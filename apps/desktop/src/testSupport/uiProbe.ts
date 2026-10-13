@@ -67,6 +67,11 @@ export interface UiProbeSnapshot {
   ts: number;
   mode?: string;
   headings: string[];
+  /**
+   * Generated `::before` text on any h1-h3, as `"<heading>: <marker>"` -- text a stylesheet draws
+   * that `headings`/`bodyText` cannot see (a community theme's `h2:before { content: "H2 " }`).
+   */
+  headingMarkers: string[];
   bodyText: string;
   targets: UiProbeTarget[];
   selects: UiProbeSelect[];
@@ -209,6 +214,25 @@ function collectHeadings(root: Element): string[] {
 }
 
 /**
+ * The text a computed `content` value draws, or `null` when it draws none: `"H2 "` -> `H2 `;
+ * `none`, `normal` and `""` -> `null`. Only a single quoted string counts (counters and `attr()`
+ * would need a fuller parser; no heading here uses them).
+ */
+export function headingMarkerText(content: string): string | null {
+  const match = /^(["'])(.*)\1$/.exec(content.trim());
+  return match && match[2] !== '' ? match[2]! : null;
+}
+
+function collectHeadingMarkers(root: Element): string[] {
+  const markers: string[] = [];
+  root.querySelectorAll('h1, h2, h3').forEach((el) => {
+    const marker = headingMarkerText(window.getComputedStyle(el, '::before').content);
+    if (marker !== null) markers.push(`${(el.textContent ?? '').trim()}: ${marker}`);
+  });
+  return markers;
+}
+
+/**
  * Best-effort screen label derived from the visible headings — every
  * catalog/panel screen renders its own name as an `<h2>` (see
  * `CharacterHubPage.tsx`'s `Mode` union and each screen's own header), so
@@ -225,6 +249,7 @@ function buildSnapshot(root: Element): UiProbeSnapshot {
     ts: Date.now(),
     mode: deriveMode(headings),
     headings,
+    headingMarkers: collectHeadingMarkers(root),
     bodyText: (root as HTMLElement).innerText ?? '',
     targets: collectTargets(root),
     selects: collectSelects(root),

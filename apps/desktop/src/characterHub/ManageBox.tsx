@@ -15,6 +15,8 @@ export function ManageBox(props: {
   children?: ReactNode;
   /** When set, Manage is disabled and this says why (loading, unavailable). */
   disabledReason?: string;
+  /** The button's text; "Manage" when not given. */
+  manageLabel?: string;
   onManage: () => void;
 }) {
   return (
@@ -45,7 +47,7 @@ export function ManageBox(props: {
             padding: '0.3rem 0.8rem',
           }}
         >
-          Manage
+          {props.manageLabel ?? 'Manage'}
         </button>
       </div>
       {props.disabledReason !== undefined ? (

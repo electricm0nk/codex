@@ -28,3 +28,16 @@ export function buildCreationRacialTraitsPreview(
     unavailableReason: surface.unavailableReason,
   };
 }
+
+/**
+ * The Racial Traits box's count (Brief 1 F2): the traits the race gives, and how many of its
+ * standard traits the chosen alternates replaced. `undefined` when the traits could not be resolved
+ * (the box then states why instead).
+ */
+export function racialTraitsCountLabel(preview: CreationRacialTraitsPreview): string | undefined {
+  if (preview.unavailableReason !== null) {
+    return undefined;
+  }
+  const innate = `${preview.rows.length} innate`;
+  return preview.replaced.length === 0 ? innate : `${innate} · ${preview.replaced.length} replaced by alternates`;
+}

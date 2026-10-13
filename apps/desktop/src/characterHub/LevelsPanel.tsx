@@ -54,7 +54,6 @@ export function LevelsPanel(props: {
         backgroundColor: 'var(--color-surface)',
         border: '1px solid var(--color-border)',
         borderRadius: 10,
-        flex: '2 1 380px',
         minWidth: 0,
         padding: '1rem',
       }}

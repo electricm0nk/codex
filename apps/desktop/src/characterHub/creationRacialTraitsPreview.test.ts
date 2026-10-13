@@ -1,4 +1,4 @@
-import { buildCreationRacialTraitsPreview } from './creationRacialTraitsPreview';
+import { buildCreationRacialTraitsPreview, racialTraitsCountLabel } from './creationRacialTraitsPreview';
 import type { RaceSelectionResponse } from '../boundary/loadAlternateRacialTraits';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -51,10 +51,19 @@ assertEqual(preview.replaced.length, 1, 'removed standard traits listed');
 assertEqual(preview.replaced[0].name, 'Defensive Training', 'by name');
 assertEqual(preview.replaced[0].byName, 'Deep Warrior', 'and by what removed it');
 
+// Brief 1 F2: the box's count names both what the race gives and what the chosen alternates replaced.
+assertEqual(racialTraitsCountLabel(preview), '3 innate · 1 replaced by alternates', 'both counts');
+assertEqual(
+  racialTraitsCountLabel(buildCreationRacialTraitsPreview(resolution({ suppressions: [] }))),
+  '3 innate',
+  'nothing replaced, nothing said about it'
+);
+
 const none = buildCreationRacialTraitsPreview(null);
 assert(none.unavailableReason !== null && none.rows.length === 0, 'no resolution → stated reason, no rows');
 
 const errored = buildCreationRacialTraitsPreview(resolution({ errors: ['corpus missing'] }));
 assertEqual(errored.unavailableReason, 'corpus missing', "engine's own error is the reason");
+assertEqual(racialTraitsCountLabel(errored), undefined, 'no count when the traits could not be resolved');
 
 console.log('creationRacialTraitsPreview tests passed');

@@ -2137,6 +2137,9 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         );
     }
 
+    // Brief 2 E1: last, so every initiative record above is already in `explanations`.
+    ground_initiative_total(ability_modifiers.dexterity, &mut explanations);
+
     PilotBaseChassisComputation {
         ability_modifiers,
         base_attack_bonus,

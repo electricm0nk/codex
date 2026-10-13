@@ -1810,6 +1810,10 @@ pub struct DraftSpellOptionsDto {
     /// Spell names the race grants as spell-like abilities (`ABILITY:Spell-Like Ability|AUTOMATIC|Racial SLA ~ <spell>`),
     /// in corpus order, for the dialog's read-only Innate column. A trait the draft's alternates suppress is not listed.
     pub innate: Vec<String>,
+    /// The engine's known-spell quotas for the draft: a spontaneous caster's
+    /// `*.spells_known.spell_level_<n>` rows and a book's size rows (the wizard's
+    /// `class_spell.wizard.spellbook_size.*`, the alchemist's/investigator's `*.formula_book_size.*`). The Create screen picks KNOWN spells, so these, not `per_day`, are its quotas.
+    pub known: Vec<ExplanationDto>,
 }
 
 const RACIAL_SLA_PREFIX: &str = "Racial SLA ~ ";
@@ -1818,7 +1822,13 @@ fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpe
     let (input, _) = build_create_input(request, FeatPolicy::Trust)
         .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
     let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
-    let per_day = map_explanations_dto(&receipt.base.explanations)
+    let explanations = map_explanations_dto(&receipt.base.explanations);
+    let known = explanations
+        .iter()
+        .filter(|row| row.id.contains(".spells_known.") || row.id.contains("book_size."))
+        .cloned()
+        .collect();
+    let per_day = explanations
         .into_iter()
         .filter(|row| row.id.contains("spells_per_day") || row.id.contains("extracts_per_day"))
         .collect();
@@ -1843,7 +1853,7 @@ fn draft_spell_options_impl(request: &CreateCharacterRequest) -> Result<DraftSpe
             }
         }
     }
-    Ok(DraftSpellOptionsDto { per_day, innate })
+    Ok(DraftSpellOptionsDto { per_day, innate, known })
 }
 
 #[tauri::command]
@@ -1851,11 +1861,81 @@ pub fn draft_spell_options(request: CreateCharacterRequest) -> Result<DraftSpell
     draft_spell_options_impl(&request)
 }
 
+/// Brief 2 E3: the sheet numbers the Create screen previews for a character that is not saved
+/// yet, from the same engine run the sheet reads once it is saved.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftSheetPreviewDto {
+    /// The engine's `initiative.total` row (`pilot_compute::INITIATIVE_TOTAL_ID`).
+    pub initiative: ExplanationDto,
+    /// The draft's carried load, as the sheet's `corpusDerived.encumbrance`.
+    pub encumbrance: EncumbranceDto,
+}
+
+fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+    let initiative = map_explanations_dto(&receipt.base.explanations)
+        .into_iter()
+        .find(|row| row.id == codex::rules_core::pilot_compute::INITIATIVE_TOTAL_ID)
+        .ok_or_else(|| "the engine computed no initiative total for this draft".to_owned())?;
+    Ok(DraftSheetPreviewDto { initiative, encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance) })
+}
+
+#[tauri::command]
+pub fn draft_sheet_preview(request: CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
+    draft_sheet_preview_impl(&request)
+}
+
+/// Brief 2 L4b: what class level `from_level + 1` of `class_id` grants a character that is not
+/// saved yet, for the Create screen's per-level lines. The same engine call `preview_level_up`
+/// makes for a saved character (`compute_level_up_grants_for_class`), on the draft's input.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DraftLevelUpPreviewDto {
+    pub from_level: u8,
+    pub to_level: u8,
+    /// The engine's automatic grant names for this transition, verbatim. Empty is a real answer:
+    /// the engine grounds per-level grants for the eleven PF1 Core classes only.
+    pub automatic_features: Vec<String>,
+}
+
+fn draft_level_up_preview_impl(
+    request: &CreateCharacterRequest,
+    class_id: &str,
+    from_level: u8,
+) -> Result<DraftLevelUpPreviewDto, String> {
+    let (input, _) = build_create_input(request, FeatPolicy::Trust)
+        .map_err(|diagnostics| diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "))?;
+    let to_level = from_level.saturating_add(1);
+    let plan = compute_level_up_grants_for_class(&input, class_id, from_level, to_level);
+    Ok(DraftLevelUpPreviewDto {
+        from_level,
+        to_level,
+        automatic_features: plan.automatic_features.into_iter().map(|grant| grant.name).collect(),
+    })
+}
+
+#[tauri::command]
+pub fn draft_level_up_preview(
+    request: CreateCharacterRequest,
+    class_id: String,
+    from_level: u8,
+) -> Result<DraftLevelUpPreviewDto, String> {
+    draft_level_up_preview_impl(&request, &class_id, from_level)
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
     app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
+    // Brief 1 F3: two traits, or three with exactly one drawback (the Traits dialog enforces the
+    // same rule). Checked at save only, so a draft the player is still editing keeps computing.
+    if let Some(message) = codex::rules_core::trait_effects::creation_trait_selection_refusal(&request.selected_traits) {
+        return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![create_diagnostic("create.trait_count", message)] });
+    }
     let (character_input, equipment_cost_copper) = match build_create_input(request, FeatPolicy::Enforce) {
         Ok(built) => built,
         Err(diagnostics) => return Ok(CreateCharacterResponse::Blocked { diagnostics }),
@@ -1993,6 +2073,20 @@ const SECOND_SEED_MARKER: &str = ".default_character_seeded_2";
 const SECOND_SEED_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000002";
 const WIZARD_CLASS_ID_FOR_SEED: &str = "class:wizard";
 
+/// Brief 3: the third starter seed's own marker, so an install that already carries markers 1
+/// and 2 gains Brother Tomas Vane on its next launch.
+const THIRD_SEED_MARKER: &str = ".default_character_seeded_3";
+const THIRD_SEED_CHARACTER_ID: &str = "00000000-0000-0000-0000-000000000003";
+const CLERIC_CLASS_ID_FOR_SEED: &str = "class:cleric";
+const FIGHTER_CLASS_ID_FOR_SEED: &str = "class:fighter";
+
+/// Cure Light Wounds (Cleric 1) and Spiritual Weapon (Cleric 2) as the engine and the Add Spell
+/// picker name them: CRB spell-list keys, the labels of the converted records
+/// `core_rulebook:spell:cure_light_wounds` / `core_rulebook:spell:spiritual_weapon`. Pinned by
+/// `the_cleric_seed_spell_ids_are_converted_crb_records`.
+const CURE_LIGHT_WOUNDS_SPELL_ID: &str = "Cure Light Wounds";
+const SPIRITUAL_WEAPON_SPELL_ID: &str = "Spiritual Weapon";
+
 /// Fireball as the engine and the Add Spell picker name it: the key of the CRB spell-list
 /// row (`rules_catalog::crb::spell_list::SPELL_LIST`, generated from `cr_spells.lst`), which is
 /// the label of the converted record [`FIREBALL_CONVERTED_RECORD_ID`]
@@ -2009,6 +2103,9 @@ const FIREBALL_CONVERTED_RECORD_ID: &str = "core_rulebook:spell:fireball";
 struct StarterSeed {
     marker: &'static str,
     request: CreateCharacterRequest,
+    /// Levels of other classes, applied in order after the request's own class through
+    /// `apply_level_up` -- the step `create_character` takes for its `additional_levels`.
+    additional_levels: Vec<&'static str>,
     record_and_prepare_spells: Vec<(&'static str, &'static str)>,
     /// The seed's whole skill-rank spend, written through the same input the sheet's "Manage
     /// skill allocation" dialog writes (`apply_set_skill_allocations`, replace-wholesale) --
@@ -2045,6 +2142,19 @@ const ELOWEN_SEED_SKILL_RANKS: &[(&str, u8)] = &[
     ("skill:knowledge_religion", 5),
     ("skill:fly", 5),
     ("skill:linguistics", 2),
+];
+
+/// Brother Tomas Vane (Human Cleric 3 / Fighter 2, Int 10 = +0): (2 cleric or fighter + 0 Int
+/// + 1 Human Skilled) x 5 = 15 ranks. Climb, Intimidate and Swim at 1 are the create path's
+/// GE-06 posture; the other 12 go into Cleric class skills, at most 5 each (max ranks =
+/// character level 5).
+const TOMAS_SEED_SKILL_RANKS: &[(&str, u8)] = &[
+    ("skill:climb", 1),
+    ("skill:intimidate", 1),
+    ("skill:swim", 1),
+    ("skill:heal", 5),
+    ("skill:knowledge_religion", 5),
+    ("skill:sense_motive", 2),
 ];
 
 fn starter_seed_request(
@@ -2093,6 +2203,14 @@ fn starter_seed_request(
 /// plus Fireball, recorded and prepared -- Fireball is a 3rd-level Wizard spell, and a Wizard
 /// 5 has 3rd-level slots (CRB p.79 Table 3-16: one base slot at 5th; Int 18 adds one bonus
 /// 3rd-level slot, CRB p.17 Table 1-3; the Evocation specialist adds one more, CRB p.79).
+///
+/// **Brother Tomas Vane** (Human Cleric 3 / Fighter 2, Brief 3, operator ruling 2026-10-11):
+/// Str 14, Dex 10, Con 14, Int 10, Wis 16, Cha 12 as stored, the Human +2 to Wisdom (18, +4).
+/// Cleric is his level-1 class; the two Fighter levels follow through `apply_level_up`, which
+/// records the Fighter's canonical seeds when it joins. His one domain is the Cleric's
+/// canonical seed (`class_seeds::canonical_seeds_for("cleric")`); no deity is recorded. Cure
+/// Light Wounds (1st) and Spiritual Weapon (2nd) are recorded and prepared -- a Cleric 3 has
+/// 2nd-level slots (CRB p.39 Table 3-6), and Wis 18 adds a bonus slot at 1st-4th (CRB p.17).
 fn starter_seeds() -> Vec<StarterSeed> {
     vec![
         StarterSeed {
@@ -2112,6 +2230,7 @@ fn starter_seeds() -> Vec<StarterSeed> {
                 },
                 "strength",
             ),
+            additional_levels: Vec::new(),
             record_and_prepare_spells: Vec::new(),
             skill_ranks: ALDRIC_SEED_SKILL_RANKS,
         },
@@ -2132,28 +2251,63 @@ fn starter_seeds() -> Vec<StarterSeed> {
                 },
                 "intelligence",
             ),
+            additional_levels: Vec::new(),
             record_and_prepare_spells: vec![(FIREBALL_SPELL_ID, WIZARD_CLASS_ID_FOR_SEED)],
             skill_ranks: ELOWEN_SEED_SKILL_RANKS,
+        },
+        StarterSeed {
+            marker: THIRD_SEED_MARKER,
+            request: starter_seed_request(
+                THIRD_SEED_CHARACTER_ID,
+                "Brother Tomas Vane",
+                CLERIC_CLASS_ID_FOR_SEED,
+                3,
+                AbilityScoresDto {
+                    strength: 14,
+                    dexterity: 10,
+                    constitution: 14,
+                    intelligence: 10,
+                    wisdom: 16,
+                    charisma: 12,
+                },
+                "wisdom",
+            ),
+            additional_levels: vec![FIGHTER_CLASS_ID_FOR_SEED, FIGHTER_CLASS_ID_FOR_SEED],
+            record_and_prepare_spells: vec![
+                (CURE_LIGHT_WOUNDS_SPELL_ID, CLERIC_CLASS_ID_FOR_SEED),
+                (SPIRITUAL_WEAPON_SPELL_ID, CLERIC_CLASS_ID_FOR_SEED),
+            ],
+            skill_ranks: TOMAS_SEED_SKILL_RANKS,
         },
     ]
 }
 
 /// Seeds the starter characters ("Aldric Ironhand": Human Fighter 3; "Elowen Ashgrave":
-/// Human Wizard 5 with Fireball prepared) into an install so there's something to open
-/// immediately instead of an empty character list.
+/// Human Wizard 5 with Fireball prepared; "Brother Tomas Vane": Human Cleric 3 / Fighter 2)
+/// into an install so there's something to open immediately instead of an empty character list.
 ///
 /// Each seed is gated on its OWN marker file, not on whether the characters directory is
 /// currently empty -- so deleting a starter character does not bring it back on next
-/// launch, and an install that already carries Aldric's marker still gains Elowen. A seed
-/// whose character id already exists on disk is never written (a player's edits are never
+/// launch, and an install that already carries Aldric's marker still gains the later seeds. A
+/// seed whose character id already exists on disk is never written (a player's edits are never
 /// overwritten), marker or not. Reuses `compose_character_input`/`create_character`'s own
 /// invariant: only saves if the build actually computes, never writes an unproven build.
-pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), String> {
-    let app_data_dir = app
-        .path()
-        .app_data_dir()
-        .map_err(|err| format!("could not resolve app data directory: {err}"))?;
-    seed_default_characters_at(&app_data_dir, &app.package_info().version.to_string())
+///
+/// Returns the error of every seed that failed (Brief 3 S1): the caller keeps them in
+/// [`StarterSeedErrors`] so the Load screen shows them, not only stderr.
+pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Vec<String> {
+    match app.path().app_data_dir() {
+        Ok(app_data_dir) => {
+            seed_starters_at(
+                &app_data_dir,
+                &app.package_info().version.to_string(),
+                starter_seeds(),
+                SeedMarkers::Honour,
+            )
+            .errors
+        }
+        Err(err) => vec![format!("could not resolve app data directory: {err}")],
+    }
 }
 
 /// The body of [`seed_default_character_if_needed`], split out so it is testable against a
@@ -2163,10 +2317,7 @@ pub(crate) fn seed_default_characters_at(
     app_data_dir: &Path,
     app_version: &str,
 ) -> Result<(), String> {
-    let errors: Vec<String> = starter_seeds()
-        .into_iter()
-        .filter_map(|seed| seed_one_starter(app_data_dir, app_version, seed).err())
-        .collect();
+    let errors = seed_starters_at(app_data_dir, app_version, starter_seeds(), SeedMarkers::Honour).errors;
     if errors.is_empty() {
         Ok(())
     } else {
@@ -2174,10 +2325,51 @@ pub(crate) fn seed_default_characters_at(
     }
 }
 
-fn seed_one_starter(app_data_dir: &Path, app_version: &str, seed: StarterSeed) -> Result<(), String> {
+/// Whether a seeding pass skips a seed whose marker exists (the launch pass) or ignores the
+/// marker for that check (the Restore button). Either way a seed whose directory exists is
+/// never touched, and a seed that is written gets its marker.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SeedMarkers {
+    Honour,
+    Ignore,
+}
+
+/// One seeding pass: the labels of the seeds it wrote, and the error of every seed that failed.
+#[derive(Debug, Default)]
+struct StarterSeedPass {
+    written: Vec<String>,
+    errors: Vec<String>,
+}
+
+fn seed_starters_at(
+    app_data_dir: &Path,
+    app_version: &str,
+    seeds: Vec<StarterSeed>,
+    markers: SeedMarkers,
+) -> StarterSeedPass {
+    let mut pass = StarterSeedPass::default();
+    for seed in seeds {
+        let label = seed.request.display_label.clone();
+        match seed_one_starter(app_data_dir, app_version, seed, markers) {
+            Ok(true) => pass.written.push(label),
+            Ok(false) => {}
+            Err(err) => pass.errors.push(err),
+        }
+    }
+    pass
+}
+
+/// Writes one seed. `Ok(true)` when it was written, `Ok(false)` when it was skipped (marker
+/// honoured, or its id already on disk).
+fn seed_one_starter(
+    app_data_dir: &Path,
+    app_version: &str,
+    seed: StarterSeed,
+    markers: SeedMarkers,
+) -> Result<bool, String> {
     let marker_path = app_data_dir.join(seed.marker);
-    if marker_path.exists() {
-        return Ok(());
+    if markers == SeedMarkers::Honour && marker_path.exists() {
+        return Ok(false);
     }
     let write_marker = || -> Result<(), String> {
         std::fs::create_dir_all(app_data_dir)
@@ -2190,10 +2382,15 @@ fn seed_one_starter(app_data_dir: &Path, app_version: &str, seed: StarterSeed) -
     let root = characters_root_from_app_data_dir(app_data_dir).join(&request.character_id);
     if root.exists() {
         // The id is taken (a restored backup, a player's own character): never overwrite.
-        return write_marker();
+        return write_marker().map(|()| false);
     }
 
     let mut character_input = compose_character_input(&request);
+    // Levels of other classes, in order: the step `build_create_input` takes for
+    // `CreateCharacterRequest.additional_levels`.
+    for class_id in &seed.additional_levels {
+        crate::pf1_adapter::apply_level_up(&mut character_input, class_id);
+    }
     for (spell_id, source_class_id) in &seed.record_and_prepare_spells {
         crate::pf1_adapter::apply_record_and_prepare_spell_selection(&mut character_input, spell_id, source_class_id);
     }
@@ -2233,7 +2430,63 @@ fn seed_one_starter(app_data_dir: &Path, app_version: &str, seed: StarterSeed) -
         character_input,
     };
     SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
-    write_marker()
+    write_marker().map(|()| true)
+}
+
+/// The errors of the latest starter seeding pass (the launch, or the last Restore), held as
+/// Tauri state so the Load screen can show a seed that failed (Brief 3 S1).
+pub struct StarterSeedErrors(std::sync::Mutex<Vec<String>>);
+
+impl StarterSeedErrors {
+    pub fn new(errors: Vec<String>) -> Self {
+        Self(std::sync::Mutex::new(errors))
+    }
+
+    pub fn replace(&self, errors: Vec<String>) {
+        *self.0.lock().unwrap_or_else(std::sync::PoisonError::into_inner) = errors;
+    }
+
+    pub fn current(&self) -> Vec<String> {
+        self.0.lock().unwrap_or_else(std::sync::PoisonError::into_inner).clone()
+    }
+}
+
+#[tauri::command]
+pub fn list_starter_seed_errors(state: tauri::State<'_, StarterSeedErrors>) -> Vec<String> {
+    state.current()
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RestoreStarterCharactersResponse {
+    /// Labels of the starter characters this call wrote back.
+    pub restored: Vec<String>,
+    /// The error of every starter character that was missing and did not compute.
+    pub errors: Vec<String>,
+}
+
+/// The body of [`restore_starter_characters`]: every starter seed whose character directory is
+/// missing is built and saved (its marker ignored for the check, written afterwards); a seed
+/// whose directory exists is never touched.
+pub(crate) fn restore_starter_characters_at(app_data_dir: &Path, app_version: &str) -> RestoreStarterCharactersResponse {
+    let pass = seed_starters_at(app_data_dir, app_version, starter_seeds(), SeedMarkers::Ignore);
+    RestoreStarterCharactersResponse { restored: pass.written, errors: pass.errors }
+}
+
+/// Brief 3 S2b: the Load screen's "Restore starter characters" button -- the only way a
+/// deleted starter comes back (a normal launch keeps it deleted).
+#[tauri::command]
+pub fn restore_starter_characters(
+    app: tauri::AppHandle,
+    state: tauri::State<'_, StarterSeedErrors>,
+) -> Result<RestoreStarterCharactersResponse, String> {
+    let app_data_dir = app
+        .path()
+        .app_data_dir()
+        .map_err(|err| format!("could not resolve app data directory: {err}"))?;
+    let response = restore_starter_characters_at(&app_data_dir, &app.package_info().version.to_string());
+    state.replace(response.errors.clone());
+    Ok(response)
 }
 
 /// Lists through the adapter of the rule system the landing screen selected
@@ -2276,6 +2529,27 @@ pub(crate) fn character_level(input: &CharacterInput) -> u8 {
 /// temp-dir character root — the same `*_at_root` convention
 /// `level_up_character_at_root` / `set_skill_allocations_at_root` already
 /// established in this module.
+/// Brief 1 F3b: one `skill.trait_modifier.<skill>` row per sheet skill a trait or drawback moves
+/// (`skill_allocation::sheet_skill_trait_modifiers`). The sheet's Skills panel adds the value to
+/// that skill's row, so Acrobat's +1 and Meticulous's untrained -2 reach the number it prints.
+fn sheet_skill_trait_modifier_rows(input: &CharacterInput) -> Vec<ExplanationDto> {
+    codex::rules_core::skill_allocation::sheet_skill_trait_modifiers(input)
+        .into_iter()
+        .map(|(skill_id, value)| {
+            let skill = skill_id.trim_start_matches("skill:").to_owned();
+            ExplanationDto {
+                id: format!("skill.trait_modifier.{skill}"),
+                value: i16::from(value),
+                detail: format!(
+                    "{value:+} on {skill} from the character's traits and drawbacks (the engine's \
+                     skill-total misc modifier: trait skill bonuses, and Meticulous's -2 while \
+                     untrained)"
+                ),
+            }
+        })
+        .collect()
+}
+
 pub(crate) fn load_saved_character_at_root(
     root: &Path,
 ) -> Result<LoadSavedCharacterResponse, String> {
@@ -2296,7 +2570,8 @@ pub(crate) fn load_saved_character_at_root(
     // `corpus_receipt.corpus_derived.equipment_effects` IS the resolved
     // `EquippedActive` effect set. Reused rather than recomputed, matching
     // `contract::to_pilot_receipt`'s own reasoning for the identical pair.
-    let explanations = map_explanations_dto(&corpus_receipt.base.explanations);
+    let mut explanations = map_explanations_dto(&corpus_receipt.base.explanations);
+    explanations.extend(sheet_skill_trait_modifier_rows(&envelope.character_input));
     let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
         &envelope.character_input,
         corpus_fixture_bundle(),
@@ -7890,6 +8165,7 @@ mod tests {
             equipment: vec![record("e1", "Sunblade of the Order")],
             spells: vec![record("s1", "Ember Step")],
             devices: vec![record("d1", "Rod of Small Mercies")],
+            conditions: Vec::new(),
         };
         save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
         assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
@@ -7928,6 +8204,89 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ---- Brief 2 E2: conditions on the custom record ------------------------------------------------
+
+    #[test]
+    fn a_custom_file_saved_before_conditions_existed_loads_with_no_conditions() {
+        let root = created_character("custom-old-file");
+        std::fs::write(root.join("custom.json"), r#"{"grants":[],"feats":[],"equipment":[],"spells":[],"devices":[]}"#).unwrap();
+        let loaded = load_character_custom_at_root(&root).expect("an old custom.json still loads");
+        assert!(loaded.conditions.is_empty(), "no conditions: {loaded:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn conditions_round_trip_through_custom_json_in_the_wire_shape() {
+        let root = created_character("custom-conditions");
+        let custom = CharacterCustomDto { conditions: vec!["Shaken".to_owned()], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-10-12T01:00:00Z").expect("save");
+        assert_eq!(load_character_custom_at_root(&root).unwrap().conditions, vec!["Shaken".to_owned()]);
+        let wire = serde_json::to_value(CharacterCustomDto::default()).unwrap();
+        assert_eq!(wire["conditions"], serde_json::json!([]), "an empty list crosses the boundary as []");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ---- Brief 2 E3: the Create screen's draft sheet preview ----------------------------------------
+
+    #[test]
+    fn the_draft_preview_encumbrance_matches_the_saved_sheet_for_the_same_character() {
+        // The Fighter's fixed loadout is a chain shirt and a longsword.
+        let request = request_for_class("race:human", "class:fighter", 1);
+        let preview = draft_sheet_preview_impl(&request).expect("preview");
+        assert!(
+            preview.encumbrance.per_item.iter().any(|item| item.item_id == "item:chain_shirt"),
+            "the chain shirt is carried: {:?}",
+            preview.encumbrance.per_item
+        );
+        assert!(preview.encumbrance.per_item.iter().any(|item| item.item_id == "item:longsword"), "and the longsword");
+        assert!(matches!(preview.encumbrance.level.as_str(), "Light" | "Medium"), "{}", preview.encumbrance.level);
+
+        let root = tempdir("draft-preview-vs-sheet");
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let sheet = load_saved_character_at_root(&root).expect("load");
+        assert_eq!(
+            serde_json::to_value(&preview.encumbrance).unwrap(),
+            serde_json::to_value(&sheet.corpus_derived.encumbrance).unwrap(),
+            "the Create preview and the sheet show the same encumbrance"
+        );
+        let sheet_initiative = sheet.explanations.iter().find(|row| row.id == "initiative.total").expect("the sheet carries the total");
+        assert_eq!(preview.initiative.value, sheet_initiative.value, "and the same initiative");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn the_draft_preview_initiative_adds_improved_initiative() {
+        let plain = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
+        assert_eq!(plain.initiative.id, "initiative.total");
+        assert_eq!(plain.initiative.value, 2, "Dex 14 -> +2");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_feats = vec![CreateFeatDto { feat_id: "Improved Initiative".to_owned(), target: None }];
+        let improved = draft_sheet_preview_impl(&request).expect("preview");
+        assert_eq!(improved.initiative.value - plain.initiative.value, 4, "Improved Initiative is +4");
+    }
+
+    #[test]
+    fn the_draft_preview_crosses_the_boundary_in_the_camel_case_wire_shape() {
+        let preview = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
+        let wire = serde_json::to_value(&preview).unwrap();
+        let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
+        assert_eq!(keys, BTreeSet::from(["initiative", "encumbrance"]));
+        for key in ["id", "value", "detail"] {
+            assert!(wire["initiative"].get(key).is_some(), "initiative.{key}: {wire}");
+        }
+        for key in ["totalCarriedWeightLbs", "lightMaxLbs", "mediumMaxLbs", "heavyMaxLbs", "level", "loadArmorCheckPenalty", "perItem"] {
+            assert!(wire["encumbrance"].get(key).is_some(), "encumbrance.{key}: {wire}");
+        }
+    }
+
+    #[test]
+    fn the_draft_preview_reports_a_draft_that_cannot_be_built() {
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
+        assert!(draft_sheet_preview_impl(&request).is_err(), "an unresolvable draft is an error, not a made-up preview");
+    }
+
     #[test]
     fn starting_wealth_for_class_reports_the_maximum_or_the_reason_there_is_none() {
         let fighter = starting_wealth_for_class_impl("class:fighter");
@@ -7957,6 +8316,105 @@ mod tests {
         }
         // Choosing an alternate trait that replaces Gnome Magic removes them (suppression is the resolver's).
         assert!(gnome.per_day.is_empty(), "a fighter has no spell quota");
+    }
+
+    fn known_value(options: &DraftSpellOptionsDto, id: &str) -> Option<i16> {
+        options.known.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_a_sorcerers_spells_known_per_level() {
+        // Brief 1 F4/F5: a sorcerer's rows are `class_chassis.sorcerer.spontaneous.*`, and the
+        // Create screen's quota is the spells it KNOWS (PF1 Sorcerer table: 4 cantrips, 2 1st).
+        let mut request = request_for_class("race:human", "class:sorcerer", 1);
+        request.ability_scores.charisma = 16;
+        let sorcerer = draft_spell_options_impl(&request).expect("options");
+        assert!(
+            sorcerer.per_day.iter().any(|row| row.id == "class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_1"),
+            "per-day rows: {:?}",
+            sorcerer.per_day.iter().map(|row| &row.id).collect::<Vec<_>>()
+        );
+        assert_eq!(known_value(&sorcerer, "class_chassis.sorcerer.spontaneous.spells_known.spell_level_0"), Some(4), "{:?}", sorcerer.known);
+        assert_eq!(known_value(&sorcerer, "class_chassis.sorcerer.spontaneous.spells_known.spell_level_1"), Some(2), "{:?}", sorcerer.known);
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_a_wizards_spellbook_size_and_it_grows_with_levels() {
+        let mut request = request_for_class("race:human", "class:wizard", 1);
+        request.ability_scores.intelligence = 14;
+        let first = draft_spell_options_impl(&request).expect("options");
+        assert_eq!(
+            known_value(&first, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"),
+            Some(5),
+            "3 + Int 2: {:?}",
+            first.known
+        );
+        request.additional_levels = vec!["class:wizard".to_owned(); 4];
+        let fifth = draft_spell_options_impl(&request).expect("options");
+        assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_1_and_higher"), Some(13), "5 + 2 * 4: {:?}", fifth.known);
+        assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_3_and_higher"), Some(2), "{:?}", fifth.known);
+        assert_eq!(known_value(&fifth, "class_spell.wizard.spellbook_size.spell_level_4_and_higher"), None, "a level-5 wizard casts up to 3rd");
+    }
+
+    #[test]
+    fn the_draft_spell_options_state_known_quotas_for_hunter_skald_and_investigator() {
+        // Brief 1 F7: these classes lost their picker under F5 for want of a known-spell row.
+        for (class_id, id, expected) in [
+            ("class:hunter", "class_chassis.hunter.spontaneous.spells_known.spell_level_1", 2),
+            ("class:skald", "class_chassis.skald.spontaneous.spells_known.spell_level_1", 2),
+            ("class:investigator", "class_spell.acg.investigator.formula_book_size.extract_level_1_and_higher", 2),
+        ] {
+            let options = draft_spell_options_impl(&request_for_class("race:human", class_id, 1)).expect("options");
+            assert_eq!(known_value(&options, id), Some(expected), "{class_id}: {:?}", options.known);
+        }
+    }
+
+    #[test]
+    fn the_saved_sheet_carries_each_skills_trait_and_drawback_modifier() {
+        // Brief 1 F3b: the sheet's skill rows add these engine rows, so Acrobat's +1 and
+        // Meticulous's untrained -2 reach the numbers the player reads.
+        let root = tempdir("sheet-trait-skill-modifiers");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_traits = vec!["trait:trait_acrobat".to_owned(), "drawback:meticulous".to_owned()];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        let row = |skill: &str| {
+            loaded.explanations.iter().find(|e| e.id == format!("skill.trait_modifier.{skill}")).map(|e| e.value)
+        };
+        assert_eq!(row("acrobatics"), Some(-1), "+1 Acrobat, -2 untrained");
+        assert_eq!(row("appraise"), Some(-2), "untrained");
+        // Create gives a Fighter its default 1 rank in Climb, Intimidate and Swim: trained, no -2.
+        assert_eq!(row("climb"), None, "trained by the default allocation");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn create_refuses_more_traits_than_the_rule_allows() {
+        let root = tempdir("create-trait-count");
+        let mut request = request_for_class("race:human", "class:fighter", 1);
+        request.selected_traits =
+            vec!["trait:trait_acrobat".to_owned(), "trait:trait_bastard".to_owned(), "trait:trait_caretaker".to_owned()];
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("three traits without a drawback must be refused: {response:?}");
+        };
+        assert!(diagnostics.iter().any(|d| d.id == "create.trait_count" && d.message.contains("at most 2 traits")), "{diagnostics:?}");
+
+        request.selected_traits.push("drawback:vain".to_owned());
+        request.selected_traits.push("drawback:pride".to_owned());
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("two drawbacks must be refused: {response:?}");
+        };
+        assert!(diagnostics.iter().any(|d| d.id == "create.trait_count" && d.message.contains("one drawback")), "{diagnostics:?}");
+
+        request.selected_traits.pop();
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "3 traits + 1 drawback is legal: {response:?}");
+        let saved = SavedCharacterStore::load(&root).unwrap();
+        assert!(saved.character_input.chosen.selected_traits.contains(&"drawback:vain".to_owned()), "the drawback is saved");
+        std::fs::remove_dir_all(&root).ok();
     }
 
     #[test]
@@ -12817,6 +13275,52 @@ mod tests {
         assert_eq!(preview.to_level, 1);
         assert_eq!(preview.character_level, 4);
     }
+
+    // ---- Brief 2 L4b: the Create screen's per-level class features ---------------------------------
+
+    /// The unsaved draft's Fighter 1 -> 2 reports the same engine grant names the saved
+    /// character's `preview_level_up` reports for the same character.
+    #[test]
+    fn the_draft_level_up_preview_names_the_same_fighter_level_2_grants_as_the_saved_path() {
+        let request = request_for("race:human", 1);
+        let draft = draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).expect("draft preview");
+        assert_eq!((draft.from_level, draft.to_level), (1, 2));
+
+        let root = saved_root_for("draft-level-up-vs-saved", compose_character_input(&request));
+        let saved = preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("saved preview");
+        let saved_names: Vec<String> = saved.automatic_features.iter().map(|grant| grant.name.clone()).collect();
+        assert_eq!(draft.automatic_features, saved_names, "the draft and the saved path agree");
+        assert!(draft.automatic_features.iter().any(|name| name.contains("bravery")), "{:?}", draft.automatic_features);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Create's first line is class level 1, a transition from class level 0.
+    #[test]
+    fn the_draft_level_up_preview_reports_a_first_class_level() {
+        let draft = draft_level_up_preview_impl(&request_for("race:human", 1), FIGHTER_CLASS_ID, 0).expect("draft preview");
+        assert_eq!((draft.from_level, draft.to_level), (0, 1));
+        assert!(
+            draft.automatic_features.iter().any(|name| name.contains("base_attack_bonus")),
+            "level 1 sets the base attack bonus: {:?}",
+            draft.automatic_features
+        );
+    }
+
+    #[test]
+    fn the_draft_level_up_preview_crosses_the_boundary_in_the_camel_case_wire_shape() {
+        let draft = draft_level_up_preview_impl(&request_for("race:human", 1), FIGHTER_CLASS_ID, 1).expect("draft preview");
+        let wire = serde_json::to_value(&draft).unwrap();
+        let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
+        assert_eq!(keys, BTreeSet::from(["fromLevel", "toLevel", "automaticFeatures"]));
+        assert!(wire["automaticFeatures"].as_array().unwrap().iter().all(serde_json::Value::is_string), "{wire}");
+    }
+
+    #[test]
+    fn the_draft_level_up_preview_reports_a_draft_that_cannot_be_built() {
+        let mut request = request_for("race:human", 1);
+        request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
+        assert!(draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).is_err(), "an unbuildable draft is an error");
+    }
 }
 
 
@@ -13100,19 +13604,43 @@ mod starter_seed_tests {
         assert_eq!(all_three + some_cross_class + unknown, 59);
     }
 
+    /// Brief 3: a fresh install holds all three starters, in seed (id) order, with the classes
+    /// each one was written with, and all three markers.
     #[test]
-    fn a_fresh_install_seeds_both_characters_and_both_markers() {
+    fn a_fresh_install_seeds_all_three_characters_and_all_three_markers() {
         let app_data_dir = temp_app_data_dir("fresh");
         seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
         let listing =
             SavedCharacterStore::list_all(&characters_root_from_app_data_dir(&app_data_dir))
                 .expect("listing succeeds");
-        let mut labels: Vec<&str> =
-            listing.characters.iter().map(|summary| summary.display_label.as_str()).collect();
-        labels.sort_unstable();
-        assert_eq!(labels, vec!["Aldric Ironhand", "Elowen Ashgrave"]);
+        let mut summaries: Vec<(&str, &str)> = listing
+            .characters
+            .iter()
+            .map(|summary| (summary.character_id.as_str(), summary.display_label.as_str()))
+            .collect();
+        summaries.sort_unstable();
+        let labels: Vec<&str> = summaries.iter().map(|(_, label)| *label).collect();
+        assert_eq!(labels, vec!["Aldric Ironhand", "Elowen Ashgrave", "Brother Tomas Vane"]);
+
+        let classes = |id: &str| -> Vec<(String, u8)> {
+            SavedCharacterStore::load(&character_root(&app_data_dir, id))
+                .expect("seed saved")
+                .character_input
+                .chosen
+                .class_levels
+                .iter()
+                .map(|class_level| (class_level.class_id.clone(), class_level.level))
+                .collect()
+        };
+        assert_eq!(classes("00000000-0000-0000-0000-000000000001"), vec![("class:fighter".to_owned(), 3)]);
+        assert_eq!(classes("00000000-0000-0000-0000-000000000002"), vec![("class:wizard".to_owned(), 5)]);
+        assert_eq!(
+            classes("00000000-0000-0000-0000-000000000003"),
+            vec![("class:cleric".to_owned(), 3), ("class:fighter".to_owned(), 2)]
+        );
         assert!(app_data_dir.join(DEFAULT_CHARACTER_SEED_MARKER).exists());
         assert!(app_data_dir.join(SECOND_SEED_MARKER).exists());
+        assert!(app_data_dir.join(".default_character_seeded_3").exists());
         std::fs::remove_dir_all(&app_data_dir).ok();
     }
 
@@ -13177,9 +13705,275 @@ mod starter_seed_tests {
         std::fs::remove_dir_all(&app_data_dir).ok();
     }
 
+    /// The Cleric seed's spell ids are CRB spell-list keys, Cleric spells of the level the seed
+    /// argues, and the labels of the converted CRB records -- never guessed slugs (the
+    /// `the_fireball_seed_id_is_the_converted_crb_record` check, per spell).
+    #[test]
+    fn the_cleric_seed_spell_ids_are_converted_crb_records() {
+        let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
+        for (spell_id, file, level) in [
+            (CURE_LIGHT_WOUNDS_SPELL_ID, "cure_light_wounds", 1_u64),
+            (SPIRITUAL_WEAPON_SPELL_ID, "spiritual_weapon", 2),
+        ] {
+            let entry = SPELL_LIST
+                .iter()
+                .find(|entry| entry.key == spell_id)
+                .unwrap_or_else(|| panic!("{spell_id} is a CRB spell-list key"));
+            assert_eq!(u64::from(entry.level), level, "{spell_id}");
+            assert_eq!(class_spell_level(CLERIC_CLASS_ID_FOR_SEED, spell_id).map(u64::from), Some(level));
+
+            let text = std::fs::read_to_string(
+                repo_root.join(format!("data/sheet_rules/core_rulebook/spell/{file}.json")),
+            )
+            .unwrap_or_else(|e| panic!("{file}: {e}"));
+            let records: serde_json::Value = serde_json::from_str(&text).expect("valid JSON");
+            let record = records
+                .as_array()
+                .and_then(|records| {
+                    records
+                        .iter()
+                        .find(|record| record["id"] == format!("core_rulebook:spell:{file}"))
+                })
+                .expect("the converted record exists");
+            assert_eq!(record["label"], spell_id);
+            let cleric_level = record["granted_by"]
+                .as_array()
+                .expect("granted_by rows")
+                .iter()
+                .find_map(|row| {
+                    let list = &row["by"]["ClassSpellList"];
+                    (list["id"] == "cleric").then(|| list["spell_level"].as_u64())
+                })
+                .flatten();
+            assert_eq!(cleric_level, Some(level), "{file}: the converted record states Cleric {level}");
+        }
+    }
+
+    /// Brief 3 S2: Brother Tomas Vane, Human Cleric 3 / Fighter 2 (Cleric is his level-1
+    /// class), Wis 16 + 2 Human = 18, with Cure Light Wounds and Spiritual Weapon recorded and
+    /// prepared, computes and loads.
+    #[test]
+    fn the_third_seed_is_a_cleric_3_fighter_2_with_spells_prepared() {
+        let app_data_dir = temp_app_data_dir("tomas");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+
+        let root = character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID);
+        let envelope = SavedCharacterStore::load(&root).expect("Tomas was saved");
+        assert_eq!(envelope.display_label, "Brother Tomas Vane");
+        let chosen = &envelope.character_input.chosen;
+        assert_eq!(chosen.race_id, HUMAN_RACE_ID);
+        assert_eq!(
+            chosen.class_levels,
+            vec![
+                CharacterClassLevel { class_id: "class:cleric".to_owned(), level: 3 },
+                CharacterClassLevel { class_id: "class:fighter".to_owned(), level: 2 },
+            ]
+        );
+        assert_eq!(
+            (
+                chosen.ability_scores.strength,
+                chosen.ability_scores.dexterity,
+                chosen.ability_scores.constitution,
+                chosen.ability_scores.intelligence,
+                chosen.ability_scores.wisdom,
+                chosen.ability_scores.charisma,
+            ),
+            (14, 10, 14, 10, 16, 12),
+            "stored scores are pre-racial; the Human +2 goes to Wisdom (18)"
+        );
+        assert!(chosen.selected_choices.iter().any(|choice| {
+            choice.choice_set_id == "choice:human_ability_bonus" && choice.selection_id == "ability:wisdom"
+        }));
+        // The Cleric's canonical seed (its one domain) is the only domain choice the seed makes.
+        let (canonical_choices, _) = codex::rules_core::class_seeds::canonical_seeds_for("cleric", 3);
+        for canonical in &canonical_choices {
+            assert!(chosen.selected_choices.contains(canonical), "{canonical:?} kept");
+        }
+        for spell_id in [CURE_LIGHT_WOUNDS_SPELL_ID, SPIRITUAL_WEAPON_SPELL_ID] {
+            for mode in [AcquisitionMode::Known, AcquisitionMode::Prepared] {
+                assert!(
+                    chosen.spells_selected.iter().any(|spell| spell.spell_id == spell_id
+                        && spell.source_class_id == CLERIC_CLASS_ID_FOR_SEED
+                        && spell.acquisition_mode == mode),
+                    "{spell_id} {mode:?}"
+                );
+            }
+        }
+
+        let receipt = build_pilot_headless_receipt(&envelope.character_input);
+        let blocking: Vec<&str> = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|diagnostic| diagnostic.claim_blocking)
+            .map(|diagnostic| diagnostic.id.as_str())
+            .collect();
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed, "blocking: {blocking:?}");
+        assert!(blocking.is_empty(), "{blocking:?}");
+
+        let loaded = load_saved_character_at_root(&root).expect("load succeeds");
+        assert!(loaded.snapshot.is_some(), "diagnostics: {:?}", loaded.diagnostics);
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// Brief 3 S2: Brother Tomas Vane, Int 10 (+0), Cleric 2 + Fighter 2 ranks per level.
+    /// Earned: (2 + 0 + 1 Human Skilled) x 5 = 15; allocated: Climb/Intimidate/Swim 1 each
+    /// (GE-06 posture) + Heal 5 + Knowledge (religion) 5 + Sense Motive 2 = 15 -> 0
+    /// unallocated. Every other skill is a Cleric class skill; at most 5 ranks each.
+    #[test]
+    fn brother_tomas_loads_with_zero_unallocated_skill_points() {
+        let app_data_dir = temp_app_data_dir("tomas-skills");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded = load_saved_character_at_root(&character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID))
+            .expect("load succeeds");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
+        assert_eq!(int_mod, 0);
+        let mut earned = 0;
+        for (class_id, levels) in [("class:cleric", 3), ("class:fighter", 2)] {
+            let per_level = i32::from(class_skill_ranks(class_id).expect("the class states skill ranks"));
+            assert_eq!(per_level, 2, "{class_id}");
+            earned += ((per_level + int_mod).max(1) + 1) * levels;
+        }
+        let spent: i32 = loaded.skill_allocations.iter().map(|a| i32::from(a.ranks)).sum();
+        assert_eq!(earned, 15, "(2 + 0 + 1) x 5");
+        assert_eq!(spent, 15, "{:?}", loaded.skill_allocations);
+        assert_class_skills_within_max(&loaded, "cleric", 5);
+    }
+
+    /// Brief 3: an install that already carries markers 1 and 2 gains the third seed on its
+    /// next launch, and Aldric's directory is untouched byte for byte.
+    #[test]
+    fn an_existing_install_with_two_markers_gains_the_third_seed_without_touching_aldric() {
+        let app_data_dir = temp_app_data_dir("existing-two");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("first launch");
+        std::fs::remove_file(app_data_dir.join(THIRD_SEED_MARKER)).expect("marker 3");
+        std::fs::remove_dir_all(character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID)).expect("Tomas dir");
+        let aldric_root = character_root(&app_data_dir, DEFAULT_CHARACTER_ID);
+        let before = snapshot_dir(&aldric_root);
+
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("next launch");
+
+        assert_eq!(snapshot_dir(&aldric_root), before, "Aldric is untouched byte for byte");
+        let tomas = SavedCharacterStore::load(&character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID))
+            .expect("Tomas seeded on the next launch");
+        assert_eq!(tomas.display_label, "Brother Tomas Vane");
+        assert!(app_data_dir.join(THIRD_SEED_MARKER).exists());
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    #[test]
+    fn a_deleted_third_seed_does_not_come_back() {
+        let app_data_dir = temp_app_data_dir("deleted-third");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("first launch");
+        let tomas_root = character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID);
+        std::fs::remove_dir_all(&tomas_root).expect("player deletes Tomas");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("next launch");
+        assert!(!tomas_root.exists(), "the marker keeps a deleted seed deleted");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// Brief 3 S2b: Restore brings back a deleted seed (its marker still present) and never
+    /// touches a seed whose directory exists, even one the player edited.
+    #[test]
+    fn restore_brings_back_a_deleted_seed_and_leaves_an_edited_seed_untouched() {
+        let app_data_dir = temp_app_data_dir("restore");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("first launch");
+        let elowen_root = character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID);
+        std::fs::remove_dir_all(&elowen_root).expect("player deletes Elowen");
+        let aldric_root = character_root(&app_data_dir, DEFAULT_CHARACTER_ID);
+        let mut aldric = SavedCharacterStore::load(&aldric_root).expect("Aldric saved");
+        aldric.display_label = "Aldric the Edited".to_owned();
+        SavedCharacterStore::save(&aldric, &aldric_root).expect("player edit saved");
+        let (aldric_before, tomas_before) = (
+            snapshot_dir(&aldric_root),
+            snapshot_dir(&character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID)),
+        );
+
+        let response = restore_starter_characters_at(&app_data_dir, "0.0.0-test");
+
+        assert_eq!(response.restored, vec!["Elowen Ashgrave".to_owned()]);
+        assert!(response.errors.is_empty(), "{:?}", response.errors);
+        assert_eq!(snapshot_dir(&aldric_root), aldric_before, "an edited seed is never touched");
+        assert_eq!(snapshot_dir(&character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID)), tomas_before);
+        let elowen = load_saved_character_at_root(&elowen_root).expect("Elowen is back");
+        assert!(elowen.snapshot.is_some(), "{:?}", elowen.diagnostics);
+        assert!(app_data_dir.join(SECOND_SEED_MARKER).exists());
+
+        let again = restore_starter_characters_at(&app_data_dir, "0.0.0-test");
+        assert!(again.restored.is_empty() && again.errors.is_empty(), "{again:?}");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// Restore ignores a missing marker for its check and writes it back afterwards.
+    #[test]
+    fn restore_rewrites_the_marker_of_the_seed_it_restores() {
+        let app_data_dir = temp_app_data_dir("restore-marker");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("first launch");
+        std::fs::remove_dir_all(character_root(&app_data_dir, DEFAULT_CHARACTER_ID)).expect("Aldric dir");
+        std::fs::remove_file(app_data_dir.join(DEFAULT_CHARACTER_SEED_MARKER)).expect("marker 1");
+
+        let response = restore_starter_characters_at(&app_data_dir, "0.0.0-test");
+
+        assert_eq!(response.restored, vec!["Aldric Ironhand".to_owned()]);
+        assert!(app_data_dir.join(DEFAULT_CHARACTER_SEED_MARKER).exists());
+        assert!(character_root(&app_data_dir, DEFAULT_CHARACTER_ID).exists());
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    fn broken_seed() -> StarterSeed {
+        StarterSeed {
+            marker: ".default_character_seeded_broken",
+            request: starter_seed_request(
+                "00000000-0000-0000-0000-0000000000ff",
+                "Broken Seed",
+                "class:not_a_real_class",
+                1,
+                AbilityScoresDto { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 },
+                "strength",
+            ),
+            additional_levels: Vec::new(),
+            record_and_prepare_spells: Vec::new(),
+            skill_ranks: &[],
+        }
+    }
+
+    /// Brief 3 S1: a seed that does not compute is returned as an error (the launch pass and
+    /// the Restore pass alike), writes no character and no marker, and does not stop the
+    /// other seeds.
+    #[test]
+    fn a_seed_that_fails_to_compute_reports_its_error() {
+        for markers in [SeedMarkers::Honour, SeedMarkers::Ignore] {
+            let app_data_dir = temp_app_data_dir("broken");
+            let pass = seed_starters_at(
+                &app_data_dir,
+                "0.0.0-test",
+                vec![broken_seed(), starter_seeds().remove(0)],
+                markers,
+            );
+            assert_eq!(pass.written, vec!["Aldric Ironhand".to_owned()], "{markers:?}");
+            assert_eq!(pass.errors.len(), 1, "{:?}", pass.errors);
+            assert!(pass.errors[0].contains("'Broken Seed' did not compute"), "{:?}", pass.errors);
+            assert!(!character_root(&app_data_dir, "00000000-0000-0000-0000-0000000000ff").exists());
+            assert!(!app_data_dir.join(".default_character_seeded_broken").exists());
+            std::fs::remove_dir_all(&app_data_dir).ok();
+        }
+    }
+
+    /// Brief 3 S1: the errors the UI reads are the latest pass's; a Restore pass replaces the
+    /// launch pass's.
+    #[test]
+    fn the_starter_seed_error_state_holds_the_latest_pass() {
+        let state = StarterSeedErrors::new(vec!["launch error".to_owned()]);
+        assert_eq!(state.current(), vec!["launch error".to_owned()]);
+        state.replace(Vec::new());
+        assert!(state.current().is_empty());
+    }
+
     /// The Load list the app serves on a fresh install, pinned as the wire the frontend's
     /// Load-list test reads (`src/testSupport/starterSeedListWire.ts`), so "the Load screen
-    /// lists both seeds" is asserted against the real `list_saved_characters` payload, never a
+    /// lists all three seeds" is asserted against the real `list_saved_characters` payload, never a
     /// hand-written sample. `CODEX_WRITE_F6E_WIRE=1` rewrites the artifact.
     #[test]
     fn the_starter_seed_list_wire_matches_the_committed_artifact() {

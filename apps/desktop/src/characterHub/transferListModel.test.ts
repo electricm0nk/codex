@@ -9,6 +9,7 @@ import {
   remainingByGroup,
   remainingSelections,
   selectedItems,
+  type SharedLimit,
   type TransferItem,
 } from './transferListModel';
 
@@ -102,6 +103,25 @@ function verifiesTheDescriptionFollowsWhateverIsClickedOnEitherSide() {
   assertEqual(describeFocus([item('x', { description: undefined })], 'x')?.body, 'No description available.', 'a missing description is stated, not blank');
 }
 
+// Brief 1 F5: a wizard's spellbook spells gained after 1st level may be of any castable level, so
+// one pool spans several spell levels. A shared limit caps a set of groups together.
+function verifiesASharedLimitCapsSeveralGroupsTogether() {
+  const spells = [item('l1a', { group: 'w:1' }), item('l1b', { group: 'w:1' }), item('l2a', { group: 'w:2' }), item('l2b', { group: 'w:2' })];
+  const limits = { 'w:1': 3, 'w:2': 2 };
+  const shared: SharedLimit[] = [{ key: 'w:1+', label: 'Wizard level 1 or higher', limit: 3, groups: ['w:1', 'w:2'] }];
+  assertEqual(canMoveRight(spells, ['l1a', 'l2a'], 'l2b', null, limits, shared).ok, true, 'two of three used, the third may be 2nd level');
+  const full = canMoveRight(spells, ['l1a', 'l1b', 'l2a'], 'l2b', null, limits, shared);
+  assertEqual(full.ok, false, 'the 2nd-level group has room but the shared pool does not');
+  assert((full.reason ?? '').includes('Wizard level 1 or higher'), 'and the reason names the pool');
+  assertEqual(moveRight(spells, ['l1a', 'l1b', 'l2a'], 'l2b', null, limits, shared).length, 3, 'so it does not move');
+  assertEqual(
+    JSON.stringify(remainingByGroup(spells, ['l1a', 'l2a'], limits, shared).map((group) => [group.key, group.remaining])),
+    JSON.stringify([['w:1', 1], ['w:2', 1]]),
+    'each group shows the smaller of its own room and its pool\'s room'
+  );
+}
+
+verifiesASharedLimitCapsSeveralGroupsTogether();
 verifiesAvailableShowsEverythingUnselectedExceptInnate();
 verifiesQualifiedOnlyHidesWhatTheCharacterMayNotTake();
 verifiesSelectedAndInnateColumns();

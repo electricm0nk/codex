@@ -16,13 +16,16 @@ import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
  */
 
 /**
- * `class_spell.wizard.total_spells_per_day.spell_level_3` and
- * `class_spell.acg.investigator.base_extracts_per_day.extract_level_1`
- * both match. The class token is the segment immediately before the
- * `_per_day` segment, so a book-namespaced id (`acg`, `apg`) resolves to
- * the class rather than the book.
+ * `class_spell.wizard.total_spells_per_day.spell_level_3`,
+ * `class_spell.acg.investigator.base_extracts_per_day.extract_level_1` and
+ * `class_chassis.sorcerer.spontaneous.total_spells_per_day.spell_level_1`
+ * all match. The class token is the segment before the `_per_day` segment,
+ * skipping a casting-kind qualifier (`spontaneous`, `partial_caster`), so a
+ * book-namespaced id (`acg`, `apg`) resolves to the class rather than the
+ * book and a chassis id to the class rather than its casting kind.
  */
-const PER_DAY_ID = /^class_spell\.(?:.+\.)?([a-z_]+)\.(total|base)_(?:spells|extracts)_per_day\.(?:spell|extract)_level_(\d+)$/;
+export const PER_DAY_ID =
+  /^class_(?:spell|chassis)\.(?:.+\.)?(?!spontaneous\.|partial_caster\.)([a-z_]+)\.(?:(?:spontaneous|partial_caster)\.)?(total|base)_(?:spells|extracts)_per_day\.(?:spell|extract)_level_(\d+)$/;
 
 export interface SpellsPerDayRow {
   /** e.g. `'wizard'`. */

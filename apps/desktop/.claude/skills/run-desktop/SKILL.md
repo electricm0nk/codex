@@ -119,7 +119,7 @@ ui-smoke litter written through the real `app_data_dir`).
   `<root>` is `$RUN_DESKTOP_DATA_ROOT`, default
   `/tmp/run-desktop-driver-${AGENT_ID}.appdata` (kept between launches so a
   manual session can inspect it; delete it yourself when done). A fresh root
-  starts empty and the app seeds Aldric Ironhand itself on first run.
+  starts empty and the app seeds its three starter characters (Aldric Ironhand, Elowen Ashgrave, Brother Tomas Vane) itself on first run.
 - **Guard:** `launch` refuses (exit 3) a relative root, or one whose data dir
   is — or sits inside — the real one resolved from your own environment.
   `driver.sh _data_env` prints exactly what `launch` would export.

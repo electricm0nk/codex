@@ -1,6 +1,7 @@
 /**
- * The Load list the desktop backend ACTUALLY serves on a fresh install (both starter seeds:
- * Aldric Ironhand, Human Fighter 3; Elowen Ashgrave, Human Wizard 5), read off the artifact
+ * The Load list the desktop backend ACTUALLY serves on a fresh install (all three starter seeds:
+ * Aldric Ironhand, Human Fighter 3; Elowen Ashgrave, Human Wizard 5; Brother Tomas Vane, Human
+ * Cleric 3 / Fighter 2), read off the artifact
  * `character_hub::starter_seed_tests::the_starter_seed_list_wire_matches_the_committed_artifact`
  * pins (that Rust test fails on any drift between the live listing and this file).
  *

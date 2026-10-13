@@ -125,6 +125,25 @@ export function buildLevelEntries(heldClasses: HeldClass[]): LevelEntry[] {
   return entries;
 }
 
+/**
+ * One level's gains as a line for the Create screen's per-level summary (Brief 2 L4):
+ * `Monk 1: +1 feat, +5 skills`, `Fighter 2: +3 skills, +1 ability score`. Skill ranks are
+ * `totalSkillPoints` for this class (roster base + Int modifier, +1 for a human, floored at 1);
+ * `skills Unknown` when the roster states no base. Class features are not part of this line.
+ */
+export function describeLevelGains(entry: LevelEntry, intelligenceModifier: number, isHuman: boolean): string {
+  const gains: string[] = [];
+  if (entry.features.includes('Feat')) {
+    gains.push('+1 feat');
+  }
+  const skills = totalSkillPoints(entry.skillPointsBase, intelligenceModifier, isHuman);
+  gains.push(skills === null ? 'skills Unknown' : `+${skills} skills`);
+  if (entry.features.includes('Ability score increase')) {
+    gains.push('+1 ability score');
+  }
+  return `${entry.classLabel} ${entry.classLevel}: ${gains.join(', ')}`;
+}
+
 /** The next level available for each held class — all at the next character level. */
 export function buildNextEntries(heldClasses: HeldClass[]): LevelEntry[] {
   const totalLevel = heldClasses.reduce((sum, held) => sum + held.level, 0);

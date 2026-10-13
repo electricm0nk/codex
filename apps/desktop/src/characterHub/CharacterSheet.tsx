@@ -89,7 +89,6 @@ import { describeEligibilityDelta, eligibilityDelta } from './featEligibilityDel
 import type { FeatCatalogEntryDto } from '../boundary/listFeats';
 import { DESKTOP_EXPORT_DEPS, runCharacterExport } from './characterExport';
 import { resolveSelectedTraits } from './traitsTabModel';
-import { buildAttackTiles } from './attackPanelModel';
 import { resolveAddSpellAffordance } from './addSpellAffordanceModel';
 import { loadCharacterTraits, type CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
 import type { BaseSavesDto, PilotSnapshotDto } from '../boundary/loadCreateCharacter';
@@ -141,6 +140,7 @@ import {
   classSkillLookup,
   featSkillBonusFor,
   featSkillBonusesWithoutARow,
+  traitSkillModifierFor,
   isClassSkill,
   type ClassSkillLookup,
   persistedFromAllocation,
@@ -148,7 +148,11 @@ import {
   skillPointsSpent,
   totalSkillPointsAvailable,
 } from './skillsModel';
-import { printedAbilityScore } from './abilityScoresModel';
+import { AbilitiesPanel } from './panels/AbilitiesPanel';
+import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './panels/CombatPanels';
+import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
+import { SquareBlock, initiativeRow } from './panels/SquareBlock';
+import { SHEET_COLUMNS, SHEET_COLUMN_STYLES, SHEET_LAYOUT, boxesInColumn, type SheetBoxId } from './sheetLayout';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
@@ -167,29 +171,6 @@ import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto
  */
 
 // ---------- shared bits ----------
-
-function fmt(value: number): string {
-  return value >= 0 ? `+${value}` : `${value}`;
-}
-
-/**
- * Renders a cell the engine did not compute as an honest em dash rather than a
- * fabricated number — the convention `deriveRaceTraits` already established for
- * an unknown race's size and vision.
- *
- * SD-27 `decisions.md §28`: touch AC, flat-footed AC, CMB and CMD used to be
- * computed *here*, in the view, so there was no such thing as "the engine did
- * not compute it" — this file always produced a number, and for every Small
- * character (touch/CMB/CMD) or every character holding a dodge bonus
- * (flat-footed) it produced the wrong one. They are engine values now, so
- * their absence is a real state and must read as absent.
- */
-function fmtOrAbsent(value: number | null, signed: boolean): string {
-  if (value === null) {
-    return '—';
-  }
-  return signed ? fmt(value) : `${value}`;
-}
 
 /**
  * Reads one `ComputationExplanation` magnitude by its stable engine id.
@@ -210,12 +191,6 @@ const ZERO_ABILITIES: AbilityScoresDto = {
   intelligence: 0,
   wisdom: 0,
   charisma: 0,
-};
-
-const panel: CSSProperties = {
-  backgroundColor: 'var(--color-surface)',
-  border: '1px solid var(--color-border)',
-  borderRadius: 10,
 };
 
 /** Shared style for the tab-content "Add …" affordances (Add Weapon / Add Armor / Add Spell / Print). */
@@ -445,41 +420,6 @@ function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number | nu
 
 // ---------- center column ----------
 
-const ABILITY_COLUMNS: ReadonlyArray<{ key: keyof AbilityScoresDto; label: string }> = [
-  { key: 'strength', label: 'STR' },
-  { key: 'dexterity', label: 'DEX' },
-  { key: 'constitution', label: 'CON' },
-  { key: 'intelligence', label: 'INT' },
-  { key: 'wisdom', label: 'WIS' },
-  { key: 'charisma', label: 'CHA' },
-];
-
-/** A titled stat panel. */
-function StatBox(props: { title?: string; children: ReactNode }) {
-  return (
-    <div style={{ ...panel, padding: '0.6rem 0.75rem' }}>
-      {props.title ? (
-        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.45rem', textTransform: 'uppercase' }}>
-          {props.title}
-        </p>
-      ) : null}
-      {props.children}
-    </div>
-  );
-}
-
-/** A boxed value with a caption, e.g. AC / Touch / CMB. */
-function StatTile(props: { label: string; value: ReactNode; emphasize?: boolean }) {
-  return (
-    <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, minWidth: 0, padding: '0.35rem 0.3rem', textAlign: 'center' }}>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.03em', margin: 0, textTransform: 'uppercase' }}>
-        {props.label}
-      </p>
-      <p style={{ fontSize: props.emphasize ? '1.3rem' : '1rem', fontWeight: 800, margin: '0.1rem 0 0' }}>{props.value}</p>
-    </div>
-  );
-}
-
 function IdentityPanel(props: { name: string; campaign: string }) {
   return (
     <div style={{ ...panel, alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', padding: '0.6rem 0.75rem' }}>
@@ -492,123 +432,6 @@ function IdentityPanel(props: { name: string; campaign: string }) {
         <p style={{ fontWeight: 700, margin: '0.1rem 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.campaign}</p>
       </div>
     </div>
-  );
-}
-
-/**
- * `scores` is the engine's effective score (`printedAbilityScore`); `abilities` its modifiers.
- * SD-36 F7a: the score used to be reconstructed as `10 + 2 x modifier`, one low for every odd score.
- */
-function AbilitiesPanel(props: { scores: AbilityScoresDto | null; abilities: AbilityScoresDto }) {
-  return (
-    <StatBox title="Abilities">
-      <div style={{ display: 'grid', gap: '0.25rem', gridTemplateColumns: 'repeat(6, 1fr)', textAlign: 'center' }}>
-        {ABILITY_COLUMNS.map((col) => (
-          <div key={col.key}>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', fontWeight: 700, margin: 0 }}>{col.label}</p>
-            <p style={{ fontSize: '1.05rem', fontWeight: 800, margin: '0.1rem 0 0' }}>{printedAbilityScore(props.scores, col.key)}</p>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: 0 }}>{fmt(props.abilities[col.key])}</p>
-          </div>
-        ))}
-      </div>
-    </StatBox>
-  );
-}
-
-/**
- * `touch` is the engine's `defense.touch_armor_class` and `flatFooted` is its
- * `defense.flat_footed_armor_class` — neither is derived here. This panel used
- * to compute both: touch as `10 + dexMod`, which is why it could display
- * `AC 19` beside `TOUCH 14` with a 4-point armor bonus, and flat-footed as
- * `ac - Math.max(0, dexMod)`, which ignored PF1's rule that a flat-footed
- * character loses dodge bonuses along with the Dexterity bonus. See SD-27
- * `decisions.md §28`.
- */
-function ArmorClassPanel(props: { ac: number; touch: number | null; flatFooted: number | null }) {
-  return (
-    <StatBox title="Armor Class">
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="AC" value={props.ac} emphasize />
-        <StatTile label="Touch" value={fmtOrAbsent(props.touch, false)} />
-        <StatTile label="Flat-Footed" value={fmtOrAbsent(props.flatFooted, false)} />
-      </div>
-    </StatBox>
-  );
-}
-
-function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; will: number } }) {
-  return (
-    <StatBox title="Saving Throws">
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="Fortitude" value={fmt(props.saves.fortitude)} />
-        <StatTile label="Reflex" value={fmt(props.saves.reflex)} />
-        <StatTile label="Will" value={fmt(props.saves.will)} />
-      </div>
-    </StatBox>
-  );
-}
-
-/**
- * `hp` is `null` when a held class's hit die is not known to the engine's hit-point fold (no
- * chassis record, or the class roster is still loading): Unknown, never a guessed total.
- */
-function InitiativeHpPanel(props: { initiative: number; hp: number | null }) {
-  return (
-    <StatBox>
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="Initiative" value={fmt(props.initiative)} />
-        <StatTile label="Hit Points" value={props.hp === null ? 'Unknown' : `${props.hp} / ${props.hp}`} />
-      </div>
-    </StatBox>
-  );
-}
-
-/**
- * `land` is the race's real base land speed, read off the same
- * corpus-derived roster the creation picker is built from.
- *
- * It used to be the literal string `"30 ft."` for every character, which was
- * already wrong for Dwarf, Gnome and Halfling (20 ft.) among the races that
- * shipped, and is wrong for Duergar and Svirfneblin (20 ft.) and Merfolk
- * (5 ft.) among the Bestiary 1 races creation now offers. The other three
- * movement modes stay `—`: no ingested race declares a fly, swim or climb
- * speed, and this panel will not invent one.
- */
-function SpeedPanel(props: { land: string }) {
-  return (
-    <StatBox title="Speed">
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="Land" value={props.land} />
-        <StatTile label="Fly" value="—" />
-        <StatTile label="Swim" value="—" />
-        <StatTile label="Climb" value="—" />
-      </div>
-    </StatBox>
-  );
-}
-
-/**
- * `cmb`/`cmd` are the engine's `combat.combat_maneuver_bonus` /
- * `defense.combat_maneuver_defense`. They used to be computed here as
- * `bab + str` and `10 + bab + str + dexMod` — two PF1 formulas living in a
- * React component, neither aware of creature size, so every Small character's
- * CMB and CMD were a point too high. See SD-27 `decisions.md §28`.
- */
-function AttackPanel(props: { baseAttackBonus: number; melee: number; cmb: number | null; cmd: number | null }) {
-  // v0.8 F-9: `melee` is the engine's `baselineMeleeAttackBonus`, which was
-  // loaded on every sheet and never rendered. v0.8 F-13: the old "Spell
-  // Res." tile here was a hard-coded "—" nothing could populate; the real
-  // spell resistance renders on the Defense tab from
-  // `equipmentEffects.spellResistanceTotal` when a build has one.
-  const tiles = buildAttackTiles({ baseAttackBonus: props.baseAttackBonus, melee: props.melee, cmb: props.cmb, cmd: props.cmd });
-  return (
-    <StatBox title="Attack">
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        {tiles.map((tile) => (
-          <StatTile key={tile.label} label={tile.label} value={tile.value} />
-        ))}
-      </div>
-    </StatBox>
   );
 }
 
@@ -637,6 +460,12 @@ function SkillsPanel(props: {
    * engine's own figure.
    */
   featSkillBonuses: FeatSkillBonusesDto;
+  /**
+   * Brief 1 F3b: the sheet response's explanations. Each row adds the engine's
+   * `skill.trait_modifier.<skill>` value (trait bonuses, Meticulous's untrained -2), which neither
+   * the panel's own sum nor `realModifiers` carries.
+   */
+  explanations: readonly ExplanationDto[];
   onOpenDialog: () => void;
   custom: CharacterCustom;
 }) {
@@ -699,7 +528,9 @@ function SkillsPanel(props: {
           const ranks = props.allocation[skill.name] ?? 0;
           const abilityMod = props.abilities[skill.ability];
           const real = REAL_MODIFIER_BY_SKILL[skill.name];
-          const total = real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name));
+          const total =
+            (real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name))) +
+            traitSkillModifierFor(props.explanations, skill.name);
           return (
             <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
               <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
@@ -4216,7 +4047,6 @@ export function CharacterSheet(props: {
   // `snapshot` regardless.
   const ac = recomputed?.baselineArmorClass ?? snapshot?.baselineArmorClass ?? 10;
   const saves = recomputed?.totalSaves ?? snapshot?.totalSaves ?? { fortitude: 0, reflex: 0, will: 0 };
-  const dexMod = abilities.dexterity;
   // SD-27 `decisions.md §28` defect 1: touch AC comes from the engine
   // (`defense.touch_armor_class`), which derives it by removing the
   // contributors a touch attack ignores from the very Armor Class shown beside
@@ -4398,6 +4228,22 @@ export function CharacterSheet(props: {
       : itemPickerConfig?.title ?? '';
 
   /** The content of one sheet tab; used by the on-screen tab panel and by every printed tab section. */
+  /** One registered stat box (`SHEET_LAYOUT`), drawn with the shared panels in `./panels`. */
+  function renderSheetBox(id: SheetBoxId, boxStyle: CSSProperties): ReactNode {
+    switch (id) {
+      case 'abilities':
+        return <AbilitiesPanel scores={engineRecords.abilityScores} abilities={abilities} boxStyle={boxStyle} />;
+      case 'armorClass':
+        return <ArmorClassPanel ac={ac} touch={touch} flatFooted={flatFooted} boxStyle={boxStyle} />;
+      case 'attack':
+        return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
+      case 'speed':
+        return <SpeedPanel land={landSpeed} boxStyle={boxStyle} />;
+      case 'saves':
+        return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
+    }
+  }
+
   function renderTabContent(name: Tab): ReactNode {
     return (
                 name === 'Weapons' ? (
@@ -4761,20 +4607,27 @@ export function CharacterSheet(props: {
         </div>
 
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
-        <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
+        <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
-          <AbilitiesPanel scores={engineRecords.abilityScores} abilities={abilities} />
-          <InitiativeHpPanel initiative={dexMod} hp={hp} />
+          {/* The 2x2 block under the name (SQUARE_BLOCK_LAYOUT): Initiative is the engine's
+              `initiative.total` row, Conditions the custom record's list (Normal when empty). */}
+          <SquareBlock
+            hp={hp}
+            initiative={initiativeRow(engineRecords.explanations)}
+            encumbrance={props.detail?.corpusDerived?.encumbrance}
+            conditions={custom.conditions}
+          />
 
+          {/* Stat block, placed by SHEET_LAYOUT (sheetLayout.ts): Abilities as one vertical
+              column, AC / Attack / Speed / Saves stacked as their own boxes beside it. */}
           <div style={{ display: 'flex', gap: '0.6rem' }}>
-            <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
-              <ArmorClassPanel ac={ac} touch={touch} flatFooted={flatFooted} />
-              <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} />
-            </div>
-            <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
-              <SavingThrowsPanel saves={saves} />
-              <SpeedPanel land={landSpeed} />
-            </div>
+            {SHEET_COLUMNS.map((column) => (
+              <div key={column} style={SHEET_COLUMN_STYLES[column]}>
+                {boxesInColumn(SHEET_LAYOUT, column).map((box) => (
+                  <Fragment key={box.id}>{renderSheetBox(box.id, box.boxStyle)}</Fragment>
+                ))}
+              </div>
+            ))}
           </div>
 
           {/* Weapons / Defense / Gear — bottom, spanning the middle. Printing renders every tab after page 1 instead. */}
@@ -4827,6 +4680,7 @@ export function CharacterSheet(props: {
             allocation={skillAllocation}
             realModifiers={snapshot?.selectedSkillModifiers}
             featSkillBonuses={engineRecords.featSkillBonuses}
+            explanations={engineRecords.explanations}
             onOpenDialog={() => setSkillDialogOpen(true)}
             custom={custom}
           />

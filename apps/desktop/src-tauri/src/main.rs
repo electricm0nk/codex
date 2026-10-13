@@ -67,7 +67,7 @@ use character_hub::{
     load_character_bio,
     load_character_hit_points,
     load_character_durability, load_character_money, load_character_portrait,
-    list_class_creation_roster, draft_spell_options, list_feats_for_draft, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    list_class_creation_roster, draft_level_up_preview, draft_sheet_preview, draft_spell_options, list_feats_for_draft, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
@@ -218,9 +218,13 @@ fn main() {
                 eprintln!("Failed to record installed-state: {err}");
             }
 
-            if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
+            // Brief 3 S1: a seed that fails is kept as app state for the Load screen
+            // (`list_starter_seed_errors`), not only printed.
+            let seed_errors = character_hub::seed_default_character_if_needed(app.handle());
+            for err in &seed_errors {
                 eprintln!("Failed to seed default character: {err}");
             }
+            app.manage(character_hub::StarterSeedErrors::new(seed_errors));
 
             // SD-36 F4b: the class creation roster is swept from the census (every class at
             // every level) once per process. Start that sweep now, off the UI thread, so the
@@ -271,6 +275,8 @@ fn main() {
             re_save_character,
             list_saved_characters,
             load_saved_character,
+            character_hub::restore_starter_characters,
+            character_hub::list_starter_seed_errors,
             preview_level_up,
             save_character_portrait,
             load_character_portrait,
@@ -339,6 +345,8 @@ fn main() {
             list_feats_for_character,
             list_feats_for_draft,
             draft_spell_options,
+            draft_sheet_preview,
+            draft_level_up_preview,
             starting_wealth_for_class,
             character_custom::load_character_custom,
             character_custom::save_character_custom,

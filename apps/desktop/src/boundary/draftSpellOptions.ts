@@ -5,12 +5,14 @@ import type { ExplanationDto } from './loadSavedCharacterDetail';
 
 /**
  * What the Create screen's spells dialog needs for a character that is not saved yet
- * (`draft_spell_options`): the engine's spells-per-day rows for the draft, and the spell names the
- * race grants as spell-like abilities.
+ * (`draft_spell_options`): the engine's spells-per-day rows for the draft, its known-spell quotas
+ * (`*.spells_known.*` and the wizard's `class_spell.wizard.spellbook_size.*` rows), and the spell
+ * names the race grants as spell-like abilities.
  */
 export interface DraftSpellOptionsDto {
   perDay: ExplanationDto[];
   innate: string[];
+  known: ExplanationDto[];
 }
 
 export async function loadDraftSpellOptions(draft: CreateCharacterRequest): Promise<DraftSpellOptionsDto> {

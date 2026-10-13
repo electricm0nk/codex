@@ -17,6 +17,15 @@
       "savedAt": "2026-01-01T00:00:00.000Z",
       "raceId": "race:human",
       "classSummary": "class:wizard:5"
+    },
+    {
+      "characterId": "00000000-0000-0000-0000-000000000003",
+      "displayLabel": "Brother Tomas Vane",
+      "gameSystem": "pf1",
+      "schemaVersion": 2,
+      "savedAt": "2026-01-01T00:00:00.000Z",
+      "raceId": "race:human",
+      "classSummary": "class:cleric:3,class:fighter:2"
     }
   ],
   "unreadableCount": 0

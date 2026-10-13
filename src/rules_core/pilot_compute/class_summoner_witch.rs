@@ -1147,6 +1147,17 @@ pub(super) fn ground_or_block_witch_class_features(
     ground_familiar_master_benefit(input, level, explanations);
 
     let intelligence_modifier = ability_modifier(input.chosen.ability_scores.intelligence);
+    // Brief 1 F7: the familiar's spell count, stated whether or not any spell is recorded yet.
+    ground_spellbook_size(
+        "apg.witch",
+        WITCH_CLASS_ID,
+        "Witch",
+        level,
+        intelligence_modifier,
+        witch_base_spells_per_day_table,
+        true,
+        explanations,
+    );
     let unmet_spells =
         unmet_witch_prepared_spell_conditions(input, level, intelligence_modifier);
     if unmet_spells.is_empty() {
@@ -1736,6 +1747,17 @@ pub(super) fn ground_or_block_arcanist_class_features(
         ),
     });
 
+    // Brief 1 F7: the spellbook's size, stated whether or not any spell is recorded yet.
+    ground_spellbook_size(
+        "acg.arcanist",
+        ARCANIST_CLASS_ID,
+        "Arcanist",
+        level,
+        ability_modifiers.intelligence,
+        arcanist_base_spells_per_day,
+        true,
+        explanations,
+    );
     let spellbook_unmet = unmet_arcanist_spellbook_conditions(input, level, ability_modifiers);
     if spellbook_unmet.is_empty() {
         ground_arcanist_prepared_spellbook(input, level, ability_modifiers, explanations);
@@ -4373,3 +4395,55 @@ mod monk_and_summoner_chassis_recognition_tests {
     }
 }
 
+
+/// Brief 1 F7 (tranche-17-ui): the Witch's familiar and the Arcanist's spellbook size, the Create
+/// screen's known-spell quota. No class-specific corpus line states either count (greps in the
+/// Brief 1 receipt), so both use the wizard's spellbook rule
+/// (`data/corpus/core_rulebook/class_feature/wizard/spellbooks.json`), operator ruling 2026-10-11.
+#[cfg(test)]
+mod witch_arcanist_spellbook_size_tests {
+    use super::{ARCANIST_CLASS_ID, WITCH_CLASS_ID};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterClassLevel};
+    use crate::rules_core::rules_catalog::class_spell_levels::class_spell_list_entries;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn rows(class_id: &str, level: u8) -> Vec<crate::rules_core::pilot_compute::ComputationExplanation> {
+        let mut input = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE).character_input.expect("fixture");
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input)
+            .explanations
+            .into_iter()
+            .filter(|e| e.id.contains(".spellbook_size."))
+            .collect()
+    }
+
+    fn value(rows: &[crate::rules_core::pilot_compute::ComputationExplanation], id: &str) -> Option<i16> {
+        rows.iter().find(|e| e.id == id).map(|e| e.value)
+    }
+
+    fn cantrips(class_id: &str) -> i16 {
+        class_spell_list_entries(class_id).expect("list").iter().filter(|(_, level)| *level == 0).count() as i16
+    }
+
+    #[test]
+    fn a_draft_witch_gets_the_wizard_shaped_book_size() {
+        // Fixture Intelligence 10 (+0): 3 at 1st level, +2 per level after.
+        let first = rows(WITCH_CLASS_ID, 1);
+        assert_eq!(value(&first, "class_spell.apg.witch.spellbook_size.spell_level_0"), Some(cantrips(WITCH_CLASS_ID)), "{first:?}");
+        assert_eq!(value(&first, "class_spell.apg.witch.spellbook_size.spell_level_1_and_higher"), Some(3), "{first:?}");
+        let third = rows(WITCH_CLASS_ID, 3);
+        assert_eq!(value(&third, "class_spell.apg.witch.spellbook_size.spell_level_1_and_higher"), Some(7), "{third:?}");
+        assert!(first.iter().all(|e| e.detail.contains("same rule as wizard; no class-specific corpus line found")), "{first:?}");
+    }
+
+    #[test]
+    fn a_draft_arcanist_gets_the_wizard_shaped_book_size() {
+        let fifth = rows(ARCANIST_CLASS_ID, 5);
+        assert_eq!(value(&fifth, "class_spell.acg.arcanist.spellbook_size.spell_level_0"), Some(cantrips(ARCANIST_CLASS_ID)), "{fifth:?}");
+        assert_eq!(value(&fifth, "class_spell.acg.arcanist.spellbook_size.spell_level_1_and_higher"), Some(11), "3 + 2 * 4: {fifth:?}");
+        assert!(fifth.iter().all(|e| e.detail.contains("same rule as wizard; no class-specific corpus line found")), "{fifth:?}");
+    }
+}
