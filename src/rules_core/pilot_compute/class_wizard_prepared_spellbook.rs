@@ -1391,7 +1391,9 @@ pub(super) fn spellbook_size_rows(
     rows
 }
 
-/// The wizard's own spellbook size rows ([`spellbook_size_rows`] over the wizard table).
+/// The wizard's own spellbook size rows ([`spellbook_size_rows`] over the wizard table). Only the
+/// tests read it; the chassis grounds every class's rows through [`ground_spellbook_size`].
+#[cfg(test)]
 pub(super) fn wizard_spellbook_size_rows(level: u8, intelligence_modifier: i16) -> Vec<(String, i16)> {
     spellbook_size_rows("wizard", WIZARD_CLASS_ID, level, intelligence_modifier, wizard_base_spells_per_day)
 }

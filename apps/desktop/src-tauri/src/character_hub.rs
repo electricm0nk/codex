@@ -2147,8 +2147,8 @@ const ELOWEN_SEED_SKILL_RANKS: &[(&str, u8)] = &[
     ("skill:linguistics", 2),
 ];
 
-/// Brother Tomas Vane (Human Cleric 3 / Fighter 2, Int 10 = +0): (2 cleric or fighter + 0 Int
-/// + 1 Human Skilled) x 5 = 15 ranks. Climb, Intimidate and Swim at 1 are the create path's
+/// Brother Tomas Vane (Human Cleric 3 / Fighter 2, Int 10 = +0): (2 cleric or fighter + 0 Int +
+/// 1 Human Skilled) x 5 = 15 ranks. Climb, Intimidate and Swim at 1 are the create path's
 /// GE-06 posture; the other 12 go into Cleric class skills, at most 5 each (max ranks =
 /// character level 5).
 const TOMAS_SEED_SKILL_RANKS: &[(&str, u8)] = &[
