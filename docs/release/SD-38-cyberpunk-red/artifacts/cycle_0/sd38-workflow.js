@@ -28,8 +28,7 @@ const CARDS = [
 "title": "Cut `tranche-18` after PR #398; 0.18.0 on 14 surfaces + `current-release.json`, one commit; push",
 "tier": "haiku",
 "deps": [
-"C0 (SD-k revised: tranche-18 is already cut from PR #398's head bb6107aee0",
-"E7.11 re-checks develop)"
+"C0"
 ],
 "cargo": false,
 "phase": "C \u2014 package + cut",

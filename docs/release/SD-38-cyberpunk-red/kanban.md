@@ -30,7 +30,7 @@ cards (`decisions.md §22`).
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
 |---|---|---|---|---|---|
 | C0 | Package + unattended-mode receipts committed | lead session | complete | — | `artifacts/cycle_0/C0_cycle_receipt.md`; package 1102f34aab, script a53be2166a, run id 36d7c51beb |
-| C1 | Cut `tranche-18` after PR #398; 0.18.0 on 14 surfaces + `current-release.json`, one commit; push | haiku | waiting | C0 (SD-k revised: tranche-18 is already cut from PR #398's head bb6107aee0; E7.11 re-checks develop) |  |
+| C1 | Cut `tranche-18` after PR #398; 0.18.0 on 14 surfaces + `current-release.json`, one commit; push | haiku | waiting | C0 | SD-k revised: tranche-18 already cut from PR #398's head bb6107aee0; E7.11 re-checks develop |
 | E0.1 | `GameSystem::CyberpunkRed`; `sheet_rules_relative` → `Option` | opus | waiting | C1 |  |
 | E0.2 | LICENSE.json + licence-matrix section (DEVIATION) | opus | waiting | E0.1 |  |
 | E0.3 | CPR corpus root bundled + `packaged_resources.rs` | opus | waiting | E0.2 |  |

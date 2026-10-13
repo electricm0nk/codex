@@ -33,7 +33,7 @@ for line in kb.splitlines():
     if not re.match(r'^\| (C|E)[0-9]', line): continue
     cols = [c.strip() for c in line.strip().strip('|').split('|')]
     cid, title, tier, status, deps = cols[0], cols[1], cols[2], cols[3], cols[4]
-    deps = [d.strip() for d in re.split(r'[;,]', deps) if re.match(r'^\s*(C|E)[0-9]', d)]
+    deps = re.findall(r'(?<![\w.])((?:C|E)\d+(?:\.(?:\d+|V|MC))?)(?![\w.])', deps)
     cards.append(dict(id=cid, title=title, tier=tier, deps=deps, cargo=cargo.get(cid, True)))
 
 def phase_of(cid):
@@ -66,6 +66,12 @@ for c in cards:
 TIERS = {'opus','sonnet','haiku','lead','sonnet + opus'}
 bad = [c['id'] for c in cards if c['tier'] not in TIERS]
 assert not bad, bad
+ids = {c['id'] for c in cards}
+for c in cards:
+    bad = [d for d in c['deps'] if d not in ids]
+    assert not bad, (c['id'], bad)
+    assert c['id'] not in c['deps'], c['id']
+# every dep cell token that looks like an id must be a real id (a note in the deps cell is a defect)
 assert len(cards) == 68, len(cards)
 
 JS = r'''export const meta = {
