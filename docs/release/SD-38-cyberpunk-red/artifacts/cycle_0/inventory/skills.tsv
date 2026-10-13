@@ -1,0 +1,66 @@
+Awareness|Concentration|WILL
+Awareness|Conceal/Reveal Object|INT
+Awareness|Lip Reading|INT
+Awareness|Perception|INT
+Awareness|Tracking|INT
+Body|Athletics|DEX
+Body|Contortionist|DEX
+Body|Dance|DEX
+Body|Endurance|WILL
+Body|Resist Torture/Drugs|WILL
+Body|Stealth|DEX
+Control|Drive Land Vehicle|REF
+Control|Pilot Air Vehicle|REF
+Control|Pilot Sea Vehicle|REF
+Control|Riding|REF
+Education|Accounting|INT
+Education|Animal Handling|INT
+Education|Bureaucracy|INT
+Education|Business|INT
+Education|Composition|INT
+Education|Criminology|INT
+Education|Cryptography|INT
+Education|Deduction|INT
+Education|Education|INT
+Education|Gamble|INT
+Education|Language|INT
+Education|Library Search|INT
+Education|Local Expert|INT
+Education|Science|INT
+Education|Tactics|INT
+Education|Wilderness Survival|INT
+Fighting|Brawling|DEX
+Fighting|Evasion|DEX
+Fighting|Martial Arts|DEX
+Fighting|Melee Weapon|DEX
+Performance|Acting|COOL
+Performance|Play Instrument|TECH
+Ranged Weapon|Archery|REF
+Ranged Weapon|Autofire|REF
+Ranged Weapon|Handgun|REF
+Ranged Weapon|Heavy Weapons|REF
+Ranged Weapon|Shoulder Arms|REF
+Social|Bribery|COOL
+Social|Conversation|EMP
+Social|Human Perception|EMP
+Social|Interrogation|COOL
+Social|Persuasion|COOL
+Social|Personal Grooming|COOL
+Social|Streetwise|COOL
+Social|Trading|COOL
+Social|Wardrobe & Style|COOL
+Technique|Air Vehicle Tech|TECH
+Technique|Basic Tech|TECH
+Technique|Cybertech|TECH
+Technique|Demolitions|TECH
+Technique|Electronics/Security Tech|TECH
+Technique|First Aid|TECH
+Technique|Forgery|TECH
+Technique|Land Vehicle Tech|TECH
+Technique|Paint/Draw/Sculpt|TECH
+Technique|Paramedic|TECH
+Technique|Photography/Film|TECH
+Technique|Pick Lock|TECH
+Technique|Pick Pocket|TECH
+Technique|Sea Vehicle Tech|TECH
+Technique|Weaponstech|TECH
