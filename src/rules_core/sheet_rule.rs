@@ -360,6 +360,8 @@ pub fn stacking_types(system: GameSystem) -> &'static [&'static str] {
     match system {
         GameSystem::Pathfinder1e => &STACKING_TYPES,
         GameSystem::Starfinder1e => &STARFINDER_STACKING_TYPES,
+        // Cyberpunk RED has no sheet-rule package, so no `Var` fold reads its bonus types.
+        GameSystem::CyberpunkRed => &[],
     }
 }
 
@@ -4002,6 +4004,7 @@ mod schema_variant_tests {
         assert_eq!(stacking_types(GameSystem::Pathfinder1e), &oracle[..]);
         assert_eq!(stacking_types(GameSystem::Starfinder1e), &oracle[..]);
         assert_eq!(stacking_types(GameSystem::Pathfinder1e), &STACKING_TYPES[..]);
+        assert!(stacking_types(GameSystem::CyberpunkRed).is_empty());
         assert_eq!(SheetRulePackage::new().system(), GameSystem::Pathfinder1e);
         assert_eq!(SheetRulePackage::for_system(GameSystem::Starfinder1e).system(), GameSystem::Starfinder1e);
     }
@@ -4044,7 +4047,7 @@ mod schema_variant_tests {
     /// `_tokens.json`, `_defects/`) are not `SheetRule` data and are not read.
     #[test]
     fn every_pathfinder_sheet_rule_file_round_trips_byte_equal() {
-        let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(GameSystem::Pathfinder1e.sheet_rules_relative());
+        let root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(GameSystem::Pathfinder1e.sheet_rules_relative().expect("Pathfinder has a sheet-rule package"));
         let mut files = Vec::new();
         json_files(&root, &mut files);
         files.sort();

@@ -63,6 +63,7 @@ pub const BOOK_PCCS: BookRegistry<SystemBook> = PerSystem {
             pcc: "starfinder/paizo/alien_archive_3/_starfinder_alien_archive_3.pcc",
         },
     ],
+    cyberpunk_red: &[],
 };
 
 /// The books the sheet-rule converter and the corpus generator convert, per system: a subset of
@@ -70,10 +71,27 @@ pub const BOOK_PCCS: BookRegistry<SystemBook> = PerSystem {
 /// (`docs/release/SD-37-starfinder-1e/decisions.md §4`), so it converts every registered book.
 /// Pathfinder is read by directory and registers none here.
 pub const CONVERTED_BOOKS: BookRegistry<SystemBook> =
-    PerSystem { pathfinder_1e: &[], starfinder_1e: BOOK_PCCS.starfinder_1e };
+    PerSystem { pathfinder_1e: &[], starfinder_1e: BOOK_PCCS.starfinder_1e, cyberpunk_red: &[] };
 
-/// The PCGen game-mode directory each system's books load against (`system/gameModes/<mode>`).
-pub const GAME_MODES: PerSystem<&str> = PerSystem { pathfinder_1e: "Pathfinder", starfinder_1e: "Starfinder" };
+/// The PCGen game-mode directory each system's books load against (`system/gameModes/<mode>`);
+/// `None` for a system with no PCGen data ([`require_pcgen_data`]).
+pub const GAME_MODES: PerSystem<Option<&str>> =
+    PerSystem { pathfinder_1e: Some("Pathfinder"), starfinder_1e: Some("Starfinder"), cyberpunk_red: None };
+
+/// The refusal every converter entry point gives a system with no PCGen data: Cyberpunk RED's
+/// source is its corebook text, not a PCGen checkout (`docs/release/SD-38-cyberpunk-red/decisions.md
+/// §23`), so it is refused by name, never converted as Pathfinder or Starfinder.
+pub fn require_pcgen_data(system: GameSystem) -> Result<(), String> {
+    match system {
+        GameSystem::Pathfinder1e | GameSystem::Starfinder1e => Ok(()),
+        GameSystem::CyberpunkRed => Err(no_pcgen_data(system)),
+    }
+}
+
+/// The refusal message [`require_pcgen_data`] gives: `no PCGen data for <system id>`.
+pub fn no_pcgen_data(system: GameSystem) -> String {
+    format!("no PCGen data for {system}")
+}
 
 /// The id a converted book carries in the population, the corpus and the package: the last
 /// segment of its directory (`starfinder/paizo/core` -> `core`), which is also the prefix of
@@ -121,6 +139,7 @@ pub const EXCLUDED_BOOK_PCCS: BookRegistry<ExcludedBook> = PerSystem {
                      (decisions.md §6, safe default SD-a; license-matrix.md SF row: exclude)",
         },
     ],
+    cyberpunk_red: &[],
 };
 
 /// The campaign-loaded system-file directives: the `.lst` files a book's `.pcc` loads that
@@ -287,6 +306,24 @@ mod tests {
         assert_eq!(ok.lst_files.len(), 2);
         assert_eq!(ok.campaign_system_files().count(), 1);
         let _ = std::fs::remove_dir_all(&root);
+    }
+
+    /// SD-38 E0.1: every PCGen-converted system has a game mode, a work inventory and a
+    /// var-names directory; Cyberpunk RED has none and every converter entry point refuses it
+    /// by name. No book is registered for it.
+    #[test]
+    fn cyberpunk_red_has_no_pcgen_data_and_is_refused_by_name() {
+        assert_eq!(require_pcgen_data(GameSystem::Pathfinder1e), Ok(()));
+        assert_eq!(require_pcgen_data(GameSystem::Starfinder1e), Ok(()));
+        assert_eq!(require_pcgen_data(GameSystem::CyberpunkRed), Err("no PCGen data for cyberpunk-red".to_string()));
+        assert_eq!(GAME_MODES.get(GameSystem::CyberpunkRed), None);
+        assert_eq!(GAME_MODES.get(GameSystem::Pathfinder1e), Some("Pathfinder"));
+        assert_eq!(GAME_MODES.get(GameSystem::Starfinder1e), Some("Starfinder"));
+        assert!(BOOK_PCCS.books(GameSystem::CyberpunkRed).is_empty());
+        assert!(CONVERTED_BOOKS.books(GameSystem::CyberpunkRed).is_empty());
+        assert!(EXCLUDED_BOOK_PCCS.books(GameSystem::CyberpunkRed).is_empty());
+        let err = resolve_book_includes(GameSystem::CyberpunkRed, Path::new("/nonexistent")).unwrap_err();
+        assert!(err.contains("cyberpunk-red"), "{err}");
     }
 
     #[test]

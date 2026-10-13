@@ -771,7 +771,10 @@ pub(crate) fn sheet_rule_package_for(
     type Slot = OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>>;
     static PACKAGES: [Slot; GameSystem::ALL.len()] = [const { Slot::new() }; GameSystem::ALL.len()];
     PACKAGES[system.index()].get_or_init(|| {
-        let dir = system.package_roots(&crate::authoring_workbench::codex_repo_root()?).sheet_rules;
+        let dir = system
+            .package_roots(&crate::authoring_workbench::codex_repo_root()?)
+            .sheet_rules
+            .ok_or_else(|| format!("{system} has no sheet-rule package"))?;
         let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
         if load.package.rules.is_empty() {
             return Err(format!(

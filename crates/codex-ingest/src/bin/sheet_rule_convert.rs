@@ -29,7 +29,7 @@
 
 
 use codex::rules_core::game_system::GameSystem;
-use codex_ingest::pcgen_import::sheet_rule;
+use codex_ingest::pcgen_import::{sheet_rule, system_books};
 
 /// Explicit argument parse -- no unrecognized argument and no operand-less flag may fall through
 /// to any other branch, least of all the corpus-wide `--write` rewrite of `data/sheet_rules`
@@ -64,6 +64,7 @@ fn parse_args(raw: &[String]) -> Result<Args, String> {
             "--system" => {
                 let id = raw.get(i + 1).ok_or_else(|| "--system requires an operand (a game system id)".to_string())?;
                 system = GameSystem::from_id(id).map_err(|e| e.to_string())?;
+                system_books::require_pcgen_data(system)?;
                 i += 1;
             }
             "--dump" => {
@@ -89,7 +90,11 @@ fn main() {
         }
     };
     let repo = codex_ingest::repo_root();
-    let out_dir = args.system.package_roots(&repo).sheet_rules;
+    // `parse_args` refused any system without PCGen data, and every such system has a package.
+    let Some(out_dir) = args.system.package_roots(&repo).sheet_rules else {
+        eprintln!("sheet_rule_convert: {} has no sheet-rule package", args.system);
+        std::process::exit(2);
+    };
     if let Some(id) = &args.one {
         match sheet_rule::convert_one_for(&repo, args.system, id) {
             Ok((c, rows)) => {
@@ -217,5 +222,16 @@ mod tests {
         assert!(err.contains("pathfinder-2e") && err.contains("pathfinder-1e"), "{err}");
         let err = args(&["--check", "--system"]).err().expect("rejected");
         assert!(err.contains("--system requires an operand"), "{err}");
+    }
+
+    /// SD-38 E0.1 (`docs/release/SD-38-cyberpunk-red/decisions.md §8, §23`): Cyberpunk RED is a
+    /// known system with no PCGen data, so the converter refuses it by name -- never a fallback
+    /// to Pathfinder or Starfinder.
+    #[test]
+    fn cyberpunk_red_is_refused_by_name() {
+        for raw in [&["--system", "cyberpunk-red", "--check"][..], &["--check", "--system", "cyberpunk-red"], &["--system", "cyberpunk-red", "--write"]] {
+            let err = args(raw).err().expect("rejected");
+            assert_eq!(err, "no PCGen data for cyberpunk-red");
+        }
     }
 }
