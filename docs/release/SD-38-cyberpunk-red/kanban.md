@@ -52,7 +52,7 @@ cards (`decisions.md §22`).
 | E2.2 | Lane A: skills (10 lists = 86) | opus | waiting | E1.3, E2.1 |  |
 | E2.3 | Lane A: armour | opus | waiting | E1.4, E2.2 |  |
 | E2.4 | Lane A: wounds + criticals | opus | waiting | E1.6, E2.3 |  |
-| E2.5 | Lane B: cyberware (D-5, D-6, D-11) | opus | waiting | E1.5, E1.V |  |
+| E2.5 | Lane B: cyberware (D-5, D-6, D-11) | opus | complete | E1.5, E1.V | `artifacts/epic_2/E2.5_cycle_receipt.md`; 7eca436018 + 5377876ab6 (clippy); `cpr::cyberware` 15/15 (RED: 0 tests, then E0425 compile errors); 10 Role packages = 9/14/14/12/12/10/10/12/16/14 over 18 combinations (Rust + Python); D-11 refusal per container (Fashionware/Internal/External 8th, NL 6th, eye 4th, audio 4th, arm 5th, leg 4th); D-6 EMP 5 → 4 after Media/Lawman; D-5 EMP 6 + 2 pieces + 1 borgware → 52; mutations 5/5 red; root 300 suites 6598 passed 0 failed; PF/SF seeds unchanged |
 | E2.6 | Lane B: roles (rank-derived values) | opus | waiting | E1.1, E2.5 |  |
 | E2.7 | Lane B: improvement (IP, A-1) | opus | waiting | E1.2, E2.6 |  |
 | E2.8 | Lane B: reputation | opus | waiting | E1.2, E2.7 |  |
