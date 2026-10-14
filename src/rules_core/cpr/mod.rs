@@ -20,6 +20,7 @@ pub mod stats;
 
 // lane B modules
 pub mod cyberware;
+pub mod roles;
 
 // lane C modules
 pub mod netrunning;
