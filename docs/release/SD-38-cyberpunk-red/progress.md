@@ -30,13 +30,13 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | C | complete | 2 of 2 | C0 complete (1102f34aab); C1 complete (706d8da680) (kanban rows; corrected by E6.MC, the row read 1 of 2 after C1 landed) |
 | E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
 | E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
-| E2 | in progress | 10 of 11 | lanes A (E2.1–E2.4) and B (E2.5–E2.8) complete; E2.1, E2.2, E2.3, E2.4, E2.5, E2.6, E2.7, E2.8, E2.9, E2.10 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E2 | complete | 11 of 11 | E2.1–E2.10 complete; E2.MC complete (dabf4176f2) — Epic report below (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E3 | in progress | 2 of 8 | E3.1, E3.2 complete (re-counted from `kanban.md` by E2.10: `awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`; this row read 0 of 8) |
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **36 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E3.1, E3.2, E6.1–E6.4, E6.MC; derived at E2.10: awk and Python both 36) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **37 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1, E3.2, E6.1–E6.4, E6.MC; derived at E2.MC: awk and Python both 37) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -133,6 +133,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E3.1 | opus | complete | fabfa38ac0 (code); receipt and rows in the next commit | `artifacts/epic_3/E3.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `preview_cyberpunk_character` / `create_cyberpunk_character`: Streetrat row rolled or picked, Edgerunner 1d10 per STAT from its own column, Complete Package = corpus default 62, STATs 2–8; `CprRoller` (SplitMix64, u32 seed returned and replayed); rows = engine `cpr.stat.*` + `cpr.derived.*`; boundary `cprCreation.ts` |
 | 2026-10-14 | E3.2 | opus | complete | 2c4a65ecb5 (code); receipt and rows in the next commit | `artifacts/epic_3/E3.2_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | New Character under Cyberpunk Red opens `CyberpunkCreateForm` (`form: 'cyberpunk'`): Role, Streetrat/Edgerunner/Complete Package, STAT + derived tiles from `preview_cyberpunk_character`; saves via `create_cyberpunk_character` with the preview's seed; `cyberpunkCreateLayout.ts` registry; ui-smoke row `create-cyberpunk-streetrat-stats` |
 | 2026-10-14 | E2.10 | opus | complete | 7f20a4994c (engine, store, adapter, fixture, tests; rebased from 4cb1b866a2); receipt and rows in the next commit | `artifacts/epic_2/E2.10_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/sheet.rs` `compose_sheet` over every engine module; `CprSheetChoices` + `cpr_sheet_choices.txt` (E0 fence exit: `input.rs`, `store.rs`); `CyberpunkAdapter::load_saved_character` returns the composed rows + printed lines; p121 labels-only branch, 29 fields + 66 skills have rows; root 300/6669/0, desktop 2/820/0; post-rebase cpr:: 95/95, desktop cpr_ 24/24 |
+| 2026-10-14 | E2.MC | opus | complete | dabf4176f2 (evidence); receipt and rows in the next commit | `artifacts/epic_2/E2.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | E2.1–E2.10 re-run green on fb6582b96e (cpr:: 95/95, cpr_adapter 5/5); 7 plants red for the intended reason then restored; converters PASS; E2 Epic report |
 
 ## Epic reports
 
@@ -213,6 +214,30 @@ blockers.)
   add a `cyberpunk-deck-calculator` row; (2) the E6 lane appended its four cycle-log rows after `## For the operator`; E6.MC moved
   them into the cycle log; (3) the Summary `C` row still read `1 of 2` after C1 landed — corrected here; (4) `apps/desktop/scripts/ui-smoke/.out/`
   is still not git-ignored (E0.MC's finding); this card deleted its own PNGs before committing.
+
+### Epic report — E2 engine (E2.MC, 2026-10-14, origin/tranche-18 fb6582b96e)
+
+- **Cards done:** 11 of 11 — E2.1–E2.10, E2.MC
+  (`awk -F'|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 11).
+- **What E2 delivered:** `src/rules_core/cpr/{stats,skills,armor,critical,cyberware,roles,improvement,reputation,netrunning,sheet}.rs`:
+  every CPR sheet number as a `cpr.` explanations row; `compose_sheet` feeds cyberware BODY/SP/Initiative/HL and the armour penalty into
+  the derived STATs, skill bases, wounds, armour, EMP and the Netrunner deck; `CyberpunkAdapter` loads the composed sheet.
+- **Figures (commands in `artifacts/epic_2/E2.MC_cycle_receipt.md`):** re-run 18 of 18 steps exit 0
+  (`awk '/^b/ && /exit=0/' E2.MC_evidence/results.txt | awk 'END{print NR}'`); `--lib cpr::` 95 passed (module filters 83 =
+  5+9+9+9+15+4+5+7+11+9); `--bins cpr_adapter` 5 passed; HP fixture 126 cells (two implementations). Plants, all restored green:
+  HP `floor` → 3 tests red, 63 of 126 cells; drop D-11 → 5 refusal tests red; armour sum → 4 red (SP 22 vs 11); Media EMP from the
+  "(−2 EMP)" string → 1 red (EMP 3 vs 4); netrunning +1 off → Cyberarm 3 red, Bodyweight Suit 3 red, NET Actions 2 red.
+  Full sweeps not repeated: E2.10 ran them on the same code (root 300/6669/0, desktop 2/820/0).
+- **Seed deltas:** PF Aldric `7b2f2f26…4b42` / Elowen `f0230bf0…81e9b` / Tomas `2320c050…be7b` unchanged; SF-Soldier-3 51 / SF-Mystic-5 72 /
+  SF-Technomancer-5 63 / SF-Envoy-3 42 lines and sha256 unchanged (head fb6582b96e vs E0.6 base records); both converters `--check`
+  PASS. CPR seeds: none yet (E7.1).
+- **Retro (`scripts/retro.py summary --since 2026-10-13 --actor sd38-e2.1 … --actor sd38-e2.10 --json`):** 18 events — 2 corrections,
+  7 rework, 9 verification (1 failing stage: clippy); 0 incidents, 0 deferrals; no repeat subject, no recurrence key. 5 of 7 rework
+  events are clippy lints a targeted `cargo test` does not run; the §6 step 6 clippy gate (R11) caught each before push. E2.MC emitted none.
+- **Open blockers:** none.
+- **For the lead:** (1) the clippy-rework shape (5 of 7 E2 rework events) is held by R11, not prevented: a lane that ran
+  `cargo clippy --tests` before its first commit would save one commit each time; (2) "netrunning +1 off" in E2.MC's criterion names no
+  single +1 — all three readings were planted and each went red; (3) E3.MC and E4.1 now have E2.MC complete.
 
 ## Decisions taken on safe defaults
 

@@ -1,0 +1,8 @@
+# E2.MC audit, fb6582b96e5171ce6e0351da4b35f2b9cf21ed60...HEAD (dabf4176f2)
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+code files in diff: 0
+files in diff: 47
