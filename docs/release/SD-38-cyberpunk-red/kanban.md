@@ -41,7 +41,7 @@ cards (`decisions.md §22`).
 | E1.0 | MANIFEST.json + `cpr_manifest_check.py` | sonnet | complete | E0.MC | `artifacts/epic_1/E1.0_cycle_receipt.md`; 53 kinds, expected sum 800 (= CUI §3 column sum, awk + Python), 3 null (E1.8); `--selftest` 10 plants; `--all` exits 1 with 53 MISSING + 3 NULL_COUNT (no kind files yet) |
 | E1.1 | Roles lane | sonnet | waiting | E1.0 |  |
 | E1.2 | Creation lane | sonnet | waiting | E1.0 |  |
-| E1.3 | Skills lane | sonnet | waiting | E1.0 |  |
+| E1.3 | Skills lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.3_cycle_receipt.md`; skill 66 / difficulty_value 7 / skill_modifier 10; checker exit 0; skills.tsv diff empty; DV table and modifier table image-checked (p130, p131) |
 | E1.4 | Gear lane | sonnet | waiting | E1.0 |  |
 | E1.5 | Cyberware lane | sonnet | waiting | E1.0 |  |
 | E1.6 | Combat lane (D-1 image check) | sonnet | waiting | E1.0 |  |
