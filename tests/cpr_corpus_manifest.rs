@@ -35,13 +35,22 @@ fn load_manifest(path: &Path) -> Result<Vec<Entry>, Vec<String>> {
         .map_err(|e| vec![format!("MANIFEST {}: cannot read ({e})", path.display())])?;
     let kinds = match value.get("kinds").and_then(Value::as_array) {
         Some(k) if !k.is_empty() => k,
-        _ => return Err(vec![format!("MANIFEST {}: no `kinds` array", path.display())]),
+        _ => {
+            return Err(vec![format!(
+                "MANIFEST {}: no `kinds` array",
+                path.display()
+            )]);
+        }
     };
     let mut errs = Vec::new();
     let mut seen = BTreeSet::new();
     let mut out = Vec::new();
     for e in kinds {
-        let Some(kind) = e.get("kind").and_then(Value::as_str).filter(|k| !k.is_empty()) else {
+        let Some(kind) = e
+            .get("kind")
+            .and_then(Value::as_str)
+            .filter(|k| !k.is_empty())
+        else {
             errs.push(format!("MANIFEST entry without a kind: {e}"));
             continue;
         };
@@ -50,14 +59,18 @@ fn load_manifest(path: &Path) -> Result<Vec<Entry>, Vec<String>> {
         }
         let file = e.get("file").and_then(Value::as_str).unwrap_or("");
         if file != format!("{kind}.json") {
-            errs.push(format!("MANIFEST {kind}: file must be {kind}.json, got {file:?}"));
+            errs.push(format!(
+                "MANIFEST {kind}: file must be {kind}.json, got {file:?}"
+            ));
         }
         let expected = match e.get("expected") {
             None | Some(Value::Null) => None,
             Some(v) => match v.as_u64() {
                 Some(n) => Some(n),
                 None => {
-                    errs.push(format!("MANIFEST {kind}: expected must be a non-negative int or null"));
+                    errs.push(format!(
+                        "MANIFEST {kind}: expected must be a non-negative int or null"
+                    ));
                     None
                 }
             },
@@ -65,14 +78,19 @@ fn load_manifest(path: &Path) -> Result<Vec<Entry>, Vec<String>> {
         if !e.get("print_only").is_some_and(Value::is_boolean) {
             errs.push(format!("MANIFEST {kind}: print_only must be a bool"));
         }
-        out.push(Entry { kind: kind.to_string(), file: file.to_string(), expected });
+        out.push(Entry {
+            kind: kind.to_string(),
+            file: file.to_string(),
+            expected,
+        });
     }
     if errs.is_empty() { Ok(out) } else { Err(errs) }
 }
 
 /// `{kind: leading integer of the Expected cell, or None}` from the inventory's §3 kind table.
 fn cui_table(path: &Path) -> Result<BTreeMap<String, Option<u64>>, String> {
-    let text = fs::read_to_string(path).map_err(|e| format!("SUM cannot read {}: {e}", path.display()))?;
+    let text =
+        fs::read_to_string(path).map_err(|e| format!("SUM cannot read {}: {e}", path.display()))?;
     let mut in_section = false;
     let mut found = false;
     let mut out = BTreeMap::new();
@@ -103,23 +121,38 @@ fn cui_table(path: &Path) -> Result<BTreeMap<String, Option<u64>>, String> {
             prev = ch;
         }
         cells.push(cur.trim().to_string());
-        if cells.len() < 2 || cells[0] == "Kind" || cells[0].chars().all(|c| matches!(c, '-' | ':' | ' ')) {
+        if cells.len() < 2
+            || cells[0] == "Kind"
+            || cells[0].chars().all(|c| matches!(c, '-' | ':' | ' '))
+        {
             continue;
         }
-        let lead: String = cells[1].trim_start().chars().take_while(char::is_ascii_digit).collect();
+        let lead: String = cells[1]
+            .trim_start()
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect();
         let lead = lead.parse::<u64>().ok();
         let mut rest = cells[0].as_str();
         while let Some(open) = rest.find('`') {
             let after = &rest[open + 1..];
             let Some(close) = after.find('`') else { break };
             let name = &after[..close];
-            if !name.is_empty() && name.chars().all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '_') {
+            if !name.is_empty()
+                && name
+                    .chars()
+                    .all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '_')
+            {
                 out.insert(name.to_string(), lead);
             }
             rest = &after[close + 1..];
         }
     }
-    if found { Ok(out) } else { Err("SUM CUI section 3 not found".to_string()) }
+    if found {
+        Ok(out)
+    } else {
+        Err("SUM CUI section 3 not found".to_string())
+    }
 }
 
 fn check_sum(manifest: &[Entry], cui: &Path) -> Vec<String> {
@@ -127,19 +160,28 @@ fn check_sum(manifest: &[Entry], cui: &Path) -> Vec<String> {
         Ok(t) => t,
         Err(e) => return vec![e],
     };
-    let mk: BTreeMap<&str, Option<u64>> = manifest.iter().map(|e| (e.kind.as_str(), e.expected)).collect();
+    let mk: BTreeMap<&str, Option<u64>> = manifest
+        .iter()
+        .map(|e| (e.kind.as_str(), e.expected))
+        .collect();
     let mut errs = Vec::new();
     for k in table.keys().filter(|k| !mk.contains_key(k.as_str())) {
-        errs.push(format!("SUM {k}: in CUI section 3, absent from the manifest"));
+        errs.push(format!(
+            "SUM {k}: in CUI section 3, absent from the manifest"
+        ));
     }
     for k in mk.keys().filter(|k| !table.contains_key(**k)) {
-        errs.push(format!("SUM {k}: in the manifest, absent from CUI section 3"));
+        errs.push(format!(
+            "SUM {k}: in the manifest, absent from CUI section 3"
+        ));
     }
     for (k, v) in &mk {
-        if let Some(t) = table.get(*k) {
-            if v != t {
-                errs.push(format!("SUM {k}: manifest expected {v:?}, CUI section 3 says {t:?}"));
-            }
+        if let Some(t) = table.get(*k)
+            && v != t
+        {
+            errs.push(format!(
+                "SUM {k}: manifest expected {v:?}, CUI section 3 says {t:?}"
+            ));
         }
     }
     let ms: u64 = mk.values().flatten().sum();
@@ -151,7 +193,9 @@ fn check_sum(manifest: &[Entry], cui: &Path) -> Vec<String> {
 }
 
 fn valid_page(v: Option<&Value>) -> bool {
-    let Some(s) = v.and_then(Value::as_str) else { return false };
+    let Some(s) = v.and_then(Value::as_str) else {
+        return false;
+    };
     let b = s.as_bytes();
     if b.len() != 4 || b[0] != b'p' || !b[1..].iter().all(u8::is_ascii_digit) {
         return false;
@@ -182,10 +226,10 @@ fn check_kind(entry: &Entry, corpus: &Path, require_count: bool) -> Vec<String> 
             return errs;
         }
     };
-    if let Some(exp) = entry.expected {
-        if recs.len() as u64 != exp {
-            errs.push(format!("COUNT {k}: {} records, expected {exp}", recs.len()));
-        }
+    if let Some(exp) = entry.expected
+        && recs.len() as u64 != exp
+    {
+        errs.push(format!("COUNT {k}: {} records, expected {exp}", recs.len()));
     }
     let bad: Vec<usize> = recs
         .iter()
@@ -194,7 +238,10 @@ fn check_kind(entry: &Entry, corpus: &Path, require_count: bool) -> Vec<String> 
         .map(|(i, _)| i)
         .collect();
     for i in bad.iter().take(3) {
-        errs.push(format!("BAD_SOURCE {k}[{i}]: source_page {:?}", recs[*i].get("source_page")));
+        errs.push(format!(
+            "BAD_SOURCE {k}[{i}]: source_page {:?}",
+            recs[*i].get("source_page")
+        ));
     }
     if bad.len() > 3 {
         errs.push(format!("BAD_SOURCE {k}: {} records in all", bad.len()));
@@ -213,11 +260,18 @@ fn run(manifest: &Path, corpus: &Path, cui: &Path, kinds: Option<&[&str]>) -> Ve
         None => {
             let listed: BTreeSet<&str> = entries.iter().map(|e| e.file.as_str()).collect();
             let mut files: Vec<String> = fs::read_dir(corpus)
-                .map(|rd| rd.filter_map(|d| d.ok()).map(|d| d.file_name().to_string_lossy().into_owned()).collect())
+                .map(|rd| {
+                    rd.filter_map(|d| d.ok())
+                        .map(|d| d.file_name().to_string_lossy().into_owned())
+                        .collect()
+                })
                 .unwrap_or_default();
             files.sort();
             for f in files {
-                if f.ends_with(".json") && !NON_KIND_FILES.contains(&f.as_str()) && !listed.contains(f.as_str()) {
+                if f.ends_with(".json")
+                    && !NON_KIND_FILES.contains(&f.as_str())
+                    && !listed.contains(f.as_str())
+                {
                     errs.push(format!("EXTRA {f}: not named by the manifest"));
                 }
             }
@@ -246,16 +300,25 @@ fn every_manifest_kind_is_pinned_and_the_corpus_matches_it() {
         &root.join("docs/release/SD-38-cyberpunk-red/content-unit-inventory.md"),
         None,
     );
-    assert!(errs.is_empty(), "corpus manifest check failed:\n{}", errs.join("\n"));
+    assert!(
+        errs.is_empty(),
+        "corpus manifest check failed:\n{}",
+        errs.join("\n")
+    );
 }
 
 #[test]
 fn manifest_kind_count_and_expected_sum_are_the_pinned_figures() {
     let root = repo_root();
-    let entries = load_manifest(&root.join("data/cyberpunk-red/corpus/MANIFEST.json")).expect("manifest loads");
+    let entries = load_manifest(&root.join("data/cyberpunk-red/corpus/MANIFEST.json"))
+        .expect("manifest loads");
     let nulls = entries.iter().filter(|e| e.expected.is_none()).count();
     let sum: u64 = entries.iter().filter_map(|e| e.expected).sum();
-    assert_eq!((entries.len(), nulls, sum), (53, 0, 930), "kinds, null counts, expected sum");
+    assert_eq!(
+        (entries.len(), nulls, sum),
+        (53, 0, 930),
+        "kinds, null counts, expected sum"
+    );
 }
 
 // ---- plants: the same ten failure shapes as `cpr_manifest_check.py --selftest` ----
@@ -290,7 +353,11 @@ impl Scratch {
             kinds.push(serde_json::json!({"kind": "delta", "file": "delta.json", "expected": 1, "figure": null,
                                           "print_only": false, "nested": null, "lane": "x"}));
         }
-        fs::write(self.dir.join("MANIFEST.json"), serde_json::json!({ "kinds": kinds }).to_string()).unwrap();
+        fs::write(
+            self.dir.join("MANIFEST.json"),
+            serde_json::json!({ "kinds": kinds }).to_string(),
+        )
+        .unwrap();
     }
     fn alpha(&self, recs: Option<Value>) {
         let p = self.dir.join("corpus/alpha.json");
@@ -300,7 +367,12 @@ impl Scratch {
         }
     }
     fn errs(&self, kinds: Option<&[&str]>) -> Vec<String> {
-        run(&self.dir.join("MANIFEST.json"), &self.dir.join("corpus"), &self.dir.join("cui.md"), kinds)
+        run(
+            &self.dir.join("MANIFEST.json"),
+            &self.dir.join("corpus"),
+            &self.dir.join("cui.md"),
+            kinds,
+        )
     }
 }
 
@@ -309,7 +381,10 @@ fn good() -> Value {
 }
 
 fn assert_code(errs: &[String], code: &str) {
-    assert!(errs.iter().any(|e| e.starts_with(code)), "want a {code:?} failure, got {errs:?}");
+    assert!(
+        errs.iter().any(|e| e.starts_with(code)),
+        "want a {code:?} failure, got {errs:?}"
+    );
 }
 
 #[test]
@@ -331,7 +406,9 @@ fn plant_null_count_and_missing_kind_fail_the_all_check() {
 #[test]
 fn plant_short_count_fails() {
     let s = Scratch::new("short");
-    s.alpha(Some(serde_json::json!([{"source_page": "p001"}, {"source_page": "p002"}])));
+    s.alpha(Some(
+        serde_json::json!([{"source_page": "p001"}, {"source_page": "p002"}]),
+    ));
     assert_code(&s.errs(Some(&["alpha"])), "COUNT alpha");
 }
 
@@ -345,7 +422,9 @@ fn plant_page_460_fails() {
 #[test]
 fn plant_record_without_source_page_fails() {
     let s = Scratch::new("nosource");
-    s.alpha(Some(serde_json::json!([{"source_page": "p001"}, {"source_page": "p002"}, {"name": "x"}])));
+    s.alpha(Some(
+        serde_json::json!([{"source_page": "p001"}, {"source_page": "p002"}, {"name": "x"}]),
+    ));
     assert_code(&s.errs(Some(&["alpha"])), "BAD_SOURCE alpha");
 }
 
