@@ -32,11 +32,11 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
 | E2 | complete | 11 of 11 | E2.1–E2.10 complete; E2.MC complete (dabf4176f2) — Epic report below (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
-| E3 | in progress | 3 of 8 | E3.1, E3.2, E3.3 complete (`awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E3 | in progress | 4 of 8 | E3.1, E3.2, E3.3, E3.4 complete (`awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E4 | in progress | 2 of 8 | E4.1, E4.2 complete (re-counted from `kanban.md` by E3.3; this row read 0 of 8) |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **40 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.3, E4.1, E4.2, E6.1–E6.4, E6.MC; derived at E3.3: awk and Python both 40; this row read 37 while kanban.md held 39) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **41 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.4, E4.1, E4.2, E6.1–E6.4, E6.MC; derived at E3.4: awk and Python both 41) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -137,6 +137,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E4.1 | opus | complete | 8e91816351 (code + fixtures); receipt and rows in the next commit | `artifacts/epic_4/E4.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `CyberpunkCharacterSheet` + `cyberpunkSheetLayout.ts` + `cyberpunkSheetModel.ts`; `CharacterHubPage` routes `cyberpunk-red` to it; every number one `cpr.` row (368 rows over 2 adapter fixtures; +1000 shift); no encumbrance box (D-12); `cpr_adapter.rs` test-only fence exit (fixture pin), cpr_adapter tests 6/6 |
 | 2026-10-14 | E4.2 | opus | complete | 160cc5a2f2 (code + test); receipt and rows in the next commit | `artifacts/epic_4/E4.2_cycle_receipt.md` | PF/SF unchanged: diff is 4 CPR-only frontend files, no engine/adapter/shared file | Skills box: 66 skills under the 9 catalog categories (`list_cyberpunk_catalog('skill')`), Level + Base each one `cpr.` row, REF/DEX bases armour-penalised by the engine; 132 skill rows checked; ungrouped fallback while the catalog loads |
 | 2026-10-14 | E3.3 | opus | complete | 55e63c7f21 (code + tests), da2b4bccfe (audit fix); receipt and rows in the next commit | `artifacts/epic_3/E3.3_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | Lifepath panel: 15 general + the Role's tables rolled (per-table seeded rollers) or picked, counts, per-column, ranges, D-9, branch skips; answers saved in `cpr_lifepath.txt` (E0 fence exit); Cultural Origin language → `Language (<name>)` at 4, engine rows `cpr.skill_level/skill.language.*`; root 6672/0, desktop 837/0, npm 170/170 |
+| 2026-10-14 | E3.4 | opus | complete | 9070539fe2 (code + tests); receipt and rows in the next commit | `artifacts/epic_3/E3.4_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | Skills allocator: Streetrat fixed list, Edgerunner 2–6 over the Role's 20, Complete Package any of 66 from the Basic 13 at 2; engine-validated (refusals as problems), spent/left = `cpr.skills.creation_points_*` rows; full skill list saved; Cultural Origin tile reads its own row; desktop 841/0 + 1/0, npm 170/170 |
 
 ## Epic reports
 
@@ -311,6 +312,7 @@ blockers.)
   the skills render ungrouped (error shown); alternative not taken: hide them. (3) The `skills` box entry lands in `cyberpunkSheetLayout.ts` (E4 lane file per §3, created by
   E4.1, not in E4.2's FILES YOU OWN cell); alternative not taken: `declined ownedBy` (no later card owns it). (4) The (x2) marker is not printed; alternative not taken: print it.
 - E3.3, Lifepath (D-9; E0 fence exit per decisions.md §7): (1) each Lifepath table rolls on its own seeded roller (request seed + table place), so a pick never re-rolls another table; alternative not taken: one roller stream (a pick would move every later table's dice). (2) Every table with a `branch` may be marked "not on my path", default rolled; alternative not taken: parsing the choose-box `branches` text into a path picker. (3) An unpicked Cultural Origin language is rolled from the region's list; alternative not taken: Create blocked until picked (breaks E3.2's ui-smoke row). (4) Answers live in their own file `cpr_lifepath.txt` (`CprLifepath`); alternative not taken: a `CprSheetChoices` field (breaks `sheet.rs`'s full-literal `kestrel()` test, an E2 file). (5) Sweet Revenge! is answered once; alternative not taken: once per enemy.
+- E3.4, skills allocator (no D-n/A-n names these): (1) Edgerunner starts at the Role's printed levels (86 spent); alternative not taken: every skill at 2. (2) Complete Package starts at the 13 Basic skills at 2 (26 spent, p. 90); alternative not taken: an empty list. (3) Fewer than 86 points may be spent (the engine's rule is at most 86; points left are a row); alternative not taken: refuse unspent points. (4) An unnamed `(choose 1)` line blocks Create; alternative not taken: save the printed placeholder. (5) The Cultural Origin language may be raised above its free 4 (Edgerunner, Complete Package); alternative not taken: hold it at 4.
 
 ## Open blockers
 

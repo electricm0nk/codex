@@ -1,0 +1,3 @@
+aldric.json: OK
+elowen.json: OK
+tomas.json: OK
