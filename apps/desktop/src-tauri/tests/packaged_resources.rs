@@ -80,6 +80,7 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
         "data/rules_tables",
         "data/class_feature_grants",
         "data/corpus",
+        "data/cyberpunk-red/corpus",
     ] {
         assert_bundled(&root, relative);
     }
@@ -117,6 +118,14 @@ fn the_packaged_bundle_carries_everything_the_rules_engine_reads() {
         codex::rules_core::corpus_loader::live_sheet_rules_for(codex::rules_core::game_system::GameSystem::Starfinder1e)
             .is_some(),
         "the Starfinder sheet-rule package does not load from the packaged root"
+    );
+    // Cyberpunk RED has no sheet-rule package; its corpus root is what the engine reads, and it must
+    // resolve under the installed root at its own path (the tracked LICENSE.json proves it is there).
+    let cpr = codex::rules_core::game_system::GameSystem::CyberpunkRed.package_roots(&installed);
+    assert_eq!(cpr.corpus, root.join("data/cyberpunk-red/corpus"), "the CPR corpus root moved");
+    assert!(
+        cpr.corpus.join("LICENSE.json").is_file(),
+        "the Cyberpunk RED corpus root resolves under the packaged root but carries no LICENSE.json"
     );
     assert_eq!(
         codex::rules_core::rules_data_package::runtime_package_root(),

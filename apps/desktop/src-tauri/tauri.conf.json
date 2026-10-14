@@ -40,6 +40,7 @@
       "resources/corpus_bundle/": "data/corpus/",
       "../../../data/sheet_rules/": "data/sheet_rules/",
       "../../../data/starfinder-1e/sheet_rules/": "data/starfinder-1e/sheet_rules/",
+      "../../../data/cyberpunk-red/corpus/": "data/cyberpunk-red/corpus/",
       "../../../data/rules_tables/": "data/rules_tables/",
       "../../../data/class_feature_grants/": "data/class_feature_grants/",
       "../../../data/converted/record_vars.json": "data/converted/record_vars.json",
