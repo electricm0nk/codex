@@ -15,6 +15,8 @@ export interface CyberpunkCatalogTab {
   title: string;
   /** The catalog group the tab sits in. */
   group: string;
+  /** Set on a tool tab: the screen shows that tool instead of listing the kind's records. */
+  tool?: 'deck';
 }
 
 export interface CyberpunkCatalogGroup {
@@ -81,6 +83,7 @@ export const CYBERPUNK_CATALOG_TABS: readonly CyberpunkCatalogTab[] = [
   tab('netrunning', 'program', 'Programs'),
   tab('netrunning', 'cyberdeck', 'Cyberdecks'),
   tab('netrunning', 'net_hardware', 'Hardware'),
+  { kind: 'deck_calculator', title: 'Deck Calculator', group: 'netrunning', tool: 'deck' },
 ];
 
 export function cyberpunkCatalogTab(kind: string): CyberpunkCatalogTab {

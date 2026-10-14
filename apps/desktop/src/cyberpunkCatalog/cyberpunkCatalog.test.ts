@@ -98,7 +98,7 @@ function landing(selectedRuleSet: RuleSetId): string {
 
 function testOneTabPerPlayerFacingKind() {
   const playerFacing = MANIFEST.filter((entry) => !entry.print_only).map((entry) => entry.kind);
-  const tabs = CYBERPUNK_CATALOG_TABS.map((entry) => entry.kind);
+  const tabs = CYBERPUNK_CATALOG_TABS.filter((entry) => entry.tool === undefined).map((entry) => entry.kind);
   assertEqual(new Set(tabs).size, tabs.length, 'no kind has two tabs');
   assertEqual([...tabs].sort().join(','), [...playerFacing].sort().join(','), 'the tabs are the MANIFEST non-print_only kinds');
   const groups = new Set(CYBERPUNK_CATALOG_GROUPS.map((group) => group.id));
@@ -130,7 +130,7 @@ function testTheLandingOffersTheSelectedSystemsCatalogs() {
 
 function testEveryTabListsEveryRecordOnce() {
   let records = 0;
-  for (const tab of CYBERPUNK_CATALOG_TABS) {
+  for (const tab of CYBERPUNK_CATALOG_TABS.filter((candidate) => candidate.tool === undefined)) {
     const entry = MANIFEST.find((candidate) => candidate.kind === tab.kind);
     assert(entry !== undefined, `${tab.kind} is in the MANIFEST`);
     const loaded = response(entry as ManifestKind);
@@ -150,7 +150,7 @@ function testEveryTabListsEveryRecordOnce() {
     }
     records += rendered.length;
   }
-  console.log(`cyberpunkCatalog: ${records} records rendered across ${CYBERPUNK_CATALOG_TABS.length} tabs`);
+  console.log(`cyberpunkCatalog: ${records} records rendered across ${CYBERPUNK_CATALOG_TABS.filter((entry) => entry.tool === undefined).length} tabs`);
 }
 
 function testSearchAndPrintedFields() {

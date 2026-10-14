@@ -13,6 +13,7 @@ import {
   recordFields,
   recordName,
 } from './cyberpunkCatalogModel';
+import { CyberpunkDeckScreen } from './deck/CyberpunkDeckScreen';
 
 /**
  * SD-38 E6.2 -- the Cyberpunk RED catalogs: one tab per player-facing MANIFEST kind, each read
@@ -102,6 +103,10 @@ export function CyberpunkCatalogScreen(props: { initialKind: string; onClose: ()
   useEffect(() => {
     let live = true;
     setResponse(null);
+    if (active.tool !== undefined) {
+      setError(null);
+      return undefined;
+    }
     setError(null);
     loadCyberpunkCatalog(kind)
       .then((loaded) => {
@@ -113,7 +118,7 @@ export function CyberpunkCatalogScreen(props: { initialKind: string; onClose: ()
     return () => {
       live = false;
     };
-  }, [kind]);
+  }, [kind, active.tool]);
 
   return (
     <section style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
@@ -154,6 +159,10 @@ export function CyberpunkCatalogScreen(props: { initialKind: string; onClose: ()
           </button>
         ))}
       </div>
+      {active.tool === 'deck' ? (
+        <CyberpunkDeckScreen />
+      ) : null}
+      {active.tool === undefined ? (
       <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.85rem' }}>
         Search by name or text
         <input
@@ -163,7 +172,8 @@ export function CyberpunkCatalogScreen(props: { initialKind: string; onClose: ()
           style={{ border: '1px solid var(--color-border)', borderRadius: 8, padding: '0.5rem 0.75rem' }}
         />
       </label>
-      {error ? (
+      ) : null}
+      {active.tool !== undefined ? null : error ? (
         <p role="alert" style={{ color: 'var(--color-danger, #c0392b)', margin: 0 }}>
           {error}
         </p>
