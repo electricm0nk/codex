@@ -1,0 +1,2177 @@
+[
+ {
+  "name": "Rockerboy Streetrat/Edgerunner starting kit",
+  "role": "Rockerboy",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Basic VH Pistol Ammunition x50",
+    "options": [
+     {
+      "name": "Basic VH Pistol Ammunition",
+      "quantity": 50
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Heavy Melee Weapon or Flashbang Grenade",
+    "options": [
+     {
+      "name": "Heavy Melee Weapon",
+      "quantity": 1
+     },
+     {
+      "name": "Flashbang Grenade",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Teargas Grenade x2",
+    "options": [
+     {
+      "name": "Teargas Grenade",
+      "quantity": 2
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Computer",
+    "options": [
+     {
+      "name": "Computer",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Electric Guitar or Bug Detector",
+    "options": [
+     {
+      "name": "Electric Guitar",
+      "quantity": 1
+     },
+     {
+      "name": "Bug Detector",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Glow Paint x5",
+    "options": [
+     {
+      "name": "Glow Paint",
+      "quantity": 5
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Pocket Amp",
+    "options": [
+     {
+      "name": "Pocket Amp",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Radio Scanner/Music Player",
+    "options": [
+     {
+      "name": "Radio Scanner/Music Player",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Video Camera",
+    "options": [
+     {
+      "name": "Video Camera",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Generic Chic: Jacket, Jewelry x3, Top x4",
+    "fashion_style": "Generic Chic",
+    "pieces": [
+     {
+      "name": "Jacket",
+      "quantity": 1
+     },
+     {
+      "name": "Jewelry",
+      "quantity": 3
+     },
+     {
+      "name": "Top",
+      "quantity": 4
+     }
+    ]
+   },
+   {
+    "text": "Leisurewear: Jewelry, Mirrorshades, Footwear",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Jewelry",
+      "quantity": 1
+     },
+     {
+      "name": "Mirrorshades",
+      "quantity": 1
+     },
+     {
+      "name": "Footwear",
+      "quantity": 1
+     }
+    ]
+   },
+   {
+    "text": "Urbanflash: Bottoms, Top",
+    "fashion_style": "Urbanflash",
+    "pieces": [
+     {
+      "name": "Bottoms",
+      "quantity": 1
+     },
+     {
+      "name": "Top",
+      "quantity": 1
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Audio Recorder",
+    "options": [
+     {
+      "name": "Audio Recorder",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Chemskin",
+    "options": [
+     {
+      "name": "Chemskin",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Cyberaudio Suite",
+    "options": [
+     {
+      "name": "Cyberaudio Suite",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Tech Hair",
+    "options": [
+     {
+      "name": "Tech Hair",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "printed_humanity_loss": 9,
+  "printed_emp_change": "-1 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Rockerboy Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "transcription_note": "All three grids read from the p099/p104/p118 page images (U-30 resolved by image): Rockerboy 'Heavy Melee Weapon or Flashbang Grenade' is one choice line; Rockerboy prints 'Jewelry x3' on the Jewelry piece in its Generic Chic line (not on Jacket); Medtech prints Handcuffs; the Exec outfit prints NO Agent (a printed omission, not an extraction drop). Printed Humanity Loss sums and '(-N EMP)' strings are stored as printed; D-6: Media and Lawman print '10 Humanity Loss (-2 EMP)', which conflicts with the Humanity rule (losing 10 from a multiple of 10 lowers EMP by exactly 1): the string is kept as printed in `printed_emp_change` and the engine computes EMP from Humanity (the sheet never prints this string). Fashion lines carry `fashion_style` and `pieces`; plain lines carry `options`.",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Solo Streetrat/Edgerunner starting kit",
+  "role": "Solo",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Assault Rifle",
+    "options": [
+     {
+      "name": "Assault Rifle",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Heavy Melee Weapon or Bulletproof Shield",
+    "options": [
+     {
+      "name": "Heavy Melee Weapon",
+      "quantity": 1
+     },
+     {
+      "name": "Bulletproof Shield",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Basic VH Pistol Ammunition x30",
+    "options": [
+     {
+      "name": "Basic VH Pistol Ammunition",
+      "quantity": 30
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Basic Rifle Ammunition x70",
+    "options": [
+     {
+      "name": "Basic Rifle Ammunition",
+      "quantity": 70
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Leisurewear: Footwear x2, Jacket x3, Mirrorshades, Bottoms x2, Top x2",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 2
+     },
+     {
+      "name": "Jacket",
+      "quantity": 3
+     },
+     {
+      "name": "Mirrorshades",
+      "quantity": 1
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 2
+     },
+     {
+      "name": "Top",
+      "quantity": 2
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Biomonitor",
+    "options": [
+     {
+      "name": "Biomonitor",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Neural Link",
+    "options": [
+     {
+      "name": "Neural Link",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Sandevistan Speedware or Wolvers",
+    "options": [
+     {
+      "name": "Sandevistan Speedware",
+      "quantity": 1
+     },
+     {
+      "name": "Wolvers",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   }
+  ],
+  "printed_humanity_loss": 14,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Solo Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Netrunner Streetrat/Edgerunner starting kit",
+  "role": "Netrunner",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Basic VH Pistol Ammunition x30",
+    "options": [
+     {
+      "name": "Basic VH Pistol Ammunition",
+      "quantity": 30
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Cyberdeck (7 Slots)",
+    "options": [
+     {
+      "name": "Cyberdeck (7 Slots)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Virtuality Goggles",
+    "options": [
+     {
+      "name": "Virtuality Goggles",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Program: Armor",
+    "options": [
+     {
+      "name": "Program: Armor",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Program: Sword",
+    "options": [
+     {
+      "name": "Program: Sword",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Program: See Ya or Eraser",
+    "options": [
+     {
+      "name": "Program: See Ya",
+      "quantity": 1
+     },
+     {
+      "name": "Program: Eraser",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Program: Sword or Vrizzbolt",
+    "options": [
+     {
+      "name": "Program: Sword",
+      "quantity": 1
+     },
+     {
+      "name": "Program: Vrizzbolt",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Program: Worm or Sword",
+    "options": [
+     {
+      "name": "Program: Worm",
+      "quantity": 1
+     },
+     {
+      "name": "Program: Sword",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Generic Chic: Top x10",
+    "fashion_style": "Generic Chic",
+    "pieces": [
+     {
+      "name": "Top",
+      "quantity": 10
+     }
+    ]
+   },
+   {
+    "text": "Leisurewear: Footwear x2, Jewelry, Bottoms x2",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 2
+     },
+     {
+      "name": "Jewelry",
+      "quantity": 1
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 2
+     }
+    ]
+   },
+   {
+    "text": "Urban Flash: Jacket",
+    "fashion_style": "Urban Flash",
+    "pieces": [
+     {
+      "name": "Jacket",
+      "quantity": 1
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Interface Plugs",
+    "options": [
+     {
+      "name": "Interface Plugs",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Neural Link",
+    "options": [
+     {
+      "name": "Neural Link",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Shift Tacts",
+    "options": [
+     {
+      "name": "Shift Tacts",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "printed_humanity_loss": 14,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Netrunner Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Tech Streetrat/Edgerunner starting kit",
+  "role": "Tech",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Shotgun or Assault Rifle",
+    "options": [
+     {
+      "name": "Shotgun",
+      "quantity": 1
+     },
+     {
+      "name": "Assault Rifle",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Basic Shotgun Shell Ammunition x100 or Basic Rifle Ammunition x100",
+    "options": [
+     {
+      "name": "Basic Shotgun Shell Ammunition",
+      "quantity": 100
+     },
+     {
+      "name": "Basic Rifle Ammunition",
+      "quantity": 100
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Flashbang Grenade",
+    "options": [
+     {
+      "name": "Flashbang Grenade",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Anti-Smog Breathing Mask",
+    "options": [
+     {
+      "name": "Anti-Smog Breathing Mask",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Disposable Cell Phone",
+    "options": [
+     {
+      "name": "Disposable Cell Phone",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Duct Tape x5",
+    "options": [
+     {
+      "name": "Duct Tape",
+      "quantity": 5
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Flashlight",
+    "options": [
+     {
+      "name": "Flashlight",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Road Flare x6",
+    "options": [
+     {
+      "name": "Road Flare",
+      "quantity": 6
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Tech Bag",
+    "options": [
+     {
+      "name": "Tech Bag",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Generic Chic: Bottoms x8, Tops x10",
+    "fashion_style": "Generic Chic",
+    "pieces": [
+     {
+      "name": "Bottoms",
+      "quantity": 8
+     },
+     {
+      "name": "Tops",
+      "quantity": 10
+     }
+    ]
+   },
+   {
+    "text": "Leisurewear: Footwear x2",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 2
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Cybereye",
+    "options": [
+     {
+      "name": "Cybereye",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "MicroOptics",
+    "options": [
+     {
+      "name": "MicroOptics",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Skinwatch",
+    "options": [
+     {
+      "name": "Skinwatch",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Tool Hand",
+    "options": [
+     {
+      "name": "Tool Hand",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "printed_humanity_loss": 12,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Tech Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Medtech Streetrat/Edgerunner starting kit",
+  "role": "Medtech",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Shotgun or Assault Rifle",
+    "options": [
+     {
+      "name": "Shotgun",
+      "quantity": 1
+     },
+     {
+      "name": "Assault Rifle",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Basic Shotgun Shell Ammunition x100 or Basic Rifle Ammunition x100",
+    "options": [
+     {
+      "name": "Basic Shotgun Shell Ammunition",
+      "quantity": 100
+     },
+     {
+      "name": "Basic Rifle Ammunition",
+      "quantity": 100
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Incendiary Shotgun Shell Ammunition x10 or Incendiary Rifle Ammunition x10",
+    "options": [
+     {
+      "name": "Incendiary Shotgun Shell Ammunition",
+      "quantity": 10
+     },
+     {
+      "name": "Incendiary Rifle Ammunition",
+      "quantity": 10
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Smoke Grenade x2",
+    "options": [
+     {
+      "name": "Smoke Grenade",
+      "quantity": 2
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Bulletproof Shield",
+    "options": [
+     {
+      "name": "Bulletproof Shield",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Airhypo",
+    "options": [
+     {
+      "name": "Airhypo",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Handcuffs",
+    "options": [
+     {
+      "name": "Handcuffs",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Flashlight",
+    "options": [
+     {
+      "name": "Flashlight",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Generic Chic: Jacket x3",
+    "fashion_style": "Generic Chic",
+    "pieces": [
+     {
+      "name": "Jacket",
+      "quantity": 3
+     }
+    ]
+   },
+   {
+    "text": "Glow Paint",
+    "options": [
+     {
+      "name": "Glow Paint",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Medtech Bag",
+    "options": [
+     {
+      "name": "Medtech Bag",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Leisurewear: Footwear, Bottoms x3, Top x5",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 1
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 3
+     },
+     {
+      "name": "Top",
+      "quantity": 5
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Biomonitor",
+    "options": [
+     {
+      "name": "Biomonitor",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Cybereye",
+    "options": [
+     {
+      "name": "Cybereye",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Nasal Filters or Toxin Binders",
+    "options": [
+     {
+      "name": "Nasal Filters",
+      "quantity": 1
+     },
+     {
+      "name": "Toxin Binders",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "TeleOptics",
+    "options": [
+     {
+      "name": "TeleOptics",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "printed_humanity_loss": 12,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Medtech Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Media Streetrat/Edgerunner starting kit",
+  "role": "Media",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Heavy Pistol or Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Heavy Pistol",
+      "quantity": 1
+     },
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Basic H Pistol Ammunition x50 or Basic VH Pistol Ammunition x50",
+    "options": [
+     {
+      "name": "Basic H Pistol Ammunition",
+      "quantity": 50
+     },
+     {
+      "name": "Basic VH Pistol Ammunition",
+      "quantity": 50
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Audio Recorder",
+    "options": [
+     {
+      "name": "Audio Recorder",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Binoculars",
+    "options": [
+     {
+      "name": "Binoculars",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Disposable Cellphone x2 or Grapple Gun",
+    "options": [
+     {
+      "name": "Disposable Cellphone",
+      "quantity": 2
+     },
+     {
+      "name": "Grapple Gun",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Flashlight",
+    "options": [
+     {
+      "name": "Flashlight",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Computer",
+    "options": [
+     {
+      "name": "Computer",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Radio Scanner/Music Player",
+    "options": [
+     {
+      "name": "Radio Scanner/Music Player",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Scrambler/Descrambler",
+    "options": [
+     {
+      "name": "Scrambler/Descrambler",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Video Camera",
+    "options": [
+     {
+      "name": "Video Camera",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Generic Chic: Footwear, Bottoms, Top",
+    "fashion_style": "Generic Chic",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 1
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 1
+     },
+     {
+      "name": "Top",
+      "quantity": 1
+     }
+    ]
+   },
+   {
+    "text": "Leisurewear: Jacket",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Jacket",
+      "quantity": 1
+     }
+    ]
+   },
+   {
+    "text": "Urbanflash: Mirrorshades",
+    "fashion_style": "Urbanflash",
+    "pieces": [
+     {
+      "name": "Mirrorshades",
+      "quantity": 1
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Amplified Hearing or Voice Stress Analyzer",
+    "options": [
+     {
+      "name": "Amplified Hearing",
+      "quantity": 1
+     },
+     {
+      "name": "Voice Stress Analyzer",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Cyberaudio Suite",
+    "options": [
+     {
+      "name": "Cyberaudio Suite",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Tattoo",
+    "options": [
+     {
+      "name": "Light Tattoo",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "printed_humanity_loss": 10,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Media Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Lawman Streetrat/Edgerunner starting kit",
+  "role": "Lawman",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Assault Rifle or Shotgun",
+    "options": [
+     {
+      "name": "Assault Rifle",
+      "quantity": 1
+     },
+     {
+      "name": "Shotgun",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Heavy Pistol",
+    "options": [
+     {
+      "name": "Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Basic Rifle Ammunition x100 or Basic Shotgun Shell Ammunition x100 or Basic Slug Ammunition x100",
+    "options": [
+     {
+      "name": "Basic Rifle Ammunition",
+      "quantity": 100
+     },
+     {
+      "name": "Basic Shotgun Shell Ammunition",
+      "quantity": 100
+     },
+     {
+      "name": "Basic Slug Ammunition",
+      "quantity": 100
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Basic H Pistol Ammunition x30",
+    "options": [
+     {
+      "name": "Basic H Pistol Ammunition",
+      "quantity": 30
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Bulletproof Shield or Smoke Grenade x2",
+    "options": [
+     {
+      "name": "Bulletproof Shield",
+      "quantity": 1
+     },
+     {
+      "name": "Smoke Grenade",
+      "quantity": 2
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Flashlight",
+    "options": [
+     {
+      "name": "Flashlight",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Handcuffs x2",
+    "options": [
+     {
+      "name": "Handcuffs",
+      "quantity": 2
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Radio Communicator",
+    "options": [
+     {
+      "name": "Radio Communicator",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Road Flare x10",
+    "options": [
+     {
+      "name": "Road Flare",
+      "quantity": 10
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Generic Chic: Jacket, Bottoms x2, Top x3",
+    "fashion_style": "Generic Chic",
+    "pieces": [
+     {
+      "name": "Jacket",
+      "quantity": 1
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 2
+     },
+     {
+      "name": "Top",
+      "quantity": 3
+     }
+    ]
+   },
+   {
+    "text": "Leisurewear: Footwear x2, Jacket x2, Bottoms x2, Mirrorshades, Top x2",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 2
+     },
+     {
+      "name": "Jacket",
+      "quantity": 2
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 2
+     },
+     {
+      "name": "Mirrorshades",
+      "quantity": 1
+     },
+     {
+      "name": "Top",
+      "quantity": 2
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Hidden Holster",
+    "options": [
+     {
+      "name": "Hidden Holster",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Subdermal Pocket",
+    "options": [
+     {
+      "name": "Subdermal Pocket",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "printed_humanity_loss": 10,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Lawman Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Exec Streetrat/Edgerunner starting kit",
+  "role": "Exec",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Basic VH Pistol Ammunition x50",
+    "options": [
+     {
+      "name": "Basic VH Pistol Ammunition",
+      "quantity": 50
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Radio Communicator x4",
+    "options": [
+     {
+      "name": "Radio Communicator",
+      "quantity": 4
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Scrambler/Descrambler",
+    "options": [
+     {
+      "name": "Scrambler/Descrambler",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Businesswear: Footwear, Jacket, Bottoms, Mirrorshades, Top, Jewelry x2",
+    "fashion_style": "Businesswear",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 1
+     },
+     {
+      "name": "Jacket",
+      "quantity": 1
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 1
+     },
+     {
+      "name": "Mirrorshades",
+      "quantity": 1
+     },
+     {
+      "name": "Top",
+      "quantity": 1
+     },
+     {
+      "name": "Jewelry",
+      "quantity": 2
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Biomonitor or Tech Hair",
+    "options": [
+     {
+      "name": "Biomonitor",
+      "quantity": 1
+     },
+     {
+      "name": "Tech Hair",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Cyberaudio Suite",
+    "options": [
+     {
+      "name": "Cyberaudio Suite",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Internal Agent",
+    "options": [
+     {
+      "name": "Internal Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Toxin Binders or Nasal Filters",
+    "options": [
+     {
+      "name": "Toxin Binders",
+      "quantity": 1
+     },
+     {
+      "name": "Nasal Filters",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   }
+  ],
+  "printed_humanity_loss": 12,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Exec Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Fixer Streetrat/Edgerunner starting kit",
+  "role": "Fixer",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Heavy Pistol or Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Heavy Pistol",
+      "quantity": 1
+     },
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Heavy Pistol or Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Heavy Pistol",
+      "quantity": 1
+     },
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Light Melee Weapon",
+    "options": [
+     {
+      "name": "Light Melee Weapon",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Basic H Pistol Ammunition x100 or Basic VH Pistol Ammunition x100",
+    "options": [
+     {
+      "name": "Basic H Pistol Ammunition",
+      "quantity": 100
+     },
+     {
+      "name": "Basic VH Pistol Ammunition",
+      "quantity": 100
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Bug Detector",
+    "options": [
+     {
+      "name": "Bug Detector",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Computer",
+    "options": [
+     {
+      "name": "Computer",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Disposable Phone x2",
+    "options": [
+     {
+      "name": "Disposable Phone",
+      "quantity": 2
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Generic Chic: Contacts, Jewelry",
+    "fashion_style": "Generic Chic",
+    "pieces": [
+     {
+      "name": "Contacts",
+      "quantity": 1
+     },
+     {
+      "name": "Jewelry",
+      "quantity": 1
+     }
+    ]
+   },
+   {
+    "text": "Leisurewear: Mirrorshades",
+    "fashion_style": "Leisurewear",
+    "pieces": [
+     {
+      "name": "Mirrorshades",
+      "quantity": 1
+     }
+    ]
+   },
+   {
+    "text": "Urbanflash: Footwear, Jacket, Bottoms, Top",
+    "fashion_style": "Urbanflash",
+    "pieces": [
+     {
+      "name": "Footwear",
+      "quantity": 1
+     },
+     {
+      "name": "Jacket",
+      "quantity": 1
+     },
+     {
+      "name": "Bottoms",
+      "quantity": 1
+     },
+     {
+      "name": "Top",
+      "quantity": 1
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Cyberaudio Suite",
+    "options": [
+     {
+      "name": "Cyberaudio Suite",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Internal Agent",
+    "options": [
+     {
+      "name": "Internal Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Subdermal Pocket",
+    "options": [
+     {
+      "name": "Subdermal Pocket",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Voice Stress Analyzer or Amplified Hearing",
+    "options": [
+     {
+      "name": "Voice Stress Analyzer",
+      "quantity": 1
+     },
+     {
+      "name": "Amplified Hearing",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   }
+  ],
+  "printed_humanity_loss": 16,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Fixer Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ },
+ {
+  "name": "Nomad Streetrat/Edgerunner starting kit",
+  "role": "Nomad",
+  "source_page": "p099",
+  "pages": {
+   "weapons_armor": "p099",
+   "outfit": "p104",
+   "cyberware": "p118"
+  },
+  "weapons_armor": [
+   {
+    "text": "Heavy Pistol or Very Heavy Pistol",
+    "options": [
+     {
+      "name": "Heavy Pistol",
+      "quantity": 1
+     },
+     {
+      "name": "Very Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Basic H Pistol Ammunition x100 or Basic VH Pistol Ammunition x100",
+    "options": [
+     {
+      "name": "Basic H Pistol Ammunition",
+      "quantity": 100
+     },
+     {
+      "name": "Basic VH Pistol Ammunition",
+      "quantity": 100
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Heavy Melee Weapon or Heavy Pistol",
+    "options": [
+     {
+      "name": "Heavy Melee Weapon",
+      "quantity": 1
+     },
+     {
+      "name": "Heavy Pistol",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Light Armorjack Body Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Body Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Light Armorjack Head Armor (SP11)",
+    "options": [
+     {
+      "name": "Light Armorjack Head Armor (SP11)",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "outfit": [
+   {
+    "text": "Agent",
+    "options": [
+     {
+      "name": "Agent",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Anti-Smog Breathing Mask",
+    "options": [
+     {
+      "name": "Anti-Smog Breathing Mask",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Duct Tape",
+    "options": [
+     {
+      "name": "Duct Tape",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Flashlight",
+    "options": [
+     {
+      "name": "Flashlight",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Grapple Gun",
+    "options": [
+     {
+      "name": "Grapple Gun",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Inflatable Bed & Sleep-Bag",
+    "options": [
+     {
+      "name": "Inflatable Bed & Sleep-Bag",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Medtech Bag",
+    "options": [
+     {
+      "name": "Medtech Bag",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Radio Communicator x2",
+    "options": [
+     {
+      "name": "Radio Communicator",
+      "quantity": 2
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Rope",
+    "options": [
+     {
+      "name": "Rope",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Techtool",
+    "options": [
+     {
+      "name": "Techtool",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Tent and Camping Equipment",
+    "options": [
+     {
+      "name": "Tent and Camping Equipment",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   },
+   {
+    "text": "Bohemian: Jewelry",
+    "fashion_style": "Bohemian",
+    "pieces": [
+     {
+      "name": "Jewelry",
+      "quantity": 1
+     }
+    ]
+   },
+   {
+    "text": "Nomad Leathers: Top x4, Bottom x2, Footwear x2, Jacket, Hat",
+    "fashion_style": "Nomad Leathers",
+    "pieces": [
+     {
+      "name": "Top",
+      "quantity": 4
+     },
+     {
+      "name": "Bottom",
+      "quantity": 2
+     },
+     {
+      "name": "Footwear",
+      "quantity": 2
+     },
+     {
+      "name": "Jacket",
+      "quantity": 1
+     },
+     {
+      "name": "Hat",
+      "quantity": 1
+     }
+    ]
+   }
+  ],
+  "cyberware": [
+   {
+    "text": "Interface Plugs or Wolvers",
+    "options": [
+     {
+      "name": "Interface Plugs",
+      "quantity": 1
+     },
+     {
+      "name": "Wolvers",
+      "quantity": 1
+     }
+    ],
+    "pick_one": true
+   },
+   {
+    "text": "Neural Link",
+    "options": [
+     {
+      "name": "Neural Link",
+      "quantity": 1
+     }
+    ],
+    "pick_one": false
+   }
+  ],
+  "printed_humanity_loss": 14,
+  "printed_emp_change": "-2 EMP",
+  "cash_eb": 500,
+  "text": "Starting kit for a Nomad Streetrat or Edgerunner: weapons and armour (p099), outfit and gear (p104), cyberware (p118). Where an item reads 'A or B', pick one and only one. Streetrat and Edgerunner Characters also get 500eb to spend on other items or keep (p099).",
+  "kind": "starting_kit"
+ }
+]
