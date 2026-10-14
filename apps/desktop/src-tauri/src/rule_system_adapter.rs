@@ -748,8 +748,8 @@ pub(crate) mod tests {
     /// SD-38 E0.4: the wire id `cyberpunk-red` (`GameSystem::CyberpunkRed.id()`) resolves to
     /// the Cyberpunk RED adapter, which lists a real (here empty) characters root instead of
     /// reporting a Would-message, and a CPR character's root is loaded through it by the
-    /// envelope router. Before E0.4 the id resolved to `StubAdapter`, whose listing is
-    /// `Err("Would render for system cyberpunk-red; not yet implemented")`.
+    /// envelope router. Before E0.4 the id resolved to `StubAdapter`, whose listing is an
+    /// `Err` carrying the stub's Would-render message for `cyberpunk-red`.
     #[test]
     fn cyberpunk_red_resolves_to_the_cyberpunk_adapter() {
         let characters_root = tempdir("cyberpunk-red-resolves");
