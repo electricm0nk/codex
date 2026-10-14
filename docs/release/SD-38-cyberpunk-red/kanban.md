@@ -39,7 +39,7 @@ cards (`decisions.md §22`).
 | E0.6 | PF + SF byte-identical gate (base = C1 SHA) | opus | complete | E0.1, E0.2, E0.3, E0.4, E0.5 | `artifacts/epic_0/E0.6_cycle_receipt.md`; evidence 666edd9f47; base 706d8da680 (C1, own worktree) vs head 2ecbf5e9a8: PF Aldric/Elowen/Tomas sha256 diff empty; SF 4 seeds' lines diff -r empty; root `--lib sf_seed` 34 passed both; PF + SF converter `--check` PASS both with identical counts |
 | E0.MC | E0 adversarial merge check | opus | complete | E0.6 | `artifacts/epic_0/E0.MC_cycle_receipt.md`; evidence f953bca5ce; on origin/tranche-18 5dc2d53e59: E0.1–E0.6 commands 25/25 as expected (PF 3 + SF 4 seeds equal C1 base); mutations 3/3 red for the intended reason and restored; E0 Epic report in `progress.md` |
 | E1.0 | MANIFEST.json + `cpr_manifest_check.py` | sonnet | complete | E0.MC | `artifacts/epic_1/E1.0_cycle_receipt.md`; 53 kinds, expected sum 800 (= CUI §3 column sum, awk + Python), 3 null (E1.8); `--selftest` 10 plants; `--all` exits 1 with 53 MISSING + 3 NULL_COUNT (no kind files yet) |
-| E1.1 | Roles lane | sonnet | waiting | E1.0 |  |
+| E1.1 | Roles lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.1_cycle_receipt.md`; role 10 / role_ability 10; checker exit 0; 18 nested counts equal by two implementations (`E1.1_nested_check.py`); image-checked p141, p149, p150, p152, p155 (U-28), p159–p160 (D-8), p164–p166 (U-29); D-4 29/29 kept |
 | E1.2 | Creation lane | sonnet | waiting | E1.0 |  |
 | E1.3 | Skills lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.3_cycle_receipt.md`; skill 66 / difficulty_value 7 / skill_modifier 10; checker exit 0; skills.tsv diff empty; DV table and modifier table image-checked (p130, p131) |
 | E1.4 | Gear lane | sonnet | waiting | E1.0 |  |

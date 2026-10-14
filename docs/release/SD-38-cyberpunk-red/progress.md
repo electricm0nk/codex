@@ -108,6 +108,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E1.0 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.0_cycle_receipt.md` | `artifacts/epic_1/E1.0_cycle_receipt.md` | unchanged by construction (Python + JSON only) | MANIFEST 53 kinds / 800 expected / 3 null; sum check against CUI §3 (800, two implementations); selftest 10 plants |
 | 2026-10-14 | E1.3 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.3_cycle_receipt.md` | `artifacts/epic_1/E1.3_cycle_receipt.md` | unchanged by construction (Python + JSON only) | skill 66 / difficulty_value 7 / skill_modifier 10; names, categories, STATs diff empty vs skills.tsv; counts by two implementations; p130 DV pairing and p131 modifiers image-checked |
 | 2026-10-14 | E1.7 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.7_cycle_receipt.md` | `artifacts/epic_1/E1.7_cycle_receipt.md` | unchanged by construction (JSON only) | 7 kinds / 59 records; F-84 4+3+8+12 = 27; 18 defenses image-checked; D-2, A-7 noted |
+| 2026-10-14 | E1.1 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.1_cycle_receipt.md` | `artifacts/epic_1/E1.1_cycle_receipt.md` | unchanged by construction (Python + JSON only) | role 10 / role_ability 10; 18 nested counts equal JSON vs page text; 30 Team STAT rows, 6 Backup bands, Believability equal page; U-28 (Loyalty −4 row shared), U-29, D-4, D-8 settled on the page image |
 
 ## Epic reports
 
