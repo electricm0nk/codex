@@ -130,6 +130,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E2.3 | opus | complete | aa084de37a (engine + tests), e9d3f45d05 (clippy fix); receipt and rows in the next commit | `artifacts/epic_2/E2.3_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/armor.rs`: SP per location = highest source (worn armour and other SP sources such as cyberware), worst Armor Penalty once to REF/DEX/MOVE (Minimum 0), Bodyweight Suit SP 11 on both locations (one only), shield refused as worn; `cpr.armor.*` 6 rows; 2 plants red; 1 rework (clippy); after the §5 rebase onto E2.7, `cargo test --locked -j 8 --lib cpr:: -- --test-threads=8` → 67 passed, 0 failed |
 | 2026-10-14 | E2.8 | opus | complete | 2c61942c2d (engine); receipt and rows in the next commit | `artifacts/epic_2/E2.8_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr/reputation.rs`: `cpr.reputation.level` (0–10, Who Knows About You text from the corpus) and `cpr.reputation.facedown` (COOL ± Rep, printed "<n> + 1d10"); `CprReputation::record` keeps the defining event unless the new Level is higher; 1 rework (SF lines out dir missing); lane B done: `sd38-b` tree and its `CARGO_TARGET_DIR` removed after the push; after the §5 rebase onto E2.3, `cargo test --locked -j 8 --lib cpr:: -- --test-threads=8` → 74 passed, 0 failed |
 | 2026-10-14 | E2.4 | opus | complete | a180fb2f43 (engine + tests), f1ef20be3a (clippy fix), cda6994c46 (printed page citations); receipt and rows in the next commit | `artifacts/epic_2/E2.4_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/critical.rs`: `cpr.wound.{lightly,seriously,mortally}_wounded` (+ `_dv` 10/13/15), `cpr.wound.death_save`, `cpr.wound.base_death_save_penalty`; HP 40 → 40/20/1; 11 of 22 injuries raise the Base DSP (3 implementations); root 300/6650/0, desktop 2/818/0; lane A ends, tree removed |
+| 2026-10-14 | E3.1 | opus | complete | fabfa38ac0 (code); receipt and rows in the next commit | `artifacts/epic_3/E3.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `preview_cyberpunk_character` / `create_cyberpunk_character`: Streetrat row rolled or picked, Edgerunner 1d10 per STAT from its own column, Complete Package = corpus default 62, STATs 2–8; `CprRoller` (SplitMix64, u32 seed returned and replayed); rows = engine `cpr.stat.*` + `cpr.derived.*`; boundary `cprCreation.ts` |
 
 ## Epic reports
 
@@ -261,6 +262,11 @@ blockers.)
   Injury that the target isn't currently suffering"); alternative not taken: count it twice. (3) The Stabilization DVs are rows of
   their own (`cpr.wound.*_dv`), since they land on the sheet as numbers; alternative not taken: text inside the threshold row.
   (4) `cpr.wound.death_save` repeats E2.1's `cpr.derived.death_save` (both BODY); E2.10 picks the one the sheet renders.
+- E3.1, creation STATs (DEF-2 puts the roller in scope; no D-n/A-n names these): (1) Complete Package spends exactly the
+  corpus `complete_package_points` record marked `default` (62, p. 79 "normally 62"); alternative not taken: a `rank`
+  parameter offering the GM-option totals 50/70/75/80. (2) The roller seed is a u32 so it crosses JSON to the frontend
+  exactly; alternative not taken: u64 (above 2^53 a JS number loses it). (3) Create refuses an id already saved;
+  alternative not taken: overwrite.
 
 ## Open blockers
 
