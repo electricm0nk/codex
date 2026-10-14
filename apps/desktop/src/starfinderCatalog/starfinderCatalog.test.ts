@@ -62,6 +62,7 @@ function landing(selectedRuleSet: RuleSetId): string {
         onBrowseCompanions: noop,
         onBrowseIntelligentItems: noop,
         onBrowseStarfinder: noop,
+        onBrowseCyberpunk: noop,
         onCorpusIngestDiagnostic: noop,
         onCampaignManager: noop,
         campaignManagerGate: { enabled: true, disabledHint: '' },

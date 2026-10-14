@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { CampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
 import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
 import { STARFINDER_CATALOG_TABS } from '../starfinderCatalog/starfinderCatalogModel';
+import { CYBERPUNK_CATALOG_GROUPS, firstKindOfGroup } from '../cyberpunkCatalog/cyberpunkCatalogModel';
 
 /**
  * Rule-set landing screen (Pathbuilder-style): a rule-set selector followed by
@@ -269,6 +270,8 @@ export function LandingScreen(props: {
   onBrowseIntelligentItems: () => void;
   /** Starfinder 1e's catalogs (SD-37 E6.4), offered instead of the Pathfinder ones when it is selected. */
   onBrowseStarfinder: (kind: StarfinderCatalogKind) => void;
+  /** Cyberpunk RED's catalogs (SD-38 E6.2), offered instead of the Pathfinder ones when it is selected; `kind` is the MANIFEST kind the screen opens on. */
+  onBrowseCyberpunk: (kind: string) => void;
   onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
   campaignManagerGate: CampaignManagerAccessGate;
@@ -311,6 +314,12 @@ export function LandingScreen(props: {
           STARFINDER_CATALOG_TABS.map((tab) => (
             <button key={tab.kind} type="button" onClick={() => props.onBrowseStarfinder(tab.kind)} style={BROWSE_LINK}>
               {tab.link}
+            </button>
+          ))
+        ) : props.selectedRuleSet === 'cyberpunk-red' ? (
+          CYBERPUNK_CATALOG_GROUPS.map((group) => (
+            <button key={group.id} type="button" onClick={() => props.onBrowseCyberpunk(firstKindOfGroup(group.id))} style={BROWSE_LINK}>
+              {group.link}
             </button>
           ))
         ) : (

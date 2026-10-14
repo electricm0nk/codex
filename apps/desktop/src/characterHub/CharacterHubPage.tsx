@@ -23,6 +23,7 @@ import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
 import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/IntelligentItemCatalogScreen';
 import { StarfinderCatalogScreen } from '../starfinderCatalog/StarfinderCatalogScreen';
 import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
+import { CyberpunkCatalogScreen } from '../cyberpunkCatalog/CyberpunkCatalogScreen';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
@@ -46,6 +47,7 @@ type Mode =
   | 'companionCatalog'
   | 'intelligentItemCatalog'
   | 'starfinderCatalog'
+  | 'cyberpunkCatalog'
   | 'corpusIngestDiagnostic'
   | 'dm-toolkit'
   | 'campaign-list'
@@ -74,6 +76,7 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
   }, [mode, onWideChange]);
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [starfinderCatalogKind, setStarfinderCatalogKind] = useState<StarfinderCatalogKind>('race');
+  const [cyberpunkCatalogKind, setCyberpunkCatalogKind] = useState<string>('role');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
   // Where the ✕ on the character sheet should return to — Load Character
   // normally, but the campaign screen when opened from a party member there.
@@ -114,6 +117,10 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
           setStarfinderCatalogKind(kind);
           setMode('starfinderCatalog');
         }}
+        onBrowseCyberpunk={(kind) => {
+          setCyberpunkCatalogKind(kind);
+          setMode('cyberpunkCatalog');
+        }}
         onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
@@ -153,6 +160,11 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
   if (mode === 'starfinderCatalog') {
     // SD-37 E6.4: Starfinder 1e's catalogs, read from its own package.
     return <StarfinderCatalogScreen initialKind={starfinderCatalogKind} onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'cyberpunkCatalog') {
+    // SD-38 E6.2: Cyberpunk RED's catalogs, read from its corpus by `list_cyberpunk_catalog`.
+    return <CyberpunkCatalogScreen initialKind={cyberpunkCatalogKind} onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'corpusIngestDiagnostic') {

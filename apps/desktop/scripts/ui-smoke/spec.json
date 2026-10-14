@@ -5264,6 +5264,37 @@
       "notes": "SD-38 E0.5 (epic-breakdown.md E0.5: 'The landing screen offers \"Cyberpunk Red\" as cyberpunk-red, selectable; its Load list comes from CyberpunkAdapter'). Selects the Cyberpunk Red chip (RULE_SETS in LandingScreen.tsx, id cyberpunk-red, available) and opens Load Character: the list is list_saved_characters with ruleSystemId 'cyberpunk-red' (buildListSavedCharactersArgs), which resolve_rule_system_adapter sends to CyberpunkAdapter (cpr_adapter.rs, E0.4). The isolated store holds the Pathfinder and Starfinder starter seeds and no Cyberpunk RED character, so the Cyberpunk list is empty: the forbid list holds the first Pathfinder seed's name and both systems' row tags, which a list from Pf1Adapter or StarfinderAdapter would show. Before E0.5 the chip is an unselectable stub, the click does nothing, and Load lists the Pathfinder seeds (RED). New Character stays closed with its reason until E3.2 (characterHubRuntime.test.ts). landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
+      "id": "browse-cyberpunk-catalog",
+      "screen": "landing",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Cyberpunk Red"
+        },
+        {
+          "op": "click",
+          "target": "Browse Cyberware"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        }
+      ],
+      "marker": "Cyberpunk Red — Cyberware",
+      "expect": [
+        "Biomonitor",
+        "96 of 96 cyberware",
+        "Cyberware and Humanity",
+        "Netrunning"
+      ],
+      "forbid": [
+        "Fighter",
+        "Hit die",
+        "Starfinder"
+      ],
+      "notes": "SD-38 E6.2 (epic-breakdown.md E6.2: 'With Cyberpunk Red selected, the landing offers catalog links, and every player-facing (non-print_only) kind is browsable'). With Cyberpunk Red selected the landing offers one Browse link per catalog group (CYBERPUNK_CATALOG_GROUPS in cyberpunkCatalogModel.ts) instead of the Pathfinder ones; Browse Cyberware opens CyberpunkCatalogScreen on the cyberware kind, whose records list_cyberpunk_catalog (cpr_catalog.rs, E6.1) reads from data/cyberpunk-red/corpus. Expects the first cyberware record (Biomonitor), the summary '96 of 96 cyberware' (records held of the MANIFEST count) and the group pills. Before E6.2 the Cyberpunk Red landing shows the Pathfinder browse links and 'Browse Cyberware' is not a target (RED). The forbid list holds a Pathfinder class, the PCGen hit-die device line and the other system's name. landing-select-pathfinder (next) restores the Pathfinder selection."
+    },
+    {
       "id": "landing-select-pathfinder",
       "screen": "landing",
       "steps": [
