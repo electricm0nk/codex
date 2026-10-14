@@ -1932,13 +1932,16 @@ mod tests {
     }
 
     type Allocation<'a> = (&'a [(&'a str, u8)], &'a [(&'a str, Option<&'a str>)]);
+    /// A Role, its valid allocation with one row id and value it must give, and its refused
+    /// allocation with the words the refusal must hold.
+    type RoleCase<'a> = (&'a str, Allocation<'a>, &'a str, i16, Allocation<'a>, &'a [&'a str]);
 
     /// The acceptance command: for each Role with sub-choices, one valid allocation previews at
     /// Rank 4 with the engine's rows and creates; one refused allocation names the broken rule,
     /// shows no rows and saves nothing.
     #[test]
     fn every_role_with_sub_choices_takes_one_valid_allocation_and_refuses_one() {
-        let cases: [(&str, Allocation, &str, i16, Allocation, &[&str]); 5] = [
+        let cases: [RoleCase; 5] = [
             (
                 "Solo",
                 (&[("Precision Attack", 3), ("Threat Detection", 1)], &[]),
