@@ -11,6 +11,8 @@ import { CreateCharacterForm } from './CreateCharacterForm';
 import { StarfinderCreateForm } from './StarfinderCreateForm';
 import { CyberpunkCreateForm } from './CyberpunkCreateForm';
 import { StarfinderCharacterSheet } from './StarfinderCharacterSheet';
+import { CyberpunkCharacterSheet } from './CyberpunkCharacterSheet';
+import { isCyberpunkCharacter } from './cyberpunkSheetModel';
 import { isStarfinderCharacter } from './starfinderSheetModel';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
@@ -245,6 +247,21 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
           setSheet((current) => (current ? { row: updatedRow, detail } : current));
           setSurface((current) => (current ? replaceRowInSurface(current, updatedRow) : current));
         }}
+        onClose={() => setMode(sheetReturnMode)}
+        onOpen={() => {
+          setSheetReturnMode('load');
+          setMode('load');
+        }}
+      />
+    );
+  }
+
+  if (mode === 'sheet' && sheet && sheet.detail !== null && isCyberpunkCharacter(sheet.detail.summary)) {
+    // A Cyberpunk RED character opens the Cyberpunk RED sheet, never the Pathfinder one.
+    return (
+      <CyberpunkCharacterSheet
+        key={sheet.detail.summary.characterId}
+        detail={sheet.detail}
         onClose={() => setMode(sheetReturnMode)}
         onOpen={() => {
           setSheetReturnMode('load');

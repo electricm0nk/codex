@@ -1,0 +1,145 @@
+import type { CSSProperties } from 'react';
+import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { boxesInColumn } from './sheetLayout';
+import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
+import { buildCyberpunkSheet, type CyberpunkSheetBox, type CyberpunkSheetCell } from './cyberpunkSheetModel';
+
+/**
+ * The Cyberpunk RED character sheet: the ten STATs (EMP as entered and current), Hit Points,
+ * Seriously Wounded, Death Save, Humanity, MOVE, LUCK and the wound track. Its boxes are placed
+ * by `cyberpunkSheetLayout.ts`; every number is one engine `cpr.` row (`cyberpunkSheetModel.ts`),
+ * as `load_saved_character` composed it -- this file writes no number of its own.
+ */
+export function CyberpunkCharacterSheet(props: {
+  detail: LoadSavedCharacterResponse;
+  onClose: () => void;
+  onOpen: () => void;
+}) {
+  const sheet = buildCyberpunkSheet(props.detail);
+  const boxById = new Map(sheet.boxes.map((box) => [box.id, box]));
+  return (
+    <section data-testid="cpr-character-sheet" style={{ marginTop: '1.5rem' }}>
+      <div style={{ alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <div>
+          <h2 data-cpr-name style={{ margin: 0 }}>{sheet.name}</h2>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.2rem 0 0' }}>Cyberpunk RED</p>
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button type="button" data-testid="cpr-sheet-open" onClick={props.onOpen} style={buttonStyle}>
+            Open
+          </button>
+          <button type="button" data-testid="cpr-sheet-close" onClick={props.onClose} style={buttonStyle}>
+            Close
+          </button>
+        </div>
+      </div>
+
+      {sheet.blocking.length === 0 ? null : (
+        <div data-testid="cpr-sheet-blocking" style={{ border: '1px solid var(--color-danger, #c0392b)', borderRadius: 8, marginBottom: '1rem', padding: '0.75rem' }}>
+          <p style={{ fontWeight: 700, margin: '0 0 0.4rem' }}>This character did not compute:</p>
+          <ul style={{ margin: 0, paddingLeft: '1.2rem' }}>
+            {sheet.blocking.map((diagnostic) => (
+              <li key={diagnostic.id}>{diagnostic.message}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {CYBERPUNK_SHEET_COLUMNS.map((column) => (
+          <div key={column} data-cpr-column={column} style={CYBERPUNK_SHEET_COLUMN_STYLES[column]}>
+            {boxesInColumn(CYBERPUNK_SHEET_LAYOUT, column).map((placement) => {
+              const box = boxById.get(placement.id);
+              return box === undefined ? null : <SheetBox key={box.id} box={box} style={placement.boxStyle} />;
+            })}
+          </div>
+        ))}
+      </div>
+
+      {sheet.notes.length === 0 ? null : (
+        <div data-testid="cpr-sheet-notes" style={{ marginTop: '1rem' }}>
+          {sheet.notes.map((diagnostic) => (
+            <p key={diagnostic.id} style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.2rem 0' }}>
+              {diagnostic.message}
+            </p>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+const buttonStyle: CSSProperties = {
+  background: 'none',
+  border: '1px solid var(--color-border)',
+  borderRadius: 8,
+  cursor: 'pointer',
+  padding: '0.5rem 1rem',
+};
+
+function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
+  const { box } = props;
+  return (
+    <div data-cpr-box={box.id} style={props.style}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.5rem', textTransform: 'uppercase' }}>
+        {box.title}
+      </p>
+      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+        {box.columns === null ? null : (
+          <thead>
+            <tr>
+              <th />
+              {box.columns.map((column) => (
+                <th key={column} style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', textAlign: 'right' }}>
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {box.rows.map((row) => {
+            const ids = row.cells.flatMap((cell) => (cell === null ? [] : [cell.rowId])).join(' ');
+            return (
+              <tr key={`${row.label}:${ids}`}>
+                <th data-cpr-label-of={ids} scope="row" style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0.2rem 0', textAlign: 'left' }}>
+                  {row.label}
+                </th>
+                {box.columns === null ? (
+                  <td style={cellStyle}>
+                    {row.cells.map((cell, index) => (
+                      <span key={index}>
+                        {index === 0 ? null : ' / '}
+                        {cell === null ? <Missing /> : <Value cell={cell} />}
+                      </span>
+                    ))}
+                  </td>
+                ) : (
+                  row.cells.map((cell, index) => (
+                    <td key={index} style={cellStyle}>
+                      {cell === null ? <Missing /> : <Value cell={cell} />}
+                    </td>
+                  ))
+                )}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+const cellStyle: CSSProperties = { padding: '0.2rem 0 0.2rem 0.75rem', textAlign: 'right' };
+
+function Missing() {
+  return <span style={{ color: 'var(--color-text-faint)' }}>—</span>;
+}
+
+function Value(props: { cell: CyberpunkSheetCell }) {
+  return (
+    <span data-cpr-row={props.cell.rowId} data-testid={props.cell.rowId} title={props.cell.detail} style={{ color: 'var(--color-accent)', fontSize: '0.95rem', fontWeight: 800 }}>
+      {props.cell.value}
+    </span>
+  );
+}

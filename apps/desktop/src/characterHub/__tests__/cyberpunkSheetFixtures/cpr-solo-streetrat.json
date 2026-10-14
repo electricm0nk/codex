@@ -1,0 +1,990 @@
+{
+  "summary": {
+    "characterId": "cpr-solo-streetrat",
+    "displayLabel": "Solo Streetrat",
+    "gameSystem": "cyberpunk-red",
+    "schemaVersion": 1,
+    "savedAt": "2026-10-13T00:00:00Z",
+    "raceId": "",
+    "classSummary": ""
+  },
+  "snapshot": null,
+  "diagnostics": [],
+  "corpusDerived": {
+    "schoolCoverage": [],
+    "equippedItems": [],
+    "equipmentEffects": {
+      "perItem": [],
+      "armorClassDelta": 0,
+      "armorCheckPenaltyTotal": 0
+    },
+    "encumbrance": {
+      "totalCarriedWeightLbs": 0.0,
+      "totalCarriedCostGp": 0.0,
+      "lightMaxLbs": 0.0,
+      "mediumMaxLbs": 0.0,
+      "heavyMaxLbs": 0.0,
+      "level": "",
+      "loadArmorCheckPenalty": 0,
+      "perItem": [],
+      "unresolvedItemIds": []
+    },
+    "unresolvedSpellIds": [],
+    "unresolvedEquipmentItemIds": []
+  },
+  "selectedFeats": [],
+  "spellsSelected": [],
+  "chosenFeatTargets": [],
+  "explanations": [
+    {
+      "id": "cpr.stat.int",
+      "value": 6,
+      "detail": "INT 6: the character's Intelligence STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.ref",
+      "value": 7,
+      "detail": "REF 7: the character's Reflexes STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.dex",
+      "value": 7,
+      "detail": "DEX 7: the character's Dexterity STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.tech",
+      "value": 3,
+      "detail": "TECH 3: the character's Technique STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.cool",
+      "value": 8,
+      "detail": "COOL 8: the character's Cool STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.will",
+      "value": 6,
+      "detail": "WILL 6: the character's Willpower STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.luck",
+      "value": 5,
+      "detail": "LUCK 5: the character's Luck STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.move",
+      "value": 5,
+      "detail": "MOVE 5: the character's Movement STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.body",
+      "value": 6,
+      "detail": "BODY 6: the character's Body STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.emp",
+      "value": 5,
+      "detail": "EMP 5: the character's Empathy STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.derived.hit_points",
+      "value": 40,
+      "detail": "HP 40 = 10 + 5 x ceil((BODY 6 + WILL 6) / 2) = 10 + 5 x 6 (Cyberpunk RED core rulebook p. 79)"
+    },
+    {
+      "id": "cpr.derived.seriously_wounded",
+      "value": 20,
+      "detail": "Seriously Wounded 20 = ceil(HP 40 / 2) (Cyberpunk RED core rulebook p. 79)"
+    },
+    {
+      "id": "cpr.derived.death_save",
+      "value": 6,
+      "detail": "Death Save 6 = BODY 6 (Cyberpunk RED core rulebook p. 79)"
+    },
+    {
+      "id": "cpr.derived.humanity_max",
+      "value": 50,
+      "detail": "Humanity 50 = EMP 5 x 10 (Cyberpunk RED core rulebook p. 80)"
+    },
+    {
+      "id": "cpr.derived.emp_current",
+      "value": 5,
+      "detail": "EMP 5 = max(0, floor(Humanity 50 / 10)) (Cyberpunk RED core rulebook p. 80; negative Humanity gives 0, p. 232)"
+    },
+    {
+      "id": "cpr.derived.move",
+      "value": 5,
+      "detail": "MOVE 5: the MOVE STAT as entered (Cyberpunk RED core rulebook p. 72)"
+    },
+    {
+      "id": "cpr.derived.luck_pool",
+      "value": 5,
+      "detail": "LUCK pool 5 = LUCK 5 (Cyberpunk RED core rulebook p. 72)"
+    },
+    {
+      "id": "cpr.derived.humanity_current",
+      "value": 50,
+      "detail": "Humanity 50 = EMP 5 x 10 - Humanity Loss 0 (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112)"
+    },
+    {
+      "id": "cpr.armor.sp_head",
+      "value": 0,
+      "detail": "Head SP 0: the highest source in the head location (nothing worn); SP does not stack (Cyberpunk RED core rulebook p. 184)"
+    },
+    {
+      "id": "cpr.armor.sp_body",
+      "value": 0,
+      "detail": "Body SP 0: the highest source in the body location (nothing worn); SP does not stack (Cyberpunk RED core rulebook p. 184)"
+    },
+    {
+      "id": "cpr.armor.penalty",
+      "value": 0,
+      "detail": "Armor Penalty 0: the most punishing penalty of the armour worn, taken once for both locations (Cyberpunk RED core rulebook p. 184; Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.ref",
+      "value": 7,
+      "detail": "REF 7 = max(0, REF 7 + Armor Penalty 0) (Cyberpunk RED core rulebook p. 184; Minimum 0, Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.dex",
+      "value": 7,
+      "detail": "DEX 7 = max(0, DEX 7 + Armor Penalty 0) (Cyberpunk RED core rulebook p. 184; Minimum 0, Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.move",
+      "value": 5,
+      "detail": "MOVE 5 = max(0, MOVE 5 + Armor Penalty 0) (Cyberpunk RED core rulebook p. 184; Minimum 0, Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.penalty_head",
+      "value": 0,
+      "detail": "head armour penalty 0: the most punishing Armor Penalty worn in the head location (nothing worn); the sheet takes it once, as cpr.armor.penalty (Cyberpunk RED core rulebook p. 184, p. 350)"
+    },
+    {
+      "id": "cpr.armor.penalty_body",
+      "value": 0,
+      "detail": "body armour penalty 0: the most punishing Armor Penalty worn in the body location (nothing worn); the sheet takes it once, as cpr.armor.penalty (Cyberpunk RED core rulebook p. 184, p. 350)"
+    },
+    {
+      "id": "cpr.cyberware.humanity_loss",
+      "value": 0,
+      "detail": "Humanity Loss 0: the preset Humanity Loss of 0 installed pieces (p. 112: at Character Generation Humanity Loss is preset)"
+    },
+    {
+      "id": "cpr.cyberware.humanity_cap",
+      "value": 50,
+      "detail": "Maximum Humanity 50: 10 x EMP 5 - 0 pieces of cyberware x 2 - 0 pieces of borgware x 4; 0 Humanity Loss cyberware excluded (p. 231)"
+    },
+    {
+      "id": "cpr.cyberware.body",
+      "value": 6,
+      "detail": "BODY 6: BODY 6 after Grafted Muscle and Bone Lace (+2, not to 11 or higher, p. 364) and Linear Frames (Sigma 12, Beta 14, p. 368)"
+    },
+    {
+      "id": "cpr.cyberware.sp_body",
+      "value": 0,
+      "detail": "Body SP 0 from cyberware: the highest of Skin Weave 7 and Subdermal Armor 11 installed (p. 365)"
+    },
+    {
+      "id": "cpr.cyberware.sp_head",
+      "value": 0,
+      "detail": "Head SP 0 from cyberware: the highest of Skin Weave 7 and Subdermal Armor 11 installed (p. 365)"
+    },
+    {
+      "id": "cpr.cyberware.initiative_bonus",
+      "value": 0,
+      "detail": "Initiative +0: Kerenzikov, always on (p. 360)"
+    },
+    {
+      "id": "cpr.cyberware.slots.fashionware.used",
+      "value": 0,
+      "detail": "Fashionware: 0 of 7 option slots used (p. 112)"
+    },
+    {
+      "id": "cpr.cyberware.slots.fashionware.capacity",
+      "value": 7,
+      "detail": "Fashionware: 7 option slots (p. 112-117, p. 359-368)"
+    },
+    {
+      "id": "cpr.cyberware.slots.internal.used",
+      "value": 0,
+      "detail": "Internal Body: 0 of 7 option slots used (p. 112)"
+    },
+    {
+      "id": "cpr.cyberware.slots.internal.capacity",
+      "value": 7,
+      "detail": "Internal Body: 7 option slots (p. 112-117, p. 359-368)"
+    },
+    {
+      "id": "cpr.cyberware.slots.external.used",
+      "value": 0,
+      "detail": "External Body: 0 of 7 option slots used (p. 112)"
+    },
+    {
+      "id": "cpr.cyberware.slots.external.capacity",
+      "value": 7,
+      "detail": "External Body: 7 option slots (p. 112-117, p. 359-368)"
+    },
+    {
+      "id": "cpr.wound.lightly_wounded",
+      "value": 40,
+      "detail": "Lightly Wounded below 40 HP: \"Less than Full HP\" of HP 40 (Cyberpunk RED core rulebook p. 186)"
+    },
+    {
+      "id": "cpr.wound.lightly_wounded_dv",
+      "value": 10,
+      "detail": "Stabilize Lightly Wounded DV10: TECH + First Aid or Paramedic + 1d10 (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.seriously_wounded",
+      "value": 20,
+      "detail": "Seriously Wounded below 20 HP: \"Less than 1/2 HP (round up)\" of HP 40 (Cyberpunk RED core rulebook p. 186)"
+    },
+    {
+      "id": "cpr.wound.seriously_wounded_dv",
+      "value": 13,
+      "detail": "Stabilize Seriously Wounded DV13: TECH + First Aid or Paramedic + 1d10 (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.mortally_wounded",
+      "value": 1,
+      "detail": "Mortally Wounded below 1 HP: \"Less than 1 HP\" of HP 40 (Cyberpunk RED core rulebook p. 186)"
+    },
+    {
+      "id": "cpr.wound.mortally_wounded_dv",
+      "value": 15,
+      "detail": "Stabilize Mortally Wounded DV15: TECH + First Aid or Paramedic + 1d10 (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.death_save",
+      "value": 6,
+      "detail": "Death Save 6 = BODY 6: roll a d10 plus the Death Save Penalty under it; a 10 always fails (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.base_death_save_penalty",
+      "value": 0,
+      "detail": "Base Death Save Penalty 0 = +1 per recorded Critical Injury that raises it (none recorded) (Cyberpunk RED core rulebook p. 221-222)"
+    },
+    {
+      "id": "cpr.skill.concentration",
+      "value": 6,
+      "detail": "Concentration base 6 = WILL 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.concentration",
+      "value": 0,
+      "detail": "Concentration level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.conceal_reveal_object",
+      "value": 6,
+      "detail": "Conceal/Reveal Object base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.conceal_reveal_object",
+      "value": 0,
+      "detail": "Conceal/Reveal Object level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.lip_reading",
+      "value": 6,
+      "detail": "Lip Reading base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.lip_reading",
+      "value": 0,
+      "detail": "Lip Reading level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.perception",
+      "value": 6,
+      "detail": "Perception base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.perception",
+      "value": 0,
+      "detail": "Perception level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.tracking",
+      "value": 6,
+      "detail": "Tracking base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.tracking",
+      "value": 0,
+      "detail": "Tracking level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.athletics",
+      "value": 7,
+      "detail": "Athletics base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.athletics",
+      "value": 0,
+      "detail": "Athletics level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.contortionist",
+      "value": 7,
+      "detail": "Contortionist base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.contortionist",
+      "value": 0,
+      "detail": "Contortionist level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.dance",
+      "value": 7,
+      "detail": "Dance base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.dance",
+      "value": 0,
+      "detail": "Dance level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.endurance",
+      "value": 6,
+      "detail": "Endurance base 6 = WILL 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.endurance",
+      "value": 0,
+      "detail": "Endurance level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.resist_torture_drugs",
+      "value": 6,
+      "detail": "Resist Torture/Drugs base 6 = WILL 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.resist_torture_drugs",
+      "value": 0,
+      "detail": "Resist Torture/Drugs level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.stealth",
+      "value": 7,
+      "detail": "Stealth base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.stealth",
+      "value": 0,
+      "detail": "Stealth level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.drive_land_vehicle",
+      "value": 7,
+      "detail": "Drive Land Vehicle base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.drive_land_vehicle",
+      "value": 0,
+      "detail": "Drive Land Vehicle level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pilot_air_vehicle",
+      "value": 7,
+      "detail": "Pilot Air Vehicle base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pilot_air_vehicle",
+      "value": 0,
+      "detail": "Pilot Air Vehicle level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pilot_sea_vehicle",
+      "value": 7,
+      "detail": "Pilot Sea Vehicle base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pilot_sea_vehicle",
+      "value": 0,
+      "detail": "Pilot Sea Vehicle level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.riding",
+      "value": 7,
+      "detail": "Riding base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.riding",
+      "value": 0,
+      "detail": "Riding level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.accounting",
+      "value": 6,
+      "detail": "Accounting base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.accounting",
+      "value": 0,
+      "detail": "Accounting level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.animal_handling",
+      "value": 6,
+      "detail": "Animal Handling base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.animal_handling",
+      "value": 0,
+      "detail": "Animal Handling level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.bureaucracy",
+      "value": 6,
+      "detail": "Bureaucracy base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.bureaucracy",
+      "value": 0,
+      "detail": "Bureaucracy level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.business",
+      "value": 6,
+      "detail": "Business base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.business",
+      "value": 0,
+      "detail": "Business level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.composition",
+      "value": 6,
+      "detail": "Composition base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.composition",
+      "value": 0,
+      "detail": "Composition level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.criminology",
+      "value": 6,
+      "detail": "Criminology base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.criminology",
+      "value": 0,
+      "detail": "Criminology level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.cryptography",
+      "value": 6,
+      "detail": "Cryptography base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.cryptography",
+      "value": 0,
+      "detail": "Cryptography level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.deduction",
+      "value": 6,
+      "detail": "Deduction base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.deduction",
+      "value": 0,
+      "detail": "Deduction level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.education",
+      "value": 6,
+      "detail": "Education base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.education",
+      "value": 0,
+      "detail": "Education level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.gamble",
+      "value": 6,
+      "detail": "Gamble base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.gamble",
+      "value": 0,
+      "detail": "Gamble level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.language",
+      "value": 6,
+      "detail": "Language base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.language",
+      "value": 0,
+      "detail": "Language level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.library_search",
+      "value": 6,
+      "detail": "Library Search base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.library_search",
+      "value": 0,
+      "detail": "Library Search level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.local_expert",
+      "value": 6,
+      "detail": "Local Expert base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.local_expert",
+      "value": 0,
+      "detail": "Local Expert level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.science",
+      "value": 6,
+      "detail": "Science base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.science",
+      "value": 0,
+      "detail": "Science level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.tactics",
+      "value": 6,
+      "detail": "Tactics base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.tactics",
+      "value": 0,
+      "detail": "Tactics level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.wilderness_survival",
+      "value": 6,
+      "detail": "Wilderness Survival base 6 = INT 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.wilderness_survival",
+      "value": 0,
+      "detail": "Wilderness Survival level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.brawling",
+      "value": 7,
+      "detail": "Brawling base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.brawling",
+      "value": 0,
+      "detail": "Brawling level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.evasion",
+      "value": 7,
+      "detail": "Evasion base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.evasion",
+      "value": 0,
+      "detail": "Evasion level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.martial_arts",
+      "value": 7,
+      "detail": "Martial Arts base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.martial_arts",
+      "value": 0,
+      "detail": "Martial Arts level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.melee_weapon",
+      "value": 7,
+      "detail": "Melee Weapon base 7 = DEX 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.melee_weapon",
+      "value": 0,
+      "detail": "Melee Weapon level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.acting",
+      "value": 8,
+      "detail": "Acting base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.acting",
+      "value": 0,
+      "detail": "Acting level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.play_instrument",
+      "value": 3,
+      "detail": "Play Instrument base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.play_instrument",
+      "value": 0,
+      "detail": "Play Instrument level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.archery",
+      "value": 7,
+      "detail": "Archery base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.archery",
+      "value": 0,
+      "detail": "Archery level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.autofire",
+      "value": 7,
+      "detail": "Autofire base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.autofire",
+      "value": 0,
+      "detail": "Autofire level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.handgun",
+      "value": 7,
+      "detail": "Handgun base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.handgun",
+      "value": 0,
+      "detail": "Handgun level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.heavy_weapons",
+      "value": 7,
+      "detail": "Heavy Weapons base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.heavy_weapons",
+      "value": 0,
+      "detail": "Heavy Weapons level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.shoulder_arms",
+      "value": 7,
+      "detail": "Shoulder Arms base 7 = REF 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.shoulder_arms",
+      "value": 0,
+      "detail": "Shoulder Arms level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.bribery",
+      "value": 8,
+      "detail": "Bribery base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.bribery",
+      "value": 0,
+      "detail": "Bribery level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.conversation",
+      "value": 5,
+      "detail": "Conversation base 5 = EMP 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.conversation",
+      "value": 0,
+      "detail": "Conversation level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.human_perception",
+      "value": 5,
+      "detail": "Human Perception base 5 = EMP 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.human_perception",
+      "value": 0,
+      "detail": "Human Perception level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.interrogation",
+      "value": 8,
+      "detail": "Interrogation base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.interrogation",
+      "value": 0,
+      "detail": "Interrogation level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.persuasion",
+      "value": 8,
+      "detail": "Persuasion base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.persuasion",
+      "value": 0,
+      "detail": "Persuasion level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.personal_grooming",
+      "value": 8,
+      "detail": "Personal Grooming base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.personal_grooming",
+      "value": 0,
+      "detail": "Personal Grooming level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.streetwise",
+      "value": 8,
+      "detail": "Streetwise base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.streetwise",
+      "value": 0,
+      "detail": "Streetwise level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.trading",
+      "value": 8,
+      "detail": "Trading base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.trading",
+      "value": 0,
+      "detail": "Trading level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.wardrobe_style",
+      "value": 8,
+      "detail": "Wardrobe & Style base 8 = COOL 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.wardrobe_style",
+      "value": 0,
+      "detail": "Wardrobe & Style level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.air_vehicle_tech",
+      "value": 3,
+      "detail": "Air Vehicle Tech base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.air_vehicle_tech",
+      "value": 0,
+      "detail": "Air Vehicle Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.basic_tech",
+      "value": 3,
+      "detail": "Basic Tech base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.basic_tech",
+      "value": 0,
+      "detail": "Basic Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.cybertech",
+      "value": 3,
+      "detail": "Cybertech base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.cybertech",
+      "value": 0,
+      "detail": "Cybertech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.demolitions",
+      "value": 3,
+      "detail": "Demolitions base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.demolitions",
+      "value": 0,
+      "detail": "Demolitions level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.electronics_security_tech",
+      "value": 3,
+      "detail": "Electronics/Security Tech base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.electronics_security_tech",
+      "value": 0,
+      "detail": "Electronics/Security Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.first_aid",
+      "value": 3,
+      "detail": "First Aid base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.first_aid",
+      "value": 0,
+      "detail": "First Aid level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.forgery",
+      "value": 3,
+      "detail": "Forgery base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.forgery",
+      "value": 0,
+      "detail": "Forgery level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.land_vehicle_tech",
+      "value": 3,
+      "detail": "Land Vehicle Tech base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.land_vehicle_tech",
+      "value": 0,
+      "detail": "Land Vehicle Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.paint_draw_sculpt",
+      "value": 3,
+      "detail": "Paint/Draw/Sculpt base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.paint_draw_sculpt",
+      "value": 0,
+      "detail": "Paint/Draw/Sculpt level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.paramedic",
+      "value": 3,
+      "detail": "Paramedic base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.paramedic",
+      "value": 0,
+      "detail": "Paramedic level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.photography_film",
+      "value": 3,
+      "detail": "Photography/Film base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.photography_film",
+      "value": 0,
+      "detail": "Photography/Film level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pick_lock",
+      "value": 3,
+      "detail": "Pick Lock base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pick_lock",
+      "value": 0,
+      "detail": "Pick Lock level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pick_pocket",
+      "value": 3,
+      "detail": "Pick Pocket base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pick_pocket",
+      "value": 0,
+      "detail": "Pick Pocket level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.sea_vehicle_tech",
+      "value": 3,
+      "detail": "Sea Vehicle Tech base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.sea_vehicle_tech",
+      "value": 0,
+      "detail": "Sea Vehicle Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.weaponstech",
+      "value": 3,
+      "detail": "Weaponstech base 3 = TECH 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.weaponstech",
+      "value": 0,
+      "detail": "Weaponstech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.reputation.level",
+      "value": 0,
+      "detail": "Reputation 0: Most Cyberpunk RED Characters start with a Reputation of 0 (p. 193); no deed has been awarded a Reputation Level"
+    },
+    {
+      "id": "cpr.reputation.facedown",
+      "value": 8,
+      "detail": "Facedown 8 + 1d10: COOL 8 + Reputation 0 + 1d10 (p. 194)"
+    },
+    {
+      "id": "cpr.ip.current",
+      "value": 0,
+      "detail": "Improvement Points 0 = 0 earned - 0 spent (Cyberpunk RED core rulebook p. 410-411)"
+    },
+    {
+      "id": "cpr.ip.total",
+      "value": 0,
+      "detail": "Improvement Points earned 0: the GM's awards as entered (p. 410)"
+    }
+  ],
+  "weaponDamage": [],
+  "selectedAlternateTraitKeys": [],
+  "selectedTraits": [],
+  "resolvedRacialTraits": {
+    "raceId": "",
+    "raceKey": "",
+    "raceName": "",
+    "book": "",
+    "appliedTraits": [],
+    "suppressions": [],
+    "firedFlags": [],
+    "inertFlags": [],
+    "unmatchedSelections": [],
+    "blockedAlternates": [],
+    "conflictingSelections": [],
+    "renderedTraitDescriptions": [],
+    "displayValueFeats": [],
+    "errors": [
+      "a Cyberpunk RED character has no Pathfinder race"
+    ]
+  },
+  "abilityScores": {
+    "strength": 0,
+    "dexterity": 0,
+    "constitution": 0,
+    "intelligence": 0,
+    "wisdom": 0,
+    "charisma": 0
+  },
+  "skillAllocations": [],
+  "equipmentSelections": [],
+  "sheetLines": [],
+  "sheetRulesUnavailableReason": "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows",
+  "featSkillBonuses": {
+    "skills": {},
+    "groups": {},
+    "contributions": [],
+    "situational": [],
+    "unknown": []
+  }
+}

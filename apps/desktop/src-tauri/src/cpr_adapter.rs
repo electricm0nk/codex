@@ -390,6 +390,78 @@ mod tests {
         std::fs::remove_dir_all(&characters_root).ok();
     }
 
+    /// The characters whose real `load_saved_character` responses the frontend Cyberpunk RED
+    /// sheet test (`cyberpunkSheetModel.test.ts`) renders: a bare Solo Streetrat (template row 1, no
+    /// sheet choices) and a kitted Solo whose cyberware lowers EMP, whose armour lowers REF, DEX
+    /// and MOVE, and whose two Critical Injuries (one that raises it) move the Base Death Save
+    /// Penalty.
+    fn sheet_fixture_characters() -> Vec<(CprSavedCharacter, codex::rules_core::cpr::input::CprSheetChoices)> {
+        use codex::rules_core::cpr::armor::{CprArmorLocation, CprWornArmor};
+        use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
+        use codex::rules_core::cpr::cyberware::CprCyberwareInstall;
+        use codex::rules_core::cpr::input::CprSheetChoices;
+        use codex::rules_core::cpr::roles::CprRole;
+
+        let mut streetrat = edgerunner();
+        for (stat, value) in CprStat::ALL.into_iter().zip([6, 7, 7, 3, 8, 6, 5, 5, 6, 5]) {
+            streetrat.input.stats.set(stat, value);
+        }
+        streetrat.character_id = "cpr-solo-streetrat".to_owned();
+        streetrat.revision_id = "cpr-solo-streetrat.rev.1".to_owned();
+        streetrat.display_label = "Solo Streetrat".to_owned();
+
+        let mut kitted = edgerunner();
+        kitted.character_id = "cpr-solo-kitted".to_owned();
+        kitted.revision_id = "cpr-solo-kitted.rev.1".to_owned();
+        kitted.display_label = "Kitted Solo".to_owned();
+        let choices = CprSheetChoices {
+            role: Some((CprRole::Solo, 4)),
+            skills: vec![("Handgun".to_owned(), 4)],
+            armor: vec![CprWornArmor { name: "Flak".to_owned(), location: CprArmorLocation::Body }],
+            cyberware: vec![CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None }],
+            criticals: vec![
+                CprRecordedCritical { location: CprCriticalLocation::Body, name: "Collapsed Lung".to_owned() },
+                CprRecordedCritical { location: CprCriticalLocation::Body, name: "Broken Ribs".to_owned() },
+            ],
+            weapons: vec!["Heavy Pistol".to_owned()],
+            ..CprSheetChoices::default()
+        };
+        vec![(streetrat, CprSheetChoices::default()), (kitted, choices)]
+    }
+
+    /// E4.1: the frontend Cyberpunk RED sheet test renders each fixture character's real
+    /// `load_saved_character` response. This keeps those files equal to what the adapter
+    /// returns today, so the frontend proof never runs on a stale engine answer.
+    /// Regenerate: `CPR_SHEET_FIXTURES_WRITE=1 cargo test --bin codex-desktop
+    /// the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses`.
+    #[test]
+    fn the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses() {
+        let write = std::env::var_os("CPR_SHEET_FIXTURES_WRITE").is_some();
+        let fixture_dir =
+            std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../src/characterHub/__tests__/cyberpunkSheetFixtures");
+        let characters_root = tempdir("sheet-fixtures");
+        let mut stale = Vec::new();
+        for (character, choices) in sheet_fixture_characters() {
+            let root = characters_root.join(&character.character_id);
+            CprCharacterStore::save(&character, &root).expect("saves");
+            CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
+            let loaded = load_saved_character_via_envelope(&root).expect("loads");
+            let json = serde_json::to_string_pretty(&loaded).expect("serialises") + "\n";
+            let path = fixture_dir.join(format!("{}.json", character.character_id));
+            if write {
+                std::fs::create_dir_all(&fixture_dir).expect("fixture dir");
+                std::fs::write(&path, &json).expect("writes the fixture");
+            } else if std::fs::read_to_string(&path).ok().as_deref() != Some(json.as_str()) {
+                stale.push(path.display().to_string());
+            }
+        }
+        std::fs::remove_dir_all(&characters_root).ok();
+        assert!(
+            stale.is_empty(),
+            "stale or missing Cyberpunk RED sheet fixtures {stale:?}; regenerate with CPR_SHEET_FIXTURES_WRITE=1 cargo test --bin codex-desktop the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses"
+        );
+    }
+
     /// A character whose saved choices the book refuses (Rank 11) does not load with a partial
     /// sheet: the load fails with the engine's reason.
     #[test]
