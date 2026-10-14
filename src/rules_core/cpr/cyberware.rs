@@ -217,10 +217,10 @@ impl CprCyberwareCatalog {
         let mut items = BTreeMap::new();
         let mut pool_capacity = BTreeMap::new();
         for item in records {
-            if let (Some(pool), Some(capacity)) = (&item.slot_pool, item.pool_capacity) {
-                if *pool_capacity.entry(pool.clone()).or_insert(capacity) != capacity {
-                    return Err(format!("cyberware.json: pool {pool} has two capacities"));
-                }
+            if let (Some(pool), Some(capacity)) = (&item.slot_pool, item.pool_capacity)
+                && *pool_capacity.entry(pool.clone()).or_insert(capacity) != capacity
+            {
+                return Err(format!("cyberware.json: pool {pool} has two capacities"));
             }
             let name = item.name.clone();
             if items.insert(name.clone(), item).is_some() {
@@ -333,10 +333,10 @@ impl CprCyberwareCatalog {
         // Printed prerequisites (the Linear Frames, p. 368).
         for item in &items {
             if let Some(prerequisites) = &item.prerequisites {
-                if let Some(min) = prerequisites.body_min {
-                    if base_body < min {
-                        return Err(rule(&item.name, format!("installation requires BODY {min}; BODY is {base_body}")));
-                    }
+                if let Some(min) = prerequisites.body_min
+                    && base_body < min
+                {
+                    return Err(rule(&item.name, format!("installation requires BODY {min}; BODY is {base_body}")));
                 }
                 for required in &prerequisites.requires {
                     if count(&required.name) < required.count {
@@ -457,10 +457,10 @@ impl CprCyberwareCatalog {
                     no_mount(Some(CprContainer::CyberaudioSuite))?
                 }
                 Some("cybereye") => {
-                    if let Some(pair) = item.requires_count {
-                        if eyes < pair {
-                            return Err(rule(name, format!("is paired: needs {pair} Cybereyes, {eyes} installed")));
-                        }
+                    if let Some(pair) = item.requires_count
+                        && eyes < pair
+                    {
+                        return Err(rule(name, format!("is paired: needs {pair} Cybereyes, {eyes} installed")));
                     }
                     match install.mount {
                         Some(CprMount::Eye(n)) if usize::from(n) < eyes => Some(CprContainer::Cybereye(n)),
@@ -476,10 +476,10 @@ impl CprCyberwareCatalog {
                     container
                 }
                 Some("cyberleg") => {
-                    if let Some(pair) = item.requires_count {
-                        if legs < pair {
-                            return Err(rule(name, format!("is paired: needs {pair} Cyberlegs, {legs} installed")));
-                        }
+                    if let Some(pair) = item.requires_count
+                        && legs < pair
+                    {
+                        return Err(rule(name, format!("is paired: needs {pair} Cyberlegs, {legs} installed")));
                     }
                     let container = limb(install.mount, false, true)?;
                     if container.is_none() {
