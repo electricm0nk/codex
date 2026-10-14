@@ -16,6 +16,7 @@ pub mod sheet;
 pub mod store;
 
 // lane A modules
+pub mod stats;
 
 // lane B modules
 pub mod cyberware;
