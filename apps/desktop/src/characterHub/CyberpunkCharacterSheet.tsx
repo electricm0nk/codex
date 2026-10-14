@@ -7,8 +7,8 @@ import { buildCyberpunkSheet, type CyberpunkSheetBox, type CyberpunkSheetCell } 
 
 /**
  * The Cyberpunk RED character sheet: the ten STATs (EMP as entered and current), the 66 skills
- * under their categories, Hit Points, Seriously Wounded, Death Save, Humanity, MOVE, LUCK and the
- * wound track. Its boxes are placed
+ * under their categories, Hit Points, Seriously Wounded, Death Save, Humanity, MOVE, LUCK, the
+ * wound track, armour, the weapons and their range DV rows. Its boxes are placed
  * by `cyberpunkSheetLayout.ts`; every number is one engine `cpr.` row (`cyberpunkSheetModel.ts`),
  * as `load_saved_character` composed it -- this file writes no number of its own.
  */
@@ -125,8 +125,8 @@ function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
             <tr>
               <th />
               {box.columns.map((column) => (
-                <th key={column} style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', textAlign: 'right' }}>
-                  {column}
+                <th key={typeof column === 'string' ? column : column.rowId} style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', textAlign: 'right' }}>
+                  {typeof column === 'string' ? column : <Value cell={column} />}
                 </th>
               ))}
             </tr>
@@ -148,7 +148,8 @@ function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
                 ) : null}
                 <tr>
                   <th data-cpr-label-of={ids} scope="row" style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0.2rem 0', textAlign: 'left' }}>
-                    {row.tag === undefined ? row.label : `${row.label} (${row.tag})`}
+                    {row.labelCell === undefined ? row.label : <Value cell={row.labelCell} />}
+                    {row.tag === undefined ? null : ` (${row.tag})`}
                   </th>
                   {box.columns === null ? (
                     <td style={cellStyle}>
@@ -192,6 +193,14 @@ function Missing() {
 }
 
 function Value(props: { cell: CyberpunkSheetCell }) {
+  if (props.cell.printed === true) {
+    // A printed line: dice stay literal, words stay words; the engine's text, never a number of ours.
+    return (
+      <span data-cpr-printed={props.cell.rowId} title={props.cell.detail} style={{ fontSize: '0.9rem', fontWeight: 600 }}>
+        {props.cell.value}
+      </span>
+    );
+  }
   return (
     <span data-cpr-row={props.cell.rowId} data-testid={props.cell.rowId} title={props.cell.detail} style={{ color: 'var(--color-accent)', fontSize: '0.95rem', fontWeight: 800 }}>
       {props.cell.value}

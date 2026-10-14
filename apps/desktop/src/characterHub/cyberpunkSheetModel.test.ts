@@ -18,6 +18,13 @@
  *    catalog (`list_cyberpunk_catalog('skill')`, here read from the same corpus file), each
  *    row's Level and Base the `cpr.skill_level.` / `cpr.skill.` rows -- the Base of a REF or
  *    DEX skill being the engine's armour-penalised one -- and no skill row left in Other totals.
+ * 6. (E4.3) The weapons, range DV and armour blocks, over a third character carrying one weapon
+ *    of each of the 11 ranged types (and a melee weapon), head and body armour and a shield:
+ *    each weapon's name, damage dice, ROF, Hands, Concealable, magazine and Skill Base are its
+ *    engine rows or printed lines; each weapon shows the D-1 single-shot range DV row of
+ *    `range_dv.json` that lists its type (and its Autofire row), read in the engine's range
+ *    bands; armour shows SP and penalty per location, the shield and the Armor Penalty.
+ *    Printed lines (dice, words) are `data-cpr-printed` spans whose text is the engine's line.
  */
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
@@ -30,7 +37,7 @@ import { buildCyberpunkSheet, isCyberpunkCharacter } from './cyberpunkSheetModel
 import { boxesInColumn } from './sheetLayout';
 import { assert, assertEqual } from '../testSupport/asserts';
 
-const CHARACTERS = ['cpr-solo-streetrat', 'cpr-solo-kitted'] as const;
+const CHARACTERS = ['cpr-solo-streetrat', 'cpr-solo-kitted', 'cpr-solo-arsenal'] as const;
 
 /** The rows the criterion names, each of which must be a tile on every character's sheet. */
 const CORE_ROWS = [
@@ -140,6 +147,12 @@ for (const id of CHARACTERS) {
   // 4b. No digit is written anywhere else (the character's name is the player's text; a label
   // read from a row id -- "cpr.weapon.0.rof" -- carries only digits of its own row ids).
   let rest = html.replace(/<span[^>]*data-cpr-row="[^"]+"[^>]*>[^<]*<\/span>/g, '');
+  // A printed line (dice stay literal; a weapon's name; "N/A") is the engine's own text.
+  const lines = new Map(detail.sheetLines.map((line) => [line.id, line.value === '' ? line.prose : line.value]));
+  rest = rest.replace(/<span[^>]*data-cpr-printed="([^"]+)"[^>]*>([^<]*)<\/span>/g, (_whole, lineId: string, text: string) => {
+    assertEqual(text, lines.get(lineId), `${id}: printed ${lineId} is the engine's line`);
+    return '';
+  });
   rest = rest.replace(/<[a-z0-9]+[^>]*data-cpr-name[^>]*>[^<]*<\/[a-z0-9]+>/g, '');
   rest = rest.replace(/<[a-z0-9]+[^>]*data-cpr-label-of="([^"]+)"[^>]*>([^<]*)<\/[a-z0-9]+>/g, (_whole, ids: string, label: string) => {
     for (const digits of label.match(/\d+/g) ?? []) {
@@ -223,7 +236,7 @@ for (const id of CHARACTERS) {
   const other = sheet.boxes.find((box) => box.id === 'other');
   assert(other === undefined || other.rows.every((row) => !/^cpr\.skill(_level)?\./.test(row.label)), `${id}: no skill row is left in Other totals`);
 }
-assertEqual(checkedSkills, 132, 'both characters: 66 skills each checked');
+assertEqual(checkedSkills, 198, 'all three characters: 66 skills each checked');
 // The kitted Solo wears Flak: its REF and DEX skills show the penalty (the check above bites).
 const kittedRows = new Map(fixture('cpr-solo-kitted').explanations.map((row) => [row.id, row.value]));
 assert(kittedRows.get('cpr.armor.ref') !== kittedRows.get('cpr.stat.ref'), 'the kitted fixture lowers REF by its armour');
@@ -268,8 +281,119 @@ const value = (rowId: string) => kitted.explanations.find((row) => row.id === ro
 assert(value('cpr.derived.emp_current') !== value('cpr.stat.emp'), 'the kitted fixture lowers EMP, so max/current is exercised');
 assert(value('cpr.wound.base_death_save_penalty') !== 0, 'the kitted fixture raises the Base Death Save Penalty');
 
+// 6. (E4.3) Weapons, range DV and armour.
+/** The weapon table and the range DV table as the corpus holds them (`weapon.json`, `range_dv.json`). */
+const WEAPONS = JSON.parse(readFileSync(new URL('../../../../data/cyberpunk-red/corpus/weapon.json', import.meta.url), 'utf8')) as CyberpunkRecord[];
+const RANGE_DV = JSON.parse(readFileSync(new URL('../../../../data/cyberpunk-red/corpus/range_dv.json', import.meta.url), 'utf8')) as Array<{
+  mode: string;
+  weapon_types: string[];
+  bands: Array<{ max_m_yds: number; dv: number | null }>;
+}>;
+const RANGED_TYPES = WEAPONS.filter((record) => record.weapon_class === 'ranged').map((record) => String(record.name));
+assertEqual(RANGED_TYPES.length, 11, 'the weapon table holds 11 ranged types');
+let checkedWeapons = 0;
+let checkedDvCells = 0;
+for (const id of CHARACTERS) {
+  const detail = fixture(id);
+  const byId = new Map(detail.explanations.map((row) => [row.id, row.value]));
+  const lines = new Map(detail.sheetLines.map((line) => [line.id, line.value === '' ? line.prose : line.value]));
+  const sheet = buildCyberpunkSheet(detail, SKILLS);
+  const other = sheet.boxes.find((box) => box.id === 'other');
+  assert(
+    other === undefined || other.rows.every((row) => !/^cpr\.(weapon|armor|range_band)\./.test(row.label)),
+    `${id}: no weapon, armour or range row is left in Other totals: ${other?.rows.map((row) => row.label).join(',')}`,
+  );
+  const html = render(detail);
+  const printed = new Set([...html.matchAll(/data-cpr-printed="([^"]+)"/g)].map((m) => m[1]));
+  for (const line of detail.sheetLines) {
+    if (line.id.startsWith('cpr.weapon.')) {
+      assert(printed.has(line.id), `${id}: the printed weapon line ${line.id} is on the sheet`);
+    }
+  }
+
+  // Armour: SP and penalty per location, the shield, and the Armor Penalty taken once.
+  const armour = sheet.boxes.find((box) => box.id === 'armour');
+  assert(armour !== undefined, `${id}: the armour box is on the sheet`);
+  const armourCells = (label: string) => armour?.rows.find((row) => row.label === label)?.cells.map((cell) => cell?.rowId ?? null).join(',');
+  assertEqual(armour?.columns?.join(','), 'SP,Penalty', `${id}: armour shows SP and Penalty`);
+  assertEqual(armourCells('Head'), 'cpr.armor.sp_head,cpr.armor.penalty_head', `${id}: head armour`);
+  assertEqual(armourCells('Body'), 'cpr.armor.sp_body,cpr.armor.penalty_body', `${id}: body armour`);
+  assertEqual(armourCells('Armor Penalty (REF, DEX, MOVE)'), ',cpr.armor.penalty', `${id}: the Armor Penalty`);
+  if (byId.has('cpr.armor.shield_hp')) {
+    assertEqual(armourCells('Shield (HP)'), 'cpr.armor.shield_hp,cpr.armor.shield_penalty', `${id}: the shield`);
+  }
+
+  const weapons = sheet.boxes.find((box) => box.id === 'weapons');
+  const indexes = [...new Set(detail.explanations.concat().map((row) => row.id).concat(detail.sheetLines.map((line) => line.id)).flatMap((rowId) => {
+    const m = /^cpr\.weapon\.(\d+)\./.exec(rowId);
+    return m === null ? [] : [Number(m[1])];
+  }))].sort((a, b) => a - b);
+  if (indexes.length === 0) {
+    assert(weapons === undefined, `${id}: no weapon, no weapons box`);
+    continue;
+  }
+  assert(weapons !== undefined, `${id}: the weapons box is on the sheet`);
+  assertEqual(weapons?.columns?.join(','), 'DMG,ROF,Hands,Concealable,Magazine,Skill Base', `${id}: the weapon columns`);
+  assertEqual(weapons?.rows.length, indexes.length, `${id}: one weapon row per weapon`);
+  const ranges = sheet.boxes.find((box) => box.id === 'rangeDv');
+  const bandRows = detail.explanations.filter((row) => row.id.startsWith('cpr.range_band.'));
+  assertEqual(
+    ranges?.columns?.map((column) => (typeof column === 'string' ? column : column.rowId)).join(','),
+    bandRows.map((row) => row.id).join(','),
+    `${id}: the range DV table is headed by the engine's range bands`,
+  );
+  for (const [n, index] of indexes.entries()) {
+    const at = (field: string) => `cpr.weapon.${index}.${field}`;
+    const row = weapons?.rows[n];
+    const name = lines.get(at('name'));
+    assert(name !== undefined, `${id}: weapon ${index} has its printed name`);
+    assertEqual(row?.labelCell?.value, name, `${id}: weapon ${index} is labelled with its name`);
+    const expected = ['damage', 'rof', 'hands', 'concealable', 'magazine', 'skill_base'].map((field) =>
+      byId.has(at(field)) ? String(byId.get(at(field))) : (lines.get(at(field)) ?? null),
+    );
+    assertEqual(JSON.stringify(row?.cells.map((cell) => cell?.value ?? null)), JSON.stringify(expected), `${id}: ${name} row = its rows and lines`);
+    for (const cell of row?.cells ?? []) {
+      assert(cell === null || cell.rowId.startsWith(`cpr.weapon.${index}.`), `${id}: ${name}: ${cell?.rowId} is its own row`);
+    }
+    // Every ranged weapon carries its Skill Base, the twin of its weapon skill's row.
+    const record = WEAPONS.find((weapon) => weapon.name === name);
+    if (record?.weapon_class === 'ranged') {
+      assertEqual(byId.get(at('skill_base')), byId.get(`cpr.skill.${slugOf(String(record.skill))}`), `${id}: ${name}: Skill Base = the ${String(record.skill)} row`);
+      assert(byId.has(at('hands')), `${id}: ${name}: Hands is an engine row`);
+    }
+
+    // D-1: the single-shot row whose weapon_types names this type, band by band; and Autofire.
+    for (const mode of ['single_shot', 'autofire'] as const) {
+      const table = RANGE_DV.find((dv) => dv.mode === mode && dv.weapon_types.includes(String(name)));
+      const label = mode === 'autofire' ? 'Autofire' : undefined;
+      const dvRow = ranges?.rows.find((r) => r.labelCell?.rowId === at('name') && r.tag === label);
+      if (table === undefined) {
+        assert(record?.weapon_class !== 'ranged' || mode === 'autofire', `${id}: ${name}: a ranged type has a D-1 row`);
+        assert(dvRow === undefined, `${id}: ${name}: no ${mode} DV row`);
+        continue;
+      }
+      assert(dvRow !== undefined, `${id}: ${name} shows its ${mode} range DV row`);
+      const field = mode === 'autofire' ? 'autofire_dv' : 'range_dv';
+      for (const [b, band] of table.bands.entries()) {
+        const dvCell = dvRow?.cells[b] ?? null;
+        assertEqual(dvCell?.rowId, at(`${field}.${b}`), `${id}: ${name} ${mode} band ${b} cell`);
+        assertEqual(dvCell?.value, band.dv === null ? 'N/A' : String(band.dv), `${id}: ${name} ${mode} band ${b} = range_dv.json`);
+        assertEqual(dvCell?.printed === true, band.dv === null, `${id}: ${name} ${mode} band ${b}: N/A is printed, a DV is a row`);
+        assertEqual(Number(byId.get(bandRows[b]?.id ?? '')), band.max_m_yds, `${id}: band ${b} reads to ${band.max_m_yds} m/yds`);
+        checkedDvCells += 1;
+      }
+    }
+    checkedWeapons += 1;
+  }
+}
+const arsenalNames = new Set(fixture('cpr-solo-arsenal').sheetLines.filter((line) => line.id.endsWith('.name')).map((line) => line.value));
+for (const type of RANGED_TYPES) {
+  assert(arsenalNames.has(type), `the arsenal fixture carries a ${type}`);
+}
+assertEqual(checkedWeapons, 1 + 12, 'kitted Heavy Pistol + the arsenal\'s 11 ranged types and 1 melee weapon');
+
 for (const gameSystem of ['pf1', 'starfinder-1e']) {
   assertEqual(isCyberpunkCharacter({ gameSystem }), false, `a ${gameSystem} character does not open the Cyberpunk RED sheet`);
 }
 assert(checkedRows > 0, 'rows were checked');
-console.log(`cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups`);
+console.log(`cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells`);

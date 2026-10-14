@@ -77,7 +77,8 @@ pub struct CprPrintedLine {
     pub id: String,
     pub label: String,
     pub form: CprPrintedForm,
-    /// The dice as written (`3d6`); empty for words.
+    /// The dice as written (`3d6`), or the few words a sheet cell shows (`Yes`, `N/A`, a
+    /// weapon's name); empty for a rule paragraph, which is the prose alone.
     pub value: String,
     pub prose: String,
 }
@@ -92,11 +93,63 @@ pub struct CprSheet {
 #[derive(Debug, Clone, Deserialize)]
 struct WeaponRecord {
     name: String,
+    weapon_class: String,
     damage: Option<String>,
     rof: Option<u8>,
     standard_magazine: Option<u16>,
+    /// Hands Required: a number for a ranged weapon (p. 172), words for melee ("Varies by
+    /// type", p. 93) and some Exotic Weapons.
+    hands: Option<serde_json::Value>,
+    can_be_concealed: Option<bool>,
+    skill: Option<String>,
+    /// The weapon type an Exotic Weapon is built on (p. 348).
+    base_weapon: Option<String>,
     source_page: String,
     text: String,
+}
+
+/// "Melee weapons use the Melee Weapon Skill to attack" (Cyberpunk RED core rulebook p. 176).
+const MELEE_SKILL: &str = "Melee Weapon";
+
+impl WeaponRecord {
+    fn attack_skill(&self) -> Option<String> {
+        self.skill.clone().or_else(|| (self.weapon_class == "melee").then(|| MELEE_SKILL.to_owned()))
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+struct RangeBand {
+    range: String,
+    max_m_yds: u16,
+    dv: Option<u8>,
+}
+
+/// One row of the range DV tables (p. 173): single shot, or Autofire.
+#[derive(Debug, Clone, Deserialize)]
+struct RangeDvRecord {
+    mode: String,
+    row_label: String,
+    /// The weapon types the row covers (D-1 for the single-shot rows).
+    weapon_types: Vec<String>,
+    bands: Vec<RangeBand>,
+    source_page: String,
+}
+
+/// The range DV rows, checked to share one set of range bands (the table's column heads).
+fn range_dv_records(corpus_dir: &Path) -> Result<Vec<RangeDvRecord>, String> {
+    let records: Vec<RangeDvRecord> = read_records(corpus_dir, "range_dv.json")?;
+    let widest = records.iter().max_by_key(|r| r.bands.len()).ok_or("range_dv.json holds no row")?;
+    for record in &records {
+        for (band, head) in record.bands.iter().zip(&widest.bands) {
+            if band.max_m_yds != head.max_m_yds {
+                return Err(format!(
+                    "range_dv.json: the {} row's band '{}' does not match the table's '{}'",
+                    record.row_label, band.range, head.range
+                ));
+            }
+        }
+    }
+    Ok(records)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -152,6 +205,7 @@ pub struct CprSheetCatalogs {
     roles: CprRoleCatalog,
     reputation: CprReputationCatalog,
     weapons: Vec<WeaponRecord>,
+    range_dv: Vec<RangeDvRecord>,
     shields: Vec<ShieldRecord>,
     housing: Vec<HousingRecord>,
     programs: Vec<ProgramRecord>,
@@ -169,6 +223,7 @@ impl CprSheetCatalogs {
             roles: CprRoleCatalog::load(corpus_dir)?,
             reputation: CprReputationCatalog::load(corpus_dir)?,
             weapons: read_records(corpus_dir, "weapon.json")?,
+            range_dv: range_dv_records(corpus_dir)?,
             // The held armour (the Bulletproof Shield) has HP and no SP (p. 350).
             shields: read_records::<ShieldRecord>(corpus_dir, "armor.json")?
                 .into_iter()
@@ -212,6 +267,99 @@ fn deck_items(catalogs: &CprSheetCatalogs, programs: &[String], hardware: &[Stri
         items.push(CprDeckItem::hardware(name, slots));
     }
     Ok(items)
+}
+
+fn words(id: String, label: String, value: String, prose: String) -> CprPrintedLine {
+    CprPrintedLine { id, label, form: CprPrintedForm::Words, value, prose }
+}
+
+/// The weapon block of weapon `i` beyond ROF, magazine and damage: its name, Hands Required,
+/// Can be Concealed?, the Skill Base of its weapon skill, and its range DV rows -- the
+/// single-shot row the D-1 mapping gives its type (an Exotic Weapon reads its base type's row)
+/// and, for an Autofire weapon, its Autofire row. A band the table prints "N/A" is printed, not
+/// a number. `range_bands` is set to the table whose bands the DV rows are read in.
+fn weapon_block<'a>(
+    catalogs: &'a CprSheetCatalogs,
+    i: usize,
+    weapon: &WeaponRecord,
+    rows: &mut Vec<ComputationExplanation>,
+    printed: &mut Vec<CprPrintedLine>,
+    range_bands: &mut Option<&'a RangeDvRecord>,
+) -> Result<(), String> {
+    let name = &weapon.name;
+    let page = &weapon.source_page;
+    let base = weapon.base_weapon.as_deref().and_then(|b| catalogs.weapons.iter().find(|w| w.name == b));
+    printed.push(words(
+        format!("cpr.weapon.{i}.name"),
+        "Weapon".to_owned(),
+        name.clone(),
+        format!("{name}: {} weapon ({page})", weapon.weapon_class),
+    ));
+    match &weapon.hands {
+        Some(serde_json::Value::Number(hands)) => {
+            let hands = hands.as_u64().and_then(|h| u32::try_from(h).ok()).ok_or_else(|| format!("{name}: Hands Required {hands} is not a count"))?;
+            rows.push(row(format!("cpr.weapon.{i}.hands"), sheet_number("hands", hands)?, format!("{name} Hands Required {hands} (Cyberpunk RED core rulebook {page})")));
+        }
+        Some(serde_json::Value::String(hands)) => printed.push(words(
+            format!("cpr.weapon.{i}.hands"),
+            format!("{name} hands"),
+            hands.clone(),
+            format!("{name} Hands Required: {hands} ({page})"),
+        )),
+        _ => {}
+    }
+    if let Some(concealable) = weapon.can_be_concealed {
+        printed.push(words(
+            format!("cpr.weapon.{i}.concealable"),
+            format!("{name} concealable"),
+            if concealable { "Yes" } else { "No" }.to_owned(),
+            format!(
+                "{name} {} be concealed under clothing with the Conceal/Reveal Object Skill ({page})",
+                if concealable { "can" } else { "cannot" }
+            ),
+        ));
+    }
+    if let Some(skill) = weapon.attack_skill().or_else(|| base.and_then(WeaponRecord::attack_skill)) {
+        let skill_id = format!("cpr.skill.{}", slug(&skill));
+        let skill_base = rows
+            .iter()
+            .find(|r| r.id == skill_id)
+            .map(|r| r.value)
+            .ok_or_else(|| format!("{name}: its skill '{skill}' has no Skill Base row ({skill_id})"))?;
+        rows.push(row(
+            format!("cpr.weapon.{i}.skill_base"),
+            skill_base,
+            format!("{name} Skill Base {skill_base}: the {skill} Skill Base ({skill_id}), the skill this weapon attacks with (Cyberpunk RED core rulebook {page}; melee, p. 176)"),
+        ));
+    }
+    let typed = |mode: &str, of: &str| catalogs.range_dv.iter().find(|r| r.mode == mode && r.weapon_types.iter().any(|t| t == of));
+    let single = typed("single_shot", name).or_else(|| base.and_then(|b| typed("single_shot", &b.name)));
+    for (record, field, what) in [(single, "range_dv", "range DV"), (typed("autofire", name), "autofire_dv", "Autofire DV")] {
+        let Some(record) = record else { continue };
+        for (b, band) in record.bands.iter().enumerate() {
+            let id = format!("cpr.weapon.{i}.{field}.{b}");
+            match band.dv {
+                Some(dv) => rows.push(row(
+                    id,
+                    i16::from(dv),
+                    format!(
+                        "{name} {what} {dv} at {} (the {} row, D-1; Cyberpunk RED core rulebook {})",
+                        band.range, record.row_label, record.source_page
+                    ),
+                )),
+                None => printed.push(words(
+                    id,
+                    format!("{name} {what} at {}", band.range),
+                    "N/A".to_owned(),
+                    format!("{name}: no {what} at {}; the {} row prints N/A ({})", band.range, record.row_label, record.source_page),
+                )),
+            }
+        }
+        if range_bands.is_none_or(|t| t.bands.len() < record.bands.len()) {
+            *range_bands = Some(record);
+        }
+    }
+    Ok(())
 }
 
 /// Composes the whole sheet of one character. A choice the book does not allow (an unknown
@@ -387,6 +535,7 @@ pub fn compose_sheet(
     }
     rows.extend(reputation_rows(entered.get(CprStat::Cool), &reputation, &catalogs.reputation));
 
+    let mut range_bands: Option<&RangeDvRecord> = None;
     for (i, name) in choices.weapons.iter().enumerate() {
         let weapon = catalogs
             .weapons
@@ -420,6 +569,17 @@ pub fn compose_sheet(
                 prose: format!("{name}: {} ({})", weapon.text, weapon.source_page),
             },
         });
+        weapon_block(catalogs, i, weapon, &mut rows, &mut printed, &mut range_bands)?;
+    }
+    // The range bands the DV rows above are read in, once: each band's farthest m/yds.
+    if let Some(table) = range_bands {
+        for (b, band) in table.bands.iter().enumerate() {
+            rows.push(row(
+                format!("cpr.range_band.{b}.max"),
+                sheet_number("range band", u32::from(band.max_m_yds))?,
+                format!("Range band {}: {} (Cyberpunk RED core rulebook {})", b + 1, band.range, table.source_page),
+            ));
+        }
     }
 
     let ip = choices.improvement_points.unwrap_or_default();
@@ -503,6 +663,10 @@ mod tests {
 
     fn row(sheet: &CprSheet, id: &str) -> i16 {
         sheet.rows.iter().find(|r| r.id == id).unwrap_or_else(|| panic!("no row {id}")).value
+    }
+
+    fn has_row(sheet: &CprSheet, id: &str) -> bool {
+        sheet.rows.iter().any(|r| r.id == id)
     }
 
     /// A Solo with cyberware that changes BODY, SP, Initiative and EMP, armour with a penalty,
@@ -665,6 +829,81 @@ mod tests {
         assert!(!sheet.rows.iter().any(|r| r.id.starts_with("cpr.netrunning.")), "a Solo carries no deck block");
     }
 
+    /// The 11 ranged weapon types of the weapon table (file p172) and a melee weapon (file p093),
+    /// carried by the armoured Kestrel (REF 8 -> 4 under Flak, Handgun 4). Every expected value is
+    /// read from the page: Hands Required and Can be Concealed? (p172; melee "Varies by type",
+    /// p093), the weapon's Skill (p172; "Melee weapons use the Melee Weapon Skill", file p177),
+    /// and the single-shot and Autofire range DV rows (file p174), with the D-1 mapping of the
+    /// 11 types onto the 8 single-shot rows (decisions.md §20.1).
+    #[test]
+    fn every_ranged_weapon_carries_hands_concealability_its_skill_base_and_its_d1_range_dv_row() {
+        const NA: Option<i16> = None;
+        let pistol = [Some(13), Some(15), Some(20), Some(25), Some(30), Some(30), NA, NA];
+        let smg = [Some(15), Some(13), Some(15), Some(20), Some(25), Some(25), Some(30), NA];
+        let shotgun = [Some(13), Some(15), Some(20), Some(25), Some(30), Some(35), NA, NA];
+        let assault = [Some(17), Some(16), Some(15), Some(13), Some(15), Some(20), Some(25), Some(30)];
+        let sniper = [Some(30), Some(25), Some(25), Some(20), Some(15), Some(16), Some(17), Some(20)];
+        let bows = [Some(15), Some(13), Some(15), Some(17), Some(20), Some(22), NA, NA];
+        let grenade = [Some(16), Some(15), Some(15), Some(17), Some(20), Some(22), Some(25), NA];
+        let rocket = [Some(17), Some(16), Some(15), Some(15), Some(20), Some(20), Some(25), Some(30)];
+        // (name, hands, concealable, skill base, single-shot row, autofire row)
+        let handgun = 4 + 4;
+        let ref_only = 4;
+        let table: [(&str, i16, &str, i16, [Option<i16>; 8], Option<[i16; 5]>); 11] = [
+            ("Medium Pistol", 1, "Yes", handgun, pistol, None),
+            ("Heavy Pistol", 1, "Yes", handgun, pistol, None),
+            ("Very Heavy Pistol", 1, "No", handgun, pistol, None),
+            ("SMG", 1, "Yes", handgun, smg, Some([20, 17, 20, 25, 30])),
+            ("Heavy SMG", 1, "No", handgun, smg, Some([20, 17, 20, 25, 30])),
+            ("Shotgun", 2, "No", ref_only, shotgun, None),
+            ("Assault Rifle", 2, "No", ref_only, assault, Some([22, 20, 17, 20, 25])),
+            ("Sniper Rifle", 2, "No", ref_only, sniper, None),
+            ("Bows & Crossbows", 2, "No", ref_only, bows, None),
+            ("Grenade Launcher", 2, "No", ref_only, grenade, None),
+            ("Rocket Launcher", 2, "No", ref_only, rocket, None),
+        ];
+        let (input, mut choices) = kestrel();
+        choices.weapons = table.iter().map(|w| w.0.to_owned()).chain(["Heavy Melee Weapon".to_owned()]).collect();
+        let sheet = compose(&(input, choices)).expect("composes");
+        let has = |id: &str| sheet.rows.iter().any(|r| r.id == id);
+        let line = |id: &str| sheet.printed.iter().find(|p| p.id == id).unwrap_or_else(|| panic!("no printed line {id}"));
+
+        for (i, (name, hands, concealable, skill_base, single, autofire)) in table.iter().enumerate() {
+            let at = |field: &str| format!("cpr.weapon.{i}.{field}");
+            assert_eq!(line(&at("name")).value, *name);
+            assert_eq!(row(&sheet, &at("hands")), *hands, "{name} Hands Required");
+            assert_eq!((line(&at("concealable")).form, line(&at("concealable")).value.as_str()), (CprPrintedForm::Words, *concealable), "{name}");
+            assert_eq!(row(&sheet, &at("skill_base")), *skill_base, "{name} Skill Base");
+            for (band, dv) in single.iter().enumerate() {
+                let id = at(&format!("range_dv.{band}"));
+                match dv {
+                    Some(dv) => assert_eq!(row(&sheet, &id), *dv, "{name} band {band}"),
+                    None => {
+                        assert!(!has(&id), "{name} band {band} is N/A, not a number");
+                        assert_eq!(line(&id).value, "N/A", "{name} band {band}");
+                    }
+                }
+            }
+            match autofire {
+                Some(dvs) => {
+                    for (band, dv) in dvs.iter().enumerate() {
+                        assert_eq!(row(&sheet, &at(&format!("autofire_dv.{band}"))), *dv, "{name} autofire band {band}");
+                    }
+                }
+                None => assert!(!sheet.rows.iter().any(|r| r.id.starts_with(&at("autofire_dv."))), "{name} has no Autofire"),
+            }
+        }
+        // The eight range bands, once: the farthest m/yds of each (file p174).
+        let bands: Vec<i16> = (0..8).map(|b| row(&sheet, &format!("cpr.range_band.{b}.max"))).collect();
+        assert_eq!(bands, [6, 12, 25, 50, 100, 200, 400, 800]);
+
+        // The melee weapon: Melee Weapon Skill Base (DEX 3 under Flak + 0), hands printed, no range DV.
+        assert_eq!(line("cpr.weapon.11.hands").value, "Varies by type");
+        assert_eq!(line("cpr.weapon.11.concealable").value, "No");
+        assert_eq!(row(&sheet, "cpr.weapon.11.skill_base"), 3);
+        assert!(!sheet.rows.iter().any(|r| r.id.starts_with("cpr.weapon.11.range_dv.")), "a melee weapon has no range DV");
+    }
+
     /// Every number is one row: ids are unique, all start `cpr.`, and the twin rows two modules
     /// emit for one sheet value agree.
     #[test]
@@ -679,6 +918,9 @@ mod tests {
             assert_eq!(row(&sheet, "cpr.derived.death_save"), row(&sheet, "cpr.wound.death_save"));
             assert_eq!(row(&sheet, "cpr.derived.seriously_wounded"), row(&sheet, "cpr.wound.seriously_wounded"));
             assert_eq!(row(&sheet, "cpr.derived.hit_points"), row(&sheet, "cpr.wound.lightly_wounded"));
+            if has_row(&sheet, "cpr.weapon.0.skill_base") {
+                assert_eq!(row(&sheet, "cpr.weapon.0.skill_base"), row(&sheet, "cpr.skill.handgun"), "the Heavy Pistol's Skill Base is the Handgun row");
+            }
         }
     }
 

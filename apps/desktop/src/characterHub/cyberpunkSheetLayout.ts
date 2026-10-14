@@ -13,7 +13,7 @@ import type { LayoutBox } from './sheetLayout';
  */
 
 /** The sheet's boxes. `other` holds every engine row no box above names, so none is dropped. */
-export type CyberpunkSheetBoxId = 'stats' | 'skills' | 'vitals' | 'woundTrack' | 'other';
+export type CyberpunkSheetBoxId = 'stats' | 'skills' | 'vitals' | 'woundTrack' | 'armour' | 'weapons' | 'rangeDv' | 'other';
 
 /** Left: the ten STATs and the skills. Right: what they give, the wound track, and the rows not
  * yet laid out. */
@@ -44,5 +44,12 @@ export const CYBERPUNK_SHEET_LAYOUT: readonly LayoutBox<CyberpunkSheetBoxId, Cyb
   // The Wound States with the HP each begins below and its Stabilization DV, then the Death Save
   // and the Base Death Save Penalty.
   { id: 'woundTrack', column: 'vitals', order: 1, boxStyle: BOX },
-  { id: 'other', column: 'vitals', order: 2, boxStyle: BOX },
+  // SP and Armor Penalty per location (head, body), the shield's HP and penalty, and the Armor
+  // Penalty taken once on REF, DEX and MOVE.
+  { id: 'armour', column: 'vitals', order: 2, boxStyle: BOX },
+  // One row per weapon: damage dice (printed), ROF, Hands, Concealable, magazine, Skill Base.
+  { id: 'weapons', column: 'vitals', order: 3, boxStyle: BOX },
+  // Each weapon's single-shot range DV row (D-1) and Autofire row, under the range bands.
+  { id: 'rangeDv', column: 'vitals', order: 4, boxStyle: BOX },
+  { id: 'other', column: 'vitals', order: 5, boxStyle: BOX },
 ];

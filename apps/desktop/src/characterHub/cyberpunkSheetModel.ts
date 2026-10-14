@@ -22,12 +22,15 @@ export function isCyberpunkCharacter(summary: Pick<CharacterSummaryDto, 'gameSys
   return summary.gameSystem === CYBERPUNK_GAME_SYSTEM;
 }
 
-/** One number on the sheet: an engine row's value. */
+/** One figure on the sheet: an engine row's value, or (`printed`) an engine printed line's
+ * text -- dice as written, a weapon's name, "N/A". */
 export interface CyberpunkSheetCell {
   rowId: string;
   value: string;
-  /** The engine's own derivation text for the row, verbatim. */
+  /** The engine's own derivation text for the row (a printed line's prose), verbatim. */
   detail: string;
+  /** A printed line (`sheetLines`), not a computed number. */
+  printed?: boolean;
 }
 
 export interface CyberpunkSheetRow {
@@ -37,16 +40,19 @@ export interface CyberpunkSheetRow {
   /** The heading the row sits under inside its box (a skill's category); `null` when the
    * catalog that names it has not arrived. */
   group?: string | null;
-  /** A short text tag printed after the label (a skill's linked STAT). */
+  /** A short text tag printed after the label (a skill's linked STAT; "Autofire"). */
   tag?: string;
+  /** The label as an engine printed line (a weapon's name), shown in place of `label`. */
+  labelCell?: CyberpunkSheetCell;
 }
 
 export interface CyberpunkSheetBox {
   id: CyberpunkSheetBoxId;
   title: string;
-  /** Column headings when each row has one value per column; `null` when a row's values read
-   * as one figure ("current / max"). */
-  columns: string[] | null;
+  /** Column headings when each row has one value per column -- words, or an engine row when the
+   * heading is a number (a range band's m/yds); `null` when a row's values read as one figure
+   * ("current / max"). */
+  columns: (string | CyberpunkSheetCell)[] | null;
   rows: CyberpunkSheetRow[];
 }
 
@@ -95,6 +101,26 @@ const WOUND_SINGLES: readonly { id: string; label: string }[] = [
   { id: 'cpr.wound.base_death_save_penalty', label: 'Base Death Save Penalty' },
 ];
 
+/** The armour box: label -> its SP (or shield HP) row and its penalty row. */
+const ARMOUR: readonly { label: string; ids: readonly [string | null, string] }[] = [
+  { label: 'Head', ids: ['cpr.armor.sp_head', 'cpr.armor.penalty_head'] },
+  { label: 'Body', ids: ['cpr.armor.sp_body', 'cpr.armor.penalty_body'] },
+  { label: 'Shield (HP)', ids: ['cpr.armor.shield_hp', 'cpr.armor.shield_penalty'] },
+  { label: 'Armor Penalty (REF, DEX, MOVE)', ids: [null, 'cpr.armor.penalty'] },
+];
+
+/** The weapon box's columns: heading -> the field of `cpr.weapon.<n>.<field>` (row or line). */
+const WEAPON_FIELDS: readonly { heading: string; field: string }[] = [
+  { heading: 'DMG', field: 'damage' },
+  { heading: 'ROF', field: 'rof' },
+  { heading: 'Hands', field: 'hands' },
+  { heading: 'Concealable', field: 'concealable' },
+  { heading: 'Magazine', field: 'magazine' },
+  { heading: 'Skill Base', field: 'skill_base' },
+];
+const WEAPON_ID = /^cpr\.weapon\.(\d+)\./;
+const RANGE_BAND_PREFIX = 'cpr.range_band.';
+
 const SKILL_PREFIX = 'cpr.skill.';
 const SKILL_LEVEL_PREFIX = 'cpr.skill_level.';
 
@@ -140,6 +166,18 @@ export function buildCyberpunkSheet(
     placed.add(id);
     return { rowId: id, value: String(row.value), detail: row.detail };
   };
+  // A build that did not compute lays out nothing, its printed lines included.
+  const computed = !detail.diagnostics.some((d) => d.claimBlocking);
+  const lines = new Map((computed ? detail.sheetLines : []).map((line) => [line.id, line]));
+  /** An engine row when the engine computed one, else its printed line (dice, words, "N/A"). */
+  const figure = (id: string): CyberpunkSheetCell | null => {
+    const computed = cell(id);
+    if (computed !== null) {
+      return computed;
+    }
+    const line = lines.get(id);
+    return line === undefined ? null : { rowId: id, value: line.value === '' ? line.prose : line.value, detail: line.prose, printed: true };
+  };
   const boxes: CyberpunkSheetBox[] = [];
   const push = (box: CyberpunkSheetBox) => {
     const kept = box.rows.filter((row) => row.cells.some((c) => c !== null));
@@ -182,6 +220,49 @@ export function buildCyberpunkSheet(
       ...WOUND_SINGLES.map((single) => ({ label: single.label, cells: [cell(single.id), null] })),
     ],
   });
+
+  push({
+    id: 'armour',
+    title: 'Armor',
+    columns: ['SP', 'Penalty'],
+    rows: ARMOUR.map((piece) => ({ label: piece.label, cells: piece.ids.map((id) => cell(id)) })),
+  });
+
+  // The weapons, in the engine's order (`cpr.weapon.<n>.`), each labelled by its printed name.
+  const weaponIndexes = [
+    ...new Set([...detail.explanations.map((row) => row.id), ...lines.keys()].flatMap((id) => {
+      const match = WEAPON_ID.exec(id);
+      return match === null ? [] : [Number(match[1])];
+    })),
+  ].sort((a, b) => a - b);
+  const weaponName = (n: number) => figure(`cpr.weapon.${n}.name`) ?? undefined;
+  push({
+    id: 'weapons',
+    title: 'Weapons',
+    columns: WEAPON_FIELDS.map((column) => column.heading),
+    rows: weaponIndexes.map((n) => ({
+      label: `cpr.weapon.${n}`,
+      labelCell: weaponName(n),
+      cells: WEAPON_FIELDS.map((column) => figure(`cpr.weapon.${n}.${column.field}`)),
+    })),
+  });
+
+  // Range DV: the engine's range bands head the columns; each weapon's single-shot row (D-1),
+  // then its Autofire row; a band the book prints N/A is the engine's printed "N/A".
+  const bandIds = detail.explanations.map((row) => row.id).filter((id) => id.startsWith(RANGE_BAND_PREFIX));
+  const dvRows = (n: number, field: string, tag?: string): CyberpunkSheetRow[] => {
+    const cells = bandIds.map((_band, b) => figure(`cpr.weapon.${n}.${field}.${b}`));
+    return cells.every((c) => c === null) ? [] : [{ label: `cpr.weapon.${n}.${field}`, labelCell: weaponName(n), ...(tag === undefined ? {} : { tag }), cells }];
+  };
+  const rangeRows = weaponIndexes.flatMap((n) => [...dvRows(n, 'range_dv'), ...dvRows(n, 'autofire_dv', 'Autofire')]);
+  if (rangeRows.length > 0) {
+    push({
+      id: 'rangeDv',
+      title: 'Range DV (m/yds up to)',
+      columns: bandIds.map((id) => cell(id) ?? id),
+      rows: rangeRows,
+    });
+  }
 
   // Any `cpr.` row the boxes above do not name: shown under its id, never dropped.
   push({

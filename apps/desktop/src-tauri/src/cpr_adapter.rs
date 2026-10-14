@@ -426,7 +426,40 @@ mod tests {
             weapons: vec!["Heavy Pistol".to_owned()],
             ..CprSheetChoices::default()
         };
-        vec![(streetrat, CprSheetChoices::default()), (kitted, choices)]
+
+        // E4.3: one weapon of each of the 11 ranged types (p. 171) and a melee weapon, armour on
+        // both locations and the Bulletproof Shield.
+        let mut arsenal = edgerunner();
+        arsenal.character_id = "cpr-solo-arsenal".to_owned();
+        arsenal.revision_id = "cpr-solo-arsenal.rev.1".to_owned();
+        arsenal.display_label = "Arsenal Solo".to_owned();
+        let arsenal_choices = CprSheetChoices {
+            role: Some((CprRole::Solo, 4)),
+            skills: vec![("Handgun".to_owned(), 4), ("Shoulder Arms".to_owned(), 3), ("Autofire".to_owned(), 2)],
+            armor: vec![
+                CprWornArmor { name: "Light Armorjack".to_owned(), location: CprArmorLocation::Head },
+                CprWornArmor { name: "Medium Armorjack".to_owned(), location: CprArmorLocation::Body },
+            ],
+            shield: Some("Bulletproof Shield".to_owned()),
+            weapons: [
+                "Medium Pistol",
+                "Heavy Pistol",
+                "Very Heavy Pistol",
+                "SMG",
+                "Heavy SMG",
+                "Shotgun",
+                "Assault Rifle",
+                "Sniper Rifle",
+                "Bows & Crossbows",
+                "Grenade Launcher",
+                "Rocket Launcher",
+                "Heavy Melee Weapon",
+            ]
+            .map(str::to_owned)
+            .to_vec(),
+            ..CprSheetChoices::default()
+        };
+        vec![(streetrat, CprSheetChoices::default()), (kitted, choices), (arsenal, arsenal_choices)]
     }
 
     /// E4.1: the frontend Cyberpunk RED sheet test renders each fixture character's real
