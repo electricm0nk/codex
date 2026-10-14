@@ -8,6 +8,10 @@ import { formatError, hasTauriRuntime } from './runtime';
  * (Streetrat row rolled or picked; Edgerunner one 1d10 per STAT) or the player's Complete
  * Package allocation, and every number is the engine's `cpr.` row. The dice come from one
  * seedable roller: send the preview's `seed` back on create to keep the previewed dice.
+ *
+ * SD-38 E3.3 adds the Lifepath: every general table and the Role's tables are rolled with the
+ * same seed or picked (`lifepath`), the answers are saved with the character, and the Cultural
+ * Origin language comes back as the engine's `cpr.skill_level.language.*` row (level 4).
  */
 
 export type CyberpunkCreationMethod = 'streetrat' | 'edgerunner' | 'completePackage';
@@ -22,6 +26,60 @@ export interface CyberpunkCreationRequest {
   templateRoll?: number | null;
   /** Complete Package only: the allocation keyed by STAT id (`int` ... `emp`). */
   stats?: Record<string, number> | null;
+  /** The Lifepath picks; every table not picked is rolled. */
+  lifepath?: CyberpunkLifepathRequest | null;
+}
+
+/** One picked Lifepath row: `entry` 0 for a table answered once, 1.. for the nth friend/enemy/affair. */
+export interface CyberpunkLifepathPick {
+  table: string;
+  entry: number;
+  /** 0 unless the table is rolled "for each column". */
+  column: number;
+  roll: number;
+}
+
+export interface CyberpunkLifepathRequest {
+  picks: CyberpunkLifepathPick[];
+  /** Picked counts of the "Roll 1d10 and subtract 7" tables, by table name. */
+  counts: Record<string, number>;
+  /** Tables behind a printed choice the player did not take. */
+  skips: string[];
+  /** The Cultural Origin language; null rolls one of the region's. */
+  culturalLanguage: string | null;
+}
+
+export interface CyberpunkLifepathAnswer {
+  entry: number;
+  columnIndex: number;
+  column: string;
+  roll: number;
+  picked: boolean;
+  text: string;
+  detail: string;
+}
+
+export interface CyberpunkLifepathTable {
+  table: string;
+  group: string;
+  sourcePage: string;
+  die: string;
+  rollInstruction: string;
+  count: number | null;
+  countMax: number | null;
+  countPicked: boolean;
+  skippable: boolean;
+  skipped: boolean;
+  perColumn: boolean;
+  answers: CyberpunkLifepathAnswer[];
+}
+
+export interface CyberpunkCulturalLanguage {
+  name: string;
+  picked: boolean;
+  /** The `Language (<name>)` skill key it is saved under. */
+  skill: string;
+  level: number;
 }
 
 export interface CyberpunkCreateRequest {
@@ -65,7 +123,10 @@ export interface CyberpunkCreationPreview {
   stats: CyberpunkStatValue[];
   statPointsSpent: number | null;
   statPointsTotal: number | null;
-  /** The engine's `cpr.stat.*` and `cpr.derived.*` rows; empty while a problem stands. */
+  /** Every Lifepath table answered (general, then the Role's). */
+  lifepath: CyberpunkLifepathTable[];
+  culturalLanguage: CyberpunkCulturalLanguage | null;
+  /** The engine's `cpr.stat.*`, `cpr.derived.*` and Cultural Origin language rows; empty while a problem stands. */
   explanations: CyberpunkCreationRow[];
   problems: CyberpunkCreationProblem[];
 }
@@ -92,6 +153,7 @@ function wire(request: CyberpunkCreationRequest) {
     seed: request.seed ?? null,
     templateRoll: request.templateRoll ?? null,
     stats: request.stats ?? null,
+    lifepath: request.lifepath ?? { picks: [], counts: {}, skips: [], culturalLanguage: null },
   };
 }
 

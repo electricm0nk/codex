@@ -9,10 +9,22 @@ import {
   cyberpunkStatTiles,
   rollAgain,
   selectMethod,
+  selectRole,
+  setCulturalLanguage,
+  setLifepathCount,
+  setLifepathPick,
+  setLifepathSkip,
   templateRowOptions,
   withPreviewSeed,
+  culturalLanguageOptions,
+  culturalLanguageTile,
+  lifepathRowOptions,
+  lifepathTablesFor,
   type CyberpunkCreationDraft,
 } from './cyberpunkCreationModel';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   CYBERPUNK_CREATE_COLUMNS,
   CYBERPUNK_CREATE_LAYOUT,
@@ -51,6 +63,8 @@ function preview(partial: Partial<CyberpunkCreationPreview>): CyberpunkCreationP
     stats: stats([6, 7, 7, 3, 8, 6, 5, 5, 6, 5]),
     statPointsSpent: null,
     statPointsTotal: null,
+    lifepath: [],
+    culturalLanguage: null,
     explanations: [],
     problems: [],
     ...partial,
@@ -205,6 +219,106 @@ function testTheCreateLayoutIsARegistry() {
   );
 }
 
+// ---- SD-38 E3.3: the Lifepath panel ----
+
+const CORPUS = join(dirname(fileURLToPath(import.meta.url)), '../../../../data/cyberpunk-red/corpus');
+
+function corpusRecords(kind: string): CyberpunkRecord[] {
+  return JSON.parse(readFileSync(join(CORPUS, `${kind}.json`), 'utf8')) as CyberpunkRecord[];
+}
+
+function testTheLifepathOffersEveryGeneralTableAndExactlyTheRolesTables() {
+  const records = corpusRecords('lifepath_table');
+  const roles = corpusRecords('role').map((r) => String(r.name));
+  assertEqual(roles.length, 10, 'ten Roles');
+  const general = records.filter((r) => r.group === 'general').map((r) => String(r.name));
+  assertEqual(general.length, 15, 'CUI F-26: 15 general tables');
+  let roleTables = 0;
+  for (const role of roles) {
+    const offered = lifepathTablesFor(records, role).map((r) => String(r.name));
+    const expected = records.filter((r) => r.group === 'general' || r.role === role).map((r) => String(r.name));
+    assertEqual(offered.join('|'), expected.join('|'), `${role}: every table offered = the lifepath_table records for that Role, corpus order`);
+    assertEqual(offered.slice(0, 15).join('|'), general.join('|'), `${role}: the general tables first`);
+    assert(offered.slice(15).every((name) => records.find((r) => r.name === name)?.role === role), `${role}: no other Role's table`);
+    roleTables += offered.length - 15;
+  }
+  assertEqual(roleTables, 52, 'CUI F-27: 52 Role tables over the ten Roles');
+  assertEqual(lifepathTablesFor(records, null).length, 0, 'no Role, no Lifepath yet');
+}
+
+function testLifepathRowOptionsAreTheRecordsRows() {
+  const records = corpusRecords('lifepath_table');
+  const revenge = records.find((r) => r.name === 'Sweet Revenge!') as CyberpunkRecord;
+  const options = lifepathRowOptions(revenge, 0);
+  assertEqual(options.map((o) => o.roll).join(','), '1,3,5,7,9,10', 'a "1-2" row is picked by its first roll');
+  assertEqual(options[0].label, '1-2: Avoid the scum.', "the book's roll and cell");
+  const dress = records.find((r) => r.name === 'Dress and Personal Style: Clothing Style and Hairstyle') as CyberpunkRecord;
+  const hair = lifepathRowOptions(dress, 1);
+  assertEqual(hair.length, 10, 'one option per row');
+  assert(hair[0].label.startsWith('1: ') && !hair[0].label.includes(' / '), 'a per-column table offers that column only');
+  const origins = records.find((r) => r.name === 'Cultural Origins') as CyberpunkRecord;
+  assertEqual(lifepathRowOptions(origins, 0)[8].label.split(' / ')[0], '9: East Asian', 'a whole-row table offers the whole row');
+  assertEqual(culturalLanguageOptions(origins, 9).join(','), 'Cantonese Chinese,English,Japanese,Korean,Mandarin Chinese,Mongolian', "the rolled region's languages");
+  assertEqual(culturalLanguageOptions(origins, null).length, 0, 'no region, no list');
+}
+
+function testLifepathPicksCountsSkipsAndLanguageAreTheDraftsOwnChoices() {
+  let draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Nomad', seed: 3 };
+  draft = setLifepathPick(draft, 'Your Personality', 0, 0, 3);
+  draft = setLifepathPick(draft, 'Your Personality', 0, 0, 4);
+  assertEqual(JSON.stringify(draft.lifepath.picks), '[{"table":"Your Personality","entry":0,"column":0,"roll":4}]', 'a pick replaces the earlier pick of that answer');
+  assertEqual(draft.seed, 3, 'a pick keeps the seed: the other tables keep their dice');
+  draft = setLifepathPick(draft, 'Your Enemies', 2, 1, 7);
+  draft = setLifepathCount(draft, 'Your Enemies', 1);
+  assertEqual(draft.lifepath.counts['Your Enemies'], 1, 'the picked count');
+  assert(!draft.lifepath.picks.some((p) => p.table === 'Your Enemies' && p.entry === 2), 'a smaller count drops the picks of the entries it removes');
+  draft = setLifepathCount(draft, 'Your Enemies', null);
+  assertEqual(draft.lifepath.counts['Your Enemies'], undefined, 'null rolls the count again');
+  draft = setLifepathPick(draft, 'Your Personality', 0, 0, null);
+  assertEqual(draft.lifepath.picks.length, 0, 'null rolls the answer again');
+  draft = setLifepathSkip(draft, 'Nomad: If in Air, What Do They Do?', true);
+  draft = setLifepathSkip(draft, 'Nomad: If in Air, What Do They Do?', true);
+  assertEqual(draft.lifepath.skips.join('|'), 'Nomad: If in Air, What Do They Do?', 'marked not taken once');
+  assertEqual(setLifepathSkip(draft, 'Nomad: If in Air, What Do They Do?', false).lifepath.skips.length, 0, 'taken again');
+  draft = setCulturalLanguage(draft, ' Japanese ');
+  assertEqual(draft.lifepath.culturalLanguage, 'Japanese', 'the language, trimmed');
+  assertEqual(setCulturalLanguage(draft, '').lifepath.culturalLanguage, null, 'empty rolls it from the region');
+
+  const request = buildCyberpunkPreviewRequest(draft);
+  assertEqual(JSON.stringify(request?.lifepath), JSON.stringify(draft.lifepath), 'the preview sends the Lifepath choices');
+  const create = buildCyberpunkCreateRequest({ ...draft, displayLabel: 'V' }, { generateId: () => 'id', now: () => 'now' });
+  assertEqual(JSON.stringify(create?.creation.lifepath), JSON.stringify(draft.lifepath), 'create saves the previewed answers');
+}
+
+function testChangingRoleKeepsOnlyTheGeneralLifepathChoices() {
+  const records = corpusRecords('lifepath_table');
+  let draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Nomad', seed: 3, templateRoll: 2 };
+  draft = setLifepathPick(draft, 'Your Personality', 0, 0, 4);
+  draft = setLifepathPick(draft, 'Nomad: How Big is Your Pack?', 0, 0, 1);
+  draft = setLifepathSkip(draft, 'Nomad: If at Sea, What Do They Do?', true);
+  draft = setLifepathCount(draft, 'Your Friends', 2);
+  const solo = selectRole(draft, 'Solo', records);
+  assertEqual(solo.role, 'Solo', 'the Role changes');
+  assertEqual(solo.seed, null, 'fresh dice');
+  assertEqual(solo.templateRoll, null, "the template row was the old Role's");
+  assertEqual(solo.lifepath.picks.map((p) => p.table).join('|'), 'Your Personality', "the Nomad table's pick is dropped");
+  assertEqual(solo.lifepath.skips.length, 0, "the Nomad branch skip is dropped");
+  assertEqual(solo.lifepath.counts['Your Friends'], 2, 'general counts are kept');
+}
+
+function testTheCulturalLanguageTileIsTheEnginesRow() {
+  const p = preview({
+    culturalLanguage: { name: 'Japanese', picked: true, skill: 'Language (Japanese)', level: 4 },
+    explanations: [
+      { id: 'cpr.skill_level.language.japanese', value: 4, detail: '' },
+      { id: 'cpr.skill.language.japanese', value: 10, detail: '' },
+    ],
+  });
+  assertEqual(JSON.stringify(culturalLanguageTile(p)), '{"id":"cpr.skill_level.language.japanese","label":"Language (Japanese)","value":4}', 'the level is the engine row');
+  assertEqual(culturalLanguageTile(preview({ culturalLanguage: { name: 'Japanese', picked: true, skill: 'Language (Japanese)', level: 4 } })), null, 'no engine row, no tile');
+  assertEqual(culturalLanguageTile(preview({})), null, 'no language, no tile');
+}
+
 testNewCharacterUnderCyberpunkRedOpensTheCyberpunkForm();
 testTheMethodPickerOffersTheThreeBookMethods();
 testNoRoleNoPreview();
@@ -217,3 +331,8 @@ testTemplateRowOptionsComeFromTheRolesCorpusRecords();
 testOnlyClaimBlockingProblemsCloseTheButton();
 testTilesComeFromTheEnginesRowsOnly();
 testTheCreateLayoutIsARegistry();
+testTheLifepathOffersEveryGeneralTableAndExactlyTheRolesTables();
+testLifepathRowOptionsAreTheRecordsRows();
+testLifepathPicksCountsSkipsAndLanguageAreTheDraftsOwnChoices();
+testChangingRoleKeepsOnlyTheGeneralLifepathChoices();
+testTheCulturalLanguageTileIsTheEnginesRow();

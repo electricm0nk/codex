@@ -5,6 +5,7 @@ import type {
   CyberpunkCreationProblem,
   CyberpunkCreationRequest,
   CyberpunkCreationRow,
+  CyberpunkLifepathRequest,
   CyberpunkStatValue,
 } from '../boundary/cprCreation';
 import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
@@ -15,6 +16,10 @@ import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
  * Streetrat row, the Complete Package allocation) and the roller's seed; every number it shows
  * (each STAT, the points spent and to spend, the derived rows) is the engine's answer from
  * `preview_cyberpunk_character`. Nothing here is a Cyberpunk RED rules table.
+ *
+ * The Lifepath (E3.3): the draft holds only the player's picks, counts, not-taken branch tables
+ * and Cultural Origin language; the tables offered and their rows are the `lifepath_table`
+ * records, and every answer not picked is the engine's roll.
  */
 
 export interface CyberpunkCreationDraft {
@@ -28,7 +33,11 @@ export interface CyberpunkCreationDraft {
   templateRoll: number | null;
   /** Complete Package: the allocation keyed by STAT id. */
   stats: Record<string, number>;
+  /** The Lifepath choices; everything not chosen is rolled with the seed. */
+  lifepath: CyberpunkLifepathRequest;
 }
+
+export const EMPTY_LIFEPATH: CyberpunkLifepathRequest = { picks: [], counts: {}, skips: [], culturalLanguage: null };
 
 export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   displayLabel: '',
@@ -37,6 +46,7 @@ export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   seed: null,
   templateRoll: null,
   stats: {},
+  lifepath: EMPTY_LIFEPATH,
 };
 
 /** The three ways to make STATs (p. 73), in the book's order. */
@@ -57,6 +67,12 @@ export function buildCyberpunkPreviewRequest(draft: CyberpunkCreationDraft): Cyb
     seed: draft.seed,
     templateRoll: draft.method === 'streetrat' ? draft.templateRoll : null,
     stats: draft.method === 'completePackage' ? { ...draft.stats } : null,
+    lifepath: {
+      picks: draft.lifepath.picks.map((pick) => ({ ...pick })),
+      counts: { ...draft.lifepath.counts },
+      skips: [...draft.lifepath.skips],
+      culturalLanguage: draft.lifepath.culturalLanguage,
+    },
   };
 }
 
@@ -162,4 +178,122 @@ export function cyberpunkStatTiles(rows: readonly CyberpunkCreationRow[], stats:
     const found = rows.find((row) => row.id === `cpr.stat.${stat.id}`);
     return found ? [{ id: found.id, label: stat.label, value: found.value }] : [];
   });
+}
+
+// ---- Lifepath (E3.3) ----
+
+/** The Lifepath tables offered for `role`: every general `lifepath_table` record, then the Role's, corpus order. */
+export function lifepathTablesFor(records: readonly CyberpunkRecord[], role: string | null): CyberpunkRecord[] {
+  if (role === null) {
+    return [];
+  }
+  return [...records.filter((r) => r.group === 'general'), ...records.filter((r) => r.group === 'role' && r.role === role)];
+}
+
+interface LifepathRecordRow {
+  roll: number | string;
+  cells: string[];
+}
+
+function recordRows(record: CyberpunkRecord): LifepathRecordRow[] {
+  return Array.isArray(record.rows) ? (record.rows as LifepathRecordRow[]) : [];
+}
+
+function perColumn(record: CyberpunkRecord): boolean {
+  const instruction = typeof record.roll_instruction === 'string' ? record.roll_instruction : '';
+  return instruction.includes('each column') || instruction.includes('each of the columns');
+}
+
+export interface LifepathRowOption {
+  /** The roll a pick sends (the first roll of a "1-2" row). */
+  roll: number;
+  label: string;
+}
+
+/**
+ * The rows a Lifepath answer can be picked from, read from the record: the printed roll and the
+ * cell of `column` for a table rolled "for each column", the whole row otherwise.
+ */
+export function lifepathRowOptions(record: CyberpunkRecord, column: number): LifepathRowOption[] {
+  const each = perColumn(record);
+  return recordRows(record).map((row) => {
+    const printed = String(row.roll);
+    const cells = each ? [row.cells[column] ?? ''] : row.cells;
+    return { roll: Number(printed.split('-')[0]), label: `${printed}: ${cells.join(' / ')}` };
+  });
+}
+
+/** The Cultural Origins record's languages for the rolled or picked region. */
+export function culturalLanguageOptions(record: CyberpunkRecord, regionRoll: number | null): string[] {
+  if (regionRoll === null || typeof record.languages_by_roll !== 'object' || record.languages_by_roll === null) {
+    return [];
+  }
+  const listed = (record.languages_by_roll as Record<string, unknown>)[String(regionRoll)];
+  return Array.isArray(listed) ? listed.map(String) : [];
+}
+
+/** Picks one answer's row; null drops the pick so the engine rolls it. The seed is kept. */
+export function setLifepathPick(
+  draft: CyberpunkCreationDraft,
+  table: string,
+  entry: number,
+  column: number,
+  roll: number | null,
+): CyberpunkCreationDraft {
+  const others = draft.lifepath.picks.filter((p) => !(p.table === table && p.entry === entry && p.column === column));
+  const picks = roll === null ? others : [...others, { table, entry, column, roll }];
+  return { ...draft, lifepath: { ...draft.lifepath, picks } };
+}
+
+/** Picks how many entries a count table has; null rolls it. A smaller count drops the picks of the removed entries. */
+export function setLifepathCount(draft: CyberpunkCreationDraft, table: string, count: number | null): CyberpunkCreationDraft {
+  const counts = { ...draft.lifepath.counts };
+  let picks = draft.lifepath.picks;
+  if (count === null) {
+    delete counts[table];
+  } else {
+    counts[table] = count;
+    picks = picks.filter((p) => p.table !== table || p.entry <= count);
+  }
+  return { ...draft, lifepath: { ...draft.lifepath, counts, picks } };
+}
+
+/** Marks a table behind a printed choice as not taken (or taken again). */
+export function setLifepathSkip(draft: CyberpunkCreationDraft, table: string, skipped: boolean): CyberpunkCreationDraft {
+  const others = draft.lifepath.skips.filter((name) => name !== table);
+  return { ...draft, lifepath: { ...draft.lifepath, skips: skipped ? [...others, table] : others } };
+}
+
+/** The Cultural Origin language; empty rolls one of the region's. */
+export function setCulturalLanguage(draft: CyberpunkCreationDraft, name: string | null): CyberpunkCreationDraft {
+  const trimmed = name?.trim() ?? '';
+  return { ...draft, lifepath: { ...draft.lifepath, culturalLanguage: trimmed === '' ? null : trimmed } };
+}
+
+/** Changes the Role: fresh dice, no template row, and only the general Lifepath choices kept. */
+export function selectRole(draft: CyberpunkCreationDraft, role: string | null, lifepathRecords: readonly CyberpunkRecord[]): CyberpunkCreationDraft {
+  const general = new Set(lifepathRecords.filter((r) => r.group === 'general').map((r) => String(r.name)));
+  const counts = Object.fromEntries(Object.entries(draft.lifepath.counts).filter(([table]) => general.has(table)));
+  return {
+    ...draft,
+    role,
+    seed: null,
+    templateRoll: null,
+    lifepath: {
+      ...draft.lifepath,
+      picks: draft.lifepath.picks.filter((p) => general.has(p.table)),
+      counts,
+      skips: draft.lifepath.skips.filter((name) => general.has(name)),
+    },
+  };
+}
+
+/** The Cultural Origin language's level tile: the engine's `cpr.skill_level.language.*` row, or none. */
+export function culturalLanguageTile(preview: Pick<CyberpunkCreationPreview, 'culturalLanguage' | 'explanations'>): CyberpunkTile | null {
+  const language = preview.culturalLanguage;
+  if (language === null) {
+    return null;
+  }
+  const found = preview.explanations.find((row) => row.id.startsWith('cpr.skill_level.language.'));
+  return found ? { id: found.id, label: language.skill, value: found.value } : null;
 }

@@ -5,6 +5,7 @@
 //! [`CprSheetChoices`] holds the rest of what the sheet composes from (Role and rank, skills,
 //! armour, cyberware, criticals, Reputation, weapons, deck, Improvement Points, cash,
 //! ammunition, housing) in its own file and grammar, `cpr_sheet_choices.txt`.
+//! [`CprLifepath`] holds the Lifepath answers (printed text, p. 45-70) in `cpr_lifepath.txt`.
 
 use std::fmt::Write as _;
 
@@ -423,6 +424,80 @@ pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
     Ok(choices)
 }
 
+/// A character's Lifepath answers (p. 45-70), in the creation panel's order: printed text,
+/// no number (the Cultural Origin language is saved as a skill in [`CprSheetChoices`]). Held in
+/// its own file, `cpr_lifepath.txt`, one line per answer:
+/// `lifepath = <table> | <entry> | <column> | <answer> | <detail>`.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CprLifepath {
+    pub answers: Vec<CprLifepathAnswer>,
+}
+
+/// One Lifepath answer: the `lifepath_table` record's name, the entry (0 for a table answered
+/// once, 1.. for the nth friend, enemy or love affair), the column answered, the cell, and the
+/// rest of the row (empty for a per-column answer).
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CprLifepathAnswer {
+    pub table: String,
+    pub entry: u8,
+    pub column: String,
+    pub text: String,
+    pub detail: String,
+}
+
+const LIFEPATH_FILE: &str = "cpr_lifepath.txt";
+
+/// Whether a text field fits the `cpr_lifepath.txt` line grammar (no `|`, no line break).
+pub fn lifepath_text_ok(text: &str) -> bool {
+    !text.contains(['|', '\n', '\r'])
+}
+
+/// The `cpr_lifepath.txt` text; no answers is an empty file.
+pub fn render_cpr_lifepath(lifepath: &CprLifepath) -> String {
+    let mut out = String::new();
+    for a in &lifepath.answers {
+        let _ = writeln!(out, "lifepath = {} | {} | {} | {} | {}", a.table, a.entry, a.column, a.text, a.detail);
+    }
+    out
+}
+
+/// Parses `cpr_lifepath.txt`. An unknown key, a line without `=`, a line without its five
+/// fields, an entry that is not a whole number, or an answer without a table is refused.
+pub fn parse_cpr_lifepath(text: &str) -> Result<CprLifepath, String> {
+    let mut lifepath = CprLifepath::default();
+    for raw_line in text.lines() {
+        let line = raw_line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let Some((key, value)) = line.split_once('=') else {
+            return Err(format!("{LIFEPATH_FILE} line missing '=': {raw_line}"));
+        };
+        let (key, value) = (key.trim(), value.trim());
+        if key != "lifepath" {
+            return Err(format!("{LIFEPATH_FILE} has an unknown key '{key}'"));
+        }
+        let fields: Vec<&str> = value.split('|').map(str::trim).collect();
+        let [table, entry, column, answer, detail] = fields[..] else {
+            return Err(format!(
+                "{LIFEPATH_FILE} lifepath '{value}' is not '<table> | <entry> | <column> | <answer> | <detail>'"
+            ));
+        };
+        if table.is_empty() {
+            return Err(format!("{LIFEPATH_FILE} lifepath names no table"));
+        }
+        let entry = entry.parse::<u8>().map_err(|_| format!("{LIFEPATH_FILE} lifepath entry '{entry}' is not a whole number"))?;
+        lifepath.answers.push(CprLifepathAnswer {
+            table: table.to_owned(),
+            entry,
+            column: column.to_owned(),
+            text: answer.to_owned(),
+            detail: detail.to_owned(),
+        });
+    }
+    Ok(lifepath)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -498,6 +573,56 @@ mod tests {
         assert!(text.contains("cyberware = Chyron @ eye 1\n"), "{text}");
         assert!(text.contains("reputation = 3 cowardice: Ran: from a fight\n"), "{text}");
         assert_eq!(parse_cpr_sheet_choices(&text), Ok(choices));
+    }
+
+    /// The Lifepath answers (E3.3): one line each, in panel order, parsed back unchanged; an
+    /// empty answer list is an empty file.
+    #[test]
+    fn lifepath_answers_render_and_parse_back() {
+        let lifepath = CprLifepath {
+            answers: vec![
+                CprLifepathAnswer {
+                    table: "Cultural Origins".to_owned(),
+                    entry: 0,
+                    column: "Your (General) Cultural Region".to_owned(),
+                    text: "East Asian".to_owned(),
+                    detail: "Cantonese Chinese, English, Japanese, Korean, Mandarin Chinese, Mongolian".to_owned(),
+                },
+                CprLifepathAnswer {
+                    table: "Your Enemies".to_owned(),
+                    entry: 2,
+                    column: "What Caused it? Who's been Wronged? (choose)".to_owned(),
+                    text: "You just don't like each other.".to_owned(),
+                    detail: String::new(),
+                },
+            ],
+        };
+        let text = render_cpr_lifepath(&lifepath);
+        assert_eq!(
+            text,
+            "lifepath = Cultural Origins | 0 | Your (General) Cultural Region | East Asian | Cantonese Chinese, English, Japanese, Korean, Mandarin Chinese, Mongolian\n\
+             lifepath = Your Enemies | 2 | What Caused it? Who's been Wronged? (choose) | You just don't like each other. | \n"
+        );
+        assert_eq!(parse_cpr_lifepath(&text), Ok(lifepath));
+        assert_eq!(render_cpr_lifepath(&CprLifepath::default()), "");
+        assert_eq!(parse_cpr_lifepath(""), Ok(CprLifepath::default()));
+    }
+
+    #[test]
+    fn parse_refuses_a_bad_lifepath_line_and_render_refuses_nothing_it_cannot_parse() {
+        let refused = |text: &str| parse_cpr_lifepath(text).unwrap_err();
+        assert_eq!(refused("answer = x\n"), "cpr_lifepath.txt has an unknown key 'answer'");
+        assert_eq!(
+            refused("lifepath = Your Friends | 1 | Friend's Relationship to You\n"),
+            "cpr_lifepath.txt lifepath 'Your Friends | 1 | Friend's Relationship to You' is not '<table> | <entry> | <column> | <answer> | <detail>'"
+        );
+        assert_eq!(
+            refused("lifepath = Your Friends | one | Who | A teacher or mentor. | \n"),
+            "cpr_lifepath.txt lifepath entry 'one' is not a whole number"
+        );
+        assert_eq!(refused("lifepath = | 0 | C | x | \n"), "cpr_lifepath.txt lifepath names no table");
+        assert!(lifepath_text_ok("A teacher or mentor."));
+        assert!(!lifepath_text_ok("a | b") && !lifepath_text_ok("two\nlines"));
     }
 
     #[test]

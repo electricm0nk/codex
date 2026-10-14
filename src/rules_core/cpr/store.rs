@@ -2,12 +2,13 @@
 //!
 //! A CPR character is its own directory under the same characters root as Pathfinder and
 //! Starfinder characters (so a character id resolves to its directory the same way for
-//! every system). The directory holds two files:
+//! every system). The directory holds these files:
 //! - `envelope.txt`: the saved-character envelope's `key = value` grammar
 //!   (`saved_character::local_store`), with `game_system = cyberpunk-red`;
 //! - `cpr_character_input.txt`: the [`CprCharacterInput`] (`input::render_cpr_character_input`);
 //! - `cpr_sheet_choices.txt`, once any is saved: the [`CprSheetChoices`] the sheet composes from
 //!   (`input::render_cpr_sheet_choices`). A character without the file has made no choice yet.
+//! - `cpr_lifepath.txt`, once saved: the [`CprLifepath`] answers (`input::render_cpr_lifepath`).
 //!
 //! It never holds `authoritative_character_input.txt`, the Pathfinder-shaped payload, and
 //! `SavedCharacterStore::list_all` skips it (`local_store::owns_payload`).
@@ -17,8 +18,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use crate::rules_core::cpr::input::{
-    parse_cpr_character_input, parse_cpr_sheet_choices, render_cpr_character_input, render_cpr_sheet_choices,
-    CprCharacterInput, CprSheetChoices,
+    parse_cpr_character_input, parse_cpr_lifepath, parse_cpr_sheet_choices, render_cpr_character_input, render_cpr_lifepath,
+    render_cpr_sheet_choices, CprCharacterInput, CprLifepath, CprSheetChoices,
 };
 use crate::rules_core::game_system::GameSystem;
 use crate::saved_character::local_store::peek_game_system;
@@ -27,6 +28,7 @@ use crate::saved_character::SavedCharacterListingError;
 const ENVELOPE_FILE: &str = "envelope.txt";
 const INPUT_FILE: &str = "cpr_character_input.txt";
 const CHOICES_FILE: &str = "cpr_sheet_choices.txt";
+const LIFEPATH_FILE: &str = "cpr_lifepath.txt";
 /// The envelope's `content_or_rules_provenance` for every CPR save: the one book SD-38 ships.
 pub const CPR_CONTENT_PROVENANCE: &str = "cyberpunk-red.corebook";
 /// Schema version of a CPR saved character (`envelope.txt` + `cpr_character_input.txt`).
@@ -123,6 +125,26 @@ impl CprCharacterStore {
             Ok(text) => parse_cpr_sheet_choices(&text),
             Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(CprSheetChoices::default()),
             Err(err) => Err(format!("{CHOICES_FILE} unreadable at {}: {err}", path.display())),
+        }
+    }
+
+    /// Writes `cpr_lifepath.txt` for the CPR character at `root` (temp file, then renamed into
+    /// place). Refused when `root` holds no CPR character.
+    pub fn save_lifepath(lifepath: &CprLifepath, root: &Path) -> Result<(), String> {
+        Self::load(root)?;
+        let path = root.join(LIFEPATH_FILE);
+        let tmp = write_tmp(&path, &render_cpr_lifepath(lifepath))?;
+        fs::rename(&tmp, &path).map_err(|err| format!("{}: {err}", path.display()))
+    }
+
+    /// The Lifepath answers of the CPR character at `root`; none when it has saved none (no
+    /// `cpr_lifepath.txt`). A malformed file is refused with its reason.
+    pub fn load_lifepath(root: &Path) -> Result<CprLifepath, String> {
+        let path = root.join(LIFEPATH_FILE);
+        match fs::read_to_string(&path) {
+            Ok(text) => parse_cpr_lifepath(&text),
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(CprLifepath::default()),
+            Err(err) => Err(format!("{LIFEPATH_FILE} unreadable at {}: {err}", path.display())),
         }
     }
 
@@ -367,6 +389,36 @@ mod tests {
         let empty = root.parent().expect("has parent").join("no-character");
         assert!(CprCharacterStore::save_choices(&choices, &empty).is_err_and(|e| e.contains("envelope.txt")));
         assert!(!empty.join("cpr_sheet_choices.txt").exists());
+        fs::remove_dir_all(root.parent().expect("has parent")).ok();
+    }
+
+    /// The Lifepath answers are their own file: none before any is saved; saved answers
+    /// round-trip and survive a re-save of the character; refused without a character.
+    #[test]
+    fn lifepath_saves_loads_and_survives_a_character_re_save() {
+        use crate::rules_core::cpr::input::{CprLifepath, CprLifepathAnswer};
+        let root = tempdir("lifepath").join("cpr-lifepath");
+        let character = sample("cpr-lifepath");
+        CprCharacterStore::save(&character, &root).expect("saves");
+        assert_eq!(CprCharacterStore::load_lifepath(&root), Ok(CprLifepath::default()));
+        let lifepath = CprLifepath {
+            answers: vec![CprLifepathAnswer {
+                table: "Your Life Goals".to_owned(),
+                entry: 0,
+                column: "Life Goal".to_owned(),
+                text: "Get rid of a bad reputation.".to_owned(),
+                detail: String::new(),
+            }],
+        };
+        CprCharacterStore::save_lifepath(&lifepath, &root).expect("saves the answers");
+        assert!(root.join("cpr_lifepath.txt").exists());
+        CprCharacterStore::save(&character, &root).expect("re-saves");
+        assert_eq!(CprCharacterStore::load_lifepath(&root), Ok(lifepath.clone()));
+        assert_eq!(CprCharacterStore::load(&root), Ok(character));
+
+        let empty = root.parent().expect("has parent").join("no-character");
+        assert!(CprCharacterStore::save_lifepath(&lifepath, &empty).is_err_and(|e| e.contains("envelope.txt")));
+        assert!(!empty.join("cpr_lifepath.txt").exists());
         fs::remove_dir_all(root.parent().expect("has parent")).ok();
     }
 

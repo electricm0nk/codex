@@ -4,6 +4,7 @@ import {
   previewCyberpunkCharacter,
   type CyberpunkCreationPreview,
   type CyberpunkCreationProblem,
+  type CyberpunkLifepathTable,
   type CyberpunkStatValue,
 } from '../boundary/cprCreation';
 import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
@@ -14,10 +15,18 @@ import {
   blockingProblems,
   buildCyberpunkCreateRequest,
   buildCyberpunkPreviewRequest,
+  culturalLanguageOptions,
+  culturalLanguageTile,
   cyberpunkDerivedTiles,
   cyberpunkStatTiles,
+  lifepathRowOptions,
   rollAgain,
   selectMethod,
+  selectRole,
+  setCulturalLanguage,
+  setLifepathCount,
+  setLifepathPick,
+  setLifepathSkip,
   templateRowOptions,
   withPreviewSeed,
   type CyberpunkCreationDraft,
@@ -39,6 +48,12 @@ import { boxesInColumn } from './sheetLayout';
  * saved character has the previewed dice, saves with the Cyberpunk RED store and reads the
  * character back through `CyberpunkAdapter`. A refused build saves nothing. The boxes are placed
  * by `CYBERPUNK_CREATE_LAYOUT`.
+ *
+ * The Lifepath panel (E3.3) lists every table the engine answered for the Role (the general
+ * tables, then the Role's): each answer is the engine's roll until the player picks a row from
+ * the `lifepath_table` record; count tables take a picked count; a table behind a printed choice
+ * can be marked not taken. The Cultural Origin language is picked or rolled, and its level is
+ * the engine's `cpr.skill_level.language.*` row. The answers are saved with the character.
  */
 
 const LABEL_STYLE: CSSProperties = {
@@ -72,7 +87,7 @@ const LEGEND_STYLE: CSSProperties = { fontSize: '0.85rem', fontWeight: 700 };
 const MUTED_STYLE: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 };
 
 type Outcome =
-  | { kind: 'saved'; headline: string; stats: CyberpunkTile[]; derived: CyberpunkTile[] }
+  | { kind: 'saved'; headline: string; stats: CyberpunkTile[]; derived: CyberpunkTile[]; language: CyberpunkTile | null }
   | { kind: 'blocked'; diagnostics: CyberpunkCreationProblem[] };
 
 function Tile(props: { tile: CyberpunkTile }) {
@@ -98,6 +113,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const [draft, setDraft] = useState<CyberpunkCreationDraft>(EMPTY_CYBERPUNK_DRAFT);
   const [roles, setRoles] = useState<CyberpunkRecord[]>([]);
   const [templates, setTemplates] = useState<CyberpunkRecord[]>([]);
+  const [lifepathRecords, setLifepathRecords] = useState<CyberpunkRecord[]>([]);
   const [preview, setPreview] = useState<CyberpunkCreationPreview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -106,10 +122,11 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
 
   // The Roles and their Streetrat rows come from the corpus (`list_cyberpunk_catalog`).
   useEffect(() => {
-    Promise.all([loadCyberpunkCatalog('role'), loadCyberpunkCatalog('streetrat_template')])
-      .then(([roleCatalog, templateCatalog]) => {
+    Promise.all([loadCyberpunkCatalog('role'), loadCyberpunkCatalog('streetrat_template'), loadCyberpunkCatalog('lifepath_table')])
+      .then(([roleCatalog, templateCatalog, lifepathCatalog]) => {
         setRoles(roleCatalog.records);
         setTemplates(templateCatalog.records);
+        setLifepathRecords(lifepathCatalog.records);
       })
       .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : String(cause)));
   }, []);
@@ -145,6 +162,109 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const rows = templateRowOptions(templates, draft.role);
   const statTiles = preview ? cyberpunkStatTiles(preview.explanations, preview.stats) : [];
   const derivedTiles = preview ? cyberpunkDerivedTiles(preview.explanations) : [];
+  const languageTile = preview ? culturalLanguageTile(preview) : null;
+
+  function lifepathTable(table: CyberpunkLifepathTable, index: number) {
+    const record = lifepathRecords.find((r) => r.name === table.table);
+    const languages = record && table.answers.length > 0 && 'languages_by_roll' in record ? culturalLanguageOptions(record, table.answers[0].roll) : null;
+    const base = `cpr-lifepath-${index}`;
+    return (
+      <div key={table.table} data-lifepath-table={table.table} style={{ borderTop: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+        <p style={{ fontSize: '0.85rem', fontWeight: 700, margin: 0 }}>
+          {table.table} <span style={{ ...MUTED_STYLE, display: 'inline' }}>({table.die}, {table.sourcePage})</span>
+        </p>
+        <p style={MUTED_STYLE}>{table.rollInstruction}</p>
+        {table.skippable ? (
+          <label style={{ ...MUTED_STYLE, display: 'block', marginTop: '0.25rem' }}>
+            <input
+              type="checkbox"
+              checked={table.skipped}
+              onChange={(event) => setDraft(setLifepathSkip(draft, table.table, event.target.checked))}
+            />{' '}
+            Not on my path
+          </label>
+        ) : null}
+        {table.count !== null && table.countMax !== null && !table.skipped ? (
+          <div style={{ ...FIELD_STYLE, marginTop: '0.35rem' }}>
+            <label style={LABEL_STYLE} htmlFor={`${base}-count`}>
+              How many
+            </label>
+            <select
+              id={`${base}-count`}
+              style={INPUT_STYLE}
+              value={table.countPicked ? String(table.count) : ''}
+              onChange={(event) => setDraft(setLifepathCount(draft, table.table, event.target.value === '' ? null : Number(event.target.value)))}
+            >
+              <option value="">Rolled: {table.count}</option>
+              {Array.from({ length: table.countMax + 1 }, (_, n) => (
+                <option key={n} value={String(n)}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
+        {table.answers.map((answer) => {
+          const id = `${base}-${answer.entry}-${answer.columnIndex}`;
+          const label = [answer.entry > 0 ? `#${answer.entry}` : '', table.perColumn || table.count !== null ? answer.column : ''].filter(Boolean).join(' ');
+          return (
+            <div key={id} style={{ ...FIELD_STYLE, marginTop: '0.35rem' }}>
+              {label ? (
+                <label style={LABEL_STYLE} htmlFor={id}>
+                  {label}
+                </label>
+              ) : null}
+              <select
+                id={id}
+                aria-label={label || table.table}
+                style={INPUT_STYLE}
+                value={answer.picked ? String(answer.roll) : ''}
+                onChange={(event) =>
+                  setDraft(setLifepathPick(draft, table.table, answer.entry, answer.columnIndex, event.target.value === '' ? null : Number(event.target.value)))
+                }
+              >
+                <option value="">
+                  {answer.picked ? 'Roll it' : `Rolled ${answer.roll}: ${[answer.text, answer.detail].filter(Boolean).join(' / ')}`}
+                </option>
+                {record
+                  ? lifepathRowOptions(record, answer.columnIndex).map((option) => (
+                      <option key={option.roll} value={String(option.roll)}>
+                        {option.label}
+                      </option>
+                    ))
+                  : null}
+              </select>
+            </div>
+          );
+        })}
+        {languages !== null ? (
+          <div style={{ ...FIELD_STYLE, marginTop: '0.35rem' }}>
+            <label style={LABEL_STYLE} htmlFor="cpr-cultural-language">
+              Cultural Origin language (pick one of the region's, or any other)
+            </label>
+            <input
+              id="cpr-cultural-language"
+              list="cpr-cultural-language-options"
+              style={INPUT_STYLE}
+              value={draft.lifepath.culturalLanguage ?? ''}
+              placeholder={preview?.culturalLanguage && !preview.culturalLanguage.picked ? `Rolled: ${preview.culturalLanguage.name}` : ''}
+              onChange={(event) => setDraft(setCulturalLanguage(draft, event.target.value))}
+            />
+            <datalist id="cpr-cultural-language-options">
+              {languages.map((language) => (
+                <option key={language} value={language} />
+              ))}
+            </datalist>
+            {languageTile ? (
+              <div style={{ marginTop: '0.4rem', maxWidth: 220 }}>
+                <Tile tile={languageTile} />
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    );
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -165,6 +285,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
           headline: `${result.summary.displayLabel} is ready`,
           stats: cyberpunkStatTiles(result.explanations, shownStats),
           derived: cyberpunkDerivedTiles(result.explanations),
+          language: culturalLanguageTile({ culturalLanguage: preview?.culturalLanguage ?? null, explanations: result.explanations }),
         });
         props.onCreated();
       } else {
@@ -200,7 +321,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
             id="cpr-role"
             style={INPUT_STYLE}
             value={draft.role ?? ''}
-            onChange={(event) => setDraft({ ...draft, role: event.target.value || null, seed: null, templateRoll: null })}
+            onChange={(event) => setDraft(selectRole(draft, event.target.value || null, lifepathRecords))}
           >
             <option value="">— choose a Role —</option>
             {roles.map((role) => (
@@ -312,6 +433,17 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
         ))}
       </div>
 
+      {preview && preview.lifepath.length > 0 ? (
+        <fieldset id="cpr-lifepath" style={{ ...FIELDSET_STYLE, marginTop: '1rem' }}>
+          <legend style={LEGEND_STYLE}>Lifepath</legend>
+          <p style={MUTED_STYLE}>
+            Every answer is rolled until you pick one. The answers are printed on your sheet; your Cultural Origin language is a
+            Language skill.
+          </p>
+          {preview.lifepath.map((table, index) => lifepathTable(table, index))}
+        </fieldset>
+      ) : null}
+
       {blocking.length > 0 ? (
         <ul style={{ color: 'var(--color-warn)', fontSize: '0.85rem', margin: '0.75rem 0', paddingLeft: '1.1rem' }}>
           {blocking.map((problem) => (
@@ -347,6 +479,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
               <div style={{ display: 'grid', gap: '0.75rem' }}>
                 <TileGrid tiles={outcome.stats} />
                 <TileGrid tiles={outcome.derived} />
+                {outcome.language ? <TileGrid tiles={[outcome.language]} /> : null}
               </div>
             </>
           ) : (
