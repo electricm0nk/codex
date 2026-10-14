@@ -344,10 +344,10 @@ impl CprKitCatalog {
         }
         let mut calibers: Vec<String> = Vec::new();
         for record in read_records(corpus_dir, "weapon")? {
-            if let Some(c) = record["ammo_type"].as_str() {
-                if !calibers.iter().any(|k| k == c) {
-                    calibers.push(c.to_owned());
-                }
+            if let Some(c) = record["ammo_type"].as_str()
+                && !calibers.iter().any(|k| k == c)
+            {
+                calibers.push(c.to_owned());
             }
         }
         calibers.push(SHOTGUN_SHELL.to_owned());
