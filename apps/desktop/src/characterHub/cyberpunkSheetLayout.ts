@@ -13,9 +13,10 @@ import type { LayoutBox } from './sheetLayout';
  */
 
 /** The sheet's boxes. `other` holds every engine row no box above names, so none is dropped. */
-export type CyberpunkSheetBoxId = 'stats' | 'vitals' | 'woundTrack' | 'other';
+export type CyberpunkSheetBoxId = 'stats' | 'skills' | 'vitals' | 'woundTrack' | 'other';
 
-/** Left: the ten STATs. Right: what they give, the wound track, and the rows not yet laid out. */
+/** Left: the ten STATs and the skills. Right: what they give, the wound track, and the rows not
+ * yet laid out. */
 export type CyberpunkSheetColumn = 'statBlock' | 'vitals';
 
 /** The registered columns, left to right. */
@@ -35,6 +36,9 @@ export const CYBERPUNK_SHEET_LAYOUT: readonly LayoutBox<CyberpunkSheetBoxId, Cyb
   // INT to EMP: each STAT as entered, and its current value where something lowers or raises it
   // (armour on REF, DEX and MOVE; cyberware on BODY; Humanity Loss on EMP).
   { id: 'stats', column: 'statBlock', order: 0, boxStyle: BOX },
+  // The 66 skills under their 9 categories, each with its level and its Skill Base (STAT + level,
+  // the REF and DEX skills from the armour-penalised STAT).
+  { id: 'skills', column: 'statBlock', order: 1, boxStyle: BOX },
   // Hit Points, Seriously Wounded, Death Save, Humanity (current of max), MOVE, LUCK.
   { id: 'vitals', column: 'vitals', order: 0, boxStyle: BOX },
   // The Wound States with the HP each begins below and its Stabilization DV, then the Death Save

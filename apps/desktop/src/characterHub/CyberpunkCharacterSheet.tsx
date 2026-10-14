@@ -1,12 +1,14 @@
-import type { CSSProperties } from 'react';
+import { Fragment, useEffect, useState, type CSSProperties } from 'react';
+import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { boxesInColumn } from './sheetLayout';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
 import { buildCyberpunkSheet, type CyberpunkSheetBox, type CyberpunkSheetCell } from './cyberpunkSheetModel';
 
 /**
- * The Cyberpunk RED character sheet: the ten STATs (EMP as entered and current), Hit Points,
- * Seriously Wounded, Death Save, Humanity, MOVE, LUCK and the wound track. Its boxes are placed
+ * The Cyberpunk RED character sheet: the ten STATs (EMP as entered and current), the 66 skills
+ * under their categories, Hit Points, Seriously Wounded, Death Save, Humanity, MOVE, LUCK and the
+ * wound track. Its boxes are placed
  * by `cyberpunkSheetLayout.ts`; every number is one engine `cpr.` row (`cyberpunkSheetModel.ts`),
  * as `load_saved_character` composed it -- this file writes no number of its own.
  */
@@ -14,8 +16,35 @@ export function CyberpunkCharacterSheet(props: {
   detail: LoadSavedCharacterResponse;
   onClose: () => void;
   onOpen: () => void;
+  /** The skill catalog when the caller already holds it; otherwise the sheet loads it
+   * (`list_cyberpunk_catalog('skill')`). */
+  skillCatalog?: readonly CyberpunkRecord[];
 }) {
-  const sheet = buildCyberpunkSheet(props.detail);
+  const given = props.skillCatalog;
+  const [loaded, setLoaded] = useState<readonly CyberpunkRecord[] | null>(null);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
+  // The skills' categories and linked STATs come from the corpus skill catalog.
+  useEffect(() => {
+    if (given !== undefined) {
+      return;
+    }
+    let live = true;
+    loadCyberpunkCatalog('skill')
+      .then((catalog) => {
+        if (live) {
+          setLoaded(catalog.records);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setCatalogError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, [given]);
+  const sheet = buildCyberpunkSheet(props.detail, given ?? loaded);
   const boxById = new Map(sheet.boxes.map((box) => [box.id, box]));
   return (
     <section data-testid="cpr-character-sheet" style={{ marginTop: '1.5rem' }}>
@@ -43,6 +72,12 @@ export function CyberpunkCharacterSheet(props: {
             ))}
           </ul>
         </div>
+      )}
+
+      {catalogError === null ? null : (
+        <p data-testid="cpr-sheet-skill-catalog-error" style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 0.75rem' }}>
+          Skill categories could not be loaded, so the skills are listed ungrouped: {catalogError}
+        </p>
       )}
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
@@ -98,30 +133,41 @@ function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
           </thead>
         )}
         <tbody>
-          {box.rows.map((row) => {
+          {box.rows.map((row, rowIndex) => {
             const ids = row.cells.flatMap((cell) => (cell === null ? [] : [cell.rowId])).join(' ');
+            const group = row.group ?? null;
+            const heading = group !== null && (rowIndex === 0 || box.rows[rowIndex - 1].group !== group);
             return (
-              <tr key={`${row.label}:${ids}`}>
-                <th data-cpr-label-of={ids} scope="row" style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0.2rem 0', textAlign: 'left' }}>
-                  {row.label}
-                </th>
-                {box.columns === null ? (
-                  <td style={cellStyle}>
-                    {row.cells.map((cell, index) => (
-                      <span key={index}>
-                        {index === 0 ? null : ' / '}
-                        {cell === null ? <Missing /> : <Value cell={cell} />}
-                      </span>
-                    ))}
-                  </td>
-                ) : (
-                  row.cells.map((cell, index) => (
-                    <td key={index} style={cellStyle}>
-                      {cell === null ? <Missing /> : <Value cell={cell} />}
+              <Fragment key={`${row.label}:${ids}`}>
+                {heading ? (
+                  <tr data-cpr-skill-group={group}>
+                    <th colSpan={(box.columns?.length ?? 1) + 1} scope="rowgroup" style={groupStyle}>
+                      {group}
+                    </th>
+                  </tr>
+                ) : null}
+                <tr>
+                  <th data-cpr-label-of={ids} scope="row" style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0.2rem 0', textAlign: 'left' }}>
+                    {row.tag === undefined ? row.label : `${row.label} (${row.tag})`}
+                  </th>
+                  {box.columns === null ? (
+                    <td style={cellStyle}>
+                      {row.cells.map((cell, index) => (
+                        <span key={index}>
+                          {index === 0 ? null : ' / '}
+                          {cell === null ? <Missing /> : <Value cell={cell} />}
+                        </span>
+                      ))}
                     </td>
-                  ))
-                )}
-              </tr>
+                  ) : (
+                    row.cells.map((cell, index) => (
+                      <td key={index} style={cellStyle}>
+                        {cell === null ? <Missing /> : <Value cell={cell} />}
+                      </td>
+                    ))
+                  )}
+                </tr>
+              </Fragment>
             );
           })}
         </tbody>
@@ -129,6 +175,15 @@ function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
     </div>
   );
 }
+
+const groupStyle: CSSProperties = {
+  borderBottom: '1px solid var(--color-border)',
+  color: 'var(--color-text-muted)',
+  fontSize: '0.72rem',
+  fontWeight: 700,
+  padding: '0.5rem 0 0.15rem',
+  textAlign: 'left',
+};
 
 const cellStyle: CSSProperties = { padding: '0.2rem 0 0.2rem 0.75rem', textAlign: 'right' };
 
