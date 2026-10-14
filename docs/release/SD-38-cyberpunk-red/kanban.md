@@ -59,7 +59,7 @@ cards (`decisions.md §22`).
 | E2.9 | Lane C: netrunning (A-7, D-2) | opus | complete | E1.7, E1.1, E1.V | `artifacts/epic_2/E2.9_cycle_receipt.md`; b387df53af + 8b3cea7355 (clippy); `cpr::netrunning` 11/11 (RED: 0 tests, then 10 of 11 failing on 0-valued bodies); ranks 1–10 → 2,2,2,3,3,3,4,4,4,5 (p197 image-checked); p157 sample deck 7 of 7, 8th slot refused; Cyberarm +1, Bodyweight Suit +1 for 1-slot Hardware only, both on one deck 9 of 9 (A-7); D-2 printed line; rank plant red; root 300 suites 6594 passed 0 failed; desktop 2 suites 810 passed 0 failed; PF/SF seeds unchanged |
 | E2.10 | Sheet assembly + adapter; p121 check | opus | waiting | E2.4, E2.8, E2.9, E1.V |  |
 | E2.MC | E2 adversarial merge check | opus | waiting | E2.10 | writes the E2 epic report |
-| E6.1 | Catalog + deck-calculator commands | sonnet | waiting | E1.V, E2.9 |  |
+| E6.1 | Catalog + deck-calculator commands | sonnet | complete | E1.V, E2.9 | `artifacts/epic_6/E6.1_cycle_receipt.md`; `cpr_catalog` 8/8 on 53 MANIFEST kinds (RED: E0425, no `catalog_at`/`deck_at`); p157 sample deck 7 of 7, 8th slot refused; PF 3/3 + SF 4/4 unchanged |
 | E6.2 | Catalog screens + landing links | sonnet | waiting | E6.1 |  |
 | E6.3 | Netrunning tools screen | sonnet | waiting | E6.2 |  |
 | E6.4 | GM reference pages (print-only) | sonnet | waiting | E6.3, E1.8 |  |
