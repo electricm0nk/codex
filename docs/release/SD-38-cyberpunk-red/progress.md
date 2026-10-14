@@ -27,16 +27,16 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 
 | Epic | Status | Cards complete | Notes |
 |---|---|---|---|
-| C | in progress | 1 of 2 | C0 complete (1102f34aab); C1 next (SD-k revised: no wait on #398) |
+| C | complete | 2 of 2 | C0 complete (1102f34aab); C1 complete (706d8da680) (kanban rows; corrected by E6.MC, the row read 1 of 2 after C1 landed) |
 | E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
 | E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
 | E2 | in progress | 3 of 11 | lanes A, B, C running; E2.1, E2.5, E2.9 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
-| E6 | waiting | 0 of 5 | runs in the E2 window |
+| E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E3 | waiting | 0 of 8 | |
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **19 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V; derived after E1.V) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **27 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1, E2.5, E2.9, E6.1–E6.4, E6.MC; derived at E6.MC) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -119,6 +119,11 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E2.5 | opus | complete | 7eca436018 (engine + fixture), 5377876ab6 (clippy fix); receipt and rows in the next commit | `artifacts/epic_2/E2.5_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr/cyberware.rs`: HL preset sum, D-11 slot refusals (8 containers, A-5 extra eyes/arms), SP 7/11 highest-wins, BODY Grafted +2 (≤10) / Sigma 12 / Beta 14 with prerequisites, Kerenzikov +2, D-5 cap; `cpr.cyberware.*` rows; F-66 parity fixture from inventory §4, p118 image-checked; D-6 grep in decisions §20.6 prints 1 (a transcription_note), retro correction |
 | 2026-10-14 | E2.9 | opus | complete | b387df53af (engine + tests), 8b3cea7355 (clippy fix); receipt and rows in the next commit | `artifacts/epic_2/E2.9_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr::netrunning` 11/11; rows `cpr.netrunning.{net_actions,deck_slots_available,deck_slots_used}` + D-2 printed line; A-7 both extra slots, over-capacity refused; clippy PASS after one collapsible_if fix; sd24 5/5; root 300/6594/0, desktop 2/810/0 |
 | 2026-10-14 | E2.1 | opus | complete | 8dcf4cbb6d (engine + fixture); receipt and rows in the next commit | `artifacts/epic_2/E2.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/stats.rs`: HP 10 + 5 x ceil((BODY+WILL)/2), Seriously Wounded ceil(HP/2), Death Save = BODY, Humanity = EMP x 10, current EMP max(0, floor(HUM/10)) (A-4), MOVE, LUCK pool; `cpr.derived.*` rows; p080 HP table fixture from the page (image-checked) 126/126 by two implementations; floor plant red (63 cells); clippy PASS; sd24 ok; root 300/6588/0, desktop 2/810/0 |
+| 2026-10-14 | E6.1 | sonnet | complete | 8e65a98089 (code); receipt and rows in the next commit | `artifacts/epic_6/E6.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr_catalog` 8/8: 53 MANIFEST kinds = expected counts; p157 deck 7 of 7, 8th refused; desktop 2 suites / 818 passed / 0 failed; frontend 165/165 |
+| 2026-10-14 | E6.2 | sonnet | complete | 61aa6d42cc (code); receipt and rows in the next commit | `artifacts/epic_6/E6.2_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | 45 tabs = 45 non-print_only of 53 MANIFEST kinds, 779 records; ui-smoke browse-cyberpunk-catalog 2/2 green; frontend 166/166; 106 ui-smoke rows |
+| 2026-10-14 | E6.3 | sonnet | complete | 7d59a9a0b9 (code); receipt and rows in the next commit | `artifacts/epic_6/E6.3_cycle_receipt.md` | PF/SF not re-rendered: no src/crates/src-tauri change (unchanged by construction) | Deck Calculator tool tab; pickers 3/27/6; frontend 167/167; 106 ui-smoke rows (no new row; spec.json is E6.4's) |
+| 2026-10-14 | E6.4 | sonnet | complete | e8063e2b4a (code); receipt and rows in the next commit | `artifacts/epic_6/E6.4_cycle_receipt.md` | PF/SF not re-rendered: no src/crates/src-tauri change (unchanged by construction) | GM Reference group: 8 print_only kinds, 151 records, every printed value on the page; ui-smoke browse-cyberpunk-gm-reference green (2/2 with catalog); frontend 168/168; 107 ui-smoke rows |
+| 2026-10-14 | E6.MC | opus | complete | 251eda57a1 (evidence); receipt and rows in the next commit | `artifacts/epic_6/E6.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (head 2df632993b vs E0.6 base records) | E6.1–E6.4 re-run 9/9 as expected (cpr_catalog 8/8, npm 168/168, ui-smoke 3/3, inventory drift 0); 4 plants red then restored (program −1 → count test; demon −1 → GM test; Standard slot +1 engine-only → corpus_mismatch; engine+corpus → (7,8)≠(7,7)); no code, no clippy; moved E6.1–E6.4 rows from after "For the operator" into this log |
 
 ## Epic reports
 
@@ -173,6 +178,33 @@ blockers.)
 - **For the lead:** decisions.md §11 asks every record for verbatim `text`; `mooks_grunts` (10) and `net_architecture[1,2]`
   carry none (stat blocks and pure tables, no prose) — E6.4 prints them from their structured fields.
 
+### Epic report — E6 catalogs, Netrunning tools, GM reference (E6.MC, 2026-10-14, origin/tranche-18 2df632993b)
+
+- **Cards done:** 5 of 5 — E6.1, E6.2, E6.3, E6.4, E6.MC
+  (`awk -F'|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 5).
+- **What E6 delivered:** two Tauri commands (`list_cyberpunk_catalog`, `compute_cyberpunk_deck`, `apps/desktop/src-tauri/src/cpr_catalog.rs`)
+  over the packaged corpus and the E2.9 engine; a landing → catalog flow with 45 player-facing tabs over 53 MANIFEST kinds
+  (8 `print_only`); a Netrunning deck calculator whose every number comes back from `compute_cyberpunk_deck`; 8 read-only GM
+  reference pages printing 151 `print_only` records.
+- **Figures (commands in `artifacts/epic_6/E6.MC_cycle_receipt.md`):** re-run 9 of 9 as expected (`awk '/^b/' E6.MC_evidence/results.txt`);
+  `--bins cpr_catalog` 8 passed; npm 168/168 test files; ui-smoke `browse-cyberpunk-catalog`, `browse-cyberpunk-gm-reference`,
+  `landing-select-pathfinder` 3/3 green, real store 15379 entries sha256 unchanged; inventory 107 rows / 18 screens, drift 0; GM pages
+  151 records (page test's own count; 8+2+4+3+5+10+55+64 = 151; E6.4 derived it from the MANIFEST sum). Plants: `program` −1 → E6.1 count
+  test and E6.2 catalog test red; `demon` −1 → E6.4 GM test red; Standard deck slot +1 in the engine → `corpus_mismatch` refusal, and
+  in engine + corpus together → p157 deck `(7, 8)` vs `(7, 7)` red; all restored green.
+- **Seed deltas:** PF Aldric `7b2f2f26…4b42` / Elowen `f0230bf0…81e9b` / Tomas `2320c050…be7b` unchanged; SF-Soldier-3 51 / SF-Mystic-5 72 /
+  SF-Technomancer-5 63 / SF-Envoy-3 42 lines and sha256 unchanged (head 2df632993b vs E0.6 base records). CPR seeds: none yet (E7.1).
+- **Retro (`scripts/retro.py summary --since 2026-10-13 --actor sd38-e6.1 --actor sd38-e6.2 --actor sd38-e6.3 --actor sd38-e6.4 --json`):**
+  1 event — 1 verification run (E6.1 clippy PASS); 0 corrections, 0 incidents, 0 deferrals, 0 rework. No key fired more than once.
+  E6.MC emitted 1 correction (the Summary `C` row). Not logged by its card: E6.1's receipt records a test that was wrong on first GREEN (`extras_add_slots…` expected
+  10 of 9) — a rework the retro log does not hold.
+- **Open blockers:** none.
+- **For the lead:** (1) the Netrunning deck screen has no ui-smoke row; its call into `compute_cyberpunk_deck` is proven by unit tests
+  with an injected `compute` and E6.1's command tests, not through the running app — the next `spec.json` writer (E3.2) or E4.7 can
+  add a `cyberpunk-deck-calculator` row; (2) the E6 lane appended its four cycle-log rows after `## For the operator`; E6.MC moved
+  them into the cycle log; (3) the Summary `C` row still read `1 of 2` after C1 landed — corrected here; (4) `apps/desktop/scripts/ui-smoke/.out/`
+  is still not git-ignored (E0.MC's finding); this card deleted its own PNGs before committing.
+
 ## Decisions taken on safe defaults
 
 (Each entry: card, SD-x / D-n / A-n, the alternative not taken.)
@@ -204,7 +236,3 @@ None.
 
 - Review `README.md §6` (author defaults A-1…A-11 in particular).
 - PR #398 must merge before C1 can cut `tranche-18`.
-| 2026-10-14 | E6.1 | sonnet | complete | 8e65a98089 (code); receipt and rows in the next commit | `artifacts/epic_6/E6.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr_catalog` 8/8: 53 MANIFEST kinds = expected counts; p157 deck 7 of 7, 8th refused; desktop 2 suites / 818 passed / 0 failed; frontend 165/165 |
-| 2026-10-14 | E6.2 | sonnet | complete | 61aa6d42cc (code); receipt and rows in the next commit | `artifacts/epic_6/E6.2_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | 45 tabs = 45 non-print_only of 53 MANIFEST kinds, 779 records; ui-smoke browse-cyberpunk-catalog 2/2 green; frontend 166/166; 106 ui-smoke rows |
-| 2026-10-14 | E6.3 | sonnet | complete | 7d59a9a0b9 (code); receipt and rows in the next commit | `artifacts/epic_6/E6.3_cycle_receipt.md` | PF/SF not re-rendered: no src/crates/src-tauri change (unchanged by construction) | Deck Calculator tool tab; pickers 3/27/6; frontend 167/167; 106 ui-smoke rows (no new row; spec.json is E6.4's) |
-| 2026-10-14 | E6.4 | sonnet | complete | e8063e2b4a (code); receipt and rows in the next commit | `artifacts/epic_6/E6.4_cycle_receipt.md` | PF/SF not re-rendered: no src/crates/src-tauri change (unchanged by construction) | GM Reference group: 8 print_only kinds, 151 records, every printed value on the page; ui-smoke browse-cyberpunk-gm-reference green (2/2 with catalog); frontend 168/168; 107 ui-smoke rows |
