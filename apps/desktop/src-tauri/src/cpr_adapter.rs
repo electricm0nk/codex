@@ -7,8 +7,9 @@
 //! `cpr_lifepath.txt` once Lifepath answers are. This adapter lists, loads and re-saves those
 //! characters; a loaded character's numbers are the rows of its composed sheet
 //! (`codex::rules_core::cpr::sheet::compose_sheet` over the CPR corpus), which the sheet renders
-//! verbatim, and its dice, rule lines and Lifepath answers are the sheet's printed lines. The
-//! sheet's critical-injuries checklist saves through `save_cyberpunk_criticals`.
+//! verbatim, and its dice, rule lines and Lifepath answers are the sheet's printed lines
+//! (`cpr_sheet_print`). The sheet's critical-injuries checklist saves through
+//! `save_cyberpunk_criticals`.
 //!
 //! The trait is Pathfinder-typed. Its two methods that take a Pathfinder `CharacterInput`
 //! (`chassis_resolve`, `level_up`) and the two that answer with a Pathfinder chassis or
@@ -22,7 +23,7 @@ use serde::Deserialize;
 
 use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
-use codex::rules_core::cpr::sheet::{compose_sheet, CprPrintedForm, CprSheetCatalogs};
+use codex::rules_core::cpr::sheet::{compose_sheet, CprSheetCatalogs};
 use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter};
 use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
 use codex::rules_core::level_up::LevelUpPlan;
@@ -32,8 +33,9 @@ use codex::rules_core::pilot_compute::{
 
 use crate::character_hub::{
     AbilityScoresDto, CharacterSummaryDto, CorpusDerivedDto, EncumbranceDto, EquipmentEffectsDto, ExplanationDto,
-    ListSavedCharactersResponse, LoadSavedCharacterResponse, SheetLineDto,
+    ListSavedCharactersResponse, LoadSavedCharacterResponse,
 };
+use crate::cpr_sheet_print::CprPrintCatalog;
 use crate::characterHub::appendToCharacter::{AppendToCharacterResponse, ItemToAppendDto};
 use crate::characterHub::recomputeCharacter::RecomputeCharacterResponse;
 use crate::characterHub::reSaveCharacter::ReSaveCharacterResponse;
@@ -205,7 +207,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
 
     /// The CPR character at `root`, its sheet composed fresh from its STATs and saved sheet
     /// choices over the CPR corpus: `explanations` are the sheet's `cpr.` rows in order and
-    /// `sheet_lines` its printed dice and rule lines (`kind` `cpr`). A saved choice the engine
+    /// `sheet_lines` its printed dice, words and rule lines (`cpr_sheet_print`). A saved choice the engine
     /// refuses fails the load with the engine's reason; no partial sheet is returned. The
     /// Pathfinder-only blocks of the response (snapshot, corpus-derived equipment, feats,
     /// spells, race traits, the six PF ability scores) are empty or zero; when the sheet prints
@@ -215,44 +217,11 @@ impl RuleSystemAdapter for CyberpunkAdapter {
         let character = CprCharacterStore::load(root)?;
         let choices = CprCharacterStore::load_choices(root)?;
         let lifepath = CprCharacterStore::load_lifepath(root)?;
-        let sheet = compose_sheet(&CprSheetCatalogs::load(&corpus_root())?, &character.input, &choices)?;
-        let mut sheet_lines: Vec<SheetLineDto> = sheet
-            .printed
-            .into_iter()
-            .map(|line| SheetLineDto {
-                id: line.id,
-                kind: "cpr".to_owned(),
-                label: line.label,
-                form: match line.form {
-                    CprPrintedForm::Dice => "dice",
-                    CprPrintedForm::Words => "words",
-                }
-                .to_owned(),
-                value: line.value,
-                also: Vec::new(),
-                prose: line.prose,
-                condition: None,
-            })
-            .collect();
-        // The Lifepath answers, printed as saved: words, never a number.
-        sheet_lines.extend(lifepath.answers.iter().enumerate().map(|(i, answer)| SheetLineDto {
-            id: format!("cpr.lifepath.{i}"),
-            kind: "cpr".to_owned(),
-            label: if answer.column.is_empty() || answer.column == answer.table {
-                answer.table.clone()
-            } else {
-                format!("{}: {}", answer.table, answer.column)
-            },
-            form: "words".to_owned(),
-            value: answer.text.clone(),
-            also: Vec::new(),
-            prose: if answer.detail.is_empty() {
-                format!("{} (Lifepath, Cyberpunk RED core rulebook p. 45-70)", answer.text)
-            } else {
-                format!("{}: {} (Lifepath, Cyberpunk RED core rulebook p. 45-70)", answer.text, answer.detail)
-            },
-            condition: None,
-        }));
+        let corpus = corpus_root();
+        let sheet = compose_sheet(&CprSheetCatalogs::load(&corpus)?, &character.input, &choices)?;
+        // Every printed line: the sheet's dice and words, the Lifepath answers, and the rule
+        // lines (Role Ability, cyberware, Humanity Loss, weapon specials, brain damage).
+        let sheet_lines = crate::cpr_sheet_print::sheet_lines(&CprPrintCatalog::load(&corpus)?, &sheet, &choices, &lifepath)?;
         let sheet_rules_unavailable_reason = sheet_lines.is_empty().then(|| {
             "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows".to_owned()
         });
@@ -332,7 +301,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
     use codex::rules_core::cpr::input::{CprCharacterInput, CprStat, CprStats};
     use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter, CPR_SAVED_CHARACTER_SCHEMA_VERSION};
@@ -464,7 +433,7 @@ mod tests {
     /// sheet choices) and a kitted Solo whose cyberware lowers EMP, whose armour lowers REF, DEX
     /// and MOVE, and whose two Critical Injuries (one that raises it) move the Base Death Save
     /// Penalty.
-    fn sheet_fixture_characters() -> Vec<(CprSavedCharacter, codex::rules_core::cpr::input::CprSheetChoices)> {
+    pub(crate) fn sheet_fixture_characters() -> Vec<(CprSavedCharacter, codex::rules_core::cpr::input::CprSheetChoices)> {
         use codex::rules_core::cpr::armor::{CprArmorLocation, CprWornArmor};
         use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
         use codex::rules_core::cpr::cyberware::{CprCyberwareInstall, CprMount};
@@ -569,7 +538,7 @@ mod tests {
     /// E4.5: the kitted Solo's Lifepath answers, as creation saves them (`cpr_creation`'s
     /// `saved_lifepath`): cells of `lifepath_table.json` rows (p. 45-70); a whole-row table keeps
     /// the row's other cells as the detail.
-    fn sheet_fixture_lifepath(character_id: &str) -> Option<codex::rules_core::cpr::input::CprLifepath> {
+    pub(crate) fn sheet_fixture_lifepath(character_id: &str) -> Option<codex::rules_core::cpr::input::CprLifepath> {
         use codex::rules_core::cpr::input::{CprLifepath, CprLifepathAnswer};
         let answer = |table: &str, entry: u8, column: &str, text: &str, detail: &str| CprLifepathAnswer {
             table: table.to_owned(),

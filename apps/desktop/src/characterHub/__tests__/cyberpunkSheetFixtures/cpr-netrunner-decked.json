@@ -1165,16 +1165,6 @@
       "condition": null
     },
     {
-      "id": "cpr.netrunning.brain_damage",
-      "kind": "cpr",
-      "label": "Brain damage",
-      "form": "words",
-      "value": "",
-      "also": [],
-      "prose": "Brain damage (from Zap and from Programs and Black ICE that deal damage directly to the brain) is subtracted from your Hit Points; armor does not reduce it (Cyberpunk RED core rulebook p. 201).",
-      "condition": null
-    },
-    {
       "id": "cpr.reputation.facedown_roll",
       "kind": "cpr",
       "label": "Facedown",
@@ -1182,6 +1172,94 @@
       "value": "4 + 1d10",
       "also": [],
       "prose": "Facedown: COOL + Reputation + 1d10, 4 + 1d10 (p. 194)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.role_ability.netrunner",
+      "kind": "role_ability",
+      "label": "Interface",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Interface Rank 4",
+        "NET Actions per Turn 3"
+      ],
+      "prose": "A Netrunner's Interface Role Ability allows them to Netrun, determines how many NET Actions they can take on their Turn, and gives them access to a suite of Interface Abilities. We will be going into Netrunning in-depth in the Netrunning Section (pg. 198). (Cyberpunk RED core rulebook p148)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.cyberware.0",
+      "kind": "cyberware",
+      "label": "Neural Link",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Humanity Loss 7"
+      ],
+      "prose": "Wired artificial nervous system, required to use Neuralware, and Subdermal Grips. System has 5 Option Slots for Neuralware options. (Cyberpunk RED core rulebook p360)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.cyberware.1",
+      "kind": "cyberware",
+      "label": "Interface Plugs",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Humanity Loss 7"
+      ],
+      "prose": "Neuralware Option. Plugs in the wrist or head that allow user to jack into and make use of Smartguns, Cyberdecks, heavy machinery, and drive vehicles with no hands! Multiple installations allow user to be plugged into multiple things at the same time. Requires Neural Link. (Cyberpunk RED core rulebook p360)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.cyberware.2",
+      "kind": "cyberware",
+      "label": "Cyberarm",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Humanity Loss 7"
+      ],
+      "prose": "Replacement arm. Does not have to be paired. A Cyberarm has 4 Option Slots for Cyberarm or Cyberlimb Options, and each comes pre-installed with a Standard Hand that doesn't cost any Humanity Loss or take up a Cyberarm Option Slot. (Cyberpunk RED core rulebook p365)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.cyberware.3",
+      "kind": "cyberware",
+      "label": "Cyberdeck (installed)",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Humanity Loss 3"
+      ],
+      "prose": "Cyberarm Option. Cyberdeck permanently installed into the user's Cyberarm. A Cyberdeck must be provided by the user at the time of installation. In addition to never accidentally misplacing your Cyberdeck, integration into a Cyberarm gives any Cyberdeck 1 extra slot that can be used for either Programs or Hardware. This is a permanent upgrade. Attempting to uninstall the Cyberdeck from the Cyberarm breaks it beyond repair, but any Programs or Hardware on it could be easily recovered. Requires a Cyberarm and takes 3 Option Slots. Cyberdeck still requires Interface Plugs and Neural Link to be operated by the user. (Cyberpunk RED core rulebook p365)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.humanity_loss",
+      "kind": "humanity",
+      "label": "Humanity Loss",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Humanity Loss 24",
+        "Humanity 56",
+        "EMP 5"
+      ],
+      "prose": "Humanity Loss 24 from installed cyberware: Humanity 56 = EMP 8 x 10 - 24. EMP 5: EMP is lowered by 1 every time the tens place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81).",
+      "condition": null
+    },
+    {
+      "id": "cpr.netrunning.brain_damage",
+      "kind": "netrunning",
+      "label": "Brain damage",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Hit Points 30",
+        "armor SP does not apply"
+      ],
+      "prose": "Brain damage (from Zap and from Programs and Black ICE that deal damage directly to the brain) is subtracted from your Hit Points; armor does not reduce it (Cyberpunk RED core rulebook p. 201).",
       "condition": null
     }
   ],

@@ -40,12 +40,17 @@
  *    two tables, ticked exactly where the engine printed a recorded injury. Ticking builds the
  *    list `save_cyberpunk_criticals` saves (the round trip and the moved Base Death Save Penalty
  *    are `cpr_adapter::tests::ticking_a_critical_injury_saves_it_and_moves_the_base_death_save_penalty`).
+ * 9. (E4.6) Every printed line of each fixture response appears on the sheet exactly once: a box
+ *    line as its printed cell, a rule line (`cpr_sheet_print.rs`: Role Ability, cyberware effects,
+ *    Humanity Loss (D-6), weapon specials, brain damage (D-2)) under "Rules and features" with its
+ *    label, figures and prose as printed; no line prints "-2 EMP".
  */
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { RULES_AND_FEATURES_ID } from './CharacterSheet';
 import { CyberpunkCharacterSheet } from './CyberpunkCharacterSheet';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
 import {
@@ -118,6 +123,31 @@ function renderedRows(html: string): Array<[string, string]> {
   return [...html.matchAll(/<span[^>]*data-cpr-row="([^"]+)"[^>]*>([^<]*)<\/span>/g)].map((m) => [m[1], m[2]]);
 }
 
+/**
+ * The html with its "Rules and features" section's engine texts removed: every rule line's label,
+ * value, `also` figures and prose, each written as the engine printed it. Anything left in that
+ * section (a digit the engine did not print) is then caught by the stray-digit check.
+ */
+function stripRuleLines(html: string, detail: LoadSavedCharacterResponse, id: string): string {
+  const start = html.indexOf(`id="${RULES_AND_FEATURES_ID}"`);
+  if (start < 0) {
+    return html;
+  }
+  const original = html.slice(start);
+  const texts: string[] = [];
+  for (const line of detail.sheetLines) {
+    if (!original.includes(`data-rule-id="${line.id}"`)) {
+      continue;
+    }
+    for (const text of [line.label, line.value, ...line.also, line.prose].filter((t) => t.length > 0)) {
+      assert(original.includes(`>${text}<`), `${id}: rule line ${line.id} prints ${JSON.stringify(text)}`);
+      texts.push(text);
+    }
+  }
+  const section = texts.reduce((rest, text) => rest.split(`>${text}<`).join('><'), original);
+  return html.slice(0, start) + section.replace(/data-rule-id="[^"]*"/g, '');
+}
+
 // 2. The registry has no encumbrance box (D-12), and each column holds its boxes in `order`.
 assertEqual(
   CYBERPUNK_SHEET_LAYOUT.filter((box) => /encumbr/i.test(box.id)).length,
@@ -175,8 +205,10 @@ for (const id of CHARACTERS) {
   checkedRows += rows.length;
 
   // 4b. No digit is written anywhere else (the character's name is the player's text; a label
-  // read from a row id -- "cpr.weapon.0.rof" -- carries only digits of its own row ids).
-  let rest = html.replace(/<span[^>]*data-cpr-row="[^"]+"[^>]*>[^<]*<\/span>/g, '');
+  // read from a row id -- "cpr.weapon.0.rof" -- carries only digits of its own row ids). The
+  // "Rules and features" section (E4.6) prints the engine's rule lines verbatim; its texts are
+  // checked and removed first (section 9 proves each line is there).
+  let rest = stripRuleLines(html, detail, id).replace(/<span[^>]*data-cpr-row="[^"]+"[^>]*>[^<]*<\/span>/g, '');
   // A printed line (dice stay literal; a weapon's name; "N/A") is the engine's own text.
   const lines = new Map(detail.sheetLines.map((line) => [line.id, line.value === '' ? line.prose : line.value]));
   rest = rest.replace(/<span[^>]*data-cpr-printed="([^"]+)"[^>]*>([^<]*)<\/span>/g, (_whole, lineId: string, text: string) => {
@@ -627,10 +659,62 @@ assertEqual(checkedTicks, 2, 'ticked injuries checked');
   assertEqual(toggleCyberpunkCritical(removed, { location: 'body', name: 'Foreign Object' }).length, 3, 'the Body Foreign Object is its own tick');
 }
 
+
+// 9. (E4.6) Every printed line of each fixture response appears on the sheet: a box line as its
+// `data-cpr-printed` cell, every other line (the rule lines `cpr_sheet_print.rs` adds: Role
+// Ability, cyberware effects, the Humanity Loss line, weapon specials, the brain-damage rule) under
+// "Rules and features" (`RulesAndFeaturesSection`, the Starfinder precedent) with its label, its
+// resolved figures and its prose as the engine printed them. No line is dropped or shown twice.
+let checkedPrinted = 0;
+let checkedRuleLines = 0;
+const ruleKinds = new Set<string>();
+for (const id of CHARACTERS) {
+  const detail = fixture(id);
+  const html = render(detail);
+  const sheet = buildCyberpunkSheet(detail, SKILLS, CRITICALS);
+  const inBoxes = new Set([...html.matchAll(/data-cpr-printed="([^"]+)"/g)].map((m) => m[1]));
+  const rulesStart = html.indexOf(`id="${RULES_AND_FEATURES_ID}"`);
+  const rulesHtml = rulesStart < 0 ? '' : html.slice(rulesStart);
+  const inRules = [...rulesHtml.matchAll(/data-rule-id="([^"]+)"/g)].map((m) => m[1]);
+  assertEqual(new Set(inRules).size, inRules.length, `${id}: each rule line once`);
+  assertEqual(
+    sheet.rules.map((line) => line.id).join(','),
+    inRules.join(','),
+    `${id}: the rules section renders the model's rule lines, in the engine's order`,
+  );
+  for (const line of detail.sheetLines) {
+    const boxed = inBoxes.has(line.id);
+    const ruled = inRules.includes(line.id);
+    assert(boxed !== ruled, `${id}: printed line ${line.id} appears on the sheet exactly once (box ${String(boxed)}, rules ${String(ruled)})`);
+    if (ruled) {
+      ruleKinds.add(line.kind);
+      checkedRuleLines += 1;
+    }
+    checkedPrinted += 1;
+  }
+  // Every rule line the engine adds (any kind but the box lines') is under Rules and features.
+  for (const line of detail.sheetLines.filter((l) => l.kind !== 'cpr')) {
+    assert(inRules.includes(line.id), `${id}: rule line ${line.id} (${line.kind}) is under Rules and features`);
+  }
+}
+// The kitted Solo, the arsenal and the Netrunner carry all five rule blocks between them.
+assertEqual([...ruleKinds].sort().join(','), 'cyberware,humanity,netrunning,role_ability,weapon_special', 'the five rule blocks render');
+{
+  const netrunner = fixture('cpr-netrunner-decked');
+  const html = render(netrunner);
+  const brain = netrunner.sheetLines.find((line) => line.id === 'cpr.netrunning.brain_damage');
+  assert(brain !== undefined && html.includes(`>${brain.prose}<`), 'D-2: the brain-damage rule is printed on the Netrunner sheet');
+  const hp = netrunner.explanations.find((row) => row.id === 'cpr.derived.hit_points')?.value;
+  assertEqual(brain?.also[0], `Hit Points ${String(hp)}`, 'D-2: the brain-damage line carries the Hit Points row');
+  for (const line of CHARACTERS.flatMap((c) => fixture(c).sheetLines)) {
+    assert(![line.label, line.value, line.prose, ...line.also].some((t) => t.includes('-2 EMP')), `D-6: ${line.id} never prints "-2 EMP"`);
+  }
+}
+
 for (const gameSystem of ['pf1', 'starfinder-1e']) {
   assertEqual(isCyberpunkCharacter({ gameSystem }), false, `a ${gameSystem} character does not open the Cyberpunk RED sheet`);
 }
 assert(checkedRows > 0, 'rows were checked');
 console.log(
-  `cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells; ${checkedPieces} cyberware pieces, ${checkedContainers} slot containers, ${checkedRoleRows} Role Ability rows, ${checkedDeckLines} deck lines; ${checkedEvents} Reputation events, ${checkedLifepath} Lifepath answers, ${checkedTicks} ticked injuries of 22`,
+  `cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells; ${checkedPieces} cyberware pieces, ${checkedContainers} slot containers, ${checkedRoleRows} Role Ability rows, ${checkedDeckLines} deck lines; ${checkedEvents} Reputation events, ${checkedLifepath} Lifepath answers, ${checkedTicks} ticked injuries of 22; ${checkedPrinted} printed lines on the sheet, ${checkedRuleLines} under Rules and features`,
 );

@@ -2223,6 +2223,113 @@
       "also": [],
       "prose": "Heavy Melee Weapon cannot be concealed under clothing with the Conceal/Reveal Object Skill (p093)",
       "condition": null
+    },
+    {
+      "id": "cpr.print.role_ability.solo",
+      "kind": "role_ability",
+      "label": "Combat Awareness",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Combat Awareness Rank 4",
+        "Combat Awareness points 4"
+      ],
+      "prose": "When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others: (Cyberpunk RED core rulebook p147)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.3",
+      "kind": "weapon_special",
+      "label": "SMG",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 10",
+        "ROF 1",
+        "Autofire Skill Base 8"
+      ],
+      "prose": "SMG: alternate fire Autofire (3) • Suppressive Fire (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.4",
+      "kind": "weapon_special",
+      "label": "Heavy SMG",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 10",
+        "ROF 1",
+        "Autofire Skill Base 8"
+      ],
+      "prose": "Heavy SMG: alternate fire Autofire (3) • Suppressive Fire (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.5",
+      "kind": "weapon_special",
+      "label": "Shotgun",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 9",
+        "ROF 1"
+      ],
+      "prose": "Shotgun: alternate fire Shotgun Shell (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.6",
+      "kind": "weapon_special",
+      "label": "Assault Rifle",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 9",
+        "ROF 1",
+        "Autofire Skill Base 8"
+      ],
+      "prose": "Assault Rifle: alternate fire Autofire (4) • Suppressive Fire (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.8",
+      "kind": "weapon_special",
+      "label": "Bows & Crossbows",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 6",
+        "ROF 1"
+      ],
+      "prose": "Bows & Crossbows: alternate fire Arrows (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.9",
+      "kind": "weapon_special",
+      "label": "Grenade Launcher",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 6",
+        "ROF 1"
+      ],
+      "prose": "Grenade Launcher: alternate fire Explosive (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.10",
+      "kind": "weapon_special",
+      "label": "Rocket Launcher",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 6",
+        "ROF 1"
+      ],
+      "prose": "Rocket Launcher: alternate fire Explosive (Cyberpunk RED core rulebook p342)",
+      "condition": null
     }
   ],
   "sheetRulesUnavailableReason": null,

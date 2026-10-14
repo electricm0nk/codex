@@ -1,6 +1,6 @@
 import type { CyberpunkCritical } from '../boundary/cprSheet';
 import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
-import type { ExplanationDto, LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import type { ExplanationDto, LoadSavedCharacterResponse, SheetLineDto } from '../boundary/loadSavedCharacterDetail';
 import type { CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
 import type { DiagnosticDto } from '../boundary/loadCreateCharacter';
 import type { CyberpunkSheetBoxId } from './cyberpunkSheetLayout';
@@ -12,7 +12,8 @@ import type { CyberpunkSheetBoxId } from './cyberpunkSheetLayout';
  * else: `CyberpunkAdapter::load_saved_character` (`cpr_adapter.rs`) sends the composed sheet's
  * `cpr.` rows (`compose_sheet`, `src/rules_core/cpr/sheet.rs`). This file holds labels and the
  * order they appear in -- no rule numbers. A row the boxes below do not name still appears, in
- * the `other` box under its row id, so an engine row is never dropped.
+ * the `other` box under its row id, so an engine row is never dropped; a printed line the boxes do
+ * not place (the rule lines `cpr_sheet_print.rs` prints) is in `rules`, so no line is dropped.
  */
 
 /** The `game_system` a Cyberpunk RED save envelope carries (`GameSystem::CyberpunkRed`). */
@@ -65,6 +66,10 @@ export interface CyberpunkSheet {
   blocking: DiagnosticDto[];
   /** Other diagnostics worth showing. */
   notes: DiagnosticDto[];
+  /** The engine's printed lines no box places -- the rule lines (Role Ability, cyberware
+   * effects, Humanity Loss, weapon specials, brain damage) -- in the engine's order, rendered
+   * under "Rules and features". */
+  rules: SheetLineDto[];
 }
 
 /**
@@ -241,6 +246,7 @@ export function buildCyberpunkSheet(
   // A build that did not compute lays out nothing, its printed lines included.
   const computed = !detail.diagnostics.some((d) => d.claimBlocking);
   const lines = new Map((computed ? detail.sheetLines : []).map((line) => [line.id, line]));
+  const placedLines = new Set<string>();
   /** An engine row when the engine computed one, else its printed line (dice, words, "N/A"). */
   const figure = (id: string): CyberpunkSheetCell | null => {
     const computed = cell(id);
@@ -248,7 +254,11 @@ export function buildCyberpunkSheet(
       return computed;
     }
     const line = lines.get(id);
-    return line === undefined ? null : { rowId: id, value: line.value === '' ? line.prose : line.value, detail: line.prose, printed: true };
+    if (line === undefined) {
+      return null;
+    }
+    placedLines.add(id);
+    return { rowId: id, value: line.value === '' ? line.prose : line.value, detail: line.prose, printed: true };
   };
   const boxes: CyberpunkSheetBox[] = [];
   const push = (box: CyberpunkSheetBox) => {
@@ -461,6 +471,7 @@ export function buildCyberpunkSheet(
     boxes,
     blocking: detail.diagnostics.filter((d) => d.claimBlocking),
     notes: detail.diagnostics.filter((d) => !d.claimBlocking),
+    rules: [...lines.values()].filter((line) => !placedLines.has(line.id)),
   };
 }
 

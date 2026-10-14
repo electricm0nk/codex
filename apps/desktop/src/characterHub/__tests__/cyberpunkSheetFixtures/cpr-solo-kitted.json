@@ -1243,6 +1243,45 @@
       "also": [],
       "prose": "Bodyguard (Lifepath, Cyberpunk RED core rulebook p. 45-70)",
       "condition": null
+    },
+    {
+      "id": "cpr.print.role_ability.solo",
+      "kind": "role_ability",
+      "label": "Combat Awareness",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Combat Awareness Rank 4",
+        "Combat Awareness points 4"
+      ],
+      "prose": "When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others: (Cyberpunk RED core rulebook p147)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.cyberware.0",
+      "kind": "cyberware",
+      "label": "Grafted Muscle and Bone Lace",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Humanity Loss 14"
+      ],
+      "prose": "User increases their BODY by 2. This increase in BODY changes a Character's HP and Death Save. This cannot increase the user's BODY to 11 or higher. (Cyberpunk RED core rulebook p364)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.humanity_loss",
+      "kind": "humanity",
+      "label": "Humanity Loss",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Humanity Loss 14",
+        "Humanity 66",
+        "EMP 6"
+      ],
+      "prose": "Humanity Loss 14 from installed cyberware: Humanity 66 = EMP 8 x 10 - 14. EMP 6: EMP is lowered by 1 every time the tens place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81).",
+      "condition": null
     }
   ],
   "sheetRulesUnavailableReason": null,

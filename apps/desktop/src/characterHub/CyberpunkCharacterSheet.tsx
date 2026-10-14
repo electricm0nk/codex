@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react
 import { saveCyberpunkCriticals } from '../boundary/cprSheet';
 import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { RulesAndFeaturesSection } from './CharacterSheet';
 import { boxesInColumn } from './sheetLayout';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
 import {
@@ -24,7 +25,9 @@ import {
  * one engine `cpr.` row (`cyberpunkSheetModel.ts`), as `load_saved_character` composed it -- this
  * file writes no number of its own. Ticking or unticking an injury saves the checklist through
  * `save_cyberpunk_criticals` and the sheet re-renders from the engine's answer (its Base Death
- * Save Penalty row moved by the engine).
+ * Save Penalty row moved by the engine). The engine's rule lines no box places (`cpr_sheet_print.rs`:
+ * the Role Ability, cyberware effects, Humanity Loss, weapon specials, brain damage) render
+ * verbatim under "Rules and features", as on the Starfinder sheet.
  */
 export function CyberpunkCharacterSheet(props: {
   detail: LoadSavedCharacterResponse;
@@ -188,6 +191,8 @@ export function CyberpunkCharacterSheet(props: {
           ))}
         </div>
       )}
+
+      <RulesAndFeaturesSection lines={sheet.rules} unavailableReason={null} />
     </section>
   );
 }

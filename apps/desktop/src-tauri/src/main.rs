@@ -26,6 +26,7 @@ mod corpus_ingest_diagnostic;
 mod cpr_adapter;
 mod cpr_catalog;
 mod cpr_creation;
+mod cpr_sheet_print;
 mod equipment_catalog;
 mod feat_catalog;
 mod authoring_workbench;
