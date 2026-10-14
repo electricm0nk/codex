@@ -847,9 +847,10 @@ mod tests {
         let grenade = [Some(16), Some(15), Some(15), Some(17), Some(20), Some(22), Some(25), NA];
         let rocket = [Some(17), Some(16), Some(15), Some(15), Some(20), Some(20), Some(25), Some(30)];
         // (name, hands, concealable, skill base, single-shot row, autofire row)
+        type Expected = (&'static str, i16, &'static str, i16, [Option<i16>; 8], Option<[i16; 5]>);
         let handgun = 4 + 4;
         let ref_only = 4;
-        let table: [(&str, i16, &str, i16, [Option<i16>; 8], Option<[i16; 5]>); 11] = [
+        let table: [Expected; 11] = [
             ("Medium Pistol", 1, "Yes", handgun, pistol, None),
             ("Heavy Pistol", 1, "Yes", handgun, pistol, None),
             ("Very Heavy Pistol", 1, "No", handgun, pistol, None),
