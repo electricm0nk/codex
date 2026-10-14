@@ -1,0 +1,21 @@
+CARD_BASE=ba53234115617b01ee75e8e07d0c39c655c324fb HEAD=71e9240410d8ca3d59cf6b3d3dcc9eca9a8785a5
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+post-rebase: CARD_BASE=3de641947ad4bd6aa05b0e024381f49bde71bb68 HEAD=68f6a5a1599694f725be248bc212d9d5f3a02d44
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+ apps/desktop/src-tauri/src/cpr_creation.rs         | 307 ++++++-
+ apps/desktop/src/boundary/cprCreation.ts           |  73 ++
+ .../src/characterHub/CyberpunkCreateForm.tsx       | 134 +++
+ .../characterHub/cyberpunkCreationModel.test.ts    | 102 ++-
+ .../src/characterHub/cyberpunkCreationModel.ts     |  71 +-
+ src/rules_core/cpr/input.rs                        | 121 +++
+ src/rules_core/cpr/roles.rs                        | 987 ++++++++++++++++++++-
+ src/rules_core/cpr/store.rs                        |  53 +-
+ 8 files changed, 1836 insertions(+), 12 deletions(-)
