@@ -177,6 +177,12 @@ impl SavedCharacterStore {
         let mut characters = Vec::new();
         let mut unreadable_entries = Vec::new();
         for entry in subdirectories {
+            // A directory whose envelope names a system this store does not own (a
+            // Cyberpunk RED character, `rules_core::cpr::store`) is that system's to list:
+            // neither a character here nor an unreadable entry.
+            if peek_game_system(&entry.path()).is_ok_and(|system| !owns_payload(&system)) {
+                continue;
+            }
             match Self::load(&entry.path()) {
                 Ok(envelope) => characters.push(summarize(&envelope)),
                 Err(err) => unreadable_entries.push(SavedCharacterListingError {
@@ -206,6 +212,26 @@ impl SavedCharacterStore {
             Err(err) => Err(io_error(root, err)),
         }
     }
+}
+
+/// `true` when a saved character of `game_system` is this store's payload (an
+/// `authoritative_character_input.txt` holding a Pathfinder-shaped `CharacterInput`).
+/// Cyberpunk RED keeps its own payload (`cpr_character_input.txt`, owned by
+/// `rules_core::cpr::store`) under the same characters root, so it is the one system
+/// this store does not own.
+pub fn owns_payload(game_system: &str) -> bool {
+    game_system != crate::rules_core::game_system::GameSystem::CyberpunkRed.id()
+}
+
+/// The `game_system` a saved character's `envelope.txt` names, read from that file alone
+/// (no payload read), so a caller can route a root to its system's store before loading.
+/// An envelope with no `game_system` line gets the same legacy default `load` gives it.
+pub fn peek_game_system(root: &Path) -> Result<String, SavedCharacterStoreError> {
+    let envelope_path = root.join(ENVELOPE_FILE);
+    let envelope_text = fs::read_to_string(&envelope_path).map_err(|err| SavedCharacterStoreError {
+        message: format!("envelope.txt missing or unreadable at {}: {err}", envelope_path.display()),
+    })?;
+    Ok(parse_envelope(&envelope_text)?.game_system)
 }
 
 fn summarize(envelope: &SavedCharacterEnvelope) -> SavedCharacterSummary {
@@ -865,6 +891,93 @@ mod tests {
         assert!(SavedCharacterStore::save(&envelope, &root).is_err());
 
         fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Cyberpunk RED character directory as `rules_core::cpr::store` writes it: an
+    /// `envelope.txt` in this store's key=value grammar naming `game_system = cyberpunk-red`,
+    /// and `cpr_character_input.txt` -- no `authoritative_character_input.txt`. Written by
+    /// hand here so this store's tests do not depend on the CPR store.
+    fn write_cyberpunk_red_directory(root: &Path) {
+        fs::create_dir_all(root).expect("cpr dir should be creatable");
+        fs::write(
+            root.join(ENVELOPE_FILE),
+            "character_id = cpr-listing-test\n\
+             revision_id = cpr-listing-test.rev.1\n\
+             revision_kind = authoritative\n\
+             saved_at = 2026-10-13T00:00:00Z\n\
+             schema_version = 1\n\
+             app_or_runtime_version = codex-dev\n\
+             content_or_rules_provenance = cyberpunk-red.corebook\n\
+             game_system = cyberpunk-red\n\
+             latest_authoritative_revision_ref = cpr-listing-test.rev.1\n\
+             display_label = CPR Listing Test\n",
+        )
+        .expect("cpr envelope should be writable");
+        fs::write(root.join("cpr_character_input.txt"), "stat.int = 6\n").expect("cpr input should be writable");
+    }
+
+    fn pf_fixture_root() -> std::path::PathBuf {
+        std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("tests/fixtures/sd14/pf1_human_fighter_level1_saved_character")
+    }
+
+    /// A characters root holding one Pathfinder character and one Cyberpunk RED directory
+    /// lists the Pathfinder character and reports NO unreadable entry: the CPR directory is
+    /// a system this store does not own (`owns_payload`), not a corrupt PF save.
+    #[test]
+    fn list_all_skips_a_directory_of_a_system_the_store_does_not_own() {
+        let characters_root = tempdir("list-all-skips-cyberpunk-red");
+        let pf_root = characters_root.join("pf-character");
+        let pf = SavedCharacterStore::load(&pf_fixture_root()).expect("the PF fixture loads");
+        SavedCharacterStore::save(&pf, &pf_root).expect("the PF fixture re-saves");
+        write_cyberpunk_red_directory(&characters_root.join("cpr-character"));
+
+        let listing = SavedCharacterStore::list_all(&characters_root).expect("lists");
+
+        assert_eq!(listing.characters.len(), 1, "{listing:?}");
+        assert_eq!(listing.characters[0].game_system, "pf1");
+        assert_eq!(listing.unreadable_entries.len(), 0, "{listing:?}");
+
+        fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// `peek_game_system` reads `envelope.txt` alone: it names a CPR directory's system
+    /// (which has no PF payload to load) and a legacy PF fixture's derived `pf1`.
+    #[test]
+    fn peek_game_system_reads_the_envelope_alone() {
+        let characters_root = tempdir("peek-game-system");
+        let cpr_root = characters_root.join("cpr-character");
+        write_cyberpunk_red_directory(&cpr_root);
+
+        assert_eq!(peek_game_system(&cpr_root).expect("peeks"), "cyberpunk-red");
+        assert_eq!(peek_game_system(&pf_fixture_root()).expect("peeks"), "pf1");
+        assert!(peek_game_system(&characters_root.join("absent")).is_err());
+        assert!(!owns_payload("cyberpunk-red"));
+        assert!(owns_payload("pf1") && owns_payload("starfinder-1e"));
+
+        fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// The `envelope.txt` this store renders for the existing PF fixture is byte-identical to
+    /// what the store rendered before SD-38 (the legacy fixture has no `game_system` line, so
+    /// the render adds `game_system = pf1` from its provenance). Pinned as a literal so any
+    /// change to `render_envelope` turns this red.
+    #[test]
+    fn render_envelope_of_the_pf_fixture_is_unchanged() {
+        let pf = SavedCharacterStore::load(&pf_fixture_root()).expect("the PF fixture loads");
+        assert_eq!(
+            render_envelope(&pf),
+            "character_id = sd14.fixture.pf1-human-fighter-level1\n\
+             revision_id = sd14.fixture.pf1-human-fighter-level1.rev.1\n\
+             revision_kind = authoritative\n\
+             saved_at = 2026-06-30T00:00:00Z\n\
+             schema_version = 1\n\
+             app_or_runtime_version = codex-dev\n\
+             content_or_rules_provenance = pf1.core_rulebook\n\
+             game_system = pf1\n\
+             latest_authoritative_revision_ref = sd14.fixture.pf1-human-fighter-level1.rev.1\n\
+             display_label = PF1 Human Fighter Level 1\n"
+        );
     }
 
     /// No trait selections at all must round-trip to a real empty list --

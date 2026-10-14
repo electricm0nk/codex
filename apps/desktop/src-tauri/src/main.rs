@@ -23,6 +23,7 @@ use codex::rules_core::converted_prose;
 mod corpus_fixtures;
 mod corpus_full;
 mod corpus_ingest_diagnostic;
+mod cpr_adapter;
 mod equipment_catalog;
 mod feat_catalog;
 mod authoring_workbench;
