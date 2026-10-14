@@ -6,6 +6,10 @@ import type {
   CyberpunkCreationRequest,
   CyberpunkCreationRow,
   CyberpunkLifepathRequest,
+  CyberpunkPickOption,
+  CyberpunkPointsOption,
+  CyberpunkRoleAbilityRequest,
+  CyberpunkRoleChoiceMenu,
   CyberpunkSkillLine,
   CyberpunkSkillsRequest,
   CyberpunkStatValue,
@@ -27,6 +31,10 @@ import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
  * instrument or field of each `(choose 1)` line. Which skills are listed, their levels, whether
  * the method lets them move, and the points spent and left are the engine's preview; the
  * Complete Package add-list is the `skill` records.
+ *
+ * The Role Ability (E3.5): the draft holds only the points the player placed and the picks made.
+ * What can be divided or picked, each option's allowed values, the rank and every number shown
+ * are the engine's preview (`roleAbility.menu`, `roleAbility.rows`).
  */
 
 export interface CyberpunkCreationDraft {
@@ -44,10 +52,13 @@ export interface CyberpunkCreationDraft {
   lifepath: CyberpunkLifepathRequest;
   /** The skill levels the player moved and the named `(choose 1)` specialties. */
   skills: CyberpunkSkillsRequest;
+  /** The Role Ability points placed and picks made. */
+  roleAbility: CyberpunkRoleAbilityRequest;
 }
 
 export const EMPTY_LIFEPATH: CyberpunkLifepathRequest = { picks: [], counts: {}, skips: [], culturalLanguage: null };
 export const EMPTY_SKILLS: CyberpunkSkillsRequest = { levels: {}, specialties: {} };
+export const EMPTY_ROLE_ABILITY: CyberpunkRoleAbilityRequest = { points: {}, picks: [] };
 
 export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   displayLabel: '',
@@ -58,6 +69,7 @@ export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   stats: {},
   lifepath: EMPTY_LIFEPATH,
   skills: EMPTY_SKILLS,
+  roleAbility: EMPTY_ROLE_ABILITY,
 };
 
 /** The three ways to make STATs (p. 73), in the book's order. */
@@ -85,6 +97,10 @@ export function buildCyberpunkPreviewRequest(draft: CyberpunkCreationDraft): Cyb
       culturalLanguage: draft.lifepath.culturalLanguage,
     },
     skills: { levels: { ...draft.skills.levels }, specialties: { ...draft.skills.specialties } },
+    roleAbility: {
+      points: { ...draft.roleAbility.points },
+      picks: draft.roleAbility.picks.map((pick) => ({ ...pick })),
+    },
   };
 }
 
@@ -283,7 +299,7 @@ export function setCulturalLanguage(draft: CyberpunkCreationDraft, name: string 
   return { ...draft, lifepath: { ...draft.lifepath, culturalLanguage: trimmed === '' ? null : trimmed } };
 }
 
-/** Changes the Role: fresh dice, no template row, only the general Lifepath choices kept, skill levels start over. */
+/** Changes the Role: fresh dice, no template row, only the general Lifepath choices kept, skill levels and Role Ability choices start over. */
 export function selectRole(draft: CyberpunkCreationDraft, role: string | null, lifepathRecords: readonly CyberpunkRecord[]): CyberpunkCreationDraft {
   const general = new Set(lifepathRecords.filter((r) => r.group === 'general').map((r) => String(r.name)));
   const counts = Object.fromEntries(Object.entries(draft.lifepath.counts).filter(([table]) => general.has(table)));
@@ -293,6 +309,7 @@ export function selectRole(draft: CyberpunkCreationDraft, role: string | null, l
     seed: null,
     templateRoll: null,
     skills: { ...draft.skills, levels: {} },
+    roleAbility: EMPTY_ROLE_ABILITY,
     lifepath: {
       ...draft.lifepath,
       picks: draft.lifepath.picks.filter((p) => general.has(p.table)),
@@ -382,4 +399,56 @@ export function skillPointTiles(preview: Pick<CyberpunkCreationPreview, 'skills'
     const found = preview.skills.rows.find((row) => row.id === wanted.id);
     return found ? [{ id: found.id, label: wanted.label, value: found.value }] : [];
   });
+}
+
+// ---- Role Ability (E3.5) ----
+
+/**
+ * Moves an option's points to its next allowed value up or down (the engine's `steps`: a tiered
+ * ability jumps between its printed costs); 0 drops it from the request. No step beyond the ends.
+ * The pool total and the rules are the engine's to refuse.
+ */
+export function adjustRolePoints(draft: CyberpunkCreationDraft, option: CyberpunkPointsOption, delta: 1 | -1): CyberpunkCreationDraft {
+  const current = draft.roleAbility.points[option.name] ?? 0;
+  const next = delta > 0 ? option.steps.find((step) => step > current) : [...option.steps].reverse().find((step) => step < current);
+  if (next === undefined) {
+    return draft;
+  }
+  const points = { ...draft.roleAbility.points };
+  if (next === 0) {
+    delete points[option.name];
+  } else {
+    points[option.name] = next;
+  }
+  return { ...draft, roleAbility: { ...draft.roleAbility, points } };
+}
+
+/** Adds one pick, with what it goes on (null for a pick that goes on nothing). */
+export function addRolePick(draft: CyberpunkCreationDraft, name: string, on: string | null): CyberpunkCreationDraft {
+  return { ...draft, roleAbility: { ...draft.roleAbility, picks: [...draft.roleAbility.picks, { name, on }] } };
+}
+
+/** Removes the pick at `index`. */
+export function removeRolePick(draft: CyberpunkCreationDraft, index: number): CyberpunkCreationDraft {
+  return { ...draft, roleAbility: { ...draft.roleAbility, picks: draft.roleAbility.picks.filter((_, i) => i !== index) } };
+}
+
+/**
+ * What a pick can go on: the engine's fixed targets (a Team Member's chart rows), or, for an
+ * option whose targets are earlier picks (an upgrade), the menu's vehicles the draft has picked.
+ */
+export function rolePickTargets(menu: CyberpunkRoleChoiceMenu, option: CyberpunkPickOption, draft: CyberpunkCreationDraft): string[] {
+  if (!option.needsTarget) {
+    return [];
+  }
+  if (option.targets.length > 0) {
+    return option.targets;
+  }
+  const vehicles = new Set((menu.picks?.options ?? []).filter((o) => o.kind === 'vehicle').map((o) => o.name));
+  return draft.roleAbility.picks.filter((pick) => vehicles.has(pick.name)).map((pick) => pick.name);
+}
+
+/** One tile per engine `cpr.role.*` row of the Role Ability, labelled by the row's detail up to its colon. */
+export function roleAbilityTiles(preview: Pick<CyberpunkCreationPreview, 'roleAbility'>): CyberpunkTile[] {
+  return (preview.roleAbility?.rows ?? []).map((row) => ({ id: row.id, label: row.detail.split(':')[0], value: row.value }));
 }

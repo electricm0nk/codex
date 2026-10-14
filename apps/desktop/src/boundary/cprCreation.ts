@@ -17,6 +17,11 @@ import { formatError, hasTauriRuntime } from './runtime';
  * Edgerunner moves the same 20 skills (2-6), Complete Package buys any of the 66 (cap 6, Basic
  * skills at 2); the engine validates the allocation and returns the points spent and left as
  * its `cpr.skills.creation_points_*` rows.
+ *
+ * SD-38 E3.5 adds the Role Ability (`roleAbility`): every Role starts at Rank 4, and the
+ * sub-choices the rank asks for (Combat Awareness points, Maker specialty ranks, Medicine points
+ * and drugs, Family Motorpool picks, the Exec's Team Member) are listed, checked and answered with
+ * `cpr.role.<role>.` rows by the engine.
  */
 
 export type CyberpunkCreationMethod = 'streetrat' | 'edgerunner' | 'completePackage';
@@ -35,6 +40,71 @@ export interface CyberpunkCreationRequest {
   lifepath?: CyberpunkLifepathRequest | null;
   /** The skill allocation; anything not sent starts where the method starts. */
   skills?: CyberpunkSkillsRequest | null;
+  /** The Role Ability sub-choices; none sent, none made. */
+  roleAbility?: CyberpunkRoleAbilityRequest | null;
+}
+
+/** One Role Ability pick, with what it goes on (an upgrade's vehicle, a Team Member's chart row). */
+export interface CyberpunkRolePick {
+  name: string;
+  on: string | null;
+}
+
+/** Points by ability or specialty (Combat Awareness, Maker, Medicine) and picks (Motorpool, Team Members, drugs). */
+export interface CyberpunkRoleAbilityRequest {
+  points: Record<string, number>;
+  picks: CyberpunkRolePick[];
+}
+
+export interface CyberpunkPointsOption {
+  name: string;
+  max: number;
+  /** The values this option takes, 0 first (a tiered ability's printed costs). */
+  steps: number[];
+  text: string;
+}
+
+export interface CyberpunkPointsMenu {
+  label: string;
+  total: number;
+  /** Every point must be placed (Maker, Medicine). */
+  exact: boolean;
+  sourcePage: string;
+  options: CyberpunkPointsOption[];
+}
+
+export interface CyberpunkPickOption {
+  name: string;
+  /** `vehicle`, `upgrade`, `pharmaceutical` or `team_member`. */
+  kind: string;
+  needsTarget: boolean;
+  /** Fixed targets (a Team Member's chart rows); empty when the targets are earlier picks (an upgrade's vehicle). */
+  targets: string[];
+  text: string;
+}
+
+export interface CyberpunkPicksMenu {
+  label: string;
+  /** The most picks the choices allow. */
+  count: number;
+  sourcePage: string;
+  options: CyberpunkPickOption[];
+}
+
+/** What the Role Ability at its rank divides or picks, from the engine. */
+export interface CyberpunkRoleChoiceMenu {
+  ability: string;
+  rank: number;
+  points: CyberpunkPointsMenu | null;
+  picks: CyberpunkPicksMenu | null;
+}
+
+export interface CyberpunkRoleAbility {
+  ability: string;
+  rank: number;
+  menu: CyberpunkRoleChoiceMenu;
+  /** The engine's `cpr.role.<role>.` rows (the rank's and the choices'); empty while refused. */
+  rows: CyberpunkCreationRow[];
 }
 
 /**
@@ -169,6 +239,8 @@ export interface CyberpunkCreationPreview {
   culturalLanguage: CyberpunkCulturalLanguage | null;
   /** The skill allocation and the engine's points rows. */
   skills: CyberpunkSkills;
+  /** The Role Ability at its starting rank: the engine's menu and rows. */
+  roleAbility: CyberpunkRoleAbility | null;
   /** The engine's `cpr.stat.*`, `cpr.derived.*`, skill and skill-points rows; empty while a problem stands. */
   explanations: CyberpunkCreationRow[];
   problems: CyberpunkCreationProblem[];
@@ -198,6 +270,7 @@ function wire(request: CyberpunkCreationRequest) {
     stats: request.stats ?? null,
     lifepath: request.lifepath ?? { picks: [], counts: {}, skips: [], culturalLanguage: null },
     skills: request.skills ?? { levels: {}, specialties: {} },
+    roleAbility: request.roleAbility ?? { points: {}, picks: [] },
   };
 }
 

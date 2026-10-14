@@ -32,7 +32,15 @@
 //! player's named instrument or field. The points spent and left are the engine's
 //! `cpr.skills.creation_points_*` rows; the saved character holds every level.
 //!
-//! Role Ability sub-choices, kit and cyberware extend these payloads later.
+//! **Role Ability** (p. 142-166): every Role starts at Rank 4, saved with the character, and
+//! the rank's rows are the engine's `cpr.role.<role>.` rows. The sub-choices the rank asks for
+//! are the player's (D-7, A-2): the Solo's Combat Awareness points, the Tech's Maker specialty
+//! ranks, the Medtech's Medicine points and drugs, the Nomad's Family Motorpool picks and the
+//! Exec's Team Member; the engine lists them (`CprRoleCatalog::choice_menu`), refuses a choice
+//! the book does not allow and answers with their rows (`choice_rows`). They are saved in
+//! `cpr_role_choices.txt`.
+//!
+//! Kit and cyberware extend these payloads later.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
@@ -40,7 +48,11 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use codex::rules_core::cpr::input::{lifepath_text_ok, CprCharacterInput, CprLifepath, CprLifepathAnswer, CprSheetChoices, CprStat, CprStats};
+use codex::rules_core::cpr::input::{
+    lifepath_text_ok, role_choice_text_ok, CprCharacterInput, CprLifepath, CprLifepathAnswer, CprRoleChoices, CprRolePick,
+    CprSheetChoices, CprStat, CprStats,
+};
+use codex::rules_core::cpr::roles::{CprRole, CprRoleCatalog, CprRoleChoiceMenu};
 use codex::rules_core::cpr::sheet::{compose_sheet, stat_rows, CprSheetCatalogs};
 use codex::rules_core::cpr::skills::{
     slug as skill_slug, spend_rows, validate_creation_skills, CprSkillAllocation, CprSkillCatalog, CprSkillMethod,
@@ -73,6 +85,9 @@ pub(crate) const REFUSED_CULTURAL_LANGUAGE: &str = "cpr_creation.cultural_langua
 pub(crate) const REFUSED_SKILLS: &str = "cpr_creation.skills";
 /// A `(choose 1)` line has no named instrument or field, or a specialty the saved grammar cannot hold.
 pub(crate) const REFUSED_SKILL_SPECIALTY: &str = "cpr_creation.skill_specialty";
+/// A Role Ability sub-choice breaks the book's rule (the engine's refusal names it) or names
+/// something the saved grammar cannot hold.
+pub(crate) const REFUSED_ROLE_ABILITY: &str = "cpr_creation.role_ability";
 /// Create without a character name.
 pub(crate) const REFUSED_NO_NAME: &str = "cpr_creation.no_name";
 /// Create over a character that is already saved under that id.
@@ -158,6 +173,29 @@ pub struct CprCreationRequest {
     /// The skill allocation; anything not sent starts where the method starts.
     #[serde(default)]
     pub skills: CprSkillsRequest,
+    /// The Role Ability sub-choices; none sent, none made.
+    #[serde(default)]
+    pub role_ability: CprRoleAbilityRequest,
+}
+
+/// The player's Role Ability sub-choices at the starting rank: points by ability or specialty
+/// (Combat Awareness, Maker, Medicine) and picks (Motorpool, Team Members, drugs), each pick with
+/// what it goes on (`on`: the vehicle an upgrade is installed on, a Team Member's chart row).
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprRoleAbilityRequest {
+    #[serde(default)]
+    pub points: BTreeMap<String, u8>,
+    #[serde(default)]
+    pub picks: Vec<CprRolePickRequest>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprRolePickRequest {
+    pub name: String,
+    #[serde(default)]
+    pub on: Option<String>,
 }
 
 /// The player's skill choices. Streetrat and Edgerunner start from the Role's printed list and
@@ -255,6 +293,8 @@ pub struct CprCreationPreview {
     pub cultural_language: Option<CprCulturalLanguageDto>,
     /// The skill allocation and the engine's points rows.
     pub skills: CprSkillsDto,
+    /// The Role Ability at its starting rank: what it divides or picks, and the engine's rows.
+    pub role_ability: Option<CprRoleAbilityDto>,
     /// The engine's `cpr.stat.*` and `cpr.derived.*` rows for these STATs, the
     /// `cpr.skill_level.*` and `cpr.skill.*` rows of every allocated skill (the Cultural Origin
     /// language among them) and the `cpr.skills.creation_points_*` rows (empty while a
@@ -343,6 +383,22 @@ pub struct CprSkillLineDto {
     pub choose_one: bool,
     /// The id of this skill's `cpr.skill_level.*` row (empty for a key the engine cannot resolve).
     pub level_row: String,
+}
+
+/// The Role Ability step: the rank, the engine's menu of sub-choices for it, and the rank's and
+/// the choices' `cpr.role.<role>.` rows (empty while the choices are refused).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprRoleAbilityDto {
+    pub ability: String,
+    pub rank: u8,
+    #[serde(skip_deserializing, default = "empty_menu")]
+    pub menu: CprRoleChoiceMenu,
+    pub rows: Vec<ExplanationDto>,
+}
+
+fn empty_menu() -> CprRoleChoiceMenu {
+    CprRoleChoiceMenu { ability: String::new(), rank: 0, points: None, picks: None }
 }
 
 /// The created character, or why it was not created (nothing saved).
@@ -685,13 +741,64 @@ fn answer_lifepath(
     Ok(LifepathOutcome { tables: out, language })
 }
 
-/// The choices creation saves beyond the STATs: every allocated skill at its level (the
-/// Cultural Origin language among them).
-fn creation_choices(skills: &CprSkillsDto) -> CprSheetChoices {
+/// The choices creation saves beyond the STATs: the Role at its starting rank and every
+/// allocated skill at its level (the Cultural Origin language among them).
+fn creation_choices(role: Option<(CprRole, u8)>, skills: &CprSkillsDto) -> CprSheetChoices {
     CprSheetChoices {
+        role,
         skills: skills.lines.iter().map(|l| (l.key.clone(), l.level)).collect(),
         ..CprSheetChoices::default()
     }
+}
+
+/// The request's Role Ability sub-choices in the saved shape.
+fn role_choices(request: &CprRoleAbilityRequest) -> CprRoleChoices {
+    CprRoleChoices {
+        points: request.points.iter().filter(|(_, p)| **p > 0).map(|(n, p)| (n.clone(), *p)).collect(),
+        picks: request.picks.iter().map(|p| CprRolePick { name: p.name.clone(), on: p.on.clone() }).collect(),
+    }
+}
+
+/// The Role Ability at the Role's starting rank (p. 142-143: every Role starts at 4): the
+/// engine's menu of sub-choices and, for choices it accepts, the rank's and the choices' rows.
+/// A name the saved grammar cannot hold, and every rule the engine refuses, become problems.
+fn role_ability_step(
+    root: &Path,
+    role_name: &str,
+    request: &CprRoleAbilityRequest,
+    problems: &mut Vec<DiagnosticDto>,
+) -> Result<Option<CprRoleAbilityDto>, String> {
+    let Some(role) = CprRole::from_name(role_name) else { return Ok(None) };
+    let catalog = CprRoleCatalog::load(root)?;
+    let rank = catalog.starting_rank(role);
+    let choices = role_choices(request);
+    let menu = catalog.choice_menu(role, rank, &choices)?;
+    let mut rows = Vec::new();
+    let bad_names: Vec<&str> = choices
+        .points
+        .iter()
+        .map(|(n, _)| n.as_str())
+        .chain(choices.picks.iter().flat_map(|p| std::iter::once(p.name.as_str()).chain(p.on.as_deref())))
+        .filter(|n| !role_choice_text_ok(n))
+        .collect();
+    if !bad_names.is_empty() {
+        for name in bad_names {
+            problems.push(problem(REFUSED_ROLE_ABILITY, format!("'{name}': a Role Ability choice is a name without = @ or #")));
+        }
+    } else {
+        match catalog.choice_rows(role, rank, &choices) {
+            Ok(choice_rows) => {
+                let rank_rows = catalog.rank_rows(role, rank).map_err(|e| e.to_string())?;
+                rows = rank_rows
+                    .into_iter()
+                    .chain(choice_rows)
+                    .map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail })
+                    .collect();
+            }
+            Err(reasons) => problems.extend(reasons.into_iter().map(|r| problem(REFUSED_ROLE_ABILITY, r))),
+        }
+    }
+    Ok(Some(CprRoleAbilityDto { ability: menu.ability.clone(), rank, menu, rows }))
 }
 
 /// The printed `(choose 1)` suffix of a Role list line whose instrument or field the player names.
@@ -841,7 +948,7 @@ fn allocated_skill_rows(
     skills: &CprSkillsDto,
 ) -> Result<Vec<ExplanationDto>, String> {
     let catalogs = CprSheetCatalogs::load(root)?;
-    let sheet = compose_sheet(&catalogs, input, &creation_choices(skills))?;
+    let sheet = compose_sheet(&catalogs, input, &creation_choices(None, skills))?;
     let wanted: Vec<String> = skills
         .lines
         .iter()
@@ -932,11 +1039,13 @@ pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<Cp
     let lifepath = answer_lifepath(root, &request.role, seed, &request.lifepath, &mut problems)?;
     let catalog = CprSkillCatalog::load(root)?;
     let skills = allocate_skills(&catalog, &request.role, request.method, &request.skills, lifepath.language.as_ref(), &mut problems)?;
+    let role_ability = role_ability_step(root, &request.role, &request.role_ability, &mut problems)?;
     let input = input_of(values);
     let explanations = if problems.is_empty() {
         let mut rows = engine_rows(&input);
         rows.extend(allocated_skill_rows(root, &catalog, &input, &skills)?);
         rows.extend(skills.rows.iter().cloned());
+        rows.extend(role_ability.iter().flat_map(|a| a.rows.iter().cloned()));
         rows
     } else {
         Vec::new()
@@ -957,6 +1066,7 @@ pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<Cp
         lifepath: lifepath.tables,
         cultural_language: lifepath.language,
         skills,
+        role_ability,
         explanations,
         problems,
     })
@@ -986,6 +1096,9 @@ pub(crate) fn create_at_root(
     }
     let values: [u8; 10] = std::array::from_fn(|i| preview.stats[i].value);
     let input = input_of(values);
+    let role = CprRole::from_name(&creation.role)
+        .ok_or_else(|| format!("cpr_creation.unknown_role: no Cyberpunk RED Role named '{}'", creation.role))?;
+    let rank = preview.role_ability.as_ref().map_or(0, |a| a.rank);
     let character = CprSavedCharacter {
         character_id: request.character_id.clone(),
         revision_id: format!("{}.rev.1", request.character_id),
@@ -996,12 +1109,14 @@ pub(crate) fn create_at_root(
         input: input.clone(),
     };
     CprCharacterStore::save(&character, root)?;
-    CprCharacterStore::save_choices(&creation_choices(&preview.skills), root)?;
+    CprCharacterStore::save_choices(&creation_choices(Some((role, rank)), &preview.skills), root)?;
     CprCharacterStore::save_lifepath(&saved_lifepath(&preview.lifepath), root)?;
+    CprCharacterStore::save_role_choices(&role_choices(&creation.role_ability), root)?;
     let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(root)?;
     let mut explanations = engine_rows(&input);
     explanations.extend(allocated_skill_rows(corpus, &CprSkillCatalog::load(corpus)?, &input, &preview.skills)?);
     explanations.extend(preview.skills.rows.iter().cloned());
+    explanations.extend(preview.role_ability.iter().flat_map(|a| a.rows.iter().cloned()));
     Ok(CprCreateResponse::Saved { summary: Box::new(loaded.summary), seed: preview.seed, explanations })
 }
 
@@ -1056,6 +1171,26 @@ mod tests {
                     .map(|(line, name)| (line.to_owned(), name.to_owned()))
                     .collect(),
             },
+            role_ability: starting_role_ability(role),
+        }
+    }
+
+    /// The two Roles whose Role Ability points must all be placed (D-7) take a valid placement;
+    /// every other Role starts with no sub-choice.
+    fn starting_role_ability(role: &str) -> CprRoleAbilityRequest {
+        let points: &[(&str, u8)] = match role {
+            "Tech" => &[("Field Expertise", 2), ("Upgrade Expertise", 2), ("Fabrication Expertise", 2), ("Invention Expertise", 2)],
+            "Medtech" => &[("Surgery", 2), ("Medical Tech (Pharmaceuticals)", 1), ("Medical Tech (Cryosystem Operation)", 1)],
+            _ => &[],
+        };
+        let picks: &[(&str, Option<&str>)] = if role == "Medtech" { &[("Antibiotic", None)] } else { &[] };
+        role_ability(points, picks)
+    }
+
+    fn role_ability(points: &[(&str, u8)], picks: &[(&str, Option<&str>)]) -> CprRoleAbilityRequest {
+        CprRoleAbilityRequest {
+            points: points.iter().map(|(n, p)| ((*n).to_owned(), *p)).collect(),
+            picks: picks.iter().map(|(n, on)| CprRolePickRequest { name: (*n).to_owned(), on: on.map(str::to_owned) }).collect(),
         }
     }
 
@@ -1781,6 +1916,161 @@ mod tests {
         assert_eq!(row(&loaded.explanations, "cpr.skill_level.composition"), 6);
         assert_eq!(row(&loaded.explanations, "cpr.skill_level.language.japanese"), 4);
         assert_eq!(row(&loaded.explanations, "cpr.skill_level.archery"), 0);
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    // ---- Role Ability rank 4 + sub-choices (E3.5) ----
+
+    fn role_problem(preview: &CprCreationPreview, words: &[&str]) -> bool {
+        preview.problems.iter().any(|p| p.id == REFUSED_ROLE_ABILITY && words.iter().all(|w| p.message.contains(w)))
+    }
+
+    fn with_role_ability(role: &str, points: &[(&str, u8)], picks: &[(&str, Option<&str>)]) -> CprCreationRequest {
+        let mut req = seeded(role, 11);
+        req.role_ability = role_ability(points, picks);
+        req
+    }
+
+    type Allocation<'a> = (&'a [(&'a str, u8)], &'a [(&'a str, Option<&'a str>)]);
+
+    /// The acceptance command: for each Role with sub-choices, one valid allocation previews at
+    /// Rank 4 with the engine's rows and creates; one refused allocation names the broken rule,
+    /// shows no rows and saves nothing.
+    #[test]
+    fn every_role_with_sub_choices_takes_one_valid_allocation_and_refuses_one() {
+        let cases: [(&str, Allocation, &str, i16, Allocation, &[&str]); 5] = [
+            (
+                "Solo",
+                (&[("Precision Attack", 3), ("Threat Detection", 1)], &[]),
+                "cpr.role.solo.combat_awareness.precision_attack",
+                3,
+                (&[("Damage Deflection", 3)], &[]),
+                &["Damage Deflection", "0, 2 or 4"],
+            ),
+            (
+                "Tech",
+                (&[("Field Expertise", 4), ("Upgrade Expertise", 2), ("Invention Expertise", 2)], &[]),
+                "cpr.role.tech.maker.field_expertise",
+                4,
+                (&[("Field Expertise", 5), ("Upgrade Expertise", 3)], &[]),
+                &["Field Expertise 5", "above 4"],
+            ),
+            (
+                "Medtech",
+                (&[("Surgery", 3), ("Medical Tech (Pharmaceuticals)", 1)], &[("Stim", None)]),
+                "cpr.role.medtech.surgery_skill",
+                6,
+                (&[("Surgery", 4)], &[("Stim", None)]),
+                &["Pharmaceuticals", "1 drugs picked"],
+            ),
+            (
+                "Nomad",
+                (&[], &[("Compact Groundcar", None), ("Heavy Chassis", Some("Compact Groundcar")), ("Roadbike", None), ("NOS", Some("Roadbike"))]),
+                "cpr.role.nomad.motorpool_picks_left",
+                0,
+                (&[], &[("Roadbike", None), ("Armored Chassis", Some("Roadbike"))]),
+                &["Armored Chassis", "Rank 5"],
+            ),
+            (
+                "Exec",
+                (&[], &[("Company Netrunner", Some("2"))]),
+                "cpr.role.exec.team_member_picks_left",
+                0,
+                (&[], &[("Company Netrunner", Some("9"))]),
+                &["1 to 6", "not 9"],
+            ),
+        ];
+        let characters_root = tempdir("role-ability");
+        for (role, valid, id, value, refused, words) in cases {
+            let ok = with_role_ability(role, valid.0, valid.1);
+            let preview = preview_at(&root(), &ok).unwrap();
+            assert!(preview.problems.is_empty(), "{role}: {:?}", preview.problems);
+            let ability = preview.role_ability.as_ref().expect("a Role Ability");
+            assert_eq!(ability.rank, 4, "{role}: every Role starts at Rank 4");
+            assert!(ability.menu.points.is_some() || ability.menu.picks.is_some(), "{role} has sub-choices");
+            let rank_id = format!("cpr.role.{}.rank", role.to_lowercase());
+            assert_eq!(row(&ability.rows, &rank_id), 4, "{role}");
+            assert_eq!(row(&ability.rows, id), value, "{role}");
+            assert_eq!(row(&preview.explanations, id), value, "{role}: the preview's explanations carry the rows");
+
+            let dir = characters_root.join(format!("cpr-{}", role.to_lowercase()));
+            let saved = create_at_root(&root(), &dir, &create(ok, role), "codex-test".to_owned()).unwrap();
+            let CprCreateResponse::Saved { explanations, .. } = saved else { panic!("{role}: {saved:?}") };
+            assert_eq!(row(&explanations, id), value, "{role}");
+
+            let bad = with_role_ability(role, refused.0, refused.1);
+            let preview = preview_at(&root(), &bad).unwrap();
+            assert!(role_problem(&preview, words), "{role}: {:?}", preview.problems);
+            assert!(preview.explanations.is_empty(), "{role}: no rows while refused");
+            assert!(preview.role_ability.as_ref().is_some_and(|a| a.rows.is_empty()), "{role}");
+            let blocked_dir = characters_root.join(format!("cpr-{}-refused", role.to_lowercase()));
+            let blocked = create_at_root(&root(), &blocked_dir, &create(bad, role), "codex-test".to_owned()).unwrap();
+            let CprCreateResponse::Blocked { diagnostics } = blocked else { panic!("{role}: {blocked:?}") };
+            assert!(diagnostics.iter().any(|d| d.id == REFUSED_ROLE_ABILITY), "{role}");
+            assert!(!blocked_dir.join("envelope.txt").exists(), "{role}: nothing saved");
+        }
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// D-7: the Tech's Maker ranks and the Medtech's Medicine points are all placed at creation;
+    /// with none placed the build is refused.
+    #[test]
+    fn tech_and_medtech_must_place_every_point() {
+        for (role, words) in [("Tech", ["Maker specialty ranks", "0 of 8"]), ("Medtech", ["Medicine points", "0 of 4"])] {
+            let preview = preview_at(&root(), &with_role_ability(role, &[], &[])).unwrap();
+            assert!(role_problem(&preview, &words), "{role}: {:?}", preview.problems);
+        }
+    }
+
+    /// Rockerboy, Netrunner, Media, Lawman and Fixer start at Rank 4 with no sub-choice; a sent
+    /// choice is refused.
+    #[test]
+    fn roles_without_sub_choices_start_at_rank_4_and_refuse_a_choice() {
+        for role in ["Rockerboy", "Netrunner", "Media", "Lawman", "Fixer"] {
+            let preview = preview_at(&root(), &seeded(role, 3)).unwrap();
+            assert!(preview.problems.is_empty(), "{role}: {:?}", preview.problems);
+            let ability = preview.role_ability.as_ref().expect("a Role Ability");
+            assert!(ability.menu.points.is_none() && ability.menu.picks.is_none(), "{role}");
+            assert_eq!(row(&preview.explanations, &format!("cpr.role.{}.rank", role.to_lowercase())), 4);
+            let preview = preview_at(&root(), &with_role_ability(role, &[("Surgery", 1)], &[])).unwrap();
+            assert!(role_problem(&preview, &["no points"]), "{role}: {:?}", preview.problems);
+        }
+    }
+
+    /// A name the saved grammar cannot hold is refused before the engine sees it.
+    #[test]
+    fn a_role_choice_the_saved_grammar_cannot_hold_is_refused() {
+        let preview = preview_at(&root(), &with_role_ability("Solo", &[("Threat=Detection", 1)], &[])).unwrap();
+        assert!(role_problem(&preview, &["Threat=Detection"]), "{:?}", preview.problems);
+        let preview = preview_at(&root(), &with_role_ability("Nomad", &[], &[("Roadbike", Some("a@b"))])).unwrap();
+        assert!(role_problem(&preview, &["a@b"]), "{:?}", preview.problems);
+    }
+
+    /// Create saves the Role at Rank 4 and its sub-choices; the loaded character carries the
+    /// Role's rank rows and the choices read back unchanged.
+    #[test]
+    fn create_saves_the_role_at_rank_4_and_its_sub_choices() {
+        use codex::rules_core::cpr::input::{CprRoleChoices, CprRolePick};
+        use codex::rules_core::cpr::roles::CprRole;
+        let req = with_role_ability("Nomad", &[], &[("Jetski", None), ("NOS", Some("Jetski"))]);
+        let characters_root = tempdir("role-save");
+        let dir = characters_root.join("cpr-nomad");
+        let saved = create_at_root(&root(), &dir, &create(req, "cpr-nomad"), "codex-test".to_owned()).unwrap();
+        assert!(matches!(saved, CprCreateResponse::Saved { .. }), "{saved:?}");
+        assert_eq!(CprCharacterStore::load_choices(&dir).unwrap().role, Some((CprRole::Nomad, 4)));
+        assert_eq!(
+            CprCharacterStore::load_role_choices(&dir).unwrap(),
+            CprRoleChoices {
+                points: Vec::new(),
+                picks: vec![
+                    CprRolePick { name: "Jetski".to_owned(), on: None },
+                    CprRolePick { name: "NOS".to_owned(), on: Some("Jetski".to_owned()) },
+                ],
+            }
+        );
+        let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+        assert_eq!(row(&loaded.explanations, "cpr.role.nomad.rank"), 4);
+        assert_eq!(row(&loaded.explanations, "cpr.role.nomad.vehicle_familiarity_bonus"), 4);
         std::fs::remove_dir_all(&characters_root).ok();
     }
 }

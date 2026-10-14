@@ -27,6 +27,11 @@ import {
   skillKey,
   skillOptions,
   skillPointTiles,
+  adjustRolePoints,
+  addRolePick,
+  removeRolePick,
+  rolePickTargets,
+  roleAbilityTiles,
   type CyberpunkCreationDraft,
 } from './cyberpunkCreationModel';
 import { readFileSync } from 'node:fs';
@@ -39,7 +44,14 @@ import {
 } from './cyberpunkCreateLayout';
 import { boxesInColumn } from './sheetLayout';
 import { characterCreationGate } from './characterHubRuntime';
-import type { CyberpunkCreationPreview, CyberpunkSkillLine, CyberpunkStatValue } from '../boundary/cprCreation';
+import type {
+  CyberpunkCreationPreview,
+  CyberpunkPickOption,
+  CyberpunkPointsOption,
+  CyberpunkRoleChoiceMenu,
+  CyberpunkSkillLine,
+  CyberpunkStatValue,
+} from '../boundary/cprCreation';
 import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -73,6 +85,7 @@ function preview(partial: Partial<CyberpunkCreationPreview>): CyberpunkCreationP
     lifepath: [],
     culturalLanguage: null,
     skills: { lines: [], rows: [] },
+    roleAbility: null,
     explanations: [],
     problems: [],
     ...partial,
@@ -438,3 +451,90 @@ testCompletePackageAddsAndDropsAnyMasterListSkill();
 testChangingMethodOrRoleResetsTheSkillLevels();
 testSkillOptionsAreTheMasterSkillListRecords();
 testTheSpentFigureIsTheEngineRow();
+
+// ---- Role Ability rank 4 + sub-choices (E3.5) ----
+
+const DAMAGE_DEFLECTION: CyberpunkPointsOption = { name: 'Damage Deflection', max: 4, steps: [0, 2, 4], text: '' };
+const THREAT_DETECTION: CyberpunkPointsOption = { name: 'Threat Detection', max: 4, steps: [0, 1, 2, 3, 4], text: '' };
+const ROADBIKE: CyberpunkPickOption = { name: 'Roadbike', kind: 'vehicle', needsTarget: false, targets: [], text: '' };
+const JETSKI: CyberpunkPickOption = { name: 'Jetski', kind: 'vehicle', needsTarget: false, targets: [], text: '' };
+const NOS: CyberpunkPickOption = { name: 'NOS', kind: 'upgrade', needsTarget: true, targets: [], text: '' };
+const BODYGUARD: CyberpunkPickOption = { name: 'Company Bodyguard', kind: 'team_member', needsTarget: true, targets: ['1', '2', '3', '4', '5', '6'], text: '' };
+const MOTORPOOL: CyberpunkRoleChoiceMenu = {
+  ability: 'Moto',
+  rank: 4,
+  points: null,
+  picks: { label: 'Family Motorpool', count: 4, sourcePage: 'p162', options: [ROADBIKE, JETSKI, NOS] },
+};
+
+function testTheRoleAbilityRequestCarriesTheDraftsPointsAndPicks() {
+  const draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Nomad' };
+  assertEqual(JSON.stringify(buildCyberpunkPreviewRequest(draft)?.roleAbility), '{"points":{},"picks":[]}', 'nothing chosen, nothing sent');
+  const chosen = addRolePick(addRolePick(draft, 'Roadbike', null), 'NOS', 'Roadbike');
+  const request = buildCyberpunkPreviewRequest(chosen);
+  assertEqual(
+    JSON.stringify(request?.roleAbility),
+    '{"points":{},"picks":[{"name":"Roadbike","on":null},{"name":"NOS","on":"Roadbike"}]}',
+    'the picks in the order made, each with what it goes on'
+  );
+  const create = buildCyberpunkCreateRequest(chosen, { generateId: () => 'id', now: () => 'now' });
+  assertEqual(JSON.stringify(create?.creation.roleAbility), JSON.stringify(request?.roleAbility), 'create saves the previewed choices');
+}
+
+function testAdjustRolePointsStepsThroughTheEnginesSteps() {
+  let draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Solo' };
+  draft = adjustRolePoints(draft, DAMAGE_DEFLECTION, 1);
+  assertEqual(draft.roleAbility.points['Damage Deflection'], 2, 'a tiered ability moves to its next printed cost, not by one');
+  draft = adjustRolePoints(draft, DAMAGE_DEFLECTION, 1);
+  assertEqual(draft.roleAbility.points['Damage Deflection'], 4, 'then the next');
+  assertEqual(adjustRolePoints(draft, DAMAGE_DEFLECTION, 1), draft, 'no step above the last: the draft is unchanged');
+  draft = adjustRolePoints(draft, DAMAGE_DEFLECTION, -1);
+  assertEqual(draft.roleAbility.points['Damage Deflection'], 2, 'down one printed cost');
+  draft = adjustRolePoints(draft, THREAT_DETECTION, 1);
+  assertEqual(draft.roleAbility.points['Threat Detection'], 1, 'a per-point ability moves by one');
+  draft = adjustRolePoints(adjustRolePoints(draft, THREAT_DETECTION, -1), THREAT_DETECTION, -1);
+  assertEqual('Threat Detection' in draft.roleAbility.points, false, 'at 0 the ability drops out of the request');
+}
+
+function testRolePicksAddAndRemoveAndUpgradeTargetsAreThePickedVehicles() {
+  let draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Nomad' };
+  assertEqual(rolePickTargets(MOTORPOOL, NOS, draft).join('|'), '', 'no vehicle picked: an upgrade has nowhere to go');
+  draft = addRolePick(addRolePick(draft, 'Jetski', null), 'Roadbike', null);
+  assertEqual(rolePickTargets(MOTORPOOL, NOS, draft).join('|'), 'Jetski|Roadbike', "an upgrade goes on a vehicle already in the pool");
+  assertEqual(rolePickTargets(MOTORPOOL, ROADBIKE, draft).length, 0, 'a vehicle goes on nothing');
+  assertEqual(rolePickTargets(MOTORPOOL, BODYGUARD, draft).join(','), '1,2,3,4,5,6', "a Team Member's targets are its chart's rows, from the engine");
+  draft = removeRolePick(draft, 0);
+  assertEqual(JSON.stringify(draft.roleAbility.picks), '[{"name":"Roadbike","on":null}]', 'remove takes out exactly that pick');
+}
+
+function testChangingRoleClearsTheRoleAbilityChoices() {
+  const solo = adjustRolePoints({ ...EMPTY_CYBERPUNK_DRAFT, role: 'Solo' }, THREAT_DETECTION, 1);
+  const tech = selectRole(solo, 'Tech', []);
+  assertEqual(JSON.stringify(tech.roleAbility), '{"points":{},"picks":[]}', "a new Role's Role Ability starts over");
+}
+
+function testTheRoleAbilityTilesAreTheEnginesRows() {
+  const p = preview({
+    roleAbility: {
+      ability: 'Combat Awareness',
+      rank: 4,
+      menu: { ability: 'Combat Awareness', rank: 4, points: null, picks: null },
+      rows: [
+        { id: 'cpr.role.solo.rank', value: 4, detail: "Combat Awareness Rank 4: the Solo's Role Ability Rank" },
+        { id: 'cpr.role.solo.combat_awareness.precision_attack', value: 3, detail: 'Precision Attack 3: you add a +1 to any Attacks made' },
+      ],
+    },
+  });
+  assertEqual(
+    roleAbilityTiles(p).map((t) => `${t.label}=${t.value}`).join('|'),
+    'Combat Awareness Rank 4=4|Precision Attack 3=3',
+    "one tile per engine row, labelled by the row's own detail"
+  );
+  assertEqual(roleAbilityTiles(preview({})).length, 0, 'no Role Ability rows, no tiles');
+}
+
+testTheRoleAbilityRequestCarriesTheDraftsPointsAndPicks();
+testAdjustRolePointsStepsThroughTheEnginesSteps();
+testRolePicksAddAndRemoveAndUpgradeTargetsAreThePickedVehicles();
+testChangingRoleClearsTheRoleAbilityChoices();
+testTheRoleAbilityTilesAreTheEnginesRows();

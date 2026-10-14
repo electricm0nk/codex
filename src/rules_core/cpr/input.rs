@@ -6,6 +6,7 @@
 //! armour, cyberware, criticals, Reputation, weapons, deck, Improvement Points, cash,
 //! ammunition, housing) in its own file and grammar, `cpr_sheet_choices.txt`.
 //! [`CprLifepath`] holds the Lifepath answers (printed text, p. 45-70) in `cpr_lifepath.txt`.
+//! [`CprRoleChoices`] holds the Role Ability sub-choices (p. 142-166) in `cpr_role_choices.txt`.
 
 use std::fmt::Write as _;
 
@@ -498,6 +499,96 @@ pub fn parse_cpr_lifepath(text: &str) -> Result<CprLifepath, String> {
     Ok(lifepath)
 }
 
+/// A character's Role Ability sub-choices (p. 142-166; D-7, A-2): the points placed on each
+/// ability or specialty the Role divides its rank among (Combat Awareness, Maker, Medicine), and
+/// the picks the rank grants (Family Motorpool vehicles and upgrades, Team Members, the drugs of
+/// Pharmaceuticals points), each with what it goes on (the vehicle an upgrade is installed on,
+/// the chart row a Team Member is hired at). Held in its own file, `cpr_role_choices.txt`, one
+/// line each: `points.<name> = <n>`, `pick = <name>` or `pick = <name> @ <on>`. Whether a name,
+/// a count or a target is allowed is the engine's check (`roles::CprRoleCatalog::choice_rows`).
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CprRoleChoices {
+    pub points: Vec<(String, u8)>,
+    pub picks: Vec<CprRolePick>,
+}
+
+/// One Role Ability pick: the name, and what it goes on, if anything.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CprRolePick {
+    pub name: String,
+    pub on: Option<String>,
+}
+
+const ROLE_CHOICES_FILE: &str = "cpr_role_choices.txt";
+
+/// Whether a name fits the `cpr_role_choices.txt` line grammar (not blank; no `=`, `@`, `#` or
+/// line break).
+pub fn role_choice_text_ok(text: &str) -> bool {
+    !text.trim().is_empty() && !text.contains(['=', '@', '#', '\n', '\r'])
+}
+
+/// The `cpr_role_choices.txt` text: the points, then the picks, each in the order made; no
+/// choices is an empty file.
+pub fn render_cpr_role_choices(choices: &CprRoleChoices) -> String {
+    let mut out = String::new();
+    for (name, points) in &choices.points {
+        let _ = writeln!(out, "points.{name} = {points}");
+    }
+    for pick in &choices.picks {
+        match &pick.on {
+            Some(on) => {
+                let _ = writeln!(out, "pick = {} @ {on}", pick.name);
+            }
+            None => {
+                let _ = writeln!(out, "pick = {}", pick.name);
+            }
+        }
+    }
+    out
+}
+
+/// Parses `cpr_role_choices.txt`. An unknown key, a line without `=`, points that are not a
+/// whole number, a name given points twice, and a pick naming nothing are refused.
+pub fn parse_cpr_role_choices(text: &str) -> Result<CprRoleChoices, String> {
+    let mut choices = CprRoleChoices::default();
+    for raw_line in text.lines() {
+        let line = raw_line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let Some((key, value)) = line.split_once('=') else {
+            return Err(format!("{ROLE_CHOICES_FILE} line missing '=': {raw_line}"));
+        };
+        let (key, value) = (key.trim(), value.trim());
+        if key == "pick" {
+            if value.is_empty() {
+                return Err(format!("{ROLE_CHOICES_FILE} pick names nothing"));
+            }
+            let pick = match value.split_once('@') {
+                Some((name, on)) if !on.trim().is_empty() && !name.trim().is_empty() => {
+                    CprRolePick { name: name.trim().to_owned(), on: Some(on.trim().to_owned()) }
+                }
+                Some(_) => return Err(format!("{ROLE_CHOICES_FILE} pick '{value}' names nothing after '@'")),
+                None => CprRolePick { name: value.to_owned(), on: None },
+            };
+            choices.picks.push(pick);
+            continue;
+        }
+        match key.strip_prefix("points.").map(str::trim) {
+            Some(name) if !name.is_empty() => {
+                let points =
+                    value.parse::<u8>().map_err(|_| format!("{ROLE_CHOICES_FILE} {key} '{value}' is not a whole number"))?;
+                if choices.points.iter().any(|(n, _)| n == name) {
+                    return Err(format!("{ROLE_CHOICES_FILE} names {key} twice"));
+                }
+                choices.points.push((name.to_owned(), points));
+            }
+            _ => return Err(format!("{ROLE_CHOICES_FILE} has an unknown key '{key}'")),
+        }
+    }
+    Ok(choices)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -623,6 +714,36 @@ mod tests {
         assert_eq!(refused("lifepath = | 0 | C | x | \n"), "cpr_lifepath.txt lifepath names no table");
         assert!(lifepath_text_ok("A teacher or mentor."));
         assert!(!lifepath_text_ok("a | b") && !lifepath_text_ok("two\nlines"));
+    }
+
+    /// The Role Ability sub-choices (E3.5): points by ability or specialty, picks with what they
+    /// go on, in the order made; none is an empty file.
+    #[test]
+    fn role_choices_render_and_parse_back() {
+        let choices = CprRoleChoices {
+            points: vec![("Damage Deflection".to_owned(), 2), ("Threat Detection".to_owned(), 2)],
+            picks: vec![
+                CprRolePick { name: "Compact Groundcar".to_owned(), on: None },
+                CprRolePick { name: "Heavy Chassis".to_owned(), on: Some("Compact Groundcar".to_owned()) },
+            ],
+        };
+        let text = render_cpr_role_choices(&choices);
+        assert_eq!(
+            text,
+            "points.Damage Deflection = 2\npoints.Threat Detection = 2\npick = Compact Groundcar\npick = Heavy Chassis @ Compact Groundcar\n"
+        );
+        assert_eq!(parse_cpr_role_choices(&text), Ok(choices));
+        assert_eq!(render_cpr_role_choices(&CprRoleChoices::default()), "");
+        assert_eq!(parse_cpr_role_choices(""), Ok(CprRoleChoices::default()));
+
+        let refused = |text: &str| parse_cpr_role_choices(text).unwrap_err();
+        assert_eq!(refused("rank = 4\n"), "cpr_role_choices.txt has an unknown key 'rank'");
+        assert_eq!(refused("points.Surgery = two\n"), "cpr_role_choices.txt points.Surgery 'two' is not a whole number");
+        assert_eq!(refused("points.Surgery = 1\npoints.Surgery = 2\n"), "cpr_role_choices.txt names points.Surgery twice");
+        assert_eq!(refused("pick = \n"), "cpr_role_choices.txt pick names nothing");
+        assert_eq!(refused("pick = NOS @ \n"), "cpr_role_choices.txt pick 'NOS @' names nothing after '@'");
+        assert!(role_choice_text_ok("High Performance Groundcar") && role_choice_text_ok("Medical Tech (Pharmaceuticals)"));
+        assert!(!role_choice_text_ok("a @ b") && !role_choice_text_ok("a = b") && !role_choice_text_ok("x\ny") && !role_choice_text_ok(" "));
     }
 
     #[test]

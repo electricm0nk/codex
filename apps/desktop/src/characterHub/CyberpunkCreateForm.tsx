@@ -12,7 +12,9 @@ import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCybe
 import {
   CYBERPUNK_CREATION_METHODS,
   EMPTY_CYBERPUNK_DRAFT,
+  addRolePick,
   addSkill,
+  adjustRolePoints,
   adjustSkill,
   adjustStat,
   blockingProblems,
@@ -24,6 +26,9 @@ import {
   cyberpunkStatTiles,
   dropSkill,
   lifepathRowOptions,
+  removeRolePick,
+  roleAbilityTiles,
+  rolePickTargets,
   rollAgain,
   selectMethod,
   selectRole,
@@ -68,6 +73,12 @@ import { boxesInColumn } from './sheetLayout';
  * Package the Basic skills plus any skill of the Master Skill List bought or dropped. A
  * `(choose 1)` line takes the named instrument or field. The points spent and left are the
  * engine's `cpr.skills.creation_points_*` rows; a refused allocation shows the engine's reason.
+ *
+ * The Role Ability panel (E3.5) shows the Role Ability at its starting Rank 4 and the sub-choices
+ * the engine lists for it: points moved between the abilities or specialties one allowed value at
+ * a time (Combat Awareness, Maker, Medicine), and picks added or removed (Family Motorpool
+ * vehicles and upgrades, the Exec's Team Member and its chart row, the Medtech's drugs). Every
+ * number shown is an engine `cpr.role.*` row; a refused choice shows the engine's reason.
  */
 
 const LABEL_STYLE: CSSProperties = {
@@ -131,6 +142,8 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const [skillRecords, setSkillRecords] = useState<CyberpunkRecord[]>([]);
   const [newSkill, setNewSkill] = useState('');
   const [newSpecialty, setNewSpecialty] = useState('');
+  const [newPick, setNewPick] = useState('');
+  const [newPickTarget, setNewPickTarget] = useState('');
   const [preview, setPreview] = useState<CyberpunkCreationPreview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -191,6 +204,11 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const chosenOption = options.find((option) => option.name === newSkill);
   const newKey = chosenOption ? skillKey(chosenOption.name, chosenOption.specialtyRequired ? newSpecialty : '') : '';
   const canAdd = chosenOption !== undefined && (!chosenOption.specialtyRequired || newSpecialty.trim() !== '');
+  const roleAbility = preview?.roleAbility ?? null;
+  const roleTiles = preview ? roleAbilityTiles(preview) : [];
+  const pickOption = roleAbility?.menu.picks?.options.find((option) => option.name === newPick);
+  const pickTargets = roleAbility && pickOption ? rolePickTargets(roleAbility.menu, pickOption, draft) : [];
+  const canPick = pickOption !== undefined && (!pickOption.needsTarget || pickTargets.includes(newPickTarget));
 
   function skillLine(line: CyberpunkSkillLine, index: number) {
     const id = `cpr-skill-${index}`;
@@ -571,6 +589,122 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
                 Add
               </button>
             </div>
+          ) : null}
+        </fieldset>
+      ) : null}
+
+      {roleAbility ? (
+        <fieldset id="cpr-role-ability" style={{ ...FIELDSET_STYLE, marginTop: '1rem' }}>
+          <legend style={LEGEND_STYLE}>
+            Role Ability: {roleAbility.ability} (Rank {roleAbility.rank})
+          </legend>
+          {roleTiles.length > 0 ? (
+            <div style={{ margin: '0.5rem 0' }}>
+              <TileGrid tiles={roleTiles} />
+            </div>
+          ) : null}
+          {roleAbility.menu.points ? (
+            <div data-role-points={roleAbility.menu.points.label} style={{ marginTop: '0.5rem' }}>
+              <p style={MUTED_STYLE}>
+                {roleAbility.menu.points.label}: {roleAbility.menu.points.exact ? 'place all' : 'place up to'} {roleAbility.menu.points.total} (
+                {roleAbility.menu.points.sourcePage})
+              </p>
+              {roleAbility.menu.points.options.map((option) => (
+                <div key={option.name} style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', padding: '0.2rem 0' }}>
+                  <span style={{ flex: '1 1 12rem', fontWeight: 600 }} title={option.text}>
+                    {option.name}
+                  </span>
+                  <button
+                    type="button"
+                    style={SMALL_BUTTON_STYLE}
+                    aria-label={`less ${option.name}`}
+                    onClick={() => setDraft(adjustRolePoints(draft, option, -1))}
+                  >
+                    -
+                  </button>
+                  <span style={{ minWidth: '1.5rem', textAlign: 'center' }}>{draft.roleAbility.points[option.name] ?? 0}</span>
+                  <button
+                    type="button"
+                    style={SMALL_BUTTON_STYLE}
+                    aria-label={`more ${option.name}`}
+                    onClick={() => setDraft(adjustRolePoints(draft, option, 1))}
+                  >
+                    +
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : null}
+          {roleAbility.menu.picks ? (
+            <div data-role-picks={roleAbility.menu.picks.label} style={{ marginTop: '0.5rem' }}>
+              <p style={MUTED_STYLE}>
+                {roleAbility.menu.picks.label}: up to {roleAbility.menu.picks.count} ({roleAbility.menu.picks.sourcePage})
+              </p>
+              {draft.roleAbility.picks.map((pick, index) => (
+                <div key={`${pick.name}@${pick.on ?? ''}#${index}`} style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', padding: '0.2rem 0' }}>
+                  <span style={{ flex: '1 1 12rem' }}>
+                    {pick.name}
+                    {pick.on ? ` @ ${pick.on}` : ''}
+                  </span>
+                  <button type="button" style={SMALL_BUTTON_STYLE} onClick={() => setDraft(removeRolePick(draft, index))}>
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <div style={{ alignItems: 'flex-end', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.35rem' }}>
+                <div style={{ ...FIELD_STYLE, flex: '1 1 12rem', marginBottom: 0 }}>
+                  <label style={LABEL_STYLE} htmlFor="cpr-role-pick">
+                    Pick
+                  </label>
+                  <select
+                    id="cpr-role-pick"
+                    style={INPUT_STYLE}
+                    value={newPick}
+                    onChange={(event) => {
+                      setNewPick(event.target.value);
+                      setNewPickTarget('');
+                    }}
+                  >
+                    <option value="">— choose —</option>
+                    {roleAbility.menu.picks.options.map((option) => (
+                      <option key={`${option.kind}:${option.name}`} value={option.name} title={option.text}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {pickOption?.needsTarget ? (
+                  <div style={{ ...FIELD_STYLE, flex: '1 1 10rem', marginBottom: 0 }}>
+                    <label style={LABEL_STYLE} htmlFor="cpr-role-pick-target">
+                      {pickOption.kind === 'team_member' ? 'Chart row' : 'On vehicle'}
+                    </label>
+                    <select id="cpr-role-pick-target" style={INPUT_STYLE} value={newPickTarget} onChange={(event) => setNewPickTarget(event.target.value)}>
+                      <option value="">— choose —</option>
+                      {pickTargets.map((target) => (
+                        <option key={target} value={target}>
+                          {target}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ) : null}
+                <button
+                  type="button"
+                  style={SMALL_BUTTON_STYLE}
+                  disabled={!canPick}
+                  onClick={() => {
+                    setDraft(addRolePick(draft, newPick, pickOption?.needsTarget ? newPickTarget : null));
+                    setNewPick('');
+                    setNewPickTarget('');
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            </div>
+          ) : null}
+          {!roleAbility.menu.points && !roleAbility.menu.picks ? (
+            <p style={MUTED_STYLE}>{roleAbility.ability} asks for no choice at creation.</p>
           ) : null}
         </fieldset>
       ) : null}
