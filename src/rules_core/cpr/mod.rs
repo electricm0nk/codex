@@ -16,6 +16,7 @@ pub mod sheet;
 pub mod store;
 
 // lane A modules
+pub mod skills;
 pub mod stats;
 
 // lane B modules
