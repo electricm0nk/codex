@@ -379,7 +379,7 @@
     "summary_text": "Very Heavy Pistol that fires paint (and acid!) balls.",
     "text": "An Exotic Medium Pistol. Fires paint balls, which are typically filled with paint, and thus deal no damage. If you filled the paint balls with Acid however, each Acid Paintball still deals no damage, but lowers the SP of the target's armor (worn in the location shot) by one with each successful hit. Great for trying to capture someone alive. Damage dealt by this weapon cannot cause a Critical Injury. Ammunition costs the same as for a normal Medium Pistol, even if filled with Acid.",
     "transcription_note": "D-3: the chapter table (p096) wins, so base_weapon is \"Very Heavy Pistol\" (p096: \"Very Heavy Pistol that fires paint (and acid!) balls.\"). The appendix detail (p348) prints \"An Exotic Medium Pistol.\" Both are recorded here; flip base_weapon to revisit.",
-    "base_weapon_p347": "Medium Pistol"
+    "base_weapon_p348": "Medium Pistol"
   },
   {
     "name": "Battleglove",

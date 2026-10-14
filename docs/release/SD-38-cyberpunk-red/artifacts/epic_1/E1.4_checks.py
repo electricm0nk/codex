@@ -56,7 +56,7 @@ check("p352 master rows = 53", count_rows(r"[0-9]e?b ?\(", ["p352.txt"]) == 53)
 
 # ---- rulings
 air = next(r for r in D["weapon"] if r["name"] == "Air Pistol")
-check("D-3 Air Pistol base_weapon Very Heavy Pistol (p096), p348 Medium Pistol kept in note", air["base_weapon"] == "Very Heavy Pistol" and air["base_weapon_p347"] == "Medium Pistol" and "D-3" in air["transcription_note"])
+check("D-3 Air Pistol base_weapon Very Heavy Pistol (p096), p348 Medium Pistol kept in note", air["base_weapon"] == "Very Heavy Pistol" and air["base_weapon_p348"] == "Medium Pistol" and "D-3" in air["transcription_note"])
 check("A-6 five attachments carry the note, three state 2 slots", sum("A-6" in r.get("transcription_note", "") for r in D["attachment"]) == 5 and sorted(r["name"] for r in D["attachment"] if r["slots"] == 2) == ["Grenade Launcher Underbarrel", "Shotgun Underbarrel", "Smartgun Link"])
 sig = next(r for r in D["gear"] if r["name"].startswith("Linear Frame ∑"))
 check("A-8 Linear Frame Sigma keeps both plug counts verbatim", "using two installations of Interface Plugs" in sig["text"] and "Requires 1 installations of Interface Plugs" in sig["text"] and "A-8" in sig["transcription_note"])
