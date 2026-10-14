@@ -1,0 +1,3 @@
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex_desktop-13c7f51f8d3e23dd)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 832 filtered out; finished in 1.31s
+error: test failed, to rerun pass `--bin codex-desktop`

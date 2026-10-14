@@ -72,7 +72,7 @@ cards (`decisions.md §22`).
 | E3.6 | Starting kit + cash (A-9) | opus | waiting | E3.5 |  |
 | E3.7 | Cyberware pack + Humanity preview + slots | opus | waiting | E3.6, E2.5 |  |
 | E3.MC | E3 adversarial merge check (3 methods through the form) | opus | waiting | E3.7, E2.MC | writes the E3 epic report |
-| E4.1 | Sheet core + layout registry; no Encumbrance box | opus | waiting | E2.MC, E3.2 |  |
+| E4.1 | Sheet core + layout registry; no Encumbrance box | opus | complete | E2.MC, E3.2 | `artifacts/epic_4/E4.1_cycle_receipt.md`; 8e91816351; a `cyberpunk-red` character opens `CyberpunkCharacterSheet` (boxes from `cyberpunkSheetLayout.ts`: STATs entered/current incl. EMP max/current, HP, Seriously Wounded, Death Save, Humanity, MOVE, LUCK, wound track, Other totals); `cyberpunkSheetModel.test.ts` over 2 real adapter load responses (pinned by a `cpr_adapter` test, fence exit): 368 rows rendered each = its row, no stray digit, +1000 shift follows; 4 plants red (hand-kept 40, re-derived SW, encumbrance box, dropped row); `grep -c encumbrance cyberpunkSheetLayout.ts` → 0 (D-12); npm 170/170; desktop sweep 831 + 1 passed; clippy PASS; sd24 5/5; PF 3/3 + SF 4/4 unchanged |
 | E4.2 | Skills block | opus | waiting | E4.1 |  |
 | E4.3 | Weapons + range DV + armour block | opus | waiting | E4.2 |  |
 | E4.4 | Cyberware + Role Ability + deck block | opus | waiting | E4.3 |  |
