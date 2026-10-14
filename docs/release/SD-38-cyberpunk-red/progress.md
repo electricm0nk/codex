@@ -29,7 +29,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 |---|---|---|---|
 | C | in progress | 1 of 2 | C0 complete (1102f34aab); C1 next (SD-k revised: no wait on #398) |
 | E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
-| E1 | waiting | 0 of 10 | |
+| E1 | in progress | 1 of 10 | E1.0 complete (MANIFEST.json + `scripts/cpr_manifest_check.py`) |
 | E2 | waiting | 0 of 11 | |
 | E6 | waiting | 0 of 5 | runs in the E2 window |
 | E3 | waiting | 0 of 8 | |
@@ -105,6 +105,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-13 | E0.5 | opus | complete | 2db271c281 (code + spec row + inventory; receipt and rows in the next commit) | `artifacts/epic_0/E0.5_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.4 records) | landing chip `cyberpunk-red` selectable; Load list routes `ruleSystemId: cyberpunk-red` → `CyberpunkAdapter`; New Character closed with its hint until E3.2; ui-smoke `select-cyberpunk-red` RED → green (6/6 with neighbours, real store untouched); npm typecheck + 164/164 test files; no `.rs` touched (no clippy/cargo sweep) |
 | 2026-10-13 | E0.6 | opus | complete | 666edd9f47 (evidence; receipt and rows in the next commit) | `artifacts/epic_0/E0.6_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged C1 → E0 head; SF 4 seeds' lines unchanged (base 706d8da680 in its own worktree) | G-1 gate: PF hash diff empty, SF `diff -r` empty, root `--lib sf_seed` 34/34 both, PF converter 49450/49450 PASS + SF 8582/8582 PASS both; card's named SF test writes 0 files (E0.1 correction stands), lines from the writer test; no code, no clippy |
 | 2026-10-14 | E0.MC | opus | complete | f953bca5ce (evidence; receipt and rows in the next commit) | `artifacts/epic_0/E0.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged vs C1; SF 4 seeds' lines unchanged vs C1 (head 5dc2d53e59 vs E0.6's base record) | E0.1–E0.6 commands re-run on origin/tranche-18: 25/25 as expected; mutations: Stub routing → E0.4 test red, CPR resource removed → packaged_resources red, PF sheet-rule string moved → tauri-resources-tracked FAIL + PF render red; all restored green; no code, no clippy; ui-smoke `.out/` not git-ignored (reported) |
+| 2026-10-14 | E1.0 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.0_cycle_receipt.md` | `artifacts/epic_1/E1.0_cycle_receipt.md` | unchanged by construction (Python + JSON only) | MANIFEST 53 kinds / 800 expected / 3 null; sum check against CUI §3 (800, two implementations); selftest 10 plants |
 
 ## Epic reports
 

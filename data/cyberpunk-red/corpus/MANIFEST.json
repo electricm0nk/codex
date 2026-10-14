@@ -1,0 +1,542 @@
+{
+  "bundle": "SD-38",
+  "schema": 1,
+  "source": "docs/release/SD-38-cyberpunk-red/content-unit-inventory.md section 3",
+  "note": "expected is null for the three E1.8 kinds until E1.8 inventories them (CUI 2.8); E1.V pins every kind. Lanes never edit this file (decisions.md SD-c).",
+  "kinds": [
+    {
+      "kind": "stat",
+      "file": "stat.json",
+      "expected": 10,
+      "figure": "F-20",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.2"
+    },
+    {
+      "kind": "role",
+      "file": "role.json",
+      "expected": 10,
+      "figure": "F-1",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.1"
+    },
+    {
+      "kind": "role_ability",
+      "file": "role_ability.json",
+      "expected": 10,
+      "figure": "F-3",
+      "print_only": false,
+      "nested": {
+        "combat_awareness": 6,
+        "maker_dv": 7,
+        "tech_upgrade_options": 10,
+        "interface_abilities": 9,
+        "net_action_bands": 4,
+        "pharmaceuticals": 5,
+        "cryosystem_levels": 5,
+        "media_rumor": 4,
+        "rank_bands_per_role": 6,
+        "team_jobs": 5,
+        "team_stat_rows": 30,
+        "motorpool_vehicles": 14,
+        "nomad_upgrades": 19
+      },
+      "lane": "E1.1"
+    },
+    {
+      "kind": "streetrat_template",
+      "file": "streetrat_template.json",
+      "expected": 100,
+      "figure": "F-22",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.2"
+    },
+    {
+      "kind": "role_skill_list",
+      "file": "role_skill_list.json",
+      "expected": 10,
+      "figure": "F-31",
+      "print_only": false,
+      "nested": {
+        "skills_per_list": 20
+      },
+      "lane": "E1.2"
+    },
+    {
+      "kind": "complete_package_points",
+      "file": "complete_package_points.json",
+      "expected": 5,
+      "figure": "F-32",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.2"
+    },
+    {
+      "kind": "lifepath_table",
+      "file": "lifepath_table.json",
+      "expected": 67,
+      "figure": "F-26, F-27, F-28, F-29",
+      "print_only": false,
+      "nested": {
+        "general": 15,
+        "role": 52
+      },
+      "lane": "E1.2"
+    },
+    {
+      "kind": "starting_kit",
+      "file": "starting_kit.json",
+      "expected": 10,
+      "figure": "F-37",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.2"
+    },
+    {
+      "kind": "ip_cost",
+      "file": "ip_cost.json",
+      "expected": 3,
+      "figure": "F-33",
+      "print_only": false,
+      "nested": {
+        "ranks_per_row": 10
+      },
+      "lane": "E1.2"
+    },
+    {
+      "kind": "ip_award",
+      "file": "ip_award.json",
+      "expected": 8,
+      "figure": "F-34",
+      "print_only": true,
+      "nested": null,
+      "lane": "E1.2"
+    },
+    {
+      "kind": "reputation_level",
+      "file": "reputation_level.json",
+      "expected": 10,
+      "figure": "F-35",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.2"
+    },
+    {
+      "kind": "skill",
+      "file": "skill.json",
+      "expected": 66,
+      "figure": "F-38",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.3"
+    },
+    {
+      "kind": "difficulty_value",
+      "file": "difficulty_value.json",
+      "expected": 7,
+      "figure": "F-42",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.3"
+    },
+    {
+      "kind": "skill_modifier",
+      "file": "skill_modifier.json",
+      "expected": 10,
+      "figure": "F-43",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.3"
+    },
+    {
+      "kind": "price_category",
+      "file": "price_category.json",
+      "expected": 8,
+      "figure": "F-44",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "weapon",
+      "file": "weapon.json",
+      "expected": 29,
+      "figure": "F-45, F-46, F-47",
+      "print_only": false,
+      "nested": {
+        "melee": 4,
+        "ranged": 11,
+        "exotic": 14
+      },
+      "lane": "E1.4"
+    },
+    {
+      "kind": "ammo",
+      "file": "ammo.json",
+      "expected": 13,
+      "figure": "F-48",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "attachment",
+      "file": "attachment.json",
+      "expected": 8,
+      "figure": "F-49",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "clip_chart",
+      "file": "clip_chart.json",
+      "expected": 10,
+      "figure": "F-50",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "weapon_quality",
+      "file": "weapon_quality.json",
+      "expected": 3,
+      "figure": "F-51",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "armor",
+      "file": "armor.json",
+      "expected": 9,
+      "figure": "F-52",
+      "print_only": false,
+      "nested": {
+        "sp_bearing": 8
+      },
+      "lane": "E1.4"
+    },
+    {
+      "kind": "gear",
+      "file": "gear.json",
+      "expected": 53,
+      "figure": "F-54, F-53",
+      "print_only": false,
+      "nested": {
+        "in_starter_table": 47
+      },
+      "lane": "E1.4"
+    },
+    {
+      "kind": "fashion",
+      "file": "fashion.json",
+      "expected": 10,
+      "figure": "F-55",
+      "print_only": false,
+      "nested": {
+        "price_cells": 90
+      },
+      "lane": "E1.4"
+    },
+    {
+      "kind": "drug",
+      "file": "drug.json",
+      "expected": 5,
+      "figure": "F-56",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "service",
+      "file": "service.json",
+      "expected": 33,
+      "figure": "F-57",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "lifestyle",
+      "file": "lifestyle.json",
+      "expected": 4,
+      "figure": "F-58",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "housing",
+      "file": "housing.json",
+      "expected": 11,
+      "figure": "F-59",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "vehicle",
+      "file": "vehicle.json",
+      "expected": 14,
+      "figure": "F-60",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.4"
+    },
+    {
+      "kind": "night_market_table",
+      "file": "night_market_table.json",
+      "expected": 2,
+      "figure": "F-61",
+      "print_only": true,
+      "nested": {
+        "type_table_rows": 6,
+        "d100_rows": 20
+      },
+      "lane": "E1.4"
+    },
+    {
+      "kind": "cyberware",
+      "file": "cyberware.json",
+      "expected": 96,
+      "figure": "F-62",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.5"
+    },
+    {
+      "kind": "therapy",
+      "file": "therapy.json",
+      "expected": 3,
+      "figure": "F-67",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.5"
+    },
+    {
+      "kind": "cyberpsychosis_band",
+      "file": "cyberpsychosis_band.json",
+      "expected": 5,
+      "figure": "F-68",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.5"
+    },
+    {
+      "kind": "humanity_trauma",
+      "file": "humanity_trauma.json",
+      "expected": 4,
+      "figure": "F-69",
+      "print_only": true,
+      "nested": null,
+      "lane": "E1.5"
+    },
+    {
+      "kind": "action",
+      "file": "action.json",
+      "expected": 18,
+      "figure": "F-70",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.6",
+      "estimate": true
+    },
+    {
+      "kind": "range_dv",
+      "file": "range_dv.json",
+      "expected": 10,
+      "figure": "F-71, F-72",
+      "print_only": false,
+      "nested": {
+        "single_shot": 8,
+        "autofire": 2
+      },
+      "lane": "E1.6"
+    },
+    {
+      "kind": "damage_band",
+      "file": "damage_band.json",
+      "expected": 8,
+      "figure": "F-73",
+      "print_only": false,
+      "nested": {
+        "brawling": 4,
+        "martial_arts": 4
+      },
+      "lane": "E1.6"
+    },
+    {
+      "kind": "martial_arts",
+      "file": "martial_arts.json",
+      "expected": 9,
+      "figure": "F-74",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.6"
+    },
+    {
+      "kind": "cover",
+      "file": "cover.json",
+      "expected": 6,
+      "figure": "F-75",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.6"
+    },
+    {
+      "kind": "critical_injury",
+      "file": "critical_injury.json",
+      "expected": 22,
+      "figure": "F-76",
+      "print_only": false,
+      "nested": {
+        "body": 11,
+        "head": 11
+      },
+      "lane": "E1.6"
+    },
+    {
+      "kind": "wound_state",
+      "file": "wound_state.json",
+      "expected": 4,
+      "figure": "F-77",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.6"
+    },
+    {
+      "kind": "hazard",
+      "file": "hazard.json",
+      "expected": 9,
+      "figure": "F-78",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.6"
+    },
+    {
+      "kind": "vehicle_maneuver",
+      "file": "vehicle_maneuver.json",
+      "expected": 7,
+      "figure": "F-79",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.6"
+    },
+    {
+      "kind": "trauma_team",
+      "file": "trauma_team.json",
+      "expected": 2,
+      "figure": "F-80",
+      "print_only": false,
+      "nested": {
+        "plans": 2,
+        "member_rows": 4,
+        "hospital_rows": 4
+      },
+      "lane": "E1.6"
+    },
+    {
+      "kind": "interface_ability",
+      "file": "interface_ability.json",
+      "expected": 9,
+      "figure": "F-7",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.7"
+    },
+    {
+      "kind": "net_action",
+      "file": "net_action.json",
+      "expected": 4,
+      "figure": "F-81",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.7"
+    },
+    {
+      "kind": "program",
+      "file": "program.json",
+      "expected": 27,
+      "figure": "F-83",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.7"
+    },
+    {
+      "kind": "demon",
+      "file": "demon.json",
+      "expected": 3,
+      "figure": "F-85",
+      "print_only": true,
+      "nested": null,
+      "lane": "E1.7"
+    },
+    {
+      "kind": "cyberdeck",
+      "file": "cyberdeck.json",
+      "expected": 3,
+      "figure": "F-86",
+      "print_only": false,
+      "nested": null,
+      "lane": "E1.7"
+    },
+    {
+      "kind": "net_hardware",
+      "file": "net_hardware.json",
+      "expected": 8,
+      "figure": "F-87",
+      "print_only": false,
+      "nested": {
+        "hardware": 6,
+        "misc_upgrades": 2
+      },
+      "lane": "E1.7"
+    },
+    {
+      "kind": "net_architecture",
+      "file": "net_architecture.json",
+      "expected": 5,
+      "figure": "F-88",
+      "print_only": true,
+      "nested": {
+        "difficulty_rows": 3,
+        "lobby_rows": 6,
+        "body_rows": 16,
+        "home_security_rows": 3,
+        "defense_rows": 18
+      },
+      "lane": "E1.7"
+    },
+    {
+      "kind": "mooks_grunts",
+      "file": "mooks_grunts.json",
+      "expected": null,
+      "figure": null,
+      "print_only": true,
+      "nested": null,
+      "lane": "E1.8"
+    },
+    {
+      "kind": "encounter",
+      "file": "encounter.json",
+      "expected": null,
+      "figure": null,
+      "print_only": true,
+      "nested": null,
+      "lane": "E1.8"
+    },
+    {
+      "kind": "beat_chart",
+      "file": "beat_chart.json",
+      "expected": null,
+      "figure": null,
+      "print_only": true,
+      "nested": null,
+      "lane": "E1.8"
+    }
+  ]
+}
