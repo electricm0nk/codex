@@ -28,7 +28,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | Epic | Status | Cards complete | Notes |
 |---|---|---|---|
 | C | in progress | 1 of 2 | C0 complete (1102f34aab); C1 next (SD-k revised: no wait on #398) |
-| E0 | in progress | 4 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22) |
+| E0 | in progress | 5 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281) |
 | E1 | waiting | 0 of 10 | |
 | E2 | waiting | 0 of 11 | |
 | E6 | waiting | 0 of 5 | runs in the E2 window |
@@ -36,7 +36,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **6 of 68** (C0, C1, E0.1, E0.2, E0.3, E0.4; derived after E0.4) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **7 of 68** (C0, C1, E0.1, E0.2, E0.3, E0.4, E0.5; derived after E0.5) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -102,6 +102,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-13 | E0.2 | opus | complete | 481de470b6 (licence file + matrix section; receipt and rows in the next commit) | `artifacts/epic_0/E0.2_cycle_receipt.md` | unchanged by construction (no src/crates/src-tauri/frontend file touched) | `data/cyberpunk-red/corpus/LICENSE.json` (signed_off true, not OGL, records_processed null → MANIFEST.json); license-matrix "Cyberpunk RED (SD-38 E0.2)" section, DEVIATION row; pi-sweep + pcgen-residue-gate PASS; note for E1: PDF 458 pages, `$P/p459.txt` empty |
 | 2026-10-13 | E0.3 | opus | complete | 4edfb5e3fb (config + test; receipt and rows in the next commit) | `artifacts/epic_0/E0.3_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.1 records) | `data/cyberpunk-red/corpus/` bundled at its own path (bundle.resources 14 → 15); packaged_resources asserts it via `GameSystem::CyberpunkRed.package_roots`; tauri-resources-tracked PASS; clippy 0/0; desktop full 806 passed |
 | 2026-10-13 | E0.4 | opus | complete | 734ed496a4 (code), a371dbed22 (audit-token fix); receipt and rows in the next commit | `artifacts/epic_0/E0.4_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.3 records) | `src/rules_core/cpr/{mod,input,sheet,store}.rs` (A-10 anchors; A-11 revised store); `local_store` `owns_payload` + `peek_game_system`; resolver + router → `CyberpunkAdapter`; stub 0002 retired for CPR; clippy 0/0; sd24 5/5; root 299 suites 6572 passed; desktop 810 passed |
+| 2026-10-13 | E0.5 | opus | complete | 2db271c281 (code + spec row + inventory; receipt and rows in the next commit) | `artifacts/epic_0/E0.5_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.4 records) | landing chip `cyberpunk-red` selectable; Load list routes `ruleSystemId: cyberpunk-red` → `CyberpunkAdapter`; New Character closed with its hint until E3.2; ui-smoke `select-cyberpunk-red` RED → green (6/6 with neighbours, real store untouched); npm typecheck + 164/164 test files; no `.rs` touched (no clippy/cargo sweep) |
 
 ## Epic reports
 
