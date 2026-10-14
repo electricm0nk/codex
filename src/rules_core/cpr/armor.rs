@@ -123,7 +123,7 @@ impl CprArmorCatalog {
     pub fn wear(&self, worn: &[CprWornArmor], other_sources: &[CprSpSource]) -> Result<CprArmorLoadout, String> {
         let mut loadout = CprArmorLoadout { sp_head: 0, sp_body: 0, penalty: 0, sources: Vec::new(), bodyweight_suit: false };
         for piece in worn {
-            if self.held.iter().any(|h| *h == piece.name) {
+            if self.held.contains(&piece.name) {
                 return Err(format!("{} is held in one arm, not worn at a location (p. 350)", piece.name));
             }
             let armour = self.get(&piece.name).ok_or_else(|| format!("{} is not on the Master Armor List (p. 350)", piece.name))?;
