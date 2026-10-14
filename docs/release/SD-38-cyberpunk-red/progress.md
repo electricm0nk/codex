@@ -28,7 +28,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | Epic | Status | Cards complete | Notes |
 |---|---|---|---|
 | C | in progress | 1 of 2 | C0 complete (1102f34aab); C1 next (SD-k revised: no wait on #398) |
-| E0 | waiting | 0 of 7 | |
+| E0 | in progress | 1 of 7 | E0.1 complete (7732b17462, ebbb643800) |
 | E1 | waiting | 0 of 10 | |
 | E2 | waiting | 0 of 11 | |
 | E6 | waiting | 0 of 5 | runs in the E2 window |
@@ -36,7 +36,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **0 of 68** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **3 of 68** (C0, C1, E0.1; derived after E0.1) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -98,6 +98,7 @@ Row template (one row per card, appended in the card's closing commit):
 | Date | Card | Model | Status | Commit | Receipt | Seed deltas | Notes |
 |---|---|---|---|---|---|---|---|
 | 2026-10-13 | C1 | haiku | complete | 706d8da680 (bump; receipt and rows in the next commit) | `artifacts/cycle_1/C1_cycle_receipt.md` | not rendered (no Rust touched; see receipt) | tranche-18 cut from #398 head; 0.18.0 on 14 surfaces + pointer; A-grep predicate corrected (Cargo.lock crate lines) |
+| 2026-10-13 | E0.1 | opus | complete | 7732b17462 (code), ebbb643800 (clippy base fix); receipt and rows in the next commit | `artifacts/epic_0/E0.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (base 67c589c5f5 in its own worktree) | `sheet_rules_relative() -> Option`; converter refuses CPR by name; verify stage reads `Some(…)` arms; root 299 / desktop 2 / ingest 177 suites green; clippy was red on the base (fixed); G-1's SF test name corrected in receipt |
 
 ## Epic reports
 

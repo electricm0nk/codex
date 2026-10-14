@@ -31,7 +31,7 @@ cards (`decisions.md §22`).
 |---|---|---|---|---|---|
 | C0 | Package + unattended-mode receipts committed | lead session | complete | — | `artifacts/cycle_0/C0_cycle_receipt.md`; package 1102f34aab, script a53be2166a, run id 36d7c51beb |
 | C1 | Cut `tranche-18` after PR #398; 0.18.0 on 14 surfaces + `current-release.json`, one commit; push | haiku | complete | C0 | `artifacts/cycle_1/C1_cycle_receipt.md`; bump commit 706d8da680 (15 files); SD-k revised: tranche-18 already cut from PR #398's head bb6107aee0; E7.11 re-checks develop |
-| E0.1 | `GameSystem::CyberpunkRed`; `sheet_rules_relative` → `Option` | opus | waiting | C1 |  |
+| E0.1 | `GameSystem::CyberpunkRed`; `sheet_rules_relative` → `Option` | opus | complete | C1 | `artifacts/epic_0/E0.1_cycle_receipt.md`; code 7732b17462, clippy base fix ebbb643800; PF/SF seeds unchanged |
 | E0.2 | LICENSE.json + licence-matrix section (DEVIATION) | opus | waiting | E0.1 |  |
 | E0.3 | CPR corpus root bundled + `packaged_resources.rs` | opus | waiting | E0.2 |  |
 | E0.4 | Envelope field (A-11) + `CyberpunkAdapter` routing; STAT rows | opus | waiting | E0.1 |  |

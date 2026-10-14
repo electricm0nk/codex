@@ -1,0 +1,354 @@
+     Running unittests src/lib.rs (codex_ingest-06e24ac7d271e507)
+test result: ok. 686 passed; 0 failed; 11 ignored; 0 measured; 0 filtered out; finished in 54.04s
+     Running unittests src/bin/bonus_stack_reader.rs (bonus_stack_reader-a632f2de39995775)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/corpus_literal_sweep.rs (corpus_literal_sweep-12b852cbea91766b)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.82s
+     Running unittests src/bin/declared_pi_shipping_audit.rs (declared_pi_shipping_audit-93014eb1982dce63)
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/derived_evaluator_fixture_check.rs (derived_evaluator_fixture_check-e3498bbda8d66851)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_class_raw_tokens.rs (enrich_class_raw_tokens-d949ed4ab73e08ee)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_companion_raw_tokens.rs (enrich_companion_raw_tokens-56a5a0185ae2e96b)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running unittests src/bin/enrich_equipment_raw_tokens.rs (enrich_equipment_raw_tokens-1d0d4a676af0f309)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running unittests src/bin/enrich_monster_ability_raw_tokens.rs (enrich_monster_ability_raw_tokens-62bff68e0fa6b950)
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running unittests src/bin/enrich_monster_raw_tokens.rs (enrich_monster_raw_tokens-d748720c5bac584f)
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_pu_class_feature_mod_closure.rs (enrich_pu_class_feature_mod_closure-e7a2f44a00402260)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_spell_raw_tokens.rs (enrich_spell_raw_tokens-bca53ee2353ef586)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running unittests src/bin/formula_interpreter.rs (formula_interpreter-929e9d3511c1637c)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_book_cache.rs (gen_book_cache-4c2c42b77948f29d)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_acg.rs (gen_cache_acg-b8405288d132c08e)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_apg.rs (gen_cache_apg-e9d995bc75466244)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_beastiary.rs (gen_cache_beastiary-934ea0e166b26126)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_class_feature.rs (gen_cache_class_feature-63efe37bd1460ae3)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_equipment_gap.rs (gen_cache_equipment_gap-35234b4404e0edb9)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_feat_gap.rs (gen_cache_feat_gap-c01d35584ea046a9)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_hand_authored_equipment.rs (gen_cache_hand_authored_equipment-66437ad628ea4a91)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_hand_authored_feat_dump.rs (gen_cache_hand_authored_feat_dump-fa30808718e795d6)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_spell_lane_dump.rs (gen_cache_spell_lane_dump-a232d1209d136c24)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_spell_mod_access.rs (gen_cache_spell_mod_access-76f58762540fdb3d)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_ultimate_equipment.rs (gen_cache_ultimate_equipment-ad176cdbcc4830ee)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_class_feature_grants.rs (gen_class_feature_grants-dffa18512484a43e)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_core_rulebook_cache.rs (gen_core_rulebook_cache-e8e421e247b3f163)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_desktop_fixture_corpus.rs (gen_desktop_fixture_corpus-c4c86fd010f2e23a)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_equipment_gap_tables.rs (gen_equipment_gap_tables-82abe5a64a04b456)
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+     Running unittests src/bin/gen_equipment_types.rs (gen_equipment_types-a782c5ac87ab757d)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_feat_gap_tables.rs (gen_feat_gap_tables-30c17773e1a4c819)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_record_vars.rs (gen_record_vars-37ab1bdba53dcfce)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_settled_corpus.rs (gen_settled_corpus-ca670a95f854edaa)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_apg_race_traits.rs (ingest_apg_race_traits-f69e083286f14584)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running unittests src/bin/ingest_class_spell_levels_arg.rs (ingest_class_spell_levels_arg-193d42a373f2667f)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_pu_classes.rs (ingest_pu_classes-de6d164e6fd53e30)
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_race_traits.rs (ingest_race_traits-2da26baea44eac4a)
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running unittests src/bin/ingest_races.rs (ingest_races-7bf8c75aec633d8c)
+test result: ok. 44 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running unittests src/bin/ingest_spells.rs (ingest_spells-609739876c1db929)
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/reconcile_description_pi_stamps.rs (reconcile_description_pi_stamps-42617c24d435408d)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running unittests src/bin/repair_equipment_copy_citations.rs (repair_equipment_copy_citations-555521d43b37d29f)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/repair_lst_provenance.rs (repair_lst_provenance-a2bacfe40da99375)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/repair_spell_citations.rs (repair_spell_citations-c0250a7363709341)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running unittests src/bin/restamp_wiring_class.rs (restamp_wiring_class-f55eb5aaabf5b34b)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/sf_corpus.rs (sf_corpus-27505bb0b6829c53)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sf_formula_census.rs (sf_formula_census-bd28295b6c4df46d)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_bucket_v_render.rs (sheet_rule_bucket_v_render-08d3c7fceea3e786)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_convert.rs (sheet_rule_convert-67f2176243580cd0)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_parity.rs (sheet_rule_parity-42958011334bca55)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/v06_corpus_trap_report.rs (v06_corpus_trap_report-e3fa254348dcc5fd)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/ability_pool_picks.rs (ability_pool_picks-504246b809fdff9c)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 259.64s
+     Running tests/class_proficiency_line_gate.rs (class_proficiency_line_gate-0038bbbd1bfdd62f)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 756.54s
+     Running tests/class_records_and_closure_attestation.rs (class_records_and_closure_attestation-20a7ed98290bc2ac)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.17s
+     Running tests/class_weapon_proficiency_grant_by_type.rs (class_weapon_proficiency_grant_by_type-518ee197b549bc6a)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.80s
+     Running tests/class_weapon_proficiency_via_converter.rs (class_weapon_proficiency_via_converter-01ee7e70e9765a3a)
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 67.40s
+     Running tests/derived_evaluator_fixture_check.rs (derived_evaluator_fixture_check-2f28492a129d59fe)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.58s
+     Running tests/derived_evaluator_fixture_check_class_feature_description.rs (derived_evaluator_fixture_check_class_feature_description-601552e20be16104)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.64s
+     Running tests/derived_evaluator_fixture_check_monster_ability.rs (derived_evaluator_fixture_check_monster_ability-b1d15c8979b327b4)
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+     Running tests/feat_gap_tables.rs (feat_gap_tables-879b61d1fe280c06)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+     Running tests/formula_interpreter_family_fixture_check.rs (formula_interpreter_family_fixture_check-f05fef0b58961df3)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+     Running tests/ge05_vendored_pcg_fixtures.rs (ge05_vendored_pcg_fixtures-00c73884f1cf7cd6)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/ge06_selected_parity_dimensions.rs (ge06_selected_parity_dimensions-6427ae4c247718d9)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.49s
+     Running tests/golden_case_fixture_schema.rs (golden_case_fixture_schema-67eed7d630c19a9c)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pcc_entry_parse.rs (pcc_entry_parse-afdbda64c0e94744)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pcgen_runner_smoke.rs (pcgen_runner_smoke-18d08a62219d0d00)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 61.78s
+     Running tests/rules_core_class_feature_grant_consumer_via_converter.rs (rules_core_class_feature_grant_consumer_via_converter-62c556fc8f81c004)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.08s
+     Running tests/rules_core_class_feature_pool_catalog_via_converter.rs (rules_core_class_feature_pool_catalog_via_converter-9ee5cc4f1ea35395)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.51s
+     Running tests/rules_core_class_skill_tables_via_converter.rs (rules_core_class_skill_tables_via_converter-78d59bbef3b6ec4a)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/rules_core_companion_chassis_via_converter.rs (rules_core_companion_chassis_via_converter-b1fa2b59b3d67e48)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.12s
+     Running tests/rules_core_damage_total_via_converter.rs (rules_core_damage_total_via_converter-6ed0f5c490431758)
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_derived_evaluator_fixture_check_via_converter.rs (rules_core_derived_evaluator_fixture_check_via_converter-578cb75c7c252811)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_domain_power_via_converter.rs (rules_core_domain_power_via_converter-5565f560fb9f31d8)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_encumbrance_via_converter.rs (rules_core_encumbrance_via_converter-84323eec67105a57)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_equipment_effects_arms_armor_via_converter.rs (rules_core_equipment_effects_arms_armor_via_converter-081cbe533efc2c37)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_equipmods_via_converter.rs (rules_core_equipment_effects_equipmods_via_converter-4bf492f2379c14b8)
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_general_via_converter.rs (rules_core_equipment_effects_general_via_converter-ebf5dfa3dbf0b337)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_intelligent_item_via_converter.rs (rules_core_equipment_effects_intelligent_item_via_converter-4b950248e4619ba7)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_magic_items_via_converter.rs (rules_core_equipment_effects_magic_items_via_converter-26b08105ebcf6a87)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_via_converter.rs (rules_core_equipment_effects_via_converter-987c114422b20b3e)
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_equipment_record_via_converter.rs (rules_core_equipment_record_via_converter-fb22344bbd46e245)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.34s
+     Running tests/rules_core_equipment_resolver_via_converter.rs (rules_core_equipment_resolver_via_converter-a0f1d8e757394f40)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/rules_core_feats_all_via_converter.rs (rules_core_feats_all_via_converter-fa23006981516924)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_pi_screening_via_converter.rs (rules_core_pi_screening_via_converter-6affb69c466354bf)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_pilot_compute_corpus_via_converter.rs (rules_core_pilot_compute_corpus_via_converter-b7aa4e2ff465d48e)
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.78s
+     Running tests/rules_core_pu_barbarian_features_via_converter.rs (rules_core_pu_barbarian_features_via_converter-877a61ba7bfd0aa5)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/rules_core_pu_monk_features_via_converter.rs (rules_core_pu_monk_features_via_converter-cb9323818fb9eeeb)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_pu_rogue_features_via_converter.rs (rules_core_pu_rogue_features_via_converter-bfe396622637e4ba)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_race_creation_via_converter.rs (rules_core_race_creation_via_converter-5ca05b75bef9a745)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_race_resolver_via_converter.rs (rules_core_race_resolver_via_converter-bdca54ef0ff19ac3)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+     Running tests/rules_core_um_feat_tables_via_converter.rs (rules_core_um_feat_tables_via_converter-1542cee46b81828b)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_weapon_tables_via_converter.rs (rules_core_weapon_tables_via_converter-77afd0d07130c553)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_wizard_spell_list_via_converter.rs (rules_core_wizard_spell_list_via_converter-2503a330a0882ae4)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd17_a_include_graph.rs (sd17_a_include_graph-6be4ab576ea2fd66)
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b1_martial_class.rs (sd17_b1_martial_class-38f9183b7b7f23e0)
+test result: ok. 14 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b5_equipment.rs (sd17_b5_equipment-40d4b2cbd5e5cbe3)
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.09s
+     Running tests/sd17_b_metadata_kinds.rs (sd17_b_metadata_kinds-b4fff9bc6a0b00ef)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b_monster_stat_block.rs (sd17_b_monster_stat_block-a068898f0234d09a)
+test result: ok. 0 passed; 0 failed; 7 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_races_and_abilities.rs (sd17_b_races_and_abilities-72a98a54ea5b5fdc)
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b_spellcasting_class.rs (sd17_b_spellcasting_class-b5d0e0c2300f48f9)
+test result: ok. 13 passed; 0 failed; 14 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_spells.rs (sd17_b_spells-b47f9d0e9ade5293)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_c_ir_convert.rs (sd17_c_ir_convert-08a3f4536d49595a)
+test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd17_d_record_aggregate.rs (sd17_d_record_aggregate-ebeb16b997339146)
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_e_source_ir_shape.rs (sd17_e_source_ir_shape-694423b9795e71be)
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd18_preloop_consumer_compose.rs (sd18_preloop_consumer_compose-83946dfe4797a221)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.51s
+     Running tests/sd19_equipment_arms_armor.rs (sd19_equipment_arms_armor-ba4a1e417edfa1b6)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_equipmods.rs (sd19_equipment_equipmods-342ffc03c733f928)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_general.rs (sd19_equipment_general-44db75e788c4be0a)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_magic_items.rs (sd19_equipment_magic_items-b7a9252d5bb8bf3d)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_abjuration.rs (sd19_school_abjuration-8a6b54cc7447a0b9)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_conjuration.rs (sd19_school_conjuration-90431f818b3f990c)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_divination.rs (sd19_school_divination-988c0b83b53a25d0)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_enchantment.rs (sd19_school_enchantment-489b05ea3fd154bc)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_evocation.rs (sd19_school_evocation-0a27742cf8f3afdd)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_illusion.rs (sd19_school_illusion-8b8af97f70a64efe)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_necromancy.rs (sd19_school_necromancy-cd3f06ef7bbde2f5)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_transmutation.rs (sd19_school_transmutation-8983dbac9e250603)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_universal.rs (sd19_school_universal-46a3a75c8f8e04cb)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_seam_shapes_correctness.rs (sd19_seam_shapes_correctness-8a175e86a59693df)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+     Running tests/sd20_contract_damage_wiring.rs (sd20_contract_damage_wiring-756e50526ab3d632)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.47s
+     Running tests/sd20_contract_equipment_wiring.rs (sd20_contract_equipment_wiring-27ddafc2c65d299e)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.46s
+     Running tests/sd20_contract_spellbook_wiring.rs (sd20_contract_spellbook_wiring-4a504568b68da5a4)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.22s
+     Running tests/sd20_damage_aggregate_weapons.rs (sd20_damage_aggregate_weapons-d7d4f8fe01b89afa)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_base_dice.rs (sd20_damage_base_dice-d88c22b94e65e3bb)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_critical_multiplier.rs (sd20_damage_critical_multiplier-2253531e7757cdb6)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_critical_threat_range.rs (sd20_damage_critical_threat_range-4683338667c87c2f)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_str_modifier.rs (sd20_damage_str_modifier-fd1fea1b8671244e)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_total_parity.rs (sd20_damage_total_parity-9aa4236e4bbb945b)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_weapon_enhancement.rs (sd20_damage_weapon_enhancement-5f572e8d17d04e3f)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_arms_armor.rs (sd20_equipment_arms_armor-77e7e3fe2be02ec3)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/sd20_equipment_effects_parity.rs (sd20_equipment_effects_parity-b5304b1b8928a20e)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_equipmods.rs (sd20_equipment_equipmods-53c8e0f0ad8b770d)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_general.rs (sd20_equipment_general-ba3a7f8b6118a723)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_magic_items.rs (sd20_equipment_magic_items-64bafc0e3ef645f6)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_spellbook_abjuration.rs (sd20_spellbook_abjuration-2709ee7c5590c6bc)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd20_spellbook_conjuration.rs (sd20_spellbook_conjuration-c6631971ad22f1b5)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_divination.rs (sd20_spellbook_divination-5ce6efc94b6ca2da)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_enchantment.rs (sd20_spellbook_enchantment-b7dc0609f170581f)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_evocation.rs (sd20_spellbook_evocation-5fc7b606bacadd00)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_illusion.rs (sd20_spellbook_illusion-23320f41554c0a11)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_necromancy.rs (sd20_spellbook_necromancy-7d34db250b99d70e)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_parity.rs (sd20_spellbook_parity-0b92daccc96d412f)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd20_spellbook_transmutation.rs (sd20_spellbook_transmutation-5d73413142026615)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_universal.rs (sd20_spellbook_universal-e0e977df2a76de76)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd20_tabletop_readiness_integration.rs (sd20_tabletop_readiness_integration-7b1bfd29c0b2db07)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.01s
+     Running tests/sd26_cache_acg.rs (sd26_cache_acg-900f567bd83861cf)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/sd26_cache_apg.rs (sd26_cache_apg-a3ee9d2df93a2aff)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+     Running tests/sd26_cache_beastiary.rs (sd26_cache_beastiary-ac44b6f5d7a1e7ba)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+     Running tests/sd26_comparator.rs (sd26_comparator-31bf9ebafabbe3d5)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.32s
+     Running tests/sd26_normalization.rs (sd26_normalization-2c611576a81de45b)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd26_parity_report.rs (sd26_parity_report-941e4b25d62a3f23)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd26_pcgen_runner.rs (sd26_pcgen_runner-225c1a6b28fc92c1)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 34.82s
+     Running tests/sd26_pilot_case_verification.rs (sd26_pilot_case_verification-283bc5a5b272ff60)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.67s
+     Running tests/sd27_advanced_race_guide_parity.rs (sd27_advanced_race_guide_parity-fe24e42dcacc897c)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.16s
+     Running tests/sd27_feat_prerequisite_enforcement.rs (sd27_feat_prerequisite_enforcement-86cee8298a11779f)
+test result: ok. 9 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 20.07s
+     Running tests/sd27_pathfinder_unchained_parity.rs (sd27_pathfinder_unchained_parity-80f24b4cfc4f53bb)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.52s
+     Running tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs (sd27_pu_class_feature_descriptions_carry_the_characters_numbers-37383f1789e2f285)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 28.86s
+     Running tests/sd27_resolved_racial_trait_display_values.rs (sd27_resolved_racial_trait_display_values-da4ddd5b77e0c5b2)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.08s
+     Running tests/sd31_e2_ground_truth_agreement.rs (sd31_e2_ground_truth_agreement-71902d59d7b690fa)
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd35_race_trait_prose_comes_from_the_converted_package.rs (sd35_race_trait_prose_comes_from_the_converted_package-d58cef626257febb)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.45s
+     Running tests/sf_core_proof.rs (sf_core_proof-d7cbe0dcb080b79f)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 38.01s
+     Running tests/sf_drone_companion.rs (sf_drone_companion-5d0de6d9e6e897dc)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sf_formula_system.rs (sf_formula_system-64bf6571af3a05fb)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+     Running tests/sf_global_default.rs (sf_global_default-d47f049f11e2598d)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sf_license_registry.rs (sf_license_registry-1e68a2fee9b9d2aa)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sf_mapping_table.rs (sf_mapping_table-675c7160bc2d1105)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+     Running tests/sheet_rule_convert_gate.rs (sheet_rule_convert_gate-4431857be3fb4084)
+test result: ok. 48 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 570.28s
+     Running tests/sheet_rule_gated_fact_grants.rs (sheet_rule_gated_fact_grants-537a590f1c4c062a)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 247.43s
+     Running tests/sheet_rule_link_repair.rs (sheet_rule_link_repair-d4b21930fae06b79)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 394.43s
+     Running tests/sheet_rule_natural_attack_suffix_collision.rs (sheet_rule_natural_attack_suffix_collision-7b15516f09c1bdd9)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 246.35s
+     Running tests/sheet_rule_weapon_selectors.rs (sheet_rule_weapon_selectors-203d39218d2ac6eb)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 247.64s
+     Running tests/spell_cross_book_identity.rs (spell_cross_book_identity-a397c82eaf4a249b)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/table_generators_write_the_data_package.rs (table_generators_write_the_data_package-c74fec36e125efdd)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running tests/v06_apg_acg_feat_catalog.rs (v06_apg_acg_feat_catalog-586829988446d5d0)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running tests/v06_corpus_trap_report.rs (v06_corpus_trap_report-8463cfddfc9c46de)
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 49.25s
+     Running tests/v06_encumbrance.rs (v06_encumbrance-b2e0a99cb82afcb1)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/v06_wizard_pilot_case_verification.rs (v06_wizard_pilot_case_verification-d39a6ca385a81f8f)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.13s
+   Doc-tests codex_ingest
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
