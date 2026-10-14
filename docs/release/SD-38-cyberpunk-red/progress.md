@@ -135,6 +135,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E2.10 | opus | complete | 7f20a4994c (engine, store, adapter, fixture, tests; rebased from 4cb1b866a2); receipt and rows in the next commit | `artifacts/epic_2/E2.10_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/sheet.rs` `compose_sheet` over every engine module; `CprSheetChoices` + `cpr_sheet_choices.txt` (E0 fence exit: `input.rs`, `store.rs`); `CyberpunkAdapter::load_saved_character` returns the composed rows + printed lines; p121 labels-only branch, 29 fields + 66 skills have rows; root 300/6669/0, desktop 2/820/0; post-rebase cpr:: 95/95, desktop cpr_ 24/24 |
 | 2026-10-14 | E2.MC | opus | complete | dabf4176f2 (evidence); receipt and rows in the next commit | `artifacts/epic_2/E2.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | E2.1–E2.10 re-run green on fb6582b96e (cpr:: 95/95, cpr_adapter 5/5); 7 plants red for the intended reason then restored; converters PASS; E2 Epic report |
 | 2026-10-14 | E4.1 | opus | complete | 8e91816351 (code + fixtures); receipt and rows in the next commit | `artifacts/epic_4/E4.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `CyberpunkCharacterSheet` + `cyberpunkSheetLayout.ts` + `cyberpunkSheetModel.ts`; `CharacterHubPage` routes `cyberpunk-red` to it; every number one `cpr.` row (368 rows over 2 adapter fixtures; +1000 shift); no encumbrance box (D-12); `cpr_adapter.rs` test-only fence exit (fixture pin), cpr_adapter tests 6/6 |
+| 2026-10-14 | E4.2 | opus | complete | 160cc5a2f2 (code + test); receipt and rows in the next commit | `artifacts/epic_4/E4.2_cycle_receipt.md` | PF/SF unchanged: diff is 4 CPR-only frontend files, no engine/adapter/shared file | Skills box: 66 skills under the 9 catalog categories (`list_cyberpunk_catalog('skill')`), Level + Base each one `cpr.` row, REF/DEX bases armour-penalised by the engine; 132 skill rows checked; ungrouped fallback while the catalog loads |
 
 ## Epic reports
 
@@ -304,6 +305,10 @@ blockers.)
   alternative not taken: hide them until E4.2–E4.5 (an engine row dropped from the sheet). (2) Both `cpr.derived.{death_save,seriously_wounded}` (vitals) and
   `cpr.wound.{death_save,seriously_wounded}` (wound track) render, each once; alternative not taken: hide one of each pair (an exemption list in the row-once test).
   (3) The STAT block's Current column shows the engine's adjusted row (armour REF/DEX/MOVE, cyberware BODY, EMP after Humanity Loss); alternative not taken: entered STATs only.
+- E4.2, skills block (R2 applied): (1) skill categories and linked STATs come from the skill catalog, loaded by the sheet through `list_cyberpunk_catalog('skill')`;
+  alternatives not taken: a 66-entry TS table (R2) or a category on each engine row (Rust through E2's fence on a TS-only card). (2) While the catalog loads or if it fails,
+  the skills render ungrouped (error shown); alternative not taken: hide them. (3) The `skills` box entry lands in `cyberpunkSheetLayout.ts` (E4 lane file per §3, created by
+  E4.1, not in E4.2's FILES YOU OWN cell); alternative not taken: `declined ownedBy` (no later card owns it). (4) The (x2) marker is not printed; alternative not taken: print it.
 
 ## Open blockers
 
