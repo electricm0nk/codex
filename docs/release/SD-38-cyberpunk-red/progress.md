@@ -30,13 +30,13 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | C | complete | 2 of 2 | C0 complete (1102f34aab); C1 complete (706d8da680) (kanban rows; corrected by E6.MC, the row read 1 of 2 after C1 landed) |
 | E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
 | E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
-| E2 | in progress | 9 of 11 | lanes A (E2.1–E2.4) and B (E2.5–E2.8) complete; E2.1, E2.2, E2.3, E2.4, E2.5, E2.6, E2.7, E2.8, E2.9 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E2 | in progress | 10 of 11 | lanes A (E2.1–E2.4) and B (E2.5–E2.8) complete; E2.1, E2.2, E2.3, E2.4, E2.5, E2.6, E2.7, E2.8, E2.9, E2.10 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
-| E3 | waiting | 0 of 8 | |
+| E3 | in progress | 2 of 8 | E3.1, E3.2 complete (re-counted from `kanban.md` by E2.10: `awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`; this row read 0 of 8) |
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **33 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.9, E6.1–E6.4, E6.MC; derived at E2.4: awk and Python both 33) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **36 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E3.1, E3.2, E6.1–E6.4, E6.MC; derived at E2.10: awk and Python both 36) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -132,6 +132,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E2.4 | opus | complete | a180fb2f43 (engine + tests), f1ef20be3a (clippy fix), cda6994c46 (printed page citations); receipt and rows in the next commit | `artifacts/epic_2/E2.4_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/critical.rs`: `cpr.wound.{lightly,seriously,mortally}_wounded` (+ `_dv` 10/13/15), `cpr.wound.death_save`, `cpr.wound.base_death_save_penalty`; HP 40 → 40/20/1; 11 of 22 injuries raise the Base DSP (3 implementations); root 300/6650/0, desktop 2/818/0; lane A ends, tree removed |
 | 2026-10-14 | E3.1 | opus | complete | fabfa38ac0 (code); receipt and rows in the next commit | `artifacts/epic_3/E3.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `preview_cyberpunk_character` / `create_cyberpunk_character`: Streetrat row rolled or picked, Edgerunner 1d10 per STAT from its own column, Complete Package = corpus default 62, STATs 2–8; `CprRoller` (SplitMix64, u32 seed returned and replayed); rows = engine `cpr.stat.*` + `cpr.derived.*`; boundary `cprCreation.ts` |
 | 2026-10-14 | E3.2 | opus | complete | 2c4a65ecb5 (code); receipt and rows in the next commit | `artifacts/epic_3/E3.2_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | New Character under Cyberpunk Red opens `CyberpunkCreateForm` (`form: 'cyberpunk'`): Role, Streetrat/Edgerunner/Complete Package, STAT + derived tiles from `preview_cyberpunk_character`; saves via `create_cyberpunk_character` with the preview's seed; `cyberpunkCreateLayout.ts` registry; ui-smoke row `create-cyberpunk-streetrat-stats` |
+| 2026-10-14 | E2.10 | opus | complete | 7f20a4994c (engine, store, adapter, fixture, tests; rebased from 4cb1b866a2); receipt and rows in the next commit | `artifacts/epic_2/E2.10_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/sheet.rs` `compose_sheet` over every engine module; `CprSheetChoices` + `cpr_sheet_choices.txt` (E0 fence exit: `input.rs`, `store.rs`); `CyberpunkAdapter::load_saved_character` returns the composed rows + printed lines; p121 labels-only branch, 29 fields + 66 skills have rows; root 300/6669/0, desktop 2/820/0; post-rebase cpr:: 95/95, desktop cpr_ 24/24 |
 
 ## Epic reports
 
@@ -272,6 +273,7 @@ blockers.)
   alternative not taken: every STAT at a fixed start value. (2) The `±1` STAT buttons clamp only at 0; the 2–8 range and the 62 total are the
   engine's refusals, shown as its problems with Create closed; alternative not taken: a desktop clamp (a hand-kept rules table, R2).
   (3) Streetrat rows are offered from the Role's `streetrat_template` records; alternative not taken: a fixed 1–10 list.
+- E2.10, sheet assembly (A-7, SD-b, SD-d, SD-g; E0 fence exit per decisions.md §7): (1) the choices beyond the STATs live in their own struct and file (`CprSheetChoices`, `cpr_sheet_choices.txt`), so `CprCharacterInput { stats }` and `CprSavedCharacter` keep their shape and no lane-A file or E3.1 literal breaks; alternative not taken: new fields on `CprCharacterInput` (breaks `stats.rs` tests, fence closed). (2) Deck extras come from the composed armour and cyberware (A-7); alternative not taken: caller flags. (3) An Exotic weapon without its own ROF/magazine prints its text, no number is inherited from `base_weapon` (Hurricane drum 16 ≠ Shotgun 4); alternative not taken: inherit. (4) Current HP / current LUCK stay play-time write-ins (the "out of" maxima are rows). (5) EMP skills use the current EMP (p. 81). (6) `cpr.derived.death_save` and `cpr.wound.death_save` both stay, asserted equal; p121 maps the box to the `cpr.derived` row (closes E2.4's note).
 
 ## Open blockers
 

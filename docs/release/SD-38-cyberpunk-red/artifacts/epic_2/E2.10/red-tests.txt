@@ -1,0 +1,27 @@
+$ cargo test --locked -j 8 --lib cpr:: -- --test-threads=8   (tests written, API absent)
+error[E0432]: unresolved imports `crate::rules_core::cpr::input::CprDeckChoice`, `crate::rules_core::cpr::input::CprImprovementPoints`, `crate::rules_core::cpr::input::CprSheetChoices`
+error[E0432]: unresolved import `crate::rules_core::cpr::input::CprSheetChoices`
+error[E0425]: cannot find type `CprSheetChoices` in this scope
+error[E0422]: cannot find struct, variant or union type `CprSheetChoices` in this scope
+error[E0422]: cannot find struct, variant or union type `CprDeckChoice` in this scope
+error[E0422]: cannot find struct, variant or union type `CprImprovementPoints` in this scope
+error[E0425]: cannot find type `CprSheetCatalogs` in this scope
+error[E0425]: cannot find type `CprSheet` in this scope
+error[E0425]: cannot find type `CprSheet` in this scope
+error[E0425]: cannot find function `render_cpr_sheet_choices` in this scope
+error[E0425]: cannot find function `parse_cpr_sheet_choices` in this scope
+error[E0433]: cannot find type `CprSheetChoices` in this scope
+error[E0425]: cannot find function `render_cpr_sheet_choices` in this scope
+error[E0425]: cannot find function `parse_cpr_sheet_choices` in this scope
+error[E0433]: cannot find type `CprSheetChoices` in this scope
+error[E0425]: cannot find function `parse_cpr_sheet_choices` in this scope
+error[E0433]: cannot find type `CprSheetCatalogs` in this scope
+error[E0425]: cannot find function `compose_sheet` in this scope
+error[E0433]: cannot find type `CprPrintedForm` in this scope
+error[E0433]: cannot find type `CprPrintedForm` in this scope
+error[E0425]: cannot find function `compose_sheet` in this scope
+error[E0599]: no associated function or constant named `load_choices` found for struct `store::CprCharacterStore` in the current scope
+error[E0599]: no associated function or constant named `save_choices` found for struct `store::CprCharacterStore` in the current scope
+error[E0599]: no associated function or constant named `load_choices` found for struct `store::CprCharacterStore` in the current scope
+error[E0599]: no associated function or constant named `save_choices` found for struct `store::CprCharacterStore` in the current scope
+error: could not compile `codex` (lib test) due to 25 previous errors

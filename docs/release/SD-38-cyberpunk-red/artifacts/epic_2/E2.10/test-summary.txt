@@ -1,0 +1,11 @@
+root_full: suites passed failed (awk) 300 6669 0
+root_full: (python re) 300 6669 0
+root_full: test result: FAILED lines 0
+desktop_full: (awk) 2 820 0
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/codex_desktop-46af3d9082bcf85c)
+test result: ok. 819 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 505.06s
+     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/packaged_resources-9d84901f614e62fd)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 92.22s
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+RESULT: PASS
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s

@@ -1,0 +1,20 @@
+$ cargo test --locked -j 8 --lib cpr::sheet -- --test-threads=8
+test rules_core::cpr::sheet::tests::the_carried_stats_are_cpr_stat_rows_equal_to_the_input ... ok
+test rules_core::cpr::sheet::tests::cyberware_body_feeds_hit_points_seriously_wounded_and_both_death_saves ... ok
+test rules_core::cpr::sheet::tests::role_reputation_weapons_and_the_ledger_boxes_are_rows_and_dice_stay_printed ... ok
+test rules_core::cpr::sheet::tests::cyberware_humanity_loss_feeds_current_humanity_current_emp_and_emp_skills ... ok
+test rules_core::cpr::sheet::tests::every_numeric_field_the_p121_sample_sheet_labels_has_a_cpr_row ... ok
+test rules_core::cpr::sheet::tests::the_netrunner_deck_takes_its_extra_slots_from_the_armour_and_the_cyberware ... ok
+test rules_core::cpr::sheet::tests::armour_and_cyberware_sp_and_the_armour_penalty_feed_the_reflex_and_dexterity_skill_bases ... ok
+test rules_core::cpr::sheet::tests::every_row_is_unique_and_twin_rows_agree ... ok
+test rules_core::cpr::sheet::tests::a_choice_the_book_does_not_allow_is_refused_with_its_reason ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.12s
+$ cargo test --locked -j 8 --lib cpr:: -- --test-threads=8
+test result: ok. 95 passed; 0 failed; 0 ignored; 0 measured; 2892 filtered out; finished in 0.12s
+$ cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins cpr_adapter -- --test-threads=8
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason ... ok
+test cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 816 filtered out; finished in 0.05s
