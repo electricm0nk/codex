@@ -1,0 +1,6 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.28s
+test rule_system_adapter::tests::cyberpunk_red_resolves_to_the_cyberpunk_adapter ... ok
+test rule_system_adapter::tests::starfinder_1e_resolves_to_the_starfinder_adapter_and_its_chassis_is_computed ... ok
+test pf1_adapter::tests::pf1_adapter_implements_rule_system_adapter_end_to_end ... ok
+test rule_system_adapter::tests::dyn_rule_system_adapter_constructs_and_dispatches_every_method ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 807 filtered out; finished in 21.53s

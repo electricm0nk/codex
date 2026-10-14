@@ -1,0 +1,86 @@
+[
+  {
+    "id": "landing-render",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/.out/sd38-e0.mc/landing-render.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catal",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e0_mc-jrwMKZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-ruleset-chips",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/.out/sd38-e0.mc/landing-ruleset-chips.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catal",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e0_mc-jrwMKZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "load-character-render",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/.out/sd38-e0.mc/load-character-render.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\n\nBrother Tomas Vane\nHuman Cleric 3 / Fighter 2\nLast modified: Dec 31, 2025\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nRestore starter characters\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e0_mc-jrwMKZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "select-cyberpunk-red",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/.out/sd38-e0.mc/select-cyberpunk-red.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\nNo characters yet — create your first one to get started.\n\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nRestore starter characters\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e0_mc-jrwMKZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-select-pathfinder",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/.out/sd38-e0.mc/landing-select-pathfinder.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catal",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e0_mc-jrwMKZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "open-seed-aldric",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/apps/desktop/scripts/ui-smoke/.out/sd38-e0.mc/open-seed-aldric.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nAldric Ironhand — Fighter 3\nPROGRESSION\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nLevel 1 Fighter\nSkill points: Unknown\nFeat\nLevel 2 Fighter\nSkill points: Unknown\nLevel 3 Fighter\nSkill points: Unknown\nFeat\nNEXT\nLevel 4 Fighter\nSkill points: Unknown\nAbility score increase\nCharacter Name\nAldric Ironhand\nCampaign\n—\nHIT POINTS\nUnknown\nINITIATIVE\n+1\nInitiative +1: Dexterity modi",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e0_mc-jrwMKZ/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

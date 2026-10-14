@@ -1,0 +1,12 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+test rules_core::game_system::tests::book_registry_keys_books_by_system ... ok
+test rules_core::game_system::tests::game_system_root_resolves_at_runtime_before_the_compile_time_path ... ok
+test rules_core::game_system::tests::game_system_root_pathfinder_is_the_current_path ... ok
+test rules_core::game_system::tests::game_system_root_an_installed_data_root_wins_over_codex_repo_root ... ok
+test rules_core::game_system::tests::game_system_root_every_system_has_its_own_index_and_per_system_slot ... ok
+test rules_core::game_system::tests::game_system_root_cyberpunk_red_has_a_corpus_and_no_sheet_rule_package ... ok
+test rules_core::game_system::tests::game_system_root_unknown_id_is_an_error_not_a_fallback ... ok
+test saved_character::local_store::tests::peek_game_system_reads_the_envelope_alone ... ok
+test rules_core::game_system::tests::game_system_root_each_id_resolves_to_exactly_one_root ... ok
+test rules_core::game_system::tests::game_system_root_live_pathfinder_package_is_the_default_package ... ok
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 2891 filtered out; finished in 4.01s

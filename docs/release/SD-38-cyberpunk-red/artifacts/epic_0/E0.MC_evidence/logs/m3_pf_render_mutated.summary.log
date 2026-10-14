@@ -1,0 +1,4 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.62s
+thread 'character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically' (3581964) panicked at src/pf_seed_render_hash.rs:94:9:
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... FAILED
+error: test failed, to rerun pass `--bin codex-desktop`

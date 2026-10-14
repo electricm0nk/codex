@@ -1,0 +1,13 @@
+diff --git a/apps/desktop/src-tauri/src/rule_system_adapter.rs b/apps/desktop/src-tauri/src/rule_system_adapter.rs
+index ed7941b5e9..6a6bd9386d 100644
+--- a/apps/desktop/src-tauri/src/rule_system_adapter.rs
++++ b/apps/desktop/src-tauri/src/rule_system_adapter.rs
+@@ -150,7 +150,7 @@ pub fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAd
+     match rule_system_id {
+         "pf1" => Box::new(crate::pf1_adapter::Pf1Adapter),
+         crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID => Box::new(crate::sf_adapter::StarfinderAdapter),
+-        id if id == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() => {
++        id if id == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() && false => {
+             Box::new(crate::cpr_adapter::CyberpunkAdapter)
+         }
+         other => {
