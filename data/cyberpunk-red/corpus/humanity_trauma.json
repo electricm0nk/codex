@@ -1,0 +1,34 @@
+[
+  {
+    "source_page": "p232",
+    "name": "Traumatic Physical Incident",
+    "kind": "humanity_trauma",
+    "example": "Torture",
+    "humanity_loss_dice": "1d6",
+    "text": "Traumatic Physical Incident. Torture. Humanity Loss 1d6."
+  },
+  {
+    "source_page": "p232",
+    "name": "Traumatic Mental Incident",
+    "kind": "humanity_trauma",
+    "example": "Witnessing a particularly horrific death, mutilation, etc.",
+    "humanity_loss_dice": "1d6",
+    "text": "Traumatic Mental Incident. Witnessing a particularly horrific death, mutilation, etc. Humanity Loss 1d6."
+  },
+  {
+    "source_page": "p232",
+    "name": "Long-term Mental Stress",
+    "kind": "humanity_trauma",
+    "example": "Kidnapping, imprisonment. Long term abuse.",
+    "humanity_loss_dice": "2d6",
+    "text": "Long-term Mental Stress. Kidnapping, imprisonment. Long term abuse. Humanity Loss 2d6."
+  },
+  {
+    "source_page": "p232",
+    "name": "Long-term Environmental Stress Factors",
+    "kind": "humanity_trauma",
+    "example": "Starvation or being trapped in a war zone, experiencing devastation from a long-term disaster, or living in constant danger for a month.",
+    "humanity_loss_dice": "2d6",
+    "text": "Long-term Environmental Stress Factors. Starvation or being trapped in a war zone, experiencing devastation from a long-term disaster, or living in constant danger for a month. Humanity Loss 2d6."
+  }
+]

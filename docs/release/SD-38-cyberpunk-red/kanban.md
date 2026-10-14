@@ -43,7 +43,7 @@ cards (`decisions.md §22`).
 | E1.2 | Creation lane | sonnet | waiting | E1.0 |  |
 | E1.3 | Skills lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.3_cycle_receipt.md`; skill 66 / difficulty_value 7 / skill_modifier 10; checker exit 0; skills.tsv diff empty; DV table and modifier table image-checked (p130, p131) |
 | E1.4 | Gear lane | sonnet | waiting | E1.0 |  |
-| E1.5 | Cyberware lane | sonnet | waiting | E1.0 |  |
+| E1.5 | Cyberware lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.5_cycle_receipt.md`; cyberware 96 (F-63 8 categories, F-64 HL 12/22/25/26/11, each by 2-3 implementations), therapy 3, cyberpsychosis_band 5, humanity_trauma 4; manifest check `--kinds` exit 0 (RED exit 1, 4 MISSING); p231 image check recorded (Standard/Extreme rows carry the max-Humanity sentences, D-5 precondition met) |
 | E1.6 | Combat lane (D-1 image check) | sonnet | waiting | E1.0 |  |
 | E1.7 | Netrunning lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.7_cycle_receipt.md`; 7 kinds, 59 records (9+4+27+3+3+8+5), `cpr_manifest_check.py --kinds <7>` RED exit 1 (7 MISSING) → GREEN exit 0; F-84 4/3/8/12 = 27 (awk + Python); 18 defenses image-checked p214-p217 |
 | E1.8 | GM-tables lane (inventory first) | sonnet | waiting | E1.0 |  |
