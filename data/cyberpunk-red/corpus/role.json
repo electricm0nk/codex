@@ -1,0 +1,149 @@
+[
+  {
+    "kind": "role",
+    "name": "Rockerboy",
+    "source_page": "p031",
+    "role_ability": "Charismatic Impact",
+    "role_ability_pages": [
+      "p145",
+      "p146"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Rockerboy's Role Ability is Charismatic Impact. With this ability, they can influence others by sheer presence of personality. They need not be a musical performer; they can influence others through poetry, art, dance, or simply their physical presence. They could be a rocker—or a cult leader. As they grow in skill, they can affect larger and larger groups and call on their fans for greater and greater requests of loyalty (Go to pg. 144 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Solo",
+    "source_page": "p032",
+    "role_ability": "Combat Awareness",
+    "role_ability_pages": [
+      "p147"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Solo's Role Ability is Combat Awareness. With Combat Awareness, a Solo can call up their training to have an enhanced situational awareness of the battlefield. When combat begins, anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among a number of combat abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others (Go to pg. 146 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Netrunner",
+    "source_page": "p033",
+    "role_ability": "Interface",
+    "role_ability_pages": [
+      "p148"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Netrunner's Role Ability is Interface. Interface is what allows the Netrunner to Netrun—to interface with electronic mind-modems (called cyberdecks) to control computers, electronics, and associated programming. The Interface Role Ability also gives the Netrunner access to a wide suite of Abilities related to computer hacking and system control (Go to pg. 147 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Tech",
+    "source_page": "p034",
+    "role_ability": "Maker",
+    "role_ability_pages": [
+      "p148",
+      "p149",
+      "p150"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Tech's Role Ability is Maker. Using the Maker Role Ability, the Tech can fix, improve, modify, make, and invent new items. Whenever a Tech increases their Maker Rank by one, they gain one rank in two different Maker Specialties of their choice, including repairing, upgrading, fabricating, and inventing (Go to pg. 147 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Medtech",
+    "source_page": "p035",
+    "role_ability": "Medicine",
+    "role_ability_pages": [
+      "p150",
+      "p151"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Medtech's Role Ability is Medicine. With this ability, Medtechs can keep people alive who should be dead with their knowledge, tools, and training. In the Time of the Red, they are as much doctors as they are mechanics, caring for people who are often more machine than human. Whenever the Medtech increases their Medicine Rank, they also choose one of three Medicine Specialties to allocate a single point to: surgery, pharmaceuticals, or cryosystems operation (Go to pg. 149 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Media",
+    "source_page": "p036",
+    "role_ability": "Credibility",
+    "role_ability_pages": [
+      "p152",
+      "p153",
+      "p154"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Media's Role Ability is Credibility. The Media can not only convince an audience of the truth of what they publish but also has a larger audience the more credible they are. Medias also have greater levels of access to sources and information; they are always in the know with their ears to the ground to pick up on rumors and information passively (Go to pg. 151 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Exec",
+    "source_page": "p037",
+    "role_ability": "Teamwork",
+    "role_ability_pages": [
+      "p154",
+      "p155",
+      "p156",
+      "p157",
+      "p158"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Exec's Role Ability is Teamwork. Just like a real corporate executive, the Exec builds a team whose members help them accomplish their goals, whether legal or not, morale permitting. Team members have a visible job description (like secretary or driver) but also have a covert roles (such as Netrunner, bodyguard, or assassin). Plus they get free housing and nice set of clothes! (Go to pg. 153 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Lawman",
+    "source_page": "p038",
+    "role_ability": "Backup",
+    "role_ability_pages": [
+      "p159",
+      "p160"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Lawman's Role Ability is Backup. With this ability, Lawmen can call upon the help of a group of fellow officers, based on the Lawman's Rank and the conditions under which they make the call. This Backup is armed and armored based on their Rank (Go to pg. 158 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Fixer",
+    "source_page": "p039",
+    "role_ability": "Operator",
+    "role_ability_pages": [
+      "p160",
+      "p161",
+      "p162"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Fixer's Role Ability is Operator. Fixers know how to get things on the black market and are adept at navigating the complex social customs of The Street, where hundreds of cultures and economic levels collide. Fixers maintain vast webs of contacts and clients who they can reach out to source goods, favors, or information. Fixers can also source desirable resources and make favorable deals (Go to pg. 159 for details)."
+  },
+  {
+    "kind": "role",
+    "name": "Nomad",
+    "source_page": "p040",
+    "role_ability": "Moto",
+    "role_ability_pages": [
+      "p162",
+      "p163",
+      "p164",
+      "p165",
+      "p166"
+    ],
+    "starting_rank": 4,
+    "rank_min": 1,
+    "rank_max": 10,
+    "text": "The Nomad's Role Ability is Moto. Whenever a Nomad increases their Rank in Moto, they have the option of adding another stock vehicle (with minimum specs) of their Moto Rank or lower to the pool of Family vehicles they have permission to use from the Family Motorpool or to make an upgrade to one of their current vehicles. Thanks to being around vehicles since birth, Nomads are also able to drive any type of vehicle with tremendous skill (Go to pg. 161 for details)."
+  }
+]
