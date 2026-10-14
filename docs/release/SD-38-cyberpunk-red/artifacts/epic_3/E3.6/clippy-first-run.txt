@@ -1,0 +1,25 @@
+    Checking codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+error: this `if` statement can be collapsed
+   --> src/rules_core/cpr/kit.rs:347:13
+    |
+347 | /             if let Some(c) = record["ammo_type"].as_str() {
+348 | |                 if !calibers.iter().any(|k| k == c) {
+349 | |                     calibers.push(c.to_owned());
+350 | |                 }
+351 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.96.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+347 ~             if let Some(c) = record["ammo_type"].as_str()
+348 ~                 && !calibers.iter().any(|k| k == c) {
+349 |                     calibers.push(c.to_owned());
+350 ~                 }
+    |
+
+error: could not compile `codex` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `codex` (lib test) due to 1 previous error
