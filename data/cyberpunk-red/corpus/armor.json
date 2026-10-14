@@ -33,9 +33,9 @@
     "cost_text": "50eb (Costly)",
     "price_category": "Costly",
     "hp": null,
-    "description": "The favored protection for the past 90 years. To quote DuPont: Kevlar ® is a heat-resistant, synthetic, lightweight fiber that delivers high tensile strength that brings improved protection and performance across a range of industries and applications. Like when people are trying to stab or shoot you. Can be made into clothes, vests, jackets, business suits, and even bikinis.",
+    "description": "The favored protection for the past 90 years. To quote DuPont: Kevlar® is a heat-resistant, synthetic, lightweight fiber that delivers high tensile strength that brings improved protection and performance across a range of industries and applications. Like when people are trying to stab or shoot you. Can be made into clothes, vests, jackets, business suits, and even bikinis.",
     "rules_text": "Armor must be purchased individually for either the head or body locations. Wearing even a single piece of heavier armor will lower your REF, DEX, and MOVE by the most punishing Armor Penalty of armor you are wearing. You take this penalty only once even though you are likely wearing armor on both your body and head. This penalty can even leave your Character (at a minimum of MOVE 0) completely immobile. SP gained by armor does not \"stack;\" Only your highest source of SP in a location determines your SP for that location. All your worn armor in a location is ablated (SP lowered by one) simultaneously whenever you take damage.",
-    "text": "The favored protection for the past 90 years. To quote DuPont: Kevlar ® is a heat-resistant, synthetic, lightweight fiber that delivers high tensile strength that brings improved protection and performance across a range of industries and applications. Like when people are trying to stab or shoot you. Can be made into clothes, vests, jackets, business suits, and even bikinis.",
+    "text": "The favored protection for the past 90 years. To quote DuPont: Kevlar® is a heat-resistant, synthetic, lightweight fiber that delivers high tensile strength that brings improved protection and performance across a range of industries and applications. Like when people are trying to stab or shoot you. Can be made into clothes, vests, jackets, business suits, and even bikinis.",
     "printed_name": "Kevlar®"
   },
   {
@@ -53,9 +53,9 @@
     "cost_text": "100eb (Premium)",
     "price_category": "Premium",
     "hp": null,
-    "description": "A combination of Kevlar ® and plastic meshes inserted into the weave of the fabric. Armorjack provides superior protection, especially against high-velocity bullets.",
+    "description": "A combination of Kevlar® and plastic meshes inserted into the weave of the fabric. Armorjack provides superior protection, especially against high-velocity bullets.",
     "rules_text": "Armor must be purchased individually for either the head or body locations. Wearing even a single piece of heavier armor will lower your REF, DEX, and MOVE by the most punishing Armor Penalty of armor you are wearing. You take this penalty only once even though you are likely wearing armor on both your body and head. This penalty can even leave your Character (at a minimum of MOVE 0) completely immobile. SP gained by armor does not \"stack;\" Only your highest source of SP in a location determines your SP for that location. All your worn armor in a location is ablated (SP lowered by one) simultaneously whenever you take damage.",
-    "text": "A combination of Kevlar ® and plastic meshes inserted into the weave of the fabric. Armorjack provides superior protection, especially against high-velocity bullets."
+    "text": "A combination of Kevlar® and plastic meshes inserted into the weave of the fabric. Armorjack provides superior protection, especially against high-velocity bullets."
   },
   {
     "name": "Bodyweight Suit",
@@ -91,9 +91,9 @@
     "cost_text": "100eb(Premium)",
     "price_category": "Premium",
     "hp": null,
-    "description": "Heavier Armorjack, with solid plastic plating, reinforced with thicker Kevlar ® mesh. Typical Street wear, this combines decent protection with a decent ost.",
+    "description": "Heavier Armorjack, with solid plastic plating, reinforced with thicker Kevlar® mesh. Typical Street wear, this combines decent protection with a decent ost.",
     "rules_text": "Armor must be purchased individually for either the head or body locations. Wearing even a single piece of heavier armor will lower your REF, DEX, and MOVE by the most punishing Armor Penalty of armor you are wearing. You take this penalty only once even though you are likely wearing armor on both your body and head. This penalty can even leave your Character (at a minimum of MOVE 0) completely immobile. SP gained by armor does not \"stack;\" Only your highest source of SP in a location determines your SP for that location. All your worn armor in a location is ablated (SP lowered by one) simultaneously whenever you take damage.",
-    "text": "Heavier Armorjack, with solid plastic plating, reinforced with thicker Kevlar ® mesh. Typical Street wear, this combines decent protection with a decent ost.",
+    "text": "Heavier Armorjack, with solid plastic plating, reinforced with thicker Kevlar® mesh. Typical Street wear, this combines decent protection with a decent ost.",
     "transcription_note": "The p351 table prints the cost as \"100eb(Premium)\" with no space; the p098 and p186 printings read \"100eb (Premium)\". Same price and category."
   },
   {
@@ -111,9 +111,9 @@
     "cost_text": "500eb (Expensive)",
     "price_category": "Expensive",
     "hp": null,
-    "description": "The thickest Armorjack, combining denser Kevlar ® and a layered mix of plastic and mesh weaves. It stops all but the heaviest attacks, but costs a pretty eb.",
+    "description": "The thickest Armorjack, combining denser Kevlar® and a layered mix of plastic and mesh weaves. It stops all but the heaviest attacks, but costs a pretty eb.",
     "rules_text": "Armor must be purchased individually for either the head or body locations. Wearing even a single piece of heavier armor will lower your REF, DEX, and MOVE by the most punishing Armor Penalty of armor you are wearing. You take this penalty only once even though you are likely wearing armor on both your body and head. This penalty can even leave your Character (at a minimum of MOVE 0) completely immobile. SP gained by armor does not \"stack;\" Only your highest source of SP in a location determines your SP for that location. All your worn armor in a location is ablated (SP lowered by one) simultaneously whenever you take damage.",
-    "text": "The thickest Armorjack, combining denser Kevlar ® and a layered mix of plastic and mesh weaves. It stops all but the heaviest attacks, but costs a pretty eb."
+    "text": "The thickest Armorjack, combining denser Kevlar® and a layered mix of plastic and mesh weaves. It stops all but the heaviest attacks, but costs a pretty eb."
   },
   {
     "name": "Flak",
@@ -149,9 +149,9 @@
     "cost_text": "5,000eb (Luxury)",
     "price_category": "Luxury",
     "hp": null,
-    "description": "You know how Evil Empire Storm Troopers just seem to stand there and take the hit? Metalgear ® is the Dark Future equivalent of that type of armor: solid metal and plastic plates on a mesh body cover. Metalgear® will stop almost anything, but you're going to be easier to hit than a one-legged bantha in a potho race.",
+    "description": "You know how Evil Empire Storm Troopers just seem to stand there and take the hit? Metalgear® is the Dark Future equivalent of that type of armor: solid metal and plastic plates on a mesh body cover. Metalgear® will stop almost anything, but you're going to be easier to hit than a one-legged bantha in a potho race.",
     "rules_text": "Armor must be purchased individually for either the head or body locations. Wearing even a single piece of heavier armor will lower your REF, DEX, and MOVE by the most punishing Armor Penalty of armor you are wearing. You take this penalty only once even though you are likely wearing armor on both your body and head. This penalty can even leave your Character (at a minimum of MOVE 0) completely immobile. SP gained by armor does not \"stack;\" Only your highest source of SP in a location determines your SP for that location. All your worn armor in a location is ablated (SP lowered by one) simultaneously whenever you take damage.",
-    "text": "You know how Evil Empire Storm Troopers just seem to stand there and take the hit? Metalgear ® is the Dark Future equivalent of that type of armor: solid metal and plastic plates on a mesh body cover. Metalgear® will stop almost anything, but you're going to be easier to hit than a one-legged bantha in a potho race.",
+    "text": "You know how Evil Empire Storm Troopers just seem to stand there and take the hit? Metalgear® is the Dark Future equivalent of that type of armor: solid metal and plastic plates on a mesh body cover. Metalgear® will stop almost anything, but you're going to be easier to hit than a one-legged bantha in a potho race.",
     "printed_name": "Metalgear®"
   },
   {

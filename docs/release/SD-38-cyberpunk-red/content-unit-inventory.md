@@ -140,8 +140,8 @@ original scratch path; that file is copied at `$INV/stat_tables.md`.
 | F-50 | Clip Chart rows | **10** | p345 | `sed -n '/Clip Chart/,/^ *Ammunition/p' p345.txt \| grep -cE '^ +(Medium\|Heavy\|Very\|SMG\|Shotgun\|Assault\|Sniper\|Grenade\|Rocket)'` → 10 | — |
 | F-51 | Weapon-quality cost rows | **3** (50/100/500eb standard) | p343 | [READ] | brand example rows 12 [READ] (print-only) |
 | F-52 | Armour types | **8** SP-bearing; **9** rows with the Bulletproof Shield | p351 (also p098, p186, identical numbers) | `sed -n 1,18p p351.txt \| awk '/[0-9]eb ?\(/{c++} END{print c}'` → 8 (misses the Shield) | `grep -E " (None\|-[24] REF)" p186.txt \| wc -l` → 8 (combat §9); Shield row by reading → 9 |
-| F-53 | Gear, starter table | **47** | price strings p101–p102 | `awk '{n=gsub(/[0-9]eb ?\(/,"&"); c+=n} END{print c}' p101.txt p102.txt` → 47 | 53 − 6 extras (F-54) = 47 |
-| F-54 | Gear, Master Gear List | **53** | price strings p352 | `awk '{n=gsub(/[0-9]eb ?\(/,"&"); c+=n} END{print c}' p352.txt` → 53 | every name found in p353–p356 by `grep -cF` (no "NO DESC") |
+| F-53 | Gear, starter table | **48** (E1.V, SD-c: was 47) | price strings p101–p102; 47 are Master Gear List items, the 48th is Radiation Suit | `awk '{n=gsub(/[0-9]e?b ?\(/,"&"); c+=n} END{print c}' p101.txt p102.txt` → 48 (the earlier `[0-9]eb ?\(` → 47 misses Road Flare's printed `10b (Cheap)`) | `jq '[.[]\|select(.in_starter_table==true)]\|length' data/cyberpunk-red/corpus/gear.json` → 48; 53 − 6 Master-List-only items (F-54) + Radiation Suit = 48 |
+| F-54 | Gear, Master Gear List | **53**; `gear` kind **54** = 53 + Radiation Suit (starter table p102 and Night Market p340 only; E1.V, SD-c) | price strings p352 | `awk '{n=gsub(/[0-9]eb ?\(/,"&"); c+=n} END{print c}' p352.txt` → 53 | every name found in p353–p356 by `grep -cF` (no "NO DESC") |
 | F-55 | Fashion style families | **10**; **90** price cells | p357 (also p103) | `awk '/^ +(Bag Lady\|Gang Colors\|Generic Chic\|Bohemian\|Leisurewear\|Nomad\|Asia Pop\|Urban Flash\|Businesswear\|High Fashion)/{c++} END{print c}' p357.txt` → 10 | 10 × 9 columns = 90 (arithmetic) |
 | F-56 | Street drugs | **5** | p358 header table | `sed -n 1,12p p358.txt \| awk '/(Costly\|Everyday\|Cheap)\)$/{c++} END{print c}'` → 5 | `cat p228.txt p229.txt p230.txt \| grep -c "Cost per Dose"` → 5 (combat §9) |
 | F-57 | Services and Entertainment | **33** | p377 | `awk '/eb \(/{c++} END{print c}' p377.txt` → 33 | — |
@@ -168,7 +168,7 @@ original scratch path; that file is copied at `$INV/stat_tables.md`.
 | ID | Figure | Value | Predicate | Command A | Command B / status |
 |---|---|---|---|---|---|
 | F-70 | Combat actions | **18** (estimate) | rows of p169–p170 "Combat Actions in Brief" | [READ]; a shell label check matched 17 | E1.6 re-derives with two implementations |
-| F-71 | Single-shot range DV table | **8** rows × **8** bands = 64 cells (11 N/A) | p174 | [READ] (a row regex returned 9 including a wrapped label) | E1.6 checks against the page image (D-1) |
+| F-71 | Single-shot range DV table | **8** rows × **8** bands = 64 cells (**8** N/A; E1.6 correction, was 11) | p174 | [READ] (a row regex returned 9 including a wrapped label) | E1.6 checks against the page image (D-1) |
 | F-72 | Autofire DV table | **2** rows × **5** bands | p174 | [READ] | — |
 | F-73 | Brawling / Martial Arts damage bands | **4** each | p177, p179 | [READ] | — |
 | F-74 | Martial Arts forms / special moves | **4** forms; **9** moves (1 shared + 4 × 2) | p180–p181 | [READ] (estimate) | E1.6 re-derives |
@@ -197,7 +197,7 @@ original scratch path; that file is copied at `$INV/stat_tables.md`.
 The operator's scope ruling names **Mooks & Grunts stat blocks, Encounters and Beat Charts** as
 content units (print-only). None of the seven inventories covers them; card **E1.8** inventoried them
 first and appended F-89 to F-91. Commands run from `$P` (the `pages/` directory; `pNNN` = printed page + 1).
-The proposed counts below are **not yet in `MANIFEST.json`** (still `null`); E1.V pins them.
+E1.V pinned the counts below in `MANIFEST.json` and in §3 (re-derived by both commands of each row).
 
 | ID | Figure | Value | Predicate | Command A | Command B / status |
 |---|---|---|---|---|---|
@@ -208,7 +208,7 @@ The proposed counts below are **not yet in `MANIFEST.json`** (still `null`); E1.
 **Not inventoried here** (named so no one reads a silence as a zero): the Beat Chart scripting rules
 (p396–p398, p409), the sample Beat Chart (p398–p399 sidebar), the Improvement Point award table (p412,
 printed 411) and Screamsheets (p426 on); the operator's scope ruling does not name them. The proposed
-counts above are the receipt's proposal for `MANIFEST.json`; nothing here edits §3.
+counts above were E1.8's proposal; E1.V pinned them in `MANIFEST.json` and §3.
 
 ---
 
@@ -243,7 +243,7 @@ writes it; each transcription lane turns its own kinds green. One file per kind:
 | `clip_chart` | 10 | F-50 | E1.4 | lookup |
 | `weapon_quality` | 3 | F-51 | E1.4 | print |
 | `armor` | 9 (8 + Bulletproof Shield) | F-52 | E1.4 | compute SP + penalty |
-| `gear` | 53 (`in_starter_table` true on 47) | F-54, F-53 | E1.4 | print |
+| `gear` | 54 (`in_starter_table` true on 48, `in_master_gear_list` true on 53) | F-54, F-53 | E1.4 | print |
 | `fashion` | 10 (90 price cells) | F-55 | E1.4 | print |
 | `drug` | 5 | F-56 | E1.4 | print |
 | `service` | 33 | F-57 | E1.4 | print |
@@ -272,7 +272,9 @@ writes it; each transcription lane turns its own kinds green. One file per kind:
 | `cyberdeck` | 3 | F-86 | E1.7 | compute slots |
 | `net_hardware` | 8 = 6 hardware + 2 misc upgrades | F-87 | E1.7 | compute slots |
 | `net_architecture` | 5 tables (difficulty, lobby, body, home security, defenses) | F-88 | E1.7 | print-only (GM) |
-| `mooks_grunts`, `encounter`, `beat_chart` | set by E1.8 (§2.8) | — | E1.8 | print-only (GM) |
+| `mooks_grunts` | 10 (4 mook + 3 lieutenant + 2 mini boss + 1 boss) | F-89 | E1.8 | print-only (GM) |
+| `encounter` | 55 (18 daytime + 20 evening + 17 midnight) | F-90 | E1.8 | print-only (GM) |
+| `beat_chart` | 64 (10 hook + 13 cliffhanger + 29 development + 3 climax + 9 resolution) | F-91 | E1.8 | print-only (GM) |
 
 **Sum check.** E1.0 writes a check that sums `expected` over every MANIFEST entry and compares it
 with the sum of this table's column (estimates included, flagged). It fails closed on a missing

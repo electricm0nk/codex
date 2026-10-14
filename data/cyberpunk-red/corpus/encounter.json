@@ -7,7 +7,7 @@
     "name": "Local Law",
     "source_page": "p418",
     "summary": "Patrol officers equal to half the Players stop anyone visibly armed or armored and call backup if challenged.",
-    "text": "Local Law: A number of patrol officers equal to half the Players, armed with Assault Rifles, Very Heavy Pistols, and heavy batons and armored in Kevlar® . If you’re wearing visible weapons or armor, they stop you and demand identification. If you’re argumentative, they call for backup (3 officers) to take you in. If you reach for a weapon, they’ll shoot first, fill out the paperwork later. (Use Security Operatives.)",
+    "text": "Local Law: A number of patrol officers equal to half the Players, armed with Assault Rifles, Very Heavy Pistols, and heavy batons and armored in Kevlar®. If you’re wearing visible weapons or armor, they stop you and demand identification. If you’re argumentative, they call for backup (3 officers) to take you in. If you reach for a weapon, they’ll shoot first, fill out the paperwork later. (Use Security Operatives.)",
     "templates": [
       "Security Operative"
     ]
@@ -203,7 +203,7 @@
     "name": "Nomad Truck",
     "source_page": "p420",
     "summary": "Nomads from the Steel Vaqueros equal to half the Players deal with a broken-down truck against local gangers; they may accept help.",
-    "text": "Nomad Truck: A number of Nomads from the Steel Vaqueros equal to half the Players (Minimum 2) are dealing with a broken-down truck. Most of them are facing off with a group of local gangers equal to the Players while the last one tries to fix the motor. If you ignore them, they ignore you, but the Nomads may take an offer to help (Roll 1d10: 1-6, Yes; 7-10, No). (Nomads; use Road Gangers; Replace Leather with Kevlar® . Gangers; Use Boosters.)",
+    "text": "Nomad Truck: A number of Nomads from the Steel Vaqueros equal to half the Players (Minimum 2) are dealing with a broken-down truck. Most of them are facing off with a group of local gangers equal to the Players while the last one tries to fix the motor. If you ignore them, they ignore you, but the Nomads may take an offer to help (Roll 1d10: 1-6, Yes; 7-10, No). (Nomads; use Road Gangers; Replace Leather with Kevlar®. Gangers; Use Boosters.)",
     "templates": [
       "Road Ganger",
       "Boostergang"
@@ -365,7 +365,7 @@
     "name": "Roaming Netrunner",
     "source_page": "p422",
     "summary": "Two Netrunners in Light Armorjack breaking into a Corporate NET Architecture; 1d10 decides whether guards spot them or they turn the building's 2 turrets on the Crew.",
-    "text": "Roaming Netrunner: Two Netrunners armed with Very Heavy Pistols and armored in Light Armorjack. They’re lingering around a small Corporate office trying not to get spotted as they break into the building’s NET Architecture. Roll 1d10. On 1-5, they’re spotted by a group of security guards equal to the Players and a conflict ensues. You, of course, are right in the middle of it. On 6-10, the Netrunners assume you’re security and use the building’s 2 security turrets to attack you. (Netrunners; use Netrunner; Replace Bodyweight Suit with Light Armorjack. Security; use Security Operatives. Security Turret; use Automated Turret on pg. 214 )",
+    "text": "Roaming Netrunner: Two Netrunners armed with Very Heavy Pistols and armored in Light Armorjack. They’re lingering around a small Corporate office trying not to get spotted as they break into the building’s NET Architecture. Roll 1d10. On 1-5, they’re spotted by a group of security guards equal to the Players and a conflict ensues. You, of course, are right in the middle of it. On 6-10, the Netrunners assume you’re security and use the building’s 2 security turrets to attack you. (Netrunners; use Netrunner; Replace Bodyweight Suit with Light Armorjack. Security; use Security Operatives. Security Turret; use Automated Turret on pg. 214)",
     "templates": [
       "Netrunner",
       "Security Operative"
