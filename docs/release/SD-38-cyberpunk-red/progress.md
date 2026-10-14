@@ -29,14 +29,14 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 |---|---|---|---|
 | C | in progress | 1 of 2 | C0 complete (1102f34aab); C1 next (SD-k revised: no wait on #398) |
 | E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
-| E1 | in progress | 1 of 10 | E1.0 complete (MANIFEST.json + `scripts/cpr_manifest_check.py`) |
+| E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
 | E2 | waiting | 0 of 11 | |
 | E6 | waiting | 0 of 5 | runs in the E2 window |
 | E3 | waiting | 0 of 8 | |
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **9 of 68** (C0, C1, E0.1, E0.2, E0.3, E0.4, E0.5, E0.6, E0.MC; derived after E0.MC) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **19 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V; derived after E1.V) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -115,6 +115,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E1.6 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.6_cycle_receipt.md` | `artifacts/epic_1/E1.6_cycle_receipt.md` | unchanged by construction (JSON, Python and Markdown only) | 10 combat kinds / 95 records; D-1 image check of p174 (8 rows, no mapping printed); U-31 resolved by image (Treatment cell, not Quick Fix, carries "Quick Fix removes Injury Effect permanently"); CUI F-71 says 11 N/A, page and image show 8 (retro correction, CUI not in this card's scope: fix in the closure docs pass); weapon.json was not on the tree, so the 11-types check ran against p172 and E1.V re-runs it |
 | 2026-10-14 | E1.4 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.4_cycle_receipt.md` | `artifacts/epic_1/E1.4_cycle_receipt.md` | unchanged by construction (JSON, Python and Markdown only) | 15 gear kinds / 213 records; CUI F-53/F-54 corrected by two implementations: starter table 48 rows (awk `[0-9]e?b ?\(`; the CUI predicate gives 47 because Road Flare prints `10b (Cheap)`), gear 54 = 53 Master Gear List + Radiation Suit (p102, p340; no Master row) (retro correction); MANIFEST `gear.expected` 53 → 54 and `nested.in_starter_table` 47 → 48 plus CUI §3/F-53/F-54 are E1.V's to apply (SD-c, one writer), so the card's literal `--kinds` command exits 1 on the real manifest with exactly `COUNT gear: 54 records, expected 53` and exits 0 with the correction applied in a scratch copy; D-3 (Air Pistol base_weapon Very Heavy Pistol, Medium Pistol kept), D-10 (Road Flare, High Fashion Jewelry, Luxury Penthouse), A-6 (5 of 8), A-8; E1.6 deferred cross-check now passes (11 ranged types each in one single-shot range_dv row) |
 | 2026-10-14 | E1.8 (attempt 2) | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.8_cycle_receipt.md` | `artifacts/epic_1/E1.8_cycle_receipt.md` | unchanged by construction (JSON and docs only) | verbatim `text` on encounter 55 + beat_chart 64 = 119 records (two implementations: `awk '/"text"/{n++}END{print n}'` over both files and Python per-record count); mooks_grunts stays 10 complete; supersedes the attempt-1 partial row |
+| 2026-10-14 | E1.V | opus | complete | b6dd7b8fa4 (data, MANIFEST, CUI, twin), f2b97084f7 (clippy fix); receipt and rows in the next commit | `artifacts/epic_1/E1.V_cycle_receipt.md` | unchanged by construction (no src/crates/src-tauri/frontend file; `git diff --name-only dc28ad5a5e..HEAD -- src crates apps` empty) | `--all` exit 0; twin 11/11; sample 112 over 53 kinds → 108 agree / 4 fixed / 0 disagree; 22 strings + 2 texts fixed; CUI §3 gear + E1.8 rows edited (named outside-row file); clippy FAIL→PASS (collapsible_if in the new test); root 300 suites 6583 passed; 2 corrections + 1 resolution |
 
 ## Epic reports
 
@@ -145,6 +146,30 @@ blockers.)
   every ui-smoke card leaves untracked PNGs (R-C, "never commit a PNG"). A one-line `.gitignore` entry is the control; it
   is outside every card's FILES YOU OWN. Next ui-smoke card: E3.2.
 
+### Epic report — E1 transcription (E1.V, 2026-10-14, tranche-18 after f2b97084f7)
+
+- **Cards done:** 10 of 10 — E1.0, E1.1–E1.8, E1.V
+  (`awk -F'|' '$2 ~ /^ E1\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 10).
+- **What E1 delivered:** `data/cyberpunk-red/corpus/` — 53 kind files, 930 records, every one with a `source_page`;
+  `MANIFEST.json` pins every kind (0 null) and `scripts/cpr_manifest_check.py --all` + `tests/cpr_corpus_manifest.rs`
+  (the Rust twin) both pass and both fail on the same 10 plants.
+- **Figures (commands in `artifacts/epic_1/E1.V_cycle_receipt.md`):** MANIFEST 53 kinds / `expected` 930 / 0 null
+  (python over MANIFEST; awk over CUI §3 → 930; twin asserts `(53, 0, 930)`); page-image sample 112 records over 53 kinds,
+  seed 38, ceil 10% per kind (`E1.V_sample.py --check` → `kinds 53 sampled 112 OK`; independent python → `mismatch []`) →
+  108 agree, 4 fixed, 0 disagree (`awk -F'\t' 'NR>1{c[$5]++} …' E1.V_verdicts.tsv`); 22 corpus strings + 2 `net_architecture`
+  texts corrected from page images (`E1.V_fixes.py --check` → all applied); root sweep 300 suites, 6583 passed, 0 failed;
+  PNG/PDF files in git 381 at C1 and at E1.V.
+- **Corrections applied in E1:** gear 53/47 → 54/48 (E1.4, SD-c); CUI F-71 N/A 11 → 8 (E1.6); E1.V: `net_architecture[3]`
+  paraphrase → printed text, 22 text-layer spacing strings.
+- **Seed deltas:** unchanged by construction through E1 (no `src/`, `crates/`, `apps/` file changed in E1:
+  `git diff --name-only 54f469ecfe..HEAD -- src crates apps` → empty); E0.MC's PF sha256 and SF line records stand. CPR seeds: none yet (E7.1).
+- **Retro (`scripts/retro.py summary --since 2026-10-14T03:00:00Z --json`, before E1.V's own events):** 1 deferral (E1.8, now
+  resolved by E1.V's `resolution`, superseded by E1.8's attempt-2 rework), 1 rework, 0 incidents, 7 verification runs (3 failed);
+  corrections in E1: E1.4 × 1, E1.6 × 1, E1.V × 2. No key fired more than once.
+- **Open blockers:** none.
+- **For the lead:** decisions.md §11 asks every record for verbatim `text`; `mooks_grunts` (10) and `net_architecture[1,2]`
+  carry none (stat blocks and pure tables, no prose) — E6.4 prints them from their structured fields.
+
 ## Decisions taken on safe defaults
 
 (Each entry: card, SD-x / D-n / A-n, the alternative not taken.)
@@ -153,6 +178,10 @@ blockers.)
   Pathfinder numbers — `chassis_resolve` zeros + claim-blocking `cpr_adapter.not_a_pathfinder_chassis`,
   `level_up` empty plan, `recompute` and `append_to_character` `success: false` with a named reason.
   Alternative not taken: zero-valued `success: true` answers.
+- E1.V, SD-c + CUI §3 sum check: E1.V edited `content-unit-inventory.md` §3 (`gear` row; the E1.8 row split into
+  `mooks_grunts` / `encounter` / `beat_chart` rows) and the F-53 / F-54 / F-71 / §2.8 text, outside its FILES YOU OWN,
+  because the manifest check's sum test compares MANIFEST with §3 kind by kind (E1.4's receipt names the edit as E1.V's).
+  Alternative not taken: leave §3 for a docs card and push MANIFEST with `--all` at exit 1.
 
 ## Open blockers
 
