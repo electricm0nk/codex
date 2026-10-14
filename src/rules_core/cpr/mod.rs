@@ -21,3 +21,4 @@ pub mod store;
 pub mod cyberware;
 
 // lane C modules
+pub mod netrunning;
