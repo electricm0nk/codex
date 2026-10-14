@@ -247,9 +247,11 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
               list="cpr-cultural-language-options"
               style={INPUT_STYLE}
               value={draft.lifepath.culturalLanguage ?? ''}
-              placeholder={preview?.culturalLanguage && !preview.culturalLanguage.picked ? `Rolled: ${preview.culturalLanguage.name}` : ''}
               onChange={(event) => setDraft(setCulturalLanguage(draft, event.target.value))}
             />
+            {preview?.culturalLanguage && !preview.culturalLanguage.picked ? (
+              <p style={MUTED_STYLE}>Rolled: {preview.culturalLanguage.name} (type a language to pick one)</p>
+            ) : null}
             <datalist id="cpr-cultural-language-options">
               {languages.map((language) => (
                 <option key={language} value={language} />
