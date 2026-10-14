@@ -1,11 +1,18 @@
 //! `CprCharacterInput`: a Cyberpunk RED character's own choices, and the text grammar of
 //! `cpr_character_input.txt` (one `key = value` line each).
 //!
-//! E0.4 holds the ten STATs (Cyberpunk RED core rulebook p. 72: "Ten Primary Statistics");
-//! the engine and creation cards add the rest of the input (method, Roles, skills, kit,
-//! cyberware) as new keys.
+//! E0.4 holds the ten STATs (Cyberpunk RED core rulebook p. 72: "Ten Primary Statistics").
+//! [`CprSheetChoices`] holds the rest of what the sheet composes from (Role and rank, skills,
+//! armour, cyberware, criticals, Reputation, weapons, deck, Improvement Points, cash,
+//! ammunition, housing) in its own file and grammar, `cpr_sheet_choices.txt`.
 
 use std::fmt::Write as _;
+
+use crate::rules_core::cpr::armor::{CprArmorLocation, CprWornArmor};
+use crate::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
+use crate::rules_core::cpr::cyberware::{CprCyberwareInstall, CprMount};
+use crate::rules_core::cpr::reputation::{CprReputationEvent, CprReputationKind};
+use crate::rules_core::cpr::roles::CprRole;
 
 /// The ten STATs, in the order the book's STAT templates list them (p. 74-77 column order).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -154,6 +161,268 @@ pub fn parse_cpr_character_input(text: &str) -> Result<CprCharacterInput, String
     Ok(CprCharacterInput { stats })
 }
 
+/// A Cyberpunk RED character's choices beyond the STATs: everything the composed sheet
+/// (`sheet::compose_sheet`) reads. Held in its own file, `cpr_sheet_choices.txt`, beside
+/// `cpr_character_input.txt` (`store::CprCharacterStore::save_choices`); a character saved with
+/// its STATs only (the creation STAT step) has none of them. The grammar is one `key = value`
+/// line each; list-valued keys repeat:
+///
+/// - `role = <Role>` and `role.rank = <rank>` (both or neither);
+/// - `skill.<skill key> = <level>`, the key as the Master Skill List names it
+///   (`Handgun`, `Language (Streetslang)`);
+/// - `armor.head = <armour>`, `armor.body = <armour>`, `armor.shield = <shield>`;
+/// - `cyberware = <name>` or `cyberware = <name> @ <eye|arm|leg|meat_arm|meat_leg> <index>`;
+/// - `critical.head = <injury>`, `critical.body = <injury>`;
+/// - `reputation = <level> <deed|cowardice>: <description>`;
+/// - `weapon = <weapon type>`;
+/// - `deck = <Cyberdeck>`, `deck.program = <Program>`, `deck.hardware = <Hardware>`;
+/// - `ip.earned = <n>`, `ip.spent = <n>` (spent needs earned);
+/// - `cash = <eb>`, `ammo = <count> <ammunition>`, `housing = <housing>`.
+///
+/// The parser checks the grammar; whether a name is in the book, a rank is in range or a
+/// loadout fits is the engine's check when the sheet is composed.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CprSheetChoices {
+    pub role: Option<(CprRole, u8)>,
+    pub skills: Vec<(String, u8)>,
+    pub armor: Vec<CprWornArmor>,
+    pub shield: Option<String>,
+    pub cyberware: Vec<CprCyberwareInstall>,
+    pub criticals: Vec<CprRecordedCritical>,
+    pub reputation: Vec<CprReputationEvent>,
+    pub weapons: Vec<String>,
+    pub deck: Option<CprDeckChoice>,
+    pub improvement_points: Option<CprImprovementPoints>,
+    pub cash: Option<u32>,
+    pub ammunition: Vec<(String, u32)>,
+    pub housing: Option<String>,
+}
+
+/// A Netrunner's Cyberdeck and what is installed on it, by corpus name.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CprDeckChoice {
+    pub deck: String,
+    pub programs: Vec<String>,
+    pub hardware: Vec<String>,
+}
+
+/// The Improvement Points box: earned in total (GM awards) and spent.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct CprImprovementPoints {
+    pub earned: u32,
+    pub spent: u32,
+}
+
+const CHOICES_FILE: &str = "cpr_sheet_choices.txt";
+
+fn mount_text(mount: CprMount) -> String {
+    let (kind, index) = match mount {
+        CprMount::Eye(n) => ("eye", n),
+        CprMount::Arm(n) => ("arm", n),
+        CprMount::Leg(n) => ("leg", n),
+        CprMount::MeatArm(n) => ("meat_arm", n),
+        CprMount::MeatLeg(n) => ("meat_leg", n),
+    };
+    format!("{kind} {index}")
+}
+
+fn parse_mount(text: &str) -> Option<CprMount> {
+    let (kind, index) = text.trim().split_once(' ')?;
+    let index = index.trim().parse::<u8>().ok()?;
+    Some(match kind {
+        "eye" => CprMount::Eye(index),
+        "arm" => CprMount::Arm(index),
+        "leg" => CprMount::Leg(index),
+        "meat_arm" => CprMount::MeatArm(index),
+        "meat_leg" => CprMount::MeatLeg(index),
+        _ => return None,
+    })
+}
+
+fn location_text(location: CprCriticalLocation) -> &'static str {
+    match location {
+        CprCriticalLocation::Head => "head",
+        CprCriticalLocation::Body => "body",
+    }
+}
+
+/// The `cpr_sheet_choices.txt` text, in the key order of [`CprSheetChoices`]; a choice not made
+/// writes no line, so no choices is an empty file.
+pub fn render_cpr_sheet_choices(choices: &CprSheetChoices) -> String {
+    let mut out = String::new();
+    if let Some((role, rank)) = choices.role {
+        let _ = writeln!(out, "role = {}\nrole.rank = {rank}", role.name());
+    }
+    for (key, level) in &choices.skills {
+        let _ = writeln!(out, "skill.{key} = {level}");
+    }
+    for piece in &choices.armor {
+        let location = match piece.location {
+            CprArmorLocation::Head => "head",
+            CprArmorLocation::Body => "body",
+        };
+        let _ = writeln!(out, "armor.{location} = {}", piece.name);
+    }
+    if let Some(shield) = &choices.shield {
+        let _ = writeln!(out, "armor.shield = {shield}");
+    }
+    for piece in &choices.cyberware {
+        match piece.mount {
+            Some(mount) => {
+                let _ = writeln!(out, "cyberware = {} @ {}", piece.name, mount_text(mount));
+            }
+            None => {
+                let _ = writeln!(out, "cyberware = {}", piece.name);
+            }
+        }
+    }
+    for injury in &choices.criticals {
+        let _ = writeln!(out, "critical.{} = {}", location_text(injury.location), injury.name);
+    }
+    for event in &choices.reputation {
+        let kind = match event.kind {
+            CprReputationKind::Deed => "deed",
+            CprReputationKind::Cowardice => "cowardice",
+        };
+        let _ = writeln!(out, "reputation = {} {kind}: {}", event.level, event.description);
+    }
+    for weapon in &choices.weapons {
+        let _ = writeln!(out, "weapon = {weapon}");
+    }
+    if let Some(deck) = &choices.deck {
+        let _ = writeln!(out, "deck = {}", deck.deck);
+        for program in &deck.programs {
+            let _ = writeln!(out, "deck.program = {program}");
+        }
+        for hardware in &deck.hardware {
+            let _ = writeln!(out, "deck.hardware = {hardware}");
+        }
+    }
+    if let Some(ip) = choices.improvement_points {
+        let _ = writeln!(out, "ip.earned = {}\nip.spent = {}", ip.earned, ip.spent);
+    }
+    if let Some(cash) = choices.cash {
+        let _ = writeln!(out, "cash = {cash}");
+    }
+    for (label, count) in &choices.ammunition {
+        let _ = writeln!(out, "ammo = {count} {label}");
+    }
+    if let Some(housing) = &choices.housing {
+        let _ = writeln!(out, "housing = {housing}");
+    }
+    out
+}
+
+fn once<T>(slot: &mut Option<T>, key: &str, value: T) -> Result<(), String> {
+    if slot.replace(value).is_some() {
+        return Err(format!("{CHOICES_FILE} names {key} twice"));
+    }
+    Ok(())
+}
+
+fn number<T: std::str::FromStr>(key: &str, value: &str) -> Result<T, String> {
+    value.parse::<T>().map_err(|_| format!("{CHOICES_FILE} {key} '{value}' is not a whole number"))
+}
+
+/// Parses `cpr_sheet_choices.txt`. An unknown key, a line without `=`, a malformed value, a
+/// single-valued key named twice, and a key without the key it belongs to (`role.rank`
+/// without `role`, `ip.spent` without `ip.earned`, `deck.program` without `deck`) are refused
+/// with their reason.
+pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
+    let mut choices = CprSheetChoices::default();
+    let (mut role, mut rank, mut deck, mut earned, mut spent) = (None, None, None, None, None);
+    let (mut programs, mut hardware) = (Vec::new(), Vec::new());
+    for raw_line in text.lines() {
+        let line = raw_line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let Some((key, value)) = line.split_once('=') else {
+            return Err(format!("{CHOICES_FILE} line missing '=': {raw_line}"));
+        };
+        let (key, value) = (key.trim(), value.trim());
+        match key {
+            "role" => {
+                let parsed = CprRole::from_name(value)
+                    .ok_or_else(|| format!("{CHOICES_FILE} role '{value}' is not one of the ten Roles"))?;
+                once(&mut role, key, parsed)?;
+            }
+            "role.rank" => once(&mut rank, key, number::<u8>(key, value)?)?,
+            "armor.head" | "armor.body" => choices.armor.push(CprWornArmor {
+                name: value.to_owned(),
+                location: if key == "armor.head" { CprArmorLocation::Head } else { CprArmorLocation::Body },
+            }),
+            "armor.shield" => once(&mut choices.shield, key, value.to_owned())?,
+            "cyberware" => {
+                let piece = match value.split_once('@') {
+                    Some((name, mount)) => CprCyberwareInstall {
+                        name: name.trim().to_owned(),
+                        mount: Some(parse_mount(mount).ok_or_else(|| {
+                            format!("{CHOICES_FILE} cyberware '{value}': the mount is '<eye|arm|leg|meat_arm|meat_leg> <index>'")
+                        })?),
+                    },
+                    None => CprCyberwareInstall { name: value.to_owned(), mount: None },
+                };
+                choices.cyberware.push(piece);
+            }
+            "critical.head" | "critical.body" => choices.criticals.push(CprRecordedCritical {
+                location: if key == "critical.head" { CprCriticalLocation::Head } else { CprCriticalLocation::Body },
+                name: value.to_owned(),
+            }),
+            "reputation" => {
+                let malformed = || format!("{CHOICES_FILE} reputation '{value}' is not '<level> <deed|cowardice>: <description>'");
+                let (head, description) = value.split_once(':').ok_or_else(malformed)?;
+                let (level, kind) = head.trim().split_once(' ').ok_or_else(malformed)?;
+                let kind = match kind.trim() {
+                    "deed" => CprReputationKind::Deed,
+                    "cowardice" => CprReputationKind::Cowardice,
+                    _ => return Err(malformed()),
+                };
+                let level = level.parse::<u8>().map_err(|_| malformed())?;
+                choices.reputation.push(CprReputationEvent { level, kind, description: description.trim().to_owned() });
+            }
+            "weapon" => choices.weapons.push(value.to_owned()),
+            "deck" => once(&mut deck, key, value.to_owned())?,
+            "deck.program" => programs.push(value.to_owned()),
+            "deck.hardware" => hardware.push(value.to_owned()),
+            "ip.earned" => once(&mut earned, key, number::<u32>(key, value)?)?,
+            "ip.spent" => once(&mut spent, key, number::<u32>(key, value)?)?,
+            "cash" => once(&mut choices.cash, key, number::<u32>(key, value)?)?,
+            "ammo" => {
+                let (count, label) = value
+                    .split_once(' ')
+                    .ok_or_else(|| format!("{CHOICES_FILE} ammo '{value}' is not '<count> <ammunition>'"))?;
+                choices.ammunition.push((label.trim().to_owned(), number::<u32>(key, count)?));
+            }
+            "housing" => once(&mut choices.housing, key, value.to_owned())?,
+            _ => match key.strip_prefix("skill.") {
+                Some(skill) if !skill.trim().is_empty() => {
+                    choices.skills.push((skill.trim().to_owned(), number::<u8>(key, value)?));
+                }
+                _ => return Err(format!("{CHOICES_FILE} has an unknown key '{key}'")),
+            },
+        }
+    }
+    choices.role = match (role, rank) {
+        (Some(role), Some(rank)) => Some((role, rank)),
+        (None, None) => None,
+        (Some(_), None) => return Err(format!("{CHOICES_FILE} names role without role.rank")),
+        (None, Some(_)) => return Err(format!("{CHOICES_FILE} names role.rank without role")),
+    };
+    choices.deck = match deck {
+        Some(deck) => Some(CprDeckChoice { deck, programs, hardware }),
+        None if !programs.is_empty() => return Err(format!("{CHOICES_FILE} names deck.program without deck")),
+        None if !hardware.is_empty() => return Err(format!("{CHOICES_FILE} names deck.hardware without deck")),
+        None => None,
+    };
+    choices.improvement_points = match (earned, spent) {
+        (Some(earned), spent) => Some(CprImprovementPoints { earned, spent: spent.unwrap_or(0) }),
+        (None, None) => None,
+        (None, Some(_)) => return Err(format!("{CHOICES_FILE} names ip.spent without ip.earned")),
+    };
+    Ok(choices)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -180,6 +449,84 @@ mod tests {
         let text = render_cpr_character_input(&input);
         assert!(text.starts_with("stat.int = 2\nstat.ref = 3\n"), "{text}");
         assert_eq!(parse_cpr_character_input(&text), Ok(input));
+    }
+
+    /// Every choice the sheet composes from, rendered then parsed back unchanged.
+    fn full() -> CprSheetChoices {
+        use crate::rules_core::cpr::armor::{CprArmorLocation, CprWornArmor};
+        use crate::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
+        use crate::rules_core::cpr::cyberware::{CprCyberwareInstall, CprMount};
+        use crate::rules_core::cpr::reputation::{CprReputationEvent, CprReputationKind};
+        use crate::rules_core::cpr::roles::CprRole;
+        CprSheetChoices {
+            role: Some((CprRole::Netrunner, 4)),
+            skills: vec![("Language (Streetslang)".to_owned(), 2), ("Handgun".to_owned(), 4)],
+            armor: vec![
+                CprWornArmor { name: "Light Armorjack".to_owned(), location: CprArmorLocation::Head },
+                CprWornArmor { name: "Bodyweight Suit".to_owned(), location: CprArmorLocation::Body },
+            ],
+            shield: Some("Bulletproof Shield".to_owned()),
+            cyberware: vec![
+                CprCyberwareInstall { name: "Neural Link".to_owned(), mount: None },
+                CprCyberwareInstall { name: "Wolvers".to_owned(), mount: Some(CprMount::MeatArm(0)) },
+                CprCyberwareInstall { name: "Chyron".to_owned(), mount: Some(CprMount::Eye(1)) },
+            ],
+            criticals: vec![CprRecordedCritical { location: CprCriticalLocation::Head, name: "Cracked Skull".to_owned() }],
+            reputation: vec![
+                CprReputationEvent { level: 2, kind: CprReputationKind::Deed, description: "Saved a fixer".to_owned() },
+                CprReputationEvent { level: 3, kind: CprReputationKind::Cowardice, description: "Ran: from a fight".to_owned() },
+            ],
+            weapons: vec!["Heavy Pistol".to_owned(), "Heavy Pistol".to_owned()],
+            deck: Some(CprDeckChoice {
+                deck: "Cyberdeck (Standard Quality)".to_owned(),
+                programs: vec!["Sword".to_owned(), "Killer".to_owned()],
+                hardware: vec!["Backup Drive".to_owned()],
+            }),
+            improvement_points: Some(CprImprovementPoints { earned: 40, spent: 20 }),
+            cash: Some(500),
+            ammunition: vec![("Heavy Pistol Basic".to_owned(), 30)],
+            housing: Some("Cargo Container".to_owned()),
+        }
+    }
+
+    #[test]
+    fn every_sheet_choice_renders_and_parses_back() {
+        let choices = full();
+        let text = render_cpr_sheet_choices(&choices);
+        assert!(text.contains("role = Netrunner\nrole.rank = 4\n"), "{text}");
+        assert!(text.contains("skill.Language (Streetslang) = 2\n"), "{text}");
+        assert!(text.contains("cyberware = Chyron @ eye 1\n"), "{text}");
+        assert!(text.contains("reputation = 3 cowardice: Ran: from a fight\n"), "{text}");
+        assert_eq!(parse_cpr_sheet_choices(&text), Ok(choices));
+    }
+
+    #[test]
+    fn no_choices_render_as_an_empty_file_that_parses_back_to_none() {
+        assert_eq!(render_cpr_sheet_choices(&CprSheetChoices::default()), "");
+        assert_eq!(parse_cpr_sheet_choices(""), Ok(CprSheetChoices::default()));
+    }
+
+    #[test]
+    fn parse_refuses_bad_sheet_choices_with_their_reason() {
+        let refused = |text: &str| parse_cpr_sheet_choices(text).unwrap_err();
+        assert_eq!(refused("role = Cowboy\n"), "cpr_sheet_choices.txt role 'Cowboy' is not one of the ten Roles");
+        assert_eq!(refused("role = Solo\n"), "cpr_sheet_choices.txt names role without role.rank");
+        assert_eq!(refused("role.rank = 4\n"), "cpr_sheet_choices.txt names role.rank without role");
+        assert_eq!(refused("armor.arm = Leathers\n"), "cpr_sheet_choices.txt has an unknown key 'armor.arm'");
+        assert_eq!(
+            refused("cyberware = Chyron @ nose 1\n"),
+            "cpr_sheet_choices.txt cyberware 'Chyron @ nose 1': the mount is '<eye|arm|leg|meat_arm|meat_leg> <index>'"
+        );
+        assert_eq!(
+            refused("reputation = 3 brave: x\n"),
+            "cpr_sheet_choices.txt reputation '3 brave: x' is not '<level> <deed|cowardice>: <description>'"
+        );
+        assert_eq!(refused("cash = 5\ncash = 6\n"), "cpr_sheet_choices.txt names cash twice");
+        assert_eq!(
+            refused("ip.spent = 5\n"),
+            "cpr_sheet_choices.txt names ip.spent without ip.earned"
+        );
+        assert_eq!(refused("deck.program = Sword\n"), "cpr_sheet_choices.txt names deck.program without deck");
     }
 
     #[test]

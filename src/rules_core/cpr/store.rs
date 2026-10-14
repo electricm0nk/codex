@@ -5,7 +5,9 @@
 //! every system). The directory holds two files:
 //! - `envelope.txt`: the saved-character envelope's `key = value` grammar
 //!   (`saved_character::local_store`), with `game_system = cyberpunk-red`;
-//! - `cpr_character_input.txt`: the [`CprCharacterInput`] (`input::render_cpr_character_input`).
+//! - `cpr_character_input.txt`: the [`CprCharacterInput`] (`input::render_cpr_character_input`);
+//! - `cpr_sheet_choices.txt`, once any is saved: the [`CprSheetChoices`] the sheet composes from
+//!   (`input::render_cpr_sheet_choices`). A character without the file has made no choice yet.
 //!
 //! It never holds `authoritative_character_input.txt`, the Pathfinder-shaped payload, and
 //! `SavedCharacterStore::list_all` skips it (`local_store::owns_payload`).
@@ -14,13 +16,17 @@ use std::fmt::Write as _;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use crate::rules_core::cpr::input::{parse_cpr_character_input, render_cpr_character_input, CprCharacterInput};
+use crate::rules_core::cpr::input::{
+    parse_cpr_character_input, parse_cpr_sheet_choices, render_cpr_character_input, render_cpr_sheet_choices,
+    CprCharacterInput, CprSheetChoices,
+};
 use crate::rules_core::game_system::GameSystem;
 use crate::saved_character::local_store::peek_game_system;
 use crate::saved_character::SavedCharacterListingError;
 
 const ENVELOPE_FILE: &str = "envelope.txt";
 const INPUT_FILE: &str = "cpr_character_input.txt";
+const CHOICES_FILE: &str = "cpr_sheet_choices.txt";
 /// The envelope's `content_or_rules_provenance` for every CPR save: the one book SD-38 ships.
 pub const CPR_CONTENT_PROVENANCE: &str = "cyberpunk-red.corebook";
 /// Schema version of a CPR saved character (`envelope.txt` + `cpr_character_input.txt`).
@@ -98,6 +104,26 @@ impl CprCharacterStore {
             display_label: envelope.display_label,
             input: parse_cpr_character_input(&input_text)?,
         })
+    }
+
+    /// Writes `cpr_sheet_choices.txt` for the CPR character at `root` (temp file, then renamed
+    /// into place). Refused when `root` holds no CPR character: choices never exist without one.
+    pub fn save_choices(choices: &CprSheetChoices, root: &Path) -> Result<(), String> {
+        Self::load(root)?;
+        let path = root.join(CHOICES_FILE);
+        let tmp = write_tmp(&path, &render_cpr_sheet_choices(choices))?;
+        fs::rename(&tmp, &path).map_err(|err| format!("{}: {err}", path.display()))
+    }
+
+    /// The sheet choices of the CPR character at `root`; none when the character has saved none
+    /// (no `cpr_sheet_choices.txt`). A malformed file is refused with its reason.
+    pub fn load_choices(root: &Path) -> Result<CprSheetChoices, String> {
+        let path = root.join(CHOICES_FILE);
+        match fs::read_to_string(&path) {
+            Ok(text) => parse_cpr_sheet_choices(&text),
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(CprSheetChoices::default()),
+            Err(err) => Err(format!("{CHOICES_FILE} unreadable at {}: {err}", path.display())),
+        }
     }
 
     /// Every CPR character directly under `characters_root`, sorted by directory name. A
@@ -312,6 +338,36 @@ mod tests {
             0
         );
         fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// The sheet choices are their own file: a character saved before any choice (the STAT
+    /// step) loads with none; saved choices round-trip; a re-save of the character keeps them;
+    /// choices for a directory that holds no CPR character are refused.
+    #[test]
+    fn sheet_choices_save_load_and_survive_a_character_re_save() {
+        use crate::rules_core::cpr::input::CprSheetChoices;
+        use crate::rules_core::cpr::roles::CprRole;
+        let root = tempdir("choices").join("cpr-choices");
+        let character = sample("cpr-choices");
+        CprCharacterStore::save(&character, &root).expect("saves");
+        assert_eq!(CprCharacterStore::load_choices(&root), Ok(CprSheetChoices::default()));
+
+        let choices = CprSheetChoices {
+            role: Some((CprRole::Fixer, 4)),
+            skills: vec![("Trading".to_owned(), 4)],
+            cash: Some(120),
+            ..CprSheetChoices::default()
+        };
+        CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
+        assert_eq!(fs::read_to_string(root.join("cpr_sheet_choices.txt")).expect("reads"), "role = Fixer\nrole.rank = 4\nskill.Trading = 4\ncash = 120\n");
+        CprCharacterStore::save(&character, &root).expect("re-saves");
+        assert_eq!(CprCharacterStore::load_choices(&root), Ok(choices.clone()));
+        assert_eq!(CprCharacterStore::load(&root), Ok(character));
+
+        let empty = root.parent().expect("has parent").join("no-character");
+        assert!(CprCharacterStore::save_choices(&choices, &empty).is_err_and(|e| e.contains("envelope.txt")));
+        assert!(!empty.join("cpr_sheet_choices.txt").exists());
+        fs::remove_dir_all(root.parent().expect("has parent")).ok();
     }
 
     #[test]

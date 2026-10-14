@@ -3,9 +3,10 @@
 //!
 //! A CPR character lives in its own store (`codex::rules_core::cpr::store`): a directory under
 //! the shared characters root holding `envelope.txt` (`game_system = cyberpunk-red`) and
-//! `cpr_character_input.txt`. This adapter lists, loads and re-saves those characters; the
-//! loaded character's numbers are the engine's `cpr.` explanation rows
-//! (`codex::rules_core::cpr::sheet`), which the sheet renders verbatim.
+//! `cpr_character_input.txt`, plus `cpr_sheet_choices.txt` once any choice is saved. This adapter
+//! lists, loads and re-saves those characters; a loaded character's numbers are the rows of its
+//! composed sheet (`codex::rules_core::cpr::sheet::compose_sheet` over the CPR corpus), which
+//! the sheet renders verbatim, and its dice and rule lines are the sheet's printed lines.
 //!
 //! The trait is Pathfinder-typed. Its two methods that take a Pathfinder `CharacterInput`
 //! (`chassis_resolve`, `level_up`) and the two that answer with a Pathfinder chassis or
@@ -16,9 +17,9 @@
 use std::path::Path;
 
 use codex::rules_core::character_input::CharacterInput;
-use codex::rules_core::cpr::sheet::stat_rows;
+use codex::rules_core::cpr::sheet::{compose_sheet, CprPrintedForm, CprSheetCatalogs};
 use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter};
-use codex::rules_core::game_system::GameSystem;
+use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
 use codex::rules_core::level_up::LevelUpPlan;
 use codex::rules_core::pilot_compute::{
     AbilityModifiers, BaseSaves, ComputationDiagnostic, PilotBaseChassisComputation, SelectedSkillModifiers,
@@ -26,7 +27,7 @@ use codex::rules_core::pilot_compute::{
 
 use crate::character_hub::{
     AbilityScoresDto, CharacterSummaryDto, CorpusDerivedDto, EncumbranceDto, EquipmentEffectsDto, ExplanationDto,
-    ListSavedCharactersResponse, LoadSavedCharacterResponse,
+    ListSavedCharactersResponse, LoadSavedCharacterResponse, SheetLineDto,
 };
 use crate::characterHub::appendToCharacter::{AppendToCharacterResponse, ItemToAppendDto};
 use crate::characterHub::recomputeCharacter::RecomputeCharacterResponse;
@@ -152,12 +153,40 @@ impl RuleSystemAdapter for CyberpunkAdapter {
         })
     }
 
-    /// The CPR character at `root`, its `cpr.` rows computed fresh. The Pathfinder-only blocks
-    /// of the response (snapshot, corpus-derived equipment, feats, spells, race traits, the
-    /// six PF ability scores, sheet-rule lines) are empty or zero, and
-    /// `sheet_rules_unavailable_reason` says why: Cyberpunk RED has no sheet-rule package.
+    /// The CPR character at `root`, its sheet composed fresh from its STATs and saved sheet
+    /// choices over the CPR corpus: `explanations` are the sheet's `cpr.` rows in order and
+    /// `sheet_lines` its printed dice and rule lines (`kind` `cpr`). A saved choice the engine
+    /// refuses fails the load with the engine's reason; no partial sheet is returned. The
+    /// Pathfinder-only blocks of the response (snapshot, corpus-derived equipment, feats,
+    /// spells, race traits, the six PF ability scores) are empty or zero; when the sheet prints
+    /// no line, `sheet_rules_unavailable_reason` says why: Cyberpunk RED has no sheet-rule
+    /// package.
     fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
         let character = CprCharacterStore::load(root)?;
+        let choices = CprCharacterStore::load_choices(root)?;
+        let corpus = GameSystem::CyberpunkRed.package_roots(&runtime_repo_root()).corpus;
+        let sheet = compose_sheet(&CprSheetCatalogs::load(&corpus)?, &character.input, &choices)?;
+        let sheet_lines: Vec<SheetLineDto> = sheet
+            .printed
+            .into_iter()
+            .map(|line| SheetLineDto {
+                id: line.id,
+                kind: "cpr".to_owned(),
+                label: line.label,
+                form: match line.form {
+                    CprPrintedForm::Dice => "dice",
+                    CprPrintedForm::Words => "words",
+                }
+                .to_owned(),
+                value: line.value,
+                also: Vec::new(),
+                prose: line.prose,
+                condition: None,
+            })
+            .collect();
+        let sheet_rules_unavailable_reason = sheet_lines.is_empty().then(|| {
+            "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows".to_owned()
+        });
         Ok(LoadSavedCharacterResponse {
             summary: summary_dto(&character),
             snapshot: None,
@@ -192,7 +221,8 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             selected_feats: Vec::new(),
             spells_selected: Vec::new(),
             chosen_feat_targets: Vec::new(),
-            explanations: stat_rows(&character.input)
+            explanations: sheet
+                .rows
                 .into_iter()
                 .map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail })
                 .collect(),
@@ -225,10 +255,8 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             },
             skill_allocations: Vec::new(),
             equipment_selections: Vec::new(),
-            sheet_lines: Vec::new(),
-            sheet_rules_unavailable_reason: Some(
-                "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows".to_owned(),
-            ),
+            sheet_lines,
+            sheet_rules_unavailable_reason,
             feat_skill_bonuses: Default::default(),
         })
     }
@@ -307,6 +335,74 @@ mod tests {
         assert_eq!(rows, expected);
         assert!(loaded.diagnostics.iter().all(|d| !d.claim_blocking && !is_would_message(&d.message)));
 
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// A character carrying a Role, skills, armour, cyberware and a weapon (its saved sheet
+    /// choices) loads with the composed sheet: its explanations are exactly `compose_sheet`'s
+    /// rows, in order (no row added or dropped on the way), the cyberware BODY reaches HP, the
+    /// armour penalty reaches a REF skill, and the weapon's damage dice reach the sheet as a
+    /// printed dice line.
+    #[test]
+    fn a_saved_character_loads_with_every_row_of_its_composed_sheet() {
+        use codex::rules_core::cpr::armor::{CprArmorLocation, CprWornArmor};
+        use codex::rules_core::cpr::cyberware::CprCyberwareInstall;
+        use codex::rules_core::cpr::input::CprSheetChoices;
+        use codex::rules_core::cpr::roles::CprRole;
+        use codex::rules_core::cpr::sheet::{compose_sheet, CprSheetCatalogs};
+
+        let characters_root = tempdir("composed");
+        let root = characters_root.join("cpr-edgerunner");
+        let character = edgerunner();
+        let choices = CprSheetChoices {
+            role: Some((CprRole::Solo, 4)),
+            skills: vec![("Handgun".to_owned(), 4)],
+            armor: vec![CprWornArmor { name: "Flak".to_owned(), location: CprArmorLocation::Body }],
+            cyberware: vec![CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None }],
+            weapons: vec!["Heavy Pistol".to_owned()],
+            ..CprSheetChoices::default()
+        };
+        CprCharacterStore::save(&character, &root).expect("saves");
+        CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
+
+        let loaded = load_saved_character_via_envelope(&root).expect("loads");
+        let corpus = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../..")
+            .join(GameSystem::CyberpunkRed.corpus_relative());
+        let sheet = compose_sheet(&CprSheetCatalogs::load(&corpus).expect("corpus"), &character.input, &choices)
+            .expect("composes");
+        let got: Vec<(String, i16)> = loaded.explanations.iter().map(|e| (e.id.clone(), e.value)).collect();
+        let want: Vec<(String, i16)> = sheet.rows.iter().map(|r| (r.id.clone(), r.value)).collect();
+        assert_eq!(got, want);
+        let value = |id: &str| loaded.explanations.iter().find(|e| e.id == id).unwrap_or_else(|| panic!("no {id}")).value;
+        // BODY 5 + 2 = 7, WILL 3: HP 10 + 5 x ceil(10 / 2) = 35; REF 8 - 4 = 4, Handgun 4 + 4.
+        assert_eq!((value("cpr.cyberware.body"), value("cpr.derived.hit_points")), (7, 35));
+        assert_eq!((value("cpr.armor.ref"), value("cpr.skill.handgun")), (4, 8));
+        let damage = loaded.sheet_lines.iter().find(|l| l.id == "cpr.weapon.0.damage").expect("the damage line");
+        assert_eq!((damage.form.as_str(), damage.value.as_str()), ("dice", "3d6"));
+
+        // A re-save keeps the choices: the reloaded sheet is unchanged.
+        CyberpunkAdapter.save_character(&root, "cpr-edgerunner.rev.1", "2026-10-13T01:00:00Z").expect("re-saves");
+        let reloaded = load_saved_character_via_envelope(&root).expect("reloads");
+        let again: Vec<(String, i16)> = reloaded.explanations.iter().map(|e| (e.id.clone(), e.value)).collect();
+        assert_eq!(again, want);
+
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// A character whose saved choices the book refuses (Rank 11) does not load with a partial
+    /// sheet: the load fails with the engine's reason.
+    #[test]
+    fn a_saved_character_the_engine_refuses_fails_to_load_with_the_reason() {
+        use codex::rules_core::cpr::input::CprSheetChoices;
+        use codex::rules_core::cpr::roles::CprRole;
+        let characters_root = tempdir("refused");
+        let root = characters_root.join("cpr-edgerunner");
+        CprCharacterStore::save(&edgerunner(), &root).expect("saves");
+        let choices = CprSheetChoices { role: Some((CprRole::Solo, 11)), ..CprSheetChoices::default() };
+        CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
+        let error = CyberpunkAdapter.load_saved_character(&root).unwrap_err();
+        assert!(error.contains("Rank 11"), "{error}");
         std::fs::remove_dir_all(&characters_root).ok();
     }
 
