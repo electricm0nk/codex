@@ -49,11 +49,11 @@ function testBuildRecomputeCharacterRequestRoutesPf1ThroughTheRealAdapter() {
 }
 
 function testBuildRecomputeCharacterRequestRoutesOtherRuleSetsToStubAdapterHonestly() {
-  const request = buildRecomputeCharacterRequest('char-2', 'cyberpunk');
+  const request = buildRecomputeCharacterRequest('char-2', 'world-of-darkness');
   assertEqual(request.characterId, 'char-2', 'characterId is carried through verbatim');
   assertEqual(
     request.ruleSystemId,
-    'cyberpunk',
+    'world-of-darkness',
     'an unimplemented rule set is not silently rewritten to pf1 in the outgoing request'
   );
 }
@@ -75,9 +75,46 @@ function testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter()
   );
   const request = buildRecomputeCharacterRequest('sf-char', 'starfinder-1e');
   assertEqual(request.ruleSystemId, 'starfinder-1e', 'a Starfinder sheet recompute routes to StarfinderAdapter');
-  // Only Pathfinder and Starfinder have adapters; the other chips stay unselectable.
+  // Only the systems with a rule-system adapter (Pathfinder, Cyberpunk RED since SD-38 E0.4,
+  // Starfinder) are selectable; the other chips stay unselectable.
   const selectable = RULE_SETS.filter((ruleSet) => ruleSet.available).map((ruleSet) => ruleSet.id);
-  assertEqual(selectable.join(','), 'pathfinder-1e,starfinder-1e', 'exactly the two systems with an adapter are selectable');
+  assertEqual(
+    selectable.join(','),
+    'pathfinder-1e,cyberpunk-red,starfinder-1e',
+    'exactly the three systems with an adapter are selectable'
+  );
+}
+
+/**
+ * SD-38 E0.5: the landing's Cyberpunk Red chip is `cyberpunk-red` and selectable;
+ * its Load list comes from the Rust `CyberpunkAdapter`, which
+ * `resolve_rule_system_adapter` (`rule_system_adapter.rs`) maps from exactly the wire id
+ * `"cyberpunk-red"` (`GameSystem::CyberpunkRed.id()`); New Character stays closed with
+ * its reason until the creation flow lands (E3.2).
+ */
+function testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationStaysClosed() {
+  const cyberpunk = RULE_SETS.find((ruleSet) => ruleSet.name === 'Cyberpunk Red');
+  assert(cyberpunk !== undefined, 'the landing lists Cyberpunk Red');
+  assertEqual(cyberpunk?.id, 'cyberpunk-red', 'the Cyberpunk Red chip carries the engine id cyberpunk-red');
+  assertEqual(cyberpunk?.available, true, 'the Cyberpunk Red chip is selectable');
+  assertEqual(
+    buildListSavedCharactersArgs('cyberpunk-red').ruleSystemId,
+    'cyberpunk-red',
+    'with Cyberpunk Red selected the Load list comes from CyberpunkAdapter'
+  );
+  assertEqual(
+    buildRecomputeCharacterRequest('cpr-char', 'cyberpunk-red').ruleSystemId,
+    'cyberpunk-red',
+    'a Cyberpunk Red call site routes to CyberpunkAdapter, never pf1'
+  );
+  const gate = characterCreationGate('cyberpunk-red');
+  assertEqual(gate.enabled, false, 'Cyberpunk Red creation stays closed until its flow exists');
+  assertEqual(gate.form, undefined, 'a closed gate opens no form (never the Pathfinder form)');
+  assertEqual(
+    gate.disabledHint,
+    'Cyberpunk Red character creation is not available on this screen yet',
+    'the disabled New Character banner names why'
+  );
 }
 
 /** The Load list asks the active system's adapter for its characters. */
@@ -121,13 +158,14 @@ function testCreationGateNeverOpensThePathfinderFormForStarfinder() {
   const gate = characterCreationGate('starfinder-1e');
   assertEqual(gate.enabled, true, 'Starfinder creation is open');
   assertEqual(gate.form, 'starfinder', 'the Pathfinder creation form never opens for Starfinder');
-  const closed = characterCreationGate('cyberpunk');
+  const closed = characterCreationGate('traveller');
   assertEqual(closed.enabled, false, 'a rule set with no creation flow stays closed');
-  assert((closed.disabledHint ?? '').includes('Cyberpunk'), 'the disabled banner names why');
+  assert((closed.disabledHint ?? '').includes('Traveller'), 'the disabled banner names why');
 }
 
 async function main() {
   testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter();
+  testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationStaysClosed();
   testTheLoadListRoutesThroughTheActiveRuleSystem();
   testAStarfinderRowNamesItsSystem();
   testCreationGateNeverOpensThePathfinderFormForStarfinder();

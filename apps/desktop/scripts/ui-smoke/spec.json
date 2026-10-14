@@ -5251,6 +5251,19 @@
       "notes": "SD-37 E6.4 (epic-breakdown.md E6.4: 'SF catalogs read data/starfinder-1e/sheet_rules'). With Starfinder 1e selected, the landing offers the six Starfinder catalogs (sf_catalog.rs list_starfinder_catalog) instead of the Pathfinder ones; Browse Classes lists the Starfinder package's class records with the rows that feed a sheet total (Stamina, Hit Points, saves per level). The forbid list holds a Pathfinder-only class (Fighter) and the PCGen HD:1 device line (a Starfinder class has no hit die). landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
+      "id": "select-cyberpunk-red",
+      "screen": "load",
+      "steps": [
+        { "op": "click", "target": "Cyberpunk Red" },
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "wait", "ms": 1500 }
+      ],
+      "marker": "Load",
+      "expect": ["Load", "Delete", "Cancel", "No characters yet \u2014 create your first one to get started."],
+      "forbid": ["Aldric Ironhand", "Pathfinder 1st Edition", "Starfinder 1st Edition"],
+      "notes": "SD-38 E0.5 (epic-breakdown.md E0.5: 'The landing screen offers \"Cyberpunk Red\" as cyberpunk-red, selectable; its Load list comes from CyberpunkAdapter'). Selects the Cyberpunk Red chip (RULE_SETS in LandingScreen.tsx, id cyberpunk-red, available) and opens Load Character: the list is list_saved_characters with ruleSystemId 'cyberpunk-red' (buildListSavedCharactersArgs), which resolve_rule_system_adapter sends to CyberpunkAdapter (cpr_adapter.rs, E0.4). The isolated store holds the Pathfinder and Starfinder starter seeds and no Cyberpunk RED character, so the Cyberpunk list is empty: the forbid list holds the first Pathfinder seed's name and both systems' row tags, which a list from Pf1Adapter or StarfinderAdapter would show. Before E0.5 the chip is an unselectable stub, the click does nothing, and Load lists the Pathfinder seeds (RED). New Character stays closed with its reason until E3.2 (characterHubRuntime.test.ts). landing-select-pathfinder (next) restores the Pathfinder selection."
+    },
+    {
       "id": "landing-select-pathfinder",
       "screen": "landing",
       "steps": [

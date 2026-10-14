@@ -17,8 +17,9 @@ import { RULE_SETS, type RuleSetId } from './LandingScreen';
  * picker — `LandingScreen.tsx`) to the wire-level `ruleSystemId` the Rust
  * `resolve_rule_system_adapter` dispatch seam understands
  * (`apps/desktop/src-tauri/src/rule_system_adapter.rs`): `"pf1"` resolves to
- * `Pf1Adapter`, `"starfinder-1e"` to `StarfinderAdapter` (SD-37 E4.6), and
- * any other id to the governed `StubAdapter` seam — see
+ * `Pf1Adapter`, `"starfinder-1e"` to `StarfinderAdapter` (SD-37 E4.6),
+ * `"cyberpunk-red"` to `CyberpunkAdapter` (SD-38 E0.4), and any other id to
+ * the governed `StubAdapter` seam — see
  * `docs/governance/wired-integration-stubs-registry.md` entry 0002 — which
  * honestly errors rather than silently falling through to PF1 logic.
  * Pathfinder 1e's landing id differs from its wire id, so it is the one id
@@ -56,7 +57,8 @@ export function buildRecomputeCharacterRequest(
 /**
  * The `list_saved_characters` arguments for the active rule set: the Load
  * list asks the active system's adapter for its characters
- * (`StarfinderAdapter` lists Starfinder saves only).
+ * (`StarfinderAdapter` lists Starfinder saves only; `CyberpunkAdapter`
+ * Cyberpunk RED saves only).
  */
 export function buildListSavedCharactersArgs(ruleSet: RuleSetId): ListSavedCharactersArgs {
   return { ruleSystemId: resolveRuleSystemId(ruleSet) };
@@ -74,7 +76,8 @@ export interface CharacterCreationGate {
  * Pathfinder 1e opens the Pathfinder form; Starfinder 1e opens the Starfinder
  * flow (race -> theme -> class -> point buy, SD-37 E6.2) -- a Starfinder
  * selection never opens the Pathfinder form. Every other rule set has no
- * creation flow and stays closed with its reason.
+ * creation flow and stays closed with its reason (Cyberpunk Red is selectable
+ * and lists its saves, but its creation flow is not built yet).
  */
 export function characterCreationGate(ruleSet: RuleSetId): CharacterCreationGate {
   if (ruleSet === 'pathfinder-1e') {
