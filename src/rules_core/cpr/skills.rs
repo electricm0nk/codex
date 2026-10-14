@@ -276,10 +276,10 @@ pub fn validate_creation_skills(catalog: &CprSkillCatalog, alloc: &CprSkillAlloc
         };
         lines.push(CprSkillSpendLine { key: canonical, level: *level, cost });
     }
-    if let Some(key) = &cultural {
-        if !lines.iter().any(|l| &l.key == key) {
-            lines.push(CprSkillSpendLine { key: key.clone(), level: free, cost: 0 });
-        }
+    if let Some(key) = &cultural
+        && !lines.iter().any(|l| &l.key == key)
+    {
+        lines.push(CprSkillSpendLine { key: key.clone(), level: free, cost: 0 });
     }
 
     let is_cultural = |key: &str| cultural.as_deref() == Some(key);
