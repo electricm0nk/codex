@@ -30,7 +30,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | C | complete | 2 of 2 | C0 complete (1102f34aab); C1 complete (706d8da680) (kanban rows; corrected by E6.MC, the row read 1 of 2 after C1 landed) |
 | E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
 | E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
-| E2 | in progress | 3 of 11 | lanes A, B, C running; E2.1, E2.5, E2.9 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E2 | in progress | 4 of 11 | lanes A, B running; E2.1, E2.5, E2.6, E2.9 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E3 | waiting | 0 of 8 | |
 | E4 | waiting | 0 of 8 | |
@@ -124,6 +124,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E6.3 | sonnet | complete | 7d59a9a0b9 (code); receipt and rows in the next commit | `artifacts/epic_6/E6.3_cycle_receipt.md` | PF/SF not re-rendered: no src/crates/src-tauri change (unchanged by construction) | Deck Calculator tool tab; pickers 3/27/6; frontend 167/167; 106 ui-smoke rows (no new row; spec.json is E6.4's) |
 | 2026-10-14 | E6.4 | sonnet | complete | e8063e2b4a (code); receipt and rows in the next commit | `artifacts/epic_6/E6.4_cycle_receipt.md` | PF/SF not re-rendered: no src/crates/src-tauri change (unchanged by construction) | GM Reference group: 8 print_only kinds, 151 records, every printed value on the page; ui-smoke browse-cyberpunk-gm-reference green (2/2 with catalog); frontend 168/168; 107 ui-smoke rows |
 | 2026-10-14 | E6.MC | opus | complete | 251eda57a1 (evidence); receipt and rows in the next commit | `artifacts/epic_6/E6.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (head 2df632993b vs E0.6 base records) | E6.1–E6.4 re-run 9/9 as expected (cpr_catalog 8/8, npm 168/168, ui-smoke 3/3, inventory drift 0); 4 plants red then restored (program −1 → count test; demon −1 → GM test; Standard slot +1 engine-only → corpus_mismatch; engine+corpus → (7,8)≠(7,7)); no code, no clippy; moved E6.1–E6.4 rows from after "For the operator" into this log |
+| 2026-10-14 | E2.6 | opus | complete | 84f7b89d49 (engine + fixture); receipt and rows in the next commit | `artifacts/epic_2/E2.6_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr/roles.rs`: 26 `cpr.role.` row ids over 10 Roles (rank + 16 rank-derived fields), ranks outside 1–10 refused; NET Actions twin with `cpr.netrunning.net_actions` flagged for E2.10 |
 
 ## Epic reports
 
@@ -227,6 +228,8 @@ blockers.)
 - E2.9, A-7 + p350 (`$P/p351.txt:39-40`, "Hardware installed in the Bodyweight Suit … can only take up 1 Option Slot"): the
   suit's extra slot holds one 1-slot Hardware only; a Program or a 2-slot Hardware there is refused as over capacity.
   Alternative not taken: a 2-slot Hardware placed in the suit costs 1 slot.
+- E2.6, D-7 / A-2 in `roles.rs`: Maker specialty ranks = 2 × Maker Rank, counting Rank 1 as a rank gained (Rank 4 → 8;
+  a Tech bought at Rank 1 by multiclassing gains two). Alternative not taken: 2 × (Rank − 1).
 
 ## Open blockers
 
