@@ -5295,6 +5295,39 @@
       "notes": "SD-38 E6.2 (epic-breakdown.md E6.2: 'With Cyberpunk Red selected, the landing offers catalog links, and every player-facing (non-print_only) kind is browsable'). With Cyberpunk Red selected the landing offers one Browse link per catalog group (CYBERPUNK_CATALOG_GROUPS in cyberpunkCatalogModel.ts) instead of the Pathfinder ones; Browse Cyberware opens CyberpunkCatalogScreen on the cyberware kind, whose records list_cyberpunk_catalog (cpr_catalog.rs, E6.1) reads from data/cyberpunk-red/corpus. Expects the first cyberware record (Biomonitor), the summary '96 of 96 cyberware' (records held of the MANIFEST count) and the group pills. Before E6.2 the Cyberpunk Red landing shows the Pathfinder browse links and 'Browse Cyberware' is not a target (RED). The forbid list holds a Pathfinder class, the PCGen hit-die device line and the other system's name. landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
+      "id": "browse-cyberpunk-gm-reference",
+      "screen": "landing",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Cyberpunk Red"
+        },
+        {
+          "op": "click",
+          "target": "Browse GM Reference"
+        },
+        {
+          "op": "wait",
+          "ms": 1500
+        }
+      ],
+      "marker": "Cyberpunk Red — Demons",
+      "expect": [
+        "Imp",
+        "Efreet",
+        "3 of 3 demons",
+        "GM Reference",
+        "NET Architecture",
+        "Beat Charts"
+      ],
+      "forbid": [
+        "Fighter",
+        "Hit die",
+        "Starfinder"
+      ],
+      "notes": "SD-38 E6.4 (epic-breakdown.md E6.4: 'Every print_only kind renders as a read-only GM reference page, each showing the MANIFEST count of records, reached from the Cyberpunk Red catalog'). With Cyberpunk Red selected the landing offers a Browse GM Reference link (the gm group in cyberpunkCatalogModel.ts); it opens CyberpunkCatalogScreen on the first GM tab, demon (the NET Architecture page prints the word 'failure', which the runner's global forbid list rejects, so it is not the landing tab), whose records list_cyberpunk_catalog (cpr_catalog.rs, E6.1) reads from data/cyberpunk-red/corpus and CyberpunkGmPage lays out as read-only tables. Expects the first two Demons (Imp, Efreet), the summary '3 of 3 demons' (records held of the MANIFEST count), the GM Reference group pill and the NET Architecture and Beat Charts tabs. Before E6.4 the landing has no Browse GM Reference link (RED). The forbid list holds a Pathfinder class, the PCGen hit-die device line and the other system's name. landing-select-pathfinder (next) restores the Pathfinder selection."
+    },
+    {
       "id": "landing-select-pathfinder",
       "screen": "landing",
       "steps": [

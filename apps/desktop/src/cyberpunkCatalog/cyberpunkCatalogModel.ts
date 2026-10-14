@@ -5,7 +5,7 @@ import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
  * number: every row is the corpus's, served by `list_cyberpunk_catalog` (`cpr_catalog.rs`). The
  * tab list is every non-`print_only` kind of `data/cyberpunk-red/corpus/MANIFEST.json`
  * (`cyberpunkCatalog.test.ts` proves it equal); the `print_only` kinds are the GM reference
- * pages (E6.4). Later E6 cards add their entries here.
+ * pages (E6.4, the `gm` group's tool tabs). Later E6 cards add their entries here.
  */
 
 export interface CyberpunkCatalogTab {
@@ -16,7 +16,7 @@ export interface CyberpunkCatalogTab {
   /** The catalog group the tab sits in. */
   group: string;
   /** Set on a tool tab: the screen shows that tool instead of listing the kind's records. */
-  tool?: 'deck';
+  tool?: 'deck' | 'gm';
 }
 
 export interface CyberpunkCatalogGroup {
@@ -33,9 +33,11 @@ export const CYBERPUNK_CATALOG_GROUPS: readonly CyberpunkCatalogGroup[] = [
   { id: 'cyberware', link: 'Browse Cyberware', title: 'Cyberware and Humanity' },
   { id: 'combat', link: 'Browse Combat Rules', title: 'Combat Rules' },
   { id: 'netrunning', link: 'Browse Netrunning', title: 'Netrunning' },
+  { id: 'gm', link: 'Browse GM Reference', title: 'GM Reference' },
 ];
 
 const tab = (group: string, kind: string, title: string): CyberpunkCatalogTab => ({ kind, title, group });
+const gmTab = (kind: string, title: string): CyberpunkCatalogTab => ({ kind, title, group: 'gm', tool: 'gm' });
 
 export const CYBERPUNK_CATALOG_TABS: readonly CyberpunkCatalogTab[] = [
   tab('character', 'role', 'Roles'),
@@ -84,6 +86,14 @@ export const CYBERPUNK_CATALOG_TABS: readonly CyberpunkCatalogTab[] = [
   tab('netrunning', 'cyberdeck', 'Cyberdecks'),
   tab('netrunning', 'net_hardware', 'Hardware'),
   { kind: 'deck_calculator', title: 'Deck Calculator', group: 'netrunning', tool: 'deck' },
+  gmTab('demon', 'Demons'),
+  gmTab('net_architecture', 'NET Architecture'),
+  gmTab('night_market_table', 'Night Market'),
+  gmTab('ip_award', 'Playstyle IP Awards'),
+  gmTab('humanity_trauma', 'Trauma and Humanity Loss'),
+  gmTab('mooks_grunts', 'Mooks and Grunts'),
+  gmTab('encounter', 'Encounters'),
+  gmTab('beat_chart', 'Beat Charts'),
 ];
 
 export function cyberpunkCatalogTab(kind: string): CyberpunkCatalogTab {

@@ -14,6 +14,7 @@ import {
   recordName,
 } from './cyberpunkCatalogModel';
 import { CyberpunkDeckScreen } from './deck/CyberpunkDeckScreen';
+import { CyberpunkGmPage } from './gm/CyberpunkGmPage';
 
 /**
  * SD-38 E6.2 -- the Cyberpunk RED catalogs: one tab per player-facing MANIFEST kind, each read
@@ -103,7 +104,7 @@ export function CyberpunkCatalogScreen(props: { initialKind: string; onClose: ()
   useEffect(() => {
     let live = true;
     setResponse(null);
-    if (active.tool !== undefined) {
+    if (active.tool === 'deck') {
       setError(null);
       return undefined;
     }
@@ -162,7 +163,7 @@ export function CyberpunkCatalogScreen(props: { initialKind: string; onClose: ()
       {active.tool === 'deck' ? (
         <CyberpunkDeckScreen />
       ) : null}
-      {active.tool === undefined ? (
+      {active.tool !== 'deck' ? (
       <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.85rem' }}>
         Search by name or text
         <input
@@ -173,10 +174,12 @@ export function CyberpunkCatalogScreen(props: { initialKind: string; onClose: ()
         />
       </label>
       ) : null}
-      {active.tool !== undefined ? null : error ? (
+      {active.tool === 'deck' ? null : error ? (
         <p role="alert" style={{ color: 'var(--color-danger, #c0392b)', margin: 0 }}>
           {error}
         </p>
+      ) : response && active.tool === 'gm' ? (
+        <CyberpunkGmPage response={response} query={query} />
       ) : response ? (
         <CyberpunkCatalogView response={response} query={query} />
       ) : (
