@@ -1,0 +1,63 @@
+[
+  {
+    "kind": "wound_state",
+    "name": "Lightly Wounded",
+    "source_page": "p187",
+    "text": "Less than Full HP | None | DV10",
+    "threshold_text": "Less than Full HP",
+    "threshold_rule": "below_full_hp",
+    "effect_text": "None",
+    "all_actions_modifier": 0,
+    "move_modifier": 0,
+    "stabilization_dv": 10,
+    "stabilization_text": "DV10",
+    "also_printed_on": "p221"
+  },
+  {
+    "kind": "wound_state",
+    "name": "Seriously Wounded",
+    "source_page": "p187",
+    "text": "Less than 1/2 HP (round up) | -2 to all Actions | DV13",
+    "threshold_text": "Less than 1/2 HP (round up)",
+    "threshold_rule": "below_half_hp_round_up",
+    "effect_text": "-2 to all Actions",
+    "all_actions_modifier": -2,
+    "move_modifier": 0,
+    "stabilization_dv": 13,
+    "stabilization_text": "DV13",
+    "also_printed_on": "p221",
+    "transcription_note": "U-24/U-27: printed as the combat chapter words it (threshold 'Less than 1/2 HP (round up)'; '-2 to all Actions'). The sheet-label wording on p080/p121 is recorded by the creation lane, not here."
+  },
+  {
+    "kind": "wound_state",
+    "name": "Mortally Wounded",
+    "source_page": "p187",
+    "text": "Less than 1 HP | -4 to all Actions; -6 to MOVE (Minimum 1); Must make a Death Save at start of each one of their Turns. Mortally Wounded Characters suffer a Critical Injury whenever they are damaged by a Melee or Ranged Attack. In addition, their Death Save Penalty increases by 1. | DV15 to heal back to 1 HP, and Unconscious (Gone from the world for 1 minute)",
+    "threshold_text": "Less than 1 HP",
+    "threshold_rule": "below_one_hp",
+    "effect_text": "-4 to all Actions -6 to MOVE (Minimum 1) Must make a Death Save at start of each one of their Turns. Mortally Wounded Characters suffer a Critical Injury whenever they are damaged by a Melee or Ranged Attack. In addition, their Death Save Penalty increases by 1.",
+    "all_actions_modifier": -4,
+    "move_modifier": -6,
+    "move_minimum": 1,
+    "death_save_each_turn": true,
+    "critical_injury_when_damaged": true,
+    "stabilization_dv": 15,
+    "stabilization_text": "DV15 to heal back to 1 HP, and Unconscious (Gone from the world for 1 minute)",
+    "also_printed_on": "p221",
+    "transcription_note": "U-26: the combat-chapter wording 'Less than 1 HP' is the rule printed (p080 says 'Death State' at zero HP). Image of p187 checked: the effect cell is five stacked lines inside one cell; the Stabilization DV cell is one cell."
+  },
+  {
+    "kind": "wound_state",
+    "name": "Dead",
+    "source_page": "p187",
+    "text": "One failed Death Save | Death | Never coming back",
+    "threshold_text": "One failed Death Save",
+    "threshold_rule": "failed_death_save",
+    "effect_text": "Death",
+    "all_actions_modifier": null,
+    "move_modifier": null,
+    "stabilization_dv": null,
+    "stabilization_text": "Never coming back",
+    "also_printed_on": "p221"
+  }
+]

@@ -1,0 +1,104 @@
+[
+  {
+    "kind": "trauma_team",
+    "name": "Silver",
+    "source_page": "p224",
+    "text": "Silver members are charged for Treatments requiring Surgery equal to the cost that they would be charged at the Hospital. If the member doesn't want to pay extra for these Treatments, the Trauma Team will do everything possible for them using the Paramedic Skill before dropping them off at the nearest hospital.",
+    "plan": "Silver",
+    "monthly_cost_eb": 500,
+    "plans_text": "As demand for their services rose, the Trauma Team changed their funding model to reflect the times, offering 2 levels of service for their clients: Silver (500eb/month) and Executive (1,000eb/month).",
+    "surgery_treatments_covered": false,
+    "shared": {
+      "calling_text": "Registering your Trauma Team Card on an Agent with a linked Biomonitor will allow your Agent to call the Trauma Team on your behalf during a firefight without you needing to take an Action to do so when you have HP less than your BODY or whenever you receive a Critical Injury that dismembers a body part. If you register your Trauma Team Card to a friend's Agent, their Agent will be able to call for their injuries as above, but on your plan. Otherwise, calling the Trauma Team is an Action, and can be done whenever you are injured.",
+      "arrival_text": "Upon calling the Trauma Team, you roll a d6. The result is how many Rounds before the Trauma Team arrives. They then join at the top of the Initiative Queue. The Trauma Team are treated like the Lawman's Backup, meaning that in addition to SP, HP, and a MOVE, and BODY score, they have a Combat Number, which is used for both offense and defense. This number combines both STAT and Skill for them. You add a d10 roll to this value whenever attacking with their carried weapons or equipment or defending. The Trauma Team members cannot dodge bullets.",
+      "team_text": "A Trauma Team consists of 5 members: A Doctor, a Medical Assistant, a Pilot, and 2 Trauma Team Security Officers. They arrive from the air in an AV-4 equipped with a Vehicle Heavy Weapon Mount loaded with a Tsunami Arms Helix (see pg. 347). The AV-4 is also packed with medical tech, including 4 Cryotanks and a state-of-the-art operating table.",
+      "members_source_page": "p225",
+      "member_rows": [
+        {
+          "name": "Trauma Team Doctor",
+          "count": 1,
+          "combat_number": 10,
+          "sp": 11,
+          "hp": 20,
+          "move_and_body": 4,
+          "text": "A Medtech, in Light Armorjack wielding a Cryopump and a Heavy Handgun. Carries two Airhypos, each loaded with a dose of Rapidetox. Additionally, they can use their combat number for these Skills: First Aid, Paramedic, Surgery, and Medical Tech."
+        },
+        {
+          "name": "Trauma Team Medical Assistant",
+          "count": 1,
+          "combat_number": 10,
+          "sp": 7,
+          "hp": 25,
+          "move_and_body": 6,
+          "text": "A Medtech in Kevlar® wielding a Cryopump and a Bulletproof Shield. Additionally, they can use their combat number for these Skills: Pilot Air Vehicle, First Aid, Paramedic, and Medical Tech."
+        },
+        {
+          "name": "Trauma Team Pilot",
+          "count": 1,
+          "combat_number": 10,
+          "sp": 7,
+          "hp": 25,
+          "move_and_body": 6,
+          "text": "A pilot in Kevlar®, wielding a Very Heavy Pistol. Additionally, they can use their combat number for these Skills: Air Vehicle Tech, First Aid, and Pilot Air Vehicle."
+        },
+        {
+          "name": "Trauma Team Security Officer (x2)",
+          "count": 2,
+          "combat_number": 10,
+          "sp": 13,
+          "hp": 30,
+          "move_and_body": 4,
+          "text": "Hired muscle in Heavy Armorjack, wielding Assault Rifles."
+        }
+      ],
+      "member_rows_note": "U-32: the stat-block column is headed 'MOVE & BODY' and prints one number per row (image of p225 checked); recorded as the single printed number move_and_body, not split.",
+      "hospital_source_page": "p226",
+      "hospital_text": "Advances in medicine have relegated many hospital trips to simple outpatient procedures, lasting no longer than 4 hours per Treatment required during the visit. Because of this, costs have come down significantly. When you check into a hospital, you are only charged for the Highest DV Stabilization or Treatment required to heal you fully. Everything else to start the natural healing process is thrown in at no extra charge. Likely, you'll walk out of the hospital the same day you walked in, to finish the healing process in the comfort of your home. If you'd rather heal in the hospital, beds are 100eb (Premium) a night.",
+      "hospital_bed_per_night_eb": 100,
+      "hospital_bed_price_category": "Premium",
+      "hospital_rows": [
+        {
+          "highest_dv_label": "DV17 or higher",
+          "dv": 17,
+          "or_higher": true,
+          "cost_eb": 1000,
+          "price_category": "V. Expensive"
+        },
+        {
+          "highest_dv_label": "DV15",
+          "dv": 15,
+          "or_higher": false,
+          "cost_eb": 500,
+          "price_category": "Expensive"
+        },
+        {
+          "highest_dv_label": "DV13",
+          "dv": 13,
+          "or_higher": false,
+          "cost_eb": 100,
+          "price_category": "Premium"
+        },
+        {
+          "highest_dv_label": "DV10",
+          "dv": 10,
+          "or_higher": false,
+          "cost_eb": 50,
+          "price_category": "Costly"
+        }
+      ]
+    },
+    "transcription_note": "The team stat block (4 member rows) and the hospital bill table (4 rows) apply to both plans and are stored once, in this record's shared object, so the nested totals stay 4 and 4 across the kind (CUI F-80 / MANIFEST nested)."
+  },
+  {
+    "kind": "trauma_team",
+    "name": "Executive",
+    "source_page": "p225",
+    "text": "Executive coverage includes Treatments requiring Surgery at no extra cost.",
+    "plan": "Executive",
+    "monthly_cost_eb": 1000,
+    "plans_text": "As demand for their services rose, the Trauma Team changed their funding model to reflect the times, offering 2 levels of service for their clients: Silver (500eb/month) and Executive (1,000eb/month).",
+    "surgery_treatments_covered": true,
+    "shared_in_record": "Silver",
+    "transcription_note": "Both plans are transferable on a 1-1 basis meaning you can use your coverage to help one of your friends without coverage, but not for two friends simultaneously, or if you've already called in your coverage for yourself (p225). Shared tables: see the Silver record."
+  }
+]
