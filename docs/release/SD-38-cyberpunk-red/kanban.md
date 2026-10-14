@@ -45,7 +45,7 @@ cards (`decisions.md §22`).
 | E1.4 | Gear lane | sonnet | waiting | E1.0 |  |
 | E1.5 | Cyberware lane | sonnet | waiting | E1.0 |  |
 | E1.6 | Combat lane (D-1 image check) | sonnet | waiting | E1.0 |  |
-| E1.7 | Netrunning lane | sonnet | waiting | E1.0 |  |
+| E1.7 | Netrunning lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.7_cycle_receipt.md`; 7 kinds, 59 records (9+4+27+3+3+8+5), `cpr_manifest_check.py --kinds <7>` RED exit 1 (7 MISSING) → GREEN exit 0; F-84 4/3/8/12 = 27 (awk + Python); 18 defenses image-checked p214-p217 |
 | E1.8 | GM-tables lane (inventory first) | sonnet | waiting | E1.0 |  |
 | E1.V | Verify lane: 10% sample vs page image; MANIFEST pinned; Rust twin | opus | waiting | E1.1, E1.2, E1.3, E1.4, E1.5, E1.6, E1.7, E1.8 | writes the E1 epic report |
 | E2.1 | Lane A: stats (HP table 126 cells) | opus | waiting | E1.2, E1.V |  |
