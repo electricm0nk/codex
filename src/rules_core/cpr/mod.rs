@@ -18,5 +18,6 @@ pub mod store;
 // lane A modules
 
 // lane B modules
+pub mod cyberware;
 
 // lane C modules
