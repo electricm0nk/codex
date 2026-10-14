@@ -34,7 +34,7 @@ cards (`decisions.md §22`).
 | E0.1 | `GameSystem::CyberpunkRed`; `sheet_rules_relative` → `Option` | opus | complete | C1 | `artifacts/epic_0/E0.1_cycle_receipt.md`; code 7732b17462, clippy base fix ebbb643800; PF/SF seeds unchanged |
 | E0.2 | LICENSE.json + licence-matrix section (DEVIATION) | opus | complete | E0.1 | `artifacts/epic_0/E0.2_cycle_receipt.md`; 481de470b6; pi-sweep + pcgen-residue-gate PASS with the dir present; PF/SF seeds unchanged (no code touched) |
 | E0.3 | CPR corpus root bundled + `packaged_resources.rs` | opus | complete | E0.2 | `artifacts/epic_0/E0.3_cycle_receipt.md`; 4edfb5e3fb; bundle.resources 14 → 15, packaged_resources RED→GREEN, tauri-resources-tracked PASS, desktop 806 passed / 0 failed; PF/SF seeds unchanged |
-| E0.4 | CPR store (A-11 revised) + `CyberpunkAdapter` routing; STAT rows | opus | waiting | E0.3 |  |
+| E0.4 | CPR store (A-11 revised) + `CyberpunkAdapter` routing; STAT rows | opus | complete | E0.3 | `artifacts/epic_0/E0.4_cycle_receipt.md`; 734ed496a4 + a371dbed22; resolver + envelope router → `CyberpunkAdapter`, RED on the stub's Would text; CPR save→list→load, 10 `cpr.stat.*` rows; `list_all` skips CPR (0 unreadable); root 299 suites / desktop 810 passed, 0 failed; PF/SF seeds unchanged |
 | E0.5 | Landing `cyberpunk-red` selectable; Load list; New Character closed | opus | waiting | E0.4 |  |
 | E0.6 | PF + SF byte-identical gate (base = C1 SHA) | opus | waiting | E0.1, E0.2, E0.3, E0.4, E0.5 |  |
 | E0.MC | E0 adversarial merge check | opus | waiting | E0.6 | writes the E0 epic report (`decisions.md §16` rule 6) |
