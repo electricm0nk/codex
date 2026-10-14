@@ -205,3 +205,4 @@ None.
 - Review `README.md §6` (author defaults A-1…A-11 in particular).
 - PR #398 must merge before C1 can cut `tranche-18`.
 | 2026-10-14 | E6.1 | sonnet | complete | 8e65a98089 (code); receipt and rows in the next commit | `artifacts/epic_6/E6.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr_catalog` 8/8: 53 MANIFEST kinds = expected counts; p157 deck 7 of 7, 8th refused; desktop 2 suites / 818 passed / 0 failed; frontend 165/165 |
+| 2026-10-14 | E6.2 | sonnet | complete | 61aa6d42cc (code); receipt and rows in the next commit | `artifacts/epic_6/E6.2_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | 45 tabs = 45 non-print_only of 53 MANIFEST kinds, 779 records; ui-smoke browse-cyberpunk-catalog 2/2 green; frontend 166/166; 106 ui-smoke rows |
