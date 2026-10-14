@@ -1,0 +1,613 @@
+[
+  {
+    "name": "Bag Lady Chic",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Homeless",
+      "Ragged",
+      "Vagrant"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Top": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      },
+      "Jacket": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Footwear": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jewelry": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Mirrorshades": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Glasses": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      },
+      "Contact Lenses": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      },
+      "Hats": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      }
+    },
+    "text": "Bag Lady Chic Homeless Ragged Vagrant"
+  },
+  {
+    "name": "Gang Colors",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Dangerous",
+      "Violent",
+      "Rebellious"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Top": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jacket": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Footwear": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jewelry": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Mirrorshades": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Glasses": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Contact Lenses": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      },
+      "Hats": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      }
+    },
+    "text": "Gang Colors Dangerous Violent Rebellious"
+  },
+  {
+    "name": "Generic Chic",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Standard",
+      "Colorful",
+      "Modular"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Top": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jacket": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Footwear": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jewelry": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Mirrorshades": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Glasses": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Contact Lenses": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      },
+      "Hats": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      }
+    },
+    "text": "Generic Chic Standard Colorful Modular"
+  },
+  {
+    "name": "Bohemian",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Folksy",
+      "Retro",
+      "Free Spirited"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Top": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jacket": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Footwear": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Jewelry": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Mirrorshades": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Glasses": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Contact Lenses": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      },
+      "Hats": {
+        "cost_eb": 10,
+        "cost_text": "10eb (Cheap)",
+        "price_category": "Cheap"
+      }
+    },
+    "text": "Bohemian Folksy Retro Free Spirited"
+  },
+  {
+    "name": "Leisurewear",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Comfort",
+      "Agility",
+      "Athleticism"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Top": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jacket": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Footwear": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Jewelry": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Mirrorshades": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Glasses": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Contact Lenses": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Hats": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      }
+    },
+    "text": "Leisurewear Comfort Agility Athleticism"
+  },
+  {
+    "name": "Nomad Leathers",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Western",
+      "Rugged",
+      "Tribal"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Top": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jacket": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Footwear": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Jewelry": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Mirrorshades": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Glasses": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Contact Lenses": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Hats": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      }
+    },
+    "text": "Nomad Leathers Western Rugged Tribal"
+  },
+  {
+    "name": "Asia Pop",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Bright",
+      "Costume-like",
+      "Youthful"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Top": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jacket": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Footwear": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Jewelry": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Mirrorshades": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Glasses": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Contact Lenses": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Hats": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      }
+    },
+    "text": "Asia Pop Bright Costume-like Youthful"
+  },
+  {
+    "name": "Urban Flash",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Flashy",
+      "Technological",
+      "Streetwear"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Top": {
+        "cost_eb": 20,
+        "cost_text": "20eb (Everyday)",
+        "price_category": "Everyday"
+      },
+      "Jacket": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Footwear": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Jewelry": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Mirrorshades": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Glasses": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Contact Lenses": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Hats": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      }
+    },
+    "text": "Urban Flash Flashy Technological Streetwear"
+  },
+  {
+    "name": "Businesswear",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Leadership",
+      "Presence",
+      "Authority"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 500,
+        "cost_text": "500eb (Expensive)",
+        "price_category": "Expensive"
+      },
+      "Top": {
+        "cost_eb": 50,
+        "cost_text": "50eb (Costly)",
+        "price_category": "Costly"
+      },
+      "Jacket": {
+        "cost_eb": 500,
+        "cost_text": "500eb (Expensive)",
+        "price_category": "Expensive"
+      },
+      "Footwear": {
+        "cost_eb": 500,
+        "cost_text": "500eb (Expensive)",
+        "price_category": "Expensive"
+      },
+      "Jewelry": {
+        "cost_eb": 5000,
+        "cost_text": "5,000eb (Luxury)",
+        "price_category": "Luxury"
+      },
+      "Mirrorshades": {
+        "cost_eb": 500,
+        "cost_text": "500eb (Expensive)",
+        "price_category": "Expensive"
+      },
+      "Glasses": {
+        "cost_eb": 500,
+        "cost_text": "500eb (Expensive)",
+        "price_category": "Expensive"
+      },
+      "Contact Lenses": {
+        "cost_eb": 100,
+        "cost_text": "100eb (Premium)",
+        "price_category": "Premium"
+      },
+      "Hats": {
+        "cost_eb": 500,
+        "cost_text": "500eb (Expensive)",
+        "price_category": "Expensive"
+      }
+    },
+    "text": "Businesswear Leadership Presence Authority"
+  },
+  {
+    "name": "High Fashion",
+    "kind": "fashion",
+    "source_page": "p357",
+    "also_printed_on": [
+      "p103"
+    ],
+    "keywords": [
+      "Exclusive",
+      "Designer",
+      "Couture"
+    ],
+    "prices": {
+      "Bottoms": {
+        "cost_eb": 1000,
+        "cost_text": "1,000eb (V. Expensive)",
+        "price_category": "Very Expensive"
+      },
+      "Top": {
+        "cost_eb": 500,
+        "cost_text": "500eb (Expensive)",
+        "price_category": "Expensive"
+      },
+      "Jacket": {
+        "cost_eb": 1000,
+        "cost_text": "1,000eb (V. Expensive)",
+        "price_category": "Very Expensive"
+      },
+      "Footwear": {
+        "cost_eb": 5000,
+        "cost_text": "5,000eb (Luxury)",
+        "price_category": "Luxury"
+      },
+      "Jewelry": {
+        "cost_eb": 50000,
+        "cost_text": "50,000eb (Luxury)",
+        "price_category": "Luxury"
+      },
+      "Mirrorshades": {
+        "cost_eb": 1000,
+        "cost_text": "1,000eb (V. Expensive)",
+        "price_category": "Very Expensive"
+      },
+      "Glasses": {
+        "cost_eb": 1000,
+        "cost_text": "1,000eb (V. Expensive)",
+        "price_category": "Very Expensive"
+      },
+      "Contact Lenses": {
+        "cost_eb": 1000,
+        "cost_text": "1,000eb (V. Expensive)",
+        "price_category": "Very Expensive"
+      },
+      "Hats": {
+        "cost_eb": 5000,
+        "cost_text": "5,000eb (Luxury)",
+        "price_category": "Luxury"
+      }
+    },
+    "text": "High Fashion Exclusive Designer Couture",
+    "transcription_note": "D-10: the Jewelry cell prints \"50,000eb (Luxury)\" (p357 and p103) while the Price Category scale prices Luxury at 5,000eb (p386); transcribed as printed (50000)."
+  }
+]

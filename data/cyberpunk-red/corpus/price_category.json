@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Cheap",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "10eb",
+    "market_price_eb": 10,
+    "and_up": false,
+    "order": 1,
+    "text": "Cheap 10eb",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  },
+  {
+    "name": "Everyday",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "20eb",
+    "market_price_eb": 20,
+    "and_up": false,
+    "order": 2,
+    "text": "Everyday 20eb",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  },
+  {
+    "name": "Costly",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "50eb",
+    "market_price_eb": 50,
+    "and_up": false,
+    "order": 3,
+    "text": "Costly 50eb",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  },
+  {
+    "name": "Premium",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "100eb",
+    "market_price_eb": 100,
+    "and_up": false,
+    "order": 4,
+    "text": "Premium 100eb",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  },
+  {
+    "name": "Expensive",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "500eb",
+    "market_price_eb": 500,
+    "and_up": false,
+    "order": 5,
+    "text": "Expensive 500eb",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  },
+  {
+    "name": "Very Expensive",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "1,000eb",
+    "market_price_eb": 1000,
+    "and_up": false,
+    "order": 6,
+    "text": "Very Expensive 1,000eb",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  },
+  {
+    "name": "Luxury",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "5,000eb",
+    "market_price_eb": 5000,
+    "and_up": false,
+    "order": 7,
+    "text": "Luxury 5,000eb",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  },
+  {
+    "name": "Super Luxury",
+    "kind": "price_category",
+    "source_page": "p386",
+    "market_price_text": "10,000eb and up",
+    "market_price_eb": 10000,
+    "and_up": true,
+    "order": 8,
+    "text": "Super Luxury 10,000eb and up",
+    "table_rule_text": "Everything you buy in Cyberpunk RED falls into one of eight Price Categories, which determines their Market Price. If you aren't a Fixer, forget about getting it cheaper. If it's Expensive and you don't know a Fixer, forget about getting it at all. Without the help of an experienced Fixer or one of their Night Markets, only items up to Premium can be purchased."
+  }
+]

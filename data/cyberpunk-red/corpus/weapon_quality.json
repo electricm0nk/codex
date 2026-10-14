@@ -1,0 +1,260 @@
+[
+  {
+    "name": "Weapon Quality Cost, 50eb standard",
+    "kind": "weapon_quality",
+    "source_page": "p343",
+    "standard_cost_eb": 50,
+    "standard_cost_text": "50eb (Costly)",
+    "poor_cost_eb": 20,
+    "poor_cost_text": "20eb (Everyday)",
+    "excellent_cost_eb": 100,
+    "excellent_cost_text": "100eb (Premium)",
+    "text": "Poor Quality Weapons malfunction whenever you roll a Critical Failure (a 1 on your Attack Check), requiring you to use an Action to reverse the malfunction before they can be used again. Unjamming your weapon doesn't require a Check. Cost varies based on the weapon's base cost. When attacking with an Excellent Quality Weapon you add a +1 to your Attack Check with it. Cost varies based on the weapon's base cost.",
+    "brand_examples": [
+      {
+        "ranged_weapon_type": "Medium Pistol",
+        "poor": "Dai Lung Streetmaster",
+        "standard": "Federated Arms X-9mm",
+        "excellent": "Militech \"Avenger\""
+      },
+      {
+        "ranged_weapon_type": "Heavy Pistol",
+        "poor": "Dai Lung Magnum",
+        "standard": "Mustang Arms \"Mark III\"",
+        "excellent": "Nova \"Cityhunter\""
+      },
+      {
+        "ranged_weapon_type": "Very Heavy Pistol",
+        "poor": "Federated Arms \"Super Chief\"",
+        "standard": "Sternmeyer P-35",
+        "excellent": "Militech \"Boomer Buster\""
+      },
+      {
+        "ranged_weapon_type": "Bow",
+        "poor": "GunMart \"Sherwood\"",
+        "standard": "Eagletech \"Tomcat\"",
+        "excellent": "Eagletech \"Bearcat\""
+      },
+      {
+        "ranged_weapon_type": "Crossbow",
+        "poor": "GunMart \"Hunter\"",
+        "standard": "Eagletech \"Striker\"",
+        "excellent": "Eagletech \"Scorpion\""
+      },
+      {
+        "ranged_weapon_type": "SMG",
+        "poor": "Federated Arms Tech-Assault III",
+        "standard": "Militech \"Mini-Gat\"",
+        "excellent": "Arasaka \"Minami 10\""
+      },
+      {
+        "ranged_weapon_type": "Heavy SMG",
+        "poor": "Chadran Arms \"City Reaper\"",
+        "standard": "Sternmeyer SMG-21",
+        "excellent": "Militech \"Viper\""
+      },
+      {
+        "ranged_weapon_type": "Shotgun",
+        "poor": "GunMart \"Home Defender\"",
+        "standard": "Arasaka \"Rapid Assault\"",
+        "excellent": "Militech \"Bulldog\""
+      },
+      {
+        "ranged_weapon_type": "Assault Rifle",
+        "poor": "Chadran Arms \"Jungle Reaper\"",
+        "standard": "Militech \"Ronin\"",
+        "excellent": "Militech \"Dragon\""
+      },
+      {
+        "ranged_weapon_type": "Sniper Rifle",
+        "poor": "GunMart \"Snipe-Star\"",
+        "standard": "Nomad \"Long Rifle\"",
+        "excellent": "Arasaka WSSA Sniper System"
+      },
+      {
+        "ranged_weapon_type": "Grenade Launcher",
+        "poor": "Towa Manufacturing Type-G",
+        "standard": "Militech \"Mini-Grenade\"",
+        "excellent": "Tsunami Arms Type-18"
+      },
+      {
+        "ranged_weapon_type": "Rocket Launcher",
+        "poor": "Towa Manufacturing Type-R",
+        "standard": "Militech \"Urban\"",
+        "excellent": "Militech \"Hotshot\""
+      }
+    ]
+  },
+  {
+    "name": "Weapon Quality Cost, 100eb standard",
+    "kind": "weapon_quality",
+    "source_page": "p343",
+    "standard_cost_eb": 100,
+    "standard_cost_text": "100eb (Premium)",
+    "poor_cost_eb": 50,
+    "poor_cost_text": "50eb (Costly)",
+    "excellent_cost_eb": 500,
+    "excellent_cost_text": "500eb (Expensive)",
+    "text": "Poor Quality Weapons malfunction whenever you roll a Critical Failure (a 1 on your Attack Check), requiring you to use an Action to reverse the malfunction before they can be used again. Unjamming your weapon doesn't require a Check. Cost varies based on the weapon's base cost. When attacking with an Excellent Quality Weapon you add a +1 to your Attack Check with it. Cost varies based on the weapon's base cost.",
+    "brand_examples": [
+      {
+        "ranged_weapon_type": "Medium Pistol",
+        "poor": "Dai Lung Streetmaster",
+        "standard": "Federated Arms X-9mm",
+        "excellent": "Militech \"Avenger\""
+      },
+      {
+        "ranged_weapon_type": "Heavy Pistol",
+        "poor": "Dai Lung Magnum",
+        "standard": "Mustang Arms \"Mark III\"",
+        "excellent": "Nova \"Cityhunter\""
+      },
+      {
+        "ranged_weapon_type": "Very Heavy Pistol",
+        "poor": "Federated Arms \"Super Chief\"",
+        "standard": "Sternmeyer P-35",
+        "excellent": "Militech \"Boomer Buster\""
+      },
+      {
+        "ranged_weapon_type": "Bow",
+        "poor": "GunMart \"Sherwood\"",
+        "standard": "Eagletech \"Tomcat\"",
+        "excellent": "Eagletech \"Bearcat\""
+      },
+      {
+        "ranged_weapon_type": "Crossbow",
+        "poor": "GunMart \"Hunter\"",
+        "standard": "Eagletech \"Striker\"",
+        "excellent": "Eagletech \"Scorpion\""
+      },
+      {
+        "ranged_weapon_type": "SMG",
+        "poor": "Federated Arms Tech-Assault III",
+        "standard": "Militech \"Mini-Gat\"",
+        "excellent": "Arasaka \"Minami 10\""
+      },
+      {
+        "ranged_weapon_type": "Heavy SMG",
+        "poor": "Chadran Arms \"City Reaper\"",
+        "standard": "Sternmeyer SMG-21",
+        "excellent": "Militech \"Viper\""
+      },
+      {
+        "ranged_weapon_type": "Shotgun",
+        "poor": "GunMart \"Home Defender\"",
+        "standard": "Arasaka \"Rapid Assault\"",
+        "excellent": "Militech \"Bulldog\""
+      },
+      {
+        "ranged_weapon_type": "Assault Rifle",
+        "poor": "Chadran Arms \"Jungle Reaper\"",
+        "standard": "Militech \"Ronin\"",
+        "excellent": "Militech \"Dragon\""
+      },
+      {
+        "ranged_weapon_type": "Sniper Rifle",
+        "poor": "GunMart \"Snipe-Star\"",
+        "standard": "Nomad \"Long Rifle\"",
+        "excellent": "Arasaka WSSA Sniper System"
+      },
+      {
+        "ranged_weapon_type": "Grenade Launcher",
+        "poor": "Towa Manufacturing Type-G",
+        "standard": "Militech \"Mini-Grenade\"",
+        "excellent": "Tsunami Arms Type-18"
+      },
+      {
+        "ranged_weapon_type": "Rocket Launcher",
+        "poor": "Towa Manufacturing Type-R",
+        "standard": "Militech \"Urban\"",
+        "excellent": "Militech \"Hotshot\""
+      }
+    ]
+  },
+  {
+    "name": "Weapon Quality Cost, 500eb standard",
+    "kind": "weapon_quality",
+    "source_page": "p343",
+    "standard_cost_eb": 500,
+    "standard_cost_text": "500eb (Expensive)",
+    "poor_cost_eb": 100,
+    "poor_cost_text": "100eb (Premium)",
+    "excellent_cost_eb": 1000,
+    "excellent_cost_text": "1,000eb (Very Expensive)",
+    "text": "Poor Quality Weapons malfunction whenever you roll a Critical Failure (a 1 on your Attack Check), requiring you to use an Action to reverse the malfunction before they can be used again. Unjamming your weapon doesn't require a Check. Cost varies based on the weapon's base cost. When attacking with an Excellent Quality Weapon you add a +1 to your Attack Check with it. Cost varies based on the weapon's base cost.",
+    "brand_examples": [
+      {
+        "ranged_weapon_type": "Medium Pistol",
+        "poor": "Dai Lung Streetmaster",
+        "standard": "Federated Arms X-9mm",
+        "excellent": "Militech \"Avenger\""
+      },
+      {
+        "ranged_weapon_type": "Heavy Pistol",
+        "poor": "Dai Lung Magnum",
+        "standard": "Mustang Arms \"Mark III\"",
+        "excellent": "Nova \"Cityhunter\""
+      },
+      {
+        "ranged_weapon_type": "Very Heavy Pistol",
+        "poor": "Federated Arms \"Super Chief\"",
+        "standard": "Sternmeyer P-35",
+        "excellent": "Militech \"Boomer Buster\""
+      },
+      {
+        "ranged_weapon_type": "Bow",
+        "poor": "GunMart \"Sherwood\"",
+        "standard": "Eagletech \"Tomcat\"",
+        "excellent": "Eagletech \"Bearcat\""
+      },
+      {
+        "ranged_weapon_type": "Crossbow",
+        "poor": "GunMart \"Hunter\"",
+        "standard": "Eagletech \"Striker\"",
+        "excellent": "Eagletech \"Scorpion\""
+      },
+      {
+        "ranged_weapon_type": "SMG",
+        "poor": "Federated Arms Tech-Assault III",
+        "standard": "Militech \"Mini-Gat\"",
+        "excellent": "Arasaka \"Minami 10\""
+      },
+      {
+        "ranged_weapon_type": "Heavy SMG",
+        "poor": "Chadran Arms \"City Reaper\"",
+        "standard": "Sternmeyer SMG-21",
+        "excellent": "Militech \"Viper\""
+      },
+      {
+        "ranged_weapon_type": "Shotgun",
+        "poor": "GunMart \"Home Defender\"",
+        "standard": "Arasaka \"Rapid Assault\"",
+        "excellent": "Militech \"Bulldog\""
+      },
+      {
+        "ranged_weapon_type": "Assault Rifle",
+        "poor": "Chadran Arms \"Jungle Reaper\"",
+        "standard": "Militech \"Ronin\"",
+        "excellent": "Militech \"Dragon\""
+      },
+      {
+        "ranged_weapon_type": "Sniper Rifle",
+        "poor": "GunMart \"Snipe-Star\"",
+        "standard": "Nomad \"Long Rifle\"",
+        "excellent": "Arasaka WSSA Sniper System"
+      },
+      {
+        "ranged_weapon_type": "Grenade Launcher",
+        "poor": "Towa Manufacturing Type-G",
+        "standard": "Militech \"Mini-Grenade\"",
+        "excellent": "Tsunami Arms Type-18"
+      },
+      {
+        "ranged_weapon_type": "Rocket Launcher",
+        "poor": "Towa Manufacturing Type-R",
+        "standard": "Militech \"Urban\"",
+        "excellent": "Militech \"Hotshot\""
+      }
+    ]
+  }
+]
