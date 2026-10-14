@@ -117,6 +117,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E1.8 (attempt 2) | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.8_cycle_receipt.md` | `artifacts/epic_1/E1.8_cycle_receipt.md` | unchanged by construction (JSON and docs only) | verbatim `text` on encounter 55 + beat_chart 64 = 119 records (two implementations: `awk '/"text"/{n++}END{print n}'` over both files and Python per-record count); mooks_grunts stays 10 complete; supersedes the attempt-1 partial row |
 | 2026-10-14 | E1.V | opus | complete | b6dd7b8fa4 (data, MANIFEST, CUI, twin), f2b97084f7 (clippy fix); receipt and rows in the next commit | `artifacts/epic_1/E1.V_cycle_receipt.md` | unchanged by construction (no src/crates/src-tauri/frontend file; `git diff --name-only dc28ad5a5e..HEAD -- src crates apps` empty) | `--all` exit 0; twin 11/11; sample 112 over 53 kinds → 108 agree / 4 fixed / 0 disagree; 22 strings + 2 texts fixed; CUI §3 gear + E1.8 rows edited (named outside-row file); clippy FAIL→PASS (collapsible_if in the new test); root 300 suites 6583 passed; 2 corrections + 1 resolution |
 | 2026-10-14 | E2.5 | opus | complete | 7eca436018 (engine + fixture), 5377876ab6 (clippy fix); receipt and rows in the next commit | `artifacts/epic_2/E2.5_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr/cyberware.rs`: HL preset sum, D-11 slot refusals (8 containers, A-5 extra eyes/arms), SP 7/11 highest-wins, BODY Grafted +2 (≤10) / Sigma 12 / Beta 14 with prerequisites, Kerenzikov +2, D-5 cap; `cpr.cyberware.*` rows; F-66 parity fixture from inventory §4, p118 image-checked; D-6 grep in decisions §20.6 prints 1 (a transcription_note), retro correction |
+| 2026-10-14 | E2.9 | opus | complete | b387df53af (engine + tests), 8b3cea7355 (clippy fix); receipt and rows in the next commit | `artifacts/epic_2/E2.9_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr::netrunning` 11/11; rows `cpr.netrunning.{net_actions,deck_slots_available,deck_slots_used}` + D-2 printed line; A-7 both extra slots, over-capacity refused; clippy PASS after one collapsible_if fix; sd24 5/5; root 300/6594/0, desktop 2/810/0 |
 
 ## Epic reports
 
@@ -190,6 +191,9 @@ blockers.)
   limit. (4) An explicitly bought Standard Hand / Foot is a piece (HL 2, counts against the D-5 cap); the free one that comes with a Cyberarm /
   Cyberleg is not an install; alternative not taken: never a piece. (5) Subdermal Grip uses a Neural Link slot only, never a Cyberarm slot;
   alternative not taken: both.
+- E2.9, A-7 + p350 (`$P/p351.txt:39-40`, "Hardware installed in the Bodyweight Suit … can only take up 1 Option Slot"): the
+  suit's extra slot holds one 1-slot Hardware only; a Program or a 2-slot Hardware there is refused as over capacity.
+  Alternative not taken: a 2-slot Hardware placed in the suit costs 1 slot.
 
 ## Open blockers
 
