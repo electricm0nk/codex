@@ -40,7 +40,17 @@
 //! the book does not allow and answers with their rows (`choice_rows`). They are saved in
 //! `cpr_role_choices.txt`.
 //!
-//! Kit and cyberware extend these payloads later.
+//! **Starting kit and cash** (p099-p106, A-9): Streetrat and Edgerunner take the Role's fixed kit
+//! (the `starting_kit` record, one option of each "or" line, the first printed option until the
+//! player picks) and 500eb; a Complete Package buys everything with 2,550eb plus an 800eb budget
+//! for fashion only, lost if unspent. Every method may buy from the Night Market lists at their
+//! printed prices. The engine (`codex::rules_core::cpr::kit`) prices and refuses the purchases and
+//! answers with the `cpr.kit.*` rows and `cpr.cash`, the cash left. Create saves the kit in
+//! `cpr_kit.txt`, the cash left as the sheet's `cash`, and the weapons, worn armour, shield,
+//! ammunition and Cyberdeck the kit holds as the sheet's choices; a kit the composed sheet refuses
+//! (a deck over its slots) is refused here.
+//!
+//! Cyberware extends these payloads later.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
@@ -49,11 +59,12 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use codex::rules_core::cpr::input::{
-    lifepath_text_ok, role_choice_text_ok, CprCharacterInput, CprLifepath, CprLifepathAnswer, CprRoleChoices, CprRolePick,
-    CprSheetChoices, CprStat, CprStats,
+    kit_text_ok, lifepath_text_ok, role_choice_text_ok, CprCharacterInput, CprKit, CprKitEntry, CprLifepath, CprLifepathAnswer,
+    CprRoleChoices, CprRolePick, CprSheetChoices, CprStat, CprStats,
 };
+use codex::rules_core::cpr::kit::{CprKitCatalog, CprKitChoices, CprKitItem, CprKitLine, CprKitMethod, CprKitOutcome, CprShopItem};
 use codex::rules_core::cpr::roles::{CprRole, CprRoleCatalog, CprRoleChoiceMenu};
-use codex::rules_core::cpr::sheet::{compose_sheet, stat_rows, CprSheetCatalogs};
+use codex::rules_core::cpr::sheet::{compose_sheet, stat_rows, CprSheet, CprSheetCatalogs};
 use codex::rules_core::cpr::skills::{
     slug as skill_slug, spend_rows, validate_creation_skills, CprSkillAllocation, CprSkillCatalog, CprSkillMethod,
 };
@@ -88,6 +99,10 @@ pub(crate) const REFUSED_SKILL_SPECIALTY: &str = "cpr_creation.skill_specialty";
 /// A Role Ability sub-choice breaks the book's rule (the engine's refusal names it) or names
 /// something the saved grammar cannot hold.
 pub(crate) const REFUSED_ROLE_ABILITY: &str = "cpr_creation.role_ability";
+/// The starting kit breaks the book's rule (the engine's refusal names it: an "or" pick that is
+/// not an option, a purchase the catalogs do not price, a spend above the budget), or the
+/// composed sheet cannot carry it.
+pub(crate) const REFUSED_KIT: &str = "cpr_creation.kit";
 /// Create without a character name.
 pub(crate) const REFUSED_NO_NAME: &str = "cpr_creation.no_name";
 /// Create over a character that is already saved under that id.
@@ -176,6 +191,10 @@ pub struct CprCreationRequest {
     /// The Role Ability sub-choices; none sent, none made.
     #[serde(default)]
     pub role_ability: CprRoleAbilityRequest,
+    /// The starting kit: the "or" picks of a fixed kit (by line) and the purchases; none sent,
+    /// the fixed kit's first options and nothing bought.
+    #[serde(default)]
+    pub kit: CprKitChoices,
 }
 
 /// The player's Role Ability sub-choices at the starting rank: points by ability or specialty
@@ -295,6 +314,8 @@ pub struct CprCreationPreview {
     pub skills: CprSkillsDto,
     /// The Role Ability at its starting rank: what it divides or picks, and the engine's rows.
     pub role_ability: Option<CprRoleAbilityDto>,
+    /// The starting kit: the fixed kit's lines, the items, the shop and the engine's money rows.
+    pub kit: Option<CprKitDto>,
     /// The engine's `cpr.stat.*` and `cpr.derived.*` rows for these STATs, the
     /// `cpr.skill_level.*` and `cpr.skill.*` rows of every allocated skill (the Cultural Origin
     /// language among them) and the `cpr.skills.creation_points_*` rows (empty while a
@@ -395,6 +416,30 @@ pub struct CprRoleAbilityDto {
     #[serde(skip_deserializing, default = "empty_menu")]
     pub menu: CprRoleChoiceMenu,
     pub rows: Vec<ExplanationDto>,
+}
+
+/// The starting-kit step: a fixed kit's lines with the option each "or" line takes, every item
+/// the character starts with, the shop the purchases come from, and the engine's `cpr.kit.*` and
+/// `cpr.cash` rows (items and rows empty while the kit is refused).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprKitDto {
+    pub method: CprKitMethod,
+    pub lines: Vec<CprKitLineDto>,
+    pub items: Vec<CprKitItem>,
+    #[serde(skip_deserializing)]
+    pub shop: Vec<CprShopItem>,
+    pub rows: Vec<ExplanationDto>,
+}
+
+/// One fixed-kit line and, for an "or" line, the option it takes and whether the player picked it.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprKitLineDto {
+    #[serde(flatten)]
+    pub line: CprKitLine,
+    pub taken: String,
+    pub picked: bool,
 }
 
 fn empty_menu() -> CprRoleChoiceMenu {
@@ -751,6 +796,71 @@ fn creation_choices(role: Option<(CprRole, u8)>, skills: &CprSkillsDto) -> CprSh
     }
 }
 
+/// The saved sheet choices: the Role and skills, and what the kit puts on the sheet (weapons,
+/// worn armour, shield, ammunition, Cyberdeck) with the cash left (A-9).
+fn sheet_choices(role: Option<(CprRole, u8)>, skills: &CprSkillsDto, kit: Option<&CprKitOutcome>) -> CprSheetChoices {
+    let mut choices = creation_choices(role, skills);
+    if let Some(kit) = kit {
+        let sheet = kit.sheet();
+        choices.weapons = sheet.weapons;
+        choices.armor = sheet.armor;
+        choices.shield = sheet.shield;
+        choices.ammunition = sheet.ammunition;
+        choices.deck = sheet.deck;
+        choices.cash = Some(kit.cash());
+    }
+    choices
+}
+
+/// The starting kit by the method (p099-p106): the engine builds it from the fixed kit and the
+/// purchases, or refuses it; a refusal, and an item name the saved grammar cannot hold, become
+/// problems.
+fn kit_step(
+    root: &Path,
+    role_name: &str,
+    method: CprCreationMethod,
+    request: &CprKitChoices,
+    problems: &mut Vec<DiagnosticDto>,
+) -> Result<(Option<CprKitDto>, Option<CprKitOutcome>), String> {
+    let Some(role) = CprRole::from_name(role_name) else { return Ok((None, None)) };
+    let catalog = CprKitCatalog::load(root)?;
+    let kit_method = match method {
+        CprCreationMethod::CompletePackage => CprKitMethod::CompletePackage,
+        CprCreationMethod::Streetrat | CprCreationMethod::Edgerunner => CprKitMethod::Fixed,
+    };
+    let fixed = match kit_method {
+        CprKitMethod::Fixed => catalog.fixed_lines(role).unwrap_or_default(),
+        CprKitMethod::CompletePackage => &[],
+    };
+    let lines = fixed
+        .iter()
+        .enumerate()
+        .map(|(index, line)| {
+            let pick = request.picks.iter().find(|p| p.line == index && line.pick_one && line.options.iter().any(|o| o.name == p.option));
+            let taken = match (line.pick_one, pick) {
+                (false, _) => String::new(),
+                (true, Some(p)) => p.option.clone(),
+                (true, None) => line.options[0].name.clone(),
+            };
+            CprKitLineDto { line: line.clone(), taken, picked: pick.is_some() }
+        })
+        .collect();
+    let (items, rows, outcome) = match catalog.build(role, kit_method, request) {
+        Ok(outcome) => {
+            for item in outcome.items.iter().filter(|i| !kit_text_ok(&i.name) || !kit_text_ok(&i.section)) {
+                problems.push(problem(REFUSED_KIT, format!("'{}': a kit item is a name without |", item.name)));
+            }
+            let rows = outcome.rows().into_iter().map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail }).collect();
+            (outcome.items.clone(), rows, Some(outcome))
+        }
+        Err(reasons) => {
+            problems.extend(reasons.into_iter().map(|r| problem(REFUSED_KIT, r)));
+            (Vec::new(), Vec::new(), None)
+        }
+    };
+    Ok((Some(CprKitDto { method: kit_method, lines, items, shop: catalog.shop().to_vec(), rows }), outcome))
+}
+
 /// The request's Role Ability sub-choices in the saved shape.
 fn role_choices(request: &CprRoleAbilityRequest) -> CprRoleChoices {
     CprRoleChoices {
@@ -940,32 +1050,30 @@ fn saved_lifepath(lifepath: &[CprLifepathTableDto]) -> CprLifepath {
 }
 
 /// The engine's rows for the allocated skills: each one's level and Skill Base, from the
-/// composed sheet of these STATs and those skills.
-fn allocated_skill_rows(
-    root: &Path,
-    catalog: &CprSkillCatalog,
-    input: &CprCharacterInput,
-    skills: &CprSkillsDto,
-) -> Result<Vec<ExplanationDto>, String> {
-    let catalogs = CprSheetCatalogs::load(root)?;
-    let sheet = compose_sheet(&catalogs, input, &creation_choices(None, skills))?;
+/// composed sheet of these STATs and the saved choices (the kit's armour penalty included).
+fn allocated_skill_rows(catalog: &CprSkillCatalog, sheet: CprSheet, skills: &CprSkillsDto) -> Vec<ExplanationDto> {
     let wanted: Vec<String> = skills
         .lines
         .iter()
         .filter_map(|l| skill_row_rest(catalog, &l.key))
         .flat_map(|rest| [format!("cpr.skill_level.{rest}"), format!("cpr.skill.{rest}")])
         .collect();
-    Ok(sheet
+    sheet
         .rows
         .into_iter()
         .filter(|r| wanted.contains(&r.id))
         .map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail })
-        .collect())
+        .collect()
 }
 
 /// The STAT step over the corpus at `root`. An unknown Role or a template row outside 1-10 is
 /// an error; an allocation create would refuse comes back as `problems`.
 pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<CprCreationPreview, String> {
+    preview_with_kit(root, request).map(|(preview, _)| preview)
+}
+
+/// The preview, and the built kit create saves.
+fn preview_with_kit(root: &Path, request: &CprCreationRequest) -> Result<(CprCreationPreview, Option<CprKitOutcome>), String> {
     let seed = request.seed.unwrap_or_else(fresh_seed);
     let mut roller = CprRoller::new(seed);
     let mut rolls = Vec::new();
@@ -1040,17 +1148,23 @@ pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<Cp
     let catalog = CprSkillCatalog::load(root)?;
     let skills = allocate_skills(&catalog, &request.role, request.method, &request.skills, lifepath.language.as_ref(), &mut problems)?;
     let role_ability = role_ability_step(root, &request.role, &request.role_ability, &mut problems)?;
+    let (kit, kit_outcome) = kit_step(root, &request.role, request.method, &request.kit, &mut problems)?;
     let input = input_of(values);
-    let explanations = if problems.is_empty() {
-        let mut rows = engine_rows(&input);
-        rows.extend(allocated_skill_rows(root, &catalog, &input, &skills)?);
-        rows.extend(skills.rows.iter().cloned());
-        rows.extend(role_ability.iter().flat_map(|a| a.rows.iter().cloned()));
-        rows
-    } else {
-        Vec::new()
-    };
-    Ok(CprCreationPreview {
+    let mut explanations = Vec::new();
+    if problems.is_empty() {
+        let role = CprRole::from_name(&request.role).zip(role_ability.as_ref().map(|a| a.rank));
+        match compose_sheet(&CprSheetCatalogs::load(root)?, &input, &sheet_choices(role, &skills, kit_outcome.as_ref())) {
+            Ok(sheet) => {
+                explanations = engine_rows(&input);
+                explanations.extend(allocated_skill_rows(&catalog, sheet, &skills));
+                explanations.extend(skills.rows.iter().cloned());
+                explanations.extend(role_ability.iter().flat_map(|a| a.rows.iter().cloned()));
+                explanations.extend(kit.iter().flat_map(|k| k.rows.iter().cloned()));
+            }
+            Err(reason) => problems.push(problem(REFUSED_KIT, format!("the sheet cannot carry this kit: {reason}"))),
+        }
+    }
+    let preview = CprCreationPreview {
         role: request.role.clone(),
         method: request.method,
         seed,
@@ -1067,9 +1181,11 @@ pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<Cp
         cultural_language: lifepath.language,
         skills,
         role_ability,
+        kit,
         explanations,
         problems,
-    })
+    };
+    Ok((preview, kit_outcome))
 }
 
 /// Creates the character at `root` from the corpus at `corpus`: the same STAT step as the
@@ -1082,7 +1198,7 @@ pub(crate) fn create_at_root(
     app_version: String,
 ) -> Result<CprCreateResponse, String> {
     let mut creation = request.creation.clone();
-    let preview = preview_at(corpus, &creation)?;
+    let (preview, kit) = preview_with_kit(corpus, &creation)?;
     creation.seed = Some(preview.seed);
     let mut diagnostics = preview.problems;
     if request.display_label.trim().is_empty() {
@@ -1108,15 +1224,28 @@ pub(crate) fn create_at_root(
         display_label: request.display_label.trim().to_owned(),
         input: input.clone(),
     };
+    let choices = sheet_choices(Some((role, rank)), &preview.skills, kit.as_ref());
+    let sheet = compose_sheet(&CprSheetCatalogs::load(corpus)?, &input, &choices)?;
     CprCharacterStore::save(&character, root)?;
-    CprCharacterStore::save_choices(&creation_choices(Some((role, rank)), &preview.skills), root)?;
+    CprCharacterStore::save_choices(&choices, root)?;
     CprCharacterStore::save_lifepath(&saved_lifepath(&preview.lifepath), root)?;
     CprCharacterStore::save_role_choices(&role_choices(&creation.role_ability), root)?;
+    let saved_kit = CprKit {
+        items: kit
+            .iter()
+            .flat_map(|k| k.items.iter())
+            .map(|i| CprKitEntry { section: i.section.clone(), name: i.name.clone(), quantity: i.quantity })
+            .collect(),
+    };
+    CprCharacterStore::save_kit(&saved_kit, root)?;
     let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(root)?;
     let mut explanations = engine_rows(&input);
-    explanations.extend(allocated_skill_rows(corpus, &CprSkillCatalog::load(corpus)?, &input, &preview.skills)?);
+    explanations.extend(allocated_skill_rows(&CprSkillCatalog::load(corpus)?, sheet, &preview.skills));
     explanations.extend(preview.skills.rows.iter().cloned());
     explanations.extend(preview.role_ability.iter().flat_map(|a| a.rows.iter().cloned()));
+    explanations.extend(
+        kit.iter().flat_map(|k| k.rows_after_save()).map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail }),
+    );
     Ok(CprCreateResponse::Saved { summary: Box::new(loaded.summary), seed: preview.seed, explanations })
 }
 
@@ -1141,6 +1270,7 @@ mod tests {
 
     use std::path::PathBuf;
 
+    use codex::rules_core::cpr::kit::{CprKitPick, CprKitPurchase};
     use serde_json::Value;
 
     fn root() -> PathBuf {
@@ -1172,6 +1302,7 @@ mod tests {
                     .collect(),
             },
             role_ability: starting_role_ability(role),
+            kit: CprKitChoices::default(),
         }
     }
 
@@ -2074,6 +2205,201 @@ mod tests {
         let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
         assert_eq!(row(&loaded.explanations, "cpr.role.nomad.rank"), 4);
         assert_eq!(row(&loaded.explanations, "cpr.role.nomad.vehicle_familiarity_bonus"), 4);
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    fn kit_problem(preview: &CprCreationPreview, words: &[&str]) -> bool {
+        preview.problems.iter().any(|p| p.id == REFUSED_KIT && p.claim_blocking && words.iter().all(|w| p.message.contains(w)))
+    }
+
+    fn purchase(kind: &str, name: &str, variant: Option<&str>, quantity: u32) -> CprKitPurchase {
+        CprKitPurchase { kind: kind.to_owned(), name: name.to_owned(), variant: variant.map(str::to_owned), quantity }
+    }
+
+    /// A valid Complete Package (p079's worked example) with these purchases.
+    fn complete_package(role: &str, purchases: Vec<CprKitPurchase>) -> CprCreationRequest {
+        let mut req = request(role, CprCreationMethod::CompletePackage);
+        req.stats = Some(allocation([5, 7, 8, 3, 6, 7, 6, 8, 8, 4]));
+        req.kit = CprKitChoices { picks: Vec::new(), purchases };
+        req
+    }
+
+    /// The `starting_kit` record's weapons/armour and outfit lines, read as plain JSON: every
+    /// option of a plain line, the first option of an "or" line, each piece of a fashion line.
+    fn record_kit(role: &str) -> Vec<(String, String, u32)> {
+        let kits: Vec<Value> =
+            serde_json::from_str(&std::fs::read_to_string(root().join("starting_kit.json")).unwrap()).unwrap();
+        let kit = kits.iter().find(|k| k["role"] == role).unwrap();
+        let mut out = Vec::new();
+        for section in ["weapons_armor", "outfit"] {
+            for line in kit[section].as_array().unwrap() {
+                if let Some(style) = line["fashion_style"].as_str() {
+                    for piece in line["pieces"].as_array().unwrap() {
+                        let name = format!("{style} {}", piece["name"].as_str().unwrap());
+                        out.push((section.to_owned(), name, piece["quantity"].as_u64().unwrap() as u32));
+                    }
+                    continue;
+                }
+                let options = line["options"].as_array().unwrap();
+                let n = if line["pick_one"].as_bool() == Some(true) { 1 } else { options.len() };
+                for o in &options[..n] {
+                    out.push((section.to_owned(), o["name"].as_str().unwrap().to_owned(), o["quantity"].as_u64().unwrap() as u32));
+                }
+            }
+        }
+        out
+    }
+
+    /// Streetrat and Edgerunner: each Role's fixed kit is its `starting_kit` record, with 500eb
+    /// kept as the cash row; create saves the kit (`cpr_kit.txt`) and the cash, and the loaded
+    /// sheet carries the cash, the armour and the weapons.
+    #[test]
+    fn each_roles_fixed_kit_is_its_starting_kit_record_and_saves_with_500eb() {
+        let characters_root = tempdir("kit-fixed");
+        let mut checked = 0;
+        for role in role_names() {
+            for method in [CprCreationMethod::Streetrat, CprCreationMethod::Edgerunner] {
+                let mut req = request(&role, method);
+                req.template_roll = (method == CprCreationMethod::Streetrat).then_some(1);
+                req.seed = Some(7);
+                let preview = preview_at(&root(), &req).unwrap();
+                assert!(preview.problems.is_empty(), "{role} {method:?}: {:?}", preview.problems);
+                let kit = preview.kit.as_ref().expect("a kit step");
+                let got: Vec<(String, String, u32)> =
+                    kit.items.iter().map(|i| (i.section.clone(), i.name.clone(), i.quantity)).collect();
+                assert_eq!(got, record_kit(&role), "{role} {method:?}");
+                assert_eq!(row(&preview.explanations, "cpr.cash"), 500, "{role}");
+                assert_eq!(row(&kit.rows, "cpr.kit.budget"), 500, "{role}");
+
+                let id = format!("kit-{}-{method:?}", role.to_lowercase());
+                let dir = characters_root.join(&id);
+                let saved = create_at_root(&root(), &dir, &create(req, &id), "codex-test".to_owned()).unwrap();
+                let CprCreateResponse::Saved { explanations, .. } = saved else { panic!("{role}: {saved:?}") };
+                assert_eq!(row(&explanations, "cpr.cash"), 500);
+                let stored: Vec<(String, String, u32)> = CprCharacterStore::load_kit(&dir)
+                    .unwrap()
+                    .items
+                    .into_iter()
+                    .map(|i| (i.section, i.name, i.quantity))
+                    .collect();
+                assert_eq!(stored, record_kit(&role), "{role}: the saved kit");
+                assert_eq!(CprCharacterStore::load_choices(&dir).unwrap().cash, Some(500));
+                let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+                assert_eq!(row(&loaded.explanations, "cpr.cash"), 500, "{role}");
+                assert_eq!(row(&loaded.explanations, "cpr.armor.sp_body"), 11, "{role}: Light Armorjack Body Armor (SP11)");
+                assert_eq!(row(&loaded.explanations, "cpr.armor.sp_head"), 11, "{role}: Light Armorjack Head Armor (SP11)");
+                checked += 1;
+            }
+        }
+        assert_eq!(checked, 20);
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// An "or" pick takes that option; an option not on the line is refused and nothing saves.
+    #[test]
+    fn a_kit_pick_takes_its_option_and_a_bad_pick_is_refused() {
+        let lines = preview_at(&root(), &request("Lawman", CprCreationMethod::Edgerunner)).unwrap().kit.unwrap().lines;
+        let index = lines.iter().position(|l| l.line.text.starts_with("Basic Rifle Ammunition x100 or")).unwrap();
+        assert_eq!(lines[index].taken, "Basic Rifle Ammunition");
+        assert!(!lines[index].picked);
+        let mut req = request("Lawman", CprCreationMethod::Edgerunner);
+        req.kit.picks = vec![CprKitPick { line: index, option: "Basic Slug Ammunition".to_owned() }];
+        let preview = preview_at(&root(), &req).unwrap();
+        assert!(preview.problems.is_empty(), "{:?}", preview.problems);
+        let kit = preview.kit.unwrap();
+        assert_eq!(kit.lines[index].taken, "Basic Slug Ammunition");
+        assert!(kit.lines[index].picked);
+        assert!(kit.items.iter().any(|i| i.name == "Basic Slug Ammunition" && i.quantity == 100));
+
+        req.kit.picks = vec![CprKitPick { line: index, option: "Basic Arrow Ammunition".to_owned() }];
+        let preview = preview_at(&root(), &req).unwrap();
+        assert!(kit_problem(&preview, &["Basic Arrow Ammunition", "not an option"]), "{:?}", preview.problems);
+        let dir = tempdir("kit-pick").join("bad");
+        let response = create_at_root(&root(), &dir, &create(req, "bad"), "codex-test".to_owned()).unwrap();
+        assert!(matches!(response, CprCreateResponse::Blocked { .. }), "{response:?}");
+        assert!(!dir.join("envelope.txt").exists());
+    }
+
+    /// Complete Package: bought from the catalogs with 2,550eb; an overspend is refused and
+    /// nothing saves.
+    #[test]
+    fn complete_package_overspend_is_refused() {
+        let req = complete_package("Solo", vec![purchase("weapon", "Malorian Arms 3516", None, 1)]);
+        let preview = preview_at(&root(), &req).unwrap();
+        assert!(kit_problem(&preview, &["10000eb", "2550eb"]), "{:?}", preview.problems);
+        assert!(preview.explanations.is_empty());
+        let dir = tempdir("kit-over").join("over");
+        let response = create_at_root(&root(), &dir, &create(req, "over"), "codex-test".to_owned()).unwrap();
+        assert!(
+            matches!(&response, CprCreateResponse::Blocked { diagnostics } if diagnostics.iter().any(|d| d.id == REFUSED_KIT)),
+            "{response:?}"
+        );
+        assert!(!dir.join("envelope.txt").exists());
+        // A Complete Package has no fixed kit to pick from.
+        let mut req = complete_package("Solo", Vec::new());
+        req.kit.picks = vec![CprKitPick { line: 0, option: "Assault Rifle".to_owned() }];
+        assert!(kit_problem(&preview_at(&root(), &req).unwrap(), &["Complete Package"]));
+    }
+
+    /// Complete Package: the cash left is 2,550eb minus the purchases; the 800eb fashion budget
+    /// left unspent is gone after the save (0), never cash.
+    #[test]
+    fn complete_package_saves_the_cash_left_and_loses_the_unspent_fashion_budget() {
+        let req = complete_package(
+            "Solo",
+            vec![
+                purchase("weapon", "Assault Rifle", None, 1),
+                purchase("armor", "Light Armorjack", Some("Body"), 1),
+                purchase("ammo", "Basic Ammunition", Some("Rifle"), 100),
+                purchase("fashion", "Nomad Leathers", Some("Jacket"), 1),
+                purchase("fashion", "Nomad Leathers", Some("Top"), 1),
+            ],
+        );
+        let preview = preview_at(&root(), &req).unwrap();
+        assert!(preview.problems.is_empty(), "{:?}", preview.problems);
+        let kit = preview.kit.as_ref().unwrap();
+        assert!(kit.lines.is_empty(), "no fixed kit");
+        assert!(!kit.shop.is_empty());
+        // 500 (Assault Rifle) + 100 (Light Armorjack) + 100 (10 x 10 rounds at 10eb).
+        assert_eq!(row(&preview.explanations, "cpr.kit.spent"), 700);
+        assert_eq!(row(&preview.explanations, "cpr.cash"), 1850);
+        assert_eq!(row(&preview.explanations, "cpr.kit.fashion_spent"), 120);
+        assert_eq!(row(&preview.explanations, "cpr.kit.fashion_left"), 680);
+
+        let characters_root = tempdir("kit-cp");
+        let dir = characters_root.join("cp-solo");
+        let saved = create_at_root(&root(), &dir, &create(req, "cp-solo"), "codex-test".to_owned()).unwrap();
+        let CprCreateResponse::Saved { explanations, .. } = saved else { panic!("{saved:?}") };
+        assert_eq!(row(&explanations, "cpr.kit.fashion_left"), 0, "unspent fashion budget 0 after save");
+        assert_eq!(row(&explanations, "cpr.cash"), 1850);
+        assert_eq!(CprCharacterStore::load_choices(&dir).unwrap().cash, Some(1850));
+        let names: Vec<String> = CprCharacterStore::load_kit(&dir).unwrap().items.into_iter().map(|i| i.name).collect();
+        assert_eq!(
+            names,
+            ["Assault Rifle", "Light Armorjack Body Armor (SP11)", "Basic Rifle Ammunition", "Nomad Leathers Jacket", "Nomad Leathers Top"]
+        );
+        let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+        assert_eq!(row(&loaded.explanations, "cpr.cash"), 1850);
+        assert_eq!(row(&loaded.explanations, "cpr.armor.sp_body"), 11);
+        assert_eq!(row(&loaded.explanations, "cpr.armor.sp_head"), 0);
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// The Netrunner's kit deck (Cyberdeck (7 Slots) and five programs) is the loaded sheet's deck.
+    #[test]
+    fn the_netrunners_kit_deck_reaches_the_sheet() {
+        let mut req = request("Netrunner", CprCreationMethod::Streetrat);
+        req.template_roll = Some(1);
+        let characters_root = tempdir("kit-deck");
+        let dir = characters_root.join("runner");
+        let saved = create_at_root(&root(), &dir, &create(req, "runner"), "codex-test".to_owned()).unwrap();
+        assert!(matches!(saved, CprCreateResponse::Saved { .. }), "{saved:?}");
+        let deck = CprCharacterStore::load_choices(&dir).unwrap().deck.expect("a deck");
+        assert_eq!(deck.deck, "Cyberdeck (Standard Quality)");
+        assert_eq!(deck.programs, ["Armor", "Sword", "See Ya", "Sword", "Worm"]);
+        let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+        assert_eq!(row(&loaded.explanations, "cpr.netrunning.deck_slots_used"), 5);
+        assert_eq!(row(&loaded.explanations, "cpr.netrunning.deck_slots_available"), 7);
         std::fs::remove_dir_all(&characters_root).ok();
     }
 }

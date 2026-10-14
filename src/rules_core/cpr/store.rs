@@ -11,6 +11,7 @@
 //! - `cpr_lifepath.txt`, once saved: the [`CprLifepath`] answers (`input::render_cpr_lifepath`).
 //! - `cpr_role_choices.txt`, once saved: the [`CprRoleChoices`] Role Ability sub-choices
 //!   (`input::render_cpr_role_choices`).
+//! - `cpr_kit.txt`, once saved: the [`CprKit`] starting kit (`input::render_cpr_kit`).
 //!
 //! It never holds `authoritative_character_input.txt`, the Pathfinder-shaped payload, and
 //! `SavedCharacterStore::list_all` skips it (`local_store::owns_payload`).
@@ -20,9 +21,9 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use crate::rules_core::cpr::input::{
-    parse_cpr_character_input, parse_cpr_lifepath, parse_cpr_role_choices, parse_cpr_sheet_choices, render_cpr_character_input,
-    render_cpr_lifepath, render_cpr_role_choices, render_cpr_sheet_choices, CprCharacterInput, CprLifepath, CprRoleChoices,
-    CprSheetChoices,
+    parse_cpr_character_input, parse_cpr_kit, parse_cpr_lifepath, parse_cpr_role_choices, parse_cpr_sheet_choices,
+    render_cpr_character_input, render_cpr_kit, render_cpr_lifepath, render_cpr_role_choices, render_cpr_sheet_choices,
+    CprCharacterInput, CprKit, CprLifepath, CprRoleChoices, CprSheetChoices,
 };
 use crate::rules_core::game_system::GameSystem;
 use crate::saved_character::local_store::peek_game_system;
@@ -33,6 +34,7 @@ const INPUT_FILE: &str = "cpr_character_input.txt";
 const CHOICES_FILE: &str = "cpr_sheet_choices.txt";
 const LIFEPATH_FILE: &str = "cpr_lifepath.txt";
 const ROLE_CHOICES_FILE: &str = "cpr_role_choices.txt";
+const KIT_FILE: &str = "cpr_kit.txt";
 /// The envelope's `content_or_rules_provenance` for every CPR save: the one book SD-38 ships.
 pub const CPR_CONTENT_PROVENANCE: &str = "cyberpunk-red.corebook";
 /// Schema version of a CPR saved character (`envelope.txt` + `cpr_character_input.txt`).
@@ -169,6 +171,26 @@ impl CprCharacterStore {
             Ok(text) => parse_cpr_role_choices(&text),
             Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(CprRoleChoices::default()),
             Err(err) => Err(format!("{ROLE_CHOICES_FILE} unreadable at {}: {err}", path.display())),
+        }
+    }
+
+    /// Writes `cpr_kit.txt` for the CPR character at `root` (temp file, then renamed into
+    /// place). Refused when `root` holds no CPR character.
+    pub fn save_kit(kit: &CprKit, root: &Path) -> Result<(), String> {
+        Self::load(root)?;
+        let path = root.join(KIT_FILE);
+        let tmp = write_tmp(&path, &render_cpr_kit(kit))?;
+        fs::rename(&tmp, &path).map_err(|err| format!("{}: {err}", path.display()))
+    }
+
+    /// The starting kit of the CPR character at `root`; none when it has saved none (no
+    /// `cpr_kit.txt`). A malformed file is refused with its reason.
+    pub fn load_kit(root: &Path) -> Result<CprKit, String> {
+        let path = root.join(KIT_FILE);
+        match fs::read_to_string(&path) {
+            Ok(text) => parse_cpr_kit(&text),
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(CprKit::default()),
+            Err(err) => Err(format!("{KIT_FILE} unreadable at {}: {err}", path.display())),
         }
     }
 
@@ -413,6 +435,27 @@ mod tests {
         let empty = root.parent().expect("has parent").join("no-character");
         assert!(CprCharacterStore::save_choices(&choices, &empty).is_err_and(|e| e.contains("envelope.txt")));
         assert!(!empty.join("cpr_sheet_choices.txt").exists());
+        fs::remove_dir_all(root.parent().expect("has parent")).ok();
+    }
+
+    /// The starting kit is its own file (E3.6): none before any is saved; a saved kit
+    /// round-trips and survives a re-save of the character; refused without a character.
+    #[test]
+    fn kit_saves_loads_and_survives_a_character_re_save() {
+        use crate::rules_core::cpr::input::{CprKit, CprKitEntry};
+        let root = tempdir("kit").join("cpr-kit");
+        let character = sample("cpr-kit");
+        CprCharacterStore::save(&character, &root).expect("saves");
+        assert_eq!(CprCharacterStore::load_kit(&root), Ok(CprKit::default()));
+        let kit = CprKit { items: vec![CprKitEntry { section: "outfit".to_owned(), name: "Agent".to_owned(), quantity: 1 }] };
+        CprCharacterStore::save_kit(&kit, &root).expect("saves the kit");
+        assert!(root.join("cpr_kit.txt").exists());
+        CprCharacterStore::save(&character, &root).expect("re-saves");
+        assert_eq!(CprCharacterStore::load_kit(&root), Ok(kit.clone()));
+
+        let empty = root.parent().expect("has parent").join("no-character");
+        assert!(CprCharacterStore::save_kit(&kit, &empty).is_err_and(|e| e.contains("envelope.txt")));
+        assert!(!empty.join("cpr_kit.txt").exists());
         fs::remove_dir_all(root.parent().expect("has parent")).ok();
     }
 

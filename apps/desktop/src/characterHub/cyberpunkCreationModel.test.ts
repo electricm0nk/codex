@@ -32,6 +32,12 @@ import {
   removeRolePick,
   rolePickTargets,
   roleAbilityTiles,
+  setKitPick,
+  addKitPurchase,
+  removeKitPurchase,
+  kitMoneyTiles,
+  kitRowTiles,
+  shopKinds,
   type CyberpunkCreationDraft,
 } from './cyberpunkCreationModel';
 import { readFileSync } from 'node:fs';
@@ -46,6 +52,7 @@ import { boxesInColumn } from './sheetLayout';
 import { characterCreationGate } from './characterHubRuntime';
 import type {
   CyberpunkCreationPreview,
+  CyberpunkKit,
   CyberpunkPickOption,
   CyberpunkPointsOption,
   CyberpunkRoleChoiceMenu,
@@ -86,6 +93,7 @@ function preview(partial: Partial<CyberpunkCreationPreview>): CyberpunkCreationP
     culturalLanguage: null,
     skills: { lines: [], rows: [] },
     roleAbility: null,
+    kit: null,
     explanations: [],
     problems: [],
     ...partial,
@@ -538,3 +546,119 @@ testAdjustRolePointsStepsThroughTheEnginesSteps();
 testRolePicksAddAndRemoveAndUpgradeTargetsAreThePickedVehicles();
 testChangingRoleClearsTheRoleAbilityChoices();
 testTheRoleAbilityTilesAreTheEnginesRows();
+
+// ---- Starting kit + cash (E3.6) ----
+
+function kit(partial: Partial<CyberpunkKit>): CyberpunkKit {
+  return { method: 'fixed', lines: [], items: [], shop: [], rows: [], ...partial };
+}
+
+function testTheKitRequestCarriesTheDraftsPicksAndPurchases() {
+  const draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Lawman' };
+  assertEqual(JSON.stringify(buildCyberpunkPreviewRequest(draft)?.kit), '{"picks":[],"purchases":[]}', 'nothing chosen, nothing sent');
+  const chosen = addKitPurchase(setKitPick(draft, 3, 'Basic Slug Ammunition'), {
+    kind: 'ammo',
+    name: 'Basic Ammunition',
+    variant: 'Rifle',
+    quantity: 20,
+  });
+  const request = buildCyberpunkPreviewRequest(chosen);
+  assertEqual(
+    JSON.stringify(request?.kit),
+    '{"picks":[{"line":3,"option":"Basic Slug Ammunition"}],"purchases":[{"kind":"ammo","name":"Basic Ammunition","variant":"Rifle","quantity":20}]}',
+    'the pick by line and the purchase with its variant and quantity'
+  );
+  const create = buildCyberpunkCreateRequest(chosen, { generateId: () => 'id', now: () => 'now' });
+  assertEqual(JSON.stringify(create?.creation.kit), JSON.stringify(request?.kit), 'create saves the previewed kit');
+}
+
+function testSetKitPickReplacesThatLinesPickOnly() {
+  const draft = setKitPick(setKitPick({ ...EMPTY_CYBERPUNK_DRAFT, role: 'Fixer' }, 0, 'Heavy Pistol'), 1, 'Very Heavy Pistol');
+  const again = setKitPick(draft, 0, 'Very Heavy Pistol');
+  assertEqual(
+    JSON.stringify(again.kit.picks),
+    '[{"line":0,"option":"Very Heavy Pistol"},{"line":1,"option":"Very Heavy Pistol"}]',
+    'a second pick on a line replaces the first; the other line keeps its own (the Fixer prints the same line twice)'
+  );
+}
+
+function testKitPurchasesAddAndRemove() {
+  const one = addKitPurchase({ ...EMPTY_CYBERPUNK_DRAFT, role: 'Solo' }, { kind: 'gear', name: 'Flashlight', variant: null, quantity: 2 });
+  const two = addKitPurchase(one, { kind: 'weapon', name: 'Heavy Pistol', variant: null, quantity: 1 });
+  assertEqual(two.kit.purchases.map((p) => p.name).join('|'), 'Flashlight|Heavy Pistol', 'in the order bought');
+  assertEqual(removeKitPurchase(two, 0).kit.purchases.map((p) => p.name).join('|'), 'Heavy Pistol', 'removes that purchase only');
+}
+
+function testChangingRoleOrMethodStartsTheKitOver() {
+  const draft = addKitPurchase(setKitPick({ ...EMPTY_CYBERPUNK_DRAFT, role: 'Solo' }, 2, 'Bulletproof Shield'), {
+    kind: 'gear',
+    name: 'Flashlight',
+    variant: null,
+    quantity: 1,
+  });
+  assertEqual(JSON.stringify(selectRole(draft, 'Tech', []).kit), '{"picks":[],"purchases":[]}', "a new Role's kit starts over");
+  assertEqual(
+    JSON.stringify(selectMethod(draft, 'completePackage', []).kit),
+    '{"picks":[],"purchases":[]}',
+    "a new method's kit starts over (a Complete Package has no fixed kit and its own budget)"
+  );
+}
+
+function testKitMoneyTilesAreTheEnginesRows() {
+  const p = preview({
+    kit: kit({
+      method: 'completePackage',
+      rows: [
+        { id: 'cpr.kit.budget', value: 2550, detail: 'Starting cash 2550eb: the Complete Package 2550eb (p105)' },
+        { id: 'cpr.kit.spent', value: 700, detail: 'Spent 700eb on 3 purchase(s)' },
+        { id: 'cpr.cash', value: 1850, detail: 'Cash 1850eb = 2550eb - 700eb spent at creation (A-9)' },
+        { id: 'cpr.kit.fashion_budget', value: 800, detail: 'Fashion budget 800eb' },
+        { id: 'cpr.kit.fashion_spent', value: 120, detail: 'Fashion bought: 120eb' },
+        { id: 'cpr.kit.fashion_left', value: 680, detail: 'Fashion budget left 680eb; lost if unspent (p106)' },
+      ],
+    }),
+  });
+  assertEqual(
+    kitMoneyTiles(p).map((t) => `${t.label}=${t.value}`).join('|'),
+    'Starting cash=2550|Spent=700|Cash left=1850|Fashion budget=800|Fashion bought=120|Fashion left (lost if unspent)=680',
+    'one tile per engine row, the value the row\'s own'
+  );
+  assertEqual(kitMoneyTiles(preview({})).length, 0, 'no kit, no tiles');
+  assertEqual(
+    kitRowTiles([
+      { id: 'cpr.stat.int', value: 6, detail: 'INT 6' },
+      { id: 'cpr.cash', value: 1850, detail: 'Cash 1850eb' },
+      { id: 'cpr.kit.fashion_left', value: 0, detail: 'Fashion budget left 0eb: the 680eb unspent went away' },
+    ])
+      .map((t) => `${t.label}=${t.value}`)
+      .join('|'),
+    'Cash left=1850|Fashion left (lost if unspent)=0',
+    "the saved character's money tiles are its create rows, the lost fashion budget at 0"
+  );
+}
+
+function testShopKindsAreTheShopsOwnKindsInOrder() {
+  const item = (kind: string, name: string) => ({
+    kind,
+    name,
+    costEb: 10,
+    costText: '10eb',
+    sourcePage: 'p341',
+    variantLabel: null,
+    variantNote: '',
+    variants: [],
+  });
+  const shop = [item('weapon', 'Heavy Pistol'), item('weapon', 'Shotgun'), item('gear', 'Flashlight'), item('program', 'Sword')];
+  assertEqual(
+    shopKinds(shop).map((k) => `${k.kind}:${k.label}`).join('|'),
+    'weapon:Weapons|gear:Gear|program:Programs',
+    'each kind once, in the shop order, with its label'
+  );
+}
+
+testTheKitRequestCarriesTheDraftsPicksAndPurchases();
+testSetKitPickReplacesThatLinesPickOnly();
+testKitPurchasesAddAndRemove();
+testChangingRoleOrMethodStartsTheKitOver();
+testKitMoneyTilesAreTheEnginesRows();
+testShopKindsAreTheShopsOwnKindsInOrder();

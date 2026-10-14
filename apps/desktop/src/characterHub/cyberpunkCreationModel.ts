@@ -5,11 +5,14 @@ import type {
   CyberpunkCreationProblem,
   CyberpunkCreationRequest,
   CyberpunkCreationRow,
+  CyberpunkKitPurchase,
+  CyberpunkKitRequest,
   CyberpunkLifepathRequest,
   CyberpunkPickOption,
   CyberpunkPointsOption,
   CyberpunkRoleAbilityRequest,
   CyberpunkRoleChoiceMenu,
+  CyberpunkShopItem,
   CyberpunkSkillLine,
   CyberpunkSkillsRequest,
   CyberpunkStatValue,
@@ -35,6 +38,10 @@ import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
  * The Role Ability (E3.5): the draft holds only the points the player placed and the picks made.
  * What can be divided or picked, each option's allowed values, the rank and every number shown
  * are the engine's preview (`roleAbility.menu`, `roleAbility.rows`).
+ *
+ * The starting kit (E3.6): the draft holds only the "or" picks (by line) and the purchases. The
+ * kit lines, the items, the shop and its prices, and every money figure (budget, spent, cash left,
+ * the fashion budget) are the engine's preview (`kit`).
  */
 
 export interface CyberpunkCreationDraft {
@@ -54,11 +61,14 @@ export interface CyberpunkCreationDraft {
   skills: CyberpunkSkillsRequest;
   /** The Role Ability points placed and picks made. */
   roleAbility: CyberpunkRoleAbilityRequest;
+  /** The starting kit's "or" picks and purchases. */
+  kit: CyberpunkKitRequest;
 }
 
 export const EMPTY_LIFEPATH: CyberpunkLifepathRequest = { picks: [], counts: {}, skips: [], culturalLanguage: null };
 export const EMPTY_SKILLS: CyberpunkSkillsRequest = { levels: {}, specialties: {} };
 export const EMPTY_ROLE_ABILITY: CyberpunkRoleAbilityRequest = { points: {}, picks: [] };
+export const EMPTY_KIT: CyberpunkKitRequest = { picks: [], purchases: [] };
 
 export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   displayLabel: '',
@@ -70,6 +80,7 @@ export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   lifepath: EMPTY_LIFEPATH,
   skills: EMPTY_SKILLS,
   roleAbility: EMPTY_ROLE_ABILITY,
+  kit: EMPTY_KIT,
 };
 
 /** The three ways to make STATs (p. 73), in the book's order. */
@@ -100,6 +111,10 @@ export function buildCyberpunkPreviewRequest(draft: CyberpunkCreationDraft): Cyb
     roleAbility: {
       points: { ...draft.roleAbility.points },
       picks: draft.roleAbility.picks.map((pick) => ({ ...pick })),
+    },
+    kit: {
+      picks: draft.kit.picks.map((pick) => ({ ...pick })),
+      purchases: draft.kit.purchases.map((purchase) => ({ ...purchase })),
     },
   };
 }
@@ -135,6 +150,7 @@ export function rollAgain(draft: CyberpunkCreationDraft): CyberpunkCreationDraft
  * Changes the method: the dice and the Streetrat row reset; a Complete Package with no allocation
  * yet starts from the STATs on screen (`shown`, the engine's preview), which the player then moves.
  * The skill levels start over (each method keys them differently); named specialties are kept.
+ * The kit starts over (a Complete Package has no fixed kit and its own budget).
  */
 export function selectMethod(
   draft: CyberpunkCreationDraft,
@@ -146,7 +162,7 @@ export function selectMethod(
   }
   const startFromShown = method === 'completePackage' && Object.keys(draft.stats).length === 0;
   const stats = startFromShown ? Object.fromEntries(shown.map((stat) => [stat.id, stat.value])) : draft.stats;
-  return { ...draft, method, seed: null, templateRoll: null, stats, skills: { ...draft.skills, levels: {} } };
+  return { ...draft, method, seed: null, templateRoll: null, stats, skills: { ...draft.skills, levels: {} }, kit: EMPTY_KIT };
 }
 
 /** One point up or down on a STAT, never below zero; the 2-8 range and the total are the engine's to refuse. */
@@ -299,7 +315,7 @@ export function setCulturalLanguage(draft: CyberpunkCreationDraft, name: string 
   return { ...draft, lifepath: { ...draft.lifepath, culturalLanguage: trimmed === '' ? null : trimmed } };
 }
 
-/** Changes the Role: fresh dice, no template row, only the general Lifepath choices kept, skill levels and Role Ability choices start over. */
+/** Changes the Role: fresh dice, no template row, only the general Lifepath choices kept, skill levels, Role Ability choices and kit start over. */
 export function selectRole(draft: CyberpunkCreationDraft, role: string | null, lifepathRecords: readonly CyberpunkRecord[]): CyberpunkCreationDraft {
   const general = new Set(lifepathRecords.filter((r) => r.group === 'general').map((r) => String(r.name)));
   const counts = Object.fromEntries(Object.entries(draft.lifepath.counts).filter(([table]) => general.has(table)));
@@ -310,6 +326,7 @@ export function selectRole(draft: CyberpunkCreationDraft, role: string | null, l
     templateRoll: null,
     skills: { ...draft.skills, levels: {} },
     roleAbility: EMPTY_ROLE_ABILITY,
+    kit: EMPTY_KIT,
     lifepath: {
       ...draft.lifepath,
       picks: draft.lifepath.picks.filter((p) => general.has(p.table)),
@@ -451,4 +468,67 @@ export function rolePickTargets(menu: CyberpunkRoleChoiceMenu, option: Cyberpunk
 /** One tile per engine `cpr.role.*` row of the Role Ability, labelled by the row's detail up to its colon. */
 export function roleAbilityTiles(preview: Pick<CyberpunkCreationPreview, 'roleAbility'>): CyberpunkTile[] {
   return (preview.roleAbility?.rows ?? []).map((row) => ({ id: row.id, label: row.detail.split(':')[0], value: row.value }));
+}
+
+// ---- Starting kit + cash (E3.6) ----
+
+/** Picks `option` on the fixed kit's "or" line `line`, replacing an earlier pick of that line. Whether it is an option is the engine's to refuse. */
+export function setKitPick(draft: CyberpunkCreationDraft, line: number, option: string): CyberpunkCreationDraft {
+  const picks = draft.kit.picks.filter((pick) => pick.line !== line);
+  const at = picks.findIndex((pick) => pick.line > line);
+  picks.splice(at === -1 ? picks.length : at, 0, { line, option });
+  return { ...draft, kit: { ...draft.kit, picks } };
+}
+
+/** Adds one purchase; its price and the budget are the engine's to answer or refuse. */
+export function addKitPurchase(draft: CyberpunkCreationDraft, purchase: CyberpunkKitPurchase): CyberpunkCreationDraft {
+  return { ...draft, kit: { ...draft.kit, purchases: [...draft.kit.purchases, { ...purchase }] } };
+}
+
+/** Removes the purchase at `index`. */
+export function removeKitPurchase(draft: CyberpunkCreationDraft, index: number): CyberpunkCreationDraft {
+  return { ...draft, kit: { ...draft.kit, purchases: draft.kit.purchases.filter((_, i) => i !== index) } };
+}
+
+const KIT_MONEY_LABELS: Readonly<Record<string, string>> = {
+  'cpr.kit.budget': 'Starting cash',
+  'cpr.kit.spent': 'Spent',
+  'cpr.cash': 'Cash left',
+  'cpr.kit.fashion_budget': 'Fashion budget',
+  'cpr.kit.fashion_spent': 'Fashion bought',
+  'cpr.kit.fashion_left': 'Fashion left (lost if unspent)',
+};
+
+/** One tile per engine money row (`cpr.kit.*`, `cpr.cash`) among `rows`, in the engine's order; other rows are skipped. */
+export function kitRowTiles(rows: readonly CyberpunkCreationRow[]): CyberpunkTile[] {
+  return rows.filter((row) => row.id in KIT_MONEY_LABELS).map((row) => ({ id: row.id, label: KIT_MONEY_LABELS[row.id], value: row.value }));
+}
+
+/** The kit step's money tiles: the engine's `kit.rows`. */
+export function kitMoneyTiles(preview: Pick<CyberpunkCreationPreview, 'kit'>): CyberpunkTile[] {
+  return kitRowTiles(preview.kit?.rows ?? []);
+}
+
+const SHOP_KIND_LABELS: Readonly<Record<string, string>> = {
+  weapon: 'Weapons',
+  attachment: 'Weapon attachments',
+  ammo: 'Ammunition',
+  armor: 'Armor',
+  gear: 'Gear',
+  fashion: 'Fashion',
+  drug: 'Street drugs',
+  cyberdeck: 'Cyberdecks',
+  net_hardware: 'Cyberdeck hardware',
+  program: 'Programs',
+};
+
+/** The shop's kinds, each once, in the shop's order, with a label. */
+export function shopKinds(shop: readonly CyberpunkShopItem[]): { kind: string; label: string }[] {
+  const seen: string[] = [];
+  for (const item of shop) {
+    if (!seen.includes(item.kind)) {
+      seen.push(item.kind);
+    }
+  }
+  return seen.map((kind) => ({ kind, label: SHOP_KIND_LABELS[kind] ?? kind }));
 }

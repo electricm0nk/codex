@@ -22,6 +22,12 @@ import { formatError, hasTauriRuntime } from './runtime';
  * sub-choices the rank asks for (Combat Awareness points, Maker specialty ranks, Medicine points
  * and drugs, Family Motorpool picks, the Exec's Team Member) are listed, checked and answered with
  * `cpr.role.<role>.` rows by the engine.
+ *
+ * SD-38 E3.6 adds the starting kit (`kit`): Streetrat and Edgerunner take the Role's fixed kit
+ * (one option of each "or" line, the first printed until picked) and 500eb; a Complete Package
+ * buys everything with 2,550eb and an 800eb fashion-only budget lost if unspent. Every method buys
+ * from the engine's shop at the printed prices; the money is the engine's `cpr.kit.*` rows and
+ * `cpr.cash`, the cash left.
  */
 
 export type CyberpunkCreationMethod = 'streetrat' | 'edgerunner' | 'completePackage';
@@ -42,6 +48,88 @@ export interface CyberpunkCreationRequest {
   skills?: CyberpunkSkillsRequest | null;
   /** The Role Ability sub-choices; none sent, none made. */
   roleAbility?: CyberpunkRoleAbilityRequest | null;
+  /** The starting kit's "or" picks and purchases; none sent, the fixed kit's first options and nothing bought. */
+  kit?: CyberpunkKitRequest | null;
+}
+
+/** The option an "or" line of the fixed kit takes, by the line's index in `kit.lines`. */
+export interface CyberpunkKitPick {
+  line: number;
+  option: string;
+}
+
+/** One purchase: a shop kind and record name, its variant (armour location, ammunition caliber, fashion piece) and how many. */
+export interface CyberpunkKitPurchase {
+  kind: string;
+  name: string;
+  variant: string | null;
+  quantity: number;
+}
+
+export interface CyberpunkKitRequest {
+  picks: CyberpunkKitPick[];
+  purchases: CyberpunkKitPurchase[];
+}
+
+export interface CyberpunkKitOption {
+  name: string;
+  quantity: number;
+}
+
+/** One printed line of the fixed kit; an "or" line takes one option (`taken`). */
+export interface CyberpunkKitLine {
+  /** `weapons_armor` or `outfit`. */
+  section: string;
+  text: string;
+  sourcePage: string;
+  pickOne: boolean;
+  fashion: boolean;
+  options: CyberpunkKitOption[];
+  /** The option an "or" line takes (the first until picked); empty for a plain line. */
+  taken: string;
+  /** The player picked `taken`. */
+  picked: boolean;
+}
+
+export interface CyberpunkShopVariant {
+  name: string;
+  /** A fashion piece's own price. */
+  costEb: number | null;
+}
+
+/** One buyable record at its printed price (ammunition: per ten rounds, or per grenade or rocket). */
+export interface CyberpunkShopItem {
+  kind: string;
+  name: string;
+  costEb: number;
+  costText: string;
+  sourcePage: string;
+  /** `Location`, `Caliber` or `Piece` when the purchase names a variant. */
+  variantLabel: string | null;
+  variantNote: string;
+  variants: CyberpunkShopVariant[];
+}
+
+/** One item the character starts with, as the engine built it. */
+export interface CyberpunkKitItem {
+  /** `weapons_armor` or `outfit` (fixed kit), or `bought`. */
+  section: string;
+  kind: string;
+  name: string;
+  quantity: number;
+  /** The engine's price of this purchase (0 for a fixed-kit item). */
+  costEb: number;
+  fashion: boolean;
+}
+
+export interface CyberpunkKit {
+  method: 'fixed' | 'completePackage';
+  lines: CyberpunkKitLine[];
+  /** Empty while the kit is refused. */
+  items: CyberpunkKitItem[];
+  shop: CyberpunkShopItem[];
+  /** The engine's `cpr.kit.*` rows and `cpr.cash`; empty while refused. */
+  rows: CyberpunkCreationRow[];
 }
 
 /** One Role Ability pick, with what it goes on (an upgrade's vehicle, a Team Member's chart row). */
@@ -241,6 +329,8 @@ export interface CyberpunkCreationPreview {
   skills: CyberpunkSkills;
   /** The Role Ability at its starting rank: the engine's menu and rows. */
   roleAbility: CyberpunkRoleAbility | null;
+  /** The starting kit: fixed lines, items, the shop and the engine's money rows. */
+  kit: CyberpunkKit | null;
   /** The engine's `cpr.stat.*`, `cpr.derived.*`, skill and skill-points rows; empty while a problem stands. */
   explanations: CyberpunkCreationRow[];
   problems: CyberpunkCreationProblem[];
@@ -271,6 +361,7 @@ function wire(request: CyberpunkCreationRequest) {
     lifepath: request.lifepath ?? { picks: [], counts: {}, skips: [], culturalLanguage: null },
     skills: request.skills ?? { levels: {}, specialties: {} },
     roleAbility: request.roleAbility ?? { points: {}, picks: [] },
+    kit: request.kit ?? { picks: [], purchases: [] },
   };
 }
 

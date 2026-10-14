@@ -12,6 +12,7 @@ import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCybe
 import {
   CYBERPUNK_CREATION_METHODS,
   EMPTY_CYBERPUNK_DRAFT,
+  addKitPurchase,
   addRolePick,
   addSkill,
   adjustRolePoints,
@@ -25,7 +26,10 @@ import {
   cyberpunkDerivedTiles,
   cyberpunkStatTiles,
   dropSkill,
+  kitMoneyTiles,
+  kitRowTiles,
   lifepathRowOptions,
+  removeKitPurchase,
   removeRolePick,
   roleAbilityTiles,
   rolePickTargets,
@@ -33,6 +37,7 @@ import {
   selectMethod,
   selectRole,
   setCulturalLanguage,
+  setKitPick,
   setLifepathCount,
   setLifepathPick,
   setLifepathSkip,
@@ -40,6 +45,7 @@ import {
   skillKey,
   skillOptions,
   skillPointTiles,
+  shopKinds,
   templateRowOptions,
   withPreviewSeed,
   type CyberpunkCreationDraft,
@@ -79,6 +85,12 @@ import { boxesInColumn } from './sheetLayout';
  * a time (Combat Awareness, Maker, Medicine), and picks added or removed (Family Motorpool
  * vehicles and upgrades, the Exec's Team Member and its chart row, the Medtech's drugs). Every
  * number shown is an engine `cpr.role.*` row; a refused choice shows the engine's reason.
+ *
+ * The starting kit panel (E3.6) shows the Role's fixed kit for Streetrat and Edgerunner, each "or"
+ * line a choice of its printed options, and for every method a shop of the engine's priced
+ * records (kind, item, its location, caliber or piece, quantity) with the purchases made. The
+ * budget, the spent figure, the cash left and the Complete Package fashion budget are the engine's
+ * `cpr.kit.*` and `cpr.cash` rows; a refused purchase or overspend shows the engine's reason.
  */
 
 const LABEL_STYLE: CSSProperties = {
@@ -112,7 +124,7 @@ const LEGEND_STYLE: CSSProperties = { fontSize: '0.85rem', fontWeight: 700 };
 const MUTED_STYLE: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 };
 
 type Outcome =
-  | { kind: 'saved'; headline: string; stats: CyberpunkTile[]; derived: CyberpunkTile[]; language: CyberpunkTile | null }
+  | { kind: 'saved'; headline: string; stats: CyberpunkTile[]; derived: CyberpunkTile[]; language: CyberpunkTile | null; money: CyberpunkTile[] }
   | { kind: 'blocked'; diagnostics: CyberpunkCreationProblem[] };
 
 function Tile(props: { tile: CyberpunkTile }) {
@@ -144,6 +156,10 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const [newSpecialty, setNewSpecialty] = useState('');
   const [newPick, setNewPick] = useState('');
   const [newPickTarget, setNewPickTarget] = useState('');
+  const [shopKind, setShopKind] = useState('');
+  const [shopName, setShopName] = useState('');
+  const [shopVariant, setShopVariant] = useState('');
+  const [shopQuantity, setShopQuantity] = useState('1');
   const [preview, setPreview] = useState<CyberpunkCreationPreview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -209,6 +225,18 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const pickOption = roleAbility?.menu.picks?.options.find((option) => option.name === newPick);
   const pickTargets = roleAbility && pickOption ? rolePickTargets(roleAbility.menu, pickOption, draft) : [];
   const canPick = pickOption !== undefined && (!pickOption.needsTarget || pickTargets.includes(newPickTarget));
+  const kit = preview?.kit ?? null;
+  const moneyTiles = preview ? kitMoneyTiles(preview) : [];
+  const kinds = kit ? shopKinds(kit.shop) : [];
+  const shopItems = kit ? kit.shop.filter((item) => item.kind === shopKind) : [];
+  const shopItem = shopItems.find((item) => item.name === shopName);
+  const quantity = Number.parseInt(shopQuantity, 10);
+  const canBuy =
+    shopItem !== undefined &&
+    (shopItem.variantLabel === null || shopItem.variants.some((v) => v.name === shopVariant)) &&
+    Number.isInteger(quantity) &&
+    quantity > 0;
+  const boughtItems = kit ? kit.items.filter((item) => item.section === 'bought') : [];
 
   function skillLine(line: CyberpunkSkillLine, index: number) {
     const id = `cpr-skill-${index}`;
@@ -374,6 +402,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
           headline: `${result.summary.displayLabel} is ready`,
           stats: cyberpunkStatTiles(result.explanations, shownStats),
           derived: cyberpunkDerivedTiles(result.explanations),
+          money: kitRowTiles(result.explanations),
           language: culturalLanguageTile({
             culturalLanguage: preview?.culturalLanguage ?? null,
             skills: preview?.skills ?? { lines: [], rows: [] },
@@ -709,6 +738,169 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
         </fieldset>
       ) : null}
 
+      {kit ? (
+        <fieldset id="cpr-kit" style={{ ...FIELDSET_STYLE, marginTop: '1rem' }}>
+          <legend style={LEGEND_STYLE}>Starting kit and cash</legend>
+          {moneyTiles.length > 0 ? (
+            <div style={{ margin: '0.5rem 0' }}>
+              <TileGrid tiles={moneyTiles} />
+            </div>
+          ) : null}
+          <p style={MUTED_STYLE}>
+            {kit.method === 'completePackage'
+              ? 'Complete Package: buy everything you start with (p105). Fashion is paid from its own budget first; what is left of that budget is lost (p106).'
+              : "Your Role's kit (p099, p104): take one option of each \"or\" line. Spend your cash on other items or keep it."}
+          </p>
+          {kit.lines.map((line, index) => (
+            <div
+              key={`${line.section}:${index}`}
+              data-kit-line={line.text}
+              style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', padding: '0.2rem 0' }}
+            >
+              <span style={{ flex: '1 1 12rem', fontWeight: line.pickOne ? 600 : 400 }}>{line.text}</span>
+              {line.pickOne ? (
+                <select
+                  id={`cpr-kit-line-${index}`}
+                  aria-label={`Pick: ${line.text}`}
+                  style={{ ...INPUT_STYLE, width: '14rem' }}
+                  value={line.taken}
+                  onChange={(event) => setDraft(setKitPick(draft, index, event.target.value))}
+                >
+                  {line.options.map((option) => (
+                    <option key={option.name} value={option.name}>
+                      {option.quantity > 1 ? `${option.name} x${option.quantity}` : option.name}
+                    </option>
+                  ))}
+                </select>
+              ) : null}
+            </div>
+          ))}
+          {draft.kit.purchases.length > 0 ? (
+            <div data-kit-purchases="bought" style={{ marginTop: '0.5rem' }}>
+              <p style={MUTED_STYLE}>Bought</p>
+              {draft.kit.purchases.map((purchase, index) => {
+                const bought = boughtItems[index];
+                return (
+                  <div
+                    key={`${purchase.kind}:${purchase.name}:${purchase.variant ?? ''}#${index}`}
+                    style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', padding: '0.2rem 0' }}
+                  >
+                    <span style={{ flex: '1 1 12rem' }}>
+                      {bought ? bought.name : `${purchase.name}${purchase.variant ? ` (${purchase.variant})` : ''}`} x{purchase.quantity}
+                    </span>
+                    {bought ? <span style={{ minWidth: '4rem', textAlign: 'right' }}>{bought.costEb}eb</span> : null}
+                    <button type="button" style={SMALL_BUTTON_STYLE} onClick={() => setDraft(removeKitPurchase(draft, index))}>
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+          <div style={{ alignItems: 'flex-end', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+            <div style={{ ...FIELD_STYLE, flex: '1 1 9rem', marginBottom: 0 }}>
+              <label style={LABEL_STYLE} htmlFor="cpr-shop-kind">
+                Shop
+              </label>
+              <select
+                id="cpr-shop-kind"
+                style={INPUT_STYLE}
+                value={shopKind}
+                onChange={(event) => {
+                  setShopKind(event.target.value);
+                  setShopName('');
+                  setShopVariant('');
+                }}
+              >
+                <option value="">— choose a list —</option>
+                {kinds.map((k) => (
+                  <option key={k.kind} value={k.kind}>
+                    {k.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {shopKind !== '' ? (
+              <div style={{ ...FIELD_STYLE, flex: '2 1 14rem', marginBottom: 0 }}>
+                <label style={LABEL_STYLE} htmlFor="cpr-shop-item">
+                  Item
+                </label>
+                <select
+                  id="cpr-shop-item"
+                  style={INPUT_STYLE}
+                  value={shopName}
+                  onChange={(event) => {
+                    setShopName(event.target.value);
+                    setShopVariant('');
+                  }}
+                >
+                  <option value="">— choose an item —</option>
+                  {shopItems.map((item) => (
+                    <option key={item.name} value={item.name}>
+                      {item.variantLabel === 'Piece' ? item.name : `${item.name} (${item.costText})`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+            {shopItem && shopItem.variantLabel !== null ? (
+              <div style={{ ...FIELD_STYLE, flex: '1 1 9rem', marginBottom: 0 }}>
+                <label style={LABEL_STYLE} htmlFor="cpr-shop-variant" title={shopItem.variantNote}>
+                  {shopItem.variantLabel}
+                </label>
+                <select id="cpr-shop-variant" style={INPUT_STYLE} value={shopVariant} onChange={(event) => setShopVariant(event.target.value)}>
+                  <option value="">— choose —</option>
+                  {shopItem.variants.map((variant) => (
+                    <option key={variant.name} value={variant.name}>
+                      {variant.costEb === null ? variant.name : `${variant.name} (${variant.costEb}eb)`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+            {shopItem ? (
+              <div style={{ ...FIELD_STYLE, flex: '0 1 6rem', marginBottom: 0 }}>
+                <label style={LABEL_STYLE} htmlFor="cpr-shop-quantity">
+                  How many
+                </label>
+                <input
+                  id="cpr-shop-quantity"
+                  type="number"
+                  min={1}
+                  style={INPUT_STYLE}
+                  value={shopQuantity}
+                  onChange={(event) => setShopQuantity(event.target.value)}
+                />
+              </div>
+            ) : null}
+            <button
+              type="button"
+              style={SMALL_BUTTON_STYLE}
+              disabled={!canBuy}
+              onClick={() => {
+                if (!shopItem) {
+                  return;
+                }
+                setDraft(
+                  addKitPurchase(draft, {
+                    kind: shopItem.kind,
+                    name: shopItem.name,
+                    variant: shopItem.variantLabel === null ? null : shopVariant,
+                    quantity,
+                  })
+                );
+                setShopName('');
+                setShopVariant('');
+                setShopQuantity('1');
+              }}
+            >
+              Buy
+            </button>
+          </div>
+          {shopItem?.variantNote ? <p style={{ ...MUTED_STYLE, marginTop: '0.35rem' }}>{shopItem.variantNote}</p> : null}
+        </fieldset>
+      ) : null}
+
       {blocking.length > 0 ? (
         <ul style={{ color: 'var(--color-warn)', fontSize: '0.85rem', margin: '0.75rem 0', paddingLeft: '1.1rem' }}>
           {blocking.map((problem) => (
@@ -745,6 +937,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
                 <TileGrid tiles={outcome.stats} />
                 <TileGrid tiles={outcome.derived} />
                 {outcome.language ? <TileGrid tiles={[outcome.language]} /> : null}
+                {outcome.money.length > 0 ? <TileGrid tiles={outcome.money} /> : null}
               </div>
             </>
           ) : (

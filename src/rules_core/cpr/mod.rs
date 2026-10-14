@@ -12,6 +12,7 @@
 //! per module, so two lanes never edit the same line.
 
 pub mod input;
+pub mod kit;
 pub mod sheet;
 pub mod store;
 

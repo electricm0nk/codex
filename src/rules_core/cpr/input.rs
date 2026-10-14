@@ -7,6 +7,7 @@
 //! ammunition, housing) in its own file and grammar, `cpr_sheet_choices.txt`.
 //! [`CprLifepath`] holds the Lifepath answers (printed text, p. 45-70) in `cpr_lifepath.txt`.
 //! [`CprRoleChoices`] holds the Role Ability sub-choices (p. 142-166) in `cpr_role_choices.txt`.
+//! [`CprKit`] holds the starting kit (p099-p106) in `cpr_kit.txt`.
 
 use std::fmt::Write as _;
 
@@ -589,6 +590,67 @@ pub fn parse_cpr_role_choices(text: &str) -> Result<CprRoleChoices, String> {
     Ok(choices)
 }
 
+/// The starting kit the character was made with (p099-p106; E3.6): every item, fixed or bought,
+/// as printed, with its quantity. Held in its own file, `cpr_kit.txt`, one line each:
+/// `item = <section> | <quantity> | <name>`, the section `weapons_armor` or `outfit` for the
+/// fixed kit and `bought` for a purchase. The cash left is the sheet's `cash` choice.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CprKit {
+    pub items: Vec<CprKitEntry>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CprKitEntry {
+    pub section: String,
+    pub name: String,
+    pub quantity: u32,
+}
+
+const KIT_FILE: &str = "cpr_kit.txt";
+
+/// Whether a kit name fits the `cpr_kit.txt` line grammar (not blank; no `|` or line break).
+pub fn kit_text_ok(text: &str) -> bool {
+    !text.trim().is_empty() && !text.contains(['|', '\n', '\r'])
+}
+
+/// The `cpr_kit.txt` text, in item order; no items is an empty file.
+pub fn render_cpr_kit(kit: &CprKit) -> String {
+    let mut out = String::new();
+    for item in &kit.items {
+        let _ = writeln!(out, "item = {} | {} | {}", item.section, item.quantity, item.name);
+    }
+    out
+}
+
+/// Parses `cpr_kit.txt`. An unknown key, a line without `=`, an item without its three fields,
+/// a quantity that is not a whole number and an item naming nothing are refused.
+pub fn parse_cpr_kit(text: &str) -> Result<CprKit, String> {
+    let mut kit = CprKit::default();
+    for raw_line in text.lines() {
+        let line = raw_line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let Some((key, value)) = line.split_once('=') else {
+            return Err(format!("{KIT_FILE} line missing '=': {raw_line}"));
+        };
+        let (key, value) = (key.trim(), value.trim());
+        if key != "item" {
+            return Err(format!("{KIT_FILE} has an unknown key '{key}'"));
+        }
+        let fields: Vec<&str> = value.split('|').map(str::trim).collect();
+        let [section, quantity, name] = fields[..] else {
+            return Err(format!("{KIT_FILE} item '{value}' is not '<section> | <quantity> | <name>'"));
+        };
+        let quantity = quantity.parse::<u32>().map_err(|_| format!("{KIT_FILE} item quantity '{quantity}' is not a whole number"))?;
+        if name.is_empty() || section.is_empty() {
+            return Err(format!("{KIT_FILE} item names nothing"));
+        }
+        kit.items.push(CprKitEntry { section: section.to_owned(), name: name.to_owned(), quantity });
+    }
+    Ok(kit)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -744,6 +806,28 @@ mod tests {
         assert_eq!(refused("pick = NOS @ \n"), "cpr_role_choices.txt pick 'NOS @' names nothing after '@'");
         assert!(role_choice_text_ok("High Performance Groundcar") && role_choice_text_ok("Medical Tech (Pharmaceuticals)"));
         assert!(!role_choice_text_ok("a @ b") && !role_choice_text_ok("a = b") && !role_choice_text_ok("x\ny") && !role_choice_text_ok(" "));
+    }
+
+    #[test]
+    fn kit_renders_and_parses_back() {
+        let kit = CprKit {
+            items: vec![
+                CprKitEntry { section: "weapons_armor".to_owned(), name: "Light Armorjack Body Armor (SP11)".to_owned(), quantity: 1 },
+                CprKitEntry { section: "bought".to_owned(), name: "Basic Rifle Ammunition".to_owned(), quantity: 70 },
+            ],
+        };
+        let text = render_cpr_kit(&kit);
+        assert_eq!(text, "item = weapons_armor | 1 | Light Armorjack Body Armor (SP11)\nitem = bought | 70 | Basic Rifle Ammunition\n");
+        assert_eq!(parse_cpr_kit(&text), Ok(kit));
+        assert_eq!(render_cpr_kit(&CprKit::default()), "");
+        assert_eq!(parse_cpr_kit(""), Ok(CprKit::default()));
+
+        let refused = |text: &str| parse_cpr_kit(text).unwrap_err();
+        assert_eq!(refused("cash = 5\n"), "cpr_kit.txt has an unknown key 'cash'");
+        assert_eq!(refused("item = outfit | Agent\n"), "cpr_kit.txt item 'outfit | Agent' is not '<section> | <quantity> | <name>'");
+        assert_eq!(refused("item = outfit | one | Agent\n"), "cpr_kit.txt item quantity 'one' is not a whole number");
+        assert_eq!(refused("item = outfit | 1 | \n"), "cpr_kit.txt item names nothing");
+        assert!(kit_text_ok("Radio Scanner/Music Player") && !kit_text_ok("a | b") && !kit_text_ok("x\ny") && !kit_text_ok(" "));
     }
 
     #[test]
