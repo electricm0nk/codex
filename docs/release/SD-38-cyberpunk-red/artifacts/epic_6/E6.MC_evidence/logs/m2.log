@@ -1,0 +1,58 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6)
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6/crates/codex-ingest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 32.20s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e6/debug/deps/codex_desktop-b8295afeae6a47bf)
+
+running 8 tests
+test cpr_catalog::tests::extras_add_slots_and_hardware_slots_come_from_the_corpus ... FAILED
+test cpr_catalog::tests::an_eighth_slot_is_refused ... FAILED
+test cpr_catalog::tests::the_p157_sample_deck_is_seven_of_seven ... FAILED
+test cpr_catalog::tests::unknown_deck_program_hardware_and_rank_are_refused ... FAILED
+test cpr_catalog::tests::each_deck_quality_name_is_a_corpus_cyberdeck_record ... FAILED
+test cpr_catalog::tests::the_command_reads_the_same_corpus_root ... ok
+test cpr_catalog::tests::an_unknown_kind_is_refused ... ok
+test cpr_catalog::tests::every_manifest_kind_lists_its_expected_count ... ok
+
+failures:
+
+---- cpr_catalog::tests::extras_add_slots_and_hardware_slots_come_from_the_corpus stdout ----
+
+thread 'cpr_catalog::tests::extras_add_slots_and_hardware_slots_come_from_the_corpus' (212006) panicked at src/cpr_catalog.rs:282:105:
+called `Result::unwrap()` on an `Err` value: "cpr_catalog.corpus_mismatch: corpus slots for 'Cyberdeck (Standard Quality)' differ from the engine's"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- cpr_catalog::tests::an_eighth_slot_is_refused stdout ----
+
+thread 'cpr_catalog::tests::an_eighth_slot_is_refused' (212002) panicked at src/cpr_catalog.rs:276:9:
+cpr_catalog.corpus_mismatch: corpus slots for 'Cyberdeck (Standard Quality)' differ from the engine's
+
+---- cpr_catalog::tests::the_p157_sample_deck_is_seven_of_seven stdout ----
+
+thread 'cpr_catalog::tests::the_p157_sample_deck_is_seven_of_seven' (212008) panicked at src/cpr_catalog.rs:266:100:
+called `Result::unwrap()` on an `Err` value: "cpr_catalog.corpus_mismatch: corpus slots for 'Cyberdeck (Standard Quality)' differ from the engine's"
+
+---- cpr_catalog::tests::unknown_deck_program_hardware_and_rank_are_refused stdout ----
+
+thread 'cpr_catalog::tests::unknown_deck_program_hardware_and_rank_are_refused' (212009) panicked at src/cpr_catalog.rs:294:9:
+assertion failed: deck_at(&root(), STANDARD, &names(&["Nope"]), &[], &none,
+            None).unwrap_err().contains("Nope")
+
+---- cpr_catalog::tests::each_deck_quality_name_is_a_corpus_cyberdeck_record stdout ----
+
+thread 'cpr_catalog::tests::each_deck_quality_name_is_a_corpus_cyberdeck_record' (212004) panicked at src/cpr_catalog.rs:304:13:
+assertion `left == right` failed
+  left: Number(7)
+ right: 8
+
+
+failures:
+    cpr_catalog::tests::an_eighth_slot_is_refused
+    cpr_catalog::tests::each_deck_quality_name_is_a_corpus_cyberdeck_record
+    cpr_catalog::tests::extras_add_slots_and_hardware_slots_come_from_the_corpus
+    cpr_catalog::tests::the_p157_sample_deck_is_seven_of_seven
+    cpr_catalog::tests::unknown_deck_program_hardware_and_rank_are_refused
+
+test result: FAILED. 3 passed; 5 failed; 0 ignored; 0 measured; 811 filtered out; finished in 0.15s
+
+error: test failed, to rerun pass `--bin codex-desktop`

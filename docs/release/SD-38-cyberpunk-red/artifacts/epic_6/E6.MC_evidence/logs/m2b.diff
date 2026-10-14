@@ -1,0 +1,26 @@
+diff --git a/data/cyberpunk-red/corpus/cyberdeck.json b/data/cyberpunk-red/corpus/cyberdeck.json
+index 6aef2be16e..d2b1258d66 100644
+--- a/data/cyberpunk-red/corpus/cyberdeck.json
++++ b/data/cyberpunk-red/corpus/cyberdeck.json
+@@ -22,7 +22,7 @@
+     ],
+     "cost_eb": 500,
+     "price_category": "Expensive",
+-    "slots": 7,
++    "slots": 8,
+     "text": "Modular platform that Programs and Hardware are installed on for the purpose of Netrunning. This cyberdeck has 7 slots to install Programs and Hardware. Requires Interface Plugs and Neural Link for a Netrunner to operate. Both Programs and Hardware take up the same limited slots in your Cyberdeck. What distinguishes a powerful Cyberdeck from a cheaper one is the number of slots it has for Programs and Hardware.",
+     "transcription_note": "p197 prints this row only as 'Cyberdeck'; 'Standard Quality' is the name on p352 and p354.",
+     "kind": "cyberdeck"
+diff --git a/src/rules_core/cpr/netrunning.rs b/src/rules_core/cpr/netrunning.rs
+index 0d52daf9c6..8009e90af4 100644
+--- a/src/rules_core/cpr/netrunning.rs
++++ b/src/rules_core/cpr/netrunning.rs
+@@ -83,7 +83,7 @@ impl CprDeckQuality {
+     pub fn base_slots(self) -> u8 {
+         match self {
+             Self::Poor => 5,
+-            Self::Standard => 7,
++            Self::Standard => 8,
+             Self::Excellent => 9,
+         }
+     }
