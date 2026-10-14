@@ -131,6 +131,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E2.8 | opus | complete | 2c61942c2d (engine); receipt and rows in the next commit | `artifacts/epic_2/E2.8_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr/reputation.rs`: `cpr.reputation.level` (0–10, Who Knows About You text from the corpus) and `cpr.reputation.facedown` (COOL ± Rep, printed "<n> + 1d10"); `CprReputation::record` keeps the defining event unless the new Level is higher; 1 rework (SF lines out dir missing); lane B done: `sd38-b` tree and its `CARGO_TARGET_DIR` removed after the push; after the §5 rebase onto E2.3, `cargo test --locked -j 8 --lib cpr:: -- --test-threads=8` → 74 passed, 0 failed |
 | 2026-10-14 | E2.4 | opus | complete | a180fb2f43 (engine + tests), f1ef20be3a (clippy fix), cda6994c46 (printed page citations); receipt and rows in the next commit | `artifacts/epic_2/E2.4_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/critical.rs`: `cpr.wound.{lightly,seriously,mortally}_wounded` (+ `_dv` 10/13/15), `cpr.wound.death_save`, `cpr.wound.base_death_save_penalty`; HP 40 → 40/20/1; 11 of 22 injuries raise the Base DSP (3 implementations); root 300/6650/0, desktop 2/818/0; lane A ends, tree removed |
 | 2026-10-14 | E3.1 | opus | complete | fabfa38ac0 (code); receipt and rows in the next commit | `artifacts/epic_3/E3.1_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `preview_cyberpunk_character` / `create_cyberpunk_character`: Streetrat row rolled or picked, Edgerunner 1d10 per STAT from its own column, Complete Package = corpus default 62, STATs 2–8; `CprRoller` (SplitMix64, u32 seed returned and replayed); rows = engine `cpr.stat.*` + `cpr.derived.*`; boundary `cprCreation.ts` |
+| 2026-10-14 | E3.2 | opus | complete | 2c4a65ecb5 (code); receipt and rows in the next commit | `artifacts/epic_3/E3.2_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | New Character under Cyberpunk Red opens `CyberpunkCreateForm` (`form: 'cyberpunk'`): Role, Streetrat/Edgerunner/Complete Package, STAT + derived tiles from `preview_cyberpunk_character`; saves via `create_cyberpunk_character` with the preview's seed; `cyberpunkCreateLayout.ts` registry; ui-smoke row `create-cyberpunk-streetrat-stats` |
 
 ## Epic reports
 
@@ -267,6 +268,10 @@ blockers.)
   parameter offering the GM-option totals 50/70/75/80. (2) The roller seed is a u32 so it crosses JSON to the frontend
   exactly; alternative not taken: u64 (above 2^53 a JS number loses it). (3) Create refuses an id already saved;
   alternative not taken: overwrite.
+- E3.2, Create form (no D-n/A-n names these): (1) a Complete Package allocation starts from the STATs on screen when the method is first chosen;
+  alternative not taken: every STAT at a fixed start value. (2) The `±1` STAT buttons clamp only at 0; the 2–8 range and the 62 total are the
+  engine's refusals, shown as its problems with Create closed; alternative not taken: a desktop clamp (a hand-kept rules table, R2).
+  (3) Streetrat rows are offered from the Role's `streetrat_template` records; alternative not taken: a fixed 1–10 list.
 
 ## Open blockers
 
