@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Poor Quality Cyberdeck",
+    "source_page": "p197",
+    "also_on": [
+      "p352",
+      "p354"
+    ],
+    "cost_eb": 100,
+    "price_category": "Premium",
+    "slots": 5,
+    "text": "A cheap modular platform that Programs and Hardware are installed on for the purpose of Netrunning. This cyberdeck has 5 slots to install Programs and Hardware. Requires Interface Plugs and Neural Link for a Netrunner to operate. Both Programs and Hardware take up the same limited slots in your Cyberdeck. What distinguishes a powerful Cyberdeck from a cheaper one is the number of slots it has for Programs and Hardware.",
+    "transcription_note": "p197 table is a two-line-per-row layout; the row-to-cost-to-slot alignment was confirmed on the p197 page image and by p352 (prices) and p354 (slot text). p354 names it 'Cyberdeck (Poor Quality)'.",
+    "kind": "cyberdeck"
+  },
+  {
+    "name": "Cyberdeck (Standard Quality)",
+    "source_page": "p197",
+    "also_on": [
+      "p352",
+      "p354"
+    ],
+    "cost_eb": 500,
+    "price_category": "Expensive",
+    "slots": 7,
+    "text": "Modular platform that Programs and Hardware are installed on for the purpose of Netrunning. This cyberdeck has 7 slots to install Programs and Hardware. Requires Interface Plugs and Neural Link for a Netrunner to operate. Both Programs and Hardware take up the same limited slots in your Cyberdeck. What distinguishes a powerful Cyberdeck from a cheaper one is the number of slots it has for Programs and Hardware.",
+    "transcription_note": "p197 prints this row only as 'Cyberdeck'; 'Standard Quality' is the name on p352 and p354.",
+    "kind": "cyberdeck"
+  },
+  {
+    "name": "Excellent Quality Cyberdeck",
+    "source_page": "p197",
+    "also_on": [
+      "p352",
+      "p354"
+    ],
+    "cost_eb": 1000,
+    "price_category": "Very Expensive",
+    "slots": 9,
+    "text": "A high-end modular platform that Programs and Hardware are installed on for the purpose of Netrunning. This cyberdeck has 9 slots to install Programs and Hardware. Requires Interface Plugs and Neural Link for a Netrunner to operate. Both Programs and Hardware take up the same limited slots in your Cyberdeck. What distinguishes a powerful Cyberdeck from a cheaper one is the number of slots it has for Programs and Hardware.",
+    "transcription_note": "p354 names it 'Cyberdeck (Excellent Quality)'.",
+    "kind": "cyberdeck"
+  }
+]

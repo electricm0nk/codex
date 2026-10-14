@@ -1,0 +1,578 @@
+[
+  {
+    "name": "NET Architecture Difficulty Rating",
+    "table_id": "difficulty",
+    "source_page": "p211",
+    "rows": [
+      {
+        "row": "Password/File/Control Node DV",
+        "values": {
+          "Basic": "DV6",
+          "Standard": "DV8",
+          "Uncommon": "DV10",
+          "Advanced": "DV12"
+        }
+      },
+      {
+        "row": "Interface of a Netrunner with a fighting chance",
+        "values": {
+          "Basic": "2",
+          "Standard": "4",
+          "Uncommon": "6",
+          "Advanced": "8"
+        }
+      },
+      {
+        "row": "Interface of a Netrunner who might die before reaching the bottom",
+        "values": {
+          "Basic": "N/A",
+          "Standard": "2 or less",
+          "Uncommon": "4 or less",
+          "Advanced": "6 or less"
+        }
+      }
+    ],
+    "text": "Step 0: Controlling the Difficulty Rating is a good way to make sure your NET Architecture will challenge your Netrunner (giving them a fighting chance) without outright killing them. A Standard Difficulty Rating is a good place to start.",
+    "generation_steps": [
+      "Step 1: Roll 3d6. This is the total number of floors the Architecture will have. Roll a d10; If you got 7 or higher, the Architecture has a branch in it. Roll that d10 again to see if you get another branch. When you don't, stop. Split up the total number of floors between the main branch and any branches you've rolled, according to your taste. A NET Architecture cannot branch until after the second floor in the main branch. Make sure that there is also a longest branch in the Architecture, so that there is a defined \"bottom\" to the NET Architecture, where a Netrunner can leave a Virus.",
+      "Step 2: Decide on the NET Architecture Difficulty Rating you want. Keep in mind the Interface Rank of your Netrunner Player Character. Start at the highest floor of the Architecture and work your way down. For the first two floors in the NET Architecture, roll on the Lobby table to determine what can be found on each floor, re-rolling any Program or Password entries already rolled. For the remaining floors, roll on the NET Architecture Body table that corresponds to the Difficulty Rating you assigned to the Architecture, re-rolling any Program or Password entries already rolled.",
+      "Step 3: For every File or Control Node in the Architecture you've generated, make sure it has a reason to exist in the Meatspace that the Architecture is installed in. If there are Control Nodes in the Architecture, decide what they are and if a Demon is present to operate them. Any Active Defenses will need a Demon present to run them. Feel free to replace any Program you've generated with another Program of the same Cost and swap around any floors you've generated in the Architecture. Sparingly, you can even pick a floor from a NET Architecture from one Difficulty Rating higher than the one you are currently generating to make a \"Boss Floor\" of sorts."
+    ],
+    "transcription_note": "Print-only GM content. p211 says 'Step 1 ... 3d6'; the Step 3 text spans p211-p212 and is condensed to its rules sentences.",
+    "kind": "net_architecture"
+  },
+  {
+    "name": "NET Architecture: First Two Floors (The Lobby)",
+    "table_id": "lobby",
+    "source_page": "p212",
+    "rows": [
+      {
+        "roll": 1,
+        "floor": "File DV6"
+      },
+      {
+        "roll": 2,
+        "floor": "Password DV6"
+      },
+      {
+        "roll": 3,
+        "floor": "Password DV8"
+      },
+      {
+        "roll": 4,
+        "floor": "Skunk"
+      },
+      {
+        "roll": 5,
+        "floor": "Wisp"
+      },
+      {
+        "roll": 6,
+        "floor": "Killer"
+      }
+    ],
+    "transcription_note": "The roll column prints 1-6; the die type is not printed (d6 implied).",
+    "kind": "net_architecture"
+  },
+  {
+    "name": "NET Architecture: All Other Floors",
+    "table_id": "body",
+    "source_page": "p212",
+    "rows": [
+      {
+        "roll_3d6": 3,
+        "floors": {
+          "Basic": "Hellhound",
+          "Standard": "Hellhound x2",
+          "Uncommon": "Kraken",
+          "Advanced": "Hellhound x3"
+        }
+      },
+      {
+        "roll_3d6": 4,
+        "floors": {
+          "Basic": "Sabertooth",
+          "Standard": "Hellhound, Killer",
+          "Uncommon": "Hellhound, Scorpion",
+          "Advanced": "Asp x2"
+        }
+      },
+      {
+        "roll_3d6": 5,
+        "floors": {
+          "Basic": "Raven x2",
+          "Standard": "Skunk x2",
+          "Uncommon": "Hellhound, Killer",
+          "Advanced": "Hellhound, Liche"
+        }
+      },
+      {
+        "roll_3d6": 6,
+        "floors": {
+          "Basic": "Hellhound",
+          "Standard": "Sabertooth",
+          "Uncommon": "Raven x2",
+          "Advanced": "Wisp x3"
+        }
+      },
+      {
+        "roll_3d6": 7,
+        "floors": {
+          "Basic": "Wisp",
+          "Standard": "Scorpion",
+          "Uncommon": "Sabertooth",
+          "Advanced": "Hellhound, Sabertooth"
+        }
+      },
+      {
+        "roll_3d6": 8,
+        "floors": {
+          "Basic": "Raven",
+          "Standard": "Hellhound",
+          "Uncommon": "Hellhound",
+          "Advanced": "Kraken"
+        }
+      },
+      {
+        "roll_3d6": 9,
+        "floors": {
+          "Basic": "Password DV6",
+          "Standard": "Password DV8",
+          "Uncommon": "Password DV10",
+          "Advanced": "Password DV12"
+        }
+      },
+      {
+        "roll_3d6": 10,
+        "floors": {
+          "Basic": "File DV6",
+          "Standard": "File DV8",
+          "Uncommon": "File DV10",
+          "Advanced": "File DV12"
+        }
+      },
+      {
+        "roll_3d6": 11,
+        "floors": {
+          "Basic": "Control Node DV6",
+          "Standard": "Control Node DV8",
+          "Uncommon": "Control Node DV10",
+          "Advanced": "Control Node DV12"
+        }
+      },
+      {
+        "roll_3d6": 12,
+        "floors": {
+          "Basic": "Password DV6",
+          "Standard": "Password DV8",
+          "Uncommon": "Password DV10",
+          "Advanced": "Password DV12"
+        }
+      },
+      {
+        "roll_3d6": 13,
+        "floors": {
+          "Basic": "Skunk",
+          "Standard": "Asp",
+          "Uncommon": "Killer",
+          "Advanced": "Giant"
+        }
+      },
+      {
+        "roll_3d6": 14,
+        "floors": {
+          "Basic": "Asp",
+          "Standard": "Killer",
+          "Uncommon": "Liche",
+          "Advanced": "Dragon"
+        }
+      },
+      {
+        "roll_3d6": 15,
+        "floors": {
+          "Basic": "Scorpion",
+          "Standard": "Liche",
+          "Uncommon": "Dragon",
+          "Advanced": "Killer, Scorpion"
+        }
+      },
+      {
+        "roll_3d6": 16,
+        "floors": {
+          "Basic": "Killer, Skunk",
+          "Standard": "Asp",
+          "Uncommon": "Asp, Raven",
+          "Advanced": "Kraken"
+        }
+      },
+      {
+        "roll_3d6": 17,
+        "floors": {
+          "Basic": "Wisp x3",
+          "Standard": "Raven x3",
+          "Uncommon": "Dragon, Wisp",
+          "Advanced": "Raven, Wisp, Hellhound"
+        }
+      },
+      {
+        "roll_3d6": 18,
+        "floors": {
+          "Basic": "Liche",
+          "Standard": "Liche, Raven",
+          "Uncommon": "Giant",
+          "Advanced": "Dragon x2"
+        }
+      }
+    ],
+    "kind": "net_architecture"
+  },
+  {
+    "name": "Home Security 2045: Buying a NET Architecture",
+    "table_id": "home_security",
+    "source_page": "p218",
+    "also_on": [
+      "p219",
+      "p373"
+    ],
+    "rows": [
+      {
+        "floors": "3 to 6",
+        "max_control_nodes": "2",
+        "portable": true,
+        "cost_per_floor_eb": 1000,
+        "price_category": "Very Expensive"
+      },
+      {
+        "floors": "7 to 12",
+        "max_control_nodes": "3",
+        "portable": false,
+        "cost_per_floor_eb": 5000,
+        "price_category": "Luxury"
+      },
+      {
+        "floors": "13 to 18",
+        "max_control_nodes": "N/A",
+        "portable": false,
+        "cost_per_floor_eb": 10000,
+        "price_category": "Super Luxury"
+      }
+    ],
+    "dv_feature_prices": [
+      {
+        "dv": 6,
+        "cost_eb": 500,
+        "price_category": "Expensive"
+      },
+      {
+        "dv": 8,
+        "cost_eb": 1000,
+        "price_category": "Very Expensive"
+      },
+      {
+        "dv": 10,
+        "cost_eb": 5000,
+        "price_category": "Luxury"
+      },
+      {
+        "dv": 12,
+        "cost_eb": 10000,
+        "price_category": "Super Luxury"
+      }
+    ],
+    "defense_counter_prices": [
+      {
+        "counter_dv": 9,
+        "cost_eb": 500,
+        "price_category": "Expensive"
+      },
+      {
+        "counter_dv": 13,
+        "cost_eb": 1000,
+        "price_category": "Very Expensive"
+      },
+      {
+        "counter_dv": 17,
+        "cost_eb": 5000,
+        "price_category": "Luxury"
+      },
+      {
+        "counter_dv": 21,
+        "cost_eb": 10000,
+        "price_category": "Super Luxury"
+      }
+    ],
+    "text": "Buying a NET Architecture: the more floors you want, the more expensive the price per floor. You can't increase the number of floors in a NET Architecture after purchase. NET Architectures, Passwords, Control Nodes, Files, Black ICE, Demons and Defenses are only available at a Night Market that includes Personal Electronics, run by a Fixer of Rank 4 or higher. Black ICE for NET Architecture use is priced exactly the same as Black ICE for Cyberdecks. If you want to add 2 Black ICE to a single floor, you pay double the cost of each Program you put in that floor. If you want to add 3 Black ICE to a single floor, you pay triple the cost of each Program you put in that floor. Demons are special and cannot be placed in doubles or triples. You can only have one Demon per six floors in your Architecture. Defenses are priced individually, based on the difficulty to counter them using the Electronics/Security Tech Skill.",
+    "worked_example": "Someone broke into TLB LTD's warehouse last week so the company decides to up their security. They start with a 4 Floor NET Architecture (1,000eb/floor for 4000eb). On the first Floor they install a Hellhound (1,000eb) and a Killer (1,000eb). Each costs double because there's two on the same floor. On Floor 2 they install a Password with a DV8 (1,000eb). Floor 3 gets one more Hellhound (500eb because it is the only Black ICE on the floor) and the last Floor has a DV8 Control Node (1,000eb) that mans an Automated Turret (5,000eb). All together, their new security system costs a whopping 13,500eb.",
+    "transcription_note": "Demon prices are in demon.json (p219, p373). The three-row 'rows' table is the floor-purchase table (home_security_rows = 3); the DV-feature and defense-counter price tables are carried alongside it.",
+    "kind": "net_architecture"
+  },
+  {
+    "name": "NET Architecture Defenses",
+    "table_id": "defenses",
+    "source_page": "p214",
+    "also_on": [
+      "p215",
+      "p216",
+      "p217"
+    ],
+    "rows": [
+      {
+        "name": "Air Swarm Drone Cloud",
+        "source_page": "p214",
+        "defense_type": "Active",
+        "text": "Tiny flying drones about the size of gnats, with nanowire cutting surfaces. Treat the cloud as a single entity wielding a Very Heavy Melee Weapon.",
+        "default_trigger": "Target enters area without wearing proper pass or badge.",
+        "counter_dv": 17,
+        "counter_minutes": 5,
+        "data": [
+          "8 MOVE",
+          "15HP",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Ground Drone",
+        "source_page": "p214",
+        "defense_type": "Active",
+        "text": "Comes in various forms, including Rolling Ball, Tracked, Wheeled, or Snake Form. Ground Drones are equipped with 2 of the following: Very Heavy Pistol with 8 Armor Piercing Bullets; SMG with 30 Basic Bullets; Observation camera.",
+        "default_trigger": "Target enters area without wearing proper pass or badge.",
+        "counter_dv": 21,
+        "counter_minutes": 5,
+        "data": [
+          "4 MOVE",
+          "30HP",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Large Air Drone",
+        "source_page": "p214",
+        "defense_type": "Active",
+        "text": "Large Air Drones are equipped with 2 of the following: Dartgun with 8 Poison Arrows; Very Heavy Pistol with 8 Armor Piercing Bullets; Observation camera.",
+        "default_trigger": "Target enters area without wearing proper pass or badge.",
+        "counter_dv": 21,
+        "counter_minutes": 5,
+        "data": [
+          "6 MOVE",
+          "20HP",
+          "Perimeter of Defended Area"
+        ],
+        "transcription_note": "p214 prints '5 mins to counter'; recorded as 5 minutes."
+      },
+      {
+        "name": "Mini Air Drone",
+        "source_page": "p214",
+        "defense_type": "Active",
+        "text": "Mini Air Drones are equipped with 1 of the following: Dartgun with 8 Poison Arrows; Very Heavy Pistol with 8 Armor Piercing Bullets; Observation camera.",
+        "default_trigger": "Target enters area without wearing proper pass or badge.",
+        "counter_dv": 17,
+        "counter_minutes": 5,
+        "data": [
+          "6 MOVE",
+          "15HP",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Spider Walking Drone",
+        "source_page": "p214",
+        "defense_type": "Active",
+        "text": "Spider drones may be equipped with 2 of the following: Grenade Launcher with 2 Teargas Grenades; Very Heavy Melee Weapon; Heavy SMG with 40 Basic Bullets; Observation camera.",
+        "default_trigger": "Target enters area without wearing proper pass or badge.",
+        "counter_dv": 21,
+        "counter_minutes": 5,
+        "data": [
+          "4 MOVE",
+          "40HP",
+          "Perimeter of Defended Area"
+        ],
+        "transcription_note": "p214 prints 'DV21 Electronics/Security Tech, 5min to counter.' (no space); parsed as 5 minutes."
+      },
+      {
+        "name": "Automated Blood Swarm",
+        "source_page": "p215",
+        "defense_type": "Emplaced",
+        "text": "Automated weapon disperses a swarm of nanites into the room as a red fog. The nanites, when inhaled, attack their victim from within by binding the hemoglobin in their blood into clots. Anything that filters gas attacks blocks the Automated Blood Swarm. Everyone Meat within the Defended Area must succeed at a DV15 Resist Torture/Drugs Check. Anyone who fails is dealt 3d6 damage directly to their HP. Their armor isn't ablated.",
+        "default_trigger": "Target enters room without wearing proper pass or badge.",
+        "counter_dv": 21,
+        "counter_minutes": 5,
+        "data": [
+          "Single Attack on all targets",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Automated Melee Weapon",
+        "source_page": "p215",
+        "defense_type": "Emplaced",
+        "text": "An automated Very Heavy Melee Weapon, typically attacking from one corner of a room. Often, it takes the form of an industrial-grade water cutter or spinning Monofilament wire.",
+        "default_trigger": "Target enters room without wearing proper pass or badge. Melee Weapon continues to attack until all targets are dead or no longer in range, or proper badge is presented.",
+        "counter_dv": 17,
+        "counter_minutes": 5,
+        "data": [
+          "Combat Number 14",
+          "25HP",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Automated Turret",
+        "source_page": "p215",
+        "defense_type": "Emplaced",
+        "text": "This is an automated weapon, usually implanted in the ceiling of a room for best coverage. Most Ranged Weapons can be installed as an Automated Turret, although typically they will be equipped with 1 of the following: Assault Rifle with 25 Basic Bullets; Flamethrower with 4 Incendiary Shotgun Shells; Dartgun with 8 Poison Arrows; Very Heavy Pistol with 8 Armor Piercing Bullets; Heavy SMG with 40 Basic Bullets.",
+        "default_trigger": "Target enters room without wearing proper pass or badge. Turret continues to fire until target is dead, or no longer in range, or proper badge is presented.",
+        "counter_dv": 17,
+        "counter_minutes": 5,
+        "data": [
+          "Combat Number 14",
+          "25HP",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Observation Cameras",
+        "source_page": "p216",
+        "defense_type": "Environmental",
+        "text": "These cameras can see in Low Light, Infrared, and UV, and report images for a Demon or security personnel to act on.",
+        "default_trigger": "Target enters room.",
+        "counter_dv": 9,
+        "counter_minutes": 1,
+        "data": [
+          "5HP",
+          "Perception DV17 to spot",
+          "Can see one entire room or corridor"
+        ]
+      },
+      {
+        "name": "Tanglefoot Flooring",
+        "source_page": "p216",
+        "defense_type": "Environmental",
+        "text": "This is a network of nanowire concealed in a seemingly normal carpet. When triggered, the wires extend and wrap around the feet and legs of the target, reducing their MOVE by 1d6 until the carpet is destroyed or they get off the carpet.",
+        "default_trigger": "Target steps onto the carpet.",
+        "counter_dv": 13,
+        "counter_minutes": 1,
+        "data": [
+          "20HP",
+          "Perception DV17 to spot",
+          "1 ROF",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Electrical Flooring",
+        "source_page": "p216",
+        "defense_type": "Environmental",
+        "text": "This is a grid wired into a standard floor, which, when triggered, delivers a shocking 6d6 damage to the target's body, reduced by armor which it doesn't ablate. Target is shocked again at the end of their next Turn and each of their additional Turns until they get off the flooring.",
+        "default_trigger": "Target steps onto the grid area.",
+        "counter_dv": 13,
+        "counter_minutes": 1,
+        "data": [
+          "20HP",
+          "Perception DV17 to spot",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Laser Grid",
+        "source_page": "p216",
+        "defense_type": "Environmental",
+        "text": "Laser grid projected from the ceiling and walls in a tight pattern. Treat touching one of the lasers like getting hit in the body with a Very Heavy Melee Weapon. If perceived, the Laser Grid can be crossed safely with a DV17 Contortionist Check, touching a laser on a failure.",
+        "default_trigger": "Target steps into the Defended Area or moves 2m/yds within the Defended Area.",
+        "counter_dv": 17,
+        "counter_minutes": 5,
+        "data": [
+          "Perception DV17 to spot",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Tip-floor",
+        "source_page": "p216",
+        "defense_type": "Environmental",
+        "text": "A section of this floor is counter-weighted to drop the target into a pit trap below the floor. Targets can attempt to save themselves from falling with a DV15 Athletics Check. No Check is required if target has a Grapple Hand or Grapple Gun easily accessible. The bottom of the pit may have a grid of nanowire or spikes delivering 6d6 damage to the target's body, which is reduced by armor.",
+        "default_trigger": "Target steps onto the tip-floor.",
+        "counter_dv": 13,
+        "counter_minutes": 1,
+        "data": [
+          "Perception DV17 to spot",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Goop",
+        "source_page": "p216",
+        "defense_type": "Environmental",
+        "text": "This is a series of sprayers that when triggered project a thick goo around the feet and legs of the target, reducing their MOVE by 2d6 until the goop is destroyed or they otherwise escape the Defended Area.",
+        "default_trigger": "Target steps into the spray area.",
+        "counter_dv": 13,
+        "counter_minutes": 1,
+        "data": [
+          "10HP",
+          "Perception DV17 to spot",
+          "1 ROF",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Ceiling/Wall Punchers",
+        "source_page": "p216",
+        "defense_type": "Environmental",
+        "text": "Steel rods that slam down in a grid from the ceiling, or out from the wall crushing targets beneath/between them with 6d6 damage to their body, which is reduced by armor.",
+        "default_trigger": "Target steps onto the grid area.",
+        "counter_dv": 13,
+        "counter_minutes": 5,
+        "data": [
+          "20HP",
+          "Perception DV17 to spot",
+          "1 ROF",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Slip-floor",
+        "source_page": "p217",
+        "defense_type": "Environmental",
+        "text": "This is a series of sprayers that when triggered projects a super slick liquid across the floor of the area. Anyone who takes a Movement Action in this area must succeed at a DV15 Athletics Check or fall Prone.",
+        "default_trigger": "Target steps onto the spray area.",
+        "counter_dv": 13,
+        "counter_minutes": 1,
+        "data": [
+          "10HP",
+          "Perception DV17 to spot",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Stun Panels",
+        "source_page": "p217",
+        "defense_type": "Environmental",
+        "text": "These are panels embedded in the walls and designed to look like art or whiteboards. When triggered, they deliver a stunning blast of blinding light and sound. Anyone caught in their area of effect must succeed at a DV 15 Resist Torture/Drugs Check or suffer the Damaged Eye and Damaged Ear Critical Injuries for the next minute. They do not take the Bonus Damage from these Critical Injuries.",
+        "default_trigger": "Target steps within 2m/yds of a panel. Area of Effect 10m/yd by 10m/yd square centered on the panel.",
+        "counter_dv": 13,
+        "counter_minutes": 1,
+        "data": [
+          "5HP",
+          "Perception DV17 to spot",
+          "Perimeter of Defended Area"
+        ]
+      },
+      {
+        "name": "Sleep Gas Elevator",
+        "source_page": "p217",
+        "defense_type": "Environmental",
+        "text": "When triggered, all openings in the space seal hermetically. Place the trap at the top of the Initiative Queue. On the trap's Turn, everyone in the space must attempt to beat a DV13 Resist Torture/Drugs Check. Anyone who fails is now Unconscious, but only until they are woken by taking damage, or by someone else using their Action to wake them. The trap can be defeated by reducing its HP to 0 before everyone falls unconscious or by disarming it through other means.",
+        "default_trigger": "Target steps into the enclosed space or area.",
+        "counter_dv": 17,
+        "counter_minutes": 5,
+        "data": [
+          "60HP",
+          "Perception DV17 to spot",
+          "Perimeter of Defended Area"
+        ]
+      }
+    ],
+    "text": "Type: the name of the Defense. Description: a description of the Defense. Some will offer a number of different options for the GM to choose from when building the Defense. The DV for countering the Defense with Electronics/Security Tech (and the amount of time it takes) is also located here. Default Trigger: the most common method of activating the Defense. GMs should feel free to modify it to their own needs. Data: additional notes can be found here. This can include MOVE for Active Defenses, Combat Number for Emplaced Defenses, range of operation, HP, the Perception Check to spot a Defense for Environmental Defenses, and any information about ROF.",
+    "transcription_note": "Defense pages: Active p214, Emplaced p215, Environmental p216-p217 (p213 txt is the Demons page; the printed page numbers are one lower). Each row was checked against the page image of p214-p217 (18 rows: 5 Active, 3 Emplaced, 10 Environmental). Print-only GM content.",
+    "kind": "net_architecture"
+  }
+]
