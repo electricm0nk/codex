@@ -170,10 +170,10 @@ pub fn compute_deck(
     items: &[CprDeckItem],
 ) -> Result<CprDeckLoad, CprNetrunningError> {
     for item in items {
-        if let CprDeckItemKind::Hardware { slots } = item.kind {
-            if !(1..=2).contains(&slots) {
-                return Err(CprNetrunningError::HardwareSlotsOutOfRange { name: item.name.clone(), slots });
-            }
+        if let CprDeckItemKind::Hardware { slots } = item.kind
+            && !(1..=2).contains(&slots)
+        {
+            return Err(CprNetrunningError::HardwareSlotsOutOfRange { name: item.name.clone(), slots });
         }
     }
 
