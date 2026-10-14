@@ -1,11 +1,12 @@
-//! Cyberpunk RED wound states and Critical Injuries (core rulebook p. 187, p. 221-223).
+//! Cyberpunk RED wound states and Critical Injuries (core rulebook p. 186-187, p. 220-222; printed
+//! page numbers, one less than the page-image file numbers the inventories cite).
 //!
 //! Computed here, one `cpr.wound.<field>` row each: the HP below which each Wound State begins
 //! (Lightly Wounded "Less than Full HP", Seriously Wounded "Less than 1/2 HP (round up)",
-//! Mortally Wounded "Less than 1 HP", p. 187), the Stabilization DV printed beside each
-//! (10/13/15, p. 223), the Death Save (BODY, p. 223) and the Base Death Save Penalty: the number of
+//! Mortally Wounded "Less than 1 HP", p. 186), the Stabilization DV printed beside each
+//! (10/13/15, p. 222), the Death Save (BODY, p. 222) and the Base Death Save Penalty: the number of
 //! recorded Critical Injuries whose effect reads "Base Death Save Penalty is increased by 1"
-//! (p. 222-223).
+//! (p. 221-222).
 //!
 //! Not simulated: the current Wound State, its −2/−4 modifiers, the Death Save Penalty that
 //! rises with each save during play, and each injury's effect. The sheet prints those rules;
@@ -21,11 +22,11 @@ use serde::Deserialize;
 use crate::rules_core::cpr::stats::seriously_wounded;
 use crate::rules_core::pilot_compute::ComputationExplanation;
 
-const SOURCE_WOUNDS: &str = "Cyberpunk RED core rulebook p. 187";
-const SOURCE_DEATH_SAVE: &str = "Cyberpunk RED core rulebook p. 223";
-const SOURCE_CRITICALS: &str = "Cyberpunk RED core rulebook p. 222-223";
+const SOURCE_WOUNDS: &str = "Cyberpunk RED core rulebook p. 186";
+const SOURCE_DEATH_SAVE: &str = "Cyberpunk RED core rulebook p. 222";
+const SOURCE_CRITICALS: &str = "Cyberpunk RED core rulebook p. 221-222";
 
-/// The two Critical Injury tables (p. 222: "Critical Injuries to the Body", p. 222-223:
+/// The two Critical Injury tables (p. 221: "Critical Injuries to the Body", p. 221-222:
 /// "Critical Injuries to the Head"). Foreign Object is on both, so an injury is named by its
 /// table and its name.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
@@ -133,7 +134,7 @@ impl CprCriticalCatalog {
                 other => return Err(format!("{}: unknown wound threshold rule {other}", record.name)),
             };
             let stabilization_dv =
-                record.stabilization_dv.ok_or_else(|| format!("{}: a Wound State with an HP threshold has a Stabilization DV (p. 223)", record.name))?;
+                record.stabilization_dv.ok_or_else(|| format!("{}: a Wound State with an HP threshold has a Stabilization DV (p. 222)", record.name))?;
             wound_states.push(CprWoundState { name: record.name, threshold, stabilization_dv });
         }
         for wanted in [CprWoundThreshold::FullHp, CprWoundThreshold::HalfHpRoundUp, CprWoundThreshold::OneHp] {
@@ -149,7 +150,7 @@ impl CprCriticalCatalog {
             let raises = match record.base_death_save_penalty_increase {
                 0 => false,
                 1 => true,
-                n => return Err(format!("{}: a Critical Injury raises the Base Death Save Penalty by 0 or 1, not {n} (p. 222-223)", record.name)),
+                n => return Err(format!("{}: a Critical Injury raises the Base Death Save Penalty by 0 or 1, not {n} (p. 221-222)", record.name)),
             };
             if injuries.iter().any(|i| i.location == record.location && i.name == record.name) {
                 return Err(format!("{} is listed twice on the {:?} table", record.name, record.location));
@@ -174,16 +175,16 @@ impl CprCriticalCatalog {
     }
 
     /// The injuries among `recorded` that raise the Base Death Save Penalty. Refused: an
-    /// injury not on that table, and the same injury twice (p. 188: a Critical Injury the target
+    /// injury not on that table, and the same injury twice (p. 187: a Critical Injury the target
     /// already has is rerolled).
     fn raising(&self, recorded: &[CprRecordedCritical]) -> Result<Vec<&CprCriticalInjury>, String> {
         let mut seen: Vec<&CprCriticalInjury> = Vec::new();
         for critical in recorded {
             let injury = self
                 .injury(critical.location, &critical.name)
-                .ok_or_else(|| format!("{} is not on the Critical Injuries to the {:?} table (p. 222-223)", critical.name, critical.location))?;
+                .ok_or_else(|| format!("{} is not on the Critical Injuries to the {:?} table (p. 221-222)", critical.name, critical.location))?;
             if seen.contains(&injury) {
-                return Err(format!("the character already has {} ({:?}); a repeated Critical Injury is rerolled (p. 188)", injury.name, injury.location));
+                return Err(format!("the character already has {} ({:?}); a repeated Critical Injury is rerolled (p. 187)", injury.name, injury.location));
             }
             seen.push(injury);
         }
