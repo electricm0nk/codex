@@ -12,6 +12,11 @@ import { formatError, hasTauriRuntime } from './runtime';
  * SD-38 E3.3 adds the Lifepath: every general table and the Role's tables are rolled with the
  * same seed or picked (`lifepath`), the answers are saved with the character, and the Cultural
  * Origin language comes back as the engine's `cpr.skill_level.language.*` row (level 4).
+ *
+ * SD-38 E3.4 adds the skills allocator (`skills`): Streetrat takes the Role's printed list,
+ * Edgerunner moves the same 20 skills (2-6), Complete Package buys any of the 66 (cap 6, Basic
+ * skills at 2); the engine validates the allocation and returns the points spent and left as
+ * its `cpr.skills.creation_points_*` rows.
  */
 
 export type CyberpunkCreationMethod = 'streetrat' | 'edgerunner' | 'completePackage';
@@ -28,6 +33,42 @@ export interface CyberpunkCreationRequest {
   stats?: Record<string, number> | null;
   /** The Lifepath picks; every table not picked is rolled. */
   lifepath?: CyberpunkLifepathRequest | null;
+  /** The skill allocation; anything not sent starts where the method starts. */
+  skills?: CyberpunkSkillsRequest | null;
+}
+
+/**
+ * Streetrat and Edgerunner key `levels` by the Role list's line (`Tactics`,
+ * `Play Instrument (choose 1)`); Complete Package by skill (`Martial Arts (Karate)`), 0 dropping it.
+ */
+export interface CyberpunkSkillsRequest {
+  levels: Record<string, number>;
+  /** The named instrument or field of each `(choose 1)` line, by line. */
+  specialties: Record<string, string>;
+}
+
+export interface CyberpunkSkillLine {
+  /** The key a level change is sent under. */
+  line: string;
+  /** The skill key saved (`Play Instrument (Guitar)`). */
+  key: string;
+  level: number;
+  basic: boolean;
+  x2: boolean;
+  /** The Cultural Origin language (its 4 levels are free). */
+  cultural: boolean;
+  /** The method lets the player change this level. */
+  adjustable: boolean;
+  /** A `(choose 1)` line: the player names the instrument or field. */
+  chooseOne: boolean;
+  /** The id of this skill's `cpr.skill_level.*` row. */
+  levelRow: string;
+}
+
+export interface CyberpunkSkills {
+  lines: CyberpunkSkillLine[];
+  /** The engine's `cpr.skills.creation_points_spent` and `_remaining` rows; empty while refused. */
+  rows: CyberpunkCreationRow[];
 }
 
 /** One picked Lifepath row: `entry` 0 for a table answered once, 1.. for the nth friend/enemy/affair. */
@@ -126,7 +167,9 @@ export interface CyberpunkCreationPreview {
   /** Every Lifepath table answered (general, then the Role's). */
   lifepath: CyberpunkLifepathTable[];
   culturalLanguage: CyberpunkCulturalLanguage | null;
-  /** The engine's `cpr.stat.*`, `cpr.derived.*` and Cultural Origin language rows; empty while a problem stands. */
+  /** The skill allocation and the engine's points rows. */
+  skills: CyberpunkSkills;
+  /** The engine's `cpr.stat.*`, `cpr.derived.*`, skill and skill-points rows; empty while a problem stands. */
   explanations: CyberpunkCreationRow[];
   problems: CyberpunkCreationProblem[];
 }
@@ -154,6 +197,7 @@ function wire(request: CyberpunkCreationRequest) {
     templateRoll: request.templateRoll ?? null,
     stats: request.stats ?? null,
     lifepath: request.lifepath ?? { picks: [], counts: {}, skips: [], culturalLanguage: null },
+    skills: request.skills ?? { levels: {}, specialties: {} },
   };
 }
 

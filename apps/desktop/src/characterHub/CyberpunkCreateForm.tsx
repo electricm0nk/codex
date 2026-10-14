@@ -5,12 +5,15 @@ import {
   type CyberpunkCreationPreview,
   type CyberpunkCreationProblem,
   type CyberpunkLifepathTable,
+  type CyberpunkSkillLine,
   type CyberpunkStatValue,
 } from '../boundary/cprCreation';
 import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import {
   CYBERPUNK_CREATION_METHODS,
   EMPTY_CYBERPUNK_DRAFT,
+  addSkill,
+  adjustSkill,
   adjustStat,
   blockingProblems,
   buildCyberpunkCreateRequest,
@@ -19,6 +22,7 @@ import {
   culturalLanguageTile,
   cyberpunkDerivedTiles,
   cyberpunkStatTiles,
+  dropSkill,
   lifepathRowOptions,
   rollAgain,
   selectMethod,
@@ -27,6 +31,10 @@ import {
   setLifepathCount,
   setLifepathPick,
   setLifepathSkip,
+  setSkillSpecialty,
+  skillKey,
+  skillOptions,
+  skillPointTiles,
   templateRowOptions,
   withPreviewSeed,
   type CyberpunkCreationDraft,
@@ -54,6 +62,12 @@ import { boxesInColumn } from './sheetLayout';
  * the `lifepath_table` record; count tables take a picked count; a table behind a printed choice
  * can be marked not taken. The Cultural Origin language is picked or rolled, and its level is
  * the engine's `cpr.skill_level.language.*` row. The answers are saved with the character.
+ *
+ * The skills panel (E3.4) lists the engine's allocation for the method: Streetrat the Role's
+ * printed levels (fixed), Edgerunner the same 20 skills moved one level at a time, Complete
+ * Package the Basic skills plus any skill of the Master Skill List bought or dropped. A
+ * `(choose 1)` line takes the named instrument or field. The points spent and left are the
+ * engine's `cpr.skills.creation_points_*` rows; a refused allocation shows the engine's reason.
  */
 
 const LABEL_STYLE: CSSProperties = {
@@ -114,6 +128,9 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const [roles, setRoles] = useState<CyberpunkRecord[]>([]);
   const [templates, setTemplates] = useState<CyberpunkRecord[]>([]);
   const [lifepathRecords, setLifepathRecords] = useState<CyberpunkRecord[]>([]);
+  const [skillRecords, setSkillRecords] = useState<CyberpunkRecord[]>([]);
+  const [newSkill, setNewSkill] = useState('');
+  const [newSpecialty, setNewSpecialty] = useState('');
   const [preview, setPreview] = useState<CyberpunkCreationPreview | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -122,11 +139,17 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
 
   // The Roles and their Streetrat rows come from the corpus (`list_cyberpunk_catalog`).
   useEffect(() => {
-    Promise.all([loadCyberpunkCatalog('role'), loadCyberpunkCatalog('streetrat_template'), loadCyberpunkCatalog('lifepath_table')])
-      .then(([roleCatalog, templateCatalog, lifepathCatalog]) => {
+    Promise.all([
+      loadCyberpunkCatalog('role'),
+      loadCyberpunkCatalog('streetrat_template'),
+      loadCyberpunkCatalog('lifepath_table'),
+      loadCyberpunkCatalog('skill'),
+    ])
+      .then(([roleCatalog, templateCatalog, lifepathCatalog, skillCatalog]) => {
         setRoles(roleCatalog.records);
         setTemplates(templateCatalog.records);
         setLifepathRecords(lifepathCatalog.records);
+        setSkillRecords(skillCatalog.records);
       })
       .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : String(cause)));
   }, []);
@@ -163,6 +186,52 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
   const statTiles = preview ? cyberpunkStatTiles(preview.explanations, preview.stats) : [];
   const derivedTiles = preview ? cyberpunkDerivedTiles(preview.explanations) : [];
   const languageTile = preview ? culturalLanguageTile(preview) : null;
+  const pointTiles = preview ? skillPointTiles(preview) : [];
+  const options = skillOptions(skillRecords);
+  const chosenOption = options.find((option) => option.name === newSkill);
+  const newKey = chosenOption ? skillKey(chosenOption.name, chosenOption.specialtyRequired ? newSpecialty : '') : '';
+  const canAdd = chosenOption !== undefined && (!chosenOption.specialtyRequired || newSpecialty.trim() !== '');
+
+  function skillLine(line: CyberpunkSkillLine, index: number) {
+    const id = `cpr-skill-${index}`;
+    const droppable = draft.method === 'completePackage' && !line.basic && !line.cultural;
+    return (
+      <div key={line.key} data-skill={line.key} style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', padding: '0.2rem 0' }}>
+        <span style={{ flex: '1 1 12rem', fontWeight: 600 }}>
+          {line.chooseOne ? line.line : line.key}
+          {line.x2 ? ' (x2)' : ''}
+          {line.cultural ? <span style={{ ...MUTED_STYLE, display: 'inline' }}> Cultural Origin, 4 free</span> : null}
+        </span>
+        {line.chooseOne ? (
+          <input
+            id={`${id}-specialty`}
+            aria-label={`${line.line}: name it`}
+            style={{ ...INPUT_STYLE, width: '10rem' }}
+            value={draft.skills.specialties[line.line] ?? ''}
+            onChange={(event) => setDraft(setSkillSpecialty(draft, line.line, event.target.value))}
+          />
+        ) : null}
+        {line.adjustable ? (
+          <button type="button" style={SMALL_BUTTON_STYLE} aria-label={`-1 ${line.key}`} onClick={() => setDraft(adjustSkill(draft, line, -1))}>
+            -1
+          </button>
+        ) : null}
+        <span id={`${id}-level`} style={{ minWidth: '1.5rem', textAlign: 'center' }}>
+          {line.level}
+        </span>
+        {line.adjustable ? (
+          <button type="button" style={SMALL_BUTTON_STYLE} aria-label={`+1 ${line.key}`} onClick={() => setDraft(adjustSkill(draft, line, 1))}>
+            +1
+          </button>
+        ) : null}
+        {droppable ? (
+          <button type="button" style={SMALL_BUTTON_STYLE} onClick={() => setDraft(dropSkill(draft, line.line))}>
+            Drop
+          </button>
+        ) : null}
+      </div>
+    );
+  }
 
   function lifepathTable(table: CyberpunkLifepathTable, index: number) {
     const record = lifepathRecords.find((r) => r.name === table.table);
@@ -287,7 +356,11 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
           headline: `${result.summary.displayLabel} is ready`,
           stats: cyberpunkStatTiles(result.explanations, shownStats),
           derived: cyberpunkDerivedTiles(result.explanations),
-          language: culturalLanguageTile({ culturalLanguage: preview?.culturalLanguage ?? null, explanations: result.explanations }),
+          language: culturalLanguageTile({
+            culturalLanguage: preview?.culturalLanguage ?? null,
+            skills: preview?.skills ?? { lines: [], rows: [] },
+            explanations: result.explanations,
+          }),
         });
         props.onCreated();
       } else {
@@ -443,6 +516,62 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
             Language skill.
           </p>
           {preview.lifepath.map((table, index) => lifepathTable(table, index))}
+        </fieldset>
+      ) : null}
+
+      {preview && preview.skills.lines.length > 0 ? (
+        <fieldset id="cpr-skills" style={{ ...FIELDSET_STYLE, marginTop: '1rem' }}>
+          <legend style={LEGEND_STYLE}>Skills</legend>
+          <p style={MUTED_STYLE}>
+            {draft.method === 'streetrat'
+              ? "Your Role's skills at their listed levels."
+              : draft.method === 'edgerunner'
+                ? "Spread 86 points over your Role's 20 skills, each from 2 to 6; (x2) skills cost 2 points a level."
+                : 'Spend 86 points on any skills, none above 6, the Basic skills at 2 or more; (x2) skills cost 2 points a level.'}
+          </p>
+          {pointTiles.length > 0 ? (
+            <div style={{ margin: '0.5rem 0', maxWidth: 360 }}>
+              <TileGrid tiles={pointTiles} />
+            </div>
+          ) : null}
+          {preview.skills.lines.map((line, index) => skillLine(line, index))}
+          {draft.method === 'completePackage' ? (
+            <div style={{ alignItems: 'flex-end', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <div style={{ ...FIELD_STYLE, flex: '1 1 12rem', marginBottom: 0 }}>
+                <label style={LABEL_STYLE} htmlFor="cpr-skill-add">
+                  Add a skill
+                </label>
+                <select id="cpr-skill-add" style={INPUT_STYLE} value={newSkill} onChange={(event) => setNewSkill(event.target.value)}>
+                  <option value="">— choose a skill —</option>
+                  {options.map((option) => (
+                    <option key={option.name} value={option.name}>
+                      {option.name} ({option.stat}){option.x2 ? ' (x2)' : ''}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {chosenOption?.specialtyRequired ? (
+                <div style={{ ...FIELD_STYLE, flex: '1 1 10rem', marginBottom: 0 }}>
+                  <label style={LABEL_STYLE} htmlFor="cpr-skill-add-specialty">
+                    Which one
+                  </label>
+                  <input id="cpr-skill-add-specialty" style={INPUT_STYLE} value={newSpecialty} onChange={(event) => setNewSpecialty(event.target.value)} />
+                </div>
+              ) : null}
+              <button
+                type="button"
+                style={SMALL_BUTTON_STYLE}
+                disabled={!canAdd}
+                onClick={() => {
+                  setDraft(addSkill(draft, newKey));
+                  setNewSkill('');
+                  setNewSpecialty('');
+                }}
+              >
+                Add
+              </button>
+            </div>
+          ) : null}
         </fieldset>
       ) : null}
 

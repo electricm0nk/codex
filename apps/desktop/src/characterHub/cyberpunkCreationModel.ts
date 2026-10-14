@@ -6,6 +6,8 @@ import type {
   CyberpunkCreationRequest,
   CyberpunkCreationRow,
   CyberpunkLifepathRequest,
+  CyberpunkSkillLine,
+  CyberpunkSkillsRequest,
   CyberpunkStatValue,
 } from '../boundary/cprCreation';
 import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
@@ -20,6 +22,11 @@ import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
  * The Lifepath (E3.3): the draft holds only the player's picks, counts, not-taken branch tables
  * and Cultural Origin language; the tables offered and their rows are the `lifepath_table`
  * records, and every answer not picked is the engine's roll.
+ *
+ * The skills allocator (E3.4): the draft holds only the levels the player moved and the named
+ * instrument or field of each `(choose 1)` line. Which skills are listed, their levels, whether
+ * the method lets them move, and the points spent and left are the engine's preview; the
+ * Complete Package add-list is the `skill` records.
  */
 
 export interface CyberpunkCreationDraft {
@@ -35,9 +42,12 @@ export interface CyberpunkCreationDraft {
   stats: Record<string, number>;
   /** The Lifepath choices; everything not chosen is rolled with the seed. */
   lifepath: CyberpunkLifepathRequest;
+  /** The skill levels the player moved and the named `(choose 1)` specialties. */
+  skills: CyberpunkSkillsRequest;
 }
 
 export const EMPTY_LIFEPATH: CyberpunkLifepathRequest = { picks: [], counts: {}, skips: [], culturalLanguage: null };
+export const EMPTY_SKILLS: CyberpunkSkillsRequest = { levels: {}, specialties: {} };
 
 export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   displayLabel: '',
@@ -47,6 +57,7 @@ export const EMPTY_CYBERPUNK_DRAFT: CyberpunkCreationDraft = {
   templateRoll: null,
   stats: {},
   lifepath: EMPTY_LIFEPATH,
+  skills: EMPTY_SKILLS,
 };
 
 /** The three ways to make STATs (p. 73), in the book's order. */
@@ -73,6 +84,7 @@ export function buildCyberpunkPreviewRequest(draft: CyberpunkCreationDraft): Cyb
       skips: [...draft.lifepath.skips],
       culturalLanguage: draft.lifepath.culturalLanguage,
     },
+    skills: { levels: { ...draft.skills.levels }, specialties: { ...draft.skills.specialties } },
   };
 }
 
@@ -106,6 +118,7 @@ export function rollAgain(draft: CyberpunkCreationDraft): CyberpunkCreationDraft
 /**
  * Changes the method: the dice and the Streetrat row reset; a Complete Package with no allocation
  * yet starts from the STATs on screen (`shown`, the engine's preview), which the player then moves.
+ * The skill levels start over (each method keys them differently); named specialties are kept.
  */
 export function selectMethod(
   draft: CyberpunkCreationDraft,
@@ -117,7 +130,7 @@ export function selectMethod(
   }
   const startFromShown = method === 'completePackage' && Object.keys(draft.stats).length === 0;
   const stats = startFromShown ? Object.fromEntries(shown.map((stat) => [stat.id, stat.value])) : draft.stats;
-  return { ...draft, method, seed: null, templateRoll: null, stats };
+  return { ...draft, method, seed: null, templateRoll: null, stats, skills: { ...draft.skills, levels: {} } };
 }
 
 /** One point up or down on a STAT, never below zero; the 2-8 range and the total are the engine's to refuse. */
@@ -270,7 +283,7 @@ export function setCulturalLanguage(draft: CyberpunkCreationDraft, name: string 
   return { ...draft, lifepath: { ...draft.lifepath, culturalLanguage: trimmed === '' ? null : trimmed } };
 }
 
-/** Changes the Role: fresh dice, no template row, and only the general Lifepath choices kept. */
+/** Changes the Role: fresh dice, no template row, only the general Lifepath choices kept, skill levels start over. */
 export function selectRole(draft: CyberpunkCreationDraft, role: string | null, lifepathRecords: readonly CyberpunkRecord[]): CyberpunkCreationDraft {
   const general = new Set(lifepathRecords.filter((r) => r.group === 'general').map((r) => String(r.name)));
   const counts = Object.fromEntries(Object.entries(draft.lifepath.counts).filter(([table]) => general.has(table)));
@@ -279,6 +292,7 @@ export function selectRole(draft: CyberpunkCreationDraft, role: string | null, l
     role,
     seed: null,
     templateRoll: null,
+    skills: { ...draft.skills, levels: {} },
     lifepath: {
       ...draft.lifepath,
       picks: draft.lifepath.picks.filter((p) => general.has(p.table)),
@@ -288,12 +302,84 @@ export function selectRole(draft: CyberpunkCreationDraft, role: string | null, l
   };
 }
 
-/** The Cultural Origin language's level tile: the engine's `cpr.skill_level.language.*` row, or none. */
-export function culturalLanguageTile(preview: Pick<CyberpunkCreationPreview, 'culturalLanguage' | 'explanations'>): CyberpunkTile | null {
+/** The Cultural Origin language's level tile: the engine's `cpr.skill_level.*` row of its skill line, or none. */
+export function culturalLanguageTile(
+  preview: Pick<CyberpunkCreationPreview, 'culturalLanguage' | 'explanations' | 'skills'>,
+): CyberpunkTile | null {
   const language = preview.culturalLanguage;
-  if (language === null) {
+  const line = preview.skills.lines.find((l) => l.cultural);
+  if (language === null || line === undefined) {
     return null;
   }
-  const found = preview.explanations.find((row) => row.id.startsWith('cpr.skill_level.language.'));
+  const found = preview.explanations.find((row) => row.id === line.levelRow);
   return found ? { id: found.id, label: language.skill, value: found.value } : null;
+}
+
+// ---- Skills allocator (E3.4) ----
+
+/** One level up or down from the level the engine showed, never below zero; the 2-6 range, the cap and the 86 points are the engine's to refuse. */
+export function adjustSkill(draft: CyberpunkCreationDraft, line: CyberpunkSkillLine, delta: number): CyberpunkCreationDraft {
+  const levels = { ...draft.skills.levels, [line.line]: Math.max(0, line.level + delta) };
+  return { ...draft, skills: { ...draft.skills, levels } };
+}
+
+/** Names the instrument or field of a `(choose 1)` line; empty clears it. */
+export function setSkillSpecialty(draft: CyberpunkCreationDraft, line: string, name: string): CyberpunkCreationDraft {
+  const specialties = { ...draft.skills.specialties };
+  const trimmed = name.trim();
+  if (trimmed === '') {
+    delete specialties[line];
+  } else {
+    specialties[line] = trimmed;
+  }
+  return { ...draft, skills: { ...draft.skills, specialties } };
+}
+
+/** A skill key: `Handgun`, or `Martial Arts (Karate)` for a skill with a specialty. */
+export function skillKey(name: string, specialty: string): string {
+  const trimmed = specialty.trim();
+  return trimmed === '' ? name : `${name} (${trimmed})`;
+}
+
+/** Complete Package: buys a skill at level 1 (a held skill keeps its level). */
+export function addSkill(draft: CyberpunkCreationDraft, key: string): CyberpunkCreationDraft {
+  if ((draft.skills.levels[key] ?? 0) > 0) {
+    return draft;
+  }
+  return { ...draft, skills: { ...draft.skills, levels: { ...draft.skills.levels, [key]: 1 } } };
+}
+
+/** Complete Package: drops a skill (sent at 0; a Basic skill dropped is the engine's to refuse). */
+export function dropSkill(draft: CyberpunkCreationDraft, key: string): CyberpunkCreationDraft {
+  return { ...draft, skills: { ...draft.skills, levels: { ...draft.skills.levels, [key]: 0 } } };
+}
+
+export interface SkillOption {
+  name: string;
+  stat: string;
+  x2: boolean;
+  specialtyRequired: boolean;
+}
+
+/** The Master Skill List the Complete Package buys from: the `skill` records, in record order. */
+export function skillOptions(records: readonly CyberpunkRecord[]): SkillOption[] {
+  return records.map((record) => ({
+    name: String(record.name),
+    stat: String(record.stat),
+    x2: record.x2 === true,
+    specialtyRequired: record.specialty_required === true,
+  }));
+}
+
+const SKILL_POINT_ROWS: readonly { id: string; label: string }[] = [
+  { id: 'cpr.skills.creation_points_spent', label: 'Skill points spent' },
+  { id: 'cpr.skills.creation_points_remaining', label: 'Skill points left' },
+];
+
+/** The points spent and left: the engine's `cpr.skills.creation_points_*` rows; none while the allocation is refused. */
+export function skillPointTiles(preview: Pick<CyberpunkCreationPreview, 'skills'>): CyberpunkTile[] {
+  return SKILL_POINT_ROWS.flatMap((wanted) => {
+    const found = preview.skills.rows.find((row) => row.id === wanted.id);
+    return found ? [{ id: found.id, label: wanted.label, value: found.value }] : [];
+  });
 }

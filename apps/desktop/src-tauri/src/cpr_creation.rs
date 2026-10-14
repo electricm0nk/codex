@@ -23,7 +23,16 @@
 //! record's `free_language_rank` (4), saved as a skill and shown as the engine's
 //! `cpr.skill_level.language.*` and `cpr.skill.language.*` rows.
 //!
-//! Skills, Role Ability sub-choices, kit and cyberware extend these payloads later.
+//! **Skills** (p. 85-90): the allocation each method allows, validated and priced by the engine
+//! (`codex::rules_core::cpr::skills::validate_creation_skills`). Streetrat takes the Role's 20
+//! skills at their printed levels; Edgerunner the same 20, each 2 to 6, starting from the printed
+//! levels; Complete Package any of the 66, none above 6, starting from the 13 Basic skills at 2.
+//! Every method spends at most 86 points ((x2) skills two a level) and adds the Cultural Origin
+//! language at its 4 free levels. A `(choose 1)` line (Play Instrument, Science) takes the
+//! player's named instrument or field. The points spent and left are the engine's
+//! `cpr.skills.creation_points_*` rows; the saved character holds every level.
+//!
+//! Role Ability sub-choices, kit and cyberware extend these payloads later.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
@@ -33,7 +42,9 @@ use serde_json::Value;
 
 use codex::rules_core::cpr::input::{lifepath_text_ok, CprCharacterInput, CprLifepath, CprLifepathAnswer, CprSheetChoices, CprStat, CprStats};
 use codex::rules_core::cpr::sheet::{compose_sheet, stat_rows, CprSheetCatalogs};
-use codex::rules_core::cpr::skills::slug as skill_slug;
+use codex::rules_core::cpr::skills::{
+    slug as skill_slug, spend_rows, validate_creation_skills, CprSkillAllocation, CprSkillCatalog, CprSkillMethod,
+};
 use codex::rules_core::cpr::stats::{derived_rows, humanity_max};
 use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter, CPR_SAVED_CHARACTER_SCHEMA_VERSION};
 use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
@@ -58,6 +69,10 @@ pub(crate) const REFUSED_LIFEPATH_COUNT: &str = "cpr_creation.lifepath_count";
 pub(crate) const REFUSED_LIFEPATH_SKIP: &str = "cpr_creation.lifepath_skip";
 /// The Cultural Origin language is empty or a name the saved grammar cannot hold.
 pub(crate) const REFUSED_CULTURAL_LANGUAGE: &str = "cpr_creation.cultural_language";
+/// The skill allocation breaks its method's rules (the engine's refusal names the rule).
+pub(crate) const REFUSED_SKILLS: &str = "cpr_creation.skills";
+/// A `(choose 1)` line has no named instrument or field, or a specialty the saved grammar cannot hold.
+pub(crate) const REFUSED_SKILL_SPECIALTY: &str = "cpr_creation.skill_specialty";
 /// Create without a character name.
 pub(crate) const REFUSED_NO_NAME: &str = "cpr_creation.no_name";
 /// Create over a character that is already saved under that id.
@@ -140,6 +155,24 @@ pub struct CprCreationRequest {
     /// The Lifepath picks; every table not picked is rolled.
     #[serde(default)]
     pub lifepath: CprLifepathRequest,
+    /// The skill allocation; anything not sent starts where the method starts.
+    #[serde(default)]
+    pub skills: CprSkillsRequest,
+}
+
+/// The player's skill choices. Streetrat and Edgerunner start from the Role's printed list and
+/// key `levels` by its line (`Tactics`, `Play Instrument (choose 1)`); Complete Package starts
+/// from the Basic skills at 2 and keys `levels` by skill (`Martial Arts (Karate)`), a level of 0
+/// dropping the skill. A key that is the Cultural Origin language raises it above its 4 free
+/// levels.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprSkillsRequest {
+    #[serde(default)]
+    pub levels: BTreeMap<String, u8>,
+    /// The named instrument or field of each `(choose 1)` line, by line.
+    #[serde(default)]
+    pub specialties: BTreeMap<String, String>,
 }
 
 /// The player's Lifepath choices. Anything not chosen is rolled with the request's seed.
@@ -220,9 +253,12 @@ pub struct CprCreationPreview {
     pub lifepath: Vec<CprLifepathTableDto>,
     /// The Cultural Origin language and its skill level (p. 46).
     pub cultural_language: Option<CprCulturalLanguageDto>,
-    /// The engine's `cpr.stat.*` and `cpr.derived.*` rows for these STATs, and the Cultural
-    /// Origin language's `cpr.skill_level.language.*` and `cpr.skill.language.*` rows (empty
-    /// while a claim-blocking problem stands).
+    /// The skill allocation and the engine's points rows.
+    pub skills: CprSkillsDto,
+    /// The engine's `cpr.stat.*` and `cpr.derived.*` rows for these STATs, the
+    /// `cpr.skill_level.*` and `cpr.skill.*` rows of every allocated skill (the Cultural Origin
+    /// language among them) and the `cpr.skills.creation_points_*` rows (empty while a
+    /// claim-blocking problem stands).
     pub explanations: Vec<ExplanationDto>,
     /// Claim-blocking reasons create would refuse.
     pub problems: Vec<DiagnosticDto>,
@@ -275,6 +311,38 @@ pub struct CprCulturalLanguageDto {
     pub skill: String,
     /// The record's `free_language_rank`.
     pub level: u8,
+}
+
+/// The skill step: the allocation as the method built it, and the engine's points rows.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprSkillsDto {
+    /// Every allocated skill, in list order (Streetrat, Edgerunner) or Basic skills first
+    /// (Complete Package), the Cultural Origin language last.
+    pub lines: Vec<CprSkillLineDto>,
+    /// The engine's `cpr.skills.creation_points_spent` and `_remaining` rows; empty while the
+    /// allocation is refused.
+    pub rows: Vec<ExplanationDto>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprSkillLineDto {
+    /// The key a level change is sent under (`CprSkillsRequest::levels`).
+    pub line: String,
+    /// The skill key saved (`Play Instrument (Guitar)`).
+    pub key: String,
+    pub level: u8,
+    pub basic: bool,
+    pub x2: bool,
+    /// The Cultural Origin language (its 4 levels are free).
+    pub cultural: bool,
+    /// The method lets the player change this level.
+    pub adjustable: bool,
+    /// A `(choose 1)` line: the player names the instrument or field.
+    pub choose_one: bool,
+    /// The id of this skill's `cpr.skill_level.*` row (empty for a key the engine cannot resolve).
+    pub level_row: String,
 }
 
 /// The created character, or why it was not created (nothing saved).
@@ -617,12 +685,133 @@ fn answer_lifepath(
     Ok(LifepathOutcome { tables: out, language })
 }
 
-/// The choices creation saves beyond the STATs: the Cultural Origin language at its free rank.
-fn creation_choices(language: Option<&CprCulturalLanguageDto>) -> CprSheetChoices {
+/// The choices creation saves beyond the STATs: every allocated skill at its level (the
+/// Cultural Origin language among them).
+fn creation_choices(skills: &CprSkillsDto) -> CprSheetChoices {
     CprSheetChoices {
-        skills: language.map(|l| vec![(l.skill.clone(), l.level)]).unwrap_or_default(),
+        skills: skills.lines.iter().map(|l| (l.key.clone(), l.level)).collect(),
         ..CprSheetChoices::default()
     }
+}
+
+/// The printed `(choose 1)` suffix of a Role list line whose instrument or field the player names.
+const CHOOSE_ONE: &str = "(choose 1)";
+
+/// The id fragment of a skill key (`handgun`, `martial_arts.karate`), as the sheet's rows use it.
+fn skill_row_rest(catalog: &CprSkillCatalog, key: &str) -> Option<String> {
+    let (skill, specialty) = catalog.resolve(key).ok()?;
+    Some(match specialty {
+        Some(spec) => format!("{}.{}", skill_slug(&skill.name), skill_slug(&spec)),
+        None => skill_slug(&skill.name),
+    })
+}
+
+/// Builds the skill allocation the method allows from the player's choices, then has the engine
+/// validate and price it. Refusals become claim-blocking `problems`; the points rows come back
+/// only for an allocation the engine accepts.
+fn allocate_skills(
+    catalog: &CprSkillCatalog,
+    role: &str,
+    method: CprCreationMethod,
+    request: &CprSkillsRequest,
+    language: Option<&CprCulturalLanguageDto>,
+    problems: &mut Vec<DiagnosticDto>,
+) -> Result<CprSkillsDto, String> {
+    let before = problems.len();
+    let cultural = language.map(|l| l.skill.as_str());
+    let x2 = |key: &str| catalog.resolve(key).is_ok_and(|(s, _)| s.x2);
+    let line = |line: &str, key: String, level: u8, basic: bool, adjustable: bool, choose_one: bool| CprSkillLineDto {
+        line: line.to_owned(),
+        x2: x2(&key),
+        cultural: cultural == Some(key.as_str()),
+        level_row: skill_row_rest(catalog, &key).map(|rest| format!("cpr.skill_level.{rest}")).unwrap_or_default(),
+        key,
+        level,
+        basic,
+        adjustable,
+        choose_one,
+    };
+    let mut lines: Vec<CprSkillLineDto> = Vec::new();
+    match method {
+        CprCreationMethod::Streetrat | CprCreationMethod::Edgerunner => {
+            // p. 86-89: the Role's 20 skills; Streetrat at the printed levels, Edgerunner from them.
+            let list = catalog.role_list(role)?;
+            let adjustable = method == CprCreationMethod::Edgerunner;
+            for entry in &list.skills {
+                let choose_one = entry.name.ends_with(CHOOSE_ONE);
+                let key = if choose_one {
+                    let name = entry.name.trim_end_matches(CHOOSE_ONE).trim();
+                    match request.specialties.get(&entry.name).map(|s| s.trim()).filter(|s| !s.is_empty()) {
+                        Some(spec) => format!("{name} ({spec})"),
+                        None => {
+                            problems.push(problem(
+                                REFUSED_SKILL_SPECIALTY,
+                                format!("name the {name} for the {role}'s '{}' skill (p. 86-89)", entry.name),
+                            ));
+                            entry.name.clone()
+                        }
+                    }
+                } else {
+                    entry.name.clone()
+                };
+                let level = request.levels.get(&entry.name).copied().unwrap_or(entry.level);
+                lines.push(line(&entry.name, key, level, entry.basic, adjustable, choose_one));
+            }
+            // Any other key is the engine's to refuse (off the list), or the Cultural Origin language raised.
+            for (key, level) in request.levels.iter().filter(|(k, _)| !list.skills.iter().any(|e| &e.name == *k)) {
+                lines.push(line(key, key.clone(), *level, false, adjustable, false));
+            }
+        }
+        CprCreationMethod::CompletePackage => {
+            // p. 90: any skills; the Basic skills start at 2; a level of 0 drops a skill.
+            let basic = catalog.basic_skills();
+            for key in basic {
+                let level = request.levels.get(key).copied().unwrap_or(2);
+                if level > 0 {
+                    lines.push(line(key, key.clone(), level, true, true, false));
+                }
+            }
+            for (key, level) in request.levels.iter().filter(|(k, l)| !basic.contains(*k) && **l > 0) {
+                lines.push(line(key, key.clone(), *level, false, true, false));
+            }
+        }
+    }
+    if let Some(language) = language.filter(|_| !lines.iter().any(|l| l.cultural)) {
+        let adjustable = method != CprCreationMethod::Streetrat;
+        lines.push(line(&language.skill, language.skill.clone(), language.level, false, adjustable, false));
+    }
+
+    // A named specialty is saved as `Skill (<name>)`: it must be a name the grammar holds.
+    for l in lines.iter().filter(|l| !l.key.ends_with(CHOOSE_ONE)) {
+        let bad_specialty = catalog.resolve(&l.key).ok().and_then(|(_, spec)| spec).filter(|s| !language_name_ok(s));
+        if let Some(spec) = bad_specialty {
+            problems.push(problem(
+                REFUSED_SKILL_SPECIALTY,
+                format!("'{}': the specialty '{spec}' must be a name without ( ) | = or #", l.key),
+            ));
+        }
+    }
+    if problems.len() > before {
+        return Ok(CprSkillsDto { lines, rows: Vec::new() });
+    }
+
+    let allocation = CprSkillAllocation {
+        method: match method {
+            CprCreationMethod::Streetrat => CprSkillMethod::Streetrat { role: role.to_owned() },
+            CprCreationMethod::Edgerunner => CprSkillMethod::Edgerunner { role: role.to_owned() },
+            CprCreationMethod::CompletePackage => CprSkillMethod::CompletePackage,
+        },
+        cultural_language: language.map(|l| l.skill.clone()),
+        levels: lines.iter().map(|l| (l.key.clone(), l.level)).collect(),
+    };
+    let rows = match validate_creation_skills(catalog, &allocation) {
+        Ok(spend) => spend_rows(&spend).into_iter().map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail }).collect(),
+        Err(reason) => {
+            problems.push(problem(REFUSED_SKILLS, reason));
+            Vec::new()
+        }
+    };
+    Ok(CprSkillsDto { lines, rows })
 }
 
 /// Every Lifepath answer, in panel order, as saved.
@@ -643,14 +832,22 @@ fn saved_lifepath(lifepath: &[CprLifepathTableDto]) -> CprLifepath {
     }
 }
 
-/// The engine's rows for the Cultural Origin language: its level and its Skill Base, from the
-/// composed sheet of these STATs and that one skill.
-fn language_rows(root: &Path, input: &CprCharacterInput, language: &CprCulturalLanguageDto) -> Result<Vec<ExplanationDto>, String> {
+/// The engine's rows for the allocated skills: each one's level and Skill Base, from the
+/// composed sheet of these STATs and those skills.
+fn allocated_skill_rows(
+    root: &Path,
+    catalog: &CprSkillCatalog,
+    input: &CprCharacterInput,
+    skills: &CprSkillsDto,
+) -> Result<Vec<ExplanationDto>, String> {
     let catalogs = CprSheetCatalogs::load(root)?;
-    let choices = CprSheetChoices { skills: vec![(language.skill.clone(), language.level)], ..CprSheetChoices::default() };
-    let sheet = compose_sheet(&catalogs, input, &choices)?;
-    let rest = format!("language.{}", skill_slug(&language.name));
-    let wanted = [format!("cpr.skill_level.{rest}"), format!("cpr.skill.{rest}")];
+    let sheet = compose_sheet(&catalogs, input, &creation_choices(skills))?;
+    let wanted: Vec<String> = skills
+        .lines
+        .iter()
+        .filter_map(|l| skill_row_rest(catalog, &l.key))
+        .flat_map(|rest| [format!("cpr.skill_level.{rest}"), format!("cpr.skill.{rest}")])
+        .collect();
     Ok(sheet
         .rows
         .into_iter()
@@ -733,12 +930,13 @@ pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<Cp
     };
 
     let lifepath = answer_lifepath(root, &request.role, seed, &request.lifepath, &mut problems)?;
+    let catalog = CprSkillCatalog::load(root)?;
+    let skills = allocate_skills(&catalog, &request.role, request.method, &request.skills, lifepath.language.as_ref(), &mut problems)?;
     let input = input_of(values);
     let explanations = if problems.is_empty() {
         let mut rows = engine_rows(&input);
-        if let Some(language) = &lifepath.language {
-            rows.extend(language_rows(root, &input, language)?);
-        }
+        rows.extend(allocated_skill_rows(root, &catalog, &input, &skills)?);
+        rows.extend(skills.rows.iter().cloned());
         rows
     } else {
         Vec::new()
@@ -758,6 +956,7 @@ pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<Cp
         stat_points_total: points.1,
         lifepath: lifepath.tables,
         cultural_language: lifepath.language,
+        skills,
         explanations,
         problems,
     })
@@ -797,13 +996,12 @@ pub(crate) fn create_at_root(
         input: input.clone(),
     };
     CprCharacterStore::save(&character, root)?;
-    CprCharacterStore::save_choices(&creation_choices(preview.cultural_language.as_ref()), root)?;
+    CprCharacterStore::save_choices(&creation_choices(&preview.skills), root)?;
     CprCharacterStore::save_lifepath(&saved_lifepath(&preview.lifepath), root)?;
     let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(root)?;
     let mut explanations = engine_rows(&input);
-    if let Some(language) = &preview.cultural_language {
-        explanations.extend(language_rows(corpus, &input, language)?);
-    }
+    explanations.extend(allocated_skill_rows(corpus, &CprSkillCatalog::load(corpus)?, &input, &preview.skills)?);
+    explanations.extend(preview.skills.rows.iter().cloned());
     Ok(CprCreateResponse::Saved { summary: Box::new(loaded.summary), seed: preview.seed, explanations })
 }
 
@@ -849,6 +1047,15 @@ mod tests {
             template_roll: None,
             stats: None,
             lifepath: CprLifepathRequest::default(),
+            // The two `(choose 1)` lines of the Role lists (Rockerboy's instrument, the Tech's
+            // and the Medtech's field), named as a player would.
+            skills: CprSkillsRequest {
+                levels: BTreeMap::new(),
+                specialties: [("Play Instrument (choose 1)", "Guitar"), ("Science (choose 1)", "Biology")]
+                    .into_iter()
+                    .map(|(line, name)| (line.to_owned(), name.to_owned()))
+                    .collect(),
+            },
         }
     }
 
@@ -1342,13 +1549,238 @@ mod tests {
         let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
         assert_eq!(row(&loaded.explanations, "cpr.skill_level.language.japanese"), 4);
         let choices = CprCharacterStore::load_choices(&dir).unwrap();
-        assert_eq!(choices.skills, [("Language (Japanese)".to_owned(), 4)]);
+        assert!(choices.skills.contains(&("Language (Japanese)".to_owned(), 4)), "{:?}", choices.skills);
         let saved_answers: Vec<(String, String)> =
             CprCharacterStore::load_lifepath(&dir).unwrap().answers.iter().map(|a| (a.table.clone(), a.text.clone())).collect();
         let previewed: Vec<(String, String)> =
             p.lifepath.iter().flat_map(|t| t.answers.iter().map(|a| (t.table.clone(), a.text.clone()))).collect();
         assert_eq!(saved_answers, previewed, "every previewed answer is saved, in order");
         assert!(saved_answers.iter().any(|(t, a)| t == "Cultural Origins" && a == "East Asian"));
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    // ---- Skills (p. 85-90) ----
+
+    /// The p087-p091 tables and worked examples, typed from the page (the root crate's engine
+    /// fixture), not read from the corpus the allocator reads.
+    fn skills_fixture() -> Value {
+        let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../tests/fixtures/cpr/streetrat_skills_p087.json");
+        serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap()
+    }
+
+    /// Every Role skill list read as plain JSON: (role, [(line, level)]).
+    fn role_lists() -> Vec<(String, Vec<(String, u8)>)> {
+        let rows: Vec<Value> =
+            serde_json::from_str(&std::fs::read_to_string(root().join("role_skill_list.json")).unwrap()).unwrap();
+        rows.iter()
+            .map(|r| {
+                let lines = r["skills"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|s| (s["name"].as_str().unwrap().to_owned(), s["level"].as_u64().unwrap() as u8))
+                    .collect();
+                (r["role"].as_str().unwrap().to_owned(), lines)
+            })
+            .collect()
+    }
+
+    fn spent(rows: &[ExplanationDto]) -> (i16, i16) {
+        (row(rows, "cpr.skills.creation_points_spent"), row(rows, "cpr.skills.creation_points_remaining"))
+    }
+
+    fn skill_problem(preview: &CprCreationPreview, id: &str, words: &[&str]) -> bool {
+        preview
+            .problems
+            .iter()
+            .any(|p| p.id == id && p.claim_blocking && words.iter().all(|w| p.message.contains(w)))
+    }
+
+    /// Streetrat (p. 86-87): the Role's 20 skills at their printed levels, each list 86 points
+    /// (CUI F-25), plus the Cultural Origin language at 4 for free. A `(choose 1)` line takes
+    /// the player's named instrument or field; a changed level is refused.
+    #[test]
+    fn streetrat_skills_are_the_roles_printed_list_at_86_points() {
+        let mut checked = 0;
+        for (role, lines) in role_lists() {
+            let preview = preview_at(&root(), &seeded(&role, 4)).unwrap();
+            assert!(preview.problems.is_empty(), "{role}: {:?}", preview.problems);
+            assert_eq!(spent(&preview.skills.rows), (86, 0), "{role}: CUI F-25");
+            let listed: Vec<(String, u8)> =
+                preview.skills.lines.iter().filter(|l| !l.cultural).map(|l| (l.line.clone(), l.level)).collect();
+            assert_eq!(listed, lines, "{role}: the printed list, in order, at its printed levels");
+            let language = preview.skills.lines.iter().find(|l| l.cultural).expect("the Cultural Origin language line");
+            assert_eq!(language.level, 4);
+            assert!(preview.skills.lines.iter().all(|l| !l.adjustable), "{role}: Streetrat levels are fixed");
+            for line in preview.skills.lines.iter().filter(|l| l.line.ends_with("(choose 1)")) {
+                assert!(line.choose_one && !line.key.contains("choose 1"), "{role}: {} names its specialty: {}", line.line, line.key);
+            }
+            checked += 1;
+        }
+        assert_eq!(checked, 10);
+
+        // A Streetrat level is the printed one: Solo Tactics 6 sent as 5 is refused.
+        let mut changed = seeded("Solo", 4);
+        changed.skills.levels.insert("Tactics".to_owned(), 5);
+        let p = preview_at(&root(), &changed).unwrap();
+        assert!(skill_problem(&p, REFUSED_SKILLS, &["Tactics", "Streetrat"]), "{:?}", p.problems);
+        assert!(p.skills.rows.is_empty() && p.explanations.is_empty());
+
+        // A `(choose 1)` line with no named instrument is refused, and so is a name the saved
+        // grammar cannot hold.
+        let mut unnamed = seeded("Rockerboy", 4);
+        unnamed.skills.specialties.clear();
+        let p = preview_at(&root(), &unnamed).unwrap();
+        assert!(skill_problem(&p, REFUSED_SKILL_SPECIALTY, &["Play Instrument"]), "{:?}", p.problems);
+        unnamed.skills.specialties.insert("Play Instrument (choose 1)".to_owned(), "Gui|tar".to_owned());
+        let p = preview_at(&root(), &unnamed).unwrap();
+        assert!(skill_problem(&p, REFUSED_SKILL_SPECIALTY, &["Gui|tar"]), "{:?}", p.problems);
+    }
+
+    /// Edgerunner (p. 88): the Role's 20 skills, each 2 to 6, 86 points, (x2) skills two points
+    /// a level. The allocation starts at the Streetrat levels (86 spent) and the player moves it.
+    #[test]
+    fn edgerunner_skills_are_the_roles_20_from_2_to_6_within_86_points() {
+        let mut req = request("Solo", CprCreationMethod::Edgerunner);
+        req.seed = Some(4);
+        let p = preview_at(&root(), &req).unwrap();
+        assert!(p.problems.is_empty(), "{:?}", p.problems);
+        assert_eq!(spent(&p.skills.rows), (86, 0), "the start: the printed levels");
+        assert_eq!(p.skills.lines.iter().filter(|l| !l.cultural).count(), 20);
+        assert!(p.skills.lines.iter().filter(|l| !l.cultural).all(|l| l.adjustable));
+
+        // p090's worked example, typed from the page: 86 points, line by line.
+        let fx = skills_fixture();
+        let mut example = req.clone();
+        for skill in fx["worked_examples"]["edgerunner_solo_p090"]["skills"].as_array().unwrap() {
+            example.skills.levels.insert(skill["name"].as_str().unwrap().to_owned(), skill["level"].as_u64().unwrap() as u8);
+        }
+        let p = preview_at(&root(), &example).unwrap();
+        assert!(p.problems.is_empty(), "{:?}", p.problems);
+        assert_eq!(spent(&p.skills.rows), (86, 0), "p090 Total Cost 86");
+
+        // Tactics 6 -> 2 frees 4 points; Autofire (x2) 6 -> 5 frees 2 more.
+        let mut lower = req.clone();
+        lower.skills.levels.insert("Tactics".to_owned(), 2);
+        assert_eq!(spent(&preview_at(&root(), &lower).unwrap().skills.rows), (82, 4));
+        lower.skills.levels.insert("Autofire".to_owned(), 5);
+        assert_eq!(spent(&preview_at(&root(), &lower).unwrap().skills.rows), (80, 6), "(x2): two points a level");
+
+        let refused: [(&str, u8, &[&str]); 4] = [
+            ("Athletics", 3, &["87 of 86"]),
+            ("Tactics", 7, &["Tactics", "above 6"]),
+            ("Tactics", 1, &["Tactics", "lower than 2"]),
+            ("Archery", 2, &["Archery", "not on the Solo"]),
+        ];
+        let characters_root = tempdir("edgerunner-skills");
+        for (skill, level, words) in refused {
+            let mut bad = req.clone();
+            bad.skills.levels.insert(skill.to_owned(), level);
+            let p = preview_at(&root(), &bad).unwrap();
+            assert!(skill_problem(&p, REFUSED_SKILLS, words), "{skill} {level}: {:?}", p.problems);
+            let dir = characters_root.join(format!("er-{}-{level}", skill.to_lowercase()));
+            let response = create_at_root(&root(), &dir, &create(bad, "er"), "codex-test".to_owned()).unwrap();
+            assert!(
+                matches!(&response, CprCreateResponse::Blocked { diagnostics } if diagnostics.iter().any(|d| d.id == REFUSED_SKILLS)),
+                "{skill} {level}: {response:?}"
+            );
+            assert!(!dir.join("envelope.txt").exists(), "{skill} {level}: nothing saved");
+        }
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// Complete Package (p. 90): any of the 66 skills, none above 6, the 13 Basic skills at 2 or
+    /// more, (x2) skills double. The start is the Basic skills at 2 (26 of 86, "the remaining
+    /// 60", p. 90); the p091 example spends exactly 86.
+    #[test]
+    fn complete_package_skills_are_any_of_66_capped_at_6_with_basic_at_2() {
+        let mut req = request("Solo", CprCreationMethod::CompletePackage);
+        req.stats = Some(allocation([5, 7, 8, 3, 6, 7, 6, 8, 8, 4]));
+        req.seed = Some(4);
+        let p = preview_at(&root(), &req).unwrap();
+        assert!(p.problems.is_empty(), "{:?}", p.problems);
+        assert_eq!(spent(&p.skills.rows), (26, 60), "13 Basic skills at 2; p. 90: 'the remaining 60'");
+        let basic: Vec<String> = skills_fixture()["basic_skills"].as_array().unwrap().iter().map(|b| b.as_str().unwrap().to_owned()).collect();
+        let held: Vec<String> = p.skills.lines.iter().filter(|l| !l.cultural).map(|l| l.key.clone()).collect();
+        assert_eq!(held, basic);
+        assert!(p.skills.lines.iter().filter(|l| !l.cultural).all(|l| l.basic && l.adjustable));
+
+        let fx = skills_fixture();
+        let mut example = req.clone();
+        for skill in fx["worked_examples"]["complete_package_solo_p091"]["skills"].as_array().unwrap() {
+            example.skills.levels.insert(skill["name"].as_str().unwrap().to_owned(), skill["level"].as_u64().unwrap() as u8);
+        }
+        let p = preview_at(&root(), &example).unwrap();
+        assert!(p.problems.is_empty(), "{:?}", p.problems);
+        assert_eq!(spent(&p.skills.rows), (86, 0), "p091 Total Cost 86");
+        let karate = p.skills.lines.iter().find(|l| l.key == "Martial Arts (Karate)").unwrap();
+        assert!(karate.x2 && !karate.basic);
+        assert_eq!(row(&p.explanations, "cpr.skill_level.martial_arts.karate"), 2);
+        assert_eq!(row(&p.explanations, "cpr.skill.autofire"), 7 + 6, "REF 7 + Autofire 6");
+
+        // (x2) doubles: Autofire 6 -> 5 frees 2, Handgun 4 -> 3 frees 1.
+        let mut lower = example.clone();
+        lower.skills.levels.insert("Autofire".to_owned(), 5);
+        lower.skills.levels.insert("Handgun".to_owned(), 3);
+        assert_eq!(spent(&preview_at(&root(), &lower).unwrap().skills.rows), (83, 3));
+
+        // Raising the Cultural Origin language past its free 4 costs a point a level.
+        let language = p.cultural_language.as_ref().unwrap().skill.clone();
+        let mut fluent = lower.clone();
+        fluent.skills.levels.insert(language.clone(), 6);
+        let f = preview_at(&root(), &fluent).unwrap();
+        assert!(f.problems.is_empty(), "{:?}", f.problems);
+        assert_eq!(spent(&f.skills.rows), (85, 1));
+        assert_eq!(f.skills.lines.iter().find(|l| l.key == language).unwrap().level, 6);
+
+        // A skill dropped to 0 leaves the list; a Basic skill cannot be dropped.
+        let mut dropped = example.clone();
+        dropped.skills.levels.insert("Tracking".to_owned(), 0);
+        let d = preview_at(&root(), &dropped).unwrap();
+        assert!(d.problems.is_empty(), "{:?}", d.problems);
+        assert!(!d.skills.lines.iter().any(|l| l.key == "Tracking"));
+        assert_eq!(spent(&d.skills.rows), (82, 4));
+
+        let refused: [(&str, u8, &str, &[&str]); 6] = [
+            ("Tactics", 4, REFUSED_SKILLS, &["87 of 86"]),
+            ("Melee Weapon", 7, REFUSED_SKILLS, &["Melee Weapon", "above 6"]),
+            ("Stealth", 1, REFUSED_SKILLS, &["Stealth", "at least 2"]),
+            ("Persuasion", 0, REFUSED_SKILLS, &["Persuasion", "missing"]),
+            ("Hacking", 1, REFUSED_SKILLS, &["Hacking"]),
+            ("Martial Arts", 1, REFUSED_SKILLS, &["Martial Arts", "specialty"]),
+        ];
+        for (skill, level, id, words) in refused {
+            let mut bad = example.clone();
+            bad.skills.levels.insert(skill.to_owned(), level);
+            let p = preview_at(&root(), &bad).unwrap();
+            assert!(skill_problem(&p, id, words), "{skill} {level}: {:?}", p.problems);
+            assert!(p.skills.rows.is_empty(), "{skill} {level}: no spent row for a refused allocation");
+        }
+        let mut grammar = example.clone();
+        grammar.skills.levels.insert("Science (Bio=logy)".to_owned(), 1);
+        assert!(skill_problem(&preview_at(&root(), &grammar).unwrap(), REFUSED_SKILL_SPECIALTY, &["Bio=logy"]));
+    }
+
+    /// Create saves the whole allocation (with the Cultural Origin language) and the loaded
+    /// character carries every level; the response carries the engine's spent row.
+    #[test]
+    fn create_saves_every_allocated_skill_and_the_loaded_character_has_them() {
+        let mut req = seeded("Rockerboy", 8);
+        req.lifepath.cultural_language = Some("Japanese".to_owned());
+        let characters_root = tempdir("skills");
+        let dir = characters_root.join("cpr-skills");
+        let response = create_at_root(&root(), &dir, &create(req, "cpr-skills"), "codex-test".to_owned()).unwrap();
+        let CprCreateResponse::Saved { explanations, .. } = response else { panic!("{response:?}") };
+        assert_eq!(spent(&explanations), (86, 0));
+        let choices = CprCharacterStore::load_choices(&dir).unwrap();
+        assert_eq!(choices.skills.len(), 21, "20 listed skills + the Cultural Origin language");
+        assert!(choices.skills.contains(&("Play Instrument (Guitar)".to_owned(), 6)), "{:?}", choices.skills);
+        assert!(choices.skills.contains(&("Language (Japanese)".to_owned(), 4)));
+        let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+        assert_eq!(row(&loaded.explanations, "cpr.skill_level.play_instrument.guitar"), 6);
+        assert_eq!(row(&loaded.explanations, "cpr.skill_level.composition"), 6);
+        assert_eq!(row(&loaded.explanations, "cpr.skill_level.language.japanese"), 4);
+        assert_eq!(row(&loaded.explanations, "cpr.skill_level.archery"), 0);
         std::fs::remove_dir_all(&characters_root).ok();
     }
 }

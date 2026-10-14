@@ -20,6 +20,13 @@ import {
   culturalLanguageTile,
   lifepathRowOptions,
   lifepathTablesFor,
+  addSkill,
+  adjustSkill,
+  dropSkill,
+  setSkillSpecialty,
+  skillKey,
+  skillOptions,
+  skillPointTiles,
   type CyberpunkCreationDraft,
 } from './cyberpunkCreationModel';
 import { readFileSync } from 'node:fs';
@@ -32,7 +39,7 @@ import {
 } from './cyberpunkCreateLayout';
 import { boxesInColumn } from './sheetLayout';
 import { characterCreationGate } from './characterHubRuntime';
-import type { CyberpunkCreationPreview, CyberpunkStatValue } from '../boundary/cprCreation';
+import type { CyberpunkCreationPreview, CyberpunkSkillLine, CyberpunkStatValue } from '../boundary/cprCreation';
 import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -65,6 +72,7 @@ function preview(partial: Partial<CyberpunkCreationPreview>): CyberpunkCreationP
     statPointsTotal: null,
     lifepath: [],
     culturalLanguage: null,
+    skills: { lines: [], rows: [] },
     explanations: [],
     problems: [],
     ...partial,
@@ -306,17 +314,105 @@ function testChangingRoleKeepsOnlyTheGeneralLifepathChoices() {
   assertEqual(solo.lifepath.counts['Your Friends'], 2, 'general counts are kept');
 }
 
+function skillLine(partial: Partial<CyberpunkSkillLine>): CyberpunkSkillLine {
+  return { line: '', key: '', level: 2, basic: false, x2: false, cultural: false, adjustable: true, chooseOne: false, levelRow: '', ...partial };
+}
+
 function testTheCulturalLanguageTileIsTheEnginesRow() {
+  const japanese = skillLine({ line: 'Language (Japanese)', key: 'Language (Japanese)', level: 4, cultural: true, levelRow: 'cpr.skill_level.language.japanese' });
+  const streetslang = skillLine({ line: 'Language (Streetslang)', key: 'Language (Streetslang)', basic: true, levelRow: 'cpr.skill_level.language.streetslang' });
   const p = preview({
     culturalLanguage: { name: 'Japanese', picked: true, skill: 'Language (Japanese)', level: 4 },
+    skills: { lines: [streetslang, japanese], rows: [] },
     explanations: [
+      { id: 'cpr.skill_level.language.streetslang', value: 2, detail: '' },
       { id: 'cpr.skill_level.language.japanese', value: 4, detail: '' },
       { id: 'cpr.skill.language.japanese', value: 10, detail: '' },
     ],
   });
-  assertEqual(JSON.stringify(culturalLanguageTile(p)), '{"id":"cpr.skill_level.language.japanese","label":"Language (Japanese)","value":4}', 'the level is the engine row');
-  assertEqual(culturalLanguageTile(preview({ culturalLanguage: { name: 'Japanese', picked: true, skill: 'Language (Japanese)', level: 4 } })), null, 'no engine row, no tile');
+  assertEqual(JSON.stringify(culturalLanguageTile(p)), '{"id":"cpr.skill_level.language.japanese","label":"Language (Japanese)","value":4}', "the level is the engine's row for the Cultural Origin language, not Streetslang's");
+  assertEqual(
+    culturalLanguageTile(preview({ culturalLanguage: { name: 'Japanese', picked: true, skill: 'Language (Japanese)', level: 4 }, skills: { lines: [japanese], rows: [] } })),
+    null,
+    'no engine row, no tile'
+  );
   assertEqual(culturalLanguageTile(preview({})), null, 'no language, no tile');
+}
+
+// ---- SD-38 E3.4: the skills allocator ----
+
+function testTheSkillsRequestCarriesTheDraftsLevelsAndSpecialties() {
+  let draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Rockerboy', method: 'edgerunner', seed: 1 };
+  assertEqual(JSON.stringify(buildCyberpunkPreviewRequest(draft)?.skills), '{"levels":{},"specialties":{}}', 'nothing chosen: the method starts where the book does');
+  draft = setSkillSpecialty(draft, 'Play Instrument (choose 1)', ' Guitar ');
+  draft = adjustSkill(draft, skillLine({ line: 'Composition', key: 'Composition', level: 6 }), -2);
+  const request = buildCyberpunkPreviewRequest(draft);
+  assertEqual(JSON.stringify(request?.skills), '{"levels":{"Composition":4},"specialties":{"Play Instrument (choose 1)":"Guitar"}}', 'the level and the named instrument');
+  assertEqual(draft.seed, 1, 'a skill change keeps the dice');
+  const create = buildCyberpunkCreateRequest({ ...draft, displayLabel: 'V' }, { generateId: () => 'id', now: () => 'now' });
+  assertEqual(JSON.stringify(create?.creation.skills), JSON.stringify(request?.skills), 'create saves the previewed allocation');
+  assertEqual(setSkillSpecialty(draft, 'Play Instrument (choose 1)', '').skills.specialties['Play Instrument (choose 1)'], undefined, 'an empty name clears it');
+}
+
+function testAdjustSkillMovesFromTheEnginesLevelAndNeverBelowZero() {
+  const draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Solo', method: 'completePackage' };
+  const up = adjustSkill(draft, skillLine({ line: 'Handgun', key: 'Handgun', level: 4 }), 1);
+  assertEqual(up.skills.levels.Handgun, 5, "one up from the level the engine showed; the cap of 6 is the engine's to refuse");
+  assertEqual(adjustSkill(draft, skillLine({ line: 'Handgun', key: 'Handgun', level: 0 }), -1).skills.levels.Handgun, 0, 'never below zero');
+}
+
+function testCompletePackageAddsAndDropsAnyMasterListSkill() {
+  let draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Solo', method: 'completePackage' };
+  assertEqual(skillKey('Martial Arts', ' Karate '), 'Martial Arts (Karate)', 'a skill with its specialty');
+  assertEqual(skillKey('Handgun', ''), 'Handgun', 'a skill without one');
+  draft = addSkill(draft, 'Martial Arts (Karate)');
+  draft = addSkill(draft, 'Handgun');
+  assertEqual(JSON.stringify(draft.skills.levels), '{"Martial Arts (Karate)":1,"Handgun":1}', 'an added skill starts at level 1');
+  assertEqual(addSkill(draft, 'Handgun').skills.levels.Handgun, 1, 'adding a held skill keeps its level');
+  assertEqual(dropSkill(draft, 'Handgun').skills.levels.Handgun, 0, 'a dropped skill is sent at 0, which the engine drops');
+}
+
+function testChangingMethodOrRoleResetsTheSkillLevels() {
+  let draft: CyberpunkCreationDraft = { ...EMPTY_CYBERPUNK_DRAFT, role: 'Tech', method: 'edgerunner' };
+  draft = adjustSkill(draft, skillLine({ line: 'Basic Tech', key: 'Basic Tech', level: 6 }), -1);
+  draft = setSkillSpecialty(draft, 'Science (choose 1)', 'Chemistry');
+  const cp = selectMethod(draft, 'completePackage', []);
+  assertEqual(JSON.stringify(cp.skills.levels), '{}', "the Edgerunner levels are keyed by the Role's list: a new method starts over");
+  assertEqual(cp.skills.specialties['Science (choose 1)'], 'Chemistry', 'the named field is kept');
+  const medtech = selectRole(draft, 'Medtech', corpusRecords('lifepath_table'));
+  assertEqual(JSON.stringify(medtech.skills.levels), '{}', "a new Role's list starts over");
+  assertEqual(medtech.skills.specialties['Science (choose 1)'], 'Chemistry', 'the named field is kept');
+}
+
+function testSkillOptionsAreTheMasterSkillListRecords() {
+  const records = corpusRecords('skill');
+  const options = skillOptions(records);
+  assertEqual(options.length, 66, 'CUI F-24: the 66 skills of the Master Skill List');
+  assertEqual(options.filter((o) => o.x2).length, 7, 'CUI F-41: 7 (x2) skills');
+  assertEqual(
+    options.filter((o) => o.specialtyRequired).map((o) => o.name).sort().join('|'),
+    records.filter((r) => r.specialty_required === true).map((r) => String(r.name)).sort().join('|'),
+    'a skill that needs a specialty is the record that says so'
+  );
+  assertEqual(options[0].name, String(records[0].name), 'record order');
+}
+
+function testTheSpentFigureIsTheEngineRow() {
+  const p = preview({
+    skills: {
+      lines: [],
+      rows: [
+        { id: 'cpr.skills.creation_points_spent', value: 82, detail: '82 creation skill points spent' },
+        { id: 'cpr.skills.creation_points_remaining', value: 4, detail: '4 of 86 left' },
+      ],
+    },
+  });
+  assertEqual(
+    skillPointTiles(p).map((t) => `${t.id}=${t.value}`).join('|'),
+    'cpr.skills.creation_points_spent=82|cpr.skills.creation_points_remaining=4',
+    "the points spent and left are the engine's rows"
+  );
+  assertEqual(skillPointTiles(preview({})).length, 0, 'a refused allocation has no row, so no figure is shown');
 }
 
 testNewCharacterUnderCyberpunkRedOpensTheCyberpunkForm();
@@ -336,3 +432,9 @@ testLifepathRowOptionsAreTheRecordsRows();
 testLifepathPicksCountsSkipsAndLanguageAreTheDraftsOwnChoices();
 testChangingRoleKeepsOnlyTheGeneralLifepathChoices();
 testTheCulturalLanguageTileIsTheEnginesRow();
+testTheSkillsRequestCarriesTheDraftsLevelsAndSpecialties();
+testAdjustSkillMovesFromTheEnginesLevelAndNeverBelowZero();
+testCompletePackageAddsAndDropsAnyMasterListSkill();
+testChangingMethodOrRoleResetsTheSkillLevels();
+testSkillOptionsAreTheMasterSkillListRecords();
+testTheSpentFigureIsTheEngineRow();
