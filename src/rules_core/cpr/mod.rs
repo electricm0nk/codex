@@ -17,6 +17,7 @@ pub mod store;
 
 // lane A modules
 pub mod armor;
+pub mod critical;
 pub mod skills;
 pub mod stats;
 
