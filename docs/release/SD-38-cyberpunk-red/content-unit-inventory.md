@@ -322,7 +322,7 @@ computed value depends on it, printed as written.
 | U-20 | Linear Frame Sigma (gear exoskeleton) needs 1 or 2 Interface Plugs (p355 says both) | gear §19.2 | **A-8** (record both, `transcription_note`; enforce neither) |
 | U-21 | Starting cash shown on the sheet | gear §18; brief DoD item 1 ("cash") | **A-9** (computed: budget − purchases at creation) |
 | U-22 | `cpr/mod.rs` declarations edited by two parallel engine lanes | design | **A-10** (lane anchors; SD-p) |
-| U-23 | Where a CPR character's input lives in the save envelope | design | **A-11** (additive optional field) |
+| U-23 | Where a CPR character's input lives | design | **A-11 revised** (own store, sibling files under the same root) |
 | U-24 | Seriously Wounded boundary: "threshold" (p080) vs "less than 1/2 HP" (p187) | creation §1 | PRINT the computed threshold number `ceil(HP/2)`; no wound simulation |
 | U-25 | Death Save: does the first save carry a penalty | combat §5 | PRINT the rule; compute Death Save = BODY and the Base Death Save Penalty count from recorded criticals |
 | U-26 | Zero HP: "Death State" (p080) vs Mortally Wounded "less than 1 HP" (p187) | combat §5 | PRINT the combat-chapter wording |

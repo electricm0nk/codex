@@ -34,7 +34,7 @@ cards (`decisions.md §22`).
 | E0.1 | `GameSystem::CyberpunkRed`; `sheet_rules_relative` → `Option` | opus | complete | C1 | `artifacts/epic_0/E0.1_cycle_receipt.md`; code 7732b17462, clippy base fix ebbb643800; PF/SF seeds unchanged |
 | E0.2 | LICENSE.json + licence-matrix section (DEVIATION) | opus | complete | E0.1 | `artifacts/epic_0/E0.2_cycle_receipt.md`; 481de470b6; pi-sweep + pcgen-residue-gate PASS with the dir present; PF/SF seeds unchanged (no code touched) |
 | E0.3 | CPR corpus root bundled + `packaged_resources.rs` | opus | waiting | E0.2 |  |
-| E0.4 | Envelope field (A-11) + `CyberpunkAdapter` routing; STAT rows | opus | waiting | E0.1 |  |
+| E0.4 | CPR store (A-11 revised) + `CyberpunkAdapter` routing; STAT rows | opus | waiting | E0.3 |  |
 | E0.5 | Landing `cyberpunk-red` selectable; Load list; New Character closed | opus | waiting | E0.4 |  |
 | E0.6 | PF + SF byte-identical gate (base = C1 SHA) | opus | waiting | E0.1, E0.2, E0.3, E0.4, E0.5 |  |
 | E0.MC | E0 adversarial merge check | opus | waiting | E0.6 | writes the E0 epic report (`decisions.md §16` rule 6) |

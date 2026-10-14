@@ -112,7 +112,7 @@ below was decided without the operator and can be revisited; each decision says 
 | 9 | Model tiering | Opus engine/UI/verify; Sonnet transcription/long waits; Haiku housekeeping | `§15` |
 | 10 | Unattended protocol, epic reports, quota, crash-resume | per `§16` | `§16` |
 | 11 | D-1…D-12 (range-DV mapping, brain damage, Air Pistol, DV29, therapy cap, "(−2 EMP)", Maker/Medicine points, Backup 16/15/14, Corp Kind 1d10, price oddities, slot enforcement, no encumbrance) | the brief's defaults | `§20` |
-| 12 | **A-1…A-11 — author defaults not in the brief** (multiclass 60 IP; Moto/Exec/Cryo picks; post-creation HL entry or roll; EMP clamp at 0; extra eye/arm slots; attachment 1 slot; deck slots both apply + over-capacity refused; Linear Frame Sigma plugs; computed starting cash; `cpr/mod.rs` lane anchors; envelope optional field) | flagged for review | `§21` |
+| 12 | **A-1…A-11 — author defaults not in the brief** (multiclass 60 IP; Moto/Exec/Cryo picks; post-creation HL entry or roll; EMP clamp at 0; extra eye/arm slots; attachment 1 slot; deck slots both apply + over-capacity refused; Linear Frame Sigma plugs; computed starting cash; `cpr/mod.rs` lane anchors; CPR own store — A-11 revised after run 4) | flagged for review | `§21` |
 | 13 | Deferrals DEF-1…DEF-5 | not in DoD | `§22` |
 
 ## 7. Initial-package construction

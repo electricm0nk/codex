@@ -69,10 +69,10 @@ const CARDS = [
 },
 {
 "id": "E0.4",
-"title": "Envelope field (A-11) + `CyberpunkAdapter` routing; STAT rows",
+"title": "CPR store (A-11 revised) + `CyberpunkAdapter` routing; STAT rows",
 "tier": "opus",
 "deps": [
-"E0.1"
+"E0.3"
 ],
 "cargo": true,
 "phase": "E0 \u2014 seam",
@@ -888,6 +888,10 @@ let stop = null
 while (pending.length || inflight.size) {
   if (!stop && !quotaHit) {
     for (const c of [...pending]) {
+      // serial lane mutex (run 4: E0.2 and E0.4 both depended only on E0.1 and were dispatched into the one
+      // sd38-main tree together; the one-writer rule needs a mechanism, not a dependency row)
+      const mainBusy = [...inflight.keys()].some(id => CARDS.find(x => x.id === id)?.lane === 'main')
+      if (c.lane === 'main' && mainBusy) continue
       if (c.deps.every(d => done.has(d))) {
         pending.splice(pending.indexOf(c), 1)
         setPhase(c.phase)

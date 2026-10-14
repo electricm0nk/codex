@@ -26,7 +26,7 @@ re-reads its lines). Names marked *(new)* are design choices the owning card con
 | Adapter seam (`apps/desktop/src-tauri/src/rule_system_adapter.rs:148–157` resolver; `:175–182` envelope router) | yes | `"cyberpunk-red"` → `CyberpunkAdapter` (E0.4) |
 | SF module set (`apps/desktop/src-tauri/src/main.rs:42–49` `mod sf_*`; `:240` `invoke_handler`; `:250–257` SF commands) | pattern only | `cpr_adapter`, `cpr_catalog`, `cpr_creation`, `cpr_sheet_print`, `cpr_improve` *(new)* |
 | PF/SF compute (`pilot_compute/**`, `sf_*` readers) | **no** | CPR's own engine `src/rules_core/cpr/**` *(new)*; PF/SF untouched |
-| Save envelope (`src/saved_character/mod.rs:14` struct, `:34` `game_system`, `:40` `character_input: CharacterInput`) | yes, additive | optional CPR payload field (A-11) |
+| Save envelope (`src/saved_character/mod.rs:14` struct, `:40` `character_input: CharacterInput`; hand-rendered in `local_store.rs`) | **no** (struct untouched) | CPR has its own store `src/rules_core/cpr/store.rs` (A-11 revised); `local_store.rs` gains `owns_payload` + `peek_game_system` only |
 | Landing + hub (`LandingScreen.tsx:14` `RuleSetId`, `:30` `RULE_SETS`, `:62` `'cyberpunk'`; `characterHubRuntime.ts:33` `resolveRuleSystemId`, `:69` `form` union, `:79` `characterCreationGate`; `CharacterHubPage.tsx:11–13, 24, 153–155, 223–226, 306–307` Starfinder branches) | yes | CPR branches beside the Starfinder ones |
 | Layout registry (`apps/desktop/src/characterHub/sheetLayout.ts:14` `LayoutBox`, `:43` `SHEET_LAYOUT`, `:91` `CREATE_LAYOUT`, `:108`/`:116` helpers) | pattern | `cyberpunkSheetLayout.ts`, `cyberpunkCreateLayout.ts` *(new)* in the same shape |
 | Restore-starters (`character_hub.rs:2103` `StarterSeed`, `:2214` `starter_seeds()`, `:2471` `restore_starter_characters_at`; `main.rs:278`) | yes, generalised | system-aware starter request (E7.1) |
@@ -54,11 +54,13 @@ re-reads its lines). Names marked *(new)* are design choices the owning card con
   `StarfinderAdapter` reused the envelope's `CharacterInput` and returned `LevelUpPlan::default()` for
   `level_up` because its grants cannot cite a PF table (`sf_adapter.rs:636–645`). `CyberpunkAdapter`
   does the same for the two PF-typed methods and serves CPR through `load_saved_character` /
-  `list_saved_characters` / `save_character` / `recompute` over the CPR payload (A-11); CPR-specific
+  `list_saved_characters` / `save_character` / `recompute` over the CPR store (A-11 revised); CPR-specific
   actions are their own commands (`cpr_creation`, `cpr_improve`). E0.4's receipt records the choice.
-- **Envelope (A-11).** `SavedCharacterEnvelope` gains
-  `#[serde(default, skip_serializing_if = "Option::is_none")] cpr_input: Option<CprCharacterInput>`;
-  `game_system = "cyberpunk-red"`. PF/SF envelopes serialise byte-identically (E0.4 test, E0.6 gate).
+- **Store (A-11 revised).** `SavedCharacterEnvelope` is NOT changed (it has no serde derive and needs a PF
+  `CharacterInput`). A CPR character is its own directory under the same characters root with `envelope.txt`
+  (`game_system = cyberpunk-red`) and `cpr_character_input.txt`, owned by `src/rules_core/cpr/store.rs`;
+  `local_store::list_all` skips directories of a system it does not own and `peek_game_system` lets the envelope
+  router dispatch a CPR root. PF/SF envelopes render byte-identically (E0.4 test, E0.6 gate).
 - **Landing.** `'cyberpunk'` → `'cyberpunk-red'` (the only id change); `available: true` at E0.5 with
   New Character closed by `characterCreationGate`'s existing hint until E3.2 (SD-37 E6.1 precedent:
   selectable chip, real Load list, creation closed with its reason).
