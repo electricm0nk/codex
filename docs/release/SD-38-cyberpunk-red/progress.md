@@ -30,13 +30,13 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | C | complete | 2 of 2 | C0 complete (1102f34aab); C1 complete (706d8da680) (kanban rows; corrected by E6.MC, the row read 1 of 2 after C1 landed) |
 | E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
 | E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
-| E2 | in progress | 6 of 11 | lanes A, B running; E2.1, E2.2, E2.5, E2.6, E2.7, E2.9 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E2 | in progress | 7 of 11 | lanes A, B running; E2.1, E2.2, E2.3, E2.5, E2.6, E2.7, E2.9 complete (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E3 | waiting | 0 of 8 | |
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **30 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1, E2.2, E2.5, E2.6, E2.7, E2.9, E6.1–E6.4, E6.MC; derived at E2.7) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **31 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.3, E2.5, E2.6, E2.7, E2.9, E6.1–E6.4, E6.MC; derived at E2.3) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -127,6 +127,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E2.6 | opus | complete | 84f7b89d49 (engine + fixture); receipt and rows in the next commit | `artifacts/epic_2/E2.6_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr/roles.rs`: 26 `cpr.role.` row ids over 10 Roles (rank + 16 rank-derived fields), ranks outside 1–10 refused; NET Actions twin with `cpr.netrunning.net_actions` flagged for E2.10 |
 | 2026-10-14 | E2.2 | opus | complete | 560bbd299a (engine + fixture), 5fb6e7c16b (clippy fix); receipt and rows in the next commit | `artifacts/epic_2/E2.2_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/skills.rs`: Skill Base = STAT + level for 66 skills (`cpr.skill.<skill>[.<specialty>]`), creation spend for Streetrat / Edgerunner / Complete Package (86, (x2) x 2, Basic >= 2, cap 6, Edgerunner floor 2, Cultural Origin language 4 free), 10 of 10 Role lists = 86; F-25 column caveat cleared by the p087 image + p088 text; 1 rework (clippy); after the §5 rebase onto E2.6/E6.x, `cargo test --locked -j 8 --lib cpr:: -- --test-threads=8` → 53 passed, 0 failed |
 | 2026-10-14 | E2.7 | opus | complete | 40d3104bb5 (engine); receipt and rows in the next commit | `artifacts/epic_2/E2.7_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 base records) | `cpr/improvement.rs`: `cpr.improvement.{typical_skill,difficult_skill,role_ability_rank}.cost` and `cpr.improvement.new_role.cost` rows; `CprRoleHistory` (Roles in order taken) for multiclassing; Skill → table mapping is E2.2's `x2` flag, read by E5.2 |
+| 2026-10-14 | E2.3 | opus | complete | aa084de37a (engine + tests), e9d3f45d05 (clippy fix); receipt and rows in the next commit | `artifacts/epic_2/E2.3_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.6 head records) | `cpr/armor.rs`: SP per location = highest source (worn armour and other SP sources such as cyberware), worst Armor Penalty once to REF/DEX/MOVE (Minimum 0), Bodyweight Suit SP 11 on both locations (one only), shield refused as worn; `cpr.armor.*` 6 rows; 2 plants red; 1 rework (clippy); after the §5 rebase onto E2.7, `cargo test --locked -j 8 --lib cpr:: -- --test-threads=8` → 67 passed, 0 failed |
 
 ## Epic reports
 
@@ -240,6 +241,11 @@ blockers.)
 - E2.7, multiclassing (A-1 names only the price): "the current Role" that must be at Rank ≥ 4 is the **latest** Role
   taken (p. 143 "until your latest Role is at least Rank 4"), so raising an earlier Role never unlocks a switch, and a Role
   already held cannot be bought again. Alternative not taken: any held Role at Rank ≥ 4 unlocks a switch.
+- E2.3, armour (no D-n/A-n names it): (1) the Armor Penalty floor "Minimum 0" (p. 350 header) applies to REF and DEX as
+  well as MOVE; alternative not taken: floor MOVE only. (2) Several pieces may be worn in one location (p. 184 "All your
+  worn armor in a location"); highest SP counts, every piece's penalty competes for the worst; alternative not taken: one
+  piece per location. (3) The Bulletproof Shield (no SP, held) is refused as worn armour; alternative not taken: ignore it.
+  (4) A Bodyweight Suit named at either location covers both; alternative not taken: require both.
 
 ## Open blockers
 
