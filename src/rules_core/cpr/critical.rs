@@ -73,9 +73,9 @@ pub struct CprRecordedCritical {
 /// threshold.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum CprWoundThreshold {
-    BelowFullHp,
-    BelowHalfHpRoundUp,
-    BelowOneHp,
+    FullHp,
+    HalfHpRoundUp,
+    OneHp,
 }
 
 /// A Wound State with an HP threshold and the Stabilization DV printed beside it.
@@ -93,17 +93,17 @@ impl CprWoundState {
 
     fn below(&self, hit_points: i16) -> i16 {
         match self.threshold {
-            CprWoundThreshold::BelowFullHp => hit_points,
-            CprWoundThreshold::BelowHalfHpRoundUp => seriously_wounded(hit_points),
-            CprWoundThreshold::BelowOneHp => 1,
+            CprWoundThreshold::FullHp => hit_points,
+            CprWoundThreshold::HalfHpRoundUp => seriously_wounded(hit_points),
+            CprWoundThreshold::OneHp => 1,
         }
     }
 
     fn rule_text(&self) -> &'static str {
         match self.threshold {
-            CprWoundThreshold::BelowFullHp => "Less than Full HP",
-            CprWoundThreshold::BelowHalfHpRoundUp => "Less than 1/2 HP (round up)",
-            CprWoundThreshold::BelowOneHp => "Less than 1 HP",
+            CprWoundThreshold::FullHp => "Less than Full HP",
+            CprWoundThreshold::HalfHpRoundUp => "Less than 1/2 HP (round up)",
+            CprWoundThreshold::OneHp => "Less than 1 HP",
         }
     }
 }
@@ -126,9 +126,9 @@ impl CprCriticalCatalog {
         let mut wound_states = Vec::new();
         for record in wound_records {
             let threshold = match record.threshold_rule.as_str() {
-                "below_full_hp" => CprWoundThreshold::BelowFullHp,
-                "below_half_hp_round_up" => CprWoundThreshold::BelowHalfHpRoundUp,
-                "below_one_hp" => CprWoundThreshold::BelowOneHp,
+                "below_full_hp" => CprWoundThreshold::FullHp,
+                "below_half_hp_round_up" => CprWoundThreshold::HalfHpRoundUp,
+                "below_one_hp" => CprWoundThreshold::OneHp,
                 "failed_death_save" => continue,
                 other => return Err(format!("{}: unknown wound threshold rule {other}", record.name)),
             };
@@ -136,7 +136,7 @@ impl CprCriticalCatalog {
                 record.stabilization_dv.ok_or_else(|| format!("{}: a Wound State with an HP threshold has a Stabilization DV (p. 223)", record.name))?;
             wound_states.push(CprWoundState { name: record.name, threshold, stabilization_dv });
         }
-        for wanted in [CprWoundThreshold::BelowFullHp, CprWoundThreshold::BelowHalfHpRoundUp, CprWoundThreshold::BelowOneHp] {
+        for wanted in [CprWoundThreshold::FullHp, CprWoundThreshold::HalfHpRoundUp, CprWoundThreshold::OneHp] {
             if wound_states.iter().filter(|s| s.threshold == wanted).count() != 1 {
                 return Err(format!("wound_state.json must hold exactly one {wanted:?} state"));
             }
