@@ -5328,6 +5328,41 @@
       "notes": "SD-38 E6.4 (epic-breakdown.md E6.4: 'Every print_only kind renders as a read-only GM reference page, each showing the MANIFEST count of records, reached from the Cyberpunk Red catalog'). With Cyberpunk Red selected the landing offers a Browse GM Reference link (the gm group in cyberpunkCatalogModel.ts); it opens CyberpunkCatalogScreen on the first GM tab, demon (the NET Architecture page prints the word 'failure', which the runner's global forbid list rejects, so it is not the landing tab), whose records list_cyberpunk_catalog (cpr_catalog.rs, E6.1) reads from data/cyberpunk-red/corpus and CyberpunkGmPage lays out as read-only tables. Expects the first two Demons (Imp, Efreet), the summary '3 of 3 demons' (records held of the MANIFEST count), the GM Reference group pill and the NET Architecture and Beat Charts tabs. Before E6.4 the landing has no Browse GM Reference link (RED). The forbid list holds a Pathfinder class, the PCGen hit-die device line and the other system's name. landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
+      "id": "create-cyberpunk-streetrat-stats",
+      "screen": "create",
+      "steps": [
+        { "op": "click", "target": "Cyberpunk Red" },
+        { "op": "click", "target": "New\nCharacter" },
+        { "op": "wait", "ms": 1500 },
+        { "op": "click", "target": "cpr-character-name" },
+        { "op": "type", "text": "CPR Smoke Solo" },
+        { "op": "select", "target": "— choose a Role —", "text": "Solo" },
+        { "op": "wait", "ms": 1500 },
+        { "op": "click", "target": "Streetrat" },
+        { "op": "select", "target": "Roll the row on 1d10", "text": "1" },
+        { "op": "wait", "ms": 1500 },
+        { "op": "click", "target": "Create character" },
+        { "op": "wait", "ms": 3000 },
+        { "op": "scroll", "ticks": 40, "direction": "up" },
+        { "op": "key", "key": "Shift" }
+      ],
+      "marker": "CPR Smoke Solo is ready",
+      "expect": [
+        "Your character was computed and saved.",
+        "INT\n6",
+        "REF\n7",
+        "TECH\n3",
+        "COOL\n8",
+        "BODY\n6",
+        "HIT POINTS\n40",
+        "SERIOUSLY WOUNDED\n20",
+        "DEATH SAVE\n6",
+        "HUMANITY\n50"
+      ],
+      "forbid": ["Character not created", "Race", "Strength", "Stamina", "Hit die"],
+      "notes": "SD-38 E3.2 (epic-breakdown.md E3.2: 'New Character under Cyberpunk Red opens CyberpunkCreateForm (method picker + STAT step, layout from a CPR create registry) and saves through CyberpunkAdapter'). Selects the Cyberpunk Red chip, opens New Character (characterCreationGate('cyberpunk-red') = {enabled: true, form: 'cyberpunk'}), names the character, picks the Solo Role (options from list_cyberpunk_catalog('role')), the Streetrat method and template row 1 (options are the Role's streetrat_template records; Solo roll 1 = '6 7 7 3 8 6 5 5 6 5', p075), then Create character: create_cyberpunk_character saves with the CPR store and reads the character back through the envelope router (CyberpunkAdapter). Expects the saved character's cpr.stat.* tiles (INT 6, REF 7, TECH 3, COOL 8, BODY 6) and cpr.derived.* tiles (HP 10 + 5 x ceil((BODY 6 + WILL 6) / 2) = 40, Seriously Wounded 20, Death Save = BODY 6, Humanity = EMP 5 x 10 = 50, p079-p080), labels uppercase per the tile CSS. Before E3.2 the New Character banner is disabled for Cyberpunk Red and the name field is not a target (RED). The forbid list holds Pathfinder/Starfinder creation words (Race, Strength, Stamina, the PCGen hit-die line). landing-select-pathfinder (next) restores the Pathfinder selection."
+    },
+    {
       "id": "landing-select-pathfinder",
       "screen": "landing",
       "steps": [

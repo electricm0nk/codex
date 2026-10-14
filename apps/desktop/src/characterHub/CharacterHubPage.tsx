@@ -9,6 +9,7 @@ import {
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CreateCharacterForm } from './CreateCharacterForm';
 import { StarfinderCreateForm } from './StarfinderCreateForm';
+import { CyberpunkCreateForm } from './CyberpunkCreateForm';
 import { StarfinderCharacterSheet } from './StarfinderCharacterSheet';
 import { isStarfinderCharacter } from './starfinderSheetModel';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
@@ -317,6 +318,8 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
           computed character sheet (or blocked diagnostics) the submit produced. */}
       {characterCreationGate(ruleSet).form === 'starfinder' ? (
         <StarfinderCreateForm onCreated={reload} />
+      ) : characterCreationGate(ruleSet).form === 'cyberpunk' ? (
+        <CyberpunkCreateForm onCreated={reload} />
       ) : (
         <CreateCharacterForm onCreated={reload} />
       )}

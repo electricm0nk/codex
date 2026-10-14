@@ -89,10 +89,10 @@ function testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter()
  * SD-38 E0.5: the landing's Cyberpunk Red chip is `cyberpunk-red` and selectable;
  * its Load list comes from the Rust `CyberpunkAdapter`, which
  * `resolve_rule_system_adapter` (`rule_system_adapter.rs`) maps from exactly the wire id
- * `"cyberpunk-red"` (`GameSystem::CyberpunkRed.id()`); New Character stays closed with
- * its reason until the creation flow lands (E3.2).
+ * `"cyberpunk-red"` (`GameSystem::CyberpunkRed.id()`); New Character opens its own
+ * creation flow (E3.2).
  */
-function testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationStaysClosed() {
+function testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationOpensItsForm() {
   const cyberpunk = RULE_SETS.find((ruleSet) => ruleSet.name === 'Cyberpunk Red');
   assert(cyberpunk !== undefined, 'the landing lists Cyberpunk Red');
   assertEqual(cyberpunk?.id, 'cyberpunk-red', 'the Cyberpunk Red chip carries the engine id cyberpunk-red');
@@ -107,14 +107,11 @@ function testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationStaysClose
     'cyberpunk-red',
     'a Cyberpunk Red call site routes to CyberpunkAdapter, never pf1'
   );
+  // SD-38 E3.2: New Character opens the Cyberpunk RED flow (`CyberpunkCreateForm`).
   const gate = characterCreationGate('cyberpunk-red');
-  assertEqual(gate.enabled, false, 'Cyberpunk Red creation stays closed until its flow exists');
-  assertEqual(gate.form, undefined, 'a closed gate opens no form (never the Pathfinder form)');
-  assertEqual(
-    gate.disabledHint,
-    'Cyberpunk Red character creation is not available on this screen yet',
-    'the disabled New Character banner names why'
-  );
+  assertEqual(gate.enabled, true, 'Cyberpunk Red creation opens');
+  assertEqual(gate.form, 'cyberpunk', 'it opens the Cyberpunk form (never the Pathfinder form)');
+  assertEqual(gate.disabledHint, undefined, 'an open gate carries no disabled reason');
 }
 
 /** The Load list asks the active system's adapter for its characters. */
@@ -165,7 +162,7 @@ function testCreationGateNeverOpensThePathfinderFormForStarfinder() {
 
 async function main() {
   testStarfinderIsSelectableOnTheLandingAndRoutesToTheStarfinderAdapter();
-  testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationStaysClosed();
+  testCyberpunkRedIsSelectableListsThroughItsAdapterAndCreationOpensItsForm();
   testTheLoadListRoutesThroughTheActiveRuleSystem();
   testAStarfinderRowNamesItsSystem();
   testCreationGateNeverOpensThePathfinderFormForStarfinder();

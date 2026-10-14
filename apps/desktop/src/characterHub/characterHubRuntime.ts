@@ -68,16 +68,16 @@ export function buildListSavedCharactersArgs(ruleSet: RuleSetId): ListSavedChara
 export interface CharacterCreationGate {
   enabled: boolean;
   /** The creation form that opens: each system builds its own characters. */
-  form?: 'pathfinder' | 'starfinder';
+  form?: 'pathfinder' | 'starfinder' | 'cyberpunk';
   disabledHint?: string;
 }
 
 /**
  * Pathfinder 1e opens the Pathfinder form; Starfinder 1e opens the Starfinder
  * flow (race -> theme -> class -> point buy, SD-37 E6.2) -- a Starfinder
- * selection never opens the Pathfinder form. Every other rule set has no
- * creation flow and stays closed with its reason (Cyberpunk Red is selectable
- * and lists its saves, but its creation flow is not built yet).
+ * selection never opens the Pathfinder form; Cyberpunk Red opens its own flow
+ * (Role, then STATs by Streetrat, Edgerunner or Complete Package). Every other
+ * rule set has no creation flow and stays closed with its reason.
  */
 export function characterCreationGate(ruleSet: RuleSetId): CharacterCreationGate {
   if (ruleSet === 'pathfinder-1e') {
@@ -85,6 +85,9 @@ export function characterCreationGate(ruleSet: RuleSetId): CharacterCreationGate
   }
   if (ruleSet === 'starfinder-1e') {
     return { enabled: true, form: 'starfinder' };
+  }
+  if (ruleSet === 'cyberpunk-red') {
+    return { enabled: true, form: 'cyberpunk' };
   }
   const name = RULE_SETS.find((candidate) => candidate.id === ruleSet)?.name ?? ruleSet;
   return { enabled: false, disabledHint: `${name} character creation is not available on this screen yet` };
