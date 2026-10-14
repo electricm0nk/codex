@@ -1,0 +1,41 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-a)
+warning: unused import: `crate::rules_core::cpr::stats::seriously_wounded`
+  --> src/rules_core/cpr/critical.rs:21:5
+   |
+21 | use crate::rules_core::cpr::stats::seriously_wounded;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `codex` (lib test) generated 1 warning (run `cargo fix --lib -p codex --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.00s
+     Running unittests src/lib.rs (/home/ubuntu/cargo-target/sd38-a/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 9 tests
+test rules_core::cpr::critical::tests::the_catalog_equals_the_hand_listed_22_injuries_and_their_flags ... ok
+test rules_core::cpr::critical::tests::refusals_name_their_reason ... ok
+test rules_core::cpr::critical::tests::the_seriously_wounded_threshold_rounds_half_hp_up ... FAILED
+test rules_core::cpr::critical::tests::thresholds_for_hp_40_are_full_20_and_1_with_stabilization_dvs_10_13_15 ... ok
+test rules_core::cpr::critical::tests::each_of_the_22_injuries_counts_its_own_flag_toward_the_base_death_save_penalty ... ok
+test rules_core::cpr::critical::tests::foreign_object_is_two_injuries_one_per_table ... ok
+test rules_core::cpr::critical::tests::the_base_death_save_penalty_row_names_the_injuries_that_raise_it ... ok
+test rules_core::cpr::critical::tests::rows_are_cpr_rows_in_sheet_order_and_cite_a_page ... ok
+test rules_core::cpr::critical::tests::death_save_is_body ... ok
+
+failures:
+
+---- rules_core::cpr::critical::tests::the_seriously_wounded_threshold_rounds_half_hp_up stdout ----
+
+thread 'rules_core::cpr::critical::tests::the_seriously_wounded_threshold_rounds_half_hp_up' (582640) panicked at src/rules_core/cpr/critical.rs:312:9:
+assertion `left == right` failed: ceil(25 / 2)
+  left: 12
+ right: 13
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::cpr::critical::tests::the_seriously_wounded_threshold_rounds_half_hp_up
+
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 2959 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--lib`
