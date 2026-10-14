@@ -1,0 +1,10 @@
+test rules_core::cpr::sheet::tests::the_carried_stats_are_cpr_stat_rows_equal_to_the_input ... ok
+test rules_core::cpr::sheet::tests::cyberware_body_feeds_hit_points_seriously_wounded_and_both_death_saves ... ok
+test rules_core::cpr::sheet::tests::cyberware_humanity_loss_feeds_current_humanity_current_emp_and_emp_skills ... ok
+test rules_core::cpr::sheet::tests::role_reputation_weapons_and_the_ledger_boxes_are_rows_and_dice_stay_printed ... ok
+test rules_core::cpr::sheet::tests::the_netrunner_deck_takes_its_extra_slots_from_the_armour_and_the_cyberware ... ok
+test rules_core::cpr::sheet::tests::every_numeric_field_the_p121_sample_sheet_labels_has_a_cpr_row ... ok
+test rules_core::cpr::sheet::tests::armour_and_cyberware_sp_and_the_armour_penalty_feed_the_reflex_and_dexterity_skill_bases ... ok
+test rules_core::cpr::sheet::tests::every_row_is_unique_and_twin_rows_agree ... ok
+test rules_core::cpr::sheet::tests::a_choice_the_book_does_not_allow_is_refused_with_its_reason ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.12s

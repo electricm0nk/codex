@@ -1,0 +1,10 @@
+test rules_core::cpr::skills::tests::the_catalog_holds_66_skills_7_of_them_x2_and_13_basic_skills ... ok
+test rules_core::cpr::skills::tests::the_p088_streetrat_solo_example_reproduces ... ok
+test rules_core::cpr::skills::tests::spend_rows_report_points_spent_and_left ... ok
+test rules_core::cpr::skills::tests::every_one_of_the_66_skill_bases_is_stat_plus_level ... ok
+test rules_core::cpr::skills::tests::x2_skills_cost_two_points_per_level ... ok
+test rules_core::cpr::skills::tests::the_p090_edgerunner_and_p091_complete_package_examples_cost_86_line_by_line ... ok
+test rules_core::cpr::skills::tests::refusals_87_points_a_skill_at_7_and_a_basic_skill_at_1 ... ok
+test rules_core::cpr::skills::tests::other_refusals_name_their_reason ... ok
+test rules_core::cpr::skills::tests::each_of_the_10_role_skill_lists_costs_exactly_86 ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.04s

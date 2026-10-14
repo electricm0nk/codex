@@ -1,0 +1,12 @@
+test rules_core::cpr::netrunning::tests::an_interface_rank_outside_one_to_ten_is_refused ... ok
+test rules_core::cpr::netrunning::tests::an_eighth_slot_on_the_sample_deck_is_refused ... ok
+test rules_core::cpr::netrunning::tests::both_extra_slots_apply_to_one_deck ... ok
+test rules_core::cpr::netrunning::tests::deck_qualities_have_five_seven_nine_slots ... ok
+test rules_core::cpr::netrunning::tests::hardware_outside_one_or_two_slots_is_refused ... ok
+test rules_core::cpr::netrunning::tests::item_slot_use_is_program_one_black_ice_two_hardware_printed ... ok
+test rules_core::cpr::netrunning::tests::interface_ranks_one_to_ten_give_the_p197_net_actions ... ok
+test rules_core::cpr::netrunning::tests::the_bodyweight_suit_slot_takes_one_slot_hardware_only ... ok
+test rules_core::cpr::netrunning::tests::the_cyberarm_deck_adds_one_slot_for_a_program ... ok
+test rules_core::cpr::netrunning::tests::the_p157_sample_deck_uses_seven_of_seven_slots ... ok
+test rules_core::cpr::netrunning::tests::the_netrunner_block_carries_net_actions_deck_rows_and_the_printed_brain_damage_rule ... ok
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 2976 filtered out; finished in 0.00s

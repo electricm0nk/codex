@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/cpr/cyberware.rs b/src/rules_core/cpr/cyberware.rs
+index 88030de806..c2c8959c0c 100644
+--- a/src/rules_core/cpr/cyberware.rs
++++ b/src/rules_core/cpr/cyberware.rs
+@@ -665,7 +665,7 @@ pub fn humanity_after_loss(base_emp: u8, humanity_loss: i16) -> i16 {
+ /// D-6: EMP is the tens place of Humanity (p. 081: 44 Humanity is EMP 4, 39 is EMP 3), never
+ /// below 0 (A-4). The p118 "(-2 EMP)" strings are not read.
+ pub fn emp_after_humanity_loss(base_emp: u8, humanity_loss: i16) -> i16 {
+-    humanity_after_loss(base_emp, humanity_loss).div_euclid(10).max(0)
++    (i16::from(base_emp) - 2 * (humanity_loss / 10)).max(0)
+ }
+ 
+ /// D-5: therapy regains Humanity up to the cap, never past it (p. 231).
