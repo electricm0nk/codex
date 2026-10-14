@@ -23,6 +23,7 @@ pub mod stats;
 // lane B modules
 pub mod cyberware;
 pub mod improvement;
+pub mod reputation;
 pub mod roles;
 
 // lane C modules
