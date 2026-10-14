@@ -46,7 +46,7 @@ cards (`decisions.md §22`).
 | E1.5 | Cyberware lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.5_cycle_receipt.md`; cyberware 96 (F-63 8 categories, F-64 HL 12/22/25/26/11, each by 2-3 implementations), therapy 3, cyberpsychosis_band 5, humanity_trauma 4; manifest check `--kinds` exit 0 (RED exit 1, 4 MISSING); p231 image check recorded (Standard/Extreme rows carry the max-Humanity sentences, D-5 precondition met) |
 | E1.6 | Combat lane (D-1 image check) | sonnet | waiting | E1.0 |  |
 | E1.7 | Netrunning lane | sonnet | complete | E1.0 | `artifacts/epic_1/E1.7_cycle_receipt.md`; 7 kinds, 59 records (9+4+27+3+3+8+5), `cpr_manifest_check.py --kinds <7>` RED exit 1 (7 MISSING) → GREEN exit 0; F-84 4/3/8/12 = 27 (awk + Python); 18 defenses image-checked p214-p217 |
-| E1.8 | GM-tables lane (inventory first) | sonnet | waiting | E1.0 |  |
+| E1.8 | GM-tables lane (inventory first) | sonnet | partial | E1.0 | `artifacts/epic_1/E1.8_cycle_receipt.md`; mooks_grunts 10 / encounter 55 (18+20+17) / beat_chart 64 (10+13+29+3+9), each by two implementations (CUI F-89..F-91); checker `--kinds` exit 0, RED exit 1 (3 MISSING); PARTIAL: encounter and beat_chart carry structured fields + paraphrased summary, no verbatim text (retro deferral; operator ruling needed) |
 | E1.V | Verify lane: 10% sample vs page image; MANIFEST pinned; Rust twin | opus | waiting | E1.1, E1.2, E1.3, E1.4, E1.5, E1.6, E1.7, E1.8 | writes the E1 epic report |
 | E2.1 | Lane A: stats (HP table 126 cells) | opus | waiting | E1.2, E1.V |  |
 | E2.2 | Lane A: skills (10 lists = 86) | opus | waiting | E1.3, E2.1 |  |

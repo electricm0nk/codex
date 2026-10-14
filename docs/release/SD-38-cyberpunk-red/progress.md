@@ -110,6 +110,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E1.7 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.7_cycle_receipt.md` | `artifacts/epic_1/E1.7_cycle_receipt.md` | unchanged by construction (JSON only) | 7 kinds / 59 records; F-84 4+3+8+12 = 27; 18 defenses image-checked; D-2, A-7 noted |
 | 2026-10-14 | E1.1 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.1_cycle_receipt.md` | `artifacts/epic_1/E1.1_cycle_receipt.md` | unchanged by construction (Python + JSON only) | role 10 / role_ability 10; 18 nested counts equal JSON vs page text; 30 Team STAT rows, 6 Backup bands, Believability equal page; U-28 (Loyalty −4 row shared), U-29, D-4, D-8 settled on the page image |
 | 2026-10-14 | E1.5 | sonnet | complete | see `git log -1 --format=%h -- artifacts/epic_1/E1.5_cycle_receipt.md` | `artifacts/epic_1/E1.5_cycle_receipt.md` | unchanged by construction (Python + JSON only) | cyberware 96 / therapy 3 / cyberpsychosis_band 5 / humanity_trauma 4; F-63 + F-64 re-derived by 2-3 implementations; p231 image check (D-5) recorded |
+| 2026-10-14 | E1.8 | sonnet | partial | see `git log -1 --format=%h -- artifacts/epic_1/E1.8_cycle_receipt.md` | `artifacts/epic_1/E1.8_cycle_receipt.md` | unchanged by construction (JSON and docs only) | mooks_grunts 10 / encounter 55 / beat_chart 64, two implementations each (CUI F-89..F-91); verbatim prose for encounter + beat_chart not transcribed (119 records), needs an operator ruling |
 
 ## Epic reports
 
