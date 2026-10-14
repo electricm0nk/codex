@@ -61,7 +61,7 @@ cards (`decisions.md §22`).
 | E2.MC | E2 adversarial merge check | opus | waiting | E2.10 | writes the E2 epic report |
 | E6.1 | Catalog + deck-calculator commands | sonnet | complete | E1.V, E2.9 | `artifacts/epic_6/E6.1_cycle_receipt.md`; `cpr_catalog` 8/8 on 53 MANIFEST kinds (RED: E0425, no `catalog_at`/`deck_at`); p157 sample deck 7 of 7, 8th slot refused; PF 3/3 + SF 4/4 unchanged |
 | E6.2 | Catalog screens + landing links | sonnet | complete | E6.1 | `artifacts/epic_6/E6.2_cycle_receipt.md`; 45 tabs = 45 non-`print_only` of 53 MANIFEST kinds, 779 records rendered; ui-smoke `browse-cyberpunk-catalog` green (2/2); frontend 166/166; PF 3/3 + SF 4/4 unchanged |
-| E6.3 | Netrunning tools screen | sonnet | waiting | E6.2 |  |
+| E6.3 | Netrunning tools screen | sonnet | complete | E6.2 | `artifacts/epic_6/E6.3_cycle_receipt.md`; Deck Calculator tool tab in the Netrunning group; 3 decks / 27 programs / 6 hardware pickers; every number the E6.1 command's row; frontend 167/167; PF/SF untouched (no src/crates/src-tauri change) |
 | E6.4 | GM reference pages (print-only) | sonnet | waiting | E6.3, E1.8 |  |
 | E6.MC | E6 adversarial merge check | opus | waiting | E6.3, E6.4 | writes the E6 epic report |
 | E3.1 | Creation commands (3 methods, seedable roller) | opus | waiting | E2.4, E6.1 |  |
