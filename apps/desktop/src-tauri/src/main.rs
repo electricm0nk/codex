@@ -25,6 +25,7 @@ mod corpus_full;
 mod corpus_ingest_diagnostic;
 mod cpr_adapter;
 mod cpr_catalog;
+mod cpr_creation;
 mod equipment_catalog;
 mod feat_catalog;
 mod authoring_workbench;
@@ -256,6 +257,8 @@ fn main() {
             sf_catalog::list_starfinder_catalog,
             cpr_catalog::list_cyberpunk_catalog,
             cpr_catalog::compute_cyberpunk_deck,
+            cpr_creation::preview_cyberpunk_character,
+            cpr_creation::create_cyberpunk_character,
             sf_choices::preview_starfinder_choices,
             sf_choices::save_starfinder_choices,
             sf_choices::list_starfinder_equipment_options,
