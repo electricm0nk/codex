@@ -1,0 +1,741 @@
+[
+  {
+    "kind": "mooks_grunts",
+    "name": "Bodyguard",
+    "tier": "mook",
+    "source_page": "p413",
+    "stats": {
+      "INT": 3,
+      "REF": 6,
+      "DEX": 5,
+      "TECH": 2,
+      "COOL": 4,
+      "WILL": 4,
+      "MOVE": 4,
+      "BODY": 6,
+      "EMP": 3
+    },
+    "luck": null,
+    "hit_points": 35,
+    "seriously_wounded": 18,
+    "death_save": 6,
+    "armor": {
+      "name": "Kevlar",
+      "head_sp": 7,
+      "body_sp": 7
+    },
+    "weapons": [
+      {
+        "name": "Poor Quality Shotgun",
+        "damage": "5d6"
+      },
+      {
+        "name": "Very Heavy Pistol",
+        "damage": "4d6"
+      }
+    ],
+    "skill_bases": {
+      "Athletics": 9,
+      "Brawling": 11,
+      "Concentration": 6,
+      "Conversation": 5,
+      "Drive Land Vehicle": 10,
+      "Education": 5,
+      "Endurance": 9,
+      "Evasion": 7,
+      "First Aid": 4,
+      "Handgun": 10,
+      "Human Perception": 5,
+      "Interrogation": 6,
+      "Language (Native)": 5,
+      "Language (Streetslang)": 5,
+      "Local Expert (Your Home)": 5,
+      "Perception": 9,
+      "Persuasion": 6,
+      "Resist Torture/Drug": 8,
+      "Shoulder Arms": 10,
+      "Stealth": 7
+    },
+    "cyberware_and_equipment": [
+      "Slug Ammo x25",
+      "Very Heavy Pistol Ammo x25",
+      "Radio Communicator"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Boostergang",
+    "tier": "mook",
+    "source_page": "p413",
+    "stats": {
+      "INT": 2,
+      "REF": 6,
+      "DEX": 5,
+      "TECH": 2,
+      "COOL": 4,
+      "WILL": 2,
+      "MOVE": 4,
+      "BODY": 4,
+      "EMP": 3
+    },
+    "luck": null,
+    "hit_points": 20,
+    "seriously_wounded": 10,
+    "death_save": 4,
+    "armor": {
+      "name": "Leather",
+      "head_sp": 4,
+      "body_sp": 4
+    },
+    "weapons": [
+      {
+        "name": "Poor Quality Very Heavy Pistol",
+        "damage": "4d6"
+      },
+      {
+        "name": "Rippers",
+        "damage": "2d6"
+      }
+    ],
+    "skill_bases": {
+      "Athletics": 9,
+      "Brawling": 9,
+      "Conceal/Reveal Object": 4,
+      "Concentration": 4,
+      "Conversation": 5,
+      "Drive Land Vehicle": 10,
+      "Education": 4,
+      "Endurance": 6,
+      "Evasion": 7,
+      "First Aid": 4,
+      "Handgun": 12,
+      "Human Perception": 5,
+      "Interrogation": 6,
+      "Language (Native)": 4,
+      "Language (Streetslang)": 4,
+      "Local Expert (Your Home)": 4,
+      "Melee Weapon": 11,
+      "Perception": 6,
+      "Persuasion": 6,
+      "Resist Torture/Drugs": 4,
+      "Stealth": 7
+    },
+    "cyberware_and_equipment": [
+      "VH Pistol Ammo x30",
+      "Disposable Cellphone",
+      "Rippers",
+      "Techhair"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Road Ganger",
+    "tier": "mook",
+    "source_page": "p414",
+    "stats": {
+      "INT": 4,
+      "REF": 6,
+      "DEX": 4,
+      "TECH": 4,
+      "COOL": 3,
+      "WILL": 3,
+      "MOVE": 3,
+      "BODY": 3,
+      "EMP": 3
+    },
+    "luck": null,
+    "hit_points": 25,
+    "seriously_wounded": 13,
+    "death_save": 3,
+    "armor": {
+      "name": "Leather",
+      "head_sp": 4,
+      "body_sp": 4
+    },
+    "weapons": [
+      {
+        "name": "Very Heavy Pistol",
+        "damage": "4d6"
+      },
+      {
+        "name": "Crossbow",
+        "damage": "4d6"
+      },
+      {
+        "name": "Light Melee Weapon",
+        "damage": "1d6"
+      }
+    ],
+    "skill_bases": {
+      "Archery": 10,
+      "Athletics": 10,
+      "Brawling": 6,
+      "Concentration": 5,
+      "Conversation": 6,
+      "Drive Land Vehicle": 12,
+      "Education": 6,
+      "Endurance": 5,
+      "Evasion": 6,
+      "First Aid": 6,
+      "Handgun": 10,
+      "Human Perception": 5,
+      "Land Vehicle Tech": 10,
+      "Language (Native)": 6,
+      "Language (Streetslang)": 6,
+      "Local Expert (Your Home)": 6,
+      "Melee Weapon": 8,
+      "Perception": 6,
+      "Persuasion": 5,
+      "Stealth": 8,
+      "Tracking": 8,
+      "Wilderness Survival": 8
+    },
+    "cyberware_and_equipment": [
+      "VH Pistol Ammo x20",
+      "Arrow Ammo x20",
+      "Rope",
+      "Flashlight",
+      "Neural Link (Interface Plugs)"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Security Operative",
+    "tier": "mook",
+    "source_page": "p414",
+    "stats": {
+      "INT": 3,
+      "REF": 7,
+      "DEX": 4,
+      "TECH": 2,
+      "COOL": 2,
+      "WILL": 3,
+      "MOVE": 3,
+      "BODY": 5,
+      "EMP": 3
+    },
+    "luck": null,
+    "hit_points": 30,
+    "seriously_wounded": 15,
+    "death_save": 5,
+    "armor": {
+      "name": "Kevlar",
+      "head_sp": 7,
+      "body_sp": 7
+    },
+    "weapons": [
+      {
+        "name": "Poor Quality Assault Rifle",
+        "damage": "5d6"
+      },
+      {
+        "name": "Very Heavy Pistol",
+        "damage": "4d6"
+      },
+      {
+        "name": "Medium Melee Weapon",
+        "damage": "2d6"
+      }
+    ],
+    "skill_bases": {
+      "Athletics": 8,
+      "Autofire": 10,
+      "Brawling": 6,
+      "Concentration": 7,
+      "Conversation": 5,
+      "Education": 5,
+      "Evasion": 6,
+      "First Aid": 4,
+      "Handgun": 10,
+      "Human Perception": 5,
+      "Interrogation": 6,
+      "Language (Native)": 5,
+      "Language (Streetslang)": 5,
+      "Local Expert (Your Home)": 5,
+      "Melee Weapon": 6,
+      "Perception": 5,
+      "Persuasion": 4,
+      "Resist Torture/Drugs": 5,
+      "Shoulder Arms": 10,
+      "Stealth": 6
+    },
+    "cyberware_and_equipment": [
+      "Rifle x40",
+      "VH Pistol Ammo x20",
+      "Radio Communicator"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Netrunner",
+    "tier": "lieutenant",
+    "source_page": "p415",
+    "stats": {
+      "INT": 7,
+      "REF": 5,
+      "DEX": 4,
+      "TECH": 7,
+      "COOL": 4,
+      "WILL": 5,
+      "MOVE": 5,
+      "BODY": 3,
+      "EMP": 4
+    },
+    "luck": null,
+    "hit_points": 30,
+    "seriously_wounded": 15,
+    "death_save": 3,
+    "armor": {
+      "name": "Bodyweight Suit",
+      "head_sp": 11,
+      "body_sp": 11
+    },
+    "weapons": [
+      {
+        "name": "Very Heavy Pistol",
+        "damage": "4d6"
+      }
+    ],
+    "skill_bases": {
+      "Interface": 4,
+      "Athletics": 9,
+      "Basic Tech": 13,
+      "Brawling": 6,
+      "Conceal/Reveal Object": 11,
+      "Concentration": 9,
+      "Conversation": 6,
+      "Cryptography": 11,
+      "Deduction": 11,
+      "Education": 11,
+      "Electronics/Security Tech": 11,
+      "Evasion": 6,
+      "First Aid": 9,
+      "Forgery": 13,
+      "Handgun": 10,
+      "Human Perception": 6,
+      "Language (Native)": 9,
+      "Language (Streetslang)": 9,
+      "Local Expert (Your Home)": 13,
+      "Library Search": 9,
+      "Perception": 11,
+      "Persuasion": 6,
+      "Pick Lock": 11,
+      "Resist Torture/Drugs": 7,
+      "Stealth": 8
+    },
+    "cyberware_and_equipment": [
+      "VH Pistol Ammo x50",
+      "Flashlight",
+      "Virtuality Goggles",
+      "Neural Link (Interface Plugs)"
+    ],
+    "cyberdeck_programs": [
+      "Banhammer",
+      "DeckKRASH",
+      "Eraser",
+      "Hellbolt",
+      "Shield",
+      "Sword",
+      "Worm"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Reclaimer Chief",
+    "tier": "lieutenant",
+    "source_page": "p415",
+    "stats": {
+      "INT": 3,
+      "REF": 6,
+      "DEX": 6,
+      "TECH": 5,
+      "COOL": 4,
+      "WILL": 5,
+      "MOVE": 4,
+      "BODY": 6,
+      "EMP": 4
+    },
+    "luck": null,
+    "hit_points": 40,
+    "seriously_wounded": 20,
+    "death_save": 6,
+    "armor": {
+      "name": "Light Armorjack",
+      "head_sp": 11,
+      "body_sp": 11
+    },
+    "weapons": [
+      {
+        "name": "Shotgun",
+        "damage": "5d6"
+      },
+      {
+        "name": "Heavy Pistol",
+        "damage": "3d6"
+      },
+      {
+        "name": "Light Melee Weapon",
+        "damage": "1d6"
+      },
+      {
+        "name": "Heavy Melee Weapon",
+        "damage": "3d6"
+      }
+    ],
+    "skill_bases": {
+      "Athletics": 12,
+      "Basic Tech": 9,
+      "Brawling": 8,
+      "Concentration": 7,
+      "Conversation": 6,
+      "Deduction": 7,
+      "Drive Land Vehicle": 10,
+      "Education": 5,
+      "Electronics/Security Tech": 9,
+      "Endurance": 11,
+      "Evasion": 8,
+      "First Aid": 7,
+      "Handgun": 10,
+      "Human Perception": 6,
+      "Land Vehicle Tech": 7,
+      "Language (Native)": 5,
+      "Language (Streetslang)": 5,
+      "Local Expert (Your Home)": 5,
+      "Melee Weapon": 10,
+      "Paramedic": 7,
+      "Perception": 8,
+      "Persuasion": 6,
+      "Pick Lock": 7,
+      "Resist Torture/Drugs": 10,
+      "Shoulder Arms": 10,
+      "Stealth": 10,
+      "Weaponstech": 9,
+      "Wilderness Survival": 7
+    },
+    "cyberware_and_equipment": [
+      "Slug Ammo x25",
+      "H Pistol Ammo x25",
+      "Agent",
+      "Grapple Gun",
+      "Radio Communicator",
+      "Tent & Camping Equipment",
+      "Nasal Filters",
+      "Neural Link (Chipware Socket, Tactile Boost)"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Security Officer",
+    "tier": "lieutenant",
+    "source_page": "p416",
+    "stats": {
+      "INT": 4,
+      "REF": "8 (6)",
+      "DEX": "6 (4)",
+      "TECH": 4,
+      "COOL": 6,
+      "WILL": 5,
+      "MOVE": "6 (4)",
+      "BODY": 7,
+      "EMP": 4
+    },
+    "luck": null,
+    "hit_points": 40,
+    "seriously_wounded": 20,
+    "death_save": 7,
+    "armor": {
+      "name": "Medium Armorjack",
+      "head_sp": 13,
+      "body_sp": 13
+    },
+    "weapons": [
+      {
+        "name": "Assault Rifle",
+        "damage": "5d6"
+      },
+      {
+        "name": "Very Heavy Pistol",
+        "damage": "4d6"
+      },
+      {
+        "name": "Medium Melee Weapon",
+        "damage": "2d6"
+      }
+    ],
+    "skill_bases": {
+      "Athletics": "10 (8)",
+      "Autofire": "12 (10)",
+      "Brawling": "10 (8)",
+      "Concentration": 7,
+      "Conversation": 6,
+      "Deduction": 6,
+      "Drive Land Vehicle": "12 (10)",
+      "Education": 6,
+      "Evasion": "10 (8)",
+      "First Aid": 6,
+      "Handgun": "10 (8)",
+      "Human Perception": 6,
+      "Interrogation": 8,
+      "Language (Native)": 6,
+      "Language (Streetslang)": 6,
+      "Local Expert (Your Home)": 6,
+      "Melee Weapon": "10 (8)",
+      "Perception": 6,
+      "Persuasion": 8,
+      "Resist Torture/Drugs": 10,
+      "Shoulder Arms": "10 (8)",
+      "Stealth": "6 (4)",
+      "Tactics": null
+    },
+    "cyberware_and_equipment": [
+      "Rifle Ammo x50",
+      "VH Pistol Ammo x30",
+      "Bulletproof Shield (10 HP)",
+      "Binoculars",
+      "Disposable Cellphone",
+      "Flashlight",
+      "Handcuffs x2",
+      "Radio Communicator",
+      "Radio Scanner/Music Player",
+      "Neural Link (Kerenzikov Speedware)"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Outrider",
+    "tier": "mini_boss",
+    "source_page": "p416",
+    "stats": {
+      "INT": 6,
+      "REF": 8,
+      "DEX": 8,
+      "TECH": 3,
+      "COOL": 5,
+      "WILL": 6,
+      "MOVE": 6,
+      "BODY": 6,
+      "EMP": 6
+    },
+    "luck": null,
+    "hit_points": 40,
+    "seriously_wounded": 20,
+    "death_save": 6,
+    "armor": {
+      "name": "Light Armorjack",
+      "head_sp": 11,
+      "body_sp": 11
+    },
+    "weapons": [
+      {
+        "name": "Assault Rifle",
+        "damage": "5d6"
+      },
+      {
+        "name": "Very Heavy Pistol",
+        "damage": "4d6"
+      },
+      {
+        "name": "Light Melee Weapon",
+        "damage": "1d6"
+      }
+    ],
+    "skill_bases": {
+      "Moto Family": 4,
+      "Animal Handling": 8,
+      "Athletics": 14,
+      "Autofire": 12,
+      "Basic Tech": 5,
+      "Brawling": 14,
+      "Concentration": 10,
+      "Conversation": 6,
+      "Criminology": 10,
+      "Drive Land Vehicle": 14,
+      "Education": 8,
+      "Endurance": 10,
+      "Evasion": 14,
+      "First Aid": 5,
+      "Handgun": 14,
+      "Human Perception": 8,
+      "Land Vehicle Tech": 7,
+      "Language (Native)": 8,
+      "Language (Streetslang)": 8,
+      "Local Expert (Badlands)": 10,
+      "Local Expert (Your Home)": 8,
+      "Melee Weapons": 12,
+      "Perception": 14,
+      "Persuasion": 7,
+      "Resist Torture/Drugs": 12,
+      "Shoulder Arms": 14,
+      "Stealth": 12,
+      "Streetwise": 9,
+      "Tracking": 10
+    },
+    "cyberware_and_equipment": [
+      "Rifle Ammo x60",
+      "VH Pistol Ammo x40",
+      "Handcuffs x2",
+      "Homing Tracers",
+      "Radio Communicator",
+      "Cyberaudio Suite (Amplified Hearing)",
+      "Cybereye (Targeting Scope, TeleOptics)",
+      "Neural Link (Interface Plugs)"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Pyro",
+    "tier": "mini_boss",
+    "source_page": "p417",
+    "stats": {
+      "INT": 5,
+      "REF": 8,
+      "DEX": 6,
+      "TECH": 7,
+      "COOL": 4,
+      "WILL": 4,
+      "MOVE": 6,
+      "BODY": 5,
+      "EMP": 3
+    },
+    "luck": null,
+    "hit_points": 35,
+    "seriously_wounded": 18,
+    "death_save": 5,
+    "armor": {
+      "name": "Light Armorjack",
+      "head_sp": 11,
+      "body_sp": 11
+    },
+    "weapons": [
+      {
+        "name": "Flamethrower",
+        "damage": "3d6"
+      },
+      {
+        "name": "Heavy Pistol",
+        "damage": "3d6"
+      },
+      {
+        "name": "Heavy Melee Weapon",
+        "damage": "3d6"
+      }
+    ],
+    "skill_bases": {
+      "Combat Awareness": 4,
+      "Athletics": 11,
+      "Basic Tech": 12,
+      "Brawling": 10,
+      "Concentration": 8,
+      "Conversation": 5,
+      "Demolition": 13,
+      "Drive Land Vehicle": 10,
+      "Education": 7,
+      "Evasion": 13,
+      "First Aid": 9,
+      "Handgun": 14,
+      "Heavy Weapons": 14,
+      "Human Perception": 5,
+      "Interrogation": 10,
+      "Language (Native)": 7,
+      "Language (Streetslang)": 7,
+      "Local Expert (Your Home)": 7,
+      "Melee Weapon": 13,
+      "Perception": 12,
+      "Persuasion": 6,
+      "Resist Torture/Drugs": 14,
+      "Science (Chemistry)": 10,
+      "Stealth": 10,
+      "Streetwise": 8,
+      "Tactics": 8
+    },
+    "cyberware_and_equipment": [
+      "Flamethrower Ammo (Incendiary Shotgun Shells) x8",
+      "VH Pistol Ammo x50",
+      "Incendiary Grenade x1",
+      "Flashbang Grenade x1",
+      "Cyberaudio Suite (Level Dampners)",
+      "Cybereye x2 (Anti-Dazzle x2)",
+      "Nasal Filters"
+    ]
+  },
+  {
+    "kind": "mooks_grunts",
+    "name": "Cyberpsycho",
+    "tier": "boss",
+    "source_page": "p417",
+    "stats": {
+      "INT": 5,
+      "REF": 8,
+      "DEX": 8,
+      "TECH": 5,
+      "COOL": 4,
+      "WILL": 7,
+      "MOVE": 8,
+      "BODY": 10,
+      "EMP": 0
+    },
+    "luck": null,
+    "hit_points": 55,
+    "seriously_wounded": 28,
+    "death_save": 10,
+    "armor": {
+      "name": "Subdermal Armor",
+      "head_sp": 11,
+      "body_sp": 11
+    },
+    "weapons": [
+      {
+        "name": "Popup Grenade Launcher",
+        "damage": "6d6"
+      },
+      {
+        "name": "Popup Heavy SMG",
+        "damage": "3d6"
+      },
+      {
+        "name": "Cybersnake",
+        "damage": "4d6"
+      },
+      {
+        "name": "Wolvers",
+        "damage": "3d6"
+      }
+    ],
+    "skill_bases": {
+      "Athletics": 16,
+      "Autofire": 14,
+      "Basic Tech": 11,
+      "Brawling": 15,
+      "Concentration": 6,
+      "Conversation": 2,
+      "Drive Land Vehicle": 10,
+      "Education": 7,
+      "Endurance": 10,
+      "Evasion": 13,
+      "First Aid": 6,
+      "Handgun": 12,
+      "Heavy Weapons": 14,
+      "Human Perception": 2,
+      "Interrogation": 13,
+      "Language (Native)": 7,
+      "Language (Streetslang)": 7,
+      "Local Expert (Your Home)": 7,
+      "Melee Weapon": 17,
+      "Perception": 9,
+      "Persuasion": 6,
+      "Resist Torture/Drugs": 15,
+      "Stealth": 10,
+      "Tracking": 10
+    },
+    "cyberware_and_equipment": [
+      "Armor Piercing Grenade x2",
+      "Heavy Pistol Ammo x100",
+      "Cyberarm x2 (Popup Grenade Launcher x2, Popup Heavy SMG, Wolvers)",
+      "Cyberleg x2 (Jump Boosters x2)",
+      "Cybersnake",
+      "Grafted Muscle & Bone Lace",
+      "Neural Link (Chipware Socket, Pain Editor)",
+      "Subdermal Armor"
+    ]
+  }
+]

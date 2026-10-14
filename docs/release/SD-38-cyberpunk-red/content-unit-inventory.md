@@ -192,13 +192,23 @@ original scratch path; that file is copied at `$INV/stat_tables.md`.
 | F-87 | NET hardware | **6**; misc upgrades **2** | p209 | `cat p209.txt \| awk '/^ +(Backup Drive\|DNA Lock\|Hardened\|Insulated\|KRASH Barrier\|Range)/{n++}END{print n}'` → 6 | — |
 | F-88 | NET Architecture GM tables | difficulty 3 rows × 4; lobby **6**; body **16** rows × 4 = 64 cells; home-security **3** rows; defenses **18** | p210–p219 | lobby `awk '/Lobby Floor/{s=1} /All Other Floors/{s=0} s && $1 ~ /^[1-6]$/ {n++} END{print n}' p212.txt` → 6; body `awk '/All Other Floors/{s=1} s && $1 ~ /^[0-9]+$/ && $1>=3 && $1<=18 {n++} END{print n}' p212.txt` → 16; defenses `cat p214.txt p215.txt p216.txt p217.txt \| grep -c "Electronics/Security Tech, [0-9]* \?min"` → 18 | print-only |
 
-### §2.8 GM tables with no inventory yet
+### §2.8 GM tables (inventoried by E1.8)
 
 The operator's scope ruling names **Mooks & Grunts stat blocks, Encounters and Beat Charts** as
-content units (print-only). **None of the seven inventories covers them.** They have no figure yet.
-Card **E1.8** inventories them first (page range, counts, two implementations each) and appends
-F-89 onward to this table in its own commit, before it transcribes them. Until E1.8 lands, any
-"N of M" figure that includes them is provisional.
+content units (print-only). None of the seven inventories covers them; card **E1.8** inventoried them
+first and appended F-89 to F-91. Commands run from `$P` (the `pages/` directory; `pNNN` = printed page + 1).
+The proposed counts below are **not yet in `MANIFEST.json`** (still `null`); E1.V pins them.
+
+| ID | Figure | Value | Predicate | Command A | Command B / status |
+|---|---|---|---|---|---|
+| F-89 | Mooks & Grunts stat blocks | **10** = 4 Mooks + 3 Lieutenants + 2 Mini Bosses + 1 Boss | one `▶ Hit Points` row per stat block, p413–p417 (printed 412–416); tier from the rule-of-thumb sentences on p414, p415, p416, p417 | `cat p413.txt p414.txt p415.txt p416.txt p417.txt \| awk '/Hit Points/{n++}END{print n}'` → 10 | `python3 -I -c "import json;print(len(json.load(open('data/cyberpunk-red/corpus/mooks_grunts.json'))))"` → 10; weapons, armor and stat cells read from the page images of p413–p417 |
+| F-90 | Encounter table entries | **55** = 18 Daytime + 20 Evening + 17 Midnight | rows keyed `(roll)` + name + `:`, p418–p426 (printed 417–425); the three tables are Daytime (p418–p420), Evening (p420–p423), Midnight (p423–p426) | `python3 -I -c "import re;t=re.sub(r'[ \t]+',' ',''.join(open(f'p{n}.txt').read() for n in range(418,427)));print(len(re.findall(r'\(\s*\d{1,3}\s*(?:[-–]\s*\d{1,3})?\s*\)\s+[A-Z][A-Za-z ]+?:',t)))"` → 55 | per table, from the corpus file: `awk '/"table": "daytime"/{a++} /"table": "evening"/{b++} /"table": "midnight"/{c++} END{print a,b,c}' data/cyberpunk-red/corpus/encounter.json` → 18 20 17; roll ranges cover 1–100 once per table except Evening roll 72, printed in both `(70-72) Solo Team` and `(72-77) Boostergang` (a book overlap, kept as printed) |
+| F-91 | Beat Chart beats | **64** = 10 Hook + 13 Cliffhanger + 29 Development + 3 Climax + 9 Resolution | one `▶ <Beat name>` heading per beat, p398–p408 (printed 397–407), excluding the five section headings `The Hook`, `Cliffhanger`, `Development`, `Climax`, `Resolution`; the scripting rules and the worked example on p396–p398 and p409 are prose, not beats | `python3 -I -c "import re;t=''.join(open(f'p{n}.txt').read() for n in range(398,409));n=[x.strip() for x in re.findall(r'▶\s*([^\n▶◀]{1,60}?)(?:\s{2,}\|\n\|◀\|\$)',t)];print(len(n)-len([x for x in n if x in ('The Hook','Cliffhanger','Development','Climax','Resolution')]))"` → 64 | `awk '/"beat_type": "hook"/{a++} /"beat_type": "cliffhanger"/{b++} /"beat_type": "development"/{c++} /"beat_type": "climax"/{d++} /"beat_type": "resolution"/{e++} END{print a,b,c,d,e}' data/cyberpunk-red/corpus/beat_chart.json` → 10 13 29 3 9 |
+
+**Not inventoried here** (named so no one reads a silence as a zero): the Beat Chart scripting rules
+(p396–p398, p409), the sample Beat Chart (p398–p399 sidebar), the Improvement Point award table (p412,
+printed 411) and Screamsheets (p426 on); the operator's scope ruling does not name them. The proposed
+counts above are the receipt's proposal for `MANIFEST.json`; nothing here edits §3.
 
 ---
 

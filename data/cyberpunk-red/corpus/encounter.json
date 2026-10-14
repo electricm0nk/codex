@@ -1,0 +1,679 @@
+[
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 1,
+    "roll_max": 5,
+    "name": "Local Law",
+    "source_page": "p418",
+    "summary": "Patrol officers equal to half the Players stop anyone visibly armed or armored and call backup if challenged.",
+    "templates": [
+      "Security Operative"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 6,
+    "roll_max": 11,
+    "name": "Corporate Guards",
+    "source_page": "p418",
+    "summary": "Low-level Corporate guards equal to the Players, in Light Armorjack with SMGs, move off trespassers.",
+    "templates": [
+      "Security Operative"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 12,
+    "roll_max": 13,
+    "name": "Techs",
+    "source_page": "p418",
+    "summary": "Techs equal to half the Players with shotguns; 1d10 decides whether they load crates, repair a City system or walk to work.",
+    "templates": [
+      "Bodyguard"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 14,
+    "roll_max": 17,
+    "name": "Private Investigator",
+    "source_page": "p418",
+    "summary": "A PI with a Very Heavy Pistol and baton in Medium Armorjack; 1d10 decides whether they hassle an informant, shadow a target or question the Crew.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 18,
+    "roll_max": 20,
+    "name": "Corporates",
+    "source_page": "p418",
+    "summary": "Corporates equal to the Players, in Kevlar suits with Medium Pistols; 1d10 decides whether gangers follow them, they mistake the Crew for boosters, or they call Corporate backup.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 21,
+    "roll_max": 27,
+    "name": "Locals",
+    "source_page": "p419",
+    "summary": "Two young locals; 1d10 decides whether Red Chrome Legion gangers rob them or Inquisitor cultists beat them.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 28,
+    "roll_max": 32,
+    "name": "Reclaimers",
+    "source_page": "p419",
+    "summary": "Reclaimers equal to the Players minus 2 with 1 chief, wiring an abandoned building into the grid; 1d10 decides whether they ignore the Crew, challenge it or cause a blackout.",
+    "templates": [
+      "Road Ganger",
+      "Reclaimer Chief"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 33,
+    "roll_max": 37,
+    "name": "Medias",
+    "source_page": "p419",
+    "summary": "A 2-person camera and interview crew; 1d10 decides whether the story-subject spots them and a conflict starts.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 38,
+    "roll_max": 41,
+    "name": "Private Investigator",
+    "source_page": "p419",
+    "summary": "A PI with a Very Heavy Pistol and heavy baton in Medium Armorjack; 1d10 decides what they are doing.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 42,
+    "roll_max": 46,
+    "name": "Trauma Team",
+    "source_page": "p419",
+    "summary": "A Trauma Team AV-4 lands at a firefight; 1d10 decides whether they ignore the Crew or the 2 security officers open fire.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 47,
+    "roll_max": 57,
+    "name": "Scavvers",
+    "source_page": "p420",
+    "summary": "Scavengers equal to the Players, armed with makeshift knives and Poor Quality Very Heavy Pistols; 1d10 decides whether they beg, ignore or rob the Crew.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 58,
+    "roll_max": 63,
+    "name": "Nomads",
+    "source_page": "p420",
+    "summary": "Nomads equal to the Players in Leather with crossbows, knives and Very Heavy Pistols, drunk and looking for a fight.",
+    "templates": [
+      "Road Ganger"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 64,
+    "roll_max": 70,
+    "name": "Boostergang",
+    "source_page": "p420",
+    "summary": "Low-level punks equal to the Players from the Piranhas who rough up easy prey with money.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 71,
+    "roll_max": 76,
+    "name": "Street Punks",
+    "source_page": "p420",
+    "summary": "Smash-heads equal to the Players, unarmored with knives and clubs, who rush anyone not in Corporate or gang colors.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 77,
+    "roll_max": 82,
+    "name": "Culties",
+    "source_page": "p420",
+    "summary": "Reckoners cultists equal to the Players corner the Crew to preach the End Times and beat the message in if refused.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 83,
+    "roll_max": 88,
+    "name": "Nomad Truck",
+    "source_page": "p420",
+    "summary": "Nomads from the Steel Vaqueros equal to half the Players deal with a broken-down truck against local gangers; they may accept help.",
+    "templates": [
+      "Road Ganger",
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 89,
+    "roll_max": 94,
+    "name": "Boostergang",
+    "source_page": "p420",
+    "summary": "Iron Sights gangers equal to the Players with SMGs, Rippers, Low Light Cybereyes and Speedware, shaking the Crew down.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "daytime",
+    "roll_min": 95,
+    "roll_max": 100,
+    "name": "Major Criminal",
+    "source_page": "p420",
+    "summary": "A Vilshenko syndicate operation: Solos equal to the Players minus 2 plus a veteran Solo unloading contraband; 1d10 decides whether they notice and act.",
+    "templates": [
+      "Security Operative",
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 1,
+    "roll_max": 5,
+    "name": "City Police",
+    "source_page": "p420",
+    "summary": "Patrol officers equal to half the Players in Medium Armorjack with Assault Rifles; call backup of 3 Security Operatives if challenged.",
+    "templates": [
+      "Security Officer",
+      "Security Operative"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 6,
+    "roll_max": 11,
+    "name": "Corporate Guards",
+    "source_page": "p420",
+    "summary": "Corporate guards equal to the Players in Heavy Armorjack with Heavy SMGs patrolling their territory.",
+    "templates": [
+      "Security Operative"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 12,
+    "roll_max": 13,
+    "name": "Corporate Techs",
+    "source_page": "p421",
+    "summary": "Corporate Techs equal to half the Players with an equal number of bodyguards; 1d10 decides their activity.",
+    "templates": [
+      "Bodyguard"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 14,
+    "roll_max": 17,
+    "name": "Private Investigator",
+    "source_page": "p421",
+    "summary": "A PI with a Very Heavy Pistol and machete in Light Armorjack, plus a heavy-caliber revolver; 1d10 decides what they are doing.",
+    "templates": [
+      "Reclaimer Chief"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 18,
+    "roll_max": 20,
+    "name": "Corporates",
+    "source_page": "p421",
+    "summary": "Corporates equal to the Players from a large firm in Kevlar suits with polymer one-shots; 1d10 decides whether gangers follow them, they mistake the Crew for boosters, or call backup.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 21,
+    "roll_max": 25,
+    "name": "Rockerboys",
+    "source_page": "p421",
+    "summary": "A band of Rockers (half the Players minus 1) with Solo bodyguards and a Fixer manager; 1d10 decides whether they invite the Crew, sic the Solos on it, or ignore it.",
+    "templates": [
+      "Boostergang",
+      "Bodyguard"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 26,
+    "roll_max": 30,
+    "name": "Medias",
+    "source_page": "p421",
+    "summary": "A 2-person camera and interview crew; 1d10 decides whether the story-subject spots them and a firefight starts.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 31,
+    "roll_max": 33,
+    "name": "Philharmonic Vampires",
+    "source_page": "p422",
+    "summary": "Philharmonic Vampires gang pranks, resolved on 1d10, undone with a DV14 Electronics/Security Tech check.",
+    "templates": [
+      "Boostergang",
+      "Bodyguard"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 34,
+    "roll_max": 40,
+    "name": "Locals",
+    "source_page": "p422",
+    "summary": "A teen from Beaverville; 1d10 decides whether Piranhas rob them, Inquisitors beat them or a Fixer holds them up.",
+    "templates": [
+      "Boostergang",
+      "Bodyguard"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 41,
+    "roll_max": 46,
+    "name": "Roaming Netrunner",
+    "source_page": "p422",
+    "summary": "Two Netrunners in Light Armorjack breaking into a Corporate NET Architecture; 1d10 decides whether guards spot them or they turn the building's 2 turrets on the Crew.",
+    "templates": [
+      "Netrunner",
+      "Security Operative"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 47,
+    "roll_max": 52,
+    "name": "Nomads",
+    "source_page": "p422",
+    "summary": "Nomads equal to the Players from the Roadrunners Pack in Medium Armorjack with rifles and fighting knives, looking for a fight.",
+    "templates": [
+      "Road Ganger"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 53,
+    "roll_max": 58,
+    "name": "Street Punks",
+    "source_page": "p422",
+    "summary": "Smash-heads equal to the Players, unarmored with knives and clubs, who rush anyone not in Corporate or gang colors.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 59,
+    "roll_max": 63,
+    "name": "Trauma Team",
+    "source_page": "p422",
+    "summary": "A Trauma Team AV-4 lands at a firefight; 1d10 decides whether they ignore the Crew or the 2 security officers open fire.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 64,
+    "roll_max": 69,
+    "name": "Chromers",
+    "source_page": "p422",
+    "summary": "Chromatic Rock fans equal to the Players with chrome arms and cyberweapons; 1d10 decides whether they fight, pass by, or invite the Crew along.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 70,
+    "roll_max": 72,
+    "name": "Solo Team",
+    "source_page": "p422",
+    "summary": "Solos equal to half the Players in Light Armorjack with swords and a Heavy Pistol, assassins looking for someone; 1d10 decides whether they dodge or target the Crew as witnesses.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 72,
+    "roll_max": 77,
+    "name": "Boostergang",
+    "source_page": "p423",
+    "summary": "Iron Sights gangers equal to the Players with automatic weapons, cyberweapons and boosted reflexes, tougher than the daylight version. Printed range overlaps the Solo Team entry at 72.",
+    "templates": [
+      "Bodyguard"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 78,
+    "roll_max": 83,
+    "name": "Solo Team",
+    "source_page": "p423",
+    "summary": "Solos equal to half the Players with Smartgun Linked Assault Rifles and cyberware on a grey operation; 1d10 decides whether they dodge or target the Crew as witnesses.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 84,
+    "roll_max": 90,
+    "name": "Boostergang",
+    "source_page": "p423",
+    "summary": "Low-level Piranhas punks equal to the Players plus 2 with Medium Pistols, knives and boosted reflexes.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 91,
+    "roll_max": 93,
+    "name": "Major Criminal",
+    "source_page": "p423",
+    "summary": "A Scagattalia Family drug-cargo operation of cybered-up Solos; 1d10 decides whether they notice and act.",
+    "templates": [
+      "Security Operative",
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "evening",
+    "roll_min": 94,
+    "roll_max": 100,
+    "name": "Firefight",
+    "source_page": "p423",
+    "summary": "A firefight between Maelstrom and Red Chrome Legion, each side equal to the Players in Light Armorjack with Very Heavy Pistols and 1 leader.",
+    "templates": [
+      "Boostergang",
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 1,
+    "roll_max": 10,
+    "name": "City Police",
+    "source_page": "p423",
+    "summary": "Patrol officers equal to half the Players with Smartgun Linked Assault Rifles who detain anyone visibly armed after midnight.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 11,
+    "roll_max": 22,
+    "name": "Corporate Guards",
+    "source_page": "p423",
+    "summary": "Corporate guards equal to the Players with Smartgun Linked Heavy SMGs challenging trespassers after midnight.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 23,
+    "roll_max": 24,
+    "name": "Private Investigator",
+    "source_page": "p423",
+    "summary": "A PI with a Very Heavy Pistol and machete in Light Armorjack plus a heavy-caliber revolver; 1d10 decides what they are doing.",
+    "templates": [
+      "Reclaimer Chief"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 25,
+    "roll_max": 25,
+    "name": "Medias",
+    "source_page": "p424",
+    "summary": "A 2-person camera and interview crew; 1d10 decides whether they are spotted by their subject or decide the Crew is the story.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 26,
+    "roll_max": 29,
+    "name": "Chromers",
+    "source_page": "p424",
+    "summary": "Chromatic Rock fans outnumbering the Players by 2, with chrome arms and cyberweapons; 1d10 decides whether they fight, pass by or invite the Crew.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 30,
+    "roll_max": 39,
+    "name": "Edgerunner Team",
+    "source_page": "p424",
+    "summary": "A Netrunner, a Solo and a Nomad about to break into a Corporate office guarded by 6 security guards; 1d10 decides whether guards spot them or they recruit the Crew.",
+    "templates": [
+      "Netrunner",
+      "Security Officer",
+      "Reclaimer Chief",
+      "Security Operative"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 40,
+    "roll_max": 42,
+    "name": "Trauma Team",
+    "source_page": "p424",
+    "summary": "A Trauma Team AV-4 lands at a firefight; 1d10 decides whether they ignore the Crew or the 2 security officers open fire.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 43,
+    "roll_max": 45,
+    "name": "Ranger",
+    "source_page": "p424",
+    "summary": "A Lawman and deputy hunting 6 scavengers in the City; 1d10 decides whether the gunfight has started or they offer the Crew part of the bounty.",
+    "templates": [
+      "Outrider",
+      "Road Ganger",
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 46,
+    "roll_max": 58,
+    "name": "Nomads",
+    "source_page": "p424",
+    "summary": "Nomads equal to the Players plus 2 from the Wildman Pack beating a Corporate couple, armed with fighting knives, clubs and rifles.",
+    "templates": [
+      "Road Ganger",
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 59,
+    "roll_max": 63,
+    "name": "Culties",
+    "source_page": "p424",
+    "summary": "Inquisitors equal to the Players corner the Crew, plus two with Air Pistols firing Acid Paintballs.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 64,
+    "roll_max": 73,
+    "name": "Street Punks",
+    "source_page": "p424",
+    "summary": "Black Lace addicts equal to the Players plus 2 who rush the Crew, unaffected by the Seriously Wounded Wound State.",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 74,
+    "roll_max": 74,
+    "name": "Major Criminal",
+    "source_page": "p425",
+    "summary": "A Scagattalia Family drug-cargo operation of cybered-up Solos equal to the Players; 1d10 decides whether they notice and act.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 75,
+    "roll_max": 79,
+    "name": "Turf War",
+    "source_page": "p425",
+    "summary": "A turf war between two large gangs rolled on 1d10 per side (Tyger Claws, 6th Street, Piranhas, Iron Sights or NCPD patrol), each with members equal to the Players (minimum 4).",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 80,
+    "roll_max": 87,
+    "name": "Arsonists",
+    "source_page": "p425",
+    "summary": "Radical anarchists: a flamethrower ganger leading Boosters equal to the Players minus 3 (minimum 2), burning down the block.",
+    "templates": [
+      "Pyro",
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 88,
+    "roll_max": 92,
+    "name": "Turf War",
+    "source_page": "p425",
+    "summary": "A turf war between two large gangs rolled on 1d10 per side (Bozos, Maelstrom, Primetime Players, Voodoo Boys or Red Chrome Legion), each with members equal to the Players (minimum 4).",
+    "templates": [
+      "Boostergang"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 93,
+    "roll_max": 99,
+    "name": "Major Criminal",
+    "source_page": "p425",
+    "summary": "A Scagattalia Family drug-cargo operation of six cybered-up Solos; 1d10 decides whether they notice and act.",
+    "templates": [
+      "Security Officer"
+    ]
+  },
+  {
+    "kind": "encounter",
+    "table": "midnight",
+    "roll_min": 100,
+    "roll_max": 100,
+    "name": "Cyberpsycho Rage",
+    "source_page": "p426",
+    "summary": "A single cyberpsycho with four cyberlimbs and multiple weapons raging at a pedestrian; arrives in 1d6 + 1 rounds and notices the Crew.",
+    "templates": [
+      "Cyberpsycho"
+    ]
+  }
+]

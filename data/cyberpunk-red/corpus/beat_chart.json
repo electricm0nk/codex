@@ -1,0 +1,450 @@
+[
+  {
+    "kind": "beat_chart",
+    "name": "Coronet Blue",
+    "beat_type": "hook",
+    "source_page": "p398",
+    "summary": "Edgerunners wake in a dangerous spot with no memory of who they are while everyone else treats them as known."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Crisis",
+    "beat_type": "hook",
+    "source_page": "p398",
+    "summary": "Edgerunners are dropped into a citywide or worldwide disaster that must tie directly to the game's plot."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Discovery",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "The adventure opens with a find, such as lost pre-War tech or a dangerous datafile, linked to a later element."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "False Accusation",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Edgerunners are blamed for a crime they did not commit and are left with only fight or flee."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Kidnapped",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Edgerunners, or a friend of theirs, are taken by a mysterious and far stronger force."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Looming Threat",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Like Crisis, but the danger has not yet broken; portents and massing forces signal that it is coming."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Murder",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "The game opens with a killing the Edgerunners cannot solve by capturing the murderer, linking it to the plot."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Play a Cliffhanger",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Open with an action scene (Confrontation, Ambush or Fist Fight work best) that introduces opposition or allies."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Play a Development",
+    "beat_type": "hook",
+    "source_page": "p399",
+    "summary": "Open with a Development (Secret Meeting, Mistaken Identity, Romance or Treachery) that introduces major allies or foes."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Revelation",
+    "beat_type": "hook",
+    "source_page": "p400",
+    "summary": "A hidden fact, such as a secret past or an inheritance, changes the Edgerunners' lives and links to the game."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Ambush",
+    "beat_type": "cliffhanger",
+    "source_page": "p400",
+    "summary": "A fight where one side gets a free first shot; when run against the Edgerunners they check Awareness against the foe's Stealth."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Battle",
+    "beat_type": "cliffhanger",
+    "source_page": "p400",
+    "summary": "A formal open combat free-for-all; scale successive battles from Mooks to Lieutenants to Mini Bosses (1 Mook = 1, 1 Lieutenant = 2, 1 Mini Boss = 3 Edgerunners)."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Chase",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "The Crew pursues the opposition; works best right after a Kidnapping or Revelation."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Confrontation",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "A verbal, non-physical showdown of threats and intimidation where the stronger side chooses not to attack."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Contest",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "A ritualized one-on-one competition, such as riddles or feats; the GM may not simply decree the NPC wins."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Dogfight",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "Vehicular combat in air, on roads or on water, where the opposition tries to shoot the Edgerunners down."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Duel",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "One-on-one combat between evenly matched participants, not necessarily to the death."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Fist Fight",
+    "beat_type": "cliffhanger",
+    "source_page": "p401",
+    "summary": "Hand-to-hand, weaponless combat between the Edgerunners (or a champion) and the opposition, often ritualized."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Monster",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "A non-intelligent threat such as a guard drone, automated turrets or a drone horde."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Obstacles",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "Traps and hazards, lethal or non-lethal, that must be physically overcome and must always be beatable with clues present."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Pursuit",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "The Edgerunners are chased by a clearly superior force and must run."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Race",
+    "beat_type": "cliffhanger",
+    "source_page": "p402",
+    "summary": "The Edgerunners race the opposition to a person, place or thing; best after a Revelation or Discovery."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Skirmish!",
+    "beat_type": "cliffhanger",
+    "source_page": "p403",
+    "summary": "A small battle where a winning Crew sees the foe escape and a losing Crew is captured or left wounded."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Advantage Revealed",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "The Edgerunners uncover a previously unknown ability, tool or weapon."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Alliance",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "Outside help arrives, giving the Edgerunners a new manpower resource that must not decide the outcome alone."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Back from the Dead",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "An old opponent returns from a supposed death; use once, with a plausible escape."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Betrayal",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "A trusted ally, lover or contact betrays the Party; the Edgerunners must get a chance to catch or avenge it."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Clue",
+    "beat_type": "development",
+    "source_page": "p403",
+    "summary": "An ambiguous Revelation that reveals only one part of the puzzle."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Foreshadowing",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "An ambiguous hint of coming events, played well before the event."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Framed!",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "The Party or a member is set up for a crime they did not commit, obviously to everyone but the authorities."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Gain Mastery",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "A compressed period of training or learning that gives the Edgerunners the skills they need."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Hazardous Quest",
+    "beat_type": "development",
+    "source_page": "p404",
+    "summary": "A long arduous journey with environmental dangers and only minor unrelated combat."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Hesitation",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "The opposition breaks off an attack to negotiate a temporary truce, then usually betrays it."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Lie Revealed",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "Something believed true is shown to be a lie, without revealing the truth."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Mistaken Identity",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "An Edgerunner is mistaken for, or poses as, an important someone else, bringing problems or advantages."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Monologue",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "The opposition leader brags about the plan when the Edgerunners are fully in their control."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Not What it Seems",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "An earlier action turns out to differ from how it was first perceived, such as a double agent."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Obsession",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "Another character becomes obsessed with a Party member and follows them without attacking."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Personal Stake",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "The stakes are raised by something personal, such as a poisoning, a kidnapped loved one or a frame-up."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Puzzle",
+    "beat_type": "development",
+    "source_page": "p405",
+    "summary": "A riddle or puzzle with one side only that must be solved to proceed and must always have clues to a solution."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Rescuers!",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "The Edgerunners must rescue someone from capture, death or confinement, with a compelling reason to do so."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Retreat",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "Usually after a Cliffhanger, the opponents break off an action and withdraw to a stronghold, covering their tracks with a delaying tactic."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Revealed Weakness",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "The Edgerunners learn a clearly described weakness of the opposition: physical, mental, a special tool or a traitor."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Revelation",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "The whole story is revealed in one shot; use only when knowing it will not critically affect the outcome."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Romance",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "Romance comes to one or more of the Edgerunners."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Sabotage!",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "A Party weapon, cyberware or vehicle is disabled; like Betrayal, the Party gets a chance to detect or repair it."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Second Chance",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "Another crack at a problem the Edgerunners failed, which the GM must justify."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Secret Meeting",
+    "beat_type": "development",
+    "source_page": "p406",
+    "summary": "A clandestine meeting to gain allies or information, usually played before a Clue, Revelation or Alliance."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Strange Bedfellows",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "A common threat forces the Crew and the opposition to work together."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Turnabout!",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "A member of the opposition decides to aid the Crew, for example an underling who betrays the Antagonist."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Vengeance!",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "One Crew member becomes the opposition's target for vengeance and is repeatedly singled out."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Warning",
+    "beat_type": "development",
+    "source_page": "p407",
+    "summary": "An explicit notice of a coming threat, in contrast to the vague hints of Foreshadowing."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Final Battle",
+    "beat_type": "climax",
+    "source_page": "p407",
+    "summary": "The last showdown with the Antagonist, henchmen and monsters, a dramatic free-for-all that wraps up the game."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Final Revelation",
+    "beat_type": "climax",
+    "source_page": "p407",
+    "summary": "The gathered cast must work out and expose the underlying mystery; the outcome is already decided."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Final Act",
+    "beat_type": "climax",
+    "source_page": "p407",
+    "summary": "The Edgerunners carry out their big plan, as in a heist, with the focus on how the plan pieces fit together rather than combat."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Antagonist Escapes",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Antagonist is beaten but gets clean away, available for reuse."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Antagonist is Killed",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Antagonist dies and the GM awards I.P."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Antagonist Toppled",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Antagonist survives but the threat is neutralized, for example by prison, disgrace or loss of followers."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Edgerunners Captured",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners are captured when the adventure ends; the GM may run a different game before the next."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Edgerunners Escape",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners are rescued or escape when on the ropes, saved for another round."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Ending Cliffhanger",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "A new threat appears just as the Edgerunners celebrate, setting up a sequel."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Greater Threat",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "A far greater threat stands behind the defeated Antagonist, showing that this is only the beginning."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Happy Ending",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners win the day, whether a major or minor victory."
+  },
+  {
+    "kind": "beat_chart",
+    "name": "Pyrrhic Victory",
+    "beat_type": "resolution",
+    "source_page": "p408",
+    "summary": "The Edgerunners win technically but at a heavy cost."
+  }
+]
