@@ -31,11 +31,13 @@ use std::path::Path;
 use serde::Deserialize;
 
 use crate::rules_core::cpr::armor::{CprArmorCatalog, CprArmorLocation, CprSpSource, BODYWEIGHT_SUIT};
-use crate::rules_core::cpr::critical::CprCriticalCatalog;
+use crate::rules_core::cpr::critical::{CprCriticalCatalog, CprCriticalLocation};
 use crate::rules_core::cpr::cyberware::{humanity_after_loss, CprCyberwareCatalog};
 use crate::rules_core::cpr::input::{CprCharacterInput, CprSheetChoices, CprStat};
 use crate::rules_core::cpr::netrunning::{netrunner_sheet, CprDeckExtras, CprDeckItem, CprDeckQuality};
-use crate::rules_core::cpr::reputation::{reputation_rows, CprReputation, CprReputationCatalog};
+use crate::rules_core::cpr::reputation::{
+    facedown_line, reputation_rows, CprReputation, CprReputationCatalog, CprReputationKind, CprReputationOutcome,
+};
 use crate::rules_core::cpr::roles::{CprRole, CprRoleCatalog};
 use crate::rules_core::cpr::skills::{skill_rows, slug, CprSkillCatalog};
 use crate::rules_core::cpr::stats::{current_emp, derived_rows, hit_points};
@@ -466,6 +468,27 @@ pub fn compose_sheet(
         ));
     }
     rows.extend(catalogs.critical.rows(hp, body, &choices.criticals)?);
+    // Each recorded Critical Injury by its table and name: the sheet's checklist ticks these.
+    for (i, critical) in choices.criticals.iter().enumerate() {
+        let (location, table) = match critical.location {
+            CprCriticalLocation::Body => ("body", "Body"),
+            CprCriticalLocation::Head => ("head", "Head"),
+        };
+        let raises = catalogs
+            .critical
+            .injury(critical.location, &critical.name)
+            .is_some_and(|injury| injury.raises_base_death_save_penalty);
+        printed.push(words(
+            format!("cpr.critical.{location}.{i}"),
+            table.to_owned(),
+            critical.name.clone(),
+            format!(
+                "{}: Critical Injury to the {table}; {} (Cyberpunk RED core rulebook p. 221-222)",
+                critical.name,
+                if raises { "raises the Base Death Save Penalty by 1" } else { "does not raise the Base Death Save Penalty" }
+            ),
+        ));
+    }
 
     // 5. Skill bases from the penalised REF and DEX and the current EMP; one level row each.
     let mut skill_stats = entered;
@@ -564,10 +587,44 @@ pub fn compose_sheet(
 
     // 7. Reputation, then the looked-up and ledger boxes.
     let mut reputation = CprReputation::default();
+    let mut outcomes = Vec::with_capacity(choices.reputation.len());
     for event in &choices.reputation {
-        reputation = reputation.record(event.clone()).map_err(|e| e.to_string())?.0;
+        let held = reputation.level();
+        let (next, outcome) = reputation.record(event.clone()).map_err(|e| e.to_string())?;
+        reputation = next;
+        outcomes.push((outcome, held));
     }
-    rows.extend(reputation_rows(entered.get(CprStat::Cool), &reputation, &catalogs.reputation));
+    let cool = entered.get(CprStat::Cool);
+    rows.extend(reputation_rows(cool, &reputation, &catalogs.reputation));
+    printed.push(CprPrintedLine {
+        id: "cpr.reputation.facedown_roll".to_owned(),
+        label: "Facedown".to_owned(),
+        form: CprPrintedForm::Dice,
+        value: facedown_line(cool, &reputation),
+        prose: format!("Facedown: COOL + Reputation + 1d10, {} (p. 194)", facedown_line(cool, &reputation)),
+    });
+    // Every recorded Reputation event, in the order recorded; the defining one is marked.
+    let defining = outcomes.iter().rposition(|(outcome, _)| *outcome == CprReputationOutcome::Replaced);
+    for (i, (event, (outcome, held))) in choices.reputation.iter().zip(&outcomes).enumerate() {
+        let kind = match event.kind {
+            CprReputationKind::Deed => "deed",
+            CprReputationKind::Cowardice => "cowardice",
+        };
+        let entry = format!("Level {} {kind}: {}", event.level, event.description);
+        let (value, standing) = if Some(i) == defining {
+            (format!("{entry} (defining)"), "the defining Reputation Event".to_owned())
+        } else if *outcome == CprReputationOutcome::Replaced {
+            (entry.clone(), "replaced later by an event of a higher Level".to_owned())
+        } else {
+            (entry.clone(), format!("not higher than Level {held}, so the earlier defining event stays"))
+        };
+        printed.push(words(
+            format!("cpr.reputation.event.{i}"),
+            "Reputation event".to_owned(),
+            value,
+            format!("{entry}; {standing} (Cyberpunk RED core rulebook p. 193)"),
+        ));
+    }
 
     let mut range_bands: Option<&RangeDvRecord> = None;
     for (i, name) in choices.weapons.iter().enumerate() {
@@ -861,6 +918,51 @@ mod tests {
         let damage = sheet.printed.iter().find(|p| p.id == "cpr.weapon.0.damage").expect("the damage line");
         assert_eq!((damage.form, damage.value.as_str()), (CprPrintedForm::Dice, "3d6"));
         assert!(!sheet.rows.iter().any(|r| r.id.starts_with("cpr.netrunning.")), "a Solo carries no deck block");
+    }
+
+    /// The Reputation block prints every recorded event and the resolved Facedown with its die
+    /// literal (p. 193-194), and each recorded Critical Injury is a printed line named by its
+    /// table, so the sheet's checklist ticks exactly the injuries the character has. p. 193: a
+    /// later event replaces the defining one only when its Level is higher; p. 194: a cowardice
+    /// defining event makes the Level negative in a Facedown (COOL 6, Level 5 -> "1 + 1d10").
+    #[test]
+    fn reputation_events_the_facedown_roll_and_recorded_criticals_are_printed_lines() {
+        let line = |sheet: &CprSheet, id: &str| {
+            sheet.printed.iter().find(|p| p.id == id).unwrap_or_else(|| panic!("no printed line {id}")).clone()
+        };
+        let mut kestrel = kestrel();
+        kestrel.1.reputation.push(CprReputationEvent { level: 2, kind: CprReputationKind::Cowardice, description: "Ran from the Maelstrom".to_owned() });
+        kestrel.1.criticals.push(CprRecordedCritical { location: CprCriticalLocation::Head, name: "Whiplash".to_owned() });
+        let sheet = compose(&kestrel).expect("composes");
+
+        let roll = line(&sheet, "cpr.reputation.facedown_roll");
+        assert_eq!((roll.form, roll.value.as_str()), (CprPrintedForm::Dice, "9 + 1d10"));
+        let first = line(&sheet, "cpr.reputation.event.0");
+        assert_eq!((first.form, first.value.as_str()), (CprPrintedForm::Words, "Level 3 deed: Held the bridge (defining)"));
+        let second = line(&sheet, "cpr.reputation.event.1");
+        assert_eq!(second.value, "Level 2 cowardice: Ran from the Maelstrom");
+        assert!(second.prose.contains("not higher than Level 3"), "{}", second.prose);
+
+        let body = line(&sheet, "cpr.critical.body.0");
+        assert_eq!((body.form, body.label.as_str(), body.value.as_str()), (CprPrintedForm::Words, "Body", "Broken Ribs"));
+        let head = line(&sheet, "cpr.critical.head.1");
+        assert_eq!((head.label.as_str(), head.value.as_str()), ("Head", "Whiplash"));
+        assert!(head.prose.contains("Base Death Save Penalty"), "{}", head.prose);
+        // Whiplash raises the penalty (p. 222); Broken Ribs does not (p. 221).
+        assert_eq!(row(&sheet, "cpr.wound.base_death_save_penalty"), 1);
+
+        // A cowardice event that becomes the defining one: Facedown COOL 6 - 5.
+        kestrel.1.reputation.push(CprReputationEvent { level: 5, kind: CprReputationKind::Cowardice, description: "Sold out the crew".to_owned() });
+        let sheet = compose(&kestrel).expect("composes");
+        assert_eq!(line(&sheet, "cpr.reputation.facedown_roll").value, "1 + 1d10");
+        assert_eq!(row(&sheet, "cpr.reputation.facedown"), 1);
+        assert_eq!(line(&sheet, "cpr.reputation.event.2").value, "Level 5 cowardice: Sold out the crew (defining)");
+        assert_eq!(line(&sheet, "cpr.reputation.event.0").value, "Level 3 deed: Held the bridge");
+
+        // No event: Reputation 0 and its Facedown still print; no event line.
+        let sheet = compose(&(kestrel.0, CprSheetChoices::default())).expect("composes");
+        assert_eq!(line(&sheet, "cpr.reputation.facedown_roll").value, "6 + 1d10");
+        assert!(!sheet.printed.iter().any(|p| p.id.starts_with("cpr.reputation.event.") || p.id.starts_with("cpr.critical.")));
     }
 
     /// The 11 ranged weapon types of the weapon table (file p172) and a melee weapon (file p093),

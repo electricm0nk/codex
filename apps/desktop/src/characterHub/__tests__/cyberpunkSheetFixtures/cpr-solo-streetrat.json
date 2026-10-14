@@ -978,8 +978,19 @@
   },
   "skillAllocations": [],
   "equipmentSelections": [],
-  "sheetLines": [],
-  "sheetRulesUnavailableReason": "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows",
+  "sheetLines": [
+    {
+      "id": "cpr.reputation.facedown_roll",
+      "kind": "cpr",
+      "label": "Facedown",
+      "form": "dice",
+      "value": "8 + 1d10",
+      "also": [],
+      "prose": "Facedown: COOL + Reputation + 1d10, 8 + 1d10 (p. 194)",
+      "condition": null
+    }
+  ],
+  "sheetRulesUnavailableReason": null,
   "featSkillBonuses": {
     "skills": {},
     "groups": {},

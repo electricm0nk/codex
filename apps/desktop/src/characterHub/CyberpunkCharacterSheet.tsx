@@ -1,17 +1,30 @@
-import { Fragment, useEffect, useState, type CSSProperties } from 'react';
+import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react';
+import { saveCyberpunkCriticals } from '../boundary/cprSheet';
 import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { boxesInColumn } from './sheetLayout';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
-import { buildCyberpunkSheet, type CyberpunkSheetBox, type CyberpunkSheetCell } from './cyberpunkSheetModel';
+import {
+  buildCyberpunkSheet,
+  cyberpunkCriticalOfRow,
+  recordedCyberpunkCriticals,
+  toggleCyberpunkCritical,
+  type CyberpunkSheetBox,
+  type CyberpunkSheetCell,
+  type CyberpunkSheetRow,
+} from './cyberpunkSheetModel';
 
 /**
  * The Cyberpunk RED character sheet: the ten STATs (EMP as entered and current), the 66 skills
  * under their categories, Hit Points, Seriously Wounded, Death Save, Humanity, MOVE, LUCK, the
  * wound track, the Role Ability, armour, the weapons and their range DV rows, the cyberware
- * (each piece's Humanity Loss, option slots per container) and a Netrunner's deck. Its boxes are placed
- * by `cyberpunkSheetLayout.ts`; every number is one engine `cpr.` row (`cyberpunkSheetModel.ts`),
- * as `load_saved_character` composed it -- this file writes no number of its own.
+ * (each piece's Humanity Loss, option slots per container), a Netrunner's deck, Reputation (with
+ * the resolved Facedown roll and every event), Improvement Points, the Lifepath answers and the
+ * critical-injuries checklist. Its boxes are placed by `cyberpunkSheetLayout.ts`; every number is
+ * one engine `cpr.` row (`cyberpunkSheetModel.ts`), as `load_saved_character` composed it -- this
+ * file writes no number of its own. Ticking or unticking an injury saves the checklist through
+ * `save_cyberpunk_criticals` and the sheet re-renders from the engine's answer (its Base Death
+ * Save Penalty row moved by the engine).
  */
 export function CyberpunkCharacterSheet(props: {
   detail: LoadSavedCharacterResponse;
@@ -20,10 +33,27 @@ export function CyberpunkCharacterSheet(props: {
   /** The skill catalog when the caller already holds it; otherwise the sheet loads it
    * (`list_cyberpunk_catalog('skill')`). */
   skillCatalog?: readonly CyberpunkRecord[];
+  /** The Critical Injury catalog when the caller already holds it; otherwise the sheet loads it
+   * (`list_cyberpunk_catalog('critical_injury')`). */
+  criticalCatalog?: readonly CyberpunkRecord[];
 }) {
   const given = props.skillCatalog;
   const [loaded, setLoaded] = useState<readonly CyberpunkRecord[] | null>(null);
   const [catalogError, setCatalogError] = useState<string | null>(null);
+  const givenCriticals = props.criticalCatalog;
+  const [loadedCriticals, setLoadedCriticals] = useState<readonly CyberpunkRecord[] | null>(null);
+  const [criticalCatalogError, setCriticalCatalogError] = useState<string | null>(null);
+  // The sheet as last answered by the engine: the load, then each checklist save's reload.
+  const [detail, setDetail] = useState<LoadSavedCharacterResponse>(props.detail);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const mounted = useRef(true);
+  useEffect(
+    () => () => {
+      mounted.current = false;
+    },
+    [],
+  );
   // The skills' categories and linked STATs come from the corpus skill catalog.
   useEffect(() => {
     if (given !== undefined) {
@@ -45,7 +75,49 @@ export function CyberpunkCharacterSheet(props: {
       live = false;
     };
   }, [given]);
-  const sheet = buildCyberpunkSheet(props.detail, given ?? loaded);
+  // The checklist lists both Critical Injury tables from the corpus catalog.
+  useEffect(() => {
+    if (givenCriticals !== undefined) {
+      return;
+    }
+    let live = true;
+    loadCyberpunkCatalog('critical_injury')
+      .then((catalog) => {
+        if (live) {
+          setLoadedCriticals(catalog.records);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setCriticalCatalogError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, [givenCriticals]);
+  const sheet = buildCyberpunkSheet(detail, given ?? loaded, givenCriticals ?? loadedCriticals);
+  const onToggleCritical = (row: CyberpunkSheetRow) => {
+    const next = toggleCyberpunkCritical(recordedCyberpunkCriticals(detail), cyberpunkCriticalOfRow(row));
+    setSaving(true);
+    setSaveError(null);
+    saveCyberpunkCriticals(detail.summary.characterId, next)
+      .then((reloaded) => {
+        if (mounted.current) {
+          setDetail(reloaded);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (mounted.current) {
+          setSaveError(cause instanceof Error ? cause.message : String(cause));
+        }
+      })
+      .finally(() => {
+        if (mounted.current) {
+          setSaving(false);
+        }
+      });
+  };
   const boxById = new Map(sheet.boxes.map((box) => [box.id, box]));
   return (
     <section data-testid="cpr-character-sheet" style={{ marginTop: '1.5rem' }}>
@@ -86,7 +158,22 @@ export function CyberpunkCharacterSheet(props: {
           <div key={column} data-cpr-column={column} style={CYBERPUNK_SHEET_COLUMN_STYLES[column]}>
             {boxesInColumn(CYBERPUNK_SHEET_LAYOUT, column).map((placement) => {
               const box = boxById.get(placement.id);
-              return box === undefined ? null : <SheetBox key={box.id} box={box} style={placement.boxStyle} />;
+              if (box === undefined) {
+                return null;
+              }
+              return box.id === 'criticalInjuries' ? (
+                <CriticalChecklist
+                  key={box.id}
+                  box={box}
+                  style={placement.boxStyle}
+                  saving={saving}
+                  saveError={saveError}
+                  catalogError={criticalCatalogError}
+                  onToggle={onToggleCritical}
+                />
+              ) : (
+                <SheetBox key={box.id} box={box} style={placement.boxStyle} />
+              );
             })}
           </div>
         ))}
@@ -174,6 +261,55 @@ function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
           })}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+/**
+ * The critical-injuries checklist: one checkbox per injury under its table, ticked when the engine
+ * printed it as recorded (the ticked entry shows that printed line). A change saves the whole list.
+ */
+function CriticalChecklist(props: {
+  box: CyberpunkSheetBox;
+  style: CSSProperties;
+  saving: boolean;
+  saveError: string | null;
+  catalogError: string | null;
+  onToggle: (row: CyberpunkSheetRow) => void;
+}) {
+  const { box } = props;
+  return (
+    <div data-cpr-box={box.id} style={props.style}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.5rem', textTransform: 'uppercase' }}>
+        {box.title}
+      </p>
+      {props.catalogError === null ? null : (
+        <p data-testid="cpr-sheet-critical-catalog-error" style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0 0 0.5rem' }}>
+          The Critical Injury tables could not be loaded, so only the recorded injuries are listed: {props.catalogError}
+        </p>
+      )}
+      {box.rows.map((row, index) => {
+        const ticked = row.cells[0] ?? null;
+        const heading = index === 0 || box.rows[index - 1].group !== row.group;
+        return (
+          <Fragment key={`${String(row.group)}:${row.label}`}>
+            {heading ? (
+              <p data-cpr-critical-table={row.group ?? ''} style={{ ...groupStyle, margin: 0 }}>
+                {row.group}
+              </p>
+            ) : null}
+            <label data-cpr-critical={`${String(row.group)}:${row.label}`} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem', padding: '0.15rem 0' }}>
+              <input type="checkbox" checked={ticked !== null} disabled={props.saving} onChange={() => props.onToggle(row)} />
+              {ticked === null ? row.label : <Value cell={ticked} />}
+            </label>
+          </Fragment>
+        );
+      })}
+      {props.saveError === null ? null : (
+        <p data-testid="cpr-sheet-critical-save-error" style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.8rem', margin: '0.4rem 0 0' }}>
+          {props.saveError}
+        </p>
+      )}
     </div>
   );
 }

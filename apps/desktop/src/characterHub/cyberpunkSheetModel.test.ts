@@ -32,6 +32,14 @@
  *    shows its used / total rows; every `cpr.role.` row sits in the Role Ability box; the
  *    Netrunner shows deck slots used / available, NET Actions (= the p. 197 table for its
  *    Interface rank), the deck and each Program and Hardware by its printed name.
+ * 8. (E4.5) The Reputation, Improvement Points, Lifepath and critical-injuries blocks: the
+ *    Reputation Level and Facedown rows, the resolved Facedown roll ("9 + 1d10", the engine's
+ *    printed dice line) and every recorded Reputation event; Improvement Points current / total;
+ *    every saved Lifepath answer by its table and column; and a checklist of the 22 Critical
+ *    Injuries of `critical_injury.json` (`list_cyberpunk_catalog('critical_injury')`) under their
+ *    two tables, ticked exactly where the engine printed a recorded injury. Ticking builds the
+ *    list `save_cyberpunk_criticals` saves (the round trip and the moved Base Death Save Penalty
+ *    are `cpr_adapter::tests::ticking_a_critical_injury_saves_it_and_moves_the_base_death_save_penalty`).
  */
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
@@ -40,7 +48,12 @@ import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CyberpunkCharacterSheet } from './CyberpunkCharacterSheet';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
-import { buildCyberpunkSheet, isCyberpunkCharacter } from './cyberpunkSheetModel';
+import {
+  buildCyberpunkSheet,
+  isCyberpunkCharacter,
+  recordedCyberpunkCriticals,
+  toggleCyberpunkCritical,
+} from './cyberpunkSheetModel';
 import { boxesInColumn } from './sheetLayout';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -73,7 +86,16 @@ const SKILLS = JSON.parse(
   readFileSync(new URL('../../../../data/cyberpunk-red/corpus/skill.json', import.meta.url), 'utf8'),
 ) as CyberpunkRecord[];
 
-function render(detail: LoadSavedCharacterResponse, skillCatalog: readonly CyberpunkRecord[] | null = SKILLS): string {
+/** The Critical Injury tables as `list_cyberpunk_catalog('critical_injury')` serves them. */
+const CRITICALS = JSON.parse(
+  readFileSync(new URL('../../../../data/cyberpunk-red/corpus/critical_injury.json', import.meta.url), 'utf8'),
+) as CyberpunkRecord[];
+
+function render(
+  detail: LoadSavedCharacterResponse,
+  skillCatalog: readonly CyberpunkRecord[] | null = SKILLS,
+  criticalCatalog: readonly CyberpunkRecord[] | null = CRITICALS,
+): string {
   return decode(
     renderToStaticMarkup(
       createElement(CyberpunkCharacterSheet, {
@@ -81,6 +103,7 @@ function render(detail: LoadSavedCharacterResponse, skillCatalog: readonly Cyber
         onClose: () => undefined,
         onOpen: () => undefined,
         ...(skillCatalog === null ? {} : { skillCatalog }),
+        ...(criticalCatalog === null ? {} : { criticalCatalog }),
       }),
     ),
   );
@@ -116,7 +139,7 @@ for (const id of CHARACTERS) {
 
   // 2. Boxes render column by column, in the registry's order.
   const renderedBoxes = [...html.matchAll(/data-cpr-box="([^"]+)"/g)].map((m) => m[1]);
-  const placed = new Set(buildCyberpunkSheet(detail, SKILLS).boxes.map((box) => box.id));
+  const placed = new Set(buildCyberpunkSheet(detail, SKILLS, CRITICALS).boxes.map((box) => box.id));
   const expectedBoxes = CYBERPUNK_SHEET_COLUMNS.flatMap((column) => boxesInColumn(CYBERPUNK_SHEET_LAYOUT, column).map((box) => box.id)).filter((box) =>
     placed.has(box),
   );
@@ -506,10 +529,108 @@ assertEqual(checkedDeckLines, 1 + 6 + 1, 'deck lines checked');
   assertEqual(netrunner.get('cpr.netrunning.deck_slots_used'), 7 + 1, 'the Netrunner fixture uses 8');
 }
 
+// 8. (E4.5) Reputation, Improvement Points, Lifepath and the critical-injuries checklist.
+const TABLES: Readonly<Record<string, string>> = { body: 'Critical Injuries to the Body', head: 'Critical Injuries to the Head' };
+assertEqual(CRITICALS.length, 22, 'the Critical Injury tables hold 22 injuries');
+let checkedEvents = 0;
+let checkedLifepath = 0;
+let checkedTicks = 0;
+for (const id of CHARACTERS) {
+  const detail = fixture(id);
+  const byId = new Map(detail.explanations.map((row) => [row.id, row.value]));
+  const lines = new Map(detail.sheetLines.map((line) => [line.id, line]));
+  const sheet = buildCyberpunkSheet(detail, SKILLS, CRITICALS);
+  const box = (boxId: string) => sheet.boxes.find((b) => b.id === boxId);
+  const cellIds = (row: { cells: ({ rowId: string } | null)[] } | undefined) => row?.cells.map((cell) => cell?.rowId ?? null).join(',');
+  const other = box('other');
+  assert(other === undefined, `${id}: every engine row is laid out in a box, Other totals is empty: ${other?.rows.map((row) => row.label).join(',')}`);
+
+  // Reputation: Level, Facedown base, the resolved roll (dice literal) and every event, in order.
+  const reputation = box('reputation');
+  assert(reputation !== undefined, `${id}: the Reputation box is on the sheet`);
+  assertEqual(cellIds(reputation?.rows.find((r) => r.label === 'Reputation Level')), 'cpr.reputation.level', `${id}: Reputation Level`);
+  assertEqual(cellIds(reputation?.rows.find((r) => r.label === 'Facedown (COOL + Reputation)')), 'cpr.reputation.facedown', `${id}: Facedown`);
+  const roll = reputation?.rows.find((r) => r.label === 'Facedown roll')?.cells[0];
+  assertEqual(roll?.printed, true, `${id}: the Facedown roll is a printed line`);
+  assertEqual(roll?.value, lines.get('cpr.reputation.facedown_roll')?.value, `${id}: the Facedown roll is the engine's line`);
+  assertEqual(roll?.value, `${String(byId.get('cpr.reputation.facedown'))} + 1d10`, `${id}: the roll resolves the Facedown row and keeps the die literal`);
+  const events = detail.sheetLines.filter((line) => /^cpr\.reputation\.event\.\d+$/.test(line.id));
+  const shownEvents = reputation?.rows.filter((r) => r.cells[0]?.rowId.startsWith('cpr.reputation.event.')) ?? [];
+  assertEqual(shownEvents.map((r) => r.cells[0]?.value).join('|'), events.map((line) => line.value).join('|'), `${id}: every Reputation event, in order`);
+  checkedEvents += shownEvents.length;
+
+  // Improvement Points: current / total.
+  assertEqual(cellIds(box('improvementPoints')?.rows[0]), 'cpr.ip.current,cpr.ip.total', `${id}: Improvement Points current / total`);
+
+  // Lifepath: every saved answer, labelled by its table and column.
+  const answers = detail.sheetLines.filter((line) => /^cpr\.lifepath\.\d+$/.test(line.id));
+  const lifepath = box('lifepath');
+  assertEqual(lifepath?.rows.length ?? 0, answers.length, `${id}: one Lifepath row per saved answer`);
+  for (const [n, line] of answers.entries()) {
+    const row = lifepath?.rows[n];
+    assertEqual(row?.label, line.label, `${id}: ${line.id} is labelled by its table and column`);
+    assertEqual(row?.cells[0]?.value, line.value, `${id}: ${line.id} is the saved answer`);
+    assertEqual(row?.cells[0]?.printed, true, `${id}: ${line.id} is printed`);
+    checkedLifepath += 1;
+  }
+
+  // The checklist: all 22 injuries under their tables, ticked exactly where one is recorded.
+  const checklist = box('criticalInjuries');
+  assertEqual(checklist?.rows.length, 22, `${id}: the checklist lists the 22 Critical Injuries`);
+  assertEqual(
+    [...new Set(checklist?.rows.map((r) => r.group))].join(','),
+    [TABLES.body, TABLES.head].join(','),
+    `${id}: the checklist is grouped by the two tables`,
+  );
+  const recorded = recordedCyberpunkCriticals(detail);
+  const ticked = checklist?.rows.filter((r) => r.cells[0] !== null) ?? [];
+  assertEqual(
+    ticked.map((r) => `${String(r.group)}:${r.label}`).sort().join('|'),
+    recorded.map((c) => `${TABLES[c.location]}:${c.name}`).sort().join('|'),
+    `${id}: ticked rows are the recorded injuries`,
+  );
+  for (const critical of recorded) {
+    const row = checklist?.rows.find((r) => r.group === TABLES[critical.location] && r.label === critical.name);
+    assert(row?.cells[0]?.printed === true, `${id}: ${critical.name} (${critical.location}) is ticked with the engine's printed line`);
+    checkedTicks += 1;
+  }
+  assertEqual(ticked.length, recorded.length, `${id}: as many ticks as recorded injuries`);
+  const html = render(detail);
+  const boxes = [...html.matchAll(/<input[^>]*type="checkbox"[^>]*>/g)].map((m) => m[0]);
+  assertEqual(boxes.length, 22, `${id}: 22 checkboxes rendered`);
+  assertEqual(boxes.filter((tag) => /\bchecked=""/.test(tag)).length, recorded.length, `${id}: the rendered ticks are the recorded injuries`);
+  // Without the catalog the checklist still shows the recorded injuries, ticked.
+  const bare = buildCyberpunkSheet(detail, SKILLS, null).boxes.find((b) => b.id === 'criticalInjuries');
+  assertEqual(bare?.rows.length ?? 0, recorded.length, `${id}: without the catalog only the recorded injuries are listed`);
+}
+// The kitted Solo: 2 events, 5 Lifepath answers, 2 recorded injuries (Collapsed Lung, Broken Ribs).
+assertEqual(checkedEvents, 2, 'Reputation events checked');
+assertEqual(checkedLifepath, 5, 'Lifepath answers checked');
+assertEqual(checkedTicks, 2, 'ticked injuries checked');
+{
+  const kittedDetail = fixture('cpr-solo-kitted');
+  const kittedValues = new Map(kittedDetail.explanations.map((row) => [row.id, row.value]));
+  // p. 193: the later Level 2 event does not replace the Level 3 one; COOL 4 + 3 = 7 (p. 194).
+  assertEqual(kittedValues.get('cpr.reputation.level'), 3, 'the kitted Solo keeps Reputation 3');
+  assertEqual(kittedValues.get('cpr.reputation.facedown'), 4 + 3, 'Facedown = COOL 4 + Reputation 3');
+  assertEqual(`${String(kittedValues.get('cpr.ip.current'))}/${String(kittedValues.get('cpr.ip.total'))}`, '20/40', 'IP 20 of 40');
+  const recorded = recordedCyberpunkCriticals(kittedDetail);
+  assertEqual(JSON.stringify(recorded), JSON.stringify([
+    { location: 'body', name: 'Collapsed Lung' },
+    { location: 'body', name: 'Broken Ribs' },
+  ]), 'the kitted Solo records two injuries in order');
+  // Ticking adds at the end; unticking removes only that injury (Foreign Object is on both tables).
+  const added = toggleCyberpunkCritical(recorded, { location: 'head', name: 'Foreign Object' });
+  assertEqual(JSON.stringify(added.map((c) => `${c.location}:${c.name}`)), JSON.stringify(['body:Collapsed Lung', 'body:Broken Ribs', 'head:Foreign Object']), 'tick appends');
+  const removed = toggleCyberpunkCritical(added, { location: 'body', name: 'Collapsed Lung' });
+  assertEqual(JSON.stringify(removed.map((c) => `${c.location}:${c.name}`)), JSON.stringify(['body:Broken Ribs', 'head:Foreign Object']), 'untick removes that one');
+  assertEqual(toggleCyberpunkCritical(removed, { location: 'body', name: 'Foreign Object' }).length, 3, 'the Body Foreign Object is its own tick');
+}
+
 for (const gameSystem of ['pf1', 'starfinder-1e']) {
   assertEqual(isCyberpunkCharacter({ gameSystem }), false, `a ${gameSystem} character does not open the Cyberpunk RED sheet`);
 }
 assert(checkedRows > 0, 'rows were checked');
 console.log(
-  `cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells; ${checkedPieces} cyberware pieces, ${checkedContainers} slot containers, ${checkedRoleRows} Role Ability rows, ${checkedDeckLines} deck lines`,
+  `cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells; ${checkedPieces} cyberware pieces, ${checkedContainers} slot containers, ${checkedRoleRows} Role Ability rows, ${checkedDeckLines} deck lines; ${checkedEvents} Reputation events, ${checkedLifepath} Lifepath answers, ${checkedTicks} ticked injuries of 22`,
 );

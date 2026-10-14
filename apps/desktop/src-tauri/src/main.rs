@@ -259,6 +259,7 @@ fn main() {
             cpr_catalog::compute_cyberpunk_deck,
             cpr_creation::preview_cyberpunk_character,
             cpr_creation::create_cyberpunk_character,
+            cpr_adapter::save_cyberpunk_criticals,
             sf_choices::preview_starfinder_choices,
             sf_choices::save_starfinder_choices,
             sf_choices::list_starfinder_equipment_options,

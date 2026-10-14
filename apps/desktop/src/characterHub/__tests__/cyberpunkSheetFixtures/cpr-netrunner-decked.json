@@ -1173,6 +1173,16 @@
       "also": [],
       "prose": "Brain damage (from Zap and from Programs and Black ICE that deal damage directly to the brain) is subtracted from your Hit Points; armor does not reduce it (Cyberpunk RED core rulebook p. 201).",
       "condition": null
+    },
+    {
+      "id": "cpr.reputation.facedown_roll",
+      "kind": "cpr",
+      "label": "Facedown",
+      "form": "dice",
+      "value": "4 + 1d10",
+      "also": [],
+      "prose": "Facedown: COOL + Reputation + 1d10, 4 + 1d10 (p. 194)",
+      "condition": null
     }
   ],
   "sheetRulesUnavailableReason": null,

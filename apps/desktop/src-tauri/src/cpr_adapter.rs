@@ -3,10 +3,12 @@
 //!
 //! A CPR character lives in its own store (`codex::rules_core::cpr::store`): a directory under
 //! the shared characters root holding `envelope.txt` (`game_system = cyberpunk-red`) and
-//! `cpr_character_input.txt`, plus `cpr_sheet_choices.txt` once any choice is saved. This adapter
-//! lists, loads and re-saves those characters; a loaded character's numbers are the rows of its
-//! composed sheet (`codex::rules_core::cpr::sheet::compose_sheet` over the CPR corpus), which
-//! the sheet renders verbatim, and its dice and rule lines are the sheet's printed lines.
+//! `cpr_character_input.txt`, plus `cpr_sheet_choices.txt` once any choice is saved and
+//! `cpr_lifepath.txt` once Lifepath answers are. This adapter lists, loads and re-saves those
+//! characters; a loaded character's numbers are the rows of its composed sheet
+//! (`codex::rules_core::cpr::sheet::compose_sheet` over the CPR corpus), which the sheet renders
+//! verbatim, and its dice, rule lines and Lifepath answers are the sheet's printed lines. The
+//! sheet's critical-injuries checklist saves through `save_cyberpunk_criticals`.
 //!
 //! The trait is Pathfinder-typed. Its two methods that take a Pathfinder `CharacterInput`
 //! (`chassis_resolve`, `level_up`) and the two that answer with a Pathfinder chassis or
@@ -14,9 +16,12 @@
 //! with the empty plan or a refusal naming the reason, never Pathfinder numbers. CPR's own
 //! actions (creation, improvement) are their own commands (`cpr_creation`, `cpr_improve`).
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
+
+use serde::Deserialize;
 
 use codex::rules_core::character_input::CharacterInput;
+use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
 use codex::rules_core::cpr::sheet::{compose_sheet, CprPrintedForm, CprSheetCatalogs};
 use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter};
 use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
@@ -41,6 +46,51 @@ pub(crate) const NO_PATHFINDER_EQUIPMENT: &str = "cpr_adapter.no_pathfinder_equi
 
 /// The adapter `rule_system_adapter::resolve_rule_system_adapter` returns for `cyberpunk-red`.
 pub struct CyberpunkAdapter;
+
+/// The CPR corpus the running app reads (packaged-root aware).
+fn corpus_root() -> PathBuf {
+    GameSystem::CyberpunkRed.package_roots(&runtime_repo_root()).corpus
+}
+
+/// One Critical Injury the sheet's checklist holds ticked: its table and its name.
+#[derive(Debug, Clone, Deserialize)]
+pub struct CprCriticalDto {
+    pub location: CprCriticalLocation,
+    pub name: String,
+}
+
+/// `save_cyberpunk_criticals`: the character and every Critical Injury its checklist holds
+/// ticked, in the order ticked.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprCriticalsSaveRequest {
+    pub character_id: String,
+    pub criticals: Vec<CprCriticalDto>,
+}
+
+/// Replaces the recorded Critical Injuries of the CPR character at `root` with `criticals` and
+/// answers with the reloaded sheet (its Base Death Save Penalty row moved by the engine). The
+/// new choices are composed first: an injury not on its table, or one recorded twice (p. 187),
+/// is refused with the engine's reason and nothing is written. Every other saved choice stays.
+pub(crate) fn save_criticals_at_root(root: &Path, criticals: &[CprRecordedCritical]) -> Result<LoadSavedCharacterResponse, String> {
+    let character = CprCharacterStore::load(root)?;
+    let mut choices = CprCharacterStore::load_choices(root)?;
+    choices.criticals = criticals.to_vec();
+    compose_sheet(&CprSheetCatalogs::load(&corpus_root())?, &character.input, &choices)?;
+    CprCharacterStore::save_choices(&choices, root)?;
+    CyberpunkAdapter.load_saved_character(root)
+}
+
+/// Save the Critical Injuries ticked on a Cyberpunk RED character's sheet; answers with the
+/// reloaded sheet.
+#[tauri::command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn save_cyberpunk_criticals(app: tauri::AppHandle, request: CprCriticalsSaveRequest) -> Result<LoadSavedCharacterResponse, String> {
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
+    let criticals: Vec<CprRecordedCritical> =
+        request.criticals.into_iter().map(|c| CprRecordedCritical { location: c.location, name: c.name }).collect();
+    save_criticals_at_root(&root, &criticals)
+}
 
 fn summary_dto(character: &CprSavedCharacter) -> CharacterSummaryDto {
     CharacterSummaryDto {
@@ -164,9 +214,9 @@ impl RuleSystemAdapter for CyberpunkAdapter {
     fn load_saved_character(&self, root: &Path) -> Result<LoadSavedCharacterResponse, String> {
         let character = CprCharacterStore::load(root)?;
         let choices = CprCharacterStore::load_choices(root)?;
-        let corpus = GameSystem::CyberpunkRed.package_roots(&runtime_repo_root()).corpus;
-        let sheet = compose_sheet(&CprSheetCatalogs::load(&corpus)?, &character.input, &choices)?;
-        let sheet_lines: Vec<SheetLineDto> = sheet
+        let lifepath = CprCharacterStore::load_lifepath(root)?;
+        let sheet = compose_sheet(&CprSheetCatalogs::load(&corpus_root())?, &character.input, &choices)?;
+        let mut sheet_lines: Vec<SheetLineDto> = sheet
             .printed
             .into_iter()
             .map(|line| SheetLineDto {
@@ -184,6 +234,25 @@ impl RuleSystemAdapter for CyberpunkAdapter {
                 condition: None,
             })
             .collect();
+        // The Lifepath answers, printed as saved: words, never a number.
+        sheet_lines.extend(lifepath.answers.iter().enumerate().map(|(i, answer)| SheetLineDto {
+            id: format!("cpr.lifepath.{i}"),
+            kind: "cpr".to_owned(),
+            label: if answer.column.is_empty() || answer.column == answer.table {
+                answer.table.clone()
+            } else {
+                format!("{}: {}", answer.table, answer.column)
+            },
+            form: "words".to_owned(),
+            value: answer.text.clone(),
+            also: Vec::new(),
+            prose: if answer.detail.is_empty() {
+                format!("{} (Lifepath, Cyberpunk RED core rulebook p. 45-70)", answer.text)
+            } else {
+                format!("{}: {} (Lifepath, Cyberpunk RED core rulebook p. 45-70)", answer.text, answer.detail)
+            },
+            condition: None,
+        }));
         let sheet_rules_unavailable_reason = sheet_lines.is_empty().then(|| {
             "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows".to_owned()
         });
@@ -399,7 +468,8 @@ mod tests {
         use codex::rules_core::cpr::armor::{CprArmorLocation, CprWornArmor};
         use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
         use codex::rules_core::cpr::cyberware::{CprCyberwareInstall, CprMount};
-        use codex::rules_core::cpr::input::{CprDeckChoice, CprSheetChoices};
+        use codex::rules_core::cpr::input::{CprDeckChoice, CprImprovementPoints, CprSheetChoices};
+        use codex::rules_core::cpr::reputation::{CprReputationEvent, CprReputationKind};
         use codex::rules_core::cpr::roles::CprRole;
 
         let mut streetrat = edgerunner();
@@ -424,6 +494,13 @@ mod tests {
                 CprRecordedCritical { location: CprCriticalLocation::Body, name: "Broken Ribs".to_owned() },
             ],
             weapons: vec!["Heavy Pistol".to_owned()],
+            // E4.5: two Reputation events (the second, lower, does not replace the first) and
+            // the Improvement Points box.
+            reputation: vec![
+                CprReputationEvent { level: 3, kind: CprReputationKind::Deed, description: "Held the bridge".to_owned() },
+                CprReputationEvent { level: 2, kind: CprReputationKind::Cowardice, description: "Ran from the Maelstrom".to_owned() },
+            ],
+            improvement_points: Some(CprImprovementPoints { earned: 40, spent: 20 }),
             ..CprSheetChoices::default()
         };
 
@@ -489,6 +566,35 @@ mod tests {
         ]
     }
 
+    /// E4.5: the kitted Solo's Lifepath answers, as creation saves them (`cpr_creation`'s
+    /// `saved_lifepath`): cells of `lifepath_table.json` rows (p. 45-70); a whole-row table keeps
+    /// the row's other cells as the detail.
+    fn sheet_fixture_lifepath(character_id: &str) -> Option<codex::rules_core::cpr::input::CprLifepath> {
+        use codex::rules_core::cpr::input::{CprLifepath, CprLifepathAnswer};
+        let answer = |table: &str, entry: u8, column: &str, text: &str, detail: &str| CprLifepathAnswer {
+            table: table.to_owned(),
+            entry,
+            column: column.to_owned(),
+            text: text.to_owned(),
+            detail: detail.to_owned(),
+        };
+        (character_id == "cpr-solo-kitted").then(|| CprLifepath {
+            answers: vec![
+                answer(
+                    "Cultural Origins",
+                    0,
+                    "Your (General) Cultural Region",
+                    "North American",
+                    "Chinese, Cree, Creole, English, French, Navajo, Spanish",
+                ),
+                answer("Your Personality", 0, "What Are You Like?", "Shy and secretive", ""),
+                answer("Your Friends", 1, "Friend's Relationship to You", "Like an older sibling to you.", ""),
+                answer("Your Friends", 2, "Friend's Relationship to You", "Like a younger sibling to you.", ""),
+                answer("Solo: What Kind of Solo are You?", 0, "Type", "Bodyguard", ""),
+            ],
+        })
+    }
+
     /// E4.1: the frontend Cyberpunk RED sheet test renders each fixture character's real
     /// `load_saved_character` response. This keeps those files equal to what the adapter
     /// returns today, so the frontend proof never runs on a stale engine answer.
@@ -505,6 +611,9 @@ mod tests {
             let root = characters_root.join(&character.character_id);
             CprCharacterStore::save(&character, &root).expect("saves");
             CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
+            if let Some(lifepath) = sheet_fixture_lifepath(&character.character_id) {
+                CprCharacterStore::save_lifepath(&lifepath, &root).expect("saves the Lifepath");
+            }
             let loaded = load_saved_character_via_envelope(&root).expect("loads");
             let json = serde_json::to_string_pretty(&loaded).expect("serialises") + "\n";
             let path = fixture_dir.join(format!("{}.json", character.character_id));
@@ -535,6 +644,105 @@ mod tests {
         CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
         let error = CyberpunkAdapter.load_saved_character(&root).unwrap_err();
         assert!(error.contains("Rank 11"), "{error}");
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// E4.5: ticking a Critical Injury on the sheet's checklist saves it through the adapter
+    /// and the answer is the reloaded sheet, whose Base Death Save Penalty row moves: Collapsed
+    /// Lung raises it by 1 (p. 221), Broken Ribs does not. Unticking removes it. An injury not on
+    /// its table, or the same injury twice (p. 187), is refused with the engine's reason and the
+    /// saved choices stay as they were. The character's other choices survive every save.
+    #[test]
+    fn ticking_a_critical_injury_saves_it_and_moves_the_base_death_save_penalty() {
+        use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
+        use codex::rules_core::cpr::input::CprSheetChoices;
+        use codex::rules_core::cpr::roles::CprRole;
+
+        let characters_root = tempdir("criticals");
+        let root = characters_root.join("cpr-edgerunner");
+        CprCharacterStore::save(&edgerunner(), &root).expect("saves");
+        let choices = CprSheetChoices { role: Some((CprRole::Solo, 4)), ..CprSheetChoices::default() };
+        CprCharacterStore::save_choices(&choices, &root).expect("saves the choices");
+        let penalty = |r: &LoadSavedCharacterResponse| {
+            r.explanations.iter().find(|e| e.id == "cpr.wound.base_death_save_penalty").expect("the penalty row").value
+        };
+        let ticked = |r: &LoadSavedCharacterResponse| -> Vec<(String, String)> {
+            r.sheet_lines.iter().filter(|l| l.id.starts_with("cpr.critical.")).map(|l| (l.id.clone(), l.value.clone())).collect()
+        };
+        let body = |name: &str| CprRecordedCritical { location: CprCriticalLocation::Body, name: name.to_owned() };
+
+        let before = load_saved_character_via_envelope(&root).expect("loads");
+        assert_eq!((penalty(&before), ticked(&before).len()), (0, 0));
+
+        let saved = save_criticals_at_root(&root, &[body("Collapsed Lung")]).expect("saves the tick");
+        assert_eq!(penalty(&saved), 1);
+        assert_eq!(ticked(&saved), [("cpr.critical.body.0".to_owned(), "Collapsed Lung".to_owned())]);
+        let reloaded = load_saved_character_via_envelope(&root).expect("reloads");
+        assert_eq!(penalty(&reloaded), 1, "the tick is on disk, not only in the answer");
+        assert_eq!(CprCharacterStore::load_choices(&root).expect("choices").criticals, [body("Collapsed Lung")]);
+
+        let both = save_criticals_at_root(&root, &[body("Collapsed Lung"), body("Broken Ribs")]).expect("saves");
+        assert_eq!((penalty(&both), ticked(&both).len()), (1, 2), "Broken Ribs does not raise the penalty");
+        let unticked = save_criticals_at_root(&root, &[body("Broken Ribs")]).expect("saves the untick");
+        assert_eq!(penalty(&unticked), 0);
+        assert_eq!(ticked(&unticked), [("cpr.critical.body.0".to_owned(), "Broken Ribs".to_owned())]);
+
+        let unknown = save_criticals_at_root(&root, &[body("Paper Cut")]).unwrap_err();
+        assert!(unknown.contains("not on the Critical Injuries"), "{unknown}");
+        let twice = save_criticals_at_root(&root, &[body("Broken Ribs"), body("Broken Ribs")]).unwrap_err();
+        assert!(twice.contains("rerolled"), "{twice}");
+        let kept = CprCharacterStore::load_choices(&root).expect("choices");
+        assert_eq!(kept.criticals, [body("Broken Ribs")], "a refused save writes nothing");
+        assert_eq!(kept.role, Some((CprRole::Solo, 4)), "the other choices survive");
+
+        let missing = save_criticals_at_root(&characters_root.join("absent"), &[body("Broken Ribs")]);
+        assert!(missing.is_err());
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// E4.5: the Lifepath answers saved at creation (`cpr_lifepath.txt`) load as printed word
+    /// lines, one per answer in the saved order, labelled by table and column; a character with
+    /// none loads with no Lifepath line.
+    #[test]
+    fn saved_lifepath_answers_load_as_printed_lines() {
+        use codex::rules_core::cpr::input::{CprLifepath, CprLifepathAnswer};
+        let characters_root = tempdir("lifepath");
+        let root = characters_root.join("cpr-edgerunner");
+        CprCharacterStore::save(&edgerunner(), &root).expect("saves");
+        let none = load_saved_character_via_envelope(&root).expect("loads");
+        assert!(!none.sheet_lines.iter().any(|l| l.id.starts_with("cpr.lifepath.")));
+
+        let answer = |table: &str, entry: u8, column: &str, text: &str, detail: &str| CprLifepathAnswer {
+            table: table.to_owned(),
+            entry,
+            column: column.to_owned(),
+            text: text.to_owned(),
+            detail: detail.to_owned(),
+        };
+        let lifepath = CprLifepath {
+            answers: vec![
+                answer("Cultural Origins", 0, "Your (General) Cultural Region", "East Asian", "Chinese, Cantonese, Japanese"),
+                answer("Your Friends", 1, "Friend's Relationship to You", "Like an older sibling to you", ""),
+                answer("Your Friends", 2, "Friend's Relationship to You", "A childhood friend", ""),
+            ],
+        };
+        CprCharacterStore::save_lifepath(&lifepath, &root).expect("saves the answers");
+        let loaded = load_saved_character_via_envelope(&root).expect("loads");
+        let lines: Vec<(&str, &str, &str, &str)> = loaded
+            .sheet_lines
+            .iter()
+            .filter(|l| l.id.starts_with("cpr.lifepath."))
+            .map(|l| (l.id.as_str(), l.label.as_str(), l.form.as_str(), l.value.as_str()))
+            .collect();
+        assert_eq!(
+            lines,
+            [
+                ("cpr.lifepath.0", "Cultural Origins: Your (General) Cultural Region", "words", "East Asian"),
+                ("cpr.lifepath.1", "Your Friends: Friend's Relationship to You", "words", "Like an older sibling to you"),
+                ("cpr.lifepath.2", "Your Friends: Friend's Relationship to You", "words", "A childhood friend"),
+            ]
+        );
+        assert!(loaded.sheet_lines[loaded.sheet_lines.len() - 3].prose.contains("Chinese, Cantonese, Japanese"));
         std::fs::remove_dir_all(&characters_root).ok();
     }
 

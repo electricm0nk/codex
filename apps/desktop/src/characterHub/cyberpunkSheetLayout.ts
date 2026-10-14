@@ -5,8 +5,7 @@ import type { LayoutBox } from './sheetLayout';
  * Declarative box placement for the Cyberpunk RED character sheet (`CyberpunkCharacterSheet.tsx`),
  * the registry shape of `sheetLayout.ts`: `column` says which stack a box lives in, `order` its
  * position there, `boxStyle` the style its own content takes. Moving a box is an edit to its
- * entry here, not a JSX move. The Reputation, Improvement Points, Lifepath and critical-injury
- * blocks add their boxes here as they land.
+ * entry here, not a JSX move.
  *
  * Cyberpunk RED has no carrying-capacity rule, so the sheet has no box for one (D-12: no page of
  * the book states one, and the book's sample sheet prints none).
@@ -24,6 +23,10 @@ export type CyberpunkSheetBoxId =
   | 'rangeDv'
   | 'cyberware'
   | 'netrunning'
+  | 'reputation'
+  | 'improvementPoints'
+  | 'lifepath'
+  | 'criticalInjuries'
   | 'other';
 
 /** Left: the ten STATs and the skills. Right: what they give, the wound track, and the rows not
@@ -58,17 +61,26 @@ export const CYBERPUNK_SHEET_LAYOUT: readonly LayoutBox<CyberpunkSheetBoxId, Cyb
   // The Role Ability: its Rank, then the values the Rank gives (Combat Awareness points, NET
   // Actions, ...), under the Role's name.
   { id: 'roleAbility', column: 'statBlock', order: 2, boxStyle: BOX },
+  // Reputation Level, the Facedown (COOL + Reputation) and its roll with the die literal, then
+  // every recorded Reputation event (the defining one marked).
+  { id: 'reputation', column: 'statBlock', order: 3, boxStyle: BOX },
+  // Improvement Points current / total.
+  { id: 'improvementPoints', column: 'statBlock', order: 4, boxStyle: BOX },
+  // The Lifepath answers, each under its table and column.
+  { id: 'lifepath', column: 'statBlock', order: 5, boxStyle: BOX },
+  // The Critical Injury checklist: both tables, the character's injuries ticked; ticking saves.
+  { id: 'criticalInjuries', column: 'vitals', order: 2, boxStyle: BOX },
   // SP and Armor Penalty per location (head, body), the shield's HP and penalty, and the Armor
   // Penalty taken once on REF, DEX and MOVE.
-  { id: 'armour', column: 'vitals', order: 2, boxStyle: BOX },
+  { id: 'armour', column: 'vitals', order: 3, boxStyle: BOX },
   // One row per weapon: damage dice (printed), ROF, Hands, Concealable, magazine, Skill Base.
-  { id: 'weapons', column: 'vitals', order: 3, boxStyle: BOX },
+  { id: 'weapons', column: 'vitals', order: 4, boxStyle: BOX },
   // Each weapon's single-shot range DV row (D-1) and Autofire row, under the range bands.
-  { id: 'rangeDv', column: 'vitals', order: 4, boxStyle: BOX },
+  { id: 'rangeDv', column: 'vitals', order: 5, boxStyle: BOX },
   // Each installed piece by name with its Humanity Loss, the total and maximum Humanity, the
   // cyberware SP and Initiative, and option slots used / total per container (D-11).
-  { id: 'cyberware', column: 'vitals', order: 5, boxStyle: BOX },
+  { id: 'cyberware', column: 'vitals', order: 6, boxStyle: BOX },
   // A Netrunner's deck: NET Actions, slots used / available, the deck, its Programs and Hardware.
-  { id: 'netrunning', column: 'vitals', order: 6, boxStyle: BOX },
-  { id: 'other', column: 'vitals', order: 7, boxStyle: BOX },
+  { id: 'netrunning', column: 'vitals', order: 7, boxStyle: BOX },
+  { id: 'other', column: 'vitals', order: 8, boxStyle: BOX },
 ];

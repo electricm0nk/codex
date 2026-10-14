@@ -1,3 +1,4 @@
+import type { CyberpunkCritical } from '../boundary/cprSheet';
 import type { CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import type { ExplanationDto, LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import type { CharacterSummaryDto } from '../boundary/loadListSavedCharacters';
@@ -146,6 +147,17 @@ const NET_ACTIONS = 'cpr.netrunning.net_actions';
 const DECK_LINE = 'cpr.netrunning.deck';
 const DECK_ITEM_LINE = /^cpr\.netrunning\.(program|hardware)\.(\d+)$/;
 
+const FACEDOWN_ROLL = 'cpr.reputation.facedown_roll';
+const REPUTATION_EVENT = /^cpr\.reputation\.event\.(\d+)$/;
+const LIFEPATH_LINE = /^cpr\.lifepath\.(\d+)$/;
+/** A recorded Critical Injury's printed line: its table and its place in the saved list. */
+const CRITICAL_LINE = /^cpr\.critical\.(body|head)\.(\d+)$/;
+/** The two Critical Injury tables (p. 221-222), in the order the checklist lists them. */
+const CRITICAL_TABLES: Readonly<Record<CyberpunkCritical['location'], string>> = {
+  body: 'Critical Injuries to the Body',
+  head: 'Critical Injuries to the Head',
+};
+
 const SKILL_PREFIX = 'cpr.skill.';
 const SKILL_LEVEL_PREFIX = 'cpr.skill_level.';
 
@@ -167,16 +179,51 @@ function humanise(slug: string): string {
     .join(' ');
 }
 
+/** Lines matching `pattern` (whose first group is a number), in that number's order. */
+function numberedLines(ids: Iterable<string>, pattern: RegExp, group = 1): string[] {
+  return [...ids]
+    .filter((id) => pattern.test(id))
+    .sort((a, b) => Number((pattern.exec(a) as RegExpExecArray)[group]) - Number((pattern.exec(b) as RegExpExecArray)[group]));
+}
+
+/**
+ * The Critical Injuries the character has, as the engine printed them (`cpr.critical.<table>.<n>`),
+ * in the order they were recorded: the list the checklist saves back, ticked or unticked.
+ */
+export function recordedCyberpunkCriticals(detail: LoadSavedCharacterResponse): CyberpunkCritical[] {
+  const lines = new Map(detail.sheetLines.map((line) => [line.id, line]));
+  return numberedLines(lines.keys(), CRITICAL_LINE, 2).map((id) => ({
+    location: (CRITICAL_LINE.exec(id) as RegExpExecArray)[1] as CyberpunkCritical['location'],
+    name: (lines.get(id) as { value: string }).value,
+  }));
+}
+
+/** The list to save when `critical` is ticked or unticked: unticking removes that injury (its
+ * table and name), ticking adds it at the end. */
+export function toggleCyberpunkCritical(recorded: readonly CyberpunkCritical[], critical: CyberpunkCritical): CyberpunkCritical[] {
+  const same = (c: CyberpunkCritical) => c.location === critical.location && c.name === critical.name;
+  return recorded.some(same) ? recorded.filter((c) => !same(c)) : [...recorded, { location: critical.location, name: critical.name }];
+}
+
+/** One checklist entry's injury, read back from its row (`criticalInjuries` box). */
+export function cyberpunkCriticalOfRow(row: CyberpunkSheetRow): CyberpunkCritical {
+  const location = (Object.keys(CRITICAL_TABLES) as CyberpunkCritical['location'][]).find((key) => CRITICAL_TABLES[key] === row.group);
+  return { location: location ?? 'body', name: row.label };
+}
+
 /**
  * Lays out one loaded Cyberpunk RED character. Every cell is one explanation row.
  *
  * `skillCatalog` is the skill catalog (`list_cyberpunk_catalog('skill')`): it names each skill,
  * its category and its linked STAT. Until it arrives (`null`) the skills still render, ungrouped
- * and labelled from their row ids.
+ * and labelled from their row ids. `criticalCatalog` is the Critical Injury catalog
+ * (`list_cyberpunk_catalog('critical_injury')`): the checklist lists every injury of both tables;
+ * until it arrives only the recorded injuries are listed.
  */
 export function buildCyberpunkSheet(
   detail: LoadSavedCharacterResponse,
   skillCatalog: readonly CyberpunkRecord[] | null,
+  criticalCatalog: readonly CyberpunkRecord[] | null = null,
 ): CyberpunkSheet {
   const rows = new Map<string, ExplanationDto>(detail.explanations.map((row) => [row.id, row]));
   const placed = new Set<string>();
@@ -348,6 +395,56 @@ export function buildCyberpunkSheet(
       })),
     ],
   });
+
+  // Reputation: the Level, the Facedown base and its roll (the die stays literal), then every
+  // recorded event as the engine printed it (the defining one marked).
+  push({
+    id: 'reputation',
+    title: 'Reputation',
+    columns: null,
+    rows: [
+      { label: 'Reputation Level', cells: [cell('cpr.reputation.level')] },
+      { label: 'Facedown (COOL + Reputation)', cells: [cell('cpr.reputation.facedown')] },
+      { label: 'Facedown roll', cells: [lines.has(FACEDOWN_ROLL) ? figure(FACEDOWN_ROLL) : null] },
+      ...numberedLines(lines.keys(), REPUTATION_EVENT).map((id) => ({ label: (lines.get(id) as { label: string }).label, cells: [figure(id)] })),
+    ],
+  });
+  push({
+    id: 'improvementPoints',
+    title: 'Improvement Points',
+    columns: null,
+    rows: [{ label: 'Improvement Points (current / total)', cells: [cell('cpr.ip.current'), cell('cpr.ip.total')] }],
+  });
+  // The Lifepath answers as saved, each labelled by its table and column.
+  push({
+    id: 'lifepath',
+    title: 'Lifepath',
+    columns: null,
+    rows: numberedLines(lines.keys(), LIFEPATH_LINE).map((id) => ({ label: (lines.get(id) as { label: string }).label, cells: [figure(id)] })),
+  });
+
+  // The critical-injuries checklist: every injury of both tables (catalog order), each ticked
+  // (its cell the engine's printed line) when the character has it; an unticked entry has no
+  // cell. Without the catalog, the recorded injuries alone.
+  const recordedIds = new Map(
+    numberedLines(lines.keys(), CRITICAL_LINE, 2).map((id) => [
+      `${(CRITICAL_LINE.exec(id) as RegExpExecArray)[1]}:${(lines.get(id) as { value: string }).value}`,
+      id,
+    ]),
+  );
+  const injuries: CyberpunkCritical[] =
+    criticalCatalog === null
+      ? recordedCyberpunkCriticals(detail)
+      : (['body', 'head'] as const).flatMap((location) =>
+          criticalCatalog.filter((record) => record.location === location).map((record) => ({ location, name: String(record.name) })),
+        );
+  const checklist: CyberpunkSheetRow[] = injuries.map((injury) => {
+    const lineId = recordedIds.get(`${injury.location}:${injury.name}`);
+    return { label: injury.name, group: CRITICAL_TABLES[injury.location], cells: [lineId === undefined ? null : figure(lineId)] };
+  });
+  if (computed && checklist.length > 0) {
+    boxes.push({ id: 'criticalInjuries', title: 'Critical Injuries', columns: null, rows: checklist });
+  }
 
   // Any `cpr.` row the boxes above do not name: shown under its id, never dropped.
   push({

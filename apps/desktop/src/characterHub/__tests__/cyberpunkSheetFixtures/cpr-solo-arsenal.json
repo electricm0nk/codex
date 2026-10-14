@@ -1715,6 +1715,16 @@
   "equipmentSelections": [],
   "sheetLines": [
     {
+      "id": "cpr.reputation.facedown_roll",
+      "kind": "cpr",
+      "label": "Facedown",
+      "form": "dice",
+      "value": "4 + 1d10",
+      "also": [],
+      "prose": "Facedown: COOL + Reputation + 1d10, 4 + 1d10 (p. 194)",
+      "condition": null
+    },
+    {
       "id": "cpr.weapon.0.damage",
       "kind": "cpr",
       "label": "Medium Pistol damage",

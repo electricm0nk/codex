@@ -943,13 +943,13 @@
     },
     {
       "id": "cpr.reputation.level",
-      "value": 0,
-      "detail": "Reputation 0: Most Cyberpunk RED Characters start with a Reputation of 0 (p. 193); no deed has been awarded a Reputation Level"
+      "value": 3,
+      "detail": "Reputation 3: All your co-workers and casual acquaintances know. (p. 193, Who Knows About You). When first meeting, a person rolls 1d10 and has heard of the character on a roll under 3 (p. 193)"
     },
     {
       "id": "cpr.reputation.facedown",
-      "value": 4,
-      "detail": "Facedown 4 + 1d10: COOL 4 + Reputation 0 + 1d10 (p. 194)"
+      "value": 7,
+      "detail": "Facedown 7 + 1d10: COOL 4 + Reputation 3 + 1d10 (p. 194)"
     },
     {
       "id": "cpr.weapon.0.rof",
@@ -1043,13 +1043,13 @@
     },
     {
       "id": "cpr.ip.current",
-      "value": 0,
-      "detail": "Improvement Points 0 = 0 earned - 0 spent (Cyberpunk RED core rulebook p. 410-411)"
+      "value": 20,
+      "detail": "Improvement Points 20 = 40 earned - 20 spent (Cyberpunk RED core rulebook p. 410-411)"
     },
     {
       "id": "cpr.ip.total",
-      "value": 0,
-      "detail": "Improvement Points earned 0: the GM's awards as entered (p. 410)"
+      "value": 40,
+      "detail": "Improvement Points earned 40: the GM's awards as entered (p. 410)"
     }
   ],
   "weaponDamage": [],
@@ -1092,6 +1092,56 @@
       "value": "Grafted Muscle and Bone Lace",
       "also": [],
       "prose": "Grafted Muscle and Bone Lace: installed cyberware (Cyberpunk RED core rulebook p. 112-117, p. 359-368)",
+      "condition": null
+    },
+    {
+      "id": "cpr.critical.body.0",
+      "kind": "cpr",
+      "label": "Body",
+      "form": "words",
+      "value": "Collapsed Lung",
+      "also": [],
+      "prose": "Collapsed Lung: Critical Injury to the Body; raises the Base Death Save Penalty by 1 (Cyberpunk RED core rulebook p. 221-222)",
+      "condition": null
+    },
+    {
+      "id": "cpr.critical.body.1",
+      "kind": "cpr",
+      "label": "Body",
+      "form": "words",
+      "value": "Broken Ribs",
+      "also": [],
+      "prose": "Broken Ribs: Critical Injury to the Body; does not raise the Base Death Save Penalty (Cyberpunk RED core rulebook p. 221-222)",
+      "condition": null
+    },
+    {
+      "id": "cpr.reputation.facedown_roll",
+      "kind": "cpr",
+      "label": "Facedown",
+      "form": "dice",
+      "value": "7 + 1d10",
+      "also": [],
+      "prose": "Facedown: COOL + Reputation + 1d10, 7 + 1d10 (p. 194)",
+      "condition": null
+    },
+    {
+      "id": "cpr.reputation.event.0",
+      "kind": "cpr",
+      "label": "Reputation event",
+      "form": "words",
+      "value": "Level 3 deed: Held the bridge (defining)",
+      "also": [],
+      "prose": "Level 3 deed: Held the bridge; the defining Reputation Event (Cyberpunk RED core rulebook p. 193)",
+      "condition": null
+    },
+    {
+      "id": "cpr.reputation.event.1",
+      "kind": "cpr",
+      "label": "Reputation event",
+      "form": "words",
+      "value": "Level 2 cowardice: Ran from the Maelstrom",
+      "also": [],
+      "prose": "Level 2 cowardice: Ran from the Maelstrom; not higher than Level 3, so the earlier defining event stays (Cyberpunk RED core rulebook p. 193)",
       "condition": null
     },
     {
@@ -1142,6 +1192,56 @@
       "value": "N/A",
       "also": [],
       "prose": "Heavy Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.lifepath.0",
+      "kind": "cpr",
+      "label": "Cultural Origins: Your (General) Cultural Region",
+      "form": "words",
+      "value": "North American",
+      "also": [],
+      "prose": "North American: Chinese, Cree, Creole, English, French, Navajo, Spanish (Lifepath, Cyberpunk RED core rulebook p. 45-70)",
+      "condition": null
+    },
+    {
+      "id": "cpr.lifepath.1",
+      "kind": "cpr",
+      "label": "Your Personality: What Are You Like?",
+      "form": "words",
+      "value": "Shy and secretive",
+      "also": [],
+      "prose": "Shy and secretive (Lifepath, Cyberpunk RED core rulebook p. 45-70)",
+      "condition": null
+    },
+    {
+      "id": "cpr.lifepath.2",
+      "kind": "cpr",
+      "label": "Your Friends: Friend's Relationship to You",
+      "form": "words",
+      "value": "Like an older sibling to you.",
+      "also": [],
+      "prose": "Like an older sibling to you. (Lifepath, Cyberpunk RED core rulebook p. 45-70)",
+      "condition": null
+    },
+    {
+      "id": "cpr.lifepath.3",
+      "kind": "cpr",
+      "label": "Your Friends: Friend's Relationship to You",
+      "form": "words",
+      "value": "Like a younger sibling to you.",
+      "also": [],
+      "prose": "Like a younger sibling to you. (Lifepath, Cyberpunk RED core rulebook p. 45-70)",
+      "condition": null
+    },
+    {
+      "id": "cpr.lifepath.4",
+      "kind": "cpr",
+      "label": "Solo: What Kind of Solo are You?: Type",
+      "form": "words",
+      "value": "Bodyguard",
+      "also": [],
+      "prose": "Bodyguard (Lifepath, Cyberpunk RED core rulebook p. 45-70)",
       "condition": null
     }
   ],
