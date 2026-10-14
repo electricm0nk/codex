@@ -8,7 +8,8 @@ import { buildCyberpunkSheet, type CyberpunkSheetBox, type CyberpunkSheetCell } 
 /**
  * The Cyberpunk RED character sheet: the ten STATs (EMP as entered and current), the 66 skills
  * under their categories, Hit Points, Seriously Wounded, Death Save, Humanity, MOVE, LUCK, the
- * wound track, armour, the weapons and their range DV rows. Its boxes are placed
+ * wound track, the Role Ability, armour, the weapons and their range DV rows, the cyberware
+ * (each piece's Humanity Loss, option slots per container) and a Netrunner's deck. Its boxes are placed
  * by `cyberpunkSheetLayout.ts`; every number is one engine `cpr.` row (`cyberpunkSheetModel.ts`),
  * as `load_saved_character` composed it -- this file writes no number of its own.
  */

@@ -398,8 +398,8 @@ mod tests {
     fn sheet_fixture_characters() -> Vec<(CprSavedCharacter, codex::rules_core::cpr::input::CprSheetChoices)> {
         use codex::rules_core::cpr::armor::{CprArmorLocation, CprWornArmor};
         use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
-        use codex::rules_core::cpr::cyberware::CprCyberwareInstall;
-        use codex::rules_core::cpr::input::CprSheetChoices;
+        use codex::rules_core::cpr::cyberware::{CprCyberwareInstall, CprMount};
+        use codex::rules_core::cpr::input::{CprDeckChoice, CprSheetChoices};
         use codex::rules_core::cpr::roles::CprRole;
 
         let mut streetrat = edgerunner();
@@ -459,7 +459,34 @@ mod tests {
             .to_vec(),
             ..CprSheetChoices::default()
         };
-        vec![(streetrat, CprSheetChoices::default()), (kitted, choices), (arsenal, arsenal_choices)]
+        // E4.4: a Netrunner in a Bodyweight Suit with a Standard Cyberdeck in a Cyberarm (A-7),
+        // loaded with the p. 157 sample deck and a Hardware piece.
+        let mut netrunner = edgerunner();
+        netrunner.character_id = "cpr-netrunner-decked".to_owned();
+        netrunner.revision_id = "cpr-netrunner-decked.rev.1".to_owned();
+        netrunner.display_label = "Decked Netrunner".to_owned();
+        let netrunner_choices = CprSheetChoices {
+            role: Some((CprRole::Netrunner, 4)),
+            armor: vec![CprWornArmor { name: "Bodyweight Suit".to_owned(), location: CprArmorLocation::Body }],
+            cyberware: vec![
+                CprCyberwareInstall { name: "Neural Link".to_owned(), mount: None },
+                CprCyberwareInstall { name: "Interface Plugs".to_owned(), mount: None },
+                CprCyberwareInstall { name: "Cyberarm".to_owned(), mount: None },
+                CprCyberwareInstall { name: "Cyberdeck (installed)".to_owned(), mount: Some(CprMount::Arm(0)) },
+            ],
+            deck: Some(CprDeckChoice {
+                deck: "Cyberdeck (Standard Quality)".to_owned(),
+                programs: ["Sword", "Sword", "Killer", "Worm", "Worm", "Armor"].map(str::to_owned).to_vec(),
+                hardware: vec!["Range Upgrade".to_owned()],
+            }),
+            ..CprSheetChoices::default()
+        };
+        vec![
+            (streetrat, CprSheetChoices::default()),
+            (kitted, choices),
+            (arsenal, arsenal_choices),
+            (netrunner, netrunner_choices),
+        ]
     }
 
     /// E4.1: the frontend Cyberpunk RED sheet test renders each fixture character's real

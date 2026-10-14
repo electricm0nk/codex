@@ -227,6 +227,11 @@
       "detail": "External Body: 7 option slots (p. 112-117, p. 359-368)"
     },
     {
+      "id": "cpr.cyberware.piece.0.humanity_loss",
+      "value": 14,
+      "detail": "Grafted Muscle and Bone Lace Humanity Loss 14: the preset loss at Character Generation (p. 112)"
+    },
+    {
       "id": "cpr.wound.lightly_wounded",
       "value": 35,
       "detail": "Lightly Wounded below 35 HP: \"Less than Full HP\" of HP 35 (Cyberpunk RED core rulebook p. 186)"
@@ -1079,6 +1084,16 @@
   "skillAllocations": [],
   "equipmentSelections": [],
   "sheetLines": [
+    {
+      "id": "cpr.cyberware.piece.0.name",
+      "kind": "cpr",
+      "label": "Cyberware",
+      "form": "words",
+      "value": "Grafted Muscle and Bone Lace",
+      "also": [],
+      "prose": "Grafted Muscle and Bone Lace: installed cyberware (Cyberpunk RED core rulebook p. 112-117, p. 359-368)",
+      "condition": null
+    },
     {
       "id": "cpr.weapon.0.damage",
       "kind": "cpr",

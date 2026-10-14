@@ -539,6 +539,7 @@ impl CprCyberwareCatalog {
         let slots = capacity.iter().map(|(container, cap)| (*container, used[container], *cap)).collect();
         Ok(CprCyberwareLoadout {
             pieces_installed: items.len(),
+            installed: items.iter().map(|it| (it.name.clone(), it.humanity_loss_preset)).collect(),
             humanity_loss,
             pieces,
             borgware,
@@ -557,6 +558,8 @@ impl CprCyberwareCatalog {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CprCyberwareLoadout {
     pieces_installed: usize,
+    /// Each installed piece in install order: its name and its preset Humanity Loss (p. 112).
+    installed: Vec<(String, i16)>,
     humanity_loss: i16,
     /// Installed non-borgware pieces that lower maximum Humanity (HL > 0, p. 231).
     pieces: i16,
@@ -571,6 +574,11 @@ pub struct CprCyberwareLoadout {
 }
 
 impl CprCyberwareLoadout {
+    /// Each installed piece in install order: its name and its preset Humanity Loss (p. 112).
+    pub fn installed(&self) -> &[(String, i16)] {
+        &self.installed
+    }
+
     /// The sum of the installed pieces' preset Humanity Loss.
     pub fn humanity_loss(&self) -> i16 {
         self.humanity_loss

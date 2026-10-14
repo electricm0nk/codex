@@ -451,6 +451,20 @@ pub fn compose_sheet(
         ));
     }
     rows.extend(cyberware_rows.iter().cloned());
+    // Each installed piece: its name printed, its preset Humanity Loss a row (p. 112).
+    for (i, (name, loss)) in loadout.installed().iter().enumerate() {
+        printed.push(words(
+            format!("cpr.cyberware.piece.{i}.name"),
+            "Cyberware".to_owned(),
+            name.clone(),
+            format!("{name}: installed cyberware (Cyberpunk RED core rulebook p. 112-117, p. 359-368)"),
+        ));
+        rows.push(row(
+            format!("cpr.cyberware.piece.{i}.humanity_loss"),
+            *loss,
+            format!("{name} Humanity Loss {loss}: the preset loss at Character Generation (p. 112)"),
+        ));
+    }
     rows.extend(catalogs.critical.rows(hp, body, &choices.criticals)?);
 
     // 5. Skill bases from the penalised REF and DEX and the current EMP; one level row each.
@@ -506,7 +520,27 @@ pub fn compose_sheet(
                         bodyweight_suit: armor.bodyweight_suit_worn(),
                         cyberarm_deck: choices.cyberware.iter().any(|c| c.name == CYBERARM_DECK),
                     };
-                    Some((quality, extras, deck_items(catalogs, &choice.programs, &choice.hardware)?))
+                    let items = deck_items(catalogs, &choice.programs, &choice.hardware)?;
+                    // The deck and what it holds, by name, in the order loaded (p. 196-208).
+                    printed.push(words(
+                        "cpr.netrunning.deck".to_owned(),
+                        "Cyberdeck".to_owned(),
+                        record.name.clone(),
+                        format!("{}: the Netrunner's Cyberdeck (Cyberpunk RED core rulebook p. 196)", record.name),
+                    ));
+                    for (kind, label, names, pages) in
+                        [("program", "Program", &choice.programs, "p. 204-207"), ("hardware", "Hardware", &choice.hardware, "p. 208")]
+                    {
+                        for (i, name) in names.iter().enumerate() {
+                            printed.push(words(
+                                format!("cpr.netrunning.{kind}.{i}"),
+                                label.to_owned(),
+                                name.clone(),
+                                format!("{name}: {label} loaded in the {} (Cyberpunk RED core rulebook {pages})", record.name),
+                            ));
+                        }
+                    }
+                    Some((quality, extras, items))
                 }
                 None => None,
             };
@@ -958,6 +992,37 @@ mod tests {
         assert_eq!(row(&sheet, "cpr.netrunning.deck_slots_used"), 7 + 1);
         assert_eq!((row(&sheet, "cpr.armor.sp_head"), row(&sheet, "cpr.armor.sp_body")), (11, 11), "p. 350");
         assert!(sheet.printed.iter().any(|p| p.id == "cpr.netrunning.brain_damage" && p.form == CprPrintedForm::Words));
+    }
+
+    /// The cyberware block lists each installed piece: its name printed and its preset Humanity
+    /// Loss a row (the page values of `kestrel()`'s doc: Neural Link 7, Kerenzikov 14, Grafted
+    /// Muscle and Bone Lace 14, Skin Weave 7), summing to the Humanity Loss row. The deck block
+    /// prints the deck, each Program and each Hardware by name, in the order loaded (the p. 157
+    /// sample deck of `spider()`).
+    #[test]
+    fn each_cyberware_piece_and_each_deck_item_is_on_the_sheet_by_name() {
+        let line = |sheet: &CprSheet, id: &str| {
+            let printed = sheet.printed.iter().find(|p| p.id == id).unwrap_or_else(|| panic!("no printed line {id}"));
+            assert_eq!(printed.form, CprPrintedForm::Words, "{id}");
+            printed.value.clone()
+        };
+        let sheet = compose(&kestrel()).expect("composes");
+        let pieces = [("Neural Link", 7), ("Kerenzikov", 14), ("Grafted Muscle and Bone Lace", 14), ("Skin Weave", 7)];
+        for (i, (name, loss)) in pieces.iter().enumerate() {
+            assert_eq!(line(&sheet, &format!("cpr.cyberware.piece.{i}.name")), *name);
+            assert_eq!(row(&sheet, &format!("cpr.cyberware.piece.{i}.humanity_loss")), *loss, "{name}");
+        }
+        assert!(!has_row(&sheet, &format!("cpr.cyberware.piece.{}.humanity_loss", pieces.len())), "one row per installed piece");
+        assert_eq!(pieces.iter().map(|(_, loss)| loss).sum::<i16>(), row(&sheet, "cpr.cyberware.humanity_loss"));
+
+        let sheet = compose(&spider()).expect("composes");
+        assert_eq!(line(&sheet, "cpr.netrunning.deck"), "Cyberdeck (Standard Quality)");
+        for (i, name) in ["Sword", "Sword", "Killer", "Worm", "Worm", "Armor"].iter().enumerate() {
+            assert_eq!(line(&sheet, &format!("cpr.netrunning.program.{i}")), *name);
+        }
+        assert!(!sheet.printed.iter().any(|p| p.id == "cpr.netrunning.program.6"), "one line per loaded Program");
+        assert_eq!(line(&sheet, "cpr.netrunning.hardware.0"), "Range Upgrade");
+        assert!(!compose(&kestrel()).expect("composes").printed.iter().any(|p| p.id.starts_with("cpr.netrunning.")), "a Solo prints no deck");
     }
 
     #[test]

@@ -25,6 +25,13 @@
  *    `range_dv.json` that lists its type (and its Autofire row), read in the engine's range
  *    bands; armour shows SP and penalty per location, the shield and the Armor Penalty.
  *    Printed lines (dice, words) are `data-cpr-printed` spans whose text is the engine's line.
+ * 7. (E4.4) The cyberware, Role Ability and deck blocks, over a fourth character, a Netrunner
+ *    with four pieces of cyberware (Neural Link, Cyberarm) and a loaded Cyberdeck: each installed
+ *    piece is its printed name with its Humanity Loss row (= the piece's `humanity_loss_preset`
+ *    in `cyberware.json`), the pieces sum to the Humanity Loss row; each option-slot container
+ *    shows its used / total rows; every `cpr.role.` row sits in the Role Ability box; the
+ *    Netrunner shows deck slots used / available, NET Actions (= the p. 197 table for its
+ *    Interface rank), the deck and each Program and Hardware by its printed name.
  */
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
@@ -37,7 +44,7 @@ import { buildCyberpunkSheet, isCyberpunkCharacter } from './cyberpunkSheetModel
 import { boxesInColumn } from './sheetLayout';
 import { assert, assertEqual } from '../testSupport/asserts';
 
-const CHARACTERS = ['cpr-solo-streetrat', 'cpr-solo-kitted', 'cpr-solo-arsenal'] as const;
+const CHARACTERS = ['cpr-solo-streetrat', 'cpr-solo-kitted', 'cpr-solo-arsenal', 'cpr-netrunner-decked'] as const;
 
 /** The rows the criterion names, each of which must be a tile on every character's sheet. */
 const CORE_ROWS = [
@@ -236,7 +243,7 @@ for (const id of CHARACTERS) {
   const other = sheet.boxes.find((box) => box.id === 'other');
   assert(other === undefined || other.rows.every((row) => !/^cpr\.skill(_level)?\./.test(row.label)), `${id}: no skill row is left in Other totals`);
 }
-assertEqual(checkedSkills, 198, 'all three characters: 66 skills each checked');
+assertEqual(checkedSkills, 66 * CHARACTERS.length, 'every character: 66 skills each checked');
 // The kitted Solo wears Flak: its REF and DEX skills show the penalty (the check above bites).
 const kittedRows = new Map(fixture('cpr-solo-kitted').explanations.map((row) => [row.id, row.value]));
 assert(kittedRows.get('cpr.armor.ref') !== kittedRows.get('cpr.stat.ref'), 'the kitted fixture lowers REF by its armour');
@@ -392,8 +399,117 @@ for (const type of RANGED_TYPES) {
 }
 assertEqual(checkedWeapons, 1 + 12, 'kitted Heavy Pistol + the arsenal\'s 11 ranged types and 1 melee weapon');
 
+// 7. (E4.4) Cyberware, the Role Ability and the Netrunner's deck.
+const CYBERWARE = JSON.parse(readFileSync(new URL('../../../../data/cyberpunk-red/corpus/cyberware.json', import.meta.url), 'utf8')) as CyberpunkRecord[];
+/** NET Actions per Interface Rank 1-10, typed from the p. 197 table (pages/p198), not the corpus. */
+const NET_ACTIONS_P197 = [2, 2, 2, 3, 3, 3, 4, 4, 4, 5];
+let checkedPieces = 0;
+let checkedContainers = 0;
+let checkedRoleRows = 0;
+let checkedDeckLines = 0;
+for (const id of CHARACTERS) {
+  const detail = fixture(id);
+  const byId = new Map(detail.explanations.map((row) => [row.id, row.value]));
+  const lines = new Map(detail.sheetLines.map((line) => [line.id, line.value === '' ? line.prose : line.value]));
+  const sheet = buildCyberpunkSheet(detail, SKILLS);
+  const box = (boxId: string) => sheet.boxes.find((b) => b.id === boxId);
+  const other = box('other');
+  assert(
+    other === undefined || other.rows.every((row) => !/^cpr\.(cyberware|role|netrunning)\./.test(row.label)),
+    `${id}: no cyberware, Role Ability or deck row is left in Other totals: ${other?.rows.map((row) => row.label).join(',')}`,
+  );
+  const cellIds = (row: { cells: ({ rowId: string } | null)[] } | undefined) => row?.cells.map((cell) => cell?.rowId ?? null).join(',');
+
+  // Cyberware: each piece by name with its Humanity Loss; the total; slots per container.
+  const cyberware = box('cyberware');
+  assert(cyberware !== undefined, `${id}: the cyberware box is on the sheet`);
+  const pieces = detail.sheetLines.filter((line) => /^cpr\.cyberware\.piece\.\d+\.name$/.test(line.id));
+  let pieceSum = 0;
+  for (const piece of pieces) {
+    const lossId = piece.id.replace(/\.name$/, '.humanity_loss');
+    const row = cyberware?.rows.find((r) => r.labelCell?.rowId === piece.id);
+    assertEqual(row?.labelCell?.value, piece.value, `${id}: cyberware ${piece.value} is labelled by its printed name`);
+    assertEqual(cellIds(row), lossId, `${id}: ${piece.value} shows its Humanity Loss row`);
+    const record = CYBERWARE.find((c) => c.name === piece.value);
+    assert(record !== undefined, `${id}: ${piece.value} is a cyberware.json record`);
+    assertEqual(row?.cells[0]?.value, String(record?.humanity_loss_preset), `${id}: ${piece.value} Humanity Loss = cyberware.json humanity_loss_preset`);
+    pieceSum += Number(byId.get(lossId));
+    checkedPieces += 1;
+  }
+  const total = cyberware?.rows.find((r) => r.label === 'Humanity Loss');
+  assertEqual(cellIds(total), 'cpr.cyberware.humanity_loss', `${id}: the Humanity Loss total`);
+  assertEqual(Number(total?.cells[0]?.value), pieceSum, `${id}: the pieces sum to the Humanity Loss row`);
+  const containers = detail.explanations.flatMap((row) => {
+    const m = /^cpr\.cyberware\.slots\.(.+)\.used$/.exec(row.id);
+    return m === null ? [] : [m[1]];
+  });
+  assert(containers.length >= 3, `${id}: Fashionware, Internal and External Body at least`);
+  for (const container of containers) {
+    const used = `cpr.cyberware.slots.${container}.used`;
+    const capacity = `cpr.cyberware.slots.${container}.capacity`;
+    const row = cyberware?.rows.find((r) => r.cells[0]?.rowId === used);
+    assertEqual(cellIds(row), `${used},${capacity}`, `${id}: ${container} slots used / total`);
+    assertEqual(row?.cells.map((cell) => cell?.value).join('/'), `${String(byId.get(used))}/${String(byId.get(capacity))}`, `${id}: ${container} = its rows`);
+    checkedContainers += 1;
+  }
+  assertEqual(cyberware?.columns ?? null, null, `${id}: the cyberware box reads each row as one figure ("used / total")`);
+
+  // Role Ability: every cpr.role. row, the Rank first.
+  const roleRows = detail.explanations.filter((row) => row.id.startsWith('cpr.role.')).map((row) => row.id);
+  const role = box('roleAbility');
+  if (roleRows.length === 0) {
+    assert(role === undefined, `${id}: no Role Ability rows, no Role Ability box`);
+  } else {
+    const shown = role?.rows.flatMap((row) => row.cells.flatMap((cell) => (cell === null ? [] : [cell.rowId]))) ?? [];
+    assertEqual([...shown].sort().join(','), [...roleRows].sort().join(','), `${id}: the Role Ability box holds every cpr.role. row`);
+    assert(/^cpr\.role\.[a-z]+\.rank$/.test(shown[0] ?? ''), `${id}: the Role Ability's Rank comes first`);
+    checkedRoleRows += shown.length;
+  }
+
+  // The Netrunner's deck.
+  const deck = box('netrunning');
+  const rank = byId.get('cpr.role.netrunner.rank');
+  if (rank === undefined) {
+    assert(deck === undefined, `${id}: not a Netrunner, no deck box`);
+    continue;
+  }
+  assert(deck !== undefined, `${id}: the Netrunner's deck box is on the sheet`);
+  assertEqual(cellIds(deck?.rows.find((r) => r.label === 'NET Actions')), 'cpr.netrunning.net_actions', `${id}: NET Actions`);
+  assertEqual(byId.get('cpr.netrunning.net_actions'), NET_ACTIONS_P197[rank - 1], `${id}: NET Actions = the p. 197 table at Interface Rank ${rank}`);
+  assertEqual(
+    cellIds(deck?.rows.find((r) => r.label === 'Deck slots (used / available)')),
+    'cpr.netrunning.deck_slots_used,cpr.netrunning.deck_slots_available',
+    `${id}: deck slots used / available`,
+  );
+  const html = render(detail);
+  const printed = new Set([...html.matchAll(/data-cpr-printed="([^"]+)"/g)].map((m) => m[1]));
+  const deckLines = detail.sheetLines.filter((line) => /^cpr\.netrunning\.(deck|program\.\d+|hardware\.\d+)$/.test(line.id));
+  assert(deckLines.some((line) => line.id.startsWith('cpr.netrunning.program.')), `${id}: the fixture loads Programs`);
+  for (const line of deckLines) {
+    assert(printed.has(line.id), `${id}: ${line.id} (${line.value}) is printed on the sheet`);
+    const row = deck?.rows.find((r) => r.cells.some((cell) => cell?.rowId === line.id));
+    assertEqual(row?.cells.find((cell) => cell?.rowId === line.id)?.value, lines.get(line.id), `${id}: ${line.id} is the engine's line`);
+    checkedDeckLines += 1;
+  }
+}
+// The Netrunner: 4 pieces + the kitted Solo's 1; 3 pools x 4 characters + Neural Link + Cyberarm;
+// Rank + one Role value for the 3 characters with a Role; the deck, 6 Programs, 1 Hardware.
+assertEqual(checkedPieces, 1 + 4, 'cyberware pieces checked');
+assertEqual(checkedContainers, 3 * CHARACTERS.length + 2, 'option-slot containers checked');
+assertEqual(checkedRoleRows, 2 * 3, 'Role Ability rows checked');
+assertEqual(checkedDeckLines, 1 + 6 + 1, 'deck lines checked');
+{
+  const netrunner = new Map(fixture('cpr-netrunner-decked').explanations.map((row) => [row.id, row.value]));
+  // p. 196: a Standard deck has 7 slots; the Cyberarm deck and the Bodyweight Suit add 1 each (A-7);
+  // the p. 157 deck (Killer is Black ICE, 2 slots) plus 1 Hardware uses 8.
+  assertEqual(netrunner.get('cpr.netrunning.deck_slots_available'), 7 + 1 + 1, 'the Netrunner fixture has 9 deck slots');
+  assertEqual(netrunner.get('cpr.netrunning.deck_slots_used'), 7 + 1, 'the Netrunner fixture uses 8');
+}
+
 for (const gameSystem of ['pf1', 'starfinder-1e']) {
   assertEqual(isCyberpunkCharacter({ gameSystem }), false, `a ${gameSystem} character does not open the Cyberpunk RED sheet`);
 }
 assert(checkedRows > 0, 'rows were checked');
-console.log(`cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells`);
+console.log(
+  `cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells; ${checkedPieces} cyberware pieces, ${checkedContainers} slot containers, ${checkedRoleRows} Role Ability rows, ${checkedDeckLines} deck lines`,
+);

@@ -5,15 +5,26 @@ import type { LayoutBox } from './sheetLayout';
  * Declarative box placement for the Cyberpunk RED character sheet (`CyberpunkCharacterSheet.tsx`),
  * the registry shape of `sheetLayout.ts`: `column` says which stack a box lives in, `order` its
  * position there, `boxStyle` the style its own content takes. Moving a box is an edit to its
- * entry here, not a JSX move. The skills, weapons and armour, cyberware, Role Ability and deck,
- * and Reputation blocks add their boxes here as they land.
+ * entry here, not a JSX move. The Reputation, Improvement Points, Lifepath and critical-injury
+ * blocks add their boxes here as they land.
  *
  * Cyberpunk RED has no carrying-capacity rule, so the sheet has no box for one (D-12: no page of
  * the book states one, and the book's sample sheet prints none).
  */
 
 /** The sheet's boxes. `other` holds every engine row no box above names, so none is dropped. */
-export type CyberpunkSheetBoxId = 'stats' | 'skills' | 'vitals' | 'woundTrack' | 'armour' | 'weapons' | 'rangeDv' | 'other';
+export type CyberpunkSheetBoxId =
+  | 'stats'
+  | 'skills'
+  | 'vitals'
+  | 'woundTrack'
+  | 'roleAbility'
+  | 'armour'
+  | 'weapons'
+  | 'rangeDv'
+  | 'cyberware'
+  | 'netrunning'
+  | 'other';
 
 /** Left: the ten STATs and the skills. Right: what they give, the wound track, and the rows not
  * yet laid out. */
@@ -44,6 +55,9 @@ export const CYBERPUNK_SHEET_LAYOUT: readonly LayoutBox<CyberpunkSheetBoxId, Cyb
   // The Wound States with the HP each begins below and its Stabilization DV, then the Death Save
   // and the Base Death Save Penalty.
   { id: 'woundTrack', column: 'vitals', order: 1, boxStyle: BOX },
+  // The Role Ability: its Rank, then the values the Rank gives (Combat Awareness points, NET
+  // Actions, ...), under the Role's name.
+  { id: 'roleAbility', column: 'statBlock', order: 2, boxStyle: BOX },
   // SP and Armor Penalty per location (head, body), the shield's HP and penalty, and the Armor
   // Penalty taken once on REF, DEX and MOVE.
   { id: 'armour', column: 'vitals', order: 2, boxStyle: BOX },
@@ -51,5 +65,10 @@ export const CYBERPUNK_SHEET_LAYOUT: readonly LayoutBox<CyberpunkSheetBoxId, Cyb
   { id: 'weapons', column: 'vitals', order: 3, boxStyle: BOX },
   // Each weapon's single-shot range DV row (D-1) and Autofire row, under the range bands.
   { id: 'rangeDv', column: 'vitals', order: 4, boxStyle: BOX },
-  { id: 'other', column: 'vitals', order: 5, boxStyle: BOX },
+  // Each installed piece by name with its Humanity Loss, the total and maximum Humanity, the
+  // cyberware SP and Initiative, and option slots used / total per container (D-11).
+  { id: 'cyberware', column: 'vitals', order: 5, boxStyle: BOX },
+  // A Netrunner's deck: NET Actions, slots used / available, the deck, its Programs and Hardware.
+  { id: 'netrunning', column: 'vitals', order: 6, boxStyle: BOX },
+  { id: 'other', column: 'vitals', order: 7, boxStyle: BOX },
 ];

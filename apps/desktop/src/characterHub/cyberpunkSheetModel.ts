@@ -121,6 +121,31 @@ const WEAPON_FIELDS: readonly { heading: string; field: string }[] = [
 const WEAPON_ID = /^cpr\.weapon\.(\d+)\./;
 const RANGE_BAND_PREFIX = 'cpr.range_band.';
 
+/** The cyberware box's single rows: label -> the row ids read as one figure. */
+const CYBERWARE_TOTALS: readonly { label: string; ids: readonly string[] }[] = [
+  { label: 'Humanity Loss', ids: ['cpr.cyberware.humanity_loss'] },
+  { label: 'Maximum Humanity', ids: ['cpr.cyberware.humanity_cap'] },
+  { label: 'Head SP (cyberware)', ids: ['cpr.cyberware.sp_head'] },
+  { label: 'Body SP (cyberware)', ids: ['cpr.cyberware.sp_body'] },
+  { label: 'Initiative bonus', ids: ['cpr.cyberware.initiative_bonus'] },
+];
+const CYBERWARE_PIECE_NAME = /^cpr\.cyberware\.piece\.(\d+)\.name$/;
+const CYBERWARE_SLOTS = /^cpr\.cyberware\.slots\.(.+)\.used$/;
+/** Option-slot container names (`CprContainer::label`); a numbered foundation ("cyberarm_1")
+ * reads from its id. */
+const CONTAINER_LABELS: Readonly<Record<string, string>> = {
+  fashionware: 'Fashionware',
+  internal: 'Internal Body',
+  external: 'External Body',
+  neural_link: 'Neural Link',
+  cyberaudio_suite: 'Cyberaudio Suite',
+};
+
+const ROLE_ROW = /^cpr\.role\.([a-z_]+)\.([a-z_]+)$/;
+const NET_ACTIONS = 'cpr.netrunning.net_actions';
+const DECK_LINE = 'cpr.netrunning.deck';
+const DECK_ITEM_LINE = /^cpr\.netrunning\.(program|hardware)\.(\d+)$/;
+
 const SKILL_PREFIX = 'cpr.skill.';
 const SKILL_LEVEL_PREFIX = 'cpr.skill_level.';
 
@@ -263,6 +288,66 @@ export function buildCyberpunkSheet(
       rows: rangeRows,
     });
   }
+
+  // The Role Ability: each Role's Rank row, then the values its Rank gives, in the engine's order.
+  const roleIds = detail.explanations.map((row) => row.id).filter((id) => ROLE_ROW.test(id));
+  const roles = [...new Set(roleIds.map((id) => (ROLE_ROW.exec(id) as RegExpExecArray)[1]))];
+  push({
+    id: 'roleAbility',
+    title: 'Role Ability',
+    columns: null,
+    rows: roles.flatMap((role) => {
+      const ids = roleIds.filter((id) => (ROLE_ROW.exec(id) as RegExpExecArray)[1] === role);
+      const rank = `cpr.role.${role}.rank`;
+      return [rank, ...ids.filter((id) => id !== rank)].map((id) => ({
+        label: humanise((ROLE_ROW.exec(id) as RegExpExecArray)[2]),
+        group: humanise(role),
+        cells: [cell(id)],
+      }));
+    }),
+  });
+
+  // Cyberware: each installed piece by its printed name with its Humanity Loss row, then the
+  // totals, then each option-slot container as "used / total".
+  const pieceIds = [...lines.keys()].filter((id) => CYBERWARE_PIECE_NAME.test(id));
+  const containers = detail.explanations.flatMap((row) => {
+    const match = CYBERWARE_SLOTS.exec(row.id);
+    return match === null ? [] : [match[1]];
+  });
+  push({
+    id: 'cyberware',
+    title: 'Cyberware',
+    columns: null,
+    rows: [
+      ...pieceIds.map((id) => ({
+        label: id,
+        labelCell: figure(id) ?? undefined,
+        cells: [cell(id.replace(/\.name$/, '.humanity_loss'))],
+      })),
+      ...CYBERWARE_TOTALS.map((total) => ({ label: total.label, cells: total.ids.map((id) => cell(id)) })),
+      ...containers.map((container) => ({
+        label: `${CONTAINER_LABELS[container] ?? humanise(container)} slots`,
+        cells: [cell(`cpr.cyberware.slots.${container}.used`), cell(`cpr.cyberware.slots.${container}.capacity`)],
+      })),
+    ],
+  });
+
+  // A Netrunner's deck: NET Actions, slots used / available, the deck and what it holds by name.
+  const deckItems = [...lines.keys()].filter((id) => DECK_ITEM_LINE.test(id));
+  push({
+    id: 'netrunning',
+    title: 'Cyberdeck and NET Actions',
+    columns: null,
+    rows: [
+      { label: 'NET Actions', cells: [cell(NET_ACTIONS)] },
+      { label: 'Deck slots (used / available)', cells: [cell('cpr.netrunning.deck_slots_used'), cell('cpr.netrunning.deck_slots_available')] },
+      { label: 'Cyberdeck', cells: [lines.has(DECK_LINE) ? figure(DECK_LINE) : null] },
+      ...deckItems.map((id) => ({
+        label: (DECK_ITEM_LINE.exec(id) as RegExpExecArray)[1] === 'program' ? 'Program' : 'Hardware',
+        cells: [figure(id)],
+      })),
+    ],
+  });
 
   // Any `cpr.` row the boxes above do not name: shown under its id, never dropped.
   push({
