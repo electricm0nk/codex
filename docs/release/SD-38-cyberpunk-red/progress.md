@@ -28,7 +28,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | Epic | Status | Cards complete | Notes |
 |---|---|---|---|
 | C | in progress | 1 of 2 | C0 complete (1102f34aab); C1 next (SD-k revised: no wait on #398) |
-| E0 | in progress | 6 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47) |
+| E0 | complete | 7 of 7 | E0.1 complete (7732b17462, ebbb643800); E0.2 complete (481de470b6); E0.3 complete (4edfb5e3fb); E0.4 complete (734ed496a4, a371dbed22); E0.5 complete (2db271c281); E0.6 complete (666edd9f47); E0.MC complete (f953bca5ce) — Epic report below |
 | E1 | waiting | 0 of 10 | |
 | E2 | waiting | 0 of 11 | |
 | E6 | waiting | 0 of 5 | runs in the E2 window |
@@ -36,7 +36,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E4 | waiting | 0 of 8 | |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **8 of 68** (C0, C1, E0.1, E0.2, E0.3, E0.4, E0.5, E0.6; derived after E0.6) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **9 of 68** (C0, C1, E0.1, E0.2, E0.3, E0.4, E0.5, E0.6, E0.MC; derived after E0.MC) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -104,11 +104,36 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-13 | E0.4 | opus | complete | 734ed496a4 (code), a371dbed22 (audit-token fix); receipt and rows in the next commit | `artifacts/epic_0/E0.4_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.3 records) | `src/rules_core/cpr/{mod,input,sheet,store}.rs` (A-10 anchors; A-11 revised store); `local_store` `owns_payload` + `peek_game_system`; resolver + router → `CyberpunkAdapter`; stub 0002 retired for CPR; clippy 0/0; sd24 5/5; root 299 suites 6572 passed; desktop 810 passed |
 | 2026-10-13 | E0.5 | opus | complete | 2db271c281 (code + spec row + inventory; receipt and rows in the next commit) | `artifacts/epic_0/E0.5_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (vs E0.4 records) | landing chip `cyberpunk-red` selectable; Load list routes `ruleSystemId: cyberpunk-red` → `CyberpunkAdapter`; New Character closed with its hint until E3.2; ui-smoke `select-cyberpunk-red` RED → green (6/6 with neighbours, real store untouched); npm typecheck + 164/164 test files; no `.rs` touched (no clippy/cargo sweep) |
 | 2026-10-13 | E0.6 | opus | complete | 666edd9f47 (evidence; receipt and rows in the next commit) | `artifacts/epic_0/E0.6_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged C1 → E0 head; SF 4 seeds' lines unchanged (base 706d8da680 in its own worktree) | G-1 gate: PF hash diff empty, SF `diff -r` empty, root `--lib sf_seed` 34/34 both, PF converter 49450/49450 PASS + SF 8582/8582 PASS both; card's named SF test writes 0 files (E0.1 correction stands), lines from the writer test; no code, no clippy |
+| 2026-10-14 | E0.MC | opus | complete | f953bca5ce (evidence; receipt and rows in the next commit) | `artifacts/epic_0/E0.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged vs C1; SF 4 seeds' lines unchanged vs C1 (head 5dc2d53e59 vs E0.6's base record) | E0.1–E0.6 commands re-run on origin/tranche-18: 25/25 as expected; mutations: Stub routing → E0.4 test red, CPR resource removed → packaged_resources red, PF sheet-rule string moved → tauri-resources-tracked FAIL + PF render red; all restored green; no code, no clippy; ui-smoke `.out/` not git-ignored (reported) |
 
 ## Epic reports
 
 (Each merge-check card and E1.V appends a block: cards done, figures with commands, seed deltas, open
 blockers.)
+
+### Epic report — E0 seam (E0.MC, 2026-10-14, origin/tranche-18 5dc2d53e59)
+
+- **Cards done:** 7 of 7 — E0.1, E0.2, E0.3, E0.4, E0.5, E0.6, E0.MC
+  (`awk -F'|' '$2 ~ /^ E0\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 7).
+- **What E0 delivered:** `GameSystem::CyberpunkRed` (`cyberpunk-red`, corpus `data/cyberpunk-red/corpus`, no sheet-rule
+  root); converter refuses it by name; CPR licence file + licence-matrix DEVIATION row; the corpus bundled at its own
+  path; `CyberpunkAdapter` + CPR's own store (save/list/load with 10 `cpr.stat.*` rows), Stub retired for the id; the
+  landing chip `cyberpunk-red` selectable with its Load list, New Character closed until E3.2.
+- **Figures (each from `artifacts/epic_0/E0.MC_cycle_receipt.md`, command there):** re-run 25 of 25 as expected
+  (`awk '/^a/' E0.MC_evidence/results.txt`); mutations 3 of 3 red then restored; root `--lib game_system` 10 passed;
+  `--lib saved_character` 11, `--lib cpr::store` 5, desktop `--bins rule_system_adapter` 4, `--bins cpr_adapter` 3,
+  `packaged_resources` 1; npm 164/164 test files; ui-smoke 6/6 green, real store untouched; PF converter 49450/49450
+  PASS, SF 8582/8582 PASS.
+- **Seed deltas:** PF Aldric `7b2f2f26…4b42` / Elowen `f0230bf0…81e9b` / Tomas `2320c050…be7b` unchanged C1 → E0;
+  SF-Soldier-3 51 / SF-Mystic-5 72 / SF-Technomancer-5 63 / SF-Envoy-3 42 lines unchanged. CPR seeds: none yet (E7.1).
+- **Retro (`scripts/retro.py summary --since 2026-10-13 --json`):** 22 events — 3 corrections (C1 version grep, G-1 SF
+  test name, A-11 envelope premise), 2 incidents (`clippy-red-on-base`, `shared-tree-two-writers`, 1 each, none
+  recurring), 1 rework, 16 verification runs (4 failed: clippy 1, tauri-resources-tracked 3 of which 2 are E0.MC's planted
+  mutations).
+- **Open blockers:** none.
+- **For the lead:** `apps/desktop/scripts/ui-smoke/.out/` (ui-smoke's default evidence dir, PNGs) is not git-ignored;
+  every ui-smoke card leaves untracked PNGs (R-C, "never commit a PNG"). A one-line `.gitignore` entry is the control; it
+  is outside every card's FILES YOU OWN. Next ui-smoke card: E3.2.
 
 ## Decisions taken on safe defaults
 
