@@ -38,3 +38,17 @@ This file holds YAML receipts appended by the closure scripts: architecture trut
   cited_path_check: pass
   relative_link_check: pass
   receipt_note: "Opus claims critic (E7.9 part 2). Refuted and fixed: the cpr 'every table value from the corpus' claim (netrunning.rs holds NET Actions, deck slots and Program/Black ICE slot costs as code); status.md command arithmetic (86 + 6 + 4 + 7 = 103); WORK_INVENTORY/VAR_NAMES_DIR live in sheet_rule/mod.rs, not system_books.rs; two stale 103-row ui-smoke figures (127 now) and 'two' PF render-hash seeds (three); ingest bin count 48 -> 49; understated cpr_improve capability; Improve dialog host; reputation/critical refusals; LICENSE.json field path; R-n provenance in status.md header. Full list with refuting commands: artifacts/epic_7/E7.9_cycle_receipt.md part 2."
+
+- cycle_id: 2026-10-15T20:46:07Z
+  row_or_kind: graphify:update
+  bundle: SD-38
+  branch: c0929752c6421d433eddea9ecec615b84b37a73a
+  integration_target: develop
+  branch_tip: c0929752
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 0.2
+  log_path: graphify-out/.truth-up-run-2026-10-15T20:46:07Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
