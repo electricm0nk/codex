@@ -1,0 +1,22 @@
+RED observations (tests written first, run before the production change; base 2fd4bdb168)
+
+1. Root: `cargo test --locked -j 8 --lib rules_core::cpr -- --test-threads=8` with the new/changed tests only:
+error[E0560]: struct `input::CprSheetChoices` has no field named `earlier_roles`   (src/rules_core/cpr/input.rs:691)
+error[E0609]: no field `earlier_roles` on type `input::CprSheetChoices`               (src/rules_core/cpr/sheet.rs:1106, :1115)
+error[E0599]: no associated function or constant named `from_roles` found for struct `improvement::CprRoleHistory` (improvement.rs:416, :419)
+-> the saved choices held one Role; no Role history could be built from them.
+
+2. Desktop: `cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins cpr_improve -- --test-threads=8`
+   after the engine + command change, before the print-line change:
+test cpr_improve::tests::a_role_switch_is_refused_at_rank_3_and_allowed_at_rank_4_and_both_roles_show ... FAILED
+panicked at src/cpr_improve.rs:639:13: no line cpr.print.role_ability.solo
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 863 filtered out
+-> the Role Ability print lines covered only the latest Role.
+   (The roleSwitch tests were not run on the unmodified base command: on 2fd4bdb168 `CprPurchase::RoleSwitch`,
+   `CprImprovePreview.switch` and `CprSheetChoices.earlier_roles` do not exist, so they cannot compile there.)
+
+3. Frontend: `cd apps/desktop && npm run typecheck` with the new tests only:
+src/characterHub/cyberpunkImproveModel.test.ts(13,3): error TS2305: Module '"./cyberpunkImproveModel"' has no exported member 'switchOptionLabel'.
+src/characterHub/cyberpunkImproveModel.test.ts(68,72): error TS2322: Type '"roleSwitch"' is not assignable to type '"skill" | "roleRank"'.
+src/characterHub/cyberpunkImproveModel.test.ts(84,3): error TS2353: Object literal may only specify known properties, and 'switch' does not exist in type 'CyberpunkImprovePreview'.
+src/boundary/cprImprove.test.ts(94,74): error TS2345: ... Type '"roleSwitch"' is not assignable to type '"skill"'.
