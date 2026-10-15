@@ -119,6 +119,9 @@ fn held_index(catalog: &CprSkillCatalog, choices: &CprSheetChoices, key: &str) -
     Ok(None)
 }
 
+/// A priced plan: the character's choices after it, and the dialog's rows.
+type PricedPlan = (CprSheetChoices, Vec<ComputationExplanation>);
+
 /// The `cpr.improve.ip.available` row: IP earned + IP entered - IP spent.
 fn available_row(choices: &CprSheetChoices, ip_awarded: u32) -> Result<ComputationExplanation, String> {
     let ip = choices.improvement_points.unwrap_or_default();
@@ -145,7 +148,7 @@ fn plan(
     skills: &CprSkillCatalog,
     choices: &CprSheetChoices,
     request: &CprImproveRequest,
-) -> Result<(CprSheetChoices, Vec<ComputationExplanation>), String> {
+) -> Result<PricedPlan, String> {
     if request.purchases.is_empty() && request.ip_awarded == 0 {
         return Err("nothing to spend: enter IP or choose a Skill Level or Role Rank to buy".to_owned());
     }
@@ -282,7 +285,7 @@ fn priced_at_root(
     corpus: &Path,
     root: &Path,
     request: &CprImproveRequest,
-) -> Result<(CprSheetChoices, Result<(CprSheetChoices, Vec<ComputationExplanation>), String>), String> {
+) -> Result<(CprSheetChoices, Result<PricedPlan, String>), String> {
     let character = CprCharacterStore::load(root)?;
     let choices = CprCharacterStore::load_choices(root)?;
     let costs = CprIpCostCatalog::load(corpus)?;
