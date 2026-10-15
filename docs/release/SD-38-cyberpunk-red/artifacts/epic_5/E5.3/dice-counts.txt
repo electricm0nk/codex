@@ -1,0 +1,9 @@
+# A (Python): humanity_loss_dice values over cyberware.json
+[('1d6', 25), ('1d6/2 Round up', 22), ('2d6', 26), ('4d6', 11), ('None', 12)] total 96
+# B: jq -r '.[] | (.humanity_loss_dice // "None")' | awk
+1d6 25
+1d6/2 Round up 22
+2d6 26
+4d6 11
+None 12
+total 96
