@@ -1,0 +1,5 @@
+test cpr_improve::tests::a_blank_regain_is_rolled_with_the_seed_and_the_same_seed_keeps_it ... ok
+test cpr_improve::tests::a_blank_humanity_loss_is_rolled_with_the_seed_and_the_same_seed_keeps_it ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 863 filtered out; finished in 12.78s
+

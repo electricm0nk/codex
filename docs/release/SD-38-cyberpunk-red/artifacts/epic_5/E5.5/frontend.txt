@@ -1,0 +1,4 @@
+cprImprove: preview/apply request shape (skill, rank, switch, cyberware, therapy, reputation), answers and refusal checked
+cyberpunkImproveModel: IP entry, keys, targets, Role switch, cyberware install, therapy, Reputation change, engine-row figures and spend gate checked
+173/173 test files passed.
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/docs/testing/ui-smoke-inventory.md (116 rows, 18 screens).

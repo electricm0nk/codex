@@ -1,0 +1,15 @@
+#!/bin/bash
+export PATH="$HOME/.cargo/bin:$PATH" CARGO_TARGET_DIR=/home/ubuntu/cargo-target/sd38-main
+W=/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main; D=$W/docs/release/SD-38-cyberpunk-red/artifacts/epic_5/E5.5; S=/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/f61b82f6-6418-42af-8873-d3df5da582e6/scratchpad/e55
+cd $W
+set_status() { sed -i "s/^$1 .*/$1 $2/" $D/verify-status.txt; }
+bash scripts/verify.sh --only clippy -j 8 > $S/clippy.log 2>&1; set_status clippy "exit=$?"
+cargo test --locked -j 8 --test sd24_wired_integration_audit -- --test-threads=8 > $D/sd24-audit.txt 2>&1; set_status sd24 "exit=$?"
+cd apps/desktop/src-tauri
+cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 > $S/desktop-full.log 2>&1; set_status desktop-full "exit=$?"
+rm -rf $S/pf $S/sf; mkdir -p $S/pf $S/sf
+PF_SEED_RENDER_OUT=$S/pf cargo test --locked -j 8 --bins pf_seed_render_hash -- --test-threads=8 --nocapture > $S/pf.log 2>&1; set_status pf-seed "exit=$?"
+SF_SEED_LINES_OUT=$S/sf cargo test --locked -j 8 --bins sf_seed_printed_features_equal_the_features_the_converted_records_grant -- --test-threads=8 > $S/sf.log 2>&1; set_status sf-seed "exit=$?"
+cd $W/apps/desktop
+(npm run typecheck && npm test && npm run ui-smoke:doc) > $S/frontend.log 2>&1; set_status frontend "exit=$?"
+echo DONE >> $D/verify-status.txt
