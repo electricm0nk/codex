@@ -234,6 +234,21 @@ export function emptyLastCheckState(
   };
 }
 
+/**
+ * The state `verify_relaunch_artifact` reports as `no-pending-update`: there is no
+ * `pending-update.json`, so nothing is pending and no restore is offered. These are known
+ * facts (a fresh install's normal state), not missing data.
+ */
+export function noPendingUpdateState(): PendingRollbackState {
+  return {
+    pendingUpdateState: 'idle',
+    previousVersionAvailable: false,
+    rollbackState: 'none',
+    backupCount: 0,
+    retainedUpdateStorageBytes: 0,
+  };
+}
+
 export function emptyPendingRollbackState(): PendingRollbackState {
   return {
     pendingUpdateState: 'unknown',

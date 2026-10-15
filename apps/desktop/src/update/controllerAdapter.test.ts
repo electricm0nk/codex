@@ -1,5 +1,8 @@
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { FetchLike } from './fetch';
+import { UpdateUi } from './Ui';
 import {
   createUpdateControllerDeps,
   loadMountTimeState,
@@ -272,6 +275,71 @@ async function verifiesEligibleWhenRealLocalProbeIsOlderThanFetchedManifest() {
     'eligible',
     'lastCheck.eligibilityResult must mirror the controller-computed verdict',
   );
+  assertEqual(
+    deps.lastCheck.installDisabledReason,
+    null,
+    'an eligible verdict carries no Install-disabled reason in Last check',
+  );
+}
+
+const READABLE_RECORD_PROBE = {
+  installed: {
+    managedExecutablePath: '/opt/codex/codex.AppImage',
+    installKind: 'app-image',
+    channel: 'alpha',
+    version: '0.1.0',
+    sourceCommit: 'deadbeef',
+    releaseTag: 'alpha/v0.1.0',
+    manifestHash: 'manifest-hash',
+    artifactSha256: 'b'.repeat(64),
+    installedAt: '2026-07-03T00:00:00Z',
+    updateEligible: true,
+    ineligibleReason: null,
+  },
+  isManagedPathWritable: true,
+};
+
+/**
+ * Fresh install (E7.3 observation): no pending-update.json, a readable installed-state record,
+ * then a Check that resolves eligible. The whole Update page's text must carry no `unknown`, no
+ * footnote calling the values placeholders, and no Install-disabled reason.
+ */
+async function verifiesFreshInstallPageAfterCheckPrintsNoUnknown() {
+  const invokeImpl = (async (cmd: string) => {
+    if (cmd === 'verify_relaunch_artifact') return { kind: 'no-pending-update' };
+    if (cmd === 'is_install_eligible') return READABLE_RECORD_PROBE;
+    throw new Error(`unexpected invoke ${cmd}`);
+  }) as InvokeLike;
+  const mountTimeState = await loadMountTimeState({ invokeImpl });
+  const deps = createUpdateControllerDeps(mountTimeState, 'alpha', {
+    fetchImpl: makeFetchImpl([
+      { url: CHANNEL_INDEX_URL, status: 200, responded: channelText() },
+      {
+        url: MANIFEST_URL,
+        status: 200,
+        responded: manifestText({
+          version: '0.2.0',
+          linux_appimage: { ...VALID_MANIFEST_WIRE.linux_appimage, sha256: 'a'.repeat(64) },
+        }),
+      },
+    ]),
+    invokeImpl,
+  });
+  await deps.controller.runCheck('alpha');
+  assertEqual(deps.lastCheck.eligibilityResult, 'eligible', 'the fixture Check resolves eligible');
+
+  const html = renderToStaticMarkup(createElement(UpdateUi, { initialDeps: deps }));
+  const text = html.replace(/<[^>]*>/g, ' ');
+  const pendingPanel = html.slice(html.indexOf('id="pending-rollback-panel"'));
+  const pendingText = pendingPanel.slice(0, pendingPanel.indexOf('</section>')).replace(/<[^>]*>/g, ' ');
+  assert(!/\bunknown\b/.test(pendingText), `Pending / Rollback panel must print no "unknown": ${pendingText}`);
+  assert(pendingText.includes('idle'), 'Pending update state prints idle');
+  assert(pendingText.includes('none'), 'Rollback state prints none');
+  assert(!/placeholder/i.test(text), 'no text on the page calls the values placeholders');
+  assert(!/\bunknown\b/.test(text), `no "unknown" anywhere on the page after Check: ${text}`);
+  const reasonRow = html.slice(html.indexOf('data-last-check-row="install-disabled-reason"'));
+  const reasonText = reasonRow.slice(0, reasonRow.indexOf('</div>')).replace(/<[^>]*>/g, ' ');
+  assert(!/ineligible/.test(reasonText), `Last check prints no Install-disabled reason when eligible: ${reasonText}`);
 }
 
 async function verifiesIneligibleWhenRealLocalProbeReportsDevLocalInstall() {
@@ -601,7 +669,11 @@ async function verifiesNoPendingUpdateMapsToEmptyState() {
   });
   assertEqual(state.installed.version, 'unknown', 'no installed record yet');
   assertEqual(state.restoreOffer, null, 'no restore offer when nothing is pending');
-  assertEqual(state.pendingRollback.rollbackState, 'unknown', 'rollback state unknown with no pending record');
+  // No pending-update.json is a known fact, not an absent one: nothing is pending and no
+  // restore is offered, so the panel prints the real states rather than `unknown`.
+  assertEqual(state.pendingRollback.pendingUpdateState, 'idle', 'nothing pending without a pending record');
+  assertEqual(state.pendingRollback.rollbackState, 'none', 'no rollback offered without a pending record');
+  assertEqual(state.pendingRollback.previousVersionAvailable, false, 'no previous version offered');
 }
 
 async function verifiesVerificationFailedOffersRestoreHonestly() {
@@ -905,6 +977,7 @@ async function main() {
   await verifiesIneligibleWhenFetchedManifestMatchesAlreadyInstalledVersion();
   await verifiesEligibilityUnknownBeforeAnyCheck();
   await verifiesNoPendingUpdateMapsToEmptyState();
+  await verifiesFreshInstallPageAfterCheckPrintsNoUnknown();
   await verifiesVerificationFailedOffersRestoreHonestly();
   await verifiesPromotedMapsKnownFieldsOnlyWithoutFabricating();
   await verifiesMountTimeInstalledPanelReadsTheRealRecord();

@@ -8,11 +8,11 @@ import {
 export const PENDING_ROLLBACK_PANEL_ID = 'pending-rollback-panel';
 
 /**
- * E7's carryover panel. Until the AppImage staged transaction lands, the
- * panel surfaces deterministic placeholders (`unknown`, `0`, `false`).
- * The contract this slice owns is that every named key in
- * `technical-requirements.md` §"Diagnostics Requirements" is rendered as
- * a row — values being unknown is acceptable, an absent field is not.
+ * Renders the pending/rollback state that `loadMountTimeState` reads from
+ * `verify_relaunch_artifact` at startup (`no-pending-update` → `idle` /
+ * `none`; `verification-failed` → `pending-relaunch` / `available`). Every
+ * named key in `technical-requirements.md` §"Diagnostics Requirements" is
+ * rendered as a row; `unknown` appears only before that startup read lands.
  */
 export function PendingRollbackPanel({
   deps,
@@ -68,8 +68,7 @@ export function PendingRollbackPanel({
           fontStyle: 'italic',
         }}
       >
-        Values are populated by the staged-transaction module;
-        until that surface lands, defaults are deterministic placeholders.
+        Values come from the relaunch verification run at startup.
       </p>
     </section>
   );
