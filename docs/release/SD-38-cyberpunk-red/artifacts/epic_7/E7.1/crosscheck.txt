@@ -1,0 +1,10 @@
+# python3 -I artifacts/epic_7/E7.1/crosscheck.py <dump> data/cyberpunk-red/corpus
+medtech seed 2045 rolls: [5, 8, 9, 3, 5, 6, 7, 1, 7, 1]
+Jax Moreno: 231 numeric rows, 231 re-derived equal
+Nyx Calder: 213 numeric rows, 213 re-derived equal
+Imani Okafor: 223 numeric rows, 223 re-derived equal
+CROSSCHECK_OK
+
+# plant: cpr.cash 460 -> 461 in a copy of Nyx loaded.json
+00000000-0000-0000-0000-000000000005 WRONG cpr.cash: sheet 461 != derived 460
+CROSSCHECK_FAILED 1

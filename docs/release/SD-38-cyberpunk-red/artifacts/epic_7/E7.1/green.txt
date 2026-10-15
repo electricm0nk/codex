@@ -1,0 +1,19 @@
+# GREEN: cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins starter_seed -- --test-threads=8
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/codex_desktop-46af3d9082bcf85c)
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 870 filtered out; finished in 112.87s
+
+# Widest scope: cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8
+     Running unittests src/main.rs => test result: ok. 891 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 523.93s
+     Running tests/packaged_resources.rs => test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 97.19s
+test result: FAILED lines: 0
+
+# Clippy: bash scripts/verify.sh --only clippy -j 8
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+RESULT: PASS
+
+# sd24 audit: cargo test --locked -j 8 --test sd24_wired_integration_audit -- --test-threads=8 (root)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+# Frontend: cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc
+173/173 test files passed.
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/docs/testing/ui-smoke-inventory.md (126 rows, 18 screens).

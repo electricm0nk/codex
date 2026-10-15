@@ -1,0 +1,9 @@
+# Baseline (pre-change tree 802687300a): cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins starter_seed -- --test-threads=8
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-main/debug/deps/codex_desktop-46af3d9082bcf85c)
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 870 filtered out; finished in 112.63s
+
+# RED (new test, before the change): cargo test --locked -j 8 --bins starter_seed_tests::restore_writes_the_three -- --test-threads=8
+thread 'character_hub::starter_seed_tests::restore_writes_the_three_cyberpunk_starters_and_a_second_restore_writes_nothing' (3405939) panicked at src/character_hub.rs:14048:9:
+  left: ["Aldric Ironhand", "Elowen Ashgrave", "Brother Tomas Vane"]
+ right: ["Aldric Ironhand", "Elowen Ashgrave", "Brother Tomas Vane", "Jax Moreno", "Nyx Calder", "Imani Okafor"]
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 891 filtered out; finished in 19.11s
