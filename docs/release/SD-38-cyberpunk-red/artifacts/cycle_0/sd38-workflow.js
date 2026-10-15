@@ -608,6 +608,17 @@ const CARDS = [
 "lane": "e4"
 },
 {
+"id": "E4.8",
+"title": "Sheet labels: Cash, Ammunition (by name), Rent; critical tick in ui-smoke; lines-out dirs (R-W)",
+"tier": "opus",
+"deps": [
+"E4.MC"
+],
+"cargo": true,
+"phase": "E4 \u2014 sheet",
+"lane": "e4"
+},
+{
 "id": "E5.1",
 "title": "IP spend (skills, Role rank)",
 "tier": "opus",
@@ -701,9 +712,21 @@ const CARDS = [
 "title": "Fresh-install acceptance (.deb, AppImage)",
 "tier": "sonnet",
 "deps": [
-"E7.2"
+"E7.2",
+"E7.3a"
 ],
 "cargo": true,
+"phase": "E7 \u2014 closure",
+"lane": "main"
+},
+{
+"id": "E7.3a",
+"title": "Update panel placeholders: Pending / Rollback `unknown` on a fresh install, stray Install-disabled reason",
+"tier": "opus",
+"deps": [
+"E7.2"
+],
+"cargo": false,
 "phase": "E7 \u2014 closure",
 "lane": "main"
 },
@@ -712,7 +735,8 @@ const CARDS = [
 "title": "Widest verify (both workspaces, npm, `verify.sh`, PF/SF byte-identical)",
 "tier": "sonnet",
 "deps": [
-"E7.3"
+"E7.3",
+"E4.8"
 ],
 "cargo": true,
 "phase": "E7 \u2014 closure",
