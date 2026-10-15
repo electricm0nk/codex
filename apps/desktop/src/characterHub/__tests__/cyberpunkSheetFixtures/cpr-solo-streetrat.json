@@ -124,7 +124,7 @@
     {
       "id": "cpr.derived.humanity_current",
       "value": 50,
-      "detail": "Humanity 50 = EMP 5 x 10 - Humanity Loss 0 (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112)"
+      "detail": "Humanity 50 = EMP 5 x 10 - Humanity Loss 0 (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112; rolled loss after it, p. 111)"
     },
     {
       "id": "cpr.armor.sp_head",
@@ -169,7 +169,7 @@
     {
       "id": "cpr.cyberware.humanity_loss",
       "value": 0,
-      "detail": "Humanity Loss 0: the preset Humanity Loss of 0 installed pieces (p. 112: at Character Generation Humanity Loss is preset)"
+      "detail": "Humanity Loss 0: the Humanity Loss of 0 installed pieces (p. 111: preset at Character Generation, rolled on the piece's dice after it)"
     },
     {
       "id": "cpr.cyberware.humanity_cap",
