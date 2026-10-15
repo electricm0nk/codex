@@ -79,7 +79,8 @@ cards (`decisions.md §22`).
 | E4.5 | Reputation, IP, Lifepath, criticals checklist | opus | complete | E4.4 | `artifacts/epic_4/E4.5_cycle_receipt.md`; 158c8a7e52 (pre-push); engine (sheet.rs, E2 fence exit): printed `cpr.reputation.facedown_roll` ("9 + 1d10"), `cpr.reputation.event.<i>`, `cpr.critical.<table>.<i>`; adapter: Lifepath `cpr.lifepath.<i>` lines, `save_cyberpunk_criticals` (composes first, refuses before writing; `grep -c 'cpr_adapter::' main.rs` 0 → 1); sheet: reputation, IP, Lifepath, 22-entry checklist (tick saves, penalty row 0 → 1 → 0 in the Rust round trip); 5 plants red; npm 171/171; root 300 suites 6684 passed 0 failed; desktop 848 + 1; clippy PASS; sd24 5/5; PF 3/3 + SF 4/4 unchanged |
 | E4.6 | Print path `cpr_sheet_print.rs` | opus | complete | E4.5 | `artifacts/epic_4/E4.6_cycle_receipt.md`; 37483e8015 (pre-push); `cpr_sheet_print::sheet_lines`: box lines + Lifepath (moved from the adapter), then rule lines with resolved figures from `cpr.` rows: `role_ability` (text + every Rank row), `cyberware` (effect + Humanity Loss), `humanity` (D-6: loss, Humanity, engine EMP; never "-2 EMP"), `weapon_special` (alt fire / Exotic text + Skill Base, ROF, Autofire base), `netrunning` (D-2 + HP); sheet renders unplaced lines via `RulesAndFeaturesSection`; 4 fixtures: 99 printed lines, 18 rule lines, each on the sheet once; `grep -c '(-2 EMP)'` 0 × 4; 2 plants red; npm 171/171; desktop 858 + 0 failed; clippy PASS; sd24 5/5; PF 3/3 + SF 4/4 unchanged |
 | E4.7 | ui-smoke rows + `ui-smoke:doc` | opus | complete | E4.6, E3.MC | `artifacts/epic_4/E4.7_cycle_receipt.md`; a42c8d0723 (rows + evidence); ui-smoke rows `sheet-cyberpunk-{streetrat-solo,edgerunner-netrunner,complete-package-fixer}` (Solo row 1, Netrunner rolled, Fixer 62 + Assault Rifle + Light Armorjack Body + Neural Link) build, save, load and assert the E4 blocks: 46 / 27 / 31 expects (skills + bases, weapons, D-1 range DV rows, armour SP, cyberware HL / max Humanity / slots, Role Ability, Reputation, IP, wound track, rule lines); RED: no such row ids; `--from select-cyberpunk-red` 14/14 green, real store untouched; `crosscheck.py` (book formulas + corpus) 46/46, 27/27, 31/31; plant range DV 16→17 → 2 rows red; inventory 115 rows, R12 clean; npm 171/171; no `.rs` in diff; PF 3/3 + SF 4/4 unchanged; full suite red on pre-SD-38 PF rows (attributed, `E4.7/full-suite-attribution.txt`) |
-| E4.MC | E4 adversarial merge check | opus | waiting | E4.7 | writes the E4 epic report |
+| E4.MC | E4 adversarial merge check | opus | complete | E4.7 | `artifacts/epic_4/E4.MC_cycle_receipt.md`; E4.1–E4.7 re-run on origin/tranche-18 3a24b12915: npm 171/171, `grep -c encumbrance` 0, `--bins cpr_adapter` 8/8, `--bins cpr_sheet_print` 4/4 with 99 printed lines and `(-2 EMP)` 0 × 4, `cpr_adapter::` in main.rs 1, ui-smoke `select-cyberpunk-red` + 3 `sheet-cyberpunk-*` rows 4/4 green (real store untouched), `ui-smoke:doc` 115 rows R12 clean; 7 plants red for the intended reason then restored (2 TSX hand-kept numbers → row-mapping test; 4 missing range rows in model/engine → model test or fixture pin; regenerated planted fixtures → D-1 assertion); finding: 6 of 6 live sheets show 11 raw-id rows in Other totals (`cpr.cash`, `cpr.ammo.<i>`), fixtures carry 0 → discovered E4.8; PF 3/3 + SF 4/4 unchanged; E4 Epic report |
+| E4.8 | Sheet labels: Cash, Ammunition (by name), Rent; critical tick in ui-smoke; lines-out dirs (R-W) | opus | waiting | E4.MC | discovered by E4.MC (`artifacts/epic_4/E4.MC/other-totals-finding.txt`); lane `main` |
 | E5.1 | IP spend (skills, Role rank) | opus | waiting | E3.MC, E4.MC |  |
 | E5.2 | Role switch (A-1) | opus | waiting | E5.1 |  |
 | E5.3 | Cyberware install with Humanity Loss (A-3, D-11) | opus | waiting | E5.2 |  |
@@ -98,12 +99,12 @@ cards (`decisions.md §22`).
 | E7.10 | Graphify LAST | sonnet | waiting | E7.9 |  |
 | E7.11 | PR `tranche-18 → develop` (final action) + `pr-tests` | sonnet | waiting | E7.10 | operator merges |
 
-**Row check (68 cards).**
+**Row check (69 cards: 68 authored + E4.8, discovered by E4.MC).**
 
 ```bash
 cd docs/release/SD-38-cyberpunk-red
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/{n++} END{print n}' kanban.md                     # → 68
-python3 -c "import re;print(sum(1 for l in open('kanban.md') if re.match(r'^\| (C|E)[0-9]', l)))"   # → 68
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/{n++} END{print n}' kanban.md                     # → 69
+python3 -c "import re;print(sum(1 for l in open('kanban.md') if re.match(r'^\| (C|E)[0-9]', l)))"   # → 69
 diff <(awk -F'|' '/^\| (C|E)[0-9]/{gsub(/ /,"",$2);print $2}' kanban.md | sort) \
      <(awk -F'|' '/^## Epic C/{s=1} s && /^\| (C|E)[0-9]/{gsub(/ /,"",$2);print $2}' epic-breakdown.md | sort) \
   && echo SAME_IDS

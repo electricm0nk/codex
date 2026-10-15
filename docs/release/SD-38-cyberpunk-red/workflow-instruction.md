@@ -55,7 +55,7 @@ status: draft — authored under operator-away defaults; operator rulings on lic
 - **Branch:** `tranche-18`, cut by C1 from `origin/develop` after PR #398 merges (`decisions.md §2`).
 - **Board:** local `./kanban.md` + `./progress.md`.
 - **Cadence:** none; one live Workflow run.
-- **Epics / cards:** C, E0–E7 (E6 runs in the E2 window) / **68 cards**, one criterion each
+- **Epics / cards:** C, E0–E7 (E6 runs in the E2 window) / **69 cards** (68 authored + E4.8, discovered by E4.MC), one criterion each
   (`kanban.md` row check).
 - **First concrete build value:** develop is at `0.17.0` (§1 item 7). This bundle's repo value is
   `0.18.0`, stamped by C1. The published triple `0.18.<run>` resolves at the first tester publish after
@@ -455,7 +455,7 @@ This order differs from the template's §11 (release notes after graphify), a kn
    ```bash
    cd docs/release/SD-38-cyberpunk-red
    test -s kanban.md || { echo NO_KANBAN; exit 2; }
-   awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 68) print "ROW_COUNT " n }' kanban.md
+   awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 69) print "ROW_COUNT " n }' kanban.md
    awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.([5-9]|1[01]) / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
    ```
    Pass = no output. Every DEF revisit condition (`decisions.md §22`) is checked and its output pasted.

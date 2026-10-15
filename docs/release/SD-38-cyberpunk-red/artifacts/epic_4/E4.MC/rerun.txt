@@ -1,0 +1,35 @@
+# E4.MC re-run of E4.1–E4.7 acceptance commands on origin/tranche-18 3a24b12915 (tree .worktrees/sd38-e4, rebase 'up to date')
+## E4.1-E4.6 frontend: cd apps/desktop && npm run typecheck && npm test
+171/171 test files passed.
+exit 0
+## E4.1: grep -c encumbrance apps/desktop/src/characterHub/cyberpunkSheetLayout.ts -> 0
+## E4.1-E4.6 model test alone: npx tsx src/characterHub/cyberpunkSheetModel.test.ts
+cyberpunkSheetModel: 4 characters, 909 engine rows rendered, each = its row; 264 skill rows in 9 groups; 13 weapons, 111 range DV cells; 5 cyberware pieces, 14 slot containers, 6 Role Ability rows, 8 deck lines; 2 Reputation events, 5 Lifepath answers, 2 ticked injuries of 22; 99 printed lines on the sheet, 18 under Rules and features
+## E4.5: cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins cpr_adapter -- --test-threads=8
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason ... ok
+test cpr_adapter::tests::saved_lifepath_answers_load_as_printed_lines ... ok
+test cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet ... ok
+test cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses ... ok
+test cpr_adapter::tests::ticking_a_critical_injury_saves_it_and_moves_the_base_death_save_penalty ... ok
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 855 filtered out; finished in 0.20s
+## E4.5: grep -c 'cpr_adapter::' apps/desktop/src-tauri/src/main.rs -> 1 (E4.5 receipt: 0 -> 1)
+## E4.6: CPR_SHEET_LINES_OUT=<dir> cargo test --locked -j 8 --bins cpr_sheet_print -- --test-threads=8
+test cpr_sheet_print::tests::a_line_whose_record_the_corpus_lacks_is_refused_by_name ... ok
+test cpr_sheet_print::tests::every_rule_line_prints_with_its_resolved_numbers ... ok
+test cpr_sheet_print::tests::a_starting_pack_prints_its_humanity_loss_and_the_engines_emp_never_minus_two ... ok
+test cpr_sheet_print::tests::the_printed_lines_are_stable_and_each_id_is_printed_once ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 859 filtered out; finished in 0.08s
+## E4.6: grep -c '(-2 EMP)' <dir>/*
+cpr-solo-streetrat.txt:0
+cpr-netrunner-decked.txt:0
+cpr-solo-arsenal.txt:0
+cpr-solo-kitted.txt:0
+## E4.6: printed lines per fixture (awk END{print NR} / python splitlines)
+cpr-netrunner-decked.txt 20 20
+cpr-solo-arsenal.txt 59 59
+cpr-solo-kitted.txt 19 19
+cpr-solo-streetrat.txt 1 1
+## E4.7: cd apps/desktop && npm run ui-smoke:doc; git status --porcelain docs/testing/ui-smoke-inventory.md -> (empty: 0 lines)

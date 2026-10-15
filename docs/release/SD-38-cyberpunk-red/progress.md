@@ -33,10 +33,10 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E2 | complete | 11 of 11 | E2.1–E2.10 complete; E2.MC complete (dabf4176f2) — Epic report below (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E3 | complete | 8 of 8 | E3.1–E3.7 complete; E3.MC complete (4a5cb95486) — Epic report below (`awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
-| E4 | in progress | 7 of 8 | E4.1, E4.2, E4.3, E4.4, E4.5, E4.6, E4.7 complete (`awk -F'\|' '$2 ~ /^ E4\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E4 | in progress | 8 of 9 | E4.1–E4.7 complete; E4.MC complete — Epic report below; E4.8 (discovered by E4.MC) waiting (`awk -F'\|' '$2 ~ /^ E4\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **50 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.7, E3.MC, E4.1–E4.7, E6.1–E6.4, E6.MC; derived at E4.7: awk and Python both 50) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **51 of 69** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.7, E3.MC, E4.1–E4.7, E4.MC, E6.1–E6.4, E6.MC; 69 = 68 authored + E4.8 discovered by E4.MC; derived at E4.MC: awk and Python both 51 complete of 69 rows) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -147,6 +147,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-15 | E3.7 | opus | complete | 9d58fcf55b (engine + desktop + frontend + tests; pre-rebase 9418fb634c); receipt and rows in the next commit | `artifacts/epic_3/E3.7_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Cyberware at creation: the Role pack (kit `cyberware` lines, "or" picks as kit picks) or Complete Package pieces from the cash (Fashionware from the fashion budget), names resolved and options placed by the engine (`cyberware.rs` `record_name`/`place`), D-11 refusal `cpr_creation.cyberware`, Humanity/EMP/cap/slot rows from the composed sheet; 10 of 10 packs = F-66 over 18 combinations; fence exits `cprCreation.ts`, `kit.rs`, `cyberware.rs` (retro correction, fifth recurrence) |
 | 2026-10-15 | E3.MC | opus | complete | 4a5cb95486 (ui-smoke rows + evidence); receipt and rows in the next commit | `artifacts/epic_3/E3.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Streetrat (Media row 4), Edgerunner (Netrunner) and Complete Package (Fixer, 62, Heavy Pistol + Neural Link) built through the live form, saved, loaded, sheet opened; every number on each loaded sheet = `compose_sheet` of the captured saved files (computed rows 114/115/110 all on screen, live digit lines 130/131/120 all from it, cells = row 212/214/208); refusal row for 63; 4 plants red; no `.rs` in diff; lane e3 ends, tree removed |
 | 2026-10-15 | E4.7 | opus | complete | a42c8d0723 (ui-smoke rows + inventory + evidence); receipt and rows in the next commit | `artifacts/epic_4/E4.7_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Three ui-smoke rows (Streetrat Solo row 1, Edgerunner Netrunner, Complete Package Fixer with bought gear) open the loaded CPR sheet and assert the E4 blocks (46/27/31 expects, each re-derived by `E4.7/crosscheck.py` from book formulas + corpus); RED no such row ids → `--from select-cyberpunk-red` 14/14 green; plant range DV → red; inventory 115 rows; full 115-row suite red on 9 pre-SD-38 PF rows (13c387b7ef, afff7a621f), stopped at 40 rows, attributed |
+| 2026-10-15 | E4.MC | opus | complete | this commit (docs only: evidence, receipt, board rows, discovered E4.8) | `artifacts/epic_4/E4.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | E4.1–E4.7 re-run green on 3a24b12915 (npm 171/171; cpr_adapter 8/8; cpr_sheet_print 4/4, 99 lines, `(-2 EMP)` 0; ui-smoke 4/4, real store untouched; inventory 115 rows R12 clean); 7 plants red then restored; finding: Other totals on 6 of 6 live sheets (11 raw-id rows), fixtures carry 0 → E4.8 discovered (lane main, dep E4.MC), card count 68 → 69; E4 Epic report |
 
 ## Epic reports
 
@@ -283,6 +284,40 @@ blockers.)
   names the button by its text "+1"); E4.7/E5.1 rows that need a skill level will need distinct button text. (4) E4.7 and E5.1 now
   have E3.MC complete.
 
+### Epic report — E4 sheet (E4.MC, 2026-10-15, origin/tranche-18 3a24b12915)
+
+- **Cards done:** 8 of 9 — E4.1–E4.7, E4.MC (`awk -F'|' '$2 ~ /^ E4\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 8);
+  E4.8 (discovered by this card) waiting. The epic is not closed until E4.8 is complete.
+- **What E4 delivered:** a saved Cyberpunk RED character opens `CyberpunkCharacterSheet`, laid out from `cyberpunkSheetLayout.ts`: STATs
+  (entered / current incl. EMP), the 66 skills in 9 categories with armour-penalised bases, HP / SW / Death Save / Humanity / MOVE / LUCK,
+  wound track, armour SP and penalties, weapons (DMG printed, ROF, Hands, Concealable, Magazine, Skill Base) with each weapon's D-1 range
+  DV row and Autofire row, cyberware (piece HL, totals, slots per container), Role Ability, Netrunner deck / Programs / Hardware / NET
+  Actions, Reputation with Facedown, IP, Lifepath, the 22-entry Critical Injury checklist (tick saves through the adapter), and the rule
+  lines `cpr_sheet_print.rs` prints under "Rules and features"; no encumbrance box (D-12); every number a `cpr.` row.
+- **Figures (commands in `artifacts/epic_4/E4.MC_cycle_receipt.md`):** re-run on 3a24b12915: npm 171/171; model test 909 rows each = its
+  row over 4 adapter fixtures, 264 skill rows / 9 groups, 13 weapons, 111 DV cells, 99 printed lines (awk and Python: 20 + 59 + 19 + 1);
+  `--bins cpr_adapter` 8/8; `--bins cpr_sheet_print` 4/4, `(-2 EMP)` 0 × 4; ui-smoke `select-cyberpunk-red` + 3 `sheet-cyberpunk-*` rows
+  4/4 green, real store 15379 entries `ddfc4461…` untouched; `ui-smoke:doc` 115 rows, R12 clean. Plants, all restored: 2 TSX hand-kept
+  numbers → the row-mapping test red; 4 missing range rows (3 in the model, 1 in `sheet.rs`) → model test or adapter fixture pin red; the
+  engine plant with fixtures regenerated → the D-1 assertion red.
+- **Finding → E4.8:** every character saved through the real form loads with an Other totals box of raw ids (6 of 6 live sheets, 11 rows:
+  `cpr.cash`, `cpr.ammo.<i>`; `artifacts/epic_4/E4.MC/other-totals-finding.txt`), while the 4 fixtures carry 0 such rows, so the test's
+  "Other totals is empty" holds only on fixtures (retro `fixture-narrower-than-live`, 2 firings). E4.8 labels Cash / Ammunition (by name,
+  an engine printed line) / Rent, adds a fixture carrying them, adds a ui-smoke Critical Injury tick, and carries the R-W control for
+  `sf-seed-lines-out-dir-missing` (3 firings: E4.1, E4.5, E4.MC).
+- **Seed deltas:** PF Aldric `7b2f2f26…4b42` / Elowen `f0230bf0…1e9b` / Tomas `2320c050…be7b` unchanged; SF-Envoy-3 42 / SF-Mystic-5 72 /
+  SF-Soldier-3 51 / SF-Technomancer-5 63 lines and sha256 unchanged (vs E0.6 base records). CPR seeds: none yet (E7.1).
+- **Retro (`scripts/retro.py summary --since 2026-10-13 --actor sd38-e4.1 … --actor sd38-e4.7 --actor sd38-e4.mc --json`):** 17 events —
+  4 corrections, 5 incidents, 3 rework, 5 verification (0 failing runs); 0 deferrals. Incident keys: `fixture-narrower-than-live` 2
+  (E4.7, E4.MC) → E4.8; `sf-seed-lines-out-dir-missing` 2 as a key (E4.5, E4.MC), 3 occurrences counting the untagged E4.1 and E4.MC
+  rework events for the same cause → R-W control in E4.8; `stale-ui-smoke-rows` 1 (E4.7, Pathfinder rows).
+  Corrections were each a different subject (G-1 SF command, E4.4 Cargo? column, a test premise, `alt_fire_modes` "None").
+- **Open blockers:** none.
+- **For the lead:** (1) the 68 → 69 change touched the E7.5 scan in `epic-breakdown.md` and `workflow-instruction.md §11`, `kanban.md`'s
+  row check and `README.md`; `scope-draft.md:77` still says 68 (the authored scope, left as written). (2) E4.7's finding (a), the full
+  ui-smoke suite red on pre-SD-38 Pathfinder rows, is not E4's and still has no card; it gates E7.4. (3) E4.8 and E5.1 both become ready
+  now and both write `CyberpunkCharacterSheet.tsx` and `spec.json`: the main-lane mutex serialises them.
+
 ## Decisions taken on safe defaults
 
 (Each entry: card, SD-x / D-n / A-n, the alternative not taken.)
@@ -362,6 +397,7 @@ blockers.)
 - E3.7, cyberware at creation (D-5, D-6, D-11, A-9 applied; E2 fence exit per decisions.md §7): (1) a Streetrat/Edgerunner cannot buy cyberware at creation (p117 "predetermined from the start"); alternative not taken: let the 500eb buy cyberware. (2) The engine places every option (first foundation with room, a paired option one per foundation, else alone in a free meat limb where allowed); alternative not taken: a player mount choice per purchase. (3) Pack names the listing spells differently resolve by folded spaces/case or the subcategory's bracketed word ("Tech Hair", "Sandevistan Speedware"); alternative not taken: edit the `starting_kit` record. (4) Pack lines stay in `kit.lines` (section `cyberware`) and are saved in `cpr_kit.txt`; alternative not taken: a separate cyberware request and file. (5) The preview's STAT/derived rows come from the composed sheet (after the loss); alternative not taken: pre-cyberware rows beside a separate loss.
 - E3.MC, merge check (no D-n/A-n names these): (1) Roles with no creation sub-choice (Media, Netrunner, Fixer) so each row's steps are only its method's; alternative not taken: Solo/Tech/Medtech/Nomad/Exec with sub-choice clicks. (2) The Edgerunner row expects only roll-independent figures (HL 14, Interface Rank 4) and leaves the rolled STATs to the compute_sheet comparison; alternative not taken: a fixed seed (no seed control in the form; a test-only control would be a shipped twin). (3) A fourth row, `create-cyberpunk-complete-package-refuses-63`, carries the "62 → 63 accepted" plant; alternative not taken: that plant at `--bins cpr_creation` only. (4) The Complete Package row adds Handgun at 1 and raises no skill (the skill `+1` buttons' probe name is "+1" for every skill); alternative not taken: edit `CyberpunkCreateForm.tsx` (not this card's file).
 - E4.7, ui-smoke rows (D-1, D-2, D-6 applied; no fence exit): (1) three self-contained rows with their own characters; alternative not taken: `setup` reuse of the E3.MC rows (couples rows, re-asserts the same characters). (2) Roles Solo / Netrunner / Fixer (Combat Awareness, two armour locations and three weapon types; the deck block; bought gear with one armour location); alternative not taken: the E3.MC Roles. (3) The Edgerunner row expects only roll-independent figures (no Humanity / Maximum Humanity: the Netrunner EMP column is 4, 5, 6); alternative not taken: a seeded roll (no seed control in the form). (4) The pre-SD-38 Pathfinder rows found red were not edited (outside the criterion); alternative not taken: rewriting ≈50 PF rows here.
+- E4.MC, merge check (discovery rule of `epic-breakdown.md` E7.5 block): the Other-totals label gap (E3.MC lead note (2), E4.7 operator findings (b) and (c)) and the R-W control for `sf-seed-lines-out-dir-missing` (3 firings) become one discovered card E4.8 (opus, cargo, lane `main`, depends on E4.MC), and the 68 in the closure scans is raised to 69 in the same commit; alternative not taken: fix them inside E4.MC (its FILES YOU OWN is `artifacts/epic_4/E4.MC_*`; the fix spans `sheet.rs`, the adapter fixtures, the model and `spec.json`). E4.8 is lane `main` so the main-lane mutex keeps it apart from E5.1 (both write `CyberpunkCharacterSheet.tsx` and `spec.json`); E5.1's own Depends-on is unchanged, so the two run in either order.
 
 ## Open blockers
 
@@ -369,6 +405,6 @@ None.
 
 ## For the operator
 
-- **E4.7 findings (2026-10-15):** (a) the full `npm run ui-smoke` is red on `tranche-18` independent of SD-38: 9 of the first 40 rows red (Pathfinder create / equipment-catalog rows) because the PF create form gained a Levels column (13c387b7ef) and the equipment catalog chips were renamed (afff7a621f), both from tranche-17-ui before the cut; ≈50 PF rows stall on it (`artifacts/epic_4/E4.7/full-suite-attribution.txt`). Needs an owner before E7.4/E7.11 (a stale-row rewrite in `spec.json`). (b) the live CPR sheet shows raw ids `cpr.cash`, `cpr.ammo.<i>` as labels under OTHER TOTALS for every created character (E4.7 `green/live-sheet-*.txt`); the E4.5 fixtures have none. (c) the critical-injury checkboxes have no accessible name, so no ui-smoke row can tick one. (b) and (c) are for E4.MC to rule on.
+- **E4.7 findings (2026-10-15):** (a) the full `npm run ui-smoke` is red on `tranche-18` independent of SD-38: 9 of the first 40 rows red (Pathfinder create / equipment-catalog rows) because the PF create form gained a Levels column (13c387b7ef) and the equipment catalog chips were renamed (afff7a621f), both from tranche-17-ui before the cut; ≈50 PF rows stall on it (`artifacts/epic_4/E4.7/full-suite-attribution.txt`). Needs an owner before E7.4/E7.11 (a stale-row rewrite in `spec.json`). (b) the live CPR sheet shows raw ids `cpr.cash`, `cpr.ammo.<i>` as labels under OTHER TOTALS for every created character (E4.7 `green/live-sheet-*.txt`); the E4.5 fixtures have none. (c) the critical-injury checkboxes have no accessible name, so no ui-smoke row can tick one. (b) and (c) are for E4.MC to rule on. **E4.MC ruling (2026-10-15):** (b) and (c) are one discovered card, E4.8 (lane `main`, after E4.MC); (a) is not E4's and still needs an owner before E7.4.
 - Review `README.md §6` (author defaults A-1…A-11 in particular).
 - PR #398 must merge before C1 can cut `tranche-18`.

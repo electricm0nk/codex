@@ -1,0 +1,9 @@
+App data root: /tmp/codex-ui-smoke-sd38-e4_mc-jYTdKB/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+PASS  select-cyberpunk-red
+PASS  sheet-cyberpunk-streetrat-solo
+PASS  sheet-cyberpunk-edgerunner-netrunner
+PASS  sheet-cyberpunk-complete-package-fixer
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+4/4 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 4 rows)
+Cleanup: 3 character(s) created across 4 row(s) with a cleanup record, 3 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd38-e4_mc-jYTdKB/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003
