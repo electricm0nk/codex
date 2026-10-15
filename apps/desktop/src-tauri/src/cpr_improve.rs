@@ -258,12 +258,15 @@ fn plan(
     Ok((next, rows))
 }
 
+/// The dialog's options: the skills, the latest Role's next Rank and the Role switch choices.
+type ImproveOptions = (Vec<CprImproveSkillOption>, Option<CprImproveRoleOption>, Vec<CprImproveSwitchOption>);
+
 /// The dialog's options for the saved `choices`.
 fn options(
     costs: &CprIpCostCatalog,
     skills: &CprSkillCatalog,
     choices: &CprSheetChoices,
-) -> Result<(Vec<CprImproveSkillOption>, Option<CprImproveRoleOption>, Vec<CprImproveSwitchOption>), String> {
+) -> Result<ImproveOptions, String> {
     let next_row = |id: String, table: CprIpTable, level: u8| -> Option<ExplanationDto> {
         costs.improve(table, level, level + 1).ok().map(|mut row| {
             row.id = id;
