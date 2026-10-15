@@ -456,7 +456,7 @@ mod tests {
             }
             let choices = CprSheetChoices {
                 role: Some((role, 4)),
-                cyberware: kit.cyberware.iter().map(|l| CprCyberwareInstall { name: l.options[0].name.clone(), mount: None }).collect(),
+                cyberware: kit.cyberware.iter().map(|l| CprCyberwareInstall { name: l.options[0].name.clone(), mount: None, humanity_loss: None }).collect(),
                 ..CprSheetChoices::default()
             };
             let sheet = compose_sheet(&catalogs, &CprCharacterInput { stats }, &choices).expect("composes");
@@ -492,7 +492,7 @@ mod tests {
         let catalogs = CprSheetCatalogs::load(&corpus()).expect("the CPR corpus loads");
         let mut print = CprPrintCatalog::load(&corpus()).expect("the print catalog loads");
         let choices = CprSheetChoices {
-            cyberware: vec![CprCyberwareInstall { name: "Biomonitor".to_owned(), mount: None }],
+            cyberware: vec![CprCyberwareInstall { name: "Biomonitor".to_owned(), mount: None, humanity_loss: None }],
             ..CprSheetChoices::default()
         };
         let mut stats = CprStats::default();

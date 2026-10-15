@@ -11,10 +11,15 @@ import {
   EMPTY_CYBERPUNK_IMPROVE_PLAN,
   addPurchase,
   canSpend,
+  cyberwareOptionLabel,
+  humanityLossFromText,
+  improveHumanity,
   improvePlanFromIpText,
   improveTotals,
   nextTarget,
+  pinSeed,
   purchaseCost,
+  purchaseHumanityLoss,
   purchaseLabel,
   removePurchase,
   skillPurchaseKey,
@@ -26,8 +31,12 @@ import {
  * Skill Levels and Role Ability Ranks one step at a time, or changes Roles (E5.2: Rank 1 of a new Role
  * once the latest Role is at Rank 4, p. 143; priced by the engine at the A-1 Rank 1 price). Every change is priced by the engine
  * (`preview_cyberpunk_improvement`): each purchase's cost, the IP available, the plan's cost and the
- * IP left are its rows, and a skipped Level or an overspend shows its refusal. "Spend IP" saves
- * through `apply_cyberpunk_improvement` and hands the reloaded sheet to `onApplied`.
+ * IP left are its rows, and a skipped Level or an overspend shows its refusal. E5.3: cyberware installed
+ * after Character Generation takes the Humanity Loss entered, or rolled on its dice when left blank (p. 111,
+ * A-3); the engine refuses a loss outside the dice and an install over its option slots (D-11), and its rows
+ * give the loss and the Humanity and EMP before and after. The engine's roller seed is pinned on the plan so
+ * the apply keeps the previewed dice. "Spend IP" saves through `apply_cyberpunk_improvement` and hands the
+ * reloaded sheet to `onApplied`.
  */
 export function CyberpunkImproveDialog(props: {
   characterId: string;
@@ -45,6 +54,8 @@ export function CyberpunkImproveDialog(props: {
   const [skillTarget, setSkillTarget] = useState('');
   const [rankTarget, setRankTarget] = useState('');
   const [switchRole, setSwitchRole] = useState('');
+  const [cyberName, setCyberName] = useState('');
+  const [lossText, setLossText] = useState('');
   const [spending, setSpending] = useState(false);
   const [spendError, setSpendError] = useState<string | null>(null);
   const mounted = useRef(true);
@@ -62,6 +73,7 @@ export function CyberpunkImproveDialog(props: {
         if (live) {
           setPreview(answer);
           setPreviewError(null);
+          setPlan((current) => (current === plan ? pinSeed(current, answer) : current));
         }
       })
       .catch((cause: unknown) => {
@@ -90,6 +102,8 @@ export function CyberpunkImproveDialog(props: {
   };
   const skillTo = targetOf(skillTarget, skillDefault);
   const rankTo = targetOf(rankTarget, rankDefault);
+  const loss = humanityLossFromText(lossText);
+  const humanity = improveHumanity(preview);
 
   const onSpend = () => {
     setSpending(true);
@@ -253,6 +267,48 @@ export function CyberpunkImproveDialog(props: {
         </div>
       )}
 
+      <div data-testid="cpr-improve-cyberware">
+        <p style={noteStyle}>
+          Cyberware after Character Generation (p. 111): Humanity Loss is determined by the dice in parentheses following the preset
+          number. Enter the loss you rolled, or leave it blank to roll it here. The install&apos;s price and where it is installed are
+          printed in the cyberware listing; they cost no IP.
+        </p>
+        <div style={rowStyle}>
+          <select aria-label="Cyberware to install" value={cyberName} onChange={(event) => setCyberName(event.target.value)} style={inputStyle}>
+            <option value="">— install cyberware —</option>
+            {(preview?.cyberware ?? []).map((o) => (
+              <option key={o.name} value={o.name}>
+                {cyberwareOptionLabel(o)}
+              </option>
+            ))}
+          </select>
+          <input
+            aria-label="Humanity Loss rolled"
+            title="Blank rolls the piece's dice"
+            inputMode="numeric"
+            value={lossText}
+            onChange={(event) => setLossText(event.target.value)}
+            style={{ ...inputStyle, width: '6rem' }}
+          />
+          <span style={noteStyle}>blank rolls the dice</span>
+          <button
+            type="button"
+            disabled={cyberName === '' || loss.error !== null}
+            onClick={() => {
+              if (cyberName !== '' && loss.error === null) {
+                setPlan(addPurchase(plan, { kind: 'cyberware', name: cyberName, humanityLoss: loss.humanityLoss }));
+                setCyberName('');
+                setLossText('');
+              }
+            }}
+            style={buttonStyle}
+          >
+            Add cyberware
+          </button>
+        </div>
+        {loss.error === null ? null : <p style={errorStyle}>{loss.error}</p>}
+      </div>
+
       {plan.purchases.length === 0 ? null : (
         <table data-testid="cpr-improve-plan" style={{ borderCollapse: 'collapse', margin: '0.5rem 0', width: '100%' }}>
           <tbody>
@@ -262,7 +318,15 @@ export function CyberpunkImproveDialog(props: {
                   {purchaseLabel(purchase)}
                 </th>
                 <td style={{ textAlign: 'right' }}>
-                  <Figure row={purchaseCost(preview, index)} /> IP
+                  {purchase.kind === 'cyberware' ? (
+                    <>
+                      Humanity Loss <Figure row={purchaseHumanityLoss(preview, index)} />
+                    </>
+                  ) : (
+                    <>
+                      <Figure row={purchaseCost(preview, index)} /> IP
+                    </>
+                  )}
                 </td>
                 <td style={{ textAlign: 'right' }}>
                   <button type="button" aria-label={`Remove ${purchaseLabel(purchase)}`} onClick={() => setPlan(removePurchase(plan, index))} style={buttonStyle}>
@@ -277,6 +341,12 @@ export function CyberpunkImproveDialog(props: {
       <p data-testid="cpr-improve-totals" style={{ margin: '0.4rem 0' }}>
         Plan cost: <Figure row={totals.cost} /> IP; IP left: <Figure row={totals.remaining} />
       </p>
+      {humanity.humanityAfter === null ? null : (
+        <p data-testid="cpr-improve-humanity" style={{ margin: '0.4rem 0' }}>
+          Humanity <Figure row={humanity.humanityBefore} /> → <Figure row={humanity.humanityAfter} />; EMP <Figure row={humanity.empBefore} /> →{' '}
+          <Figure row={humanity.empAfter} />
+        </p>
+      )}
 
       {preview?.refusal == null ? null : (
         <p data-testid="cpr-improve-refusal" style={errorStyle}>

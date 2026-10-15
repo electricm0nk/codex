@@ -396,7 +396,7 @@ pub(crate) mod tests {
             role: Some((CprRole::Solo, 4)),
             skills: vec![("Handgun".to_owned(), 4)],
             armor: vec![CprWornArmor { name: "Flak".to_owned(), location: CprArmorLocation::Body }],
-            cyberware: vec![CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None }],
+            cyberware: vec![CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None, humanity_loss: None }],
             weapons: vec!["Heavy Pistol".to_owned()],
             ..CprSheetChoices::default()
         };
@@ -457,7 +457,7 @@ pub(crate) mod tests {
             role: Some((CprRole::Solo, 4)),
             skills: vec![("Handgun".to_owned(), 4)],
             armor: vec![CprWornArmor { name: "Flak".to_owned(), location: CprArmorLocation::Body }],
-            cyberware: vec![CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None }],
+            cyberware: vec![CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None, humanity_loss: None }],
             criticals: vec![
                 CprRecordedCritical { location: CprCriticalLocation::Body, name: "Collapsed Lung".to_owned() },
                 CprRecordedCritical { location: CprCriticalLocation::Body, name: "Broken Ribs".to_owned() },
@@ -515,10 +515,10 @@ pub(crate) mod tests {
             role: Some((CprRole::Netrunner, 4)),
             armor: vec![CprWornArmor { name: "Bodyweight Suit".to_owned(), location: CprArmorLocation::Body }],
             cyberware: vec![
-                CprCyberwareInstall { name: "Neural Link".to_owned(), mount: None },
-                CprCyberwareInstall { name: "Interface Plugs".to_owned(), mount: None },
-                CprCyberwareInstall { name: "Cyberarm".to_owned(), mount: None },
-                CprCyberwareInstall { name: "Cyberdeck (installed)".to_owned(), mount: Some(CprMount::Arm(0)) },
+                CprCyberwareInstall { name: "Neural Link".to_owned(), mount: None, humanity_loss: None },
+                CprCyberwareInstall { name: "Interface Plugs".to_owned(), mount: None, humanity_loss: None },
+                CprCyberwareInstall { name: "Cyberarm".to_owned(), mount: None, humanity_loss: None },
+                CprCyberwareInstall { name: "Cyberdeck (installed)".to_owned(), mount: Some(CprMount::Arm(0)), humanity_loss: None },
             ],
             deck: Some(CprDeckChoice {
                 deck: "Cyberdeck (Standard Quality)".to_owned(),

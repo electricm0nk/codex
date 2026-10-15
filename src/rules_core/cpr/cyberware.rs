@@ -7,8 +7,10 @@
 //! (Skin Weave 7, Subdermal Armor 11, highest wins), BODY after Grafted Muscle and Bone Lace
 //! (+2, never to 11 or higher) and the Linear Frames (Sigma 12, Beta 14, with their
 //! prerequisites), the always-on Kerenzikov Initiative bonus, and the therapy cap on maximum
-//! Humanity (D-5). Every rule value comes from the corpus records; post-creation dice Humanity
-//! Loss (A-3) is entered elsewhere.
+//! Humanity (D-5). Every rule value comes from the corpus records. A piece installed after
+//! Character Generation carries its rolled Humanity Loss instead of the preset (p. 111: "After
+//! Character Generation, Humanity Loss is determined by the dice in parentheses following the
+//! preset number"); the loss is checked against the piece's dice range (A-3).
 
 use std::collections::BTreeMap;
 use std::fmt;
@@ -62,6 +64,7 @@ struct CyberwareItem {
     #[serde(default)]
     subcategory: String,
     humanity_loss_preset: i16,
+    humanity_loss_dice: Option<String>,
     slot_pool: Option<String>,
     pool_capacity: Option<u8>,
     slots_used: u8,
@@ -123,6 +126,80 @@ pub enum CprMount {
 pub struct CprCyberwareInstall {
     pub name: String,
     pub mount: Option<CprMount>,
+    /// The Humanity Loss rolled (or entered) for a piece installed after Character Generation
+    /// (p. 111, A-3); `None` is the preset loss of a piece taken at Character Generation.
+    pub humanity_loss: Option<i16>,
+}
+
+/// The dice a piece's Humanity Loss is rolled on after Character Generation (p. 111): `2d6`,
+/// `4d6`, `1d6`, or `1d6/2` rounded up.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CprHumanityLossDice {
+    pub count: u8,
+    pub sides: u8,
+    /// The total is halved, rounded up (`1d6/2 Round up`).
+    pub halved: bool,
+}
+
+impl CprHumanityLossDice {
+    /// The corpus `humanity_loss_dice` text: `<n>d<sides>`, optionally followed by
+    /// `/2 Round up`.
+    pub fn parse(text: &str) -> Option<Self> {
+        let text = text.trim();
+        let (dice, halved) = match text.split_once('/') {
+            Some((dice, rest)) => {
+                if !rest.trim().eq_ignore_ascii_case("2 round up") {
+                    return None;
+                }
+                (dice.trim(), true)
+            }
+            None => (text, false),
+        };
+        let (count, sides) = dice.split_once('d')?;
+        let count = count.parse::<u8>().ok().filter(|n| *n > 0)?;
+        let sides = sides.parse::<u8>().ok().filter(|n| *n > 0)?;
+        Some(Self { count, sides, halved })
+    }
+
+    fn total(self, sum: i16) -> i16 {
+        if self.halved {
+            (sum + 1).div_euclid(2)
+        } else {
+            sum
+        }
+    }
+
+    /// The lowest and highest loss the dice can give (A-3: 2d6 2-12, 4d6 4-24, 1d6 1-6,
+    /// 1d6/2 round up 1-3).
+    pub fn range(self) -> (i16, i16) {
+        let count = i16::from(self.count);
+        (self.total(count), self.total(count * i16::from(self.sides)))
+    }
+
+    /// The loss rolled with `die` (one face of a `sides`-sided die per call) and the faces.
+    pub fn roll(self, mut die: impl FnMut(u8) -> u8) -> (i16, Vec<u8>) {
+        let faces: Vec<u8> = (0..self.count).map(|_| die(self.sides)).collect();
+        let sum = faces.iter().map(|f| i16::from(*f)).sum();
+        (self.total(sum), faces)
+    }
+
+    pub fn text(self) -> String {
+        let dice = format!("{}d{}", self.count, self.sides);
+        if self.halved {
+            format!("{dice}/2 round up")
+        } else {
+            dice
+        }
+    }
+}
+
+/// One piece the improve dialog offers: its name, category, preset loss and loss dice.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CprCyberwareOffer {
+    pub name: String,
+    pub category: String,
+    pub humanity_loss_preset: i16,
+    pub dice: Option<CprHumanityLossDice>,
 }
 
 /// An option-slot container (D-11).
@@ -219,6 +296,11 @@ impl CprCyberwareCatalog {
         let mut items = BTreeMap::new();
         let mut pool_capacity = BTreeMap::new();
         for item in records {
+            if let Some(dice) = &item.humanity_loss_dice
+                && CprHumanityLossDice::parse(dice).is_none()
+            {
+                return Err(format!("cyberware.json: {} has Humanity Loss dice '{dice}' the engine cannot read", item.name));
+            }
             if let (Some(pool), Some(capacity)) = (&item.slot_pool, item.pool_capacity)
                 && *pool_capacity.entry(pool.clone()).or_insert(capacity) != capacity
             {
@@ -274,6 +356,49 @@ impl CprCyberwareCatalog {
 
     pub fn max_humanity_penalty(&self) -> MaxHumanityPenalty {
         self.penalty
+    }
+
+    /// The dice the piece's Humanity Loss is rolled on after Character Generation (p. 111);
+    /// `None` for a piece with no loss dice (it loses no Humanity).
+    pub fn humanity_loss_dice(&self, name: &str) -> Result<Option<CprHumanityLossDice>, CprCyberwareRefusal> {
+        let item = self.items.get(name).ok_or_else(|| rule(name, "is not in the cyberware catalog (p. 112-117)"))?;
+        Ok(item.humanity_loss_dice.as_deref().and_then(CprHumanityLossDice::parse))
+    }
+
+    /// A-3: a rolled or entered loss must lie in the piece's dice range (0 for a piece with no
+    /// loss dice).
+    pub fn check_rolled_humanity_loss(&self, name: &str, loss: i16) -> Result<(), CprCyberwareRefusal> {
+        let dice = self.humanity_loss_dice(name)?;
+        let ((low, high), range) = match dice {
+            Some(dice) => {
+                let (low, high) = dice.range();
+                ((low, high), format!("{} ({low}-{high})", dice.text()))
+            }
+            None => ((0, 0), "no Humanity Loss dice (0)".to_owned()),
+        };
+        if (low..=high).contains(&loss) {
+            Ok(())
+        } else {
+            Err(rule(
+                name,
+                format!(
+                    "Humanity Loss {loss} is outside its dice, {range}; after Character Generation the loss is rolled on the dice (p. 111, A-3)"
+                ),
+            ))
+        }
+    }
+
+    /// Every piece in the catalog, by name.
+    pub fn offers(&self) -> Vec<CprCyberwareOffer> {
+        self.items
+            .values()
+            .map(|item| CprCyberwareOffer {
+                name: item.name.clone(),
+                category: item.category.clone(),
+                humanity_loss_preset: item.humanity_loss_preset,
+                dice: item.humanity_loss_dice.as_deref().and_then(CprHumanityLossDice::parse),
+            })
+            .collect()
     }
 
     fn slots_provided(&self, foundation: &str) -> u8 {
@@ -363,7 +488,7 @@ impl CprCyberwareCatalog {
                 }
                 None => {}
             }
-            out.push(CprCyberwareInstall { name: name.to_owned(), mount });
+            out.push(CprCyberwareInstall { name: name.to_owned(), mount, humanity_loss: None });
         }
         Ok(out)
     }
@@ -380,6 +505,16 @@ impl CprCyberwareCatalog {
             })
             .collect::<Result<_, _>>()?;
         let count = |name: &str| items.iter().filter(|it| it.name == name).count();
+
+        // A-3: a loss rolled after Character Generation lies in the piece's dice range.
+        for install in installs {
+            if let Some(loss) = install.humanity_loss {
+                self.check_rolled_humanity_loss(&install.name, loss)?;
+            }
+        }
+        // Each piece's loss: rolled after Character Generation, else the preset (p. 111).
+        let losses: Vec<i16> =
+            installs.iter().zip(&items).map(|(install, item)| install.humanity_loss.unwrap_or(item.humanity_loss_preset)).collect();
 
         // Only one of an item, and one Speedware at a time (p. 360).
         let mut speedware = 0;
@@ -602,7 +737,7 @@ impl CprCyberwareCatalog {
         }
 
         // Effects that land on the sheet.
-        let humanity_loss = items.iter().map(|it| it.humanity_loss_preset).sum();
+        let humanity_loss = losses.iter().sum();
         let counts_against_cap = |it: &&&CyberwareItem| !self.zero_humanity_loss_excluded || it.humanity_loss_preset > 0;
         let borgware = items.iter().filter(counts_against_cap).filter(|it| it.category == BORGWARE).count() as i16;
         let pieces = items.iter().filter(counts_against_cap).filter(|it| it.category != BORGWARE).count() as i16;
@@ -629,7 +764,7 @@ impl CprCyberwareCatalog {
         let slots = capacity.iter().map(|(container, cap)| (*container, used[container], *cap)).collect();
         Ok(CprCyberwareLoadout {
             pieces_installed: items.len(),
-            installed: items.iter().map(|it| (it.name.clone(), it.humanity_loss_preset)).collect(),
+            installed: items.iter().zip(&losses).map(|(it, loss)| (it.name.clone(), *loss)).collect(),
             humanity_loss,
             pieces,
             borgware,
@@ -648,7 +783,8 @@ impl CprCyberwareCatalog {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CprCyberwareLoadout {
     pieces_installed: usize,
-    /// Each installed piece in install order: its name and its preset Humanity Loss (p. 112).
+    /// Each installed piece in install order: its name and its Humanity Loss (preset, or rolled
+    /// after Character Generation, p. 111).
     installed: Vec<(String, i16)>,
     humanity_loss: i16,
     /// Installed non-borgware pieces that lower maximum Humanity (HL > 0, p. 231).
@@ -664,12 +800,13 @@ pub struct CprCyberwareLoadout {
 }
 
 impl CprCyberwareLoadout {
-    /// Each installed piece in install order: its name and its preset Humanity Loss (p. 112).
+    /// Each installed piece in install order: its name and its Humanity Loss (preset, or rolled
+    /// after Character Generation, p. 111).
     pub fn installed(&self) -> &[(String, i16)] {
         &self.installed
     }
 
-    /// The sum of the installed pieces' preset Humanity Loss.
+    /// The sum of the installed pieces' Humanity Loss.
     pub fn humanity_loss(&self) -> i16 {
         self.humanity_loss
     }
@@ -697,7 +834,7 @@ impl CprCyberwareLoadout {
                 id: "cpr.cyberware.humanity_loss".to_string(),
                 value: self.humanity_loss,
                 detail: format!(
-                    "Humanity Loss {}: the preset Humanity Loss of {} installed pieces (p. 112: at Character Generation Humanity Loss is preset)",
+                    "Humanity Loss {}: the Humanity Loss of {} installed pieces (p. 111: preset at Character Generation, rolled on the piece's dice after it)",
                     self.humanity_loss, self.pieces_installed
                 ),
             },
@@ -789,11 +926,11 @@ mod tests {
     }
 
     fn install(name: &str) -> CprCyberwareInstall {
-        CprCyberwareInstall { name: name.to_string(), mount: None }
+        CprCyberwareInstall { name: name.to_string(), mount: None, humanity_loss: None }
     }
 
     fn mounted(name: &str, mount: CprMount) -> CprCyberwareInstall {
-        CprCyberwareInstall { name: name.to_string(), mount: Some(mount) }
+        CprCyberwareInstall { name: name.to_string(), mount: Some(mount), humanity_loss: None }
     }
 
     fn row(rows: &[ComputationExplanation], id: &str) -> i16 {
@@ -878,7 +1015,7 @@ mod tests {
                 assert_eq!(inventory_sum, package.printed_humanity_loss, "{} inventory arithmetic", package.role);
                 let installs: Vec<CprCyberwareInstall> = picks
                     .iter()
-                    .map(|p| CprCyberwareInstall { name: p.name.clone(), mount: p.mount.as_deref().map(fixture_mount) })
+                    .map(|p| CprCyberwareInstall { name: p.name.clone(), mount: p.mount.as_deref().map(fixture_mount), humanity_loss: None })
                     .collect();
                 let loadout = catalog
                     .check(5, &installs)
@@ -1187,5 +1324,53 @@ mod tests {
         assert_eq!(row(&rows, "cpr.cyberware.slots.cyberaudio_suite.capacity"), 3);
         assert!(rows.iter().all(|r| r.id.starts_with("cpr.cyberware.")), "{rows:?}");
         assert!(rows.iter().all(|r| !r.detail.contains("EMP)")), "never prints the '(-2 EMP)' fragment");
+    }
+
+    // ---- Humanity Loss after Character Generation (p. 111, A-3) --------------------------
+
+    fn rolled(name: &str, loss: i16) -> CprCyberwareInstall {
+        CprCyberwareInstall { name: name.to_string(), mount: None, humanity_loss: Some(loss) }
+    }
+
+    /// A-3: the dice in parentheses after the preset (p. 111) bound a rolled or entered loss:
+    /// 2d6 2-12, 4d6 4-24, 1d6 1-6, 1d6/2 round up 1-3; a piece with no dice loses none.
+    #[test]
+    fn each_dice_form_gives_the_a3_range() {
+        let catalog = catalog();
+        let range = |name: &str| catalog.humanity_loss_dice(name).expect("in the catalog").map(|d| d.range());
+        assert_eq!(range("Gills"), Some((2, 12)));
+        assert_eq!(range("Kerenzikov"), Some((4, 24)));
+        assert_eq!(range("Subdermal Pocket"), Some((1, 6)));
+        assert_eq!(range("Nasal Filters"), Some((1, 3)));
+        assert_eq!(range("Biomonitor"), None);
+        assert!(catalog.humanity_loss_dice("Unknown Implant").is_err());
+        let half = CprHumanityLossDice::parse("1d6/2 Round up").expect("parses");
+        assert_eq!(half.text(), "1d6/2 round up");
+        // 1d6 halved, rounded up: faces 1-6 give 1,1,2,2,3,3.
+        let faces: Vec<i16> = (1..=6).map(|face| half.roll(|_| face).0).collect();
+        assert_eq!(faces, vec![1, 1, 2, 2, 3, 3]);
+        let four = CprHumanityLossDice::parse("4d6").expect("parses");
+        let mut die = [6u8, 5, 1, 2].into_iter();
+        assert_eq!(four.roll(|_| die.next().unwrap()), (14, vec![6, 5, 1, 2]));
+        assert!(CprHumanityLossDice::parse("2d").is_none());
+    }
+
+    /// A rolled loss outside the piece's dice is refused naming the range; inside it, it
+    /// replaces the preset in the Humanity Loss sum and the piece's own figure.
+    #[test]
+    fn a_rolled_loss_outside_the_dice_is_refused_and_inside_it_replaces_the_preset() {
+        let catalog = catalog();
+        for (name, loss) in [("Gills", 13), ("Gills", 1), ("Kerenzikov", 3), ("Kerenzikov", 25), ("Nasal Filters", 4), ("Biomonitor", 1)] {
+            let refusal = catalog.check(5, &[install("Neural Link"), rolled(name, loss)]).expect_err("out of range");
+            let text = refusal.to_string();
+            assert!(text.contains(&format!("Humanity Loss {loss}")) && text.contains("A-3"), "{text}");
+        }
+        let loadout = catalog
+            .check(5, &[install("Neural Link"), rolled("Gills", 12), rolled("Nasal Filters", 3), rolled("Biomonitor", 0)])
+            .expect("in range");
+        assert_eq!(loadout.humanity_loss(), 7 + 12 + 3, "Neural Link preset 7, Gills rolled 12, Nasal Filters rolled 3");
+        assert_eq!(loadout.installed()[1], ("Gills".to_owned(), 12));
+        // The D-5 cap counts pieces, not their loss: 3 pieces with HL > 0 (Biomonitor is 0-HL).
+        assert_eq!(loadout.humanity_cap(8), 80 - 3 * 2);
     }
 }

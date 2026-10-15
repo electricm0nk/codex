@@ -410,7 +410,7 @@ pub fn compose_sheet(
         "cpr.derived.humanity_current".to_owned(),
         humanity_now,
         format!(
-            "Humanity {humanity_now} = EMP {base_emp} x 10 - Humanity Loss {humanity_loss} (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112)"
+            "Humanity {humanity_now} = EMP {base_emp} x 10 - Humanity Loss {humanity_loss} (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112; rolled loss after it, p. 111)"
         ),
     ));
     let hp = hit_points(body, entered.get(CprStat::Will));
@@ -453,8 +453,9 @@ pub fn compose_sheet(
         ));
     }
     rows.extend(cyberware_rows.iter().cloned());
-    // Each installed piece: its name printed, its preset Humanity Loss a row (p. 112).
-    for (i, (name, loss)) in loadout.installed().iter().enumerate() {
+    // Each installed piece: its name printed, its Humanity Loss a row (preset at Character
+    // Generation, rolled after it, p. 111).
+    for (i, ((name, loss), install)) in loadout.installed().iter().zip(&choices.cyberware).enumerate() {
         printed.push(words(
             format!("cpr.cyberware.piece.{i}.name"),
             "Cyberware".to_owned(),
@@ -464,7 +465,10 @@ pub fn compose_sheet(
         rows.push(row(
             format!("cpr.cyberware.piece.{i}.humanity_loss"),
             *loss,
-            format!("{name} Humanity Loss {loss}: the preset loss at Character Generation (p. 112)"),
+            match install.humanity_loss {
+                Some(_) => format!("{name} Humanity Loss {loss}: rolled on its dice when installed after Character Generation (p. 111)"),
+                None => format!("{name} Humanity Loss {loss}: the preset loss at Character Generation (p. 112)"),
+            },
         ));
     }
     rows.extend(catalogs.critical.rows(hp, body, &choices.criticals)?);
@@ -749,7 +753,7 @@ mod tests {
     }
 
     fn install(name: &str) -> CprCyberwareInstall {
-        CprCyberwareInstall { name: name.to_owned(), mount: None }
+        CprCyberwareInstall { name: name.to_owned(), mount: None, humanity_loss: None }
     }
 
     fn row(sheet: &CprSheet, id: &str) -> i16 {
@@ -868,6 +872,23 @@ mod tests {
         assert_eq!(row(&sheet, "cpr.derived.emp_current"), 1);
         assert_eq!(row(&sheet, "cpr.skill.conversation"), 1 + 2);
         assert_eq!(row(&sheet, "cpr.skill.human_perception"), 1);
+    }
+
+    /// A piece installed after Character Generation carries its rolled loss (p. 111, A-3):
+    /// Skin Weave rolled 12 instead of its preset 7 makes the loss 47, Humanity 60 - 47 = 13,
+    /// EMP 1, and its piece row says the loss was rolled.
+    #[test]
+    fn a_rolled_humanity_loss_replaces_the_preset_on_the_sheet() {
+        let mut choices = kestrel();
+        let skin_weave = choices.1.cyberware.iter_mut().find(|c| c.name == "Skin Weave").expect("kestrel has Skin Weave");
+        skin_weave.humanity_loss = Some(12);
+        let sheet = compose(&choices).expect("composes");
+        assert_eq!(row(&sheet, "cpr.cyberware.humanity_loss"), 47);
+        assert_eq!(row(&sheet, "cpr.derived.humanity_current"), 13);
+        assert_eq!(row(&sheet, "cpr.derived.emp_current"), 1);
+        let piece = sheet.rows.iter().find(|r| r.id == "cpr.cyberware.piece.3.humanity_loss").expect("Skin Weave's row");
+        assert_eq!(piece.value, 12);
+        assert!(piece.detail.contains("rolled") && piece.detail.contains("after Character Generation"), "{}", piece.detail);
     }
 
     /// Light Armorjack head (11) + Flak body (15, -4) + Skin Weave (7 head and body): SP is the
@@ -1074,7 +1095,7 @@ mod tests {
                 install("Neural Link"),
                 install("Interface Plugs"),
                 install("Cyberarm"),
-                CprCyberwareInstall { name: "Cyberdeck (installed)".to_owned(), mount: Some(CprMount::Arm(0)) },
+                CprCyberwareInstall { name: "Cyberdeck (installed)".to_owned(), mount: Some(CprMount::Arm(0)), humanity_loss: None },
             ],
             deck: Some(CprDeckChoice {
                 deck: "Cyberdeck (Standard Quality)".to_owned(),

@@ -176,7 +176,9 @@ pub fn parse_cpr_character_input(text: &str) -> Result<CprCharacterInput, String
 /// - `skill.<skill key> = <level>`, the key as the Master Skill List names it
 ///   (`Handgun`, `Language (Streetslang)`);
 /// - `armor.head = <armour>`, `armor.body = <armour>`, `armor.shield = <shield>`;
-/// - `cyberware = <name>` or `cyberware = <name> @ <eye|arm|leg|meat_arm|meat_leg> <index>`;
+/// - `cyberware = <name>` or `cyberware = <name> @ <eye|arm|leg|meat_arm|meat_leg> <index>`,
+///   either followed by `| humanity loss <n>` for a piece installed after Character Generation
+///   with its rolled loss (p. 111, A-3);
 /// - `critical.head = <injury>`, `critical.body = <injury>`;
 /// - `reputation = <level> <deed|cowardice>: <description>`;
 /// - `weapon = <weapon type>`;
@@ -284,14 +286,14 @@ pub fn render_cpr_sheet_choices(choices: &CprSheetChoices) -> String {
         let _ = writeln!(out, "armor.shield = {shield}");
     }
     for piece in &choices.cyberware {
-        match piece.mount {
-            Some(mount) => {
-                let _ = writeln!(out, "cyberware = {} @ {}", piece.name, mount_text(mount));
-            }
-            None => {
-                let _ = writeln!(out, "cyberware = {}", piece.name);
-            }
+        let _ = write!(out, "cyberware = {}", piece.name);
+        if let Some(mount) = piece.mount {
+            let _ = write!(out, " @ {}", mount_text(mount));
         }
+        if let Some(loss) = piece.humanity_loss {
+            let _ = write!(out, " | humanity loss {loss}");
+        }
+        out.push('\n');
     }
     for injury in &choices.criticals {
         let _ = writeln!(out, "critical.{} = {}", location_text(injury.location), injury.name);
@@ -378,14 +380,24 @@ pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
             }),
             "armor.shield" => once(&mut choices.shield, key, value.to_owned())?,
             "cyberware" => {
-                let piece = match value.split_once('@') {
+                let (placed, humanity_loss) = match value.split_once('|') {
+                    Some((placed, loss)) => {
+                        let loss = loss.trim().strip_prefix("humanity loss").and_then(|n| n.trim().parse::<i16>().ok()).ok_or_else(|| {
+                            format!("{CHOICES_FILE} cyberware '{value}': the rolled loss is '| humanity loss <number>'")
+                        })?;
+                        (placed.trim(), Some(loss))
+                    }
+                    None => (value, None),
+                };
+                let piece = match placed.split_once('@') {
                     Some((name, mount)) => CprCyberwareInstall {
                         name: name.trim().to_owned(),
                         mount: Some(parse_mount(mount).ok_or_else(|| {
                             format!("{CHOICES_FILE} cyberware '{value}': the mount is '<eye|arm|leg|meat_arm|meat_leg> <index>'")
                         })?),
+                        humanity_loss,
                     },
-                    None => CprCyberwareInstall { name: value.to_owned(), mount: None },
+                    None => CprCyberwareInstall { name: placed.to_owned(), mount: None, humanity_loss },
                 };
                 choices.cyberware.push(piece);
             }
@@ -729,9 +741,11 @@ mod tests {
             ],
             shield: Some("Bulletproof Shield".to_owned()),
             cyberware: vec![
-                CprCyberwareInstall { name: "Neural Link".to_owned(), mount: None },
-                CprCyberwareInstall { name: "Wolvers".to_owned(), mount: Some(CprMount::MeatArm(0)) },
-                CprCyberwareInstall { name: "Chyron".to_owned(), mount: Some(CprMount::Eye(1)) },
+                CprCyberwareInstall { name: "Neural Link".to_owned(), mount: None, humanity_loss: None },
+                CprCyberwareInstall { name: "Wolvers".to_owned(), mount: Some(CprMount::MeatArm(0)), humanity_loss: None },
+                CprCyberwareInstall { name: "Chyron".to_owned(), mount: Some(CprMount::Eye(1)), humanity_loss: None },
+                CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(9) },
+                CprCyberwareInstall { name: "Image Enhance".to_owned(), mount: Some(CprMount::Eye(0)), humanity_loss: Some(5) },
             ],
             criticals: vec![CprRecordedCritical { location: CprCriticalLocation::Head, name: "Cracked Skull".to_owned() }],
             reputation: vec![
@@ -758,6 +772,8 @@ mod tests {
         assert!(text.contains("role = Netrunner\nrole.rank = 4\nrole.earlier = Solo 4\nrole.earlier = Fixer 5\n"), "{text}");
         assert!(text.contains("skill.Language (Streetslang) = 2\n"), "{text}");
         assert!(text.contains("cyberware = Chyron @ eye 1\n"), "{text}");
+        assert!(text.contains("cyberware = Gills | humanity loss 9\n"), "{text}");
+        assert!(text.contains("cyberware = Image Enhance @ eye 0 | humanity loss 5\n"), "{text}");
         assert!(text.contains("reputation = 3 cowardice: Ran: from a fight\n"), "{text}");
         assert_eq!(parse_cpr_sheet_choices(&text), Ok(choices));
     }
@@ -890,6 +906,10 @@ mod tests {
         assert_eq!(
             refused("cyberware = Chyron @ nose 1\n"),
             "cpr_sheet_choices.txt cyberware 'Chyron @ nose 1': the mount is '<eye|arm|leg|meat_arm|meat_leg> <index>'"
+        );
+        assert_eq!(
+            refused("cyberware = Gills | humanity loss many\n"),
+            "cpr_sheet_choices.txt cyberware 'Gills | humanity loss many': the rolled loss is '| humanity loss <number>'"
         );
         assert_eq!(
             refused("reputation = 3 brave: x\n"),

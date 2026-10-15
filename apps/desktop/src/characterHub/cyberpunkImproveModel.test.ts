@@ -4,8 +4,13 @@ import {
   addPurchase,
   canSpend,
   improvePlanFromIpText,
+  cyberwareOptionLabel,
+  humanityLossFromText,
+  improveHumanity,
   improveTotals,
   nextTarget,
+  pinSeed,
+  purchaseHumanityLoss,
   purchaseCost,
   purchaseLabel,
   removePurchase,
@@ -89,7 +94,9 @@ const preview: CyberpunkImprovePreview = {
     { id: 'cpr.improve.ip.cost', value: 1440, detail: 'cost' },
     { id: 'cpr.improve.ip.remaining', value: 1060, detail: 'remaining' },
   ],
+  cyberware: [],
   refusal: null,
+  seed: 11,
 };
 assertEqual(purchaseCost(preview, 0)?.value, 1140, 'purchase 0 cost is its row');
 assertEqual(purchaseCost(preview, 1)?.value, 1300, 'purchase 1 cost is its row');
@@ -110,4 +117,40 @@ const removed = removePurchase(plan, 0);
 assertEqual(removed.purchases.length, 1, 'one left');
 assertEqual(purchaseLabel(removed.purchases[0]), 'Role Ability to Rank 5', 'the rank purchase stays');
 
-console.log('cyberpunkImproveModel: IP entry, keys, targets, Role switch, engine-row figures and spend gate checked');
+// 7. Cyberware after Character Generation (E5.3, p. 111, A-3): the loss is entered or left blank to roll;
+// its range, the rolled loss, Humanity and EMP are the engine's rows; the seed is pinned so the apply keeps the dice.
+const gills = { name: 'Gills', category: 'Internal', dice: '2d6', min: 2, max: 12 };
+const biomonitor = { name: 'Biomonitor', category: 'Fashionware', dice: null, min: 0, max: 0 };
+assertEqual(cyberwareOptionLabel(gills), 'Gills (Internal) — Humanity Loss 2d6 (2-12)', 'an option shows the engine dice and range');
+assertEqual(cyberwareOptionLabel(biomonitor), 'Biomonitor (Fashionware) — no Humanity Loss', 'a no-dice option');
+assertEqual(humanityLossFromText(' ').humanityLoss, null, 'blank rolls');
+assertEqual(humanityLossFromText('7').humanityLoss, 7, 'entered');
+assertEqual(humanityLossFromText('x').error, 'Humanity Loss must be a whole number, or blank to roll it', 'not a number');
+let installs = addPurchase(EMPTY_CYBERPUNK_IMPROVE_PLAN, { kind: 'cyberware', name: 'Gills', humanityLoss: null });
+installs = addPurchase(installs, { kind: 'cyberware', name: 'Biomonitor', humanityLoss: 0 });
+assertEqual(purchaseLabel(installs.purchases[0]), 'Install Gills (Humanity Loss rolled)', 'rolled label');
+assertEqual(purchaseLabel(installs.purchases[1]), 'Install Biomonitor (Humanity Loss 0 entered)', 'entered label');
+const installPreview: CyberpunkImprovePreview = {
+  ...preview,
+  cyberware: [gills, biomonitor],
+  rows: [
+    { id: 'cpr.improve.purchase.0.humanity_loss', value: 1009, detail: 'Gills: Humanity Loss 9, rolled 2d6 = 4 + 5' },
+    { id: 'cpr.improve.humanity.before', value: 1080, detail: 'before' },
+    { id: 'cpr.improve.humanity.after', value: 1071, detail: 'after' },
+    { id: 'cpr.improve.emp.before', value: 1008, detail: 'before' },
+    { id: 'cpr.improve.emp.after', value: 1007, detail: 'after' },
+  ],
+  seed: 4242,
+};
+assertEqual(purchaseHumanityLoss(installPreview, 0)?.value, 1009, 'the loss is its row');
+assertEqual(purchaseHumanityLoss(installPreview, 1), null, 'no row, no loss');
+assertEqual(purchaseCost(installPreview, 0), null, 'an install has no IP cost row');
+const hum = improveHumanity(installPreview);
+assertEqual([hum.humanityBefore?.value, hum.humanityAfter?.value, hum.empBefore?.value, hum.empAfter?.value].join(','), '1080,1071,1008,1007', 'Humanity and EMP are rows');
+assertEqual(improveHumanity(preview).empAfter, null, 'no install, no EMP rows');
+const pinned = pinSeed(installs, installPreview);
+assertEqual(pinned.seed, 4242, 'the preview seed is pinned');
+assert(pinSeed(pinned, { ...installPreview, seed: 1 }) === pinned, 'a pinned seed is kept (same plan, no re-preview loop)');
+assert(canSpend(installs, installPreview), 'an install-only plan can be applied');
+
+console.log('cyberpunkImproveModel: IP entry, keys, targets, Role switch, cyberware install, engine-row figures and spend gate checked');

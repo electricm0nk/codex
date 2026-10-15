@@ -20,13 +20,21 @@
 //! A Role switch (`roleSwitch`) buys Rank 1 in a Role the character does not hold, at the Role
 //! Ability Rank table's Rank 1 price (A-1, 60 IP), only while the latest Role is at Rank 4 or
 //! more (p. 143); the new Role becomes the latest, the earlier Roles keep their Ranks and the sheet
-//! shows each Role's rows. A Rank purchase raises the latest Role. Cyberware installs, therapy and
-//! Reputation are not part of this plan.
+//! shows each Role's rows. A Rank purchase raises the latest Role.
+//!
+//! A cyberware install (`cyberware`) after Character Generation costs no IP (its Eurobuck price
+//! and install tier are printed, not computed): it takes the Humanity Loss the player entered, or
+//! one rolled on the piece's dice (p. 111) by the creation roller (`CprRoller`) with the
+//! request's seed, and the engine refuses a loss outside the dice range (A-3) and an install over
+//! its container's option slots (D-11). The preview answers with the seed it used and the
+//! Humanity and EMP before and after the plan; an apply sent with that seed rolls the same loss.
+//! Therapy and Reputation are not part of this plan.
 
 use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::cpr::cyberware::{CprCyberwareCatalog, CprCyberwareInstall};
 use codex::rules_core::cpr::improvement::{CprIpCostCatalog, CprIpTable, CprRoleHistory};
 use codex::rules_core::cpr::input::{CprImprovementPoints, CprSheetChoices};
 use codex::rules_core::cpr::roles::CprRole;
@@ -38,6 +46,7 @@ use codex::rules_core::pilot_compute::ComputationExplanation;
 
 use crate::character_hub::{ExplanationDto, LoadSavedCharacterResponse};
 use crate::cpr_adapter::CyberpunkAdapter;
+use crate::cpr_creation::CprRoller;
 use crate::rule_system_adapter::RuleSystemAdapter;
 
 /// The CPR corpus the running app reads (packaged-root aware).
@@ -55,6 +64,10 @@ pub enum CprPurchase {
     RoleRank { to: u8 },
     /// Rank 1 in a Role the character does not hold, by its name (`Nomad`); p. 143, A-1.
     RoleSwitch { role: String },
+    /// A piece of cyberware by its catalog name, with the Humanity Loss the player entered, or
+    /// none to roll it on the piece's dice (p. 111, A-3). It costs no IP.
+    #[serde(rename_all = "camelCase")]
+    Cyberware { name: String, humanity_loss: Option<i16> },
 }
 
 /// The improve dialog's plan: the IP entered (added to the IP earned) and the purchases, in order.
@@ -64,6 +77,10 @@ pub struct CprImproveRequest {
     pub character_id: String,
     pub ip_awarded: u32,
     pub purchases: Vec<CprPurchase>,
+    /// The roller's seed for the Humanity Loss of each install left blank; absent, a fresh seed
+    /// is drawn and the preview answers with it.
+    #[serde(default)]
+    pub seed: Option<u32>,
 }
 
 /// One Skill the dialog offers: its key, Level, (x2) mark and the engine's price of the next
@@ -100,15 +117,78 @@ pub struct CprImproveSwitchOption {
     pub refusal: Option<String>,
 }
 
-/// `preview_cyberpunk_improvement`: the options and the plan's rows, or why the plan is refused.
+/// A piece of cyberware the dialog offers: its catalog name and category, and the dice its
+/// Humanity Loss is rolled on after Character Generation with their range (p. 111, A-3); a piece
+/// with no loss dice has range 0-0.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprImproveCyberwareOption {
+    pub name: String,
+    pub category: String,
+    pub dice: Option<String>,
+    pub min: i16,
+    pub max: i16,
+}
+
+/// `preview_cyberpunk_improvement`: the options and the plan's rows, or why the plan is refused,
+/// and the seed the plan's Humanity Loss rolls used.
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CprImprovePreview {
     pub skills: Vec<CprImproveSkillOption>,
     pub role: Option<CprImproveRoleOption>,
     pub switch: Vec<CprImproveSwitchOption>,
+    pub cyberware: Vec<CprImproveCyberwareOption>,
     pub rows: Vec<ExplanationDto>,
     pub refusal: Option<String>,
+    pub seed: u32,
+}
+
+/// A seed for a request that did not send one.
+fn fresh_seed() -> u32 {
+    let nanos = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_nanos())
+        .unwrap_or_default();
+    (nanos ^ (nanos >> 32) ^ u128::from(std::process::id())) as u32
+}
+
+/// Each purchase rolls on its own roller (the seed and the purchase's place in the plan), so
+/// adding or removing a later purchase leaves an earlier roll as it was.
+fn purchase_roller(seed: u32, index: usize) -> CprRoller {
+    let place = u32::try_from(index).unwrap_or(u32::MAX).wrapping_add(1);
+    CprRoller::new(seed ^ place.wrapping_mul(0x85EB_CA6B).rotate_left(13))
+}
+
+/// The Humanity Loss of an install: the entered loss checked against the piece's dice (A-3), or
+/// one rolled on them; the loss and how it was found.
+fn install_loss(
+    cyberware: &CprCyberwareCatalog,
+    name: &str,
+    entered: Option<i16>,
+    seed: u32,
+    index: usize,
+) -> Result<(i16, String), String> {
+    let dice = cyberware.humanity_loss_dice(name).map_err(|r| r.to_string())?;
+    match entered {
+        Some(loss) => {
+            cyberware.check_rolled_humanity_loss(name, loss).map_err(|r| r.to_string())?;
+            let range = dice.map_or("no Humanity Loss dice".to_owned(), |d| {
+                let (low, high) = d.range();
+                format!("{} ({low}-{high})", d.text())
+            });
+            Ok((loss, format!("Humanity Loss {loss}, entered; its dice are {range} (p. 111, A-3)")))
+        }
+        None => match dice {
+            Some(dice) => {
+                let mut roller = purchase_roller(seed, index);
+                let (loss, faces) = dice.roll(|sides| roller.roll(sides));
+                let faces: Vec<String> = faces.iter().map(u8::to_string).collect();
+                Ok((loss, format!("Humanity Loss {loss}, rolled {} = {} (p. 111, A-3)", dice.text(), faces.join(" + "))))
+            }
+            None => Ok((0, "Humanity Loss 0: the piece has no Humanity Loss dice (p. 111)".to_owned())),
+        },
+    }
 }
 
 fn dto(row: ComputationExplanation) -> ExplanationDto {
@@ -184,11 +264,13 @@ fn available_row(choices: &CprSheetChoices, ip_awarded: u32) -> Result<Computati
 fn plan(
     costs: &CprIpCostCatalog,
     skills: &CprSkillCatalog,
+    cyberware: &CprCyberwareCatalog,
     choices: &CprSheetChoices,
     request: &CprImproveRequest,
+    seed: u32,
 ) -> Result<PricedPlan, String> {
     if request.purchases.is_empty() && request.ip_awarded == 0 {
-        return Err("nothing to spend: enter IP or choose a Skill Level, Role Rank or Role switch to buy".to_owned());
+        return Err("nothing to spend: enter IP or choose a Skill Level, Role Rank, Role switch or cyberware to buy".to_owned());
     }
     let ip = choices.improvement_points.unwrap_or_default();
     let earned = ip
@@ -227,6 +309,26 @@ fn plan(
                 let (after, priced) = costs.switch_role(&history, new_role).map_err(|r| r.to_string())?;
                 set_role_history(&mut next, &after);
                 (format!("Role switch to {}", new_role.name()), priced)
+            }
+            CprPurchase::Cyberware { name, humanity_loss } => {
+                let record = cyberware
+                    .record_name(name.trim())
+                    .ok_or_else(|| format!("'{}' is not in the cyberware catalog (p. 112-117)", name.trim()))?
+                    .to_owned();
+                let (loss, detail) = install_loss(cyberware, &record, *humanity_loss, seed, i)?;
+                // The piece's mount (which Cybereye, Cyberarm or Cyberleg holds it): placed as
+                // creation places it, after the pieces already installed.
+                let mut names: Vec<String> = next.cyberware.iter().map(|c| c.name.clone()).collect();
+                names.push(record.clone());
+                let placed = cyberware.place(&names).map_err(|r| r.to_string())?;
+                let mount = placed.last().and_then(|p| p.mount);
+                next.cyberware.push(CprCyberwareInstall { name: record.clone(), mount, humanity_loss: Some(loss) });
+                rows.push(ComputationExplanation {
+                    id: format!("cpr.improve.purchase.{i}.humanity_loss"),
+                    value: loss,
+                    detail: format!("{record}: {detail}"),
+                });
+                continue;
             }
         };
         total += u32::try_from(priced.value).map_err(|_| format!("{label}: price {} is not a cost", priced.value))?;
@@ -346,35 +448,68 @@ fn priced_at_root(
     corpus: &Path,
     root: &Path,
     request: &CprImproveRequest,
+    seed: u32,
 ) -> Result<(CprSheetChoices, Result<PricedPlan, String>), String> {
     let character = CprCharacterStore::load(root)?;
     let choices = CprCharacterStore::load_choices(root)?;
     let costs = CprIpCostCatalog::load(corpus)?;
     let skills = CprSkillCatalog::load(corpus)?;
-    let planned = plan(&costs, &skills, &choices, request).and_then(|(next, rows)| {
-        compose_sheet(&CprSheetCatalogs::load(corpus)?, &character.input, &next)?;
+    let cyberware = CprCyberwareCatalog::load(corpus)?;
+    let planned = plan(&costs, &skills, &cyberware, &choices, request, seed).and_then(|(next, mut rows)| {
+        let catalogs = CprSheetCatalogs::load(corpus)?;
+        let after = compose_sheet(&catalogs, &character.input, &next)?;
+        if request.purchases.iter().any(|p| matches!(p, CprPurchase::Cyberware { .. })) {
+            // The Humanity and EMP the installs move (p. 80, p. 111), read from the engine's
+            // sheet before and after the plan.
+            let before = compose_sheet(&catalogs, &character.input, &choices)?;
+            for (sheet, when) in [(&before, "before"), (&after, "after")] {
+                for (id, label) in [("cpr.derived.humanity_current", "humanity"), ("cpr.derived.emp_current", "emp")] {
+                    let found = sheet.rows.iter().find(|r| r.id == id).ok_or_else(|| format!("the sheet has no {id} row"))?;
+                    rows.push(ComputationExplanation {
+                        id: format!("cpr.improve.{label}.{when}"),
+                        value: found.value,
+                        detail: format!("{when} this plan: {}", found.detail),
+                    });
+                }
+            }
+        }
         Ok((next, rows))
     });
     Ok((choices, planned))
 }
 
+fn cyberware_options(corpus: &Path) -> Result<Vec<CprImproveCyberwareOption>, String> {
+    Ok(CprCyberwareCatalog::load(corpus)?
+        .offers()
+        .into_iter()
+        .map(|offer| {
+            let (min, max) = offer.dice.map_or((0, 0), |d| d.range());
+            CprImproveCyberwareOption { name: offer.name, category: offer.category, dice: offer.dice.map(|d| d.text()), min, max }
+        })
+        .collect())
+}
+
 /// The dialog's options and the plan's rows (or refusal) for the CPR character at `root`. Writes
 /// nothing.
 pub(crate) fn preview_at_root(corpus: &Path, root: &Path, request: &CprImproveRequest) -> Result<CprImprovePreview, String> {
-    let (choices, planned) = priced_at_root(corpus, root, request)?;
+    let seed = request.seed.unwrap_or_else(fresh_seed);
+    let (choices, planned) = priced_at_root(corpus, root, request, seed)?;
     let (skills, role, switch) = options(&CprIpCostCatalog::load(corpus)?, &CprSkillCatalog::load(corpus)?, &choices)?;
     // A refused plan still shows the IP available, so the dialog can say what there is to spend.
     let (rows, refusal) = match planned {
         Ok((_, rows)) => (rows.into_iter().map(dto).collect(), None),
         Err(reason) => (available_row(&choices, request.ip_awarded).into_iter().map(dto).collect(), Some(reason)),
     };
-    Ok(CprImprovePreview { skills, role, switch, rows, refusal })
+    Ok(CprImprovePreview { skills, role, switch, cyberware: cyberware_options(corpus)?, rows, refusal, seed })
 }
 
-/// Spend the plan on the CPR character at `root`: the new Levels, Ranks, Roles and IP box are saved
-/// through the store and the reloaded sheet is the answer. A refused plan writes nothing.
+/// Spend the plan on the CPR character at `root`: the new Levels, Ranks, Roles, cyberware (with
+/// its Humanity Loss) and IP box are saved through the store and the reloaded sheet is the answer.
+/// A refused plan writes nothing. A blank Humanity Loss rolls with the request's seed, so an apply
+/// sent with the preview's seed keeps the preview's dice.
 pub(crate) fn apply_at_root(corpus: &Path, root: &Path, request: &CprImproveRequest) -> Result<LoadSavedCharacterResponse, String> {
-    let (_, planned) = priced_at_root(corpus, root, request)?;
+    let seed = request.seed.unwrap_or_else(fresh_seed);
+    let (_, planned) = priced_at_root(corpus, root, request, seed)?;
     let (next, _) = planned?;
     CprCharacterStore::save_choices(&next, root)?;
     CyberpunkAdapter.load_saved_character(root)
@@ -402,6 +537,7 @@ mod tests {
 
     use std::path::PathBuf;
 
+    use codex::rules_core::cpr::cyberware::CprCyberwareInstall;
     use codex::rules_core::cpr::input::{CprCharacterInput, CprImprovementPoints, CprSheetChoices, CprStat, CprStats};
     use codex::rules_core::cpr::roles::CprRole;
     use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter, CPR_SAVED_CHARACTER_SCHEMA_VERSION};
@@ -450,7 +586,20 @@ mod tests {
     }
 
     fn request(ip_awarded: u32, purchases: Vec<CprPurchase>) -> CprImproveRequest {
-        CprImproveRequest { character_id: "cpr-improve".to_owned(), ip_awarded, purchases }
+        CprImproveRequest { character_id: "cpr-improve".to_owned(), ip_awarded, purchases, seed: None }
+    }
+
+    /// The saved character's sheet as the adapter loads it.
+    struct CprAdapterSheet(LoadSavedCharacterResponse);
+
+    impl CprAdapterSheet {
+        fn of(root: &Path) -> Self {
+            Self(CyberpunkAdapter.load_saved_character(root).expect("loads"))
+        }
+
+        fn row(&self, id: &str) -> i16 {
+            row(&self.0.explanations, id)
+        }
     }
 
     fn row(rows: &[ExplanationDto], id: &str) -> i16 {
@@ -708,6 +857,140 @@ mod tests {
         });
         let parsed: CprImproveRequest = serde_json::from_value(wire).expect("deserialises");
         assert_eq!(parsed.purchases, vec![switch("Nomad")]);
+    }
+
+    fn cyberware(name: &str, humanity_loss: Option<i16>) -> CprPurchase {
+        CprPurchase::Cyberware { name: name.to_owned(), humanity_loss }
+    }
+
+    /// A-3 / p. 111: Gills installed after creation with an entered Humanity Loss of 12 (its
+    /// dice are 2d6, 2-12) costs no IP; the preview shows the loss and Humanity 80 -> 68, EMP
+    /// 8 -> 6 (p. 80: EMP is the tens place of Humanity); the save keeps the entered loss, and
+    /// the reloaded sheet's Humanity Loss, Humanity and EMP rows move.
+    #[test]
+    fn an_install_takes_an_entered_humanity_loss_and_the_humanity_and_emp_rows_move() {
+        let root = saved_solo("install", Some(CprImprovementPoints { earned: 100, spent: 0 }));
+        let plan = request(0, vec![cyberware("Gills", Some(12))]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.humanity_loss"), 12);
+        assert!(preview.rows.iter().all(|r| r.id != "cpr.improve.purchase.0.cost"), "an install is not an IP purchase");
+        assert_eq!(row(&preview.rows, "cpr.improve.ip.cost"), 0);
+        assert_eq!((row(&preview.rows, "cpr.improve.humanity.before"), row(&preview.rows, "cpr.improve.humanity.after")), (80, 68));
+        assert_eq!((row(&preview.rows, "cpr.improve.emp.before"), row(&preview.rows, "cpr.improve.emp.after")), (8, 6));
+        let gills = preview.cyberware.iter().find(|o| o.name == "Gills").expect("Gills offered");
+        assert_eq!((gills.dice.as_deref(), gills.min, gills.max), (Some("2d6"), 2, 12));
+
+        let before = CprAdapterSheet::of(&root);
+        assert_eq!((before.row("cpr.derived.humanity_current"), before.row("cpr.derived.emp_current")), (80, 8));
+        let loaded = apply_at_root(&corpus(), &root, &plan).expect("applies");
+        let sheet = |id: &str| row(&loaded.explanations, id);
+        assert_eq!(sheet("cpr.cyberware.humanity_loss"), 12);
+        assert_eq!(sheet("cpr.derived.humanity_current"), 68);
+        assert_eq!(sheet("cpr.derived.emp_current"), 6, "the EMP row moves 8 -> 6");
+        assert_eq!(sheet("cpr.ip.current"), 100, "no IP spent");
+        let saved = CprCharacterStore::load_choices(&root).unwrap();
+        assert_eq!(saved.cyberware, vec![CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(12) }]);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// A-3: an entered loss outside the piece's dice is refused naming the range (2d6 13 and 1,
+    /// 4d6 3, 1d6/2 round up 4, a no-dice piece 1); nothing is written. The bounds themselves
+    /// are accepted.
+    #[test]
+    fn an_entered_humanity_loss_outside_the_dice_is_refused_and_nothing_is_saved() {
+        let root = saved_solo("hlrange", None);
+        let before = choices_text(&root);
+        for (name, loss, range) in
+            [("Gills", 13, "2d6 (2-12)"), ("Gills", 1, "2d6 (2-12)"), ("Grafted Muscle and Bone Lace", 3, "4d6 (4-24)"), ("Nasal Filters", 4, "1d6/2 round up (1-3)"), ("Biomonitor", 1, "no Humanity Loss dice (0)")]
+        {
+            let plan = request(0, vec![cyberware(name, Some(loss))]);
+            let reason = preview_at_root(&corpus(), &root, &plan).expect("previews").refusal.unwrap_or_else(|| panic!("{name} {loss} accepted"));
+            assert!(reason.contains(&format!("Humanity Loss {loss}")) && reason.contains(range), "{reason}");
+            assert!(apply_at_root(&corpus(), &root, &plan).is_err());
+            assert_eq!(choices_text(&root), before, "a refused install writes nothing");
+        }
+        for (name, loss) in [("Gills", 2), ("Gills", 12), ("Grafted Muscle and Bone Lace", 24), ("Nasal Filters", 1), ("Biomonitor", 0)] {
+            let plan = request(0, vec![cyberware(name, Some(loss))]);
+            assert_eq!(preview_at_root(&corpus(), &root, &plan).expect("previews").refusal, None, "{name} {loss}");
+        }
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// D-11: with the 7 Internal Body option slots full, an eighth Internal piece is refused as
+    /// over the slots and nothing is written; a Cybereye option without a Cybereye is refused.
+    #[test]
+    fn an_over_slot_install_is_refused_and_nothing_is_saved() {
+        let root = saved_solo("overslot", None);
+        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
+        for name in ["AudioVox", "Enhanced Antibodies", "Gills", "Nasal Filters", "Toxin Binders", "Independent Air Supply", "Radar/Sonar Implant"] {
+            choices.cyberware.push(CprCyberwareInstall { name: name.to_owned(), mount: None, humanity_loss: None });
+        }
+        CprCharacterStore::save_choices(&choices, &root).unwrap();
+        let before = choices_text(&root);
+        let plan = request(0, vec![cyberware("Vampyres", Some(14))]);
+        let reason = preview_at_root(&corpus(), &root, &plan).expect("previews").refusal.expect("over the slots");
+        assert!(reason.contains("Vampyres does not fit") && reason.contains("8 of 7"), "{reason}");
+        assert!(apply_at_root(&corpus(), &root, &plan).unwrap_err().contains("8 of 7"));
+        assert_eq!(choices_text(&root), before);
+        let reason = preview_at_root(&corpus(), &root, &request(0, vec![cyberware("Chyron", Some(2))]))
+            .expect("previews")
+            .refusal
+            .expect("no Cybereye");
+        assert!(reason.contains("Chyron"), "{reason}");
+        // A Cybereye first gives the option its eye.
+        let plan = request(0, vec![cyberware("Cybereye", Some(7)), cyberware("Chyron", Some(2))]);
+        assert_eq!(preview_at_root(&corpus(), &root, &plan).expect("previews").refusal, None);
+        let loaded = apply_at_root(&corpus(), &root, &plan).expect("applies");
+        assert_eq!(row(&loaded.explanations, "cpr.cyberware.slots.cybereye_1.used"), 1);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// A-3: a loss left blank is rolled on the piece's dice by the creation roller with the
+    /// request's seed: the preview answers with its seed, the same seed rolls the same loss on
+    /// apply, and over 300 seeds every 1d6/2 round-up roll lands in 1-3 and reaches both ends.
+    #[test]
+    fn a_blank_humanity_loss_is_rolled_with_the_seed_and_the_same_seed_keeps_it() {
+        let root = saved_solo("rolled", None);
+        let plan = request(0, vec![cyberware("Gills", None)]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        let seed = preview.seed;
+        let rolled = row(&preview.rows, "cpr.improve.purchase.0.humanity_loss");
+        assert!((2..=12).contains(&rolled), "{rolled}");
+        let detail = &preview.rows.iter().find(|r| r.id == "cpr.improve.purchase.0.humanity_loss").unwrap().detail;
+        assert!(detail.contains("rolled 2d6"), "{detail}");
+
+        let mut seeded = request(0, vec![cyberware("Gills", None)]);
+        seeded.seed = Some(seed);
+        let again = preview_at_root(&corpus(), &root, &seeded).expect("previews");
+        assert_eq!((again.seed, row(&again.rows, "cpr.improve.purchase.0.humanity_loss")), (seed, rolled));
+        let loaded = apply_at_root(&corpus(), &root, &seeded).expect("applies");
+        assert_eq!(row(&loaded.explanations, "cpr.cyberware.humanity_loss"), rolled);
+        assert_eq!(CprCharacterStore::load_choices(&root).unwrap().cyberware[0].humanity_loss, Some(rolled));
+
+        let mut seen = std::collections::BTreeSet::new();
+        for seed in 0..300 {
+            let mut plan = request(0, vec![cyberware("Nasal Filters", None)]);
+            plan.seed = Some(seed);
+            let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+            seen.insert(row(&preview.rows, "cpr.improve.purchase.0.humanity_loss"));
+        }
+        assert_eq!(seen.into_iter().collect::<Vec<_>>(), vec![1, 2, 3]);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    #[test]
+    fn a_cyberware_install_deserialises_from_the_frontend_wire_shape() {
+        let wire = serde_json::json!({
+            "characterId": "cpr-improve",
+            "ipAwarded": 0,
+            "seed": 7,
+            "purchases": [{ "kind": "cyberware", "name": "Gills", "humanityLoss": 9 }, { "kind": "cyberware", "name": "Gills", "humanityLoss": null }]
+        });
+        let parsed: CprImproveRequest = serde_json::from_value(wire).expect("deserialises");
+        assert_eq!(parsed.seed, Some(7));
+        assert_eq!(parsed.purchases, vec![cyberware("Gills", Some(9)), cyberware("Gills", None)]);
     }
 
     /// The wire shape `cprImprove.ts` sends: `{ characterId, ipAwarded, purchases: [{ kind:

@@ -47,8 +47,10 @@ async function main() {
     skills: [],
     role: null,
     switch: [],
+    cyberware: [],
     rows: [{ id: 'cpr.improve.ip.available', value: 200, detail: 'Improvement Points available 200' }],
     refusal: null,
+    seed: 5,
   };
   const calls: Array<{ cmd: string; args: unknown }> = [];
   const globals = globalThis as Record<string, unknown>;
@@ -86,6 +88,32 @@ async function main() {
     assertEqual(calls[1].cmd, 'apply_cyberpunk_improvement', 'the apply command registered in main.rs');
     assertEqual(JSON.stringify(calls[0].args), wire, 'the preview request is the shape CprImproveRequest deserialises');
     assertEqual(JSON.stringify(calls[1].args), wire, 'the apply request is the same shape');
+
+    // E5.3: a cyberware install (entered or blank loss) and the pinned seed travel as CprImproveRequest deserialises them.
+    const install = {
+      ipAwarded: 0,
+      seed: 4242,
+      purchases: [
+        { kind: 'cyberware' as const, name: 'Gills', humanityLoss: 9 },
+        { kind: 'cyberware' as const, name: 'Nasal Filters', humanityLoss: null },
+      ],
+    };
+    await previewCyberpunkImprovement('cpr-solo-kitted', install);
+    assertEqual(
+      JSON.stringify(calls[2].args),
+      JSON.stringify({
+        request: {
+          characterId: 'cpr-solo-kitted',
+          ipAwarded: 0,
+          purchases: [
+            { kind: 'cyberware', name: 'Gills', humanityLoss: 9 },
+            { kind: 'cyberware', name: 'Nasal Filters', humanityLoss: null },
+          ],
+          seed: 4242,
+        },
+      }),
+      'an install and the seed are the shape CprImproveRequest deserialises',
+    );
 
     (globals.window as { __TAURI_INTERNALS__: { invoke: unknown } }).__TAURI_INTERNALS__.invoke = async () => {
       throw 'Overspend: these improvements cost 140 IP, but 90 IP are available';

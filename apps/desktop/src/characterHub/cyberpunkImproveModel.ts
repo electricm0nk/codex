@@ -1,4 +1,5 @@
 import type {
+  CyberpunkImproveCyberwareOption,
   CyberpunkImprovePlan,
   CyberpunkImprovePreview,
   CyberpunkImproveRow,
@@ -9,7 +10,7 @@ import type {
 
 /**
  * The Cyberpunk RED improve dialog's model (SD-38 E5.1). It holds the plan the engine prices -- the
- * IP entered and the purchases, one Skill Level, Role Rank or Role switch each -- and finds each figure the
+ * IP entered and the purchases, one Skill Level, Role Rank, Role switch or cyberware install each -- and finds each figure the
  * dialog shows among the engine's preview rows by id. It prices, sums and subtracts nothing: the
  * costs, the IP available, the plan's cost and the IP left are `cpr_improve.rs` rows.
  */
@@ -74,7 +75,37 @@ export function purchaseLabel(purchase: CyberpunkPurchase): string {
       return `Role Ability to Rank ${purchase.to}`;
     case 'roleSwitch':
       return `Switch Role to ${purchase.role} (Rank 1)`;
+    case 'cyberware':
+      return purchase.humanityLoss === null
+        ? `Install ${purchase.name} (Humanity Loss rolled)`
+        : `Install ${purchase.name} (Humanity Loss ${purchase.humanityLoss} entered)`;
   }
+}
+
+/** A cyberware option as the dialog lists it: the engine's Humanity Loss dice and range (p. 111, A-3). */
+export function cyberwareOptionLabel(option: CyberpunkImproveCyberwareOption): string {
+  const loss = option.dice === null ? 'no Humanity Loss' : `Humanity Loss ${option.dice} (${option.min}-${option.max})`;
+  return `${option.name} (${option.category}) — ${loss}`;
+}
+
+/** The Humanity Loss field: blank rolls it (null); a whole number is entered; the engine checks the range. */
+export function humanityLossFromText(text: string): { humanityLoss: number | null; error: string | null } {
+  const trimmed = text.trim();
+  if (trimmed === '') {
+    return { humanityLoss: null, error: null };
+  }
+  if (!/^\d+$/.test(trimmed)) {
+    return { humanityLoss: null, error: 'Humanity Loss must be a whole number, or blank to roll it' };
+  }
+  return { humanityLoss: Number(trimmed), error: null };
+}
+
+/**
+ * The plan with the engine's roller seed kept: once a preview answers, its seed is pinned so every later
+ * preview and the apply roll the same blank Humanity Loss. A plan that already has a seed is returned as is.
+ */
+export function pinSeed(plan: CyberpunkImprovePlan, preview: CyberpunkImprovePreview): CyberpunkImprovePlan {
+  return plan.seed === undefined || plan.seed === null ? { ...plan, seed: preview.seed } : plan;
 }
 
 /** A Role switch option as the dialog lists it: the engine's price of Rank 1, or that it is locked. */
@@ -89,6 +120,26 @@ function rowOf(preview: CyberpunkImprovePreview | null, id: string): CyberpunkIm
 /** The engine's price of purchase `index` of the plan. */
 export function purchaseCost(preview: CyberpunkImprovePreview | null, index: number): CyberpunkImproveRow | null {
   return rowOf(preview, `cpr.improve.purchase.${index}.cost`);
+}
+
+/** The engine's Humanity Loss of install `index` of the plan (entered, or rolled on its dice). */
+export function purchaseHumanityLoss(preview: CyberpunkImprovePreview | null, index: number): CyberpunkImproveRow | null {
+  return rowOf(preview, `cpr.improve.purchase.${index}.humanity_loss`);
+}
+
+/** The engine's Humanity and EMP before and after the plan's installs (p. 80); null without an install. */
+export function improveHumanity(preview: CyberpunkImprovePreview | null): {
+  humanityBefore: CyberpunkImproveRow | null;
+  humanityAfter: CyberpunkImproveRow | null;
+  empBefore: CyberpunkImproveRow | null;
+  empAfter: CyberpunkImproveRow | null;
+} {
+  return {
+    humanityBefore: rowOf(preview, 'cpr.improve.humanity.before'),
+    humanityAfter: rowOf(preview, 'cpr.improve.humanity.after'),
+    empBefore: rowOf(preview, 'cpr.improve.emp.before'),
+    empAfter: rowOf(preview, 'cpr.improve.emp.after'),
+  };
 }
 
 /** The engine's IP available, plan cost and IP left. */
