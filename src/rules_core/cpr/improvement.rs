@@ -275,6 +275,20 @@ impl CprRoleHistory {
         CprRoleHistory { roles: vec![(role, rank)] }
     }
 
+    /// A character with `roles` in the order taken (the last is the latest). No Role, or a Role
+    /// named twice, is refused.
+    pub fn from_roles(roles: Vec<(CprRole, u8)>) -> Result<Self, String> {
+        if roles.is_empty() {
+            return Err("a character's Role history names no Role".to_owned());
+        }
+        for (i, (role, _)) in roles.iter().enumerate() {
+            if roles[..i].iter().any(|(r, _)| r == role) {
+                return Err(format!("a character's Role history names the {} Role twice", role.name()));
+            }
+        }
+        Ok(CprRoleHistory { roles })
+    }
+
     pub fn roles(&self) -> &[(CprRole, u8)] {
         &self.roles
     }
@@ -409,6 +423,18 @@ mod tests {
         assert_eq!(row.value, 60);
         assert_eq!(history.roles(), [(CprRole::Solo, 5), (CprRole::Nomad, 4), (CprRole::Fixer, 1)]);
         assert_eq!(history.current_role(), CprRole::Fixer);
+    }
+
+    #[test]
+    fn a_role_history_is_built_from_the_roles_in_the_order_taken() {
+        let history = CprRoleHistory::from_roles(vec![(CprRole::Solo, 4), (CprRole::Nomad, 2)]).expect("two Roles");
+        assert_eq!(history.current_role(), CprRole::Nomad);
+        assert_eq!(history.roles(), [(CprRole::Solo, 4), (CprRole::Nomad, 2)]);
+        assert_eq!(CprRoleHistory::from_roles(Vec::new()), Err("a character's Role history names no Role".to_owned()));
+        assert_eq!(
+            CprRoleHistory::from_roles(vec![(CprRole::Solo, 4), (CprRole::Solo, 1)]),
+            Err("a character's Role history names the Solo Role twice".to_owned())
+        );
     }
 
     #[test]

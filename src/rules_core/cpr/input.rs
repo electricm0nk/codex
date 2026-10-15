@@ -170,7 +170,9 @@ pub fn parse_cpr_character_input(text: &str) -> Result<CprCharacterInput, String
 /// its STATs only (the creation STAT step) has none of them. The grammar is one `key = value`
 /// line each; list-valued keys repeat:
 ///
-/// - `role = <Role>` and `role.rank = <rank>` (both or neither);
+/// - `role = <Role>` and `role.rank = <rank>` (both or neither): the latest Role;
+/// - `role.earlier = <Role> <rank>`, once per Role held before the latest, in the order taken
+///   (a Role switch, p. 143); it needs `role`, and no Role is named twice;
 /// - `skill.<skill key> = <level>`, the key as the Master Skill List names it
 ///   (`Handgun`, `Language (Streetslang)`);
 /// - `armor.head = <armour>`, `armor.body = <armour>`, `armor.shield = <shield>`;
@@ -187,6 +189,8 @@ pub fn parse_cpr_character_input(text: &str) -> Result<CprCharacterInput, String
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct CprSheetChoices {
     pub role: Option<(CprRole, u8)>,
+    /// The Roles held before `role`, in the order taken, each at its Rank (p. 143).
+    pub earlier_roles: Vec<(CprRole, u8)>,
     pub skills: Vec<(String, u8)>,
     pub armor: Vec<CprWornArmor>,
     pub shield: Option<String>,
@@ -199,6 +203,13 @@ pub struct CprSheetChoices {
     pub cash: Option<u32>,
     pub ammunition: Vec<(String, u32)>,
     pub housing: Option<String>,
+}
+
+impl CprSheetChoices {
+    /// Every Role the character holds, in the order taken: the earlier Roles, then the latest.
+    pub fn held_roles(&self) -> Vec<(CprRole, u8)> {
+        self.earlier_roles.iter().copied().chain(self.role).collect()
+    }
 }
 
 /// A Netrunner's Cyberdeck and what is installed on it, by corpus name.
@@ -255,6 +266,9 @@ pub fn render_cpr_sheet_choices(choices: &CprSheetChoices) -> String {
     let mut out = String::new();
     if let Some((role, rank)) = choices.role {
         let _ = writeln!(out, "role = {}\nrole.rank = {rank}", role.name());
+    }
+    for (role, rank) in &choices.earlier_roles {
+        let _ = writeln!(out, "role.earlier = {} {rank}", role.name());
     }
     for (key, level) in &choices.skills {
         let _ = writeln!(out, "skill.{key} = {level}");
@@ -351,6 +365,13 @@ pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
                 once(&mut role, key, parsed)?;
             }
             "role.rank" => once(&mut rank, key, number::<u8>(key, value)?)?,
+            "role.earlier" => {
+                let malformed = || format!("{CHOICES_FILE} role.earlier '{value}' is not '<Role> <rank>'");
+                let (name, held) = value.rsplit_once(' ').ok_or_else(malformed)?;
+                let earlier = CprRole::from_name(name.trim()).ok_or_else(malformed)?;
+                let held = held.trim().parse::<u8>().map_err(|_| malformed())?;
+                choices.earlier_roles.push((earlier, held));
+            }
             "armor.head" | "armor.body" => choices.armor.push(CprWornArmor {
                 name: value.to_owned(),
                 location: if key == "armor.head" { CprArmorLocation::Head } else { CprArmorLocation::Body },
@@ -412,6 +433,18 @@ pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
         (Some(_), None) => return Err(format!("{CHOICES_FILE} names role without role.rank")),
         (None, Some(_)) => return Err(format!("{CHOICES_FILE} names role.rank without role")),
     };
+    if !choices.earlier_roles.is_empty() {
+        let Some((latest, _)) = choices.role else {
+            return Err(format!("{CHOICES_FILE} names role.earlier without role"));
+        };
+        let mut seen: Vec<CprRole> = Vec::new();
+        for held in choices.earlier_roles.iter().map(|(r, _)| *r).chain([latest]) {
+            if seen.contains(&held) {
+                return Err(format!("{CHOICES_FILE} names the {} Role twice", held.name()));
+            }
+            seen.push(held);
+        }
+    }
     choices.deck = match deck {
         Some(deck) => Some(CprDeckChoice { deck, programs, hardware }),
         None if !programs.is_empty() => return Err(format!("{CHOICES_FILE} names deck.program without deck")),
@@ -688,6 +721,7 @@ mod tests {
         use crate::rules_core::cpr::roles::CprRole;
         CprSheetChoices {
             role: Some((CprRole::Netrunner, 4)),
+            earlier_roles: vec![(CprRole::Solo, 4), (CprRole::Fixer, 5)],
             skills: vec![("Language (Streetslang)".to_owned(), 2), ("Handgun".to_owned(), 4)],
             armor: vec![
                 CprWornArmor { name: "Light Armorjack".to_owned(), location: CprArmorLocation::Head },
@@ -721,7 +755,7 @@ mod tests {
     fn every_sheet_choice_renders_and_parses_back() {
         let choices = full();
         let text = render_cpr_sheet_choices(&choices);
-        assert!(text.contains("role = Netrunner\nrole.rank = 4\n"), "{text}");
+        assert!(text.contains("role = Netrunner\nrole.rank = 4\nrole.earlier = Solo 4\nrole.earlier = Fixer 5\n"), "{text}");
         assert!(text.contains("skill.Language (Streetslang) = 2\n"), "{text}");
         assert!(text.contains("cyberware = Chyron @ eye 1\n"), "{text}");
         assert!(text.contains("reputation = 3 cowardice: Ran: from a fight\n"), "{text}");
@@ -842,6 +876,16 @@ mod tests {
         assert_eq!(refused("role = Cowboy\n"), "cpr_sheet_choices.txt role 'Cowboy' is not one of the ten Roles");
         assert_eq!(refused("role = Solo\n"), "cpr_sheet_choices.txt names role without role.rank");
         assert_eq!(refused("role.rank = 4\n"), "cpr_sheet_choices.txt names role.rank without role");
+        assert_eq!(refused("role.earlier = Solo 4\n"), "cpr_sheet_choices.txt names role.earlier without role");
+        assert_eq!(refused("role = Nomad\nrole.rank = 1\nrole.earlier = Solo\n"), "cpr_sheet_choices.txt role.earlier 'Solo' is not '<Role> <rank>'");
+        assert_eq!(
+            refused("role = Nomad\nrole.rank = 1\nrole.earlier = Cowboy 4\n"),
+            "cpr_sheet_choices.txt role.earlier 'Cowboy 4' is not '<Role> <rank>'"
+        );
+        assert_eq!(
+            refused("role = Solo\nrole.rank = 1\nrole.earlier = Solo 4\n"),
+            "cpr_sheet_choices.txt names the Solo Role twice"
+        );
         assert_eq!(refused("armor.arm = Leathers\n"), "cpr_sheet_choices.txt has an unknown key 'armor.arm'");
         assert_eq!(
             refused("cyberware = Chyron @ nose 1\n"),

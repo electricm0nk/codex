@@ -3,12 +3,13 @@ import type {
   CyberpunkImprovePreview,
   CyberpunkImproveRow,
   CyberpunkImproveSkillOption,
+  CyberpunkImproveSwitchOption,
   CyberpunkPurchase,
 } from '../boundary/cprImprove';
 
 /**
  * The Cyberpunk RED improve dialog's model (SD-38 E5.1). It holds the plan the engine prices -- the
- * IP entered and the purchases, one Skill Level or Role Rank each -- and finds each figure the
+ * IP entered and the purchases, one Skill Level, Role Rank or Role switch each -- and finds each figure the
  * dialog shows among the engine's preview rows by id. It prices, sums and subtracts nothing: the
  * costs, the IP available, the plan's cost and the IP left are `cpr_improve.rs` rows.
  */
@@ -38,11 +39,19 @@ export function skillPurchaseKey(option: CyberpunkImproveSkillOption, specialty:
 
 type Target = { kind: 'skill'; key: string } | { kind: 'roleRank' };
 
-/** The Level/Rank a new purchase asks for: one above the plan's last purchase of it, else above `current`. */
+/**
+ * The Level/Rank a new purchase asks for: one above the plan's last purchase of it, else above
+ * `current`. A Rank purchase raises the latest Role, so after a Role switch in the plan it asks for
+ * Rank 2 of the new Role (the new Role starts at Rank 1, p. 143).
+ */
 export function nextTarget(plan: CyberpunkImprovePlan, target: Target, current: number): number {
   let from = current;
   for (const purchase of plan.purchases) {
-    if (purchase.kind === target.kind && (purchase.kind === 'roleRank' || (target.kind === 'skill' && purchase.key === target.key))) {
+    if (target.kind === 'roleRank' && purchase.kind === 'roleSwitch') {
+      from = 1;
+    } else if (purchase.kind === 'roleRank' && target.kind === 'roleRank') {
+      from = purchase.to;
+    } else if (purchase.kind === 'skill' && target.kind === 'skill' && purchase.key === target.key) {
       from = purchase.to;
     }
   }
@@ -58,7 +67,19 @@ export function removePurchase(plan: CyberpunkImprovePlan, index: number): Cyber
 }
 
 export function purchaseLabel(purchase: CyberpunkPurchase): string {
-  return purchase.kind === 'skill' ? `${purchase.key} to Level ${purchase.to}` : `Role Ability to Rank ${purchase.to}`;
+  switch (purchase.kind) {
+    case 'skill':
+      return `${purchase.key} to Level ${purchase.to}`;
+    case 'roleRank':
+      return `Role Ability to Rank ${purchase.to}`;
+    case 'roleSwitch':
+      return `Switch Role to ${purchase.role} (Rank 1)`;
+  }
+}
+
+/** A Role switch option as the dialog lists it: the engine's price of Rank 1, or that it is locked. */
+export function switchOptionLabel(option: CyberpunkImproveSwitchOption): string {
+  return option.cost === null ? `${option.role} — locked (p. 143)` : `${option.role} — Rank 1 for ${option.cost.value} IP`;
 }
 
 function rowOf(preview: CyberpunkImprovePreview | null, id: string): CyberpunkImproveRow | null {

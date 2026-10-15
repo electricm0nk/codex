@@ -1,21 +1,27 @@
 //! Cyberpunk RED improvement: spending Improvement Points on Skill Levels and the Role
-//! Ability Rank after creation (Cyberpunk RED core rulebook p. 410-411), the improve dialog's
-//! two commands.
+//! Ability Rank after creation (Cyberpunk RED core rulebook p. 410-411), and changing Roles
+//! (p. 143), the improve dialog's two commands.
 //!
 //! - `preview_cyberpunk_improvement` answers with the dialog's options, read from the saved
 //!   character: every Master Skill List skill (and each held specialty) at its Level with the
-//!   engine's price of its next Level, the Role at its Rank with the price of its next Rank;
+//!   engine's price of its next Level, the Role at its Rank with the price of its next Rank,
+//!   each Role the character does not hold with the A-1 price of its Rank 1 (or the p. 143 lock);
 //!   and, for the plan the player has built, one `cpr.improve.purchase.<i>.cost` row per
 //!   purchase, the IP available, the plan's cost and the IP left, or the engine's refusal.
-//! - `apply_cyberpunk_improvement` runs the same plan, saves the new Levels, Rank and IP box
+//! - `apply_cyberpunk_improvement` runs the same plan, saves the new Levels, Ranks, Roles and IP box
 //!   through the store (`CprCharacterStore::save_choices`) and answers with the reloaded sheet.
 //!
 //! Every price is `codex::rules_core::cpr::improvement` over the `ip_cost` corpus (Typical
 //! 20 x the next Level, Difficult (x2) 40 x, Role Ability 60 x the next Rank); a purchase is one
 //! Level/Rank up, so a skipped Level is refused (p. 411). The IP entered in the dialog are added
 //! to the IP earned (the GM's award, entered, not computed); spending more than earned minus
-//! spent is refused. A refused plan writes nothing. A Role switch, cyberware installs, therapy
-//! and Reputation are not part of this plan.
+//! spent is refused. A refused plan writes nothing.
+//!
+//! A Role switch (`roleSwitch`) buys Rank 1 in a Role the character does not hold, at the Role
+//! Ability Rank table's Rank 1 price (A-1, 60 IP), only while the latest Role is at Rank 4 or
+//! more (p. 143); the new Role becomes the latest, the earlier Roles keep their Ranks and the sheet
+//! shows each Role's rows. A Rank purchase raises the latest Role. Cyberware installs, therapy and
+//! Reputation are not part of this plan.
 
 use std::path::{Path, PathBuf};
 
@@ -23,6 +29,7 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::cpr::improvement::{CprIpCostCatalog, CprIpTable, CprRoleHistory};
 use codex::rules_core::cpr::input::{CprImprovementPoints, CprSheetChoices};
+use codex::rules_core::cpr::roles::CprRole;
 use codex::rules_core::cpr::sheet::{compose_sheet, CprSheetCatalogs};
 use codex::rules_core::cpr::skills::{slug, CprSkill, CprSkillCatalog};
 use codex::rules_core::cpr::store::CprCharacterStore;
@@ -44,8 +51,10 @@ fn corpus_root() -> PathBuf {
 pub enum CprPurchase {
     /// A Skill by its key as the sheet names it (`Handgun`, `Language (Streetslang)`).
     Skill { key: String, to: u8 },
-    /// The current Role's Ability Rank.
+    /// The latest Role's Ability Rank.
     RoleRank { to: u8 },
+    /// Rank 1 in a Role the character does not hold, by its name (`Nomad`); p. 143, A-1.
+    RoleSwitch { role: String },
 }
 
 /// The improve dialog's plan: the IP entered (added to the IP earned) and the purchases, in order.
@@ -81,12 +90,23 @@ pub struct CprImproveRoleOption {
     pub next: Option<ExplanationDto>,
 }
 
+/// A Role the character does not hold: the engine's A-1 price of its Rank 1, or why the saved
+/// character may not change Roles yet (p. 143).
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprImproveSwitchOption {
+    pub role: String,
+    pub cost: Option<ExplanationDto>,
+    pub refusal: Option<String>,
+}
+
 /// `preview_cyberpunk_improvement`: the options and the plan's rows, or why the plan is refused.
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CprImprovePreview {
     pub skills: Vec<CprImproveSkillOption>,
     pub role: Option<CprImproveRoleOption>,
+    pub switch: Vec<CprImproveSwitchOption>,
     pub rows: Vec<ExplanationDto>,
     pub refusal: Option<String>,
 }
@@ -117,6 +137,24 @@ fn held_index(catalog: &CprSkillCatalog, choices: &CprSheetChoices, key: &str) -
         }
     }
     Ok(None)
+}
+
+/// The Roles `choices` holds, in the order taken; none for a character saved without a Role.
+fn role_history(choices: &CprSheetChoices) -> Result<Option<CprRoleHistory>, String> {
+    let held = choices.held_roles();
+    if held.is_empty() {
+        return Ok(None);
+    }
+    CprRoleHistory::from_roles(held).map(Some)
+}
+
+/// `choices` holding `history`: its last Role the latest, the rest earlier, in order.
+fn set_role_history(choices: &mut CprSheetChoices, history: &CprRoleHistory) {
+    let roles = history.roles();
+    if let Some((latest, earlier)) = roles.split_last() {
+        choices.role = Some(*latest);
+        choices.earlier_roles = earlier.to_vec();
+    }
 }
 
 /// A priced plan: the character's choices after it, and the dialog's rows.
@@ -150,7 +188,7 @@ fn plan(
     request: &CprImproveRequest,
 ) -> Result<PricedPlan, String> {
     if request.purchases.is_empty() && request.ip_awarded == 0 {
-        return Err("nothing to spend: enter IP or choose a Skill Level or Role Rank to buy".to_owned());
+        return Err("nothing to spend: enter IP or choose a Skill Level, Role Rank or Role switch to buy".to_owned());
     }
     let ip = choices.improvement_points.unwrap_or_default();
     let earned = ip
@@ -175,14 +213,20 @@ fn plan(
                 (key.trim().to_owned(), priced)
             }
             CprPurchase::RoleRank { to } => {
-                let (role, rank) = next
-                    .role
-                    .ok_or("the character has no Role, so it has no Role Ability Rank to raise")?;
-                let (_, priced) = costs
-                    .raise_role_rank(&CprRoleHistory::new(role, rank), role, *to)
-                    .map_err(|r| r.to_string())?;
-                next.role = Some((role, *to));
+                let history =
+                    role_history(&next)?.ok_or("the character has no Role, so it has no Role Ability Rank to raise")?;
+                let role = history.current_role();
+                let (after, priced) = costs.raise_role_rank(&history, role, *to).map_err(|r| r.to_string())?;
+                set_role_history(&mut next, &after);
                 (format!("{} Role Ability", role.name()), priced)
+            }
+            CprPurchase::RoleSwitch { role } => {
+                let new_role = CprRole::from_name(role.trim())
+                    .ok_or_else(|| format!("'{}' is not one of the ten Roles (p. 142)", role.trim()))?;
+                let history = role_history(&next)?.ok_or("the character has no Role, so it cannot change Roles")?;
+                let (after, priced) = costs.switch_role(&history, new_role).map_err(|r| r.to_string())?;
+                set_role_history(&mut next, &after);
+                (format!("Role switch to {}", new_role.name()), priced)
             }
         };
         total += u32::try_from(priced.value).map_err(|_| format!("{label}: price {} is not a cost", priced.value))?;
@@ -219,7 +263,7 @@ fn options(
     costs: &CprIpCostCatalog,
     skills: &CprSkillCatalog,
     choices: &CprSheetChoices,
-) -> Result<(Vec<CprImproveSkillOption>, Option<CprImproveRoleOption>), String> {
+) -> Result<(Vec<CprImproveSkillOption>, Option<CprImproveRoleOption>, Vec<CprImproveSwitchOption>), String> {
     let next_row = |id: String, table: CprIpTable, level: u8| -> Option<ExplanationDto> {
         costs.improve(table, level, level + 1).ok().map(|mut row| {
             row.id = id;
@@ -268,15 +312,29 @@ fn options(
             }
         }
     }
+    let history = role_history(choices)?;
     let role = choices.role.map(|(role, rank)| CprImproveRoleOption {
         name: role.name().to_owned(),
         rank,
-        next: costs.raise_role_rank(&CprRoleHistory::new(role, rank), role, rank + 1).ok().map(|(_, mut row)| {
+        next: history.as_ref().and_then(|h| costs.raise_role_rank(h, role, rank + 1).ok()).map(|(_, mut row)| {
             row.id = format!("cpr.improve.role.{}.next", role.id());
             dto(row)
         }),
     });
-    Ok((out, role))
+    let mut switch = Vec::new();
+    if let Some(history) = &history {
+        for candidate in CprRole::ALL.into_iter().filter(|r| history.rank(*r).is_none()) {
+            let (cost, refusal) = match costs.switch_role(history, candidate) {
+                Ok((_, mut row)) => {
+                    row.id = format!("cpr.improve.switch.{}.cost", candidate.id());
+                    (Some(dto(row)), None)
+                }
+                Err(reason) => (None, Some(reason.to_string())),
+            };
+            switch.push(CprImproveSwitchOption { role: candidate.name().to_owned(), cost, refusal });
+        }
+    }
+    Ok((out, role, switch))
 }
 
 /// Load the character at `root`, price the plan, and check the new choices compose (the
@@ -301,16 +359,16 @@ fn priced_at_root(
 /// nothing.
 pub(crate) fn preview_at_root(corpus: &Path, root: &Path, request: &CprImproveRequest) -> Result<CprImprovePreview, String> {
     let (choices, planned) = priced_at_root(corpus, root, request)?;
-    let (skills, role) = options(&CprIpCostCatalog::load(corpus)?, &CprSkillCatalog::load(corpus)?, &choices)?;
+    let (skills, role, switch) = options(&CprIpCostCatalog::load(corpus)?, &CprSkillCatalog::load(corpus)?, &choices)?;
     // A refused plan still shows the IP available, so the dialog can say what there is to spend.
     let (rows, refusal) = match planned {
         Ok((_, rows)) => (rows.into_iter().map(dto).collect(), None),
         Err(reason) => (available_row(&choices, request.ip_awarded).into_iter().map(dto).collect(), Some(reason)),
     };
-    Ok(CprImprovePreview { skills, role, rows, refusal })
+    Ok(CprImprovePreview { skills, role, switch, rows, refusal })
 }
 
-/// Spend the plan on the CPR character at `root`: the new Levels, Rank and IP box are saved
+/// Spend the plan on the CPR character at `root`: the new Levels, Ranks, Roles and IP box are saved
 /// through the store and the reloaded sheet is the answer. A refused plan writes nothing.
 pub(crate) fn apply_at_root(corpus: &Path, root: &Path, request: &CprImproveRequest) -> Result<LoadSavedCharacterResponse, String> {
     let (_, planned) = priced_at_root(corpus, root, request)?;
@@ -534,6 +592,119 @@ mod tests {
             .expect("refused");
         assert!(reason.contains("no Role"), "{reason}");
         std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// `saved_solo` with the Solo at `rank`.
+    fn saved_solo_at(label: &str, rank: u8, ip: CprImprovementPoints) -> PathBuf {
+        let root = saved_solo(label, Some(ip));
+        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
+        choices.role = Some((CprRole::Solo, rank));
+        CprCharacterStore::save_choices(&choices, &root).unwrap();
+        root
+    }
+
+    fn switch(role: &str) -> CprPurchase {
+        CprPurchase::RoleSwitch { role: role.to_owned() }
+    }
+
+    /// A-1 / p. 143: a Solo at Rank 3 may not change Roles (refused, nothing written); at Rank 4
+    /// Rank 1 of Nomad costs 60 IP (the Role Ability Rank table's Rank 1 price), the Solo keeps
+    /// Rank 4, and the reloaded sheet shows both Roles' rank rows and both Role Ability lines.
+    #[test]
+    fn a_role_switch_is_refused_at_rank_3_and_allowed_at_rank_4_and_both_roles_show() {
+        let at3 = saved_solo_at("switch3", 3, CprImprovementPoints { earned: 200, spent: 0 });
+        let before = choices_text(&at3);
+        let plan = request(0, vec![switch("Nomad")]);
+        let reason = preview_at_root(&corpus(), &at3, &plan).expect("previews").refusal.expect("refused");
+        assert!(reason.contains("Rank 3") && reason.contains("p. 143"), "{reason}");
+        assert!(apply_at_root(&corpus(), &at3, &plan).unwrap_err().contains("Rank 3"));
+        assert_eq!(choices_text(&at3), before, "a refused switch writes nothing");
+        std::fs::remove_dir_all(at3.parent().unwrap()).ok();
+
+        let at4 = saved_solo_at("switch4", 4, CprImprovementPoints { earned: 200, spent: 0 });
+        let preview = preview_at_root(&corpus(), &at4, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.cost"), 60, "A-1: the Rank 1 price");
+        assert!(preview.rows[0].detail.contains("Nomad") && preview.rows[0].detail.contains("A-1"), "{}", preview.rows[0].detail);
+        assert_eq!(row(&preview.rows, "cpr.improve.ip.remaining"), 140);
+
+        let loaded = apply_at_root(&corpus(), &at4, &plan).expect("applies");
+        let sheet = |id: &str| row(&loaded.explanations, id);
+        assert_eq!(sheet("cpr.role.solo.rank"), 4, "the earlier Role keeps its Rank");
+        assert_eq!(sheet("cpr.role.solo.combat_awareness_points"), 4);
+        assert_eq!(sheet("cpr.role.nomad.rank"), 1, "the new Role starts at Rank 1");
+        assert_eq!(sheet("cpr.role.nomad.vehicle_familiarity_bonus"), 1);
+        assert_eq!((sheet("cpr.ip.current"), sheet("cpr.ip.total")), (140, 200));
+        for id in ["cpr.print.role_ability.solo", "cpr.print.role_ability.nomad"] {
+            assert!(loaded.sheet_lines.iter().any(|l| l.id == id), "no line {id}");
+        }
+        let saved = CprCharacterStore::load_choices(&at4).unwrap();
+        assert_eq!(saved.role, Some((CprRole::Nomad, 1)));
+        assert_eq!(saved.earlier_roles, vec![(CprRole::Solo, 4)]);
+        std::fs::remove_dir_all(at4.parent().unwrap()).ok();
+    }
+
+    /// One plan may raise the Solo 3 -> 4 (240) and then switch (60); a Rank purchase after the
+    /// switch raises the new Role (Nomad 1 -> 2, 120), and a second switch is locked until the
+    /// latest Role reaches Rank 4. A Role already held, or not one of the ten, is refused.
+    #[test]
+    fn a_plan_can_reach_rank_4_then_switch_and_the_next_switch_waits_for_the_new_role() {
+        let root = saved_solo_at("switchplan", 3, CprImprovementPoints { earned: 1000, spent: 0 });
+        let plan = request(0, vec![CprPurchase::RoleRank { to: 4 }, switch("Nomad"), CprPurchase::RoleRank { to: 2 }]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        assert_eq!(
+            [0, 1, 2].map(|i| row(&preview.rows, &format!("cpr.improve.purchase.{i}.cost"))),
+            [240, 60, 120]
+        );
+        assert_eq!(row(&preview.rows, "cpr.improve.ip.cost"), 420);
+        let again = request(0, vec![CprPurchase::RoleRank { to: 4 }, switch("Nomad"), switch("Fixer")]);
+        let reason = preview_at_root(&corpus(), &root, &again).expect("previews").refusal.expect("locked");
+        assert!(reason.contains("Nomad, is at Rank 1"), "{reason}");
+        let refusal = |plan: CprImproveRequest| preview_at_root(&corpus(), &root, &plan).expect("previews").refusal.expect("refused");
+        assert!(refusal(request(0, vec![CprPurchase::RoleRank { to: 4 }, switch("Solo")])).contains("already has the Solo Role"));
+        assert!(refusal(request(0, vec![switch("Cowboy")])).contains("not one of the ten Roles"));
+
+        let loaded = apply_at_root(&corpus(), &root, &plan).expect("applies");
+        assert_eq!(row(&loaded.explanations, "cpr.role.solo.rank"), 4);
+        assert_eq!(row(&loaded.explanations, "cpr.role.nomad.rank"), 2);
+        assert_eq!(row(&loaded.explanations, "cpr.ip.current"), 580);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// The preview offers every Role the character does not hold: at Rank 4 each with the
+    /// engine's A-1 price row, at Rank 3 each with the engine's refusal instead.
+    #[test]
+    fn the_preview_offers_each_unheld_role_with_its_price_or_the_lock() {
+        let at4 = saved_solo_at("switchopts4", 4, CprImprovementPoints { earned: 0, spent: 0 });
+        let preview = preview_at_root(&corpus(), &at4, &request(0, vec![switch("Nomad")])).expect("previews");
+        assert_eq!(preview.switch.len(), 9, "the ten Roles less the Solo");
+        assert!(preview.switch.iter().all(|o| o.role != "Solo"));
+        for option in &preview.switch {
+            assert_eq!(option.cost.as_ref().map(|r| r.value), Some(60), "{}", option.role);
+            assert_eq!(option.refusal, None);
+        }
+        std::fs::remove_dir_all(at4.parent().unwrap()).ok();
+
+        let at3 = saved_solo_at("switchopts3", 3, CprImprovementPoints { earned: 0, spent: 0 });
+        let preview = preview_at_root(&corpus(), &at3, &request(0, vec![switch("Nomad")])).expect("previews");
+        assert_eq!(preview.switch.len(), 9);
+        for option in &preview.switch {
+            assert!(option.cost.is_none(), "{}", option.role);
+            assert!(option.refusal.as_deref().is_some_and(|r| r.contains("Rank 3")), "{:?}", option.refusal);
+        }
+        std::fs::remove_dir_all(at3.parent().unwrap()).ok();
+    }
+
+    #[test]
+    fn a_role_switch_deserialises_from_the_frontend_wire_shape() {
+        let wire = serde_json::json!({
+            "characterId": "cpr-improve",
+            "ipAwarded": 0,
+            "purchases": [{ "kind": "roleSwitch", "role": "Nomad" }]
+        });
+        let parsed: CprImproveRequest = serde_json::from_value(wire).expect("deserialises");
+        assert_eq!(parsed.purchases, vec![switch("Nomad")]);
     }
 
     /// The wire shape `cprImprove.ts` sends: `{ characterId, ipAwarded, purchases: [{ kind:

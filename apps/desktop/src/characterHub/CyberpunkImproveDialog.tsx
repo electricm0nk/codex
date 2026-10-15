@@ -18,11 +18,13 @@ import {
   purchaseLabel,
   removePurchase,
   skillPurchaseKey,
+  switchOptionLabel,
 } from './cyberpunkImproveModel';
 
 /**
  * The Cyberpunk RED improve dialog (SD-38 E5.1): the player enters the IP the GM awarded and buys
- * Skill Levels and Role Ability Ranks one step at a time. Every change is priced by the engine
+ * Skill Levels and Role Ability Ranks one step at a time, or changes Roles (E5.2: Rank 1 of a new Role
+ * once the latest Role is at Rank 4, p. 143; priced by the engine at the A-1 Rank 1 price). Every change is priced by the engine
  * (`preview_cyberpunk_improvement`): each purchase's cost, the IP available, the plan's cost and the
  * IP left are its rows, and a skipped Level or an overspend shows its refusal. "Spend IP" saves
  * through `apply_cyberpunk_improvement` and hands the reloaded sheet to `onApplied`.
@@ -42,6 +44,7 @@ export function CyberpunkImproveDialog(props: {
   const [specialty, setSpecialty] = useState('');
   const [skillTarget, setSkillTarget] = useState('');
   const [rankTarget, setRankTarget] = useState('');
+  const [switchRole, setSwitchRole] = useState('');
   const [spending, setSpending] = useState(false);
   const [spendError, setSpendError] = useState<string | null>(null);
   const mounted = useRef(true);
@@ -213,6 +216,40 @@ export function CyberpunkImproveDialog(props: {
           >
             Add Role Rank
           </button>
+        </div>
+      )}
+
+      {role === null ? null : (
+        <div data-testid="cpr-improve-switch">
+          <p style={noteStyle}>
+            Multiclassing (p. 143): you can change Roles anytime you have completed at least 4 Ranks in your previous Role by buying
+            Rank 1 in the new Role with Improvement Points. You then start the new Role at Rank 1. When you switch, you&apos;ll be locked
+            from multiclassing again until your latest Role is at least Rank 4. You can continue increasing the Rank of your previous Role,
+            and you retain all features granted by it.
+          </p>
+          <div style={rowStyle}>
+            <select aria-label="New Role" value={switchRole} onChange={(event) => setSwitchRole(event.target.value)} style={inputStyle}>
+              <option value="">— change Role to —</option>
+              {(preview?.switch ?? []).map((o) => (
+                <option key={o.role} value={o.role} title={o.refusal ?? o.cost?.detail ?? ''}>
+                  {switchOptionLabel(o)}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              disabled={switchRole === ''}
+              onClick={() => {
+                if (switchRole !== '') {
+                  setPlan(addPurchase(plan, { kind: 'roleSwitch', role: switchRole }));
+                  setSwitchRole('');
+                }
+              }}
+              style={buttonStyle}
+            >
+              Add Role switch
+            </button>
+          </div>
         </div>
       )}
 

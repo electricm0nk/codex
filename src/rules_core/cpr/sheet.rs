@@ -523,8 +523,8 @@ pub fn compose_sheet(
         ));
     }
 
-    // 6. Role Ability and the Netrunner's deck.
-    if let Some((role, rank)) = choices.role {
+    // 6. Role Ability and the Netrunner's deck: every Role held, earlier Roles first (p. 143).
+    for (role, rank) in choices.held_roles() {
         rows.extend(catalogs.roles.rank_rows(role, rank).map_err(|e| e.to_string())?);
         if role == CprRole::Netrunner {
             let deck = match &choices.deck {
@@ -581,7 +581,7 @@ pub fn compose_sheet(
             }
         }
     }
-    if choices.deck.is_some() && choices.role.map(|(r, _)| r) != Some(CprRole::Netrunner) {
+    if choices.deck.is_some() && !choices.held_roles().iter().any(|(r, _)| *r == CprRole::Netrunner) {
         return Err("a Cyberdeck block needs the Netrunner Role: its NET Actions come from the Interface rank (p. 197)".to_owned());
     }
 
@@ -773,6 +773,7 @@ mod tests {
         let input = CprCharacterInput { stats: stats([5, 8, 7, 4, 6, 5, 6, 6, 6, 6]) };
         let choices = CprSheetChoices {
             role: Some((CprRole::Solo, 4)),
+            earlier_roles: Vec::new(),
             skills: [
                 ("Handgun", 4),
                 ("Brawling", 2),
@@ -1094,6 +1095,30 @@ mod tests {
         assert_eq!(row(&sheet, "cpr.netrunning.deck_slots_used"), 7 + 1);
         assert_eq!((row(&sheet, "cpr.armor.sp_head"), row(&sheet, "cpr.armor.sp_body")), (11, 11), "p. 350");
         assert!(sheet.printed.iter().any(|p| p.id == "cpr.netrunning.brain_damage" && p.form == CprPrintedForm::Words));
+    }
+
+    /// After a Role switch (p. 143, E5.2) the sheet shows every Role the character holds with the
+    /// values its own Rank gives: a Solo 4 who took Nomad has Combat Awareness 4 and Vehicle
+    /// Familiarity +1 (Moto Rank 1, p. 161). A Netrunner who changed Roles keeps the Interface
+    /// Rank's NET Actions and the deck block (p. 147, p. 197).
+    #[test]
+    fn every_held_role_shows_its_rank_rows_after_a_role_switch() {
+        let (input, mut choices) = kestrel();
+        choices.earlier_roles = vec![(CprRole::Solo, 4)];
+        choices.role = Some((CprRole::Nomad, 1));
+        let sheet = compose(&(input, choices)).expect("composes");
+        assert_eq!(row(&sheet, "cpr.role.solo.rank"), 4);
+        assert_eq!(row(&sheet, "cpr.role.solo.combat_awareness_points"), 4);
+        assert_eq!(row(&sheet, "cpr.role.nomad.rank"), 1);
+        assert_eq!(row(&sheet, "cpr.role.nomad.vehicle_familiarity_bonus"), 1);
+
+        let (input, mut choices) = spider();
+        choices.earlier_roles = vec![(CprRole::Netrunner, 4)];
+        choices.role = Some((CprRole::Fixer, 1));
+        let sheet = compose(&(input, choices)).expect("a former Netrunner keeps the deck");
+        assert_eq!(row(&sheet, "cpr.role.netrunner.net_actions"), 3);
+        assert_eq!(row(&sheet, "cpr.netrunning.net_actions"), 3);
+        assert_eq!(row(&sheet, "cpr.role.fixer.haggle_bonus"), 1);
     }
 
     /// The cyberware block lists each installed piece: its name printed and its preset Humanity

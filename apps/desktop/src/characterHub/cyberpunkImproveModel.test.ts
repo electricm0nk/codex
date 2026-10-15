@@ -10,6 +10,7 @@ import {
   purchaseLabel,
   removePurchase,
   skillPurchaseKey,
+  switchOptionLabel,
 } from './cyberpunkImproveModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -63,10 +64,24 @@ assertEqual(plan.purchases.length, 2, 'two purchases');
 assertEqual(purchaseLabel(plan.purchases[0]), 'Handgun to Level 7', 'skill label');
 assertEqual(purchaseLabel(plan.purchases[1]), 'Role Ability to Rank 5', 'rank label');
 
+// 3b. A Role switch (E5.2, p. 143): the new Role starts at Rank 1, so a Rank purchase after it asks for Rank 2 of the new Role.
+let switched = addPurchase(addPurchase(EMPTY_CYBERPUNK_IMPROVE_PLAN, { kind: 'roleSwitch', role: 'Nomad' }), { kind: 'roleRank', to: 2 });
+assertEqual(nextTarget(addPurchase(EMPTY_CYBERPUNK_IMPROVE_PLAN, { kind: 'roleSwitch', role: 'Nomad' }), { kind: 'roleRank' }, 4), 2, 'after a switch, Rank 2');
+assertEqual(nextTarget(switched, { kind: 'roleRank' }, 4), 3, 'after the switch and Rank 2, Rank 3');
+assertEqual(purchaseLabel(switched.purchases[0]), 'Switch Role to Nomad (Rank 1)', 'switch label');
+assertEqual(purchaseLabel(switched.purchases[1]), 'Role Ability to Rank 2', 'the rank after the switch');
+const switchOptions = [
+  { role: 'Nomad', cost: { id: 'cpr.improve.switch.nomad.cost', value: 60, detail: '60 IP: Rank 1 in the Nomad Role (A-1)' }, refusal: null },
+  { role: 'Fixer', cost: null, refusal: 'cannot change Roles: the latest Role, Solo, is at Rank 3; it must reach Rank 4 first (p. 143)' },
+];
+assertEqual(switchOptionLabel(switchOptions[0]), 'Nomad — Rank 1 for 60 IP', 'a priced switch option shows the engine price');
+assertEqual(switchOptionLabel(switchOptions[1]), 'Fixer — locked (p. 143)', 'a locked option is marked; the engine refusal says why');
+
 // 4. Every figure the dialog shows is an engine row, found by id.
 const preview: CyberpunkImprovePreview = {
   skills: [handgun, language],
   role: { name: 'Solo', rank: 4, next: { id: 'cpr.improve.role.solo.next', value: 300, detail: '300 IP' } },
+  switch: switchOptions,
   rows: [
     { id: 'cpr.improve.purchase.0.cost', value: 1140, detail: 'Handgun' },
     { id: 'cpr.improve.purchase.1.cost', value: 1300, detail: 'Solo' },
@@ -95,4 +110,4 @@ const removed = removePurchase(plan, 0);
 assertEqual(removed.purchases.length, 1, 'one left');
 assertEqual(purchaseLabel(removed.purchases[0]), 'Role Ability to Rank 5', 'the rank purchase stays');
 
-console.log('cyberpunkImproveModel: IP entry, keys, targets, engine-row figures and spend gate checked');
+console.log('cyberpunkImproveModel: IP entry, keys, targets, Role switch, engine-row figures and spend gate checked');

@@ -6,7 +6,7 @@ import { formatError, hasTauriRuntime } from './runtime';
  * Desktop boundary over the Cyberpunk RED improve dialog (SD-38 E5.1):
  * `preview_cyberpunk_improvement` and `apply_cyberpunk_improvement`
  * (`apps/desktop/src-tauri/src/cpr_improve.rs`). The dialog sends its plan -- the IP entered and the
- * purchases, one Skill Level or Role Rank each -- and the engine prices it on the p. 411 tables,
+ * purchases, one Skill Level, Role Rank or Role switch each -- and the engine prices it on the p. 411 tables,
  * refuses a skipped Level or an overspend, and (on apply) saves through the store and answers with
  * the reloaded sheet. Nothing here prices or counts.
  */
@@ -36,14 +36,36 @@ export interface CyberpunkImproveRoleOption {
   next: CyberpunkImproveRow | null;
 }
 
+/** A Role the character does not hold: the engine's A-1 price of its Rank 1, or why it is locked (p. 143). */
+export interface CyberpunkImproveSwitchOption {
+  role: string;
+  cost: CyberpunkImproveRow | null;
+  refusal: string | null;
+}
+
 export interface CyberpunkImprovePreview {
   skills: CyberpunkImproveSkillOption[];
   role: CyberpunkImproveRoleOption | null;
+  switch: CyberpunkImproveSwitchOption[];
   rows: CyberpunkImproveRow[];
   refusal: string | null;
 }
 
-export type CyberpunkPurchase = { kind: 'skill'; key: string; to: number } | { kind: 'roleRank'; to: number };
+export type CyberpunkPurchase =
+  | { kind: 'skill'; key: string; to: number }
+  | { kind: 'roleRank'; to: number }
+  | { kind: 'roleSwitch'; role: string };
+
+function wirePurchase(p: CyberpunkPurchase) {
+  switch (p.kind) {
+    case 'skill':
+      return { kind: 'skill', key: p.key, to: p.to };
+    case 'roleRank':
+      return { kind: 'roleRank', to: p.to };
+    case 'roleSwitch':
+      return { kind: 'roleSwitch', role: p.role };
+  }
+}
 
 export interface CyberpunkImprovePlan {
   ipAwarded: number;
@@ -55,7 +77,7 @@ function request(characterId: string, plan: CyberpunkImprovePlan) {
     request: {
       characterId,
       ipAwarded: plan.ipAwarded,
-      purchases: plan.purchases.map((p) => (p.kind === 'skill' ? { kind: 'skill', key: p.key, to: p.to } : { kind: 'roleRank', to: p.to })),
+      purchases: plan.purchases.map(wirePurchase),
     },
   };
 }

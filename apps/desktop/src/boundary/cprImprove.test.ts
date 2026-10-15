@@ -7,7 +7,7 @@ import { assertEqual } from '../testSupport/asserts';
  * SD-38 E5.1: the improve dialog previews and spends through `preview_cyberpunk_improvement` and
  * `apply_cyberpunk_improvement` (`apps/desktop/src-tauri/src/cpr_improve.rs`). This proves the wire
  * shape the Rust commands deserialise (`CprImproveRequest`: `{ request: { characterId, ipAwarded,
- * purchases: [{ kind: 'skill', key, to } | { kind: 'roleRank', to }] } }`), that the preview and the
+ * purchases: [{ kind: 'skill', key, to } | { kind: 'roleRank', to } | { kind: 'roleSwitch', role }] } }`), that the preview and the
  * reloaded sheet are handed back as answered, and that a refusal reaches the caller with its reason.
  * The prices, the refusals and the save are proved against the real store in Rust.
  */
@@ -26,6 +26,7 @@ async function main() {
     purchases: [
       { kind: 'skill' as const, key: 'Handgun', to: 7 },
       { kind: 'roleRank' as const, to: 5 },
+      { kind: 'roleSwitch' as const, role: 'Nomad' },
     ],
   };
   assertEqual(
@@ -45,6 +46,7 @@ async function main() {
   const preview: CyberpunkImprovePreview = {
     skills: [],
     role: null,
+    switch: [],
     rows: [{ id: 'cpr.improve.ip.available', value: 200, detail: 'Improvement Points available 200' }],
     refusal: null,
   };
@@ -73,6 +75,7 @@ async function main() {
         purchases: [
           { kind: 'skill', key: 'Handgun', to: 7 },
           { kind: 'roleRank', to: 5 },
+          { kind: 'roleSwitch', role: 'Nomad' },
         ],
       },
     });

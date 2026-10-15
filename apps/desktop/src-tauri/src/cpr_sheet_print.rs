@@ -162,28 +162,33 @@ pub(crate) fn sheet_lines(
     Ok(lines)
 }
 
-/// The Role Ability's rule text with every `cpr.role.<role>.` row's figure on the line.
+/// Each held Role's Ability rule text (earlier Roles first, p. 143) with every
+/// `cpr.role.<role>.` row's figure on the line.
 fn role_ability_lines(catalog: &CprPrintCatalog, sheet: &CprSheet, choices: &CprSheetChoices) -> Result<Vec<SheetLineDto>, String> {
-    let Some((role, _)) = choices.role else { return Ok(Vec::new()) };
-    let record = catalog
-        .role_abilities
-        .iter()
-        .find(|r| r.role == role.name())
-        .ok_or_else(|| format!("cpr_sheet_print: role_ability.json holds no Role Ability of the {}", role.name()))?;
-    let prefix = format!("cpr.role.{}.", role.id());
-    let also: Vec<String> = sheet.rows.iter().filter(|r| r.id.starts_with(&prefix)).map(|r| row_figure(&r.detail).to_owned()).collect();
-    if also.is_empty() {
-        return Err(format!("cpr_sheet_print: the sheet has no {prefix}* row for the {} Role Ability", record.name));
+    let mut lines = Vec::new();
+    for (role, _) in choices.held_roles() {
+        let record = catalog
+            .role_abilities
+            .iter()
+            .find(|r| r.role == role.name())
+            .ok_or_else(|| format!("cpr_sheet_print: role_ability.json holds no Role Ability of the {}", role.name()))?;
+        let prefix = format!("cpr.role.{}.", role.id());
+        let also: Vec<String> =
+            sheet.rows.iter().filter(|r| r.id.starts_with(&prefix)).map(|r| row_figure(&r.detail).to_owned()).collect();
+        if also.is_empty() {
+            return Err(format!("cpr_sheet_print: the sheet has no {prefix}* row for the {} Role Ability", record.name));
+        }
+        lines.push(line(
+            format!("cpr.print.role_ability.{}", role.id()),
+            "role_ability",
+            record.name.clone(),
+            "words",
+            String::new(),
+            also,
+            format!("{} (Cyberpunk RED core rulebook {})", record.text, record.source_page),
+        ));
     }
-    Ok(vec![line(
-        format!("cpr.print.role_ability.{}", role.id()),
-        "role_ability",
-        record.name.clone(),
-        "words",
-        String::new(),
-        also,
-        format!("{} (Cyberpunk RED core rulebook {})", record.text, record.source_page),
-    )])
+    Ok(lines)
 }
 
 /// Each installed piece's effect text with its Humanity Loss, then the D-6 Humanity line.
