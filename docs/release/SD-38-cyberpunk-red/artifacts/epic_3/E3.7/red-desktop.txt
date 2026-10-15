@@ -1,0 +1,50 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/crates/codex-ingest)
+error[E0425]: cannot find value `REFUSED_CYBERWARE` in this scope
+    --> src/cpr_creation.rs:2409:49
+     |
+2409 |         preview.problems.iter().any(|p| p.id == REFUSED_CYBERWARE && p.claim_blocking && words.iter().all(|w| p.message.contains(w)))
+     |                                                 ^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `REFUSED_CYBERWARE` in this scope
+    --> src/cpr_creation.rs:2552:118
+     |
+2552 | ...cs } if diagnostics.iter().any(|d| d.id == REFUSED_CYBERWARE)), "{response:?}");
+     |                                               ^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0609]: no field `cyberware` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2468:41
+     |
+2468 |                 let cyberware = preview.cyberware.as_ref().expect("a cyberware step");
+     |                                         ^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 10 others
+
+error[E0609]: no field `cyberware` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2479:43
+     |
+2479 |             let shown: Vec<String> = base.cyberware.as_ref().unwrap().pieces.iter().map(|p| p.name.clone()).collect();
+     |                                           ^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 10 others
+
+error[E0609]: no field `cyberware` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2512:41
+     |
+2512 |                 let cyberware = preview.cyberware.as_ref().unwrap();
+     |                                         ^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 10 others
+
+error[E0609]: no field `cyberware` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2585:21
+     |
+2585 |             preview.cyberware.as_ref().unwrap().pieces.iter().map(|p| (p.name.clone(), p.mount.clone())).collect();
+     |                     ^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 10 others
+
+Some errors have detailed explanations: E0425, E0609.
+For more information about an error, try `rustc --explain E0425`.
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 6 previous errors
