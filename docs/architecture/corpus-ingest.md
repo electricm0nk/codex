@@ -262,15 +262,16 @@ from `codex::rules_core::game_system::GameSystem::package_roots`.
 
 Cyberpunk RED is the one game system with **no ingest pipeline**. Its corpus is a hand transcription of the corebook PDF (v1.22, source outside git)
 into one JSON file per record kind; no PCGen data exists for it, no converter produced it and nothing regenerates it. The converter refuses it by
-name rather than falling back to another system: `crates/codex-ingest/src/pcgen_import/system_books.rs` gives it `None` for its game mode, work
-inventory and variable-name directory, `require_pcgen_data` returns `no PCGen data for cyberpunk-red`, and `sheet_rule_convert --system cyberpunk-red`
+name rather than falling back to another system: `crates/codex-ingest/src/pcgen_import/system_books.rs` gives it `None` for its game mode (`GAME_MODES`)
+and no books, `crates/codex-ingest/src/pcgen_import/sheet_rule/mod.rs` gives it `None` for its work inventory (`WORK_INVENTORY`) and
+variable-name directory (`VAR_NAMES_DIR`), `require_pcgen_data` (`system_books.rs`) returns `no PCGen data for cyberpunk-red`, and `sheet_rule_convert --system cyberpunk-red`
 exits non-zero (pinned by `cyberpunk_red_is_refused_by_name`). No PCGen oracle governs any Cyberpunk figure.
 
 | File | Holds |
 |---|---|
 | `MANIFEST.json` | One entry per kind: `kind`, `file`, `expected` (record count), `figure` (the content-unit inventory figure), `print_only`, `nested` (sub-table counts or null) and `lane` |
 | `<kind>.json` | A JSON array of records, each carrying a `source_page` of the form `pNNN` (the page-image file number, one more than the printed page) |
-| `LICENSE.json` | The licence declaration and the operator sign-off: `open_game_content` is `false` and `operator_sign_off.signed_off` is `true`; the operator ruled the whole text ships in a private single-user build, and nothing here is legal clearance |
+| `LICENSE.json` | The licence declaration and the operator sign-off: `license_declaration.open_game_content` is `false` and `operator_sign_off.signed_off` is `true`; the operator ruled the whole text ships in a private single-user build, and nothing here is legal clearance |
 
 Re-derived: `jq -r '[(.kinds|length), ([.kinds[].expected]|add), ([.kinds[]|select(.print_only)]|length)]|map(tostring)|join(" ")' data/cyberpunk-red/corpus/MANIFEST.json`
 prints `53 930 8` (kinds, records they expect, kinds shipped print-only) and `git ls-files data/cyberpunk-red | awk 'END{print NR}'` prints `55` tracked files.

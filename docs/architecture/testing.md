@@ -148,7 +148,7 @@ that it is dev-only.*
 - **`codex-ingest` (`crates/codex-ingest`)** — `cargo test --locked -p codex-ingest` (from repo
   root; it's a workspace member) or `cd crates/codex-ingest && cargo test --locked`. Recorded
   floors: `BASELINE_INGEST_FULL_TESTS=1841`, `BASELINE_INGEST_TEST_BINARIES=176` (`ls crates/codex-ingest/tests/*.rs | wc -l` → 126
-  `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | wc -l` → 48 `src/bin/*.rs` unit-test targets, plus the lib target). Its `#[ignore]`-gated
+  `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | wc -l` → 49 `src/bin/*.rs` unit-test targets, plus the lib target: 126 + 49 + 1 = 176). Its `#[ignore]`-gated
   suites are the oracle-parity tier (see [Corpus-gated tests](#corpus-gated-tests)); they need a
   real, pinned local PCGen checkout and do not run in a plain `cargo test`.
 - **`codex-desktop` (`apps/desktop/src-tauri`)** — `cd apps/desktop/src-tauri && cargo test --locked`.

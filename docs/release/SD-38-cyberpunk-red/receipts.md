@@ -24,3 +24,17 @@ This file holds YAML receipts appended by the closure scripts: architecture trut
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: "truth-up touched 11 doc(s) in 296e80e7bb (edited by hand before the script ran; Opus claims critic follows as part 2 of E7.9). The script's own lines said 'docs touched none, no architecture impact': its README index parser needs a leading '||' per row and matches 0 of the 14 linked rows, so it maps no path to any doc (the same defect SD-37 E7.7 recorded, retro correction 1791397812938-sd37-e7-7-7cf9ac). The script's two verification one-liners ran and passed; the README's two one-liners (which include the crates/ and data/ roots the script's cited-path grep omits) were also run and print nothing. Figures: command count 103 by the python parse of generate_handler (HEAD 103, origin/develop 96, tranche/17 b99c3d4b02 86); Cyberpunk figures are release-notes R-n figures, `python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_7/E7.8_check.py --plant` -> RELEASE_NOTES_CHECK_OK 14 figures, 3 plants rejected."
+
+- cycle_id: 2026-10-15T21:00:00Z
+  row_or_kind: architecture:claims_critic
+  bundle: SD-38
+  model: opus
+  branch_tip_before: 4c4ff18d6e
+  docs_checked: [README.md, corpus-ingest.md, desktop-app.md, glossary.md, homebrew-and-oracle.md, overview.md, persistence.md, release-pipeline.md, rules-engine.md, status.md, testing.md]
+  docs_corrected: [corpus-ingest.md, desktop-app.md, rules-engine.md, status.md, testing.md]
+  claims_refuted: 11
+  blockers_after_fixes: 0
+  identifiers_checked: "145 of 145 backticked identifiers in part 1's added lines found in src/apps/crates/tests/scripts/.github (git grep -w -F -f)"
+  cited_path_check: pass
+  relative_link_check: pass
+  receipt_note: "Opus claims critic (E7.9 part 2). Refuted and fixed: the cpr 'every table value from the corpus' claim (netrunning.rs holds NET Actions, deck slots and Program/Black ICE slot costs as code); status.md command arithmetic (86 + 6 + 4 + 7 = 103); WORK_INVENTORY/VAR_NAMES_DIR live in sheet_rule/mod.rs, not system_books.rs; two stale 103-row ui-smoke figures (127 now) and 'two' PF render-hash seeds (three); ingest bin count 48 -> 49; understated cpr_improve capability; Improve dialog host; reputation/critical refusals; LICENSE.json field path; R-n provenance in status.md header. Full list with refuting commands: artifacts/epic_7/E7.9_cycle_receipt.md part 2."

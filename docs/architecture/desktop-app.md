@@ -157,7 +157,7 @@ Grouped by the Rust file that defines each command:
 | `character_hub.rs` (Create-screen draft previews) | `draft_sheet_preview`, `draft_level_up_preview` | The engine's initiative total and carried load for a Create-screen draft that is not saved yet, and the engine's grant names for the draft's class-level transition (empty is a real answer: per-level grants are grounded for the eleven PF1 Core classes only) | `CreateCharacterForm.tsx` |
 | `cpr_creation.rs` | `preview_cyberpunk_character`, `create_cyberpunk_character` | Cyberpunk RED creation by the book's three methods (Streetrat, Edgerunner, Complete Package): template row, STAT rolls from one seedable roller (`CprRoller`; a create sent with a preview's seed draws the same dice), Lifepath, skills, Role Ability sub-choices, starting kit and cash, cyberware; every number is a `cpr.` row | `CyberpunkCreateForm.tsx` via `boundary/cprCreation.ts` |
 | `cpr_adapter.rs` | `save_cyberpunk_criticals` | Saves the sheet's critical-injury checklist (an injury whose engine check refuses is not saved) and answers with the reloaded sheet; the module also holds `CyberpunkAdapter` and the three starter requests | `CyberpunkCharacterSheet.tsx` |
-| `cpr_improve.rs` | `preview_cyberpunk_improvement`, `apply_cyberpunk_improvement` | Spending Improvement Points on Skill Levels and Role Ability Rank, and changing Role, priced by the engine (`cpr::improvement`); preview answers with option rows and a `cpr.improve.purchase.<i>.cost` row per purchase, apply saves and reloads the sheet | `CyberpunkImproveDialog.tsx` via `boundary/cprImprove.ts` |
+| `cpr_improve.rs` | `preview_cyberpunk_improvement`, `apply_cyberpunk_improvement` | Spending Improvement Points on Skill Levels and Role Ability Rank, and changing Role, priced by the engine (`cpr::improvement`); also, at no IP cost, a cyberware install after creation (Humanity Loss entered or rolled with the request's seed, refused outside the piece's dice or over its slots), therapy (Humanity regained, capped at the maximum Humanity) and a Reputation event (Level 1-10, replace-only-if-higher); preview answers with option rows and a `cpr.improve.purchase.<i>.cost` row per purchase, apply saves and reloads the sheet | `CyberpunkImproveDialog.tsx` via `boundary/cprImprove.ts` |
 | `cpr_catalog.rs` | `list_cyberpunk_catalog`, `compute_cyberpunk_deck` | Every record of one MANIFEST kind from `data/cyberpunk-red/corpus` (a kind the MANIFEST does not list is refused); a Cyberdeck's slot rows from the engine (`cpr.netrunning.*`), a loadout over the deck's slots refused | `cyberpunkCatalog/CyberpunkCatalogScreen.tsx`, `cyberpunkCatalog/deck/CyberpunkDeckScreen.tsx` via `boundary/loadCyberpunkCatalog.ts`, `boundary/cprDeck.ts` |
 | `sf_creation.rs` | `preview_starfinder_character`, `create_starfinder_character` | Starfinder creation flow: race, theme, class, point buy (budget 10, cap 18) served from the converted package and `sf_abilities`; saves the `CharacterInput` `sf_adapter` reads | `StarfinderCreateForm.tsx` via `boundary/starfinderCreation.ts` |
 | `sf_level_up.rs` | `preview_starfinder_level_up`, `level_up_starfinder_character` | Starfinder level-up: classes, the 5/10/15/20 increase, skill ranks, owed picks and every `sf.*` total the level changes (`compute_sheet` at both levels); accept saves | `StarfinderLevelUpDialog.tsx` via `boundary/starfinderLevelUp.ts` |
@@ -439,13 +439,14 @@ Under the Starfinder 1e chip on `LandingScreen.tsx`:
   Pathfinder links (`starfinderCatalog/StarfinderCatalogScreen.tsx`, `list_starfinder_catalog`).
 - **Harnesses** — ui-smoke rows `build-/open-starfinder-{soldier,mystic,technomancer,envoy}` create each seed through the
   creation flow, level it, give it feats/spells/gear and reopen it from the saved store; the harness runs against an isolated
-  `XDG_DATA_HOME` and records the real store's entry count and sha256 before and after (`103` rows, `14` Starfinder).
-  `sf_oracle_parity.rs` is the oracle-parity gate (see [homebrew-and-oracle.md](./homebrew-and-oracle.md)). The two
-  Pathfinder seeds have a render-hash pair (`pf_seed_render_hash.rs`, `pf_catalog_dump_hash.rs`); Starfinder has none.
+  `XDG_DATA_HOME` and records the real store's entry count and sha256 before and after (`127` rows on `tranche-18`, `14` Starfinder; `103` at SD-37).
+  `sf_oracle_parity.rs` is the oracle-parity gate (see [homebrew-and-oracle.md](./homebrew-and-oracle.md)). The three
+  Pathfinder seeds (Aldric, Elowen, Tomas) have render hashes (`pf_seed_render_hash.rs`; `pf_catalog_dump_hash.rs` hashes the Pathfinder catalog
+  outputs); Starfinder has none.
 
 ## Cyberpunk RED surface
 
-Under the Cyberpunk Red chip on `LandingScreen.tsx` (`CharacterHubPage.tsx` routes to each screen below):
+Under the Cyberpunk Red chip on `LandingScreen.tsx` (`CharacterHubPage.tsx` routes to Create, the sheet and the catalogs; the Improve dialog opens from the sheet):
 
 - **Create** — `CyberpunkCreateForm.tsx` (layout in `cyberpunkCreateLayout.ts`, request model in `cyberpunkCreationModel.ts`) over
   `preview_cyberpunk_character` / `create_cyberpunk_character`: Streetrat, Edgerunner and Complete Package STATs, the Lifepath, the

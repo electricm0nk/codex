@@ -785,24 +785,27 @@ PCGen data, hence no converted package (`GameSystem::sheet_rules_relative` is `N
 `None` for it); its rules live in `src/rules_core/cpr/` and read the hand-transcribed corpus at `data/cyberpunk-red/corpus/` (see
 [corpus-ingest.md](./corpus-ingest.md) §"The Cyberpunk RED corpus"). The paper-sheet rule governs: only a value that lands on the sheet as a
 number is computed; text rules are printed, and dice stay literal on the sheet. Each computed value is one `cpr.<area>.<field>` explanation row
-(`sheet.rs`); no frontend code re-derives one. Every table value an engine module uses is read from a corpus record, and a corpus table that is
-missing, short or out of order is a refusal, never a default.
+(`sheet.rs`); no frontend code re-derives one. Table values are read from corpus records, with three exceptions held as code in `netrunning.rs`:
+NET Actions per Interface rank (1-3 → 2, 4-6 → 3, 7-9 → 4, 10 → 5, p. 197), a Cyberdeck's own slots (Poor 5, Standard 7, Excellent 9) and the slots a
+Program (1) or Black ICE (2) takes. How a loader treats a bad corpus table varies by module: the `ip_cost` loader (`improvement.rs`) refuses a table
+that is missing, short, out of order or that disagrees with its own rate, and `reputation.rs`, `critical.rs` and `skills.rs` refuse a record count or
+shape they do not expect. Other loaders were not audited for this by the SD-38 claims critic.
 
 | Module | Computes | Refuses |
 |---|---|---|
 | `stats.rs` | HP, Seriously Wounded threshold, Death Save, Humanity, current EMP, MOVE, LUCK (`cpr.derived.*`) | |
 | `skills.rs` | each of the 66 Master Skill List skill bases (STAT + level), the creation points spent and left | an 86-point budget overrun, a (x2) skill priced wrong, a skill above 6 (Edgerunner: below 2), a Basic skill under 2 |
 | `armor.rs` | head and body SP (highest source wins, no stacking), the single worst Armor Penalty, REF/DEX/MOVE after it | |
-| `critical.rs` | the HP below which each Wound State begins, the Stabilization DVs, Death Save, Base Death Save Penalty from the recorded Critical Injuries | an injury or threshold the corpus does not hold |
+| `critical.rs` | the HP below which each Wound State begins, the Stabilization DVs, Death Save, Base Death Save Penalty from the recorded Critical Injuries | an injury or threshold the corpus does not hold; the same Critical Injury recorded twice (it is rerolled, p. 187) |
 | `cyberware.rs` | preset Humanity Loss, option slots used per container, cyberware SP, BODY after Grafted Muscle / Bone Lace / Linear Frames, Kerenzikov Initiative bonus, the therapy cap on Humanity | a piece installed over its container's slots; a rolled loss outside the piece's dice range |
 | `roles.rs` | for each of the ten Roles, the values a Role Ability Rank 1-10 puts on the sheet (Charismatic Impact, Combat Awareness, NET Actions, Maker, Medicine, Believability, Backup, Haggle, Vehicle Familiarity, ...) | a rank outside 1-10 |
 | `improvement.rs` | the Improvement Point price of a Skill Level (Typical 20 x, Difficult 40 x) or Role Ability Rank (60 x) and the Role switch rule | a skipped Level/Rank, a Level past 10, a switch before Rank 4, a table that disagrees with its own rate |
 | `netrunning.rs` | NET Actions per Turn from the Interface rank, a Cyberdeck's slots available and used | a loadout over the deck's slots |
-| `reputation.rs` | the Facedown additive term (COOL + Reputation + 1d10, the die printed, never rolled), the replace-only-if-higher Reputation rule | |
+| `reputation.rs` | the Facedown additive term (COOL + Reputation + 1d10, the die printed, never rolled), the replace-only-if-higher Reputation rule | a Reputation Level outside 1-10 |
 | `kit.rs` | the Streetrat/Edgerunner starting kit lines and cash, the Complete Package budget (2,550eb plus 800eb of Fashion), each purchase's price | a purchase over the budget |
 
 `input.rs` holds the player's choices and their text grammars (`CprCharacterInput`: the ten STATs; `CprSheetChoices`, `CprLifepath`,
-`CprRoleChoices`, `CprKit` in their own files). `sheet.rs`'s `compose_sheet(catalogs, input, choices)` assembles one sheet through the modules
+`CprRoleChoices`, `CprKit`, all five defined in `input.rs`; the store saves each to its own text file, see [persistence.md](./persistence.md)). `sheet.rs`'s `compose_sheet(catalogs, input, choices)` assembles one sheet through the modules
 in the order their values feed each other (cyberware, then Humanity and EMP, armour, the Derived STATs and wound thresholds, skills, Role
 Ability and the Cyberdeck block, Reputation, then the ledger boxes), and refuses the whole sheet if any choice is one the book refuses; no partial
 sheet is returned. `store.rs` is the saved-character store ([persistence.md](./persistence.md)). Play-time state is not simulated: current HP and
