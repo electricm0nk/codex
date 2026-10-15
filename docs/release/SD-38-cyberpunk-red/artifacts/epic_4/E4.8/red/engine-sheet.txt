@@ -1,0 +1,36 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex-ce0bccb9212d3fe1)
+
+running 16 tests
+test rules_core::cpr::sheet::tests::a_rolled_humanity_loss_replaces_the_preset_on_the_sheet ... ok
+test rules_core::cpr::sheet::tests::each_ammunition_stack_prints_its_name_beside_its_count_row ... FAILED
+test rules_core::cpr::sheet::tests::cyberware_humanity_loss_feeds_current_humanity_current_emp_and_emp_skills ... ok
+test rules_core::cpr::sheet::tests::cyberware_body_feeds_hit_points_seriously_wounded_and_both_death_saves ... ok
+test rules_core::cpr::sheet::tests::armour_and_cyberware_sp_and_the_armour_penalty_feed_the_reflex_and_dexterity_skill_bases ... ok
+test rules_core::cpr::sheet::tests::every_numeric_field_the_p121_sample_sheet_labels_has_a_cpr_row ... ok
+test rules_core::cpr::sheet::tests::every_ranged_weapon_carries_hands_concealability_its_skill_base_and_its_d1_range_dv_row ... ok
+test rules_core::cpr::sheet::tests::the_carried_stats_are_cpr_stat_rows_equal_to_the_input ... ok
+test rules_core::cpr::sheet::tests::role_reputation_weapons_and_the_ledger_boxes_are_rows_and_dice_stay_printed ... ok
+test rules_core::cpr::sheet::tests::every_held_role_shows_its_rank_rows_after_a_role_switch ... ok
+test rules_core::cpr::sheet::tests::each_cyberware_piece_and_each_deck_item_is_on_the_sheet_by_name ... ok
+test rules_core::cpr::sheet::tests::the_netrunner_deck_takes_its_extra_slots_from_the_armour_and_the_cyberware ... ok
+test rules_core::cpr::sheet::tests::every_row_is_unique_and_twin_rows_agree ... ok
+test rules_core::cpr::sheet::tests::humanity_regained_in_therapy_raises_humanity_and_emp ... ok
+test rules_core::cpr::sheet::tests::reputation_events_the_facedown_roll_and_recorded_criticals_are_printed_lines ... ok
+test rules_core::cpr::sheet::tests::a_choice_the_book_does_not_allow_is_refused_with_its_reason ... ok
+
+failures:
+
+---- rules_core::cpr::sheet::tests::each_ammunition_stack_prints_its_name_beside_its_count_row stdout ----
+
+thread 'rules_core::cpr::sheet::tests::each_ammunition_stack_prints_its_name_beside_its_count_row' (3633954) panicked at src/rules_core/cpr/sheet.rs:988:91:
+no printed line cpr.ammo.0.name
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rules_core::cpr::sheet::tests::each_ammunition_stack_prints_its_name_beside_its_count_row
+
+test result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 3009 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `--lib`

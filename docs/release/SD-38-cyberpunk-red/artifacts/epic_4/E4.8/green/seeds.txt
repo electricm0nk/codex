@@ -1,0 +1,16 @@
+# commands: PF_SEED_RENDER_OUT=<dir> cargo test --locked -j 8 --bins pf_seed_render_hash; SF_SEED_LINES_OUT=<absent dir> cargo test --locked -j 8 --bins sf_seed_printed_features_equal_the_features_the_converted_records_grant (desktop-targeted.txt)
+# PF: diff E0.6 base sha256 vs head
+PF_UNCHANGED
+7b2f2f263bbe2dd94991b436f548d603d3638e0b21eb03215be36b3cb8394b42  aldric.json
+f0230bf0e3ac0cd75e7e277165b108838964e48344f28efd71eb16fd72d81e9b  elowen.json
+2320c050d34730266e28a24496a5c245cc2025747445a8ec0515b29d0c6abe7b  tomas.json
+# SF: sha256sum of the 4 seed files (E0.6 base/sha256.txt holds the same 4 hashes)
+0526f8b4ff07756eab857e3d6cbbd209a7c5b37c697dcab496ba525d29aa74ae  SF-Envoy-3.txt
+eac7ca0c613602ffea8b5ff6687e38bd805fd4ad28ebde68364254142e4a0e61  SF-Mystic-5.txt
+1132b37dbd39dc4f1222485cddb20cd331b2f949168315370782c3b5ff71590e  SF-Soldier-3.txt
+d9ebfa252de3225849e042584f52d2d89c5d3bdb562f85bf4a60113d0017e032  SF-Technomancer-5.txt
+# SF re-check (python sha256 vs E0.6 base/sha256.txt):
+SF-Envoy-3.txt UNCHANGED 42 lines
+SF-Mystic-5.txt UNCHANGED 72 lines
+SF-Soldier-3.txt UNCHANGED 51 lines
+SF-Technomancer-5.txt UNCHANGED 63 lines

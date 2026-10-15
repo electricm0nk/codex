@@ -1,0 +1,13 @@
+codex verify — mode: --only, jobs: 8
+repo:  /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4
+logs:  /tmp/codex-verify-i3stcv
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 8  (THREE crates)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+---------------------------------------------------------------
+SUMMARY
+  passed:  1  clippy
+
+RESULT: PASS
+logs in /tmp/codex-verify-i3stcv
+clippy_exit=0
