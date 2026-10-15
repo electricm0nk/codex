@@ -1,0 +1,10 @@
+## identifier audit
+OK_NO_BUNDLE_TAGS
+## 1 tokens
+OK_NO_TOKENS
+## 2 no-op
+OK_NO_NOOP_HANDLERS
+## 3 mock
+OK_NO_MOCK_LEAKS
+## 4 would
+OK_NO_WOULD_STRINGS

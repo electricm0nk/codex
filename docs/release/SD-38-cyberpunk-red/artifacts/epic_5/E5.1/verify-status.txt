@@ -1,0 +1,2 @@
+desktop cargo test --locked -j 8 --no-fail-fast: ran, 868 passed 0 failed 2 ignored (unittests) + 1 passed (packaged_resources)
+ui-smoke improve-cyberpunk-skill (final code): ran, 1/1 green, real store untouched

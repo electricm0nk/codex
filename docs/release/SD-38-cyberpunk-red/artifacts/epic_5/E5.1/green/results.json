@@ -1,0 +1,20 @@
+[
+  {
+    "id": "improve-cyberpunk-skill",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-main/docs/release/SD-38-cyberpunk-red/artifacts/epic_5/E5.1/green/ui-smoke-out/improve-cyberpunk-skill.png",
+    "rendered_excerpt": "⚙\nCPR Improve Streetrat Solo\nCyberpunk RED\nImprove\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t6\t—\nREF\t7\t7\nDEX\t7\t7\nTECH\t3\t—\nCOOL\t8\t—\nWILL\t6\t—\nLUCK\t5\t—\nMOVE\t5\t5\nBODY\t6\t6\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t8\nConceal/Reveal Object (INT)\t0\t6\nLip Reading (INT)\t0\t6\nPerception (INT)\t6\t12\nTracking (INT)\t0\t6\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e5_1-Hb00QV/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "79ecb2d7-5386-4968-8400-b7a8913deca4"
+      ],
+      "deleted": [
+        "79ecb2d7-5386-4968-8400-b7a8913deca4"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

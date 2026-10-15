@@ -1,0 +1,13 @@
+## identifier audit
+OK_NO_BUNDLE_TAGS
+## 1 tokens
+778:+          placeholder="IP entered"
+815:+          <input aria-label="Specialty" placeholder="Specialty" value={specialty} onChange={(event) => setSpecialty(event.target.value)} style={inputStyle} />
+819:+          placeholder={skillDefault === null ? 'Level' : `Level ${skillDefault}`}
+850:+            placeholder={rankDefault === null ? 'Rank' : `Rank ${rankDefault}`}
+## 2 no-op
+OK_NO_NOOP_HANDLERS
+## 3 mock
+OK_NO_MOCK_LEAKS
+## 4 would
+OK_NO_WOULD_STRINGS
