@@ -32,11 +32,11 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E1 | complete | 10 of 10 | E1.0–E1.8 complete; E1.V complete (MANIFEST pinned 53 kinds / 930 / 0 null, 112-record image sample, Rust twin) — Epic report below |
 | E2 | complete | 11 of 11 | E2.1–E2.10 complete; E2.MC complete (dabf4176f2) — Epic report below (count: `awk -F'\|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
-| E3 | in progress | 7 of 8 | E3.1, E3.2, E3.3, E3.4, E3.5, E3.6, E3.7 complete (`awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E3 | complete | 8 of 8 | E3.1–E3.7 complete; E3.MC complete (4a5cb95486) — Epic report below (`awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E4 | in progress | 6 of 8 | E4.1, E4.2, E4.3, E4.4, E4.5, E4.6 complete (`awk -F'\|' '$2 ~ /^ E4\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E5 | waiting | 0 of 6 | |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **48 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.7, E4.1–E4.6, E6.1–E6.4, E6.MC; derived at E3.7: awk and Python both 48) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **49 of 68** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.7, E3.MC, E4.1–E4.6, E6.1–E6.4, E6.MC; derived at E3.MC: awk and Python both 49) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -145,6 +145,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-14 | E3.6 | opus | complete | e218733fb0 (engine + store + desktop + frontend + tests), f5a37b232a (clippy fix); receipt and rows in the next commit | `artifacts/epic_3/E3.6_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Starting kit by method in the engine (`kit.rs`, E0 fence exit): fixed kit = `starting_kit` record with "or" picks + 500eb; Complete Package bought with 2,550eb + 800eb fashion-only, lost after save; money rows `cpr.kit.*` + `cpr.cash` (A-9); kit saved in `cpr_kit.txt` (E3.3 precedent), cash and weapons/armour/shield/ammo/deck as sheet choices; root 6694/0, desktop 852/0, npm 170/170 |
 | 2026-10-14 | E4.6 | opus | complete | 37483e8015 (print module + adapter + mod line + sheet + model + tests + fixtures; pre-push SHA); receipt and rows in the next commit | `artifacts/epic_4/E4.6_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | `cpr_sheet_print.rs` prints the Role Ability text, cyberware effects, the D-6 Humanity Loss line, weapon specials and the D-2 brain-damage line with resolved figures from `cpr.` rows; the CPR sheet renders every unplaced line under Rules and features; 99 printed lines / 18 rule lines on 4 fixtures, each once; `grep -c '(-2 EMP)'` 0 |
 | 2026-10-15 | E3.7 | opus | complete | 9d58fcf55b (engine + desktop + frontend + tests; pre-rebase 9418fb634c); receipt and rows in the next commit | `artifacts/epic_3/E3.7_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Cyberware at creation: the Role pack (kit `cyberware` lines, "or" picks as kit picks) or Complete Package pieces from the cash (Fashionware from the fashion budget), names resolved and options placed by the engine (`cyberware.rs` `record_name`/`place`), D-11 refusal `cpr_creation.cyberware`, Humanity/EMP/cap/slot rows from the composed sheet; 10 of 10 packs = F-66 over 18 combinations; fence exits `cprCreation.ts`, `kit.rs`, `cyberware.rs` (retro correction, fifth recurrence) |
+| 2026-10-15 | E3.MC | opus | complete | 4a5cb95486 (ui-smoke rows + evidence); receipt and rows in the next commit | `artifacts/epic_3/E3.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Streetrat (Media row 4), Edgerunner (Netrunner) and Complete Package (Fixer, 62, Heavy Pistol + Neural Link) built through the live form, saved, loaded, sheet opened; every number on each loaded sheet = `compose_sheet` of the captured saved files (computed rows 114/115/110 all on screen, live digit lines 130/131/120 all from it, cells = row 212/214/208); refusal row for 63; 4 plants red; no `.rs` in diff; lane e3 ends, tree removed |
 
 ## Epic reports
 
@@ -250,6 +251,37 @@ blockers.)
   `cargo clippy --tests` before its first commit would save one commit each time; (2) "netrunning +1 off" in E2.MC's criterion names no
   single +1 — all three readings were planted and each went red; (3) E3.MC and E4.1 now have E2.MC complete.
 
+### Epic report — E3 create (E3.MC, 2026-10-15, origin/tranche-18 c32c03b16f + 4a5cb95486)
+
+- **Cards done:** 8 of 8 — E3.1–E3.7, E3.MC
+  (`awk -F'|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 8).
+- **What E3 delivered:** New Character under Cyberpunk Red opens `CyberpunkCreateForm`: Role, Streetrat / Edgerunner / Complete
+  Package STATs from one seedable roller (`cpr_creation.rs`), Lifepath (15 general + the Role's tables, Cultural language at 4),
+  skills allocator per method, Role Ability Rank 4 with sub-choices, starting kit and cash (A-9), cyberware pack or bought pieces
+  with Humanity/EMP preview and slot refusals (D-11); every figure on the form is an engine `cpr.` row; the character saves through
+  the CPR store and loads through `CyberpunkAdapter`.
+- **Figures (commands in `artifacts/epic_3/E3.MC_cycle_receipt.md`):** three characters built in the live app, one per method,
+  saved, loaded and their sheets opened; against `compose_sheet` of the captured saved files: computed table rows on the live sheet
+  114/114 (Streetrat Media), 115/115 (Edgerunner Netrunner), 110/110 (Complete Package Fixer); live lines with a digit all from it
+  130/130, 131/131, 120/120 (Python re-count agrees); cells = their row 212/212, 214/214, 208/208; book-formula crosscheck 16/16,
+  16/16, 17/17; ui-smoke 9/9 CPR rows green, real store untouched; `--bins cpr_creation` 35/35; npm 171/171; ui-smoke:doc 112 rows.
+  Plants, all restored: CP 63 accepted → the refusal row red; pack HL +1 → all three sheet rows red; adapter HP twin → comparison
+  A and B red; TSX SW twin → comparison C red.
+- **Seed deltas:** PF Aldric `7b2f2f26…4b42` / Elowen `f0230bf0…1e9b` / Tomas `2320c050…be7b` unchanged; SF-Envoy-3 42 / SF-Mystic-5 72 /
+  SF-Soldier-3 51 / SF-Technomancer-5 63 lines and sha256 unchanged (vs E0.6 base records). CPR seeds: none yet (E7.1).
+- **Retro (`scripts/retro.py summary --since 2026-10-13 --actor sd38-e3.1 … --actor sd38-e3.7 --actor sd38-e3.mc --json`):** 17 events —
+  6 corrections, 2 rework, 9 verification (2 failing stage runs: clippy); 0 incidents, 0 deferrals. Recurring subject: "FILES YOU OWN
+  'same three files'" logged as a correction 4 times (E3.4, E3.5, E3.6, E3.7; E3.7's receipt counts E3.3 as the first recurrence) — every E3 card after E3.2 needed
+  `cprCreation.ts` (the wire type) and from E3.5 an engine file; held by fence exits, not prevented. E3.MC emitted 1 rework
+  (comparison A from set to multiset after its own plant).
+- **Open blockers:** none.
+- **For the lead:** (1) R-W: the "same three files" FILES YOU OWN shape recurred 4+ times; a later serial chain over one form needs its
+  wire file (`apps/desktop/src/boundary/<x>.ts`) and the engine module in the cell, or a check that the cell is closed under the
+  request type. (2) The loaded CPR sheet prints `cpr.cash` and `cpr.ammo.0` under their raw row ids in "Other totals" (no label in
+  `cyberpunkSheetModel.ts`) — an E4 label gap for E4.MC/E4.7. (3) ui-smoke cannot address one skill's `+1` on the create form (the probe
+  names the button by its text "+1"); E4.7/E5.1 rows that need a skill level will need distinct button text. (4) E4.7 and E5.1 now
+  have E3.MC complete.
+
 ## Decisions taken on safe defaults
 
 (Each entry: card, SD-x / D-n / A-n, the alternative not taken.)
@@ -327,6 +359,7 @@ blockers.)
 - E3.6, starting kit + cash (A-9; E0 fence exits per decisions.md §7): (1) an "or" line not picked takes its first printed option; alternative not taken: refuse until picked. (2) The shop is the ten per-item Night Market kinds the corpus prices (weapons, attachments, ammunition, armour, gear, fashion, street drugs, cyberdecks, cyberdeck hardware, programs); vehicles, services, lifestyle and housing are not sold, cyberware is E3.7's; alternative not taken: sell those too. (3) Fashion is paid from the 800eb fashion budget first, the rest from the cash; alternative not taken: refuse fashion above 800eb. (4) The p345 ammunition availability and tens rule are enforced; alternative not taken: any caliber. (5) The kit's weapons, worn armour, first shield, ammunition and first Cyberdeck (with programs/hardware) are written to the sheet choices, programs without a deck stay in the kit file; alternative not taken: kit file only. (6) The kit lives in its own file `cpr_kit.txt`; alternative not taken: new `CprSheetChoices` fields. (7) Bought armour names Body or Head; alternative not taken: one purchase covers both.
 - E4.6, print path (D-2, D-6 applied; no fence exit): (1) rule lines carry one `kind` per block (`role_ability`, `cyberware`, `humanity`, `weapon_special`, `netrunning`) and render under "Rules and features"; box lines keep `cpr`; alternative not taken: one `cpr` kind for all. (2) The sheet's `rules` = every printed line no box placed; alternative not taken: a kind filter (a future unplaced line would vanish). (3) Weapon specials = alternate fire modes or an Exotic Weapon's text; alternative not taken: print every weapon's `text` (a re-print of its table row). (4) The D-2 line keeps E2.9's `BRAIN_DAMAGE_RULE` wording, re-kinded with its HP figure in `cpr_sheet_print.rs`; alternative not taken: move the constant out of `netrunning.rs` (an E2 fence exit for no wording change).
 - E3.7, cyberware at creation (D-5, D-6, D-11, A-9 applied; E2 fence exit per decisions.md §7): (1) a Streetrat/Edgerunner cannot buy cyberware at creation (p117 "predetermined from the start"); alternative not taken: let the 500eb buy cyberware. (2) The engine places every option (first foundation with room, a paired option one per foundation, else alone in a free meat limb where allowed); alternative not taken: a player mount choice per purchase. (3) Pack names the listing spells differently resolve by folded spaces/case or the subcategory's bracketed word ("Tech Hair", "Sandevistan Speedware"); alternative not taken: edit the `starting_kit` record. (4) Pack lines stay in `kit.lines` (section `cyberware`) and are saved in `cpr_kit.txt`; alternative not taken: a separate cyberware request and file. (5) The preview's STAT/derived rows come from the composed sheet (after the loss); alternative not taken: pre-cyberware rows beside a separate loss.
+- E3.MC, merge check (no D-n/A-n names these): (1) Roles with no creation sub-choice (Media, Netrunner, Fixer) so each row's steps are only its method's; alternative not taken: Solo/Tech/Medtech/Nomad/Exec with sub-choice clicks. (2) The Edgerunner row expects only roll-independent figures (HL 14, Interface Rank 4) and leaves the rolled STATs to the compute_sheet comparison; alternative not taken: a fixed seed (no seed control in the form; a test-only control would be a shipped twin). (3) A fourth row, `create-cyberpunk-complete-package-refuses-63`, carries the "62 → 63 accepted" plant; alternative not taken: that plant at `--bins cpr_creation` only. (4) The Complete Package row adds Handgun at 1 and raises no skill (the skill `+1` buttons' probe name is "+1" for every skill); alternative not taken: edit `CyberpunkCreateForm.tsx` (not this card's file).
 
 ## Open blockers
 

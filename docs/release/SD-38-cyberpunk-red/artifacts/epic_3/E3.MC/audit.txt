@@ -1,0 +1,8 @@
+CARD_BASE=c32c03b16fc8446a5103d6e0a08d3ce58987d652 HEAD=4a5cb95486dde183fe8034a05a13fe05ddc84c2d
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+files in diff (code paths): apps/desktop/scripts/ui-smoke/spec.json 
+.rs files in diff under src/crates/apps: 0
