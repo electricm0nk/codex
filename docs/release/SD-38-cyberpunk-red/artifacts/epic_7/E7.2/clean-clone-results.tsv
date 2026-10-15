@@ -1,0 +1,5 @@
+step	result
+clone HEAD	26c315e426 (git clone --no-local of sd38-main at the E7.2 code commit; `git status --porcelain | wc -l` at clone time: 0)
+npm ci	exit 0
+npm run build	exit 0
+cargo build --locked -j 8 (apps/desktop/src-tauri)	exit 0

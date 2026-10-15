@@ -1,0 +1,2 @@
+NYX_INPUT cpr_character_input.txt EQUAL 10 lines
+NYX_CHOICES cpr_sheet_choices.txt EQUAL 38 lines
