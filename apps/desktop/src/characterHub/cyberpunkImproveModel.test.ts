@@ -14,6 +14,9 @@ import {
   purchaseHumanityRegained,
   purchaseCost,
   purchaseLabel,
+  purchaseReputationLevel,
+  improveReputation,
+  reputationLevelFromText,
   removePurchase,
   skillPurchaseKey,
   switchOptionLabel,
@@ -198,4 +201,38 @@ assertEqual(purchaseHumanityRegained(therapyPreview, 2), null, 'no row, no regai
 assertEqual(improveHumanity(therapyPreview).humanityAfter?.value, 1078, 'Humanity after therapy is its row');
 assert(canSpend(therapies, therapyPreview), 'a therapy-only plan can be applied');
 
-console.log('cyberpunkImproveModel: IP entry, keys, targets, Role switch, cyberware install, therapy, engine-row figures and spend gate checked');
+// 9. Reputation change (E5.5, p. 193-194): the Level (1-10, checked by the engine), deed or cowardice and what it was for
+// are entered; the Level after each event, the Reputation and the Facedown base before and after are the engine's rows.
+assertEqual(reputationLevelFromText('4').level, 4, 'a Level is entered');
+assertEqual(reputationLevelFromText(' ').level, null, 'blank is no Level yet');
+assertEqual(reputationLevelFromText(' ').error, null, 'blank is not an error');
+assertEqual(reputationLevelFromText('-3').error, 'Reputation Level must be a whole number', 'not a whole number');
+let reps = addPurchase(EMPTY_CYBERPUNK_IMPROVE_PLAN, { kind: 'reputation', level: 4, event: 'deed', description: 'Played a killer show' });
+reps = addPurchase(reps, { kind: 'reputation', level: 6, event: 'cowardice', description: 'Ran from the Maelstrom' });
+assertEqual(purchaseLabel(reps.purchases[0]), 'Reputation: Level 4 deed — Played a killer show', 'deed label');
+assertEqual(purchaseLabel(reps.purchases[1]), 'Reputation: Level 6 cowardice — Ran from the Maelstrom', 'cowardice label');
+const repPreview: CyberpunkImprovePreview = {
+  ...preview,
+  rows: [
+    { id: 'cpr.improve.purchase.0.reputation_level', value: 1004, detail: 'Level 4 deed: Played a killer show is the defining Reputation Event' },
+    { id: 'cpr.improve.purchase.1.reputation_level', value: 1006, detail: 'Facedowns treat the Level as -6 (p. 194)' },
+    { id: 'cpr.improve.reputation.before', value: 1000, detail: 'before' },
+    { id: 'cpr.improve.reputation.after', value: 1006, detail: 'after' },
+    { id: 'cpr.improve.facedown.before', value: 1004, detail: 'before' },
+    { id: 'cpr.improve.facedown.after', value: -1002, detail: 'after' },
+  ],
+};
+assertEqual(purchaseReputationLevel(repPreview, 0)?.value, 1004, 'the Level after event 0 is its row');
+assertEqual(purchaseReputationLevel(repPreview, 1)?.value, 1006, 'the Level after event 1 is its row');
+assertEqual(purchaseReputationLevel(repPreview, 2), null, 'no row, no Level');
+assertEqual(purchaseCost(repPreview, 0), null, 'a Reputation change has no IP cost row');
+const rep = improveReputation(repPreview);
+assertEqual(
+  [rep.reputationBefore?.value, rep.reputationAfter?.value, rep.facedownBefore?.value, rep.facedownAfter?.value].join(','),
+  '1000,1006,1004,-1002',
+  'Reputation and Facedown are rows (the negative Facedown is the engine\'s, not COOL - Level here)',
+);
+assertEqual(improveReputation(preview).facedownAfter, null, 'no Reputation change, no Facedown rows');
+assert(canSpend(reps, repPreview), 'a Reputation-only plan can be applied');
+
+console.log('cyberpunkImproveModel: IP entry, keys, targets, Role switch, cyberware install, therapy, Reputation change, engine-row figures and spend gate checked');

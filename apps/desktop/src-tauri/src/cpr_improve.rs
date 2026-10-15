@@ -36,7 +36,14 @@
 //! less 2 per piece of cyberware and 4 per piece of borgware), so a restore above the cap
 //! stops at the cap. The regain is saved as `humanity.regained`. Addiction therapy regains no
 //! Humanity: the dialog prints its effect, and as a purchase it is refused.
-//! Reputation is not part of this plan.
+//!
+//! A Reputation change (`reputation`, p. 193-194) costs no IP: it records the event the GM
+//! awarded, its Level 1 to 10 (outside the table refused), deed or cowardice, and what it was for.
+//! The engine's `CprReputation::record` decides whether it becomes the defining event: a new event
+//! replaces the old only if its Level is higher, whatever its kind, so a cowardice event of a
+//! higher Level replaces a deed and Facedowns then treat the Level as negative (p. 194). Every
+//! event is saved (`reputation = <level> <deed|cowardice>: <description>`); the preview answers
+//! with the Level after each event and the Reputation and Facedown rows before and after the plan.
 
 use std::path::{Path, PathBuf};
 
@@ -47,6 +54,7 @@ use codex::rules_core::cpr::cyberware::{
 };
 use codex::rules_core::cpr::improvement::{CprIpCostCatalog, CprIpTable, CprRoleHistory};
 use codex::rules_core::cpr::input::{CprCharacterInput, CprImprovementPoints, CprSheetChoices, CprStat};
+use codex::rules_core::cpr::reputation::{CprReputation, CprReputationEvent, CprReputationKind, CprReputationOutcome};
 use codex::rules_core::cpr::roles::CprRole;
 use codex::rules_core::cpr::sheet::{compose_sheet, CprSheetCatalogs};
 use codex::rules_core::cpr::skills::{slug, CprSkill, CprSkillCatalog};
@@ -81,6 +89,81 @@ pub enum CprPurchase {
     /// A Humanity therapy by its p. 230 name, with the Humanity regain the player entered, or
     /// none to roll it on the therapy's dice. It costs no IP.
     Therapy { name: String, regained: Option<i16> },
+    /// A Reputation event the GM awarded (p. 193): its Level 1 to 10, whether it was a deed or
+    /// cowardice, and what it was for. It costs no IP.
+    Reputation { level: u8, event: CprReputationEventKind, description: String },
+}
+
+/// What a Reputation event was for, as the dialog sends it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum CprReputationEventKind {
+    Deed,
+    Cowardice,
+}
+
+impl CprReputationEventKind {
+    fn kind(self) -> CprReputationKind {
+        match self {
+            CprReputationEventKind::Deed => CprReputationKind::Deed,
+            CprReputationEventKind::Cowardice => CprReputationKind::Cowardice,
+        }
+    }
+
+    fn word(self) -> &'static str {
+        match self {
+            CprReputationEventKind::Deed => "deed",
+            CprReputationEventKind::Cowardice => "cowardice",
+        }
+    }
+}
+
+/// The Reputation `events` resolve to, in the order recorded (p. 193: a later event replaces the
+/// defining one only when its Level is higher).
+fn resolved_reputation(events: &[CprReputationEvent]) -> Result<CprReputation, String> {
+    events.iter().try_fold(CprReputation::default(), |held, event| {
+        held.record(event.clone()).map(|(next, _)| next).map_err(|r| r.to_string())
+    })
+}
+
+/// Record a Reputation event on `next`: the engine's Level after it and the row's text.
+fn record_reputation(
+    next: &mut CprSheetChoices,
+    level: u8,
+    event: CprReputationEventKind,
+    description: &str,
+) -> Result<(i16, String), String> {
+    let description = description.trim();
+    if description.is_empty() {
+        return Err("a Reputation event needs what the event was for (p. 193)".to_owned());
+    }
+    if description.contains(['\n', '\r']) {
+        return Err("a Reputation event's description must be one line".to_owned());
+    }
+    let held = resolved_reputation(&next.reputation)?;
+    let recorded = CprReputationEvent { level, kind: event.kind(), description: description.to_owned() };
+    let (after, outcome) = held.record(recorded.clone()).map_err(|r| r.to_string())?;
+    next.reputation.push(recorded);
+    let entry = format!("Level {level} {}: {description}", event.word());
+    let detail = match outcome {
+        CprReputationOutcome::Replaced => {
+            let negative = match event {
+                CprReputationEventKind::Deed => String::new(),
+                CprReputationEventKind::Cowardice => {
+                    format!("; it is for cowardice, so Facedowns treat the Level as -{level} (p. 194)")
+                }
+            };
+            format!(
+                "{entry} is the defining Reputation Event, replacing Reputation {} (p. 193){negative}",
+                held.level()
+            )
+        }
+        CprReputationOutcome::Kept => format!(
+            "{entry} is recorded but does not replace the defining Reputation Level {}: a new deed's Reputation will only replace the old one if the Level is higher (p. 193)",
+            held.level()
+        ),
+    };
+    Ok((i16::from(after.level()), detail))
 }
 
 /// The improve dialog's plan: the IP entered (added to the IP earned) and the purchases, in order.
@@ -339,7 +422,7 @@ fn plan(
 ) -> Result<PricedPlan, String> {
     if request.purchases.is_empty() && request.ip_awarded == 0 {
         return Err(
-            "nothing to spend: enter IP or choose a Skill Level, Role Rank, Role switch, cyberware or therapy to buy".to_owned()
+            "nothing to spend: enter IP or choose a Skill Level, Role Rank, Role switch, cyberware, therapy or Reputation change".to_owned()
         );
     }
     let ip = choices.improvement_points.unwrap_or_default();
@@ -422,6 +505,11 @@ fn plan(
                     value: gained,
                     detail: format!("{therapy} therapy: {how}; Humanity {current} -> {after}{stop}; regains {gained} (p. 230)"),
                 });
+                continue;
+            }
+            CprPurchase::Reputation { level, event, description } => {
+                let (after, detail) = record_reputation(&mut next, *level, *event, description)?;
+                rows.push(ComputationExplanation { id: format!("cpr.improve.purchase.{i}.reputation_level"), value: after, detail });
                 continue;
             }
         };
@@ -567,6 +655,21 @@ fn priced_at_root(
                 }
             }
         }
+        if request.purchases.iter().any(|p| matches!(p, CprPurchase::Reputation { .. })) {
+            // The Reputation Level and the Facedown base (COOL + Reputation, negative for
+            // cowardice; p. 193-194), read from the engine's sheet before and after the plan.
+            let before = compose_sheet(&catalogs, &character.input, &choices)?;
+            for (sheet, when) in [(&before, "before"), (&after, "after")] {
+                for (id, label) in [("cpr.reputation.level", "reputation"), ("cpr.reputation.facedown", "facedown")] {
+                    let found = sheet.rows.iter().find(|r| r.id == id).ok_or_else(|| format!("the sheet has no {id} row"))?;
+                    rows.push(ComputationExplanation {
+                        id: format!("cpr.improve.{label}.{when}"),
+                        value: found.value,
+                        detail: format!("{when} this plan: {}", found.detail),
+                    });
+                }
+            }
+        }
         Ok((next, rows))
     });
     Ok((choices, planned))
@@ -665,6 +768,7 @@ mod tests {
 
     use codex::rules_core::cpr::cyberware::CprCyberwareInstall;
     use codex::rules_core::cpr::input::{CprCharacterInput, CprImprovementPoints, CprSheetChoices, CprStat, CprStats};
+    use codex::rules_core::cpr::reputation::{CprReputationEvent, CprReputationKind};
     use codex::rules_core::cpr::roles::CprRole;
     use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter, CPR_SAVED_CHARACTER_SCHEMA_VERSION};
     use codex::rules_core::game_system::GameSystem;
@@ -1278,6 +1382,161 @@ mod tests {
         });
         let parsed: CprImproveRequest = serde_json::from_value(wire).expect("deserialises");
         assert_eq!(parsed.purchases, vec![therapy("Standard Humanity Loss", Some(7)), therapy("Extreme Humanity Loss", None)]);
+    }
+
+    fn reputation(level: u8, event: CprReputationEventKind, description: &str) -> CprPurchase {
+        CprPurchase::Reputation { level, event, description: description.to_owned() }
+    }
+
+    use CprReputationEventKind::{Cowardice, Deed};
+
+    /// `saved_solo` (COOL 4) with the Reputation events `events` already recorded.
+    fn saved_solo_with_reputation(label: &str, events: &[(u8, CprReputationKind, &str)]) -> PathBuf {
+        let root = saved_solo(label, Some(CprImprovementPoints { earned: 30, spent: 0 }));
+        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
+        for (level, kind, description) in events {
+            choices.reputation.push(CprReputationEvent { level: *level, kind: *kind, description: (*description).to_owned() });
+        }
+        CprCharacterStore::save_choices(&choices, &root).unwrap();
+        root
+    }
+
+    fn line(loaded: &LoadSavedCharacterResponse, id: &str) -> String {
+        loaded.sheet_lines.iter().find(|l| l.id == id).unwrap_or_else(|| panic!("no line {id}")).value.clone()
+    }
+
+    /// p. 193: a Reputation change sets the Level and the event. A Level 4 deed on a character at
+    /// Reputation 0 costs no IP; the preview's rows give the Level after (4), the Reputation 0 -> 4
+    /// and the Facedown base COOL 4 + 0 -> 4 + 4 (p. 194); the apply saves the event and the
+    /// reloaded sheet's Reputation and Facedown rows and its event line move.
+    #[test]
+    fn a_reputation_change_sets_the_level_and_the_event_and_the_sheet_rereads() {
+        let root = saved_solo_with_reputation("rep", &[]);
+        let before = CprAdapterSheet::of(&root);
+        assert_eq!((before.row("cpr.reputation.level"), before.row("cpr.reputation.facedown")), (0, 4), "COOL 4, Reputation 0");
+        let plan = request(0, vec![reputation(4, Deed, "Played a killer show")]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.reputation_level"), 4);
+        let detail = &preview.rows.iter().find(|r| r.id == "cpr.improve.purchase.0.reputation_level").unwrap().detail;
+        assert!(detail.contains("Played a killer show") && detail.contains("defining") && detail.contains("p. 193"), "{detail}");
+        assert!(preview.rows.iter().all(|r| r.id != "cpr.improve.purchase.0.cost"), "a Reputation change is not an IP purchase");
+        assert_eq!(row(&preview.rows, "cpr.improve.ip.cost"), 0);
+        assert_eq!((row(&preview.rows, "cpr.improve.reputation.before"), row(&preview.rows, "cpr.improve.reputation.after")), (0, 4));
+        assert_eq!((row(&preview.rows, "cpr.improve.facedown.before"), row(&preview.rows, "cpr.improve.facedown.after")), (4, 8));
+
+        let loaded = apply_at_root(&corpus(), &root, &plan).expect("applies");
+        let sheet = |id: &str| row(&loaded.explanations, id);
+        assert_eq!((sheet("cpr.reputation.level"), sheet("cpr.reputation.facedown")), (4, 8));
+        assert_eq!(sheet("cpr.ip.current"), 30, "no IP spent");
+        assert_eq!(line(&loaded, "cpr.reputation.event.0"), "Level 4 deed: Played a killer show (defining)");
+        assert_eq!(line(&loaded, "cpr.reputation.facedown_roll"), "8 + 1d10");
+        let saved = CprCharacterStore::load_choices(&root).unwrap();
+        assert_eq!(
+            saved.reputation,
+            vec![CprReputationEvent { level: 4, kind: CprReputationKind::Deed, description: "Played a killer show".to_owned() }]
+        );
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// p. 193: "a new deed's Reputation will only replace the old one if the Level is higher".
+    /// With a Level 5 deed defining, a Level 3 deed and an equal Level 5 deed are recorded but the
+    /// Level stays 5 (the row says it does not replace); a Level 6 deed replaces it. Two deeds in
+    /// one plan are taken in order (6, then 7).
+    #[test]
+    fn a_new_positive_deed_replaces_the_old_only_if_higher() {
+        let root = saved_solo_with_reputation("rephigher", &[(5, CprReputationKind::Deed, "Held the bridge")]);
+        for lower in [3u8, 5] {
+            let preview = preview_at_root(&corpus(), &root, &request(0, vec![reputation(lower, Deed, "Fixed a deal")])).expect("previews");
+            assert_eq!(preview.refusal, None);
+            assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.reputation_level"), 5, "Level {lower} does not replace 5");
+            let detail = &preview.rows.iter().find(|r| r.id == "cpr.improve.purchase.0.reputation_level").unwrap().detail;
+            assert!(detail.contains("does not replace") && detail.contains("Level 5") && detail.contains("p. 193"), "{detail}");
+            assert_eq!(row(&preview.rows, "cpr.improve.reputation.after"), 5);
+        }
+        let higher = request(0, vec![reputation(6, Deed, "Took down a Maxtac squad")]);
+        let preview = preview_at_root(&corpus(), &root, &higher).expect("previews");
+        assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.reputation_level"), 6);
+        assert_eq!((row(&preview.rows, "cpr.improve.reputation.before"), row(&preview.rows, "cpr.improve.reputation.after")), (5, 6));
+        let two = request(0, vec![reputation(6, Deed, "a"), reputation(7, Deed, "b")]);
+        let preview = preview_at_root(&corpus(), &root, &two).expect("previews");
+        assert_eq!(
+            (row(&preview.rows, "cpr.improve.purchase.0.reputation_level"), row(&preview.rows, "cpr.improve.purchase.1.reputation_level")),
+            (6, 7)
+        );
+
+        // The lower deed is saved (people may know of it) but the Level 5 deed stays defining.
+        let loaded = apply_at_root(&corpus(), &root, &request(0, vec![reputation(3, Deed, "Fixed a deal")])).expect("applies");
+        assert_eq!(row(&loaded.explanations, "cpr.reputation.level"), 5);
+        assert_eq!(line(&loaded, "cpr.reputation.event.0"), "Level 5 deed: Held the bridge (defining)");
+        assert_eq!(line(&loaded, "cpr.reputation.event.1"), "Level 3 deed: Fixed a deal");
+        let loaded = apply_at_root(&corpus(), &root, &higher).expect("applies");
+        assert_eq!(row(&loaded.explanations, "cpr.reputation.level"), 6);
+        assert_eq!(line(&loaded, "cpr.reputation.event.2"), "Level 6 deed: Took down a Maxtac squad (defining)");
+        assert_eq!(CprCharacterStore::load_choices(&root).unwrap().reputation.len(), 3);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// p. 194: "If your defining Reputation Event is for cowardice your Reputation Level is treated
+    /// as a negative number." Over a Level 3 deed (Facedown 4 + 3 = 7), a Level 6 cowardice event
+    /// replaces it (p. 193: a negative event can replace a positive one) and the Facedown base
+    /// becomes 4 - 6 = -2; a Level 2 cowardice event does not replace the deed and the Facedown
+    /// stays 7.
+    #[test]
+    fn a_cowardice_event_makes_the_facedown_use_a_negative_reputation() {
+        let root = saved_solo_with_reputation("repcoward", &[(3, CprReputationKind::Deed, "Held the bridge")]);
+        let plan = request(0, vec![reputation(6, Cowardice, "Ran from the Maelstrom")]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.reputation_level"), 6, "the Level itself is 6");
+        let detail = &preview.rows.iter().find(|r| r.id == "cpr.improve.purchase.0.reputation_level").unwrap().detail;
+        assert!(detail.contains("cowardice") && detail.contains("-6") && detail.contains("p. 194"), "{detail}");
+        assert_eq!((row(&preview.rows, "cpr.improve.facedown.before"), row(&preview.rows, "cpr.improve.facedown.after")), (7, -2));
+
+        let lower = preview_at_root(&corpus(), &root, &request(0, vec![reputation(2, Cowardice, "Hid")])).expect("previews");
+        assert_eq!(row(&lower.rows, "cpr.improve.purchase.0.reputation_level"), 3);
+        assert_eq!(row(&lower.rows, "cpr.improve.facedown.after"), 7, "a lower cowardice event leaves the deed defining");
+
+        let loaded = apply_at_root(&corpus(), &root, &plan).expect("applies");
+        assert_eq!((row(&loaded.explanations, "cpr.reputation.level"), row(&loaded.explanations, "cpr.reputation.facedown")), (6, -2));
+        assert_eq!(line(&loaded, "cpr.reputation.facedown_roll"), "-2 + 1d10");
+        assert_eq!(line(&loaded, "cpr.reputation.event.1"), "Level 6 cowardice: Ran from the Maelstrom (defining)");
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// A Level outside the p. 193 table (0, 11), an event with no description and one that would
+    /// break the saved line (a line break) are refused; nothing is written.
+    #[test]
+    fn a_reputation_change_outside_the_table_or_without_an_event_is_refused_and_nothing_is_saved() {
+        let root = saved_solo_with_reputation("represuse", &[(2, CprReputationKind::Deed, "Held the bridge")]);
+        let before = choices_text(&root);
+        let refusal = |purchase: CprPurchase| {
+            let plan = request(0, vec![purchase]);
+            assert!(apply_at_root(&corpus(), &root, &plan).is_err());
+            preview_at_root(&corpus(), &root, &plan).expect("previews").refusal.expect("refused")
+        };
+        for level in [0u8, 11] {
+            let reason = refusal(reputation(level, Deed, "x"));
+            assert!(reason.contains(&format!("Reputation Level {level}")) && reason.contains("p. 193"), "{reason}");
+        }
+        assert!(refusal(reputation(4, Deed, "  ")).contains("what the event was"));
+        assert!(refusal(reputation(4, Cowardice, "Ran\nreputation = 10 deed: forged")).contains("one line"));
+        assert_eq!(choices_text(&root), before, "a refused Reputation change writes nothing");
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    #[test]
+    fn a_reputation_change_deserialises_from_the_frontend_wire_shape() {
+        let wire = serde_json::json!({
+            "characterId": "cpr-improve",
+            "ipAwarded": 0,
+            "purchases": [
+                { "kind": "reputation", "level": 4, "event": "deed", "description": "Played a killer show" },
+                { "kind": "reputation", "level": 6, "event": "cowardice", "description": "Ran" }
+            ]
+        });
+        let parsed: CprImproveRequest = serde_json::from_value(wire).expect("deserialises");
+        assert_eq!(parsed.purchases, vec![reputation(4, Deed, "Played a killer show"), reputation(6, Cowardice, "Ran")]);
     }
 
     /// The wire shape `cprImprove.ts` sends: `{ characterId, ipAwarded, purchases: [{ kind:

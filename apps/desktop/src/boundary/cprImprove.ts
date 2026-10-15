@@ -10,7 +10,9 @@ import { formatError, hasTauriRuntime } from './runtime';
  * the p. 411 tables, refuses a skipped Level or an overspend, checks an install's Humanity Loss against its
  * dice and its option slots (E5.3: p. 111, A-3, D-11; a blank loss is rolled with the plan's seed), checks a
  * therapy's Humanity regain against its dice and stops it at the D-5 maximum Humanity (E5.4: p. 230), and (on
- * apply) saves through the store and answers with the reloaded sheet. Nothing here prices or counts.
+ * apply) saves through the store and answers with the reloaded sheet. A Reputation change (E5.5: p. 193-194) records the
+ * event the GM awarded; the engine decides whether it replaces the defining event and resolves the Facedown. Nothing here
+ * prices or counts.
  */
 
 /** One engine row: id, value and the engine's derivation text. */
@@ -89,7 +91,11 @@ export type CyberpunkPurchase =
   | { kind: 'roleRank'; to: number }
   | { kind: 'roleSwitch'; role: string }
   | { kind: 'cyberware'; name: string; humanityLoss: number | null }
-  | { kind: 'therapy'; name: string; regained: number | null };
+  | { kind: 'therapy'; name: string; regained: number | null }
+  | { kind: 'reputation'; level: number; event: CyberpunkReputationEvent; description: string };
+
+/** What a Reputation event was for: a deed, or cowardice (Facedowns then treat the Level as negative, p. 194). */
+export type CyberpunkReputationEvent = 'deed' | 'cowardice';
 
 function wirePurchase(p: CyberpunkPurchase) {
   switch (p.kind) {
@@ -103,6 +109,8 @@ function wirePurchase(p: CyberpunkPurchase) {
       return { kind: 'cyberware', name: p.name, humanityLoss: p.humanityLoss };
     case 'therapy':
       return { kind: 'therapy', name: p.name, regained: p.regained };
+    case 'reputation':
+      return { kind: 'reputation', level: p.level, event: p.event, description: p.description };
   }
 }
 

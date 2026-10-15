@@ -5,6 +5,7 @@ import {
   type CyberpunkImprovePlan,
   type CyberpunkImprovePreview,
   type CyberpunkImproveRow,
+  type CyberpunkReputationEvent,
 } from '../boundary/cprImprove';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import {
@@ -15,6 +16,7 @@ import {
   humanityLossFromText,
   improveHumanity,
   improvePlanFromIpText,
+  improveReputation,
   improveTotals,
   nextTarget,
   pinSeed,
@@ -22,7 +24,9 @@ import {
   purchaseHumanityLoss,
   purchaseHumanityRegained,
   purchaseLabel,
+  purchaseReputationLevel,
   removePurchase,
+  reputationLevelFromText,
   skillPurchaseKey,
   switchOptionLabel,
   therapyOptionLabel,
@@ -40,7 +44,10 @@ import {
  * give the loss and the Humanity and EMP before and after. E5.4: therapy (p. 230) regains the Humanity entered,
  * or rolled on its dice when left blank; the engine refuses a regain outside the dice and stops it at the D-5
  * maximum Humanity, and its rows give the regain and the Humanity and EMP before and after. Addiction therapy
- * regains no Humanity: its printed effect is shown, not bought. The engine's roller seed is pinned on the plan so
+ * regains no Humanity: its printed effect is shown, not bought. E5.5: a Reputation change (p. 193-194) records the event the
+ * GM awarded -- its Level, deed or cowardice, and what it was for; the engine refuses a Level outside 1-10, decides whether the
+ * event replaces the defining one (only a higher Level does), and its rows give the Level after each event and the Reputation and
+ * Facedown base before and after (negative Reputation for cowardice). The engine's roller seed is pinned on the plan so
  * the apply keeps the previewed dice. "Spend IP" saves through `apply_cyberpunk_improvement` and hands the
  * reloaded sheet to `onApplied`.
  */
@@ -64,6 +71,9 @@ export function CyberpunkImproveDialog(props: {
   const [lossText, setLossText] = useState('');
   const [therapyName, setTherapyName] = useState('');
   const [regainText, setRegainText] = useState('');
+  const [repLevelText, setRepLevelText] = useState('');
+  const [repEvent, setRepEvent] = useState<CyberpunkReputationEvent>('deed');
+  const [repDescription, setRepDescription] = useState('');
   const [spending, setSpending] = useState(false);
   const [spendError, setSpendError] = useState<string | null>(null);
   const mounted = useRef(true);
@@ -114,6 +124,8 @@ export function CyberpunkImproveDialog(props: {
   const regain = therapyRegainedFromText(regainText);
   const therapies = preview?.therapy ?? [];
   const humanity = improveHumanity(preview);
+  const repLevel = reputationLevelFromText(repLevelText);
+  const reputation = improveReputation(preview);
 
   const onSpend = () => {
     setSpending(true);
@@ -371,6 +383,58 @@ export function CyberpunkImproveDialog(props: {
           ))}
       </div>
 
+      <div data-testid="cpr-improve-reputation">
+        <p style={noteStyle}>
+          Reputation (p. 193): when your GM believes your Character has done something worthy of gaining a Reputation, they can assign
+          a Reputation Level from 1 to 10. A new deed&apos;s Reputation will only replace the old one if the Level is higher. Reputation
+          received from a negative event or action (show cowardice, desert or betray an ally) can replace the Reputation of a positive
+          one. Facedown (p. 194): COOL + Reputation + 1d10; if your defining Reputation Event is for cowardice your Reputation Level is
+          treated as a negative number.
+        </p>
+        <div style={rowStyle}>
+          <input
+            aria-label="Reputation Level"
+            title="The Level the GM awarded, 1 to 10"
+            inputMode="numeric"
+            value={repLevelText}
+            onChange={(event) => setRepLevelText(event.target.value)}
+            style={{ ...inputStyle, width: '6rem' }}
+          />
+          <select
+            aria-label="Reputation event kind"
+            value={repEvent}
+            onChange={(event) => setRepEvent(event.target.value === 'cowardice' ? 'cowardice' : 'deed')}
+            style={inputStyle}
+          >
+            <option value="deed">deed</option>
+            <option value="cowardice">cowardice</option>
+          </select>
+          <input
+            aria-label="Reputation event"
+            title="What the Reputation was awarded for"
+            value={repDescription}
+            onChange={(event) => setRepDescription(event.target.value)}
+            style={inputStyle}
+          />
+          <button
+            type="button"
+            disabled={repLevel.level === null || repDescription.trim() === ''}
+            onClick={() => {
+              if (repLevel.level !== null && repDescription.trim() !== '') {
+                setPlan(addPurchase(plan, { kind: 'reputation', level: repLevel.level, event: repEvent, description: repDescription.trim() }));
+                setRepLevelText('');
+                setRepEvent('deed');
+                setRepDescription('');
+              }
+            }}
+            style={buttonStyle}
+          >
+            Add Reputation event
+          </button>
+        </div>
+        {repLevel.error === null ? null : <p style={errorStyle}>{repLevel.error}</p>}
+      </div>
+
       {plan.purchases.length === 0 ? null : (
         <table data-testid="cpr-improve-plan" style={{ borderCollapse: 'collapse', margin: '0.5rem 0', width: '100%' }}>
           <tbody>
@@ -387,6 +451,10 @@ export function CyberpunkImproveDialog(props: {
                   ) : purchase.kind === 'therapy' ? (
                     <>
                       Humanity regained <Figure row={purchaseHumanityRegained(preview, index)} />
+                    </>
+                  ) : purchase.kind === 'reputation' ? (
+                    <>
+                      Reputation <Figure row={purchaseReputationLevel(preview, index)} />
                     </>
                   ) : (
                     <>
@@ -411,6 +479,13 @@ export function CyberpunkImproveDialog(props: {
         <p data-testid="cpr-improve-humanity" style={{ margin: '0.4rem 0' }}>
           Humanity <Figure row={humanity.humanityBefore} /> → <Figure row={humanity.humanityAfter} />; EMP <Figure row={humanity.empBefore} /> →{' '}
           <Figure row={humanity.empAfter} />
+        </p>
+      )}
+
+      {reputation.reputationAfter === null ? null : (
+        <p data-testid="cpr-improve-reputation-change" style={{ margin: '0.4rem 0' }}>
+          Reputation <Figure row={reputation.reputationBefore} /> → <Figure row={reputation.reputationAfter} />; Facedown{' '}
+          <Figure row={reputation.facedownBefore} /> + 1d10 → <Figure row={reputation.facedownAfter} /> + 1d10
         </p>
       )}
 

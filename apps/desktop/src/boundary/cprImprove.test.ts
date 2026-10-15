@@ -139,6 +139,29 @@ async function main() {
       'a therapy is the shape CprImproveRequest deserialises',
     );
 
+    // E5.5: a Reputation change (Level, deed or cowardice, what it was for) travels as CprImproveRequest deserialises it.
+    await previewCyberpunkImprovement('cpr-solo-kitted', {
+      ipAwarded: 0,
+      purchases: [
+        { kind: 'reputation' as const, level: 4, event: 'deed' as const, description: 'Played a killer show' },
+        { kind: 'reputation' as const, level: 6, event: 'cowardice' as const, description: 'Ran' },
+      ],
+    });
+    assertEqual(
+      JSON.stringify(calls[4].args),
+      JSON.stringify({
+        request: {
+          characterId: 'cpr-solo-kitted',
+          ipAwarded: 0,
+          purchases: [
+            { kind: 'reputation', level: 4, event: 'deed', description: 'Played a killer show' },
+            { kind: 'reputation', level: 6, event: 'cowardice', description: 'Ran' },
+          ],
+        },
+      }),
+      'a Reputation change is the shape CprImproveRequest deserialises',
+    );
+
     (globals.window as { __TAURI_INTERNALS__: { invoke: unknown } }).__TAURI_INTERNALS__.invoke = async () => {
       throw 'Overspend: these improvements cost 140 IP, but 90 IP are available';
     };
@@ -150,7 +173,7 @@ async function main() {
   } finally {
     delete globals.window;
   }
-  console.log('cprImprove: preview/apply request shape (skill, rank, switch, cyberware, therapy), answers and refusal checked');
+  console.log('cprImprove: preview/apply request shape (skill, rank, switch, cyberware, therapy, reputation), answers and refusal checked');
 }
 
 main().catch((error: unknown) => {
