@@ -674,3 +674,14 @@ E7.4: `sheet_rule_convert --check`, the residue gate), because those stay in the
 
 **Enforced by:** no CPR card lists `crates/codex-ingest/**` in FILES YOU OWN except E0.1's
 named-refusal match arms.
+
+## §24 — E7.10 closed on the graphify node-count guard outcome (lead ruling, 2026-10-15)
+
+`update_graphify.py` exited 1 on the dedup-collapse guard (new 648,327 nodes vs existing 648,328;
+`graph.json` not written; no force flag; receipt `artifacts/epic_7/E7.10_cycle_receipt.md`; indexed SHA
+4d1af843d1 = `origin/tranche-18`; tree clean). That is exactly the card's stated outcome ("on the node-count
+guard (exit 1) file the receipt and stop — never force") and the documented non-blocking policy
+(operator-confirmed 2026-07-20), and it is how SD-37 closed its graphify card
+(`docs/release/SD-37-starfinder-1e/decisions.md §23`, 2026-10-08). Ruling: E7.10 is `complete` on that
+outcome; the semantic graph is unchanged and indexes no SD-38 content; a full semantic re-extraction is an
+**operator decision** (cost), carried in `forward-scope-register.md` FSR-C3. E7.11 proceeds.
