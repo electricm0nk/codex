@@ -34,9 +34,9 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E6 | complete | 5 of 5 | E6.1–E6.4 complete; E6.MC complete (251eda57a1) — Epic report below (`awk -F'\|' '$2 ~ /^ E6\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E3 | complete | 8 of 8 | E3.1–E3.7 complete; E3.MC complete (4a5cb95486) — Epic report below (`awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E4 | in progress | 8 of 9 | E4.1–E4.7 complete; E4.MC complete — Epic report below; E4.8 (discovered by E4.MC) waiting (`awk -F'\|' '$2 ~ /^ E4\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
-| E5 | in progress | 5 of 6 | E5.1 complete (d1adf600d0, df7394c0a7, 0ec709c355); E5.2 complete (aa1d6b7500, 37c4d687e6); E5.3 complete (3b0592252d, 06c93e0e2a); E5.4 complete (224cdce6fc); E5.5 complete (cd9564ec44) (`awk -F'\|' '$2 ~ /^ E5\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
+| E5 | complete | 6 of 6 | E5.1 complete (d1adf600d0, df7394c0a7, 0ec709c355); E5.2 complete (aa1d6b7500, 37c4d687e6); E5.3 complete (3b0592252d, 06c93e0e2a); E5.4 complete (224cdce6fc); E5.5 complete (cd9564ec44); E5.MC complete (481718c99a) — Epic report below (`awk -F'\|' '$2 ~ /^ E5\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E7 | waiting | 0 of 11 | |
-| **Total** | | **56 of 69** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.7, E3.MC, E4.1–E4.7, E4.MC, E5.1–E5.5, E6.1–E6.4, E6.MC; 69 = 68 authored + E4.8 discovered by E4.MC; derived at E5.5: awk and Python both 56 complete of 69 rows) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
+| **Total** | | **57 of 69** (C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.7, E3.MC, E4.1–E4.7, E4.MC, E5.1–E5.5, E5.MC, E6.1–E6.4, E6.MC; 69 = 68 authored + E4.8 discovered by E4.MC; derived at E5.MC: awk and Python both 57 complete of 69 rows) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
 
@@ -153,6 +153,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-15 | E5.3 | opus | complete | 3b0592252d (dice reader + install loss + command + dialog + tests), 06c93e0e2a (sheet fixtures regenerated); receipt and rows in the next commit | `artifacts/epic_5/E5.3_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Cyberware install after creation (A-3, D-11): entered Humanity Loss or one rolled on the piece's dice with the pinned seed, refused outside the dice range; over-slot install refused, nothing written; Humanity/EMP rows move (Gills 12: 80 → 68, EMP 8 → 6); `--bins cpr_improve` 16/16; npm 173/173; root 300 suites 6704 / desktop 877 passed, 0 failed (first desktop sweep 876/1 on stale sheet fixtures, regenerated: 1 rework); clippy PASS; audits OK |
 | 2026-10-15 | E5.4 | opus | complete | 224cdce6fc (therapy catalog + `humanity.regained` + sheet + `therapy` purchase + dialog + tests); receipt and rows in the next commit | `artifacts/epic_5/E5.4_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Therapy (D-5): Standard 2d6 / Extreme 4d6 regain entered or rolled with the pinned seed, refused outside the dice, stopped at maximum Humanity (68 + 20 → 78, regains 10; at the cap 0); Addiction printed, refused as a purchase; `--bins cpr_improve` 22/22; cap mutation red; npm 173/173; root 300 suites 6706 / desktop 883 passed, 0 failed; clippy PASS; audits OK |
 | 2026-10-15 | E5.5 | opus | complete | cd9564ec44 (`reputation` purchase + preview rows + dialog section + tests); receipt and rows in the next commit | `artifacts/epic_5/E5.5_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Reputation change (p. 193-194): Level 1-10 entered with deed/cowardice and the event, recorded by the engine's `record` (only a higher Level replaces; a higher cowardice event replaces a deed and the Facedown goes negative: COOL 4, cowardice 6 → −2); every event saved; `--bins cpr_improve` 27/27; 2 mutations red; npm 173/173; desktop 888 passed, 0 failed (no root file changed); clippy PASS; sd24 5/5; audits OK |
+| 2026-10-15 | E5.MC | opus | complete | 481718c99a (rows + inventory + evidence); receipt and rows in the next commit | `artifacts/epic_5/E5.MC_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | E5.1–E5.5 re-run on 9646a423ce: `--bins cpr_improve` 27/27; 6 new ui-smoke rows (E5.2 switch + lock, E5.3 install + A-3 refusal, E5.4 D-5 cap + range refusal, E5.5 cowardice and lower deed, E5.1 skip refusal) + improve-cyberpunk-skill 7/7 green, real store untouched; plants reverted: IP ×15/10 → 8 red + app row red, switch at Rank 3 → 2 red, gate removed → 3 red + app row red; npm 173/173; inventory 122 rows R12 clean; E5 Epic report |
 
 ## Epic reports
 
@@ -323,6 +324,33 @@ blockers.)
   ui-smoke suite red on pre-SD-38 Pathfinder rows, is not E4's and still has no card; it gates E7.4. (3) E4.8 and E5.1 both become ready
   now and both write `CyberpunkCharacterSheet.tsx` and `spec.json`: the main-lane mutex serialises them.
 
+### Epic report — E5 improve (E5.MC, 2026-10-15, origin/tranche-18 9646a423ce)
+
+- **Cards done:** 6 of 6 — E5.1–E5.5, E5.MC (`awk -F'|' '$2 ~ /^ E5\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 6).
+- **What E5 delivered:** the CPR sheet's Improve button opens `CyberpunkImproveDialog`, priced and saved by `cpr_improve.rs`
+  (`preview_cyberpunk_improvement` / `apply_cyberpunk_improvement`): IP entered and spent on one-step Skill Levels and Role Ranks at the
+  p. 411 prices (skips and overspend refused); a Role switch at the A-1 price only while the latest Role is Rank ≥ 4, both Roles' rows on the
+  sheet; cyberware installed after creation with an entered or seeded-rolled Humanity Loss inside its dice (A-3), slots enforced (D-11),
+  Humanity / EMP / Maximum Humanity recomputed; therapy (Standard 2d6 / Extreme 4d6) stopped at the D-5 maximum, Addiction printed; a
+  Reputation event (Level 1-10, deed or cowardice) recorded with every event kept and the defining one marked, Facedown negative for
+  cowardice. Every figure the dialog shows is a `cpr.improve.*` or sheet row; the sheet re-reads from the store.
+- **Figures (commands in `artifacts/epic_5/E5.MC_cycle_receipt.md`):** re-run on 9646a423ce: `--bins cpr_improve` 27/27; ui-smoke 7 E5 rows
+  7/7 green through the running app (6 added by E5.MC; spec 116 → 122 rows, python and awk agree), real store 15379 entries `ddfc4461…`
+  untouched; npm 173/173; `ui-smoke:doc` 122 rows, R12 clean. Plants, all reverted (`src_clean exit=0`): IP price × 15/10 → 8 of 27 red and
+  improve-cyberpunk-skill red; switch at Rank 3 → 2 red; switch gate removed → 3 red and improve-cyberpunk-role-switch red.
+- **Seed deltas:** PF Aldric `7b2f2f26…4b42` / Elowen `f0230bf0…1e9b` / Tomas `2320c050…be7b` unchanged; SF-Envoy-3 42 / SF-Mystic-5 72 /
+  SF-Soldier-3 51 / SF-Technomancer-5 63 lines and sha256 unchanged (vs E0.6 base records). CPR seeds: none yet (E7.1).
+- **Retro (`scripts/retro.py summary --since 2026-10-13 --actor sd38-e5.1 … --actor sd38-e5.5 --actor sd38-e5.mc --json`):** 8 events —
+  1 correction (therapy page p. 231 → printed p. 230, E5.4), 1 incident (`tdd-red-not-observed`, E5.3), 6 rework (E5.1 × 2: placeholder
+  token, clippy `type_complexity`; E5.2: the same clippy lint; E5.3: stale sheet fixtures pushed before the desktop sweep; E5.MC × 2: a ui-smoke expect and a row note); 0 deferrals. No
+  incident key fired more than once. The clippy `type_complexity` cause recurred (E5.1, E5.2) as rework, not as a keyed incident; both
+  were caught by the R11 clippy step before push.
+- **Open blockers:** none.
+- **For the lead:** (1) E4.8 (discovered by E4.MC, dep E4.MC complete) is still `waiting`; every one of E5.MC's 7 live sheets still shows
+  the OTHER TOTALS raw ids (`cpr.cash`, `cpr.ammo.0`, `cpr.ammo.1`, `artifacts/epic_5/E5.MC/explore/live-sheet-*.txt`), so the E4 epic is
+  not closed and E7.5 will stop on it. E4.8 and E7.1 both write `spec.json` (main-lane mutex). (2) E4.7's finding (a), the full ui-smoke
+  suite red on pre-SD-38 Pathfinder rows, still has no card and gates E7.4.
+
 ## Decisions taken on safe defaults
 
 (Each entry: card, SD-x / D-n / A-n, the alternative not taken.)
@@ -408,6 +436,7 @@ blockers.)
 - E5.3, cyberware install with Humanity Loss (A-3, D-11; E2 fence exit for `cyberware.rs`/`input.rs`/`sheet.rs`, E4 fence exit for `cpr_adapter.rs`/`cpr_sheet_print.rs` and the generated sheet fixtures, decisions.md §7): (1) the loss is saved as a `| humanity loss <n>` suffix on the `cyberware = <name> [@ <mount>]` line (old files parse unchanged); alternative not taken: a separate key. (2) the mount is chosen automatically by the engine's `place()` (E3.7 placement); alternative not taken: a mount picker. (3) the seed is pinned on the first preview so the apply keeps the rolled dice; alternative not taken: a fresh roll on apply.
 - E5.4, therapy (D-5; E2 fence exit for `cyberware.rs`/`input.rs`/`sheet.rs`, decisions.md §7): (1) the regain is saved as one total `humanity.regained = <n>` line (old files parse unchanged); alternative not taken: a per-session therapy log. (2) Addiction therapy is printed in the dialog and refused as a purchase (it moves no sheet number); alternative not taken: a recorded sheet line. (3) a blank regain rolls with the plan's pinned seed; alternative not taken: entry only. (4) the sheet refuses a saved regain larger than the cyberware's total loss; alternative not taken: clamp silently. (5) new text cites the printed p. 230; existing p. 231 (file page) citations left unchanged to avoid fixture churn; alternative not taken: re-word them.
 - E5.5, Reputation change (no D-n/A-n names it; paper-sheet rule applied; no fence exit, no `src/` change): (1) every awarded event is saved, a lower one too (p. 193: people may know of less impressive deeds), and the sheet marks the defining one; alternative not taken: drop an event that does not replace. (2) the change costs no IP and the GM's Level is entered, not computed. (3) the event's kind is deed or cowardice and the Level is always 1-10; alternative not taken: a signed Level entry. (4) a blank or multi-line description is refused (one saved line per event); alternative not taken: save a default description.
+- E5.MC, merge check (A-1, A-3, D-5, D-11 applied; no fence exit, no `.rs` change): (1) the card's "cost × 10 → 15" planted as every IP price × 15 / 10 in `improvement.rs` `cost_to_reach`; alternative not taken: edit `ip_cost.json` (the corpus loader refuses a table that disagrees with its per-level rate, so the app would fail to load rather than misprice). (2) "switch at rank 3 accepted" planted twice: the gate one Rank down (cargo; no form path builds a Role at Rank 3) and the gate removed (cargo + the app row); alternative not taken: a test-only Rank 3 character in the app. (3) one self-contained character per row (E4.7 precedent); alternative not taken: `setup` reuse of improve-cyberpunk-skill. (4) E4.8's OTHER TOTALS gap, seen again on all 7 live sheets, is not re-carded (E4.8 holds it); alternative not taken: a second discovered card.
 
 ## Open blockers
 
