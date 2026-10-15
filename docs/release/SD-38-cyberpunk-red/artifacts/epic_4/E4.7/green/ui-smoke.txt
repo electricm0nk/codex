@@ -1,0 +1,23 @@
+App data root: /tmp/codex-ui-smoke-sd38-e4_7-kAcXH3/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd38-e4.7'...
+PASS  select-cyberpunk-red
+PASS  browse-cyberpunk-catalog
+PASS  browse-cyberpunk-gm-reference
+PASS  create-cyberpunk-streetrat-stats
+PASS  create-cyberpunk-streetrat-sheet
+PASS  create-cyberpunk-edgerunner-sheet
+PASS  create-cyberpunk-complete-package-sheet
+PASS  create-cyberpunk-complete-package-refuses-63
+PASS  sheet-cyberpunk-streetrat-solo
+PASS  sheet-cyberpunk-edgerunner-netrunner
+PASS  sheet-cyberpunk-complete-package-fixer
+PASS  landing-select-pathfinder
+PASS  open-seed-aldric
+PASS  open-seed-elowen
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+14/14 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 14 rows)
+Cleanup: 7 character(s) created across 14 row(s) with a cleanup record, 7 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd38-e4_7-kAcXH3/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003
+Evidence: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/f61b82f6-6418-42af-8873-d3df5da582e6/scratchpad/e47/green
+Removed isolated app-data root /tmp/codex-ui-smoke-sd38-e4_7-kAcXH3 (it held 3 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003).
