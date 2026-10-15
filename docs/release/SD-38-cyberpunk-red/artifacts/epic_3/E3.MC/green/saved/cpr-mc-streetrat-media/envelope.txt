@@ -1,0 +1,10 @@
+character_id = 2c3abebf-197e-4399-a880-b5d09ec46085
+revision_id = 2c3abebf-197e-4399-a880-b5d09ec46085.rev.1
+revision_kind = authoritative
+saved_at = 2026-10-15T02:42:13.275Z
+schema_version = 1
+app_or_runtime_version = 0.18.0
+content_or_rules_provenance = cyberpunk-red.corebook
+game_system = cyberpunk-red
+latest_authoritative_revision_ref = 2c3abebf-197e-4399-a880-b5d09ec46085.rev.1
+display_label = CPR MC Streetrat Media

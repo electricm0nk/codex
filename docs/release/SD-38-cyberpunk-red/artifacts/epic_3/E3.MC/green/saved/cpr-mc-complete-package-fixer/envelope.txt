@@ -1,0 +1,10 @@
+character_id = 6e8910a5-a5f0-4fb7-a32a-04b155184e3a
+revision_id = 6e8910a5-a5f0-4fb7-a32a-04b155184e3a.rev.1
+revision_kind = authoritative
+saved_at = 2026-10-15T02:43:16.479Z
+schema_version = 1
+app_or_runtime_version = 0.18.0
+content_or_rules_provenance = cyberpunk-red.corebook
+game_system = cyberpunk-red
+latest_authoritative_revision_ref = 6e8910a5-a5f0-4fb7-a32a-04b155184e3a.rev.1
+display_label = CPR MC Complete Package Fixer

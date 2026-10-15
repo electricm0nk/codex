@@ -1,0 +1,222 @@
+⚙
+CPR MC Complete Package Fixer
+Cyberpunk RED
+Open
+Close
+STATS
+
+STAT	Current
+INT	8	—
+REF	5	5
+DEX	7	7
+TECH	4	—
+COOL	6	—
+WILL	5	—
+LUCK	8	—
+MOVE	5	5
+BODY	6	6
+EMP	8	7
+SKILLS
+
+Level	Base
+Awareness
+Concentration (WILL)	2	7
+Conceal/Reveal Object (INT)	0	8
+Lip Reading (INT)	0	8
+Perception (INT)	2	10
+Tracking (INT)	0	8
+Body
+Athletics (DEX)	2	9
+Contortionist (DEX)	0	7
+Dance (DEX)	0	7
+Endurance (WILL)	0	5
+Resist Torture/Drugs (WILL)	0	5
+Stealth (DEX)	2	9
+Control
+Drive Land Vehicle (REF)	0	5
+Pilot Air Vehicle (REF)	0	5
+Pilot Sea Vehicle (REF)	0	5
+Riding (REF)	0	5
+Education
+Accounting (INT)	0	8
+Animal Handling (INT)	0	8
+Bureaucracy (INT)	0	8
+Business (INT)	0	8
+Composition (INT)	0	8
+Criminology (INT)	0	8
+Cryptography (INT)	0	8
+Deduction (INT)	0	8
+Education (INT)	2	10
+Gamble (INT)	0	8
+Language (Streetslang) (INT)	2	10
+Language (Swahili) (INT)	4	12
+Library Search (INT)	0	8
+Local Expert (Your Home) (INT)	2	10
+Science (INT)	0	8
+Tactics (INT)	0	8
+Wilderness Survival (INT)	0	8
+Fighting
+Brawling (DEX)	2	9
+Evasion (DEX)	2	9
+Martial Arts (DEX)	0	7
+Melee Weapon (DEX)	0	7
+Performance
+Acting (COOL)	0	6
+Play Instrument (TECH)	0	4
+Ranged Weapon
+Archery (REF)	0	5
+Autofire (REF)	0	5
+Handgun (REF)	1	6
+Heavy Weapons (REF)	0	5
+Shoulder Arms (REF)	0	5
+Social
+Bribery (COOL)	0	6
+Conversation (EMP)	2	9
+Human Perception (EMP)	2	9
+Interrogation (COOL)	0	6
+Persuasion (COOL)	2	8
+Personal Grooming (COOL)	0	6
+Streetwise (COOL)	0	6
+Trading (COOL)	0	6
+Wardrobe & Style (COOL)	0	6
+Technique
+Air Vehicle Tech (TECH)	0	4
+Basic Tech (TECH)	0	4
+Cybertech (TECH)	0	4
+Demolitions (TECH)	0	4
+Electronics/Security Tech (TECH)	0	4
+First Aid (TECH)	2	6
+Forgery (TECH)	0	4
+Land Vehicle Tech (TECH)	0	4
+Paint/Draw/Sculpt (TECH)	0	4
+Paramedic (TECH)	0	4
+Photography/Film (TECH)	0	4
+Pick Lock (TECH)	0	4
+Pick Pocket (TECH)	0	4
+Sea Vehicle Tech (TECH)	0	4
+Weaponstech (TECH)	0	4
+ROLE ABILITY
+
+Fixer
+Rank	4
+Haggle Bonus	4
+REPUTATION
+
+Reputation Level	0
+Facedown (COOL + Reputation)	6
+Facedown roll	6 + 1d10
+IMPROVEMENT POINTS
+
+Improvement Points (current / total)	0 / 0
+LIFEPATH
+
+Cultural Origins: Your (General) Cultural Region	Sub-Saharan African
+Your Personality: What Are You Like?	Picky, fussy, and nervous
+Dress and Personal Style: Clothing Style and Hairstyle: Clothing Style	Generic Chic (Standard, Colorful, Modular)
+Dress and Personal Style: Clothing Style and Hairstyle: Hairstyle	Short and curly
+Affectation You Are Never Without	Strange contacts
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: What Do You Value Most?	Power
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: How Do You Feel About Most People?	I stay neutral.
+Things You Value the Most: Most Valued Person in Your Life?: Most Valued Person in Your Life?	A pet
+Things You Value the Most: Most Valued Possession You Own?: Most Valued Possession You Own?	A piece of jewelry
+Your Original Family Background: Original Background	Nomad Pack
+Your Environment: Childhood Environment	In the ruins of a deserted town or city taken over by Reclaimers.
+Your Family Crisis: Background	Your family is cursed with a hereditary feud that has lasted for generations.
+Your Enemies: Enemy	Ex-friend
+Your Enemies: What Caused it? Who's been Wronged? (choose)	Turned down the other's offer of a job or romantic involvement.
+Your Enemies: What Can They Throw at You?	Just themselves and a close friend.
+Sweet Revenge!: What are You/They Gonna do About it?	Verbally attack them.
+Your Life Goals: Life Goals	Save, if possible, anyone else involved in your background, like a lover, or family member.
+Fixer: What Kind of Fixer are You?: Type	Act as an exclusive agent for a Media, Rockerboy, or a Nomad Pack.
+Fixer: Got a Partner? Who?: Who?	Mentor
+Fixer: What's Your "Office" Like?: Office	An otherwise abandoned building.
+Fixer: Who are Your Side Clients?: Who?	Local politicos or Execs who depend on you for finding out information.
+Fixer: Who's Gunning for You?: Who?	Rival Fixer trying to beat you out for resources and parts.
+HIT POINTS, HUMANITY, MOVE AND LUCK
+
+Hit Points	40
+Seriously Wounded	20
+Death Save	6
+Humanity	73 / 80
+MOVE	5
+LUCK	8
+WOUND TRACK
+
+Below HP	Stabilize DV
+Lightly Wounded	40	10
+Seriously Wounded	20	13
+Mortally Wounded	1	15
+Death Save	6	—
+Base Death Save Penalty	0	—
+CRITICAL INJURIES
+
+Critical Injuries to the Body
+Dismembered Arm
+Dismembered Hand
+Collapsed Lung
+Broken Ribs
+Broken Arm
+Foreign Object
+Broken Leg
+Torn Muscle
+Spinal Injury
+Crushed Fingers
+Dismembered Leg
+Critical Injuries to the Head
+Lost Eye
+Brain Injury
+Damaged Eye
+Concussion
+Broken Jaw
+Foreign Object
+Whiplash
+Cracked Skull
+Damaged Ear
+Crushed Windpipe
+Lost Ear
+ARMOR
+
+SP	Penalty
+Head	0	0
+Body	0	0
+Armor Penalty (REF, DEX, MOVE)	—	0
+WEAPONS
+
+DMG	ROF	Hands	Concealable	Magazine	Skill Base
+Heavy Pistol	3d6	2	1	Yes	8	6
+RANGE DV (M/YDS UP TO)
+
+6	12	25	50	100	200	400	800
+Heavy Pistol	13	15	20	25	30	30	N/A	N/A
+CYBERWARE
+
+Neural Link	7
+Humanity Loss	7
+Maximum Humanity	78
+Head SP (cyberware)	0
+Body SP (cyberware)	0
+Initiative bonus	0
+Fashionware slots	0 / 7
+Internal Body slots	0 / 7
+External Body slots	0 / 7
+Neural Link slots	0 / 5
+OTHER TOTALS
+
+cpr.cash	1950
+RULES AND FEATURES
+
+Role ability
+Operator
+Operator Rank 4
+Haggle bonus +4
+The Fixer's Role Ability is Operator. Fixers know how to get things on the black market and are adept at navigating the complex social customs of The Street, where hundreds of cultures and economic levels collide. Fixers maintain vast webs of contacts and clients. Contacts represents who the Fixer can reach out in order to source goods, favors, or information. The Fixer will still have to pay for these, of course. Reach is the highest price category of items that a Fixer can always source, and if they can use their influence to gather other Fixers into creating a Night Market, which makes all price categories of items available to them for a short time. (See pg. 338 for rules on setting up Night Markets) Haggle is the ability of the Fixer to strike a deal. When haggling with a person, you roll COOL + Trading Skill + Your Operator Rank + 1d10 against their COOL + Trading Skill + Their Operator Rank (if they are a Fixer) + 1d10. If you succeed, you can make 1 deal of your Operator Rank or lower. Only 1 Fixer deal can be made per transaction. Grease represents the Fixer's ability to blend into the many cultures on and off The Street; ability to know the language, social codes, and status marks for each group or culture. (Cyberpunk RED core rulebook p160)
+Cyberware
+Neural Link
+Humanity Loss 7
+Wired artificial nervous system, required to use Neuralware, and Subdermal Grips. System has 5 Option Slots for Neuralware options. (Cyberpunk RED core rulebook p360)
+Humanity
+Humanity Loss
+Humanity Loss 7
+Humanity 73
+EMP 7
+Humanity Loss 7 from installed cyberware: Humanity 73 = EMP 8 x 10 - 7. EMP 7: EMP is lowered by 1 every time the tens place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81).

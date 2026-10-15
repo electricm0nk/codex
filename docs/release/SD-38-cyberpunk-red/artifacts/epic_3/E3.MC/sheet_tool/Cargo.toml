@@ -1,0 +1,21 @@
+# E3.MC evidence tool (not part of any workspace, never shipped): composes the Cyberpunk RED
+# sheet for a SAVED character directory captured from a ui-smoke run, with the engine's own
+# `compose_sheet` (src/rules_core/cpr/sheet.rs) and the desktop's printed lines
+# (apps/desktop/src-tauri/src/cpr_sheet_print.rs, included by path), and writes the result in the
+# shape `load_saved_character` answers (camelCase), so compare.mts can render the expected sheet.
+#
+# Build/run (from this directory):
+#   CARGO_TARGET_DIR=/home/ubuntu/cargo-target/sd38-e3/mc-tool cargo run --release -- \
+#     <captured character dir> <repo>/data/cyberpunk-red/corpus <template response json> <out json>
+[package]
+name = "e3mc_sheet_tool"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+codex = { path = "../../../../../../.." }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

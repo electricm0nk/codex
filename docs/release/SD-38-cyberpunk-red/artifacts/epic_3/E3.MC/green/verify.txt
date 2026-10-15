@@ -1,0 +1,6 @@
+cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins cpr_creation -- --test-threads=8
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 828 filtered out; finished in 20.13s
+
+cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc
+171/171 test files passed.
+Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/docs/testing/ui-smoke-inventory.md (112 rows, 18 screens).

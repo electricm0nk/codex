@@ -1,0 +1,10 @@
+stat.int = 6
+stat.ref = 5
+stat.dex = 7
+stat.tech = 5
+stat.cool = 6
+stat.will = 7
+stat.luck = 5
+stat.move = 5
+stat.body = 6
+stat.emp = 6
