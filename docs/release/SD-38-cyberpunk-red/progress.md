@@ -161,6 +161,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-15 | E7.3 | sonnet | complete | this commit (docs only: receipt, kanban row, this row) | `artifacts/epic_7/E7.3_cycle_receipt.md` | docs only; PF/SF/CPR seeds not rendered (E7.4 re-derives) | attempt 2 after E7.3a: .deb and AppImage rebuilt from bad443695a, clean profiles, Check ok, notes loaded, Installed real, Pending / Rollback `idle` / `none` (no `unknown` after Check), CPR seed Nyx Calder opens (HP 40, Humanity 56/70, EMP 5); Install enabled on a throwaway 0.16.0 AppImage |
 | 2026-10-15 | E4.8 | opus | complete | dd4bbbbb90 (engine name line + ledger box + named checkboxes + fixture + ui-smoke rows + inventory + lines-out dirs), dca8a369c4 (evidence); receipt and rows in this commit | `artifacts/epic_4/E4.8_cycle_receipt.md` | PF Aldric/Elowen/Tomas sha256 unchanged; SF 4 seeds' lines unchanged (42/72/51/63) | Cash / Ammunition (by name) / Rent in a `ledger` box; no Other totals box on the 5 fixtures or the 3 live ui-smoke sheets; critical tick row green; R-W control for `sf-seed-lines-out-dir-missing` in place |
 | 2026-10-15 | E7.4 | sonnet | complete | this commit (baselines block, evidence, receipt, rows) | `artifacts/epic_7/E7.4_cycle_receipt.md` | PF 3 hashes and SF 4 seed files (sha256 + 42/72/51/63 lines) identical to E0.6 base | one `verify.sh --full` on efe5e27a0a: RESULT PASS, 53/53 stages, 0 `test result: FAILED`; root-full 6707/299 suites, ingest 1841, desktop 892, npm 173/173, clippy 0/0/0; six floors re-recorded; not run: full `npm run ui-smoke` (not in G-9; E4.7 finding (a) unowned) |
+| 2026-10-15 | E7.5 | opus | blocked-escalated | this commit (docs only: receipt, kanban row, this row, open blocker, retro log) | `artifacts/epic_7/E7.5_cycle_receipt.md` | docs only; not rendered (no code since E7.4's identical PF/SF result) | closure scan printed `ROW_COUNT 70` against the constant 69; every non-exempt card complete (63/63, awk + Python); the extra row is E7.3a, whose discovery commit 43e9dcdb27 skipped the raise-the-count rule; DEF-1…5 not fired; FSR-C2 fires only under the broad reading (`fixed` rows) — 0 literal `disagree`; stopped: no retrospective, sweep or PR |
 
 ## Epic reports
 
@@ -448,7 +449,14 @@ blockers.)
 
 ## Open blockers
 
-None.
+- **E7.5 (2026-10-15, blocked-escalated) — closure-scan constant not raised for E7.3a.** Command
+  (from the package dir): `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 69) print "ROW_COUNT " n }' kanban.md`
+  → `ROW_COUNT 70`. The status line of the scan prints nothing (63/63 non-exempt cards complete). The
+  70th row is E7.3a (ID diff vs `1102f34aab` adds only E4.8 and E7.3a); the discovery rule says the
+  discovering commit raises the count, and `43e9dcdb27` did not. **Ruling / write needed (lead, package
+  planning docs):** raise 69 → 70 and the prose to "68 authored + E4.8 (E4.MC) + E7.3a (E7.3)" at
+  `epic-breakdown.md:265,269`, `workflow-instruction.md:58,458`, `README.md:45,49`, `progress.md:39`, in
+  one commit; then re-dispatch E7.5 (E7.11 re-runs the same scan). Receipt: `artifacts/epic_7/E7.5_cycle_receipt.md`.
 
 ## For the operator
 
