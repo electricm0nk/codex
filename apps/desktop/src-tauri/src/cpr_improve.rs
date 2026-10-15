@@ -28,15 +28,25 @@
 //! request's seed, and the engine refuses a loss outside the dice range (A-3) and an install over
 //! its container's option slots (D-11). The preview answers with the seed it used and the
 //! Humanity and EMP before and after the plan; an apply sent with that seed rolls the same loss.
-//! Therapy and Reputation are not part of this plan.
+//!
+//! Therapy (`therapy`, p. 230) costs no IP either (its Eurobuck price, Medical Tech DV and
+//! materials are printed): Standard Humanity Loss regains 2d6 and Extreme Humanity Loss 4d6,
+//! entered or rolled with the request's seed like an install's loss; the engine refuses an
+//! entered regain outside the dice and stops the regain at the D-5 maximum Humanity (10 x EMP
+//! less 2 per piece of cyberware and 4 per piece of borgware), so a restore above the cap
+//! stops at the cap. The regain is saved as `humanity.regained`. Addiction therapy regains no
+//! Humanity: the dialog prints its effect, and as a purchase it is refused.
+//! Reputation is not part of this plan.
 
 use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::cpr::cyberware::{CprCyberwareCatalog, CprCyberwareInstall};
+use codex::rules_core::cpr::cyberware::{
+    humanity_after_loss, humanity_after_therapy, CprCyberwareCatalog, CprCyberwareInstall, CprHumanityLossDice,
+};
 use codex::rules_core::cpr::improvement::{CprIpCostCatalog, CprIpTable, CprRoleHistory};
-use codex::rules_core::cpr::input::{CprImprovementPoints, CprSheetChoices};
+use codex::rules_core::cpr::input::{CprCharacterInput, CprImprovementPoints, CprSheetChoices, CprStat};
 use codex::rules_core::cpr::roles::CprRole;
 use codex::rules_core::cpr::sheet::{compose_sheet, CprSheetCatalogs};
 use codex::rules_core::cpr::skills::{slug, CprSkill, CprSkillCatalog};
@@ -68,6 +78,9 @@ pub enum CprPurchase {
     /// none to roll it on the piece's dice (p. 111, A-3). It costs no IP.
     #[serde(rename_all = "camelCase")]
     Cyberware { name: String, humanity_loss: Option<i16> },
+    /// A Humanity therapy by its p. 230 name, with the Humanity regain the player entered, or
+    /// none to roll it on the therapy's dice. It costs no IP.
+    Therapy { name: String, regained: Option<i16> },
 }
 
 /// The improve dialog's plan: the IP entered (added to the IP earned) and the purchases, in order.
@@ -130,6 +143,25 @@ pub struct CprImproveCyberwareOption {
     pub max: i16,
 }
 
+/// A therapy of the p. 230 table as the dialog offers it: the dice its Humanity regain is rolled
+/// on with their range (none, 0-0, for Addiction, whose effect is printed) and its printed cost,
+/// Medical Tech DV, materials, duration and effect.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprImproveTherapyOption {
+    pub name: String,
+    pub dice: Option<String>,
+    pub min: i16,
+    pub max: i16,
+    pub cost_eb: u32,
+    pub price_category: String,
+    pub medtech_dv: u8,
+    pub materials_eb: u32,
+    pub materials_price_category: String,
+    pub duration: String,
+    pub text: String,
+}
+
 /// `preview_cyberpunk_improvement`: the options and the plan's rows, or why the plan is refused,
 /// and the seed the plan's Humanity Loss rolls used.
 #[derive(Debug, Clone, Serialize)]
@@ -139,6 +171,7 @@ pub struct CprImprovePreview {
     pub role: Option<CprImproveRoleOption>,
     pub switch: Vec<CprImproveSwitchOption>,
     pub cyberware: Vec<CprImproveCyberwareOption>,
+    pub therapy: Vec<CprImproveTherapyOption>,
     pub rows: Vec<ExplanationDto>,
     pub refusal: Option<String>,
     pub seed: u32,
@@ -188,6 +221,40 @@ fn install_loss(
             }
             None => Ok((0, "Humanity Loss 0: the piece has no Humanity Loss dice (p. 111)".to_owned())),
         },
+    }
+}
+
+/// The Humanity a therapy regains: the entered regain checked against the therapy's dice, or one
+/// rolled on them; the regain and how it was found. Addiction therapy regains none and is refused.
+fn therapy_roll(
+    cyberware: &CprCyberwareCatalog,
+    name: &str,
+    entered: Option<i16>,
+    seed: u32,
+    index: usize,
+) -> Result<(String, i16, String), String> {
+    let therapy = cyberware
+        .therapy(name)
+        .ok_or_else(|| format!("'{name}' is not one of the therapies on p. 230"))?;
+    let dice: CprHumanityLossDice = therapy.dice.ok_or_else(|| {
+        format!("{} therapy regains no Humanity; its effect is printed, not computed (p. 230)", therapy.name)
+    })?;
+    let (low, high) = dice.range();
+    match entered {
+        Some(regained) if (low..=high).contains(&regained) => {
+            Ok((therapy.name.clone(), regained, format!("entered {regained}; its dice are {} ({low}-{high})", dice.text())))
+        }
+        Some(regained) => Err(format!(
+            "{}: Humanity regained {regained} is outside its dice, {} ({low}-{high}) (p. 230)",
+            therapy.name,
+            dice.text()
+        )),
+        None => {
+            let mut roller = purchase_roller(seed, index);
+            let (regained, faces) = dice.roll(|sides| roller.roll(sides));
+            let faces: Vec<String> = faces.iter().map(u8::to_string).collect();
+            Ok((therapy.name.clone(), regained, format!("rolled {} = {}", dice.text(), faces.join(" + "))))
+        }
     }
 }
 
@@ -265,12 +332,15 @@ fn plan(
     costs: &CprIpCostCatalog,
     skills: &CprSkillCatalog,
     cyberware: &CprCyberwareCatalog,
+    input: &CprCharacterInput,
     choices: &CprSheetChoices,
     request: &CprImproveRequest,
     seed: u32,
 ) -> Result<PricedPlan, String> {
     if request.purchases.is_empty() && request.ip_awarded == 0 {
-        return Err("nothing to spend: enter IP or choose a Skill Level, Role Rank, Role switch or cyberware to buy".to_owned());
+        return Err(
+            "nothing to spend: enter IP or choose a Skill Level, Role Rank, Role switch, cyberware or therapy to buy".to_owned()
+        );
     }
     let ip = choices.improvement_points.unwrap_or_default();
     let earned = ip
@@ -327,6 +397,30 @@ fn plan(
                     id: format!("cpr.improve.purchase.{i}.humanity_loss"),
                     value: loss,
                     detail: format!("{record}: {detail}"),
+                });
+                continue;
+            }
+            CprPurchase::Therapy { name, regained } => {
+                let (therapy, roll, how) = therapy_roll(cyberware, name.trim(), *regained, seed, i)?;
+                // D-5 (p. 230): the regain stops at the maximum Humanity of the cyberware the
+                // plan has installed so far.
+                let base_emp = input.stats.get(CprStat::Emp);
+                let loadout = cyberware.check(input.stats.get(CprStat::Body), &next.cyberware).map_err(|r| r.to_string())?;
+                let held = next.humanity_regained.unwrap_or(0);
+                let current = humanity_after_loss(base_emp, loadout.humanity_loss()) + i16::try_from(held).unwrap_or(i16::MAX);
+                let cap = loadout.humanity_cap(base_emp);
+                let after = humanity_after_therapy(current, roll, cap);
+                let gained = after - current;
+                next.humanity_regained = Some(held + u16::try_from(gained).unwrap_or(0));
+                let stop = if gained < roll {
+                    format!(", stopped at Maximum Humanity {cap} (D-5)")
+                } else {
+                    format!(", under Maximum Humanity {cap} (D-5)")
+                };
+                rows.push(ComputationExplanation {
+                    id: format!("cpr.improve.purchase.{i}.humanity_regained"),
+                    value: gained,
+                    detail: format!("{therapy} therapy: {how}; Humanity {current} -> {after}{stop}; regains {gained} (p. 230)"),
                 });
                 continue;
             }
@@ -455,12 +549,12 @@ fn priced_at_root(
     let costs = CprIpCostCatalog::load(corpus)?;
     let skills = CprSkillCatalog::load(corpus)?;
     let cyberware = CprCyberwareCatalog::load(corpus)?;
-    let planned = plan(&costs, &skills, &cyberware, &choices, request, seed).and_then(|(next, mut rows)| {
+    let planned = plan(&costs, &skills, &cyberware, &character.input, &choices, request, seed).and_then(|(next, mut rows)| {
         let catalogs = CprSheetCatalogs::load(corpus)?;
         let after = compose_sheet(&catalogs, &character.input, &next)?;
-        if request.purchases.iter().any(|p| matches!(p, CprPurchase::Cyberware { .. })) {
-            // The Humanity and EMP the installs move (p. 80, p. 111), read from the engine's
-            // sheet before and after the plan.
+        if request.purchases.iter().any(|p| matches!(p, CprPurchase::Cyberware { .. } | CprPurchase::Therapy { .. })) {
+            // The Humanity and EMP the installs and therapies move (p. 80, p. 111, p. 230), read
+            // from the engine's sheet before and after the plan.
             let before = compose_sheet(&catalogs, &character.input, &choices)?;
             for (sheet, when) in [(&before, "before"), (&after, "after")] {
                 for (id, label) in [("cpr.derived.humanity_current", "humanity"), ("cpr.derived.emp_current", "emp")] {
@@ -476,6 +570,29 @@ fn priced_at_root(
         Ok((next, rows))
     });
     Ok((choices, planned))
+}
+
+fn therapy_options(corpus: &Path) -> Result<Vec<CprImproveTherapyOption>, String> {
+    Ok(CprCyberwareCatalog::load(corpus)?
+        .therapies()
+        .iter()
+        .map(|t| {
+            let (min, max) = t.dice.map_or((0, 0), |d| d.range());
+            CprImproveTherapyOption {
+                name: t.name.clone(),
+                dice: t.dice.map(|d| d.text()),
+                min,
+                max,
+                cost_eb: t.cost_eb,
+                price_category: t.price_category.clone(),
+                medtech_dv: t.medtech_dv,
+                materials_eb: t.materials_eb,
+                materials_price_category: t.materials_price_category.clone(),
+                duration: t.duration.clone(),
+                text: t.text.clone(),
+            }
+        })
+        .collect())
 }
 
 fn cyberware_options(corpus: &Path) -> Result<Vec<CprImproveCyberwareOption>, String> {
@@ -500,7 +617,16 @@ pub(crate) fn preview_at_root(corpus: &Path, root: &Path, request: &CprImproveRe
         Ok((_, rows)) => (rows.into_iter().map(dto).collect(), None),
         Err(reason) => (available_row(&choices, request.ip_awarded).into_iter().map(dto).collect(), Some(reason)),
     };
-    Ok(CprImprovePreview { skills, role, switch, cyberware: cyberware_options(corpus)?, rows, refusal, seed })
+    Ok(CprImprovePreview {
+        skills,
+        role,
+        switch,
+        cyberware: cyberware_options(corpus)?,
+        therapy: therapy_options(corpus)?,
+        rows,
+        refusal,
+        seed,
+    })
 }
 
 /// Spend the plan on the CPR character at `root`: the new Levels, Ranks, Roles, cyberware (with
@@ -991,6 +1117,167 @@ mod tests {
         let parsed: CprImproveRequest = serde_json::from_value(wire).expect("deserialises");
         assert_eq!(parsed.seed, Some(7));
         assert_eq!(parsed.purchases, vec![cyberware("Gills", Some(9)), cyberware("Gills", None)]);
+    }
+
+    fn therapy(name: &str, regained: Option<i16>) -> CprPurchase {
+        CprPurchase::Therapy { name: name.to_owned(), regained }
+    }
+
+    /// `saved_solo` (EMP 8) with Gills installed at a Humanity Loss of 12: Humanity 80 - 12 = 68,
+    /// EMP 6; maximum Humanity 80 - 1 piece x 2 = 78 (D-5, p. 230).
+    fn saved_solo_with_gills(label: &str) -> PathBuf {
+        let root = saved_solo(label, Some(CprImprovementPoints { earned: 50, spent: 0 }));
+        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
+        choices.cyberware.push(CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(12) });
+        CprCharacterStore::save_choices(&choices, &root).unwrap();
+        let sheet = CprAdapterSheet::of(&root);
+        assert_eq!(
+            (sheet.row("cpr.derived.humanity_current"), sheet.row("cpr.cyberware.humanity_cap"), sheet.row("cpr.derived.emp_current")),
+            (68, 78, 6)
+        );
+        root
+    }
+
+    /// p. 230: Standard Humanity Loss therapy with 7 entered (its dice 2d6, 2-12) regains 7 below
+    /// the cap: Humanity 68 -> 75, EMP 6 -> 7; it costs no IP; the save keeps the regained 7 and
+    /// the reloaded sheet's Humanity and EMP rows move.
+    #[test]
+    fn therapy_regains_the_entered_humanity_below_the_cap_and_the_sheet_rereads() {
+        let root = saved_solo_with_gills("therapy");
+        let plan = request(0, vec![therapy("Standard Humanity Loss", Some(7))]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.humanity_regained"), 7);
+        assert!(preview.rows.iter().all(|r| r.id != "cpr.improve.purchase.0.cost"), "therapy is not an IP purchase");
+        assert_eq!(row(&preview.rows, "cpr.improve.ip.cost"), 0);
+        assert_eq!((row(&preview.rows, "cpr.improve.humanity.before"), row(&preview.rows, "cpr.improve.humanity.after")), (68, 75));
+        assert_eq!((row(&preview.rows, "cpr.improve.emp.before"), row(&preview.rows, "cpr.improve.emp.after")), (6, 7));
+
+        let loaded = apply_at_root(&corpus(), &root, &plan).expect("applies");
+        let sheet = |id: &str| row(&loaded.explanations, id);
+        assert_eq!((sheet("cpr.derived.humanity_current"), sheet("cpr.derived.emp_current")), (75, 7));
+        assert_eq!(sheet("cpr.ip.current"), 50, "no IP spent");
+        assert_eq!(CprCharacterStore::load_choices(&root).unwrap().humanity_regained, Some(7));
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// D-5: a restore above the cap stops at the cap. Extreme therapy with 20 entered from
+    /// Humanity 68 would reach 88; it stops at maximum Humanity 78 (regained 10), and a second
+    /// therapy at the cap regains 0. Two therapies in one plan add up (5 + 12 -> 68 + 5 = 73,
+    /// then 73 + 12 = 85, stopped at 78).
+    #[test]
+    fn a_restore_above_the_cap_stops_at_the_cap() {
+        let root = saved_solo_with_gills("cap");
+        let plan = request(0, vec![therapy("Extreme Humanity Loss", Some(20))]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        assert_eq!(row(&preview.rows, "cpr.improve.purchase.0.humanity_regained"), 10);
+        let detail = &preview.rows.iter().find(|r| r.id == "cpr.improve.purchase.0.humanity_regained").unwrap().detail;
+        assert!(detail.contains("Maximum Humanity 78") && detail.contains("D-5"), "{detail}");
+        assert_eq!(row(&preview.rows, "cpr.improve.humanity.after"), 78);
+
+        let two = request(0, vec![therapy("Standard Humanity Loss", Some(5)), therapy("Standard Humanity Loss", Some(12))]);
+        let preview = preview_at_root(&corpus(), &root, &two).expect("previews");
+        assert_eq!(
+            (row(&preview.rows, "cpr.improve.purchase.0.humanity_regained"), row(&preview.rows, "cpr.improve.purchase.1.humanity_regained")),
+            (5, 5)
+        );
+
+        let loaded = apply_at_root(&corpus(), &root, &plan).expect("applies");
+        assert_eq!(row(&loaded.explanations, "cpr.derived.humanity_current"), 78);
+        assert_eq!(row(&loaded.explanations, "cpr.derived.emp_current"), 7);
+        assert_eq!(CprCharacterStore::load_choices(&root).unwrap().humanity_regained, Some(10));
+        let again = preview_at_root(&corpus(), &root, &request(0, vec![therapy("Standard Humanity Loss", Some(12))])).expect("previews");
+        assert_eq!(row(&again.rows, "cpr.improve.purchase.0.humanity_regained"), 0, "at the cap therapy regains nothing");
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// An entered regain outside the therapy's dice (Standard 13 and 1, Extreme 3 and 25) is
+    /// refused naming the range; Addiction therapy regains no Humanity (its effect is printed)
+    /// and is refused as a purchase; an unknown therapy is refused; nothing is written.
+    #[test]
+    fn an_entered_regain_outside_the_dice_and_addiction_therapy_are_refused_and_nothing_is_saved() {
+        let root = saved_solo_with_gills("therapyrange");
+        let before = choices_text(&root);
+        for (name, regained, range) in [
+            ("Standard Humanity Loss", 13, "2d6 (2-12)"),
+            ("Standard Humanity Loss", 1, "2d6 (2-12)"),
+            ("Extreme Humanity Loss", 3, "4d6 (4-24)"),
+            ("Extreme Humanity Loss", 25, "4d6 (4-24)"),
+        ] {
+            let plan = request(0, vec![therapy(name, Some(regained))]);
+            let reason = preview_at_root(&corpus(), &root, &plan).expect("previews").refusal.unwrap_or_else(|| panic!("{name} {regained} accepted"));
+            assert!(reason.contains(&format!("Humanity regained {regained}")) && reason.contains(range), "{reason}");
+            assert!(apply_at_root(&corpus(), &root, &plan).is_err());
+        }
+        let reason = preview_at_root(&corpus(), &root, &request(0, vec![therapy("Addiction", None)])).expect("previews").refusal.expect("refused");
+        assert!(reason.contains("Addiction") && reason.contains("printed"), "{reason}");
+        let reason = preview_at_root(&corpus(), &root, &request(0, vec![therapy("Primal Scream", Some(4))])).expect("previews").refusal.expect("refused");
+        assert!(reason.contains("Primal Scream"), "{reason}");
+        assert_eq!(choices_text(&root), before, "a refused therapy writes nothing");
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// A regain left blank is rolled on the therapy's dice with the request's seed; the same seed
+    /// keeps it on apply; over 300 seeds every Standard roll lands in 2-12 and reaches both ends.
+    #[test]
+    fn a_blank_regain_is_rolled_with_the_seed_and_the_same_seed_keeps_it() {
+        let root = saved_solo("therapyroll", None);
+        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
+        // Gills 12 + Grafted Muscle and Bone Lace 24: Humanity 80 - 36 = 44; the cap (74 or more) is above 44 + 24.
+        choices.cyberware.push(CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(12) });
+        choices.cyberware.push(CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None, humanity_loss: Some(24) });
+        CprCharacterStore::save_choices(&choices, &root).unwrap();
+        let plan = request(0, vec![therapy("Extreme Humanity Loss", None)]);
+        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
+        assert_eq!(preview.refusal, None);
+        let rolled = row(&preview.rows, "cpr.improve.purchase.0.humanity_regained");
+        assert!((4..=24).contains(&rolled), "{rolled}");
+        let detail = &preview.rows.iter().find(|r| r.id == "cpr.improve.purchase.0.humanity_regained").unwrap().detail;
+        assert!(detail.contains("rolled 4d6"), "{detail}");
+        let mut seeded = request(0, vec![therapy("Extreme Humanity Loss", None)]);
+        seeded.seed = Some(preview.seed);
+        let loaded = apply_at_root(&corpus(), &root, &seeded).expect("applies");
+        assert_eq!(row(&loaded.explanations, "cpr.derived.humanity_current"), 44 + rolled);
+        assert_eq!(CprCharacterStore::load_choices(&root).unwrap().humanity_regained, Some(rolled as u16));
+
+        let mut seen = std::collections::BTreeSet::new();
+        for seed in 0..300 {
+            let mut plan = request(0, vec![therapy("Standard Humanity Loss", None)]);
+            plan.seed = Some(seed);
+            seen.insert(row(&preview_at_root(&corpus(), &root, &plan).expect("previews").rows, "cpr.improve.purchase.0.humanity_regained"));
+        }
+        assert_eq!((seen.first().copied(), seen.last().copied()), (Some(2), Some(12)));
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// The preview offers the three p. 230 therapies: Standard 2d6 (2-12) and Extreme 4d6 (4-24)
+    /// with their printed cost and DV, and Addiction with no dice and its printed effect.
+    #[test]
+    fn the_preview_offers_the_therapies_and_prints_addiction() {
+        let root = saved_solo("therapyopts", None);
+        let preview = preview_at_root(&corpus(), &root, &request(0, vec![skill("Handgun", 5)])).expect("previews");
+        let names: Vec<&str> = preview.therapy.iter().map(|t| t.name.as_str()).collect();
+        assert_eq!(names, ["Addiction", "Standard Humanity Loss", "Extreme Humanity Loss"]);
+        let standard = &preview.therapy[1];
+        assert_eq!((standard.dice.as_deref(), standard.min, standard.max, standard.cost_eb, standard.medtech_dv), (Some("2d6"), 2, 12, 500, 15));
+        let extreme = &preview.therapy[2];
+        assert_eq!((extreme.dice.as_deref(), extreme.min, extreme.max, extreme.cost_eb, extreme.medtech_dv), (Some("4d6"), 4, 24, 1000, 17));
+        let addiction = &preview.therapy[0];
+        assert_eq!((addiction.dice.as_deref(), addiction.min, addiction.max), (None, 0, 0));
+        assert!(addiction.text.contains("automatically fail the roll"), "{}", addiction.text);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    #[test]
+    fn a_therapy_deserialises_from_the_frontend_wire_shape() {
+        let wire = serde_json::json!({
+            "characterId": "cpr-improve",
+            "ipAwarded": 0,
+            "purchases": [{ "kind": "therapy", "name": "Standard Humanity Loss", "regained": 7 }, { "kind": "therapy", "name": "Extreme Humanity Loss", "regained": null }]
+        });
+        let parsed: CprImproveRequest = serde_json::from_value(wire).expect("deserialises");
+        assert_eq!(parsed.purchases, vec![therapy("Standard Humanity Loss", Some(7)), therapy("Extreme Humanity Loss", None)]);
     }
 
     /// The wire shape `cprImprove.ts` sends: `{ characterId, ipAwarded, purchases: [{ kind:

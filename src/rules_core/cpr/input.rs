@@ -205,6 +205,9 @@ pub struct CprSheetChoices {
     pub cash: Option<u32>,
     pub ammunition: Vec<(String, u32)>,
     pub housing: Option<String>,
+    /// Humanity regained in therapy since the cyberware was installed, in total (p. 230; each
+    /// session stops at the D-5 maximum, so this never takes Humanity past it when saved).
+    pub humanity_regained: Option<u16>,
 }
 
 impl CprSheetChoices {
@@ -329,6 +332,9 @@ pub fn render_cpr_sheet_choices(choices: &CprSheetChoices) -> String {
     if let Some(housing) = &choices.housing {
         let _ = writeln!(out, "housing = {housing}");
     }
+    if let Some(regained) = choices.humanity_regained {
+        let _ = writeln!(out, "humanity.regained = {regained}");
+    }
     out
 }
 
@@ -431,6 +437,7 @@ pub fn parse_cpr_sheet_choices(text: &str) -> Result<CprSheetChoices, String> {
                 choices.ammunition.push((label.trim().to_owned(), number::<u32>(key, count)?));
             }
             "housing" => once(&mut choices.housing, key, value.to_owned())?,
+            "humanity.regained" => once(&mut choices.humanity_regained, key, number::<u16>(key, value)?)?,
             _ => match key.strip_prefix("skill.") {
                 Some(skill) if !skill.trim().is_empty() => {
                     choices.skills.push((skill.trim().to_owned(), number::<u8>(key, value)?));
@@ -762,6 +769,7 @@ mod tests {
             cash: Some(500),
             ammunition: vec![("Heavy Pistol Basic".to_owned(), 30)],
             housing: Some("Cargo Container".to_owned()),
+            humanity_regained: Some(7),
         }
     }
 
@@ -775,7 +783,10 @@ mod tests {
         assert!(text.contains("cyberware = Gills | humanity loss 9\n"), "{text}");
         assert!(text.contains("cyberware = Image Enhance @ eye 0 | humanity loss 5\n"), "{text}");
         assert!(text.contains("reputation = 3 cowardice: Ran: from a fight\n"), "{text}");
+        assert!(text.contains("humanity.regained = 7\n"), "{text}");
         assert_eq!(parse_cpr_sheet_choices(&text), Ok(choices));
+        assert!(parse_cpr_sheet_choices("humanity.regained = 2\nhumanity.regained = 3\n").unwrap_err().contains("twice"));
+        assert!(parse_cpr_sheet_choices("humanity.regained = -2\n").unwrap_err().contains("whole number"));
     }
 
     /// The Lifepath answers (E3.3): one line each, in panel order, parsed back unchanged; an

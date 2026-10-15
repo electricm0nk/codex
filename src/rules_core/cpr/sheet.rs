@@ -389,7 +389,13 @@ pub fn compose_sheet(
 
     // 2. Humanity and EMP after the Humanity Loss.
     let humanity_loss = loadout.humanity_loss();
-    let humanity_now = humanity_after_loss(base_emp, humanity_loss);
+    let regained = i16::try_from(choices.humanity_regained.unwrap_or(0)).unwrap_or(i16::MAX);
+    if regained > humanity_loss {
+        return Err(format!(
+            "Humanity regained in therapy {regained} is more than the {humanity_loss} Humanity the cyberware took (p. 230)"
+        ));
+    }
+    let humanity_now = humanity_after_loss(base_emp, humanity_loss) + regained;
     let emp_now = current_emp(humanity_now);
 
     // 3. Armour, the cyberware SP competing in its location.
@@ -409,9 +415,15 @@ pub fn compose_sheet(
     rows.push(row(
         "cpr.derived.humanity_current".to_owned(),
         humanity_now,
-        format!(
-            "Humanity {humanity_now} = EMP {base_emp} x 10 - Humanity Loss {humanity_loss} (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112; rolled loss after it, p. 111)"
-        ),
+        if regained > 0 {
+            format!(
+                "Humanity {humanity_now} = EMP {base_emp} x 10 - Humanity Loss {humanity_loss} + Humanity regained in therapy {regained} (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112; rolled loss after it, p. 111; therapy up to the maximum Humanity, p. 230, D-5)"
+            )
+        } else {
+            format!(
+                "Humanity {humanity_now} = EMP {base_emp} x 10 - Humanity Loss {humanity_loss} (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112; rolled loss after it, p. 111)"
+            )
+        },
     ));
     let hp = hit_points(body, entered.get(CprStat::Will));
 
@@ -814,6 +826,7 @@ mod tests {
             cash: Some(500),
             ammunition: vec![("Heavy Pistol Basic".to_owned(), 30)],
             housing: Some("Cargo Container".to_owned()),
+            humanity_regained: None,
         };
         (input, choices)
     }
@@ -889,6 +902,27 @@ mod tests {
         let piece = sheet.rows.iter().find(|r| r.id == "cpr.cyberware.piece.3.humanity_loss").expect("Skin Weave's row");
         assert_eq!(piece.value, 12);
         assert!(piece.detail.contains("rolled") && piece.detail.contains("after Character Generation"), "{}", piece.detail);
+    }
+
+    /// D-5 / p. 230: Humanity regained in therapy is added back to the Humanity the cyberware
+    /// left (Kestrel: 60 - 42 = 18, + 20 regained = 38, EMP 3), the row says so, and a file that
+    /// regains more than the cyberware took (43 of 42) is refused.
+    #[test]
+    fn humanity_regained_in_therapy_raises_humanity_and_emp() {
+        let (input, mut choices) = kestrel();
+        choices.humanity_regained = Some(20);
+        let sheet = compose_sheet(&catalogs(), &input, &choices).expect("composes");
+        assert_eq!(row(&sheet, "cpr.derived.humanity_current"), 38);
+        assert_eq!(row(&sheet, "cpr.derived.emp_current"), 3);
+        let detail = &sheet.rows.iter().find(|r| r.id == "cpr.derived.humanity_current").expect("row").detail;
+        assert!(detail.contains("+ Humanity regained in therapy 20") && detail.contains("p. 230"), "{detail}");
+        choices.humanity_regained = Some(43);
+        let reason = compose_sheet(&catalogs(), &input, &choices).unwrap_err();
+        assert!(reason.contains("43") && reason.contains("42"), "{reason}");
+        // No therapy: the row's text is as before.
+        let plain = compose(&kestrel()).expect("composes");
+        let detail = &plain.rows.iter().find(|r| r.id == "cpr.derived.humanity_current").expect("row").detail;
+        assert!(!detail.contains("therapy"), "{detail}");
     }
 
     /// Light Armorjack head (11) + Flak body (15, -4) + Skin Weave (7 head and body): SP is the

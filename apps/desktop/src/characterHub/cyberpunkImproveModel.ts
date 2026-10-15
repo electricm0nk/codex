@@ -5,12 +5,13 @@ import type {
   CyberpunkImproveRow,
   CyberpunkImproveSkillOption,
   CyberpunkImproveSwitchOption,
+  CyberpunkImproveTherapyOption,
   CyberpunkPurchase,
 } from '../boundary/cprImprove';
 
 /**
  * The Cyberpunk RED improve dialog's model (SD-38 E5.1). It holds the plan the engine prices -- the
- * IP entered and the purchases, one Skill Level, Role Rank, Role switch or cyberware install each -- and finds each figure the
+ * IP entered and the purchases, one Skill Level, Role Rank, Role switch, cyberware install or therapy each -- and finds each figure the
  * dialog shows among the engine's preview rows by id. It prices, sums and subtracts nothing: the
  * costs, the IP available, the plan's cost and the IP left are `cpr_improve.rs` rows.
  */
@@ -79,7 +80,29 @@ export function purchaseLabel(purchase: CyberpunkPurchase): string {
       return purchase.humanityLoss === null
         ? `Install ${purchase.name} (Humanity Loss rolled)`
         : `Install ${purchase.name} (Humanity Loss ${purchase.humanityLoss} entered)`;
+    case 'therapy':
+      return purchase.regained === null
+        ? `Therapy: ${purchase.name} (Humanity regained rolled)`
+        : `Therapy: ${purchase.name} (Humanity regained ${purchase.regained} entered)`;
   }
+}
+
+/** A therapy option as the dialog lists it: the engine's regain dice and range, and the printed cost and DV (p. 230). */
+export function therapyOptionLabel(option: CyberpunkImproveTherapyOption): string {
+  const regain = option.dice === null ? 'regains no Humanity' : `regains ${option.dice} (${option.min}-${option.max})`;
+  return `${option.name} — ${regain}; ${option.costEb}eb (${option.priceCategory}), Medical Tech DV${option.medtechDv}`;
+}
+
+/** The Humanity regained field: blank rolls it (null); a whole number is entered; the engine checks the range and the cap. */
+export function therapyRegainedFromText(text: string): { regained: number | null; error: string | null } {
+  const trimmed = text.trim();
+  if (trimmed === '') {
+    return { regained: null, error: null };
+  }
+  if (!/^\d+$/.test(trimmed)) {
+    return { regained: null, error: 'Humanity regained must be a whole number, or blank to roll it' };
+  }
+  return { regained: Number(trimmed), error: null };
 }
 
 /** A cyberware option as the dialog lists it: the engine's Humanity Loss dice and range (p. 111, A-3). */
@@ -127,7 +150,12 @@ export function purchaseHumanityLoss(preview: CyberpunkImprovePreview | null, in
   return rowOf(preview, `cpr.improve.purchase.${index}.humanity_loss`);
 }
 
-/** The engine's Humanity and EMP before and after the plan's installs (p. 80); null without an install. */
+/** The engine's Humanity regained by therapy `index` of the plan (entered or rolled, stopped at the D-5 maximum). */
+export function purchaseHumanityRegained(preview: CyberpunkImprovePreview | null, index: number): CyberpunkImproveRow | null {
+  return rowOf(preview, `cpr.improve.purchase.${index}.humanity_regained`);
+}
+
+/** The engine's Humanity and EMP before and after the plan's installs and therapies (p. 80, p. 230); null without either. */
 export function improveHumanity(preview: CyberpunkImprovePreview | null): {
   humanityBefore: CyberpunkImproveRow | null;
   humanityAfter: CyberpunkImproveRow | null;

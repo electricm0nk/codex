@@ -8,7 +8,8 @@ import { formatError, hasTauriRuntime } from './runtime';
  * (`apps/desktop/src-tauri/src/cpr_improve.rs`). The dialog sends its plan -- the IP entered and the
  * purchases, one Skill Level, Role Rank, Role switch or cyberware install each -- and the engine prices it on
  * the p. 411 tables, refuses a skipped Level or an overspend, checks an install's Humanity Loss against its
- * dice and its option slots (E5.3: p. 111, A-3, D-11; a blank loss is rolled with the plan's seed), and (on
+ * dice and its option slots (E5.3: p. 111, A-3, D-11; a blank loss is rolled with the plan's seed), checks a
+ * therapy's Humanity regain against its dice and stops it at the D-5 maximum Humanity (E5.4: p. 230), and (on
  * apply) saves through the store and answers with the reloaded sheet. Nothing here prices or counts.
  */
 
@@ -53,11 +54,30 @@ export interface CyberpunkImproveCyberwareOption {
   max: number;
 }
 
+/**
+ * A therapy of the p. 230 table, with the engine's Humanity regain dice and their range (none for Addiction,
+ * whose effect is printed) and its printed cost, Medical Tech DV, materials, duration and effect.
+ */
+export interface CyberpunkImproveTherapyOption {
+  name: string;
+  dice: string | null;
+  min: number;
+  max: number;
+  costEb: number;
+  priceCategory: string;
+  medtechDv: number;
+  materialsEb: number;
+  materialsPriceCategory: string;
+  duration: string;
+  text: string;
+}
+
 export interface CyberpunkImprovePreview {
   skills: CyberpunkImproveSkillOption[];
   role: CyberpunkImproveRoleOption | null;
   switch: CyberpunkImproveSwitchOption[];
   cyberware: CyberpunkImproveCyberwareOption[];
+  therapy: CyberpunkImproveTherapyOption[];
   rows: CyberpunkImproveRow[];
   refusal: string | null;
   /** The seed the engine rolled any blank Humanity Loss with; send it back to keep those dice. */
@@ -68,7 +88,8 @@ export type CyberpunkPurchase =
   | { kind: 'skill'; key: string; to: number }
   | { kind: 'roleRank'; to: number }
   | { kind: 'roleSwitch'; role: string }
-  | { kind: 'cyberware'; name: string; humanityLoss: number | null };
+  | { kind: 'cyberware'; name: string; humanityLoss: number | null }
+  | { kind: 'therapy'; name: string; regained: number | null };
 
 function wirePurchase(p: CyberpunkPurchase) {
   switch (p.kind) {
@@ -80,6 +101,8 @@ function wirePurchase(p: CyberpunkPurchase) {
       return { kind: 'roleSwitch', role: p.role };
     case 'cyberware':
       return { kind: 'cyberware', name: p.name, humanityLoss: p.humanityLoss };
+    case 'therapy':
+      return { kind: 'therapy', name: p.name, regained: p.regained };
   }
 }
 

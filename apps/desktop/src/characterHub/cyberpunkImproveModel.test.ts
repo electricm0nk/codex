@@ -11,11 +11,14 @@ import {
   nextTarget,
   pinSeed,
   purchaseHumanityLoss,
+  purchaseHumanityRegained,
   purchaseCost,
   purchaseLabel,
   removePurchase,
   skillPurchaseKey,
   switchOptionLabel,
+  therapyOptionLabel,
+  therapyRegainedFromText,
 } from './cyberpunkImproveModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -95,6 +98,7 @@ const preview: CyberpunkImprovePreview = {
     { id: 'cpr.improve.ip.remaining', value: 1060, detail: 'remaining' },
   ],
   cyberware: [],
+  therapy: [],
   refusal: null,
   seed: 11,
 };
@@ -153,4 +157,45 @@ assertEqual(pinned.seed, 4242, 'the preview seed is pinned');
 assert(pinSeed(pinned, { ...installPreview, seed: 1 }) === pinned, 'a pinned seed is kept (same plan, no re-preview loop)');
 assert(canSpend(installs, installPreview), 'an install-only plan can be applied');
 
-console.log('cyberpunkImproveModel: IP entry, keys, targets, Role switch, cyberware install, engine-row figures and spend gate checked');
+// 8. Therapy (E5.4, p. 230, D-5): the regain is entered or left blank to roll; the regain, the cap stop, Humanity and EMP
+// are the engine's rows; Addiction regains no Humanity and is only printed.
+const standard = {
+  name: 'Standard Humanity Loss',
+  dice: '2d6',
+  min: 2,
+  max: 12,
+  costEb: 500,
+  priceCategory: 'Expensive',
+  medtechDv: 15,
+  materialsEb: 100,
+  materialsPriceCategory: 'Premium',
+  duration: '1 week',
+  text: 'Patient regains 2d6 of their lost Humanity.',
+};
+const addiction = { ...standard, name: 'Addiction', dice: null, min: 0, max: 0, costEb: 1000, priceCategory: 'V. Expensive', text: 'Patient is freed of one of their addictions.' };
+assertEqual(therapyOptionLabel(standard), 'Standard Humanity Loss — regains 2d6 (2-12); 500eb (Expensive), Medical Tech DV15', 'a therapy option shows the engine dice and the printed cost');
+assertEqual(therapyOptionLabel(addiction), 'Addiction — regains no Humanity; 1000eb (V. Expensive), Medical Tech DV15', 'Addiction is marked as no regain');
+assertEqual(therapyRegainedFromText(' ').regained, null, 'blank rolls');
+assertEqual(therapyRegainedFromText('9').regained, 9, 'entered');
+assertEqual(therapyRegainedFromText('-1').error, 'Humanity regained must be a whole number, or blank to roll it', 'not a whole number');
+let therapies = addPurchase(EMPTY_CYBERPUNK_IMPROVE_PLAN, { kind: 'therapy', name: 'Standard Humanity Loss', regained: 7 });
+therapies = addPurchase(therapies, { kind: 'therapy', name: 'Extreme Humanity Loss', regained: null });
+assertEqual(purchaseLabel(therapies.purchases[0]), 'Therapy: Standard Humanity Loss (Humanity regained 7 entered)', 'entered therapy label');
+assertEqual(purchaseLabel(therapies.purchases[1]), 'Therapy: Extreme Humanity Loss (Humanity regained rolled)', 'rolled therapy label');
+const therapyPreview: CyberpunkImprovePreview = {
+  ...preview,
+  therapy: [addiction, standard],
+  rows: [
+    { id: 'cpr.improve.purchase.0.humanity_regained', value: 1007, detail: 'Standard Humanity Loss therapy: entered 7' },
+    { id: 'cpr.improve.purchase.1.humanity_regained', value: 1003, detail: 'stopped at Maximum Humanity 78 (D-5)' },
+    { id: 'cpr.improve.humanity.before', value: 1068, detail: 'before' },
+    { id: 'cpr.improve.humanity.after', value: 1078, detail: 'after' },
+  ],
+};
+assertEqual(purchaseHumanityRegained(therapyPreview, 0)?.value, 1007, 'the regain is its row');
+assertEqual(purchaseHumanityRegained(therapyPreview, 1)?.value, 1003, 'the capped regain is its row (not 7 + a roll)');
+assertEqual(purchaseHumanityRegained(therapyPreview, 2), null, 'no row, no regain');
+assertEqual(improveHumanity(therapyPreview).humanityAfter?.value, 1078, 'Humanity after therapy is its row');
+assert(canSpend(therapies, therapyPreview), 'a therapy-only plan can be applied');
+
+console.log('cyberpunkImproveModel: IP entry, keys, targets, Role switch, cyberware install, therapy, engine-row figures and spend gate checked');

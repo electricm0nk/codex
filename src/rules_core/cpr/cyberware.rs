@@ -90,7 +90,31 @@ struct CyberwareItem {
 #[derive(Debug, Clone, Deserialize)]
 struct TherapyRecord {
     name: String,
+    cost_eb: u32,
+    price_category: String,
+    medtech_dv: u8,
+    materials_eb: u32,
+    materials_price_category: String,
+    duration: String,
+    humanity_regained_dice: Option<String>,
     max_humanity_penalty: Option<PenaltyRecord>,
+    text: String,
+}
+
+/// One therapy of the p. 230 table: the dice its Humanity regain is rolled on (none for
+/// Addiction, whose effect is printed) and its printed cost, Medical Tech DV, materials,
+/// duration and effect text.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CprTherapy {
+    pub name: String,
+    pub dice: Option<CprHumanityLossDice>,
+    pub cost_eb: u32,
+    pub price_category: String,
+    pub medtech_dv: u8,
+    pub materials_eb: u32,
+    pub materials_price_category: String,
+    pub duration: String,
+    pub text: String,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
@@ -277,6 +301,7 @@ fn rule(item: &str, reason: impl Into<String>) -> CprCyberwareRefusal {
 #[derive(Debug, Clone)]
 pub struct CprCyberwareCatalog {
     items: BTreeMap<String, CyberwareItem>,
+    therapies: Vec<CprTherapy>,
     penalty: MaxHumanityPenalty,
     zero_humanity_loss_excluded: bool,
     /// Capacity of the foundation-less pools (`fashion`, `internal`, `external`).
@@ -338,8 +363,31 @@ impl CprCyberwareCatalog {
             }
         }
         let penalty = penalty.ok_or("therapy.json: no record carries max_humanity_penalty")?;
+        let therapies = therapies
+            .into_iter()
+            .map(|t| {
+                let dice = match &t.humanity_regained_dice {
+                    Some(text) => Some(CprHumanityLossDice::parse(text).ok_or_else(|| {
+                        format!("therapy.json: {} has Humanity regain dice '{text}' the engine cannot read", t.name)
+                    })?),
+                    None => None,
+                };
+                Ok(CprTherapy {
+                    name: t.name,
+                    dice,
+                    cost_eb: t.cost_eb,
+                    price_category: t.price_category,
+                    medtech_dv: t.medtech_dv,
+                    materials_eb: t.materials_eb,
+                    materials_price_category: t.materials_price_category,
+                    duration: t.duration,
+                    text: t.text,
+                })
+            })
+            .collect::<Result<Vec<_>, String>>()?;
         Ok(CprCyberwareCatalog {
             items,
+            therapies,
             penalty: MaxHumanityPenalty { per_cyberware: penalty.per_cyberware, per_borgware: penalty.per_borgware },
             zero_humanity_loss_excluded: penalty.zero_humanity_loss_excluded,
             pool_capacity,
@@ -356,6 +404,16 @@ impl CprCyberwareCatalog {
 
     pub fn max_humanity_penalty(&self) -> MaxHumanityPenalty {
         self.penalty
+    }
+
+    /// The p. 230 therapies, in the corpus order.
+    pub fn therapies(&self) -> &[CprTherapy] {
+        &self.therapies
+    }
+
+    /// The therapy `name` names, if the p. 230 table has it.
+    pub fn therapy(&self, name: &str) -> Option<&CprTherapy> {
+        self.therapies.iter().find(|t| t.name == name)
     }
 
     /// The dice the piece's Humanity Loss is rolled on after Character Generation (p. 111);
@@ -1255,6 +1313,27 @@ mod tests {
         assert_eq!(humanity_after_therapy(30, 7, 52), 37);
         assert_eq!(humanity_after_therapy(48, 12, 52), 52);
         assert_eq!(humanity_after_therapy(52, 5, 52), 52);
+    }
+
+    /// The p. 230 therapy table: Standard Humanity Loss regains 2d6 (2-12), Extreme 4d6 (4-24),
+    /// Addiction regains none (its effect is printed); each keeps its printed cost, DV, materials,
+    /// duration and effect text.
+    #[test]
+    fn the_catalog_holds_the_three_therapies_with_their_regain_dice_and_printed_fields() {
+        let catalog = catalog();
+        let names: Vec<&str> = catalog.therapies().iter().map(|t| t.name.as_str()).collect();
+        assert_eq!(names, ["Addiction", "Standard Humanity Loss", "Extreme Humanity Loss"]);
+        let standard = catalog.therapy("Standard Humanity Loss").expect("Standard");
+        assert_eq!(standard.dice.map(|d| (d.text(), d.range())), Some(("2d6".to_owned(), (2, 12))));
+        assert_eq!((standard.cost_eb, standard.medtech_dv, standard.materials_eb), (500, 15, 100));
+        let extreme = catalog.therapy("Extreme Humanity Loss").expect("Extreme");
+        assert_eq!(extreme.dice.map(|d| (d.text(), d.range())), Some(("4d6".to_owned(), (4, 24))));
+        assert_eq!((extreme.cost_eb, extreme.medtech_dv, extreme.materials_eb), (1000, 17, 500));
+        let addiction = catalog.therapy("Addiction").expect("Addiction");
+        assert_eq!(addiction.dice, None);
+        assert!(addiction.text.contains("freed of one of their addictions"), "{}", addiction.text);
+        assert_eq!((addiction.duration.as_str(), addiction.price_category.as_str()), ("1 week", "V. Expensive"));
+        assert!(catalog.therapy("Primal Scream").is_none());
     }
 
     // ---- creation: the printed names of the kits, and where each option goes ------------

@@ -48,6 +48,7 @@ async function main() {
     role: null,
     switch: [],
     cyberware: [],
+    therapy: [],
     rows: [{ id: 'cpr.improve.ip.available', value: 200, detail: 'Improvement Points available 200' }],
     refusal: null,
     seed: 5,
@@ -115,6 +116,29 @@ async function main() {
       'an install and the seed are the shape CprImproveRequest deserialises',
     );
 
+    // E5.4: a therapy (entered or blank regain) travels as CprImproveRequest deserialises it.
+    await previewCyberpunkImprovement('cpr-solo-kitted', {
+      ipAwarded: 0,
+      purchases: [
+        { kind: 'therapy' as const, name: 'Standard Humanity Loss', regained: 7 },
+        { kind: 'therapy' as const, name: 'Extreme Humanity Loss', regained: null },
+      ],
+    });
+    assertEqual(
+      JSON.stringify(calls[3].args),
+      JSON.stringify({
+        request: {
+          characterId: 'cpr-solo-kitted',
+          ipAwarded: 0,
+          purchases: [
+            { kind: 'therapy', name: 'Standard Humanity Loss', regained: 7 },
+            { kind: 'therapy', name: 'Extreme Humanity Loss', regained: null },
+          ],
+        },
+      }),
+      'a therapy is the shape CprImproveRequest deserialises',
+    );
+
     (globals.window as { __TAURI_INTERNALS__: { invoke: unknown } }).__TAURI_INTERNALS__.invoke = async () => {
       throw 'Overspend: these improvements cost 140 IP, but 90 IP are available';
     };
@@ -126,7 +150,7 @@ async function main() {
   } finally {
     delete globals.window;
   }
-  console.log('cprImprove: preview/apply request shape, answers and refusal checked');
+  console.log('cprImprove: preview/apply request shape (skill, rank, switch, cyberware, therapy), answers and refusal checked');
 }
 
 main().catch((error: unknown) => {

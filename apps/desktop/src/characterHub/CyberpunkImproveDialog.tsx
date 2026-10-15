@@ -20,10 +20,13 @@ import {
   pinSeed,
   purchaseCost,
   purchaseHumanityLoss,
+  purchaseHumanityRegained,
   purchaseLabel,
   removePurchase,
   skillPurchaseKey,
   switchOptionLabel,
+  therapyOptionLabel,
+  therapyRegainedFromText,
 } from './cyberpunkImproveModel';
 
 /**
@@ -34,7 +37,10 @@ import {
  * IP left are its rows, and a skipped Level or an overspend shows its refusal. E5.3: cyberware installed
  * after Character Generation takes the Humanity Loss entered, or rolled on its dice when left blank (p. 111,
  * A-3); the engine refuses a loss outside the dice and an install over its option slots (D-11), and its rows
- * give the loss and the Humanity and EMP before and after. The engine's roller seed is pinned on the plan so
+ * give the loss and the Humanity and EMP before and after. E5.4: therapy (p. 230) regains the Humanity entered,
+ * or rolled on its dice when left blank; the engine refuses a regain outside the dice and stops it at the D-5
+ * maximum Humanity, and its rows give the regain and the Humanity and EMP before and after. Addiction therapy
+ * regains no Humanity: its printed effect is shown, not bought. The engine's roller seed is pinned on the plan so
  * the apply keeps the previewed dice. "Spend IP" saves through `apply_cyberpunk_improvement` and hands the
  * reloaded sheet to `onApplied`.
  */
@@ -56,6 +62,8 @@ export function CyberpunkImproveDialog(props: {
   const [switchRole, setSwitchRole] = useState('');
   const [cyberName, setCyberName] = useState('');
   const [lossText, setLossText] = useState('');
+  const [therapyName, setTherapyName] = useState('');
+  const [regainText, setRegainText] = useState('');
   const [spending, setSpending] = useState(false);
   const [spendError, setSpendError] = useState<string | null>(null);
   const mounted = useRef(true);
@@ -103,6 +111,8 @@ export function CyberpunkImproveDialog(props: {
   const skillTo = targetOf(skillTarget, skillDefault);
   const rankTo = targetOf(rankTarget, rankDefault);
   const loss = humanityLossFromText(lossText);
+  const regain = therapyRegainedFromText(regainText);
+  const therapies = preview?.therapy ?? [];
   const humanity = improveHumanity(preview);
 
   const onSpend = () => {
@@ -309,6 +319,58 @@ export function CyberpunkImproveDialog(props: {
         {loss.error === null ? null : <p style={errorStyle}>{loss.error}</p>}
       </div>
 
+      <div data-testid="cpr-improve-therapy">
+        <p style={noteStyle}>
+          Therapy (p. 230): Humanity cannot be fully regained without the removal of cyberware. Each piece of cyberware will decrease
+          your maximum Humanity by 2; each piece of borgware lowers it by 4 instead; cyberware with 0 Humanity Loss on installation will
+          not decrease it. Enter the Humanity you regained, or leave it blank to roll it here. The therapy&apos;s cost, materials and
+          Medical Tech DV are printed; they cost no IP.
+        </p>
+        <div style={rowStyle}>
+          <select aria-label="Therapy" value={therapyName} onChange={(event) => setTherapyName(event.target.value)} style={inputStyle}>
+            <option value="">— therapy —</option>
+            {therapies
+              .filter((t) => t.dice !== null)
+              .map((t) => (
+                <option key={t.name} value={t.name} title={t.text}>
+                  {therapyOptionLabel(t)}
+                </option>
+              ))}
+          </select>
+          <input
+            aria-label="Humanity regained rolled"
+            title="Blank rolls the therapy's dice"
+            inputMode="numeric"
+            value={regainText}
+            onChange={(event) => setRegainText(event.target.value)}
+            style={{ ...inputStyle, width: '6rem' }}
+          />
+          <span style={noteStyle}>blank rolls the dice</span>
+          <button
+            type="button"
+            disabled={therapyName === '' || regain.error !== null}
+            onClick={() => {
+              if (therapyName !== '' && regain.error === null) {
+                setPlan(addPurchase(plan, { kind: 'therapy', name: therapyName, regained: regain.regained }));
+                setTherapyName('');
+                setRegainText('');
+              }
+            }}
+            style={buttonStyle}
+          >
+            Add therapy
+          </button>
+        </div>
+        {regain.error === null ? null : <p style={errorStyle}>{regain.error}</p>}
+        {therapies
+          .filter((t) => t.dice === null)
+          .map((t) => (
+            <p key={t.name} data-testid="cpr-improve-therapy-printed" style={noteStyle}>
+              {therapyOptionLabel(t)}; materials {t.materialsEb}eb ({t.materialsPriceCategory}); {t.duration}. {t.text}
+            </p>
+          ))}
+      </div>
+
       {plan.purchases.length === 0 ? null : (
         <table data-testid="cpr-improve-plan" style={{ borderCollapse: 'collapse', margin: '0.5rem 0', width: '100%' }}>
           <tbody>
@@ -321,6 +383,10 @@ export function CyberpunkImproveDialog(props: {
                   {purchase.kind === 'cyberware' ? (
                     <>
                       Humanity Loss <Figure row={purchaseHumanityLoss(preview, index)} />
+                    </>
+                  ) : purchase.kind === 'therapy' ? (
+                    <>
+                      Humanity regained <Figure row={purchaseHumanityRegained(preview, index)} />
                     </>
                   ) : (
                     <>
