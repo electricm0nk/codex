@@ -62,3 +62,4 @@ status: draft — authored under operator-away defaults; operator rulings on lic
 `workflow-agent-model-must-be-explicit`, `operator-away-autonomous-mode`,
 `sheet-rule-package-path-is-baked-at-compile-time`, `proxmox-host-stops-vm-on-guest-oom`,
 `peer-session-may-grab-the-shared-checkout`.
+- Retrospective (written at E7.6, 2026-10-15): `docs/retro/sd38-retrospective.md`.
