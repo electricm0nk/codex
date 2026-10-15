@@ -98,7 +98,7 @@ cards (`decisions.md §22`).
 | E7.8 | Release notes (marker removed; resolver passes) | sonnet | complete | E7.7 | `artifacts/epic_7/E7.8_cycle_receipt.md`; `grep -c 'SD-38 INTERIM NOTES' release-notes.md` 1 -> 0; resolver prints this package's path; validator PASS; 14 figures, each with two implementations (`E7.8_check.py --plant` OK); docs only |
 | E7.9 | Architecture truth-up + claims critic | sonnet + opus | complete | E7.8 | part 1 (truth-up, sonnet) and part 2 (Opus claims critic): `artifacts/epic_7/E7.9_cycle_receipt.md`, `receipts.md`; critic refuted 11 claims, all fixed in 5 docs, 0 blockers; docs only |
 | E7.10 | Graphify LAST | sonnet | complete | E7.9 | **Closed on the node-count guard outcome, `decisions.md §24` (lead, 2026-10-15): graph unchanged at 648,328 nodes, no SD-38 content indexed; semantic re-extraction is an operator decision (FSR-C3).** `artifacts/epic_7/E7.10_cycle_receipt.md`; guard hit (648327 vs 648328, graph.json not written, no force); indexed SHA 4d1af843d1 = origin/tranche-18, tree clean before the run; docs only |
-| E7.11 | PR `tranche-18 → develop` (final action) + `pr-tests` | sonnet | waiting | E7.10 | operator merges |
+| E7.11 | PR `tranche-18 → develop` (final action) + `pr-tests` | sonnet | complete | E7.10 | `artifacts/epic_7/E7.11_cycle_receipt.md`; pre-PR scan (exemption narrowed to E7.11) printed nothing, `SD-38 INTERIM NOTES` count 0; PR number and `pr-tests` result in the receipt; operator merges |
 
 **Row check (70 cards: 68 authored + E4.8, discovered by E4.MC, + E7.3a, discovered by E7.3).**
 

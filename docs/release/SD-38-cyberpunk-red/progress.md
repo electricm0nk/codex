@@ -35,7 +35,7 @@ row to the cycle log **in its own closing commit**; every merge-check card (and 
 | E3 | complete | 8 of 8 | E3.1–E3.7 complete; E3.MC complete (4a5cb95486) — Epic report below (`awk -F'\|' '$2 ~ /^ E3\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E4 | complete | 9 of 9 | E4.1–E4.7 complete; E4.MC complete — Epic report below; E4.8 (discovered by E4.MC) complete (`awk -F'\|' '$2 ~ /^ E4\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
 | E5 | complete | 6 of 6 | E5.1 complete (d1adf600d0, df7394c0a7, 0ec709c355); E5.2 complete (aa1d6b7500, 37c4d687e6); E5.3 complete (3b0592252d, 06c93e0e2a); E5.4 complete (224cdce6fc); E5.5 complete (cd9564ec44); E5.MC complete (481718c99a) — Epic report below (`awk -F'\|' '$2 ~ /^ E5\./ && $5 ~ /^ complete *$/' kanban.md`, unescape `\|`) |
-| E7 | in progress | 11 of 12 | E7.1, E7.2, E7.3a, E7.3, E7.4, E7.5, E7.6, E7.7, E7.8, E7.9, E7.10 (closed on the guard outcome, `decisions.md §24`) complete; E7.11 waiting |
+| E7 | complete | 12 of 12 | E7.1 through E7.11 complete (E7.10 closed on the guard outcome, `decisions.md §24`); PR opened, operator merges |
 | **Total** | | **68 of 70** (E7.9 complete at its closing commit; E7.8 complete; E7.7 complete; E7.6 complete; E7.5 complete; C0, C1, E0.1–E0.6, E0.MC, E1.0–E1.8, E1.V, E2.1–E2.10, E2.MC, E3.1–E3.7, E3.MC, E4.1–E4.8, E4.MC, E5.1–E5.5, E5.MC, E6.1–E6.4, E6.MC, E7.1–E7.4, E7.3a; 70 = 68 authored + E4.8 discovered by E4.MC + E7.3a discovered by E7.3; re-derived by the lead after run 6: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } $5 ~ /complete/ {c++} END { print n, c }' kanban.md` → `70 63`) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` (unescape `\|`) |
 
 ---
@@ -169,6 +169,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-15 | E7.9 part 1 | sonnet | partial (truth-up done; claims critic is part 2, card stays waiting) | this commit (docs only: 11 `docs/architecture` files, `receipts.md`, receipt, kanban row, this row) | `artifacts/epic_7/E7.9_cycle_receipt.md` | docs only; not rendered (no render path touched) |
 | 2026-10-15 | E7.9 part 2 | opus | complete (claims critic: 11 claims refuted and fixed, 0 blockers; card complete) | this commit (docs only: 5 `docs/architecture` files, `receipts.md`, receipt part 2, kanban row, this row, Summary E7/Total) | `artifacts/epic_7/E7.9_cycle_receipt.md` | docs only; not rendered (no render path touched) |
 | 2026-10-15 | E7.10 | sonnet | blocked-escalated (graphify node-count guard, exit 1; no force) | this commit (docs only: `receipts.md`, receipt, kanban row, this row) | `artifacts/epic_7/E7.10_cycle_receipt.md` | docs only; seeds not rendered (no render path touched) |
+| 2026-10-15 | E7.11 | sonnet | complete | this commit (docs only: receipt, kanban row, this row) | `artifacts/epic_7/E7.11_cycle_receipt.md` | docs only; seeds not rendered (no render path touched) |
 
 ## Epic reports
 
