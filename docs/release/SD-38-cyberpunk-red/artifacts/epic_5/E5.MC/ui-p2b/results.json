@@ -1,0 +1,20 @@
+[
+  {
+    "id": "improve-cyberpunk-role-switch",
+    "status": "red",
+    "screenshot": "/home/ubuntu/cargo-target/sd38-main/verify-e5mc/ui-p2b/improve-cyberpunk-role-switch.FAILED.png",
+    "rendered_excerpt": "⚙\nCPR MC Role Switch Solo\nCyberpunk RED\nImprove\nOpen\nClose\nImprove: spend Improvement Points\nThe cost is based on the next Level/Rank; you can't skip Levels/Ranks (p. 411). Typical Skills cost 20 IP x the next Level, Difficult (x2) Skills 40 IP x, Role Ability Ranks 60 IP x the next Rank.\n\nIP awarded\nIP available: 0\n\nAdd skill level\nNomad Role Ability, Rank 1, next Rank 120 IP\n\nblank buys Rank 2\nA",
+    "reason": "expected string missing: 'cannot change Roles: the latest Role, Nomad, is at Rank 1; it must reach Rank 4 first (p. 143)'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e5_mc-jnNK7n/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "f902f5b2-fbdf-403a-a689-446a9fb83ae2"
+      ],
+      "deleted": [
+        "f902f5b2-fbdf-403a-a689-446a9fb83ae2"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

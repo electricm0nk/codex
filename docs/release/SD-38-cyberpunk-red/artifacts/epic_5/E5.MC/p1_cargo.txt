@@ -1,0 +1,51 @@
+test cpr_improve::tests::a_cyberware_install_deserialises_from_the_frontend_wire_shape ... ok
+test cpr_improve::tests::a_reputation_change_deserialises_from_the_frontend_wire_shape ... ok
+test cpr_improve::tests::a_character_without_a_role_cannot_raise_a_rank ... ok
+test cpr_improve::tests::a_plan_can_reach_rank_4_then_switch_and_the_next_switch_waits_for_the_new_role ... FAILED
+test cpr_improve::tests::a_role_switch_deserialises_from_the_frontend_wire_shape ... ok
+test cpr_improve::tests::a_role_switch_is_refused_at_rank_3_and_allowed_at_rank_4_and_both_roles_show ... FAILED
+test cpr_improve::tests::a_reputation_change_outside_the_table_or_without_an_event_is_refused_and_nothing_is_saved ... ok
+test cpr_improve::tests::a_therapy_deserialises_from_the_frontend_wire_shape ... ok
+test cpr_improve::tests::a_reputation_change_sets_the_level_and_the_event_and_the_sheet_rereads ... ok
+test cpr_improve::tests::a_skipped_level_is_refused_and_nothing_is_saved_while_two_single_steps_are_priced ... FAILED
+test cpr_improve::tests::a_cowardice_event_makes_the_facedown_use_a_negative_reputation ... ok
+test cpr_improve::tests::a_restore_above_the_cap_stops_at_the_cap ... ok
+test cpr_improve::tests::entered_ip_buys_skill_levels_and_a_role_rank_at_the_engine_prices_and_the_sheet_rereads ... FAILED
+test cpr_improve::tests::an_entered_regain_outside_the_dice_and_addiction_therapy_are_refused_and_nothing_is_saved ... ok
+test cpr_improve::tests::a_new_positive_deed_replaces_the_old_only_if_higher ... ok
+test cpr_improve::tests::an_install_takes_an_entered_humanity_loss_and_the_humanity_and_emp_rows_move ... ok
+test cpr_improve::tests::overspend_is_refused_and_nothing_is_saved ... FAILED
+test cpr_improve::tests::the_preview_lists_every_skill_and_the_role_with_their_next_prices ... FAILED
+test cpr_improve::tests::the_request_deserialises_from_the_frontend_wire_shape ... ok
+test cpr_improve::tests::new_specialties_are_priced_and_bad_purchases_are_refused ... FAILED
+test cpr_improve::tests::the_preview_offers_each_unheld_role_with_its_price_or_the_lock ... FAILED
+test cpr_improve::tests::the_preview_offers_the_therapies_and_prints_addiction ... ok
+test cpr_improve::tests::an_over_slot_install_is_refused_and_nothing_is_saved ... ok
+test cpr_improve::tests::therapy_regains_the_entered_humanity_below_the_cap_and_the_sheet_rereads ... ok
+test cpr_improve::tests::an_entered_humanity_loss_outside_the_dice_is_refused_and_nothing_is_saved ... ok
+test cpr_improve::tests::a_blank_regain_is_rolled_with_the_seed_and_the_same_seed_keeps_it ... ok
+test cpr_improve::tests::a_blank_humanity_loss_is_rolled_with_the_seed_and_the_same_seed_keeps_it ... ok
+thread 'cpr_improve::tests::a_plan_can_reach_rank_4_then_switch_and_the_next_switch_waits_for_the_new_role' (3361414) panicked at src/cpr_improve.rs:1038:9:
+  left: [360, 90, 180]
+ right: [240, 60, 120]
+thread 'cpr_improve::tests::a_role_switch_is_refused_at_rank_3_and_allowed_at_rank_4_and_both_roles_show' (3361420) panicked at src/cpr_improve.rs:1009:9:
+  left: 90
+ right: 60
+thread 'cpr_improve::tests::a_skipped_level_is_refused_and_nothing_is_saved_while_two_single_steps_are_priced' (3361421) panicked at src/cpr_improve.rs:891:9:
+  left: Some("Overspend: these improvements cost 330 IP, but 300 IP are available (300 earned + 0 entered - 0 spent; p. 411)")
+ right: None
+thread 'cpr_improve::tests::entered_ip_buys_skill_levels_and_a_role_rank_at_the_engine_prices_and_the_sheet_rereads' (3361447) panicked at src/cpr_improve.rs:852:9:
+  left: Some("Overspend: these improvements cost 660 IP, but 500 IP are available (0 earned + 500 entered - 0 spent; p. 411)")
+ right: None
+thread 'cpr_improve::tests::overspend_is_refused_and_nothing_is_saved' (3361449) panicked at src/cpr_improve.rs:908:9:
+Overspend: these improvements cost 150 IP, but 90 IP are available (100 earned + 50 entered - 60 spent; p. 411)
+thread 'cpr_improve::tests::the_preview_lists_every_skill_and_the_role_with_their_next_prices' (3361450) panicked at src/cpr_improve.rs:947:9:
+  left: Some(150)
+ right: Some(100)
+thread 'cpr_improve::tests::new_specialties_are_priced_and_bad_purchases_are_refused' (3361448) panicked at src/cpr_improve.rs:926:9:
+  left: 30
+ right: 20
+thread 'cpr_improve::tests::the_preview_offers_each_unheld_role_with_its_price_or_the_lock' (3361451) panicked at src/cpr_improve.rs:1066:13:
+  left: Some(90)
+ right: Some(60)
+test result: FAILED. 19 passed; 8 failed; 0 ignored; 0 measured; 863 filtered out; finished in 12.70s
