@@ -3,6 +3,7 @@ import { saveCyberpunkCriticals } from '../boundary/cprSheet';
 import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { RulesAndFeaturesSection } from './CharacterSheet';
+import { CyberpunkImproveDialog } from './CyberpunkImproveDialog';
 import { boxesInColumn } from './sheetLayout';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
 import {
@@ -25,7 +26,9 @@ import {
  * one engine `cpr.` row (`cyberpunkSheetModel.ts`), as `load_saved_character` composed it -- this
  * file writes no number of its own. Ticking or unticking an injury saves the checklist through
  * `save_cyberpunk_criticals` and the sheet re-renders from the engine's answer (its Base Death
- * Save Penalty row moved by the engine). The engine's rule lines no box places (`cpr_sheet_print.rs`:
+ * Save Penalty row moved by the engine). "Improve" opens `CyberpunkImproveDialog` (E5.1), which spends
+ * Improvement Points through `apply_cyberpunk_improvement`; the sheet re-renders from its reloaded
+ * answer. The engine's rule lines no box places (`cpr_sheet_print.rs`:
  * the Role Ability, cyberware effects, Humanity Loss, weapon specials, brain damage) render
  * verbatim under "Rules and features", as on the Starfinder sheet.
  */
@@ -50,6 +53,7 @@ export function CyberpunkCharacterSheet(props: {
   const [detail, setDetail] = useState<LoadSavedCharacterResponse>(props.detail);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [improving, setImproving] = useState(false);
   const mounted = useRef(true);
   useEffect(
     () => () => {
@@ -130,6 +134,9 @@ export function CyberpunkCharacterSheet(props: {
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.2rem 0 0' }}>Cyberpunk RED</p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button type="button" data-testid="cpr-sheet-improve" onClick={() => setImproving(true)} disabled={improving} style={buttonStyle}>
+            Improve
+          </button>
           <button type="button" data-testid="cpr-sheet-open" onClick={props.onOpen} style={buttonStyle}>
             Open
           </button>
@@ -138,6 +145,17 @@ export function CyberpunkCharacterSheet(props: {
           </button>
         </div>
       </div>
+
+      {improving ? (
+        <CyberpunkImproveDialog
+          characterId={detail.summary.characterId}
+          onApplied={(reloaded) => {
+            setDetail(reloaded);
+            setImproving(false);
+          }}
+          onClose={() => setImproving(false)}
+        />
+      ) : null}
 
       {sheet.blocking.length === 0 ? null : (
         <div data-testid="cpr-sheet-blocking" style={{ border: '1px solid var(--color-danger, #c0392b)', borderRadius: 8, marginBottom: '1rem', padding: '0.75rem' }}>
