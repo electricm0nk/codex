@@ -4,7 +4,9 @@
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60` (PR #396)** (SD-37 E7.9a): `packaged_resources.rs` and `no_baked_manifest_dir_in_production.rs` added below; floors as recorded in `scripts/verify-baselines.env`.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The three crates" counts,
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the test-count floors (re-recorded by SD-38 E7.4
+> from one full `verify.sh` run on `efe5e27a0a`: 53 stages passed, 0 failed), the root test-file count, the frontend test-file counts, the
+> ui-smoke spec size and the Cyberpunk RED gates below. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The three crates" counts,
 > §"`scripts/verify.sh`" stage counts, the Starfinder gates and the ui-smoke spec size, each re-derived by the command beside
 > it. The test-count floors are the E7.2 full-run values recorded in `scripts/verify-baselines.env` (a full `verify.sh` run
 > was not repeated this pass; logs in `docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.2_logs/`). The SD-36 receipt
@@ -132,11 +134,11 @@ points — `codex-desktop` never links `codex-ingest` in a normal build; the arr
 that it is dev-only.*
 
 - **`codex` (repo root)** — `cargo test --locked` runs unit tests inside `src/` plus every
-  integration test file under `tests/*.rs`. There are **289** files matching `tests/*.rs`
+  integration test file under `tests/*.rs`. There are **291** files matching `tests/*.rs`
   (`ls tests/*.rs | wc -l`, current). The last full-run floors recorded in
   `scripts/verify-baselines.env` (`grep -E '^[A-Z_]+=' scripts/verify-baselines.env | tail -n 20`,
-  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=2838`,
-  `BASELINE_ROOT_FULL_TESTS=6514`, `BASELINE_ROOT_TEST_BINARIES=297` (re-recorded by SD-37 E7.2). The post-Epic-A
+  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=3019`,
+  `BASELINE_ROOT_FULL_TESTS=6707`, `BASELINE_ROOT_TEST_BINARIES=299` (re-recorded by SD-38 E7.4). The post-Epic-A
   drop in root's counts was sharp (from `3402`/`7876`/`414` pre-Epic-A) because ~821 unit
   tests and ~859 integration-test entries that used to live under root src/pcgen_import and
   src/oracle_validation (former paths, no longer valid — both are now
@@ -145,7 +147,7 @@ that it is dev-only.*
   comment block for the full reconciliation).
 - **`codex-ingest` (`crates/codex-ingest`)** — `cargo test --locked -p codex-ingest` (from repo
   root; it's a workspace member) or `cd crates/codex-ingest && cargo test --locked`. Recorded
-  floors: `BASELINE_INGEST_FULL_TESTS=1832`, `BASELINE_INGEST_TEST_BINARIES=175` (`ls crates/codex-ingest/tests/*.rs | wc -l` → 126
+  floors: `BASELINE_INGEST_FULL_TESTS=1841`, `BASELINE_INGEST_TEST_BINARIES=176` (`ls crates/codex-ingest/tests/*.rs | wc -l` → 126
   `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | wc -l` → 48 `src/bin/*.rs` unit-test targets, plus the lib target). Its `#[ignore]`-gated
   suites are the oracle-parity tier (see [Corpus-gated tests](#corpus-gated-tests)); they need a
   real, pinned local PCGen checkout and do not run in a plain `cargo test`.
@@ -154,7 +156,7 @@ that it is dev-only.*
   `codex` and dev-depends **only** on `codex-ingest` (never a normal dependency — the `crate-wall`
   verify stage checks this structurally: `cargo tree --locked -e normal,build` must show zero
   `codex-ingest` lines). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs`
-  files. As of this verification, **43** source files under `apps/desktop/src-tauri/src/` carry
+  files. As of this verification, **53** source files under `apps/desktop/src-tauri/src/` carry
   one (`grep -rl '#\[cfg(test)\]' apps/desktop/src-tauri/src/ | wc -l`), including
   `corpus_bundle_parity_test.rs` (added for the corpus-bundle work — see
   [The corpus bundle](#the-corpus-bundle-and-its-parity-test) below), `spell_catalog.rs`,
@@ -187,9 +189,8 @@ Runs `node scripts/run-tests.mjs` (`apps/desktop/package.json` `scripts.test`) �
 `apps/desktop/scripts/run-tests.mjs` recursively globs every `src/**/*.test.ts` file, then
 `spawnSync`s each one individually through `tsx`. Each test file is a self-executing script (no
 `describe`/`it` wrapper); it asserts directly and exits non-zero on the first failed assertion.
-There are currently **125** matching files (`find apps/desktop/src -iname "*.test.ts" | wc -l`;
-the last recorded floor, `BASELINE_FRONTEND_TEST_FILES`, is `121` — the four-file gap is new tests
-added after that baseline was last measured, not a regression, since this is a floor). The runner
+There are currently **169** `*.test.ts` files (`find apps/desktop/src -iname "*.test.ts" | wc -l`);
+the last recorded floor, `BASELINE_FRONTEND_TEST_FILES`, is `173` (the `frontend-test` stage printed `173/173 files` in the SD-38 E7.4 full run; the runner globs more than the `*.test.ts` pattern this line counts, so the two numbers are not expected to match). The runner
 prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files passed.` summary line.
 
 ### Standalone scripts
@@ -207,6 +208,24 @@ prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files pass
 | `python3 scripts/release/check_promotion_evidence.py --self-test` | The promotion-evidence gate's own built-in RED-GREEN harness; also the first step `promotion-gates.yml` runs on every PR. |
 
 All `jsonschema`-based validators need the `jsonschema` pip package; CI pins `jsonschema==4.21.1`.
+
+## Cyberpunk RED gates
+
+Cyberpunk RED has no PCGen oracle, so its correctness rests on three things, none of them an oracle comparison.
+
+- **The corpus manifest check.** `python3 scripts/cpr_manifest_check.py --all` and the root test `tests/cpr_corpus_manifest.rs` are two independent
+  implementations of the same checks (every manifest kind exists and holds exactly its `expected` records, every record has a `source_page` `pNNN` in
+  `p001`..`p459`, no corpus file is unnamed, the manifest's kinds and expected sum equal the content-unit inventory's kind table). Each fails closed on
+  planted corruptions (`--selftest` for the script; plant tests in the Rust twin). The Rust twin runs in `root-full`; the script is run by hand and by
+  the SD-38 cards, not by a `verify.sh` stage. **Not covered:** field values, nested sub-table counts, the correctness of a `source_page`.
+- **Hand-derived engine values.** `src/rules_core/cpr/` modules pin book values as test constants and `tests/fixtures/cpr/` holds page-pinned fixtures
+  (`hp_table_p080.json`, `role_cyberware_p118.json`, `role_rank_values.json`, `sample_sheet_p121.json`, `streetrat_skills_p087.json`).
+- **A no-engine cross-check of the starters.** `docs/release/SD-38-cyberpunk-red/artifacts/epic_7/E7.1/crosscheck.py` re-derives every number on the three
+  starter sheets from the book's formulas and the corpus with no engine code and a planted wrong value is rejected.
+
+The packaged-app gate is `apps/desktop/src-tauri/tests/packaged_resources.rs`, which also lays out `data/cyberpunk-red/corpus` from `bundle.resources` and
+loads a starter sheet from it. Pathfinder and Starfinder stay byte-identical: the three Pathfinder seed render hashes and the four Starfinder seed-line files
+are compared against the bundle's base commit, and a diff is a defect, not a re-baseline.
 
 ## `scripts/verify.sh`: stages, groups, and what each protects
 
@@ -369,8 +388,8 @@ the fold's `multiclass.<class>.` re-scope stripped, equals the class-alone set; 
 loads at least two classes. Their fixtures are Blocked alone, so asserting `Computed` would fabricate a
 success; the Computed proof for mixes is the census mix panel (`decisions.md` §14.2).
 
-**The ui-smoke harness** (`apps/desktop/scripts/ui-smoke/`: `spec.json` 103 rows across 18 screens, 3
-manual, 14 of them Starfinder (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));print(len(d['rows']),sum(1 for r in d['rows'] if 'starfinder' in r['id']))"` → `103 14`); `run.mjs`; the DEV-only `ui_probe` DOM snapshot, see [desktop-app.md](./desktop-app.md)). Run with
+**The ui-smoke harness** (`apps/desktop/scripts/ui-smoke/`: `spec.json` 127 rows across 18 screens, 3
+manual, 14 of them Starfinder and 23 Cyberpunk RED (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));r=d['rows'];print(len(r),sum(1 for x in r if 'starfinder' in x['id']),sum(1 for x in r if 'cyberpunk' in x['id']))"` → `127 14 23`); `run.mjs`; the DEV-only `ui_probe` DOM snapshot, see [desktop-app.md](./desktop-app.md)). Run with
 `npm run ui-smoke` against one launched app; `results.json` is written as a `not-run` skeleton first, so a
 killed run keeps its denominator. `docs/testing/ui-smoke-inventory.md` is generated by
 `render-inventory.mjs` (`npm run ui-smoke:doc`). Receipts live under
