@@ -166,6 +166,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-15 | E7.6 | sonnet | complete | this commit (docs only: `docs/retro/sd38-retrospective.md`, `references/README.md` citation, receipt, kanban row, this row, Summary E7/Total) | `artifacts/epic_7/E7.6_cycle_receipt.md` | docs only; not rendered (no render path changed since E7.4) |
 | 2026-10-15 | E7.7 | haiku | complete | this commit (docs only: receipt, kanban row, this row, Summary E7/Total; sweep: `sd38-main` cargo target deleted, no worktree or branch removed) | `artifacts/epic_7/E7.7_cycle_receipt.md` | docs only; not rendered (no render path touched) |
 | 2026-10-15 | E7.8 | sonnet | complete | this commit (docs only: release notes body, `E7.8_check.py`, receipt, kanban row, this row, Summary E7/Total) | `artifacts/epic_7/E7.8_cycle_receipt.md` | docs only; not rendered (no render path touched) |
+| 2026-10-15 | E7.9 part 1 | sonnet | partial (truth-up done; claims critic is part 2, card stays waiting) | this commit (docs only: 11 `docs/architecture` files, `receipts.md`, receipt, kanban row, this row) | `artifacts/epic_7/E7.9_cycle_receipt.md` | docs only; not rendered (no render path touched) |
 
 ## Epic reports
 
