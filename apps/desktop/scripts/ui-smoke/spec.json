@@ -5259,9 +5259,9 @@
         { "op": "wait", "ms": 1500 }
       ],
       "marker": "Load",
-      "expect": ["Load", "Delete", "Cancel", "No characters yet \u2014 create your first one to get started."],
-      "forbid": ["Aldric Ironhand", "Pathfinder 1st Edition", "Starfinder 1st Edition"],
-      "notes": "SD-38 E0.5 (epic-breakdown.md E0.5: 'The landing screen offers \"Cyberpunk Red\" as cyberpunk-red, selectable; its Load list comes from CyberpunkAdapter'). Selects the Cyberpunk Red chip (RULE_SETS in LandingScreen.tsx, id cyberpunk-red, available) and opens Load Character: the list is list_saved_characters with ruleSystemId 'cyberpunk-red' (buildListSavedCharactersArgs), which resolve_rule_system_adapter sends to CyberpunkAdapter (cpr_adapter.rs, E0.4). The isolated store holds the Pathfinder and Starfinder starter seeds and no Cyberpunk RED character, so the Cyberpunk list is empty: the forbid list holds the first Pathfinder seed's name and both systems' row tags, which a list from Pf1Adapter or StarfinderAdapter would show. Before E0.5 the chip is an unselectable stub, the click does nothing, and Load lists the Pathfinder seeds (RED). New Character stays closed with its reason until E3.2 (characterHubRuntime.test.ts). landing-select-pathfinder (next) restores the Pathfinder selection."
+      "expect": ["Load", "Delete", "Cancel", "Jax Moreno", "Nyx Calder", "Imani Okafor"],
+      "forbid": ["Aldric Ironhand", "Pathfinder 1st Edition", "Starfinder 1st Edition", "No characters yet"],
+      "notes": "SD-38 E0.5 (epic-breakdown.md E0.5: 'The landing screen offers \"Cyberpunk Red\" as cyberpunk-red, selectable; its Load list comes from CyberpunkAdapter'). Selects the Cyberpunk Red chip (RULE_SETS in LandingScreen.tsx, id cyberpunk-red, available) and opens Load Character: the list is list_saved_characters with ruleSystemId 'cyberpunk-red' (buildListSavedCharactersArgs), which resolve_rule_system_adapter sends to CyberpunkAdapter (cpr_adapter.rs, E0.4). The isolated store holds the starter seeds of every system; since SD-38 E7.1 those include the three Cyberpunk RED starters (Jax Moreno, Nyx Calder, Imani Okafor, character_hub.rs starter_seeds / cpr_adapter.rs starter_requests), so the Cyberpunk list is exactly those three (before E7.1 it was empty, 'No characters yet', now forbidden): the forbid list also holds the first Pathfinder seed's name and both other systems' row tags, which a list from Pf1Adapter or StarfinderAdapter would show. Before E0.5 the chip is an unselectable stub, the click does nothing, and Load lists the Pathfinder seeds (RED). New Character stays closed with its reason until E3.2 (characterHubRuntime.test.ts). landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
       "id": "browse-cyberpunk-catalog",
@@ -6196,6 +6196,72 @@
       ],
       "forbid": ["Character not created", "This character did not compute", "Race", "Strength", "Handgun (REF)\t8"],
       "notes": "SD-38 E5.MC for E5.1's refusal path through the app (epic-breakdown.md E5.1: '... refuses skipped levels and overspend'). Builds the Streetrat Solo of improve-cyberpunk-skill (template row 1: COOL 8, EMP 5, Humanity 36 of Maximum 46 after its kit's 14 Humanity Loss, Solo Rank 4) (Handgun Level 6), loads it, Improve, enters 500 IP and asks for Handgun Level 8: the engine refuses the skipped Level (p. 411) and the plan cannot be spent; the sheet behind the dialog still shows Handgun 6 / 13 and IP 0 / 0. The overspend refusal through the app is exercised by E5.MC's cost plant: with every IP price x 1.5, Handgun Level 7 costs 210 > 200 IP, the spend is refused and improve-cyberpunk-skill goes red (Handgun stays 6 / 13, IP 0 / 0). Before E5.MC the row does not exist."
+    },
+    {
+      "id": "restore-cyberpunk-seed-netrunner",
+      "screen": "load",
+      "steps": [
+        {"op": "click", "target": "Cyberpunk Red"},
+        {"op": "click", "target": "Load\nCharacter"},
+        {"op": "wait", "ms": 1500},
+        {"op": "click", "target": "Nyx Calder"},
+        {"op": "click", "target": "Delete"},
+        {"op": "wait", "ms": 1500},
+        {"op": "click", "target": "Restore starter characters"},
+        {"op": "wait", "ms": 3000}
+      ],
+      "marker": "Restored: Nyx Calder",
+      "expect": ["Restored: Nyx Calder", "Restore starter characters", "Jax Moreno", "Nyx Calder", "Imani Okafor"],
+      "forbid": ["Could not restore", "A starter character could not be created", "Aldric Ironhand"],
+      "notes": "SD-38 E7.1 (epic-breakdown.md E7.1: 'Three CPR starters ... are restored by Restore starter characters, open in the real app'). On the Cyberpunk Red Load list, selects the Complete Package Netrunner starter Nyx Calder, deletes it (LoadCharacterScreen's window.confirm resolves true in this harness, see load-character-delete-clone), then clicks Restore starter characters: restore_starter_characters rebuilds every starter whose folder is missing through cpr_adapter.rs create_starter_at (the Create screen's cpr_creation::create_at_root, Lifepath seed 2077) and the status line names exactly the one it wrote. The id is the seed's own (00000000-0000-0000-0000-000000000005), so the row's cleanup deletes nothing. open-cyberpunk-seed-netrunner (next) loads the restored character. Before E7.1 the Cyberpunk list holds no starter (RED: 'Nyx Calder' is not on screen)."
+    },
+    {
+      "id": "open-cyberpunk-seed-netrunner",
+      "screen": "sheet",
+      "steps": [
+        {"op": "click", "target": "Cyberpunk Red"},
+        {"op": "click", "target": "Load\nCharacter"},
+        {"op": "wait", "ms": 1500},
+        {"op": "click", "target": "Nyx Calder"},
+        {"op": "click", "target": "Load"},
+        {"op": "wait", "ms": 3000}
+      ],
+      "marker": "Nyx Calder",
+      "expect": ["Nyx Calder", "Cyberpunk RED", "EMP\t7\t5", "Humanity\t56 / 70", "Lightly Wounded\t40\t10", "Seriously Wounded\t20\t13", "Rank\t4", "NET Actions\t3", "Deck slots (used / available)\t6 / 7", "Cyberdeck\tCyberdeck (Standard Quality)", "Program\tSword", "Program\tEraser", "Interface Plugs\t7", "Neural Link\t7", "Humanity Loss\t14", "Maximum Humanity\t66", "Neural Link slots\t1 / 5", "Head\t11\t0", "Body\t11\t0", "Cybertech (TECH)\t6\t13", "Library Search (INT)\t6\t13", "Handgun (REF)\t6\t12", "Concentration (WILL)\t4\t9", "Facedown (COOL + Reputation)\t6"],
+      "forbid": ["Character not created", "This character did not compute", "Race", "Strength", "Stamina", "Hit die", "(-2 EMP)"],
+      "notes": "SD-38 E7.1: the Complete Package Netrunner starter Nyx Calder (STATs 7 6 6 7 6 5 6 6 6 7 = 62, p079; 86 skill points, p090; Interface 4; 2,090 of 2,550eb on a Standard Cyberdeck, Sword x2, Armor, Worm, See Ya, Eraser, a Neural Link with Interface Plugs, a Heavy Pistol, 50 rounds and Light Armorjack head and body), restored by the previous row and opened from the Cyberpunk Red Load list. Every expect is a cpr. engine row whose value docs/release/SD-38-cyberpunk-red/artifacts/epic_7/E7.1/crosscheck.py re-derives from the book's formulas and the corpus without engine code (cpr-seed-builds.md): Humanity 70 - (7 + 7) = 56 / 70, EMP 5; HP 10 + 5 x ceil(11 / 2) = 40, SW 20; Interface Rank 4 -> 3 NET Actions (p148); 6 one-slot programs in the deck's 7 slots; Maximum Humanity 70 - 2 x 2 = 66; skill base = STAT + level (Cybertech TECH 7 + 6, Library Search INT 7 + 6, Handgun REF 6 + 6, Concentration WILL 5 + 4)."
+    },
+    {
+      "id": "open-cyberpunk-seed-solo",
+      "screen": "sheet",
+      "steps": [
+        {"op": "click", "target": "Cyberpunk Red"},
+        {"op": "click", "target": "Load\nCharacter"},
+        {"op": "wait", "ms": 1500},
+        {"op": "click", "target": "Jax Moreno"},
+        {"op": "click", "target": "Load"},
+        {"op": "wait", "ms": 3000}
+      ],
+      "marker": "Jax Moreno",
+      "expect": ["Jax Moreno", "Cyberpunk RED", "EMP\t5\t3", "Humanity\t36 / 50", "Lightly Wounded\t50\t10", "Seriously Wounded\t25\t13", "Rank\t4", "Combat Awareness Points\t4", "Biomonitor\t0", "Neural Link\t7", "Sandevistan\t7", "Humanity Loss\t14", "Maximum Humanity\t46", "Head\t11\t0", "Body\t11\t0", "Tactics (INT)\t6\t11", "Handgun (REF)\t6\t14", "Shoulder Arms (REF)\t6\t14", "Interrogation (COOL)\t6\t13", "Conversation (EMP)\t2\t5", "Facedown (COOL + Reputation)\t7"],
+      "forbid": ["Character not created", "This character did not compute", "Race", "Strength", "Stamina", "Hit die", "(-2 EMP)"],
+      "notes": "SD-38 E7.1: the Streetrat Solo starter Jax Moreno (Solo template row 3, p075: 5 8 7 4 7 7 6 7 8 5; the printed Solo skills; Combat Awareness 4 as Initiative Reaction 2 + Threat Detection 2; the fixed Solo kit and cyberware pack), seeded on the isolated root's first launch and opened from the Cyberpunk Red Load list. Every expect is a cpr. engine row crosscheck.py re-derives (cpr-seed-builds.md): Humanity 50 - (0 + 7 + 7) = 36 / 50, EMP 3; HP 10 + 5 x ceil(15 / 2) = 50, SW 25; Maximum Humanity 50 - 2 x 2 = 46; skill base = current STAT + level (Tactics INT 5 + 6, Handgun and Shoulder Arms REF 8 + 6, Interrogation COOL 7 + 6, Conversation current EMP 3 + 2, D-6); Facedown COOL 7 + Reputation 0."
+    },
+    {
+      "id": "open-cyberpunk-seed-medtech",
+      "screen": "sheet",
+      "steps": [
+        {"op": "click", "target": "Cyberpunk Red"},
+        {"op": "click", "target": "Load\nCharacter"},
+        {"op": "wait", "ms": 1500},
+        {"op": "click", "target": "Imani Okafor"},
+        {"op": "click", "target": "Load"},
+        {"op": "wait", "ms": 3000}
+      ],
+      "marker": "Imani Okafor",
+      "expect": ["Imani Okafor", "Cyberpunk RED", "EMP\t7\t5", "Humanity\t58 / 70", "Lightly Wounded\t40\t10", "Seriously Wounded\t20\t13", "Rank\t4", "Biomonitor\t0", "Cybereye\t7", "Nasal Filters\t2", "TeleOptics\t3", "Humanity Loss\t12", "Maximum Humanity\t64", "Head\t11\t0", "Body\t11\t0", "Shield (HP)\t10\t0", "First Aid (TECH)\t4\t12", "Paramedic (TECH)\t6\t14", "Cybertech (TECH)\t4\t12", "Shoulder Arms (REF)\t4\t9", "Conversation (EMP)\t6\t11", "Facedown (COOL + Reputation)\t5"],
+      "forbid": ["Character not created", "This character did not compute", "Race", "Strength", "Stamina", "Hit die", "(-2 EMP)"],
+      "notes": "SD-38 E7.1: the Edgerunner Medtech starter Imani Okafor (seed 2045's ten 1d10 rolls 5 8 9 3 5 6 7 1 7 1, each STAT from its own column of the Medtech table, p078: 6 5 7 8 5 5 8 5 7 7; the Medtech list moved within 86 points, Shoulder Arms 6 -> 4 and First Aid 2 -> 4; Medicine Surgery 2 / Pharmaceuticals 1 (Speedheal) / Cryosystem Operation 1, D-7; the fixed Medtech kit with the Assault Rifle and rifle ammunition picked; the Medtech cyberware pack), opened from the Cyberpunk Red Load list. Every expect is a cpr. engine row crosscheck.py re-derives (cpr-seed-builds.md): Humanity 70 - (0 + 7 + 2 + 3) = 58 / 70, EMP 5; HP 10 + 5 x ceil(12 / 2) = 40; Maximum Humanity 70 - 3 x 2 = 64; Bulletproof Shield 10 HP; skill base = current STAT + level (First Aid TECH 8 + 4, Paramedic 8 + 6, Cybertech 8 + 4, Shoulder Arms REF 5 + 4, Conversation current EMP 5 + 6). landing-select-pathfinder (next) restores the Pathfinder selection."
     },
     {
       "id": "landing-select-pathfinder",

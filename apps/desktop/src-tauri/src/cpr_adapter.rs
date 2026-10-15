@@ -17,12 +17,14 @@
 //! with the empty plan or a refusal naming the reason, never Pathfinder numbers. CPR's own
 //! actions (creation, improvement) are their own commands (`cpr_creation`, `cpr_improve`).
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use serde::Deserialize;
 
 use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
+use codex::rules_core::cpr::kit::{CprKitChoices, CprKitPick, CprKitPurchase};
 use codex::rules_core::cpr::sheet::{compose_sheet, CprSheetCatalogs};
 use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter};
 use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
@@ -34,6 +36,10 @@ use codex::rules_core::pilot_compute::{
 use crate::character_hub::{
     AbilityScoresDto, CharacterSummaryDto, CorpusDerivedDto, EncumbranceDto, EquipmentEffectsDto, ExplanationDto,
     ListSavedCharactersResponse, LoadSavedCharacterResponse,
+};
+use crate::cpr_creation::{
+    create_at_root, CprCreateRequest, CprCreateResponse, CprCreationMethod, CprCreationRequest, CprLifepathRequest,
+    CprRoleAbilityRequest, CprRolePickRequest, CprSkillsRequest,
 };
 use crate::cpr_sheet_print::CprPrintCatalog;
 use crate::characterHub::appendToCharacter::{AppendToCharacterResponse, ItemToAppendDto};
@@ -92,6 +98,166 @@ pub fn save_cyberpunk_criticals(app: tauri::AppHandle, request: CprCriticalsSave
     let criticals: Vec<CprRecordedCritical> =
         request.criticals.into_iter().map(|c| CprRecordedCritical { location: c.location, name: c.name }).collect();
     save_criticals_at_root(&root, &criticals)
+}
+
+/// The Cyberpunk RED starter characters, in the order they are written: each one's marker
+/// file and the creation request that builds it through the Create screen's own path
+/// (`cpr_creation::create_at_root`). Every die is fixed by the request's seed or pick, so a
+/// restore rebuilds the same character byte for byte. The full builds, with the arithmetic of
+/// every number they put on the sheet, are `docs/release/SD-38-cyberpunk-red/artifacts/epic_7/cpr-seed-builds.md`.
+///
+/// **Jax Moreno**, Streetrat Solo: Solo template row 3 (p. 75), the printed skill list, Combat
+/// Awareness 4 split Initiative Reaction 2 / Threat Detection 2 (p. 147), the fixed Solo kit
+/// with its first options and the Solo cyberware pack (Humanity Loss 14, p. 118).
+///
+/// **Nyx Calder**, Complete Package Netrunner: 62 STAT points (p. 79), the 13 Basic skills and
+/// eight more for 86 skill points (p. 90), Interface 4 (p. 148), and 2,090 of the 2,550eb
+/// (p. 105) on a Standard Cyberdeck, six programs, a Neural Link with Interface Plugs, a Heavy
+/// Pistol with 50 rounds and Light Armorjack head and body.
+///
+/// **Imani Okafor**, Edgerunner Medtech: ten 1d10 STAT rolls from seed 2045 (p. 78), the
+/// Medtech list moved within its 86 points (Shoulder Arms 6 -> 4, First Aid 2 -> 4), Medicine
+/// Surgery 2 / Pharmaceuticals 1 (Speedheal) / Cryosystem Operation 1 (D-7), the fixed Medtech
+/// kit with the Assault Rifle and its rifle ammunition picked, and the Medtech cyberware pack
+/// (Humanity Loss 12).
+///
+/// Each one's Lifepath and Cultural Origin language are rolled by its own seed (Jax 2020, Nyx
+/// 2077, Imani 2045), so the three answer the tables differently.
+pub(crate) fn starter_requests(saved_at: &str) -> Vec<(&'static str, CprCreateRequest)> {
+    let map = |pairs: &[(&str, u8)]| -> BTreeMap<String, u8> { pairs.iter().map(|(k, v)| ((*k).to_owned(), *v)).collect() };
+    let purchase = |kind: &str, name: &str, variant: Option<&str>, quantity: u32| CprKitPurchase {
+        kind: kind.to_owned(),
+        name: name.to_owned(),
+        variant: variant.map(str::to_owned),
+        quantity,
+    };
+    let request = |id: &str, name: &str, creation: CprCreationRequest| CprCreateRequest {
+        character_id: id.to_owned(),
+        display_label: name.to_owned(),
+        saved_at: saved_at.to_owned(),
+        creation,
+    };
+    let solo = CprCreationRequest {
+        role: "Solo".to_owned(),
+        method: CprCreationMethod::Streetrat,
+        seed: Some(2020),
+        template_roll: Some(3),
+        stats: None,
+        lifepath: CprLifepathRequest::default(),
+        skills: CprSkillsRequest::default(),
+        role_ability: CprRoleAbilityRequest {
+            points: map(&[("Initiative Reaction", 2), ("Threat Detection", 2)]),
+            picks: Vec::new(),
+        },
+        kit: CprKitChoices::default(),
+    };
+    let netrunner = CprCreationRequest {
+        role: "Netrunner".to_owned(),
+        method: CprCreationMethod::CompletePackage,
+        seed: Some(2077),
+        template_roll: None,
+        stats: Some(map(&[
+            ("int", 7),
+            ("ref", 6),
+            ("dex", 6),
+            ("tech", 7),
+            ("cool", 6),
+            ("will", 5),
+            ("luck", 6),
+            ("move", 6),
+            ("body", 6),
+            ("emp", 7),
+        ])),
+        lifepath: CprLifepathRequest::default(),
+        skills: CprSkillsRequest {
+            levels: map(&[
+                ("Concentration", 4),
+                ("Education", 4),
+                ("Evasion", 4),
+                ("Local Expert (Your Home)", 4),
+                ("Perception", 4),
+                ("Stealth", 4),
+                ("Electronics/Security Tech", 6),
+                ("Basic Tech", 6),
+                ("Cybertech", 6),
+                ("Handgun", 6),
+                ("Library Search", 6),
+                ("Cryptography", 4),
+                ("Conceal/Reveal Object", 4),
+                ("Streetwise", 4),
+            ]),
+            specialties: BTreeMap::new(),
+        },
+        role_ability: CprRoleAbilityRequest::default(),
+        kit: CprKitChoices {
+            picks: Vec::new(),
+            purchases: vec![
+                purchase("cyberdeck", "Cyberdeck (Standard Quality)", None, 1),
+                purchase("program", "Sword", None, 2),
+                purchase("program", "Armor", None, 1),
+                purchase("program", "Worm", None, 1),
+                purchase("program", "See Ya", None, 1),
+                purchase("program", "Eraser", None, 1),
+                purchase("cyberware", "Neural Link", None, 1),
+                purchase("cyberware", "Interface Plugs", None, 1),
+                purchase("weapon", "Heavy Pistol", None, 1),
+                purchase("ammo", "Basic Ammunition", Some("H Pistol"), 50),
+                purchase("armor", "Light Armorjack", Some("Body"), 1),
+                purchase("armor", "Light Armorjack", Some("Head"), 1),
+            ],
+        },
+    };
+    let medtech = CprCreationRequest {
+        role: "Medtech".to_owned(),
+        method: CprCreationMethod::Edgerunner,
+        seed: Some(2045),
+        template_roll: None,
+        stats: None,
+        lifepath: CprLifepathRequest::default(),
+        skills: CprSkillsRequest {
+            levels: map(&[("Shoulder Arms", 4), ("First Aid", 4)]),
+            specialties: [("Science (choose 1)".to_owned(), "Biology".to_owned())].into_iter().collect(),
+        },
+        role_ability: CprRoleAbilityRequest {
+            points: map(&[
+                ("Surgery", 2),
+                ("Medical Tech (Pharmaceuticals)", 1),
+                ("Medical Tech (Cryosystem Operation)", 1),
+            ]),
+            picks: vec![CprRolePickRequest { name: "Speedheal".to_owned(), on: None }],
+        },
+        kit: CprKitChoices {
+            // The fixed Medtech kit's first three lines (p. 99): "Shotgun or Assault Rifle" and
+            // the two ammunition lines that follow it.
+            picks: vec![
+                CprKitPick { line: 0, option: "Assault Rifle".to_owned() },
+                CprKitPick { line: 1, option: "Basic Rifle Ammunition".to_owned() },
+                CprKitPick { line: 2, option: "Incendiary Rifle Ammunition".to_owned() },
+            ],
+            purchases: Vec::new(),
+        },
+    };
+    vec![
+        (".default_character_seeded_4", request("00000000-0000-0000-0000-000000000004", "Jax Moreno", solo)),
+        (".default_character_seeded_5", request("00000000-0000-0000-0000-000000000005", "Nyx Calder", netrunner)),
+        (".default_character_seeded_6", request("00000000-0000-0000-0000-000000000006", "Imani Okafor", medtech)),
+    ]
+}
+
+/// Builds and saves one Cyberpunk RED starter at `root` through the Create screen's path over
+/// the running app's CPR corpus. A build creation refuses saves nothing and is an error naming
+/// every refusal.
+pub(crate) fn create_starter_at(root: &Path, request: &CprCreateRequest, app_version: &str) -> Result<(), String> {
+    match create_at_root(&corpus_root(), root, request, app_version.to_owned())? {
+        CprCreateResponse::Saved { .. } => Ok(()),
+        CprCreateResponse::Blocked { diagnostics } => {
+            let blocking: Vec<String> = diagnostics.iter().map(|d| format!("{}: {}", d.id, d.message)).collect();
+            Err(format!(
+                "starter character '{}' did not compute (blocking: {blocking:?}); not seeding",
+                request.display_label
+            ))
+        }
+    }
 }
 
 fn summary_dto(character: &CprSavedCharacter) -> CharacterSummaryDto {

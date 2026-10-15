@@ -2100,11 +2100,39 @@ const FIREBALL_SPELL_ID: &str = "Fireball";
 #[cfg(test)]
 const FIREBALL_CONVERTED_RECORD_ID: &str = "core_rulebook:spell:fireball";
 
-/// One starter character: its own marker, the create request, and the spells recorded AND
-/// prepared on top of the class's canonical seeds (the `record_and_prepare_spell_selection`
-/// mutation the Spells tab's picker runs).
+/// One starter character: its own marker and the build of its rule system.
 struct StarterSeed {
     marker: &'static str,
+    build: StarterBuild,
+}
+
+/// A starter's build, by rule system.
+enum StarterBuild {
+    Pathfinder(Box<PathfinderStarter>),
+    /// Built through the Cyberpunk RED Create screen's path (`cpr_adapter::starter_requests`).
+    CyberpunkRed(Box<crate::cpr_creation::CprCreateRequest>),
+}
+
+impl StarterSeed {
+    fn character_id(&self) -> &str {
+        match &self.build {
+            StarterBuild::Pathfinder(build) => &build.request.character_id,
+            StarterBuild::CyberpunkRed(request) => &request.character_id,
+        }
+    }
+
+    fn display_label(&self) -> &str {
+        match &self.build {
+            StarterBuild::Pathfinder(build) => &build.request.display_label,
+            StarterBuild::CyberpunkRed(request) => &request.display_label,
+        }
+    }
+}
+
+/// A Pathfinder starter: the create request, and the spells recorded AND prepared on top of
+/// the class's canonical seeds (the `record_and_prepare_spell_selection` mutation the Spells
+/// tab's picker runs).
+struct PathfinderStarter {
     request: CreateCharacterRequest,
     /// Levels of other classes, applied in order after the request's own class through
     /// `apply_level_up` -- the step `create_character` takes for its `additional_levels`.
@@ -2218,76 +2246,90 @@ fn starter_seeds() -> Vec<StarterSeed> {
     vec![
         StarterSeed {
             marker: DEFAULT_CHARACTER_SEED_MARKER,
-            request: starter_seed_request(
-                DEFAULT_CHARACTER_ID,
-                "Aldric Ironhand",
-                "class:fighter",
-                3,
-                AbilityScoresDto {
-                    strength: 17,
-                    dexterity: 13,
-                    constitution: 14,
-                    intelligence: 14,
-                    wisdom: 12,
-                    charisma: 8,
-                },
-                "strength",
-            ),
-            additional_levels: Vec::new(),
-            record_and_prepare_spells: Vec::new(),
-            skill_ranks: ALDRIC_SEED_SKILL_RANKS,
+            build: StarterBuild::Pathfinder(Box::new(PathfinderStarter {
+                request: starter_seed_request(
+                    DEFAULT_CHARACTER_ID,
+                    "Aldric Ironhand",
+                    "class:fighter",
+                    3,
+                    AbilityScoresDto {
+                        strength: 17,
+                        dexterity: 13,
+                        constitution: 14,
+                        intelligence: 14,
+                        wisdom: 12,
+                        charisma: 8,
+                    },
+                    "strength",
+                ),
+                additional_levels: Vec::new(),
+                record_and_prepare_spells: Vec::new(),
+                skill_ranks: ALDRIC_SEED_SKILL_RANKS,
+            })),
         },
         StarterSeed {
             marker: SECOND_SEED_MARKER,
-            request: starter_seed_request(
-                SECOND_SEED_CHARACTER_ID,
-                "Elowen Ashgrave",
-                WIZARD_CLASS_ID_FOR_SEED,
-                5,
-                AbilityScoresDto {
-                    strength: 8,
-                    dexterity: 14,
-                    constitution: 13,
-                    intelligence: 16,
-                    wisdom: 12,
-                    charisma: 10,
-                },
-                "intelligence",
-            ),
-            additional_levels: Vec::new(),
-            record_and_prepare_spells: vec![(FIREBALL_SPELL_ID, WIZARD_CLASS_ID_FOR_SEED)],
-            skill_ranks: ELOWEN_SEED_SKILL_RANKS,
+            build: StarterBuild::Pathfinder(Box::new(PathfinderStarter {
+                request: starter_seed_request(
+                    SECOND_SEED_CHARACTER_ID,
+                    "Elowen Ashgrave",
+                    WIZARD_CLASS_ID_FOR_SEED,
+                    5,
+                    AbilityScoresDto {
+                        strength: 8,
+                        dexterity: 14,
+                        constitution: 13,
+                        intelligence: 16,
+                        wisdom: 12,
+                        charisma: 10,
+                    },
+                    "intelligence",
+                ),
+                additional_levels: Vec::new(),
+                record_and_prepare_spells: vec![(FIREBALL_SPELL_ID, WIZARD_CLASS_ID_FOR_SEED)],
+                skill_ranks: ELOWEN_SEED_SKILL_RANKS,
+            })),
         },
         StarterSeed {
             marker: THIRD_SEED_MARKER,
-            request: starter_seed_request(
-                THIRD_SEED_CHARACTER_ID,
-                "Brother Tomas Vane",
-                CLERIC_CLASS_ID_FOR_SEED,
-                3,
-                AbilityScoresDto {
-                    strength: 14,
-                    dexterity: 10,
-                    constitution: 14,
-                    intelligence: 10,
-                    wisdom: 16,
-                    charisma: 12,
-                },
-                "wisdom",
-            ),
-            additional_levels: vec![FIGHTER_CLASS_ID_FOR_SEED, FIGHTER_CLASS_ID_FOR_SEED],
-            record_and_prepare_spells: vec![
-                (CURE_LIGHT_WOUNDS_SPELL_ID, CLERIC_CLASS_ID_FOR_SEED),
-                (SPIRITUAL_WEAPON_SPELL_ID, CLERIC_CLASS_ID_FOR_SEED),
-            ],
-            skill_ranks: TOMAS_SEED_SKILL_RANKS,
+            build: StarterBuild::Pathfinder(Box::new(PathfinderStarter {
+                request: starter_seed_request(
+                    THIRD_SEED_CHARACTER_ID,
+                    "Brother Tomas Vane",
+                    CLERIC_CLASS_ID_FOR_SEED,
+                    3,
+                    AbilityScoresDto {
+                        strength: 14,
+                        dexterity: 10,
+                        constitution: 14,
+                        intelligence: 10,
+                        wisdom: 16,
+                        charisma: 12,
+                    },
+                    "wisdom",
+                ),
+                additional_levels: vec![FIGHTER_CLASS_ID_FOR_SEED, FIGHTER_CLASS_ID_FOR_SEED],
+                record_and_prepare_spells: vec![
+                    (CURE_LIGHT_WOUNDS_SPELL_ID, CLERIC_CLASS_ID_FOR_SEED),
+                    (SPIRITUAL_WEAPON_SPELL_ID, CLERIC_CLASS_ID_FOR_SEED),
+                ],
+                skill_ranks: TOMAS_SEED_SKILL_RANKS,
+            })),
         },
     ]
+    .into_iter()
+    .chain(
+        crate::cpr_adapter::starter_requests(DEFAULT_CHARACTER_SAVED_AT)
+            .into_iter()
+            .map(|(marker, request)| StarterSeed { marker, build: StarterBuild::CyberpunkRed(Box::new(request)) }),
+    )
+    .collect()
 }
 
 /// Seeds the starter characters ("Aldric Ironhand": Human Fighter 3; "Elowen Ashgrave":
-/// Human Wizard 5 with Fireball prepared; "Brother Tomas Vane": Human Cleric 3 / Fighter 2)
-/// into an install so there's something to open immediately instead of an empty character list.
+/// Human Wizard 5 with Fireball prepared; "Brother Tomas Vane": Human Cleric 3 / Fighter 2; and
+/// the three Cyberpunk RED starters of `cpr_adapter::starter_requests`) into an install so
+/// there's something to open immediately instead of an empty character list.
 ///
 /// Each seed is gated on its OWN marker file, not on whether the characters directory is
 /// currently empty -- so deleting a starter character does not bring it back on next
@@ -2352,7 +2394,7 @@ fn seed_starters_at(
 ) -> StarterSeedPass {
     let mut pass = StarterSeedPass::default();
     for seed in seeds {
-        let label = seed.request.display_label.clone();
+        let label = seed.display_label().to_owned();
         match seed_one_starter(app_data_dir, app_version, seed, markers) {
             Ok(true) => pass.written.push(label),
             Ok(false) => {}
@@ -2381,13 +2423,22 @@ fn seed_one_starter(
             .map_err(|err| format!("{}: {err}", marker_path.display()))
     };
 
-    let request = seed.request;
-    let root = characters_root_from_app_data_dir(app_data_dir).join(&request.character_id);
+    let root = characters_root_from_app_data_dir(app_data_dir).join(seed.character_id());
     if root.exists() {
         // The id is taken (a restored backup, a player's own character): never overwrite.
         return write_marker().map(|()| false);
     }
 
+    match seed.build {
+        StarterBuild::Pathfinder(build) => save_pathfinder_starter(&root, app_version, *build)?,
+        StarterBuild::CyberpunkRed(request) => crate::cpr_adapter::create_starter_at(&root, &request, app_version)?,
+    }
+    write_marker().map(|()| true)
+}
+
+/// Builds one Pathfinder starter and saves it at `root`, only if the build computes.
+fn save_pathfinder_starter(root: &Path, app_version: &str, seed: PathfinderStarter) -> Result<(), String> {
+    let request = seed.request;
     let mut character_input = compose_character_input(&request);
     // Levels of other classes, in order: the step `build_create_input` takes for
     // `CreateCharacterRequest.additional_levels`.
@@ -2432,8 +2483,7 @@ fn seed_one_starter(
         display_label: request.display_label.clone(),
         character_input,
     };
-    SavedCharacterStore::save(&envelope, &root).map_err(|err| err.message)?;
-    write_marker().map(|()| true)
+    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)
 }
 
 /// The errors of the latest starter seeding pass (the launch, or the last Restore), held as
@@ -13336,6 +13386,7 @@ mod tests {
 mod starter_seed_tests {
     use super::*;
     use codex::rules_core::character_input::AcquisitionMode;
+    use codex::rules_core::cpr::store::CprCharacterStore;
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use codex::rules_core::rules_catalog::class_spell_levels::class_spell_level;
     use codex::rules_core::rules_catalog::crb::spell_list::SPELL_LIST;
@@ -13928,17 +13979,19 @@ mod starter_seed_tests {
     fn broken_seed() -> StarterSeed {
         StarterSeed {
             marker: ".default_character_seeded_broken",
-            request: starter_seed_request(
-                "00000000-0000-0000-0000-0000000000ff",
-                "Broken Seed",
-                "class:not_a_real_class",
-                1,
-                AbilityScoresDto { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 },
-                "strength",
-            ),
-            additional_levels: Vec::new(),
-            record_and_prepare_spells: Vec::new(),
-            skill_ranks: &[],
+            build: StarterBuild::Pathfinder(Box::new(PathfinderStarter {
+                request: starter_seed_request(
+                    "00000000-0000-0000-0000-0000000000ff",
+                    "Broken Seed",
+                    "class:not_a_real_class",
+                    1,
+                    AbilityScoresDto { strength: 10, dexterity: 10, constitution: 10, intelligence: 10, wisdom: 10, charisma: 10 },
+                    "strength",
+                ),
+                additional_levels: Vec::new(),
+                record_and_prepare_spells: Vec::new(),
+                skill_ranks: &[],
+            })),
         }
     }
 
@@ -14009,6 +14062,223 @@ mod starter_seed_tests {
             "{} drifted from the live listing; rerun with CODEX_WRITE_F6E_WIRE=1",
             path.display()
         );
+    }
+
+    /// The three Cyberpunk RED starters (`artifacts/epic_7/cpr-seed-builds.md`): id, name, and
+    /// the ten STATs (INT REF DEX TECH COOL WILL LUCK MOVE BODY EMP) the build gives.
+    /// Streetrat Solo: Solo template row 3 (p. 75). Complete Package Netrunner: the 62-point
+    /// allocation. Edgerunner Medtech: seed 2045's ten 1d10 rolls 5 8 9 3 5 6 7 1 7 1, each
+    /// STAT read from its own column of the Medtech table (p. 78) -- the rolls re-derived by a
+    /// second SplitMix64 implementation (`artifacts/epic_7/E7.1/crosscheck.py`).
+    const CPR_STARTERS: [(&str, &str, [i16; 10]); 3] = [
+        ("00000000-0000-0000-0000-000000000004", "Jax Moreno", [5, 8, 7, 4, 7, 7, 6, 7, 8, 5]),
+        ("00000000-0000-0000-0000-000000000005", "Nyx Calder", [7, 6, 6, 7, 6, 5, 6, 6, 6, 7]),
+        ("00000000-0000-0000-0000-000000000006", "Imani Okafor", [6, 5, 7, 8, 5, 5, 8, 5, 7, 7]),
+    ];
+
+    fn cpr_row(loaded: &LoadSavedCharacterResponse, id: &str) -> i16 {
+        loaded
+            .explanations
+            .iter()
+            .find(|e| e.id == id)
+            .unwrap_or_else(|| panic!("{}: no row {id}", loaded.summary.display_label))
+            .value
+    }
+
+    /// SD-38 E7.1: Restore on an empty install writes the three Pathfinder starters and the
+    /// three Cyberpunk RED starters; each CPR starter loads through the envelope router as a
+    /// Cyberpunk RED sheet carrying its build (cpr-seed-builds.md, every value below by hand:
+    /// HP = 10 + 5 x ceil((BODY + WILL) / 2), p. 186; Humanity = 10 x EMP - Humanity Loss and
+    /// current EMP = floor(Humanity / 10), p. 107/230; Skill Base = STAT + level, p. 80). The
+    /// CPR adapter lists the three, the Pathfinder listing still holds only its three, and a
+    /// second Restore writes nothing and changes no byte.
+    #[test]
+    fn restore_writes_the_three_cyberpunk_starters_and_a_second_restore_writes_nothing() {
+        let app_data_dir = temp_app_data_dir("cpr-restore");
+        let response = restore_starter_characters_at(&app_data_dir, "0.0.0-test");
+        assert!(response.errors.is_empty(), "{:?}", response.errors);
+        assert_eq!(
+            response.restored,
+            ["Aldric Ironhand", "Elowen Ashgrave", "Brother Tomas Vane", "Jax Moreno", "Nyx Calder", "Imani Okafor"]
+        );
+        for marker in [".default_character_seeded_4", ".default_character_seeded_5", ".default_character_seeded_6"] {
+            assert!(app_data_dir.join(marker).exists(), "{marker}");
+        }
+
+        let characters_root = characters_root_from_app_data_dir(&app_data_dir);
+        let cpr = crate::rule_system_adapter::resolve_rule_system_adapter("cyberpunk-red")
+            .list_saved_characters(&characters_root)
+            .expect("the CPR listing");
+        let mut listed: Vec<(&str, &str)> =
+            cpr.characters.iter().map(|c| (c.character_id.as_str(), c.display_label.as_str())).collect();
+        listed.sort_unstable();
+        assert_eq!(listed, CPR_STARTERS.iter().map(|(id, name, _)| (*id, *name)).collect::<Vec<_>>());
+        assert_eq!(cpr.unreadable_count, 0);
+        let pf = SavedCharacterStore::list_all(&characters_root).expect("the PF listing");
+        assert_eq!((pf.characters.len(), pf.unreadable_entries.len()), (3, 0));
+
+        let stat_ids = ["int", "ref", "dex", "tech", "cool", "will", "luck", "move", "body", "emp"];
+        let mut sheets = Vec::new();
+        for (id, name, stats) in CPR_STARTERS {
+            let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&character_root(&app_data_dir, id))
+                .unwrap_or_else(|e| panic!("{name}: {e}"));
+            assert_eq!((loaded.summary.display_label.as_str(), loaded.summary.game_system.as_str()), (name, "cyberpunk-red"));
+            let got: Vec<i16> = stat_ids.iter().map(|s| cpr_row(&loaded, &format!("cpr.stat.{s}"))).collect();
+            assert_eq!(got, stats, "{name}: STATs");
+            let (body, will) = (stats[8], stats[5]);
+            assert_eq!(cpr_row(&loaded, "cpr.derived.hit_points"), 10 + 5 * ((body + will + 1) / 2), "{name}: HP");
+            assert!(loaded.sheet_lines.iter().any(|l| l.id.starts_with("cpr.lifepath.")), "{name}: the Lifepath prints");
+            // `CPR_STARTER_DUMP_OUT=<dir>` keeps each starter's saved files and loaded sheet, the
+            // input of cpr-seed-builds.md and its independent cross-check.
+            if let Some(out) = std::env::var_os("CPR_STARTER_DUMP_OUT") {
+                let dir = PathBuf::from(out).join(id);
+                std::fs::create_dir_all(&dir).expect("dump dir");
+                for entry in std::fs::read_dir(character_root(&app_data_dir, id)).expect("starter dir") {
+                    let path = entry.expect("entry").path();
+                    std::fs::copy(&path, dir.join(path.file_name().expect("name"))).expect("copy");
+                }
+                let json = serde_json::to_string_pretty(&loaded).expect("serialises") + "\n";
+                std::fs::write(dir.join("loaded.json"), json).expect("loaded.json");
+            }
+            sheets.push(loaded);
+        }
+        let [jax, nyx, imani] = [&sheets[0], &sheets[1], &sheets[2]];
+
+        // Jax Moreno, Streetrat Solo (row 3): HP 10 + 5 x ceil(15 / 2) = 50; the Solo pack
+        // Biomonitor 0 + Neural Link 7 + Sandevistan 7 = 14 -> Humanity 50 - 14 = 36, EMP 3;
+        // Tactics INT 5 + 6 = 11, Handgun REF 8 + 6 = 14; the Solo kit's 500eb and SP 11 head and body.
+        for (id, value) in [
+            ("cpr.derived.hit_points", 50),
+            ("cpr.cyberware.humanity_loss", 14),
+            ("cpr.derived.humanity_current", 36),
+            ("cpr.derived.emp_current", 3),
+            ("cpr.role.solo.rank", 4),
+            ("cpr.skill_level.tactics", 6),
+            ("cpr.skill.tactics", 11),
+            ("cpr.skill.handgun", 14),
+            ("cpr.cash", 500),
+            ("cpr.armor.sp_body", 11),
+            ("cpr.armor.sp_head", 11),
+        ] {
+            assert_eq!(cpr_row(jax, id), value, "Jax Moreno {id}");
+        }
+        let jax_choices =
+            CprCharacterStore::load_role_choices(&character_root(&app_data_dir, CPR_STARTERS[0].0)).expect("Jax's role choices");
+        assert_eq!(
+            jax_choices.points,
+            [("Initiative Reaction".to_owned(), 2), ("Threat Detection".to_owned(), 2)],
+            "Combat Awareness 4 = Initiative Reaction 2 + Threat Detection 2"
+        );
+
+        // Nyx Calder, Complete Package Netrunner: HP 10 + 5 x ceil(11 / 2) = 40; bought Neural
+        // Link 7 + Interface Plugs 7 = 14 -> Humanity 70 - 14 = 56, EMP 5; Interface 4 -> 3 NET
+        // Actions (p. 148); the Standard deck's 7 slots, 6 programs; 2550 - 2090 spent = 460eb;
+        // Cybertech TECH 7 + 6 = 13, Library Search INT 7 + 6 = 13, Handgun REF 6 + 6 = 12.
+        for (id, value) in [
+            ("cpr.derived.hit_points", 40),
+            ("cpr.cyberware.humanity_loss", 14),
+            ("cpr.derived.humanity_current", 56),
+            ("cpr.derived.emp_current", 5),
+            ("cpr.netrunning.net_actions", 3),
+            ("cpr.netrunning.deck_slots_available", 7),
+            ("cpr.netrunning.deck_slots_used", 6),
+            ("cpr.cash", 460),
+            ("cpr.skill.cybertech", 13),
+            ("cpr.skill.library_search", 13),
+            ("cpr.skill.handgun", 12),
+        ] {
+            assert_eq!(cpr_row(nyx, id), value, "Nyx Calder {id}");
+        }
+        let nyx_choices = CprCharacterStore::load_choices(&character_root(&app_data_dir, CPR_STARTERS[1].0)).expect("Nyx's choices");
+        // 13 Basic skills + 8 bought + the Cultural Origin language.
+        assert_eq!(nyx_choices.skills.len(), 22, "{:?}", nyx_choices.skills);
+
+        // Imani Okafor, Edgerunner Medtech (seed 2045): HP 10 + 5 x ceil(12 / 2) = 40; the
+        // Medtech pack's printed 12 -> Humanity 70 - 12 = 58, EMP 5; First Aid raised 2 -> 4:
+        // TECH 8 + 4 = 12; Paramedic TECH 8 + 6 = 14; 500eb.
+        for (id, value) in [
+            ("cpr.derived.hit_points", 40),
+            ("cpr.cyberware.humanity_loss", 12),
+            ("cpr.derived.humanity_current", 58),
+            ("cpr.derived.emp_current", 5),
+            ("cpr.role.medtech.rank", 4),
+            ("cpr.skill_level.first_aid", 4),
+            ("cpr.skill.first_aid", 12),
+            ("cpr.skill.paramedic", 14),
+            ("cpr.cash", 500),
+        ] {
+            assert_eq!(cpr_row(imani, id), value, "Imani Okafor {id}");
+        }
+        let imani_role =
+            CprCharacterStore::load_role_choices(&character_root(&app_data_dir, CPR_STARTERS[2].0)).expect("Imani's role choices");
+        let medicine: u8 = imani_role.points.iter().map(|(_, p)| *p).sum();
+        assert_eq!(medicine, 4, "D-7: all four Medicine points placed: {:?}", imani_role.points);
+
+        // A second Restore writes nothing and changes no byte of any starter.
+        let ids: Vec<&str> = [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID]
+            .into_iter()
+            .chain(CPR_STARTERS.iter().map(|(id, _, _)| *id))
+            .collect();
+        let before: Vec<_> = ids.iter().map(|id| snapshot_dir(&character_root(&app_data_dir, id))).collect();
+        let again = restore_starter_characters_at(&app_data_dir, "0.0.0-test");
+        assert!(again.restored.is_empty() && again.errors.is_empty(), "{again:?}");
+        let after: Vec<_> = ids.iter().map(|id| snapshot_dir(&character_root(&app_data_dir, id))).collect();
+        assert!(before == after, "a second Restore changed a starter's bytes");
+
+        // A deleted CPR starter comes back through Restore alone; the others are untouched.
+        std::fs::remove_dir_all(character_root(&app_data_dir, CPR_STARTERS[1].0)).expect("player deletes Nyx");
+        let back = restore_starter_characters_at(&app_data_dir, "0.0.0-test");
+        assert_eq!((back.restored, back.errors), (vec!["Nyx Calder".to_owned()], Vec::<String>::new()));
+        let nyx_again = crate::rule_system_adapter::load_saved_character_via_envelope(&character_root(&app_data_dir, CPR_STARTERS[1].0))
+            .expect("Nyx is back");
+        assert_eq!(cpr_row(&nyx_again, "cpr.netrunning.net_actions"), 3);
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-38 E7.1: a Cyberpunk RED starter creation refuses (here a Complete Package one STAT
+    /// point short of 62, p. 79) is returned as an error naming the refusal, writes no
+    /// character and no marker, and does not stop the next seed.
+    #[test]
+    fn a_cyberpunk_starter_creation_refuses_reports_its_error() {
+        let app_data_dir = temp_app_data_dir("cpr-broken");
+        let mut requests = crate::cpr_adapter::starter_requests(DEFAULT_CHARACTER_SAVED_AT);
+        let (_, mut broken) = requests[1].clone();
+        broken.character_id = "00000000-0000-0000-0000-0000000000fe".to_owned();
+        broken.display_label = "Broken Netrunner".to_owned();
+        broken.creation.stats.as_mut().expect("a Complete Package allocation").insert("int".to_owned(), 6);
+        let (marker, jax) = requests.remove(0);
+        let pass = seed_starters_at(
+            &app_data_dir,
+            "0.0.0-test",
+            vec![
+                StarterSeed { marker: ".default_character_seeded_broken_cpr", build: StarterBuild::CyberpunkRed(Box::new(broken)) },
+                StarterSeed { marker, build: StarterBuild::CyberpunkRed(Box::new(jax)) },
+            ],
+            SeedMarkers::Ignore,
+        );
+        assert_eq!(pass.written, vec!["Jax Moreno".to_owned()]);
+        assert_eq!(pass.errors.len(), 1, "{:?}", pass.errors);
+        assert!(pass.errors[0].contains("'Broken Netrunner' did not compute"), "{:?}", pass.errors);
+        assert!(pass.errors[0].contains("61"), "the refusal names the 61 points: {:?}", pass.errors);
+        assert!(!character_root(&app_data_dir, "00000000-0000-0000-0000-0000000000fe").exists());
+        assert!(!app_data_dir.join(".default_character_seeded_broken_cpr").exists());
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-38 E7.1: the launch pass seeds the Cyberpunk RED starters too (each under its own
+    /// marker), and a deleted one stays deleted until Restore -- the Pathfinder seeds' rules.
+    #[test]
+    fn the_launch_pass_seeds_the_cyberpunk_starters_and_keeps_a_deleted_one_deleted() {
+        let app_data_dir = temp_app_data_dir("cpr-launch");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        for (id, _, _) in CPR_STARTERS {
+            assert!(character_root(&app_data_dir, id).join("envelope.txt").exists(), "{id}");
+        }
+        let imani_root = character_root(&app_data_dir, CPR_STARTERS[2].0);
+        std::fs::remove_dir_all(&imani_root).expect("player deletes Imani");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("next launch");
+        assert!(!imani_root.exists(), "the marker keeps a deleted CPR starter deleted");
+        std::fs::remove_dir_all(&app_data_dir).ok();
     }
 
     fn snapshot_dir(root: &Path) -> BTreeMap<String, Vec<u8>> {
