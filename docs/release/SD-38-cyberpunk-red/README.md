@@ -42,11 +42,11 @@ and Starfinder 1e stay **byte-identical**.
 | Slug | `cyberpunk-red` |
 | Canonical branch | `tranche-18`, cut by C1 from `origin/develop` after PR #398 merges (`decisions.md §2`) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E0–E7 / **69 cards** (68 authored + E4.8, discovered by E4.MC), one criterion each (`kanban.md` row check) |
+| Epics / cards | C, E0–E7 / **70 cards** (68 authored + E4.8, discovered by E4.MC + E7.3a, discovered by E7.3), one criterion each (`kanban.md` row check) |
 | Target version | `0.18.0`, stamped by C1's single commit on 14 surfaces + `current-release.json`. Published triple `0.18.<run>` resolves at the first tester publish after the operator merges |
 | Dispatch mechanism | `Workflow` tool, one long run (`decisions.md §16.2`) |
 | Cadence | N/A |
-| Closure gate | 69 cards `complete` → retrospective + cite → sweep → release notes → architecture truth-up → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 70 cards `complete` → retrospective + cite → sweep → release notes → architecture truth-up → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | PDF text, 459 page files (CUI F-19); no PCGen oracle |
 
 ## 2. Files in this folder

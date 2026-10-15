@@ -262,9 +262,9 @@ column order):
 ```bash
 cd docs/release/SD-38-cyberpunk-red
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 69) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 70) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E7\.([5-9]|1[01]) / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 ```
 
-Pass = no output. The E7.5–E7.11 exemption is by ID, and the 69-row check (68 authored + E4.8, discovered by E4.MC) guards against a dropped
+Pass = no output. The E7.5–E7.11 exemption is by ID, and the 70-row check (68 authored + E4.8, discovered by E4.MC + E7.3a, discovered by E7.3) guards against a dropped
 row. A card added by discovery raises the 68 in the same commit that adds its row.
