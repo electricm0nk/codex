@@ -121,7 +121,6 @@ export function CyberpunkImproveDialog(props: {
         IP awarded
         <input
           aria-label="IP entered"
-          placeholder="IP entered"
           inputMode="numeric"
           value={ipText}
           onChange={(event) => {
@@ -158,16 +157,17 @@ export function CyberpunkImproveDialog(props: {
           ))}
         </select>
         {option?.specialtyRequired === true ? (
-          <input aria-label="Specialty" placeholder="Specialty" value={specialty} onChange={(event) => setSpecialty(event.target.value)} style={inputStyle} />
+          <input aria-label="Specialty" value={specialty} onChange={(event) => setSpecialty(event.target.value)} style={inputStyle} />
         ) : null}
         <input
           aria-label="Skill Level to buy"
-          placeholder={skillDefault === null ? 'Level' : `Level ${skillDefault}`}
+          title={skillDefault === null ? 'Level' : `Level ${skillDefault} when left blank`}
           inputMode="numeric"
           value={skillTarget}
           onChange={(event) => setSkillTarget(event.target.value)}
           style={{ ...inputStyle, width: '6rem' }}
         />
+        {skillDefault === null ? null : <span style={noteStyle}>blank buys Level {skillDefault}</span>}
         <button
           type="button"
           disabled={key === null || skillTo === null}
@@ -193,12 +193,13 @@ export function CyberpunkImproveDialog(props: {
           </span>
           <input
             aria-label="Role Rank to buy"
-            placeholder={rankDefault === null ? 'Rank' : `Rank ${rankDefault}`}
+            title={rankDefault === null ? 'Rank' : `Rank ${rankDefault} when left blank`}
             inputMode="numeric"
             value={rankTarget}
             onChange={(event) => setRankTarget(event.target.value)}
             style={{ ...inputStyle, width: '6rem' }}
           />
+          {rankDefault === null ? null : <span style={noteStyle}>blank buys Rank {rankDefault}</span>}
           <button
             type="button"
             disabled={rankTo === null}
