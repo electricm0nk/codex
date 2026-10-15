@@ -693,11 +693,24 @@ pub(crate) mod tests {
             }),
             ..CprSheetChoices::default()
         };
+        // E4.8: the p121 sheet's Cash, Ammunition and Rent fields -- cash, two ammunition stacks
+        // (the Solo kit's, p099) and housing with a rent in eb (Cargo Container, p379).
+        let mut ledger = edgerunner();
+        ledger.character_id = "cpr-solo-ledger".to_owned();
+        ledger.revision_id = "cpr-solo-ledger.rev.1".to_owned();
+        ledger.display_label = "Ledger Solo".to_owned();
+        let ledger_choices = CprSheetChoices {
+            cash: Some(1450),
+            ammunition: vec![("Basic VH Pistol Ammunition".to_owned(), 30), ("Basic Rifle Ammunition".to_owned(), 70)],
+            housing: Some("Cargo Container".to_owned()),
+            ..CprSheetChoices::default()
+        };
         vec![
             (streetrat, CprSheetChoices::default()),
             (kitted, choices),
             (arsenal, arsenal_choices),
             (netrunner, netrunner_choices),
+            (ledger, ledger_choices),
         ]
     }
 

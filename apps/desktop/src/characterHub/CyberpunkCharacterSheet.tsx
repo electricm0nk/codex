@@ -291,6 +291,8 @@ function SheetBox(props: { box: CyberpunkSheetBox; style: CSSProperties }) {
 /**
  * The critical-injuries checklist: one checkbox per injury under its table, ticked when the engine
  * printed it as recorded (the ticked entry shows that printed line). A change saves the whole list.
+ * Each checkbox is named by its table and injury ("Critical Injuries to the Head: Foreign Object"):
+ * Foreign Object is on both tables, and a ticked entry's text is the printed line, not the name.
  */
 function CriticalChecklist(props: {
   box: CyberpunkSheetBox;
@@ -322,7 +324,13 @@ function CriticalChecklist(props: {
               </p>
             ) : null}
             <label data-cpr-critical={`${String(row.group)}:${row.label}`} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem', padding: '0.15rem 0' }}>
-              <input type="checkbox" checked={ticked !== null} disabled={props.saving} onChange={() => props.onToggle(row)} />
+              <input
+                type="checkbox"
+                aria-label={`${String(row.group)}: ${row.label}`}
+                checked={ticked !== null}
+                disabled={props.saving}
+                onChange={() => props.onToggle(row)}
+              />
               {ticked === null ? row.label : <Value cell={ticked} />}
             </label>
           </Fragment>

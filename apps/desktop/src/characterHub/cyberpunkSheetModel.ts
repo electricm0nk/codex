@@ -163,6 +163,9 @@ const CRITICAL_TABLES: Readonly<Record<CyberpunkCritical['location'], string>> =
   head: 'Critical Injuries to the Head',
 };
 
+/** An ammunition stack's count row; its name is the printed line `<row id>.name`. */
+const AMMO_ROW = /^cpr\.ammo\.(\d+)$/;
+
 const SKILL_PREFIX = 'cpr.skill.';
 const SKILL_LEVEL_PREFIX = 'cpr.skill_level.';
 
@@ -455,6 +458,25 @@ export function buildCyberpunkSheet(
   if (computed && checklist.length > 0) {
     boxes.push({ id: 'criticalInjuries', title: 'Critical Injuries', columns: null, rows: checklist });
   }
+
+  // The p121 sheet's Cash, Ammunition and Rent fields: the cash, each ammunition stack's count
+  // under its ammunition's name (the engine's printed `cpr.ammo.<n>.name` line), and the housing's
+  // rent (a row in eb, or the engine's printed words where the book gives no figure).
+  push({
+    id: 'ledger',
+    title: 'Cash, Ammunition and Rent',
+    columns: null,
+    rows: [
+      { label: 'Cash', cells: [cell('cpr.cash')] },
+      ...numberedLines(rows.keys(), AMMO_ROW).map((id) => ({
+        label: 'Ammunition',
+        group: 'Ammunition',
+        labelCell: figure(`${id}.name`) ?? undefined,
+        cells: [cell(id)],
+      })),
+      { label: 'Rent', cells: [figure('cpr.housing.rent')] },
+    ],
+  });
 
   // Any `cpr.` row the boxes above do not name: shown under its id, never dropped.
   push({

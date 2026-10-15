@@ -320,7 +320,7 @@ mod tests {
         lines.iter().find(|l| l.id == id).unwrap_or_else(|| panic!("no printed line {id}"))
     }
 
-    /// The criterion over the four fixture characters (`cpr_adapter::tests::sheet_fixture_characters`):
+    /// The criterion over the five fixture characters (`cpr_adapter::tests::sheet_fixture_characters`):
     /// the Role Ability prints its rule text with every Rank value; each installed piece of
     /// cyberware prints its effect with its Humanity Loss; the Humanity Loss line (D-6) prints the
     /// loss, Humanity and EMP as the engine's rows give them; every weapon with special rules
@@ -330,7 +330,7 @@ mod tests {
     #[test]
     fn every_rule_line_prints_with_its_resolved_numbers() {
         let printed = printed_fixtures();
-        assert_eq!(printed.len(), 4);
+        assert_eq!(printed.len(), 5);
         for (id, sheet, lines) in &printed {
             // Every engine printed line is carried once; the box lines keep the engine's order and
             // its Netrunner rule lines move to the netrunning block.
@@ -352,6 +352,8 @@ mod tests {
                     .iter()
                     .map(|l| format!("{} | {} | {} | {} | {} | {} | {}\n", l.kind, l.id, l.label, l.form, l.value, l.prose.replace('\n', " / "), l.also.join("; ")))
                     .collect();
+                // The out directory is made here: a missing one used to fail the run (NotFound).
+                std::fs::create_dir_all(&dir).expect("makes the lines-out directory");
                 std::fs::write(Path::new(&dir).join(format!("{id}.txt")), text).expect("writes the character's lines");
             }
         }

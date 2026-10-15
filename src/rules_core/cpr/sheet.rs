@@ -706,8 +706,10 @@ pub fn compose_sheet(
     if let Some(cash) = choices.cash {
         rows.push(row("cpr.cash".to_owned(), sheet_number("cash", cash)?, format!("Cash {cash}eb as entered")));
     }
+    // Each ammunition stack: its count a row, its name printed (the p121 sheet's Ammunition field).
     for (i, (label, count)) in choices.ammunition.iter().enumerate() {
         rows.push(row(format!("cpr.ammo.{i}"), sheet_number("ammunition", *count)?, format!("{label}: {count} as entered")));
+        printed.push(words(format!("cpr.ammo.{i}.name"), "Ammunition".to_owned(), label.clone(), format!("{label}, as entered")));
     }
     if let Some(name) = &choices.housing {
         let housing = catalogs
@@ -974,6 +976,24 @@ mod tests {
         let damage = sheet.printed.iter().find(|p| p.id == "cpr.weapon.0.damage").expect("the damage line");
         assert_eq!((damage.form, damage.value.as_str()), (CprPrintedForm::Dice, "3d6"));
         assert!(!sheet.rows.iter().any(|r| r.id.starts_with("cpr.netrunning.")), "a Solo carries no deck block");
+    }
+
+    /// The p121 sample sheet's Ammunition field names each stack: every ammunition count row
+    /// `cpr.ammo.<i>` has a printed line `cpr.ammo.<i>.name` holding the ammunition's name as
+    /// entered, so the sheet labels the count by its name, never by the row id.
+    #[test]
+    fn each_ammunition_stack_prints_its_name_beside_its_count_row() {
+        let (input, mut choices) = kestrel();
+        choices.ammunition = vec![("Basic VH Pistol Ammunition".to_owned(), 30), ("Basic Rifle Ammunition".to_owned(), 70)];
+        let sheet = compose(&(input, choices)).expect("composes");
+        assert_eq!((row(&sheet, "cpr.ammo.0"), row(&sheet, "cpr.ammo.1")), (30, 70));
+        let name = |id: &str| sheet.printed.iter().find(|p| p.id == id).unwrap_or_else(|| panic!("no printed line {id}")).clone();
+        for (id, want) in [("cpr.ammo.0.name", "Basic VH Pistol Ammunition"), ("cpr.ammo.1.name", "Basic Rifle Ammunition")] {
+            let line = name(id);
+            assert_eq!((line.form, line.label.as_str(), line.value.as_str()), (CprPrintedForm::Words, "Ammunition", want), "{id}");
+            assert!(!line.value.chars().any(|c| c.is_ascii_digit()), "{id}: the name carries no count");
+        }
+        assert!(!sheet.printed.iter().any(|p| p.id == "cpr.ammo.2.name"), "one name line per stack");
     }
 
     /// The Reputation block prints every recorded event and the resolved Facedown with its die

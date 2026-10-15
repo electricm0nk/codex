@@ -27,6 +27,7 @@ export type CyberpunkSheetBoxId =
   | 'improvementPoints'
   | 'lifepath'
   | 'criticalInjuries'
+  | 'ledger'
   | 'other';
 
 /** Left: the ten STATs and the skills. Right: what they give, the wound track, and the rows not
@@ -82,5 +83,7 @@ export const CYBERPUNK_SHEET_LAYOUT: readonly LayoutBox<CyberpunkSheetBoxId, Cyb
   { id: 'cyberware', column: 'vitals', order: 6, boxStyle: BOX },
   // A Netrunner's deck: NET Actions, slots used / available, the deck, its Programs and Hardware.
   { id: 'netrunning', column: 'vitals', order: 7, boxStyle: BOX },
-  { id: 'other', column: 'vitals', order: 8, boxStyle: BOX },
+  // The p121 sample sheet's Cash, Ammunition (each stack under its ammunition's name) and Rent.
+  { id: 'ledger', column: 'vitals', order: 8, boxStyle: BOX },
+  { id: 'other', column: 'vitals', order: 9, boxStyle: BOX },
 ];

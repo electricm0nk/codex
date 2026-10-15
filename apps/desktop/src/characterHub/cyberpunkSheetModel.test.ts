@@ -44,6 +44,12 @@
  *    line as its printed cell, a rule line (`cpr_sheet_print.rs`: Role Ability, cyberware effects,
  *    Humanity Loss (D-6), weapon specials, brain damage (D-2)) under "Rules and features" with its
  *    label, figures and prose as printed; no line prints "-2 EMP".
+ * 10. (E4.8) Cash, Ammunition and Rent, over a fifth character carrying cash, two ammunition stacks
+ *    and housing (the p121 sheet's Cash / Ammunition / Rent fields): each sits under its label in
+ *    the `ledger` box -- every ammunition count under its ammunition's name, the engine's printed
+ *    `cpr.ammo.<i>.name` line -- each cell its row; no fixture has an Other totals box; every
+ *    Critical Injury checkbox carries a name of its own (its table and injury), so a ui-smoke row
+ *    can tick it.
  */
 import { readFileSync } from 'node:fs';
 import { createElement } from 'react';
@@ -62,7 +68,7 @@ import {
 import { boxesInColumn } from './sheetLayout';
 import { assert, assertEqual } from '../testSupport/asserts';
 
-const CHARACTERS = ['cpr-solo-streetrat', 'cpr-solo-kitted', 'cpr-solo-arsenal', 'cpr-netrunner-decked'] as const;
+const CHARACTERS = ['cpr-solo-streetrat', 'cpr-solo-kitted', 'cpr-solo-arsenal', 'cpr-netrunner-decked', 'cpr-solo-ledger'] as const;
 
 /** The rows the criterion names, each of which must be a tile on every character's sheet. */
 const CORE_ROWS = [
@@ -711,10 +717,77 @@ assertEqual([...ruleKinds].sort().join(','), 'cyberware,humanity,netrunning,role
   }
 }
 
+// 10. (E4.8) Cash, each Ammunition stack by its name, and Rent sit under labels in the ledger box;
+// no character's sheet has an Other totals box; each Critical Injury checkbox is named.
+let checkedLedger = 0;
+const LEDGER_ROW = /^cpr\.(cash|ammo\.\d+|housing\.rent)$/;
+for (const id of CHARACTERS) {
+  const detail = fixture(id);
+  const sheet = buildCyberpunkSheet(detail, SKILLS, CRITICALS);
+  const other = sheet.boxes.find((b) => b.id === 'other');
+  assert(other === undefined, `${id}: no Other totals box (rows ${other?.rows.map((row) => row.label).join(',') ?? ''})`);
+  const ledgerRows = detail.explanations.filter((row) => LEDGER_ROW.test(row.id));
+  const ledger = sheet.boxes.find((b) => b.id === 'ledger');
+  assertEqual(ledger === undefined, ledgerRows.length === 0, `${id}: the ledger box is there exactly when the engine sent a cash, ammunition or rent row`);
+  const shown = (ledger?.rows ?? []).flatMap((row) => row.cells.flatMap((cell) => (cell === null ? [] : [cell.rowId])));
+  assertEqual(shown.sort().join(','), ledgerRows.map((row) => row.id).sort().join(','), `${id}: the ledger box holds every cash, ammunition and rent row`);
+  for (const row of ledger?.rows ?? []) {
+    const cell = row.cells[0];
+    if (cell === null) {
+      throw new Error(`${id}: ${row.label} has no cell`);
+    }
+    assertEqual(cell.value, String(detail.explanations.find((r) => r.id === cell.rowId)?.value), `${id}: ${cell.rowId} is its row`);
+    checkedLedger += 1;
+  }
+  // Every checkbox of the checklist is named by its table and injury, each name once.
+  const names = [...render(detail).matchAll(/<input[^>]*type="checkbox"[^>]*>/g)].map((m) => /aria-label="([^"]+)"/.exec(m[0])?.[1] ?? '');
+  assertEqual(names.length, 22, `${id}: 22 checkboxes`);
+  assertEqual(new Set(names).size, 22, `${id}: each checkbox has a name of its own: ${names.join('|')}`);
+  assert(names.includes('Critical Injuries to the Body: Collapsed Lung') && names.includes('Critical Injuries to the Head: Foreign Object'), `${id}: a checkbox is named by its table and injury`);
+}
+assertEqual(checkedLedger, 4, 'the ledger Solo: cash, two ammunition stacks and rent');
+{
+  const ledger = fixture('cpr-solo-ledger');
+  const sheet = buildCyberpunkSheet(ledger, SKILLS, CRITICALS);
+  const box = sheet.boxes.find((b) => b.id === 'ledger');
+  // Label (the ammunition's printed name for a stack) and the row each value is.
+  const laidOut = (box?.rows ?? []).map((row) => `${row.group ?? ''}|${row.labelCell?.value ?? row.label}|${row.cells.map((cell) => cell?.rowId ?? '').join(',')}`);
+  assertEqual(
+    laidOut.join(' ; '),
+    ['|Cash|cpr.cash', 'Ammunition|Basic VH Pistol Ammunition|cpr.ammo.0', 'Ammunition|Basic Rifle Ammunition|cpr.ammo.1', '|Rent|cpr.housing.rent'].join(' ; '),
+    'the ledger box: Cash, each Ammunition stack by name, Rent',
+  );
+  for (const n of [0, 1]) {
+    const row = box?.rows.find((r) => r.cells[0]?.rowId === `cpr.ammo.${n}`);
+    assertEqual(row?.labelCell?.printed, true, `cpr.ammo.${n} is labelled by the engine's printed name line`);
+    assertEqual(row?.labelCell?.rowId, `cpr.ammo.${n}.name`, `cpr.ammo.${n} is labelled by cpr.ammo.${n}.name`);
+  }
+  const html = render(ledger);
+  for (const text of ['>Cash<', '>Ammunition<', '>Rent<', '>Basic VH Pistol Ammunition<', '>Basic Rifle Ammunition<', '>1450<', '>30<', '>70<', '>1000<']) {
+    assert(html.includes(text), `the ledger sheet renders ${text}`);
+  }
+  assert(!/>cpr\.(cash|ammo|housing)/.test(html), 'no ledger row is shown under its raw id');
+  assert(sheet.rules.every((line) => !line.id.startsWith('cpr.ammo.')), 'the ammunition names are box labels, not rule lines');
+  // A housing whose rent the book prints as words (no eb figure) is the engine's printed line,
+  // under the same Rent label.
+  const words = buildCyberpunkSheet(
+    {
+      ...ledger,
+      explanations: ledger.explanations.filter((row) => row.id !== 'cpr.housing.rent'),
+      sheetLines: [...ledger.sheetLines, { ...ledger.sheetLines[0], id: 'cpr.housing.rent', kind: 'cpr', label: 'Rent', form: 'words' as const, value: '', also: [], prose: 'Living on The Street rent: free (p379)' }],
+    },
+    SKILLS,
+    CRITICALS,
+  );
+  const rent = words.boxes.find((b) => b.id === 'ledger')?.rows.find((row) => row.label === 'Rent');
+  assertEqual(rent?.cells[0]?.printed, true, 'a worded rent is printed under Rent');
+  assert(words.rules.every((line) => line.id !== 'cpr.housing.rent'), 'a worded rent is not left under Rules and features');
+}
+
 for (const gameSystem of ['pf1', 'starfinder-1e']) {
   assertEqual(isCyberpunkCharacter({ gameSystem }), false, `a ${gameSystem} character does not open the Cyberpunk RED sheet`);
 }
 assert(checkedRows > 0, 'rows were checked');
 console.log(
-  `cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells; ${checkedPieces} cyberware pieces, ${checkedContainers} slot containers, ${checkedRoleRows} Role Ability rows, ${checkedDeckLines} deck lines; ${checkedEvents} Reputation events, ${checkedLifepath} Lifepath answers, ${checkedTicks} ticked injuries of 22; ${checkedPrinted} printed lines on the sheet, ${checkedRuleLines} under Rules and features`,
+  `cyberpunkSheetModel: ${CHARACTERS.length} characters, ${checkedRows} engine rows rendered, each = its row; ${checkedSkills} skill rows in ${CATEGORIES.length} groups; ${checkedWeapons} weapons, ${checkedDvCells} range DV cells; ${checkedPieces} cyberware pieces, ${checkedContainers} slot containers, ${checkedRoleRows} Role Ability rows, ${checkedDeckLines} deck lines; ${checkedEvents} Reputation events, ${checkedLifepath} Lifepath answers, ${checkedTicks} ticked injuries of 22; ${checkedPrinted} printed lines on the sheet, ${checkedRuleLines} under Rules and features; ${checkedLedger} cash, ammunition and rent rows`,
 );
