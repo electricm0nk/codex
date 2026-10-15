@@ -50,7 +50,15 @@
 //! ammunition and Cyberdeck the kit holds as the sheet's choices; a kit the composed sheet refuses
 //! (a deck over its slots) is refused here.
 //!
-//! Cyberware extends these payloads later.
+//! **Cyberware** (p111-p118, D-5, D-6, D-11): Streetrat and Edgerunner take the Role's pack (the
+//! `starting_kit` record's cyberware lines, each "or" line picked like the kit's), at no cost; a
+//! Complete Package buys its pieces from the cyberware catalog with the same cash, Fashionware from
+//! the fashion budget first. The engine (`codex::rules_core::cpr::cyberware`) resolves the printed
+//! names, places each option on its Cybereye, Cyberarm or Cyberleg (or alone in a meat limb) and
+//! refuses an install over a container's slots. The Humanity Loss is the pieces' preset loss, and
+//! the Humanity, EMP and maximum Humanity the preview shows are the composed sheet's
+//! `cpr.derived.*` and `cpr.cyberware.*` rows. Create saves the placed pieces as the sheet's
+//! cyberware.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
@@ -58,17 +66,17 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+use codex::rules_core::cpr::cyberware::{CprCyberwareCatalog, CprCyberwareInstall, CprMount};
 use codex::rules_core::cpr::input::{
     kit_text_ok, lifepath_text_ok, role_choice_text_ok, CprCharacterInput, CprKit, CprKitEntry, CprLifepath, CprLifepathAnswer,
     CprRoleChoices, CprRolePick, CprSheetChoices, CprStat, CprStats,
 };
 use codex::rules_core::cpr::kit::{CprKitCatalog, CprKitChoices, CprKitItem, CprKitLine, CprKitMethod, CprKitOutcome, CprShopItem};
 use codex::rules_core::cpr::roles::{CprRole, CprRoleCatalog, CprRoleChoiceMenu};
-use codex::rules_core::cpr::sheet::{compose_sheet, stat_rows, CprSheet, CprSheetCatalogs};
+use codex::rules_core::cpr::sheet::{compose_sheet, CprSheet, CprSheetCatalogs};
 use codex::rules_core::cpr::skills::{
     slug as skill_slug, spend_rows, validate_creation_skills, CprSkillAllocation, CprSkillCatalog, CprSkillMethod,
 };
-use codex::rules_core::cpr::stats::{derived_rows, humanity_max};
 use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter, CPR_SAVED_CHARACTER_SCHEMA_VERSION};
 use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
 
@@ -103,6 +111,9 @@ pub(crate) const REFUSED_ROLE_ABILITY: &str = "cpr_creation.role_ability";
 /// not an option, a purchase the catalogs do not price, a spend above the budget), or the
 /// composed sheet cannot carry it.
 pub(crate) const REFUSED_KIT: &str = "cpr_creation.kit";
+/// The cyberware cannot be installed: a name the catalog does not have, an install over a
+/// container's option slots (D-11) or another printed install rule (the engine's refusal names it).
+pub(crate) const REFUSED_CYBERWARE: &str = "cpr_creation.cyberware";
 /// Create without a character name.
 pub(crate) const REFUSED_NO_NAME: &str = "cpr_creation.no_name";
 /// Create over a character that is already saved under that id.
@@ -316,6 +327,8 @@ pub struct CprCreationPreview {
     pub role_ability: Option<CprRoleAbilityDto>,
     /// The starting kit: the fixed kit's lines, the items, the shop and the engine's money rows.
     pub kit: Option<CprKitDto>,
+    /// The cyberware the character starts with, placed, and the engine's Humanity/EMP rows.
+    pub cyberware: Option<CprCyberwareDto>,
     /// The engine's `cpr.stat.*` and `cpr.derived.*` rows for these STATs, the
     /// `cpr.skill_level.*` and `cpr.skill.*` rows of every allocated skill (the Cultural Origin
     /// language among them) and the `cpr.skills.creation_points_*` rows (empty while a
@@ -442,6 +455,30 @@ pub struct CprKitLineDto {
     pub picked: bool,
 }
 
+/// The cyberware step: every piece as installed (the record's name and where it sits) and the
+/// composed sheet's `cpr.cyberware.*` rows (Humanity Loss, maximum Humanity, slots, each piece's
+/// loss) with the Humanity and EMP after the loss (`cpr.derived.humanity_max`,
+/// `cpr.derived.humanity_current`, `cpr.derived.emp_current`); rows empty while anything is refused.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprCyberwareDto {
+    pub pieces: Vec<CprCyberwarePieceDto>,
+    pub rows: Vec<ExplanationDto>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CprCyberwarePieceDto {
+    /// As the kit prints it or the purchase names it (`Tech Hair`).
+    pub printed: String,
+    /// The cyberware record (`Techhair`), as saved.
+    pub name: String,
+    /// `eye 0`, `arm 1`, `meat_arm 0`; none for a piece that sits in no foundation.
+    pub mount: Option<String>,
+    /// Bought (Complete Package) rather than the Role's pack.
+    pub bought: bool,
+}
+
 fn empty_menu() -> CprRoleChoiceMenu {
     CprRoleChoiceMenu { ability: String::new(), rank: 0, points: None, picks: None }
 }
@@ -524,14 +561,83 @@ fn input_of(values: [u8; 10]) -> CprCharacterInput {
     CprCharacterInput { stats }
 }
 
-/// The engine's rows for a character with these STATs and no cyberware yet (Humanity = EMP x 10).
-fn engine_rows(input: &CprCharacterInput) -> Vec<ExplanationDto> {
-    let humanity = humanity_max(input.stats.get(CprStat::Emp));
-    stat_rows(input)
-        .into_iter()
-        .chain(derived_rows(input, humanity))
-        .map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail })
+/// The composed sheet's STAT, derived and cyberware rows: the derived rows (Humanity, EMP, HP)
+/// are after the cyberware's Humanity Loss and BODY.
+fn engine_rows(sheet: &CprSheet) -> Vec<ExplanationDto> {
+    sheet
+        .rows
+        .iter()
+        .filter(|r| r.id.starts_with("cpr.stat.") || r.id.starts_with("cpr.derived.") || r.id.starts_with("cpr.cyberware."))
+        .map(|e| ExplanationDto { id: e.id.clone(), value: e.value, detail: e.detail.clone() })
         .collect()
+}
+
+/// The Humanity and EMP rows the cyberware step shows beside its own.
+const HUMANITY_ROWS: [&str; 3] = ["cpr.derived.humanity_max", "cpr.derived.humanity_current", "cpr.derived.emp_current"];
+
+/// The cyberware step's rows: the composed sheet's `cpr.cyberware.*` rows and its Humanity/EMP rows.
+fn cyberware_rows(sheet: &CprSheet) -> Vec<ExplanationDto> {
+    sheet
+        .rows
+        .iter()
+        .filter(|r| r.id.starts_with("cpr.cyberware.") || HUMANITY_ROWS.contains(&r.id.as_str()))
+        .map(|e| ExplanationDto { id: e.id.clone(), value: e.value, detail: e.detail.clone() })
+        .collect()
+}
+
+/// `eye 0`, as the saved choices write a mount.
+fn mount_text(mount: CprMount) -> String {
+    let (kind, index) = match mount {
+        CprMount::Eye(n) => ("eye", n),
+        CprMount::Arm(n) => ("arm", n),
+        CprMount::Leg(n) => ("leg", n),
+        CprMount::MeatArm(n) => ("meat_arm", n),
+        CprMount::MeatLeg(n) => ("meat_leg", n),
+    };
+    format!("{kind} {index}")
+}
+
+/// The cyberware the kit gives (the Role's pack, or the Complete Package's purchases), placed and
+/// checked by the engine against BODY `base_body`. A refusal becomes a problem; the installs come
+/// back only when the engine accepts them.
+fn cyberware_step(
+    root: &Path,
+    base_body: u8,
+    kit: Option<&CprKitOutcome>,
+    problems: &mut Vec<DiagnosticDto>,
+) -> Result<(Option<CprCyberwareDto>, Vec<CprCyberwareInstall>), String> {
+    let Some(kit) = kit else { return Ok((None, Vec::new())) };
+    let catalog = CprCyberwareCatalog::load(root)?;
+    let printed = kit.cyberware();
+    let bought: Vec<bool> = kit
+        .items
+        .iter()
+        .filter(|i| i.section == "cyberware" || i.kind == "cyberware")
+        .flat_map(|i| std::iter::repeat_n(i.section == "bought", i.quantity as usize))
+        .collect();
+    let installs = match catalog.place(&printed) {
+        Ok(installs) => installs,
+        Err(reason) => {
+            problems.push(problem(REFUSED_CYBERWARE, reason.to_string()));
+            let pieces = printed
+                .iter()
+                .zip(&bought)
+                .map(|(p, b)| CprCyberwarePieceDto { printed: p.clone(), name: p.clone(), mount: None, bought: *b })
+                .collect();
+            return Ok((Some(CprCyberwareDto { pieces, rows: Vec::new() }), Vec::new()));
+        }
+    };
+    let pieces = printed
+        .iter()
+        .zip(&installs)
+        .zip(&bought)
+        .map(|((p, i), b)| CprCyberwarePieceDto { printed: p.clone(), name: i.name.clone(), mount: i.mount.map(mount_text), bought: *b })
+        .collect();
+    if let Err(reason) = catalog.check(base_body, &installs) {
+        problems.push(problem(REFUSED_CYBERWARE, reason.to_string()));
+        return Ok((Some(CprCyberwareDto { pieces, rows: Vec::new() }), Vec::new()));
+    }
+    Ok((Some(CprCyberwareDto { pieces, rows: Vec::new() }), installs))
 }
 
 /// One `lifepath_table` record, the fields the panel reads.
@@ -796,10 +902,16 @@ fn creation_choices(role: Option<(CprRole, u8)>, skills: &CprSkillsDto) -> CprSh
     }
 }
 
-/// The saved sheet choices: the Role and skills, and what the kit puts on the sheet (weapons,
-/// worn armour, shield, ammunition, Cyberdeck) with the cash left (A-9).
-fn sheet_choices(role: Option<(CprRole, u8)>, skills: &CprSkillsDto, kit: Option<&CprKitOutcome>) -> CprSheetChoices {
+/// The saved sheet choices: the Role and skills, what the kit puts on the sheet (weapons, worn
+/// armour, shield, ammunition, Cyberdeck) with the cash left (A-9), and the placed cyberware.
+fn sheet_choices(
+    role: Option<(CprRole, u8)>,
+    skills: &CprSkillsDto,
+    kit: Option<&CprKitOutcome>,
+    cyberware: &[CprCyberwareInstall],
+) -> CprSheetChoices {
     let mut choices = creation_choices(role, skills);
+    choices.cyberware = cyberware.to_vec();
     if let Some(kit) = kit {
         let sheet = kit.sheet();
         choices.weapons = sheet.weapons;
@@ -1069,11 +1181,15 @@ fn allocated_skill_rows(catalog: &CprSkillCatalog, sheet: CprSheet, skills: &Cpr
 /// The STAT step over the corpus at `root`. An unknown Role or a template row outside 1-10 is
 /// an error; an allocation create would refuse comes back as `problems`.
 pub(crate) fn preview_at(root: &Path, request: &CprCreationRequest) -> Result<CprCreationPreview, String> {
-    preview_with_kit(root, request).map(|(preview, _)| preview)
+    preview_with_kit(root, request).map(|(preview, _, _)| preview)
 }
 
-/// The preview, and the built kit create saves.
-fn preview_with_kit(root: &Path, request: &CprCreationRequest) -> Result<(CprCreationPreview, Option<CprKitOutcome>), String> {
+/// The preview, and the built kit and placed cyberware create saves.
+#[allow(clippy::type_complexity)]
+fn preview_with_kit(
+    root: &Path,
+    request: &CprCreationRequest,
+) -> Result<(CprCreationPreview, Option<CprKitOutcome>, Vec<CprCyberwareInstall>), String> {
     let seed = request.seed.unwrap_or_else(fresh_seed);
     let mut roller = CprRoller::new(seed);
     let mut rolls = Vec::new();
@@ -1150,12 +1266,16 @@ fn preview_with_kit(root: &Path, request: &CprCreationRequest) -> Result<(CprCre
     let role_ability = role_ability_step(root, &request.role, &request.role_ability, &mut problems)?;
     let (kit, kit_outcome) = kit_step(root, &request.role, request.method, &request.kit, &mut problems)?;
     let input = input_of(values);
+    let (mut cyberware, installs) = cyberware_step(root, input.stats.get(CprStat::Body), kit_outcome.as_ref(), &mut problems)?;
     let mut explanations = Vec::new();
     if problems.is_empty() {
         let role = CprRole::from_name(&request.role).zip(role_ability.as_ref().map(|a| a.rank));
-        match compose_sheet(&CprSheetCatalogs::load(root)?, &input, &sheet_choices(role, &skills, kit_outcome.as_ref())) {
+        match compose_sheet(&CprSheetCatalogs::load(root)?, &input, &sheet_choices(role, &skills, kit_outcome.as_ref(), &installs)) {
             Ok(sheet) => {
-                explanations = engine_rows(&input);
+                explanations = engine_rows(&sheet);
+                if let Some(step) = cyberware.as_mut() {
+                    step.rows = cyberware_rows(&sheet);
+                }
                 explanations.extend(allocated_skill_rows(&catalog, sheet, &skills));
                 explanations.extend(skills.rows.iter().cloned());
                 explanations.extend(role_ability.iter().flat_map(|a| a.rows.iter().cloned()));
@@ -1182,10 +1302,11 @@ fn preview_with_kit(root: &Path, request: &CprCreationRequest) -> Result<(CprCre
         skills,
         role_ability,
         kit,
+        cyberware,
         explanations,
         problems,
     };
-    Ok((preview, kit_outcome))
+    Ok((preview, kit_outcome, installs))
 }
 
 /// Creates the character at `root` from the corpus at `corpus`: the same STAT step as the
@@ -1198,7 +1319,7 @@ pub(crate) fn create_at_root(
     app_version: String,
 ) -> Result<CprCreateResponse, String> {
     let mut creation = request.creation.clone();
-    let (preview, kit) = preview_with_kit(corpus, &creation)?;
+    let (preview, kit, installs) = preview_with_kit(corpus, &creation)?;
     creation.seed = Some(preview.seed);
     let mut diagnostics = preview.problems;
     if request.display_label.trim().is_empty() {
@@ -1224,7 +1345,7 @@ pub(crate) fn create_at_root(
         display_label: request.display_label.trim().to_owned(),
         input: input.clone(),
     };
-    let choices = sheet_choices(Some((role, rank)), &preview.skills, kit.as_ref());
+    let choices = sheet_choices(Some((role, rank)), &preview.skills, kit.as_ref(), &installs);
     let sheet = compose_sheet(&CprSheetCatalogs::load(corpus)?, &input, &choices)?;
     CprCharacterStore::save(&character, root)?;
     CprCharacterStore::save_choices(&choices, root)?;
@@ -1239,7 +1360,7 @@ pub(crate) fn create_at_root(
     };
     CprCharacterStore::save_kit(&saved_kit, root)?;
     let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(root)?;
-    let mut explanations = engine_rows(&input);
+    let mut explanations = engine_rows(&sheet);
     explanations.extend(allocated_skill_rows(&CprSkillCatalog::load(corpus)?, sheet, &preview.skills));
     explanations.extend(preview.skills.rows.iter().cloned());
     explanations.extend(preview.role_ability.iter().flat_map(|a| a.rows.iter().cloned()));
@@ -2224,14 +2345,14 @@ mod tests {
         req
     }
 
-    /// The `starting_kit` record's weapons/armour and outfit lines, read as plain JSON: every
+    /// The `starting_kit` record's weapons/armour, outfit and cyberware lines, read as plain JSON: every
     /// option of a plain line, the first option of an "or" line, each piece of a fashion line.
     fn record_kit(role: &str) -> Vec<(String, String, u32)> {
         let kits: Vec<Value> =
             serde_json::from_str(&std::fs::read_to_string(root().join("starting_kit.json")).unwrap()).unwrap();
         let kit = kits.iter().find(|k| k["role"] == role).unwrap();
         let mut out = Vec::new();
-        for section in ["weapons_armor", "outfit"] {
+        for section in ["weapons_armor", "outfit", "cyberware"] {
             for line in kit[section].as_array().unwrap() {
                 if let Some(style) = line["fashion_style"].as_str() {
                     for piece in line["pieces"].as_array().unwrap() {
@@ -2401,5 +2522,204 @@ mod tests {
         assert_eq!(row(&loaded.explanations, "cpr.netrunning.deck_slots_used"), 5);
         assert_eq!(row(&loaded.explanations, "cpr.netrunning.deck_slots_available"), 7);
         std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    // ---- Cyberware at creation (E3.7) ----------------------------------------------------
+
+    fn cyberware_problem(preview: &CprCreationPreview, words: &[&str]) -> bool {
+        preview.problems.iter().any(|p| p.id == REFUSED_CYBERWARE && p.claim_blocking && words.iter().all(|w| p.message.contains(w)))
+    }
+
+    /// Every Role's printed pack Humanity Loss (`printed_humanity_loss`), read as plain JSON.
+    fn printed_pack_humanity_loss() -> Vec<(String, i16)> {
+        let kits: Vec<Value> =
+            serde_json::from_str(&std::fs::read_to_string(root().join("starting_kit.json")).unwrap()).unwrap();
+        kits.iter().map(|k| (k["role"].as_str().unwrap().to_owned(), k["printed_humanity_loss"].as_i64().unwrap() as i16)).collect()
+    }
+
+    /// CUI F-66: the ten Role packs (p117), each over every combination of its "or" lines,
+    /// preview the printed Humanity Loss as the engine's row; the default pack saves, and the
+    /// loaded sheet carries the same loss and the placed pieces.
+    #[test]
+    fn ten_of_ten_role_packs_give_their_printed_humanity_loss() {
+        let printed = printed_pack_humanity_loss();
+        let f66: Vec<(&str, i16)> = vec![
+            ("Rockerboy", 9),
+            ("Solo", 14),
+            ("Netrunner", 14),
+            ("Tech", 12),
+            ("Medtech", 12),
+            ("Media", 10),
+            ("Lawman", 10),
+            ("Exec", 12),
+            ("Fixer", 16),
+            ("Nomad", 14),
+        ];
+        assert_eq!(printed.iter().map(|(r, h)| (r.as_str(), *h)).collect::<Vec<_>>(), f66, "CUI F-66");
+        let characters_root = tempdir("packs");
+        let (mut packs, mut combinations) = (0, 0);
+        for (role, loss) in &printed {
+            let base = preview_at(&root(), &seeded(role, 3)).unwrap();
+            let lines = &base.kit.as_ref().unwrap().lines;
+            let or_lines: Vec<(usize, Vec<String>)> = lines
+                .iter()
+                .enumerate()
+                .filter(|(_, l)| l.line.section == "cyberware" && l.line.pick_one)
+                .map(|(i, l)| (i, l.line.options.iter().map(|o| o.name.clone()).collect()))
+                .collect();
+            let mut picks: Vec<Vec<CprKitPick>> = vec![Vec::new()];
+            for (line, options) in &or_lines {
+                picks = picks
+                    .iter()
+                    .flat_map(|done| {
+                        options.iter().map(move |option| {
+                            let mut next = done.clone();
+                            next.push(CprKitPick { line: *line, option: option.clone() });
+                            next
+                        })
+                    })
+                    .collect();
+            }
+            for combination in picks {
+                let mut req = seeded(role, 3);
+                req.kit.picks = combination.clone();
+                let preview = preview_at(&root(), &req).unwrap();
+                assert!(preview.problems.is_empty(), "{role} {combination:?}: {:?}", preview.problems);
+                assert_eq!(row(&preview.explanations, "cpr.cyberware.humanity_loss"), *loss, "{role} {combination:?}");
+                let cyberware = preview.cyberware.as_ref().expect("a cyberware step");
+                assert_eq!(row(&cyberware.rows, "cpr.cyberware.humanity_loss"), *loss, "{role}");
+                combinations += 1;
+            }
+
+            let id = format!("pack-{}", role.to_lowercase());
+            let dir = characters_root.join(&id);
+            let saved = create_at_root(&root(), &dir, &create(seeded(role, 3), &id), "codex-test".to_owned()).unwrap();
+            let CprCreateResponse::Saved { explanations, .. } = saved else { panic!("{role}: {saved:?}") };
+            assert_eq!(row(&explanations, "cpr.cyberware.humanity_loss"), *loss, "{role}: create response");
+            let installed: Vec<String> = CprCharacterStore::load_choices(&dir).unwrap().cyberware.into_iter().map(|c| c.name).collect();
+            let shown: Vec<String> = base.cyberware.as_ref().unwrap().pieces.iter().map(|p| p.name.clone()).collect();
+            assert_eq!(installed, shown, "{role}: the saved pieces are the previewed pieces");
+            let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+            assert_eq!(row(&loaded.explanations, "cpr.cyberware.humanity_loss"), *loss, "{role}: the loaded sheet");
+            packs += 1;
+        }
+        assert_eq!(packs, 10);
+        // Solo, Medtech, Media, Fixer, Nomad have one 2-way line, Exec two: 1+2+1+1+2+2+1+4+2+2.
+        assert_eq!(combinations, 18);
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// D-6: the Humanity/EMP preview is the engine's row, never the p117 "(-2 EMP)" string: Media
+    /// and Lawman (HL 10) from every template row lose exactly one EMP (p081), Rockerboy (HL 9)
+    /// loses one; the preview's rows equal the loaded sheet's.
+    #[test]
+    fn the_humanity_and_emp_preview_is_the_engine_row() {
+        let printed = printed_pack_humanity_loss();
+        let characters_root = tempdir("emp");
+        let mut checked = 0;
+        for role in ["Media", "Lawman", "Rockerboy"] {
+            let loss = printed.iter().find(|(r, _)| r == role).unwrap().1;
+            for roll in 1..=10u8 {
+                let mut req = request(role, CprCreationMethod::Streetrat);
+                req.template_roll = Some(roll);
+                let preview = preview_at(&root(), &req).unwrap();
+                assert!(preview.problems.is_empty(), "{role} {roll}: {:?}", preview.problems);
+                let emp = i16::from(preview.stats.iter().find(|s| s.id == "emp").unwrap().value);
+                let rows = &preview.explanations;
+                assert_eq!(row(rows, "cpr.derived.humanity_max"), 10 * emp);
+                assert_eq!(row(rows, "cpr.derived.humanity_current"), 10 * emp - loss, "{role} {roll}");
+                assert_eq!(row(rows, "cpr.derived.emp_current"), (10 * emp - loss).div_euclid(10).max(0), "{role} {roll}");
+                assert_eq!(row(rows, "cpr.derived.emp_current"), emp - 1, "{role} {roll}: one EMP, not the printed two");
+                let cyberware = preview.cyberware.as_ref().unwrap();
+                for id in ["cpr.derived.humanity_current", "cpr.derived.emp_current", "cpr.cyberware.humanity_cap"] {
+                    assert_eq!(row(&cyberware.rows, id), row(rows, id), "{role} {roll} {id}");
+                }
+                if roll == 1 {
+                    let id = format!("emp-{}", role.to_lowercase());
+                    let dir = characters_root.join(&id);
+                    let saved = create_at_root(&root(), &dir, &create(req, &id), "codex-test".to_owned()).unwrap();
+                    assert!(matches!(saved, CprCreateResponse::Saved { .. }), "{saved:?}");
+                    let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+                    for id in ["cpr.derived.humanity_current", "cpr.derived.emp_current", "cpr.cyberware.humanity_cap", "cpr.cyberware.humanity_loss"] {
+                        assert_eq!(row(&loaded.explanations, id), row(rows, id), "{role}: loaded {id}");
+                    }
+                }
+                checked += 1;
+            }
+        }
+        assert_eq!(checked, 30);
+        std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    /// D-11: an over-slot purchase is refused with the container and its slots, and nothing
+    /// saves; up to the slots it is accepted.
+    #[test]
+    fn an_over_slot_cyberware_purchase_is_refused_and_nothing_saves() {
+        let seven = complete_package("Solo", vec![purchase("cyberware", "Light Tattoo", None, 7)]);
+        let preview = preview_at(&root(), &seven).unwrap();
+        assert!(preview.problems.is_empty(), "{:?}", preview.problems);
+        assert_eq!(row(&preview.explanations, "cpr.cyberware.slots.fashionware.used"), 7);
+        assert_eq!(row(&preview.explanations, "cpr.cyberware.slots.fashionware.capacity"), 7);
+        // Fashionware is paid from the fashion budget (p106): 7 x 100eb.
+        assert_eq!(row(&preview.explanations, "cpr.kit.fashion_spent"), 700);
+        assert_eq!(row(&preview.explanations, "cpr.cash"), 2550);
+
+        let eight = complete_package("Solo", vec![purchase("cyberware", "Light Tattoo", None, 8)]);
+        let preview = preview_at(&root(), &eight).unwrap();
+        assert!(cyberware_problem(&preview, &["Light Tattoo", "Fashionware", "8 of 7"]), "{:?}", preview.problems);
+        assert!(preview.explanations.is_empty());
+        let dir = tempdir("cyber-over").join("over");
+        let response = create_at_root(&root(), &dir, &create(eight, "over"), "codex-test".to_owned()).unwrap();
+        assert!(matches!(&response, CprCreateResponse::Blocked { diagnostics } if diagnostics.iter().any(|d| d.id == REFUSED_CYBERWARE)), "{response:?}");
+        assert!(!dir.join("envelope.txt").exists());
+
+        // A Cybereye's 3 slots: a Dartgun (3) and a Chyron (1) do not fit one eye.
+        let eye = complete_package(
+            "Solo",
+            ["Cybereye", "Dartgun", "Chyron"].iter().map(|n| purchase("cyberware", n, None, 1)).collect(),
+        );
+        let preview = preview_at(&root(), &eye).unwrap();
+        assert!(cyberware_problem(&preview, &["Chyron", "Cybereye 1", "4 of 3"]), "{:?}", preview.problems);
+    }
+
+    /// A Complete Package buys cyberware with its cash and saves it placed on the sheet; a
+    /// Streetrat or Edgerunner cannot buy more than the Role's pack (p117).
+    #[test]
+    fn complete_package_cyberware_is_bought_placed_and_saved() {
+        let req = complete_package(
+            "Solo",
+            vec![
+                purchase("cyberware", "Neural Link", None, 1),
+                purchase("cyberware", "Sandevistan", None, 1),
+                purchase("cyberware", "Cybereye", None, 1),
+                purchase("cyberware", "MicroOptics", None, 1),
+            ],
+        );
+        let preview = preview_at(&root(), &req).unwrap();
+        assert!(preview.problems.is_empty(), "{:?}", preview.problems);
+        // 500 + 500 + 100 + 100 (p113, p116 listing prices).
+        assert_eq!(row(&preview.explanations, "cpr.kit.spent"), 1200);
+        assert_eq!(row(&preview.explanations, "cpr.cash"), 1350);
+        // Neural Link 7, Sandevistan 7, Cybereye 7, MicroOptics 2.
+        assert_eq!(row(&preview.explanations, "cpr.cyberware.humanity_loss"), 23);
+        let pieces: Vec<(String, Option<String>)> =
+            preview.cyberware.as_ref().unwrap().pieces.iter().map(|p| (p.name.clone(), p.mount.clone())).collect();
+        assert_eq!(pieces[3], ("MicroOptics".to_owned(), Some("eye 0".to_owned())));
+
+        let characters_root = tempdir("cyber-cp");
+        let dir = characters_root.join("jay");
+        let saved = create_at_root(&root(), &dir, &create(req, "jay"), "codex-test".to_owned()).unwrap();
+        assert!(matches!(saved, CprCreateResponse::Saved { .. }), "{saved:?}");
+        let installed: Vec<String> = CprCharacterStore::load_choices(&dir).unwrap().cyberware.into_iter().map(|c| c.name).collect();
+        assert_eq!(installed, ["Neural Link", "Sandevistan", "Cybereye", "MicroOptics"]);
+        assert_eq!(CprCharacterStore::load_choices(&dir).unwrap().cash, Some(1350));
+        let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(&dir).unwrap();
+        assert_eq!(row(&loaded.explanations, "cpr.cyberware.humanity_loss"), 23);
+        std::fs::remove_dir_all(&characters_root).ok();
+
+        let mut fixed = request("Solo", CprCreationMethod::Edgerunner);
+        fixed.kit.purchases = vec![purchase("cyberware", "Light Tattoo", None, 1)];
+        let preview = preview_at(&root(), &fixed).unwrap();
+        assert!(kit_problem(&preview, &["Light Tattoo", "predetermined"]), "{:?}", preview.problems);
     }
 }

@@ -5,6 +5,7 @@ import type {
   CyberpunkCreationProblem,
   CyberpunkCreationRequest,
   CyberpunkCreationRow,
+  CyberpunkKitLine,
   CyberpunkKitPurchase,
   CyberpunkKitRequest,
   CyberpunkLifepathRequest,
@@ -520,6 +521,7 @@ const SHOP_KIND_LABELS: Readonly<Record<string, string>> = {
   cyberdeck: 'Cyberdecks',
   net_hardware: 'Cyberdeck hardware',
   program: 'Programs',
+  cyberware: 'Cyberware',
 };
 
 /** The shop's kinds, each once, in the shop's order, with a label. */
@@ -531,4 +533,57 @@ export function shopKinds(shop: readonly CyberpunkShopItem[]): { kind: string; l
     }
   }
   return seen.map((kind) => ({ kind, label: SHOP_KIND_LABELS[kind] ?? kind }));
+}
+
+// ---- Cyberware at creation (E3.7) ----
+
+/** A fixed-kit line with its index in `kit.lines` (the index an "or" pick is sent under). */
+export interface IndexedKitLine {
+  index: number;
+  line: CyberpunkKitLine;
+}
+
+/** The Role's cyberware pack: the kit's `cyberware` lines, each with its kit index. */
+export function cyberwareLines(lines: readonly CyberpunkKitLine[]): IndexedKitLine[] {
+  return lines.flatMap((line, index) => (line.section === 'cyberware' ? [{ index, line }] : []));
+}
+
+/** Every other kit line (weapons and armour, outfit), each with its kit index. */
+export function kitLinesBesideCyberware(lines: readonly CyberpunkKitLine[]): IndexedKitLine[] {
+  return lines.flatMap((line, index) => (line.section === 'cyberware' ? [] : [{ index, line }]));
+}
+
+const CYBERWARE_TILES: readonly { id: string; label: string }[] = [
+  { id: 'cpr.cyberware.humanity_loss', label: 'Humanity Loss' },
+  { id: 'cpr.derived.humanity_current', label: 'Humanity' },
+  { id: 'cpr.derived.emp_current', label: 'Current EMP' },
+  { id: 'cpr.cyberware.humanity_cap', label: 'Maximum Humanity' },
+];
+
+/** The Humanity Loss, Humanity, EMP and maximum Humanity tiles: one per engine row present. */
+export function cyberwareTiles(rows: readonly CyberpunkCreationRow[]): CyberpunkTile[] {
+  return CYBERWARE_TILES.flatMap((wanted) => {
+    const found = rows.find((row) => row.id === wanted.id);
+    return found ? [{ id: found.id, label: wanted.label, value: found.value }] : [];
+  });
+}
+
+const SLOT_USED = /^cpr\.cyberware\.slots\.(.+)\.used$/;
+
+/** One tile per container the engine returned: its slots used, labelled with the capacity row's value. */
+export function cyberwareSlotTiles(rows: readonly CyberpunkCreationRow[]): CyberpunkTile[] {
+  return rows.flatMap((row) => {
+    const match = SLOT_USED.exec(row.id);
+    if (!match) {
+      return [];
+    }
+    const capacity = rows.find((r) => r.id === `cpr.cyberware.slots.${match[1]}.capacity`);
+    const container = row.detail.split(':')[0];
+    return capacity ? [{ id: row.id, label: `${container} slots used (of ${capacity.value})`, value: row.value }] : [];
+  });
+}
+
+/** The preset Humanity Loss of the `index`th installed piece: its engine row, or null. */
+export function cyberwarePieceLoss(rows: readonly CyberpunkCreationRow[], index: number): number | null {
+  return rows.find((row) => row.id === `cpr.cyberware.piece.${index}.humanity_loss`)?.value ?? null;
 }

@@ -38,6 +38,11 @@ import {
   kitMoneyTiles,
   kitRowTiles,
   shopKinds,
+  cyberwareLines,
+  kitLinesBesideCyberware,
+  cyberwareTiles,
+  cyberwareSlotTiles,
+  cyberwarePieceLoss,
   type CyberpunkCreationDraft,
 } from './cyberpunkCreationModel';
 import { readFileSync } from 'node:fs';
@@ -53,6 +58,7 @@ import { characterCreationGate } from './characterHubRuntime';
 import type {
   CyberpunkCreationPreview,
   CyberpunkKit,
+  CyberpunkKitLine,
   CyberpunkPickOption,
   CyberpunkPointsOption,
   CyberpunkRoleChoiceMenu,
@@ -94,6 +100,7 @@ function preview(partial: Partial<CyberpunkCreationPreview>): CyberpunkCreationP
     skills: { lines: [], rows: [] },
     roleAbility: null,
     kit: null,
+    cyberware: null,
     explanations: [],
     problems: [],
     ...partial,
@@ -662,3 +669,77 @@ testKitPurchasesAddAndRemove();
 testChangingRoleOrMethodStartsTheKitOver();
 testKitMoneyTilesAreTheEnginesRows();
 testShopKindsAreTheShopsOwnKindsInOrder();
+
+// ---- Cyberware at creation (E3.7) ----
+
+function kitLine(section: string, text: string, options: string[]): CyberpunkKitLine {
+  return {
+    section,
+    text,
+    sourcePage: 'p117',
+    pickOne: options.length > 1,
+    fashion: false,
+    options: options.map((name) => ({ name, quantity: 1 })),
+    taken: options.length > 1 ? options[0] : '',
+    picked: false,
+  };
+}
+
+function testTheCyberwarePackLinesKeepTheirKitIndex() {
+  const lines = [
+    kitLine('weapons_armor', 'Assault Rifle', ['Assault Rifle']),
+    kitLine('outfit', 'Agent', ['Agent']),
+    kitLine('cyberware', 'Biomonitor', ['Biomonitor']),
+    kitLine('cyberware', 'Sandevistan Speedware or Wolvers', ['Sandevistan Speedware', 'Wolvers']),
+  ];
+  assertEqual(
+    cyberwareLines(lines).map(({ index, line }) => `${index}:${line.text}`).join('|'),
+    '2:Biomonitor|3:Sandevistan Speedware or Wolvers',
+    'the pack lines, each with its index in kit.lines (the index an "or" pick is sent under)'
+  );
+  assertEqual(
+    kitLinesBesideCyberware(lines).map(({ index, line }) => `${index}:${line.text}`).join('|'),
+    '0:Assault Rifle|1:Agent',
+    'the kit panel keeps the other lines at their own index'
+  );
+  const picked = setKitPick({ ...EMPTY_CYBERPUNK_DRAFT, role: 'Solo' }, 3, 'Wolvers');
+  assertEqual(JSON.stringify(buildCyberpunkPreviewRequest(picked)?.kit?.picks), '[{"line":3,"option":"Wolvers"}]', 'a pack pick is a kit pick');
+}
+
+function testTheHumanityAndEmpTilesAreTheEnginesRows() {
+  const rows = [
+    { id: 'cpr.cyberware.humanity_loss', value: 14, detail: 'Humanity Loss 14' },
+    { id: 'cpr.cyberware.humanity_cap', value: 46, detail: 'Maximum Humanity 46' },
+    { id: 'cpr.derived.humanity_max', value: 50, detail: 'Humanity 50' },
+    { id: 'cpr.derived.humanity_current', value: 36, detail: 'Humanity 36' },
+    { id: 'cpr.derived.emp_current', value: 3, detail: 'EMP 3' },
+    { id: 'cpr.cyberware.slots.fashionware.used', value: 1, detail: 'Fashionware: 1 of 7 option slots used (p. 112)' },
+    { id: 'cpr.cyberware.slots.fashionware.capacity', value: 7, detail: 'Fashionware: 7 option slots' },
+    { id: 'cpr.cyberware.slots.neural_link.used', value: 1, detail: 'Neural Link: 1 of 5 option slots used (p. 112)' },
+    { id: 'cpr.cyberware.slots.neural_link.capacity', value: 5, detail: 'Neural Link: 5 option slots' },
+    { id: 'cpr.cyberware.piece.0.humanity_loss', value: 0, detail: 'Biomonitor Humanity Loss 0' },
+    { id: 'cpr.cyberware.piece.1.humanity_loss', value: 7, detail: 'Neural Link Humanity Loss 7' },
+  ];
+  assertEqual(
+    cyberwareTiles(rows).map((t) => `${t.label}=${t.value}`).join('|'),
+    'Humanity Loss=14|Humanity=36|Current EMP=3|Maximum Humanity=46',
+    'one tile per engine row, its value the row\'s own (EMP from the engine, never the printed "(-2 EMP)")'
+  );
+  assertEqual(
+    cyberwareSlotTiles(rows).map((t) => `${t.label}=${t.value}`).join('|'),
+    'Fashionware slots used (of 7)=1|Neural Link slots used (of 5)=1',
+    'each container the engine returned: used, out of its capacity row'
+  );
+  assertEqual(cyberwarePieceLoss(rows, 1), 7, "a piece's loss is its engine row");
+  assertEqual(cyberwarePieceLoss(rows, 9), null, 'no row, no figure');
+  assertEqual(cyberwareTiles([]).length, 0, 'no rows (a refused step), no tiles');
+}
+
+function testCyberwareIsAShopKind() {
+  const item = { kind: 'cyberware', name: 'Neural Link', costEb: 500, costText: '500eb', sourcePage: 'p360', variantLabel: null, variantNote: '', variants: [] };
+  assertEqual(shopKinds([item]).map((k) => k.label).join('|'), 'Cyberware', 'the Complete Package buys cyberware from the shop');
+}
+
+testTheCyberwarePackLinesKeepTheirKitIndex();
+testTheHumanityAndEmpTilesAreTheEnginesRows();
+testCyberwareIsAShopKind();

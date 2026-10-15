@@ -12,8 +12,16 @@
 //! Every method buys from the same shop: every priced record of the weapon, attachment,
 //! ammunition, armour, gear, fashion, street drug, cyberdeck, cyberdeck hardware and program
 //! catalogs, at its printed price (ammunition in tens, grenades and rockets one by one, p345).
-//! Cyberware is bought in the cyberware step. A purchase the catalogs do not price, a quantity of
-//! 0, a variant the record does not have and a spend above the budget are refused.
+//! A purchase the catalogs do not price, a quantity of 0, a variant the record does not have and
+//! a spend above the budget are refused.
+//!
+//! **Cyberware** (p117): a Streetrat's or Edgerunner's cyberware is the Role's pack, the
+//! record's `cyberware` lines (an "or" line picked like any other), and costs nothing; buying
+//! more is refused ("predetermined from the start"; the Night Market comes in play). A Complete
+//! Package buys every piece from the cyberware catalog at its printed price with the 2,550eb,
+//! Fashionware from the 800eb fashion budget first (p106: "only on Fashion or Fashionware").
+//! [`CprKitOutcome::cyberware`] lists the pieces as printed, one per install, for the cyberware
+//! step (`cyberware.rs`: placement, slots, Humanity Loss).
 //!
 //! The rows: `cpr.kit.budget`, `cpr.kit.spent` and `cpr.cash` (A-9: the budget minus the
 //! purchases; after creation the saved cash is the sheet's write-in); for a Complete Package also
@@ -47,6 +55,10 @@ const SHOTGUN_SHELL: &str = "Shotgun Shell";
 const DECK_PREFIX: &str = "Cyberdeck (";
 /// The fixed kits print a program as `Program: <name>`.
 const PROGRAM_PREFIX: &str = "Program: ";
+/// The shop kind, and the fixed-kit section, of cyberware.
+const CYBERWARE: &str = "cyberware";
+/// The cyberware category the fashion budget also pays for (p106).
+const FASHIONWARE: &str = "Fashionware";
 
 /// How the kit is made.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -93,7 +105,7 @@ pub struct CprKitPurchase {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CprKitLine {
-    /// `weapons_armor` or `outfit`.
+    /// `weapons_armor`, `outfit` or `cyberware`.
     pub section: String,
     pub text: String,
     pub source_page: String,
@@ -141,7 +153,7 @@ pub struct CprShopVariant {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CprKitItem {
-    /// `weapons_armor` or `outfit` (fixed kit), or `bought`.
+    /// `weapons_armor`, `outfit` or `cyberware` (fixed kit), or `bought`.
     pub section: String,
     /// The shop kind of a bought item; empty for a fixed-kit item.
     pub kind: String,
@@ -204,6 +216,8 @@ pub struct CprKitCatalog {
     kits: Vec<FixedKit>,
     shop: Vec<CprShopItem>,
     names: SheetNames,
+    /// The cyberware records of the Fashionware category (paid from the fashion budget first).
+    fashionware: BTreeSet<String>,
 }
 
 fn read_records(corpus_dir: &Path, kind: &str) -> Result<Vec<Value>, String> {
@@ -302,7 +316,7 @@ impl CprKitCatalog {
         for record in read_records(corpus_dir, "starting_kit")? {
             let role = text(&record, "role");
             let mut lines = Vec::new();
-            for section in ["weapons_armor", "outfit"] {
+            for section in ["weapons_armor", "outfit", CYBERWARE] {
                 let page = record["pages"][section].as_str().map_or_else(|| text(&record, "source_page"), str::to_owned);
                 for line in record[section].as_array().ok_or_else(|| format!("starting_kit: {role} has no {section}"))? {
                     let line_text = text(line, "text");
@@ -364,6 +378,7 @@ impl CprKitCatalog {
             ("cyberdeck", "cost_eb"),
             ("net_hardware", "cost_eb"),
             ("program", "cost_eb"),
+            (CYBERWARE, "cost_eb"),
         ] {
             for record in read_records(corpus_dir, kind)? {
                 let name = text(&record, "name");
@@ -422,11 +437,16 @@ impl CprKitCatalog {
                 });
             }
         }
-        Ok(Self { kits, shop, names })
+        let fashionware = read_records(corpus_dir, CYBERWARE)?
+            .iter()
+            .filter(|r| r["category"].as_str() == Some(FASHIONWARE))
+            .map(|r| text(r, "name"))
+            .collect();
+        Ok(Self { kits, shop, names, fashionware })
     }
 
     /// Every buyable record: weapons, attachments, ammunition, armour, gear, fashion, street
-    /// drugs, cyberdecks, cyberdeck hardware, programs, each kind in corpus order.
+    /// drugs, cyberdecks, cyberdeck hardware, programs, cyberware, each kind in corpus order.
     pub fn shop(&self) -> &[CprShopItem] {
         &self.shop
     }
@@ -488,7 +508,8 @@ impl CprKitCatalog {
             }
             _ => (name.clone(), item.cost_eb * quantity),
         };
-        Ok(CprKitItem { section: "bought".to_owned(), kind: kind.clone(), name: label, quantity: *quantity, cost_eb: cost, fashion: kind == "fashion" })
+        let fashion = kind == "fashion" || (kind == CYBERWARE && self.fashionware.contains(name));
+        Ok(CprKitItem { section: "bought".to_owned(), kind: kind.clone(), name: label, quantity: *quantity, cost_eb: cost, fashion })
     }
 
     /// The kit the method gives with the player's picks and purchases, or every reason it is
@@ -543,6 +564,13 @@ impl CprKitCatalog {
             }
         };
         for purchase in &choices.purchases {
+            if method == CprKitMethod::Fixed && purchase.kind == CYBERWARE {
+                reasons.push(format!(
+                    "{}: a Streetrat's or Edgerunner's cyberware is predetermined from the start, the Role's pack (p117); more is bought at the Night Market in play (p340)",
+                    purchase.name
+                ));
+                continue;
+            }
             match self.price(purchase) {
                 Ok(item) => items.push(item),
                 Err(reason) => reasons.push(reason),
@@ -566,6 +594,16 @@ impl CprKitCatalog {
 }
 
 impl CprKitOutcome {
+    /// The cyberware the character starts with, as printed, one entry per install: the Role
+    /// pack's pieces (fixed kit) and the cyberware bought (Complete Package), in kit order.
+    pub fn cyberware(&self) -> Vec<String> {
+        self.items
+            .iter()
+            .filter(|i| i.section == CYBERWARE || i.kind == CYBERWARE)
+            .flat_map(|i| std::iter::repeat_n(i.name.clone(), i.quantity as usize))
+            .collect()
+    }
+
     /// The cash left: the budget minus the purchases (A-9).
     pub fn cash(&self) -> u32 {
         self.budget - self.spent
@@ -701,7 +739,7 @@ mod tests {
         for kit in &kits {
             let role = CprRole::from_name(kit["role"].as_str().unwrap()).unwrap();
             let mut expected = Vec::new();
-            for section in ["weapons_armor", "outfit"] {
+            for section in ["weapons_armor", "outfit", "cyberware"] {
                 for line in kit[section].as_array().unwrap() {
                     if let Some(style) = line["fashion_style"].as_str() {
                         for piece in line["pieces"].as_array().unwrap() {
@@ -770,6 +808,73 @@ mod tests {
         refused(
             catalog.build(CprRole::Lawman, CprKitMethod::CompletePackage, &pick("Basic Slug Ammunition")),
             &["Complete Package", "no fixed kit"],
+        );
+    }
+
+    /// The Role's cyberware pack (p117) is part of the fixed kit: its "or" lines are picked like
+    /// any other; the pieces come out as printed for the cyberware step.
+    #[test]
+    fn the_fixed_kit_carries_the_roles_cyberware_pack_with_its_or_picks() {
+        let catalog = catalog();
+        let solo = catalog.build(CprRole::Solo, CprKitMethod::Fixed, &CprKitChoices::default()).unwrap();
+        assert_eq!(solo.cyberware(), ["Biomonitor", "Neural Link", "Sandevistan Speedware"]);
+        let lines = catalog.fixed_lines(CprRole::Solo).unwrap();
+        let (index, line) = lines.iter().enumerate().find(|(_, l)| l.section == "cyberware" && l.pick_one).unwrap();
+        assert_eq!(line.text, "Sandevistan Speedware or Wolvers");
+        let wolvers = CprKitChoices { picks: vec![CprKitPick { line: index, option: "Wolvers".to_owned() }], purchases: Vec::new() };
+        let picked = catalog.build(CprRole::Solo, CprKitMethod::Fixed, &wolvers).unwrap();
+        assert_eq!(picked.cyberware(), ["Biomonitor", "Neural Link", "Wolvers"]);
+        assert!(picked.items.iter().filter(|i| i.section == "cyberware").all(|i| i.cost_eb == 0), "the pack costs nothing");
+        // p117: a Streetrat's or Edgerunner's cyberware is predetermined; more is bought at the
+        // Night Market in play.
+        refused(
+            catalog.build(
+                CprRole::Solo,
+                CprKitMethod::Fixed,
+                &CprKitChoices { picks: Vec::new(), purchases: vec![buy("cyberware", "Light Tattoo", None, 1)] },
+            ),
+            &["predetermined", "p117"],
+        );
+    }
+
+    /// A Complete Package buys its cyberware with the 2,550eb (p105: Jay's Neural Link and
+    /// Sandevistan Speedware, 500eb each), and Fashionware from the 800eb fashion budget first
+    /// (p106: EMP Threading 10eb).
+    #[test]
+    fn complete_package_cyberware_spends_the_cash_and_fashionware_the_fashion_budget() {
+        let catalog = catalog();
+        let choices = CprKitChoices {
+            picks: Vec::new(),
+            purchases: vec![
+                buy("cyberware", "Neural Link", None, 1),
+                buy("cyberware", "Sandevistan", None, 1),
+                buy("cyberware", "EMP Threading", None, 1),
+            ],
+        };
+        let outcome = catalog.build(CprRole::Solo, CprKitMethod::CompletePackage, &choices).unwrap();
+        let rows = outcome.rows();
+        assert_eq!(row(&rows, "cpr.kit.spent"), 1000);
+        assert_eq!(row(&rows, "cpr.cash"), 1550);
+        assert_eq!(row(&rows, "cpr.kit.fashion_spent"), 10);
+        assert_eq!(row(&rows, "cpr.kit.fashion_left"), 790);
+        assert_eq!(outcome.cyberware(), ["Neural Link", "Sandevistan", "EMP Threading"]);
+        // Two of a piece are two installs.
+        let two = CprKitChoices { picks: Vec::new(), purchases: vec![buy("cyberware", "Light Tattoo", None, 2)] };
+        assert_eq!(catalog.build(CprRole::Solo, CprKitMethod::CompletePackage, &two).unwrap().cyberware(), ["Light Tattoo", "Light Tattoo"]);
+        // The shop sells every cyberware record at its printed price.
+        let listed: Vec<(String, i64)> =
+            catalog.shop().iter().filter(|i| i.kind == "cyberware").map(|i| (i.name.clone(), i64::from(i.cost_eb))).collect();
+        let priced: Vec<(String, i64)> =
+            records("cyberware").iter().map(|r| (r["name"].as_str().unwrap().to_owned(), r["cost_eb"].as_i64().unwrap())).collect();
+        assert_eq!(listed, priced);
+        assert_eq!(listed.len(), 96);
+        refused(
+            catalog.build(
+                CprRole::Solo,
+                CprKitMethod::CompletePackage,
+                &CprKitChoices { picks: Vec::new(), purchases: vec![buy("cyberware", "Neural Link", Some("arm 0"), 1)] },
+            ),
+            &["Neural Link", "variant"],
         );
     }
 

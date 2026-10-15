@@ -46,6 +46,11 @@ import {
   skillOptions,
   skillPointTiles,
   shopKinds,
+  cyberwareLines,
+  kitLinesBesideCyberware,
+  cyberwareTiles,
+  cyberwareSlotTiles,
+  cyberwarePieceLoss,
   templateRowOptions,
   withPreviewSeed,
   type CyberpunkCreationDraft,
@@ -91,6 +96,12 @@ import { boxesInColumn } from './sheetLayout';
  * records (kind, item, its location, caliber or piece, quantity) with the purchases made. The
  * budget, the spent figure, the cash left and the Complete Package fashion budget are the engine's
  * `cpr.kit.*` and `cpr.cash` rows; a refused purchase or overspend shows the engine's reason.
+ *
+ * The cyberware panel (E3.7) shows the Role's pack for Streetrat and Edgerunner (each "or" line a
+ * choice, sent as a kit pick) or the Complete Package's cyberware bought from the shop's Cyberware
+ * list, every piece where the engine placed it with its Humanity Loss, and the Humanity Loss,
+ * Humanity, current EMP, maximum Humanity and option slots as the engine's rows; an install over a
+ * container's slots shows the engine's refusal.
  */
 
 const LABEL_STYLE: CSSProperties = {
@@ -124,7 +135,15 @@ const LEGEND_STYLE: CSSProperties = { fontSize: '0.85rem', fontWeight: 700 };
 const MUTED_STYLE: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 };
 
 type Outcome =
-  | { kind: 'saved'; headline: string; stats: CyberpunkTile[]; derived: CyberpunkTile[]; language: CyberpunkTile | null; money: CyberpunkTile[] }
+  | {
+      kind: 'saved';
+      headline: string;
+      stats: CyberpunkTile[];
+      derived: CyberpunkTile[];
+      language: CyberpunkTile | null;
+      money: CyberpunkTile[];
+      cyberware: CyberpunkTile[];
+    }
   | { kind: 'blocked'; diagnostics: CyberpunkCreationProblem[] };
 
 function Tile(props: { tile: CyberpunkTile }) {
@@ -237,6 +256,10 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
     Number.isInteger(quantity) &&
     quantity > 0;
   const boughtItems = kit ? kit.items.filter((item) => item.section === 'bought') : [];
+  const cyberware = preview?.cyberware ?? null;
+  const packLines = kit ? cyberwareLines(kit.lines) : [];
+  const humanityTiles = cyberware ? cyberwareTiles(cyberware.rows) : [];
+  const slotTiles = cyberware ? cyberwareSlotTiles(cyberware.rows) : [];
 
   function skillLine(line: CyberpunkSkillLine, index: number) {
     const id = `cpr-skill-${index}`;
@@ -403,6 +426,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
           stats: cyberpunkStatTiles(result.explanations, shownStats),
           derived: cyberpunkDerivedTiles(result.explanations),
           money: kitRowTiles(result.explanations),
+          cyberware: cyberwareTiles(result.explanations),
           language: culturalLanguageTile({
             culturalLanguage: preview?.culturalLanguage ?? null,
             skills: preview?.skills ?? { lines: [], rows: [] },
@@ -751,7 +775,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
               ? 'Complete Package: buy everything you start with (p105). Fashion is paid from its own budget first; what is left of that budget is lost (p106).'
               : "Your Role's kit (p099, p104): take one option of each \"or\" line. Spend your cash on other items or keep it."}
           </p>
-          {kit.lines.map((line, index) => (
+          {kitLinesBesideCyberware(kit.lines).map(({ index, line }) => (
             <div
               key={`${line.section}:${index}`}
               data-kit-line={line.text}
@@ -901,6 +925,70 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
         </fieldset>
       ) : null}
 
+      {cyberware && kit ? (
+        <fieldset id="cpr-cyberware" style={{ ...FIELDSET_STYLE, marginTop: '1rem' }}>
+          <legend style={LEGEND_STYLE}>Cyberware and Humanity</legend>
+          {humanityTiles.length > 0 ? (
+            <div style={{ margin: '0.5rem 0' }}>
+              <TileGrid tiles={humanityTiles} />
+            </div>
+          ) : null}
+          <p style={MUTED_STYLE}>
+            {kit.method === 'completePackage'
+              ? 'Complete Package: buy your cyberware from the Cyberware list of the shop above (p117); Fashionware is paid from the fashion budget first (p106).'
+              : "Your Role's cyberware (p117): pick one and only one option of each \"or\" line. Its Humanity Loss is preset."}
+          </p>
+          {packLines.map(({ index, line }) => (
+            <div
+              key={`cyberware:${index}`}
+              data-cyberware-line={line.text}
+              style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', padding: '0.2rem 0' }}
+            >
+              <span style={{ flex: '1 1 12rem', fontWeight: line.pickOne ? 600 : 400 }}>{line.text}</span>
+              {line.pickOne ? (
+                <select
+                  id={`cpr-kit-line-${index}`}
+                  aria-label={`Pick: ${line.text}`}
+                  style={{ ...INPUT_STYLE, width: '14rem' }}
+                  value={line.taken}
+                  onChange={(event) => setDraft(setKitPick(draft, index, event.target.value))}
+                >
+                  {line.options.map((option) => (
+                    <option key={option.name} value={option.name}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+              ) : null}
+            </div>
+          ))}
+          {cyberware.pieces.length > 0 ? (
+            <div data-cyberware-pieces="installed" style={{ marginTop: '0.5rem' }}>
+              <p style={MUTED_STYLE}>Installed</p>
+              {cyberware.pieces.map((piece, index) => {
+                const loss = cyberwarePieceLoss(cyberware.rows, index);
+                return (
+                  <div key={`${piece.name}#${index}`} data-cyberware={piece.name} style={{ display: 'flex', gap: '0.5rem', padding: '0.2rem 0' }}>
+                    <span style={{ flex: '1 1 12rem' }}>
+                      {piece.name}
+                      {piece.mount ? <span style={{ ...MUTED_STYLE, display: 'inline' }}> ({piece.mount.replace('_', ' ')})</span> : null}
+                    </span>
+                    {loss !== null ? <span style={{ minWidth: '5rem', textAlign: 'right' }}>HL {loss}</span> : null}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p style={{ ...MUTED_STYLE, marginTop: '0.35rem' }}>No cyberware.</p>
+          )}
+          {slotTiles.length > 0 ? (
+            <div style={{ marginTop: '0.5rem' }}>
+              <TileGrid tiles={slotTiles} />
+            </div>
+          ) : null}
+        </fieldset>
+      ) : null}
+
       {blocking.length > 0 ? (
         <ul style={{ color: 'var(--color-warn)', fontSize: '0.85rem', margin: '0.75rem 0', paddingLeft: '1.1rem' }}>
           {blocking.map((problem) => (
@@ -938,6 +1026,7 @@ export function CyberpunkCreateForm(props: { onCreated: () => void }) {
                 <TileGrid tiles={outcome.derived} />
                 {outcome.language ? <TileGrid tiles={[outcome.language]} /> : null}
                 {outcome.money.length > 0 ? <TileGrid tiles={outcome.money} /> : null}
+                {outcome.cyberware.length > 0 ? <TileGrid tiles={outcome.cyberware} /> : null}
               </div>
             </>
           ) : (

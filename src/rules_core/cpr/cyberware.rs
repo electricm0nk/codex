@@ -59,6 +59,8 @@ struct Prerequisites {
 struct CyberwareItem {
     name: String,
     category: String,
+    #[serde(default)]
+    subcategory: String,
     humanity_loss_preset: i16,
     slot_pool: Option<String>,
     pool_capacity: Option<u8>,
@@ -276,6 +278,94 @@ impl CprCyberwareCatalog {
 
     fn slots_provided(&self, foundation: &str) -> u8 {
         self.items.get(foundation).and_then(|f| f.slots_provided).unwrap_or(0)
+    }
+
+    /// The record a printed name is (the p117 Role packs and the p105 example print names the
+    /// p359-368 listing spells differently): the record's own name; the name without spaces or
+    /// case ("Tech Hair" is Techhair); or the record's name followed by the word its subcategory
+    /// brackets ("Sandevistan Speedware" is Sandevistan, "Neuralware (Speedware)").
+    pub fn record_name(&self, printed: &str) -> Option<&str> {
+        if let Some((name, _)) = self.items.get_key_value(printed) {
+            return Some(name.as_str());
+        }
+        let squash = |s: &str| s.chars().filter(|c| !c.is_whitespace()).flat_map(char::to_lowercase).collect::<String>();
+        let wanted = squash(printed);
+        let mut found = self.items.values().filter(|it| squash(&it.name) == wanted);
+        if let (Some(item), None) = (found.next(), found.next()) {
+            return Some(item.name.as_str());
+        }
+        let mut found = self.items.values().filter(|it| {
+            printed.strip_prefix(it.name.as_str()).and_then(|rest| rest.strip_prefix(' ')).is_some_and(|word| {
+                it.subcategory
+                    .split_once('(')
+                    .and_then(|(_, bracket)| bracket.strip_suffix(')'))
+                    .is_some_and(|bracketed| bracketed.eq_ignore_ascii_case(word))
+            })
+        });
+        match (found.next(), found.next()) {
+            (Some(item), None) => Some(item.name.as_str()),
+            _ => None,
+        }
+    }
+
+    /// Creation-time placement: each printed name resolved to its record ([`Self::record_name`]),
+    /// and each option that sits on a Cybereye, Cyberarm or Cyberleg given its mount: the first
+    /// such foundation of the list with option slots left (a paired option, one per eye, p. 361,
+    /// prefers a foundation that does not hold it yet), else, for an option the book allows
+    /// alone in a meat limb, the first meat arm or leg not yet holding a piece (p. 365, p. 367).
+    /// An option with no room is left on the first foundation, so [`Self::check`] refuses it as
+    /// over the slots (D-11).
+    pub fn place(&self, printed: &[String]) -> Result<Vec<CprCyberwareInstall>, CprCyberwareRefusal> {
+        let names: Vec<&str> = printed
+            .iter()
+            .map(|p| self.record_name(p).ok_or_else(|| rule(p, "is not in the cyberware catalog (p. 112-117)")))
+            .collect::<Result<_, _>>()?;
+        let count = |foundation: &str| names.iter().filter(|n| **n == foundation).count();
+        let (eyes, arms, legs) = (count(CYBEREYE), count(CYBERARM), count(CYBERLEG));
+        let mut used: BTreeMap<CprMount, u8> = BTreeMap::new();
+        let mut held: BTreeMap<CprMount, Vec<&str>> = BTreeMap::new();
+        let mut meat_taken: Vec<CprMount> = Vec::new();
+        let mut out = Vec::with_capacity(names.len());
+        for name in names {
+            let item = &self.items[name];
+            let on_foundation = |make: fn(u8) -> CprMount, n: usize, foundation: &str, used: &BTreeMap<CprMount, u8>, held: &BTreeMap<CprMount, Vec<&str>>| {
+                let cap = self.slots_provided(foundation);
+                let room: Vec<CprMount> = (0..n)
+                    .map(|i| make(i as u8))
+                    .filter(|m| used.get(m).copied().unwrap_or(0) + item.slots_used <= cap)
+                    .collect();
+                let fresh = room.iter().copied().find(|m| !held.get(m).is_some_and(|h| h.contains(&name)));
+                fresh.or(room.first().copied())
+            };
+            let meat = |make: fn(u8) -> CprMount, taken: &[CprMount]| {
+                (0..NATURAL_PAIR as u8).map(make).find(|m| !taken.contains(m)).filter(|_| item.meat_limb_ok)
+            };
+            let arm = || on_foundation(CprMount::Arm, arms, CYBERARM, &used, &held);
+            let leg = || on_foundation(CprMount::Leg, legs, CYBERLEG, &used, &held);
+            let mount = match item.slot_pool.as_deref() {
+                Some("cybereye") => on_foundation(CprMount::Eye, eyes, CYBEREYE, &used, &held).or((eyes > 0).then_some(CprMount::Eye(0))),
+                Some("cyberarm") => arm()
+                    .or_else(|| meat(CprMount::MeatArm, &meat_taken))
+                    .or((arms > 0).then_some(CprMount::Arm(0)))
+                    .or(item.meat_limb_ok.then_some(CprMount::MeatArm(0))),
+                Some("cyberleg") => leg()
+                    .or_else(|| meat(CprMount::MeatLeg, &meat_taken))
+                    .or((legs > 0).then_some(CprMount::Leg(0)))
+                    .or(item.meat_limb_ok.then_some(CprMount::MeatLeg(0))),
+                Some("cyberlimb") => arm().or_else(leg).or((arms > 0).then_some(CprMount::Arm(0))).or((legs > 0).then_some(CprMount::Leg(0))),
+                _ => None,
+            };
+            match mount {
+                Some(m @ (CprMount::MeatArm(_) | CprMount::MeatLeg(_))) => meat_taken.push(m),
+                Some(m) => {
+                    *used.entry(m).or_insert(0) += item.slots_used;
+                    held.entry(m).or_default().push(name);
+                }
+                None => {}
+            }
+            out.push(CprCyberwareInstall { name: name.to_owned(), mount });
+        }
+        Ok(out)
     }
 
     /// Check `installs` against every printed install rule and compute the loadout.
@@ -1028,6 +1118,60 @@ mod tests {
         assert_eq!(humanity_after_therapy(30, 7, 52), 37);
         assert_eq!(humanity_after_therapy(48, 12, 52), 52);
         assert_eq!(humanity_after_therapy(52, 5, 52), 52);
+    }
+
+    // ---- creation: the printed names of the kits, and where each option goes ------------
+
+    #[test]
+    fn printed_kit_names_resolve_to_their_records() {
+        let catalog = catalog();
+        // p117 prints "Tech Hair" and "Sandevistan Speedware"; the p360 listing names them
+        // Techhair and Sandevistan (subcategory "Neuralware (Speedware)").
+        assert_eq!(catalog.record_name("Tech Hair"), Some("Techhair"));
+        assert_eq!(catalog.record_name("Sandevistan Speedware"), Some("Sandevistan"));
+        assert_eq!(catalog.record_name("Neural Link"), Some("Neural Link"));
+        assert_eq!(catalog.record_name("Sandevistan Cyberarm"), None, "only the record's own subcategory word");
+        assert_eq!(catalog.record_name("Unknown Implant"), None);
+    }
+
+    fn placed(catalog: &CprCyberwareCatalog, names: &[&str]) -> Vec<CprCyberwareInstall> {
+        let names: Vec<String> = names.iter().map(|n| (*n).to_owned()).collect();
+        catalog.place(&names).unwrap_or_else(|e| panic!("{names:?}: {e}"))
+    }
+
+    #[test]
+    fn placement_mounts_each_option_on_its_foundation_or_alone_in_a_meat_limb() {
+        let catalog = catalog();
+        // The Tech's pack: MicroOptics on the Cybereye, the Tool Hand alone in a meat arm.
+        let tech = placed(&catalog, &["Cybereye", "MicroOptics", "Skinwatch", "Tool Hand"]);
+        assert_eq!(
+            tech,
+            vec![
+                install("Cybereye"),
+                mounted("MicroOptics", CprMount::Eye(0)),
+                install("Skinwatch"),
+                mounted("Tool Hand", CprMount::MeatArm(0)),
+            ]
+        );
+        assert!(catalog.check(5, &tech).is_ok());
+        // Two meat-arm pieces take one meat arm each; the Sandevistan Speedware takes no mount.
+        let solo = placed(&catalog, &["Neural Link", "Sandevistan Speedware", "Wolvers", "Rippers"]);
+        assert_eq!(solo[1], install("Sandevistan"));
+        assert_eq!((solo[2].mount, solo[3].mount), (Some(CprMount::MeatArm(0)), Some(CprMount::MeatArm(1))));
+        // A Cyberarm takes an arm option before a meat arm does.
+        let arm = placed(&catalog, &["Cyberarm", "Wolvers"]);
+        assert_eq!(arm[1], mounted("Wolvers", CprMount::Arm(0)));
+        // A paired option goes one per eye (p. 361).
+        let pair = placed(&catalog, &["Cybereye", "Cybereye", "Image Enhance", "Image Enhance"]);
+        assert_eq!((pair[2].mount, pair[3].mount), (Some(CprMount::Eye(0)), Some(CprMount::Eye(1))));
+        assert!(catalog.check(5, &pair).is_ok());
+        // An eye with no room left: the option stays on the first eye, and the check refuses it
+        // as over the slots (D-11), not as unmounted.
+        let full = placed(&catalog, &["Cybereye", "Dartgun", "Chyron"]);
+        assert_eq!(full[2], mounted("Chyron", CprMount::Eye(0)));
+        assert_slots_full(catalog.check(5, &full), CprContainer::Cybereye(0), 3);
+        // A printed name the catalog does not have is refused.
+        assert!(matches!(catalog.place(&["Unknown Implant".to_owned()]), Err(CprCyberwareRefusal::Rule { .. })));
     }
 
     #[test]

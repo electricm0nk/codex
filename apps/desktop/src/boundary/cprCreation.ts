@@ -28,6 +28,12 @@ import { formatError, hasTauriRuntime } from './runtime';
  * buys everything with 2,550eb and an 800eb fashion-only budget lost if unspent. Every method buys
  * from the engine's shop at the printed prices; the money is the engine's `cpr.kit.*` rows and
  * `cpr.cash`, the cash left.
+ *
+ * SD-38 E3.7 adds cyberware: the Role's pack is the fixed kit's `cyberware` lines (an "or" line is
+ * a kit pick), a Complete Package buys pieces from the shop's `cyberware` kind (Fashionware from
+ * the fashion budget first); the engine places each piece, refuses an install over a container's
+ * slots (`cpr_creation.cyberware`), and answers with the Humanity Loss, Humanity, EMP, maximum
+ * Humanity and slot rows (`cyberware`).
  */
 
 export type CyberpunkCreationMethod = 'streetrat' | 'edgerunner' | 'completePackage';
@@ -78,7 +84,7 @@ export interface CyberpunkKitOption {
 
 /** One printed line of the fixed kit; an "or" line takes one option (`taken`). */
 export interface CyberpunkKitLine {
-  /** `weapons_armor` or `outfit`. */
+  /** `weapons_armor`, `outfit` or `cyberware` (the Role's pack, p117). */
   section: string;
   text: string;
   sourcePage: string;
@@ -112,7 +118,7 @@ export interface CyberpunkShopItem {
 
 /** One item the character starts with, as the engine built it. */
 export interface CyberpunkKitItem {
-  /** `weapons_armor` or `outfit` (fixed kit), or `bought`. */
+  /** `weapons_armor`, `outfit` or `cyberware` (fixed kit), or `bought`. */
   section: string;
   kind: string;
   name: string;
@@ -129,6 +135,22 @@ export interface CyberpunkKit {
   items: CyberpunkKitItem[];
   shop: CyberpunkShopItem[];
   /** The engine's `cpr.kit.*` rows and `cpr.cash`; empty while refused. */
+  rows: CyberpunkCreationRow[];
+}
+
+/** One installed piece: as printed or bought, the record it is, and where the engine placed it. */
+export interface CyberpunkCyberwarePiece {
+  printed: string;
+  /** The cyberware record, as saved. */
+  name: string;
+  /** `eye 0`, `arm 1`, `meat_arm 0`; null for a piece that sits in no foundation. */
+  mount: string | null;
+  bought: boolean;
+}
+
+export interface CyberpunkCyberware {
+  pieces: CyberpunkCyberwarePiece[];
+  /** The engine's `cpr.cyberware.*` rows and `cpr.derived.humanity_max`/`humanity_current`/`emp_current`; empty while refused. */
   rows: CyberpunkCreationRow[];
 }
 
@@ -331,6 +353,8 @@ export interface CyberpunkCreationPreview {
   roleAbility: CyberpunkRoleAbility | null;
   /** The starting kit: fixed lines, items, the shop and the engine's money rows. */
   kit: CyberpunkKit | null;
+  /** The cyberware, placed, and the engine's Humanity/EMP rows. */
+  cyberware: CyberpunkCyberware | null;
   /** The engine's `cpr.stat.*`, `cpr.derived.*`, skill and skill-points rows; empty while a problem stands. */
   explanations: CyberpunkCreationRow[];
   problems: CyberpunkCreationProblem[];
