@@ -168,6 +168,7 @@ Row template (one row per card, appended in the card's closing commit):
 | 2026-10-15 | E7.8 | sonnet | complete | this commit (docs only: release notes body, `E7.8_check.py`, receipt, kanban row, this row, Summary E7/Total) | `artifacts/epic_7/E7.8_cycle_receipt.md` | docs only; not rendered (no render path touched) |
 | 2026-10-15 | E7.9 part 1 | sonnet | partial (truth-up done; claims critic is part 2, card stays waiting) | this commit (docs only: 11 `docs/architecture` files, `receipts.md`, receipt, kanban row, this row) | `artifacts/epic_7/E7.9_cycle_receipt.md` | docs only; not rendered (no render path touched) |
 | 2026-10-15 | E7.9 part 2 | opus | complete (claims critic: 11 claims refuted and fixed, 0 blockers; card complete) | this commit (docs only: 5 `docs/architecture` files, `receipts.md`, receipt part 2, kanban row, this row, Summary E7/Total) | `artifacts/epic_7/E7.9_cycle_receipt.md` | docs only; not rendered (no render path touched) |
+| 2026-10-15 | E7.10 | sonnet | blocked-escalated (graphify node-count guard, exit 1; no force) | this commit (docs only: `receipts.md`, receipt, kanban row, this row) | `artifacts/epic_7/E7.10_cycle_receipt.md` | docs only; seeds not rendered (no render path touched) |
 
 ## Epic reports
 

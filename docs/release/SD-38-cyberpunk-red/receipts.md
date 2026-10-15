@@ -52,3 +52,17 @@ This file holds YAML receipts appended by the closure scripts: architecture trut
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+- cycle_id: 2026-10-15T20:47:22Z
+  row_or_kind: graphify:update
+  bundle: SD-38
+  branch: 4d1af843d1051cab5251a16c3e073d859ee1e488
+  integration_target: develop
+  branch_tip: 4d1af843
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1399.1
+  log_path: graphify-out/.truth-up-run-2026-10-15T20:47:22Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: "node-count guard hit (exit 1): new graph 648327 nodes vs existing graph.json 648328 (net -1), graph.json NOT written, nothing force-applied. Indexed SHA 4d1af843d1051cab5251a16c3e073d859ee1e488 = origin/tranche-18, unfiltered git status --porcelain empty immediately before the run. Attempt 1 of this card (cycle 2026-10-15T20:46:07Z, exit 1, wall 0.2s) failed earlier for a different cause: the E7.10 worktree had no graph.json (graphify-out is gitignored and lives in the lead checkout); attempt 2 seeded the worktree graphify-out from /home/ubuntu/workspace/repos/codex/graphify-out (copy, lead checkout untouched). Operator ruling needed: accept the guard-hit as non-blocking (2026-07-20 policy) or authorize a full semantic rebuild."
