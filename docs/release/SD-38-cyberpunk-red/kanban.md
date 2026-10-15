@@ -89,7 +89,8 @@ cards (`decisions.md §22`).
 | E5.MC | E5 adversarial merge check | opus | complete | E5.5 | `artifacts/epic_5/E5.MC_cycle_receipt.md`; 481718c99a; E5 Epic report in `progress.md`; 6 ui-smoke rows (role switch + lock refused at Nomad Rank 1, Gills 12 → Humanity 24 / EMP 2 / Max 44 + HL 13 refused, therapy 12 capped at 46 / EMP 4 + 13 refused, cowardice 6 → Facedown 2, a lower deed kept → Rep 4 / Facedown 12, Handgun 6→8 skip refused) + improve-cyberpunk-skill: 7/7 green, real store untouched; plants reverted: IP price ×15/10 → `--bins cpr_improve` 8 of 27 red + skill row red; switch at Rank 3 → 2 red; gate removed → 3 red + role-switch row red; `--bins cpr_improve` 27/27 clean; npm 173/173; inventory 122 rows R12 clean; no `.rs` change; PF 3/3 + SF 4/4 unchanged |
 | E7.1 | Three CPR starter seeds restorable | opus | complete | E5.MC | `artifacts/epic_7/E7.1_cycle_receipt.md`; 49887659f2; builds `artifacts/epic_7/cpr-seed-builds.md` (Jax Moreno Streetrat Solo row 3, Nyx Calder Complete Package Netrunner 62/86/2,090eb, Imani Okafor Edgerunner Medtech seed 2045); `--bins starter_seed` 23/23 (Restore writes 3 CPR + 3 PF, a second Restore writes nothing, byte-identical; deleted Nyx restored alone); `crosscheck.py` re-derives every sheet number 231/231, 213/213, 223/223; ui-smoke 8/8 incl. `restore-cyberpunk-seed-netrunner` + 3 `open-cyberpunk-seed-*`, real store untouched; desktop suite 891 + 1 passed, 0 FAILED; clippy PASS; sd24 5/5; npm 173/173; inventory 126 rows R12 clean; PF 3/3 + SF 4/4 unchanged |
 | E7.2 | Packaged resources + clean-checkout build | opus | complete | E7.1 | `artifacts/epic_7/E7.2_cycle_receipt.md`; 26c315e426; `packaged_resources` reads all 53 MANIFEST kind files under the packaged CPR root (bundle = manifest + LICENSE/MANIFEST, 55), loads every sheet catalog there and composes Nyx Calder (213 `cpr.` rows; HP 40, Humanity 56, EMP 5, Handgun 12, NET Actions 3, deck 6/7, cash 460); plants weapon.json-missing + Handgun 6→5 each RED; tauri-resources-tracked PASS; clean clone `npm ci`/`npm run build`/`cargo build --locked` exit 0; desktop 891 + 1 passed, 0 FAILED; clippy PASS; sd24 5/5; PF 3/3 + SF 4/4 + CPR 3/3 unchanged |
-| E7.3 | Fresh-install acceptance (.deb, AppImage) | sonnet | waiting | E7.2 | SD-m if the box cannot install |
+| E7.3 | Fresh-install acceptance (.deb, AppImage) | sonnet | partial | E7.2, E7.3a | SD-m if the box cannot install; attempt 1 (`artifacts/epic_7/E7.3_cycle_receipt.md`): both artifacts built, installed on clean profiles, Check ok, notes load, Installed panel real, CPR seed (Nyx Calder) opens, Install enabled on a 0.16.0-stamped AppImage; the Pending / Rollback panel reads `unknown` twice on both, so the criterion's "no unknown" is not met; E7.3a fixes it, then E7.3 re-runs |
+| E7.3a | Update panel placeholders: Pending / Rollback `unknown` on a fresh install, stray Install-disabled reason | opus | ready | E7.2 | discovered by E7.3 (`artifacts/epic_7/E7.3_cycle_receipt.md`); no cargo; lane `main` |
 | E7.4 | Widest verify (both workspaces, npm, `verify.sh`, PF/SF byte-identical) | sonnet | waiting | E7.3 |  |
 | E7.5 | Final-acceptance scan (stop if short) | opus | waiting | E7.4 |  |
 | E7.6 | Retrospective written + cited | sonnet | waiting | E7.5 |  |
@@ -99,12 +100,12 @@ cards (`decisions.md §22`).
 | E7.10 | Graphify LAST | sonnet | waiting | E7.9 |  |
 | E7.11 | PR `tranche-18 → develop` (final action) + `pr-tests` | sonnet | waiting | E7.10 | operator merges |
 
-**Row check (69 cards: 68 authored + E4.8, discovered by E4.MC).**
+**Row check (70 cards: 68 authored + E4.8, discovered by E4.MC, + E7.3a, discovered by E7.3).**
 
 ```bash
 cd docs/release/SD-38-cyberpunk-red
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/{n++} END{print n}' kanban.md                     # → 69
-python3 -c "import re;print(sum(1 for l in open('kanban.md') if re.match(r'^\| (C|E)[0-9]', l)))"   # → 69
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/{n++} END{print n}' kanban.md                     # → 70
+python3 -c "import re;print(sum(1 for l in open('kanban.md') if re.match(r'^\| (C|E)[0-9]', l)))"   # → 70
 diff <(awk -F'|' '/^\| (C|E)[0-9]/{gsub(/ /,"",$2);print $2}' kanban.md | sort) \
      <(awk -F'|' '/^## Epic C/{s=1} s && /^\| (C|E)[0-9]/{gsub(/ /,"",$2);print $2}' epic-breakdown.md | sort) \
   && echo SAME_IDS
