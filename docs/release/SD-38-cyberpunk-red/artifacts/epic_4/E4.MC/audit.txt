@@ -1,0 +1,8 @@
+# E4.MC dual audit, CARD_BASE=3a24b1291564fc03947c6324c45f08e0a3e01775, HEAD=976662c28c, added lines
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+files under src crates apps scripts tests in the diff: 0
+.rs files in the diff: 0
