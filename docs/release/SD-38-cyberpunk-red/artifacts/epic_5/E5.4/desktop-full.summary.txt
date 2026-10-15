@@ -1,0 +1,4 @@
+awk: desktop suites=2 passed=884 failed=0 ignored=2
+python: suites 2 per-suite ['883', '1'] passed 884 failed 0
+cpr_improve tests ok 22
+FAILED lines 0
