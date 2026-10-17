@@ -2,16 +2,17 @@ import type { CSSProperties } from 'react';
 import type { CampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
 import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
 import { STARFINDER_CATALOG_TABS } from '../starfinderCatalog/starfinderCatalogModel';
+import { CYBERPUNK_CATALOG_GROUPS, firstKindOfGroup } from '../cyberpunkCatalog/cyberpunkCatalogModel';
 
 /**
  * Rule-set landing screen (Pathbuilder-style): a rule-set selector followed by
  * "New character" / "Load character" banners whose artwork changes per rule
- * set. Pathfinder 1e and Starfinder 1e are selectable (each has a rule-system
- * adapter: `rule_system_adapter.rs`); the other rule sets are present as
- * unselectable stubs until their rules land.
+ * set. Pathfinder 1e, Cyberpunk Red and Starfinder 1e are selectable (each has
+ * a rule-system adapter: `rule_system_adapter.rs`); the other rule sets are
+ * present as unselectable stubs until their rules land.
  */
 
-export type RuleSetId = 'pathfinder-1e' | 'solarus-arcanum' | 'traveller' | 'cyberpunk' | 'starfinder-1e' | 'world-of-darkness';
+export type RuleSetId = 'pathfinder-1e' | 'solarus-arcanum' | 'traveller' | 'cyberpunk-red' | 'starfinder-1e' | 'world-of-darkness';
 
 export interface RuleSet {
   id: RuleSetId;
@@ -59,10 +60,11 @@ export const RULE_SETS: readonly RuleSet[] = [
     },
   },
   {
-    id: 'cyberpunk',
+    // The engine's id (`GameSystem::CyberpunkRed.id()`), routed as-is to `CyberpunkAdapter`.
+    id: 'cyberpunk-red',
     name: 'Cyberpunk Red',
     tagline: 'Neon dystopia',
-    available: false,
+    available: true,
     art: {
       create: 'linear-gradient(115deg, #2a0820 0%, #6b1050 55%, #f838a0 130%)',
       load: 'linear-gradient(115deg, #1a0514 0%, #500a38 55%, #c81e7c 130%)',
@@ -268,6 +270,8 @@ export function LandingScreen(props: {
   onBrowseIntelligentItems: () => void;
   /** Starfinder 1e's catalogs (SD-37 E6.4), offered instead of the Pathfinder ones when it is selected. */
   onBrowseStarfinder: (kind: StarfinderCatalogKind) => void;
+  /** Cyberpunk RED's catalogs (SD-38 E6.2), offered instead of the Pathfinder ones when it is selected; `kind` is the MANIFEST kind the screen opens on. */
+  onBrowseCyberpunk: (kind: string) => void;
   onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
   campaignManagerGate: CampaignManagerAccessGate;
@@ -310,6 +314,12 @@ export function LandingScreen(props: {
           STARFINDER_CATALOG_TABS.map((tab) => (
             <button key={tab.kind} type="button" onClick={() => props.onBrowseStarfinder(tab.kind)} style={BROWSE_LINK}>
               {tab.link}
+            </button>
+          ))
+        ) : props.selectedRuleSet === 'cyberpunk-red' ? (
+          CYBERPUNK_CATALOG_GROUPS.map((group) => (
+            <button key={group.id} type="button" onClick={() => props.onBrowseCyberpunk(firstKindOfGroup(group.id))} style={BROWSE_LINK}>
+              {group.link}
             </button>
           ))
         ) : (

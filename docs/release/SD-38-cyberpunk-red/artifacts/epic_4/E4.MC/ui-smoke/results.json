@@ -1,0 +1,70 @@
+[
+  {
+    "id": "select-cyberpunk-red",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/scripts/ui-smoke/.out/sd38-e4.mc/select-cyberpunk-red.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\nNo characters yet — create your first one to get started.\n\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nRestore starter characters\nCancel",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_mc-jYTdKB/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-cyberpunk-streetrat-solo",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/scripts/ui-smoke/.out/sd38-e4.mc/sheet-cyberpunk-streetrat-solo.png",
+    "rendered_excerpt": "⚙\nCPR Sheet Streetrat Solo\nCyberpunk RED\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t6\t—\nREF\t7\t7\nDEX\t7\t7\nTECH\t3\t—\nCOOL\t8\t—\nWILL\t6\t—\nLUCK\t5\t—\nMOVE\t5\t5\nBODY\t6\t6\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t8\nConceal/Reveal Object (INT)\t0\t6\nLip Reading (INT)\t0\t6\nPerception (INT)\t6\t12\nTracking (INT)\t0\t6\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t6\nResist ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_mc-jYTdKB/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "a1749c42-280a-40d1-9bba-060a89be2bd4"
+      ],
+      "deleted": [
+        "a1749c42-280a-40d1-9bba-060a89be2bd4"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-cyberpunk-edgerunner-netrunner",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/scripts/ui-smoke/.out/sd38-e4.mc/sheet-cyberpunk-edgerunner-netrunner.png",
+    "rendered_excerpt": "⚙\nCPR Sheet Edgerunner Netrunner\nCyberpunk RED\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t7\t—\nREF\t6\t6\nDEX\t7\t7\nTECH\t6\t—\nCOOL\t8\t—\nWILL\t4\t—\nLUCK\t8\t—\nMOVE\t7\t7\nBODY\t6\t6\nEMP\t5\t3\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t6\nConceal/Reveal Object (INT)\t6\t13\nLip Reading (INT)\t0\t7\nPerception (INT)\t2\t9\nTracking (INT)\t0\t7\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t4\nR",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_mc-jYTdKB/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "bf54ff15-90a7-4825-9945-c5d9d4766b59"
+      ],
+      "deleted": [
+        "bf54ff15-90a7-4825-9945-c5d9d4766b59"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-cyberpunk-complete-package-fixer",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/scripts/ui-smoke/.out/sd38-e4.mc/sheet-cyberpunk-complete-package-fixer.png",
+    "rendered_excerpt": "⚙\nCPR Sheet Complete Package Fixer\nCyberpunk RED\nOpen\nClose\nSTATS\n\nSTAT\tCurrent\nINT\t8\t—\nREF\t5\t5\nDEX\t7\t7\nTECH\t4\t—\nCOOL\t6\t—\nWILL\t5\t—\nLUCK\t8\t—\nMOVE\t5\t5\nBODY\t6\t6\nEMP\t8\t7\nSKILLS\n\nLevel\tBase\nAwareness\nConcentration (WILL)\t2\t7\nConceal/Reveal Object (INT)\t0\t8\nLip Reading (INT)\t0\t8\nPerception (INT)\t2\t10\nTracking (INT)\t0\t8\nBody\nAthletics (DEX)\t2\t9\nContortionist (DEX)\t0\t7\nDance (DEX)\t0\t7\nEndurance (WILL)\t0\t5",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd38-e4_mc-jYTdKB/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "82588e3a-dd8a-4f52-b3d7-8e394ef94308"
+      ],
+      "deleted": [
+        "82588e3a-dd8a-4f52-b3d7-8e394ef94308"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

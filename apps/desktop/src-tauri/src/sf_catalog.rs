@@ -180,7 +180,7 @@ pub fn list_starfinder_catalog(kind: SfCatalogKind) -> Result<SfCatalogResponse,
     let package = sf_adapter::package().map_err(|r| format!("{}: {}", r.id, r.message))?;
     Ok(SfCatalogResponse {
         kind,
-        source: codex::rules_core::game_system::GameSystem::Starfinder1e.sheet_rules_relative().to_owned(),
+        source: codex::rules_core::game_system::GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package").to_owned(),
         entries: entries(package, kind),
     })
 }
@@ -199,7 +199,7 @@ mod tests {
     }
 
     fn sheet_rules_root() -> PathBuf {
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..").join(GameSystem::Starfinder1e.sheet_rules_relative())
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..").join(GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package"))
     }
 
     fn kind_dir(kind: SfCatalogKind) -> &'static str {
@@ -413,7 +413,7 @@ mod tests {
         for kind in SfCatalogKind::ALL {
             let response = list_starfinder_catalog(kind).expect("catalog");
             assert_eq!(response.kind, kind);
-            assert_eq!(response.source, GameSystem::Starfinder1e.sheet_rules_relative());
+            assert_eq!(response.source, GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package"));
             assert_eq!(response.entries, entries(package(), kind));
         }
     }

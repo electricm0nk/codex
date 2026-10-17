@@ -1,0 +1,349 @@
+import json, sys
+OUT = sys.argv[1]
+
+STUBS = {
+ "Rockerboy": ("p031", "Charismatic Impact", "The Rockerboy's Role Ability is Charismatic Impact. With this ability, they can influence others by sheer presence of personality. They need not be a musical performer; they can influence others through poetry, art, dance, or simply their physical presence. They could be a rocker—or a cult leader. As they grow in skill, they can affect larger and larger groups and call on their fans for greater and greater requests of loyalty (Go to pg. 144 for details)."),
+ "Solo": ("p032", "Combat Awareness", "The Solo's Role Ability is Combat Awareness. With Combat Awareness, a Solo can call up their training to have an enhanced situational awareness of the battlefield. When combat begins, anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among a number of combat abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others (Go to pg. 146 for details)."),
+ "Netrunner": ("p033", "Interface", "The Netrunner's Role Ability is Interface. Interface is what allows the Netrunner to Netrun—to interface with electronic mind-modems (called cyberdecks) to control computers, electronics, and associated programming. The Interface Role Ability also gives the Netrunner access to a wide suite of Abilities related to computer hacking and system control (Go to pg. 147 for details)."),
+ "Tech": ("p034", "Maker", "The Tech's Role Ability is Maker. Using the Maker Role Ability, the Tech can fix, improve, modify, make, and invent new items. Whenever a Tech increases their Maker Rank by one, they gain one rank in two different Maker Specialties of their choice, including repairing, upgrading, fabricating, and inventing (Go to pg. 147 for details)."),
+ "Medtech": ("p035", "Medicine", "The Medtech's Role Ability is Medicine. With this ability, Medtechs can keep people alive who should be dead with their knowledge, tools, and training. In the Time of the Red, they are as much doctors as they are mechanics, caring for people who are often more machine than human. Whenever the Medtech increases their Medicine Rank, they also choose one of three Medicine Specialties to allocate a single point to: surgery, pharmaceuticals, or cryosystems operation (Go to pg. 149 for details)."),
+ "Media": ("p036", "Credibility", "The Media's Role Ability is Credibility. The Media can not only convince an audience of the truth of what they publish but also has a larger audience the more credible they are. Medias also have greater levels of access to sources and information; they are always in the know with their ears to the ground to pick up on rumors and information passively (Go to pg. 151 for details)."),
+ "Exec": ("p037", "Teamwork", "The Exec's Role Ability is Teamwork. Just like a real corporate executive, the Exec builds a team whose members help them accomplish their goals, whether legal or not, morale permitting. Team members have a visible job description (like secretary or driver) but also have a covert roles (such as Netrunner, bodyguard, or assassin). Plus they get free housing and nice set of clothes! (Go to pg. 153 for details)."),
+ "Lawman": ("p038", "Backup", "The Lawman's Role Ability is Backup. With this ability, Lawmen can call upon the help of a group of fellow officers, based on the Lawman's Rank and the conditions under which they make the call. This Backup is armed and armored based on their Rank (Go to pg. 158 for details)."),
+ "Fixer": ("p039", "Operator", "The Fixer's Role Ability is Operator. Fixers know how to get things on the black market and are adept at navigating the complex social customs of The Street, where hundreds of cultures and economic levels collide. Fixers maintain vast webs of contacts and clients who they can reach out to source goods, favors, or information. Fixers can also source desirable resources and make favorable deals (Go to pg. 159 for details)."),
+ "Nomad": ("p040", "Moto", "The Nomad's Role Ability is Moto. Whenever a Nomad increases their Rank in Moto, they have the option of adding another stock vehicle (with minimum specs) of their Moto Rank or lower to the pool of Family vehicles they have permission to use from the Family Motorpool or to make an upgrade to one of their current vehicles. Thanks to being around vehicles since birth, Nomads are also able to drive any type of vehicle with tremendous skill (Go to pg. 161 for details)."),
+}
+ABILITY_PAGES = {
+ "Rockerboy": ["p145","p146"], "Solo": ["p147"], "Netrunner": ["p148"], "Tech": ["p148","p149","p150"],
+ "Medtech": ["p150","p151"], "Media": ["p152","p153","p154"], "Exec": ["p154","p155","p156","p157","p158"],
+ "Lawman": ["p159","p160"], "Fixer": ["p160","p161","p162"], "Nomad": ["p162","p163","p164","p165","p166"],
+}
+
+roles = []
+for name, (pg, ab, stub) in STUBS.items():
+    roles.append({
+        "kind": "role", "name": name, "source_page": pg,
+        "role_ability": ab, "role_ability_pages": ABILITY_PAGES[name],
+        "starting_rank": 4, "rank_min": 1, "rank_max": 10,
+        "text": stub,
+    })
+
+def band(label, lo, hi, **kw):
+    d = {"rank_label": label, "rank_min": lo, "rank_max": hi}
+    d.update(kw)
+    return d
+
+RA = {}
+
+RA["Rockerboy"] = {
+ "name": "Charismatic Impact", "role": "Rockerboy", "source_page": "p145", "pages": ["p145","p146"],
+ "text": "The Rockerboy has the Role ability Charismatic Impact. They can influence others by sheer presence of personality. They need not be a musical performer; they can influence others through poetry, art, dance, or simply their physical presence. They could be a rocker—or a cult leader. A Rockerboy can only use their Charismatic Impact Role Ability on Fans. Assuming you aren't in combat, you can make people who aren't currently fans into fans (unless they actively dislike you) by rolling Charismatic Impact + 1d10 vs. a DV8 for a Single Person, DV10 for a Small Group of up to 6, or DV12 for a Huge Group. The GM determines whenever someone you meet is already a Fan. When a Rockerboy wants to make use of their Charismatic Impact on a fan or group of fans, the GM uses the table below to determine if the favor is something within the powers of their Charismatic Impact given their current Role Ability Rank. If it isn't, the Rockerboy automatically fails. If it is, the group size determines the DV against which the Rockerboy must roll Charismatic Impact + 1d10. If they succeed, the fan or group of fans puts their best effort toward the favor the Rockerboy asked for. If they fail, the Rockerboy can't ask for the same favor again from those fans for a week.",
+ "check_dvs": {"single_fan": 8, "small_group": 10, "huge_group": 12},
+ "rank_bands": [
+  band("1 and 2",1,2, venues="Small local clubs", single_fan="Rockerboy can convince fan to do a small favor for the Rockerboy; buy the Rockerboy a drink or meal, give them a lift somewhere.", small_group="Rockerboy has a group of up to 6 fans to ask for autographs and other personal totems; fans will stop Rockerboy in streets to befriend them.", huge_group="You're kidding, right? You don't have huge groups of fans yet.", source_page="p145"),
+  band("3 and 4",3,4, venues="Well known clubs", single_fan="Rockerboy can convince fan to do a major favor for the Rockerboy; go to bed with the Rockerboy, put a good word in for them, etc.", small_group="Convince a group of up to 6 fans to regularly hang out with Rockerboy; provide booze, drugs, or other party favors to the Rockerboy.", huge_group="Rockerboy has a strong local following; fans buy their recordings and merch.", source_page="p145"),
+  band("5 and 6",5,6, venues="Large, important clubs", single_fan="Rockerboy can convince fan to commit a minor crime for Rockerboy; shoplift, help out in a fight.", small_group="Convince a group of up to 6 fans to act as the Rockerboy's personal \"posse\"; constantly hang out with them, do favors, and provide things for their personal needs.", huge_group="Rockerboy's fans are all over the City, often in nearby cities. They are strongly loyal and will often do major favors for the Rockerboy in exchange for attention.", source_page="p146"),
+  band("7 and 8",7,8, venues="Small concert halls, local video feed", single_fan="Fan is willing to risk their life for Rockerboy without question.", small_group="Convince a group of up to 6 fans to commit a minor crime for Rockerboy; shoplift, help in a fight.", huge_group="The Rockerboy's fans are rabidly loyal. They fight with rival fan groups, support strong fan information networks, will band together to help Rockerboy.", source_page="p146"),
+  band("9",9,9, venues="Large concert halls, national video feed", single_fan="Rockerboy can convince fan to commit major crime for Rockerboy; steal expensive item, beat someone up for Rockerboy.", small_group="Convince a group of up to 6 fans to commit a major crime for Rockerboy; steal expensive item, beat someone up.", huge_group="The Rockerboy's fans are basically a brainwashed, cult-like following; they will riot, destroy property, and even kill for the Rockerboy.", source_page="p146"),
+  band("10",10,10, venues="Huge stadiums or international video", single_fan="Fan is willing to sacrifice self for Rockerboy without question.", small_group="Convince a group of up to 6 fans to risk their lives for the Rockerboy; to act as personal protection.", huge_group="The Rockerboy's fans are now a worldwide following with strong, cult-like attributes. They will do almost anything for the Rockerboy if asked; they are a private army based on the Rockerboy's charisma.", source_page="p146"),
+ ],
+}
+
+RA["Solo"] = {
+ "name": "Combat Awareness", "role": "Solo", "source_page": "p147", "pages": ["p147"],
+ "text": "When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others:",
+ "pool_points": "equal to Combat Awareness Rank (the total number of points they have in their Combat Awareness Role Ability)",
+ "combat_awareness_abilities": [
+  {"name": "Damage Deflection", "text": "You have been trained to \"roll with the punches,\" reducing damage done to you.", "tiers": [
+     {"points": 2, "text": "decrease the first damage you take this Round by 1", "value": 1},
+     {"points": 4, "text": "decrease the first damage you take this Round by 2", "value": 2},
+     {"points": 6, "text": "decrease the first damage you take this Round by 3", "value": 3},
+     {"points": 8, "text": "decrease the first damage you take this Round by 4", "value": 4},
+     {"points": 10, "text": "decrease the first damage you take this Round by 5", "value": 5}]},
+  {"name": "Fumble Recovery", "text": "You have been trained to instantly recover from mishaps by taking your time with every shot. For 4 points, you ignore critical failures (1s) you roll while attacking. These rolls are still treated as 1, however.", "tiers": [
+     {"points": 4, "text": "ignore critical failures (1s) you roll while attacking; these rolls are still treated as 1", "value": None}]},
+  {"name": "Initiative Reaction", "text": "Your reflexes are trained to respond instantly, without thinking, at the start of a firefight. Each point adds a +1 to Initiative rolls made.", "per_point": "+1 to Initiative rolls"},
+  {"name": "Precision Attack", "text": "You have been trained to precisely aim attacks, giving you greater accuracy.", "tiers": [
+     {"points": 3, "text": "you add a +1 to any Attacks made", "value": 1},
+     {"points": 6, "text": "you add a +2 to any Attacks made", "value": 2},
+     {"points": 9, "text": "you add a +3 to any Attacks made", "value": 3}]},
+  {"name": "Spot Weakness", "text": "You have been trained to look for weak spots to damage even heavily armored targets. Each point adds a +1 to the damage (before armor) of your first successful Attack in a Round.", "per_point": "+1 damage (before armor) on the first successful Attack in a Round"},
+  {"name": "Threat Detection", "text": "You have enhanced situational awareness. Each point adds a +1 to any Perception Checks made.", "per_point": "+1 to any Perception Checks"},
+ ],
+}
+
+RA["Netrunner"] = {
+ "name": "Interface", "role": "Netrunner", "source_page": "p148", "pages": ["p148"],
+ "text": "A Netrunner's Interface Role Ability allows them to Netrun, determines how many NET Actions they can take on their Turn, and gives them access to a suite of Interface Abilities. We will be going into Netrunning in-depth in the Netrunning Section (pg. 198).",
+ "net_actions_per_turn": [
+  {"rank_label": "1 to 3", "rank_min": 1, "rank_max": 3, "net_actions": 2},
+  {"rank_label": "4 to 6", "rank_min": 4, "rank_max": 6, "net_actions": 3},
+  {"rank_label": "7 to 9", "rank_min": 7, "rank_max": 9, "net_actions": 4},
+  {"rank_label": "10", "rank_min": 10, "rank_max": 10, "net_actions": 5},
+ ],
+ "interface_abilities": [
+  {"name": "Backdoor", "data": "Allows the Netrunner to break through Passwords and other obstructions in the Architecture."},
+  {"name": "Cloak", "data": "Allows the Netrunner to hide their actions in the Architecture before they leave."},
+  {"name": "Control", "data": "Allows the Netrunner to control things that are attached to the Architecture."},
+  {"name": "Eye-Dee", "data": "Allows the Netrunner to know what a found piece of data is and its value."},
+  {"name": "Pathfinder", "data": "Allows the Netrunner to learn the \"map\" of the Architecture."},
+  {"name": "Scanner", "data": "Allows the Netrunner to find out the locations of systems in an area."},
+  {"name": "Slide", "data": "Allows the Netrunner to slip away from one Black ICE that is following them."},
+  {"name": "Virus", "data": "Allows the Netrunner to leave a custom virus at the very core of the Architecture."},
+  {"name": "Zap", "data": "A basic Netrunner attack that works against both Programs and other Netrunners."},
+ ],
+}
+
+RA["Tech"] = {
+ "name": "Maker", "role": "Tech", "source_page": "p148", "pages": ["p148","p149","p150"],
+ "text": "A Tech can fix, improve, modify, make, and invent new items using Maker, their Role Ability. Whenever a Tech increases their Maker Rank by 1, they gain 1 Rank in two different Maker Specialties (Field Expertise, Upgrade Expertise, Fabrication Expertise, or Invention Expertise) of their choice.",
+ "specialty_ranks_per_maker_rank": 2,
+ "specialties": [
+  {"name": "Field Expertise", "source_page": "p148", "text": "Your familiarity with technology in the field makes you a valuable asset on any job, especially when something breaks down at just the wrong moment. Add your Rank in this Specialty to any Basic Tech, Cybertech, Electronics/Security Tech, Weaponstech, Land, Sea, or Air Vehicle Tech Skill Check you make for any Non-Maker Specialty purpose. Additionally, as long as you have at least 1 Rank in this specialty, instead of attempting a lengthy full repair you can elect to instead temporarily repair your target (at the same DV of a typical repair for the item) to perfect condition as an Action (with full SP and HP, if applicable). You add your Rank in Field Expertise to this Check. This jury-rigging holds for 10 minutes for each Rank you have in this specialty, after which the item returns to the state it was in before you jury-rigged it, except that it cannot be jury-rigged again until it has been fully repaired.",
+   "skill_checks_boosted": ["Basic Tech","Cybertech","Electronics/Security Tech","Weaponstech","Land Vehicle Tech","Sea Vehicle Tech","Air Vehicle Tech"], "jury_rig_minutes_per_rank": 10},
+  {"name": "Upgrade Expertise", "source_page": "p149", "text": "Improves an item in one of the following ways. An item can only benefit from 1 upgrade granted by this specialty. To upgrade an item, you roll TECH + the TECH Skill that the item is typically repaired with + your Rank in this specialty + 1d10. The Tech must purchase materials of the same price category of the item being upgraded, which installing the upgrade consumes. The DV you roll against and the time it takes to install the upgrade is based on the price category of the item you are upgrading. On a failed Check, halfway through the upgrade, you realize that you'll have to start again from scratch. The materials purchased to make the upgrade and the item to be upgraded are both uninjured."},
+  {"name": "Fabrication Expertise", "source_page": "p149", "text": "Fabricate an existing item or one invented by the Tech using Invention Expertise from materials. To make an item, you roll TECH + the TECH Skill that the item is typically repaired with + your Rank in this specialty + 1d10. The Tech must purchase materials of one price category lower than the price category of the item being fabricated. (Except for Super Luxury items, which require materials equal to half their Price to fabricate.) The DV you roll against and the time it takes to make the item is based on the price category of the item you are making. On a failed Check, halfway through the fabrication process, you realize that you'll have to start again from scratch. The materials purchased to make the item are uninjured. Fabricating a Cheap item costs 5eb."},
+  {"name": "Invention Expertise", "source_page": "p149", "text": "Invent an upgrade to an existing item or invent an entirely new item. To invent an item/upgrade, you'll need to describe to your GM the desired function of your item/upgrade, as precisely as you can in the language of already existing technologies in the setting, making sure to include the mechanism by which your invention might accomplish its function. It is suggested that you draw up a simple schematic for illustrative purposes. Your GM and fellow Players will certainly appreciate it. If your GM is satisfied with your explanation and is okay with it in their game, they will write how the proposed invention would operate rules-wise, being careful not to create an imbalanced item. The upgrades presented earlier in Upgrade Expertise are a good guideline for balanced Tech upgrades. Based on the item or upgrade's value if it were to be sold on the open market, the GM will set the Price Category of the item as close to other items/upgrades of a similar \"power level\" as possible, although the lowest category they can select is Expensive. The time it will take to invent the item/upgrade and the DV your Character has to beat with their TECH + the TECH Skill associated with repairing the invention or the item the invention is meant to upgrade + your Rank in this specialty + 1d10. The DV you roll against and the time it takes to make the item is based on the price category of the item you are making. On a failed Check, you realize halfway through your process that you need to go back to the drawing board. Once invented, you (or another Tech who you show the blueprints to) can make your invented item/upgrade real using Fabrication or Upgrade Expertise! It's worth mentioning that nobody will give your invention a second thought before you have a working prototype. Of course, that's when they'll try to steal it. Don't bother with the courts. More than any ability in the game, this ability can result in game imbalance. Your GM might need to retroactively change the way your invention operates rules-wise (or, in extreme circumstances, even replace it with another invention of an equal price category that you collaborate on together) several times before you find a version that works well at your table and doesn't negatively impact game balance.", "lowest_price_category": "Expensive"},
+ ],
+ "upgrade_expertise_options": [
+  "Lower the Humanity Loss of non-borgware cyberware by 1d6 if its typical humanity loss would be 2d6 or greater.",
+  "Increase the number slots of a type an item already has for options, attachments, Programs/Hardware, etc. by one.",
+  "Simplify the item, halving the time it takes to make any future full repair to the item.",
+  "Grant a typically non-concealable one-handed weapon the ability to be concealed.",
+  "Increase an Average Quality Weapon to an Excellent Quality Weapon.",
+  "Grant a weapon Attachment Slot to an Exotic Weapon.",
+  "Allow an Exotic Weapon to fire one variety of Non-Basic Ammunition of its ammunition type.",
+  "Increase an item's SP by 1, but only if it had any to begin with.",
+  "Upgrade a vehicle with an upgrade that only requires a Nomad Role Ability Rank of 1.",
+  "Install an upgrade invented by the Tech using Invention Expertise. Requires additional materials equal to the Price Category assigned to the item by the GM when it was invented.",
+ ],
+ "dv_time_table": [
+  {"cost": "Cheap/Everyday", "dv": 9, "time": "1 hour"},
+  {"cost": "Costly", "dv": 13, "time": "6 hours"},
+  {"cost": "Premium", "dv": 17, "time": "1 day"},
+  {"cost": "Expensive", "dv": 21, "time": "1 week"},
+  {"cost": "Very Expensive", "dv": 24, "time": "2 weeks"},
+  {"cost": "Luxury", "dv": 29, "time": "1 month"},
+  {"cost": "Super Luxury", "dv": 29, "time": "1 month per 10,000eb of Cost."},
+ ],
+ "transcription_note": "D-4: the Luxury and Super Luxury rows both read DV29 on the p150 page image (crop x 96-440, y 880-1110 at 110 dpi) and in the p141 Item Repair sidebar image (crop x 30-210, y 520-940 at 110 dpi); kept as printed.",
+}
+
+RA["Medtech"] = {
+ "name": "Medicine", "role": "Medtech", "source_page": "p150", "pages": ["p150","p151"],
+ "text": "Medtechs keep people alive who should be dead with their knowledge and training. In the Time of the Red, they are as much mechanics as they are doctors, caring for people who are oftentimes more machine than human. The Medtech Role Ability is Medicine. Whenever the Medtech increases their Medicine Rank, they also choose one of the following three Medicine Specialties (Surgery, Medical Tech [Pharmaceuticals], or Medical Tech [Cryosystem Operation]) to allocate 1 point to. The Medical Section contains additional uses for both the Surgery and Medical Tech Skills, which are only available to Medtechs through this Role Ability (See pg. 226). These include Cyberware installation and harvesting, Bodysculpting, and Therapy!",
+ "points_per_rank": 1,
+ "specialties": [
+  {"name": "Surgery", "source_page": "p150", "text": "For every point you allocate to Surgery, you gain 2 points in the Surgery Skill (up to a maximum of 10). The Surgery Skill is the TECH Skill used to treat the most severe Critical Injuries, as well as implant cyberware, and is only available to Medtechs through this Medicine Specialty.", "skill_points_per_point": 2, "skill": "Surgery", "skill_max": 10},
+  {"name": "Medical Tech (Pharmaceuticals)", "source_page": "p150", "text": "For every point you allocate to Medical Tech (Pharmaceuticals), you gain 1 point in the Medical Tech Skill (up to a maximum of 10). The Medical Tech Skill is the TECH Skill used to operate, understand, and repair (as other non-vehicle Tech Skills) medical machinery. This Skill is only available to Medtechs, and only through either this Medicine Specialty or Cryosystem Operation. You can only put a maximum of 5 points into this specialty. Each time you allocate a point into Pharmaceuticals you also gain access to one of the following pharmaceuticals, which your Character can synthesize by rolling a DV13 Medical Tech Check, wasting the materials used on a failure. A Medtech can make a number of doses from 200eb of materials equal to their Medical Tech Skill in 1 hour. You can't synthesize Street Drugs with Medical Tech (Pharmaceuticals).", "skill_points_per_point": 1, "skill": "Medical Tech", "skill_max": 10, "max_points": 5, "synthesis_dv": 13, "materials_eb": 200},
+  {"name": "Medical Tech (Cryosystem Operation)", "source_page": "p151", "text": "For every point you allocate to Medical Tech (Cryosystem Operation), you gain 1 point in the Medical Tech Skill (up to a maximum of 10). The Medical Tech Skill is the TECH Skill used to operate, understand, and repair (as other non-vehicle Tech Skills) medical machinery. This Skill is only available to Medtechs, and only through either this Medicine Specialty or Pharmaceuticals. You can only put a maximum of 5 points into this specialty. When you allocate points into Cryosystem Operation you also gain a benefit as detailed below:", "skill_points_per_point": 1, "skill": "Medical Tech", "skill_max": 10, "max_points": 5},
+ ],
+ "medical_tech_skill_note": "Your Medical Tech Skill Level equals your points in Pharmaceuticals plus your points in CryoSystem Operation.",
+ "pharmaceuticals": [
+  {"name": "Antibiotic", "effect": "When injected with a dose of Antibiotic, a target who has already started the natural healing process heals an extra 2 Hit Points every day for a week. A person can only benefit from one use of Antibiotic at a time."},
+  {"name": "Rapidetox", "effect": "When injected with a dose of Rapidetox, a target who is affected by a drug, poison, or intoxicant is immediately purged of the effects of that substance."},
+  {"name": "Speedheal", "effect": "When injected with a dose of Speedheal, a target who is not in the Mortally Wounded Wound State immediately heals an amount of HP equal to their BODY + WILL. A person can only benefit from one use of Speedheal per day."},
+  {"name": "Stim", "effect": "When injected with a dose of Stim, a target can ignore all penalties from being in the Seriously Wounded Wound State for an hour. A person can only benefit from one use of Stim per day."},
+  {"name": "Surge", "effect": "When injected with a dose of Surge, a target can function unimpaired without sleep for a full 24 hours. A person can only benefit from one use of Surge per week."},
+ ],
+ "pharmaceutical_administration_text": "Applying a single dose of a drug to a target takes an Action. If the target is unwilling, the Medtech can use their Action to attempt to make a single Melee Weapon Attack with their Airhypo against the target, that administers a single dose to their target on a hit instead of dealing damage. A Character who is not a Medtech cannot administer Pharmaceuticals correctly. These aren't Street Drugs, they require training to get the medically correct proportions.",
+ "cryosystem_levels": [
+  {"level": 1, "benefit": "With 1 point in Cryosystem Operation you gain one Cryopump."},
+  {"level": 2, "benefit": "With 2 points in Cryosystem Operation you become a Registered Cryotank Technician and gain unlimited 24/7 access to 1 Cryotank at a time at any cryotank facility operated by medical corporations or government agencies."},
+  {"level": 3, "benefit": "With 3 points in Cryosystem Operation you gain 1 Cryotank, installed in a room of your choosing."},
+  {"level": 4, "benefit": "With 4 points in Cryosystem Operation you gain 2 more Cryotanks that can fit in the same room as your first one and your Cryopump has 2 charges and its maximum carrying capacity increases to 2 people in stasis."},
+  {"level": 5, "benefit": "With 5 points in Cryosystem Operation you gain 3 more Cryotanks that can fit in the same room as the first three and your Cryopump has 3 charges and its maximum carrying capacity increases to three people in stasis."},
+ ],
+}
+
+RA["Media"] = {
+ "name": "Credibility", "role": "Media", "source_page": "p152", "pages": ["p152","p153","p154"],
+ "text": "The Media Role Ability is Credibility. The Media not only can convince an audience of what they publish, but also has a larger audience the more credible they are. They also have greater levels of access to sources and information. Medias are also in the know and pick up on rumors passively. Medias are deeply plugged into information networks. Assuming you aren't entirely off-grid, at least twice per week the GM will secretly roll Your Credibility Rank + 1d10. If the Check beats any of the DVs on the Rumor Table's Passive column, the GM will clue the Media in on the highest DV rumor which their Check beat. These are the same rumors that a Media might find by hitting The Street during gameplay using their relevant information gathering skills like Library Search, Conversation, or Interrogation. When a Media is actively looking for a rumor like this, they roll appropriate STAT + relevant Skill + 1d10 against the DV on the Active column the GM has set for the rumor based on how detailed it is.",
+ "rumor_table": [
+  {"rumor": "Vague Rumor", "description": "The rumor is hazy. It contains the bare minimum of information required to start hunting down the supposed truth at the core of it.", "passive_dv": 7, "active_dv": 13},
+  {"rumor": "Typical Rumor", "description": "The rumor is enough to know where to go next in an investigation. It contains enough information to get a passing glimpse at the supposed truth at the core of it.", "passive_dv": 9, "active_dv": 15},
+  {"rumor": "Substantial Rumor", "description": "As Typical Rumor, but the rumor additionally contains concrete information that is beneficial to a potential investigation, like names, places, and times.", "passive_dv": 11, "active_dv": 17},
+  {"rumor": "Detailed Rumor", "description": "As Substantial Rumor, but the rumor additionally contains information that, if verified, could become a piece of evidence the Media can use in a story they might publish about the supposed truth at the core of the rumor.", "passive_dv": 13, "active_dv": 21},
+ ],
+ "publishing_text": "Access/Sources represents those you can reasonably get in touch with/interview or otherwise gain information from. Audience is how many people your stories or exposés can reach. Believability is how well your story or exposé goes over with your audience. The higher your Credibility, the more likely people will believe something you have written or broadcast. You roll 1d10 based on your Believability when you publish a story and any time you want to find out whether an individual (or a group of individuals) believe your story. If your story contains even a single piece of verifiable evidence that is easily understood by the masses, the chance your audience will believe it is 1 higher. If it contains more than 4 distinct verifiable pieces of hard evidence, the chance your audience will believe it is 2 higher. These two bonuses stack with each other. LUCK can never be spent on a Believability Check. Impact is how much change any individual story or revelation you publish has on your audience. For example, a story about an unfair economic practice at the incremental level might just get a few local bosses to change their practices. But at higher levels of Credibility, your exposé may cause entire Megacorps to fall. Your GM will handle this. Once you publish a story/scoop you cannot publish another story on the same exact topic unless you have new information to add to the conversation.",
+ "believability_modifiers": {"one_verifiable_piece": 1, "more_than_four_pieces": 2, "stack": True},
+ "rank_bands": [
+  band("1 and 2",1,2, access_sources="Local honcho, gang lord, local neighborhood leadership", audience="Immediate neighborhood.", believability_out_of_10=2, believability="2 out of 10 chance the audience buys it.", impact="Change created by a story/scoop is small, incremental. Small-time bad guys are scared and may change their ways a little.", source_page="p153"),
+  band("3 and 4",3,4, access_sources="City gang honcho, minor politician, Corp Exec, well known person in the neighborhood", audience="You're well known as a contributor on the local screamsheet or Data Pool.", believability_out_of_10=3, believability="3 out of 10 chance the audience buys it.", impact="Change created by a story/scoop has a direct effect; local small-time bad guys get arrested or thrown out of power, justice gets served.", source_page="p153"),
+  band("5 and 6",5,6, access_sources="Major City player, City politico, local celebrity", audience="Your stuff goes Citywide. You're a regular columnist or contributor to local screamsheets or TV.", believability_out_of_10=4, believability="4 out of 10 chance the audience buys it.", impact="Change created by a story/scoop changes things all over the City. Higher-level bad guys may be jailed or thrown out of power. Local laws may even get passed.", source_page="p153"),
+  band("7 and 8",7,8, access_sources="Local Corp president, mayor or City manager, City celebrity", audience="Your stuff goes Statewide. You are a minor celeb in your own right.", believability_out_of_10=5, believability="5 out of 10 chance the audience buys it.", impact="Change created by a story/scoop can change things all over several cities. Mid-level corporations or governments may be thrown out of power. Laws may be passed that affect people over several cities.", source_page="p153"),
+  band("9",9,9, access_sources="Divisional Corp head, State politico, well known celebrity", audience="You are known by many across the country, but not by everyone. If they've seen you, chances are it is on a national newsfeed.", believability_out_of_10=6, believability="6 out of 10 chance the audience buys it.", impact="Change created by a story/scoop can change things all over a major area like a whole nation. Large corporations or local governments may be toppled. Laws may be passed that affect people over a national area.", source_page="p153"),
+  band("10",10,10, access_sources="Major world leader, major Corporation head, world-famous celebrity", audience="You are known worldwide. People stop you for autographs and people in high places use you to leak important stuff.", believability_out_of_10=7, believability="7 out of 10 chance the audience buys it.", impact="Change created by a story/scoop can change things all over the world. Megacorps and powerful governments may fall or be overthrown. International laws may be established. Change can affect millions.", source_page="p154"),
+ ],
+}
+
+def job(name, src, cover, true_job, rows, s2, s4, s6, cyber, gear, note=None):
+    d = {"name": name, "source_page": src, "cover_jobs": cover, "true_job": true_job,
+         "stat_columns": ["INT","REF","DEX","TECH","COOL","WILL","MOVE","BODY","EMP"],
+         "stat_rows": [{"roll": i+1, "INT": r[0], "REF": r[1], "DEX": r[2], "TECH": r[3], "COOL": r[4], "WILL": r[5], "MOVE": r[6], "BODY": r[7], "EMP": r[8]} for i, r in enumerate(rows)],
+         "skills_plus_2": s2, "skills_plus_4": s4, "skills_plus_6": s6, "cyberware": cyber, "gear": gear}
+    if note: d["transcription_note"] = note
+    return d
+
+RA["Exec"] = {
+ "name": "Teamwork", "role": "Exec", "source_page": "p154", "pages": ["p154","p155","p156","p157","p158"],
+ "text": "Just like a real corporate executive, the Exec builds a team whose members help them accomplish their goals, whether legal or not, morale permitting. The Exec Role Ability is Teamwork.",
+ "signing_bonus": {"rank": 1, "source_page": "p154", "text": "At Teamwork Rank 1, as a gift, the Exec is given a suit comprised of a Businesswear Jacket, Top, Bottom, and Footwear that identify them as a member of the business elite. The Exec cannot resell these without raising suspicion."},
+ "corporate_housing": [
+  {"rank": 2, "housing": "Corporate Conapt", "text": "At Teamwork Rank 2, the Exec is given access to one of their Company's Corporate Conapts. As long as they remain a member of that Corporation, they can stay there without paying any Rent or any other fees. The Exec must still buy their own Lifestyle separately every month. If the Exec leaves to join another Corporation, they will extend to them the same offer, and even pay to move all their stuff to the new apartment.", "source_page": "p154"},
+  {"rank": 7, "housing": "Beaverville House in the Executive Zone", "text": "At Teamwork Rank 7, the Exec's corporate housing is improved to a Beaverville House in the Executive Zone.", "source_page": "p154"},
+  {"rank": 10, "housing": "Beaverville McMansion in the Executive Zone or a Luxury Penthouse in the Corporate Zone", "text": "At Teamwork Rank 10, the Exec's corporate housing is improved dramatically to a Beaverville McMansion in the Executive Zone or a Luxury Penthouse in the Corporate Zone.", "source_page": "p154"},
+ ],
+ "corporate_health_insurance": [
+  {"rank": 6, "coverage": "Trauma Team Silver", "text": "At Teamwork Rank 6, the Exec is given Trauma Team Silver coverage, paid for monthly by their Corporation. If the Exec leaves to join another Corporation, they will extend to them the same offer.", "source_page": "p154"},
+  {"rank": 8, "coverage": "Trauma Team Executive", "text": "At Teamwork Rank 8, the Corporation upgrades their coverage to Trauma Team Executive.", "source_page": "p154"},
+ ],
+ "team_member_thresholds": [
+  {"rank": 3, "team_members_total": 1}, {"rank": 5, "team_members_total": 2}, {"rank": 9, "team_members_total": 3}],
+ "team_members_text": "Starting at Rank 3, Teamwork give the Exec a Team Member. Ranks 5 and 9 of Teamwork give the Exec an additional Team Member, capping out at a maximum of 3 total Team Members at Rank 9. Team Members are rolled from a special chart for each of their jobs. The Exec chooses which class of Team Members they want, but their roll on the chart determines the STATs of the Team Member HR hires for them. While constructed like Player Characters, they vary in several distinct ways. They do not improve their Skills. They determine and heal their HP like Player Characters do. They are controlled by the GM, and their ability to follow an order depends on their Loyalty and ability to make a Loyalty Check. They cannot wear Armor other than Light Armorjack. Company Policy. Losing Team Members: If a Team Member is lost, HR will repossess their equipment and replace them during the next game session. This \"new hire\" has new STATs, but their starting Loyalty is reduced to 1 (they heard about what happened). In addition, this will cost the Exec an additional 200eb in \"hiring fees\" (bribes) to HR.",
+ "loyalty_text": "Loyalty: While Team Members work for the Exec, they are not mindless drones. They do the tasks given to them by the Exec based on their Loyalty to their boss (or the paycheck they sign for them). Loyalty is a shifting value; an Exec must (during every game session) do things to promote Loyalty and not lose it. Loyalty caps at maximum of 10 between game sessions, but during an individual game session, Loyalty has no limit. Loyalty Save: When a task is given to a Team Member by the Exec, the GM must roll 1d6 under the Team member's current Loyalty. If the Save is failed, the Team Member may refuse or botch the assignment or otherwise turn on the Exec. If Loyalty drops to 0 or lower, the Team Member will actively attempt to betray the Exec to their enemies. If at the end of a session a Team Member has less than 0 Loyalty, they will complain to HR and either receive a transfer or quit upon having one refused, depending on HR's whims. Either way, they are gone. See Losing Team Members, just above.",
+ "creating_team_members_text": "Job: Decide what your Team Member's job is. If you want to, you can also pick a cover job for them as well. You might not want other people to know you've got a Covert Ops specialist or Netrunner on the payroll. STATs: Roll 1d6 and read across the corresponding row, recording each STAT. Don't forget to determine their HP, Mortally Wounded, and Death Save values. You do not need to lower their EMP due to Humanity Loss from cyberware. That's already been factored in. Skills, Cyberware, and Gear: Record your Team Member's Skills, Cyberware, and Gear. These are standard packages provided to them by the company. Starting Loyalty: Roll 1d6 and add 1. This is your Team Member's starting Loyalty.",
+ "starting_loyalty": {"dice": "1d6", "add": 1}, "loyalty_cap_between_sessions": 10, "replacement_hire_loyalty": 1, "replacement_fee_eb": 200,
+ "loyalty_gain": [
+  {"action": "Compliment Team Member's work. Overuse this during a week and it will stop gaining you Loyalty with the Team Member.", "gain": 1},
+  {"action": "Give them a bonus or other perk of at least 200eb in value.", "gain": 4},
+  {"action": "Support them against Management.", "gain": 4},
+  {"action": "Give them a 20% cut of your earnings for a job.", "gain": 6},
+  {"action": "Give Team Member paid time off. Must be for an entire game session.", "gain": 6},
+  {"action": "Risk physical harm for Team Member.", "gain": 8},
+ ],
+ "loyalty_loss": [
+  {"actions": ["Gain no Loyalty with Team Member during an entire game session."], "loss": -1},
+  {"actions": ["Berate or chew out Team Member or their work."], "loss": -2},
+  {"actions": ["Ignore Team Member's contribution to a job.", "Forget Team Member's Birthday."], "loss": -4},
+  {"actions": ["Do not come through with bonus or perk promised."], "loss": -6},
+  {"actions": ["Throw them under the bus to Management."], "loss": -6},
+  {"actions": ["Abandon Team Member under fire."], "loss": -8},
+ ],
+ "loyalty_table_note": "U-28 resolved on the p155 page image (crop x 480-820, y 770-1045 at 110 dpi): the Losing Loyalty table has 6 rows; Ignore contribution and Forget Birthday share the single -4 row; the -1 row is Gain no Loyalty during an entire session.",
+ "team_jobs": [
+  job("Company Bodyguard","p156",["Escort","Personal Trainer"],"To protect the Exec in dangerous situations.",
+      [(3,7,7,4,7,6,4,8,4),(5,8,6,2,7,8,4,8,2),(4,8,5,3,7,8,6,6,3),(4,7,8,4,7,7,4,7,2),(3,8,5,2,8,7,4,6,7),(5,7,7,2,7,6,5,7,4)],
+      ["Concentration","Conversation","Education","First Aid","Human Perception","Language (Streetslang)","Local Expert (Your Home)","Persuasion","Stealth"],
+      ["Athletics","Evasion","Interrogation","Perception","Resist Torture/Drugs","Tactics"],
+      ["Handgun","Brawling"],
+      "Enhanced Antibodies, Subdermal Armor (SP11), Cyberaudio Suite, Internal Agent, Homing Tracer",
+      "Agent, Light Armorjack (SP 11), Very Heavy Pistol, Basic VH Pistol Ammo x50"),
+  job("Company Covert Operative","p156",["Personal Assistant","Stylist"],"Keeping the Exec from getting their hands dirty.",
+      [(4,8,5,4,6,8,5,7,3),(3,8,6,2,8,6,6,6,5),(6,7,5,5,7,6,3,7,4),(5,6,5,3,6,8,7,6,4),(3,8,4,4,8,7,4,8,4),(5,8,3,7,7,8,3,6,3)],
+      ["Athletics","Brawling","Concentration","Conversation","Education","First Aid","Language (Streetslang)","Local Expert (Your Home)","Perception","Persuasion"],
+      ["Bribery","Bureaucracy","Business","Evasion","Human Perception","Pick Lock","Streetwise","Trading","Wardrobe & Style"],
+      ["Handgun","Stealth"],
+      "Cybereyes with paired Low Light/Infrared/UV, Color Shift, Cyberarm with Grapple Hand, Popup Ranged Weapon (Very Heavy Pistol), Realskinn™ Covering",
+      "Agent, Light Armorjack (SP 11), Very Heavy Pistol, Basic VH Pistol Ammo x50",
+      "Job spans p156 (header, STAT rows, +2 skills) and p157 (+4 and +6 skills, cyberware, gear)."),
+  job("Company Driver","p157",["Valet","Personal Driver"],"Drives, pilots, and maintains the Team's vehicles.",
+      [(5,8,6,4,6,5,6,5,5),(5,7,7,5,5,7,4,7,3),(6,8,8,4,7,4,5,6,2),(8,7,4,5,4,7,5,6,4),(7,8,3,5,7,6,4,6,4),(6,8,6,6,8,5,3,5,3)],
+      ["Athletics","Concentration","Conversation","Education","First Aid","Human Perception","Language (Streetslang)","Local Expert (Your Home)","Perception","Persuasion"],
+      ["Brawling","Endurance","Evasion","Land Vehicle Tech","Pilot Air Vehicle","Pilot Sea Vehicle","Sea Vehicle Tech","Stealth","Tracking"],
+      ["Drive Land Vehicle","Handgun"],
+      "Radar/Sonar Implant, Cyberaudio Suite, Internal Agent, Homing Tracer, Radar Detector",
+      "Light Armorjack (SP11), Very Heavy Pistol, Compact Groundcar with Seating Upgrade, Basic VH Pistol Ammo x50"),
+  job("Company Netrunner","p157",["I.T. Engineer","Research Specialist"],"Netrunning and information gathering.",
+      [(6,7,8,7,5,4,5,5,3),(7,8,4,6,8,3,4,6,4),(5,6,8,8,6,6,4,4,3),(7,8,5,6,4,4,6,5,5),(5,8,8,5,5,3,6,4,6),(8,7,6,6,4,7,4,4,4)],
+      ["Interface (Netrunner Role Ability)","Athletics","Brawling","Concentration","Conversation","Evasion","First Aid","Human Perception","Language (Streetslang)","Local Expert (Your Home)","Perception","Persuasion"],
+      ["Basic Tech","Cryptography","Cybertech","Education","Electronics/Security Tech (x2)","Forgery","Library Search","Handgun","Stealth"],
+      [],
+      "Neural Link, Chipware Socket, Pain Editor, Interface Plugs, Cybereyes with Virtuality",
+      "Agent, Light Armorjack (SP11), Cyberdeck (7 slots: Sword, Sword, Killer, Worm, Worm, Armor), Very Heavy Pistol, Basic VH Pistol Ammo x50",
+      "Job spans p157 (header, STAT rows, +2 skills) and p158 (+4 skills, cyberware, gear). The book prints no 'Skills at +6' line for this job."),
+  job("Company Technician","p158",["I.T. Engineer","Intern"],"Repairs Team's gear and weapons.",
+      [(8,8,5,7,3,4,4,5,6),(8,7,6,8,3,5,5,4,4),(8,6,5,8,4,3,3,7,6),(8,8,5,7,4,4,4,5,5),(7,7,3,7,5,3,6,6,3),(7,8,5,8,6,3,3,5,5)],
+      ["Athletics","Brawling","Concentration","Conversation","Evasion","First Aid","Human Perception","Language (Streetslang)","Local Expert (Your Home)","Perception","Persuasion","Stealth"],
+      ["Education","Handgun","Weaponstech (x2)"],
+      ["Basic Tech","Cybertech","Electronics/Security Tech (x2)"],
+      "Tool Hand, Cyberaudio Suite, Internal Agent, Bug Detector, Audio Recorder",
+      "Light Armorjack (SP11), Very Heavy Pistol, Basic VH Pistol Ammo x50",
+      "The book prints the +6 line label with a stray period ('Skills at +6.:'); transcribed as the +6 skills."),
+ ],
+}
+
+RA["Lawman"] = {
+ "name": "Backup", "role": "Lawman", "source_page": "p159", "pages": ["p159","p160"],
+ "text": "The Lawman's Role Ability is Backup. Lawmen can call upon the help of a group of fellow law enforcers, based on the Lawman's Backup Rank and the conditions under which the call is made. The Backup will be armed and armored based on the table below, and will be played by the GM. As a Lawman increases in Rank, they are likely to be promoted within their current law enforcement organization or to be recruited by law enforcement agencies that they can currently call Backup from. When in danger, you can call on Backup from a group of your Backup Rank or lower. As an Action, you attempt to roll equal or lower than your Backup Rank on a d10 to get someone to respond to your call. If you abuse this, your Boss will throw you off the force or fine you as they see fit. After someone responds to your call, you roll a d6 to find out in how many Rounds your backup will arrive on the scene. If you roll a 6 on this roll, instead of your typical backup, the backup that arrives will be of the next highest level of backup, unless you are Rank 10, in which case two separate backup groups will arrive. If nobody responds to your call, you can always try your backup call again next Turn.",
+ "call_roll": "1d10, equal or lower than Backup Rank", "arrival_roll": "1d6 Rounds",
+ "column_definitions": "Combat Number: A Skill Base used for both offense and defense. This number combines both STAT and Skill for them. You will add a d10 roll to this value whenever attacking with their carried weapons or equipment or defending. Backup cannot dodge bullets. SP: The stopping power of the armor on both their Body and Head location. HP: The amount of Hit Points that each member of the backup has. MOVE & BODY: The backup's MOVE and BODY STAT, important for movement and for some effects that reference the target's MOVE or BODY (like Death Saves).",
+ "rank_bands": [
+  band("1 and 2",1,2, combat_number=8, sp=7, hp=20, move_and_body=4, backup="Corporate Security", text="Corporate Security. Four local renta-cops on the scene, arriving on foot. They carry Heavy Pistols and wear Kevlar®.", source_page="p158"),
+  band("3 and 4",3,4, combat_number=10, sp=7, hp=25, move_and_body=5, backup="Local Beat Cops", text="Local Beat Cops. Four local cops on the beat. They arrive in two Compact Groundcars. They carry Heavy Pistols and are armored in Kevlar®.", source_page="p158"),
+  band("5 thru 7",5,7, combat_number=14, sp=13, hp=35, move_and_body=4, backup="Sheriff's Department", text="Sheriff's Department. Two local \"County Mounties\" patrolling the exurbs and the highways around the City. They will arrive in a High Performance Groundcar, armed with Heavy Pistols and Assault Rifles. Armored in Heavy Armorjack.", source_page="p158"),
+  band("8",8,8, combat_number=16, sp=15, hp=50, move_and_body=6, backup="Recovery Zone Marshal", text="Recovery Zone Marshal. Like the marshals of the Old West, these are lone Lawmen who patrol the Recovery Zones and new cities. One arrives on a Superbike, carrying a Very Heavy Pistol, Assault Rifle, Grenade Launcher, and wearing Flak Armor.", source_page="p159"),
+  band("9",9,9, combat_number=15, sp=18, hp=35, move_and_body=4, backup="C-SWAT", text="C-SWAT. Two heavy hitters from the Psycho Squad. They carry assault rifles and rocket launchers, wearing Metalgear®. Will arrive from the air in an AV-4.", source_page="p159"),
+  band("10",10,10, combat_number=14, sp=11, hp=35, move_and_body=6, backup="National Law Enforcement/Interpol/FBI/Netwatch", text="National Law Enforcement/Interpol/FBI/Netwatch. These are serious hitters, operating under the control of national governments or international law enforcement groups. They travel in pairs, will arrive in an AV-4, and are outfitted with Very Heavy Pistols, Assault Rifles, in Light Armorjack. Unlike all other forms of Backup, these serious hitters stick around after the conflict ends and assist in investigating the scene. While they will not travel with the Crew on a day-to-day basis, after the first time they are called the same 2 serious hitters will always respond to calls for backup connected to the initial call until the \"case\" is closed, or they fall in the line of duty. Additionally, they can use their Combat Number for these Skills: Accounting, Acting, Conceal/Reveal Object, Criminology, Cryptography, Deduction, Education, Forgery, Interrogation, Paramedic, Perception, Personal Grooming, Resist Torture/Drugs, Stealth, and Tracking.",
+       combat_number_skills=["Accounting","Acting","Conceal/Reveal Object","Criminology","Cryptography","Deduction","Education","Forgery","Interrogation","Paramedic","Perception","Personal Grooming","Resist Torture/Drugs","Stealth","Tracking"], source_page="p159"),
+ ],
+ "transcription_note": "D-8: Combat Number 16 / 15 / 14 at Ranks 8 / 9 / 10 kept as printed; confirmed on the p159 page image (crop x 96-815, y 110-440 at 110 dpi). The p158 and p159 page images, not the .txt, were used for the band boundaries.",
+}
+
+RA["Fixer"] = {
+ "name": "Operator", "role": "Fixer", "source_page": "p160", "pages": ["p160","p161","p162"],
+ "text": "The Fixer's Role Ability is Operator. Fixers know how to get things on the black market and are adept at navigating the complex social customs of The Street, where hundreds of cultures and economic levels collide. Fixers maintain vast webs of contacts and clients. Contacts represents who the Fixer can reach out in order to source goods, favors, or information. The Fixer will still have to pay for these, of course. Reach is the highest price category of items that a Fixer can always source, and if they can use their influence to gather other Fixers into creating a Night Market, which makes all price categories of items available to them for a short time. (See pg. 338 for rules on setting up Night Markets) Haggle is the ability of the Fixer to strike a deal. When haggling with a person, you roll COOL + Trading Skill + Your Operator Rank + 1d10 against their COOL + Trading Skill + Their Operator Rank (if they are a Fixer) + 1d10. If you succeed, you can make 1 deal of your Operator Rank or lower. Only 1 Fixer deal can be made per transaction. Grease represents the Fixer's ability to blend into the many cultures on and off The Street; ability to know the language, social codes, and status marks for each group or culture.",
+ "haggle_roll": "COOL + Trading Skill + Your Operator Rank + 1d10 against their COOL + Trading Skill + Their Operator Rank (if they are a Fixer) + 1d10",
+ "rank_bands": [
+  band("1 and 2",1,2, contacts_clients="Local honcho, gang lord, local neighborhood leadership", reach="You can always find a place to source Cheap and Everyday items for your clients on a piece-by-piece basis, even if they are otherwise unavailable.", haggle="If successful, you can get 10% more or less than market price when buying or selling.", grease="You know the cultural ins-and-outs of your immediate neighborhood including all local gangs.", reach_up_to="Cheap/Everyday", source_page="p161"),
+  band("3 and 4",3,4, contacts_clients="City gang honcho, minor politician, Corp Exec, well known person in the neighborhood.", reach="You can always find a place to source up to Expensive items for your clients on a piece by piece basis, even if they are otherwise unavailable.", haggle="If successful, when you buy 5 or more of the same item, you can get one more of that item for free.", grease="You know how to get along well with at least 1 other culture in your area as well as gaining a single language you don't already know associated with that culture at Skill Level 4.", reach_up_to="Expensive", source_page="p161"),
+  band("5 and 6",5,6, contacts_clients="Major City player, City politico, neighborhood celebrity.", reach="Once per month, working with other Fixers of your rank, you can set up a Night Market. While at a Night Market that you have helped organize, you can always find a place to source up to Super Luxury items.", haggle="If successful, you can negotiate the pay per person for a Job up 20%.", grease="You know how to get along perfectly with 2 additional cultures (3 in total) in your area as well as gaining a single language which you don't already know associated with each culture at Skill Level 4.", reach_up_to="Super Luxury (at a Night Market you helped organize, once per month)", source_page="p161"),
+  band("7 and 8",7,8, contacts_clients="Local Corp president, mayor or City manager, local celebrity.", reach="You can always find a place to source up to Very Expensive items for your clients on a piece by piece basis, even if they are otherwise unavailable.", haggle="If successful, when buying a Luxury or Super Luxury item, you can pay half now and half in one month. If you ever don't pay the second half on time, nobody will do this deal with you again.", grease="You know how to blend in perfectly with 3 additional cultures (6 in total) in your area as well as a gaining single language which you don't already know associated with each culture at Skill Level 4.", reach_up_to="Very Expensive", source_page="p162"),
+  band("9",9,9, contacts_clients="Divisional Corp head, state or City zone politico, well known celebrity.", reach="You can always find a place to source up to Luxury items for your clients on a piece by piece basis, even if they are otherwise unavailable. When you set up a Night Market, you can choose to additionally set up a Midnight Market inside it, which gathers the leadership of the criminal underworld.", haggle="If successful, you can get 20% more or less than market price when buying or selling.", grease="You know how to blend in perfectly with not only many cultures in your area, but also with Corporate and governmental agencies.", reach_up_to="Luxury", source_page="p162"),
+  band("10",10,10, contacts_clients="Major world leader, major Corporation head, world-famous celebrity.", reach="You can always find a place to source up to Super Luxury items for your clients on a piece by piece basis, even if they are otherwise unavailable.", haggle="If successful, you can negotiate to double the pay per person for a Dangerous Job.", grease="You can blend in seamlessly with almost any group, including very specialized or \"tight\" groups such as secret societies, cults, or exclusive membership groups.", reach_up_to="Super Luxury", source_page="p162"),
+ ],
+}
+
+def up(name, rank, text, group, page):
+    return {"name": name, "rank_required": rank, "text": text, "applies_to": group, "source_page": page}
+
+RA["Nomad"] = {
+ "name": "Moto", "role": "Nomad", "source_page": "p162", "pages": ["p162","p163","p164","p165","p166"],
+ "text": "The difference between most people and Nomads is that Nomads have better cars. The Nomad Role Ability is Moto. Nomad Vehicle Familiarity: Being part of a Nomad Family means spending your life in the driver's seat and under the hood, improving your driving abilities and vehicle knowledge enough to get by on familiarity alone or with training to pull off impressive feats with ease. A Nomad adds their Moto Rank to any Drive Land Vehicle, Pilot Air Vehicle, Pilot Sea Vehicle, Air Vehicle Tech, Land Vehicle Tech, or Sea Vehicle Tech Skill Check they make. Family Motorpool: Whenever a Nomad increases their Role Ability Rank, they have the option of: Either adding a stock vehicle (with minimum specs) of their Moto Rank or lower to the pool of vehicles they have permission to use from the Family Motorpool. Or upgrading one of the Nomad's already permitted Family Vehicles with a single upgrade of their Moto Rank or lower. A Nomad can only have one of their Family Vehicles out at a time. A Nomad can call one of their Family to get their current Family Vehicle swapped out with another of their loaned Family Vehicles, and, assuming their Family is close by, the vehicle can be swapped out the following morning. If destroyed, the Family will fully repair any Family Vehicle for the Nomad, but it will take a week's time. The Nomad will also be expected to pay 500eb for the service. Even Family Heads pay this because it's a way of saving face for damaging Family property. It might be waived if you are broke, but your reputation would suffer. Daily repairs like bullet removal are the Nomad's responsibility. Upon attaining the 10th Rank in their Role Ability, a Nomad is promoted to a leadership position in their Family, with all the responsibility that entails. While leading by example, such a Nomad can have all their Family Vehicles out at a time. Any future Family Vehicles they wish to purchase are bought at market price, and any future upgrades they desire can be bought at 1,000eb a piece.",
+ "vehicle_familiarity_skills": ["Drive Land Vehicle","Pilot Air Vehicle","Pilot Sea Vehicle","Air Vehicle Tech","Land Vehicle Tech","Sea Vehicle Tech"],
+ "repair_fee_eb": 500, "repair_days": 7, "rank_10_upgrade_cost_eb": 1000,
+ "motorpool": [
+  {"rank_label": "1 to 4", "rank_min": 1, "rank_max": 4, "vehicles": ["Compact Groundcar","Gyrocopter","Jetski","Roadbike"]},
+  {"rank_label": "5 to 6", "rank_min": 5, "rank_max": 6, "vehicles": ["Helicopter","High Performance Groundcar","Speedboat"]},
+  {"rank_label": "7 to 8", "rank_min": 7, "rank_max": 8, "vehicles": ["AV-4","Cabin Cruiser","Superbike"]},
+  {"rank_label": "9 to 10", "rank_min": 9, "rank_max": 10, "vehicles": ["Aerozep","AV-9","Super Groundcar","Yacht"]},
+ ],
+ "upgrades_intro": "Unless stated otherwise, an option can only be taken once per vehicle. These upgrades are also rarely sold on the open market, at Very Expensive for those attainable at Moto Rank 1, and at Luxury for those not attainable at Rank 1.",
+ "upgrades": [
+  up("Armored Chassis",5,"Armors the vehicle at SP13. Doesn't affect the vehicle's glass.","All Vehicles","p164"),
+  up("Bulletproof Glass",1,"Instead of providing no protection, all glass on the vehicle is now considered to be cover: Thin Bulletproof Glass (15 HP). If upgraded a second time, it becomes Thick Bulletproof Glass (30 HP). All windows on the vehicle sustain damage individually.","All Vehicles","p164"),
+  up("Communications Center",1,"Easily accessible touchscreen console with onboard Agent and storage space loaded with removable tech: 6 Radio Communicators, 6 Scrambler/Descramblers, a Radio Scanner/Music Player, a Homing Tracer with 6 button-sized linked tracers, and an Audio Recorder.","All Vehicles","p164"),
+  up("NOS",1,"A burst of power when you need it. Allows you to use your Action to use an additional Move Action when driving a vehicle. Each tank of NOS can be used once per day. Each additional upgrade adds an additional tank. The tanks capture nitrogen and oxygen from the air and synthesize nitrous oxide on their own, never needing refilling.","All Vehicles","p164"),
+  up("Onboard Flamethrower",1,"A Flamethrower you can mount front, side, or back-facing on the exterior of a vehicle. The driver can fire it using their Action. Cannot be reloaded while driving. Weapon cannot be removed and cannot accept weapon attachments. Multiple upgrades can be installed.","All Vehicles","p164"),
+  up("Onboard Machine gun",1,"An Assault Rifle with 30 rounds only capable of using Autofire that you can mount front facing on the exterior of a vehicle. The driver can fire it using their Action. Cannot be reloaded while driving. Weapon cannot be removed and cannot accept weapon attachments. Multiple upgrades can be installed.","All Vehicles","p164"),
+  up("Seating Upgrade",1,"Adds two seats to the vehicle. If desired, these extra seats can come in a sidecar, which can be fully enclosed with the same glass as the rest of the vehicle, with side windows optional. Additionally, any seats in a vehicle with this upgrade can be rigged as ejector seats, firing the contents of the seat 10 m/yds into the air above the vehicle, through a trapdoor mechanism in the ceiling of the vehicle, if needed. An ejected passenger struck by a helicopter blade during such an ejection takes damage as if they had been struck by a Very Heavy Melee Weapon. Typically, these ejection seats are rigged with parachutes, but these could always be removed. This upgrade can be taken multiple times for all vehicles except Bikes, Jetskis, and Gyrocopters.","All Vehicles","p164"),
+  up("Security Upgrade",5,"Replaces all the locks on the vehicle with DNA locks, which can be set up to accept a thumbprint, iris scan, blood sample, or any other desired biometric method. Such a lock cannot be unlocked without either its biometric key or a DV 17 Electronics/Security Tech Check. A person who presents an inaccurate biometric key, or fails a Check to open one of the locks without the correct biometric key is struck as if they had been hit in the body by a Stun Baton if they are within two m/yds of the vehicle. Additionally, the Security Upgrade adds a cloaking feature to the vehicle, allowing it to hide itself from all but a DV17 Perception Check, assuming it remains still. System takes a minute to engage, and operates by taking a video of the vehicle's surroundings and projecting it on the surface of the vehicle in real time, aided in part by nanomachines which cover hard-to-reach areas.","All Vehicles","p164"),
+  up("Smuggling Upgrade",1,"Upgrades the vehicle with two onboard Hidden Holsters (exactly the same rules-wise as the Cyberware of the same name) which provide the driver and one passenger with an easily accessible concealed weapon, and one large space hidden somewhere within the vehicle for smuggling purposes. These spaces can only be discovered with a DV17 Conceal/Reveal Object Check. This upgrade can be taken multiple times with all vehicles except: Bikes, Jetskis, and Gyrocopters.","All Vehicles","p164"),
+  up("Heavy Chassis",1,"Adds 20 SDP to the vehicle. This doesn't affect the vehicle's glass. A vehicle with this upgrade can tow up to 10 tons. It might even have a large tow cable, appearance-wise. This upgrade is a prerequisite for some of the heavier duty vehicle upgrades.","All Vehicles Except Bikes, Jetskis, Gyrocopters","p165"),
+  up("Onboard Rocket Pod",5,"A Rocket Launcher with a drum of three rockets that you can mount front facing on the exterior of a vehicle. The driver can fire it using their Action. Cannot be reloaded while driving. Weapon cannot be removed and cannot accept weapon attachments. Multiple upgrades can be installed, but what job requires more than three rockets...? Requires Heavy Chassis.","All Vehicles Except Bikes, Jetskis, Gyrocopters","p165"),
+  up("Vehicle Heavy Weapon Mount",5,"Upgrade transforms one of the vehicle's seats into a swiveling mount for any two-handed ranged weapon, which can be fired by a passenger using their Action. The passenger also can reload this mounted weapon while the vehicle is in motion. This weapon can be removed or reinstalled using an Action. The first time a Nomad upgrades one of their vehicles with one of these, their Family will include with it a Tsunami Arms Helix, Rhinemetall EMG-86 Railgun, or Militech \"Cowboy\" U-56 Grenade Launcher as a gift, but all others are up to the Nomad to source. If the vehicle has Bulletproof Glass, a bubble of the same glass protects the gunner. Multiple upgrades can only be installed on Cabin Cruisers, Yachts, Aerozeps, and Groundcars that already have the Housing Capacity Upgrade installed. Requires Heavy Chassis.","All Vehicles Except Bikes, Jetskis, Gyrocopters","p165"),
+  up("Onboard Melee Weapon",1,"A Very Heavy Melee Weapon you can mount front, side, or back facing on the exterior of a vehicle. The driver can attack with it using their Action. Weapon cannot be removed. Multiple upgrades can be installed.","All Land and Sea Vehicles","p165"),
+  up("Hover Upgrade",5,"This upgrade installs a series of powerful fans onto the base of the vehicle that allow it to travel across the surface of the water at the speed of a Cabin Cruiser.","All Land Vehicles","p165"),
+  up("AV-4 Engine Upgrade",7,"This upgrade adds a vectored thrust turbofan engine to the vehicle, allowing flight! As far as movement is concerned, treat the vehicle as an AV-4 while it is in the air. The vehicle is piloted using the Pilot Air Vehicle Skill instead of the Drive Land Vehicle Skill when it is in the air.","All Land Vehicles","p165"),
+  up("Combat Plow",1,"Whenever you slam the front of the vehicle into a piece of cover, another vehicle, or an unlucky pedestrian your vehicle doesn't take any damage and nobody in your vehicle suffers the Whiplash Critical Injury. If your vehicle was boosted by NOS on the Turn when you slammed the front of your vehicle into a piece of cover, other vehicle, or unlucky pedestrian, damage dealt by your vehicle's ramming increases by 2d6.","All Land and Sea Vehicles Except Bikes and Jetskies","p165"),
+  up("Enhanced Interface Plug Integration",5,"When you use your Interface Plugs to drive your bike with this upgrade, if you can dodge bullets (REF 8 or higher), and you, a passenger on your bike, or your bike are targeted by an attack that you could dodge or otherwise avoid on foot, you can attempt to dodge or avoid that attack with your Evasion Skill, just like you would if you were on foot. Your choice to dodge \"becomes\" the chosen defense of your passenger automatically. In the case of an explosive or other area attack, your bike swerves out of its range if you successfully dodge, just as such an effect would cause you to do if you were on foot.","All Bikes","p166"),
+  up("Deployable Spike Strip",1,"Can be deployed by the driver as an Action. When deployed, any closely trailing vehicles with tires must make a DV17 Drive Land Vehicle Check. Should they fail the Check, their vehicle takes 4d6 damage to its weak point (damage that gets through any vehicle's SP is multiplied by 2). Replacement spike strips are 10eb (Cheap). Multiple upgrades increase the amount of spike strips that can be deployed before the mechanism needs to be reloaded, which can't happen while the vehicle is moving.","All Groundcards [sic: Groundcars]","p166"),
+  up("Housing Capacity",1,"When installed in a Groundcar or AV-4, this upgrade adds a sleeping area with 1 bed, a toilet, a shower, and a small kitchen to the vehicle, turning it into a Kombi. When installed in a Cabin Cruiser, Yacht, or Aerozep, the upgrade instead adds one room to the vehicle. Requires a Heavy Chassis on Compact Groundcar and High Performance Groundcar.","Aerozep, AV-4, Cabin Cruiser, Groundcars, Yacht","p166"),
+ ],
+ "transcription_note": "U-29 resolved on the p164, p165 and p166 page images: every Rank Required value sits beside the upgrade it is paired with here (Rank 5: Armored Chassis, Security Upgrade, Onboard Rocket Pod, Vehicle Heavy Weapon Mount, Hover Upgrade, Enhanced Interface Plug Integration; Rank 7: AV-4 Engine Upgrade; all others Rank 1). The p166 group heading prints 'All Groundcards'.",
+}
+
+ORDER = ["Rockerboy","Solo","Netrunner","Tech","Medtech","Media","Exec","Lawman","Fixer","Nomad"]
+ras = []
+for r in ORDER:
+    d = dict(RA[r])
+    rec = {"kind": "role_ability"}
+    rec.update(d)
+    rec["starting_rank"] = 4
+    rec["rank_min"] = 1
+    rec["rank_max"] = 10
+    ras.append(rec)
+
+json.dump(roles, open(OUT + "/role.json", "w"), indent=2, ensure_ascii=False); open(OUT + "/role.json", "a").write("\n")
+json.dump(ras, open(OUT + "/role_ability.json", "w"), indent=2, ensure_ascii=False); open(OUT + "/role_ability.json", "a").write("\n")
+print(len(roles), len(ras))

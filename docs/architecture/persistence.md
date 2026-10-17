@@ -1,8 +1,8 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the `game_system` routing note below (`src/saved_character/` and
-> `src/campaign/` have no diff against `origin/develop`: `git diff --stat origin/develop...HEAD -- src/saved_character src/campaign` prints nothing). The rest was last verified
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the Cyberpunk RED routing note, the
+> store-ownership rule and the six-seed list below. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the `game_system` routing note below. The rest was last verified
 > 2026-09-29 against `tranche/16`. Earlier: **2026-09-29 against `tranche/16` (`165cc205e7`)** — added the SD-36 F6e starter-seeds
 > section (`starter_seeds()` is a list, each entry with its own marker; `character_hub.rs`,
 > `stage-f6/f6e-receipt.md`). Prior pass **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36
@@ -38,9 +38,18 @@ schema_version 1 envelopes (no `game_system` line) still load, via
 `local_store::derive_legacy_game_system`, which derives a short id like
 `"pf1"` from the `content_or_rules_provenance` lineage prefix.
 The field routes a load: a Starfinder 1e character is saved with `game_system` `"starfinder-1e"` (`GameSystem::Starfinder1e.id()`), and
-`rule_system_adapter::load_saved_character_via_envelope` sends exactly that value to `StarfinderAdapter`; every other value loads through
-`Pf1Adapter` (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam"). The store itself is system-neutral: it saves the same
-`CharacterInput` shape for both systems.
+`rule_system_adapter::load_saved_character_via_envelope` sends exactly that value to `StarfinderAdapter`; a Cyberpunk RED character is
+saved with `"cyberpunk-red"` and goes to `CyberpunkAdapter`; every other value loads through
+`Pf1Adapter` (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam"). `SavedCharacterStore` saves the same
+`CharacterInput` shape for Pathfinder and Starfinder; it does **not** own a Cyberpunk RED payload.
+
+**Cyberpunk RED has its own store** (`src/rules_core/cpr/store.rs`, `CprCharacterStore`). A character is a directory under the same
+characters root holding `envelope.txt` (the same `key = value` envelope grammar, `game_system = cyberpunk-red`) and
+`cpr_character_input.txt` (the ten STATs), plus `cpr_sheet_choices.txt`, `cpr_lifepath.txt`, `cpr_role_choices.txt` and `cpr_kit.txt` once
+the player has saved any of those. There is no `authoritative_character_input.txt`. So that the shared root can hold both, the Pathfinder
+store's listing skips a directory whose envelope names a system it does not own (`local_store::owns_payload`, read through
+`local_store::peek_game_system`, which reads `envelope.txt` alone): such a directory is neither a Pathfinder character nor an
+unreadable entry. The Pathfinder envelope bytes are unchanged (pinned by the `render_envelope_of_the_pf_fixture_is_unchanged` test).
 
 `SavedCharacterRevisionKind` currently has exactly one variant,
 `Authoritative` — there is no autosave/recovery revision kind implemented yet,
@@ -280,9 +289,13 @@ on-disk revision); every other write path that persists a
 
 **Starter seeds are a list, not a single hardcoded character.** `seed_default_character_if_needed`
 resolves the app-data directory and calls `character_hub.rs`'s `seed_default_characters_at`, which
-walks `starter_seeds()` — three `StarterSeed` entries as of tranche-17-ui brief 3: Aldric Ironhand (Human Fighter 3),
+walks `starter_seeds()` — six `StarterSeed` entries: three Pathfinder ones (tranche-17-ui brief 3) — Aldric Ironhand (Human Fighter 3),
 Elowen Ashgrave (Human Wizard 5, with Fireball recorded and prepared) and Brother Tomas Vane (Cleric 3 / Fighter 2,
-id `00000000-0000-0000-0000-000000000003`). Each seed carries its own marker file
+id `00000000-0000-0000-0000-000000000003`) — and three Cyberpunk RED ones chained on from `cpr_adapter::starter_requests` (SD-38 E7.1):
+Jax Moreno (Solo, Streetrat, id `…0004`, marker `.default_character_seeded_4`), Nyx Calder (Netrunner, Complete Package, `…0005`,
+`.default_character_seeded_5`) and Imani Okafor (Medtech, Edgerunner, `…0006`, `.default_character_seeded_6`). A seed is a
+`StarterBuild::Pathfinder` or `StarterBuild::CyberpunkRed`; the Cyberpunk builds run the Create screen's own path
+(`cpr_creation::create_at_root`) with every die fixed by the request, so a restore rebuilds the same character. Each seed carries its own marker file
 (`DEFAULT_CHARACTER_SEED_MARKER` = `.default_character_seeded` for Aldric, `SECOND_SEED_MARKER` =
 `.default_character_seeded_2` for Elowen, `THIRD_SEED_MARKER` = `.default_character_seeded_3` for Tomas), so an
 install that already carries one seed's marker gains any later seed on its next launch without re-writing the
@@ -293,8 +306,7 @@ touches a seed whose directory exists. A seed whose character directory already 
 overwritten at launch either (its marker is written instead, so a player's edits survive even a lost marker). A seed
 that fails to build is reported, not dropped: the pass collects its error, `list_starter_seed_errors` returns the
 latest pass's errors, and the Load screen shows "A starter character could not be created: <errors>".
-Count check: `grep -c "marker: " apps/desktop/src-tauri/src/character_hub.rs` prints 5 (three `starter_seeds()`
-entries, the struct field, one test fixture). Each seed
+Each Pathfinder seed
 is built through `compose_character_input`, the same composer `create_character` uses, plus
 `pf1_adapter::apply_record_and_prepare_spell_selection` for any extra spells — never a hand-written
 character file — and is written only when its headless build receipt is `Computed`

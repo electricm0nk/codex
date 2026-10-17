@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Black Lace",
+    "kind": "drug",
+    "source_page": "p358",
+    "continues_on": null,
+    "primary_effect_duration": "24 Hours",
+    "secondary_effect_dv": 17,
+    "cost_per_dose_eb": 50,
+    "cost_text": "50eb (Costly)",
+    "price_category": "Costly",
+    "text": "Primary Effect\n• Lasts 24 Hours.\n• User takes 2d6 Humanity Loss upon taking a dose, which is returned if the user isn't affected by Black Lace's Secondary Effect.\n• For the duration of the Primary Effect, the user ignores the effects of the Seriously Wounded Wound State.\nSecondary Effect (DV17)\n• Humanity Loss from Primary Effect isn't returned.\n• If the user wasn't already addicted to Black Lace, they are now. While addicted, unless the user is currently experiencing the Primary Effect of Black Lace, their REF is lowered by 2 points."
+  },
+  {
+    "name": "Blue Glass",
+    "kind": "drug",
+    "source_page": "p358",
+    "continues_on": null,
+    "primary_effect_duration": "4 Hours",
+    "secondary_effect_dv": 15,
+    "cost_per_dose_eb": 20,
+    "cost_text": "20eb (Everyday)",
+    "price_category": "Everyday",
+    "text": "Primary Effect\n• Lasts 4 Hours.\n• For the duration of the Primary Effect, The GM will occasionally tell you when you are \"flashing out,\" meaning you are hallucinating swirls of vibrant colors in short, powerful bursts. You lose your ability to do an Action on a Turn while in this state.\nSecondary Effect (DV15)\n• If the user wasn't already addicted to Blue Glass, they are now.\n• While addicted, The GM will occasionally tell you when you are \"flashing out,\" hallucinating in short powerful bursts that cause you to lose your ability to do an Action on a Turn while in this state.\n• A Blue Glass Junkie will typically \"flash out\" once every hour, but this can vary heavily from person to person.\n• While addicted to Blue Glass, its Primary Effect changes: Instead of causing you to \"flash out\", you are instead immune to \"flashing out\" while experiencing the Primary Effect of Blue Glass. Now, you take it for stability.",
+    "margin_note": "Lawmen in Night City usually won't hassle you over drugs unless they're looking for an excuse to mess up your day."
+  },
+  {
+    "name": "Boost",
+    "kind": "drug",
+    "source_page": "p358",
+    "continues_on": null,
+    "primary_effect_duration": "24 Hours",
+    "secondary_effect_dv": 17,
+    "cost_per_dose_eb": 50,
+    "cost_text": "50eb (Costly)",
+    "price_category": "Costly",
+    "text": "Primary Effect\n• Lasts 24 Hours.\n• For the duration of the Primary Effect, the user's INT increases by 2 points. This can raise your INT above 8.\nSecondary Effect (DV17)\n• If the user wasn't already addicted to Boost, they are now. While addicted, their INT is lowered by 2 points."
+  },
+  {
+    "name": "Smash",
+    "kind": "drug",
+    "source_page": "p358",
+    "continues_on": "p359",
+    "primary_effect_duration": "4 Hours",
+    "secondary_effect_dv": 15,
+    "cost_per_dose_eb": 10,
+    "cost_text": "10eb (Cheap)",
+    "price_category": "Cheap",
+    "text": "Primary Effect\n• Lasts 4 Hours.\n• Yellow, foamy, and sold in cans everywhere.\n• For the duration of the Primary Effect, the user feels euphoric, loose, happy, and ready to party. In game terms this gives the user +2 to the following Skills: Dance, Contortionist, Conversation, Human Perception, Persuasion, and Acting.\nSecondary Effect (DV15)\n• If the user wasn't already addicted to Smash, they are now. While addicted, the user feels a loss of interest in normally enjoyable activities and has -2 to the following Skills: Dance, Contortionist, Conversation, Human Perception, Persuasion, and Acting.\n• While addicted to Smash, your GM will occasionally tell you when you crave more Smash, and you should do your best to roleplay accordingly."
+  },
+  {
+    "name": "Synthcoke",
+    "kind": "drug",
+    "source_page": "p358",
+    "continues_on": null,
+    "primary_effect_duration": "4 Hours",
+    "secondary_effect_dv": 15,
+    "cost_per_dose_eb": 20,
+    "cost_text": "20eb (Everyday)",
+    "price_category": "Everyday",
+    "text": "Primary Effect\n• Lasts 4 Hours.\n• For the duration of the Primary Effect, the user's REF increases by 1 point. This can raise your REF above 8. In addition, they are prone to paranoid ideation.\n• For the duration of the Primary Effect, your GM will occasionally tell you when you feel paranoid, and you should do your best to roleplay accordingly.\nSecondary Effect (DV15)\n• If the user wasn't already addicted to Synthcoke, they are now. While addicted, their REF is lowered by 2 points, unless the user is currently experiencing the Primary Effect of Synthcoke.\n• While addicted to Synthcoke, your GM will occasionally tell you when you crave more Synthcoke, and you should do your best to roleplay accordingly."
+  }
+]

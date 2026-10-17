@@ -2,7 +2,10 @@
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60` (PR #396)** (SD-37 E7.9a) — the bundled resources, the command count (92) and the root-resolution chain were re-derived on the merged tree; the two passes below are otherwise kept as written.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for the command inventory (86
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the command count (103) and
+> inventory rows, the rule-system adapter seam (three adapters), §"Cyberpunk RED surface", the bundled-resources list, the
+> Landing chips and the boundary file count.
+> Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for the command inventory (86
 > registered), the rule-system adapter seam (Pathfinder and Starfinder adapters), §"Starfinder 1e surface", the bundled
 > resources and the frontend map; the E7.7 claims critic (2026-10-07) also re-derived the **Landing** paragraph of
 > §"Character flow" (rule-set chips, per-system catalog links). Sections not named here (the Mode machine, boundary layer,
@@ -30,10 +33,13 @@ re-derives the same corrections independently:
   `Print` are all wired to real handlers (`CharacterSheet.tsx`'s `menuItems`).
 - **`StubScreen.tsx` still exists as a component but nothing imports it** (confirmed by grep across
   `apps/desktop/src`) — it is dead code today, not a live placeholder for any screen.
-- **The command count is 92** — re-derived by parsing `generate_handler![...]`
-  programmatically (`python3` script counting non-empty comma-separated entries after stripping comments); see
-  the inventory below. (The same parse gives 78 on the common base `20bf84a3b2`, 84 on `develop` @ `fd68740f60` (PR #396's six) and 86 on pre-merge `tranche/17` (SD-37's eight Starfinder commands); 78 + 6 + 8 = 92.)
-- **`apps/desktop/src/boundary/` holds 58 non-test files today**, not 27 — `ls apps/desktop/src/boundary/*.ts | grep -v '\.test\.ts$' | wc -l`.
+- **The command count is 103** — re-derived by parsing `generate_handler![...]`
+  programmatically (`python3` script counting non-empty comma-separated entries after stripping `//` comments, run on `git show <rev>:apps/desktop/src-tauri/src/main.rs`); see
+  the inventory below. The same parse gives 86 on `tranche/17` @ `b99c3d4b02` (SD-37's eight Starfinder commands), 96 on `origin/develop` @ `bb6107aee0` (the merged
+  tranche-17-ui work, which added `draft_sheet_preview` and `draft_level_up_preview` among its four) and 103 on `tranche-18` (SD-38's seven Cyberpunk RED commands: 96 + 7 = 103).
+  The earlier figure 92 predated the merge of tranche-17-ui and is superseded.
+- **`apps/desktop/src/boundary/` holds 70 non-test files today** (65 on `origin/develop`, 70 on `tranche-18`: SD-38 added `cprCreation`, `cprDeck`,
+  `cprImprove`, `cprSheet` and `loadCyberpunkCatalog`) — `git ls-tree --name-only HEAD apps/desktop/src/boundary/ | grep '\.ts$' | grep -v '\.test\.ts$' | awk 'END{print NR}'`.
 
 ## Build shape
 
@@ -125,7 +131,7 @@ export function formatError(cause: unknown): string {
 
 ## The complete Tauri command inventory
 
-**92 commands are registered** (reachable via `invoke()`; the same parse of `develop`'s `main.rs` gives 84 and of the pre-merge `tranche/17` 86: PR #396 added 6 Create-screen/update commands and SD-37 8 Starfinder commands on the common base's 78), re-derived by parsing every entry of
+**103 commands are registered** (reachable via `invoke()`; the same parse gives 96 on `origin/develop` and 86 on the pre-merge `tranche/17`; SD-38 added 7 Cyberpunk RED commands on develop's 96), re-derived by parsing every entry of
 `tauri::generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` with comments stripped
 (`python3` one-liner splitting on `,` after a regex-stripped comment pass — a plain `grep -c ','`
 overcounts because several list entries carry inline `//` explanatory comments of their own with
@@ -148,6 +154,11 @@ Grouped by the Rust file that defines each command:
 | `characterHub/appendToCharacter.rs` | `append_to_character` | Batch, corpus-validated equipment append, via `RuleSystemAdapter` | none — no frontend caller (see "Rule-system adapter seam" below) |
 | `characterHub/recomputeCharacter.rs` | `recompute_character` | Load + recompute without mutating, via `RuleSystemAdapter` | `CharacterSheet.tsx`'s `☰ Menu` "Recompute" |
 | `characterHub/reSaveCharacter.rs` | `re_save_character` | Re-saves under a freshly minted `{id}.rev.N`, via `RuleSystemAdapter` | none — no frontend caller |
+| `character_hub.rs` (Create-screen draft previews) | `draft_sheet_preview`, `draft_level_up_preview` | The engine's initiative total and carried load for a Create-screen draft that is not saved yet, and the engine's grant names for the draft's class-level transition (empty is a real answer: per-level grants are grounded for the eleven PF1 Core classes only) | `CreateCharacterForm.tsx` |
+| `cpr_creation.rs` | `preview_cyberpunk_character`, `create_cyberpunk_character` | Cyberpunk RED creation by the book's three methods (Streetrat, Edgerunner, Complete Package): template row, STAT rolls from one seedable roller (`CprRoller`; a create sent with a preview's seed draws the same dice), Lifepath, skills, Role Ability sub-choices, starting kit and cash, cyberware; every number is a `cpr.` row | `CyberpunkCreateForm.tsx` via `boundary/cprCreation.ts` |
+| `cpr_adapter.rs` | `save_cyberpunk_criticals` | Saves the sheet's critical-injury checklist (an injury whose engine check refuses is not saved) and answers with the reloaded sheet; the module also holds `CyberpunkAdapter` and the three starter requests | `CyberpunkCharacterSheet.tsx` |
+| `cpr_improve.rs` | `preview_cyberpunk_improvement`, `apply_cyberpunk_improvement` | Spending Improvement Points on Skill Levels and Role Ability Rank, and changing Role, priced by the engine (`cpr::improvement`); also, at no IP cost, a cyberware install after creation (Humanity Loss entered or rolled with the request's seed, refused outside the piece's dice or over its slots), therapy (Humanity regained, capped at the maximum Humanity) and a Reputation event (Level 1-10, replace-only-if-higher); preview answers with option rows and a `cpr.improve.purchase.<i>.cost` row per purchase, apply saves and reloads the sheet | `CyberpunkImproveDialog.tsx` via `boundary/cprImprove.ts` |
+| `cpr_catalog.rs` | `list_cyberpunk_catalog`, `compute_cyberpunk_deck` | Every record of one MANIFEST kind from `data/cyberpunk-red/corpus` (a kind the MANIFEST does not list is refused); a Cyberdeck's slot rows from the engine (`cpr.netrunning.*`), a loadout over the deck's slots refused | `cyberpunkCatalog/CyberpunkCatalogScreen.tsx`, `cyberpunkCatalog/deck/CyberpunkDeckScreen.tsx` via `boundary/loadCyberpunkCatalog.ts`, `boundary/cprDeck.ts` |
 | `sf_creation.rs` | `preview_starfinder_character`, `create_starfinder_character` | Starfinder creation flow: race, theme, class, point buy (budget 10, cap 18) served from the converted package and `sf_abilities`; saves the `CharacterInput` `sf_adapter` reads | `StarfinderCreateForm.tsx` via `boundary/starfinderCreation.ts` |
 | `sf_level_up.rs` | `preview_starfinder_level_up`, `level_up_starfinder_character` | Starfinder level-up: classes, the 5/10/15/20 increase, skill ranks, owed picks and every `sf.*` total the level changes (`compute_sheet` at both levels); accept saves | `StarfinderLevelUpDialog.tsx` via `boundary/starfinderLevelUp.ts` |
 | `sf_choices.rs` | `preview_starfinder_choices`, `save_starfinder_choices`, `list_starfinder_equipment_options` | The one set of feats, spells known and gear the creation form, the level-up dialog and the sheet's "Feats, spells and gear" dialog all edit; prerequisite verdicts from the engine | `StarfinderChoicesDialog.tsx`, `StarfinderChoicesPanel.tsx` via `boundary/starfinderChoices.ts` |
@@ -289,7 +300,7 @@ directory (falling back to a source-tree path for tests), and everything else an
 `main.rs`'s `.setup()` calls `codex::set_data_root(authoring_workbench::codex_repo_root()?)` right after `set_app_resource_dir`, before anything touches the engine; `repo_root()` returns that root when installed and the checkout otherwise (tests, bins, `cargo tauri dev`). It is a process-wide `OnceLock`: first call wins. Two controls keep it honest:
 
 - `tests/no_baked_manifest_dir_in_production.rs` (root crate) fails if production code, before a file's first `#[cfg(test)]`, reads `CARGO_MANIFEST_DIR` outside `support/paths.rs`. It does not see a baked path built another way or a production read placed after a file's first `#[cfg(test)]` module.
-- `apps/desktop/src-tauri/tests/packaged_resources.rs` reads `tauri.conf.json`, lays out **only** what `bundle.resources` lists (symlinks, nothing else) as the resource root, installs it with `set_data_root`, asserts every path the engine joins onto its root exists there (`FIXTURE_RELATIVE_PATH`, `MIX_PANEL_RELATIVE_PATH`, `RECORD_VARS_PATH`, `data/sheet_rules`, `data/class_feature_grants`, `data/corpus`), and builds the class roster (more than the 31-class fallback), the sweep fixture, the mix panel and the sheet-rule package from it. It is one `#[test]` in its own process because the root is process-wide.
+- `apps/desktop/src-tauri/tests/packaged_resources.rs` reads `tauri.conf.json`, lays out **only** what `bundle.resources` lists (symlinks, nothing else) as the resource root, installs it with `set_data_root`, asserts every path the engine joins onto its root exists there (`FIXTURE_RELATIVE_PATH`, `MIX_PANEL_RELATIVE_PATH`, `RECORD_VARS_PATH`, `data/sheet_rules`, `data/class_feature_grants`, `data/corpus`, `data/cyberpunk-red/corpus`), and builds the class roster (more than the 31-class fallback), the sweep fixture, the mix panel and the sheet-rule package from it. It is one `#[test]` in its own process because the root is process-wide.
 
 A new file the engine reads at runtime therefore needs three things at once: the read through `repo_root()`, a `bundle.resources` entry in `tauri.conf.json`, and an assertion in `packaged_resources.rs`.
 
@@ -371,8 +382,8 @@ free functions by name, so a rule system is added by writing one adapter.
   callers hold `Box<dyn RuleSystemAdapter>`). Methods: `rule_system_id`, `chassis_resolve`,
   `level_up` (takes `&[ClassLevelDelta]`, so a multiclass level-up is expressible), `save_character`,
   `append_to_character`, `recompute`, `list_saved_characters`, `load_saved_character`. The one resolver,
-  `resolve_rule_system_adapter(rule_system_id)`, maps `"pf1"` to `Pf1Adapter`, `"starfinder-1e"` to `StarfinderAdapter`
-  and any other id to `StubAdapter`.
+  `resolve_rule_system_adapter(rule_system_id)`, maps `"pf1"` to `Pf1Adapter`, `"starfinder-1e"` to `StarfinderAdapter`,
+  `"cyberpunk-red"` to `CyberpunkAdapter` and any other id to `StubAdapter`.
 - **`apps/desktop/src-tauri/src/pf1_adapter.rs`** — `Pf1Adapter`, wrapping the PF1 compute/persistence free
   functions extracted out of `character_hub.rs`.
 - **`apps/desktop/src-tauri/src/sf_adapter.rs`** — `StarfinderAdapter`, the Starfinder 1e implementation (rule-system id
@@ -383,6 +394,15 @@ free functions by name, so a rule system is added by writing one adapter.
   ([rules-engine.md](./rules-engine.md) §3e) as an `sf.*` explanation row. The printed lines come from
   `sf_sheet_print.rs` (race, theme, class feature, feat, spell, item, upgrade, fusion and augmentation lines, with named
   refusals) and `sf_drone_print.rs` (a Mechanic's drone as its own block of terms).
+- **`apps/desktop/src-tauri/src/cpr_adapter.rs`** — `CyberpunkAdapter` (rule-system id `"cyberpunk-red"`, the same string as
+  `GameSystem::CyberpunkRed.id()`). It lists, loads and re-saves characters of the Cyberpunk store
+  (`rules_core::cpr::store`); a loaded character's numbers are the rows of `compose_sheet` over the corpus, which the sheet renders
+  verbatim, and its dice, rule lines and Lifepath answers are the printed lines of `cpr_sheet_print.rs`. The trait is Pathfinder-typed, so
+  the methods that take or answer with a Pathfinder chassis or equipment (`chassis_resolve`, `level_up`, `recompute`,
+  `append_to_character`) cannot carry a Cyberpunk character: they answer with the empty plan or a refusal that names the reason
+  (`cpr_adapter.not_a_pathfinder_chassis`, `cpr_adapter.no_pathfinder_equipment`), never Pathfinder numbers. A load whose saved
+  choices the book refuses fails with the engine's reason and returns no partial sheet. The adapter also owns the three starter requests
+  (`starter_requests`, see [persistence.md](./persistence.md)).
 - **`apps/desktop/src-tauri/src/stub_adapter.rs`** — `StubAdapter`, the governed placeholder
   (registered exception 0002, `docs/governance/wired-integration-stubs-registry.md`) for a
   `rule_system_id` this codebase has no real adapter for: every method reports `"Would render for
@@ -392,13 +412,13 @@ free functions by name, so a rule system is added by writing one adapter.
 Routing: `append_to_character`, `recompute_character` and `re_save_character` resolve their adapter from
 the request's `rule_system_id`. `list_saved_characters` dispatches on the system the landing screen has selected
 (`list_saved_characters_via_rule_system`; no id is Pathfinder's listing), and `load_saved_character` on the saved
-envelope's own `game_system` (`load_saved_character_via_envelope`; a Starfinder envelope goes to `StarfinderAdapter`,
+envelope's own `game_system`, read from `envelope.txt` alone (`load_saved_character_via_envelope`; a Cyberpunk RED envelope goes to `CyberpunkAdapter`, a Starfinder envelope to `StarfinderAdapter`,
 every other value, including the legacy values `local_store::derive_legacy_game_system` gives older envelopes,
 loads through `Pf1Adapter`). On the frontend, `characterHubRuntime.ts`'s `resolveRuleSystemId` maps the UI's `RuleSetId`
-(`pathfinder-1e` to `pf1`; `starfinder-1e` passes through). **The other Pathfinder character-mutation commands in the
+(`pathfinder-1e` to `pf1`; `starfinder-1e` and `cyberpunk-red` pass through). **The other Pathfinder character-mutation commands in the
 inventory above** (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP) call PF1-specific free
 functions in `character_hub.rs` directly and do **not** go through this seam; the Starfinder flows have their own commands
-(`sf_*`) and save through `StarfinderAdapter`.
+(`sf_*`) and save through `StarfinderAdapter`, and the Cyberpunk RED flows have theirs (`cpr_*`) and save through the Cyberpunk store.
 
 ## Starfinder 1e surface
 
@@ -419,9 +439,32 @@ Under the Starfinder 1e chip on `LandingScreen.tsx`:
   Pathfinder links (`starfinderCatalog/StarfinderCatalogScreen.tsx`, `list_starfinder_catalog`).
 - **Harnesses** — ui-smoke rows `build-/open-starfinder-{soldier,mystic,technomancer,envoy}` create each seed through the
   creation flow, level it, give it feats/spells/gear and reopen it from the saved store; the harness runs against an isolated
-  `XDG_DATA_HOME` and records the real store's entry count and sha256 before and after (`103` rows, `14` Starfinder).
-  `sf_oracle_parity.rs` is the oracle-parity gate (see [homebrew-and-oracle.md](./homebrew-and-oracle.md)). The two
-  Pathfinder seeds have a render-hash pair (`pf_seed_render_hash.rs`, `pf_catalog_dump_hash.rs`); Starfinder has none.
+  `XDG_DATA_HOME` and records the real store's entry count and sha256 before and after (`127` rows on `tranche-18`, `14` Starfinder; `103` at SD-37).
+  `sf_oracle_parity.rs` is the oracle-parity gate (see [homebrew-and-oracle.md](./homebrew-and-oracle.md)). The three
+  Pathfinder seeds (Aldric, Elowen, Tomas) have render hashes (`pf_seed_render_hash.rs`; `pf_catalog_dump_hash.rs` hashes the Pathfinder catalog
+  outputs); Starfinder has none.
+
+## Cyberpunk RED surface
+
+Under the Cyberpunk Red chip on `LandingScreen.tsx` (`CharacterHubPage.tsx` routes to Create, the sheet and the catalogs; the Improve dialog opens from the sheet):
+
+- **Create** — `CyberpunkCreateForm.tsx` (layout in `cyberpunkCreateLayout.ts`, request model in `cyberpunkCreationModel.ts`) over
+  `preview_cyberpunk_character` / `create_cyberpunk_character`: Streetrat, Edgerunner and Complete Package STATs, the Lifepath, the
+  skills allocator, Role Ability at Rank 4 with its sub-choices, a starting kit with cash and a cyberware pack with a Humanity preview.
+  Every number comes from a `cpr.` row; the desktop holds no Cyberpunk table.
+- **Sheet** — a saved Cyberpunk RED character opens `CyberpunkCharacterSheet.tsx` (boxes placed by `cyberpunkSheetLayout.ts`, rows read by
+  `cyberpunkSheetModel.ts`: STATs, HP, Seriously Wounded, Death Save, Humanity, 66 skills, wound track, Role Ability, armour, weapons with
+  range DVs, cyberware, a Cyberdeck block, Reputation, Improvement Points, Lifepath and a critical-injuries checklist), never the Pathfinder
+  layout. Ticking an injury saves through `save_cyberpunk_criticals` and the sheet re-renders from the engine's answer. Text rules are
+  printed (`cpr_sheet_print.rs`), not simulated, and dice stay literal.
+- **Improve** — `CyberpunkImproveDialog.tsx` (`cyberpunkImproveModel.ts`) over `preview_cyberpunk_improvement` / `apply_cyberpunk_improvement`.
+- **Catalogs and tools** — with Cyberpunk Red selected the landing screen offers the Cyberpunk catalog groups instead of the Pathfinder links
+  (`cyberpunkCatalog/CyberpunkCatalogScreen.tsx`, `list_cyberpunk_catalog`); that screen also hosts a Cyberdeck calculator
+  (`cyberpunkCatalog/deck/CyberpunkDeckScreen.tsx`, `compute_cyberpunk_deck`) and a GM reference page
+  (`cyberpunkCatalog/gm/CyberpunkGmPage.tsx`) that shows the corpus's `print_only` kinds as read-only tables and text.
+- **Starters** — three starter characters are seeded on a fresh install and returned by Restore starter characters (see
+  [persistence.md](./persistence.md)).
+- **Harnesses** — 23 of the 127 ui-smoke rows are Cyberpunk rows (`jq -r '[(.rows|length), ([.rows[]|select(.id|test("cyberpunk"))]|length)]|map(tostring)|join(" ")' apps/desktop/scripts/ui-smoke/spec.json` → `127 23`). The Pathfinder render-hash pair and the Starfinder seed-line files are unchanged by it.
 
 ## Frontend directory map
 
@@ -453,7 +496,8 @@ model files for encounter building, DM console export, session history, and DM-t
 **`classCatalog/`, `raceCatalog/`, `spellCatalog/`, `equipmentCatalog/`, `intelligentItemCatalog/`,
 `monsterCatalog/`, `companionCatalog/`** — near-identical catalog browsers, each a `*Screen.tsx` +
 `*Runtime.ts` pair (see the DI pattern below). **`starfinderCatalog/`** is the Starfinder equivalent
-(`StarfinderCatalogScreen.tsx`, `starfinderCatalogModel.ts`).
+(`StarfinderCatalogScreen.tsx`, `starfinderCatalogModel.ts`); **`cyberpunkCatalog/`** is the Cyberpunk RED equivalent
+(`CyberpunkCatalogScreen.tsx`, `cyberpunkCatalogModel.ts`, plus `deck/` and `gm/`).
 
 **`testerWorkbench/`** — the tester workbench and its feedback composers: `loadTesterWorkbenchSurface.ts`
 / `loadTesterWorkbenchSurfaceRuntime.ts` assemble the `TesterWorkbenchSurface` driving `App.tsx`'s
@@ -505,12 +549,12 @@ fallback — `boundary/loadCreateCharacter.ts` throws outside a Tauri runtime, s
 
 ## Character flow
 
-**Landing** (`LandingScreen.tsx`) offers six rule-set chips, of which two are selectable (`available: true`:
-Pathfinder 1e and Starfinder 1e; Solarus Arcanum, Traveller MGT 2e, Cyberpunk Red and World of Darkness are shown disabled;
-`awk '/available: true/{t++} /available: false/{f++} END{print t, f}' apps/desktop/src/characterHub/LandingScreen.tsx` → `2 4`),
+**Landing** (`LandingScreen.tsx`) offers six rule-set chips, of which three are selectable (`available: true`:
+Pathfinder 1e, Cyberpunk Red and Starfinder 1e; Solarus Arcanum, Traveller MGT 2e and World of Darkness are shown disabled;
+`awk '/available: true/{t++} /available: false/{f++} END{print t, f}' apps/desktop/src/characterHub/LandingScreen.tsx` → `3 3`),
 and action banners: New Character, Load Character, Campaign Manager (gated), DM Toolkit (real, see above), and the
-catalog browsers of the selected system: the seven Pathfinder browsers, or the six Starfinder catalogs
-(§"Starfinder 1e surface").
+catalog browsers of the selected system: the seven Pathfinder browsers, the six Starfinder catalogs
+(§"Starfinder 1e surface"), or the Cyberpunk RED catalog groups (§"Cyberpunk RED surface").
 
 **Create** (`CreateCharacterForm.tsx`) drives the DI chain in the sequence diagram above.
 The class picker reads the engine's class roster: `list_class_creation_roster`

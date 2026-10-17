@@ -1,0 +1,29 @@
+plant penalty_off
+test rules_core::cpr::sheet::tests::armour_and_cyberware_sp_and_the_armour_penalty_feed_the_reflex_and_dexterity_skill_bases ... FAILED
+test rules_core::cpr::sheet::tests::every_numeric_field_the_p121_sample_sheet_labels_has_a_cpr_row ... FAILED
+  left: 12
+ right: 8
+  left: 8
+ right: 4
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.11s
+plant body_off
+test rules_core::cpr::sheet::tests::cyberware_body_feeds_hit_points_seriously_wounded_and_both_death_saves ... FAILED
+test rules_core::cpr::sheet::tests::every_row_is_unique_and_twin_rows_agree ... FAILED
+  left: 40
+ right: 45
+  left: 6
+ right: 8
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.11s
+plant emp_off
+test rules_core::cpr::sheet::tests::cyberware_humanity_loss_feeds_current_humanity_current_emp_and_emp_skills ... FAILED
+test rules_core::cpr::sheet::tests::every_numeric_field_the_p121_sample_sheet_labels_has_a_cpr_row ... FAILED
+  left: 8
+ right: 3
+  left: 8
+ right: 3
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.13s
+plant cyber_sp_off
+test rules_core::cpr::sheet::tests::armour_and_cyberware_sp_and_the_armour_penalty_feed_the_reflex_and_dexterity_skill_bases ... FAILED
+  left: (0, 4)
+ right: (7, 7)
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 2978 filtered out; finished in 0.13s

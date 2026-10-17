@@ -1,0 +1,59 @@
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.60s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex_desktop-13c7f51f8d3e23dd)
+
+running 8 tests
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::saved_lifepath_answers_load_as_printed_lines ... ok
+test cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet ... ok
+test cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses ... ok
+test cpr_adapter::tests::ticking_a_critical_injury_saves_it_and_moves_the_base_death_save_penalty ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 885 filtered out; finished in 0.21s
+
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.13s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex_desktop-13c7f51f8d3e23dd)
+
+running 4 tests
+test cpr_sheet_print::tests::a_starting_pack_prints_its_humanity_loss_and_the_engines_emp_never_minus_two ... ok
+test cpr_sheet_print::tests::a_line_whose_record_the_corpus_lacks_is_refused_by_name ... ok
+test cpr_sheet_print::tests::every_rule_line_prints_with_its_resolved_numbers ... ok
+test cpr_sheet_print::tests::the_printed_lines_are_stable_and_each_id_is_printed_once ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 889 filtered out; finished in 0.10s
+
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 29.21s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex_desktop-13c7f51f8d3e23dd)
+
+running 1 test
+test cpr_sheet_print::tests::every_rule_line_prints_with_its_resolved_numbers ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 892 filtered out; finished in 0.04s
+
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 27.77s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex_desktop-13c7f51f8d3e23dd)
+
+running 1 test
+test sf_sheet_print::tests::sf_seed_printed_features_equal_the_features_the_converted_records_grant ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 892 filtered out; finished in 1.26s
+
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 27.43s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e4/debug/deps/codex_desktop-13c7f51f8d3e23dd)
+
+running 1 test
+pf-seed-render manifest_dir=/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e4/apps/desktop/src-tauri
+pf-seed-render aldric sha256=7b2f2f263bbe2dd94991b436f548d603d3638e0b21eb03215be36b3cb8394b42 bytes=55260
+pf-seed-render elowen sha256=f0230bf0e3ac0cd75e7e277165b108838964e48344f28efd71eb16fd72d81e9b bytes=82750
+pf-seed-render tomas sha256=2320c050d34730266e28a24496a5c245cc2025747445a8ec0515b29d0c6abe7b bytes=79713
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 892 filtered out; finished in 33.94s
+

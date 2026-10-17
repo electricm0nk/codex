@@ -10,6 +10,9 @@ pub mod composed_input;
 pub mod contract;
 pub mod converted_prose;
 pub mod corpus_loader;
+// SD-38 E0.4: Cyberpunk RED -- the character input, its own saved-character store and the
+// `cpr.` explanation rows the sheet renders.
+pub mod cpr;
 pub mod damage_total;
 // SD-35 `AT-35-E6-003-RULED` cycle 14: the SETTLED result of reading a row's
 // bonus chains. Declared live so a live module can hold the answer without

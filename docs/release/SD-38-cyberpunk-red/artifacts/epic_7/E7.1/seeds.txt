@@ -1,0 +1,17 @@
+# PF: cd apps/desktop/src-tauri && PF_SEED_RENDER_OUT=<dir> cargo test --locked -j 8 --bins pf_seed_render_hash -- --test-threads=8 --nocapture  (final code, after 49887659f2 contents)
+# diff artifacts/epic_0/E0.6/pf-render/base/sha256.txt <dir>/sha256.txt -> no output (PF_SHA_EQUAL)
+7b2f2f263bbe2dd94991b436f548d603d3638e0b21eb03215be36b3cb8394b42  aldric.json
+f0230bf0e3ac0cd75e7e277165b108838964e48344f28efd71eb16fd72d81e9b  elowen.json
+2320c050d34730266e28a24496a5c245cc2025747445a8ec0515b29d0c6abe7b  tomas.json
+
+# SF: mkdir -p <dir> && SF_SEED_LINES_OUT=<dir> cargo test --locked -j 8 --bins sf_seed_printed_features_equal_the_features_the_converted_records_grant -- --test-threads=8
+# sha256 of the 4 files = artifacts/epic_0/E0.6/sf-lines/base/sha256.txt (SF_SHA_EQUAL); line counts by awk END{print NR}: 42/72/51/63 = base line-counts.txt
+0526f8b4ff07756eab857e3d6cbbd209a7c5b37c697dcab496ba525d29aa74ae  SF-Envoy-3.txt
+eac7ca0c613602ffea8b5ff6687e38bd805fd4ad28ebde68364254142e4a0e61  SF-Mystic-5.txt
+1132b37dbd39dc4f1222485cddb20cd331b2f949168315370782c3b5ff71590e  SF-Soldier-3.txt
+d9ebfa252de3225849e042584f52d2d89c5d3bdb562f85bf4a60113d0017e032  SF-Technomancer-5.txt
+
+# CPR starters (the new baseline for later cards): cd apps/desktop/src-tauri && CPR_STARTER_DUMP_OUT=<dir> cargo test --locked -j 8 --bins starter_seed_tests::restore_writes_the_three -- --test-threads=8; (cd <dir> && sha256sum */loaded.json)
+6235940fdcda8ad69cf5a63dac51d0f24c443b76d7224e7b969d23df8cf70819  00000000-0000-0000-0000-000000000004/loaded.json
+729e3f8abdc1dd02bbd3de0af46aad33f5507f5908cfec91b5e87fef8a6d78e5  00000000-0000-0000-0000-000000000005/loaded.json
+719793f549eb9fe191912bb907d66cf5951c75d69e6cd7d2d2613fb5f464fc75  00000000-0000-0000-0000-000000000006/loaded.json

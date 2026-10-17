@@ -1,0 +1,235 @@
+⚙
+CPR MC Streetrat Media
+Cyberpunk RED
+Open
+Close
+STATS
+
+STAT	Current
+INT	6	—
+REF	5	5
+DEX	7	7
+TECH	5	—
+COOL	6	—
+WILL	7	—
+LUCK	5	—
+MOVE	5	5
+BODY	6	6
+EMP	6	5
+SKILLS
+
+Level	Base
+Awareness
+Concentration (WILL)	2	9
+Conceal/Reveal Object (INT)	0	6
+Lip Reading (INT)	4	10
+Perception (INT)	6	12
+Tracking (INT)	0	6
+Body
+Athletics (DEX)	2	9
+Contortionist (DEX)	0	7
+Dance (DEX)	0	7
+Endurance (WILL)	0	7
+Resist Torture/Drugs (WILL)	0	7
+Stealth (DEX)	2	9
+Control
+Drive Land Vehicle (REF)	0	5
+Pilot Air Vehicle (REF)	0	5
+Pilot Sea Vehicle (REF)	0	5
+Riding (REF)	0	5
+Education
+Accounting (INT)	0	6
+Animal Handling (INT)	0	6
+Bureaucracy (INT)	0	6
+Business (INT)	0	6
+Composition (INT)	6	12
+Criminology (INT)	0	6
+Cryptography (INT)	0	6
+Deduction (INT)	6	12
+Education (INT)	2	8
+Gamble (INT)	0	6
+Language (Streetslang) (INT)	2	8
+Language (Romanian) (INT)	4	10
+Library Search (INT)	4	10
+Local Expert (Your Home) (INT)	6	12
+Science (INT)	0	6
+Tactics (INT)	0	6
+Wilderness Survival (INT)	0	6
+Fighting
+Brawling (DEX)	2	9
+Evasion (DEX)	6	13
+Martial Arts (DEX)	0	7
+Melee Weapon (DEX)	0	7
+Performance
+Acting (COOL)	0	6
+Play Instrument (TECH)	0	5
+Ranged Weapon
+Archery (REF)	0	5
+Autofire (REF)	0	5
+Handgun (REF)	6	11
+Heavy Weapons (REF)	0	5
+Shoulder Arms (REF)	0	5
+Social
+Bribery (COOL)	6	12
+Conversation (EMP)	6	11
+Human Perception (EMP)	6	11
+Interrogation (COOL)	0	6
+Persuasion (COOL)	6	12
+Personal Grooming (COOL)	0	6
+Streetwise (COOL)	0	6
+Trading (COOL)	0	6
+Wardrobe & Style (COOL)	0	6
+Technique
+Air Vehicle Tech (TECH)	0	5
+Basic Tech (TECH)	0	5
+Cybertech (TECH)	0	5
+Demolitions (TECH)	0	5
+Electronics/Security Tech (TECH)	0	5
+First Aid (TECH)	2	7
+Forgery (TECH)	0	5
+Land Vehicle Tech (TECH)	0	5
+Paint/Draw/Sculpt (TECH)	0	5
+Paramedic (TECH)	0	5
+Photography/Film (TECH)	4	9
+Pick Lock (TECH)	0	5
+Pick Pocket (TECH)	0	5
+Sea Vehicle Tech (TECH)	0	5
+Weaponstech (TECH)	0	5
+ROLE ABILITY
+
+Media
+Rank	4
+Credibility Rumor Check	4
+Believability	3
+REPUTATION
+
+Reputation Level	0
+Facedown (COOL + Reputation)	6
+Facedown roll	6 + 1d10
+IMPROVEMENT POINTS
+
+Improvement Points (current / total)	0 / 0
+LIFEPATH
+
+Cultural Origins: Your (General) Cultural Region	Eastern European
+Your Personality: What Are You Like?	Picky, fussy, and nervous
+Dress and Personal Style: Clothing Style and Hairstyle: Clothing Style	Bag Lady Chic (Homeless, Ragged, Vagrant)
+Dress and Personal Style: Clothing Style and Hairstyle: Hairstyle	Long and ratty
+Affectation You Are Never Without	Strange contacts
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: What Do You Value Most?	Power
+Your Motivations and Relationships: What Do You Value Most? and How Do You Feel About Most People?: How Do You Feel About Most People?	People are tools. Use them for your own goals then discard them.
+Things You Value the Most: Most Valued Person in Your Life?: Most Valued Person in Your Life?	A pet
+Things You Value the Most: Most Valued Possession You Own?: Most Valued Possession You Own?	A recording
+Your Original Family Background: Original Background	Nomad Pack
+Your Environment: Childhood Environment	In a Nomad pack moving from place to place.
+Your Family Crisis: Background	Your family was exiled or otherwise driven from their original home/nation/Corporation.
+Your Enemies: Enemy	Boosterganger
+Your Enemies: What Caused it? Who's been Wronged? (choose)	Caused the other to lose face or status.
+Your Enemies: What Can They Throw at You?	Just themselves and a close friend.
+Your Enemies: Enemy	Partner or coworker
+Your Enemies: What Caused it? Who's been Wronged? (choose)	You just don't like each other.
+Your Enemies: What Can They Throw at You?	Themselves and a few (1d10/2) friends.
+Sweet Revenge!: What are You/They Gonna do About it?	Go into a murderous rage and try to physically rip their face off.
+Your Life Goals: Life Goals	Cause pain and suffering to anyone who crosses you.
+Media: What Kind of Media are You?: Type	Videographer
+Media: How Does Your Work Reach the Public?: How?	Screamsheets
+Media: How Ethical are You?: Ethics	Willing to bend any rules to get the bad guys. But only the bad guys.
+Media: What Types of Stories Do You Want to Tell?: Stories	Editorials
+HIT POINTS, HUMANITY, MOVE AND LUCK
+
+Hit Points	45
+Seriously Wounded	23
+Death Save	6
+Humanity	50 / 60
+MOVE	5
+LUCK	5
+WOUND TRACK
+
+Below HP	Stabilize DV
+Lightly Wounded	45	10
+Seriously Wounded	23	13
+Mortally Wounded	1	15
+Death Save	6	—
+Base Death Save Penalty	0	—
+CRITICAL INJURIES
+
+Critical Injuries to the Body
+Dismembered Arm
+Dismembered Hand
+Collapsed Lung
+Broken Ribs
+Broken Arm
+Foreign Object
+Broken Leg
+Torn Muscle
+Spinal Injury
+Crushed Fingers
+Dismembered Leg
+Critical Injuries to the Head
+Lost Eye
+Brain Injury
+Damaged Eye
+Concussion
+Broken Jaw
+Foreign Object
+Whiplash
+Cracked Skull
+Damaged Ear
+Crushed Windpipe
+Lost Ear
+ARMOR
+
+SP	Penalty
+Head	11	0
+Body	11	0
+Armor Penalty (REF, DEX, MOVE)	—	0
+WEAPONS
+
+DMG	ROF	Hands	Concealable	Magazine	Skill Base
+Heavy Pistol	3d6	2	1	Yes	8	11
+RANGE DV (M/YDS UP TO)
+
+6	12	25	50	100	200	400	800
+Heavy Pistol	13	15	20	25	30	30	N/A	N/A
+CYBERWARE
+
+Amplified Hearing	3
+Cyberaudio Suite	7
+Light Tattoo	0
+Humanity Loss	10
+Maximum Humanity	56
+Head SP (cyberware)	0
+Body SP (cyberware)	0
+Initiative bonus	0
+Fashionware slots	1 / 7
+Internal Body slots	0 / 7
+External Body slots	0 / 7
+Cyberaudio Suite slots	1 / 3
+OTHER TOTALS
+
+cpr.cash	500
+cpr.ammo.0	50
+RULES AND FEATURES
+
+Role ability
+Credibility
+Credibility Rank 4
+Credibility Rumor roll 4 + 1d10
+Believability 3 out of 10
+The Media Role Ability is Credibility. The Media not only can convince an audience of what they publish, but also has a larger audience the more credible they are. They also have greater levels of access to sources and information. Medias are also in the know and pick up on rumors passively. Medias are deeply plugged into information networks. Assuming you aren't entirely off-grid, at least twice per week the GM will secretly roll Your Credibility Rank + 1d10. If the Check beats any of the DVs on the Rumor Table's Passive column, the GM will clue the Media in on the highest DV rumor which their Check beat. These are the same rumors that a Media might find by hitting The Street during gameplay using their relevant information gathering skills like Library Search, Conversation, or Interrogation. When a Media is actively looking for a rumor like this, they roll appropriate STAT + relevant Skill + 1d10 against the DV on the Active column the GM has set for the rumor based on how detailed it is. (Cyberpunk RED core rulebook p152)
+Cyberware
+Amplified Hearing
+Humanity Loss 3
+Cyberaudio Option. User adds +2 to their Perception Skill for Checks which include hearing. Requires a Cyberaudio Suite. Multiple installations of this option provide user no additional benefit. (Cyberpunk RED core rulebook p362)
+Cyberaudio Suite
+Humanity Loss 7
+Cyberaudio Suite is installed invisibly in the inner skull. System has 3 Option Slots for Cyberaudio Options. User can only have one Cyberaudio Suite installed. (Cyberpunk RED core rulebook p362)
+Light Tattoo
+Humanity Loss 0
+Subdermal patches store light and project colored tattoos under the skin. The larger the piece, the more installations of this fashionware you need to complete it. A user with a three or more Light Tattoo installations adds +2 to their Wardrobe & Style Skill. (This bonus only applies once.) (Cyberpunk RED core rulebook p359)
+Humanity
+Humanity Loss
+Humanity Loss 10
+Humanity 50
+EMP 5
+Humanity Loss 10 from installed cyberware: Humanity 50 = EMP 6 x 10 - 10. EMP 5: EMP is lowered by 1 every time the tens place of Humanity is lowered (Cyberpunk RED core rulebook p. 80-81).

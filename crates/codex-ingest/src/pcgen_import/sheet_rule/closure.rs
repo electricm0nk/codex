@@ -502,7 +502,7 @@ impl PinnedTree {
         }
         files.sort_by(|a, b| a.rel_path.cmp(&b.rel_path));
         let source_dates = book_source_dates(&book_paths);
-        let mode = system_books::GAME_MODES.get(system);
+        let mode = system_books::GAME_MODES.get(system).ok_or_else(|| system_books::no_pcgen_data(system))?;
         let repo_dir = root.parent().ok_or_else(|| format!("{} has no parent (the PCGen checkout)", root.display()))?;
         let armor_class_split = armor_class_split(&system_books::load_game_mode(repo_dir, mode)?)?;
         Ok(PinnedTree::indexed(system, root, book_paths, source_dates, files, armor_class_split))

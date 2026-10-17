@@ -1,0 +1,83 @@
+[
+ {
+  "name": "Reputation Level 1",
+  "level": 1,
+  "who_knows_about_you": "Anyone who was there at the time knows.",
+  "source_page": "p194",
+  "text": "Anyone who was there at the time knows.",
+  "transcription_note": "Scale p194 (printed 193). Most Cyberpunk RED Characters start at Reputation 0 (no row; Level 0 is not a printed row). Facedown (p195): COOL + Reputation + 1d10; a defining event for cowardice makes the Level negative. Recognition roll: 1d10 under the Level.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 2",
+  "level": 2,
+  "who_knows_about_you": "Stories have gotten around to immediate friends.",
+  "source_page": "p194",
+  "text": "Stories have gotten around to immediate friends.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 3",
+  "level": 3,
+  "who_knows_about_you": "All your co-workers and casual acquaintances know.",
+  "source_page": "p194",
+  "text": "All your co-workers and casual acquaintances know.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 4",
+  "level": 4,
+  "who_knows_about_you": "Stories are all over the local area.",
+  "source_page": "p194",
+  "text": "Stories are all over the local area.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 5",
+  "level": 5,
+  "who_knows_about_you": "Others beyond your local area recognize your name.",
+  "source_page": "p194",
+  "text": "Others beyond your local area recognize your name.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 6",
+  "level": 6,
+  "who_knows_about_you": "Others beyond your local area know you on sight.",
+  "source_page": "p194",
+  "text": "Others beyond your local area know you on sight.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 7",
+  "level": 7,
+  "who_knows_about_you": "A news story or two has been written about your exploits.",
+  "source_page": "p194",
+  "text": "A news story or two has been written about your exploits.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 8",
+  "level": 8,
+  "who_knows_about_you": "Your exploits regularly make the headlines and screamsheets.",
+  "source_page": "p194",
+  "text": "Your exploits regularly make the headlines and screamsheets.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 9",
+  "level": 9,
+  "who_knows_about_you": "Your exploits always make the screamsheets and TV.",
+  "source_page": "p194",
+  "text": "Your exploits always make the screamsheets and TV.",
+  "kind": "reputation_level"
+ },
+ {
+  "name": "Reputation Level 10",
+  "level": 10,
+  "who_knows_about_you": "You're known worldwide.",
+  "source_page": "p194",
+  "text": "You're known worldwide.",
+  "kind": "reputation_level"
+ }
+]

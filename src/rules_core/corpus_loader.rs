@@ -373,7 +373,9 @@ pub fn live_sheet_rules_for(
     static PACKAGES: [Slot; GameSystem::ALL.len()] = [const { Slot::new() }; GameSystem::ALL.len()];
     PACKAGES[system.index()]
         .get_or_init(|| {
-            let dir = system.package_roots(&runtime_repo_root()).sheet_rules;
+            // A system with no sheet-rule package (Cyberpunk RED) has nothing to load: `None`,
+            // the same "not verified" a missing package reads as.
+            let dir = system.package_roots(&runtime_repo_root()).sheet_rules?;
             let load = load_sheet_rules(&dir);
             if load.package.rules.is_empty() {
                 None

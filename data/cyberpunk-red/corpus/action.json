@@ -1,0 +1,140 @@
+[
+  {
+    "kind": "action",
+    "name": "Move Action",
+    "source_page": "p169",
+    "text": "Move up to as many m/yds as your MOVE STAT x 2 each Turn (or squares equal to your MOVE STAT).",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Attack",
+    "source_page": "p169",
+    "text": "Make a Melee or Ranged Attack.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Choke",
+    "source_page": "p169",
+    "text": "Choke an opponent you have Grabbed.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Equip/Drop Shield",
+    "source_page": "p169",
+    "text": "Equipping and dropping a Shield takes an Action. See Using Shields later in this section on pg. 183.",
+    "xref_printed_pages": [
+      183
+    ],
+    "transcription_note": "In-book cross-references are printed page numbers; the file is printed + 1."
+  },
+  {
+    "kind": "action",
+    "name": "Get into a Vehicle",
+    "source_page": "p169",
+    "text": "Get into a Vehicle. See Vehicle Combat later in this section on pg. 189.",
+    "xref_printed_pages": [
+      189
+    ],
+    "transcription_note": "In-book cross-references are printed page numbers; the file is printed + 1."
+  },
+  {
+    "kind": "action",
+    "name": "Get Up",
+    "source_page": "p169",
+    "text": "Get up after being Prone. While Prone, until you use this Action, you cannot use a Move Action.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Grab",
+    "source_page": "p169",
+    "text": "Grab and hold an opponent or take away an object they are holding.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Hold Action",
+    "source_page": "p170",
+    "text": "Hold an Action until later in the Initiative Queue. You must choose a specified event to trigger the Action or a specific number in the Initiative Queue when the action occurs as well as what the Action is, and what its intended target is.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Human Shield",
+    "source_page": "p170",
+    "text": "Equip an opponent you have Grabbed as a Human Shield.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Reload",
+    "source_page": "p170",
+    "text": "Fully reload and replace a weapon's magazine with a single ammunition type.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Run",
+    "source_page": "p170",
+    "text": "Take an additional Move Action, but only if you have already taken a Move Action this Turn.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Start a Vehicle",
+    "source_page": "p170",
+    "text": "Start a Vehicle to gain its MOVE and jump to the top of the Initiative Queue.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Stabilize",
+    "source_page": "p170",
+    "text": "Stabilize a target to begin the natural healing process or pull them out of the Mortally Wounded Wound State to save their life. See on pg. 222.",
+    "xref_printed_pages": [
+      222
+    ],
+    "transcription_note": "In-book cross-references are printed page numbers; the file is printed + 1."
+  },
+  {
+    "kind": "action",
+    "name": "Throw",
+    "source_page": "p170",
+    "text": "Throw a grabbed opponent to the ground or throw an object.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Use NET Actions",
+    "source_page": "p170",
+    "text": "Perform multiple NET Actions inside the NET. See Netrunning Section for how to use NET Actions on pg. 197.",
+    "xref_printed_pages": [
+      197
+    ],
+    "transcription_note": "In-book cross-references are printed page numbers; the file is printed + 1."
+  },
+  {
+    "kind": "action",
+    "name": "Use an Object",
+    "source_page": "p170",
+    "text": "Manipulate an object in a way that doesn't require a Skill. Drawing an easily accessible weapon into a free hand or dropping a held weapon (not a shield) onto the floor does not require this Action but stowing a held weapon on your person does.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Use a Skill",
+    "source_page": "p170",
+    "text": "Use one of your Skills to accomplish a quick task. A longer task will require multiple Actions over the course of multiple Turns, rolling only when the full time has been paid for in 3-second increments.",
+    "xref_printed_pages": []
+  },
+  {
+    "kind": "action",
+    "name": "Vehicle Maneuver",
+    "source_page": "p170",
+    "text": "Use your Action while driving to focus entirely on making a dangerous Maneuver.",
+    "xref_printed_pages": []
+  }
+]

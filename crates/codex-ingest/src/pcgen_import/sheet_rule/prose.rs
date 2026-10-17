@@ -148,9 +148,11 @@ pub fn pi_hit(system: GameSystem, text: &str) -> Option<&'static str> {
     // with the same case-sensitive substring rule its corpus is stamped by
     // (`pi_screening::classify_field_sf`), so a derived adjective (`Eoxian`) is caught by its
     // root. Pathfinder's screen is unchanged.
+    // Cyberpunk RED never reaches here: every converter entry point refuses it by name
+    // (`system_books::require_pcgen_data`), so it adds no term set.
     match system {
-        GameSystem::Pathfinder1e => None,
-        _ => SF_PI_TERMS.iter().copied().find(|term| text.contains(term)),
+        GameSystem::Pathfinder1e | GameSystem::CyberpunkRed => None,
+        GameSystem::Starfinder1e => SF_PI_TERMS.iter().copied().find(|term| text.contains(term)),
     }
 }
 

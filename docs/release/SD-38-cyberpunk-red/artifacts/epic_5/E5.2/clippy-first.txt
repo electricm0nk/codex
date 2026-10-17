@@ -1,0 +1,20 @@
+codex verify — mode: --only, jobs: 8
+repo:  /home/ubuntu/workspace/repos/codex/.worktrees/sd38-main
+logs:  /tmp/codex-verify-00ZYcw
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 8  (THREE crates)
+    desktop: cargo exit 101 — /tmp/codex-verify-00ZYcw/clippy-desktop.log
+    FAIL  clippy  (root:0 desktop:0 ingest:0 — logs in /tmp/codex-verify-00ZYcw)
+---------------------------------------------------------------
+SUMMARY
+  passed:  0  
+  FAILED:  1  clippy
+
+RESULT: FAIL — logs in /tmp/codex-verify-00ZYcw
+error: very complex type used. Consider factoring parts into `type` definitions
+   --> src/cpr_improve.rs:266:6
+    |
+266 | ) -> Result<(Vec<CprImproveSkillOption>, Option<CprImproveRoleOption>, Vec<CprImproveSwitchOption>), String> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 1 previous error

@@ -1,0 +1,2 @@
+item = bought | 1 | Heavy Pistol
+item = bought | 1 | Neural Link

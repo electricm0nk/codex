@@ -2,8 +2,9 @@
 
 > Scope: what Codex is, its product doctrine, its workspace/crate structure, its four top-level
 > planes, and how a character's data flows from raw PCGen corpus text to a rendered sheet cell.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**. Starfinder 1e is a
-> second game system on the same engine (§"Two game systems, one engine"); the Pathfinder rules tables are a bundled data
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**. Cyberpunk RED is a
+> third game system with its own engine module and no converter (§"Three game systems"); Starfinder 1e is a
+> second game system on the same engine as Pathfinder; the Pathfinder rules tables are a bundled data
 > package read through `src/rules_core/rules_catalog/`, not compiled source. Workspace shape re-derived with
 > `cargo metadata --no-deps --format-version=1 | python3 -c "import json,sys; print([p['name'] for p in json.load(sys.stdin)['packages']])"`
 > (prints `['codex-ingest', 'codex']`: two packages at the workspace root) and `python3 scripts/pcgen_residue_gate.py --check --closure`.
@@ -11,7 +12,7 @@
 
 ## What Codex is
 
-Codex is a desktop character-management tool for two game systems, Pathfinder 1st Edition (PF1) and Starfinder 1st Edition (SF1). It
+Codex is a desktop character-management tool for three game systems: Pathfinder 1st Edition (PF1), Starfinder 1st Edition (SF1) and Cyberpunk RED (CPR). It
 pairs a headless Rust rules-computation crate with a React/Tauri desktop
 shell, and it grounds its rule data in the real PCGen open-source corpus (a
 separate, unvendored checkout of `.pcc`/`.lst` files) rather than
@@ -87,22 +88,30 @@ flowchart LR
 talks to the ingest tooling at ingest time, never to the running app. CI is the only path from a
 developer's commit to a player's update.*
 
-## Two game systems, one engine
+## Three game systems
 
-`src/rules_core/game_system.rs` defines `GameSystem` (`Pathfinder1e`, `Starfinder1e`), whose wire ids are
-`pathfinder-1e` and `starfinder-1e`. The package roots (`GameSystem::package_roots`), the converter's book
+`src/rules_core/game_system.rs` defines `GameSystem` (`Pathfinder1e`, `Starfinder1e`, `CyberpunkRed`), whose wire ids are
+`pathfinder-1e`, `starfinder-1e` and `cyberpunk-red`. The package roots (`GameSystem::package_roots`), the converter's book
 registries (`crates/codex-ingest/src/pcgen_import/system_books.rs`) and `sheet_rule_convert --system` are keyed by it,
 and an unknown id is an error, never a fallback to a default system. Not every root is: Pathfinder-only tools still
 name the Pathfinder corpus directly (`settled_corpus::CORPUS_ROOT` = `"data/corpus"`, read by
 `crates/codex-ingest/src/bin/gen_settled_corpus.rs` and `pcgen_import/corpus_settled_bundle.rs`). Pathfinder's paths are unchanged
 (`data/sheet_rules/`, `data/corpus/`); Starfinder's live under `data/starfinder-1e/` (`sheet_rules/` and
 `corpus/`, eight converted books). The saved-character envelope carries a `game_system` field, and the desktop
-routes a command to one of two `RuleSystemAdapter`s (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter
+routes a command to one of three `RuleSystemAdapter`s (see [desktop-app.md](./desktop-app.md) §"Rule-system adapter
 seam"). Both systems share the converter (`crates/codex-ingest`), the sheet-rule evaluator
 (`src/rules_core/sheet_rule.rs`) and the fail-honest explanation record. The Pathfinder side computes through
 per-domain engines and class tables; the Starfinder side has **no per-class, per-race or per-skill table**: the
 `sf_*` readers in `src/rules_core/pilot_compute/` total every number from the converted records the character
 holds (see [rules-engine.md](./rules-engine.md) §"Starfinder 1e: the generic chassis").
+
+**Cyberpunk RED is the exception to "one engine".** It has no PCGen data, no converter run and no sheet-rule package:
+`GameSystem::sheet_rules_relative` returns `None` for it and `package_roots(..).sheet_rules` is `None`. Its rules live in
+its own engine module, `src/rules_core/cpr/` (see [rules-engine.md](./rules-engine.md) §"Cyberpunk RED: the `cpr` engine"),
+and its data is a hand-transcribed corpus of the corebook under `data/cyberpunk-red/corpus/` (see
+[corpus-ingest.md](./corpus-ingest.md) §"The Cyberpunk RED corpus"). It shares the saved-character envelope
+(`game_system = cyberpunk-red`), the characters root, the `RuleSystemAdapter` seam and the fail-honest explanation
+record; it does not share the sheet-rule evaluator or the oracle. No PCGen oracle governs any Cyberpunk figure.
 
 ## The converter/live boundary
 
@@ -365,7 +374,7 @@ not structure, and are not listed below):
 | `src/` | The `codex` root crate: `rules_core/` (compute spine + per-domain engines + `rules_catalog/` + the `rules_data_package.rs` loader + `game_system.rs`), `saved_character/`, `campaign/`, `homebrew_authoring/`, `support/` (shared path helpers, SD-36 C1.3), `bin/` (a small number of live-side binaries — `pi_sweep_rules_tables`, `rules_tables_package`, `class_census`, the `v06_*_dump` reporting bins) | [rules-engine.md](./rules-engine.md), [rules-data-tables.md](./rules-data-tables.md), [persistence.md](./persistence.md), [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | `crates/codex-ingest/` | The `codex-ingest` crate: `crates/codex-ingest/src/pcgen_import/` (parser + `sheet_rule/` converter + `wiring_class.rs`), `crates/codex-ingest/src/oracle_validation/` (parity harness), `crates/codex-ingest/src/bin/` (`sheet_rule_convert`, every `gen_*`/`enrich_*` corpus-cache generator), its own `crates/codex-ingest/tests/` | [corpus-ingest.md](./corpus-ingest.md), [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | `apps/desktop/` | React 18 + Tauri 2 desktop shell: frontend under `src/` (screens, `boundary/*.ts` wrappers, `testSupport/`), Rust IPC shell under `src-tauri/` (`codex-desktop`, its own Cargo workspace) | [desktop-app.md](./desktop-app.md), [update-and-feedback.md](./update-and-feedback.md) |
-| `data/` | Committed data: `data/rules_tables/<table id>.json` (the Pathfinder rules-table package, 281 files; normalised by `rules_tables_package`), `data/starfinder-1e/sheet_rules/` and `data/starfinder-1e/corpus/` (the Starfinder 1e converted package, generated), `data/corpus/<book>/**/*.json` (the JSON corpus cache, one dir per book, each carrying a `_settled/<kind>.json` pre-resolved bundle where applicable), `data/sheet_rules/<book>/<kind>/<key>.json` (the SD-35 sheet-rule schema, plus `_vars/`, `_defects/`, `_report.json`), `data/stubs/<book>.json` (future-state placeholders for out-of-scope books), `data/class_feature_grants/`, `data/converted/`. Converter and corpus-cache output is never hand-edited | [rules-data-tables.md](./rules-data-tables.md), [corpus-ingest.md](./corpus-ingest.md), [status.md](./status.md) |
+| `data/` | Committed data: `data/rules_tables/<table id>.json` (the Pathfinder rules-table package, 281 files; normalised by `rules_tables_package`), `data/starfinder-1e/sheet_rules/` and `data/starfinder-1e/corpus/` (the Starfinder 1e converted package, generated), `data/cyberpunk-red/corpus/` (the Cyberpunk RED hand-transcribed corpus: `MANIFEST.json`, `LICENSE.json` and one `<kind>.json` per record kind; not generated), `data/corpus/<book>/**/*.json` (the JSON corpus cache, one dir per book, each carrying a `_settled/<kind>.json` pre-resolved bundle where applicable), `data/sheet_rules/<book>/<kind>/<key>.json` (the SD-35 sheet-rule schema, plus `_vars/`, `_defects/`, `_report.json`), `data/stubs/<book>.json` (future-state placeholders for out-of-scope books), `data/class_feature_grants/`, `data/converted/`. Converter and corpus-cache output is never hand-edited | [rules-data-tables.md](./rules-data-tables.md), [corpus-ingest.md](./corpus-ingest.md), [status.md](./status.md) |
 | `tests/` | Root-crate integration suite: one behavior per file, named by originating slice (`sd*`, `ge*`, `pcc_*`, `golden_case_*`); `tests/fixtures/`, `tests/support/` | [testing.md](./testing.md) |
 | `schemas/` | `schemas/update/` (JSON Schemas for the update manifest and channel index the release pipeline validates against), `schemas/rules/` (`sheet_rule.schema.json`, `var_table.schema.json`, `rules_tables.schema.json`, generated and checked by the `rules-schema-check` stage) | [release-pipeline.md](./release-pipeline.md), [rules-data-tables.md](./rules-data-tables.md) |
 | `scripts/` | Everything that is not a Cargo target or an npm script: `verify.sh` (the verification gate), `denominator_gate.py`/`pcgen_residue_gate.py`/`token_coverage.py` (the standing gates), `release/`, `tranche/`, `site/`, one-shot per-bundle census/ingest/classify scripts (most are named after the bundle that wrote them and are historical, not living infrastructure) | [testing.md](./testing.md), [release-pipeline.md](./release-pipeline.md) |

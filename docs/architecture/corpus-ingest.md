@@ -1,7 +1,8 @@
 # Corpus Ingest
 
-> Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR and the sheet-rule packages (Pathfinder 1e and Starfinder 1e) the rules engine consumes.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The Starfinder 1e
+> Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR and the sheet-rule packages (Pathfinder 1e and Starfinder 1e; Cyberpunk RED has none, see §"The Cyberpunk RED corpus") the rules engine consumes.
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §"The Cyberpunk RED corpus" (new) and the
+> converter's refusal of a system with no PCGen data. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The Starfinder 1e
 > converter" (new), §"The sheet-rule converter" (the Pathfinder report figures below were re-read from
 > `data/sheet_rules/_report.json` this pass and are unmoved: 49,450 of 49,450, 73,363 rules, 6,211 tables, 424 degraded)
 > and the references to the Pathfinder rules tables, now a data package (`data/rules_tables/`, see
@@ -256,6 +257,33 @@ from `codex::rules_core::game_system::GameSystem::package_roots`.
   pinned delta classes, planted mutations that must fail, Pathfinder's 49,450 records unmoved,
   `sheet_rule_convert --check` exit 0 and `python3 scripts/pcgen_residue_gate.py --check --closure` exit 0. The
   `sf-sheet-rules-check` stage of `scripts/verify.sh` re-checks the Starfinder package.
+
+## The Cyberpunk RED corpus (`data/cyberpunk-red/corpus/`)
+
+Cyberpunk RED is the one game system with **no ingest pipeline**. Its corpus is a hand transcription of the corebook PDF (v1.22, source outside git)
+into one JSON file per record kind; no PCGen data exists for it, no converter produced it and nothing regenerates it. The converter refuses it by
+name rather than falling back to another system: `crates/codex-ingest/src/pcgen_import/system_books.rs` gives it `None` for its game mode (`GAME_MODES`)
+and no books, `crates/codex-ingest/src/pcgen_import/sheet_rule/mod.rs` gives it `None` for its work inventory (`WORK_INVENTORY`) and
+variable-name directory (`VAR_NAMES_DIR`), `require_pcgen_data` (`system_books.rs`) returns `no PCGen data for cyberpunk-red`, and `sheet_rule_convert --system cyberpunk-red`
+exits non-zero (pinned by `cyberpunk_red_is_refused_by_name`). No PCGen oracle governs any Cyberpunk figure.
+
+| File | Holds |
+|---|---|
+| `MANIFEST.json` | One entry per kind: `kind`, `file`, `expected` (record count), `figure` (the content-unit inventory figure), `print_only`, `nested` (sub-table counts or null) and `lane` |
+| `<kind>.json` | A JSON array of records, each carrying a `source_page` of the form `pNNN` (the page-image file number, one more than the printed page) |
+| `LICENSE.json` | The licence declaration and the operator sign-off: `license_declaration.open_game_content` is `false` and `operator_sign_off.signed_off` is `true`; the operator ruled the whole text ships in a private single-user build, and nothing here is legal clearance |
+
+Re-derived: `jq -r '[(.kinds|length), ([.kinds[].expected]|add), ([.kinds[]|select(.print_only)]|length)]|map(tostring)|join(" ")' data/cyberpunk-red/corpus/MANIFEST.json`
+prints `53 930 8` (kinds, records they expect, kinds shipped print-only) and `git ls-files data/cyberpunk-red | awk 'END{print NR}'` prints `55` tracked files.
+The engine modules read the `<kind>.json` files directly (`CprSkillCatalog::load(corpus_dir)` and its siblings, `cpr::sheet::CprSheetCatalogs::load`) through
+`GameSystem::CyberpunkRed.package_roots(..).corpus`, not through `corpus_loader` or a settled bundle. The packaged app ships the directory as a bundle
+resource (`tauri.conf.json`, `data/cyberpunk-red/corpus/`).
+
+Two independent implementations check the corpus against the manifest: `python3 scripts/cpr_manifest_check.py --all` (also `--kinds` and `--selftest`; failure
+codes MISSING, EXTRA, COUNT, NULL_COUNT, BAD_SOURCE, BAD_FILE, SUM, MANIFEST) and the root test `tests/cpr_corpus_manifest.rs`. Both also compare the manifest's
+kinds and expected sum with the kind table of the SD-38 content-unit inventory and fail closed on a mismatch. **They do not cover** field values, nested
+sub-table counts or whether a `source_page` is the right page: transcription accuracy beyond the manifest counts rests on a 10% sample compared with page
+images (SD-38 E1.V), not on a gate. Records are not Product-Identity screened (`docs/governance/license-matrix.md`, the Cyberpunk RED row).
 
 ## Pipeline stages
 

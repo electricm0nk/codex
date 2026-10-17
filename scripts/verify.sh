@@ -1536,7 +1536,10 @@ game_system_rs = os.path.join(repo_root, "src/rules_core/game_system.rs")
 with open(game_system_rs, encoding="utf-8") as fh:
     source = fh.read()
 fn = re.search(r"fn sheet_rules_relative\(self\)[^{]*\{(.*?)\n    \}", source, re.S)
-system_roots = re.findall(r'=>\s*"([^"]+)"', fn.group(1)) if fn else []
+# Arms read `=> Some("<root>")`; `=> None` is a system with no sheet-rule package (Cyberpunk RED).
+system_roots = re.findall(r'=>\s*Some\(\s*"([^"]+)"\s*\)', fn.group(1)) if fn else []
+no_package = re.findall(r'(\w+)\s*=>\s*None\b', fn.group(1)) if fn else []
+print(f"systems without a sheet-rule package: {', '.join(no_package) or 'none'}")
 if not system_roots:
     print(f"no sheet_rules_relative arms read from {game_system_rs} -- cannot check")
     sys.exit(1)

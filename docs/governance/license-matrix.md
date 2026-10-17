@@ -273,3 +273,30 @@ prints `TOTAL_ROWS 12947`), in-scope 12,718 + excluded 229.
 
 **Revisit:** if the operator verifies the LPJ licence, flip its row to `include` and add a go-wide
 cycle for its 37 rows (`decisions.md §6`). SSRGG and `_society` stay out unless Paizo's terms change.
+
+## Cyberpunk RED (SD-38 E0.2, 2026-10-13)
+
+**Scope.** One row: the Cyberpunk RED Core Rulebook, the only book SD-38 ingests. It is not a PCGen
+dataset (no PCGen data exists for this system, `docs/release/SD-38-cyberpunk-red/decisions.md §23`),
+so the PCC, `ISOGL`, `INFOTEXT` and `COPYRIGHT:` columns read from the book itself, not from a `.pcc`.
+The per-book licence file is `data/cyberpunk-red/corpus/LICENSE.json`.
+
+**This row is a DEVIATION.** Every other row in this file rests on OGL 1.0a plus a PI screen.
+Cyberpunk RED is not OGL; R. Talsorian's Homebrew Content Policy applies. On the operator's ruling
+of 2026-10-13 (verbatim: *"license - do the whole thing for now. We can back stuff out or reword it
+later if need be. For now, i'm the only person even using the app."*), the whole book text — names,
+tables, rule text, descriptions — ships in a private single-user build, unredacted and unscreened
+(`docs/release/SD-38-cyberpunk-red/decisions.md §3`, §4). **Nothing below is legal clearance.**
+
+**Evidence commands:** `sha256sum cpr-corebook-v122.pdf` → `7ca9058f8eb1…e240ea`;
+`sed -n 31,33p $P/p003.txt` (the book's own copyright block; `$P` = the SD-38 source pages directory,
+never committed).
+
+| source | code | publisher | OGL text | copyright lines / OGL 1.0a line | `ISOGL` | community-use `INFOTEXT` | licence | PI posture | data rows | include / exclude | `operator_sign_off` |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `cpr-corebook-v122.pdf` (Cyberpunk RED Core Rulebook, CR3001, ISBN 978-1-950911-06-6, First Printing; outside git) | CPR | R. Talsorian Games, Inc. | **no** | 1 / no — "Copyright © 2020 by R. Talsorian Games, Inc., Cyberpunk is a registered trademark of CD Projekt Red S.A. All rights reserved" (book p003) | n/a (not PCGen) | n/a | **DEVIATION** — R. Talsorian Homebrew Content Policy; not OGL | not screened: operator ruling 2026-10-13 (PI is an OGL concept; `pi-sweep` reads `src/rules_core/rules_catalog` + `data/rules_tables` only) | pending — `data/cyberpunk-red/corpus/MANIFEST.json` (E1.0, verified at E1.V) | **include** (whole text, private single-user build) | **true** (operator ruling 2026-10-13) |
+
+**Revisit:** if the operator backs the ruling out ("we can back stuff out or reword it later"), a
+later bundle rewrites `text` fields page by page (every record carries `source_page`), keeps names
+and numbers, and flips `operator_sign_off` in both this row and `LICENSE.json`
+(`docs/release/SD-38-cyberpunk-red/decisions.md §4`; `forward-scope-register.md`).

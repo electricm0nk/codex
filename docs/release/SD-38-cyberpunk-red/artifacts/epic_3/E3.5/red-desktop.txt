@@ -1,0 +1,82 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/crates/codex-ingest)
+error[E0425]: cannot find type `CprRoleAbilityRequest` in this scope
+    --> src/cpr_creation.rs:1065:45
+     |
+1065 |     fn starting_role_ability(role: &str) -> CprRoleAbilityRequest {
+     |                                             ^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprRoleAbilityRequest` in this scope
+    --> src/cpr_creation.rs:1075:79
+     |
+1075 |     fn role_ability(points: &[(&str, u8)], picks: &[(&str, Option<&str>)]) -> CprRoleAbilityRequest {
+     |                                                                               ^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprRoleAbilityRequest` in this scope
+    --> src/cpr_creation.rs:1076:9
+     |
+1076 |         CprRoleAbilityRequest {
+     |         ^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprRolePickRequest` in this scope
+    --> src/cpr_creation.rs:1078:47
+     |
+1078 |             picks: picks.iter().map(|(n, on)| CprRolePickRequest { name: (*n).to_owned(), on: on.map(str::to_owned) }).collect(),
+     |                                               ^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `REFUSED_ROLE_ABILITY` in this scope
+    --> src/cpr_creation.rs:1810:49
+     |
+1810 |         preview.problems.iter().any(|p| p.id == REFUSED_ROLE_ABILITY && words.iter().all(|w| p.message.contains(w)))
+     |                                                 ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `REFUSED_ROLE_ABILITY` in this scope
+    --> src/cpr_creation.rs:1894:56
+     |
+1894 |             assert!(diagnostics.iter().any(|d| d.id == REFUSED_ROLE_ABILITY), "{role}");
+     |                                                        ^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0560]: struct `cpr_creation::CprCreationRequest` has no field named `role_ability`
+    --> src/cpr_creation.rs:1059:13
+     |
+1059 |             role_ability: starting_role_ability(role),
+     |             ^^^^^^^^^^^^ `cpr_creation::CprCreationRequest` does not have this field
+     |
+     = note: all struct fields are already assigned
+
+error[E0609]: no field `role_ability` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:1815:13
+     |
+1815 |         req.role_ability = role_ability(points, picks);
+     |             ^^^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats` ... and 2 others
+
+error[E0609]: no field `role_ability` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1873:35
+     |
+1873 |             let ability = preview.role_ability.as_ref().expect("a Role Ability");
+     |                                   ^^^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 8 others
+
+error[E0609]: no field `role_ability` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1890:29
+     |
+1890 |             assert!(preview.role_ability.as_ref().is_some_and(|a| a.rows.is_empty()), "{role}");
+     |                             ^^^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 8 others
+
+error[E0609]: no field `role_ability` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:1917:35
+     |
+1917 |             let ability = preview.role_ability.as_ref().expect("a Role Ability");
+     |                                   ^^^^^^^^^^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 8 others
+
+Some errors have detailed explanations: E0422, E0425, E0560, E0609.
+For more information about an error, try `rustc --explain E0422`.
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 11 previous errors

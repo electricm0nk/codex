@@ -1,0 +1,4 @@
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+FAIL  select-cyberpunk-red  -- expected string missing: 'No characters yet — create your first one to get started.'; forbidden string present: 'Aldric Ironhand'
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+0/1 green, 1 red, 0 blocked, 0 manual, 0 not-run (M = 1 rows)

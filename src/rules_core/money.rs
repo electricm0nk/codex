@@ -336,6 +336,8 @@ pub fn starting_wealth(system: GameSystem, class_id: &str, level: i64) -> Option
         GameSystem::Starfinder1e => {
             usize::try_from(level).ok().filter(|l| *l >= 1).and_then(|l| SF_WEALTH_BY_LEVEL_CREDITS.get(l - 1)).copied()
         }
+        // Cyberpunk RED's starting money is its own engine module's rule, not a class/level table here.
+        GameSystem::CyberpunkRed => None,
     }
 }
 
@@ -373,6 +375,7 @@ mod system_wealth_tests {
         }
         assert_eq!(starting_wealth(GameSystem::Starfinder1e, "core:class:soldier", 0), None);
         assert_eq!(starting_wealth(GameSystem::Starfinder1e, "core:class:soldier", 21), None);
+        assert_eq!(starting_wealth(GameSystem::CyberpunkRed, "core:class:soldier", 1), None);
     }
 
     /// The Pathfinder branch is what character creation grants (the top of the class's roll,

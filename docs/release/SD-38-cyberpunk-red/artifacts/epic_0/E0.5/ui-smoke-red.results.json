@@ -1,0 +1,8 @@
+[
+ {
+  "id": "select-cyberpunk-red",
+  "status": "red",
+  "reason": "expected string missing: 'No characters yet — create your first one to get started.'; forbidden string present: 'Aldric Ironhand'",
+  "rendered_excerpt": "⚙\nLoad Character\n\n\nAldric Ironhand\nHuman Fighter 3\nLast modified: Dec 31, 2025\n\nElowen Ashgrave\nHuman Wizard 5\nLast modified: Dec 31, 2025\n\nBrother Tomas Vane\nHuman Cleric 3 / Fighter 2\nLast modified: Dec 31, 2025\nSelect a character to preview, then press Load for the full sheet.\nLoad\nDelete\nExport\nClone\nImport\nRestore starter characters\nCancel"
+ }
+]

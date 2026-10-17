@@ -3,7 +3,8 @@
 > Scope: every project-specific term a newcomer meets in this codebase or its docs, each with a
 > short definition and a link to the doc that treats it in full.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60`** (SD-37 E7.9a): both term sets kept; the Data root entry now names the per-system roots.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the SD-37 terms (game system, held set,
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the SD-38 terms (the
+> `cpr.` row, printed rule, the Game system entry). Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the SD-37 terms (game system, held set,
 > data package, rules catalog, golden digests, Starfinder chassis).
 > Also verified: **2026-10-07 against branch `tranche-16-ui`** for the four terms it added (data root, installed state, release-notes pointer, version stamp). Earlier: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
 > class census, closure-complete attestation, class roster, mechanism, sabotage parity, status parity,
@@ -109,6 +110,13 @@ JSON cache derived from** the corpus. See [corpus-ingest.md](./corpus-ingest.md)
 a byte-equality proof that every corpus-literal value this repo ships was transcribed verbatim
 from the pinned oracle, not paraphrased or hand-typed. See [testing.md](./testing.md).
 
+## `cpr.` row
+
+One explanation row of a Cyberpunk RED sheet, id `cpr.<area>.<field>` (for example `cpr.derived.hp`, `cpr.skill.<skill>`),
+composed by `src/rules_core/cpr/sheet.rs` (`compose_sheet`). Every number on a Cyberpunk sheet is one such row and no
+frontend code re-derives one. Text rules and dice are **printed** (`CprPrintedLine`), not computed: dice stay literal on
+the sheet. See [rules-engine.md](./rules-engine.md) §"Cyberpunk RED: the `cpr` engine".
+
 ## Crate wall
 
 The Cargo-workspace-enforced separation between the `codex` crate (ships in the desktop binary,
@@ -173,9 +181,9 @@ See `AGENTS.md` rule 9 and [testing.md](./testing.md).
 
 ## Game system
 
-`GameSystem` in `src/rules_core/game_system.rs`: `Pathfinder1e` (`pathfinder-1e`) or `Starfinder1e` (`starfinder-1e`).
-Names a package root and a book list; an unknown id is an error, never a default. See
-[overview.md](./overview.md) §"Two game systems, one engine".
+`GameSystem` in `src/rules_core/game_system.rs`: `Pathfinder1e` (`pathfinder-1e`), `Starfinder1e` (`starfinder-1e`) or
+`CyberpunkRed` (`cyberpunk-red`). Names a package root and a book list; an unknown id is an error, never a default.
+`CyberpunkRed` has a corpus root and no sheet-rule package. See [overview.md](./overview.md) §"Three game systems".
 
 ## Golden digest
 

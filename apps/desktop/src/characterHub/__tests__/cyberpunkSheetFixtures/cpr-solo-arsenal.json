@@ -1,0 +1,2343 @@
+{
+  "summary": {
+    "characterId": "cpr-solo-arsenal",
+    "displayLabel": "Arsenal Solo",
+    "gameSystem": "cyberpunk-red",
+    "schemaVersion": 1,
+    "savedAt": "2026-10-13T00:00:00Z",
+    "raceId": "",
+    "classSummary": ""
+  },
+  "snapshot": null,
+  "diagnostics": [],
+  "corpusDerived": {
+    "schoolCoverage": [],
+    "equippedItems": [],
+    "equipmentEffects": {
+      "perItem": [],
+      "armorClassDelta": 0,
+      "armorCheckPenaltyTotal": 0
+    },
+    "encumbrance": {
+      "totalCarriedWeightLbs": 0.0,
+      "totalCarriedCostGp": 0.0,
+      "lightMaxLbs": 0.0,
+      "mediumMaxLbs": 0.0,
+      "heavyMaxLbs": 0.0,
+      "level": "",
+      "loadArmorCheckPenalty": 0,
+      "perItem": [],
+      "unresolvedItemIds": []
+    },
+    "unresolvedSpellIds": [],
+    "unresolvedEquipmentItemIds": []
+  },
+  "selectedFeats": [],
+  "spellsSelected": [],
+  "chosenFeatTargets": [],
+  "explanations": [
+    {
+      "id": "cpr.stat.int",
+      "value": 7,
+      "detail": "INT 7: the character's Intelligence STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.ref",
+      "value": 8,
+      "detail": "REF 8: the character's Reflexes STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.dex",
+      "value": 6,
+      "detail": "DEX 6: the character's Dexterity STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.tech",
+      "value": 5,
+      "detail": "TECH 5: the character's Technique STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.cool",
+      "value": 4,
+      "detail": "COOL 4: the character's Cool STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.will",
+      "value": 3,
+      "detail": "WILL 3: the character's Willpower STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.luck",
+      "value": 2,
+      "detail": "LUCK 2: the character's Luck STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.move",
+      "value": 6,
+      "detail": "MOVE 6: the character's Movement STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.body",
+      "value": 5,
+      "detail": "BODY 5: the character's Body STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.stat.emp",
+      "value": 8,
+      "detail": "EMP 8: the character's Empathy STAT as entered (Cyberpunk RED core rulebook p. 72-73)"
+    },
+    {
+      "id": "cpr.derived.hit_points",
+      "value": 30,
+      "detail": "HP 30 = 10 + 5 x ceil((BODY 5 + WILL 3) / 2) = 10 + 5 x 4 (Cyberpunk RED core rulebook p. 79)"
+    },
+    {
+      "id": "cpr.derived.seriously_wounded",
+      "value": 15,
+      "detail": "Seriously Wounded 15 = ceil(HP 30 / 2) (Cyberpunk RED core rulebook p. 79)"
+    },
+    {
+      "id": "cpr.derived.death_save",
+      "value": 5,
+      "detail": "Death Save 5 = BODY 5 (Cyberpunk RED core rulebook p. 79)"
+    },
+    {
+      "id": "cpr.derived.humanity_max",
+      "value": 80,
+      "detail": "Humanity 80 = EMP 8 x 10 (Cyberpunk RED core rulebook p. 80)"
+    },
+    {
+      "id": "cpr.derived.emp_current",
+      "value": 8,
+      "detail": "EMP 8 = max(0, floor(Humanity 80 / 10)) (Cyberpunk RED core rulebook p. 80; negative Humanity gives 0, p. 232)"
+    },
+    {
+      "id": "cpr.derived.move",
+      "value": 6,
+      "detail": "MOVE 6: the MOVE STAT as entered (Cyberpunk RED core rulebook p. 72)"
+    },
+    {
+      "id": "cpr.derived.luck_pool",
+      "value": 2,
+      "detail": "LUCK pool 2 = LUCK 2 (Cyberpunk RED core rulebook p. 72)"
+    },
+    {
+      "id": "cpr.derived.humanity_current",
+      "value": 80,
+      "detail": "Humanity 80 = EMP 8 x 10 - Humanity Loss 0 (Cyberpunk RED core rulebook p. 80; preset loss at creation, p. 112; rolled loss after it, p. 111)"
+    },
+    {
+      "id": "cpr.armor.sp_head",
+      "value": 11,
+      "detail": "Head SP 11: the highest source in the head location (Light Armorjack 11); SP does not stack (Cyberpunk RED core rulebook p. 184)"
+    },
+    {
+      "id": "cpr.armor.sp_body",
+      "value": 12,
+      "detail": "Body SP 12: the highest source in the body location (Medium Armorjack 12); SP does not stack (Cyberpunk RED core rulebook p. 184)"
+    },
+    {
+      "id": "cpr.armor.penalty",
+      "value": -2,
+      "detail": "Armor Penalty -2: the most punishing penalty of the armour worn, taken once for both locations (Cyberpunk RED core rulebook p. 184; Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.ref",
+      "value": 6,
+      "detail": "REF 6 = max(0, REF 8 + Armor Penalty -2) (Cyberpunk RED core rulebook p. 184; Minimum 0, Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.dex",
+      "value": 4,
+      "detail": "DEX 4 = max(0, DEX 6 + Armor Penalty -2) (Cyberpunk RED core rulebook p. 184; Minimum 0, Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.move",
+      "value": 4,
+      "detail": "MOVE 4 = max(0, MOVE 6 + Armor Penalty -2) (Cyberpunk RED core rulebook p. 184; Minimum 0, Cyberpunk RED core rulebook p. 350)"
+    },
+    {
+      "id": "cpr.armor.penalty_head",
+      "value": 0,
+      "detail": "head armour penalty 0: the most punishing Armor Penalty worn in the head location (Light Armorjack 0); the sheet takes it once, as cpr.armor.penalty (Cyberpunk RED core rulebook p. 184, p. 350)"
+    },
+    {
+      "id": "cpr.armor.penalty_body",
+      "value": -2,
+      "detail": "body armour penalty -2: the most punishing Armor Penalty worn in the body location (Medium Armorjack -2); the sheet takes it once, as cpr.armor.penalty (Cyberpunk RED core rulebook p. 184, p. 350)"
+    },
+    {
+      "id": "cpr.armor.shield_hp",
+      "value": 10,
+      "detail": "Bulletproof Shield 10 HP, reduced by damage; a shield has HP instead of SP (Cyberpunk RED core rulebook p351)"
+    },
+    {
+      "id": "cpr.armor.shield_penalty",
+      "value": 0,
+      "detail": "Bulletproof Shield Armor Penalty 0: \"None, but always takes up one arm\" (p351)"
+    },
+    {
+      "id": "cpr.cyberware.humanity_loss",
+      "value": 0,
+      "detail": "Humanity Loss 0: the Humanity Loss of 0 installed pieces (p. 111: preset at Character Generation, rolled on the piece's dice after it)"
+    },
+    {
+      "id": "cpr.cyberware.humanity_cap",
+      "value": 80,
+      "detail": "Maximum Humanity 80: 10 x EMP 8 - 0 pieces of cyberware x 2 - 0 pieces of borgware x 4; 0 Humanity Loss cyberware excluded (p. 231)"
+    },
+    {
+      "id": "cpr.cyberware.body",
+      "value": 5,
+      "detail": "BODY 5: BODY 5 after Grafted Muscle and Bone Lace (+2, not to 11 or higher, p. 364) and Linear Frames (Sigma 12, Beta 14, p. 368)"
+    },
+    {
+      "id": "cpr.cyberware.sp_body",
+      "value": 0,
+      "detail": "Body SP 0 from cyberware: the highest of Skin Weave 7 and Subdermal Armor 11 installed (p. 365)"
+    },
+    {
+      "id": "cpr.cyberware.sp_head",
+      "value": 0,
+      "detail": "Head SP 0 from cyberware: the highest of Skin Weave 7 and Subdermal Armor 11 installed (p. 365)"
+    },
+    {
+      "id": "cpr.cyberware.initiative_bonus",
+      "value": 0,
+      "detail": "Initiative +0: Kerenzikov, always on (p. 360)"
+    },
+    {
+      "id": "cpr.cyberware.slots.fashionware.used",
+      "value": 0,
+      "detail": "Fashionware: 0 of 7 option slots used (p. 112)"
+    },
+    {
+      "id": "cpr.cyberware.slots.fashionware.capacity",
+      "value": 7,
+      "detail": "Fashionware: 7 option slots (p. 112-117, p. 359-368)"
+    },
+    {
+      "id": "cpr.cyberware.slots.internal.used",
+      "value": 0,
+      "detail": "Internal Body: 0 of 7 option slots used (p. 112)"
+    },
+    {
+      "id": "cpr.cyberware.slots.internal.capacity",
+      "value": 7,
+      "detail": "Internal Body: 7 option slots (p. 112-117, p. 359-368)"
+    },
+    {
+      "id": "cpr.cyberware.slots.external.used",
+      "value": 0,
+      "detail": "External Body: 0 of 7 option slots used (p. 112)"
+    },
+    {
+      "id": "cpr.cyberware.slots.external.capacity",
+      "value": 7,
+      "detail": "External Body: 7 option slots (p. 112-117, p. 359-368)"
+    },
+    {
+      "id": "cpr.wound.lightly_wounded",
+      "value": 30,
+      "detail": "Lightly Wounded below 30 HP: \"Less than Full HP\" of HP 30 (Cyberpunk RED core rulebook p. 186)"
+    },
+    {
+      "id": "cpr.wound.lightly_wounded_dv",
+      "value": 10,
+      "detail": "Stabilize Lightly Wounded DV10: TECH + First Aid or Paramedic + 1d10 (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.seriously_wounded",
+      "value": 15,
+      "detail": "Seriously Wounded below 15 HP: \"Less than 1/2 HP (round up)\" of HP 30 (Cyberpunk RED core rulebook p. 186)"
+    },
+    {
+      "id": "cpr.wound.seriously_wounded_dv",
+      "value": 13,
+      "detail": "Stabilize Seriously Wounded DV13: TECH + First Aid or Paramedic + 1d10 (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.mortally_wounded",
+      "value": 1,
+      "detail": "Mortally Wounded below 1 HP: \"Less than 1 HP\" of HP 30 (Cyberpunk RED core rulebook p. 186)"
+    },
+    {
+      "id": "cpr.wound.mortally_wounded_dv",
+      "value": 15,
+      "detail": "Stabilize Mortally Wounded DV15: TECH + First Aid or Paramedic + 1d10 (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.death_save",
+      "value": 5,
+      "detail": "Death Save 5 = BODY 5: roll a d10 plus the Death Save Penalty under it; a 10 always fails (Cyberpunk RED core rulebook p. 222)"
+    },
+    {
+      "id": "cpr.wound.base_death_save_penalty",
+      "value": 0,
+      "detail": "Base Death Save Penalty 0 = +1 per recorded Critical Injury that raises it (none recorded) (Cyberpunk RED core rulebook p. 221-222)"
+    },
+    {
+      "id": "cpr.skill.concentration",
+      "value": 3,
+      "detail": "Concentration base 3 = WILL 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.concentration",
+      "value": 0,
+      "detail": "Concentration level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.conceal_reveal_object",
+      "value": 7,
+      "detail": "Conceal/Reveal Object base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.conceal_reveal_object",
+      "value": 0,
+      "detail": "Conceal/Reveal Object level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.lip_reading",
+      "value": 7,
+      "detail": "Lip Reading base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.lip_reading",
+      "value": 0,
+      "detail": "Lip Reading level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.perception",
+      "value": 7,
+      "detail": "Perception base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.perception",
+      "value": 0,
+      "detail": "Perception level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.tracking",
+      "value": 7,
+      "detail": "Tracking base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.tracking",
+      "value": 0,
+      "detail": "Tracking level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.athletics",
+      "value": 4,
+      "detail": "Athletics base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.athletics",
+      "value": 0,
+      "detail": "Athletics level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.contortionist",
+      "value": 4,
+      "detail": "Contortionist base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.contortionist",
+      "value": 0,
+      "detail": "Contortionist level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.dance",
+      "value": 4,
+      "detail": "Dance base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.dance",
+      "value": 0,
+      "detail": "Dance level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.endurance",
+      "value": 3,
+      "detail": "Endurance base 3 = WILL 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.endurance",
+      "value": 0,
+      "detail": "Endurance level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.resist_torture_drugs",
+      "value": 3,
+      "detail": "Resist Torture/Drugs base 3 = WILL 3 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.resist_torture_drugs",
+      "value": 0,
+      "detail": "Resist Torture/Drugs level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.stealth",
+      "value": 4,
+      "detail": "Stealth base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.stealth",
+      "value": 0,
+      "detail": "Stealth level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.drive_land_vehicle",
+      "value": 6,
+      "detail": "Drive Land Vehicle base 6 = REF 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.drive_land_vehicle",
+      "value": 0,
+      "detail": "Drive Land Vehicle level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pilot_air_vehicle",
+      "value": 6,
+      "detail": "Pilot Air Vehicle base 6 = REF 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pilot_air_vehicle",
+      "value": 0,
+      "detail": "Pilot Air Vehicle level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pilot_sea_vehicle",
+      "value": 6,
+      "detail": "Pilot Sea Vehicle base 6 = REF 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pilot_sea_vehicle",
+      "value": 0,
+      "detail": "Pilot Sea Vehicle level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.riding",
+      "value": 6,
+      "detail": "Riding base 6 = REF 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.riding",
+      "value": 0,
+      "detail": "Riding level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.accounting",
+      "value": 7,
+      "detail": "Accounting base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.accounting",
+      "value": 0,
+      "detail": "Accounting level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.animal_handling",
+      "value": 7,
+      "detail": "Animal Handling base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.animal_handling",
+      "value": 0,
+      "detail": "Animal Handling level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.bureaucracy",
+      "value": 7,
+      "detail": "Bureaucracy base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.bureaucracy",
+      "value": 0,
+      "detail": "Bureaucracy level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.business",
+      "value": 7,
+      "detail": "Business base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.business",
+      "value": 0,
+      "detail": "Business level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.composition",
+      "value": 7,
+      "detail": "Composition base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.composition",
+      "value": 0,
+      "detail": "Composition level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.criminology",
+      "value": 7,
+      "detail": "Criminology base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.criminology",
+      "value": 0,
+      "detail": "Criminology level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.cryptography",
+      "value": 7,
+      "detail": "Cryptography base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.cryptography",
+      "value": 0,
+      "detail": "Cryptography level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.deduction",
+      "value": 7,
+      "detail": "Deduction base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.deduction",
+      "value": 0,
+      "detail": "Deduction level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.education",
+      "value": 7,
+      "detail": "Education base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.education",
+      "value": 0,
+      "detail": "Education level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.gamble",
+      "value": 7,
+      "detail": "Gamble base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.gamble",
+      "value": 0,
+      "detail": "Gamble level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.language",
+      "value": 7,
+      "detail": "Language base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.language",
+      "value": 0,
+      "detail": "Language level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.library_search",
+      "value": 7,
+      "detail": "Library Search base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.library_search",
+      "value": 0,
+      "detail": "Library Search level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.local_expert",
+      "value": 7,
+      "detail": "Local Expert base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.local_expert",
+      "value": 0,
+      "detail": "Local Expert level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.science",
+      "value": 7,
+      "detail": "Science base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.science",
+      "value": 0,
+      "detail": "Science level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.tactics",
+      "value": 7,
+      "detail": "Tactics base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.tactics",
+      "value": 0,
+      "detail": "Tactics level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.wilderness_survival",
+      "value": 7,
+      "detail": "Wilderness Survival base 7 = INT 7 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.wilderness_survival",
+      "value": 0,
+      "detail": "Wilderness Survival level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.brawling",
+      "value": 4,
+      "detail": "Brawling base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.brawling",
+      "value": 0,
+      "detail": "Brawling level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.evasion",
+      "value": 4,
+      "detail": "Evasion base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.evasion",
+      "value": 0,
+      "detail": "Evasion level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.martial_arts",
+      "value": 4,
+      "detail": "Martial Arts base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.martial_arts",
+      "value": 0,
+      "detail": "Martial Arts level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.melee_weapon",
+      "value": 4,
+      "detail": "Melee Weapon base 4 = DEX 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.melee_weapon",
+      "value": 0,
+      "detail": "Melee Weapon level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.acting",
+      "value": 4,
+      "detail": "Acting base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.acting",
+      "value": 0,
+      "detail": "Acting level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.play_instrument",
+      "value": 5,
+      "detail": "Play Instrument base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.play_instrument",
+      "value": 0,
+      "detail": "Play Instrument level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.archery",
+      "value": 6,
+      "detail": "Archery base 6 = REF 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.archery",
+      "value": 0,
+      "detail": "Archery level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.autofire",
+      "value": 8,
+      "detail": "Autofire base 8 = REF 6 + level 2 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.autofire",
+      "value": 2,
+      "detail": "Autofire level 2: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.handgun",
+      "value": 10,
+      "detail": "Handgun base 10 = REF 6 + level 4 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.handgun",
+      "value": 4,
+      "detail": "Handgun level 4: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.heavy_weapons",
+      "value": 6,
+      "detail": "Heavy Weapons base 6 = REF 6 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.heavy_weapons",
+      "value": 0,
+      "detail": "Heavy Weapons level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.shoulder_arms",
+      "value": 9,
+      "detail": "Shoulder Arms base 9 = REF 6 + level 3 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.shoulder_arms",
+      "value": 3,
+      "detail": "Shoulder Arms level 3: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.bribery",
+      "value": 4,
+      "detail": "Bribery base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.bribery",
+      "value": 0,
+      "detail": "Bribery level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.conversation",
+      "value": 8,
+      "detail": "Conversation base 8 = EMP 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.conversation",
+      "value": 0,
+      "detail": "Conversation level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.human_perception",
+      "value": 8,
+      "detail": "Human Perception base 8 = EMP 8 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.human_perception",
+      "value": 0,
+      "detail": "Human Perception level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.interrogation",
+      "value": 4,
+      "detail": "Interrogation base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.interrogation",
+      "value": 0,
+      "detail": "Interrogation level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.persuasion",
+      "value": 4,
+      "detail": "Persuasion base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.persuasion",
+      "value": 0,
+      "detail": "Persuasion level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.personal_grooming",
+      "value": 4,
+      "detail": "Personal Grooming base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.personal_grooming",
+      "value": 0,
+      "detail": "Personal Grooming level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.streetwise",
+      "value": 4,
+      "detail": "Streetwise base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.streetwise",
+      "value": 0,
+      "detail": "Streetwise level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.trading",
+      "value": 4,
+      "detail": "Trading base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.trading",
+      "value": 0,
+      "detail": "Trading level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.wardrobe_style",
+      "value": 4,
+      "detail": "Wardrobe & Style base 4 = COOL 4 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.wardrobe_style",
+      "value": 0,
+      "detail": "Wardrobe & Style level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.air_vehicle_tech",
+      "value": 5,
+      "detail": "Air Vehicle Tech base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.air_vehicle_tech",
+      "value": 0,
+      "detail": "Air Vehicle Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.basic_tech",
+      "value": 5,
+      "detail": "Basic Tech base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.basic_tech",
+      "value": 0,
+      "detail": "Basic Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.cybertech",
+      "value": 5,
+      "detail": "Cybertech base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.cybertech",
+      "value": 0,
+      "detail": "Cybertech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.demolitions",
+      "value": 5,
+      "detail": "Demolitions base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.demolitions",
+      "value": 0,
+      "detail": "Demolitions level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.electronics_security_tech",
+      "value": 5,
+      "detail": "Electronics/Security Tech base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.electronics_security_tech",
+      "value": 0,
+      "detail": "Electronics/Security Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.first_aid",
+      "value": 5,
+      "detail": "First Aid base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.first_aid",
+      "value": 0,
+      "detail": "First Aid level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.forgery",
+      "value": 5,
+      "detail": "Forgery base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.forgery",
+      "value": 0,
+      "detail": "Forgery level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.land_vehicle_tech",
+      "value": 5,
+      "detail": "Land Vehicle Tech base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.land_vehicle_tech",
+      "value": 0,
+      "detail": "Land Vehicle Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.paint_draw_sculpt",
+      "value": 5,
+      "detail": "Paint/Draw/Sculpt base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.paint_draw_sculpt",
+      "value": 0,
+      "detail": "Paint/Draw/Sculpt level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.paramedic",
+      "value": 5,
+      "detail": "Paramedic base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.paramedic",
+      "value": 0,
+      "detail": "Paramedic level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.photography_film",
+      "value": 5,
+      "detail": "Photography/Film base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.photography_film",
+      "value": 0,
+      "detail": "Photography/Film level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pick_lock",
+      "value": 5,
+      "detail": "Pick Lock base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pick_lock",
+      "value": 0,
+      "detail": "Pick Lock level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.pick_pocket",
+      "value": 5,
+      "detail": "Pick Pocket base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.pick_pocket",
+      "value": 0,
+      "detail": "Pick Pocket level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.sea_vehicle_tech",
+      "value": 5,
+      "detail": "Sea Vehicle Tech base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.sea_vehicle_tech",
+      "value": 0,
+      "detail": "Sea Vehicle Tech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill.weaponstech",
+      "value": 5,
+      "detail": "Weaponstech base 5 = TECH 5 + level 0 (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.skill_level.weaponstech",
+      "value": 0,
+      "detail": "Weaponstech level 0: as entered; Skill Base = STAT + level (Cyberpunk RED core rulebook p. 81)"
+    },
+    {
+      "id": "cpr.role.solo.rank",
+      "value": 4,
+      "detail": "Combat Awareness Rank 4: the Solo's Role Ability Rank (1-10; every Role starts at Rank 4, p. 142-143)"
+    },
+    {
+      "id": "cpr.role.solo.combat_awareness_points",
+      "value": 4,
+      "detail": "Combat Awareness points 4: the pool equals Rank 4, divided among the six abilities (p. 146)"
+    },
+    {
+      "id": "cpr.reputation.level",
+      "value": 0,
+      "detail": "Reputation 0: Most Cyberpunk RED Characters start with a Reputation of 0 (p. 193); no deed has been awarded a Reputation Level"
+    },
+    {
+      "id": "cpr.reputation.facedown",
+      "value": 4,
+      "detail": "Facedown 4 + 1d10: COOL 4 + Reputation 0 + 1d10 (p. 194)"
+    },
+    {
+      "id": "cpr.weapon.0.rof",
+      "value": 2,
+      "detail": "Medium Pistol ROF 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.0.magazine",
+      "value": 12,
+      "detail": "Medium Pistol standard magazine 12 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.0.hands",
+      "value": 1,
+      "detail": "Medium Pistol Hands Required 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.0.skill_base",
+      "value": 10,
+      "detail": "Medium Pistol Skill Base 10: the Handgun Skill Base (cpr.skill.handgun), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.0",
+      "value": 13,
+      "detail": "Medium Pistol range DV 13 at 0 to 6 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.1",
+      "value": 15,
+      "detail": "Medium Pistol range DV 15 at 7 to 12 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.2",
+      "value": 20,
+      "detail": "Medium Pistol range DV 20 at 13 to 25 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.3",
+      "value": 25,
+      "detail": "Medium Pistol range DV 25 at 26 to 50 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.4",
+      "value": 30,
+      "detail": "Medium Pistol range DV 30 at 51 to 100 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.5",
+      "value": 30,
+      "detail": "Medium Pistol range DV 30 at 101 to 200 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.1.rof",
+      "value": 2,
+      "detail": "Heavy Pistol ROF 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.1.magazine",
+      "value": 8,
+      "detail": "Heavy Pistol standard magazine 8 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.1.hands",
+      "value": 1,
+      "detail": "Heavy Pistol Hands Required 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.1.skill_base",
+      "value": 10,
+      "detail": "Heavy Pistol Skill Base 10: the Handgun Skill Base (cpr.skill.handgun), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.0",
+      "value": 13,
+      "detail": "Heavy Pistol range DV 13 at 0 to 6 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.1",
+      "value": 15,
+      "detail": "Heavy Pistol range DV 15 at 7 to 12 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.2",
+      "value": 20,
+      "detail": "Heavy Pistol range DV 20 at 13 to 25 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.3",
+      "value": 25,
+      "detail": "Heavy Pistol range DV 25 at 26 to 50 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.4",
+      "value": 30,
+      "detail": "Heavy Pistol range DV 30 at 51 to 100 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.5",
+      "value": 30,
+      "detail": "Heavy Pistol range DV 30 at 101 to 200 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.2.rof",
+      "value": 1,
+      "detail": "Very Heavy Pistol ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.2.magazine",
+      "value": 8,
+      "detail": "Very Heavy Pistol standard magazine 8 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.2.hands",
+      "value": 1,
+      "detail": "Very Heavy Pistol Hands Required 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.2.skill_base",
+      "value": 10,
+      "detail": "Very Heavy Pistol Skill Base 10: the Handgun Skill Base (cpr.skill.handgun), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.0",
+      "value": 13,
+      "detail": "Very Heavy Pistol range DV 13 at 0 to 6 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.1",
+      "value": 15,
+      "detail": "Very Heavy Pistol range DV 15 at 7 to 12 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.2",
+      "value": 20,
+      "detail": "Very Heavy Pistol range DV 20 at 13 to 25 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.3",
+      "value": 25,
+      "detail": "Very Heavy Pistol range DV 25 at 26 to 50 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.4",
+      "value": 30,
+      "detail": "Very Heavy Pistol range DV 30 at 51 to 100 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.5",
+      "value": 30,
+      "detail": "Very Heavy Pistol range DV 30 at 101 to 200 m/yds (the Pistol row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.rof",
+      "value": 1,
+      "detail": "SMG ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.3.magazine",
+      "value": 30,
+      "detail": "SMG standard magazine 30 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.3.hands",
+      "value": 1,
+      "detail": "SMG Hands Required 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.3.skill_base",
+      "value": 10,
+      "detail": "SMG Skill Base 10: the Handgun Skill Base (cpr.skill.handgun), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.0",
+      "value": 15,
+      "detail": "SMG range DV 15 at 0 to 6 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.1",
+      "value": 13,
+      "detail": "SMG range DV 13 at 7 to 12 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.2",
+      "value": 15,
+      "detail": "SMG range DV 15 at 13 to 25 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.3",
+      "value": 20,
+      "detail": "SMG range DV 20 at 26 to 50 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.4",
+      "value": 25,
+      "detail": "SMG range DV 25 at 51 to 100 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.5",
+      "value": 25,
+      "detail": "SMG range DV 25 at 101 to 200 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.6",
+      "value": 30,
+      "detail": "SMG range DV 30 at 201 to 400 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.autofire_dv.0",
+      "value": 20,
+      "detail": "SMG Autofire DV 20 at 0 to 6 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.autofire_dv.1",
+      "value": 17,
+      "detail": "SMG Autofire DV 17 at 7 to 12 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.autofire_dv.2",
+      "value": 20,
+      "detail": "SMG Autofire DV 20 at 13 to 25 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.autofire_dv.3",
+      "value": 25,
+      "detail": "SMG Autofire DV 25 at 26 to 50 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.3.autofire_dv.4",
+      "value": 30,
+      "detail": "SMG Autofire DV 30 at 51 to 100 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.rof",
+      "value": 1,
+      "detail": "Heavy SMG ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.4.magazine",
+      "value": 40,
+      "detail": "Heavy SMG standard magazine 40 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.4.hands",
+      "value": 1,
+      "detail": "Heavy SMG Hands Required 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.4.skill_base",
+      "value": 10,
+      "detail": "Heavy SMG Skill Base 10: the Handgun Skill Base (cpr.skill.handgun), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.0",
+      "value": 15,
+      "detail": "Heavy SMG range DV 15 at 0 to 6 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.1",
+      "value": 13,
+      "detail": "Heavy SMG range DV 13 at 7 to 12 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.2",
+      "value": 15,
+      "detail": "Heavy SMG range DV 15 at 13 to 25 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.3",
+      "value": 20,
+      "detail": "Heavy SMG range DV 20 at 26 to 50 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.4",
+      "value": 25,
+      "detail": "Heavy SMG range DV 25 at 51 to 100 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.5",
+      "value": 25,
+      "detail": "Heavy SMG range DV 25 at 101 to 200 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.6",
+      "value": 30,
+      "detail": "Heavy SMG range DV 30 at 201 to 400 m/yds (the SMG row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.autofire_dv.0",
+      "value": 20,
+      "detail": "Heavy SMG Autofire DV 20 at 0 to 6 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.autofire_dv.1",
+      "value": 17,
+      "detail": "Heavy SMG Autofire DV 17 at 7 to 12 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.autofire_dv.2",
+      "value": 20,
+      "detail": "Heavy SMG Autofire DV 20 at 13 to 25 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.autofire_dv.3",
+      "value": 25,
+      "detail": "Heavy SMG Autofire DV 25 at 26 to 50 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.4.autofire_dv.4",
+      "value": 30,
+      "detail": "Heavy SMG Autofire DV 30 at 51 to 100 m/yds (the SMGs row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.5.rof",
+      "value": 1,
+      "detail": "Shotgun ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.5.magazine",
+      "value": 4,
+      "detail": "Shotgun standard magazine 4 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.5.hands",
+      "value": 2,
+      "detail": "Shotgun Hands Required 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.5.skill_base",
+      "value": 9,
+      "detail": "Shotgun Skill Base 9: the Shoulder Arms Skill Base (cpr.skill.shoulder_arms), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.0",
+      "value": 13,
+      "detail": "Shotgun range DV 13 at 0 to 6 m/yds (the Shotgun (Slug) row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.1",
+      "value": 15,
+      "detail": "Shotgun range DV 15 at 7 to 12 m/yds (the Shotgun (Slug) row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.2",
+      "value": 20,
+      "detail": "Shotgun range DV 20 at 13 to 25 m/yds (the Shotgun (Slug) row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.3",
+      "value": 25,
+      "detail": "Shotgun range DV 25 at 26 to 50 m/yds (the Shotgun (Slug) row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.4",
+      "value": 30,
+      "detail": "Shotgun range DV 30 at 51 to 100 m/yds (the Shotgun (Slug) row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.5",
+      "value": 35,
+      "detail": "Shotgun range DV 35 at 101 to 200 m/yds (the Shotgun (Slug) row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.rof",
+      "value": 1,
+      "detail": "Assault Rifle ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.6.magazine",
+      "value": 25,
+      "detail": "Assault Rifle standard magazine 25 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.6.hands",
+      "value": 2,
+      "detail": "Assault Rifle Hands Required 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.6.skill_base",
+      "value": 9,
+      "detail": "Assault Rifle Skill Base 9: the Shoulder Arms Skill Base (cpr.skill.shoulder_arms), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.0",
+      "value": 17,
+      "detail": "Assault Rifle range DV 17 at 0 to 6 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.1",
+      "value": 16,
+      "detail": "Assault Rifle range DV 16 at 7 to 12 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.2",
+      "value": 15,
+      "detail": "Assault Rifle range DV 15 at 13 to 25 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.3",
+      "value": 13,
+      "detail": "Assault Rifle range DV 13 at 26 to 50 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.4",
+      "value": 15,
+      "detail": "Assault Rifle range DV 15 at 51 to 100 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.5",
+      "value": 20,
+      "detail": "Assault Rifle range DV 20 at 101 to 200 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.6",
+      "value": 25,
+      "detail": "Assault Rifle range DV 25 at 201 to 400 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.range_dv.7",
+      "value": 30,
+      "detail": "Assault Rifle range DV 30 at 401 to 800 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.autofire_dv.0",
+      "value": 22,
+      "detail": "Assault Rifle Autofire DV 22 at 0 to 6 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.autofire_dv.1",
+      "value": 20,
+      "detail": "Assault Rifle Autofire DV 20 at 7 to 12 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.autofire_dv.2",
+      "value": 17,
+      "detail": "Assault Rifle Autofire DV 17 at 13 to 25 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.autofire_dv.3",
+      "value": 20,
+      "detail": "Assault Rifle Autofire DV 20 at 26 to 50 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.6.autofire_dv.4",
+      "value": 25,
+      "detail": "Assault Rifle Autofire DV 25 at 51 to 100 m/yds (the Assault Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.rof",
+      "value": 1,
+      "detail": "Sniper Rifle ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.7.magazine",
+      "value": 4,
+      "detail": "Sniper Rifle standard magazine 4 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.7.hands",
+      "value": 2,
+      "detail": "Sniper Rifle Hands Required 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.7.skill_base",
+      "value": 9,
+      "detail": "Sniper Rifle Skill Base 9: the Shoulder Arms Skill Base (cpr.skill.shoulder_arms), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.0",
+      "value": 30,
+      "detail": "Sniper Rifle range DV 30 at 0 to 6 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.1",
+      "value": 25,
+      "detail": "Sniper Rifle range DV 25 at 7 to 12 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.2",
+      "value": 25,
+      "detail": "Sniper Rifle range DV 25 at 13 to 25 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.3",
+      "value": 20,
+      "detail": "Sniper Rifle range DV 20 at 26 to 50 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.4",
+      "value": 15,
+      "detail": "Sniper Rifle range DV 15 at 51 to 100 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.5",
+      "value": 16,
+      "detail": "Sniper Rifle range DV 16 at 101 to 200 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.6",
+      "value": 17,
+      "detail": "Sniper Rifle range DV 17 at 201 to 400 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.7.range_dv.7",
+      "value": 20,
+      "detail": "Sniper Rifle range DV 20 at 401 to 800 m/yds (the Sniper Rifle row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.8.rof",
+      "value": 1,
+      "detail": "Bows & Crossbows ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.8.hands",
+      "value": 2,
+      "detail": "Bows & Crossbows Hands Required 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.8.skill_base",
+      "value": 6,
+      "detail": "Bows & Crossbows Skill Base 6: the Archery Skill Base (cpr.skill.archery), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.0",
+      "value": 15,
+      "detail": "Bows & Crossbows range DV 15 at 0 to 6 m/yds (the Bows & Crossbow row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.1",
+      "value": 13,
+      "detail": "Bows & Crossbows range DV 13 at 7 to 12 m/yds (the Bows & Crossbow row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.2",
+      "value": 15,
+      "detail": "Bows & Crossbows range DV 15 at 13 to 25 m/yds (the Bows & Crossbow row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.3",
+      "value": 17,
+      "detail": "Bows & Crossbows range DV 17 at 26 to 50 m/yds (the Bows & Crossbow row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.4",
+      "value": 20,
+      "detail": "Bows & Crossbows range DV 20 at 51 to 100 m/yds (the Bows & Crossbow row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.5",
+      "value": 22,
+      "detail": "Bows & Crossbows range DV 22 at 101 to 200 m/yds (the Bows & Crossbow row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.9.rof",
+      "value": 1,
+      "detail": "Grenade Launcher ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.9.magazine",
+      "value": 2,
+      "detail": "Grenade Launcher standard magazine 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.9.hands",
+      "value": 2,
+      "detail": "Grenade Launcher Hands Required 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.9.skill_base",
+      "value": 6,
+      "detail": "Grenade Launcher Skill Base 6: the Heavy Weapons Skill Base (cpr.skill.heavy_weapons), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.0",
+      "value": 16,
+      "detail": "Grenade Launcher range DV 16 at 0 to 6 m/yds (the Grenade Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.1",
+      "value": 15,
+      "detail": "Grenade Launcher range DV 15 at 7 to 12 m/yds (the Grenade Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.2",
+      "value": 15,
+      "detail": "Grenade Launcher range DV 15 at 13 to 25 m/yds (the Grenade Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.3",
+      "value": 17,
+      "detail": "Grenade Launcher range DV 17 at 26 to 50 m/yds (the Grenade Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.4",
+      "value": 20,
+      "detail": "Grenade Launcher range DV 20 at 51 to 100 m/yds (the Grenade Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.5",
+      "value": 22,
+      "detail": "Grenade Launcher range DV 22 at 101 to 200 m/yds (the Grenade Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.6",
+      "value": 25,
+      "detail": "Grenade Launcher range DV 25 at 201 to 400 m/yds (the Grenade Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.rof",
+      "value": 1,
+      "detail": "Rocket Launcher ROF 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.10.magazine",
+      "value": 1,
+      "detail": "Rocket Launcher standard magazine 1 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.10.hands",
+      "value": 2,
+      "detail": "Rocket Launcher Hands Required 2 (Cyberpunk RED core rulebook p342)"
+    },
+    {
+      "id": "cpr.weapon.10.skill_base",
+      "value": 6,
+      "detail": "Rocket Launcher Skill Base 6: the Heavy Weapons Skill Base (cpr.skill.heavy_weapons), the skill this weapon attacks with (Cyberpunk RED core rulebook p342; melee, p. 176)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.0",
+      "value": 17,
+      "detail": "Rocket Launcher range DV 17 at 0 to 6 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.1",
+      "value": 16,
+      "detail": "Rocket Launcher range DV 16 at 7 to 12 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.2",
+      "value": 15,
+      "detail": "Rocket Launcher range DV 15 at 13 to 25 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.3",
+      "value": 15,
+      "detail": "Rocket Launcher range DV 15 at 26 to 50 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.4",
+      "value": 20,
+      "detail": "Rocket Launcher range DV 20 at 51 to 100 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.5",
+      "value": 20,
+      "detail": "Rocket Launcher range DV 20 at 101 to 200 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.6",
+      "value": 25,
+      "detail": "Rocket Launcher range DV 25 at 201 to 400 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.10.range_dv.7",
+      "value": 30,
+      "detail": "Rocket Launcher range DV 30 at 401 to 800 m/yds (the Rocket Launcher row, D-1; Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.weapon.11.rof",
+      "value": 2,
+      "detail": "Heavy Melee Weapon ROF 2 (Cyberpunk RED core rulebook p093)"
+    },
+    {
+      "id": "cpr.weapon.11.skill_base",
+      "value": 4,
+      "detail": "Heavy Melee Weapon Skill Base 4: the Melee Weapon Skill Base (cpr.skill.melee_weapon), the skill this weapon attacks with (Cyberpunk RED core rulebook p093; melee, p. 176)"
+    },
+    {
+      "id": "cpr.range_band.0.max",
+      "value": 6,
+      "detail": "Range band 1: 0 to 6 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.range_band.1.max",
+      "value": 12,
+      "detail": "Range band 2: 7 to 12 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.range_band.2.max",
+      "value": 25,
+      "detail": "Range band 3: 13 to 25 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.range_band.3.max",
+      "value": 50,
+      "detail": "Range band 4: 26 to 50 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.range_band.4.max",
+      "value": 100,
+      "detail": "Range band 5: 51 to 100 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.range_band.5.max",
+      "value": 200,
+      "detail": "Range band 6: 101 to 200 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.range_band.6.max",
+      "value": 400,
+      "detail": "Range band 7: 201 to 400 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.range_band.7.max",
+      "value": 800,
+      "detail": "Range band 8: 401 to 800 m/yds (Cyberpunk RED core rulebook p174)"
+    },
+    {
+      "id": "cpr.ip.current",
+      "value": 0,
+      "detail": "Improvement Points 0 = 0 earned - 0 spent (Cyberpunk RED core rulebook p. 410-411)"
+    },
+    {
+      "id": "cpr.ip.total",
+      "value": 0,
+      "detail": "Improvement Points earned 0: the GM's awards as entered (p. 410)"
+    }
+  ],
+  "weaponDamage": [],
+  "selectedAlternateTraitKeys": [],
+  "selectedTraits": [],
+  "resolvedRacialTraits": {
+    "raceId": "",
+    "raceKey": "",
+    "raceName": "",
+    "book": "",
+    "appliedTraits": [],
+    "suppressions": [],
+    "firedFlags": [],
+    "inertFlags": [],
+    "unmatchedSelections": [],
+    "blockedAlternates": [],
+    "conflictingSelections": [],
+    "renderedTraitDescriptions": [],
+    "displayValueFeats": [],
+    "errors": [
+      "a Cyberpunk RED character has no Pathfinder race"
+    ]
+  },
+  "abilityScores": {
+    "strength": 0,
+    "dexterity": 0,
+    "constitution": 0,
+    "intelligence": 0,
+    "wisdom": 0,
+    "charisma": 0
+  },
+  "skillAllocations": [],
+  "equipmentSelections": [],
+  "sheetLines": [
+    {
+      "id": "cpr.reputation.facedown_roll",
+      "kind": "cpr",
+      "label": "Facedown",
+      "form": "dice",
+      "value": "4 + 1d10",
+      "also": [],
+      "prose": "Facedown: COOL + Reputation + 1d10, 4 + 1d10 (p. 194)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.0.damage",
+      "kind": "cpr",
+      "label": "Medium Pistol damage",
+      "form": "dice",
+      "value": "2d6",
+      "also": [],
+      "prose": "Medium Pistol: 2d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.0.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Medium Pistol",
+      "also": [],
+      "prose": "Medium Pistol: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.0.concealable",
+      "kind": "cpr",
+      "label": "Medium Pistol concealable",
+      "form": "words",
+      "value": "Yes",
+      "also": [],
+      "prose": "Medium Pistol can be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.6",
+      "kind": "cpr",
+      "label": "Medium Pistol range DV at 201 to 400 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Medium Pistol: no range DV at 201 to 400 m/yds; the Pistol row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.0.range_dv.7",
+      "kind": "cpr",
+      "label": "Medium Pistol range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Medium Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.1.damage",
+      "kind": "cpr",
+      "label": "Heavy Pistol damage",
+      "form": "dice",
+      "value": "3d6",
+      "also": [],
+      "prose": "Heavy Pistol: 3d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.1.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Heavy Pistol",
+      "also": [],
+      "prose": "Heavy Pistol: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.1.concealable",
+      "kind": "cpr",
+      "label": "Heavy Pistol concealable",
+      "form": "words",
+      "value": "Yes",
+      "also": [],
+      "prose": "Heavy Pistol can be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.6",
+      "kind": "cpr",
+      "label": "Heavy Pistol range DV at 201 to 400 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Heavy Pistol: no range DV at 201 to 400 m/yds; the Pistol row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.1.range_dv.7",
+      "kind": "cpr",
+      "label": "Heavy Pistol range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Heavy Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.2.damage",
+      "kind": "cpr",
+      "label": "Very Heavy Pistol damage",
+      "form": "dice",
+      "value": "4d6",
+      "also": [],
+      "prose": "Very Heavy Pistol: 4d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.2.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Very Heavy Pistol",
+      "also": [],
+      "prose": "Very Heavy Pistol: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.2.concealable",
+      "kind": "cpr",
+      "label": "Very Heavy Pistol concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Very Heavy Pistol cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.6",
+      "kind": "cpr",
+      "label": "Very Heavy Pistol range DV at 201 to 400 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Very Heavy Pistol: no range DV at 201 to 400 m/yds; the Pistol row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.2.range_dv.7",
+      "kind": "cpr",
+      "label": "Very Heavy Pistol range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Very Heavy Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.3.damage",
+      "kind": "cpr",
+      "label": "SMG damage",
+      "form": "dice",
+      "value": "2d6",
+      "also": [],
+      "prose": "SMG: 2d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.3.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "SMG",
+      "also": [],
+      "prose": "SMG: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.3.concealable",
+      "kind": "cpr",
+      "label": "SMG concealable",
+      "form": "words",
+      "value": "Yes",
+      "also": [],
+      "prose": "SMG can be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.3.range_dv.7",
+      "kind": "cpr",
+      "label": "SMG range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "SMG: no range DV at 401 to 800 m/yds; the SMG row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.4.damage",
+      "kind": "cpr",
+      "label": "Heavy SMG damage",
+      "form": "dice",
+      "value": "3d6",
+      "also": [],
+      "prose": "Heavy SMG: 3d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.4.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Heavy SMG",
+      "also": [],
+      "prose": "Heavy SMG: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.4.concealable",
+      "kind": "cpr",
+      "label": "Heavy SMG concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Heavy SMG cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.4.range_dv.7",
+      "kind": "cpr",
+      "label": "Heavy SMG range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Heavy SMG: no range DV at 401 to 800 m/yds; the SMG row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.5.damage",
+      "kind": "cpr",
+      "label": "Shotgun damage",
+      "form": "dice",
+      "value": "5d6",
+      "also": [],
+      "prose": "Shotgun: 5d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.5.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Shotgun",
+      "also": [],
+      "prose": "Shotgun: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.5.concealable",
+      "kind": "cpr",
+      "label": "Shotgun concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Shotgun cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.6",
+      "kind": "cpr",
+      "label": "Shotgun range DV at 201 to 400 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Shotgun: no range DV at 201 to 400 m/yds; the Shotgun (Slug) row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.5.range_dv.7",
+      "kind": "cpr",
+      "label": "Shotgun range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Shotgun: no range DV at 401 to 800 m/yds; the Shotgun (Slug) row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.6.damage",
+      "kind": "cpr",
+      "label": "Assault Rifle damage",
+      "form": "dice",
+      "value": "5d6",
+      "also": [],
+      "prose": "Assault Rifle: 5d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.6.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Assault Rifle",
+      "also": [],
+      "prose": "Assault Rifle: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.6.concealable",
+      "kind": "cpr",
+      "label": "Assault Rifle concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Assault Rifle cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.7.damage",
+      "kind": "cpr",
+      "label": "Sniper Rifle damage",
+      "form": "dice",
+      "value": "5d6",
+      "also": [],
+      "prose": "Sniper Rifle: 5d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.7.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Sniper Rifle",
+      "also": [],
+      "prose": "Sniper Rifle: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.7.concealable",
+      "kind": "cpr",
+      "label": "Sniper Rifle concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Sniper Rifle cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.8.damage",
+      "kind": "cpr",
+      "label": "Bows & Crossbows damage",
+      "form": "dice",
+      "value": "4d6",
+      "also": [],
+      "prose": "Bows & Crossbows: 4d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.8.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Bows & Crossbows",
+      "also": [],
+      "prose": "Bows & Crossbows: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.8.concealable",
+      "kind": "cpr",
+      "label": "Bows & Crossbows concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Bows & Crossbows cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.6",
+      "kind": "cpr",
+      "label": "Bows & Crossbows range DV at 201 to 400 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Bows & Crossbows: no range DV at 201 to 400 m/yds; the Bows & Crossbow row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.8.range_dv.7",
+      "kind": "cpr",
+      "label": "Bows & Crossbows range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Bows & Crossbows: no range DV at 401 to 800 m/yds; the Bows & Crossbow row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.9.damage",
+      "kind": "cpr",
+      "label": "Grenade Launcher damage",
+      "form": "dice",
+      "value": "6d6",
+      "also": [],
+      "prose": "Grenade Launcher: 6d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.9.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Grenade Launcher",
+      "also": [],
+      "prose": "Grenade Launcher: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.9.concealable",
+      "kind": "cpr",
+      "label": "Grenade Launcher concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Grenade Launcher cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.9.range_dv.7",
+      "kind": "cpr",
+      "label": "Grenade Launcher range DV at 401 to 800 m/yds",
+      "form": "words",
+      "value": "N/A",
+      "also": [],
+      "prose": "Grenade Launcher: no range DV at 401 to 800 m/yds; the Grenade Launcher row prints N/A (p174)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.10.damage",
+      "kind": "cpr",
+      "label": "Rocket Launcher damage",
+      "form": "dice",
+      "value": "8d6",
+      "also": [],
+      "prose": "Rocket Launcher: 8d6 single shot damage (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.10.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Rocket Launcher",
+      "also": [],
+      "prose": "Rocket Launcher: ranged weapon (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.10.concealable",
+      "kind": "cpr",
+      "label": "Rocket Launcher concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Rocket Launcher cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.11.damage",
+      "kind": "cpr",
+      "label": "Heavy Melee Weapon damage",
+      "form": "dice",
+      "value": "3d6",
+      "also": [],
+      "prose": "Heavy Melee Weapon: 3d6 single shot damage (p093)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.11.name",
+      "kind": "cpr",
+      "label": "Weapon",
+      "form": "words",
+      "value": "Heavy Melee Weapon",
+      "also": [],
+      "prose": "Heavy Melee Weapon: melee weapon (p093)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.11.hands",
+      "kind": "cpr",
+      "label": "Heavy Melee Weapon hands",
+      "form": "words",
+      "value": "Varies by type",
+      "also": [],
+      "prose": "Heavy Melee Weapon Hands Required: Varies by type (p093)",
+      "condition": null
+    },
+    {
+      "id": "cpr.weapon.11.concealable",
+      "kind": "cpr",
+      "label": "Heavy Melee Weapon concealable",
+      "form": "words",
+      "value": "No",
+      "also": [],
+      "prose": "Heavy Melee Weapon cannot be concealed under clothing with the Conceal/Reveal Object Skill (p093)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.role_ability.solo",
+      "kind": "role_ability",
+      "label": "Combat Awareness",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Combat Awareness Rank 4",
+        "Combat Awareness points 4"
+      ],
+      "prose": "When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others: (Cyberpunk RED core rulebook p147)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.3",
+      "kind": "weapon_special",
+      "label": "SMG",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 10",
+        "ROF 1",
+        "Autofire Skill Base 8"
+      ],
+      "prose": "SMG: alternate fire Autofire (3) • Suppressive Fire (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.4",
+      "kind": "weapon_special",
+      "label": "Heavy SMG",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 10",
+        "ROF 1",
+        "Autofire Skill Base 8"
+      ],
+      "prose": "Heavy SMG: alternate fire Autofire (3) • Suppressive Fire (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.5",
+      "kind": "weapon_special",
+      "label": "Shotgun",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 9",
+        "ROF 1"
+      ],
+      "prose": "Shotgun: alternate fire Shotgun Shell (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.6",
+      "kind": "weapon_special",
+      "label": "Assault Rifle",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 9",
+        "ROF 1",
+        "Autofire Skill Base 8"
+      ],
+      "prose": "Assault Rifle: alternate fire Autofire (4) • Suppressive Fire (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.8",
+      "kind": "weapon_special",
+      "label": "Bows & Crossbows",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 6",
+        "ROF 1"
+      ],
+      "prose": "Bows & Crossbows: alternate fire Arrows (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.9",
+      "kind": "weapon_special",
+      "label": "Grenade Launcher",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 6",
+        "ROF 1"
+      ],
+      "prose": "Grenade Launcher: alternate fire Explosive (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    },
+    {
+      "id": "cpr.print.weapon.10",
+      "kind": "weapon_special",
+      "label": "Rocket Launcher",
+      "form": "words",
+      "value": "",
+      "also": [
+        "Skill Base 6",
+        "ROF 1"
+      ],
+      "prose": "Rocket Launcher: alternate fire Explosive (Cyberpunk RED core rulebook p342)",
+      "condition": null
+    }
+  ],
+  "sheetRulesUnavailableReason": null,
+  "featSkillBonuses": {
+    "skills": {},
+    "groups": {},
+    "contributions": [],
+    "situational": [],
+    "unknown": []
+  }
+}

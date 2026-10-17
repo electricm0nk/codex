@@ -1,0 +1,13 @@
+== root_full (awk): suites passed failed ignored
+300 6681 0 27
+== root_full (python)
+300 6681 0 27 FAILED suites: 0
+== desktop_full (awk): suites passed failed ignored
+2 847 0 2
+== desktop_full (python)
+2 847 0 2 FAILED suites: 0
+== desktop per-suite
+unittests 846 0
+tests/packaged_resources.rs 1 0
+== npm test
+170/170 test files passed.

@@ -1,0 +1,14 @@
+# cd apps/desktop && RUN_DESKTOP_AGENT=sd38-e7.1 node scripts/ui-smoke/run.mjs --only load-seed-list-both,load-restore-starter-characters,select-cyberpunk-red,restore-cyberpunk-seed-netrunner,open-cyberpunk-seed-netrunner,open-cyberpunk-seed-solo,open-cyberpunk-seed-medtech,landing-select-pathfinder --out <dir>   (final code)
+App data root: /tmp/codex-ui-smoke-sd38-e7_1-dZozl5/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+PASS  load-seed-list-both
+PASS  load-restore-starter-characters
+PASS  select-cyberpunk-red
+PASS  restore-cyberpunk-seed-netrunner
+PASS  open-cyberpunk-seed-netrunner
+PASS  open-cyberpunk-seed-solo
+PASS  open-cyberpunk-seed-medtech
+PASS  landing-select-pathfinder
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+8/8 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 8 rows)
+Cleanup: 0 character(s) created across 8 row(s) with a cleanup record, 0 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd38-e7_1-dZozl5/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006

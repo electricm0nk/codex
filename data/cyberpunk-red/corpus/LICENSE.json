@@ -1,0 +1,24 @@
+{
+  "book": "core",
+  "book_title": "Cyberpunk RED Core Rulebook (CR3001, ISBN 978-1-950911-06-6, First Printing)",
+  "copyright_notice": "Copyright (c) 2020 by R. Talsorian Games, Inc. Cyberpunk is a registered trademark of CD Projekt Red S.A. All rights reserved (book page p003).",
+  "source": {
+    "file": "cpr-corebook-v122.pdf",
+    "sha256": "7ca9058f8eb10584edabb58dae60b5c23a0d90673f967cc84a22f32330e240ea",
+    "in_git": false
+  },
+  "generated_by": "hand transcription from the source PDF (docs/release/SD-38-cyberpunk-red/, Epic E1); no PCGen data exists for this system",
+  "license_declaration": {
+    "open_game_content": false,
+    "policy": "R. Talsorian Homebrew Content Policy",
+    "operator_ruling": "ship whole text, private single-user build, 2026-10-13",
+    "deviation": "DEVIATION from the OGL-built licence posture of docs/governance/license-matrix.md: the whole book text (names, tables, rule text, descriptions) ships unredacted (docs/release/SD-38-cyberpunk-red/decisions.md section 4)"
+  },
+  "operator_sign_off": {
+    "note": "Operator ruling 2026-10-13, verbatim: \"license - do the whole thing for now. We can back stuff out or reword it later if need be. For now, i'm the only person even using the app.\" Revisit: a later bundle rewrites text fields page by page (every record carries source_page) and flips this flag.",
+    "signed_off": true
+  },
+  "records_processed": null,
+  "records_processed_note": "null by design: no record file exists when this licence file is written (SD-38 E0.2); the per-kind counts live in MANIFEST.json (E1.0, verified at E1.V), which is the single source for the record count.",
+  "screening_method_note": "No Product Identity screening is applied: PI is an OGL concept and this book is not OGL. The pi-sweep stage scans src/rules_core/rules_catalog and data/rules_tables only and does not read data/cyberpunk-red/. Nothing here is legal clearance."
+}

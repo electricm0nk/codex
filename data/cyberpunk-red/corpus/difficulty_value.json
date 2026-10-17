@@ -1,0 +1,51 @@
+[
+ {
+  "kind": "difficulty_value",
+  "name": "Simple",
+  "dv": 9,
+  "source_page": "p130",
+  "text": "This is something most people can do without thinking, but which might be hard for a small child."
+ },
+ {
+  "kind": "difficulty_value",
+  "name": "Everyday",
+  "dv": 13,
+  "source_page": "p130",
+  "text": "This feat is something most people can do without a lot of special training."
+ },
+ {
+  "kind": "difficulty_value",
+  "name": "Difficult",
+  "dv": 15,
+  "source_page": "p130",
+  "text": "This feat is difficult to accomplish without training or natural talent."
+ },
+ {
+  "kind": "difficulty_value",
+  "name": "Professional",
+  "dv": 17,
+  "source_page": "p130",
+  "text": "This feat takes actual training and the user can be considered to be a professional, skilled in their abilities."
+ },
+ {
+  "kind": "difficulty_value",
+  "name": "Heroic",
+  "dv": 21,
+  "source_page": "p130",
+  "text": "This is a highly skilled feat; one that only the best of the best can pull off. This is the level of sports stars and other highly regarded superstars."
+ },
+ {
+  "kind": "difficulty_value",
+  "name": "Incredible",
+  "dv": 24,
+  "source_page": "p130",
+  "text": "This is a tremendous feat. Pulling this off would rate you among the very best of your class professionally. You are of truly Olympian mettle."
+ },
+ {
+  "kind": "difficulty_value",
+  "name": "Legendary",
+  "dv": 29,
+  "source_page": "p130",
+  "text": "An awe-inspiring feat. This is something people write stories about; a truly amazing accomplishment that will be spoken of in hushed tones for years to come."
+ }
+]

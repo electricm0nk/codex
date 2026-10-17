@@ -1,0 +1,4 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 30.93s
+test the_packaged_bundle_carries_everything_the_rules_engine_reads ... FAILED
+thread 'the_packaged_bundle_carries_everything_the_rules_engine_reads' (3577291) panicked at tests/packaged_resources.rs:61:5:
+error: test failed, to rerun pass `--test packaged_resources`

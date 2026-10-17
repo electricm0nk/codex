@@ -1,0 +1,5 @@
+clippy pass
+sd24_audit pass
+pf_render pass
+sf_lines FAIL(exit 101) -> rerun pass (out dir created; see receipt)
+desktop_full pass

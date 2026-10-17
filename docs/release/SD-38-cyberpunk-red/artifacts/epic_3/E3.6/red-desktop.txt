@@ -1,0 +1,140 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src-tauri)
+   Compiling codex-ingest v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/crates/codex-ingest)
+error[E0425]: cannot find value `REFUSED_KIT` in this scope
+    --> src/cpr_creation.rs:2081:49
+     |
+2081 |         preview.problems.iter().any(|p| p.id == REFUSED_KIT && p.claim_blocking && words.iter().all(|w| p.message.contains(w)))
+     |                                                 ^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprKitPurchase` in this scope
+    --> src/cpr_creation.rs:2084:82
+     |
+2084 |     fn purchase(kind: &str, name: &str, variant: Option<&str>, quantity: u32) -> CprKitPurchase {
+     |                                                                                  ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPurchase` in this scope
+    --> src/cpr_creation.rs:2085:9
+     |
+2085 |         CprKitPurchase { kind: kind.to_owned(), name: name.to_owned(), variant: variant.map(str::to_owned), quantity }
+     |         ^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find type `CprKitPurchase` in this scope
+    --> src/cpr_creation.rs:2089:52
+     |
+2089 |     fn complete_package(role: &str, purchases: Vec<CprKitPurchase>) -> CprCreationRequest {
+     |                                                    ^^^^^^^^^^^^^^ not found in this scope
+     |
+help: you might be missing a type parameter
+     |
+2089 |     fn complete_package<CprKitPurchase>(role: &str, purchases: Vec<CprKitPurchase>) -> CprCreationRequest {
+     |                        ++++++++++++++++
+
+error[E0422]: cannot find struct, variant or union type `CprKitChoices` in this scope
+    --> src/cpr_creation.rs:2092:19
+     |
+2092 |         req.kit = CprKitChoices { picks: Vec::new(), purchases };
+     |                   ^^^^^^^^^^^^^
+     |
+    ::: /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/src/rules_core/cpr/input.rs:511:1
+     |
+ 511 | pub struct CprRoleChoices {
+     | ------------------------- similarly named struct `CprRoleChoices` defined here
+     |
+help: a struct with a similar name exists
+     |
+2092 -         req.kit = CprKitChoices { picks: Vec::new(), purchases };
+2092 +         req.kit = CprRoleChoices { picks: Vec::new(), purchases };
+     |
+
+error[E0422]: cannot find struct, variant or union type `CprKitPick` in this scope
+    --> src/cpr_creation.rs:2175:30
+     |
+2175 |         req.kit.picks = vec![CprKitPick { line: index, option: "Basic Slug Ammunition".to_owned() }];
+     |                              ^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPick` in this scope
+    --> src/cpr_creation.rs:2183:30
+     |
+2183 |         req.kit.picks = vec![CprKitPick { line: index, option: "Basic Arrow Ammunition".to_owned() }];
+     |                              ^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `REFUSED_KIT` in this scope
+    --> src/cpr_creation.rs:2203:114
+     |
+2203 |             matches!(&response, CprCreateResponse::Blocked { diagnostics } if diagnostics.iter().any(|d| d.id == REFUSED_KIT)),
+     |                                                                                                                  ^^^^^^^^^^^ not found in this scope
+
+error[E0422]: cannot find struct, variant or union type `CprKitPick` in this scope
+    --> src/cpr_creation.rs:2209:30
+     |
+2209 |         req.kit.picks = vec![CprKitPick { line: 0, option: "Assault Rifle".to_owned() }];
+     |                              ^^^^^^^^^^ not found in this scope
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:2092:13
+     |
+2092 |         req.kit = CprKitChoices { picks: Vec::new(), purchases };
+     |             ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats` ... and 3 others
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2136:35
+     |
+2136 |                 let kit = preview.kit.as_ref().expect("a kit step");
+     |                                   ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 9 others
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2170:101
+     |
+2170 |         let lines = preview_at(&root(), &request("Lawman", CprCreationMethod::Edgerunner)).unwrap().kit.unwrap().lines;
+     |                                                                                                     ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 9 others
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:2175:13
+     |
+2175 |         req.kit.picks = vec![CprKitPick { line: index, option: "Basic Slug Ammunition".to_owned() }];
+     |             ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats` ... and 3 others
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2178:27
+     |
+2178 |         let kit = preview.kit.unwrap();
+     |                           ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 9 others
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:2183:13
+     |
+2183 |         req.kit.picks = vec![CprKitPick { line: index, option: "Basic Arrow Ammunition".to_owned() }];
+     |             ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats` ... and 3 others
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationRequest`
+    --> src/cpr_creation.rs:2209:13
+     |
+2209 |         req.kit.picks = vec![CprKitPick { line: 0, option: "Assault Rifle".to_owned() }];
+     |             ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `template_roll`, `stats` ... and 3 others
+
+error[E0609]: no field `kit` on type `cpr_creation::CprCreationPreview`
+    --> src/cpr_creation.rs:2229:27
+     |
+2229 |         let kit = preview.kit.as_ref().unwrap();
+     |                           ^^^ unknown field
+     |
+     = note: available fields are: `role`, `method`, `seed`, `rolls`, `template_roll` ... and 9 others
+
+Some errors have detailed explanations: E0422, E0425, E0609.
+For more information about an error, try `rustc --explain E0422`.
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 17 previous errors

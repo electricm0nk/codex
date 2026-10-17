@@ -435,6 +435,8 @@ mod tests {
                         format!("{} | {} | {} | {} | {} | {}\n", l.kind, l.id, l.label, l.printed, l.prose.replace('\n', " / "), also.join("; "))
                     })
                     .collect();
+                // The out directory is made here: a missing one used to fail the run (NotFound).
+                std::fs::create_dir_all(&dir).expect("makes the lines-out directory");
                 std::fs::write(PathBuf::from(dir).join(format!("{seed}.txt")), text).expect("writes the seed's lines");
             }
         }

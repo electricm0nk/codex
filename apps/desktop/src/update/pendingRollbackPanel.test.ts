@@ -6,6 +6,7 @@ import {
 import {
   buildUnwiredUpdateDeps,
   emptyPendingRollbackState,
+  noPendingUpdateState,
   type UpdateControllerDeps,
   type PendingRollbackState,
 } from './updateModel';
@@ -48,18 +49,33 @@ function testAllFivePendingRollbackFieldsExposed() {
   }
 }
 
-function testE7PlaceholderNoteIsVisibleUntilE7Lands() {
+function testSourceNoteNamesTheRealSourceAndNoPlaceholders() {
   const html = render(buildUnwiredUpdateDeps());
   assertContains(
     html,
     'id="pending-rollback-source-note"',
-    'AV-DIAG-3: panel must surface the E7 carryover note anchor',
+    'AV-DIAG-3: panel must surface the source note anchor',
   );
   assertContains(
     html,
-    'populated by the staged-transaction module',
-    'AV-DIAG-3: carryover note must mention the E7 staged-transaction module',
+    'relaunch verification run at startup',
+    'AV-DIAG-3: source note names the startup relaunch verification',
   );
+  assertEqual(
+    /placeholder/i.test(html),
+    false,
+    'E7.3a: the panel must not call its values placeholders',
+  );
+}
+
+function testNoPendingUpdateStateRendersRealValues() {
+  const html = render({
+    ...buildUnwiredUpdateDeps(),
+    pendingRollback: noPendingUpdateState(),
+  });
+  assertContains(html, '>idle<', 'E7.3a: no pending update renders Pending update state idle');
+  assertContains(html, '>none<', 'E7.3a: no pending update renders Rollback state none');
+  assertEqual(html.includes('>unknown<'), false, 'E7.3a: no pending update renders no unknown');
 }
 
 function testSuppliedStateRendersValues() {
@@ -137,9 +153,10 @@ function testF3cStateSourceBindingDefaultsToUnwired() {
 
 testPanelRendersWithCanonicalId();
 testAllFivePendingRollbackFieldsExposed();
-testE7PlaceholderNoteIsVisibleUntilE7Lands();
+testSourceNoteNamesTheRealSourceAndNoPlaceholders();
+testNoPendingUpdateStateRendersRealValues();
 testSuppliedStateRendersValues();
 testEmptyStateSurfacesDeterministicPlaceholders();
 testF3cStateSourceBindingDefaultsToUnwired();
 
-console.log('pendingRollbackPanel.test.ts: 6/6 assertions passed');
+console.log('pendingRollbackPanel.test.ts: 7/7 assertions passed');

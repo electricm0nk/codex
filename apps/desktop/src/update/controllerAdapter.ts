@@ -36,6 +36,7 @@ import {
   emptyInstalledState,
   emptyLastCheckState,
   emptyPendingRollbackState,
+  noPendingUpdateState,
   type EligibilityResult,
   type InstalledState,
   type InstallResult,
@@ -306,7 +307,9 @@ export function createUpdateControllerDeps(
   function syncLastCheckEligibility(channel: UpdateChannelLabel): void {
     const decision = computeDecision(channel);
     deps.lastCheck.eligibilityResult = decision.result;
-    deps.lastCheck.installDisabledReason = decision.reason;
+    // An eligible verdict has no disabled reason; `decision.reason` falls back to the word
+    // 'ineligible' for the controller's own contract, which Last check must not print.
+    deps.lastCheck.installDisabledReason = decision.result === 'eligible' ? null : decision.reason;
   }
 
   deps.controller = {
@@ -481,7 +484,7 @@ export async function loadMountTimeState(
     case 'no-pending-update':
       return {
         installed: recorded.installed ?? unknownInstalled(recorded.error),
-        pendingRollback: emptyPendingRollbackState(),
+        pendingRollback: noPendingUpdateState(),
         restoreOffer: null,
       };
     case 'verification-failed':

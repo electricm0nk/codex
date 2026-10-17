@@ -1,7 +1,7 @@
 # Homebrew authoring and oracle validation
 
 > Scope: the headless GE-08 package-authoring surface (`src/homebrew_authoring/`, root `codex` crate), the GE-05 pilot oracle-parity surface (`crates/codex-ingest/src/oracle_validation/`), and the SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`), as they exist today.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for §"The Starfinder 1e oracle parity gate" (new). The rest was last verified as follows: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §"Cyberpunk RED has no oracle" (new). Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for §"The Starfinder 1e oracle parity gate" (new). The rest was last verified as follows: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
 > re-checked this document's "one proof package" framing for `homebrew_authoring` against the code
 > (`grep -rn "pub fn.*_proof\b" src/homebrew_authoring/` still returns exactly one hit,
 > `guard_stance_proof()` — the claim holds unchanged) and confirmed no other capability/scope claim in
@@ -413,6 +413,14 @@ Mechanic 1 is the drone's master) and the Mechanic's drone, 15 oracle observatio
 - **What it does not contain.** `not_in_oracle.tsv` lists the engine fields the oracle exports no value for (1,413 rows, test-kept to
   equal the computation). Parity beyond the roster (higher-level builds of the six other classes), drone totals (printed as terms, an
   open operator ruling) and anything the oracle does not export are not checked. See [status.md](./status.md) §"Starfinder 1e".
+
+## Cyberpunk RED has no oracle
+
+No PCGen data and no PCGen oracle exist for Cyberpunk RED, so nothing in `oracle_validation/` or `scripts/oracle_harness/` touches it and the converter
+refuses it by name (see [corpus-ingest.md](./corpus-ingest.md) §"The Cyberpunk RED corpus"). Its engine's figures are checked against the book instead:
+page-pinned fixtures in `tests/fixtures/cpr/`, hand-derived constants in the `src/rules_core/cpr/` tests, and a no-engine re-derivation of the three starter
+sheets (see [testing.md](./testing.md) §"Cyberpunk RED gates"). That is a weaker proof than an oracle parity run: it covers the values the book prints and the
+three starters, not every combination a player can build.
 
 ## Relationship to the fail-honest pattern and test locations
 

@@ -1,0 +1,16 @@
+Plant 1 (ui-smoke): data/cyberpunk-red/corpus/range_dv.json line 212, Assault Rifle single-shot band 0-6 m dv 16 -> 17 (sed -i '212s/"dv": 16/"dv": 17/'), then
+RUN_DESKTOP_AGENT=sd38-e4.7 node scripts/ui-smoke/run.mjs --only sheet-cyberpunk-streetrat-solo,sheet-cyberpunk-complete-package-fixer -> exit 1:
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+FAIL  sheet-cyberpunk-streetrat-solo  -- expected string missing: 'Assault Rifle	17	16	15	13	15	20	25	30'
+FAIL  sheet-cyberpunk-complete-package-fixer  -- expected string missing: 'Assault Rifle	17	16	15	13	15	20	25	30'
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+0/2 green, 2 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+reverted: git checkout -- data/cyberpunk-red/corpus/range_dv.json; git diff --stat -- data -> empty
+
+Plant 2 (crosscheck.py): spec copy with 'Maximum Humanity\t46' -> 48 and 'Assault Rifle\t17\t16...' -> '17\t17...', live text copy with Maximum Humanity 48:
+  sheet-cyberpunk-streetrat-solo: MISSING on live sheet: 'Assault Rifle\t17\t17\t15\t13\t15\t20\t25\t30'
+  sheet-cyberpunk-streetrat-solo: NOT RE-DERIVED: 'Assault Rifle\t17\t17\t15\t13\t15\t20\t25\t30'
+  sheet-cyberpunk-streetrat-solo: NOT RE-DERIVED: 'Maximum Humanity\t48'
+sheet-cyberpunk-streetrat-solo: 46 expects = 33 derived + 9 constant + 2 identity; on live sheet 45/46
+CROSSCHECK FAIL (3 problems)
+exit=1

@@ -1,0 +1,120 @@
+{
+  "source": "Cyberpunk RED core rulebook p. 118 (file p118), Streetrat/Edgerunner 'Fast and Dirty' cyberware by Role, transcribed from docs/release/SD-38-cyberpunk-red/artifacts/cycle_0/inventory/cyberware.md §4 (package table) and §1 (item HL presets). Not built from data/cyberpunk-red/corpus/, which the engine reads.",
+  "note": "Each group is one printed line; a group with two options is a printed 'X or Y' choice. inventory_hl is the item's preset from the inventory's §1 table. mount places an option on its foundation for the slot check (eye/arm/leg index 0, or a meat arm).",
+  "packages": [
+    {
+      "role": "Rockerboy",
+      "printed_humanity_loss": 9,
+      "groups": [
+        [{ "name": "Audio Recorder", "inventory_hl": 2 }],
+        [{ "name": "Chemskin", "inventory_hl": 0 }],
+        [{ "name": "Cyberaudio Suite", "inventory_hl": 7 }],
+        [{ "name": "Techhair", "inventory_hl": 0 }]
+      ]
+    },
+    {
+      "role": "Solo",
+      "printed_humanity_loss": 14,
+      "groups": [
+        [{ "name": "Biomonitor", "inventory_hl": 0 }],
+        [{ "name": "Neural Link", "inventory_hl": 7 }],
+        [
+          { "name": "Sandevistan", "inventory_hl": 7 },
+          { "name": "Wolvers", "inventory_hl": 7, "mount": "meat_arm:0" }
+        ]
+      ]
+    },
+    {
+      "role": "Netrunner",
+      "printed_humanity_loss": 14,
+      "groups": [
+        [{ "name": "Interface Plugs", "inventory_hl": 7 }],
+        [{ "name": "Neural Link", "inventory_hl": 7 }],
+        [{ "name": "Shift Tacts", "inventory_hl": 0 }]
+      ]
+    },
+    {
+      "role": "Tech",
+      "printed_humanity_loss": 12,
+      "groups": [
+        [{ "name": "Cybereye", "inventory_hl": 7 }],
+        [{ "name": "MicroOptics", "inventory_hl": 2, "mount": "eye:0" }],
+        [{ "name": "Skinwatch", "inventory_hl": 0 }],
+        [{ "name": "Tool Hand", "inventory_hl": 3, "mount": "meat_arm:0" }]
+      ]
+    },
+    {
+      "role": "Medtech",
+      "printed_humanity_loss": 12,
+      "groups": [
+        [{ "name": "Biomonitor", "inventory_hl": 0 }],
+        [{ "name": "Cybereye", "inventory_hl": 7 }],
+        [
+          { "name": "Nasal Filters", "inventory_hl": 2 },
+          { "name": "Toxin Binders", "inventory_hl": 2 }
+        ],
+        [{ "name": "TeleOptics", "inventory_hl": 3, "mount": "eye:0" }]
+      ]
+    },
+    {
+      "role": "Media",
+      "printed_humanity_loss": 10,
+      "groups": [
+        [
+          { "name": "Amplified Hearing", "inventory_hl": 3 },
+          { "name": "Voice Stress Analyzer", "inventory_hl": 3 }
+        ],
+        [{ "name": "Cyberaudio Suite", "inventory_hl": 7 }],
+        [{ "name": "Light Tattoo", "inventory_hl": 0 }]
+      ]
+    },
+    {
+      "role": "Lawman",
+      "printed_humanity_loss": 10,
+      "groups": [
+        [{ "name": "Hidden Holster", "inventory_hl": 7 }],
+        [{ "name": "Subdermal Pocket", "inventory_hl": 3 }]
+      ]
+    },
+    {
+      "role": "Exec",
+      "printed_humanity_loss": 12,
+      "groups": [
+        [
+          { "name": "Biomonitor", "inventory_hl": 0 },
+          { "name": "Techhair", "inventory_hl": 0 }
+        ],
+        [{ "name": "Cyberaudio Suite", "inventory_hl": 7 }],
+        [{ "name": "Internal Agent", "inventory_hl": 3 }],
+        [
+          { "name": "Toxin Binders", "inventory_hl": 2 },
+          { "name": "Nasal Filters", "inventory_hl": 2 }
+        ]
+      ]
+    },
+    {
+      "role": "Fixer",
+      "printed_humanity_loss": 16,
+      "groups": [
+        [{ "name": "Cyberaudio Suite", "inventory_hl": 7 }],
+        [{ "name": "Internal Agent", "inventory_hl": 3 }],
+        [{ "name": "Subdermal Pocket", "inventory_hl": 3 }],
+        [
+          { "name": "Voice Stress Analyzer", "inventory_hl": 3 },
+          { "name": "Amplified Hearing", "inventory_hl": 3 }
+        ]
+      ]
+    },
+    {
+      "role": "Nomad",
+      "printed_humanity_loss": 14,
+      "groups": [
+        [
+          { "name": "Interface Plugs", "inventory_hl": 7 },
+          { "name": "Wolvers", "inventory_hl": 7, "mount": "meat_arm:0" }
+        ],
+        [{ "name": "Neural Link", "inventory_hl": 7 }]
+      ]
+    }
+  ]
+}

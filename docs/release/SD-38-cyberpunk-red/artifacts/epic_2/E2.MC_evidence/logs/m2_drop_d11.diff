@@ -1,0 +1,13 @@
+diff --git a/src/rules_core/cpr/cyberware.rs b/src/rules_core/cpr/cyberware.rs
+index 88030de806..cdf259ce44 100644
+--- a/src/rules_core/cpr/cyberware.rs
++++ b/src/rules_core/cpr/cyberware.rs
+@@ -499,7 +499,7 @@ impl CprCyberwareCatalog {
+                 let slot = used.get_mut(&container).expect("every reachable container has a capacity");
+                 let requested = *slot + item.slots_used;
+                 let cap = capacity[&container];
+-                if requested > cap {
++                if false && requested > cap {
+                     return Err(CprCyberwareRefusal::SlotsFull {
+                         item: name.to_string(),
+                         container,

@@ -1,0 +1,28 @@
+== plant fashion overflow not charged to the cash: src/rules_core/cpr/kit.rs
+test rules_core::cpr::kit::tests::complete_package_fashion_over_800_is_paid_from_the_cash_and_an_overspend_is_refused ... FAILED
+thread 'rules_core::cpr::kit::tests::complete_package_fashion_over_800_is_paid_from_the_cash_and_an_overspend_is_refused' (1996225) panicked at src/rules_core/cpr/kit.rs:866:9:
+test result: FAILED. 8 passed; 1 failed; 0 ignored; 0 measured; 3003 filtered out; finished in 0.05s
+== plant overspend refusal removed: src/rules_core/cpr/kit.rs
+test rules_core::cpr::kit::tests::complete_package_fashion_over_800_is_paid_from_the_cash_and_an_overspend_is_refused ... FAILED
+test rules_core::cpr::kit::tests::fixed_kit_purchases_spend_the_500eb_and_an_overspend_is_refused ... FAILED
+thread 'rules_core::cpr::kit::tests::complete_package_fashion_over_800_is_paid_from_the_cash_and_an_overspend_is_refused' (1998196) panicked at src/rules_core/cpr/kit.rs:689:31:
+thread 'rules_core::cpr::kit::tests::fixed_kit_purchases_spend_the_500eb_and_an_overspend_is_refused' (1998199) panicked at src/rules_core/cpr/kit.rs:689:31:
+test result: FAILED. 7 passed; 2 failed; 0 ignored; 0 measured; 3003 filtered out; finished in 0.04s
+== plant an or-line takes every option: src/rules_core/cpr/kit.rs
+test rules_core::cpr::kit::tests::an_or_pick_takes_that_option_and_a_bad_pick_is_refused ... FAILED
+test rules_core::cpr::kit::tests::the_kit_puts_weapons_armour_ammunition_and_the_deck_on_the_sheet ... FAILED
+test rules_core::cpr::kit::tests::each_roles_fixed_kit_is_its_starting_kit_record ... FAILED
+thread 'rules_core::cpr::kit::tests::an_or_pick_takes_that_option_and_a_bad_pick_is_refused' (2000316) panicked at src/rules_core/cpr/kit.rs:751:9:
+thread 'rules_core::cpr::kit::tests::the_kit_puts_weapons_armour_ammunition_and_the_deck_on_the_sheet' (2000322) panicked at src/rules_core/cpr/kit.rs:1002:9:
+thread 'rules_core::cpr::kit::tests::each_roles_fixed_kit_is_its_starting_kit_record' (2000319) panicked at src/rules_core/cpr/kit.rs:731:13:
+test result: FAILED. 6 passed; 3 failed; 0 ignored; 0 measured; 3003 filtered out; finished in 0.04s
+== plant create does not save cpr_kit.txt: apps/desktop/src-tauri/src/cpr_creation.rs
+test cpr_creation::tests::complete_package_saves_the_cash_left_and_loses_the_unspent_fashion_budget ... FAILED
+test cpr_creation::tests::each_roles_fixed_kit_is_its_starting_kit_record_and_saves_with_500eb ... FAILED
+thread 'cpr_creation::tests::complete_package_saves_the_cash_left_and_loses_the_unspent_fashion_budget' (2002290) panicked at src/cpr_creation.rs:2377:9:
+thread 'cpr_creation::tests::each_roles_fixed_kit_is_its_starting_kit_record_and_saves_with_500eb' (2002297) panicked at src/cpr_creation.rs:2285:17:
+test result: FAILED. 29 passed; 2 failed; 0 ignored; 0 measured; 822 filtered out; finished in 16.73s
+== plant setKitPick appends: apps/desktop/src/characterHub/cyberpunkCreationModel.ts
+    throw new Error(`${message}: expected ${String(expected)}, got ${String(actual)}`);
+Error: a second pick on a line replaces the first; the other line keeps its own (the Fixer prints the same line twice): expected [{"line":0,"option":"Very Heavy Pistol"},{"line":1,"option":"Very Heavy Pistol"}], got [{"line":0,"option":"Heavy Pistol"},{"line":0,"option":"Very Heavy Pistol"},{"line":1,"option":"Very Heavy Pistol"}]
+exit=1

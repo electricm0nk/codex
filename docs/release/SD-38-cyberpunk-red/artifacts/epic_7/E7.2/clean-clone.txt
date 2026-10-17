@@ -1,0 +1,19 @@
+== status
+npm ci exit=0
+npm run build exit=0
+cargo build exit=0
+== npm ci (tail)
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+== npm run build (tail)
+✓ built in 930ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+== cargo build (tail)
+warning: `codex-desktop` (bin "codex-desktop") generated 71 warnings (run `cargo fix --bin "codex-desktop" -p codex-desktop` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3m 20s

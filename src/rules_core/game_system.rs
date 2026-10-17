@@ -3,7 +3,9 @@
 //! SD-37 Epic 1 (`docs/release/SD-37-starfinder-1e/decisions.md §7`): Pathfinder 1e and
 //! Starfinder 1e share one engine, so every place that names a data root or a book list is
 //! keyed by a [`GameSystem`]. Pathfinder's paths are unchanged (`data/sheet_rules/`,
-//! `data/corpus/`); Starfinder's live under `data/starfinder-1e/`. The id strings are the
+//! `data/corpus/`); Starfinder's live under `data/starfinder-1e/`. Cyberpunk RED (SD-38,
+//! `docs/release/SD-38-cyberpunk-red/decisions.md §8`) has a corpus under
+//! `data/cyberpunk-red/corpus` and no sheet-rule package. The id strings are the
 //! desktop's `RuleSetId` literals (`apps/desktop/src/characterHub/LandingScreen.tsx`) and the
 //! save envelope's `game_system` field (`src/saved_character/mod.rs`).
 //!
@@ -17,6 +19,7 @@ use std::path::{Path, PathBuf};
 pub enum GameSystem {
     Pathfinder1e,
     Starfinder1e,
+    CyberpunkRed,
 }
 
 /// An id that names no [`GameSystem`].
@@ -37,21 +40,23 @@ impl std::error::Error for UnknownGameSystem {}
 /// One system's package roots, joined onto a repo (or packaged-resource) root.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PackageRoots {
-    /// The converted sheet-rule package (`SheetRulePackage`).
-    pub sheet_rules: PathBuf,
+    /// The converted sheet-rule package (`SheetRulePackage`), or `None` for a system that has
+    /// none ([`GameSystem::sheet_rules_relative`]).
+    pub sheet_rules: Option<PathBuf>,
     /// The per-book converted corpus records.
     pub corpus: PathBuf,
 }
 
 impl GameSystem {
     /// Every system, in a fixed order (the index order of [`GameSystem::index`]).
-    pub const ALL: [GameSystem; 2] = [GameSystem::Pathfinder1e, GameSystem::Starfinder1e];
+    pub const ALL: [GameSystem; 3] = [GameSystem::Pathfinder1e, GameSystem::Starfinder1e, GameSystem::CyberpunkRed];
 
-    /// The wire id: `pathfinder-1e` or `starfinder-1e`.
+    /// The wire id: `pathfinder-1e`, `starfinder-1e` or `cyberpunk-red`.
     pub const fn id(self) -> &'static str {
         match self {
             GameSystem::Pathfinder1e => "pathfinder-1e",
             GameSystem::Starfinder1e => "starfinder-1e",
+            GameSystem::CyberpunkRed => "cyberpunk-red",
         }
     }
 
@@ -68,14 +73,19 @@ impl GameSystem {
         match self {
             GameSystem::Pathfinder1e => 0,
             GameSystem::Starfinder1e => 1,
+            GameSystem::CyberpunkRed => 2,
         }
     }
 
-    /// The sheet-rule package directory, relative to the repo root.
-    pub const fn sheet_rules_relative(self) -> &'static str {
+    /// The sheet-rule package directory, relative to the repo root; `None` for a system with no
+    /// converted package. Cyberpunk RED has no PCGen data, so no package: its rules live in its
+    /// own engine module, and an empty directory would ship a path claiming to be a package.
+    /// `scripts/verify.sh`'s `tauri-resources-tracked` stage reads the `Some("…")` arms.
+    pub const fn sheet_rules_relative(self) -> Option<&'static str> {
         match self {
-            GameSystem::Pathfinder1e => "data/sheet_rules",
-            GameSystem::Starfinder1e => "data/starfinder-1e/sheet_rules",
+            GameSystem::Pathfinder1e => Some("data/sheet_rules"),
+            GameSystem::Starfinder1e => Some("data/starfinder-1e/sheet_rules"),
+            GameSystem::CyberpunkRed => None,
         }
     }
 
@@ -84,13 +94,14 @@ impl GameSystem {
         match self {
             GameSystem::Pathfinder1e => "data/corpus",
             GameSystem::Starfinder1e => "data/starfinder-1e/corpus",
+            GameSystem::CyberpunkRed => "data/cyberpunk-red/corpus",
         }
     }
 
     /// This system's package roots under `repo_root`.
     pub fn package_roots(self, repo_root: &Path) -> PackageRoots {
         PackageRoots {
-            sheet_rules: repo_root.join(self.sheet_rules_relative()),
+            sheet_rules: self.sheet_rules_relative().map(|relative| repo_root.join(relative)),
             corpus: repo_root.join(self.corpus_relative()),
         }
     }
@@ -143,6 +154,7 @@ pub fn resolve_repo_root(configured: Option<std::ffi::OsString>) -> PathBuf {
 pub struct PerSystem<T> {
     pub pathfinder_1e: T,
     pub starfinder_1e: T,
+    pub cyberpunk_red: T,
 }
 
 impl<T: Copy> PerSystem<T> {
@@ -151,6 +163,7 @@ impl<T: Copy> PerSystem<T> {
         match system {
             GameSystem::Pathfinder1e => self.pathfinder_1e,
             GameSystem::Starfinder1e => self.starfinder_1e,
+            GameSystem::CyberpunkRed => self.cyberpunk_red,
         }
     }
 }
@@ -159,10 +172,10 @@ impl<T: Copy> PerSystem<T> {
 pub type BookRegistry<T> = PerSystem<&'static [T]>;
 
 impl<T: 'static> PerSystem<&'static [T]> {
-    /// A registry holding Pathfinder 1e books only; Starfinder registers its own books in
-    /// the card that ingests them.
+    /// A registry holding Pathfinder 1e books only; Starfinder and Cyberpunk RED register
+    /// their own books in the card that ingests them.
     pub const fn pathfinder_only(pathfinder_1e: &'static [T]) -> Self {
-        PerSystem { pathfinder_1e, starfinder_1e: &[] }
+        PerSystem { pathfinder_1e, starfinder_1e: &[], cyberpunk_red: &[] }
     }
 
     /// The books registered for `system`, in registry order.
@@ -170,6 +183,7 @@ impl<T: 'static> PerSystem<&'static [T]> {
         match system {
             GameSystem::Pathfinder1e => self.pathfinder_1e,
             GameSystem::Starfinder1e => self.starfinder_1e,
+            GameSystem::CyberpunkRed => self.cyberpunk_red,
         }
     }
 }
@@ -192,9 +206,11 @@ mod tests {
             assert_eq!(GameSystem::from_id(system.id()), Ok(system));
             assert!(ids.insert(system.id()), "duplicate id {}", system.id());
             let roots = system.package_roots(repo);
-            assert!(sheet_dirs.insert(roots.sheet_rules.clone()), "shared sheet-rule root {:?}", roots.sheet_rules);
+            if let Some(sheet_rules) = &roots.sheet_rules {
+                assert!(sheet_dirs.insert(sheet_rules.clone()), "shared sheet-rule root {sheet_rules:?}");
+                assert_ne!(sheet_rules, &roots.corpus);
+            }
             assert!(corpus_dirs.insert(roots.corpus.clone()), "shared corpus root {:?}", roots.corpus);
-            assert_ne!(roots.sheet_rules, roots.corpus);
         }
         assert_eq!(ids.len(), GameSystem::ALL.len());
     }
@@ -205,11 +221,11 @@ mod tests {
     fn game_system_root_pathfinder_is_the_current_path() {
         let repo = Path::new("/repo");
         let pf = GameSystem::Pathfinder1e.package_roots(repo);
-        assert_eq!(pf.sheet_rules, PathBuf::from("/repo/data/sheet_rules"));
+        assert_eq!(pf.sheet_rules, Some(PathBuf::from("/repo/data/sheet_rules")));
         assert_eq!(pf.corpus, PathBuf::from("/repo/data/corpus"));
         assert_eq!(GameSystem::Pathfinder1e.id(), "pathfinder-1e");
         let sf = GameSystem::Starfinder1e.package_roots(repo);
-        assert_eq!(sf.sheet_rules, PathBuf::from("/repo/data/starfinder-1e/sheet_rules"));
+        assert_eq!(sf.sheet_rules, Some(PathBuf::from("/repo/data/starfinder-1e/sheet_rules")));
         assert_eq!(sf.corpus, PathBuf::from("/repo/data/starfinder-1e/corpus"));
         assert_eq!(GameSystem::Starfinder1e.id(), "starfinder-1e");
     }
@@ -218,11 +234,14 @@ mod tests {
     /// default system.
     #[test]
     fn game_system_root_unknown_id_is_an_error_not_a_fallback() {
-        for bad in ["", "pathfinder", "Pathfinder-1e", "pathfinder-2e", "starfinder-2e", " pathfinder-1e"] {
+        for bad in ["", "pathfinder", "Pathfinder-1e", "pathfinder-2e", "starfinder-2e", " pathfinder-1e", "cyberpunk", "Cyberpunk-Red"] {
             let err = GameSystem::from_id(bad).expect_err(bad);
             assert_eq!(err.id, bad);
             let message = err.to_string();
-            assert!(message.contains("pathfinder-1e") && message.contains("starfinder-1e"), "{message}");
+            assert!(
+                message.contains("pathfinder-1e") && message.contains("starfinder-1e") && message.contains("cyberpunk-red"),
+                "{message}"
+            );
         }
     }
 
@@ -248,7 +267,7 @@ mod tests {
         assert_eq!(resolve_runtime_root(None, None), PathBuf::from(env!("CARGO_MANIFEST_DIR")));
         assert_eq!(
             GameSystem::Starfinder1e.package_roots(&resolve_runtime_root(Some(&installed), None)).sheet_rules,
-            PathBuf::from("/usr/lib/Codex/data/starfinder-1e/sheet_rules")
+            Some(PathBuf::from("/usr/lib/Codex/data/starfinder-1e/sheet_rules"))
         );
     }
 
@@ -262,6 +281,43 @@ mod tests {
         assert!(std::ptr::eq(keyed.unwrap(), default.unwrap()));
     }
 
+    /// SD-38 E0.1 (`docs/release/SD-38-cyberpunk-red/decisions.md §8`): Cyberpunk RED is the
+    /// third system. Its id is the desktop's `RuleSetId` literal, its corpus lives under
+    /// `data/cyberpunk-red/corpus`, and it has **no** sheet-rule package (`None`, never a path to
+    /// an empty directory). Pathfinder's and Starfinder's strings are unchanged.
+    #[test]
+    fn game_system_root_cyberpunk_red_has_a_corpus_and_no_sheet_rule_package() {
+        assert_eq!(GameSystem::from_id("cyberpunk-red"), Ok(GameSystem::CyberpunkRed));
+        assert_eq!("cyberpunk-red".parse::<GameSystem>(), Ok(GameSystem::CyberpunkRed));
+        assert_eq!(GameSystem::CyberpunkRed.id(), "cyberpunk-red");
+        assert_eq!(GameSystem::CyberpunkRed.to_string(), "cyberpunk-red");
+        assert_eq!(GameSystem::ALL.len(), 3);
+        assert_eq!(GameSystem::ALL[GameSystem::CyberpunkRed.index()], GameSystem::CyberpunkRed);
+        assert_eq!(GameSystem::CyberpunkRed.corpus_relative(), "data/cyberpunk-red/corpus");
+        assert_eq!(GameSystem::CyberpunkRed.sheet_rules_relative(), None);
+        let cpr = GameSystem::CyberpunkRed.package_roots(Path::new("/repo"));
+        assert_eq!(cpr.corpus, PathBuf::from("/repo/data/cyberpunk-red/corpus"));
+        assert_eq!(cpr.sheet_rules, None);
+        assert_eq!(GameSystem::Pathfinder1e.sheet_rules_relative(), Some("data/sheet_rules"));
+        assert_eq!(GameSystem::Starfinder1e.sheet_rules_relative(), Some("data/starfinder-1e/sheet_rules"));
+        assert_eq!(GameSystem::Pathfinder1e.corpus_relative(), "data/corpus");
+        assert_eq!(GameSystem::Starfinder1e.corpus_relative(), "data/starfinder-1e/corpus");
+        assert!(crate::rules_core::corpus_loader::live_sheet_rules_for(GameSystem::CyberpunkRed).is_none());
+    }
+
+    /// Every system has its own `index()` slot in `ALL` order, and `PerSystem` carries one value
+    /// per system: a Pathfinder-only registry registers no Cyberpunk RED book.
+    #[test]
+    fn game_system_root_every_system_has_its_own_index_and_per_system_slot() {
+        for (i, system) in GameSystem::ALL.into_iter().enumerate() {
+            assert_eq!(system.index(), i, "{system}");
+        }
+        let per = PerSystem { pathfinder_1e: 1, starfinder_1e: 2, cyberpunk_red: 3 };
+        assert_eq!(GameSystem::ALL.map(|s| per.get(s)), [1, 2, 3]);
+        const PF: &[&str] = &["core_rulebook"];
+        assert!(BookRegistry::pathfinder_only(PF).books(GameSystem::CyberpunkRed).is_empty());
+    }
+
     /// A registry built from a Pathfinder book list returns that list, unchanged and in order,
     /// for Pathfinder, and registers no book for any other system.
     #[test]
@@ -270,7 +326,7 @@ mod tests {
         const REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(PF);
         assert_eq!(REGISTRY.books(GameSystem::Pathfinder1e), PF);
         assert!(REGISTRY.books(GameSystem::Starfinder1e).is_empty());
-        let both = PerSystem { pathfinder_1e: Some("pathfinder/x"), starfinder_1e: None };
+        let both = PerSystem { pathfinder_1e: Some("pathfinder/x"), starfinder_1e: None, cyberpunk_red: None };
         assert_eq!(both.get(GameSystem::Pathfinder1e), Some("pathfinder/x"));
         assert_eq!(both.get(GameSystem::Starfinder1e), None);
     }

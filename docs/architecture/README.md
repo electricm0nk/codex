@@ -2,9 +2,10 @@
 
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set,
 > plus reading paths into it by intent.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**. Index rows for
-> `rules-engine.md`, `rules-data-tables.md`, `corpus-ingest.md` and `desktop-app.md` now name the Starfinder 1e and
-> data-package paths (`src/rules_core/rules_catalog/`, `data/rules_tables/`, `data/starfinder-1e/`); the
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**. Index rows for
+> `rules-engine.md`, `rules-data-tables.md`, `corpus-ingest.md` and `desktop-app.md` name the Starfinder 1e, Cyberpunk RED and
+> data-package paths (`src/rules_core/rules_catalog/`, `src/rules_core/cpr/`, `data/rules_tables/`, `data/starfinder-1e/`,
+> `data/cyberpunk-red/`); the
 > compiled `rules_tables` module they used to name no longer exists. The verification one-liners below
 > were run against this tree.
 > Maintenance: updated at SD closure — see §Maintenance contract below
@@ -47,12 +48,12 @@ doc's coverage shifts.
 | [glossary.md](./glossary.md) | Every project term (SD-nn, tranche, epic, STC package, corpus, wiring_class, crate wall, oracle, ui-smoke, ...) defined once | (reference surface; no single source dir) |
 | [conventions.md](./conventions.md) | Cross-cutting idiom catalog: fail-honest, store shape, DI seams, boundary rule, TDD | `src/`, `apps/desktop/src/` |
 | [status.md](./status.md) | What is real vs. stubbed/partial/deferred across the whole repo | `src/`, `apps/desktop/` |
-| [corpus-ingest.md](./corpus-ingest.md) | PCGen `.pcc`/`.lst` parsing into canonical source-IR, the sheet-rule converter for both game systems | `crates/codex-ingest/src/pcgen_import/`, `data/starfinder-1e/` |
-| [rules-engine.md](./rules-engine.md) | The headless compute spine (PF1 per-domain engines and the Starfinder 1e `sf_*` readers) | `src/rules_core/` (excluding `rules_catalog/`) |
+| [corpus-ingest.md](./corpus-ingest.md) | PCGen `.pcc`/`.lst` parsing into canonical source-IR, the sheet-rule converter for the two PCGen-backed game systems, and the hand-transcribed Cyberpunk RED corpus with its manifest check | `crates/codex-ingest/src/pcgen_import/`, `data/starfinder-1e/`, `data/cyberpunk-red/`, `scripts/cpr_manifest_check.py` |
+| [rules-engine.md](./rules-engine.md) | The headless compute spine (PF1 per-domain engines, the Starfinder 1e `sf_*` readers and the Cyberpunk RED `cpr` module) | `src/rules_core/` (excluding `rules_catalog/`) |
 | [rules-data-tables.md](./rules-data-tables.md) | The Pathfinder rule-data tables as a JSON data package, and the package-backed catalog that reads it | `data/rules_tables/`, `src/rules_core/rules_catalog/` |
 | [persistence.md](./persistence.md) | Saved-character and campaign local on-disk storage | `src/saved_character/`, `src/campaign/`, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/campaign_drive.rs` |
 | [homebrew-and-oracle.md](./homebrew-and-oracle.md) | Homebrew package authoring; oracle-parity fixture schema | `src/homebrew_authoring/`, `crates/codex-ingest/src/oracle_validation/` |
-| [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam (Pathfinder and Starfinder adapters) | `apps/desktop/` |
+| [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam (Pathfinder, Starfinder and Cyberpunk adapters) | `apps/desktop/` |
 | [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/feedback/`, `apps/desktop/src/update/`, `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src/testerWorkbench/update/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
 | [release-pipeline.md](./release-pipeline.md) | Publish workflow, manifest generation, branch-promotion gates | `.github/workflows/`, `scripts/release/`, `tools/release/`, `scripts/tranche/` |
 | [testing.md](./testing.md) | Full verification command set, fixture grammar, corpus-gated tests | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/testSupport/` |
@@ -84,9 +85,12 @@ jump straight to the doc(s) for what you're actually doing:
 - **Cut a release** → [release-pipeline.md](./release-pipeline.md) (publish pipeline, branch
   promotion, version stamp) → [getting-started.md](./getting-started.md) §"Branch model, commits,
   and PRs" for the `tranche/N` → `develop` → `test` → `main` flow and who merges what.
-- **Starfinder 1e** → [overview.md](./overview.md) §"Two game systems, one engine" →
+- **Starfinder 1e** → [overview.md](./overview.md) §"Three game systems" →
   [rules-engine.md](./rules-engine.md) §3e (the `sf_*` readers) → [corpus-ingest.md](./corpus-ingest.md) §"The Starfinder 1e
   converter" → [desktop-app.md](./desktop-app.md) §"Starfinder 1e surface" → [status.md](./status.md) §"Starfinder 1e" for what it does not cover.
+- **Cyberpunk RED** → [overview.md](./overview.md) §"Three game systems" →
+  [rules-engine.md](./rules-engine.md) §"Cyberpunk RED: the `cpr` engine" → [corpus-ingest.md](./corpus-ingest.md) §"The Cyberpunk RED
+  corpus" → [desktop-app.md](./desktop-app.md) §"Cyberpunk RED surface" → [status.md](./status.md) §"Cyberpunk RED" for what it does not cover.
 - **Investigating CI** → [release-pipeline.md](./release-pipeline.md).
 - **What works today** → [status.md](./status.md).
 - **How saved characters/campaigns are stored** → [persistence.md](./persistence.md).

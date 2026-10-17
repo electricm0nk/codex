@@ -137,7 +137,8 @@ pub trait RuleSystemAdapter {
 /// dispatch through. One resolver for every command, so a system's adapter
 /// is registered once: `"pf1"` is `Pf1Adapter`; `"starfinder-1e"`
 /// (`sf_adapter::STARFINDER_RULE_SYSTEM_ID`, SD-37 E4.6) is
-/// `StarfinderAdapter`; any other id is `StubAdapter`
+/// `StarfinderAdapter`; `"cyberpunk-red"` (`GameSystem::CyberpunkRed.id()`, SD-38 E0.4) is
+/// `CyberpunkAdapter`; any other id is `StubAdapter`
 /// (`docs/governance/wired-integration-stubs-registry.md` entry 0002), which
 /// reports the id it was given and never falls through to Pathfinder logic.
 ///
@@ -149,6 +150,9 @@ pub fn resolve_rule_system_adapter(rule_system_id: &str) -> Box<dyn RuleSystemAd
     match rule_system_id {
         "pf1" => Box::new(crate::pf1_adapter::Pf1Adapter),
         crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID => Box::new(crate::sf_adapter::StarfinderAdapter),
+        id if id == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() => {
+            Box::new(crate::cpr_adapter::CyberpunkAdapter)
+        }
         other => {
             let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
             Box::new(crate::stub_adapter::StubAdapter::new(leaked))
@@ -168,13 +172,17 @@ pub fn list_saved_characters_via_rule_system(
 }
 
 /// The `load_saved_character` command's body: a saved character is loaded by the adapter of
-/// the system its own envelope names (`game_system`). A Starfinder envelope goes to
-/// `StarfinderAdapter`; every other envelope (Pathfinder's `"pf1"`, and the legacy values
-/// `local_store::derive_legacy_game_system` gives envelopes saved before the field existed)
-/// loads through `Pf1Adapter` exactly as before.
+/// the system its own envelope names (`game_system`), read from `envelope.txt` alone
+/// (`local_store::peek_game_system`) before any payload is read: a Cyberpunk RED envelope goes
+/// to `CyberpunkAdapter` (its payload is `cpr_character_input.txt`, not a Pathfinder input); a
+/// Starfinder envelope goes to `StarfinderAdapter`; every other envelope (Pathfinder's `"pf1"`,
+/// and the legacy values `local_store::derive_legacy_game_system` gives envelopes saved before
+/// the field existed) loads through `Pf1Adapter` exactly as before.
 pub fn load_saved_character_via_envelope(root: &Path) -> Result<LoadSavedCharacterResponse, String> {
-    let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    if envelope.game_system == crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID {
+    let game_system = codex::saved_character::local_store::peek_game_system(root).map_err(|err| err.message)?;
+    if game_system == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() {
+        crate::cpr_adapter::CyberpunkAdapter.load_saved_character(root)
+    } else if game_system == crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID {
         crate::sf_adapter::StarfinderAdapter.load_saved_character(root)
     } else {
         crate::pf1_adapter::Pf1Adapter.load_saved_character(root)
@@ -735,5 +743,24 @@ pub(crate) mod tests {
         assert_eq!(value("sf.resolve"), 4);
         assert_eq!(value("sf.eac"), 16);
         assert_eq!(value("sf.kac"), 19);
+    }
+
+    /// SD-38 E0.4: the wire id `cyberpunk-red` (`GameSystem::CyberpunkRed.id()`) resolves to
+    /// the Cyberpunk RED adapter, which lists a real (here empty) characters root instead of
+    /// reporting a Would-message, and a CPR character's root is loaded through it by the
+    /// envelope router. Before E0.4 the id resolved to `StubAdapter`, whose listing is an
+    /// `Err` carrying the stub's Would-render message for `cyberpunk-red`.
+    #[test]
+    fn cyberpunk_red_resolves_to_the_cyberpunk_adapter() {
+        let characters_root = tempdir("cyberpunk-red-resolves");
+        let adapter = resolve_rule_system_adapter("cyberpunk-red");
+        assert_eq!(adapter.rule_system_id(), "cyberpunk-red");
+        let listing = adapter.list_saved_characters(&characters_root);
+        assert!(
+            listing.as_ref().is_ok_and(|l| l.characters.is_empty() && l.unreadable_count == 0),
+            "the Cyberpunk RED listing must be a real listing: {:?}",
+            listing.as_ref().err()
+        );
+        std::fs::remove_dir_all(&characters_root).ok();
     }
 }

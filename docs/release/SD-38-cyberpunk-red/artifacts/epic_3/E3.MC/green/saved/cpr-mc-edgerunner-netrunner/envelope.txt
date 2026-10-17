@@ -1,0 +1,10 @@
+character_id = dd7ab902-37b5-4a51-a0c2-c97756683d76
+revision_id = dd7ab902-37b5-4a51-a0c2-c97756683d76.rev.1
+revision_kind = authoritative
+saved_at = 2026-10-15T02:42:37.547Z
+schema_version = 1
+app_or_runtime_version = 0.18.0
+content_or_rules_provenance = cyberpunk-red.corebook
+game_system = cyberpunk-red
+latest_authoritative_revision_ref = dd7ab902-37b5-4a51-a0c2-c97756683d76.rev.1
+display_label = CPR MC Edgerunner Netrunner

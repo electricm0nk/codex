@@ -1,0 +1,72 @@
+[
+  {
+    "kind": "vehicle_maneuver",
+    "name": "Swerve",
+    "source_page": "p193",
+    "text": "Swerve 13",
+    "dv": 13,
+    "air_vehicle_only": false,
+    "check_text": "REF + Relevant Control Skill + 1d10",
+    "rule_text": "Maneuvers require your full attention, which in game terms means both your Action and your Move Action. Failing to beat the DV of the Check with REF + Relevant Control Skill + 1d10 will cause you to immediately Lose Control of the Vehicle."
+  },
+  {
+    "kind": "vehicle_maneuver",
+    "name": "Sharp Turn",
+    "source_page": "p193",
+    "text": "Sharp Turn 13",
+    "dv": 13,
+    "air_vehicle_only": false,
+    "check_text": "REF + Relevant Control Skill + 1d10",
+    "rule_text": "Maneuvers require your full attention, which in game terms means both your Action and your Move Action. Failing to beat the DV of the Check with REF + Relevant Control Skill + 1d10 will cause you to immediately Lose Control of the Vehicle."
+  },
+  {
+    "kind": "vehicle_maneuver",
+    "name": "Emergency Stop",
+    "source_page": "p193",
+    "text": "Emergency Stop 13",
+    "dv": 13,
+    "air_vehicle_only": false,
+    "check_text": "REF + Relevant Control Skill + 1d10",
+    "rule_text": "Maneuvers require your full attention, which in game terms means both your Action and your Move Action. Failing to beat the DV of the Check with REF + Relevant Control Skill + 1d10 will cause you to immediately Lose Control of the Vehicle."
+  },
+  {
+    "kind": "vehicle_maneuver",
+    "name": "Bootleg Turn",
+    "source_page": "p193",
+    "text": "Bootleg Turn 17",
+    "dv": 17,
+    "air_vehicle_only": false,
+    "check_text": "REF + Relevant Control Skill + 1d10",
+    "rule_text": "Maneuvers require your full attention, which in game terms means both your Action and your Move Action. Failing to beat the DV of the Check with REF + Relevant Control Skill + 1d10 will cause you to immediately Lose Control of the Vehicle."
+  },
+  {
+    "kind": "vehicle_maneuver",
+    "name": "Do a Jump",
+    "source_page": "p193",
+    "text": "Do a Jump 17",
+    "dv": 17,
+    "air_vehicle_only": false,
+    "check_text": "REF + Relevant Control Skill + 1d10",
+    "rule_text": "Maneuvers require your full attention, which in game terms means both your Action and your Move Action. Failing to beat the DV of the Check with REF + Relevant Control Skill + 1d10 will cause you to immediately Lose Control of the Vehicle."
+  },
+  {
+    "kind": "vehicle_maneuver",
+    "name": "Landing (Air Vehicle)",
+    "source_page": "p193",
+    "text": "Landing (Air Vehicle) 13",
+    "dv": 13,
+    "air_vehicle_only": true,
+    "check_text": "REF + Relevant Control Skill + 1d10",
+    "rule_text": "Maneuvers require your full attention, which in game terms means both your Action and your Move Action. Failing to beat the DV of the Check with REF + Relevant Control Skill + 1d10 will cause you to immediately Lose Control of the Vehicle."
+  },
+  {
+    "kind": "vehicle_maneuver",
+    "name": "Aerobatic Maneuver (Air Vehicle)",
+    "source_page": "p193",
+    "text": "Aerobatic Maneuver (Air Vehicle) 17",
+    "dv": 17,
+    "air_vehicle_only": true,
+    "check_text": "REF + Relevant Control Skill + 1d10",
+    "rule_text": "Maneuvers require your full attention, which in game terms means both your Action and your Move Action. Failing to beat the DV of the Check with REF + Relevant Control Skill + 1d10 will cause you to immediately Lose Control of the Vehicle."
+  }
+]

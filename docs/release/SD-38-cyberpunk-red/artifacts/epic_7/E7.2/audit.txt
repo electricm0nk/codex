@@ -1,0 +1,7 @@
+OK_NO_BUNDLE_TAGS
+OK_NO_TOKENS
+OK_NO_NOOP_HANDLERS
+OK_NO_MOCK_LEAKS
+OK_NO_WOULD_STRINGS
+ apps/desktop/src-tauri/tests/packaged_resources.rs | 122 +++++++++++++++++++++
+ 1 file changed, 122 insertions(+)

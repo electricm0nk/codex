@@ -1,0 +1,59 @@
+   Compiling codex-desktop v0.18.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 36.10s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd38-e3/debug/deps/codex_desktop-9b89aecaf12b93dc)
+
+running 51 tests
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test cpr_catalog::tests::an_eighth_slot_is_refused ... ok
+test cpr_catalog::tests::each_deck_quality_name_is_a_corpus_cyberdeck_record ... ok
+test cpr_catalog::tests::an_unknown_kind_is_refused ... ok
+test cpr_catalog::tests::extras_add_slots_and_hardware_slots_come_from_the_corpus ... ok
+test cpr_catalog::tests::the_command_reads_the_same_corpus_root ... ok
+test cpr_catalog::tests::the_p157_sample_deck_is_seven_of_seven ... ok
+test cpr_catalog::tests::unknown_deck_program_hardware_and_rank_are_refused ... ok
+test cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::saved_lifepath_answers_load_as_printed_lines ... ok
+test cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet ... ok
+test cpr_creation::tests::an_unknown_role_and_an_out_of_range_template_roll_are_refused ... ok
+test cpr_adapter::tests::the_frontend_cyberpunk_sheet_fixtures_are_the_adapters_load_responses ... ok
+test cpr_creation::tests::a_role_choice_the_saved_grammar_cannot_hold_is_refused ... ok
+test cpr_catalog::tests::every_manifest_kind_lists_its_expected_count ... ok
+test cpr_adapter::tests::ticking_a_critical_injury_saves_it_and_moves_the_base_death_save_penalty ... ok
+test cpr_creation::tests::a_kit_pick_takes_its_option_and_a_bad_pick_is_refused ... ok
+test cpr_creation::tests::complete_package_overspend_is_refused ... ok
+test cpr_creation::tests::an_over_slot_cyberware_purchase_is_refused_and_nothing_saves ... ok
+test cpr_creation::tests::complete_package_refuses_a_missing_or_unknown_stat ... ok
+test cpr_creation::tests::complete_package_cyberware_is_bought_placed_and_saved ... ok
+test cpr_creation::tests::branch_tables_can_be_skipped_and_bad_picks_are_refused ... ok
+test cpr_creation::tests::complete_package_saves_the_cash_left_and_loses_the_unspent_fashion_budget ... ok
+test cpr_creation::tests::create_saves_every_allocated_skill_and_the_loaded_character_has_them ... ok
+test cpr_creation::tests::create_refuses_an_empty_name_and_an_existing_character ... ok
+test cpr_creation::tests::create_saves_the_role_at_rank_4_and_its_sub_choices ... ok
+test cpr_creation::tests::complete_package_accepts_62_and_refuses_61_63_a_9_and_a_1 ... ok
+test cpr_creation::tests::create_with_the_previews_seed_saves_the_previewed_stats ... ok
+test cpr_creation::tests::complete_package_skills_are_any_of_66_capped_at_6_with_basic_at_2 ... ok
+test cpr_creation::tests::lifepath_rolls_are_seeded_and_a_pick_changes_only_its_table ... ok
+test cpr_creation::tests::edgerunner_skills_are_the_roles_20_from_2_to_6_within_86_points ... ok
+test cpr_creation::tests::every_role_with_sub_choices_takes_one_valid_allocation_and_refuses_one ... ok
+test cpr_creation::tests::roles_without_sub_choices_start_at_rank_4_and_refuse_a_choice ... ok
+test cpr_creation::tests::tech_and_medtech_must_place_every_point ... ok
+test cpr_creation::tests::seeded_edgerunner_rolls_reproduce ... ok
+test cpr_creation::tests::streetrat_skills_are_the_roles_printed_list_at_86_points ... ok
+test cpr_creation::tests::each_roles_fixed_kit_is_its_starting_kit_record_and_saves_with_500eb ... ok
+test cpr_creation::tests::a_rolled_streetrat_row_is_one_d10_and_that_whole_row ... ok
+test cpr_creation::tests::the_netrunners_kit_deck_reaches_the_sheet ... ok
+test cpr_creation::tests::the_cultural_origin_language_becomes_a_language_skill_at_4 ... ok
+test cpr_creation::tests::the_p078_edgerunner_example_reads_each_stat_from_its_own_column ... ok
+test cpr_creation::tests::the_roller_is_a_fair_d10_and_seed_stable ... ok
+test cpr_creation::tests::the_preview_carries_the_engines_stat_and_derived_rows ... ok
+test cpr_creation::tests::the_lifepath_answers_every_general_table_and_the_roles_tables ... ok
+test cpr_creation::tests::the_humanity_and_emp_preview_is_the_engine_row ... ok
+test cpr_creation::tests::ten_of_ten_role_packs_give_their_printed_humanity_loss ... ok
+test cpr_creation::tests::count_tables_roll_1d10_minus_7_and_answer_each_entry ... ok
+test cpr_creation::tests::every_template_row_round_trips_through_preview_create_and_load ... ok
+test cpr_creation::tests::range_rows_and_the_d9_exec_corp_table_roll_their_whole_range ... ok
+
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 808 filtered out; finished in 21.98s
+

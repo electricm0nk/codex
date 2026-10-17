@@ -1,0 +1,4 @@
+test result: ok. 121 passed; 0 failed; 0 ignored; 0 measured; 2892 filtered out; finished in 0.16s
+test result: ok. 47 passed; 0 failed; 0 ignored; 0 measured; 808 filtered out; finished in 17.05s
+typecheck exit=0
+model test exit=0

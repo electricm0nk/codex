@@ -1,0 +1,4 @@
+root: cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (HEAD 3b0592252d)
+awk: suites=300 passed=6704 failed=0 ignored=27
+py: suites=300 passed=6704 failed=0 ignored=27
+FAILED lines: 0

@@ -1,0 +1,6 @@
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::a_saved_character_the_engine_refuses_fails_to_load_with_the_reason ... ok
+test cpr_adapter::tests::a_saved_character_loads_with_every_row_of_its_composed_sheet ... ok
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 827 filtered out; finished in 0.06s

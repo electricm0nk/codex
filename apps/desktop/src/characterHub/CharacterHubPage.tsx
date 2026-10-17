@@ -9,7 +9,10 @@ import {
 import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
 import { CreateCharacterForm } from './CreateCharacterForm';
 import { StarfinderCreateForm } from './StarfinderCreateForm';
+import { CyberpunkCreateForm } from './CyberpunkCreateForm';
 import { StarfinderCharacterSheet } from './StarfinderCharacterSheet';
+import { CyberpunkCharacterSheet } from './CyberpunkCharacterSheet';
+import { isCyberpunkCharacter } from './cyberpunkSheetModel';
 import { isStarfinderCharacter } from './starfinderSheetModel';
 import { LandingScreen, type RuleSetId } from './LandingScreen';
 import { LoadCharacterScreen } from './LoadCharacterScreen';
@@ -23,6 +26,7 @@ import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
 import { IntelligentItemCatalogScreen } from '../intelligentItemCatalog/IntelligentItemCatalogScreen';
 import { StarfinderCatalogScreen } from '../starfinderCatalog/StarfinderCatalogScreen';
 import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
+import { CyberpunkCatalogScreen } from '../cyberpunkCatalog/CyberpunkCatalogScreen';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
 import { isGoogleDriveConfigured } from '../settings/googleDrive';
@@ -46,6 +50,7 @@ type Mode =
   | 'companionCatalog'
   | 'intelligentItemCatalog'
   | 'starfinderCatalog'
+  | 'cyberpunkCatalog'
   | 'corpusIngestDiagnostic'
   | 'dm-toolkit'
   | 'campaign-list'
@@ -74,6 +79,7 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
   }, [mode, onWideChange]);
   const [ruleSet, setRuleSet] = useState<RuleSetId>('pathfinder-1e');
   const [starfinderCatalogKind, setStarfinderCatalogKind] = useState<StarfinderCatalogKind>('race');
+  const [cyberpunkCatalogKind, setCyberpunkCatalogKind] = useState<string>('role');
   const [sheet, setSheet] = useState<{ row: CharacterHubListRowSurface; detail: LoadSavedCharacterResponse | null } | null>(null);
   // Where the ✕ on the character sheet should return to — Load Character
   // normally, but the campaign screen when opened from a party member there.
@@ -114,6 +120,10 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
           setStarfinderCatalogKind(kind);
           setMode('starfinderCatalog');
         }}
+        onBrowseCyberpunk={(kind) => {
+          setCyberpunkCatalogKind(kind);
+          setMode('cyberpunkCatalog');
+        }}
         onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
@@ -153,6 +163,11 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
   if (mode === 'starfinderCatalog') {
     // SD-37 E6.4: Starfinder 1e's catalogs, read from its own package.
     return <StarfinderCatalogScreen initialKind={starfinderCatalogKind} onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'cyberpunkCatalog') {
+    // SD-38 E6.2: Cyberpunk RED's catalogs, read from its corpus by `list_cyberpunk_catalog`.
+    return <CyberpunkCatalogScreen initialKind={cyberpunkCatalogKind} onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'corpusIngestDiagnostic') {
@@ -241,6 +256,21 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
     );
   }
 
+  if (mode === 'sheet' && sheet && sheet.detail !== null && isCyberpunkCharacter(sheet.detail.summary)) {
+    // A Cyberpunk RED character opens the Cyberpunk RED sheet, never the Pathfinder one.
+    return (
+      <CyberpunkCharacterSheet
+        key={sheet.detail.summary.characterId}
+        detail={sheet.detail}
+        onClose={() => setMode(sheetReturnMode)}
+        onOpen={() => {
+          setSheetReturnMode('load');
+          setMode('load');
+        }}
+      />
+    );
+  }
+
   if (mode === 'sheet' && sheet) {
     return (
       <CharacterSheet
@@ -305,6 +335,8 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
           computed character sheet (or blocked diagnostics) the submit produced. */}
       {characterCreationGate(ruleSet).form === 'starfinder' ? (
         <StarfinderCreateForm onCreated={reload} />
+      ) : characterCreationGate(ruleSet).form === 'cyberpunk' ? (
+        <CyberpunkCreateForm onCreated={reload} />
       ) : (
         <CreateCharacterForm onCreated={reload} />
       )}

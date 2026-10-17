@@ -1,0 +1,104 @@
+[
+  {
+    "kind": "martial_arts",
+    "name": "Recovery",
+    "source_page": "p180",
+    "text": "Whenever you use the Get Up Action, you can attempt to beat a DV13 with the Martial Arts Special Move Resolution. If you succeed, that Get Up Action didn't cost an Action.",
+    "form": "Shared",
+    "shared": true,
+    "requirement": "No Requirement: All Martial Arts Forms may use this Move.",
+    "dv": 13,
+    "form_text": null
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Disarming Combination",
+    "source_page": "p180",
+    "text": "Once per Turn when you fulfill this requirement, you can use the Martial Arts Special Move Resolution to attempt to beat a DV15. If you succeed, any one object held in the hands of the target you hit twice this Turn is either held by you or is on the floor.",
+    "form": "Aikido",
+    "shared": false,
+    "requirement": "You hit the same target with a Brawling Attack and a Martial Arts Attack this Turn.",
+    "dv": 15,
+    "form_text": "This soft form practices sweeping hand and body techniques to lock and disarm opponents, turning their power against themselves."
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Iron Grip",
+    "source_page": "p180",
+    "text": "Once per Turn when you fulfill this requirement, as an Action you can use the Martial Arts Special Move Resolution to attempt to beat a DV15. If you succeed, the target you are grappling makes all future attempts to escape this Grapple at an additional -2. Additionally, until the Grapple is broken, your target cannot make any Ranged Attacks.",
+    "form": "Aikido",
+    "shared": false,
+    "requirement": "You have a target successfully Grabbed that isn't already affected by Iron Grip.",
+    "dv": 15,
+    "form_text": "This soft form practices sweeping hand and body techniques to lock and disarm opponents, turning their power against themselves."
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Armor Breaking Combination",
+    "source_page": "p180",
+    "text": "Once per Turn when you fulfill this requirement, you can use the Martial Arts Special Move Resolution to attempt to beat a DV15. If you succeed, the target you hit twice this Turn has all their worn armor ablated by an additional two points.",
+    "form": "Karate",
+    "shared": false,
+    "requirement": "You hit the same target with a Melee Weapon and a Martial Arts Attack this Turn.",
+    "dv": 15,
+    "form_text": "This hard form practices strikes and blows designed to break an opponent's bones or armor."
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Bone Breaking Strike",
+    "source_page": "p180",
+    "text": "Instead of making 2 Attacks with your Martial Arts Attack Action you can choose to make a Bone Breaking Strike. Use your Action to use the Martial Arts Special Move Resolution against a single target in Melee range. If you hit, your target suffers the Broken Ribs Critical Injury in addition to your Martial Arts Attack damage. If they already had this Critical Injury, they do not suffer another Critical Injury. If you take a -8 to your Check, you can instead use this Special Move to target your opponent's head location just like making an Aimed Shot, declaring you are doing so when you roll. If you hit, your target instead suffers the Cracked Skull Critical Injury, after damage is calculated. If they already had this Critical Injury, they do not suffer another Critical Injury.",
+    "form": "Karate",
+    "shared": false,
+    "requirement": "WILL 8 or higher",
+    "dv": null,
+    "form_text": "This hard form practices strikes and blows designed to break an opponent's bones or armor.",
+    "transcription_note": "U-33: no fixed DV is printed; the move is resolved with the Martial Arts Special Move Resolution (DEX + that Form's Skill + 1d10 vs the Defender's DEX + Evasion + 1d10, p179). dv is null, printed as written."
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Counter Throw",
+    "source_page": "p180",
+    "text": "Once per Turn when you fulfill this requirement, as an Action you may use the Martial Arts Special Move Resolution to attempt to beat a DV15. If you succeed against the DV, you use the Throw Action on one target in melee range whose Melee Attack you dodged to satisfy this move's requirement. This throw cannot be avoided. If you beat your DV, they are getting thrown. You don't need to be grappling them.",
+    "form": "Judo",
+    "shared": false,
+    "requirement": "You dodged all Melee Attacks that were targeted at you since your last Turn.",
+    "dv": 15,
+    "form_text": "This soft form practices grabs, throws, and escapes."
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Grab Escape",
+    "source_page": "p180",
+    "text": "Once per Turn when you fulfill this requirement, you can use the Martial Arts Special Move Resolution to attempt to beat a DV15. If you succeed, you are no longer grappled by the target you hit twice, and they suffer the Broken Arm Critical Injury if they didn't have it already. You pick the arm.",
+    "form": "Judo",
+    "shared": false,
+    "requirement": "You hit a target that is grappling you with 2 Melee Attacks this Turn.",
+    "dv": 15,
+    "form_text": "This soft form practices grabs, throws, and escapes."
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Pressure Point Strike",
+    "source_page": "p181",
+    "text": "Instead of making 2 Attacks with your Martial Arts Attack Action you can choose to make a Pressure Point Strike. Use your Action to use the Martial Arts Special Move Resolution against a single target in Melee range. If you hit, your target suffers the Spinal Injury Critical Injury in addition to your Martial Arts Attack damage. If they already had this Critical Injury, they do not suffer another Critical Injury. If you take a -8 to your Check, you can instead use this Special Move to target your opponent's head location just like making an Aimed Shot, declaring you are doing so when you roll. If you hit, your target instead suffers the Brain Injury Critical Injury. If they already had this Critical Injury, they do not suffer another Critical Injury",
+    "form": "Taekwondo",
+    "shared": false,
+    "requirement": "WILL 8 or higher.",
+    "dv": null,
+    "form_text": "This hard form practices high kicks and precision strikes to break through defenses and cause severe injury through attacking pressure points.",
+    "transcription_note": "U-33: no fixed DV is printed; resolved with the Martial Arts Special Move Resolution (p179). dv is null, printed as written. The printed text ends without a final period."
+  },
+  {
+    "kind": "martial_arts",
+    "name": "Flying Kick",
+    "source_page": "p181",
+    "text": "Instead of making 2 Attacks with your Martial Arts Attack Action you can choose to make a Flying Kick. Use your Action and all your remaining movement this Turn to fling forward in a straight line toward your target that can be up to 4m/yards away from you. Use the Martial Arts Special Move Resolution against that target. If you hit, you deal damage to your target's body location as if you had struck them with a Martial Arts Attack. Additionally, if you hit, your target is now Prone and is removed from any motorcycle or other vehicle lacking a fully enclosed cabin that they may have been in or on.",
+    "form": "Taekwondo",
+    "shared": false,
+    "requirement": "MOVE 8 or higher. You must have moved at least 4m/yds already this Turn.",
+    "dv": null,
+    "form_text": "This hard form practices high kicks and precision strikes to break through defenses and cause severe injury through attacking pressure points.",
+    "transcription_note": "U-33: no fixed DV is printed; resolved with the Martial Arts Special Move Resolution (p179). dv is null, printed as written."
+  }
+]

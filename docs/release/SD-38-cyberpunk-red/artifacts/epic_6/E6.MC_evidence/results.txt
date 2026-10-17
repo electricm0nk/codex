@@ -1,0 +1,20 @@
+b01 exit=0 test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 811 filtered out; finished in 0.16s
+b02 exit=0 cpr_catalog:: lines=2 (need >=2)
+b03 exit=0 typecheck
+b04 exit=0 168/168 test files passed.
+b05 exit=0 Wrote /home/ubuntu/workspace/repos/codex/.worktrees/sd38-e6/docs/testing/ui-smoke-inventory.md (107 rows, 18 screens). inventory_drift_lines=0
+b06 exit=0 cyberpunkCatalog tests passed
+b07 exit=0 cyberpunkDeck tests passed
+b08 exit=0 cyberpunkGm: 151 records across 8 GM pages (ip_award 8, night_market_table 2, humanity_trauma 4, demon 3, net_architecture 5, mooks_grunts 10, encounter 55, beat_chart 64)
+b09 exit=0 3/3 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 3 rows) | Real store after: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+m1_rust exit=101 test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 811 filtered out; finished in 0.13s |  right: 27
+m1_ts exit=1 Error: program: the corpus file holds the MANIFEST count: expected 27, got 26
+m1_restored exit=0 test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 811 filtered out; finished in 0.14s
+m2 exit=101 test result: FAILED. 3 passed; 5 failed; 0 ignored; 0 measured; 811 filtered out; finished in 0.15s | test cpr_catalog::tests::extras_add_slots_and_hardware_slots_come_from_the_corpus ... FAILED test cpr_catalog::tests::an_eighth_slot_is_refused ... FAILED test cpr_catalog::tests::the_p157_sample_deck_is_seven_of_seven ... FAILED test cpr_catalog::tests::unknown_deck_program_hardware_and_rank_are_refused ... FAILED test cpr_catalog::tests::each_deck_quality_name_is_a_corpus_cyberdeck_record ... FA
+m2_restored exit=0 test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 811 filtered out; finished in 0.14s
+m3 exit=1 Error: demon: the corpus file holds the MANIFEST count: expected 3, got 2
+m3_restored exit=0 cyberpunkGm: 151 records across 8 GM pages (ip_award 8, night_market_table 2, humanity_trauma 4, demon 3, net_architecture 5, mooks_grunts 10, encounter 55, beat_chart 64)
+m2b exit=101 test result: FAILED. 5 passed; 3 failed (engine Standard 7->8 AND corpus cyberdeck slots 7->8, consistent plant) | p157 sample deck left (7, 8) right (7, 7); extras left (8, 10) right (8, 9)
+m2b_restored exit=0 test result: ok. 8 passed; 0 failed
+s1_pf exit=0 pf_seed_render_hash 1 passed; diff vs E0.6/pf-render/base/sha256.txt empty
+s2_sf exit=0 sf writer test 1 passed; sha256 + line-count diffs vs E0.6/sf-lines/base empty

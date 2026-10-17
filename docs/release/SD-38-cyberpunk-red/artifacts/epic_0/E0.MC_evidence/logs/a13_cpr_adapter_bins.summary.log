@@ -1,0 +1,5 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 31.30s
+test cpr_adapter::tests::save_character_advances_the_revision_and_refuses_a_stale_one ... ok
+test cpr_adapter::tests::a_cyberpunk_red_character_saves_lists_and_loads_with_its_ten_stat_rows ... ok
+test cpr_adapter::tests::pathfinder_shaped_methods_refuse_with_their_reason ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 808 filtered out; finished in 0.00s

@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Kibble",
+    "kind": "lifestyle",
+    "source_page": "p378",
+    "monthly_cost_eb": 100,
+    "monthly_cost_text": "100eb",
+    "what_it_entails": "You eat horrible food that you might not buy for a dog you liked. Once a month, you can see a movie or braindance.",
+    "section_text": "Your Lifestyle determines how you live, what you eat, and how you have fun. Whenever you live beyond the Lifestyle you paid for at the beginning of the month, the GM will charge you separately for your expenditures. If you don't pay for your lifestyle at the start of a month, you have one week to do so before you roll a Death Save at the start of each day you don't. A kibble lifestyle is only 100eb a month. You shouldn't starve ... but the only difference between some brands of Kibble and dog food is cheeseburger flavoring.",
+    "text": "You eat horrible food that you might not buy for a dog you liked. Once a month, you can see a movie or braindance."
+  },
+  {
+    "name": "Generic Prepak",
+    "kind": "lifestyle",
+    "source_page": "p378",
+    "monthly_cost_eb": 300,
+    "monthly_cost_text": "300eb",
+    "what_it_entails": "You eat food which tastes much better than kibble, by comparison. Each weekend, you can afford to go out to a good bar and party or have a sit-down meal at a good restaurant.",
+    "section_text": "Your Lifestyle determines how you live, what you eat, and how you have fun. Whenever you live beyond the Lifestyle you paid for at the beginning of the month, the GM will charge you separately for your expenditures. If you don't pay for your lifestyle at the start of a month, you have one week to do so before you roll a Death Save at the start of each day you don't. A kibble lifestyle is only 100eb a month. You shouldn't starve ... but the only difference between some brands of Kibble and dog food is cheeseburger flavoring.",
+    "text": "You eat food which tastes much better than kibble, by comparison. Each weekend, you can afford to go out to a good bar and party or have a sit-down meal at a good restaurant."
+  },
+  {
+    "name": "Good Prepak",
+    "kind": "lifestyle",
+    "source_page": "p378",
+    "monthly_cost_eb": 600,
+    "monthly_cost_text": "600eb",
+    "what_it_entails": "Your food is the same quality as most restaurants, and while still artificial it tastes almost exactly the same as real food. You frequent excellent bars and restaurants when you go out. Once a month, you can see a Live Concert or Sporting Event.",
+    "section_text": "Your Lifestyle determines how you live, what you eat, and how you have fun. Whenever you live beyond the Lifestyle you paid for at the beginning of the month, the GM will charge you separately for your expenditures. If you don't pay for your lifestyle at the start of a month, you have one week to do so before you roll a Death Save at the start of each day you don't. A kibble lifestyle is only 100eb a month. You shouldn't starve ... but the only difference between some brands of Kibble and dog food is cheeseburger flavoring.",
+    "text": "Your food is the same quality as most restaurants, and while still artificial it tastes almost exactly the same as real food. You frequent excellent bars and restaurants when you go out. Once a month, you can see a Live Concert or Sporting Event."
+  },
+  {
+    "name": "Fresh Food",
+    "kind": "lifestyle",
+    "source_page": "p378",
+    "monthly_cost_eb": 1500,
+    "monthly_cost_text": "1500eb",
+    "what_it_entails": "You eat real food. Once per month if you are tired and too far from home, you can get a nearby hotel room and not worry about your budget. You frequent an executive bar. Once a month, you can eat at a world class restaurant.",
+    "section_text": "Your Lifestyle determines how you live, what you eat, and how you have fun. Whenever you live beyond the Lifestyle you paid for at the beginning of the month, the GM will charge you separately for your expenditures. If you don't pay for your lifestyle at the start of a month, you have one week to do so before you roll a Death Save at the start of each day you don't. A kibble lifestyle is only 100eb a month. You shouldn't starve ... but the only difference between some brands of Kibble and dog food is cheeseburger flavoring.",
+    "text": "You eat real food. Once per month if you are tired and too far from home, you can get a nearby hotel room and not worry about your budget. You frequent an executive bar. Once a month, you can eat at a world class restaurant.",
+    "transcription_note": "The table prints \"1500eb\" with no thousands comma; the number is 1,500eb."
+  }
+]

@@ -109,7 +109,7 @@ pub(crate) fn package() -> Result<&'static SheetRulePackage, SfChassisRefusal> {
             REFUSED_PACKAGE_MISSING,
             format!(
                 "the Starfinder package ({}) did not load: {reason}",
-                GameSystem::Starfinder1e.sheet_rules_relative()
+                GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package")
             ),
         )
     })
@@ -1647,10 +1647,10 @@ pub(crate) mod tests {
     fn a_packaged_app_reads_the_starfinder_package_from_its_resource_root() {
         let staged = tempdir("packaged-root");
         std::fs::create_dir_all(staged.join(GameSystem::Pathfinder1e.corpus_relative())).expect("corpus dir");
-        let class_dir = staged.join(GameSystem::Starfinder1e.sheet_rules_relative()).join("core/class");
+        let class_dir = staged.join(GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package")).join("core/class");
         std::fs::create_dir_all(&class_dir).expect("sheet rules dir");
         std::fs::copy(
-            repo_root().join(GameSystem::Starfinder1e.sheet_rules_relative()).join("core/class/soldier.json"),
+            repo_root().join(GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package")).join("core/class/soldier.json"),
             class_dir.join("soldier.json"),
         )
         .expect("a converted class file copies");
@@ -1672,7 +1672,7 @@ pub(crate) mod tests {
     #[ignore = "child process of a_packaged_app_reads_the_starfinder_package_from_its_resource_root"]
     fn starfinder_package_from_a_packaged_resource_root_probe() {
         let Some(staged) = std::env::var_os(PACKAGED_ROOT_PROBE) else { return };
-        let staged_dir = PathBuf::from(staged).join(GameSystem::Starfinder1e.sheet_rules_relative());
+        let staged_dir = PathBuf::from(staged).join(GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package"));
         let expected = codex::rules_core::corpus_loader::load_sheet_rules(&staged_dir).package.rules.len();
         assert!(expected > 0, "the staged file carries rules");
         let loaded = package().expect("the Starfinder package loads").rules.len();

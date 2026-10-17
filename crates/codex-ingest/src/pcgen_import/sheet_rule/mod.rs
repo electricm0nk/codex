@@ -84,21 +84,26 @@ struct InventoryFile {
 }
 
 /// The work inventory each system's population comes from (repo-relative). Pathfinder's is the
-/// SD-35 inventory; Starfinder's is E0.3's (`docs/work-inventory.starfinder-1e.json`).
-pub const WORK_INVENTORY: PerSystem<&str> =
-    PerSystem { pathfinder_1e: "docs/work-inventory.json", starfinder_1e: "docs/work-inventory.starfinder-1e.json" };
+/// SD-35 inventory; Starfinder's is E0.3's (`docs/work-inventory.starfinder-1e.json`). Cyberpunk
+/// RED has no PCGen data and no inventory here ([`system_books::require_pcgen_data`]).
+pub const WORK_INVENTORY: PerSystem<Option<&str>> = PerSystem {
+    pathfinder_1e: Some("docs/work-inventory.json"),
+    starfinder_1e: Some("docs/work-inventory.starfinder-1e.json"),
+    cyberpunk_red: None,
+};
 
 /// Where `--write` puts the source-name -> `VarId` map (repo-relative directory). Pathfinder's
 /// is the oracle harness's; Starfinder's sits beside its package so a Starfinder run can never
-/// overwrite Pathfinder's map (E1.3 "Does not cover").
-pub const VAR_NAMES_DIR: PerSystem<&str> = PerSystem { pathfinder_1e: "scripts/oracle_harness", starfinder_1e: "data/starfinder-1e" };
+/// overwrite Pathfinder's map (E1.3 "Does not cover"). Cyberpunk RED converts nothing, so none.
+pub const VAR_NAMES_DIR: PerSystem<Option<&str>> =
+    PerSystem { pathfinder_1e: Some("scripts/oracle_harness"), starfinder_1e: Some("data/starfinder-1e"), cyberpunk_red: None };
 
 /// The population's inventory for `system`. For a system whose books are registered by `.pcc`
 /// ([`system_books::CONVERTED_BOOKS`]) only the converted books' units are kept, and each unit's
 /// `book` (the inventory's directory form, `paizo/core`) becomes the book id the tree, the
 /// corpus and the package use (`core`, [`system_books::book_id`]).
 fn read_inventory(repo: &Path, system: GameSystem) -> Result<InventoryFile, String> {
-    let rel = WORK_INVENTORY.get(system);
+    let rel = WORK_INVENTORY.get(system).ok_or_else(|| system_books::no_pcgen_data(system))?;
     let text = std::fs::read_to_string(repo.join(rel)).map_err(|e| format!("{rel}: {e}"))?;
     let mut inv: InventoryFile = serde_json::from_str(&text).map_err(|e| format!("{rel}: {e}"))?;
     let converted = system_books::CONVERTED_BOOKS.books(system);
@@ -1622,7 +1627,8 @@ pub fn write_output(out_dir: &Path, rendered: &BTreeMap<String, Vec<u8>>) -> std
 }
 
 pub fn write_var_names(repo: &Path, system: GameSystem, run: &Run) -> std::io::Result<()> {
-    write_var_names_to(&repo.join(VAR_NAMES_DIR.get(system)), run)
+    let dir = VAR_NAMES_DIR.get(system).ok_or_else(|| std::io::Error::other(system_books::no_pcgen_data(system)))?;
+    write_var_names_to(&repo.join(dir), run)
 }
 
 /// Write `var_names.json` to an arbitrary directory (e.g. a `--dump` scratch dir), the same
@@ -1798,6 +1804,7 @@ mod check_tests {
 /// Load everything and run once for one game system: the tree, the population, the index, the
 /// conversion (SD-37 E1.3: the system keys the pinned book subtree and the corpus root).
 pub fn convert_repo(repo: &Path, system: GameSystem) -> Result<(Run, CorpusIndex), String> {
+    system_books::require_pcgen_data(system)?;
     let tree = PinnedTree::load_for(system, &closure::corpus_root())?;
     let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
@@ -1813,6 +1820,7 @@ pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Ve
 /// Convert one unit by id (for tests and spot checks): the whole index is built, one record
 /// is converted, and its `Converted` is returned with the closure rows it read.
 pub fn convert_one_for(repo: &Path, system: GameSystem, unit_id: &str) -> Result<(convert::Converted, Vec<String>), String> {
+    system_books::require_pcgen_data(system)?;
     let tree = PinnedTree::load_for(system, &closure::corpus_root())?;
     let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);

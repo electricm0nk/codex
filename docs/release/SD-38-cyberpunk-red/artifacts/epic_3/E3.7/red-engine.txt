@@ -1,0 +1,99 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd38-e3)
+error[E0599]: no method named `cyberware` found for struct `kit::CprKitOutcome` in the current scope
+   --> src/rules_core/cpr/kit.rs:782:25
+    |
+182 | pub struct CprKitOutcome {
+    | ------------------------ method `cyberware` not found for this struct
+...
+782 |         assert_eq!(solo.cyberware(), ["Biomonitor", "Neural Link", "Sandevistan Speedware"]);
+    |                         ^^^^^^^^^ method not found in `kit::CprKitOutcome`
+
+error[E0599]: no method named `cyberware` found for struct `kit::CprKitOutcome` in the current scope
+   --> src/rules_core/cpr/kit.rs:788:27
+    |
+182 | pub struct CprKitOutcome {
+    | ------------------------ method `cyberware` not found for this struct
+...
+788 |         assert_eq!(picked.cyberware(), ["Biomonitor", "Neural Link", "Wolvers"]);
+    |                           ^^^^^^^^^ method not found in `kit::CprKitOutcome`
+
+error[E0599]: no method named `cyberware` found for struct `kit::CprKitOutcome` in the current scope
+   --> src/rules_core/cpr/kit.rs:822:28
+    |
+182 | pub struct CprKitOutcome {
+    | ------------------------ method `cyberware` not found for this struct
+...
+822 |         assert_eq!(outcome.cyberware(), ["Neural Link", "Sandevistan", "EMP Threading"]);
+    |                            ^^^^^^^^^ method not found in `kit::CprKitOutcome`
+
+error[E0599]: no method named `cyberware` found for struct `kit::CprKitOutcome` in the current scope
+   --> src/rules_core/cpr/kit.rs:825:95
+    |
+182 | pub struct CprKitOutcome {
+    | ------------------------ method `cyberware` not found for this struct
+...
+825 |         assert_eq!(catalog.build(CprRole::Solo, CprKitMethod::CompletePackage, &two).unwrap().cyberware(), ["Light Tattoo", "Light ...
+    |                                                                                               ^^^^^^^^^ method not found in `kit::CprKitOutcome`
+
+error[E0599]: no method named `record_name` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+    --> src/rules_core/cpr/cyberware.rs:1040:28
+     |
+ 199 | pub struct CprCyberwareCatalog {
+     | ------------------------------ method `record_name` not found for this struct
+...
+1040 |         assert_eq!(catalog.record_name("Tech Hair"), Some("Techhair"));
+     |                            ^^^^^^^^^^^ method not found in `cyberware::CprCyberwareCatalog`
+
+error[E0599]: no method named `record_name` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+    --> src/rules_core/cpr/cyberware.rs:1041:28
+     |
+ 199 | pub struct CprCyberwareCatalog {
+     | ------------------------------ method `record_name` not found for this struct
+...
+1041 |         assert_eq!(catalog.record_name("Sandevistan Speedware"), Some("Sandevistan"));
+     |                            ^^^^^^^^^^^ method not found in `cyberware::CprCyberwareCatalog`
+
+error[E0599]: no method named `record_name` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+    --> src/rules_core/cpr/cyberware.rs:1042:28
+     |
+ 199 | pub struct CprCyberwareCatalog {
+     | ------------------------------ method `record_name` not found for this struct
+...
+1042 |         assert_eq!(catalog.record_name("Neural Link"), Some("Neural Link"));
+     |                            ^^^^^^^^^^^ method not found in `cyberware::CprCyberwareCatalog`
+
+error[E0599]: no method named `record_name` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+    --> src/rules_core/cpr/cyberware.rs:1043:28
+     |
+ 199 | pub struct CprCyberwareCatalog {
+     | ------------------------------ method `record_name` not found for this struct
+...
+1043 |         assert_eq!(catalog.record_name("Sandevistan Cyberarm"), None, "only the record's own subcategory word");
+     |                            ^^^^^^^^^^^ method not found in `cyberware::CprCyberwareCatalog`
+
+error[E0599]: no method named `record_name` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+    --> src/rules_core/cpr/cyberware.rs:1044:28
+     |
+ 199 | pub struct CprCyberwareCatalog {
+     | ------------------------------ method `record_name` not found for this struct
+...
+1044 |         assert_eq!(catalog.record_name("Unknown Implant"), None);
+     |                            ^^^^^^^^^^^ method not found in `cyberware::CprCyberwareCatalog`
+
+error[E0599]: no method named `place` found for reference `&cyberware::CprCyberwareCatalog` in the current scope
+    --> src/rules_core/cpr/cyberware.rs:1049:17
+     |
+1049 |         catalog.place(&names).unwrap_or_else(|e| panic!("{names:?}: {e}"))
+     |                 ^^^^^ method not found in `&cyberware::CprCyberwareCatalog`
+
+error[E0599]: no method named `place` found for struct `cyberware::CprCyberwareCatalog` in the current scope
+    --> src/rules_core/cpr/cyberware.rs:1084:34
+     |
+ 199 | pub struct CprCyberwareCatalog {
+     | ------------------------------ method `place` not found for this struct
+...
+1084 |         assert!(matches!(catalog.place(&["Unknown Implant".to_owned()]), Err(CprCyberwareRefusal::Rule { .. })));
+     |                                  ^^^^^ method not found in `cyberware::CprCyberwareCatalog`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `codex` (lib test) due to 11 previous errors

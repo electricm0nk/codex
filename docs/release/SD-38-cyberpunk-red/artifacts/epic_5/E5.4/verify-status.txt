@@ -1,0 +1,8 @@
+clippy exit=0
+sd24 exit=0
+root-full exit=0
+desktop-full exit=0
+pf-seed exit=0
+sf-seed exit=0
+frontend exit=0
+DONE

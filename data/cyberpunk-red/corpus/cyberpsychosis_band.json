@@ -1,0 +1,53 @@
+[
+  {
+    "source_page": "p233",
+    "name": "3 or Greater",
+    "kind": "cyberpsychosis_band",
+    "empathy_min": 3,
+    "empathy_max": null,
+    "negative_humanity": false,
+    "hare_traits_min": null,
+    "text": "No cyberpsychosis or dissociative disorder."
+  },
+  {
+    "source_page": "p233",
+    "name": "Equal to 2",
+    "kind": "cyberpsychosis_band",
+    "empathy_min": 2,
+    "empathy_max": 2,
+    "negative_humanity": false,
+    "hare_traits_min": null,
+    "text": "Borderline dissociative disorder. Do your best to roleplay accordingly."
+  },
+  {
+    "source_page": "p233",
+    "name": "Equal to 1",
+    "kind": "cyberpsychosis_band",
+    "empathy_min": 1,
+    "empathy_max": 1,
+    "negative_humanity": false,
+    "hare_traits_min": 3,
+    "text": "Dissociative disorder, borderline cyberpsychosis, Character exhibits strongly at least 3 traits from the Hare Psychopathy checklist. Do your best to roleplay accordingly."
+  },
+  {
+    "source_page": "p233",
+    "name": "Equal to 0",
+    "kind": "cyberpsychosis_band",
+    "empathy_min": 0,
+    "empathy_max": 0,
+    "negative_humanity": false,
+    "hare_traits_min": 5,
+    "text": "Cyberpsychosis. Character exhibits strongly at least 5 traits from the Hare Psychopathy checklist. Do your best to roleplay accordingly."
+  },
+  {
+    "source_page": "p233",
+    "name": "Equal to 0 and You Have Negative Humanity",
+    "kind": "cyberpsychosis_band",
+    "empathy_min": 0,
+    "empathy_max": 0,
+    "negative_humanity": true,
+    "hare_traits_min": null,
+    "text": "Extreme cyberpsychosis. Character is handed to the GM, who plays them according to their worst tendencies. Character is handed back to the Player if their Humanity becomes a positive number again.",
+    "transcription_note": "Printed EMP condition is \"Equal to 0\" for a character with negative Humanity (CUI A-4: EMP clamps at 0)."
+  }
+]

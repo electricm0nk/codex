@@ -1,7 +1,8 @@
 # Rules engine
 
-> Scope: The headless rules-computation spine for Pathfinder 1e and Starfinder 1e — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §3e (the Starfinder 1e
+> Scope: The headless rules-computation spine for Pathfinder 1e, Starfinder 1e and Cyberpunk RED — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
+> engine), the `GameSystem` description and the module-map note. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §3e (the Starfinder 1e
 > generic chassis: the `sf_*` readers, `game_system.rs`, the engine master link) and for every reference to the
 > Pathfinder rules tables, now a data package read through `src/rules_core/rules_catalog/` (the compiled `rules_tables`
 > module no longer exists; see [rules-data-tables.md](./rules-data-tables.md)). Pathfinder compute behaviour is unchanged
@@ -20,7 +21,7 @@ cited modules for that.
 ## Module map
 
 `src/rules_core/` has no subdirectories of its own besides `pilot_compute/`, `equipment_effects/`,
-`feat_prereqs/`, `level_up/`, `spellbook/` and `rules_catalog/` (the last is
+`feat_prereqs/`, `level_up/`, `spellbook/`, `cpr/` (Cyberpunk RED, §3f) and `rules_catalog/` (the last is
 [rules-data-tables.md](./rules-data-tables.md)'s territory). `game_system.rs` names the game system a package root belongs to, and
 `rules_data_package.rs` loads the Pathfinder table package. Every other file listed here is a flat
 sibling module. Grouped by role, not alphabetically — this is what
@@ -750,8 +751,8 @@ allocation dialog, never a plain class skill (`f7c-receipt.md` §a–§c).
 ### 3e. SD-37 — Starfinder 1e: the generic chassis
 
 Starfinder 1e is a second game system on this engine (`src/rules_core/game_system.rs`: `GameSystem::Pathfinder1e` /
-`Starfinder1e`, wire ids `pathfinder-1e` / `starfinder-1e`, `package_roots` giving each system's `sheet_rules` and
-`corpus` roots; an unknown id is `UnknownGameSystem`, never a default). It has **no per-class, per-race or per-skill
+`Starfinder1e` / `CyberpunkRed`, wire ids `pathfinder-1e` / `starfinder-1e` / `cyberpunk-red`, `package_roots` giving each system's
+`sheet_rules` root (`Option`: `None` for Cyberpunk RED) and `corpus` root; an unknown id is `UnknownGameSystem`, never a default). It has **no per-class, per-race or per-skill
 table**. Seven readers in `src/rules_core/pilot_compute/` total every sheet number from the converted package
 (`data/starfinder-1e/sheet_rules/<book>/<kind>/<slug>.json`) over one **held set**:
 
@@ -776,6 +777,43 @@ the readers leave to the caller, the bulk condition's max-Dex cap and -5 Strengt
 
 What the Starfinder side does not cover is in [status.md](./status.md) §"Starfinder 1e". The Pathfinder census, the
 multiclass fold and the class dispatch of §3d are Pathfinder-only.
+
+### 3f. SD-38 — Cyberpunk RED: the `cpr` engine
+
+Cyberpunk RED (`GameSystem::CyberpunkRed`, id `cyberpunk-red`) does **not** run on the sheet-rule evaluator or `pilot_compute/`. It has no
+PCGen data, hence no converted package (`GameSystem::sheet_rules_relative` is `None`, and `corpus_loader`'s live sheet-rule lookup answers
+`None` for it); its rules live in `src/rules_core/cpr/` and read the hand-transcribed corpus at `data/cyberpunk-red/corpus/` (see
+[corpus-ingest.md](./corpus-ingest.md) §"The Cyberpunk RED corpus"). The paper-sheet rule governs: only a value that lands on the sheet as a
+number is computed; text rules are printed, and dice stay literal on the sheet. Each computed value is one `cpr.<area>.<field>` explanation row
+(`sheet.rs`); no frontend code re-derives one. Table values are read from corpus records, with three exceptions held as code in `netrunning.rs`:
+NET Actions per Interface rank (1-3 → 2, 4-6 → 3, 7-9 → 4, 10 → 5, p. 197), a Cyberdeck's own slots (Poor 5, Standard 7, Excellent 9) and the slots a
+Program (1) or Black ICE (2) takes. How a loader treats a bad corpus table varies by module: the `ip_cost` loader (`improvement.rs`) refuses a table
+that is missing, short, out of order or that disagrees with its own rate, and `reputation.rs`, `critical.rs` and `skills.rs` refuse a record count or
+shape they do not expect. Other loaders were not audited for this by the SD-38 claims critic.
+
+| Module | Computes | Refuses |
+|---|---|---|
+| `stats.rs` | HP, Seriously Wounded threshold, Death Save, Humanity, current EMP, MOVE, LUCK (`cpr.derived.*`) | |
+| `skills.rs` | each of the 66 Master Skill List skill bases (STAT + level), the creation points spent and left | an 86-point budget overrun, a (x2) skill priced wrong, a skill above 6 (Edgerunner: below 2), a Basic skill under 2 |
+| `armor.rs` | head and body SP (highest source wins, no stacking), the single worst Armor Penalty, REF/DEX/MOVE after it | |
+| `critical.rs` | the HP below which each Wound State begins, the Stabilization DVs, Death Save, Base Death Save Penalty from the recorded Critical Injuries | an injury or threshold the corpus does not hold; the same Critical Injury recorded twice (it is rerolled, p. 187) |
+| `cyberware.rs` | preset Humanity Loss, option slots used per container, cyberware SP, BODY after Grafted Muscle / Bone Lace / Linear Frames, Kerenzikov Initiative bonus, the therapy cap on Humanity | a piece installed over its container's slots; a rolled loss outside the piece's dice range |
+| `roles.rs` | for each of the ten Roles, the values a Role Ability Rank 1-10 puts on the sheet (Charismatic Impact, Combat Awareness, NET Actions, Maker, Medicine, Believability, Backup, Haggle, Vehicle Familiarity, ...) | a rank outside 1-10 |
+| `improvement.rs` | the Improvement Point price of a Skill Level (Typical 20 x, Difficult 40 x) or Role Ability Rank (60 x) and the Role switch rule | a skipped Level/Rank, a Level past 10, a switch before Rank 4, a table that disagrees with its own rate |
+| `netrunning.rs` | NET Actions per Turn from the Interface rank, a Cyberdeck's slots available and used | a loadout over the deck's slots |
+| `reputation.rs` | the Facedown additive term (COOL + Reputation + 1d10, the die printed, never rolled), the replace-only-if-higher Reputation rule | a Reputation Level outside 1-10 |
+| `kit.rs` | the Streetrat/Edgerunner starting kit lines and cash, the Complete Package budget (2,550eb plus 800eb of Fashion), each purchase's price | a purchase over the budget |
+
+`input.rs` holds the player's choices and their text grammars (`CprCharacterInput`: the ten STATs; `CprSheetChoices`, `CprLifepath`,
+`CprRoleChoices`, `CprKit`, all five defined in `input.rs`; the store saves each to its own text file, see [persistence.md](./persistence.md)). `sheet.rs`'s `compose_sheet(catalogs, input, choices)` assembles one sheet through the modules
+in the order their values feed each other (cyberware, then Humanity and EMP, armour, the Derived STATs and wound thresholds, skills, Role
+Ability and the Cyberdeck block, Reputation, then the ledger boxes), and refuses the whole sheet if any choice is one the book refuses; no partial
+sheet is returned. `store.rs` is the saved-character store ([persistence.md](./persistence.md)). Play-time state is not simulated: current HP and
+LUCK, ablation, the Wound State and its penalties, skill checks, NET-run play and in-play dice are written in by the player, and the sheet prints
+their rules.
+
+What the Cyberpunk side does not cover is in [status.md](./status.md) §"Cyberpunk RED". The Pathfinder census, the multiclass fold and the
+class dispatch of §3d are Pathfinder-only.
 
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 

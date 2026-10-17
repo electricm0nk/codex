@@ -1,7 +1,10 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**: Starfinder 1e rows added
+> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**: Cyberpunk RED rows added (Posture, Real today,
+> Known gaps); the Tauri command count is 103; the Cyberpunk corpus, licence and ui-smoke figures are release-notes `R-n` figures (R-4 to R-7), re-derived by
+> `python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_7/E7.8_check.py --plant` (run on this tree, see the SD-38 `receipts.md`), and the starter row counts are the SD-38 E7.1 receipt's.
+> Claims critic (SD-38 E7.9 part 2, 2026-10-15): the command-count arithmetic and the Starfinder ui-smoke figure below were corrected. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**: Starfinder 1e rows added
 > (Posture, Real today, Known gaps); the Pathfinder rules tables are a data package, so the table evidence cells
 > below point at `src/rules_core/rules_catalog/`; the Tauri command count is 86. Starfinder figures are the release
 > notes' `R-n` figures, re-derived by `python3 docs/release/SD-37-starfinder-1e/artifacts/epic_7/E7.6_check.py --plant`
@@ -74,6 +77,15 @@ against a real PCGen oracle run of 14 characters plus one drone: 782 oracle fiel
 the 36 and the 1,413 engine fields the oracle exports no value for are re-derived as R-13). Starfinder has **no
 class census**: the Pathfinder census above says nothing about it, and the Starfinder denominators are the roster of
 four seeds and ten level-1 class builds, not every class at every level.
+
+**Cyberpunk RED** is a third game system with its own engine module (`src/rules_core/cpr/`) and no PCGen data
+(`src/rules_core/game_system.rs`). Its corpus is a hand transcription of the corebook: **53** record kinds, **930** expected records, **8** kinds shipped
+print-only (`jq -r '[(.kinds|length), ([.kinds[].expected]|add), ([.kinds[]|select(.print_only)]|length)]|map(tostring)|join(" ")' data/cyberpunk-red/corpus/MANIFEST.json`
+→ `53 930 8`, release-notes R-4). Every number on a Cyberpunk sheet is an engine `cpr.` row; text rules are printed and dice stay literal. Three
+starter characters (Jax Moreno, Nyx Calder, Imani Okafor) are seeded on a fresh install; every number on each loaded sheet (231, 213 and 223 rows) equals a
+re-derivation from the book's formulas and the corpus with no engine code (SD-38 E7.1 receipt, quoted). There is no oracle and no class census for it:
+the proof is page-pinned fixtures, hand-derived constants and a 10% transcription sample against page images, not a comparison with an independent
+implementation of every build.
 
 **Where these figures live.** The full, corpus-wide census is the "Class/level
 compute coverage — corpus-wide" table below, and that table is the SOURCE OF
@@ -355,7 +367,8 @@ same test-pinned standard as the rows above).
   `Recompute`, `Clone`, `Export`, `Print` are all wired to real handlers.
 - **`StubScreen.tsx` is unreferenced dead code**, not a live placeholder for
   any current screen.
-- **The Tauri command count is 86** (77 at the prior pass; SD-37 added the eight Starfinder commands listed in
+- **The Tauri command count is 103** (86 at the prior pass, on pre-merge `tranche/17`; 92 after `develop`'s six (PR #396) were merged in, 96 after tranche-17-ui's four, and 103 after
+  SD-38's seven Cyberpunk RED commands: 86 + 6 + 4 + 7 = 103; all listed in
   [desktop-app.md](./desktop-app.md)), re-derived directly from
   `generate_handler![...]` (see [desktop-app.md](./desktop-app.md)); a saved
   character's on-disk bundle can now hold up to six files, not two (four new
@@ -423,10 +436,12 @@ Anyone who needs it can read the superseded commits under `docs/release/SD-29-*`
 | Rule-table catalogs | **37** `RuleSetId` variants spanning the 38-book tracked corpus (see "Capability matrix: content kinds, corpus-wide" above, this same file, for the re-derived denominator and reconciliation) — see [rules-data-tables.md](./rules-data-tables.md) for per-book ceiling detail | [rules-data-tables.md](./rules-data-tables.md) |
 | Character Hub | Create, load, clone, portrait upload/load/delete, JSON export, recompute, plus (new since the last full pass) equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP tracking, plus the Create screen's Levels column and Manage dialogs (feats, skills, spells, equipment), maximum starting money with three pricing modes, GM grants and custom records (Custom), and printing — real engine compute + real persistence; see desktop-app.md §"The Create screen's columns and Manage dialogs" for what is not modelled | [desktop-app.md](./desktop-app.md) |
 | DM Toolkit | Real encounter builder + DM console export (`rate_encounter`, `export_dm_console`), consuming the real `Encounter`/party-CR compute below | [desktop-app.md](./desktop-app.md) |
-| Rule-system adapter seam (hub-of-hubs) | `RuleSystemAdapter` trait is the object-safe seam three commands (`append_to_character`/`recompute_character`/`re_save_character`) dispatch through on a `rule_system_id`: `"pf1"` resolves to the real `Pf1Adapter`, `"starfinder-1e"` to the real `StarfinderAdapter`; any other id resolves to the governed `StubAdapter` (registered exception 0002, `docs/governance/wired-integration-stubs-registry.md`). `list_saved_characters` dispatches on the selected system and `load_saved_character` on the envelope's `game_system`. The other Pathfinder character-mutation commands call PF1 free functions directly and do not go through this seam | [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam" |
+| Rule-system adapter seam (hub-of-hubs) | `RuleSystemAdapter` trait is the object-safe seam three commands (`append_to_character`/`recompute_character`/`re_save_character`) dispatch through on a `rule_system_id`: `"pf1"` resolves to the real `Pf1Adapter`, `"starfinder-1e"` to the real `StarfinderAdapter`, `"cyberpunk-red"` to the real `CyberpunkAdapter`; any other id resolves to the governed `StubAdapter` (registered exception 0002, `docs/governance/wired-integration-stubs-registry.md`). `list_saved_characters` dispatches on the selected system and `load_saved_character` on the envelope's `game_system`. The other Pathfinder character-mutation commands call PF1 free functions directly and do not go through this seam | [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam" |
 | Starfinder 1e engine | Generic chassis over the converted package, no per-class/race/skill table: BAB, saves, HP/Stamina/Resolve (`sf_chassis`), EAC/KAC and initiative (`sf_defense`), skills (`sf_skills`), spells per day/known/DCs for levels 0-6 (`sf_spells`), credits and bulk (`sf_loadout`), ability scores with the 5/10/15/20 increases (`sf_abilities`), melee/ranged attack and per-weapon attack/damage (`sf_attack`); each total is an `sf.*` explanation row listing every term | [rules-engine.md](./rules-engine.md) §"Starfinder 1e: the generic chassis" |
-| Starfinder 1e desktop surface | Under the Starfinder chip: creation flow (race, theme, class, point buy), sheet (`StarfinderCharacterSheet`), level-up dialog, feats/spells/gear dialog, six catalogs; every number on the sheet is an engine explanation row, enforced by `starfinderSheet.test.ts`; 14 of the 103 ui-smoke rows are Starfinder rows (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));print(len(d['rows']),sum(1 for r in d['rows'] if 'starfinder' in r['id']))"` → `103 14`, R-14) | [desktop-app.md](./desktop-app.md) |
+| Starfinder 1e desktop surface | Under the Starfinder chip: creation flow (race, theme, class, point buy), sheet (`StarfinderCharacterSheet`), level-up dialog, feats/spells/gear dialog, six catalogs; every number on the sheet is an engine explanation row, enforced by `starfinderSheet.test.ts`; 14 of the 127 ui-smoke rows are Starfinder rows (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));print(len(d['rows']),sum(1 for r in d['rows'] if 'starfinder' in r['id']))"` → `127 14` on `tranche-18`; `103 14` at SD-37's R-14) | [desktop-app.md](./desktop-app.md) |
 | Starfinder 1e printed sheet | `sf_sheet_print` prints race, theme, class-feature, feat, spell, carried-item, upgrade, fusion and augmentation lines as `sheet_rule::render_sheet` prints them over the held records, with named refusals for an unprintable selection; a Mechanic's drone prints as its own block of terms (`sf_drone_print`) | [desktop-app.md](./desktop-app.md) |
+| Cyberpunk RED engine | `src/rules_core/cpr/`: Derived STATs, the 66 skill bases and creation budget, armour SP and penalty, wound thresholds and Critical Injury Base Death Save Penalty, cyberware Humanity Loss/slots/SP/BODY, Role Ability values for all ten Roles at Rank 1-10, Improvement Point prices and the Role switch, NET Actions and Cyberdeck slots, Reputation and Facedown, starting kit and cash; each value is a `cpr.<area>.<field>` row and a choice the book refuses fails the whole sheet | [rules-engine.md](./rules-engine.md) §"Cyberpunk RED: the `cpr` engine" |
+| Cyberpunk RED desktop surface | Under the Cyberpunk Red chip: creation by Streetrat, Edgerunner or Complete Package with a seedable roller, a sheet (`CyberpunkCharacterSheet`) with a critical-injury checklist, an Improve dialog, catalog screens with a Cyberdeck calculator and print-only GM pages, three seeded starters; 23 of the 127 ui-smoke rows are Cyberpunk rows (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));r=d['rows'];print(len(r),sum(1 for x in r if 'cyberpunk' in x['id']))"` → `127 23`, R-7) | [desktop-app.md](./desktop-app.md) §"Cyberpunk RED surface" |
 | Corpus-ingest diagnostic | `corpus_ingest_diagnostic` Tauri command reports real ingested-record-kind counts per book, counted from the package-backed rules catalog tables (`ClassId::ALL`, `SPELL_LIST`, `equipment_tables()`, ...) | [desktop-app.md](./desktop-app.md) |
 | PCGen runner scaffolding | `scripts/pcgen-run-character.sh` drives the real headless PCGen Gradle batch-export; wrapped by `oracle_validation::pcgen_runner::run_pcgen_character` (now under `crates/codex-ingest`) | [testing.md](./testing.md) |
 | Campaign manager (local) | Create/edit/list campaigns and their assets, backed by `CampaignStore` on disk; nonce-based conflict detection with local-wins + preserved-conflict-copy resolution. `localStorage` remains the actual frontend source of truth; `write_campaign_drive_artifacts` is a one-way write-through mirror | [persistence.md](./persistence.md) |
@@ -471,7 +486,20 @@ Anyone who needs it can read the superseded commits under `docs/release/SD-29-*`
 | Degraded records | 30 of 8,582 converted records carry a degraded token, each named by token type in `_report.json` | `data/starfinder-1e/sheet_rules/_report.json` |
 | Starship | Planned capability deferral, not built; its revisit condition was checked at closure (`decisions.md §17`) | `docs/release/SD-37-starfinder-1e/forward-scope-register.md` |
 | Licence sign-off | Every Starfinder licence-matrix row has `operator_sign_off` false (11 rows, R-16); only the operator signs | `docs/governance/license-matrix.md` |
-| Render-hash harness | None for Starfinder; the four seeds are checked by tests (R-12), not by hash. The two Pathfinder seeds have the hash pair (R-7) | `apps/desktop/src-tauri/src/pf_seed_render_hash.rs` |
+| Render-hash harness | None for Starfinder; the four seeds are checked by tests (R-12), not by hash. The three Pathfinder seeds (Aldric, Elowen, Tomas) have render hashes, byte-identical between the SD-38 base and head (SD-38 release-notes R-12, R-13) | `apps/desktop/src-tauri/src/pf_seed_render_hash.rs` |
+
+### Cyberpunk RED
+
+| Item | Status | Where |
+|---|---|---|
+| Planned deferrals | A NET Architecture generator, an in-play dice engine, NET-run simulation, vehicle-combat simulation and an NPC/Mook generator are not built; their tables ship print-only (DEF-1 to DEF-5, each with a revisit condition checked at closure) | `docs/release/SD-38-cyberpunk-red/decisions.md` §22 |
+| Licence | Not OGL. The whole text ships in a private single-user build by operator ruling; `LICENSE.json` says `open_game_content` false and `signed_off` true, the licence matrix records a DEVIATION row, and no Product Identity screening is applied. Nothing here is legal clearance; a later bundle can reword `text` fields | `data/cyberpunk-red/corpus/LICENSE.json`, `docs/governance/license-matrix.md` |
+| Transcription accuracy | A hand transcription; E1.V compared a 10% sample of records to page images, and records outside the sample are covered by the manifest counts (record counts, `source_page` shape), not read against the page | `scripts/cpr_manifest_check.py`, `tests/cpr_corpus_manifest.rs` |
+| Role switch price | The book prints no price for the new Role's Rank 1; the engine takes the Role Ability Rank table's Rank 1 price (author default A-1) | `src/rules_core/cpr/improvement.rs` |
+| Pathfinder-typed adapter methods | `chassis_resolve`, `level_up`, `recompute` and `append_to_character` cannot carry a Cyberpunk character and answer with the empty plan or a named refusal | `apps/desktop/src-tauri/src/cpr_adapter.rs` |
+| Platform coverage | The fresh-install acceptance ran the Linux `.deb` and AppImage only; Windows and macOS builds of this bundle were not exercised | `docs/release/SD-38-cyberpunk-red/release-notes.md` §"Does not cover" |
+| Pathfinder ui-smoke rows | The full `npm run ui-smoke` was not run at closure; 9 of the first 40 rows were red at E4.7 (Pathfinder create and equipment-catalog rows changed by tranche-17-ui before the cut), and no card owns the row rewrite (quoted from the release notes' Known Issues) | `apps/desktop/scripts/ui-smoke/spec.json` |
+| Render-hash harness | None for Cyberpunk RED; the three starters are checked by tests and the no-engine cross-check, not by hash | `docs/release/SD-38-cyberpunk-red/artifacts/epic_7/cpr-seed-builds.md` |
 
 ### Core engine: compute coverage and proof surfaces
 
