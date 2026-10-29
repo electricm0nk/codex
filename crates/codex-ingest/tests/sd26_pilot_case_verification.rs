@@ -127,7 +127,9 @@ use codex::rules_core::contract::to_pilot_receipt;
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
+
+mod common;
 
 /// The exact GE-06 deterministic posture's equipment records (Longsword +
 /// Chain Shirt, `WT:4`/`WT:25` — the real weights PCGen's own export
@@ -221,34 +223,6 @@ fn default_pcgen_repo_dir() -> PathBuf {
     PathBuf::from(home).join("workspace/repos/pcgen")
 }
 
-fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
-    let gradlew = pcgen_repo_dir.join("gradlew");
-    if !gradlew.is_file() {
-        return false;
-    }
-    // A cone-mode sparse checkout (scripts/fetch-pcgen-oracle.sh, as CI runs
-    // it) always keeps root-level files, so `gradlew` alone being present
-    // and executable is not proof the headless export can actually run --
-    // CI runs 35050389421 and 35045137495 both had a runnable `gradlew` but
-    // no `code/` tree, so the batch export failed on a missing template
-    // instead of this guard skipping cleanly. Check for that template too.
-    let batch_export_template = pcgen_repo_dir.join("code/testsuite/base-xml.ftl");
-    if !batch_export_template.is_file() {
-        return false;
-    }
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        std::fs::metadata(&gradlew)
-            .map(|meta| (meta.permissions().mode() & 0o111) != 0)
-            .unwrap_or(false)
-    }
-    #[cfg(not(unix))]
-    {
-        true
-    }
-}
-
 /// Fail loudly on a swapped fixture rather than reporting parity numbers
 /// computed from content nobody verified.
 fn assert_pilot_pcg_fixture_is_pinned(path: &std::path::Path) {
@@ -284,6 +258,8 @@ fn golden_fixture_starts_this_cycle_at_not_yet_grounded() {
 
 #[test]
 fn gradle_wrapper_runnable_check_requires_executable_gradlew() {
+    // Pins the shared engine guard (tests/common/mod.rs): each missing piece is refused in order,
+    // and only the full set plus `java` on PATH counts as runnable.
     let temp = std::env::temp_dir().join(format!(
         "sd26-pilot-case-verification-{}-{}",
         std::process::id(),
@@ -293,8 +269,19 @@ fn gradle_wrapper_runnable_check_requires_executable_gradlew() {
             .as_nanos()
     ));
     std::fs::create_dir_all(&temp).expect("temp directory should be creatable");
+    let bin = temp.join("bin");
+    std::fs::create_dir_all(&bin).expect("bin directory should be creatable");
+    let java = bin.join("java");
+    std::fs::write(&java, "#!/usr/bin/env bash\n").expect("java placeholder should write");
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(&java, std::fs::Permissions::from_mode(0o755))
+            .expect("permissions should update");
+    }
+    let with_java = Some(bin.as_os_str());
     assert!(
-        !pcgen_gradle_wrapper_is_runnable(&temp),
+        common::pcgen_engine_runnable_with_path(&temp, with_java).is_err(),
         "missing gradlew must be treated as not runnable"
     );
 
@@ -307,7 +294,7 @@ fn gradle_wrapper_runnable_check_requires_executable_gradlew() {
         std::fs::set_permissions(&gradlew, std::fs::Permissions::from_mode(0o644))
             .expect("permissions should update");
         assert!(
-            !pcgen_gradle_wrapper_is_runnable(&temp),
+            common::pcgen_engine_runnable_with_path(&temp, with_java).is_err(),
             "non-executable gradlew must be treated as not runnable"
         );
 
@@ -315,24 +302,72 @@ fn gradle_wrapper_runnable_check_requires_executable_gradlew() {
             .expect("permissions should update");
     }
 
-    // A cone-mode sparse checkout (scripts/fetch-pcgen-oracle.sh) always
-    // keeps root-level files, so an executable `gradlew` with no `code/`
-    // tree behind it is exactly the shape CI runs 35050389421 and
-    // 35045137495 hit: the guard must still refuse until the batch export
-    // template is present too.
+    // A cone-mode sparse checkout (scripts/fetch-pcgen-oracle.sh) always keeps root-level files,
+    // so an executable `gradlew` alone is the shape CI runs 35050389421 and 35045137495 hit.
     assert!(
-        !pcgen_gradle_wrapper_is_runnable(&temp),
-        "executable gradlew without the batch export template must still be treated as not runnable"
+        common::pcgen_engine_runnable_with_path(&temp, with_java).is_err(),
+        "executable gradlew alone must still be treated as not runnable"
     );
 
+    std::fs::create_dir_all(temp.join("gradle/wrapper")).expect("gradle/wrapper should be creatable");
+    std::fs::write(temp.join("gradle/wrapper/gradle-wrapper.jar"), "").expect("wrapper jar placeholder should write");
+    std::fs::create_dir_all(temp.join("code/src/java")).expect("code/src/java should be creatable");
     let testsuite_dir = temp.join("code/testsuite");
     std::fs::create_dir_all(&testsuite_dir).expect("code/testsuite directory should be creatable");
     std::fs::write(testsuite_dir.join("base-xml.ftl"), "")
         .expect("batch export template placeholder should write");
 
+    let empty_path = temp.join("no-java");
+    std::fs::create_dir_all(&empty_path).expect("empty PATH dir should be creatable");
+    assert_eq!(
+        common::pcgen_engine_runnable_with_path(&temp, Some(empty_path.as_os_str())),
+        Err("no java binary on PATH".to_string()),
+        "a complete checkout without java on PATH must not be treated as runnable"
+    );
+    assert_eq!(
+        common::pcgen_engine_runnable_with_path(&temp, with_java),
+        Ok(()),
+        "executable gradlew + wrapper jar + Java sources + batch export template + java on PATH should be runnable"
+    );
+    std::fs::remove_dir_all(&temp).expect("temp directory should be removable");
+}
+
+/// The wider oracle cone (code/testsuite/PCGfiles) brings code/testsuite/base-xml.ftl into the
+/// sparse checkout, and cone mode always keeps the root `gradlew`. That pair is not a runnable
+/// engine: there is no Gradle wrapper jar and no Java source tree behind it.
+#[test]
+fn sparse_cone_gradlew_plus_template_is_not_a_runnable_engine() {
+    let temp = std::env::temp_dir().join(format!(
+        "sd26-sparse-cone-shape-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after epoch")
+            .as_nanos()
+    ));
+    std::fs::create_dir_all(temp.join("code/testsuite")).expect("code/testsuite should be creatable");
+    let gradlew = temp.join("gradlew");
+    std::fs::write(&gradlew, "#!/usr/bin/env bash\n").expect("gradlew placeholder should write");
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(&gradlew, std::fs::Permissions::from_mode(0o755))
+            .expect("permissions should update");
+    }
+    std::fs::write(temp.join("code/testsuite/base-xml.ftl"), "").expect("template placeholder should write");
+    let bin = temp.join("bin");
+    std::fs::create_dir_all(&bin).expect("bin directory should be creatable");
+    let java = bin.join("java");
+    std::fs::write(&java, "#!/usr/bin/env bash\n").expect("java placeholder should write");
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(&java, std::fs::Permissions::from_mode(0o755))
+            .expect("permissions should update");
+    }
     assert!(
-        pcgen_gradle_wrapper_is_runnable(&temp),
-        "present executable gradlew plus the batch export template should be treated as runnable"
+        common::pcgen_engine_runnable_with_path(&temp, Some(bin.as_os_str())).is_err(),
+        "executable gradlew + base-xml.ftl alone (the sparse-cone shape) must not count as a runnable engine"
     );
     std::fs::remove_dir_all(&temp).expect("temp directory should be removable");
 }
@@ -351,15 +386,8 @@ fn gradle_wrapper_runnable_check_requires_executable_gradlew() {
 #[test]
 fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
     let pcgen_repo_dir = default_pcgen_repo_dir();
-    if !pcgen_gradle_wrapper_is_runnable(&pcgen_repo_dir) {
-        eprintln!(
-            "[skip] sd26_pilot_case_verification: real PCGen headless export not available under {} \
-             (needs both an executable gradlew and code/testsuite/base-xml.ftl; set \
-             $PCGEN_REPO_DIR to a full PCGen checkout to run this end-to-end -- CI's \
-             sparse oracle fetch keeps root-level files like gradlew but not the code/ \
-             Gradle project)",
-            pcgen_repo_dir.display()
-        );
+    if let Err(reason) = common::pcgen_engine_runnable(&pcgen_repo_dir) {
+        eprintln!("[skip] sd26_pilot_case_verification: real PCGen engine not runnable: {reason}");
         return;
     }
 

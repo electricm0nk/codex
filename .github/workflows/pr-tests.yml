@@ -9,7 +9,7 @@ name: PR tests (develop)
 #
 # TWIN: the steps below are copied verbatim from the `test` job in
 # .github/workflows/publish-tester-release.yml (checkout, Linux deps, Rust
-# toolchain, rust-cache, oracle fetch, root `cargo test`, desktop-shell
+# toolchain, rust-cache, oracle fetch, root `cargo test --workspace`, desktop-shell
 # `cargo test`, Node setup, npm install, typecheck, frontend test). If you
 # change one, change the other — that is the whole point of this file
 # existing separately from relying on the post-merge lane alone.
@@ -66,7 +66,7 @@ jobs:
           echo "PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data" >> "$GITHUB_ENV"
 
       - name: Run core crate tests
-        run: cargo test --locked
+        run: cargo test --locked --workspace
 
       - name: Run desktop shell tests
         working-directory: apps/desktop/src-tauri

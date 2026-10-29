@@ -24,6 +24,8 @@ use codex_ingest::oracle_validation::selected_parity_dimensions::{
 
 use std::path::{Path, PathBuf};
 
+mod common;
+
 /// Absolute path to the repo root this test binary was compiled from.
 fn repo_root() -> PathBuf {
     codex_ingest::repo_root()
@@ -203,6 +205,11 @@ fn to_normalized_output_composes_end_to_end_with_the_comparator() {
 /// scripts by hand from the test.
 #[test]
 fn run_pcgen_character_runs_the_real_pcgen_engine_end_to_end() {
+    // Skips first on the shared engine guard (`common::pcgen_engine_runnable`), then on a missing `.pcg`.
+    if let Err(reason) = common::pcgen_engine_runnable(&pcgen_repo_dir()) {
+        eprintln!("[skip] sd26_pcgen_runner: real PCGen engine not runnable: {reason}");
+        return;
+    }
     let pcg = substitute_pcg_fixture();
     if !pcg.is_file() {
         eprintln!(

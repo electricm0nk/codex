@@ -121,6 +121,15 @@ sf_missing_paths() {
             system/gameModes/Starfinder)
                 [[ -d "$DEST/system/gameModes/Starfinder" ]] \
                     || printf '%s\n' "system/gameModes/Starfinder" ;;
+            data/_universal)
+                # SF Core Rulebook .pcc includes RACE:*/_universal/races.lst; a cone
+                # without it fails sf_core_proof (CI runs 38475972609, 39011422319).
+                [[ -f "$DEST/data/_universal/races.lst" ]] \
+                    || printf '%s\n' "data/_universal/races.lst" ;;
+            code/testsuite/PCGfiles)
+                # sf_mapping_table reads PCGen's own Starfinder test characters from here.
+                [[ -f "$DEST/code/testsuite/PCGfiles/sf_soldier.pcg" ]] \
+                    || printf '%s\n' "code/testsuite/PCGfiles/sf_soldier.pcg" ;;
         esac
     done
 }

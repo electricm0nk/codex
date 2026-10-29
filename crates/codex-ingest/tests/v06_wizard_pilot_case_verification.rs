@@ -38,7 +38,9 @@ use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
+
+mod common;
 
 /// Same equipment shape as `sd26_pilot_case_verification.rs`'s
 /// `FIGHTER_GEAR_FIXTURE_TEXT` (identical Longsword/Chain Shirt records --
@@ -124,41 +126,6 @@ fn default_pcgen_repo_dir() -> PathBuf {
     PathBuf::from(home).join("workspace/repos/pcgen")
 }
 
-/// True iff the PCGen Gradle wrapper at `<pcgen_repo_dir>/gradlew` is a
-/// present, executable file. Mirrors PR #356's contract for
-/// `tests/sd26_pilot_case_verification::pcgen_gradle_wrapper_is_runnable`,
-/// which is the canonical fix for the same E2E-vs-CI-runner precondition
-/// gap (GitHub Actions runners do not check out the companion PCGen repo,
-/// so `$HOME/workspace/repos/pcgen/gradlew` is absent there even though the
-/// runner script is present and invokable).
-fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
-    let gradlew = pcgen_repo_dir.join("gradlew");
-    if !gradlew.is_file() {
-        return false;
-    }
-    // A cone-mode sparse checkout (scripts/fetch-pcgen-oracle.sh, as CI runs
-    // it) always keeps root-level files, so `gradlew` alone being present
-    // and executable is not proof the headless export can actually run --
-    // CI runs 35050389421 and 35045137495 both had a runnable `gradlew` but
-    // no `code/` tree, so the batch export failed on a missing template
-    // instead of this guard skipping cleanly. Check for that template too.
-    let batch_export_template = pcgen_repo_dir.join("code/testsuite/base-xml.ftl");
-    if !batch_export_template.is_file() {
-        return false;
-    }
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        std::fs::metadata(&gradlew)
-            .map(|meta| (meta.permissions().mode() & 0o111) != 0)
-            .unwrap_or(false)
-    }
-    #[cfg(not(unix))]
-    {
-        true
-    }
-}
-
 fn pilot_case_pcg_fixture() -> PathBuf {
     repo_root().join(PILOT_PCG_FIXTURE_PATH)
 }
@@ -211,7 +178,7 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
     // --- CI/runtime precondition: the real PCGen Gradle wrapper is not
     // available on every host. PR #356 established the same skip-guard for
     // SD-26's pilot parity test; this is the v0.6 Wizard pilot case's mirror.
-    // When `gradlew` is absent or non-executable, the test exits early with a
+    // When the shared engine guard (`common::pcgen_engine_runnable`) refuses, the test exits early with a
     // clear skip message instead of panicking on the missing PCGen checkout,
     // which is the GitHub Actions runner's actual state — the wrapper, the
     // runner script, and the parser are still exercised end-to-end on any host
@@ -219,15 +186,8 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
     // components (script missing, normalizer non-zero exit, parseable-output
     // contract violated) is still surfaced as a hard test failure. ---
     let pcgen_repo_dir = default_pcgen_repo_dir();
-    if !pcgen_gradle_wrapper_is_runnable(&pcgen_repo_dir) {
-        eprintln!(
-            "[skip] v06_wizard_pilot_case_verification: real PCGen headless export not available under {} \
-             (needs both an executable gradlew and code/testsuite/base-xml.ftl; set \
-             $PCGEN_REPO_DIR to a full PCGen checkout to run this end-to-end -- CI's \
-             sparse oracle fetch keeps root-level files like gradlew but not the code/ \
-             Gradle project)",
-            pcgen_repo_dir.display()
-        );
+    if let Err(reason) = common::pcgen_engine_runnable(&pcgen_repo_dir) {
+        eprintln!("[skip] v06_wizard_pilot_case_verification: real PCGen engine not runnable: {reason}");
         return;
     }
 
