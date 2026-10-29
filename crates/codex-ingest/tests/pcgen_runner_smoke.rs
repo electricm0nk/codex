@@ -61,6 +61,8 @@
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
+mod common;
+
 /// Absolute path to the repo root this test binary was compiled from.
 fn repo_root() -> PathBuf {
     codex_ingest::repo_root()
@@ -171,6 +173,8 @@ fn pcgen_run_script_exists_and_reports_usage() {
 
 /// Runs 4.1's script against a real `.pcg` fixture and returns the produced XML path.
 ///
+/// Skips first on the shared engine guard (`common::pcgen_engine_runnable`), then on a missing `.pcg`.
+///
 /// When the PCGen checkout is unavailable (the GitHub Actions runner does not
 /// check out the PCGen repo alongside this one), prints an explanatory note to
 /// stderr and returns `Ok(None)` so the calling test can pass cleanly. The
@@ -179,6 +183,10 @@ fn pcgen_run_script_exists_and_reports_usage() {
 /// components (script missing, normalizer non-zero exit, parseable-output
 /// contract violated) is still surfaced as a hard test failure.
 fn run_pcgen_and_capture_xml(work_dir: &Path) -> Option<PathBuf> {
+    if let Err(reason) = common::pcgen_engine_runnable(&pcgen_repo_dir()) {
+        eprintln!("[skip] pcgen_runner_smoke: real PCGen engine not runnable: {reason}");
+        return None;
+    }
     let pcg = substitute_pcg_fixture();
     if !pcg.is_file() {
         eprintln!(
