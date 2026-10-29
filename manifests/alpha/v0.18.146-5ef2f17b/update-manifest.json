@@ -1,0 +1,54 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "deb_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "any",
+    "windows_install": true
+  },
+  "linux_appimage": {
+    "name": "Codex_0.18.146_amd64.AppImage",
+    "sha256": "cb587671a962208f43ed54b35ef78ce82a7b2d8731a0d8aa0777713ad9a178bc",
+    "size_bytes": 103438840,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.18.146-5ef2f17b/Codex_0.18.146_amd64.AppImage"
+  },
+  "linux_deb": {
+    "name": "Codex_0.18.146_amd64.deb",
+    "sha256": "72bca4bfbedfb4a0d2fd4372efce6ca8bd77df1a5f32f5dd8d3802b9bff2649a",
+    "size_bytes": 30330216,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.18.146-5ef2f17b/Codex_0.18.146_amd64.deb"
+  },
+  "macos_dmg": {
+    "name": "Codex_0.18.146_aarch64.dmg",
+    "sha256": "12b8c529b34f9461b10744e027a0b98ab56ea0bfb01e21fe6540f348dd1d35c2",
+    "size_bytes": 30716129,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.18.146-5ef2f17b/Codex_0.18.146_aarch64.dmg"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-10-29T14:50:39Z",
+    "source_branch": "develop",
+    "source_commit": "5ef2f17b67a0a3764934c263c921e5d70f449d42"
+  },
+  "release_notes_hash": "f5a730e05dc6532db0a1d14e127806e7112511dacaff27298d2698e2ac68548c",
+  "release_notes_path": "docs/release/SD-38-cyberpunk-red/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/5ef2f17b67a0a3764934c263c921e5d70f449d42/docs/release/SD-38-cyberpunk-red/release-notes.md",
+  "schema_version": "1.3.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "5ef2f17b67a0a3764934c263c921e5d70f449d42",
+  "tag": "alpha/v0.18.146-5ef2f17b",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.18.146",
+  "windows_nsis": {
+    "name": "Codex_0.18.146_x64-setup.exe",
+    "sha256": "fdec57adf125d8a346eb4c0a290c945cc0b25e8f50391babb23ae6143b2c5f87",
+    "size_bytes": 16318318,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.18.146-5ef2f17b/Codex_0.18.146_x64-setup.exe"
+  },
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "40885167911",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
