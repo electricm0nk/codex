@@ -149,6 +149,13 @@ jobs:
     name: Test before publish
     runs-on: ubuntu-latest
 
+    env:
+      # Tests are built with light optimization (opt-level 1) in CI only. The
+      # oracle-reading suites parse the PCGen corpus; unoptimized they took
+      # 69 min (core) + 14 min (desktop) on job 123177169190. Local builds
+      # are unchanged: this is a CI env var, not a Cargo.toml profile.
+      CARGO_PROFILE_TEST_OPT_LEVEL: "1"
+
     # TWIN: .github/workflows/pr-tests.yml runs this same lane on every PR
     # into develop, so a broken suite is caught before merge instead of only
     # here, after. If you change a step in this job, change it there too.
