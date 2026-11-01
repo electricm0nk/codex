@@ -762,9 +762,20 @@ pub struct PerformInstallArgs {
     pub index_url: String,
 }
 
+/// The frontend sends the flat payload `{ manifest, indexUrl }`, so the command takes those two
+/// fields as its own parameters (Tauri maps `index_url` to `indexUrl`). A single struct parameter
+/// would make Tauri demand `{ args: { ... } }` instead.
 #[tauri::command]
-pub fn perform_install(args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
-    perform_install_impl(&resolve_config_root(), args)
+pub fn perform_install(manifest: serde_json::Value, index_url: String) -> Result<RelaunchPrompt, String> {
+    perform_install_from_wire(&resolve_config_root(), manifest, index_url)
+}
+
+fn perform_install_from_wire(
+    config_dir: &Path,
+    manifest: serde_json::Value,
+    index_url: String,
+) -> Result<RelaunchPrompt, String> {
+    perform_install_impl(config_dir, PerformInstallArgs { manifest, index_url })
 }
 
 fn perform_install_impl(config_dir: &Path, args: PerformInstallArgs) -> Result<RelaunchPrompt, String> {
@@ -1801,6 +1812,35 @@ mod verify_relaunch_artifact_tests {
         write_record(&dir, InstallKind::WindowsNsis);
         let err = perform_install_impl(&dir, install_args()).unwrap_err();
         assert!(err.contains("windows_nsis"), "the Windows path must run and name the missing installer: {err}");
+    }
+
+    /// Pins the `perform_install` wire shape. Both frontend call sites
+    /// (`installAction.ts`, `controllerAdapter.ts`) invoke the command with the
+    /// FLAT payload `{ manifest, indexUrl }`. Tauri binds each top-level key to
+    /// the command parameter of the same (camelCased) name, so the shim must take
+    /// `manifest` + `index_url` directly — a single `args` struct parameter makes
+    /// Tauri demand `{ args: {...} }` and the Install button fails with
+    /// "missing required key args".
+    ///
+    /// Not covered: the real Tauri IPC arg binding (the `#[tauri::command]`
+    /// macro's generated handler). The fn-pointer check pins arity and types;
+    /// parameter NAMES are pinned only by the source, not by this test.
+    #[test]
+    fn perform_install_takes_the_flat_frontend_payload() {
+        let _shim: fn(serde_json::Value, String) -> Result<RelaunchPrompt, String> = perform_install;
+
+        let wire: serde_json::Value = serde_json::json!({
+            "manifest": { "version": "0.2.0" },
+            "indexUrl": "https://example.invalid/index.json",
+        });
+        assert!(wire.get("args").is_none(), "frontend sends no `args` wrapper");
+        let manifest = wire["manifest"].clone();
+        let index_url = wire["indexUrl"].as_str().expect("indexUrl is a string").to_string();
+
+        let dir = tempdir("perform-install-flat-wire");
+        write_record(&dir, InstallKind::Deb);
+        let err = perform_install_from_wire(&dir, manifest, index_url).unwrap_err();
+        assert!(err.contains("linux_deb"), "flat payload must reach the deb path: {err}");
     }
 
     #[test]
