@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { chipStyle, selectedChipKey } from './customChip';
 import {
   CUSTOM_RECORD_KINDS,
   GRANT_TARGETS,
@@ -32,6 +33,7 @@ export function CustomDialog(props: {
   const [draft, setDraft] = useState<CharacterCustom>(props.value);
   const [section, setSection] = useState<Section>('grants');
   const [showProblems, setShowProblems] = useState(false);
+  const [focusedChip, setFocusedChip] = useState<string | null>(null);
 
   useEffect(() => {
     if (!props.open) {
@@ -102,9 +104,11 @@ export function CustomDialog(props: {
               key={tab.key}
               type="button"
               role="tab"
-              aria-selected={section === tab.key}
+              aria-selected={selectedChipKey(section, tab.key)}
               onClick={() => setSection(tab.key)}
-              style={{ ...buttonStyle, ...(section === tab.key ? { backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' } : {}) }}
+              onFocus={(event) => setFocusedChip(event.currentTarget.matches(':focus-visible') ? tab.key : null)}
+              onBlur={() => setFocusedChip(null)}
+              style={chipStyle({ selected: selectedChipKey(section, tab.key), focused: focusedChip === tab.key })}
             >
               {tab.label} ({countFor(tab.key)})
             </button>

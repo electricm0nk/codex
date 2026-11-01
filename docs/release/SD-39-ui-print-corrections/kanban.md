@@ -39,7 +39,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51
 | E1.1 | Feat budget rows + refusal | opus | waiting | E1.0 | |
 | E1.2 | Duplicate feat guard | opus | waiting | E1.1 | |
 | E1.3 | Hide-unmet checkbox | opus | waiting | E1.2 | |
-| E1.4 | Add Custom chip styling fix | sonnet | waiting | C1 | side lane ui-a |
+| E1.4 | Add Custom chip styling fix | sonnet | complete | C1 | side lane ui-a; receipt artifacts/epic_1/E1.4_cycle_receipt.md |
 | E1.MC | E1 merge check + Epic report | opus | waiting | E1.3, E1.4 | |
 | E2.1 | Layout registry + Abilities/Details moves + title | opus | waiting | E1.MC | |
 | E2.2 | Combat row 2x2 + 1x4 | opus | waiting | E2.1 | |

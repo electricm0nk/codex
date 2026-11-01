@@ -45,6 +45,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 |---|---|---|---|---|
 | C1 | C1 | blocked-escalated | 49d598c13a | artifacts/cycle_1/C1_cycle_receipt.md |
 | E1 | E1.0 | complete | 5014fb84a9 | artifacts/epic_1/E1.0_cycle_receipt.md |
+| E1 | E1.4 | complete | PENDING_SHA | artifacts/epic_1/E1.4_cycle_receipt.md |
 
 ## Epic reports
 
