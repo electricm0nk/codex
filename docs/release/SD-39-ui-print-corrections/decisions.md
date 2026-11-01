@@ -311,9 +311,13 @@ package made and what the code shows.
 | "Campaign notes" exist | They do not | R17 |
 
 | C1's acceptance grep may read `Cargo.lock` | The lockfile holds 24 third-party packages at 0.18.x (`awk '/^name = /{n=$3} /^version = "0\.18\./{print n}' apps/desktop/src-tauri/Cargo.lock \| awk 'END{print NR}'`). They must not change | The check reads only the `codex-desktop` entry. C1's receipt said 27, counting by a different predicate. No operator ruling was needed |
+| E1.0: `SLOTS:` is a hand count that gives weapons main / off / two-handed | The awk count is right (2: 30, 1: 3, 0: 3), but the 2s are worn pairs (boots, gloves, bracers) and no Core weapon has one; a weapon's hands are `WIELD:`, settled as `wield_category` on the corpus record | E4.1 reads `wield_category`; `slot_of` reads only the `TwoHanded` tag |
+| E1.0: 19 tag/prose disagreements | 19 reproduces only by skipping `Slot: none` and comparing spellings: 12 `wrists` vs `wrist`, 7 `neck (does not take up slot)`. 8 weapon-tagged rods and staffs say `Slot: none`. Total 27, of which 15 change the answer | The test lists all 27. The prose wins: the 7 necklaces and 8 rods and staffs have no slot |
+| E1.0: `crates/codex-ingest/**` only on a failed proof | `data/equipment_types.json` is written by `gen_equipment_types`, so a table added by hand is lost at the next run. The rule was aimed at `sheet_rule_convert` | E1.0 owns that generator; `data/sheet_rules/**` stays unchanged, `git diff` 0 files |
+| G-1: `sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue` writes the SF seed lines | That test writes nothing; the writer is `sf_seed_printed_features_equal_the_features_the_converted_records_grant` (`sf_sheet_print.rs`). The old filter passes and leaves an empty directory, and `diff -r` of two empty directories proves nothing | G-1 names the writing test |
 
 **Measured (`python3` over `data/sheet_rules/*/equipment/*.json`, 2026-11-01):** 7,386 records, 2,906 with a slot
-tag, 1,617 with a `Slot:` line, 19 where the two disagree; the prose wins. Items with neither have no slot.
+tag, 1,617 with a `Slot:` line, 27 where the two differ (E1.0; the 19 first written here left out the 8 `Slot: none` weapons); the prose wins. Items with neither have no slot.
 
 **Slot vocabulary.** The operator said a ring takes "a hands slot". The book and `equipmentslots.lst` give rings
 their own slot, two of them. SD-39 follows the book; a change is one table row.

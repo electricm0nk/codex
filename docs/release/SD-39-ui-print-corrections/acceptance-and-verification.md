@@ -26,8 +26,8 @@ python3 - <<'PY'   # list every changed JSON path between base and head renders
 import json,sys
 # the card binds BASE/HEAD json paths; prints "path: old -> new" lines; the receipt pastes them all
 PY
-# SF: four seeds' printed lines; CPR: three seeds
-cd apps/desktop/src-tauri && mkdir -p <dir> && SF_SEED_LINES_OUT=<dir> cargo test --locked -j 8 --bins sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue -- --test-threads=8
+# SF: four seeds' printed lines; CPR: five seeds (`ls <dir>`; an empty dir is a FAIL)
+cd apps/desktop/src-tauri && mkdir -p <dir> && SF_SEED_LINES_OUT=<dir> cargo test --locked -j 8 --bins sf_seed_printed_features_equal_the_features_the_converted_records_grant -- --test-threads=8
 cd apps/desktop/src-tauri && mkdir -p <dir> && CPR_SHEET_LINES_OUT=<dir> cargo test --locked -j 8 --bins every_rule_line_prints_with_its_resolved_numbers -- --test-threads=8
 diff -r <base> <head>                                 # pass = no output, except E3.5 and E8.3 (listed)
 cargo run --locked -j 8 -p codex-ingest --bin sheet_rule_convert -- --check
