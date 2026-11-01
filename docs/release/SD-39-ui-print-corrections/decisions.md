@@ -310,6 +310,8 @@ package made and what the code shows.
 | Linux only for print | The app also ships for macOS and Windows | Print opens the viewer (R19), which works on all three |
 | "Campaign notes" exist | They do not | R17 |
 
+| C1's acceptance grep may read `Cargo.lock` | The lockfile holds 24 third-party packages at 0.18.x (`awk '/^name = /{n=$3} /^version = "0\.18\./{print n}' apps/desktop/src-tauri/Cargo.lock \| awk 'END{print NR}'`). They must not change | The check reads only the `codex-desktop` entry. C1's receipt said 27, counting by a different predicate. No operator ruling was needed |
+
 **Measured (`python3` over `data/sheet_rules/*/equipment/*.json`, 2026-11-01):** 7,386 records, 2,906 with a slot
 tag, 1,617 with a `Slot:` line, 19 where the two disagree; the prose wins. Items with neither have no slot.
 

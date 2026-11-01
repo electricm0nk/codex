@@ -57,9 +57,10 @@ seed deltas, open blockers.)
 
 ## Open blockers
 
-- C1: F-1 literal grep on `apps/desktop/src-tauri/Cargo.lock` matches 27 third-party pins. Ruling needed: scope the check to the `codex-desktop` entry (0.19.0), or keep the literal grep and leave the pins. Receipt: artifacts/cycle_1/C1_cycle_receipt.md.
+(none)
 
 ## Run handle
 
 | Run id | START | Script path | Started |
 |---|---|---|---|
+| wf_e22fdf36-bc3 | C1 | session `workflows/scripts/sd39-ui-print-corrections-wf_e22fdf36-bc3.js` | 2026-11-01; stopped at C1 on a too-wide acceptance grep; the lead cleared it |

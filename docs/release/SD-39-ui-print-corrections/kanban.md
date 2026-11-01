@@ -34,7 +34,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
 |---|---|---|---|---|---|
 | C0 | Package committed + Cycle 0 receipt | lead | complete | — | this commit; branch cut by the lead |
-| C1 | 0.19.0 on 14 surfaces + notes pointer (branch already cut) | haiku | blocked-escalated | C0 | commit 49d598c13a; F-1 literal grep blocked by 27 third-party Cargo.lock pins: ruling needed (artifacts/cycle_1/C1_cycle_receipt.md) |
+| C1 | 0.19.0 on 14 surfaces + notes pointer (branch already cut) | haiku | complete | C0 | commit 49d598c13a; receipt artifacts/cycle_1/C1_cycle_receipt.md; acceptance command corrected by the lead (decisions.md §25) |
 | E1.0 | Slot table + slot_of; prove repeatable and tags | opus | waiting | C1 | |
 | E1.1 | Feat budget rows + refusal | opus | waiting | E1.0 | |
 | E1.2 | Duplicate feat guard | opus | waiting | E1.1 | |
