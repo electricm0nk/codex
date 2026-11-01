@@ -16,7 +16,7 @@ status: planning-ready
 |---|---|
 | Cards complete | 0 of 51 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
-| Pinned `tranche-19` SHA | cut by the lead at C0 from `origin/develop` @ `2b14020bc7`; C1 adds the version commit on it |
+| Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
 ## Cycle 0 — package authored (2026-11-01, planning session, Fable 5.1)
 
@@ -43,6 +43,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 
 | Cycle | Card | Status | SHA | Receipt |
 |---|---|---|---|---|
+| C1 | C1 | blocked-escalated | 49d598c13a | artifacts/cycle_1/C1_cycle_receipt.md |
 
 ## Epic reports
 
@@ -56,7 +57,7 @@ seed deltas, open blockers.)
 
 ## Open blockers
 
-(none)
+- C1: F-1 literal grep on `apps/desktop/src-tauri/Cargo.lock` matches 27 third-party pins. Ruling needed: scope the check to the `codex-desktop` entry (0.19.0), or keep the literal grep and leave the pins. Receipt: artifacts/cycle_1/C1_cycle_receipt.md.
 
 ## Run handle
 
