@@ -76,7 +76,7 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   // tranche promotion lands — update alongside the version bump (all of
   // package.json, tauri.conf.json, src-tauri/Cargo.toml + Cargo.lock, and
   // the workflow stamp, in ONE commit), not as a follow-on fix.
-  assert(pkg.startsWith('0.18.'), `version "${pkg}" must keep major=0, tranche=18 on tranche/18`);
+  assert(pkg.startsWith('0.19.'), `version "${pkg}" must keep major=0, tranche=19 on tranche-19`);
 }
 
 // The invariant is a *relationship*, not two independent literals: the
