@@ -94,6 +94,45 @@ pub fn parse_equipment_types(text: &str) -> Vec<(String, Vec<String>)> {
     out
 }
 
+/// One row of the game mode's slot list, in the shape `data/equipment_types.json` stores it.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct SlotRow {
+    pub name: String,
+    /// The Codex slot word (`BodySlot` in `rules_core::body_slots`). A row with no Codex slot is `none`.
+    pub body_slot: String,
+    pub capacity: u32,
+    pub tags: Vec<String>,
+}
+
+/// The Codex slot for a source row. `Torso` (clothing) and the `Tattoo` rows have none
+/// (`decisions.md` SD-g: map to none, never guess).
+fn body_slot_word(name: &str) -> String {
+    match name {
+        "Armor" | "Belt" | "Body" | "Chest" | "Eyes" | "Feet" | "Hands" | "Head" | "Headband" | "Neck" | "Ring"
+        | "Shield" | "Shoulders" | "Wrist" => name.to_ascii_lowercase(),
+        "Weapon" => "wield_main".to_string(),
+        _ => "none".to_string(),
+    }
+}
+
+/// Every `EQSLOT:` row of `equipmentslots.lst`, in file order. `CONTAINS:<tag>,<tag>=<n>` gives the
+/// tags that seat an item there and how many the slot holds.
+pub fn parse_slot_table(text: &str) -> Vec<SlotRow> {
+    text.lines()
+        .filter_map(|line| {
+            let fields: Vec<&str> = line.split('\t').collect();
+            let name = fields[0].trim().strip_prefix("EQSLOT:")?;
+            let (tags, capacity) = token_value(&fields, "CONTAINS:")?.rsplit_once('=')?;
+            Some(SlotRow {
+                name: name.to_string(),
+                body_slot: body_slot_word(name),
+                capacity: capacity.trim().parse().ok()?,
+                tags: tags.split(',').map(|t| t.trim().to_string()).collect(),
+            })
+        })
+        .collect()
+}
+
 #[derive(Debug, Default, PartialEq, Eq)]
 pub struct MergedEquipmentTypes {
     pub types: BTreeMap<String, Vec<String>>,
@@ -119,6 +158,31 @@ pub fn merge_equipment_types(records: impl IntoIterator<Item = (String, Vec<Stri
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    const SLOT_LIST: &str = "# comment\nNUMSLOTS:DEFAULT\tHEAD:1\tHANDS:2\n###Block: New Version\n\
+EQSLOT:Ring\t\tCONTAINS:Ring=2\t\tNUMBER:TORSO\n\
+EQSLOT:Neck\t\tCONTAINS:Neckwear,Amulet=1\tNUMBER:HEAD\n\
+EQSLOT:Torso\tCONTAINS:Clothing=1\tNUMBER:TORSO\n\
+EQSLOT:Weapon\tCONTAINS:Weapon=1\tNUMBER:HANDS\n\
+EQSLOT:Tattoo Ring\t\tCONTAINS:Tattoo Ring=2\t\tNUMBER:TORSO\n";
+
+    #[test]
+    fn parse_slot_table_reads_every_row_and_maps_it_to_our_vocabulary() {
+        let rows = parse_slot_table(SLOT_LIST);
+        let summary: Vec<(&str, &str, u32)> =
+            rows.iter().map(|r| (r.name.as_str(), r.body_slot.as_str(), r.capacity)).collect();
+        assert_eq!(
+            summary,
+            vec![
+                ("Ring", "ring", 2),
+                ("Neck", "neck", 1),
+                ("Torso", "none", 1),
+                ("Weapon", "wield_main", 1),
+                ("Tattoo Ring", "none", 2),
+            ]
+        );
+        assert_eq!(rows[1].tags, vec!["Neckwear".to_string(), "Amulet".to_string()]);
+    }
 
     fn tags(items: &[&str]) -> Vec<String> {
         items.iter().map(|s| s.to_string()).collect()

@@ -1,6 +1,7 @@
 //! Headless rules-core surfaces.
 
 pub mod archetype_resolver;
+pub mod body_slots;
 pub mod character_input;
 pub mod class_census;
 pub mod class_feature_pool_catalog;
