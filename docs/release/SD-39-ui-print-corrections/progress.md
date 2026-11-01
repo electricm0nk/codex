@@ -1,0 +1,62 @@
+---
+canonical: true
+bundle_id: SD-39
+slug: ui-print-corrections
+canonical_branch: tranche-19
+target_version: 0.19.0
+date: 2026-11-01
+status: planning-ready
+---
+
+# SD-39 Progress
+
+## Summary
+
+| Field | Value |
+|---|---|
+| Cards complete | 0 of 51 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
+| Pinned `tranche-19` SHA | cut by the lead at C0 from `origin/develop` @ `2b14020bc7`; C1 adds the version commit on it |
+
+## Cycle 0 — package authored (2026-11-01, planning session, Fable 5.1)
+
+- Source: the operator's 12 dictated defects and 16 grill answers (`artifacts/cycle_0/defects-and-rulings-2026-11-01.md`).
+- Repo facts checked on `develop` @ `5ef2f17b67` local / `2b14020bc7` origin: no PDF crate, no fonts,
+  one `window.print()` site, prerequisites already enforced on feat add, no budget or duplicate guard,
+  `ActiveState` already has worn/carried values, converter parses and drops `SLOTS`, 14 version surfaces,
+  peer worktree `fix-perform-install` present.
+- Author calls without an operator ruling: `README.md §6` rows 1–9.
+- Operator ruling 2026-11-01: "commit now without review". The lead cut `tranche-19` from `origin/develop` and committed this package as C0; C1 still owns the version bump.
+- Mode: attended review, autonomous run (`decisions.md §16`); E9.4 is the one planned operator wait.
+
+### Placeholder gate output (author, 2026-11-01)
+
+Command: `grep -rhoE '<[a-z_-]+>' docs/release/SD-39-ui-print-corrections/*.md | sort | uniq -c | sort -rn`
+run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9` allowed list
+(schema placeholders, command arguments a card binds, message/pattern placeholders such as `<pool>`,
+`<price>`, `<gold>`); zero bugs. Deferred values: `(E1.0)`, `(E2.4)`, `(E7.1)` figures in
+`content-unit-inventory.md`, `0.19.<run>`, the run id.
+
+## Cycle log
+
+| Cycle | Card | Status | SHA | Receipt |
+|---|---|---|---|---|
+
+## Epic reports
+
+(The merge-check card of each epic writes a one-screen block here: cards done, figures with commands,
+seed deltas, open blockers.)
+
+## Decisions taken on safe defaults
+
+| Card | Decision point | Default taken | Alternative not taken |
+|---|---|---|---|
+
+## Open blockers
+
+(none)
+
+## Run handle
+
+| Run id | START | Script path | Started |
+|---|---|---|---|

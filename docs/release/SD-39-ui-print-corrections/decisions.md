@@ -1,0 +1,290 @@
+---
+canonical: true
+owner: operator
+bundle_id: SD-39
+slug: ui-print-corrections
+canonical_branch: tranche-19
+target_version: 0.19.0
+date: 2026-11-01
+status: planning-ready — R1–R16 are operator answers given 2026-11-01; "DEFAULT" rows are the author's and name how to revisit
+---
+
+# SD-39 Decisions
+
+Every entry says who decided (OPERATOR ruling, verbatim where it matters, or author DEFAULT), what
+enforces it, and how to revisit it. "R<n>" below is a grill ruling; `workflow-instruction.md §12` uses
+"R<n>" for standing rules, so the two are told apart by file.
+
+## §1 — Package location
+
+**DEFAULT.** `docs/release/SD-39-ui-print-corrections/`. The overlay names `docs/stc/stc-<##>-<description>/`
+as the chassis path; this repo has no `docs/stc/` (`ls docs/stc` → no such directory, 2026-11-01), every
+sibling bundle lives under `docs/release/`, and `scripts/architecture_truth_up.py:54` treats `^docs/release/`
+as architecture-relevant. SD-38 recorded the same deviation (`../SD-38-cyberpunk-red/decisions.md §1`).
+**Enforced by:** C0. **Revisit:** the operator says "move to docs/stc"; one `git mv` before C1.
+
+## §2 — Branch, board, version
+
+**DEFAULT.** Branch `tranche-19`, cut by C1 from `origin/develop` @ `2b14020bc7` (PR #402 merge). Board:
+`./kanban.md` + `./progress.md`. Version `0.19.0` stamped by C1's **single commit** on the 14 surfaces
+the `0\.18\.` grep names on 2026-11-01 (F-1 in `content-unit-inventory.md`; 14 files, same set SD-38's
+C1 bumped) plus `docs/release/current-release.json` → `{"tranche": 19, "notes_path":
+"docs/release/SD-39-ui-print-corrections/release-notes.md"}`. Root `Cargo.toml` stays `0.1.0`.
+`release-notes.md` ships an interim body with the sentinel `SD-39 INTERIM NOTES` and neither resolver
+marker; E9.8 replaces it; E9.11 refuses the PR while the sentinel is present.
+**Enforced by:** C1's receipt (A/B grep, 15 files touched); `python3 tools/release/resolve_release_notes.py --repo-root .` exit 0.
+**Revisit:** the tranche digit moves only at a new bare cut.
+
+## §3 — Operator rulings on record (2026-11-01)
+
+The grill transcript is `artifacts/cycle_0/defects-and-rulings-2026-11-01.md`. The rulings:
+
+| R | Question | Operator's choice |
+|---|---|---|
+| R1 | Print engine | **Rust generates the PDF from a per-system template.** Not browser print, not PDF forms |
+| R2 | Template shape | **Shared page frame + shared blocks; each system has a short layout file** |
+| R3 | Paper size | **App setting, default A4, US Letter option; print dialog shows it and allows a one-off override** |
+| R4 | Print modes | **Stacking checkboxes: Spellbook, Show the math, Bio and campaign notes.** basic = none, full = all |
+| R5 | Output | **Two buttons: Save PDF and Print** (operator chose 3 over the recommended single Save) |
+| R6 | Print proof | **Golden text-extraction tests + one operator eyeball per system as a closure gate** |
+| R7 | Flyover kind | **Left side drawer; close by X, click-outside, Escape** |
+| R8 | Level ledger | **Stamp the level on every new choice; one-time migration by slot order, rows marked "assigned on upgrade"** |
+| R9 | Over-budget legacy saves | **Keep every feat; red "over budget by N" badge; block new adds; never auto-delete** |
+| R10 | Hide-unmet checkbox | **Default ticked; unticked shows unmet feats greyed with the missing prerequisite; Add disabled** |
+| R10b | Overrides | **Add an Overrides group to the Custom tab**: feats without prerequisites, weapons without proficiency, spells outside class list/level, armor without proficiency, equipment ignoring slot limits (operator's five); author extras in §10 |
+| R11 | Market money | **Keep the three price modes (cashless / buy 100% sell 50% / character build) and make Market honour them** |
+| R12 | Slot conflicts | **Hard block ("head slot is taken by X"); item stays carried; the slot override allows and tags** |
+| R13 | `.pcg` import | **Tool-side converter in `crates/codex-ingest`, shipped as a sidecar; the live app never parses `.pcg`** |
+| R14 | Magic variants | **Generate +1…+5 at runtime from base item + enhancement table; special abilities and materials later** |
+| R15 | System scope | **PF1e gets everything; SF1e and CPR get print + layout + Market shell** |
+| R16 | Epic order | **UI first, print last** (operator chose 2 over the recommended print-first) |
+
+## §4 — Print pipeline (R1, R2, R5, R6)
+
+**OPERATOR R1/R2/R5/R6; DEFAULT on the crate.** A Rust module in `apps/desktop/src-tauri/src/print/`
+takes the composed sheet (the same `LoadSavedCharacterResponse` the screen renders, plus the engine
+`explanations` rows) and a `PrintRequest { paper, spellbook, math, bio }`, builds a Typst document from
+a shared frame and shared blocks, and writes a PDF. **Typst as a library** (`typst`, `typst-pdf` crates,
+latest stable at E8.1; versions recorded in E8.1's receipt and `technical-design.md §1`), with OFL fonts
+bundled under `apps/desktop/src-tauri/resources/fonts/` and listed in `tauri.conf.json bundle.resources`
++ `tests/packaged_resources.rs`. Save PDF = save-as dialog (`tauri-plugin-dialog`) then open with
+`tauri-plugin-opener`; Print = same bytes to a temp file handed to the OS print path (`xdg-open`-style
+via the opener on Linux; the receipt names the mechanism per platform). The current CSS print path
+(`apps/desktop/src/characterHub/printLayout.ts`, `CharacterSheet.tsx:2854 window.print()`) is removed by E8.4.
+**Enforced by:** G-9, G-10; E8.MC. **Revisit:** if `typst` cannot be built offline/CI, E8.1 returns
+`blocked-escalated` naming the alternative (`printpdf` with hand layout) and its cost.
+
+## §5 — One converter re-run (DEFAULT, batch-big rule)
+
+Three schema additions need PCGen data: feat `stackable` (PCGen `MULT:YES`), equipment `slot` (PCGen
+`SLOTS` + the EQSLOTS vocabulary), and the enhancement-eligibility flags for armor/shield/weapon
+(derivable from `TYPE`). The converter already parses `SLOTS`
+(`crates/codex-ingest/src/pcgen_import/lst_parser/equipment.rs:87`) and drops it at
+`sheet_rule/convert.rs:1936,2557`. **Card E1.0 adds all three fields and runs the converter once**
+(`cargo run -p codex-ingest --bin sheet_rule_convert`), first after C1, so no later card re-runs it.
+**Enforced by:** E1.0; the `--check` runs in G-1. **Revisit:** a fourth field discovered later is a
+discovered card that re-runs the converter once more, never a hand edit of `data/sheet_rules/`.
+
+## §6 — Feat guards (R9, R10)
+
+**OPERATOR.** Budget = the engine's own count of feat slots by pool (level feats at 1, 3, 5 …; racial
+bonus; class bonus pools such as Fighter combat feats), exposed as explanations rows
+`feats.budget.<pool>.granted|spent|remaining`. `add_feat_selection` refuses at `remaining == 0` for the
+pool the feat would consume unless the "ignore feat budget" override is on. Duplicate = same `feat_id`
+(and same `target` when the feat takes one) unless `stackable`. Hide-unmet default ticked;
+`FeatPrerequisiteReport` (`apps/desktop/src-tauri/src/feat_catalog.rs:33–69`) already supplies the unmet
+list. Legacy over-budget: keep, badge, block adds. **Enforced by:** E1.1–E1.3, G-3. **Revisit:** the
+operator may ask for a soft warning instead of a block: one flag in E1.1.
+
+## §7 — Layout (R7 + author calls)
+
+**OPERATOR R7; D2, D8, D9 verbatim.** Target Pathfinder sheet: left rail = portrait, Level/XP, Class,
+**Character Details** (moved from the right column), **Show Progression** button; middle = identity,
+then one row holding the 2x2 (HP / Initiative / Encumbrance / Conditions) beside a 1x4 (Armor Class /
+Attack / Speed / Saving Throws); right column = **Abilities** (moved from the middle) then Skills; tabs
+unchanged below. **DEFAULT:** below a breakpoint the 1x4 wraps under the 2x2; the "what the next level
+grants" text moves into the drawer. All moves are entries in `sheetLayout.ts` (the registry
+tranche-17-ui introduced: "Moving a box is an edit to its entry here, not a JSX move"), extended to
+register the left rail and right column. **Enforced by:** E2.1–E2.3, G-4. **Revisit:** edit the registry.
+
+## §8 — Market (R11, R14, D3)
+
+**OPERATOR.** One `Market` button on the Weapons, Defense and Gear tabs (and SF/CPR equivalents)
+replaces Add Weapon / Add Armor / Add Gear. Root cause of D3: `buildItemPickerConfig`
+(`CharacterSheet.tsx:255–300`) loads the whole `ArmsArmor` category for both pickers and only sets
+`initialGroup`. Market filters server-side by a new `MarketCategory` (Weapon / Armor / Shield / Gear /
+Magic item) derived from the record's type tags. PF variants: `+N` picker (N = 1…5) on armor, shields and
+weapons; price = base + masterwork (150 gp armor/shield, 300 gp weapon) + N² × 1000 gp (armor/shield)
+or N² × 2000 gp (weapon); the generated item's id is `<base_id>+<N>`; AC/attack/damage consume the
+enhancement bonus (bonus type `enhancement`, so it does not stack with itself). Price modes:
+`PriceMode` (`character_hub.rs:4397`) already exists; buy deducts in paid modes and refuses when
+`gold < price`; sell credits 50% (Standard) / 100% (CharacterBuild) / 0 (Cashless). Currency label per
+system from the adapter (gp / credits / eddies). **Enforced by:** E3.1–E3.5, G-5. **Revisit:** the
+operator may add special abilities (DEF-1) in a later bundle.
+
+## §9 — Body slots and worn vs carried (R12, D5)
+
+**OPERATOR.** `BodySlot` enum (armor, shield, belt, body, chest, eyes, feet, hands, head, headband,
+neck, ring (×2), shoulders, wrist, wielded main / off / two-handed, none) converted from PCGen's EQSLOTS
+by E1.0. Worn/wielded = `ActiveState::EquippedActive`; carried = `ActiveState::SelectedInactive`
+(`src/rules_core/character_input.rs:163–170`, already in the engine; the UI sends `EquippedActive` for
+everything today). Equip refuses when the slot is held (rings allow two) with "head slot is taken by
+<item>"; the slot override allows and tags. Only `EquippedActive` items feed AC, attack, saves, ability
+and skill bonuses; weight counts for both states (encumbrance). **Enforced by:** E4.1–E4.3, G-6.
+**Revisit:** swap-on-equip (option 3 in the grill) is one flag in E4.1 if the operator changes their mind.
+
+## §10 — Overrides (R10b + author extras)
+
+**OPERATOR five + DEFAULT three.** `CharacterCustomDto` gains `overrides: Overrides` with eight booleans:
+`feats_without_prerequisites`, `weapons_without_proficiency`, `spells_outside_class_list`,
+`armor_without_proficiency`, `ignore_slot_limits` (operator), `ignore_feat_budget`,
+`ignore_alignment_restrictions`, `ignore_encumbrance` (author). Each command that enforces the matching
+rule reads the flag. **Every item admitted under an override is tagged**: the selection record carries
+`override: Some(<flag>)`, the UI shows a badge, and the "full" print marks it ("admitted without
+prerequisites"). The sheet never lies silently. **Enforced by:** E6.1, E6.2, G-7. **Revisit:** drop an
+extra by deleting its toggle; the tag rule stays.
+
+## §11 — Level ledger (R8, D9)
+
+**OPERATOR.** Feat, spell, skill-rank and ability-increase selections gain `taken_at_level: Option<u8>`
+and `assigned_on_upgrade: bool`. New adds stamp the current character level. Migration (E5.2) runs once
+per legacy save on load: feats fill level-feat slots in saved order (1, 3, 5 …; racial/class bonus pools
+at their grant level), spells fill spells-known slots per class level, ranks fill per-level rank budgets,
+ability increases at 4, 8, 12 …; every migrated row sets `assigned_on_upgrade = true` and the drawer shows
+it. The drawer (E5.3) lists per level: class level taken, HP (if recorded), feats with targets, spells
+learned, ranks spent, class features gained, ability increase, and unspent slots. Read-only in SD-39
+(DEF-6). **Enforced by:** E5.1–E5.3, G-8.
+
+## §12 — `.pcg` import (R13, D12)
+
+**OPERATOR.** `crates/codex-ingest/src/pcg_import/` reads PCGen 6.x `.pcg` (line-based `KEY:value`)
+into Codex's saved-character JSON; a binary `pcg_import` is built and shipped as a Tauri sidecar
+(`tauri.conf.json bundle.externalBin`). The Import button offers "Codex file | PCGen file"; for PCGen it
+runs the sidecar and imports the result like a Codex file. Unknown records become custom items; the
+import report lists every mapping and every unknown. Fixtures: `scripts/oracle_harness/eqm-fixtures/*.pcg`
+and any `.pcg` under `$PCGEN_REPO_DIR` the card finds (count recorded). The `pcgen-residue-gate` stage
+keeps the live crates clean. **Enforced by:** E7.1, E7.2, G-11.
+
+## §13 — Custom items (D11)
+
+**OPERATOR.** `CustomRecordDto` gains optional `bonuses: Vec<CustomBonus { target, bonus_type, value }>`
+(targets from a fixed list: attack, damage, ac, each save, each ability, each skill, speed, initiative,
+hp, cmb, cmd; bonus types from the engine's stacking vocabulary) and optional `slot: Option<BodySlot>`.
+A custom item with neither is the text item of today. Worn custom items apply (§9 rule). **Enforced by:**
+E4.4, G-6.
+
+## §14 — Custom chip styling (D10)
+
+**OPERATOR.** The Add Custom dialog's top-row chips (`CustomTab.tsx`) must return to their resting style
+on deselect; one selected chip at a time; focus ring distinct from selection; tokens valid in both
+themes. The fix is in the shared chip component if one exists, so Market and the feat picker inherit it.
+**Enforced by:** E1.4 (ui-smoke row + unit test on the class/style function).
+
+## §15 — Model tiering
+
+Per `~/.claude/CLAUDE.md` (2026-09-29): engine, UI, verify, every merge check → **Opus 5.5**
+(`model: 'opus'`); well-specified mechanical work and every long wait → **Sonnet 5.5**; housekeeping
+→ **Haiku 4.5**. Every `agent()` sets `model` (`awk '/agent\(/ && !/model:/' <script>` prints nothing).
+Planning disclosure: this package was written by Fable 5.1.
+
+## §16 — Run protocol (attended launch, autonomous run)
+
+The operator is present on 2026-11-01 and reviews this package. Once launched the run follows the
+standing autonomous rules (memory: "operator away — autonomous mode", "run to 100% DoD without asking"):
+
+1. Clear a blocker first; if only an operator ruling can clear it, mark **only that card**
+   `blocked-escalated` with the exact ruling under `progress.md ## Open blockers`; continue every
+   independent card.
+2. Never open the PR while any card is open, partial or blocked-escalated.
+3. A choice inside scope with a safe default (§16.1): take it, log it, continue. No `AskUserQuestion`.
+4. **Report after each epic** (the merge-check card writes the Epic report block in `progress.md`).
+5. **E9.4 is the one planned wait:** the operator prints one sheet per system and records "usable" (or
+   defects) in the receipt. The run proceeds to E9.5 only on "usable" ×3. Defects found there are
+   discovered cards in E8, not blockers to argue with.
+
+### §16.1 Safe defaults
+
+| # | Decision point | Safe default |
+|---|---|---|
+| SD-a | A sheet value's derivation has no explanations row | "Show the math" prints the value with "(no derivation recorded)"; log a `retro.py note`; never invent a formula |
+| SD-b | Compute vs print | Print unless the value lands on the sheet as a number (paper-sheet rule) |
+| SD-c | A count differs from its CUI figure | Re-derive with two implementations; correction via `retro.py` with `--verified-by` |
+| SD-d | A PF seed render delta | Allowed only when every changed field is listed in the receipt and is additive or the card's stated intent; otherwise a defect |
+| SD-e | An SF or CPR seed delta outside E3.5 / E8.3 | A defect. Fix it. Never re-baseline |
+| SD-f | A worktree, branch or file another session may own (`fix-perform-install` on 2026-11-01) | Do not touch it; log it |
+| SD-g | A PCGen `SLOTS` value with no Codex `BodySlot` | Map to `none`, list it in E1.0's receipt with the count; never guess a slot |
+| SD-h | `typst` build fails in CI | E8.1 `blocked-escalated` naming the failing job and the alternative |
+| SD-i | Usage-limit stop | Stop dispatching, write a resume receipt (§16.3) |
+| SD-j | No CI on `tranche-19` pushes | CI evidence = the closure PR's `pr-tests`, awaited by E9.11 |
+| SD-k | Rebase conflict | `kanban.md`: take upstream, re-apply only your own row, run the duplicate-ID check; `progress.md` append-only sections: keep both; any other file: abort, `blocked-escalated` |
+| SD-l | Fresh-install check cannot run on this box | E9.2 `blocked-escalated` with the exact operator action |
+| SD-m | A `.pcg` key with no Codex mapping | Custom item + import-report line; never dropped |
+| SD-n | A feat's stackability is unknown (no `MULT` token) | Not stackable |
+| SD-o | The migration finds more saved feats than slots (legacy over-budget) | Assign in saved order until slots run out; the rest get `taken_at_level = None` and feed the over-budget badge (R9) |
+
+### §16.2 Watchdog — one long Workflow run
+
+One long run with a recorded run id; recovery starts a **new** run with `START=<card>`; never resume a
+run with parallel lanes. No cron.
+
+### §16.3 Quota stop rule
+
+Stop dispatching when any `agent()` result matches `/usage limit|rate limit|quota|limit reached/i`, or
+the harness shows a weekly reading ≥ 85%. Lanes in flight finish; write a resume receipt. Never
+downgrade a model.
+
+### §16.4 Crash-resume recipe
+
+Keep every dirty worktree; read the run id from `progress.md` and `journal.jsonl`; start a new run with
+`START=` the first unrun card; the prefix must be byte-identical to `artifacts/cycle_0/sd39-workflow.js`;
+log a `retro.py incident`.
+
+### §16.5 Environment guards
+
+Carried verbatim into `workflow-instruction.md §2.1` and `§6`.
+
+## §17 — Closure order (STANDING, operator-pinned 2026-09-14)
+
+All cards `complete` → retrospective written and cited → full worktree/branch sweep → **release notes**
+→ **architecture truth-up** → **graphify LAST** over a clean tree at `origin/tranche-19` → **PR as the
+final action**. The operator merges.
+
+## §18 — Seed deltas in SD-39 (DEFAULT, replaces SD-38's byte-identical rule for PF)
+
+SD-39 changes PF saved-character and sheet DTOs (slots, ledger stamps, overrides, Market ids). The PF
+render hashes (`pf_seed_render_hash.rs`) **will** change. Rule: every card renders Aldric (Fighter 3)
+and Elowen (Wizard 5) before and after; a delta is accepted only when the receipt lists every changed
+JSON path and classes it `additive-field | intended-value-change`; any other delta is a defect. SF and
+CPR seed outputs stay byte-identical except in E3.5 (Market shell) and E8.3 (print layout files), whose
+receipts list their deltas the same way. **Enforced by:** G-1; R7 (per-character status) in every receipt.
+
+## §19 — Paper-sheet rule (STANDING, 2026-09-07)
+
+Compute only values that land on the sheet as a number; print everything else; dice stay literal. "Show
+the math" prints the engine's existing explanations rows, never a new derivation engine.
+
+## §20 — No PCGen in live code (STANDING, 2026-09-07)
+
+`src/`, `apps/desktop/` and `apps/desktop/src-tauri/` parse no `.lst`, no `.pcg`, no PCGen token. The
+`.pcg` reader lives in `crates/codex-ingest`; the app calls the sidecar binary. `pcgen-residue-gate` in
+`scripts/verify.sh` is the control.
+
+## §21 — Discovered cards
+
+A defect found mid-run that is in the DoD becomes a card appended to `kanban.md` by the card that found
+it (with the row-count constant re-counted in the same commit, R18), never a note.
+
+## §22 — Planned capability deferrals
+
+`forward-scope-register.md §4` DEF-1…DEF-6. Each has a revisit command checked at E9.5. None is a card.
+
+## §23 — Fence exits
+
+A lane that needs a file outside its FILES YOU OWN returns `declined` with `ownedBy:<card>` unless that
+file's owning epic merge check is `complete`; then it edits under its own criterion and re-runs that
+epic's gate, naming both in the receipt.
+
+## §24 — Peer-session guard (2026-11-01)
+
+`git worktree list` shows `.worktrees/fix-perform-install` on `fix/perform-install-args` owned by
+another session. Every dispatch prefix carries SD-f; the E9.7 sweep removes only `sd39-*` trees.
