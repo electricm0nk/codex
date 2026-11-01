@@ -18,7 +18,7 @@ date: 2026-11-01
 >
 > **This bundle runs as one long `Workflow`-tool script invoked from a live session. It is NOT run
 > with `/loop /batch` and it is NOT a one-shot task.** `workflow-instruction.md §2.4` says how to write
-> the script. **Autonomous defaults apply** (`decisions.md §16`): no questions mid-run, safe defaults
+> the script. **🟡 UNATTENDED MODE** (`decisions.md §16`, §24; corrections §25): no questions mid-run, safe defaults
 > logged, a report after each epic. One card, E9.4, is an **operator gate** (the printed-sheet eyeball);
 > the run waits there and nowhere else. `scope-draft.md` is the *what*; `workflow-instruction.md` is the *how*.
 
@@ -87,8 +87,7 @@ Cyberpunk RED get the print engine, the layout moves and the Market shell (`deci
   R14–R19 (`workflow-instruction.md §12.3`).
 - **tranche-17-ui** (`../tranche-17-ui/`): the layout registry `sheetLayout.ts` SD-39 extends; its open
   findings (29 lb draft kit, level-up gating, no-browser eyeball) are candidates FSR-C3…C5.
-- **Live peer work on 2026-11-01:** worktree `.worktrees/fix-perform-install` on `fix/perform-install-args`
-  belongs to another session. SD-39 never touches it (`workflow-instruction.md §2.1`).
+- **Live peer work:** none (`decisions.md §24`).
 
 ## 5. Build version target
 
@@ -106,7 +105,7 @@ Repo files read `0.19.0` after C1.
 | 4 | Override extras | ignore feat budget, ignore alignment restrictions, ignore encumbrance added to the operator's five | `decisions.md §10` |
 | 5 | Overridden items are tagged | badge in the UI, marked on the "full" printed sheet | `decisions.md §10` |
 | 6 | Unknown `.pcg` items | imported as custom items and listed in an import report | `decisions.md §13` |
-| 7 | One converter re-run for the whole bundle (feat `stackable`, equipment `slot`, enhancement eligibility) | card E1.0, first after C1 | `decisions.md §5` |
+| 7 | No converter re-run: tags and `repeatable` already hold the data | card E1.0 proves it | `decisions.md §25` |
 | 8 | PDF engine crate | Typst as a library, OFL fonts bundled; the card records the exact versions | `decisions.md §4`, `technical-design.md §1` |
 | 9 | Seed renders change in this bundle | additive fields are allowed; every delta is explained field by field in the receipt; silent change is a defect | `decisions.md §18` |
 

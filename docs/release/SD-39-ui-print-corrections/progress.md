@@ -27,7 +27,9 @@ status: planning-ready
   peer worktree `fix-perform-install` present.
 - Author calls without an operator ruling: `README.md §6` rows 1–9.
 - Operator ruling 2026-11-01: "commit now without review". The lead cut `tranche-19` from `origin/develop` and committed this package as C0; C1 still owns the version bump.
-- Mode: attended review, autonomous run (`decisions.md §16`); E9.4 is the one planned operator wait.
+- **UNATTENDED MODE acknowledged 2026-11-01:** the operator launched and walked away; rulings R17–R20 taken first; `decisions.md §16`, §24, §25. E9.4 is the one planned operator wait.
+- Lead re-read the package against the repo before dispatch; 9 corrections in `decisions.md §25`.
+- Merged `fix-perform-install` worktree and local branch removed (R20; 0 dirty files, 0 unmerged commits). `sd39-main` created; the main checkout is back on `develop`.
 
 ### Placeholder gate output (author, 2026-11-01)
 

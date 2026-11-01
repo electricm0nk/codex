@@ -19,9 +19,9 @@ status: planning-ready
 > (`decisions.md §16.2`). §2.4 says how to write the script. `scope-draft.md` is the *what*; this file
 > is the *how*. The orchestrating session never executes RED→GREEN work itself (§2.2).
 >
-> > ### 🟢 AUTONOMOUS RUN — attended launch, no questions mid-run
+> > ### 🟡 UNATTENDED MODE — the operator launched and walked away
 > >
-> > The operator reviewed this package on 2026-11-01 and launches it. From launch on, the standing
+> > Operator, 2026-11-01: "You will be operating in unattended mode". The standing
 > > autonomous rules apply (`decisions.md §16`): take the safe default and log it; never call
 > > `AskUserQuestion`; clear blockers first and escalate only the card that needs a ruling; report after
 > > each epic in `progress.md`; never open the PR while any card is open. **E9.4 is the one planned
@@ -56,8 +56,7 @@ ENVIRONMENT (SD-39, binding — every rule here applies to you):
       git -C /home/ubuntu/workspace/repos/codex worktree add -b sd39/<lane> \
           /home/ubuntu/workspace/repos/codex/.worktrees/sd39-<lane> origin/tranche-19
   Start EVERY command with `cd <your tree> &&` (the shell's directory resets). Never write in
-  /home/ubuntu/workspace/repos/codex itself (the lead's checkout). NEVER touch
-  /home/ubuntu/workspace/repos/codex/.worktrees/fix-perform-install (another session's tree).
+  /home/ubuntu/workspace/repos/codex itself (the lead's checkout).
 - export CARGO_TARGET_DIR=/home/ubuntu/cargo-target/sd39-<lane>    # one per lane per source tree;
   never under /tmp; never shared across trees; the main lane uses /home/ubuntu/cargo-target/sd39-main.
   Claim it: mkdir -p "$CARGO_TARGET_DIR" && echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"
@@ -76,6 +75,9 @@ ENVIRONMENT (SD-39, binding — every rule here applies to you):
 - FRONTEND: in apps/desktop run `npm run typecheck && npm test && npm run ui-smoke:doc` for any
   frontend or spec.json change; `npm run ui-smoke` for a card that adds a ui-smoke row, always with
   `export RUN_DESKTOP_AGENT=sd39-<card-id>` first.
+- `decisions.md §25` WINS over older text in this package. Reuse before you build: read the existing code your card names first.
+- A test filter that matches 0 tests is a FAIL. Run each filter in the cargo workspace that holds the test.
+- WORKTREES: a side lane removes its own worktree, its local sd39/<lane> branch and its CARGO_TARGET_DIR when its work is pushed.
 - SEED OUTPUTS BEFORE AND AFTER (G-1): mkdir -p every *_OUT dir first. PF deltas are listed path by
   path and classed additive-field | intended-value-change; SF and CPR deltas are defects outside
   E3.5 / E8.3. Never re-baseline silently.
@@ -127,11 +129,10 @@ Load the `workflow-authoring` skill first. Plain JavaScript:
 
 1. `export const meta = { name: 'sd39-ui-print-corrections', description, phases }` with one phase per
    §3 row, same titles.
-2. **The script reads `kanban.md`** at each step: it dispatches a card only when every `Depends on` ID
-   is `complete`, and it picks up discovered cards from the board (R8).
+2. **A script has no file access**, so the card list is in the script and each dispatched agent reads `kanban.md`: it returns `declined` if a `Depends on` is not `complete`. Each agent returns `{status, sha, receipt, discovered}`; `discovered` card IDs run before that epic's merge check (R8).
 3. `pipeline()` in the main lane; `parallel()` only for the three side lanes, each making its own
    worktree per the prefix (never the harness's isolation: its base is the session checkout).
-4. A **3-slot cargo semaphore** keyed on the `Cargo?` column.
+4. Cargo lanes stay ≤ 3 by construction: the main lane, `ingest`, and at most one other side lane.
 5. **Every `agent()` sets `model`** from the Tier column, on the same line as `agent(`. Check:
    `awk '/agent\(/ && !/model:/' <script>` prints nothing. Tier is exactly `opus`, `sonnet` or `haiku`;
    C0 (`lead`) is never dispatched; E9.9 is two calls (`sonnet` truth-up, then `opus` critic); E9.4 is
@@ -156,8 +157,7 @@ export const meta = {
 }
 // tier and cargo come from epic-breakdown.md §0; deps from kanban.md (R8). model on the agent( line.
 const run = (card) => agent(PREFIX + PROCEDURE + criterion(card), { model: card.tier, phase: card.phase })
-const slots = semaphore(3)
-const go = async (card) => { await depsComplete(card); quotaGate(); return card.cargo ? slots.with(() => run(card)) : run(card) }
+const go = async (card) => { quotaGate(); return run(card) }
 
 phase('C — package + cut');  await go(C1)
 phase('E1 — guards');        await go(E1_0)
@@ -295,7 +295,7 @@ on `origin/tranche-19` and merge nothing.
 - **Blocker doctrine:** cleared or escalated, never deferred. The test: was this scope in the Definition
   of Done at scoping? If yes, it is a blocker.
 - **Disk:** after every side lane ends, `df -h /` and `git worktree list`; prune merged, unlocked, clean
-  `sd39-*` worktrees and delete their `CARGO_TARGET_DIR`s. Never remove a `locked` tree or the peer's.
+  `sd39-*` worktrees and delete their `CARGO_TARGET_DIR`s. Never remove a `locked` tree.
 
 ## 9. Placeholder-resolution checklist
 
@@ -308,7 +308,7 @@ card binds (`<sha>`, `<c1-sha>`, `<base>`, `<head>`, `<dir>`, `<lane>`, `<card>`
 `<epic>`, `<list>`, `<text>`, `<output>`, `<violations>`, `<result>`, `<value>`, `<cmd>`, `<log>`,
 `<pidfile>`, `<script>`, `<type>`, `<new>`, `<item>`, `<slot>`, `<flag>`, `<base_id>`, `<name>`,
 `<system>`, `<file>`, `<json>`, `<fixture>`, `<E2.4 ids>`, `<new ids>`, `<F-1 globs>`, `<BodySlot>`,
-`<kind>`, and the pattern/message placeholders `<pool>`, `<price>`, `<gold>`, `<same>`, `<book>`, `<description>`, `<epic-start>`), (b) a deferred value with a named resolution point (`0.19.<run>` → first tester publish after
+`<kind>`, `<price>`, and the pattern/message placeholders `<pool>`, `<price>`, `<gold>`, `<same>`, `<book>`, `<description>`, `<epic-start>`), (b) a deferred value with a named resolution point (`0.19.<run>` → first tester publish after
 the operator merges; `(E1.0)`, `(E2.4)`, `(E7.1)` figures → those cards; the run id → launch), or (c) a
 bug to fix before launch. The author's run is recorded in `progress.md`.
 
@@ -330,8 +330,8 @@ bug to fix before launch. The author's run is recorded in `progress.md`.
 2. **E9.6 retrospective:** `scripts/retro.py summary --since 2026-11-01 --json`; write
    `docs/retro/sd39-retrospective.md` in the shape of `docs/retro/sd38-retrospective.md`; cite it from
    `references/README.md` in the same commit.
-3. **E9.7 sweep:** every `sd39-*` worktree and `sd39/*` branch; found vs removed counts; never `test`,
-   `update-index`, a locked tree, or the peer's `fix-perform-install`; delete `/home/ubuntu/cargo-target/sd39-*`.
+3. **E9.7 sweep:** every `sd39-*` worktree and `sd39/*` branch except `sd39-main`, which E9.8–E9.11 still need (the script's last step removes it after the PR); found vs removed counts; never `test`,
+   `update-index` or a locked tree; delete `/home/ubuntu/cargo-target/sd39-*`.
 4. **E9.8 release notes:** replace the interim body; `grep -c 'SD-39 INTERIM NOTES'` → 0; every figure with
    its command; `python3 tools/release/resolve_release_notes.py --repo-root .` passes.
 5. **E9.9 architecture truth-up**
@@ -353,7 +353,7 @@ bug to fix before launch. The author's run is recorded in `progress.md`.
 
 | Rule | Statement | Checked by |
 |---|---|---|
-| R1 Converter lane in the prefix | **Re-activated** for SD-39: E1.0 is the one converter run; `--check` in G-1 | E1.0 receipt; G-1 |
+| R1 Converter lane in the prefix | Only if E1.0's proof fails (`decisions.md §25`); `--check` in G-1 | E1.0 receipt; G-1 |
 | R2 No hand-kept desktop tables | Budget pools, prices and slots come from the catalog/data, never a TSX table | E1.MC, E3.MC, E4.MC |
 | R3 Merge checks stay on Opus | every `*.MC` is `opus` | `awk -F'\|' '$2 ~ /MC/ && $4 !~ /opus/' kanban.md` prints nothing |
 | R4 `ownedBy` declines | a declined item naming a later card goes to that card | script review |
@@ -371,11 +371,12 @@ bug to fix before launch. The author's run is recorded in `progress.md`.
 
 | Rule | Statement | Checked by |
 |---|---|---|
-| **R14 Out-dir is a control** | every G-1 command carries `mkdir -p`; if `sf-seed-lines-out-dir-missing` fires once in SD-39, E8.3 makes the writer tests create their dir | `grep -c 'sf-seed-lines-out-dir-missing' docs/retro/events.jsonl` at E8.3 |
+| **R14 Out-dir is a control** | every G-1 command carries `mkdir -p`; if `sf-seed-lines-out-dir-missing` fires once in SD-39, E8.3 makes the writer tests create their dir | `grep -rl 'sf-seed-lines-out-dir-missing' docs/retro/events` at E8.3 |
 | **R15 FILES YOU OWN is closed** | each card greps `boundary/*.ts wire()` and second call sites before its first write; the receipt has the closure-check row | `grep -L 'closure check' artifacts/epic_*/*_cycle_receipt.md` prints nothing |
 | **R16 Clippy before the first commit** | `cargo clippy --locked --tests` on touched workspaces before any `.rs` card's first local commit | receipt row "Clippy before first commit" |
 | **R17 Full ui-smoke has an owner** | E2.4 runs the full suite once and records the red-row list as FSR-C2 evidence; the full suite is **not** a gate in SD-39 (stated here, per the retro's wording) | E2.4 receipt |
 | **R18 Re-count at discovery** | the card that adds a discovered row edits the `51` constant in G-12 and this file in the same commit | E9.5's `ROW_COUNT` check never fires |
+| **R20 Zero tests is a fail** | a filter matching 0 tests proves nothing; receipts quote the `N passed` line | receipts |
 | **R19 Observed concurrency, not stated** | before dispatching a side lane, `git status --porcelain` and `git worktree list` are read; no two cards share a tree on "depends only on" reasoning | the lead's dispatch log in `progress.md` |
 
 ### 12.3 Per-cycle and measurement rules

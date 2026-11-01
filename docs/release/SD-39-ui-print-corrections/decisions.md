@@ -58,6 +58,10 @@ The grill transcript is `artifacts/cycle_0/defects-and-rulings-2026-11-01.md`. T
 | R14 | Magic variants | **Generate +1…+5 at runtime from base item + enhancement table; special abilities and materials later** |
 | R15 | System scope | **PF1e gets everything; SF1e and CPR get print + layout + Market shell** |
 | R16 | Epic order | **UI first, print last** (operator chose 2 over the recommended print-first) |
+| R17 | Campaign notes (no such field exists) | **Use what exists:** the character bio + the campaign's description. No new field |
+| R18 | A newly bought item | **Worn if its slot is free**; else carried, with the reason shown; no-slot items carried |
+| R19 | The Print button | **Makes the PDF and opens it in the system viewer**; you print from there |
+| R20 | Merged worktree `fix-perform-install` | **Removed** at launch, with its local branch |
 
 ## §4 — Print pipeline (R1, R2, R5, R6)
 
@@ -68,8 +72,7 @@ a shared frame and shared blocks, and writes a PDF. **Typst as a library** (`typ
 latest stable at E8.1; versions recorded in E8.1's receipt and `technical-design.md §1`), with OFL fonts
 bundled under `apps/desktop/src-tauri/resources/fonts/` and listed in `tauri.conf.json bundle.resources`
 + `tests/packaged_resources.rs`. Save PDF = save-as dialog (`tauri-plugin-dialog`) then open with
-`tauri-plugin-opener`; Print = same bytes to a temp file handed to the OS print path (`xdg-open`-style
-via the opener on Linux; the receipt names the mechanism per platform). The current CSS print path
+`tauri-plugin-opener`; Print = same bytes to a temp file, opened in the system PDF viewer (R19). The current CSS print path
 (`apps/desktop/src/characterHub/printLayout.ts`, `CharacterSheet.tsx:2854 window.print()`) is removed by E8.4.
 **Enforced by:** G-9, G-10; E8.MC. **Revisit:** if `typst` cannot be built offline/CI, E8.1 returns
 `blocked-escalated` naming the alternative (`printpdf` with hand layout) and its cost.
@@ -187,9 +190,9 @@ Per `~/.claude/CLAUDE.md` (2026-09-29): engine, UI, verify, every merge check �
 → **Haiku 4.5**. Every `agent()` sets `model` (`awk '/agent\(/ && !/model:/' <script>` prints nothing).
 Planning disclosure: this package was written by Fable 5.1.
 
-## §16 — Run protocol (attended launch, autonomous run)
+## §16 — Run protocol (UNATTENDED)
 
-The operator is present on 2026-11-01 and reviews this package. Once launched the run follows the
+The operator launched and walked away on 2026-11-01. The run follows the
 standing autonomous rules (memory: "operator away — autonomous mode", "run to 100% DoD without asking"):
 
 1. Clear a blocker first; if only an operator ruling can clear it, mark **only that card**
@@ -211,7 +214,7 @@ standing autonomous rules (memory: "operator away — autonomous mode", "run to 
 | SD-c | A count differs from its CUI figure | Re-derive with two implementations; correction via `retro.py` with `--verified-by` |
 | SD-d | A PF seed render delta | Allowed only when every changed field is listed in the receipt and is additive or the card's stated intent; otherwise a defect |
 | SD-e | An SF or CPR seed delta outside E3.5 / E8.3 | A defect. Fix it. Never re-baseline |
-| SD-f | A worktree, branch or file another session may own (`fix-perform-install` on 2026-11-01) | Do not touch it; log it |
+| SD-f | A worktree, branch or file another session may own | Do not touch it; log it |
 | SD-g | A PCGen `SLOTS` value with no Codex `BodySlot` | Map to `none`, list it in E1.0's receipt with the count; never guess a slot |
 | SD-h | `typst` build fails in CI | E8.1 `blocked-escalated` naming the failing job and the alternative |
 | SD-i | Usage-limit stop | Stop dispatching, write a resume receipt (§16.3) |
@@ -284,7 +287,34 @@ A lane that needs a file outside its FILES YOU OWN returns `declined` with `owne
 file's owning epic merge check is `complete`; then it edits under its own criterion and re-runs that
 epic's gate, naming both in the receipt.
 
-## §24 — Peer-session guard (2026-11-01)
+## §24 — Unattended run
 
-`git worktree list` shows `.worktrees/fix-perform-install` on `fix/perform-install-args` owned by
-another session. Every dispatch prefix carries SD-f; the E9.7 sweep removes only `sd39-*` trees.
+The operator launched SD-39 on 2026-11-01 and said "You will be operating in unattended mode". §16 applies
+in full. No live peer: the merged `.worktrees/fix-perform-install` was removed (R20), so SD-f guards only
+trees found later. Subagents default to Opus; Sonnet and Haiku where the card's Tier says.
+
+## §25 — Pre-launch corrections (2026-11-01; these win over any older text in this package)
+
+The lead re-read the package against the repo before dispatch (`AGENTS.md`). Each row is a claim the
+package made and what the code shows.
+
+| Package said | Code shows | Effect |
+|---|---|---|
+| PCGen `SLOTS:` holds the body location | It holds a **hand count** (Core Rulebook values 2, 1, 0: `grep -rhE 'SLOTS:' cr_equip_*.lst`). Location comes from `TYPE` + `equipmentslots.lst` `EQSLOT` | E1.0 builds the table over `tags` |
+| A converter re-run is needed | `tags`, `repeatable` and the `Slot:` prose line are already in `data/sheet_rules/**` | No re-run unless E1.0's proof fails. §5 is superseded |
+| Worn vs carried must be built | `set_equipment_active_state`, the stow control (`CharacterSheet.tsx:1642`) and the engine filter (`pilot_compute_corpus.rs:280`) exist. Missing: slots, refusal, the Equipment view | E4 adds slots and proves the rest. §9's new commands are dropped. Saved items keep their state |
+| Market needs `buy_item` / `sell_item` | `purchase_equipment` and `remove_equipment_selection` exist with `PriceMode` | E3.2 extends them. §8's new commands are dropped |
+| `+N` needs a new `enhancement.rs` | `equipment_modifier/plus1a`, `plus1w`… and `attach_equipment_modifier` exist | E3.1 and E3.4 reuse them, and change only what a proof shows is missing |
+| Selections gain `taken_at_level`, with a schema bump | `selected_feats` is `Vec<String>`, engine input | E5 uses a `ledger.json` beside `custom.json`. No schema bump, and saved characters are not rewritten. §11's fields live in that file |
+| Sidecar via `tauri.conf.json externalBin` + `tauri-plugin-shell` | `tauri-build` fails when an `externalBin` is absent, and `publish-tester-release.yml` builds Linux, macOS and Windows | `tauri.sidecar.json` passed only at bundling; `std::process::Command`; all three jobs build the binary. §12 is amended |
+| Linux only for print | The app also ships for macOS and Windows | Print opens the viewer (R19), which works on all three |
+| "Campaign notes" exist | They do not | R17 |
+
+**Measured (`python3` over `data/sheet_rules/*/equipment/*.json`, 2026-11-01):** 7,386 records, 2,906 with a slot
+tag, 1,617 with a `Slot:` line, 19 where the two disagree; the prose wins. Items with neither have no slot.
+
+**Slot vocabulary.** The operator said a ring takes "a hands slot". The book and `equipmentslots.lst` give rings
+their own slot, two of them. SD-39 follows the book; a change is one table row.
+
+**Does not cover:** whether every tag maps to the right slot on every book. E1.0's test names the shapes it checks and
+lists the rest as counts.

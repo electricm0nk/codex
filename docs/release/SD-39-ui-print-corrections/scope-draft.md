@@ -30,6 +30,8 @@ status: planning-ready — the defects are the operator's words; the rulings are
 
 The verbatim transcript is `artifacts/cycle_0/defects-and-rulings-2026-11-01.md`.
 
+> **Corrections to the Definition of Done below:** `decisions.md §25` and rulings R17–R20 win where they differ.
+
 ## 2. Definition of Done
 
 SD-39 is done when every row below holds on `tranche-19` and the operator has signed E9.4.
@@ -47,7 +49,7 @@ SD-39 is done when every row below holds on `tranche-19` and the operator has si
 4. **Market.** The three Add buttons are gone on all three systems; Market lists only the category chosen;
    PF armor, shields and weapons offer +1…+5 generated at runtime at Core Rulebook prices; buy and sell
    honour the three price modes; an unaffordable buy is refused.
-5. **Equipping.** Every PF equipment record that PCGen gives a SLOTS value carries a Codex `slot`; worn
+5. **Equipping.** Every PF equipment record that names a body location (tags or `Slot:` line) resolves to a slot; worn
    items apply and carried items do not; a taken slot refuses a second item with the slot named; the Gear
    tab has an Equipment control; custom items may declare structured bonuses and a slot.
 6. **Ledger.** Every new feat / spell / skill rank / ability increase is stamped with the level taken;
@@ -75,5 +77,5 @@ and `spec.json` (`epic-breakdown.md §0`).
 
 ## 5. Mode
 
-Attended launch, autonomous run: the operator reviews this package, then the run takes safe defaults
+Unattended: the run takes safe defaults
 and reports after each epic (`decisions.md §16`). E9.4 is the only card that waits for the operator.

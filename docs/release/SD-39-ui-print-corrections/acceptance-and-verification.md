@@ -11,7 +11,7 @@ status: planning-ready
 
 # SD-39 Acceptance and Verification
 
-Gates G-1…G-12 map the Definition of Done (`scope-draft.md §2`) to commands. Every closure gate is
+Gates G-1…G-12 map the Definition of Done (`scope-draft.md §2`) to commands. Run each filter in the cargo workspace that holds the test. **A filter that matches 0 tests is a FAIL, not a pass** (R20). Every closure gate is
 also a fenced command somewhere a reader can copy without unescaping.
 
 ## G-1 Seed deltas (DoD 9) — every card; re-checked at every `*.MC` and E9.3
@@ -28,7 +28,7 @@ import json,sys
 PY
 # SF: four seeds' printed lines; CPR: three seeds
 cd apps/desktop/src-tauri && mkdir -p <dir> && SF_SEED_LINES_OUT=<dir> cargo test --locked -j 8 --bins sf_seed_lines_print_every_resolved_term_and_no_pcgen_residue -- --test-threads=8
-cd apps/desktop/src-tauri && mkdir -p <dir> && CPR_SHEET_LINES_OUT=<dir> cargo test --locked -j 8 --bins cpr_sheet_lines -- --test-threads=8
+cd apps/desktop/src-tauri && mkdir -p <dir> && CPR_SHEET_LINES_OUT=<dir> cargo test --locked -j 8 --bins every_rule_line_prints_with_its_resolved_numbers -- --test-threads=8
 diff -r <base> <head>                                 # pass = no output, except E3.5 and E8.3 (listed)
 cargo run --locked -j 8 -p codex-ingest --bin sheet_rule_convert -- --check
 cargo run --locked -j 8 -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check
@@ -37,19 +37,17 @@ cargo run --locked -j 8 -p codex-ingest --bin sheet_rule_convert -- --system sta
 `mkdir -p <dir>` is in the command because the writer tests panic on a missing directory (SD-38 retro §2);
 E8.3 builds the in-test control if the incident fires once (R14).
 
-## G-2 Converter re-run bounded (E1.0)
+## G-2 Data unchanged unless a proof failed (E1.0)
 
 ```bash
-git diff --name-only <c1-sha>..HEAD -- data | awk 'END{print NR}'          # recorded
-# every changed key across all changed files is one of the three
-git diff <c1-sha>..HEAD -- data | awk '/^[-+]/ && !/^(\+\+\+|---)/' | grep -oE '"[a-z_]+":' | sort -u
-# expected output exactly: "enhanceable":  "slot":  "stackable":
+git diff --name-only <c1-sha>..HEAD -- data/sheet_rules | awk 'END{print NR}'     # 0, unless E1.0's receipt names the failed proof
 ```
 
 ## G-3 Feat guards (DoD 3) — E1.1–E1.3, E1.MC
 
 ```bash
-cargo test --locked -j 8 feat_budget feat_duplicate -- --test-threads=8
+cargo test --locked -j 8 feat_budget -- --test-threads=8
+cargo test --locked -j 8 feat_duplicate -- --test-threads=8
 cd apps/desktop && npm run typecheck && npm test        # picker filter test included
 ```
 
@@ -58,13 +56,13 @@ cd apps/desktop && npm run typecheck && npm test        # picker filter test inc
 ```bash
 cd apps/desktop && npm test                             # sheetLayout.test.ts region map, drawer reducer
 grep -c 'Character Details' apps/desktop/src/characterHub/CharacterSheet.tsx   # ≥ 1 (heading)
-RUN_DESKTOP_AGENT=sd39-e2.4 npm run ui-smoke -- --rows <E2.4 ids>
+RUN_DESKTOP_AGENT=sd39-e2.4 npm run ui-smoke -- --only <E2.4 ids>
 ```
 
 ## G-5 Market (DoD 4) — E3.1–E3.5, E3.MC
 
 ```bash
-cargo test --locked -j 8 market_category_filter enhancement_price_table market_buy_sell enhancement_rows -- --test-threads=8
+for t in market_category_filter enhancement_price_table market_buy_sell enhancement_rows; do cargo test --locked -j 8 $t -- --test-threads=8; done
 grep -c 'Add Weapon\|Add Armor\|Add Gear' apps/desktop/src/characterHub/{Character,Starfinder,Cyberpunk}CharacterSheet.tsx   # 0 0 0
 ```
 
@@ -74,7 +72,7 @@ gp, plus masterwork 150/300) is quoted in the test with its page cite.
 ## G-6 Slots and custom items (DoD 5) — E4.1–E4.4, E4.MC
 
 ```bash
-cargo test --locked -j 8 slot_conflict worn_vs_carried custom_item_bonuses -- --test-threads=8
+for t in slot_of slot_conflict worn_vs_carried custom_item_bonuses; do cargo test --locked -j 8 $t -- --test-threads=8; done
 ```
 
 ## G-7 Overrides (DoD 7) — E6.1, E6.2, E6.MC
@@ -86,7 +84,7 @@ cargo test --locked -j 8 overrides_ -- --test-threads=8     # 16 cases
 ## G-8 Ledger (DoD 6) — E5.1–E5.3, E5.MC
 
 ```bash
-cargo test --locked -j 8 ledger_stamp ledger_migration progression_ledger -- --test-threads=8
+for t in ledger_stamp ledger_migration progression_ledger; do cargo test --locked -j 8 $t -- --test-threads=8; done
 ```
 
 ## G-9 Print engine present and the old path gone (DoD 1) — E8.1, E8.4
@@ -109,8 +107,8 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 --test print_golden -- --t
 
 ```bash
 cargo test --locked -p codex-ingest -j 8 pcg_import_fixtures -- --test-threads=8
-bash scripts/verify.sh --only pcgen-residue-gate crate-wall
-grep -rn 'pcg' src apps/desktop/src apps/desktop/src-tauri/src | grep -v 'sidecar\|externalBin\|import_character_from_pcg' | awk 'END{print NR}'   # 0
+bash scripts/verify.sh --only pcgen-residue-gate --only crate-wall
+grep -rln 'pcg' src apps/desktop/src apps/desktop/src-tauri/src      # only the sidecar caller and its boundary; read by hand in the receipt
 ```
 
 ## G-12 Closure (DoD 10) — E9.1–E9.11

@@ -33,8 +33,8 @@ operator moves scope between classes.
 
 | ID | Work | Falls out of |
 |---|---|---|
-| IMP-1 | One converter re-run adding `stackable`, `slot`, enhancement eligibility | COM-3, COM-4, COM-5 (E1.0) |
-| IMP-2 | Saved-character schema version bump + migration hook | COM-6 (E5.1, E5.2) |
+| IMP-1 | Slot table and `slot_of` over existing tags (no converter run unless the proof fails) | COM-3, COM-4, COM-5 (E1.0) |
+| IMP-2 | `ledger.json` beside `custom.json` + first-load build | COM-6 (E5.1, E5.2) |
 | IMP-3 | `sheetLayout.ts` registers the left rail and right column | COM-2 (E2.1) |
 | IMP-4 | Packaged resources: fonts + sidecar in `tauri.conf.json` and `packaged_resources.rs` | COM-1, COM-8 (E9.1) |
 | IMP-5 | ui-smoke rows for every new control; inventory regenerated | every UI card (R12 of SD-38) |
@@ -45,7 +45,7 @@ operator moves scope between classes.
 
 | ID | Work | Source | Why not in SD-39's DoD | Revisit condition (checked at E9.5) |
 |---|---|---|---|---|
-| FSR-C1 | Writer tests for `SF_SEED_LINES_OUT` / `CPR_SHEET_LINES_OUT` create their out dir | `docs/retro/sd38-retrospective.md` change 1 | not a user-facing correction; **but** R14 below makes E8.3 build it if the incident fires once | `grep -c 'sf-seed-lines-out-dir-missing' docs/retro/events.jsonl` rises during SD-39 |
+| FSR-C1 | Writer tests for `SF_SEED_LINES_OUT` / `CPR_SHEET_LINES_OUT` create their out dir | `docs/retro/sd38-retrospective.md` change 1 | not a user-facing correction; **but** R14 below makes E8.3 build it if the incident fires once | `grep -rl 'sf-seed-lines-out-dir-missing' docs/retro/events \| awk 'END{print NR}'` rises during SD-39 |
 | FSR-C2 | Full `npm run ui-smoke` as a gate; stale rows rewritten | SD-38 retro "did not work" (a) | ≈50 stale PF rows predate this bundle | E2.4's `npm run ui-smoke` report shows any red row SD-39 did not touch |
 | FSR-C3 | Create's draft preview shows "29 lb carried" with no equipment | `../tranche-17-ui/brief-2-layout.md:57` | not dictated; E4.2 reads the source while wiring weight and records the cause | E4.2's receipt names the cause and whether draft and saved sheet differ |
 | FSR-C4 | Level-up gating findings | tranche-17-ui open findings | not dictated | the operator names them |

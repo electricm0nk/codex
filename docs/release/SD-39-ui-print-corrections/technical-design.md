@@ -11,6 +11,8 @@ status: planning-ready — every existing path below was checked with ls/grep -n
 
 # SD-39 Technical Design
 
+> **`decisions.md §25` wins where this file differs.** It corrects §2 (slots from tags, stow exists), §3 (extend `purchase_equipment`, reuse the eqmods), §5 (ledger file) and §7 (sidecar config). Print opens the viewer (R19); BioNotes is the bio + the campaign description (R17).
+
 ## §1 Print pipeline (E8)
 
 **Today.** `CharacterSheet.tsx:2854` calls `window.print()` after two animation frames;

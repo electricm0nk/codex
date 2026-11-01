@@ -11,6 +11,8 @@ status: planning-ready
 
 # SD-39 Technical Requirements
 
+> **`decisions.md §25` wins where this file differs.**
+
 ## 1. Pre-launch prerequisites (each with its check; run by C1 and recorded in its receipt)
 
 | ID | Prerequisite | Check | Closes at |
@@ -29,7 +31,7 @@ status: planning-ready
 
 | ID | Requirement | Verified by |
 |---|---|---|
-| NR-1 | No live-code PCGen parsing: `src/`, `apps/desktop/**` contain no `.pcg`/`.lst` reader | `pcgen-residue-gate` stage; `grep -rn 'pcg' src apps/desktop/src-tauri/src \| grep -v sidecar` empty |
+| NR-1 | No live-code PCGen parsing: `src/`, `apps/desktop/**` contain no `.pcg`/`.lst` reader | `pcgen-residue-gate` stage; `grep -rln 'pcg' src apps/desktop/src-tauri/src` read by hand in E7.2's receipt |
 | NR-2 | Every sheet number printed comes from an explanations row or the saved DTO; no TSX or Typst re-derives a number | E8.MC review; `grep -n 'fn compute\|calc(' apps/desktop/src-tauri/src/print/` empty |
 | NR-3 | PDF output is deterministic for identical input (fonts bundled, no timestamps) | golden test hashes two runs equal |
 | NR-4 | A4 and US Letter both lay out without clipped text (Typst overflow warnings = 0) | E8.5 asserts Typst diagnostics empty |
@@ -39,7 +41,7 @@ status: planning-ready
 | NR-8 | +N variant price = base + masterwork + N²×(1000 armor/shield \| 2000 weapon) gp | `cargo test enhancement_price_table` against the CRB table (5 armor + 5 weapon rows) |
 | NR-9 | Worn applies, carried does not: AC with armor `SelectedInactive` = AC without armor; weight equal in both states | `cargo test worn_vs_carried` on Aldric |
 | NR-10 | Slot conflict refused with `"<slot> slot is taken by <item>"`; two rings allowed | `cargo test slot_conflict` |
-| NR-11 | Every new selection carries `taken_at_level = Some(level)`; a migrated legacy save has every row `assigned_on_upgrade = true` and the sum of assigned feats ≤ slots | `cargo test ledger_stamp`, `cargo test ledger_migration` |
+| NR-11 | Every new selection has a ledger row with `taken_at_level = Some(level)`; a legacy ledger has every row `assigned_on_upgrade = true` and assigned feats ≤ slots | `ledger_stamp`, `ledger_migration` tests |
 | NR-12 | Each override flag is consulted by exactly the command(s) `decisions.md §10` names; admitted records carry `override = Some(flag)` | `cargo test overrides_*` (8) |
 | NR-13 | `.pcg` import of every fixture produces a character that loads in the app without error; unknown keys counted in the report | `cargo test -p codex-ingest pcg_import_fixtures` |
 | NR-14 | SF and CPR seed outputs byte-identical outside E3.5/E8.3; PF deltas explained field by field | G-1 |

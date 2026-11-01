@@ -35,7 +35,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51
 |---|---|---|---|---|---|
 | C0 | Package committed + Cycle 0 receipt | lead | complete | — | this commit; branch cut by the lead |
 | C1 | 0.19.0 on 14 surfaces + notes pointer (branch already cut) | haiku | ready | C0 | |
-| E1.0 | Converter: stackable, slot, enhanceable + one re-run | opus | waiting | C1 | |
+| E1.0 | Slot table + slot_of; prove repeatable and tags | opus | waiting | C1 | |
 | E1.1 | Feat budget rows + refusal | opus | waiting | E1.0 | |
 | E1.2 | Duplicate feat guard | opus | waiting | E1.1 | |
 | E1.3 | Hide-unmet checkbox | opus | waiting | E1.2 | |
@@ -47,17 +47,17 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51
 | E2.4 | ui-smoke rows + inventory | sonnet | waiting | E2.3 | |
 | E2.MC | E2 merge check + Epic report | opus | waiting | E2.4 | |
 | E3.1 | list_market + category fix + +N variants | opus | waiting | E2.MC | |
-| E3.2 | buy_item / sell_item + price modes | opus | waiting | E3.1 | |
+| E3.2 | Sell + +N purchase on existing purchase_equipment | opus | waiting | E3.1 | |
 | E3.3 | Market dialog replaces Add buttons (PF) | opus | waiting | E3.2 | |
 | E3.4 | Enhancement bonus → AC/attack/damage rows | opus | waiting | E3.3 | |
 | E3.5 | SF + CPR Market shell | opus | waiting | E3.3 | side lane sf-cpr |
 | E3.MC | E3 merge check + Epic report | opus | waiting | E3.4, E3.5 | |
-| E4.1 | BodySlot + equip/unequip engine + commands | opus | waiting | E3.MC | |
-| E4.2 | Worn vs carried consumption + legacy stay worn | opus | waiting | E4.1 | |
+| E4.1 | Slot check on set_equipment_active_state; wear if free | opus | waiting | E3.MC | |
+| E4.2 | Prove carried adds weight only | opus | waiting | E4.1 | |
 | E4.3 | Equipment panel | opus | waiting | E4.2 | |
 | E4.4 | Custom item bonuses + slot | opus | waiting | E4.3 | |
 | E4.MC | E4 merge check + Epic report | opus | waiting | E4.4 | |
-| E5.1 | taken_at_level stamp + schema version | opus | waiting | E4.MC | |
+| E5.1 | Ledger file, stamped on every add | opus | waiting | E4.MC | |
 | E5.2 | Legacy ledger migration | opus | waiting | E5.1 | |
 | E5.3 | Drawer content from list_progression_ledger | opus | waiting | E5.2 | |
 | E5.MC | E5 merge check + Epic report | opus | waiting | E5.3 | |
