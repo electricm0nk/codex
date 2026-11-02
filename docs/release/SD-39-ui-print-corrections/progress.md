@@ -57,6 +57,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E2 | E2.4 | complete | 22688208ec | artifacts/epic_2/E2.4_cycle_receipt.md |
 | E2 | E2.MC | complete | this commit | artifacts/epic_2/E2.MC_cycle_receipt.md |
 | E3 | E3.1 | complete | 93c596cc1c | artifacts/epic_3/E3.1_cycle_receipt.md |
+| E3 | E3.2 | complete | 61aad6b9ab | artifacts/epic_3/E3.2_cycle_receipt.md |
 
 ## Epic reports
 
@@ -121,6 +122,8 @@ seed deltas, open blockers.)
 | E3.1 | Which list a magic suit of armor is on | Magic item only: a magic marker wins | Armor as well, which would also put tagged rods on Weapon |
 | E3.1 | An arms row with no type tags | Gear, still buyable | A kind guessed from its name |
 | E3.1 | Unpriced template twins, `Codex-Named Unit` rows | Hidden | Shown, as the old picker did |
+| E3.2 | A `+N` sale's refund when the bonus was attached free through Attach Modifier | The copy's offer price, what a `+N` sells for | A record of what was paid, which needs a new field; the free attach is the defect, E3.6 |
+| E3.2 | How a sale names a copy | `bonus` on the request: `0` plain, `N` a `+N`, absent the first | A list index, which the sheet's rows do not carry |
 
 ## Open blockers
 

@@ -59,10 +59,10 @@ grep -c 'Character Details' apps/desktop/src/characterHub/CharacterSheet.tsx   #
 RUN_DESKTOP_AGENT=sd39-e2.4 npm run ui-smoke -- --only <E2.4 ids>
 ```
 
-## G-5 Market (DoD 4) — E3.1–E3.5, E3.MC
+## G-5 Market (DoD 4) — E3.1–E3.6, E3.MC
 
 ```bash
-for t in market_category_filter enhancement_price_table market_buy_sell enhancement_rows; do cargo test --locked -j 8 $t -- --test-threads=8; done
+for t in market_category_filter enhancement_price_table market_buy_sell market_attach_price enhancement_rows; do cargo test --locked -j 8 $t -- --test-threads=8; done
 grep -c 'Add Weapon\|Add Armor\|Add Gear' apps/desktop/src/characterHub/{Character,Starfinder,Cyberpunk}CharacterSheet.tsx   # 0 0 0
 ```
 
@@ -116,7 +116,7 @@ grep -rln 'pcg' src apps/desktop/src apps/desktop/src-tauri/src      # only the 
 ```bash
 cd docs/release/SD-39-ui-print-corrections
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 53) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 54) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E9\.([5-9]|1[01]) / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c 'usable: yes' artifacts/epic_9/E9.4_cycle_receipt.md        # 3
 grep -c 'SD-39 INTERIM NOTES' release-notes.md                        # 0 at E9.8+

@@ -1,0 +1,5 @@
+Temporary test, not committed: seed funded 2,000 cp, Standard mode.
+  market_buy Longsword (Base), no bonus        -> after plain buy 500
+  attach_equipment_modifier_at_root ~ +1 ~     -> attached true; after free attach 500
+  market_sell Some(1)                          -> after sale 116250
+Discovered card E3.6.

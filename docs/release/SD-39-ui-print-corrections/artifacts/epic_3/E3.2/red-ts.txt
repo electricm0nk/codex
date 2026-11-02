@@ -1,0 +1,1 @@
+src/boundary/purchaseEquipment.test.ts(18,7): error TS2353: Object literal may only specify known properties, and 'bonus' does not exist in type 'PurchaseEquipmentRequest'.
