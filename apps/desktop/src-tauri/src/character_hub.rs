@@ -9950,7 +9950,7 @@ mod tests {
     }
 
     /// The whole census at 1st level, with what creation seeds and nothing picked: no class starts
-    /// over budget. Covers the seeds alone; picks are covered by the tests above for four shapes.
+    /// over budget. Covers the seeds alone; picks are covered by the tests above for five shapes.
     #[test]
     fn feat_budget_no_census_class_is_over_budget_at_birth() {
         let mut checked = 0;
@@ -9987,7 +9987,9 @@ mod tests {
     #[test]
     fn a_fighter_1_is_refused_improved_two_weapon_fighting_with_the_reasons() {
         let root = tempdir("add-feat-prereq-refused");
-        let envelope = level_up_test_envelope("race:human", 1);
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        // A slot left open, so the refusal under test is the prerequisite's, not the budget's.
+        envelope.character_input.chosen.selected_feats.retain(|feat| feat != "feat:dodge");
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
         let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
 
@@ -10053,7 +10055,7 @@ mod tests {
     #[test]
     fn a_feat_with_no_prerequisites_is_still_added_through_the_guard() {
         let root = tempdir("add-feat-prereq-free");
-        let envelope = level_up_test_envelope("race:human", 1);
+        let envelope = level_up_test_envelope("race:human", 3);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
         add_feat_selection_enforcing_prerequisites_at_root(
@@ -13269,12 +13271,15 @@ mod tests {
         let response = load_saved_character_at_root(&root).expect("saved rogue should load");
         let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
 
+        // The load appends the feat budget's rows, which are not the chassis's records.
+        let (budget, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| row.id.starts_with("feats.budget."));
+        assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
         assert_eq!(
-            response.explanations.len(),
+            chassis.len(),
             engine.base.explanations.len(),
             "no explanation record may be dropped at the boundary"
         );
-        for (wire, engine_record) in response.explanations.iter().zip(&engine.base.explanations) {
+        for (wire, engine_record) in chassis.into_iter().zip(&engine.base.explanations) {
             assert_eq!(wire.id, engine_record.id);
             assert_eq!(wire.value, engine_record.value);
             assert_eq!(
