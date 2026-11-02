@@ -823,6 +823,62 @@ fn feat_budget_for(
     Ok(codex::rules_core::feat_budget::feat_budget(package, input, base, &race_traits))
 }
 
+/// Whether a feat's record lets it be taken again (PCGen `MULT:YES`, proved in `body_slots.rs`). A
+/// name printed in several books is repeatable when any printing is. A feat with no record is not.
+fn feat_is_repeatable(package: &codex::rules_core::sheet_rule::SheetRulePackage, feat_id: &str) -> bool {
+    // A compound token names the feat in its first segment and the weapon in its last.
+    let name = feat_id.strip_prefix("feat:").and_then(|rest| rest.split(':').next()).unwrap_or(feat_id);
+    package
+        .find_all(FEAT_POOL, &codex::rules_core::sheet_rule::id_slug(name))
+        .iter()
+        .filter_map(|id| package.rule(id))
+        .any(|rule| rule.repeatable)
+}
+
+/// The refusal for a feat the character already holds, or `None` when it may be taken.
+///
+/// Not repeatable: one copy is the limit, whatever target is named. Repeatable with no target to
+/// name (Fleet): every copy counts. Repeatable with a target (Weapon Focus): a new target is a new
+/// feat, the same target is not, and a pick naming no target meets only a copy that named none.
+fn duplicate_feat_refusal(
+    package: &codex::rules_core::sheet_rule::SheetRulePackage,
+    input: &CharacterInput,
+    feat_id: &str,
+    target: Option<&str>,
+) -> Option<String> {
+    use codex::rules_core::feat_identity;
+
+    let chosen = &input.chosen;
+    let copies = feat_identity::count(&chosen.selected_feats, feat_id);
+    if copies == 0 {
+        return None;
+    }
+    if !feat_is_repeatable(package, feat_id) {
+        return Some(format!("This character already holds '{feat_id}', and it cannot be taken twice."));
+    }
+    feat_effects::chooser_contract_for_feat(feat_id)?;
+    let recorded = feat_effects::chosen_feat_targets(&chosen.selected_feats, &chosen.selected_choices)
+        .into_iter()
+        .find(|entry| feat_identity::same(&entry.feat_id, feat_id))
+        .map_or_else(Vec::new, |entry| entry.targets);
+    match target {
+        Some(named) => {
+            let wanted = comparable_target(named);
+            recorded
+                .iter()
+                .any(|held| comparable_target(held) == wanted)
+                .then(|| format!("This character already holds '{feat_id}' for {}.", named.trim()))
+        }
+        None => (copies > recorded.len())
+            .then(|| format!("This character already holds '{feat_id}' with no target named: name a target for that one first.")),
+    }
+}
+
+/// A target's letters and digits, lowercased: creation seeds `longsword`, the picker sends `Longsword`.
+fn comparable_target(target: &str) -> String {
+    target.chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect()
+}
+
 /// `feats.budget.*` rows for the sheet. An unreadable package serves none: the sheet says so through
 /// `sheet_rules_unavailable_reason`, and the add path refuses with the same reason.
 fn feat_budget_rows(input: &CharacterInput, base: &PilotBaseChassisComputation) -> Vec<ExplanationDto> {
@@ -1467,7 +1523,9 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
         name: "add_feat_selection",
         description: "Appends an entry to chosen.selected_feats, then \
             recomputes and re-saves. SD-27: refuses first when the \
-            character does not meet the feat's real corpus prerequisites, \
+            character already holds the feat (a repeatable feat may be taken \
+            again, on a new target when it takes one), has no feat budget \
+            left, or does not meet the feat's real corpus prerequisites, \
             naming the unmet ones -- see \
             add_feat_selection_enforcing_prerequisites_at_root.",
         wired: true,
@@ -1685,7 +1743,7 @@ pub struct CreateEquipmentDto {
 /// Whether picking feats into a draft checks each one's prerequisites.
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum FeatPolicy {
-    /// Creating: a feat the build does not qualify for refuses the creation.
+    /// Creating: a feat the build does not qualify for, or already holds, refuses the creation.
     Enforce,
     /// Listing what a draft qualifies for: pending picks count toward each other's prerequisites.
     Trust,
@@ -1759,10 +1817,23 @@ fn build_create_input(
         crate::pf1_adapter::apply_add_equipment_selection(&mut character_input, &item.item_id, ActiveState::EquippedActive);
     }
 
+    let mut unclaimed_seeds = DISPLACEABLE_SEEDED_FEATS.to_vec();
     for feat in &request.selected_feats {
         let target_choice = crate::pf1_adapter::resolve_feat_target_choice(&feat.feat_id, feat.target.as_deref())
             .map_err(|message| vec![create_diagnostic("create.feat_target", message)])?;
+        // A pick naming a seeded default takes its place: the screen does not show the seed, so this
+        // is no duplicate to the player, and the later picks must not displace what the player chose.
+        if let Some(index) = unclaimed_seeds.iter().position(|(seeded, _)| codex::rules_core::feat_identity::same(seeded, &feat.feat_id)) {
+            let (seeded, slot) = unclaimed_seeds.remove(index);
+            remove_seeded_feat(&mut character_input, seeded, slot);
+        }
         if feat_policy == FeatPolicy::Enforce {
+            let package = sheet_rule_package()
+                .as_ref()
+                .map_err(|message| vec![create_diagnostic("create.feat_prereqs_unavailable", message.clone())])?;
+            if let Some(message) = duplicate_feat_refusal(package, &character_input, &feat.feat_id, feat.target.as_deref()) {
+                return Err(vec![create_diagnostic("create.feat_duplicate", message)]);
+            }
             let receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
             let facts = prereq_facts_for(&character_input, &receipt.base)
                 .map_err(|message| vec![create_diagnostic("create.feat_prereqs_unavailable", message)])?;
@@ -1801,10 +1872,9 @@ fn seat_picked_feats(input: &mut CharacterInput, feat_policy: FeatPolicy) -> Res
         if budget.over_by() == 0 {
             break;
         }
-        let Some(position) = input.chosen.selected_feats.iter().position(|feat| feat == seeded) else { continue };
-        input.chosen.selected_feats.remove(position);
-        input.chosen.selected_choices.retain(|c| !(c.choice_set_id == slot && c.selection_id == seeded));
-        budget = feat_budget_for(input, &base).map_err(unavailable)?;
+        if remove_seeded_feat(input, seeded, slot) {
+            budget = feat_budget_for(input, &base).map_err(unavailable)?;
+        }
     }
     if feat_policy == FeatPolicy::Enforce && budget.over_by() > 0 {
         let over: Vec<String> = budget
@@ -1819,6 +1889,14 @@ fn seat_picked_feats(input: &mut CharacterInput, feat_policy: FeatPolicy) -> Res
         )]);
     }
     Ok(())
+}
+
+/// Takes a seeded default and its slot off the character. `false` when it does not hold the seed.
+fn remove_seeded_feat(input: &mut CharacterInput, seeded: &str, slot: &str) -> bool {
+    let Some(position) = input.chosen.selected_feats.iter().position(|feat| feat == seeded) else { return false };
+    input.chosen.selected_feats.remove(position);
+    input.chosen.selected_choices.retain(|c| !(c.choice_set_id == slot && c.selection_id == seeded));
+    true
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -3767,8 +3845,8 @@ pub(crate) fn list_feats_for_character_at_root(
 /// * **The error names the reason.** A refusal a player cannot act on is
 ///   as bad as no refusal at all.
 ///
-/// The feat budget is checked first: a character with no room is told about the room, whichever
-/// feat it asked for.
+/// A feat already held is refused first, since making room would not let it in. The feat budget
+/// comes next: a character with no room is told about the room, whichever new feat it asked for.
 pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
     root: &Path,
     feat_id: &str,
@@ -3777,6 +3855,9 @@ pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
 ) -> Result<CreateCharacterResponse, String> {
     let (envelope, facts) = character_prereq_facts_at_root(root)?;
     let package = sheet_rule_package().as_ref().map_err(Clone::clone)?;
+    if let Some(refusal) = duplicate_feat_refusal(package, &envelope.character_input, feat_id, target) {
+        return Err(refusal);
+    }
     let base = compute_pilot_base_chassis(&envelope.character_input);
     if let Some(refusal) = feat_budget_for(&envelope.character_input, &base)?.refusal(package, feat_id) {
         return Err(refusal);
@@ -9779,6 +9860,244 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- The duplicate feat guard at the mutation boundary -----
+
+    fn add_feat_guarded(root: &Path, feat: &str, target: Option<&str>) -> Result<CreateCharacterResponse, String> {
+        add_feat_selection_enforcing_prerequisites_at_root(root, feat, target, "2026-11-01T00:00:00Z")
+    }
+
+    fn duplicate_refused(root: &Path, feat: &str, target: Option<&str>) {
+        let before = SavedCharacterStore::load(root).unwrap().character_input.chosen;
+        let error = add_feat_guarded(root, feat, target).expect_err(&format!("{feat} {target:?} is already held"));
+        assert!(error.contains("already holds"), "{feat} {target:?}: {error}");
+        let after = SavedCharacterStore::load(root).unwrap().character_input.chosen;
+        assert_eq!(after.selected_feats, before.selected_feats, "a refused add writes no feat");
+        assert_eq!(after.selected_choices, before.selected_choices, "a refused add writes no target");
+    }
+
+    fn duplicate_allowed(root: &Path, feat: &str, target: Option<&str>) {
+        let outcome = add_feat_guarded(root, feat, target).unwrap_or_else(|error| panic!("{feat} {target:?}: {error}"));
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{feat} {target:?}: {outcome:?}");
+    }
+
+    #[test]
+    fn feat_duplicate_toughness_twice_is_refused_in_every_id_shape() {
+        let root = tempdir("feat-duplicate-toughness");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Toughness", None);
+        duplicate_refused(&root, "Toughness", None);
+        duplicate_refused(&root, "feat:toughness", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The seed's Power Attack is `feat:power_attack`; the picker sends `Power Attack`.
+    #[test]
+    fn feat_duplicate_a_seeded_feat_is_held_whichever_shape_the_picker_sends() {
+        let root = tempdir("feat-duplicate-seeded");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_refused(&root, "Power Attack", None);
+        duplicate_refused(&root, "Dodge", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Every creation seeds Weapon Focus (longsword), so a dagger is the second weapon of the pair.
+    #[test]
+    fn feat_duplicate_weapon_focus_longsword_and_dagger_are_two_feats_and_neither_comes_twice() {
+        let root = tempdir("feat-duplicate-weapon-focus");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_refused(&root, "Weapon Focus", Some("longsword"));
+        duplicate_refused(&root, "Weapon Focus", Some("Longsword"));
+        duplicate_allowed(&root, "Weapon Focus", Some("Dagger"));
+        duplicate_refused(&root, "Weapon Focus", Some("dagger"));
+        duplicate_refused(&root, "feat:weapon_focus", Some(" Dagger "));
+
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        let held = loaded.selected_feats.iter().filter(|feat| codex::rules_core::feat_identity::same(feat, "Weapon Focus")).count();
+        assert_eq!(held, 2, "{:?}", loaded.selected_feats);
+        let targets = &loaded.chosen_feat_targets.iter().find(|entry| entry.feat_id == "feat:weapon_focus").expect("the feat's targets").targets;
+        assert_eq!(targets.len(), 2, "{targets:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The same pair on a chooser feat no seed holds, recorded only through its own choice set.
+    #[test]
+    fn feat_duplicate_skill_focus_targets_are_compared_within_the_feat() {
+        let root = tempdir("feat-duplicate-skill-focus");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Skill Focus", Some("Perception"));
+        duplicate_allowed(&root, "Skill Focus", Some("Stealth"));
+        duplicate_refused(&root, "Skill Focus", Some("perception"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A chooser feat with no target named: one such copy is a state the sheet shows, a second is the
+    /// same id with the same (absent) target.
+    #[test]
+    fn feat_duplicate_an_untargeted_chooser_feat_is_refused_only_against_an_untargeted_copy() {
+        let root = tempdir("feat-duplicate-untargeted");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Skill Focus", Some("Perception"));
+        duplicate_allowed(&root, "Skill Focus", None);
+        duplicate_refused(&root, "Skill Focus", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Fleet's record is `repeatable` and takes no target: every copy counts.
+    #[test]
+    fn feat_duplicate_a_repeatable_feat_with_no_target_may_be_taken_again() {
+        let root = tempdir("feat-duplicate-repeatable");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Fleet", None);
+        duplicate_allowed(&root, "feat:fleet", None);
+        let held = saved_feats(&root);
+        assert_eq!(codex::rules_core::feat_identity::count(&held, "Fleet"), 2, "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A feat with no record has no `MULT` to read: not stackable (`decisions.md` SD-n).
+    #[test]
+    fn feat_duplicate_a_feat_with_no_record_is_not_stackable() {
+        let root = tempdir("feat-duplicate-unknown");
+        let mut envelope = level_up_test_envelope("race:human", 5);
+        envelope.character_input.chosen.selected_feats.push("Homebrew Grit".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+
+        duplicate_refused(&root, "Homebrew Grit", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The more useful answer wins: making room would not let a held feat in.
+    #[test]
+    fn feat_duplicate_is_named_before_the_budget_on_a_full_character() {
+        let root = tempdir("feat-duplicate-full");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 1), &root).expect("save");
+
+        duplicate_refused(&root, "Power Attack", None);
+        let error = add_feat_guarded(&root, "Toughness", None).expect_err("a new feat still meets the budget");
+        assert!(error.contains("pool"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// R9's shape: a save already holding a feat twice keeps both, and one removal leaves one held.
+    #[test]
+    fn feat_duplicate_a_save_already_holding_two_copies_keeps_them() {
+        let root = tempdir("feat-duplicate-legacy");
+        let mut envelope = level_up_test_envelope("race:human", 5);
+        envelope.character_input.chosen.selected_feats.extend(["Toughness".to_owned(), "feat:toughness".to_owned()]);
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let held = saved_feats(&root);
+
+        assert_eq!(load_saved_character_at_root(&root).expect("it loads").selected_feats, held);
+        duplicate_refused(&root, "Toughness", None);
+        remove_feat_selection_at_root(&root, "Toughness", None, "2026-11-01T00:00:00Z").expect("remove");
+        assert_eq!(codex::rules_core::feat_identity::count(&saved_feats(&root), "Toughness"), 1);
+        duplicate_refused(&root, "Toughness", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn create_picks(picks: &[(&str, Option<&str>)]) -> CreateCharacterRequest {
+        let mut request = request_for("race:human", 5);
+        request.selected_feats = picks
+            .iter()
+            .map(|(id, target)| CreateFeatDto { feat_id: (*id).to_owned(), target: target.map(str::to_owned) })
+            .collect();
+        request
+    }
+
+    #[test]
+    fn feat_duplicate_create_refuses_the_same_pick_twice_and_a_seeded_target_again() {
+        for (name, picks) in [
+            ("same pick", vec![("Toughness", None), ("Toughness", None)]),
+            ("both shapes", vec![("Toughness", None), ("feat:toughness", None)]),
+            ("seeded target", vec![("Weapon Focus", Some("longsword"))]),
+            ("same target", vec![("Skill Focus", Some("Stealth")), ("Skill Focus", Some("Stealth"))]),
+        ] {
+            let root = tempdir("feat-duplicate-create");
+            let response = create_character_at_root(&root, &create_picks(&picks), "test-version".to_owned()).expect("create");
+            let CreateCharacterResponse::Blocked { diagnostics } = response else { panic!("{name}: {response:?}") };
+            assert_eq!(diagnostics[0].id, "create.feat_duplicate", "{name}: {diagnostics:?}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    #[test]
+    fn feat_duplicate_create_allows_what_may_be_taken_again() {
+        let root = tempdir("feat-duplicate-create-allowed");
+        let request = create_picks(&[("Weapon Focus", Some("Dagger")), ("Skill Focus", Some("Stealth")), ("Skill Focus", Some("Perception")), ("Fleet", None)]);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A pick naming a seeded default takes the default's place, so the player holds it once and the
+    /// picks that follow cannot displace what the player chose. The seed is invisible on Create, so
+    /// refusing here would refuse a choice the screen offers.
+    #[test]
+    fn feat_duplicate_create_a_pick_of_a_seeded_default_replaces_it() {
+        let root = tempdir("feat-duplicate-create-seeded");
+        let response = create_character_at_root(&root, &create_picks(&[("Power Attack", None), ("Dodge", None)]), "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        for feat in ["Power Attack", "Dodge"] {
+            assert_eq!(codex::rules_core::feat_identity::count(&loaded.selected_feats, feat), 1, "{feat}: {:?}", loaded.selected_feats);
+            assert!(loaded.selected_feats.iter().any(|held| held == feat), "the player's own pick is what stays: {:?}", loaded.selected_feats);
+        }
+        std::fs::remove_dir_all(&root).ok();
+
+        // Human Fighter 1 has 3 slots and must keep Weapon Focus: Power Attack plus one more pick fit
+        // only by displacing Dodge, never the Power Attack the player asked for.
+        let root = tempdir("feat-duplicate-create-seeded-full");
+        let mut request = request_for("race:human", 1);
+        request.selected_feats = ["Power Attack", "Cleave"].iter().map(|id| CreateFeatDto { feat_id: (*id).to_owned(), target: None }).collect();
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let held = saved_feats(&root);
+        assert_eq!(codex::rules_core::feat_identity::count(&held, "Power Attack"), 1, "{held:?}");
+        assert_eq!(codex::rules_core::feat_identity::count(&held, "Dodge"), 0, "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A draft is still being edited: its listings compute whatever it holds, and only the save refuses.
+    #[test]
+    fn feat_duplicate_a_draft_with_a_duplicate_pick_still_lists_feats() {
+        let request = create_picks(&[("Toughness", None), ("Toughness", None)]);
+        list_feats_for_draft_impl(&request, &crate::feat_catalog::FeatCatalogFilter::default()).expect("the draft still computes");
+    }
+
+    /// Where the flag comes from, over the whole catalog the picker offers. A key with no record is
+    /// not stackable by rule (SD-n), so a repeatable feat lost to a spelling difference would be
+    /// refused its second copy: every catalog key is looked up, and the misses are listed.
+    #[test]
+    fn feat_duplicate_every_chooser_feat_is_repeatable_and_catalog_keys_reach_their_records() {
+        let package = sheet_rule_package().as_ref().expect("package");
+        for contract in feat_effects::CHOOSER_FEAT_CONTRACTS {
+            assert!(feat_is_repeatable(package, contract.feat_key), "{} takes a target but is not repeatable", contract.feat_key);
+        }
+        assert!(!feat_is_repeatable(package, "Toughness"));
+        assert!(feat_is_repeatable(package, "feat:weapon_focus:weapon:longsword"));
+
+        let (mut found, mut repeatable, mut missing) = (0, 0, Vec::new());
+        for table in codex::rules_core::rules_catalog::feats_all::all_feat_tables() {
+            for entry in table.entries {
+                let slug = codex::rules_core::sheet_rule::id_slug(entry.key);
+                if package.find_all(FEAT_POOL, &slug).is_empty() {
+                    missing.push(entry.key);
+                } else {
+                    found += 1;
+                    repeatable += usize::from(feat_is_repeatable(package, entry.key));
+                }
+            }
+        }
+        println!("catalog feats with a record: {found}, repeatable {repeatable}; with none: {} {missing:?}", missing.len());
+        assert!(found > 600, "the lookup must reach the catalog, reached {found}");
     }
 
     // ----- SD-27: feat prerequisite enforcement -----
