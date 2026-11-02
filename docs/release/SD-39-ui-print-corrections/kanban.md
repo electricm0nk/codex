@@ -46,7 +46,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 53
 | E2.1 | Layout registry + Abilities/Details moves + title | opus | complete | E1.MC | commit 7d935657cb + receipt commit; receipt artifacts/epic_2/E2.1_cycle_receipt.md |
 | E2.2 | Combat row 2x2 + 1x4 | opus | complete | E2.1 | commit f321378d43 + receipt commit; receipt artifacts/epic_2/E2.2_cycle_receipt.md |
 | E2.3 | Show Progression drawer shell | opus | complete | E2.2 | commit c10cbc057c + receipt commit; receipt artifacts/epic_2/E2.3_cycle_receipt.md |
-| E2.4 | ui-smoke rows + inventory | sonnet | waiting | E2.3 | |
+| E2.4 | ui-smoke rows + inventory | sonnet | complete | E2.3 | commit + receipt commit; receipt artifacts/epic_2/E2.4_cycle_receipt.md; full-suite 64/133 green, 14 red, 52 blocked |
 | E2.MC | E2 merge check + Epic report | opus | waiting | E2.4 | |
 | E3.1 | list_market + category fix + +N variants | opus | waiting | E2.MC | |
 | E3.2 | Sell + +N purchase on existing purchase_equipment | opus | waiting | E3.1 | |

@@ -1344,8 +1344,8 @@
         { "op": "key", "key": "Shift" }
       ],
       "marker": "Wizard level 3",
-      "expect": ["Elowen Ashgrave", "Wizard 5", "HIT POINTS\n27", "Skill points: 7", "Fireball", "Wizard level 3"],
-      "notes": "SD-36 F6e: opens the second starter seed, Elowen Ashgrave (Human Wizard 5), on her Spells tab: Fireball, recorded and prepared, labelled with its Wizard spell level (3) from list_class_spell_levels -- the spell the operator named. Clicks the row by its displayLabel prefix (same mechanism as load-character-select-and-open). The seed is a real saved character built through the create path (compose_character_input + the record-and-prepare spell mutation), never a hand-written file. LAST row of the spec on purpose: it ends scrolled down so the screenshot shows the Fireball rows, and a row scrolled down is the one resetToLanding cannot recover from (see the $comment's scroll note) -- nothing runs after it."
+      "expect": ["Elowen Ashgrave", "Wizard 5", "HIT POINTS\n27", "Fireball", "Wizard level 3"],
+      "notes": "SD-36 F6e: opens the second starter seed, Elowen Ashgrave (Human Wizard 5), on her Spells tab: Fireball, recorded and prepared, labelled with its Wizard spell level (3) from list_class_spell_levels -- the spell the operator named. Clicks the row by its displayLabel prefix (same mechanism as load-character-select-and-open). The seed is a real saved character built through the create path (compose_character_input + the record-and-prepare spell mutation), never a hand-written file. LAST row of the spec on purpose: it ends scrolled down so the screenshot shows the Fireball rows, and a row scrolled down is the one resetToLanding cannot recover from (see the $comment's scroll note) -- nothing runs after it. No longer expects 'Skill points: 7': since the Show Progression drawer (SD-39 E2.1/E2.3) only the drawer prints it, and sheet-progression-drawer-open asserts it there."
     },
     {
       "id": "create-starfinder-soldier",
@@ -6430,6 +6430,172 @@
         "☰ Menu"
       ],
       "notes": "SD-37 E6.6: the second Pathfinder starter seed, Elowen Ashgrave (Human Wizard 5), opened from the isolated store. load-seed-wizard-fireball (the last row of the spec) additionally opens her Spells tab."
+    },
+    {
+      "id": "sheet-layout-title-and-columns",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        }
+      ],
+      "marker": "☰ Menu",
+      "expect": [
+        "Elowen Ashgrave",
+        "Wizard 5",
+        "CHARACTER DETAILS",
+      "ABILITIES",
+      "Acrobatics",
+        "Show Progression"
+      ],
+      "forbid": [
+        "Hide Progression"
+      ],
+      "notes": "SD-39 E2.4: the Pathfinder sheet after E2.1. The left rail is titled 'Character Details' (was 'Progression'; renders uppercase) and holds the Show Progression button; Abilities and Skills render on the sheet. The harness asserts text on the page, not which column holds it, so the column placement is pinned by sheetLayout.test.ts and not by this row. Opens the second starter seed (Elowen Ashgrave) as open-seed-elowen does."
+    },
+    {
+      "id": "sheet-progression-drawer-open",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 60000
+        }
+      ],
+      "marker": "Level 6 Wizard",
+      "expect": [
+        "Level 6 Wizard",
+        "NEXT",
+        "Skill points: 7"
+      ],
+      "notes": "SD-39 E2.3/E2.4: Show Progression opens the left drawer (role=dialog, aria-modal) with the level history for Elowen Ashgrave (Wizard 5, next level 6). 'Skill points: 7' is printed only there; the drawer reads 'Skill points: Unknown' until the class roster arrives (E2.3 receipt), hence the wait. Leaves the drawer open; resetToLanding's Escape closes it."
+    },
+    {
+      "id": "sheet-progression-drawer-close-x",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "×"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        }
+      ],
+      "marker": "Show Progression",
+      "expect": [
+        "Elowen Ashgrave",
+        "Show Progression"
+      ],
+      "forbid": [
+        "Level 6 Wizard"
+      ],
+      "notes": "SD-39 E2.3/E2.4: the drawer's X closes it; the level history is gone from the page. Click-outside is covered by ProgressionDrawer.test.ts only (the harness clicks named controls, not pixels)."
+    },
+    {
+      "id": "sheet-progression-drawer-close-escape",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "key",
+          "key": "Escape"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        }
+      ],
+      "marker": "Show Progression",
+      "expect": [
+        "Elowen Ashgrave",
+        "Show Progression"
+      ],
+      "forbid": [
+        "Level 6 Wizard"
+      ],
+      "notes": "SD-39 E2.3/E2.4: Escape closes the drawer; the level history is gone from the page."
     }
   ]
 }
