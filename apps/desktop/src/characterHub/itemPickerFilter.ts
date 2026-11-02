@@ -31,11 +31,11 @@ export interface ItemPickerEntry {
    * True when this row must be shown but not selectable — a feat whose real
    * corpus prerequisites this character does not meet.
    *
-   * Deliberately "greyed out and explained" rather than "filtered away":
-   * hiding the row would tell a player nothing about why their build cannot
-   * take Improved Two-Weapon Fighting, and offering it and then refusing the
-   * mutation is the offered-then-refused shape the no-stub doctrine calls a
-   * dead affordance.
+   * When listed it is greyed and explained: a player can see why their build
+   * cannot take Improved Two-Weapon Fighting, and offering it and then refusing
+   * the mutation is the offered-then-refused shape the no-stub doctrine calls a
+   * dead affordance. The Add Feat picker leaves these rows out while its "Hide
+   * feats I don't qualify for" box is ticked (`visibleItemPickerEntries`).
    */
   disabled?: boolean;
   /**
@@ -268,6 +268,22 @@ export function filterItemPickerEntries(entries: ItemPickerEntry[], searchTerm: 
   return entries.filter(
     (entry) => entry.name.toLowerCase().includes(term) || entry.detail.toLowerCase().includes(term)
   );
+}
+
+/** The Add Feat picker's checkbox. */
+export const HIDE_UNMET_FEATS_LABEL = "Hide feats I don't qualify for";
+
+/** The rows the picker lists: with `hideUnavailable`, none of the disabled ones. */
+export function visibleItemPickerEntries(entries: ItemPickerEntry[], hideUnavailable: boolean): ItemPickerEntry[] {
+  return hideUnavailable ? entries.filter((entry) => !entry.disabled) : entries;
+}
+
+/**
+ * What Add would add: the listed row with this key, unless it is disabled. Add is disabled when
+ * this is null, so a stale key left by a re-filter or by ticking the box cannot add anything.
+ */
+export function selectableItemPickerEntry(rows: ItemPickerEntry[], selectedKey: string | null): ItemPickerEntry | null {
+  return rows.find((entry) => entry.key === selectedKey && !entry.disabled) ?? null;
 }
 
 /** Label a row is filed under in the category list; rows with no group are `Uncategorized`. */

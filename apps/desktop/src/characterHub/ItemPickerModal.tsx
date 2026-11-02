@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { filterItemPickerEntriesInGroup, itemPickerGroupCounts, type ItemPickerEntry } from './itemPickerFilter';
+import {
+  filterItemPickerEntriesInGroup,
+  itemPickerGroupCounts,
+  selectableItemPickerEntry,
+  visibleItemPickerEntries,
+  type ItemPickerEntry,
+} from './itemPickerFilter';
 
 export type { ItemPickerEntry } from './itemPickerFilter';
 
@@ -26,6 +32,8 @@ export function ItemPickerModal(props: {
   loadEntries: () => Promise<ItemPickerEntry[]>;
   /** Category to open on (rows carry a `group`); omitted opens on All. */
   initialGroup?: string;
+  /** A checkbox under the search box that leaves disabled rows out; absent, they are always listed. */
+  hideUnavailable?: { label: string; checked: boolean; onChange: (checked: boolean) => void };
   onClose: () => void;
   onSelect: (entry: ItemPickerEntry) => void;
 }) {
@@ -65,13 +73,16 @@ export function ItemPickerModal(props: {
 
   // Catalogs with categories (equipment) get a category rail; others (spells, feats) are unchanged.
   const hasGroups = (entries ?? []).some((entry) => entry.group !== undefined);
-  const groupCounts = hasGroups ? itemPickerGroupCounts(entries ?? [], search) : [];
+  const listed = visibleItemPickerEntries(entries ?? [], props.hideUnavailable?.checked ?? false);
+  const groupCounts = hasGroups ? itemPickerGroupCounts(listed, search) : [];
   const activeGroup = hasGroups ? group : null;
-  const filtered = filterItemPickerEntriesInGroup(entries ?? [], search, activeGroup);
+  const filtered = filterItemPickerEntriesInGroup(listed, search, activeGroup);
+  // The search's matches the checkbox is keeping out, so "No matches." cannot read as "no such feat".
+  const hiddenCount = filterItemPickerEntriesInGroup(entries ?? [], search, activeGroup).length - filtered.length;
   const searchedTotal = groupCounts.reduce((sum, item) => sum + item.count, 0);
   // A disabled row can never become the selection, so the Add button cannot
   // fire for one even if a stale `selectedKey` survives a re-filter.
-  const selected = filtered.find((entry) => entry.key === selectedKey && !entry.disabled) ?? null;
+  const selected = selectableItemPickerEntry(filtered, selectedKey);
   const unavailableCount = filtered.filter((entry) => entry.disabled).length;
 
   function handleConfirm() {
@@ -154,11 +165,22 @@ export function ItemPickerModal(props: {
             {entries
               ? `Showing ${filtered.length} of ${entries.length}${activeGroup ? ` in ${activeGroup}` : ''}${
                   unavailableCount > 0 ? ` · ${unavailableCount} unavailable (prerequisites not met)` : ''
-                }`
+                }${hiddenCount > 0 ? ` · ${hiddenCount} hidden (prerequisites not met)` : ''}`
               : loadError
                 ? 'Catalog unavailable'
                 : 'Loading…'}
           </p>
+          {props.hideUnavailable ? (
+            <label style={{ alignItems: 'center', color: 'var(--color-text)', cursor: 'pointer', display: 'flex', fontSize: '0.85rem', gap: '0.4rem', marginTop: '0.5rem' }}>
+              <input
+                type="checkbox"
+                aria-label={props.hideUnavailable.label}
+                checked={props.hideUnavailable.checked}
+                onChange={(event) => props.hideUnavailable?.onChange(event.target.checked)}
+              />
+              {props.hideUnavailable.label}
+            </label>
+          ) : null}
         </div>
 
         <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>

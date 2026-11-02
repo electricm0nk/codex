@@ -69,7 +69,9 @@ import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
 import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { resolveSpellRouting } from './spellRoutingModel';
+import { getHideUnmetFeats, setHideUnmetFeats } from '../settings/featPickerPreference';
 import {
+  HIDE_UNMET_FEATS_LABEL,
   describeFeatCatalogCoverage,
   mapEquipmentCatalogEntries,
   mapFeatCatalogEntries,
@@ -251,6 +253,8 @@ export interface ItemPickerConfig {
   onSelect: (entry: ItemPickerEntry) => void;
   /** Category the picker opens on; absent opens on All. Only meaningful for catalogs with categories. */
   initialGroup?: string;
+  /** The picker shows the "Hide feats I don't qualify for" checkbox. */
+  offersHideUnavailable?: true;
 }
 
 /**
@@ -312,6 +316,7 @@ export function buildItemPickerConfig(
       searchPlaceholder: 'Search feats…',
       loadEntries: deps.loadFeats,
       onSelect: deps.onSelectFeat,
+      offersHideUnavailable: true,
     };
   }
   // Second step of the two-step chooser-feat flow: the feat is picked
@@ -2891,6 +2896,7 @@ export function CharacterSheet(props: {
   const [itemPickerOpen, setItemPickerOpen] = useState<
     'weapon' | 'armor' | 'gear' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null
   >(null);
+  const [hideUnmetFeats, setHideUnmetFeatsState] = useState(() => getHideUnmetFeats());
   // Set between the two steps of adding a chooser feat: the feat has been
   // picked, and the picker has reopened for the thing it names.
   const [pendingFeatTarget, setPendingFeatTarget] = useState<{
@@ -4217,10 +4223,10 @@ export function CharacterSheet(props: {
       ),
     loadSpells: loadSpellPickerEntries,
     // SD-27: the Add Feat picker reads the catalog *for this character*, so
-    // every row carries its real prerequisite verdict and the ones this
-    // build cannot take render greyed with the reason. All 690 records are
-    // still returned -- an unavailable feat is shown and explained, never
-    // hidden and never offered-then-refused.
+    // every row carries its real prerequisite verdict. All 690 records are
+    // still returned: the picker's "Hide feats I don't qualify for" box leaves
+    // the unavailable ones out, and unticked they render greyed with the
+    // reason, never offered-then-refused.
     loadFeats: () =>
       listFeatsForCharacter(props.row.characterId, { nameContains: null, category: null }).then((response) =>
         mapFeatCatalogEntries(response.entries)
@@ -4753,6 +4759,18 @@ export function CharacterSheet(props: {
         searchPlaceholder={itemPickerConfig?.searchPlaceholder ?? ''}
         loadEntries={itemPickerConfig?.loadEntries ?? (() => Promise.resolve([]))}
         initialGroup={itemPickerConfig?.initialGroup}
+        hideUnavailable={
+          itemPickerConfig?.offersHideUnavailable
+            ? {
+                label: HIDE_UNMET_FEATS_LABEL,
+                checked: hideUnmetFeats,
+                onChange: (checked) => {
+                  setHideUnmetFeats(checked);
+                  setHideUnmetFeatsState(checked);
+                },
+              }
+            : undefined
+        }
         onClose={() => {
           setItemPickerOpen(null);
           setPendingFeatLevelUp(null);

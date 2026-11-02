@@ -10,8 +10,8 @@ import { assert, assertEqual } from '../testSupport/asserts';
  * every one — a Fighter 1 with a +1 base attack bonus could take Improved
  * Two-Weapon Fighting (BAB +6, Dex 17, Two-Weapon Fighting).
  *
- * The requirement is specifically **greyed with the reason**, not filtered
- * away and not offered-then-refused. These entries are the real wire shape
+ * A listed row is **greyed with the reason**, not offered-then-refused; the
+ * checkbox that leaves such rows out is `featPickerHideUnmet.test.ts`. These entries are the real wire shape
  * `list_feats_for_character` sends, with the reason strings the Rust engine
  * actually produces.
  */
