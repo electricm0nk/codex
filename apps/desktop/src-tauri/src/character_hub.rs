@@ -3530,7 +3530,7 @@ pub enum AttachEquipmentModifierResponse {
 ///    "unknown cost = blocked, same as unaffordable" rule. Checked against
 ///    the real static table before choosing this: the actual magical
 ///    weapon/armor enhancement records (`"Special Ability ~ +1 ~
-///    Weapon"` through `~ +10 ~`) all resolve `cost_gp: None` (real PF1
+///    Weapon"` up; `~ +6 ~ Weapon` is no catalog key) all resolve `cost_gp: None` (real PF1
 ///    enhancement pricing is a bonus-squared formula, not a flat catalog
 ///    price) -- mirroring `purchase_equipment`'s block-on-unknown-cost
 ///    behavior here would block exactly the headline use case this

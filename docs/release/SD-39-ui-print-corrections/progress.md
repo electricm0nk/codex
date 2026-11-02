@@ -61,6 +61,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E3 | E3.3 | complete | f905c625d2 | artifacts/epic_3/E3.3_cycle_receipt.md |
 | E3 | E3.4 | complete | af1e860a9c | artifacts/epic_3/E3.4_cycle_receipt.md |
 | E3 | E3.5 | complete | 9efc712f1d | artifacts/epic_3/E3.5_cycle_receipt.md |
+| E3 | E3.6 | complete | c896b64374 | artifacts/epic_3/E3.6_cycle_receipt.md |
 
 ## Epic reports
 
@@ -134,6 +135,8 @@ seed deltas, open blockers.)
 | E3.4 | Offers that cannot show | Stop offering them, by a rule reading the same corpus | Named exceptions in a test, which leaves the charge standing |
 | E3.5 | How Starfinder honours three price modes when it derives credits from what is held | One saved `selected_choices` row the engine adds to Credits remaining | Hiding the control there, or a sidecar `compute_sheet` cannot see |
 | E3.5 | Cyberpunk RED starter items the shop has no name for | On the Sell list, for nothing, and the line says so | A hand-kept name table (R2) |
+| E3.6 | A `+N` at or below the one a copy holds | Costs nothing, returns nothing; the copy stays what it was | A refusal, which the row does not ask for |
+| E3.6 | A flat-priced modifier under Cashless | No money moves | The old charge in every mode, from before the request had a mode |
 
 ## Open blockers
 

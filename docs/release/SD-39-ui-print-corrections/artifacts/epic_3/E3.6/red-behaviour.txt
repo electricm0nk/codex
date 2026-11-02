@@ -1,0 +1,56 @@
+test character_hub::tests::market_attach_price_cashless_refused_when_no_copy_is_held ... ok
+test character_hub::tests::market_attach_price_character_build_charged ... FAILED
+test character_hub::tests::market_attach_price_character_build_refused_one_copper_short ... FAILED
+test character_hub::tests::market_attach_price_cashless_charged_nothing ... ok
+test character_hub::tests::market_attach_price_a_flat_priced_modifier_keeps_its_price_and_cashless_skips_it ... FAILED
+test character_hub::tests::market_attach_price_request_carries_the_mode_on_the_wire ... ok
+test character_hub::tests::market_attach_price_a_row_with_no_such_offer_attaches_free ... FAILED
+test character_hub::tests::market_attach_price_standard_charged ... FAILED
+test character_hub::tests::market_attach_price_standard_charges_the_whole_balance_when_it_just_covers ... FAILED
+test character_hub::tests::market_attach_price_standard_refused_one_copper_short ... FAILED
+test character_hub::tests::market_attach_price_the_mint_shape_never_gains ... FAILED
+test character_hub::tests::market_attach_price_cashless_sold_back_moves_no_money ... ok
+test character_hub::tests::market_attach_price_standard_sold_back_loses_half ... FAILED
+test character_hub::tests::market_attach_price_a_held_offer_is_credited ... FAILED
+test character_hub::tests::market_attach_price_is_the_market_row_less_the_catalog_price ... FAILED
+test character_hub::tests::market_attach_price_credits_the_copy_it_attaches_to ... FAILED
+test character_hub::tests::market_attach_price_character_build_sold_back_nets_zero ... FAILED
+test character_hub::tests::market_attach_price_a_lower_or_equal_bonus_costs_nothing ... ok
+thread 'character_hub::tests::market_attach_price_character_build_charged' (3913934) panicked at src/character_hub.rs:9958:9:
+assertion `left == right` failed: attach-build-charged: the response carries the balance
+  left: 298500
+ right: 68500
+thread 'character_hub::tests::market_attach_price_character_build_refused_one_copper_short' (3913935) panicked at src/character_hub.rs:9973:13:
+thread 'character_hub::tests::market_attach_price_a_flat_priced_modifier_keeps_its_price_and_cashless_skips_it' (3913927) panicked at src/character_hub.rs:10172:13:
+thread 'character_hub::tests::market_attach_price_a_row_with_no_such_offer_attaches_free' (3913930) panicked at src/character_hub.rs:10155:13:
+thread 'character_hub::tests::market_attach_price_standard_charged' (3914011) panicked at src/character_hub.rs:9958:9:
+assertion `left == right` failed: attach-standard-charged: the response carries the balance
+  left: 298500
+ right: 68500
+thread 'character_hub::tests::market_attach_price_standard_charges_the_whole_balance_when_it_just_covers' (3914012) panicked at src/character_hub.rs:10053:9:
+assertion `left == right` failed
+  left: 230000
+ right: 0
+thread 'character_hub::tests::market_attach_price_standard_refused_one_copper_short' (3914013) panicked at src/character_hub.rs:9973:13:
+thread 'character_hub::tests::market_attach_price_the_mint_shape_never_gains' (3914015) panicked at src/character_hub.rs:10084:13:
+thread 'character_hub::tests::market_attach_price_standard_sold_back_loses_half' (3914014) panicked at src/character_hub.rs:10060:9:
+assertion `left == right` failed
+  left: 414250
+ right: 184250
+thread 'character_hub::tests::market_attach_price_a_held_offer_is_credited' (3913928) panicked at src/character_hub.rs:10103:9:
+assertion `left == right` failed: 16,000 gp more, the whole of a +3 in total
+  left: 1768500
+ right: 168500
+thread 'character_hub::tests::market_attach_price_is_the_market_row_less_the_catalog_price' (3914009) panicked at src/character_hub.rs:10198:17:
+assertion `left == right` failed: Longsword (Base) +1
+  left: 0
+ right: 230000
+thread 'character_hub::tests::market_attach_price_credits_the_copy_it_attaches_to' (3914008) panicked at src/character_hub.rs:10137:9:
+assertion `left == right` failed: the plain copy pays, not the +1 beside it
+  left: 0
+ right: 230000
+thread 'character_hub::tests::market_attach_price_character_build_sold_back_nets_zero' (3914007) panicked at src/character_hub.rs:10065:9:
+assertion `left == right` failed
+  left: 530000
+ right: 300000
+test result: FAILED. 5 passed; 13 failed; 0 ignored; 0 measured; 974 filtered out; finished in 52.15s

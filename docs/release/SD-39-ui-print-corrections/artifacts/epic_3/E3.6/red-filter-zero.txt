@@ -1,0 +1,6 @@
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-b51aea73009681a5)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 974 filtered out; finished in 0.00s
+     Running tests/packaged_resources.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/packaged_resources-693e68cf45da1662)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
