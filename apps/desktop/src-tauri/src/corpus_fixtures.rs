@@ -36,18 +36,15 @@ use codex::rules_core::source_content::SourcePackageContent;
 use crate::authoring_workbench::resolve_package_path;
 
 const FIXTURE_RESOURCE_ROOT: &str = "resources/corpus_fixtures";
-/// What the load must find, in the `<root>/spell/*.json` + `<root>/equipment/*.json` layout
-/// `rules_core::corpus_loader` reads the real corpus in: every converted record that shipped.
-const CONVERTED_RECORD_DIRS: &[&str] = &["spell", "equipment"];
-
-/// How many converted records are on disk beside the bundle.
+/// How many records the load must find: the spell files, and the settled bundle's equipment. The
+/// loader reads equipment values out of that bundle, so a file under `equipment/` with no entry
+/// there is a leftover it skips, not a record that failed to load.
 fn converted_record_count(dir: &std::path::Path) -> usize {
-    CONVERTED_RECORD_DIRS
-        .iter()
-        .filter_map(|kind| std::fs::read_dir(dir.join(kind)).ok())
-        .flatten()
-        .filter(|entry| entry.as_ref().is_ok_and(|e| e.path().extension().is_some_and(|ext| ext == "json")))
-        .count()
+    let spells = std::fs::read_dir(dir.join("spell")).map_or(0, |entries| {
+        entries.filter(|entry| entry.as_ref().is_ok_and(|e| e.path().extension().is_some_and(|ext| ext == "json"))).count()
+    });
+    let equipment = codex::rules_core::settled_corpus::read_equipment_bundle(dir).map_or(0, |bundle| bundle.records.len());
+    spells + equipment
 }
 
 fn fixture_dir() -> Result<PathBuf, String> {
@@ -92,6 +89,21 @@ pub fn corpus_fixture_bundle() -> &'static SourcePackageContent<'static> {
 mod tests {
     use super::*;
     use codex::rules_core::source_content::SourceContentKind;
+
+    /// A record dropped from the bundle can stay on disk: `tauri-build` copies resources and
+    /// deletes none, and an install over an older version may leave a file. The loader skips a file
+    /// with no settled record, so counting files would stop the app starting over a harmless leftover.
+    #[test]
+    fn a_leftover_record_file_is_not_a_shipped_record() {
+        let dir = std::env::temp_dir().join(format!("codex-fixture-leftover-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("equipment")).unwrap();
+        std::fs::create_dir_all(dir.join("_settled")).unwrap();
+        std::fs::write(dir.join("equipment/equip_gone.json"), "{}").unwrap();
+        std::fs::write(dir.join("_settled/equipment.json"), r#"{"kind":"equipment","records":{}}"#).unwrap();
+        let shipped = converted_record_count(&dir);
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(shipped, 0);
+    }
 
     #[test]
     fn bundled_fixture_directory_resolves_and_contains_expected_files() {
