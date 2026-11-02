@@ -3380,6 +3380,7 @@ export function CharacterSheet(props: {
         itemId: target.itemId,
         modifierItemId: entry.key,
         savedAt: new Date().toISOString(),
+        priceMode,
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));

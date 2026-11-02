@@ -15,6 +15,7 @@ async function testNoRuntimeThrowsDescriptiveError() {
       itemId: 'item:longsword',
       modifierItemId: 'Special Ability ~ +1 ~ Weapon',
       savedAt: '2026-07-24T00:00:00Z',
+      priceMode: 'standard',
     });
   } catch (cause) {
     thrown = cause;

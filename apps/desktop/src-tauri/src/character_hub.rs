@@ -3333,6 +3333,16 @@ fn copy_bonus(selection: &EquipmentSelection, offers: &[crate::equipment_catalog
         .unwrap_or(0)
 }
 
+/// What a copy of `item_id` holding `bonus` costs: its Market offer, else the catalog price, which
+/// is also what a plain copy costs. `None` when the record has no price.
+fn copy_price_gp(item_id: &str, bonus: u8, offers: &[crate::equipment_catalog::MarketVariantDto]) -> Option<f64> {
+    offers
+        .iter()
+        .find(|offer| offer.bonus == bonus)
+        .map(|offer| offer.price_gp)
+        .or_else(|| catalog_cost_gp(item_id))
+}
+
 /// Saves one new copy of `item_id`, holding `modifier_key` when it is a `+N`, in one save. The
 /// bonus goes on the new copy: `apply_attach_equipment_modifier` takes the first copy of an id,
 /// which would make an older plain item the one that was paid for.
@@ -3484,7 +3494,7 @@ pub enum AttachEquipmentModifierResponse {
 /// `attach_equipment_modifier`'s real implementation (v0.6 alpha swarm
 /// items 1+27 sub-task 6, frontend-proposed shape). Mirrors
 /// `purchase_equipment_at_root`'s atomic resolve-cost -> check-affordability
-/// -> mutate -> charge sequencing, with two deliberate differences:
+/// -> mutate -> charge sequencing, with three deliberate differences:
 ///
 /// 1. **Validates `modifier_item_id` against the real equipment catalog
 ///    first**, before any cost or target-selection check -- a typo'd or
@@ -3524,10 +3534,18 @@ pub enum AttachEquipmentModifierResponse {
 ///    enhancement pricing is a bonus-squared formula, not a flat catalog
 ///    price) -- mirroring `purchase_equipment`'s block-on-unknown-cost
 ///    behavior here would block exactly the headline use case this
-///    command exists for. Only a modifier with a real, known `cost_gp`
-///    (e.g. Masterwork, `Some(0.0)` in the current table -- itself a
-///    known pre-existing pricing gap, not introduced here) is ever
-///    actually charged.
+///    command exists for. A modifier with a real, known `cost_gp` is
+///    charged that.
+///
+///    **Except a `+N` the copy's Market row offers:** it is charged the
+///    offer's price less what the copy already holds, its catalog price or
+///    its held `+M` offer, so buying plain and attaching costs what buying
+///    the `+N` costs and a sale cannot pay for a bonus nobody paid for. A
+///    bonus at or below the one held costs nothing and returns nothing. A
+///    row with no such offer, including a legacy `item:*` id, keeps the free
+///    attach above.
+/// 3. **`Cashless` moves no money** for any modifier, so it needs no funds
+///    (see [`PriceMode`]). The other two modes charge the same.
 ///
 /// The target `item_id` must already exist in `equipment_selections` --
 /// checked via a read before any charge, so a not-found target is a
@@ -3538,6 +3556,17 @@ pub(crate) fn attach_equipment_modifier_at_root(
     item_id: &str,
     modifier_item_id: &str,
     saved_at: &str,
+) -> Result<AttachEquipmentModifierResponse, String> {
+    attach_equipment_modifier_priced_at_root(root, item_id, modifier_item_id, saved_at, PriceMode::Standard)
+}
+
+/// [`attach_equipment_modifier_at_root`] under an explicit [`PriceMode`].
+pub(crate) fn attach_equipment_modifier_priced_at_root(
+    root: &Path,
+    item_id: &str,
+    modifier_item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
 ) -> Result<AttachEquipmentModifierResponse, String> {
     let Some(modifier_row) =
         codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(modifier_item_id)
@@ -3556,13 +3585,14 @@ pub(crate) fn attach_equipment_modifier_at_root(
 
     let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
         .map_err(|err| err.message)?;
-    let target_exists = envelope
+    // The copy `apply_attach_equipment_modifier` takes: the first of the id.
+    let target = envelope
         .character_input
         .chosen
         .equipment_selections
         .iter()
-        .any(|selection| selection.item_id == item_id);
-    if !target_exists {
+        .find(|selection| selection.item_id == item_id);
+    let Some(target) = target else {
         return Ok(AttachEquipmentModifierResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "equipment.attach_modifier.target_not_found".to_owned(),
@@ -3573,13 +3603,18 @@ pub(crate) fn attach_equipment_modifier_at_root(
                 claim_blocking: true,
             }],
         });
-    }
+    };
 
-    // Same row that satisfied recognition above -- see this function's doc
-    // comment for why price must not come from a second, independent lookup.
-    let cost_copper = match modifier_row.cost_gp {
-        Some(cost_gp) => money::gp_to_copper(cost_gp),
-        None => 0,
+    let offers = market_offers(item_id);
+    let cost_copper = if mode == PriceMode::Cashless {
+        0
+    } else if let Some(offer) = offers.iter().find(|offer| offer.modifier_key == modifier_item_id) {
+        let held_gp = copy_price_gp(item_id, copy_bonus(target, &offers), &offers);
+        money::gp_to_copper(offer.price_gp).saturating_sub(held_gp.map_or(0, money::gp_to_copper))
+    } else {
+        // Same row that satisfied recognition above -- see this function's doc
+        // comment for why price must not come from a second, independent lookup.
+        modifier_row.cost_gp.map_or(0, money::gp_to_copper)
     };
 
     if cost_copper > 0 {
@@ -3625,22 +3660,26 @@ pub struct AttachEquipmentModifierRequest {
     pub item_id: String,
     pub modifier_item_id: String,
     pub saved_at: String,
+    /// Absent means `Standard`, as on a purchase.
+    #[serde(default)]
+    pub price_mode: PriceMode,
 }
 
 /// See `attach_equipment_modifier_at_root` for the full transaction-shape
-/// reasoning (free-attach on unknown cost, target/modifier validation
-/// before any charge).
+/// reasoning (the `+N` charge, free-attach on unknown cost, target/modifier
+/// validation before any charge).
 #[tauri::command]
 pub fn attach_equipment_modifier(
     app: tauri::AppHandle,
     request: AttachEquipmentModifierRequest,
 ) -> Result<AttachEquipmentModifierResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    attach_equipment_modifier_at_root(
+    attach_equipment_modifier_priced_at_root(
         &root,
         &request.item_id,
         &request.modifier_item_id,
         &request.saved_at,
+        request.price_mode,
     )
 }
 
@@ -4326,11 +4365,7 @@ pub(crate) fn sell_equipment_copy_at_root(
         });
     };
     let sold_bonus = copy_bonus(&held[index], &offers);
-    let cost_gp = offers
-        .iter()
-        .find(|offer| offer.bonus == sold_bonus)
-        .map(|offer| offer.price_gp)
-        .or_else(|| catalog_cost_gp(item_id));
+    let cost_gp = copy_price_gp(item_id, sold_bonus, &offers);
 
     let response = mutate_saved_character_at_root(root, saved_at, |character_input| {
         character_input.chosen.equipment_selections.remove(index);
@@ -9910,6 +9945,300 @@ mod tests {
         let old: RemoveEquipmentSelectionRequest =
             serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": MARKET_SWORD, "savedAt": "t"})).unwrap();
         assert_eq!(old.bonus, None);
+    }
+
+    const PLUS_ONE_KEY: &str = "Special Ability ~ +1 ~ Weapon";
+    const PLAIN_SWORD_CP: i64 = 1_500;
+    /// `+3`: 15 gp + 300 gp masterwork + 18,000 gp.
+    const PLUS_THREE_SWORD_CP: i64 = 1_831_500;
+
+    fn market_attach(root: &Path, item_id: &str, modifier: &str, mode: PriceMode) -> AttachEquipmentModifierResponse {
+        attach_equipment_modifier_priced_at_root(root, item_id, modifier, "2026-11-02T00:00:02Z", mode)
+            .expect("attach call should not error")
+    }
+
+    fn market_sword_modifiers(root: &Path) -> Vec<String> {
+        held_selections(root)
+            .into_iter()
+            .find(|selection| selection.item_id == MARKET_SWORD)
+            .expect("the sword is held")
+            .applied_modifiers
+    }
+
+    /// A plain sword bought and then given a `+1` pays what a bought `+1` pays: the offer, less the
+    /// catalog price already paid.
+    fn assert_market_attach_charged(label: &str, mode: PriceMode) {
+        let root = fund_and_seed(label, 300_000);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(balance(&root), 300_000 - PLAIN_SWORD_CP as u64, "{label}: after the plain buy");
+
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode);
+        let AttachEquipmentModifierResponse::Attached { money, .. } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(money.total_copper, 68_500, "{label}: the response carries the balance");
+        assert_eq!(balance(&root), 68_500, "{label}: a bought +1 leaves the same 68,500 cp");
+        assert_eq!(market_sword_modifiers(&root), vec![PLUS_ONE_KEY.to_owned()], "{label}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// One copper short of the charge changes nothing: not the copy, not the balance, not the revision.
+    fn assert_market_attach_refused(label: &str, mode: PriceMode) {
+        let funded = PLUS_ONE_SWORD_CP - 1;
+        let root = fund_and_seed(label, funded);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+        let before = SavedCharacterStore::load(&root).unwrap();
+
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode);
+        let AttachEquipmentModifierResponse::Blocked { diagnostics } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(
+            diagnostics.iter().map(|d| d.id.as_str()).collect::<Vec<_>>(),
+            vec!["money.equipment_attach_modifier.insufficient_funds"],
+            "{label}"
+        );
+        assert!(diagnostics.iter().all(|d| d.claim_blocking), "{label}");
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().revision_id, before.revision_id, "{label}: nothing saved");
+        assert!(market_sword_modifiers(&root).is_empty(), "{label}");
+        assert_eq!(balance(&root), (funded - PLAIN_SWORD_CP) as u64, "{label}: no money moved");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Buy plain, attach `+1`, sell the `+1`, all in one mode: the balance E3.2's mint proof ends on.
+    fn market_attach_round_trip(label: &str, funded: i64, mode: PriceMode) -> u64 {
+        let root = fund_and_seed(label, funded);
+        let before = held_selections(&root).len();
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+        assert!(matches!(market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode), AttachEquipmentModifierResponse::Attached { .. }));
+        let sale = market_sell(&root, MARKET_SWORD, Some(1), mode).expect("the sale");
+        assert!(matches!(sale, CreateCharacterResponse::Saved { .. }), "{label}: {sale:?}");
+        assert_eq!(held_selections(&root).len(), before, "{label}: the copy is gone");
+        let left = balance(&root);
+        std::fs::remove_dir_all(&root).ok();
+        left
+    }
+
+    #[test]
+    fn market_attach_price_standard_charged() {
+        assert_market_attach_charged("attach-standard-charged", PriceMode::Standard);
+    }
+
+    #[test]
+    fn market_attach_price_character_build_charged() {
+        assert_market_attach_charged("attach-build-charged", PriceMode::CharacterBuild);
+    }
+
+    /// Cashless holds the bonus at no charge, on a character with no money at all.
+    #[test]
+    fn market_attach_price_cashless_charged_nothing() {
+        let root = fund_and_seed("attach-cashless-charged", 0);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Cashless), PurchaseEquipmentResponse::Purchased { .. }));
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Cashless);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(balance(&root), 0);
+        assert_eq!(market_sword_modifiers(&root), vec![PLUS_ONE_KEY.to_owned()]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn market_attach_price_standard_refused_one_copper_short() {
+        assert_market_attach_refused("attach-standard-refused", PriceMode::Standard);
+    }
+
+    #[test]
+    fn market_attach_price_character_build_refused_one_copper_short() {
+        assert_market_attach_refused("attach-build-refused", PriceMode::CharacterBuild);
+    }
+
+    /// Cashless cannot refuse for money; a copy the character does not hold it refuses in every mode.
+    #[test]
+    fn market_attach_price_cashless_refused_when_no_copy_is_held() {
+        let root = fund_and_seed("attach-cashless-refused", 500);
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Cashless);
+        let AttachEquipmentModifierResponse::Blocked { diagnostics } = response else {
+            panic!("{response:?}");
+        };
+        assert_eq!(diagnostics[0].id, "equipment.attach_modifier.target_not_found");
+        assert_eq!(balance(&root), 500);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The exact charge, not one copper more: the balance that just covers it is enough.
+    #[test]
+    fn market_attach_price_standard_charges_the_whole_balance_when_it_just_covers() {
+        let root = fund_and_seed("attach-exact", PLUS_ONE_SWORD_CP);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(balance(&root), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Paid in full, sold at half: never a gain.
+    #[test]
+    fn market_attach_price_standard_sold_back_loses_half() {
+        assert_eq!(market_attach_round_trip("attach-standard-sold", 300_000, PriceMode::Standard), 300_000 - 231_500 + 115_750);
+    }
+
+    #[test]
+    fn market_attach_price_character_build_sold_back_nets_zero() {
+        assert_eq!(market_attach_round_trip("attach-build-sold", 300_000, PriceMode::CharacterBuild), 300_000);
+    }
+
+    #[test]
+    fn market_attach_price_cashless_sold_back_moves_no_money() {
+        assert_eq!(market_attach_round_trip("attach-cashless-sold", 500, PriceMode::Cashless), 500);
+    }
+
+    /// E3.2's mint: 2,000 cp, buy plain, attach `+1`, sell. It read 116,250 cp at Standard. The attach
+    /// is now refused, so all that is left to sell is the plain sword.
+    #[test]
+    fn market_attach_price_the_mint_shape_never_gains() {
+        for (label, mode, after_sale) in [
+            ("attach-mint-standard", PriceMode::Standard, 500 + 750),
+            ("attach-mint-build", PriceMode::CharacterBuild, 2_000),
+        ] {
+            let root = fund_and_seed(label, 2_000);
+            assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+            let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Blocked { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), 500, "{label}");
+            market_sell(&root, MARKET_SWORD, None, mode).expect("the sale");
+            assert_eq!(balance(&root), after_sale, "{label}");
+            assert!(balance(&root) <= 2_000, "{label}: never gains");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// A held `+1` going to `+3` pays the difference between the offers, so the sale at CharacterBuild
+    /// still nets to zero.
+    #[test]
+    fn market_attach_price_a_held_offer_is_credited() {
+        let funded = 2_000_000;
+        let root = fund_and_seed("attach-upgrade", funded);
+        let mode = PriceMode::CharacterBuild;
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), mode), PurchaseEquipmentResponse::Purchased { .. }));
+        let response = market_attach(&root, MARKET_SWORD, "Special Ability ~ +3 ~ Weapon", mode);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(balance(&root), (funded - PLUS_THREE_SWORD_CP) as u64, "16,000 gp more, the whole of a +3 in total");
+        market_sell(&root, MARKET_SWORD, Some(3), mode).expect("sold as the +3 it is");
+        assert_eq!(balance(&root), funded as u64);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Nothing is due for a bonus at or below the one held, and nothing comes back: the copy stays
+    /// what it was, so no later sale can pay for a `+1` as anything else.
+    #[test]
+    fn market_attach_price_a_lower_or_equal_bonus_costs_nothing() {
+        for (label, bonus) in [("attach-lower", 1), ("attach-equal", 3)] {
+            let root = fund_and_seed(label, 2_000_000);
+            assert!(matches!(market_buy(&root, MARKET_SWORD, Some(3), PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+            let left = balance(&root);
+            let response = market_attach(&root, MARKET_SWORD, &format!("Special Ability ~ +{bonus} ~ Weapon"), PriceMode::Standard);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}");
+            market_sell(&root, MARKET_SWORD, Some(3), PriceMode::Standard).expect("still a +3");
+            assert_eq!(balance(&root), left + (PLUS_THREE_SWORD_CP as u64) / 2, "{label}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The attach takes the first copy of an id, so the first copy is the one credited, whatever a
+    /// later copy holds.
+    #[test]
+    fn market_attach_price_credits_the_copy_it_attaches_to() {
+        let funded = 1_000_000;
+        let root = fund_and_seed("attach-first-copy", funded);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        let left = balance(&root);
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(left - balance(&root), (PLUS_ONE_SWORD_CP - PLAIN_SWORD_CP) as u64, "the plain copy pays, not the +1 beside it");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// No such offer attaches as it did: a legacy id, a key of another kind, a row that offers none.
+    #[test]
+    fn market_attach_price_a_row_with_no_such_offer_attaches_free() {
+        for (label, item_id, buy, modifier) in [
+            ("attach-legacy", "item:longsword", false, PLUS_ONE_KEY),
+            ("attach-other-kind", MARKET_SWORD, true, "Special Ability ~ +1 ~ Armor"),
+            ("attach-no-offers", "Net (Base)", true, PLUS_ONE_KEY),
+        ] {
+            let root = fund_and_seed(label, 2_000);
+            if buy {
+                assert!(matches!(market_buy(&root, item_id, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+            }
+            let left = balance(&root);
+            let response = market_attach(&root, item_id, modifier, PriceMode::Standard);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// A modifier with a flat price is charged as it was, except that Cashless moves no money.
+    #[test]
+    fn market_attach_price_a_flat_priced_modifier_keeps_its_price_and_cashless_skips_it() {
+        const WHIPWOOD_CP: u64 = 50_000;
+        for (label, mode, funded, left) in [
+            ("attach-flat-standard", PriceMode::Standard, 60_000, 10_000),
+            ("attach-flat-build", PriceMode::CharacterBuild, WHIPWOOD_CP as i64, 0),
+            ("attach-flat-cashless", PriceMode::Cashless, 100, 100),
+        ] {
+            let root = fund_and_seed(label, funded);
+            let response = market_attach(&root, "item:longsword", "Material ~ Whipwood", mode);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The charge is off `list_market`, for every bonus of each kind, so it cannot part from the
+    /// price the Market row shows.
+    #[test]
+    fn market_attach_price_is_the_market_row_less_the_catalog_price() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let rows = [
+            (MarketCategory::Weapon, MARKET_SWORD),
+            (MarketCategory::Armor, "Chain Shirt (Base)"),
+            (MarketCategory::Shield, "Heavy Wooden Shield (Base)"),
+        ];
+        for (category, key) in rows {
+            let listed = list_market(MarketFilter { category, name_contains: None, book: None });
+            let row = listed.entries.iter().find(|row| row.entry.key == key).expect("on sale");
+            assert_eq!(row.variants.len(), 5, "{key}");
+            for variant in &row.variants {
+                let root = fund_and_seed(&format!("attach-price-{}", variant.bonus), 6_000_000);
+                assert!(matches!(market_buy(&root, key, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+                let left = balance(&root);
+                let response = market_attach(&root, key, &variant.modifier_key, PriceMode::Standard);
+                assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{key}: {response:?}");
+                assert_eq!(
+                    left - balance(&root),
+                    money::gp_to_copper(variant.price_gp) - money::gp_to_copper(catalog_cost_gp(key).expect("priced")),
+                    "{key} +{}",
+                    variant.bonus
+                );
+                std::fs::remove_dir_all(&root).ok();
+            }
+        }
+    }
+
+    #[test]
+    fn market_attach_price_request_carries_the_mode_on_the_wire() {
+        let sent: AttachEquipmentModifierRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "modifierItemId": PLUS_ONE_KEY, "savedAt": "t", "priceMode": "cashless",
+        }))
+        .unwrap();
+        assert_eq!(sent.price_mode, PriceMode::Cashless);
+        let old: AttachEquipmentModifierRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "modifierItemId": PLUS_ONE_KEY, "savedAt": "t",
+        }))
+        .unwrap();
+        assert_eq!(old.price_mode, PriceMode::Standard, "absent means Standard, as a purchase's does");
     }
 
     /// An unaffordable item must be honestly rejected -- no equipment
