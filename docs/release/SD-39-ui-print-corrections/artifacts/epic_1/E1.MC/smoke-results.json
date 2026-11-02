@@ -1,0 +1,138 @@
+[
+  {
+    "id": "sheet-tab-feats",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/sheet-tab-feats.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nHIT POINTS\n7 / 7\nINITIATIVE\n+3\nInitiative +3: Dexterity modifier +3. Bonuses that hold only while a grit or panache point is held are listed on their own and not added here\nENCUMBRANCE\nLig",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "bab57152-9fdb-461c-8ca5-2fb8b483bda2"
+      ],
+      "deleted": [
+        "bab57152-9fdb-461c-8ca5-2fb8b483bda2"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-add-feat",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/sheet-action-add-feat.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nNo longer eligible: Improved Awesome Blow, Reckless Rage, Hurtful.\n\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nHIT POINTS\n7 / 7\nINITIATIVE\n+3\nInitiative +3: Dexterity modifier +3. Bonuses that hold only while a grit or panache poin",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "bab6b1d9-c638-445f-a273-9b5b1904dbec"
+      ],
+      "deleted": [
+        "bab6b1d9-c638-445f-a273-9b5b1904dbec"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-add-feat-unmet-listed",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/sheet-action-add-feat-unmet-listed.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nNo longer eligible: Improved Awesome Blow, Reckless Rage, Hurtful.\n\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nHIT POINTS\n7 / 7\nINITIATIVE\n+3\nInitiative +3: Dexterity modifier +3. Bonuses that hold only while a grit or panache poin",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "1c787a99-c006-4372-a3b2-c1b0b85ad22e"
+      ],
+      "deleted": [
+        "1c787a99-c006-4372-a3b2-c1b0b85ad22e"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-custom-dialog-chips",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/sheet-action-custom-dialog-chips.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nHIT POINTS\n7 / 7\nINITIATIVE\n+3\nInitiative +3: Dexterity modifier +3. Bonuses that hold only while a grit or panache point is held are listed on their own and not added here\nENCUMBRANCE\nLig",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "68ce87ec-8d95-4140-ba4d-f3180f5fb42b"
+      ],
+      "deleted": [
+        "68ce87ec-8d95-4140-ba4d-f3180f5fb42b"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-level-up-dialog",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/sheet-action-level-up-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nHIT POINTS\n7 / 7\nINITIATIVE\n+3\nInitiative +3: Dexterity modifier +3. Bonuses that hold only while a grit or panache point is held are listed on their own and not added here\nENCUMBRANCE\nLig",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "7c4c4437-4047-42a2-a7e6-0dbdcf93d7eb"
+      ],
+      "deleted": [
+        "7c4c4437-4047-42a2-a7e6-0dbdcf93d7eb"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer-accept",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/level-up-fighter6-into-arcane-archer-accept.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: '12345678910 (no <select> named '12345678910')' at row step 7/25 (select \"12345678910\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-blockers-and-labels",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/level-up-fighter6-blockers-and-labels.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: '12345678910 (no <select> named '12345678910')' at row step 7/17 (select \"12345678910\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-action-trait-add",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/e1mc/smoke/sheet-action-trait-add.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nHIT POINTS\n7 / 7\nINITIATIVE\n+3\nInitiative +3: Dexterity modifier +3. Bonuses that hold only while a grit or panache point is held are listed on their own and not added here\nENCUMBRANCE\nLig",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd39-e1_mc-YvRFA2/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "008a4890-bbc4-4b51-b30e-097985a0b26c"
+      ],
+      "deleted": [
+        "008a4890-bbc4-4b51-b30e-097985a0b26c"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

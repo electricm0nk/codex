@@ -161,7 +161,7 @@ const go = async (card) => { quotaGate(); return run(card) }
 
 phase('C — package + cut');  await go(C1)
 phase('E1 — guards');        await go(E1_0)
-const uiA = go(E1_4)                                            // side lane ui-a (CustomTab.tsx only)
+const uiA = go(E1_4)                                            // side lane ui-a (CustomDialog.tsx + customChip.ts)
 for (const c of [E1_1, E1_2, E1_3]) await go(c); await uiA; await go(E1_MC)
 phase('E2 — layout');        for (const c of E2) await go(c)    // serial, then E2.MC
 phase('E3 — Market');        for (const c of [E3_1, E3_2, E3_3]) await go(c)
@@ -186,7 +186,7 @@ Phase titles above match these rows. Shared-file writer order: `epic-breakdown.m
 | Phase / epic | Cards | Parallel? | File-touch set | Gated on |
 |---|---|---|---|---|
 | C — package + cut | C0, C1 | no | this package; the 14 F-1 surfaces + `current-release.json` | — |
-| E1 — guards | E1.0–E1.5, E1.MC | E1.4 ∥ E1.1–E1.3 (`ui-a`) | `crates/codex-ingest/**`, `data/sheet_rules/**`, `data/equipment_types.json`; `src/rules_core/feat_budget.rs` *(new)*; `character_hub.rs`; `CharacterSheet.tsx`; `CustomTab.tsx` (`ui-a` only); `settings/**` | C1 |
+| E1 — guards | E1.0–E1.6, E1.MC | E1.4 ∥ E1.1–E1.3 (`ui-a`) | `crates/codex-ingest/**`, `data/sheet_rules/**`, `data/equipment_types.json`; `src/rules_core/feat_budget.rs` *(new)*; `character_hub.rs`; `CharacterSheet.tsx`; `CustomDialog.tsx`, `customChip.ts` (`ui-a` only); `settings/**` | C1 |
 | E2 — layout | E2.1–E2.4, E2.MC | no | `sheetLayout.ts`, `CharacterSheet.tsx`, `ProgressionDrawer.tsx` *(new)*, `spec.json`, inventory | E1.MC |
 | E3 — Market | E3.1–E3.5, E3.MC | E3.5 ∥ E3.4 (`sf-cpr`) | `equipment_catalog.rs`, `src/rules_core/enhancement.rs` *(new)*, `character_hub.rs`, `main.rs`, `MarketDialog.tsx` *(new)*, `CharacterSheet.tsx`, `boundary/*.ts`, `spec.json`; `sf-cpr`: the SF/CPR sheet files and adapters only | E2.MC |
 | E4 — slots | E4.1–E4.4, E4.MC | no | `src/rules_core/body_slots.rs` *(new)*, `character_input.rs`, the F-11 consumers, `character_hub.rs`, `main.rs`, `local_store.rs`, `src/saved_character/mod.rs`, `EquipmentPanel.tsx` *(new)*, `CharacterSheet.tsx`, `character_custom.rs`, `CustomTab.tsx`, `spec.json` | E3.MC |

@@ -116,7 +116,7 @@ grep -rln 'pcg' src apps/desktop/src apps/desktop/src-tauri/src      # only the 
 ```bash
 cd docs/release/SD-39-ui-print-corrections
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 52) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 53) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E9\.([5-9]|1[01]) / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c 'usable: yes' artifacts/epic_9/E9.4_cycle_receipt.md        # 3
 grep -c 'SD-39 INTERIM NOTES' release-notes.md                        # 0 at E9.8+

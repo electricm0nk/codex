@@ -178,7 +178,7 @@ E4.4, G-6.
 
 ## §14 — Custom chip styling (D10)
 
-**OPERATOR.** The Add Custom dialog's top-row chips (`CustomTab.tsx`) must return to their resting style
+**OPERATOR.** The Add Custom dialog's top-row chips (`CustomDialog.tsx`, E1.4) must return to their resting style
 on deselect; one selected chip at a time; focus ring distinct from selection; tokens valid in both
 themes. The fix is in the shared chip component if one exists, so Market and the feat picker inherit it.
 **Enforced by:** E1.4 (ui-smoke row + unit test on the class/style function).
@@ -323,6 +323,9 @@ package made and what the code shows.
 | A Create pick is an add like any other, so a pick equal to a seeded default is a duplicate | The seeds are not shown on Create, so a refusal would refuse a choice the screen offers. Refusal is also wrong in the other direction: if the seed stays, a later pick can displace it, and the player loses the feat they picked | The pick takes the seed's place, with the seed's slot (Power Attack, Dodge). Weapon Focus is not displaceable, so Create refuses it on the seeded target. The same pick twice refuses with `create.feat_duplicate` |
 | E1.3's FILES YOU OWN: `CharacterSheet.tsx` picker; technical design: a `FeatPicker` | No `FeatPicker` exists (`grep -rlw FeatPicker apps/desktop/src`: 0 files). The picker is `ItemPickerModal.tsx`, its logic is `itemPickerFilter.ts`, and `CharacterSheet.tsx` renders it. No card owned either file (`grep -n 'ItemPicker\|itemPickerFilter' epic-breakdown.md` names neither in a FILES column) | The row is amended; both files are E1.3's |
 | R10: "Settings" as a place | App settings here are `localStorage` keys in `settings/*.ts` (`themeMode.ts`), and the box itself is the control | `settings/featPickerPreference.ts`, key `codex.featPicker.hideUnmet`. No row in the Settings dialog |
+
+| E1.1: a class's feat pools are the rules with `target: Pool(p)` and a Number value; the census and `feat_pool_of` share that predicate | Swashbuckler and Gunslinger grant through an `offers` row with no target, so both read `{}` at every level (`artifacts/epic_1/E1.MC/pool-table.txt`), and an Elf Swashbuckler 4 is refused the bonus feat the book gives. `hunter_teamwork_feats#bonus6..11` repeat `#bonus0..5`, so a Hunter reads twice the book | E1.6. Dragon Disciple and Sentinel hold their grant only as prose, the same miss in another shape (E1.6 (c)). The table's other rows were read against remembered book numbers, not page cites: an estimate, not a proof |
+| E1.5: the row "ends ticked" | The harness reads the screen once after the last step, and the assertions need the box unticked. No later row expects the hidden count or clicks Add Feat (`python3` over `spec.json`) | The row text now says unticked |
 
 **Measured (`python3` over `data/sheet_rules/*/equipment/*.json`, 2026-11-01):** 7,386 records, 2,906 with a slot
 tag, 1,617 with a `Slot:` line, 27 where the two differ (E1.0; the 19 first written here left out the 8 `Slot: none` weapons); the prose wins. Items with neither have no slot.

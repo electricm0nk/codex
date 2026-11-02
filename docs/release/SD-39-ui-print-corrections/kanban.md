@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 52
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 53
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -41,7 +41,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 52
 | E1.3 | Hide-unmet checkbox | opus | complete | E1.2 | commit 42a1c821b3 + receipt commit; receipt artifacts/epic_1/E1.3_cycle_receipt.md |
 | E1.5 | ui-smoke feat rows reach the picker | sonnet | complete | E1.3, E1.4 | commit ec9f0becf4 + receipt commit; receipt artifacts/epic_1/E1.5_cycle_receipt.md |
 | E1.4 | Add Custom chip styling fix | sonnet | complete | C1 | side lane ui-a; commit 18ca8b657c; receipt artifacts/epic_1/E1.4_cycle_receipt.md |
-| E1.MC | E1 merge check + Epic report | opus | waiting | E1.3, E1.4, E1.5 | |
+| E1.MC | E1 merge check + Epic report | opus | complete | E1.3, E1.4, E1.5 | merged nothing; receipt artifacts/epic_1/E1.MC_cycle_receipt.md |
+| E1.6 | Feat pools a class grants by offers; Hunter counted once | opus | ready | E1.MC | discovered by E1.MC, decisions.md §21; row-order next |
 | E2.1 | Layout registry + Abilities/Details moves + title | opus | waiting | E1.MC | |
 | E2.2 | Combat row 2x2 + 1x4 | opus | waiting | E2.1 | |
 | E2.3 | Show Progression drawer shell | opus | waiting | E2.2 | |

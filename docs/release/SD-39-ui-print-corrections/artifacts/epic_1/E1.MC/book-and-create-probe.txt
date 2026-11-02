@@ -1,0 +1,24 @@
+OFFERSOUT class:gunslinger ["ultimate_combat:class_feature:gunslinger_bonus_feats<-internal[\"Gunslinger Bonus Feat Selection\"]"]
+OFFERSOUT class:swashbuckler ["advanced_class_guide:class_feature:swashbuckler_bonus_feats<-internal[\"Swashbuckler Bonus Feat Selection\"]"]
+BOOKCHECK class:swashbuckler 4: [("level", 2, 1)]
+BOOKCHECK class:swashbuckler 8: [("level", 4, 1)]
+BOOKCHECK class:swashbuckler 20: [("level", 10, 1)]
+BOOKCHECK class:gunslinger 4: [("level", 2, 1)]
+BOOKCHECK class:gunslinger 20: [("level", 10, 1)]
+BOOKCHECK class:hunter 3: [("level", 2, 1), ("hunter_teamwork_feats", 2, 0)]
+BOOKCHECK class:hunter 18: [("level", 9, 1), ("hunter_teamwork_feats", 12, 0)]
+BOOKCHECK class:fighter 4: [("level", 2, 0), ("fighter_bonus_feat", 3, 2)]
+SWASH4 start ["feat:power_attack", "feat:weapon_focus"] [("feats.budget.level.granted", 2), ("feats.budget.level.spent", 1), ("feats.budget.level.remaining", 1)]
+SWASH4 add Toughness: ok
+SWASH4 add Improved Initiative: 'Improved Initiative' cannot be taken: no feat pool has room for it (the level pool has 0 of 2 left).
+SWASHPLAN Ok(([], []))
+CREATEOFFER part=4 ok=12 bad=39 nocompute=0
+CREATEOFFER part=0 ok=27 bad=27 nocompute=0
+CREATEOFFER part=3 ok=18 bad=33 nocompute=0
+CREATEOFFER part=7 ok=33 bad=18 nocompute=0
+CREATEOFFER part=6 ok=24 bad=27 nocompute=0
+CREATEOFFER part=2 ok=30 bad=21 nocompute=0
+CREATEOFFER part=1 ok=27 bad=24 nocompute=0
+CREATEOFFER part=5 ok=18 bad=33 nocompute=0
+non-prestige refusals: 0
+prestige-first-class refusals: 222

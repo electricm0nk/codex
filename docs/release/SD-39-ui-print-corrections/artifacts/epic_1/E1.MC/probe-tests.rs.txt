@@ -1,0 +1,93 @@
+    fn e1mc_partition(k: usize) {
+        let names = ["Toughness","Alertness","Endurance","Iron Will","Lightning Reflexes","Great Fortitude","Run","Diehard","Athletic","Acrobatic"];
+        let (mut ok, mut bad, mut nocompute) = (0, Vec::new(), Vec::new());
+        for (i, class_id) in codex::rules_core::class_census::census().keys().enumerate() {
+            if i % 8 != k { continue; }
+            for (race, level) in [("race:human", 1u8), ("race:elf", 1), ("race:human", 5)] {
+                let request = request_for_class(race, class_id, level);
+                let Ok(preview) = draft_sheet_preview_impl(&request) else { println!("NOPREVIEW {race} {class_id} {level}"); continue };
+                let n: i16 = preview.feat_budget.iter().filter(|r| ["feats.budget.level.granted","feats.budget.racial.granted","feats.budget.bonus.granted"].contains(&r.id.as_str())).map(|r| r.value).sum();
+                let mut request = request.clone();
+                request.selected_feats = names.iter().take(n as usize).map(|id| CreateFeatDto { feat_id: (*id).to_owned(), target: None }).collect();
+                let root = tempdir("probe-create");
+                match create_character_at_root(&root, &request, "t".to_owned()) {
+                    Ok(CreateCharacterResponse::Saved { .. }) => {
+                        ok += 1;
+                        let loaded = load_saved_character_at_root(&root).expect("load");
+                        let over: i16 = loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining") && r.value < 0).map(|r| -r.value).sum();
+                        if over != 0 { bad.push(format!("{race} {class_id} {level} n={n} saved-over-by {over} {:?}", loaded.selected_feats)); }
+                        if loaded.snapshot.is_none() { nocompute.push(format!("{race} {class_id} {level}")); }
+                    }
+                    other => bad.push(format!("{race} {class_id} {level} n={n}: {other:?}").chars().take(300).collect()),
+                }
+                std::fs::remove_dir_all(&root).ok();
+            }
+        }
+        println!("CREATEOFFER part={k} ok={ok} bad={} nocompute={}", bad.len(), nocompute.len());
+        for b in &bad { println!("CREATEBAD {b}"); }
+        for b in &nocompute { println!("NOCOMPUTE {b}"); }
+    }
+    #[test] fn e1mcp2_c0() { e1mc_partition(0) }
+    #[test] fn e1mcp2_c1() { e1mc_partition(1) }
+    #[test] fn e1mcp2_c2() { e1mc_partition(2) }
+    #[test] fn e1mcp2_c3() { e1mc_partition(3) }
+    #[test] fn e1mcp2_c4() { e1mc_partition(4) }
+    #[test] fn e1mcp2_c5() { e1mc_partition(5) }
+    #[test] fn e1mcp2_c6() { e1mc_partition(6) }
+    #[test] fn e1mcp2_c7() { e1mc_partition(7) }
+
+    /// Book: swashbuckler and gunslinger gain a bonus feat at 4th and every four levels after (ACG, UC).
+    #[test]
+    fn e1mcp2_swashbuckler_and_gunslinger() {
+        for (class, level) in [("class:swashbuckler", 4u8), ("class:swashbuckler", 8), ("class:swashbuckler", 20), ("class:gunslinger", 4), ("class:gunslinger", 20), ("class:hunter", 3), ("class:hunter", 18), ("class:fighter", 4)] {
+            let input = compose_character_input(&request_for_class("race:elf", class, level));
+            let base = compute_pilot_base_chassis(&input);
+            let b = feat_budget_for(&input, &base).unwrap();
+            println!("BOOKCHECK {class} {level}: {:?}", b.pools().iter().map(|p| (p.id.clone(), p.granted, p.spent)).collect::<Vec<_>>());
+        }
+        let root = tempdir("probe-swash");
+        let mut envelope = level_up_test_envelope("race:elf", 1);
+        envelope.character_input = compose_character_input(&request_for_class("race:elf", "class:swashbuckler", 4));
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let l = load_saved_character_at_root(&root).unwrap();
+        println!("SWASH4 start {:?} {:?}", l.selected_feats, l.explanations.iter().filter(|r| r.id.starts_with("feats.budget")).map(|r| (r.id.clone(), r.value)).collect::<Vec<_>>());
+        for feat in ["Toughness", "Improved Initiative"] {
+            let out = add_feat_selection_enforcing_prerequisites_at_root(&root, feat, None, "2026-11-01T00:00:00Z");
+            println!("SWASH4 add {feat}: {}", match &out { Ok(_) => "ok".to_owned(), Err(e) => e.clone() });
+        }
+        std::fs::remove_dir_all(&root).ok();
+        let root = tempdir("probe-swash-prev");
+        let mut envelope = level_up_test_envelope("race:elf", 1);
+        envelope.character_input = compose_character_input(&request_for_class("race:elf", "class:swashbuckler", 3));
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let plan = preview_level_up_at_root(&root, "class:swashbuckler");
+        println!("SWASHPLAN {:?}", plan.map(|p| (p.pick_from_lists.iter().map(|l| (l.category.clone(), l.count)).collect::<Vec<_>>(), p.automatic_features.iter().map(|g| g.name.clone()).collect::<Vec<_>>())));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Every census class at 20: held rules that offer feats outside `feat_budget`'s reading.
+    #[test]
+    fn e1mcp2_held_offers_outside_the_budget() {
+        use codex::rules_core::sheet_rule::{held_set, BonusTarget, CharacterFacts, HeldSeed, OptionSet};
+        let package = sheet_rule_package().as_ref().expect("package");
+        for class_id in codex::rules_core::class_census::census().keys() {
+            let input = compose_character_input(&request_for_class("race:elf", class_id, 20));
+            let base = compute_pilot_base_chassis(&input);
+            let seed = HeldSeed::from_character(&input, &base);
+            let facts = CharacterFacts::from_character(&input, &base).with_linked_picks(package, &seed);
+            let held = held_set(package, &seed, &facts);
+            let mut hits = Vec::new();
+            for id in held.rules.keys() {
+                if held.removed.contains(id) { continue; }
+                let Some(rule) = package.rule(id) else { continue };
+                let pooled = matches!(rule.target, Some(BonusTarget::Pool(_)));
+                let Some(offers) = rule.offers.as_ref() else { continue };
+                if let OptionSet::Rules { pool, tags, .. } = &offers.from {
+                    let feaish = pool == "feat" || tags.iter().any(|t| t.to_lowercase().contains("feat"));
+                    if feaish && !pooled { hits.push(format!("{}<-{pool}{tags:?}", id.as_str())); }
+                }
+            }
+            if !hits.is_empty() { println!("OFFERSOUT {class_id} {hits:?}"); }
+        }
+    }
+
