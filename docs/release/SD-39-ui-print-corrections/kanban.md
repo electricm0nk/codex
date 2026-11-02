@@ -48,7 +48,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 53
 | E2.3 | Show Progression drawer shell | opus | complete | E2.2 | commit c10cbc057c + receipt commit; receipt artifacts/epic_2/E2.3_cycle_receipt.md |
 | E2.4 | ui-smoke rows + inventory | sonnet | complete | E2.3 | commit 22688208ec + receipt commit; receipt artifacts/epic_2/E2.4_cycle_receipt.md; full-suite 64/133 green, 14 red, 52 blocked |
 | E2.MC | E2 merge check + Epic report | opus | complete | E2.4 | merged nothing; receipt artifacts/epic_2/E2.MC_cycle_receipt.md |
-| E3.1 | list_market + category fix + +N variants | opus | waiting | E2.MC | |
+| E3.1 | list_market + category fix + +N variants | opus | complete | E2.MC | commit 93c596cc1c + receipt commit; receipt artifacts/epic_3/E3.1_cycle_receipt.md; Armor cross-type 0 of 63 |
 | E3.2 | Sell + +N purchase on existing purchase_equipment | opus | waiting | E3.1 | |
 | E3.3 | Market dialog replaces Add buttons (PF) | opus | waiting | E3.2 | |
 | E3.4 | Enhancement bonus → AC/attack/damage rows | opus | waiting | E3.3 | |

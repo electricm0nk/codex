@@ -82,11 +82,12 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
 
 ## §3 Market (E3)
 
-- `list_market(MarketFilter { system, category: Weapon|Armor|Shield|Gear|MagicItem, name_contains, book })`
-  (new command, `equipment_catalog.rs`) derives category from record type tags; `+N` variants are
-  produced by `enhancement.rs` (new, `src/rules_core/`) for records flagged `enhanceable: armor|shield|weapon`
-  (E1.0 data): id `<base>+<N>`, name `+N <Base>`, price per `decisions.md §8`, and an `enhancement`
-  bonus the engine applies to AC (armor/shield) or attack+damage (weapon) only while `EquippedActive`.
+- `list_market(MarketFilter { category: Weapon|Armor|Shield|Gear|MagicItem, name_contains, book })`
+  (new command, `equipment_catalog.rs`) derives category from record type tags. Each row of an
+  `enhanceable` priced arms or armor record has a `variants` list: `{ bonus, name "+N <Base>", priceGp,
+  modifierKey }`, price per `decisions.md §8`. `modifierKey` is the eqmod `Special Ability ~ +N ~ <Kind>`;
+  E3.2 attaches it, and the engine applies it to AC (armor/shield) or attack+damage (weapon) only while
+  `EquippedActive` (E3.4). `decisions.md §25`.
 - `buy_item { item_id, price_mode, equip_now }` / `sell_item { item_id, price_mode }` wrap
   `add/remove_equipment_selection` and move `gold` (`character_hub.rs:4857`). Refusal: `Insufficient
   funds: <price> > <gold>`.

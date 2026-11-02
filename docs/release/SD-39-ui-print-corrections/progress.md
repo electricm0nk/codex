@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 14 of 53 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 15 of 53 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -56,6 +56,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E2 | E2.3 | complete | c10cbc057c | artifacts/epic_2/E2.3_cycle_receipt.md |
 | E2 | E2.4 | complete | 22688208ec | artifacts/epic_2/E2.4_cycle_receipt.md |
 | E2 | E2.MC | complete | this commit | artifacts/epic_2/E2.MC_cycle_receipt.md |
+| E3 | E3.1 | complete | 93c596cc1c | artifacts/epic_3/E3.1_cycle_receipt.md |
 
 ## Epic reports
 
@@ -117,6 +118,9 @@ seed deltas, open blockers.)
 
 | Card | Decision point | Default taken | Alternative not taken |
 |---|---|---|---|
+| E3.1 | Which list a magic suit of armor is on | Magic item only: a magic marker wins | Armor as well, which would also put tagged rods on Weapon |
+| E3.1 | An arms row with no type tags | Gear, still buyable | A kind guessed from its name |
+| E3.1 | Unpriced template twins, `Codex-Named Unit` rows | Hidden | Shown, as the old picker did |
 
 ## Open blockers
 
