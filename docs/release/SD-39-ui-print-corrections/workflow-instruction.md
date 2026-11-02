@@ -186,7 +186,7 @@ Phase titles above match these rows. Shared-file writer order: `epic-breakdown.m
 | Phase / epic | Cards | Parallel? | File-touch set | Gated on |
 |---|---|---|---|---|
 | C — package + cut | C0, C1 | no | this package; the 14 F-1 surfaces + `current-release.json` | — |
-| E1 — guards | E1.0–E1.4, E1.MC | E1.4 ∥ E1.1–E1.3 (`ui-a`) | `crates/codex-ingest/**`, `data/sheet_rules/**`, `data/equipment_types.json`; `src/rules_core/feat_budget.rs` *(new)*; `character_hub.rs`; `CharacterSheet.tsx`; `CustomTab.tsx` (`ui-a` only); `settings/**` | C1 |
+| E1 — guards | E1.0–E1.5, E1.MC | E1.4 ∥ E1.1–E1.3 (`ui-a`) | `crates/codex-ingest/**`, `data/sheet_rules/**`, `data/equipment_types.json`; `src/rules_core/feat_budget.rs` *(new)*; `character_hub.rs`; `CharacterSheet.tsx`; `CustomTab.tsx` (`ui-a` only); `settings/**` | C1 |
 | E2 — layout | E2.1–E2.4, E2.MC | no | `sheetLayout.ts`, `CharacterSheet.tsx`, `ProgressionDrawer.tsx` *(new)*, `spec.json`, inventory | E1.MC |
 | E3 — Market | E3.1–E3.5, E3.MC | E3.5 ∥ E3.4 (`sf-cpr`) | `equipment_catalog.rs`, `src/rules_core/enhancement.rs` *(new)*, `character_hub.rs`, `main.rs`, `MarketDialog.tsx` *(new)*, `CharacterSheet.tsx`, `boundary/*.ts`, `spec.json`; `sf-cpr`: the SF/CPR sheet files and adapters only | E2.MC |
 | E4 — slots | E4.1–E4.4, E4.MC | no | `src/rules_core/body_slots.rs` *(new)*, `character_input.rs`, the F-11 consumers, `character_hub.rs`, `main.rs`, `local_store.rs`, `src/saved_character/mod.rs`, `EquipmentPanel.tsx` *(new)*, `CharacterSheet.tsx`, `character_custom.rs`, `CustomTab.tsx`, `spec.json` | E3.MC |
@@ -253,7 +253,7 @@ on `origin/tranche-19` and merge nothing.
    `Running` line. Do not repeat a clean gate (R-V).
 9. **Receipt** to `artifacts/epic_<n>/<card>_cycle_receipt.md` (§7). Update the card's `kanban.md` row
    and append a `progress.md` row **in the same commit**. If you added a discovered card, re-count the
-   `51` constant in `acceptance-and-verification.md` G-12 and `kanban.md` in that commit (R18).
+   card-count constant in `acceptance-and-verification.md` G-12 and `kanban.md` in that commit (R18).
    Unfiltered `git status --porcelain` prints nothing after it. Push via §5.
 10. **Report:** status (`complete | partial | blocked-escalated`), SHA, receipt path, seed deltas,
     discoveries.
@@ -375,7 +375,7 @@ bug to fix before launch. The author's run is recorded in `progress.md`.
 | **R15 FILES YOU OWN is closed** | each card greps `boundary/*.ts wire()` and second call sites before its first write; the receipt has the closure-check row | `grep -L 'closure check' artifacts/epic_*/*_cycle_receipt.md` prints nothing |
 | **R16 Clippy before the first commit** | `cargo clippy --locked --tests` on touched workspaces before any `.rs` card's first local commit | receipt row "Clippy before first commit" |
 | **R17 Full ui-smoke has an owner** | E2.4 runs the full suite once and records the red-row list as FSR-C2 evidence; the full suite is **not** a gate in SD-39 (stated here, per the retro's wording) | E2.4 receipt |
-| **R18 Re-count at discovery** | the card that adds a discovered row edits the `51` constant in G-12 and this file in the same commit | E9.5's `ROW_COUNT` check never fires |
+| **R18 Re-count at discovery** | the card that adds a discovered row edits the card-count constant in G-12 and this file in the same commit | E9.5's `ROW_COUNT` check never fires |
 | **R20 Zero tests is a fail** | a filter matching 0 tests proves nothing; receipts quote the `N passed` line | receipts |
 | **R19 Observed concurrency, not stated** | before dispatching a side lane, `git status --porcelain` and `git worktree list` are read; no two cards share a tree on "depends only on" reasoning | the lead's dispatch log in `progress.md` |
 

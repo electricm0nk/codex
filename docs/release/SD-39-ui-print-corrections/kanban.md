@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 52
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -38,9 +38,10 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51
 | E1.0 | Slot table + slot_of; prove repeatable and tags | opus | complete | C1 | commit 5014fb84a9; receipt artifacts/epic_1/E1.0_cycle_receipt.md |
 | E1.1 | Feat budget rows + refusal | opus | complete | E1.0 | commit 1de994845f + receipt commit; receipt artifacts/epic_1/E1.1_cycle_receipt.md |
 | E1.2 | Duplicate feat guard | opus | complete | E1.1 | commit 073780a2bb + receipt commit; receipt artifacts/epic_1/E1.2_cycle_receipt.md |
-| E1.3 | Hide-unmet checkbox | opus | waiting | E1.2 | |
+| E1.3 | Hide-unmet checkbox | opus | complete | E1.2 | commit 42a1c821b3 + receipt commit; receipt artifacts/epic_1/E1.3_cycle_receipt.md |
+| E1.5 | ui-smoke feat rows reach the picker | sonnet | waiting | E1.3, E1.4 | discovered by E1.3 |
 | E1.4 | Add Custom chip styling fix | sonnet | complete | C1 | side lane ui-a; commit 18ca8b657c; receipt artifacts/epic_1/E1.4_cycle_receipt.md |
-| E1.MC | E1 merge check + Epic report | opus | waiting | E1.3, E1.4 | |
+| E1.MC | E1 merge check + Epic report | opus | waiting | E1.3, E1.4, E1.5 | |
 | E2.1 | Layout registry + Abilities/Details moves + title | opus | waiting | E1.MC | |
 | E2.2 | Combat row 2x2 + 1x4 | opus | waiting | E2.1 | |
 | E2.3 | Show Progression drawer shell | opus | waiting | E2.2 | |

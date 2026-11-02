@@ -100,8 +100,8 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
   `feats.budget.<pool>.granted|spent|remaining` in explanations.
 - `add_feat_selection_enforcing_prerequisites_at_root` (`character_hub.rs` ~3560) gains the budget and
   duplicate checks before the prerequisite check; error strings name the pool or the duplicate.
-- Picker: `FeatPicker` reads `FeatPrerequisiteReport.unmet` (`feat_catalog.rs:49–59`); checkbox "Hide
-  feats I don't qualify for" default on; unticked rows greyed with `unmet.join(', ')`.
+- Picker: `ItemPickerModal` over `itemPickerFilter.ts` reads the catalog's `eligibility` (`feat_catalog.rs`); checkbox "Hide
+  feats I don't qualify for" default on; unticked rows greyed with `unavailableReason`, the unmet list joined by `; `.
 
 ## §5 Level ledger (E5)
 

@@ -1,0 +1,14 @@
+{
+  "real_app_data_dir": "/home/ubuntu/.local/share/io.electricm0nk.codex",
+  "before": {
+    "entries": 15379,
+    "sha256": "ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf",
+    "present": true
+  },
+  "after": {
+    "entries": 15379,
+    "sha256": "ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf",
+    "present": true
+  },
+  "untouched": true
+}
