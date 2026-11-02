@@ -24,7 +24,8 @@ use serde::Deserialize;
 
 use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
-use codex::rules_core::cpr::kit::{CprKitChoices, CprKitPick, CprKitPurchase};
+use codex::rules_core::cpr::input::CprKitEntry;
+use codex::rules_core::cpr::kit::{CprKitCatalog, CprKitChoices, CprKitItem, CprKitPick, CprKitPurchase};
 use codex::rules_core::cpr::sheet::{compose_sheet, CprSheetCatalogs};
 use codex::rules_core::cpr::store::{CprCharacterStore, CprSavedCharacter};
 use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
@@ -45,12 +46,18 @@ use crate::cpr_sheet_print::CprPrintCatalog;
 use crate::characterHub::appendToCharacter::{AppendToCharacterResponse, ItemToAppendDto};
 use crate::characterHub::recomputeCharacter::RecomputeCharacterResponse;
 use crate::characterHub::reSaveCharacter::ReSaveCharacterResponse;
+use crate::character_hub::{refund_copper, PriceMode};
+use crate::cpr_catalog::{market_rows, CprMarketRow};
 use crate::rule_system_adapter::{ClassLevelDelta, RuleSystemAdapter};
+use crate::sf_catalog::{MarketShellCopyDto, MarketShellOutcome, MarketShellRequest, MarketShellStateDto};
 
 /// Diagnostic id and error prefix: a Pathfinder chassis cannot describe a CPR character.
 pub(crate) const NOT_A_PATHFINDER_CHASSIS: &str = "cpr_adapter.not_a_pathfinder_chassis";
 /// Error prefix: the Pathfinder equipment append does not apply to a CPR character.
 pub(crate) const NO_PATHFINDER_EQUIPMENT: &str = "cpr_adapter.no_pathfinder_equipment";
+
+/// The Market's money label on this system.
+pub const MARKET_CURRENCY: &str = "eddies";
 
 /// The adapter `rule_system_adapter::resolve_rule_system_adapter` returns for `cyberpunk-red`.
 pub struct CyberpunkAdapter;
@@ -98,6 +105,178 @@ pub fn save_cyberpunk_criticals(app: tauri::AppHandle, request: CprCriticalsSave
     let criticals: Vec<CprRecordedCritical> =
         request.criticals.into_iter().map(|c| CprRecordedCritical { location: c.location, name: c.name }).collect();
     save_criticals_at_root(&root, &criticals)
+}
+
+/// What one sale of a held kit entry takes and pays before the price mode: `(unit, price of a unit)`,
+/// off the Market row that prints the same name. A starter kit can print an item under a name the
+/// shop does not use (`Rope`, `Urbanflash Jacket`), with no price to go by: it sells for nothing,
+/// and says so. Cyberware and a deck, its programs and hardware are not on the Market: `None`.
+fn market_terms(catalog: &CprKitCatalog, rows: &[CprMarketRow], entry: &CprKitEntry) -> Option<(u32, u32)> {
+    let installed = entry.section == "cyberware"
+        || entry.name.starts_with("Program: ")
+        || entry.name.starts_with("Cyberdeck (")
+        || catalog.shop().iter().any(|s| s.name == entry.name && ["cyberware", "cyberdeck", "net_hardware", "program"].contains(&s.kind.as_str()));
+    if installed {
+        return None;
+    }
+    Some(rows.iter().find(|r| r.item.name == entry.name).map_or((1, 0), |r| (r.unit, r.item.cost_eb)))
+}
+
+/// The balance (the sheet's Cash) and every copy the kit holds that the Market buys back: ammunition
+/// by the unit a sale takes, anything else one row per piece.
+pub(crate) fn market_state_at_root(root: &Path) -> Result<MarketShellStateDto, String> {
+    CprCharacterStore::load(root)?;
+    let choices = CprCharacterStore::load_choices(root)?;
+    let kit = CprCharacterStore::load_kit(root)?;
+    let catalog = CprKitCatalog::load(&corpus_root())?;
+    let rows = market_rows(&catalog)?;
+    let mut held = Vec::new();
+    for (index, entry) in kit.items.iter().enumerate() {
+        let Some((unit, _)) = market_terms(&catalog, &rows, entry) else { continue };
+        let key = format!("{index}|{}", entry.name);
+        if unit > 1 {
+            let name = format!("{} ({} of {})", entry.name, unit.min(entry.quantity), entry.quantity);
+            held.push(MarketShellCopyDto { key, name });
+        } else {
+            held.extend((0..entry.quantity).map(|_| MarketShellCopyDto { key: key.clone(), name: entry.name.clone() }));
+        }
+    }
+    Ok(MarketShellStateDto { currency: MARKET_CURRENCY.to_owned(), balance: i64::from(choices.cash.unwrap_or(0)), held })
+}
+
+/// Composes the sheet with the new choices and saves them with the kit, or refuses and saves nothing.
+fn market_save(
+    root: &Path,
+    character: &CprSavedCharacter,
+    kit: &codex::rules_core::cpr::input::CprKit,
+    choices: &codex::rules_core::cpr::input::CprSheetChoices,
+    moved: u32,
+) -> Result<MarketShellOutcome, String> {
+    if let Err(reason) = compose_sheet(&CprSheetCatalogs::load(&corpus_root())?, &character.input, choices) {
+        return Ok(MarketShellOutcome::blocked("cpr_market.sheet_refused", reason));
+    }
+    CprCharacterStore::save_kit(kit, root)?;
+    CprCharacterStore::save_choices(choices, root)?;
+    Ok(MarketShellOutcome::Saved { moved: i64::from(moved) })
+}
+
+/// Buys one Market row in one save: the kit holds it, the sheet shows it where the kit's reading puts
+/// it, and the Cash pays for it, unless the mode is Cashless; a buy over the Cash is refused.
+pub(crate) fn market_buy_at_root(root: &Path, request: &MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    let character = CprCharacterStore::load(root)?;
+    let mut choices = CprCharacterStore::load_choices(root)?;
+    let mut kit = CprCharacterStore::load_kit(root)?;
+    let catalog = CprKitCatalog::load(&corpus_root())?;
+    let rows = market_rows(&catalog)?;
+    let Some(row) = rows.iter().find(|r| r.row.key == request.key) else {
+        return Ok(MarketShellOutcome::blocked("cpr_market.not_on_offer", format!("{}: not on the Market", request.key)));
+    };
+    let cash = choices.cash.unwrap_or(0);
+    let cost = if request.price_mode == PriceMode::Cashless { 0 } else { row.item.cost_eb };
+    if cost > cash {
+        return Ok(MarketShellOutcome::blocked(
+            "cpr_market.over_cash",
+            format!("{} costs {cost}eb; the character has {cash}eb", row.row.name),
+        ));
+    }
+    let sheet = catalog.sheet_of_item(&row.item);
+    if sheet.shield.is_some() && choices.shield.is_some() {
+        return Ok(MarketShellOutcome::blocked("cpr_market.one_shield", "The character already holds a shield; sell it first"));
+    }
+    choices.weapons.extend(sheet.weapons);
+    choices.armor.extend(sheet.armor);
+    choices.shield = sheet.shield.or(choices.shield);
+    for (label, count) in sheet.ammunition {
+        match choices.ammunition.iter_mut().find(|(held, _)| *held == label) {
+            Some((_, held)) => *held += count,
+            None => choices.ammunition.push((label, count)),
+        }
+    }
+    if cost > 0 {
+        choices.cash = Some(cash - cost);
+    }
+    match kit.items.iter_mut().find(|e| row.unit > 1 && e.name == row.item.name) {
+        Some(entry) => entry.quantity += row.unit,
+        None => kit.items.push(CprKitEntry { section: row.item.section.clone(), name: row.item.name.clone(), quantity: row.unit }),
+    }
+    market_save(root, &character, &kit, &choices, cost)
+}
+
+/// Sells the copy the key names, at the mode's share of its price: the kit lets it go, and the sheet
+/// loses what the kit's reading put there.
+pub(crate) fn market_sell_at_root(root: &Path, request: &MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    let character = CprCharacterStore::load(root)?;
+    let mut choices = CprCharacterStore::load_choices(root)?;
+    let mut kit = CprCharacterStore::load_kit(root)?;
+    let catalog = CprKitCatalog::load(&corpus_root())?;
+    let rows = market_rows(&catalog)?;
+    let not_held = || MarketShellOutcome::blocked("cpr_market.not_held", format!("{}: the character does not hold that copy", request.key));
+    let Some((index, name)) = request.key.split_once('|') else { return Ok(not_held()) };
+    let Ok(index) = index.parse::<usize>() else { return Ok(not_held()) };
+    let Some(entry) = kit.items.get(index).filter(|e| e.name == name) else { return Ok(not_held()) };
+    let Some((unit, unit_cost)) = market_terms(&catalog, &rows, entry) else { return Ok(not_held()) };
+    let taken = unit.min(entry.quantity);
+    let value = unit_cost * taken / unit;
+    let refund = u32::try_from(refund_copper(u64::from(value), request.price_mode)).unwrap_or(0);
+
+    let sheet = catalog.sheet_of_item(&CprKitItem {
+        section: entry.section.clone(),
+        kind: String::new(),
+        name: entry.name.clone(),
+        quantity: taken,
+        cost_eb: 0,
+        fashion: false,
+    });
+    for weapon in sheet.weapons {
+        if let Some(at) = choices.weapons.iter().position(|w| *w == weapon) {
+            choices.weapons.remove(at);
+        }
+    }
+    for piece in sheet.armor {
+        if let Some(at) = choices.armor.iter().position(|a| *a == piece) {
+            choices.armor.remove(at);
+        }
+    }
+    if sheet.shield.is_some() {
+        choices.shield = None;
+    }
+    for (label, count) in sheet.ammunition {
+        if let Some(at) = choices.ammunition.iter().position(|(held, _)| *held == label) {
+            choices.ammunition[at].1 = choices.ammunition[at].1.saturating_sub(count);
+            if choices.ammunition[at].1 == 0 {
+                choices.ammunition.remove(at);
+            }
+        }
+    }
+    if refund > 0 {
+        choices.cash = Some(choices.cash.unwrap_or(0) + refund);
+    }
+    kit.items[index].quantity -= taken;
+    if kit.items[index].quantity == 0 {
+        kit.items.remove(index);
+    }
+    market_save(root, &character, &kit, &choices, refund)
+}
+
+/// The Market's balance, currency and Sell list for a saved Cyberpunk RED character.
+#[tauri::command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn cyberpunk_market_state(app: tauri::AppHandle, character_id: String) -> Result<MarketShellStateDto, String> {
+    market_state_at_root(&crate::character_hub::resolve_character_root(&app, &character_id)?)
+}
+
+/// Buys one Market row for a saved Cyberpunk RED character.
+#[tauri::command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn buy_cyberpunk_market(app: tauri::AppHandle, request: MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    market_buy_at_root(&crate::character_hub::resolve_character_root(&app, &request.character_id)?, &request)
+}
+
+/// Sells one held copy of a saved Cyberpunk RED character.
+#[tauri::command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn sell_cyberpunk_market(app: tauri::AppHandle, request: MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    market_sell_at_root(&crate::character_hub::resolve_character_root(&app, &request.character_id)?, &request)
 }
 
 /// The Cyberpunk RED starter characters, in the order they are written: each one's marker
@@ -956,5 +1135,193 @@ pub(crate) mod tests {
         assert!(adapter.load_saved_character(&pf_root).is_err_and(|e| e.contains("not 'cyberpunk-red'")));
 
         std::fs::remove_dir_all(&characters_root).ok();
+    }
+
+    // --- The Market ---
+
+    fn market_root(label: &str, starter: &str) -> std::path::PathBuf {
+        let root = tempdir(label).join("c");
+        let (_, request) = starter_requests("2026-11-02T00:00:00Z").into_iter().find(|(_, r)| r.display_label == starter).expect("starter");
+        create_starter_at(&root, &request, "test").expect("creates");
+        root
+    }
+
+    fn market_request(key: &str, price_mode: PriceMode) -> MarketShellRequest {
+        MarketShellRequest { character_id: "c".into(), key: key.into(), price_mode, saved_at: "t".into() }
+    }
+
+    fn moved(outcome: MarketShellOutcome) -> i64 {
+        match outcome {
+            MarketShellOutcome::Saved { moved } => moved,
+            MarketShellOutcome::Blocked { diagnostics } => panic!("blocked: {diagnostics:?}"),
+        }
+    }
+
+    fn sheet_row(root: &Path, id: &str) -> Option<i16> {
+        CyberpunkAdapter.load_saved_character(root).unwrap().explanations.iter().find(|e| e.id == id).map(|e| e.value)
+    }
+
+    fn weapon_names(root: &Path) -> Vec<String> {
+        CprCharacterStore::load_choices(root).unwrap().weapons
+    }
+
+    /// Three modes on a 500eb Heavy Pistol-class weapon: what moves, and that the sheet follows.
+    #[test]
+    fn market_shell_buy_and_sell_honour_the_three_price_modes() {
+        let key = "weapon|Heavy Pistol|";
+        // weapon.json: Heavy Pistol is 100eb (Premium), p341.
+        for (mode, charged, returned) in [
+            (PriceMode::Standard, 100, 50),
+            (PriceMode::CharacterBuild, 100, 100),
+            (PriceMode::Cashless, 0, 0),
+        ] {
+            let root = market_root("market-modes", "Jax Moreno");
+            let start = market_state_at_root(&root).unwrap();
+            assert_eq!(start.currency, "eddies");
+            assert_eq!(i64::from(sheet_row(&root, "cpr.cash").unwrap()), start.balance);
+            let weapons = weapon_names(&root).len();
+
+            assert_eq!(moved(market_buy_at_root(&root, &market_request(key, mode)).unwrap()), charged, "{mode:?}");
+            let bought = market_state_at_root(&root).unwrap();
+            assert_eq!(bought.balance, start.balance - charged, "{mode:?}");
+            assert_eq!(i64::from(sheet_row(&root, "cpr.cash").unwrap()), bought.balance, "{mode:?}: the sheet's Cash");
+            assert_eq!(weapon_names(&root).len(), weapons + 1, "{mode:?}: the weapon box");
+            assert_eq!(bought.held.len(), start.held.len() + 1, "{mode:?}");
+
+            let copy = bought.held.iter().rev().find(|c| c.name == "Heavy Pistol").unwrap();
+            assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, mode)).unwrap()), returned, "{mode:?}");
+            let sold = market_state_at_root(&root).unwrap();
+            assert_eq!(sold.balance, start.balance - charged + returned, "{mode:?}");
+            assert_eq!(weapon_names(&root).len(), weapons, "{mode:?}");
+            assert_eq!(sold.held.len(), start.held.len(), "{mode:?}");
+            std::fs::remove_dir_all(root.parent().unwrap()).ok();
+        }
+    }
+
+    #[test]
+    fn market_shell_a_buy_over_the_cash_is_refused_in_the_paid_modes() {
+        let key = "armor|Metalgear|Body"; // 5,000eb, p351.
+        let root = market_root("market-refused", "Jax Moreno");
+        let start = market_state_at_root(&root).unwrap();
+        assert!(start.balance < 5000, "{}", start.balance);
+        let choices = CprCharacterStore::load_choices(&root).unwrap();
+        for mode in [PriceMode::Standard, PriceMode::CharacterBuild] {
+            let outcome = market_buy_at_root(&root, &market_request(key, mode)).unwrap();
+            assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{mode:?}: {outcome:?}");
+        }
+        assert_eq!(CprCharacterStore::load_choices(&root).unwrap(), choices, "a refused buy saves nothing");
+        assert_eq!(market_state_at_root(&root).unwrap(), start);
+
+        assert_eq!(moved(market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap()), 0);
+        assert_eq!(market_state_at_root(&root).unwrap().balance, start.balance);
+        assert!(CprCharacterStore::load_choices(&root).unwrap().armor.iter().any(|a| a.name == "Metalgear"));
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// Armour reaches its location's SP row, a shield its HP row, ammunition its count row; a
+    /// bought-and-sold piece leaves each as it was.
+    #[test]
+    fn market_shell_what_is_bought_reaches_the_sheet_and_leaves_with_the_sale() {
+        let root = market_root("market-sheet", "Nyx Calder");
+        let before = CprCharacterStore::load_choices(&root).unwrap();
+        for key in ["armor|Metalgear|Head", "armor|Bulletproof Shield|", "ammo|Basic Ammunition|Rifle", "gear|Agent|"] {
+            moved(market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap());
+        }
+        assert_eq!(sheet_row(&root, "cpr.armor.sp_head"), Some(18), "Metalgear SP18");
+        assert_eq!(sheet_row(&root, "cpr.armor.shield_hp"), Some(10), "Bulletproof Shield 10 HP");
+        let held = market_state_at_root(&root).unwrap().held;
+        assert!(held.iter().any(|c| c.name == "Agent"), "gear is held, though no sheet box prints it");
+        let again = market_buy_at_root(&root, &market_request("armor|Bulletproof Shield|", PriceMode::Cashless)).unwrap();
+        assert!(matches!(again, MarketShellOutcome::Blocked { .. }), "one shield: {again:?}");
+
+        for name in ["Metalgear Head Armor (SP18)", "Bulletproof Shield", "Agent"] {
+            let copy = market_state_at_root(&root).unwrap().held.into_iter().rev().find(|c| c.name == name).unwrap_or_else(|| panic!("{name}"));
+            moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::Cashless)).unwrap());
+        }
+        let ammo = market_state_at_root(&root).unwrap().held.into_iter().rev().find(|c| c.name.starts_with("Basic Rifle Ammunition")).unwrap();
+        moved(market_sell_at_root(&root, &market_request(&ammo.key, PriceMode::Cashless)).unwrap());
+        assert_eq!(CprCharacterStore::load_choices(&root).unwrap(), before, "every sale undid its buy on the sheet");
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// Ammunition sells ten rounds at a time, at the price of ten; a remainder pays its share.
+    #[test]
+    fn market_shell_ammunition_sells_by_the_ten() {
+        let root = market_root("market-ammo", "Nyx Calder");
+        let name = |held: &[crate::sf_catalog::MarketShellCopyDto]| held.iter().find(|c| c.name.starts_with("Basic H Pistol Ammunition")).unwrap().clone();
+        let state = market_state_at_root(&root).unwrap();
+        let copy = name(&state.held);
+        assert_eq!(copy.name, "Basic H Pistol Ammunition (10 of 50)");
+        assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::CharacterBuild)).unwrap()), 10, "10eb per ten, p346");
+        let stack = |root: &Path| CprCharacterStore::load_choices(root).unwrap().ammunition.iter().find(|(n, _)| n == "Basic H Pistol Ammunition").map(|(_, c)| *c);
+        assert_eq!(stack(&root), Some(40));
+        for _ in 0..4 {
+            let copy = name(&market_state_at_root(&root).unwrap().held);
+            moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::Standard)).unwrap());
+        }
+        assert_eq!(stack(&root), None, "the stack is gone");
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// Everything a Role's fixed kit gives, other than cyberware and the Netrunner's deck, can be
+    /// sold: its printed name is the name the shop gives the same item.
+    #[test]
+    fn market_shell_every_fixed_kit_item_has_a_price() {
+        let corpus = corpus_root();
+        let catalog = CprKitCatalog::load(&corpus).unwrap();
+        let rows = crate::cpr_catalog::market_rows(&catalog).unwrap();
+        let mut unpriced = std::collections::BTreeSet::new();
+        for role in codex::rules_core::cpr::roles::CprRole::ALL {
+            for line in catalog.fixed_lines(role).unwrap().iter().filter(|l| l.section != "cyberware") {
+                for option in &line.options {
+                    if !rows.iter().any(|r| r.item.name == option.name) {
+                        unpriced.insert(option.name.clone());
+                    }
+                }
+            }
+        }
+        // 7 netrunning items, not on the Market; 16 starter names the shop does not use.
+        let expected: std::collections::BTreeSet<String> = [
+            "Cyberdeck (7 Slots)", "Program: Armor", "Program: Eraser", "Program: See Ya", "Program: Sword", "Program: Vrizzbolt", "Program: Worm",
+            "Disposable Cellphone", "Disposable Phone", "Electric Guitar", "Generic Chic Contacts", "Generic Chic Tops", "Inflatable Bed & Sleep-Bag",
+            "Nomad Leathers Bottom", "Nomad Leathers Hat", "Pocket Amp", "Rope", "Tent and Camping Equipment", "Urbanflash Bottoms", "Urbanflash Footwear",
+            "Urbanflash Jacket", "Urbanflash Mirrorshades", "Urbanflash Top",
+        ].into_iter().map(str::to_owned).collect();
+        assert_eq!(unpriced, expected);
+    }
+
+    /// A starter's item the shop has no name for sells for nothing and says so; a Netrunner's deck
+    /// and programs are not on the Sell list.
+    #[test]
+    fn market_shell_a_starter_item_with_no_shop_name_sells_for_nothing() {
+        // A starter kit prints this; the shop lists `Rope (60m/yds)`.
+        let root = market_root("market-unpriced", "Nyx Calder");
+        let mut kit = CprCharacterStore::load_kit(&root).unwrap();
+        kit.items.push(CprKitEntry { section: "outfit".to_owned(), name: "Rope".to_owned(), quantity: 1 });
+        CprCharacterStore::save_kit(&kit, &root).unwrap();
+        let state = market_state_at_root(&root).unwrap();
+        assert!(state.held.iter().all(|c| !c.name.starts_with("Program: ") && !c.name.starts_with("Cyberdeck")), "{:?}", state.held);
+        let names = CprCharacterStore::load_choices(&root).unwrap().deck.expect("Nyx holds a deck").programs;
+        assert!(state.held.iter().all(|c| !names.contains(&c.name)), "a bought program is the deck's: {:?}", state.held);
+        let rope = state.held.iter().find(|c| c.name == "Rope").expect("held");
+        assert_eq!(moved(market_sell_at_root(&root, &market_request(&rope.key, PriceMode::CharacterBuild)).unwrap()), 0);
+        let after = market_state_at_root(&root).unwrap();
+        assert_eq!(after.balance, state.balance);
+        assert_eq!(after.held.len(), state.held.len() - 1);
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    #[test]
+    fn market_shell_refuses_a_row_not_on_offer_and_a_copy_not_held() {
+        let root = market_root("market-keys", "Jax Moreno");
+        for key in ["cyberware|Cybereye|", "weapon|No Such Gun|", "nonsense"] {
+            let outcome = market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap();
+            assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+        }
+        for key in ["999|Heavy Pistol", "nonsense", "0|Not What Is There"] {
+            let outcome = market_sell_at_root(&root, &market_request(key, PriceMode::Standard)).unwrap();
+            assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+        }
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
     }
 }

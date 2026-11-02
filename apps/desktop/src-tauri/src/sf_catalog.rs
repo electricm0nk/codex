@@ -24,9 +24,12 @@
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::sheet_rule::{SheetRule, SheetRulePackage};
+use codex::rules_core::pilot_compute::sf_loadout;
+use codex::rules_core::sheet_rule::{SheetRule, SheetRulePackage, SheetValue};
 use codex::rules_core::sheet_rule_catalog::{catalog_description_or_fields, catalog_field_summary, DescriptionTier};
 
+use crate::character_hub::{DiagnosticDto, PriceMode};
+use crate::equipment_catalog::MarketCategory;
 use crate::sf_adapter;
 use crate::sf_sheet_print::HIT_DIE_ROW;
 
@@ -183,6 +186,107 @@ pub fn list_starfinder_catalog(kind: SfCatalogKind) -> Result<SfCatalogResponse,
         source: codex::rules_core::game_system::GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package").to_owned(),
         entries: entries(package, kind),
     })
+}
+
+/// One row of the Starfinder or Cyberpunk RED Market.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketShellRowDto {
+    /// What a buy names the row by.
+    pub key: String,
+    pub name: String,
+    pub detail: String,
+    /// The whole price, in the system's currency.
+    pub price: Option<i64>,
+}
+
+/// One held copy on a Market's Sell list.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketShellCopyDto {
+    /// What a sale names this copy by.
+    pub key: String,
+    pub name: String,
+}
+
+/// What a Market shows of the character: the system's currency, the balance and what is held.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketShellStateDto {
+    pub currency: String,
+    pub balance: i64,
+    pub held: Vec<MarketShellCopyDto>,
+}
+
+/// A buy or sale: saved, with the money it moved, or refused with nothing saved.
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind")]
+pub enum MarketShellOutcome {
+    Saved { moved: i64 },
+    Blocked { diagnostics: Vec<DiagnosticDto> },
+}
+
+impl MarketShellOutcome {
+    pub(crate) fn blocked(id: &str, message: impl Into<String>) -> Self {
+        Self::Blocked { diagnostics: vec![DiagnosticDto { id: id.to_owned(), message: message.into(), claim_blocking: true }] }
+    }
+}
+
+/// A buy or a sale: the row or copy, by its key.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketShellRequest {
+    pub character_id: String,
+    pub key: String,
+    #[serde(default)]
+    pub price_mode: PriceMode,
+    pub saved_at: String,
+}
+
+/// Whether an equipment record is a weapon: it states damage dice, the engine's own test
+/// (`sf_attack`), or carries the type tag, as a grenade with no dice does. The tag alone misses most
+/// of them: a laser rifle's tags are `Fire`, `LASER`.
+pub(crate) fn is_market_weapon(rule: &SheetRule) -> bool {
+    matches!(rule.value, SheetValue::Dice { .. }) || rule.tags.iter().any(|t| t == "Weapon")
+}
+
+/// The Market tab of an equipment record, from its type tags.
+fn market_category_of(rule: &SheetRule) -> MarketCategory {
+    let has = |tag: &str| rule.tags.iter().any(|t| t == tag);
+    if is_market_weapon(rule) {
+        MarketCategory::Weapon
+    } else if has("ARMOR") {
+        MarketCategory::Armor
+    } else if has("Shields") {
+        MarketCategory::Shield
+    } else if has("Magic") {
+        MarketCategory::MagicItem
+    } else {
+        MarketCategory::Gear
+    }
+}
+
+/// One tab's rows: every equipment record of the category the engine can carry, by name.
+pub fn market_rows(package: &SheetRulePackage, category: MarketCategory) -> Vec<MarketShellRowDto> {
+    let mut rows: Vec<MarketShellRowDto> = package
+        .rules_of_kind("equipment")
+        .filter(|r| !r.id.contains('#') && sf_loadout::is_buyable(r) && market_category_of(r) == category)
+        .map(|r| MarketShellRowDto {
+            key: r.id.clone(),
+            name: r.label.clone(),
+            detail: sf_loadout::stat_rows(r, "Quality").collect::<Vec<_>>().join(", "),
+            price: sf_loadout::price(r).ok(),
+        })
+        .collect();
+    rows.sort_by(|a, b| a.name.cmp(&b.name).then(a.key.cmp(&b.key)));
+    rows
+}
+
+/// One tab of the Starfinder Market.
+#[tauri::command]
+pub fn list_starfinder_market(category: MarketCategory) -> Result<Vec<MarketShellRowDto>, String> {
+    let package = sf_adapter::package().map_err(|r| format!("{}: {}", r.id, r.message))?;
+    Ok(market_rows(package, category))
 }
 
 #[cfg(test)]
@@ -416,5 +520,40 @@ mod tests {
             assert_eq!(response.source, GameSystem::Starfinder1e.sheet_rules_relative().expect("Starfinder has a sheet-rule package"));
             assert_eq!(response.entries, entries(package(), kind));
         }
+    }
+
+    /// Every buyable record is on exactly one list, and the lists hold only their own kind.
+    #[test]
+    fn market_shell_lists_partition_the_buyable_records_by_type_tag() {
+        let package = sf_adapter::package().unwrap();
+        let buyable = package
+            .rules_of_kind("equipment")
+            .filter(|r| !r.id.contains('#') && codex::rules_core::pilot_compute::sf_loadout::is_buyable(r))
+            .count();
+        assert!(buyable > 2000, "{buyable}");
+        let mut total = 0;
+        for (category, tag) in [
+            (MarketCategory::Weapon, None),
+            (MarketCategory::Armor, Some("ARMOR")),
+            (MarketCategory::Shield, Some("Shields")),
+            (MarketCategory::MagicItem, Some("Magic")),
+            (MarketCategory::Gear, None),
+        ] {
+            let rows = market_rows(package, category);
+            assert!(!rows.is_empty(), "{category:?}");
+            total += rows.len();
+            for row in &rows {
+                let rule = package.rule(&row.key).unwrap();
+                assert!(row.price.is_some(), "{}", row.key);
+                if let Some(tag) = tag {
+                    assert!(rule.tags.iter().any(|t| t == tag), "{category:?} holds {}: {:?}", row.key, rule.tags);
+                }
+            }
+        }
+        assert_eq!(total, buyable);
+        let weapons = market_rows(package, MarketCategory::Weapon);
+        assert!(weapons.iter().any(|r| r.key == "core:equipment:laser_rifle_corona"), "a laser rifle's tags say nothing of weapons");
+        assert!(weapons.iter().any(|r| r.key == "core:equipment:smoke_grenade_i" || r.name.contains("grenade")), "a grenade has no dice, only the tag");
+        assert!(market_rows(package, MarketCategory::Gear).iter().all(|r| !is_market_weapon(package.rule(&r.key).unwrap())));
     }
 }

@@ -38,7 +38,7 @@
 
 use std::path::Path;
 
-use codex::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
+use codex::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection, SelectedChoice};
 use codex::rules_core::encumbrance::BulkCondition;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::LevelUpPlan;
@@ -70,6 +70,8 @@ use crate::characterHub::appendToCharacter::{
 use crate::characterHub::recomputeCharacter::{CharacterSnapshotDto, RecomputeCharacterResponse};
 use crate::characterHub::reSaveCharacter::{re_save_character_at_root, ReSaveCharacterResponse};
 use crate::rule_system_adapter::{ClassLevelDelta, RuleSystemAdapter};
+use crate::character_hub::{refund_copper, PriceMode};
+use crate::sf_catalog::{MarketShellCopyDto, MarketShellOutcome, MarketShellRequest, MarketShellStateDto};
 
 /// The Starfinder 1e rule-system id: the wire id, the desktop `RuleSetId` and
 /// the save envelope's `game_system`.
@@ -80,6 +82,12 @@ pub const REFUSED_TWO_THEMES: &str = "sf_adapter.two_themes";
 pub const REFUSED_TWO_ARMORS: &str = "sf_adapter.two_armors";
 pub const REFUSED_KEY_ABILITY_CHOICE: &str = "sf_adapter.key_ability_choice";
 pub const REFUSED_NOT_STARFINDER: &str = "sf_adapter.not_a_starfinder_character";
+pub const REFUSED_MARKET_CREDITS: &str = "sf_adapter.market_credits";
+/// The Market's money label on this system.
+pub const MARKET_CURRENCY: &str = "credits";
+/// The `selected_choices` set holding the credits the price modes moved ([`SfLoadout::credits_adjustment`]):
+/// the engine derives Credits remaining from the items held, so what a sale lost must be saved.
+pub const MARKET_CREDITS_CHOICE: &str = "market.credits_adjustment";
 
 const SRD_BULK: &str = "SRD Bulk Limits (https://www.aonsrd.com/Equipment.aspx)";
 const SRD_CONDITIONS: &str = "SRD Conditions: Encumbered, Overburdened (https://www.aonsrd.com/Rules.aspx?ID=165)";
@@ -150,8 +158,13 @@ pub fn build_from_input(
 
     let mut key_ability_choice = None;
     let mut choices: std::collections::BTreeMap<String, Vec<String>> = Default::default();
+    let mut credits_adjustment = 0_i64;
     for choice in &chosen.selected_choices {
-        if classes.iter().any(|(class, _)| *class == choice.choice_set_id) {
+        if choice.choice_set_id == MARKET_CREDITS_CHOICE {
+            credits_adjustment += choice.selection_id.parse::<i64>().map_err(|_| {
+                refuse(REFUSED_MARKET_CREDITS, format!("{MARKET_CREDITS_CHOICE}: {:?} is not a number", choice.selection_id))
+            })?;
+        } else if classes.iter().any(|(class, _)| *class == choice.choice_set_id) {
             let ability = parse_ability(&choice.selection_id).ok_or_else(|| {
                 refuse(
                     REFUSED_KEY_ABILITY_CHOICE,
@@ -233,7 +246,7 @@ pub fn build_from_input(
             .collect(),
         choices,
     };
-    Ok((build, SfLoadout { starting_credits: None, carried, applied }))
+    Ok((build, SfLoadout { starting_credits: None, carried, applied, credits_adjustment }))
 }
 
 /// Every Starfinder sheet total of one character.
@@ -854,6 +867,142 @@ impl RuleSystemAdapter for StarfinderAdapter {
             feat_skill_bonuses: Default::default(),
         })
     }
+}
+
+fn credits_adjustment_of(input: &CharacterInput) -> Result<i64, String> {
+    let (_, loadout) = build_from_input(package().map_err(|r| r.message)?, input).map_err(|r| format!("{}: {}", r.id, r.message))?;
+    Ok(loadout.credits_adjustment)
+}
+
+/// `input` with the Market's credits row saying `value`; none at 0, so a character the price modes
+/// left even saves as it would have without them.
+fn set_credits_adjustment(input: &mut CharacterInput, value: i64) {
+    let choices = &mut input.chosen.selected_choices;
+    choices.retain(|c| c.choice_set_id != MARKET_CREDITS_CHOICE);
+    if value != 0 {
+        choices.push(SelectedChoice { choice_set_id: MARKET_CREDITS_CHOICE.to_owned(), selection_id: value.to_string() });
+    }
+}
+
+fn market_save(mut envelope: SavedCharacterEnvelope, input: CharacterInput, saved_at: &str, root: &Path, moved: i64) -> Result<MarketShellOutcome, String> {
+    let package = package().map_err(|r| r.message)?;
+    if let Err(refusal) = compute_sheet(package, &input) {
+        return Ok(MarketShellOutcome::blocked(refusal.id, refusal.message));
+    }
+    let next = next_revision_id(&envelope.character_id, &envelope.revision_id);
+    envelope.revision_id = next.clone();
+    envelope.latest_authoritative_revision_ref = next;
+    envelope.saved_at = saved_at.to_owned();
+    envelope.character_input = input;
+    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    Ok(MarketShellOutcome::Saved { moved })
+}
+
+/// The balance (the engine's Credits remaining) and every held copy, its upgrades named.
+pub(crate) fn market_state_at_root(root: &Path) -> Result<MarketShellStateDto, String> {
+    let envelope = load_starfinder(root)?;
+    let package = package().map_err(|r| r.message)?;
+    let sheet = compute_sheet(package, &envelope.character_input).map_err(|r| format!("{}: {}", r.id, r.message))?;
+    let label = |id: &str| package.rule(id).map_or_else(|| id.to_owned(), |r| r.label.clone());
+    let held = envelope
+        .character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .enumerate()
+        .filter(|(_, s)| s.active_state != ActiveState::Absent)
+        .map(|(position, s)| {
+            let on_it: Vec<String> = s.applied_modifiers.iter().map(|m| label(m)).collect();
+            let item = label(&s.item_id);
+            MarketShellCopyDto {
+                key: format!("{position}|{}", s.item_id),
+                name: if on_it.is_empty() { item } else { format!("{item} ({})", on_it.join(", ")) },
+            }
+        })
+        .collect();
+    Ok(MarketShellStateDto { currency: MARKET_CURRENCY.to_owned(), balance: sheet.carried.credits_remaining.total, held })
+}
+
+/// Buys one item in one save. The engine charges every held item, so a paid buy needs only the new
+/// selection, and refuses it over the credits; a Cashless buy also adds its price back.
+///
+/// Armour goes on unless armour is worn, because the engine refuses two worn; a weapon, a shield and
+/// an augmentation are equipped; everything else is carried.
+pub(crate) fn market_buy_at_root(root: &Path, request: &MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    let envelope = load_starfinder(root)?;
+    let package = package().map_err(|r| r.message)?;
+    let offered = package
+        .rule(&request.key)
+        .filter(|r| !r.id.contains('#') && split_rule_id(&r.id).1 == "equipment" && sf_loadout::is_buyable(r));
+    let Some(item) = offered else {
+        return Ok(MarketShellOutcome::blocked("sf_market.not_on_offer", format!("{}: not on the Market", request.key)));
+    };
+    let price = sf_loadout::price(item).map_err(|r| r.message)?;
+    let has = |rule: &codex::rules_core::sheet_rule::SheetRule, tag: &str| rule.tags.iter().any(|t| t == tag);
+    let mut input = envelope.character_input.clone();
+    let armor_worn = input.chosen.equipment_selections.iter().any(|s| {
+        s.active_state == ActiveState::EquippedActive && package.rule(&s.item_id).is_some_and(|r| has(r, "ARMOR"))
+    });
+    let equipped = crate::sf_catalog::is_market_weapon(item)
+        || has(item, "Shields")
+        || (has(item, "ARMOR") && !armor_worn)
+        || sf_loadout::AUGMENTATION_KINDS.iter().any(|k| has(item, k));
+    let active_state = if equipped { ActiveState::EquippedActive } else { ActiveState::SelectedInactive };
+    input.chosen.equipment_selections.push(EquipmentSelection {
+        item_id: item.id.clone(),
+        equipped_or_active: equipped,
+        active_state,
+        applied_modifiers: Vec::new(),
+    });
+    let cashless = request.price_mode == PriceMode::Cashless;
+    if cashless {
+        let adjustment = credits_adjustment_of(&envelope.character_input)?;
+        set_credits_adjustment(&mut input, adjustment + price);
+    }
+    market_save(envelope, input, &request.saved_at, root, if cashless { 0 } else { price })
+}
+
+/// Sells the copy the key names, at the mode's share of what it cost: its price and the prices of
+/// the upgrades on it. Dropping the selection returns all of that, so the rest is taken back.
+pub(crate) fn market_sell_at_root(root: &Path, request: &MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    let envelope = load_starfinder(root)?;
+    let package = package().map_err(|r| r.message)?;
+    let not_held = || MarketShellOutcome::blocked("sf_market.not_held", format!("{}: the character does not hold that copy", request.key));
+    let Some((position, item_id)) = request.key.split_once('|') else { return Ok(not_held()) };
+    let Ok(position) = position.parse::<usize>() else { return Ok(not_held()) };
+    let selections = &envelope.character_input.chosen.equipment_selections;
+    let Some(copy) = selections.get(position).filter(|s| s.item_id == item_id && s.active_state != ActiveState::Absent) else {
+        return Ok(not_held());
+    };
+    let priced = |id: &str| package.rule(id).and_then(|r| sf_loadout::price(r).ok()).unwrap_or(0);
+    let value = priced(&copy.item_id) + copy.applied_modifiers.iter().map(|m| priced(m)).sum::<i64>();
+    let refund = i64::try_from(refund_copper(u64::try_from(value).unwrap_or(0), request.price_mode)).unwrap_or(0);
+    let mut input = envelope.character_input.clone();
+    input.chosen.equipment_selections.remove(position);
+    let adjustment = credits_adjustment_of(&envelope.character_input)?;
+    set_credits_adjustment(&mut input, adjustment - (value - refund));
+    market_save(envelope, input, &request.saved_at, root, refund)
+}
+
+/// The Market's balance, currency and Sell list for a saved Starfinder character.
+#[tauri::command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn starfinder_market_state(app: tauri::AppHandle, character_id: String) -> Result<MarketShellStateDto, String> {
+    market_state_at_root(&crate::character_hub::resolve_character_root(&app, &character_id)?)
+}
+
+/// Buys one Market row for a saved Starfinder character.
+#[tauri::command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn buy_starfinder_market(app: tauri::AppHandle, request: MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    market_buy_at_root(&crate::character_hub::resolve_character_root(&app, &request.character_id)?, &request)
+}
+
+/// Sells one held copy of a saved Starfinder character.
+#[tauri::command]
+#[allow(clippy::needless_pass_by_value)]
+pub fn sell_starfinder_market(app: tauri::AppHandle, request: MarketShellRequest) -> Result<MarketShellOutcome, String> {
+    market_sell_at_root(&crate::character_hub::resolve_character_root(&app, &request.character_id)?, &request)
 }
 
 #[cfg(test)]
@@ -1679,4 +1828,186 @@ pub(crate) mod tests {
         assert_eq!(loaded, expected, "the package is the staged resource root's, not the checkout's");
     }
 
+
+    // --- The Market ---
+
+    fn market_root(label: &str) -> std::path::PathBuf {
+        let root = crate::sf_creation::tests::tempdir(label);
+        crate::sf_level_up::tests::create_seed("SF-Soldier-3", &root);
+        root
+    }
+
+    fn market_request(key: &str, price_mode: PriceMode) -> MarketShellRequest {
+        MarketShellRequest { character_id: "sf".into(), key: key.into(), price_mode, saved_at: "2026-11-02T00:00:00Z".into() }
+    }
+
+    fn market_price(id: &str) -> i64 {
+        sf_loadout::price(package().unwrap().rule(id).unwrap()).unwrap()
+    }
+
+    fn moved(outcome: MarketShellOutcome) -> i64 {
+        match outcome {
+            MarketShellOutcome::Saved { moved } => moved,
+            MarketShellOutcome::Blocked { diagnostics } => panic!("blocked: {diagnostics:?}"),
+        }
+    }
+
+    const BATTERY: &str = "core:equipment:battery";
+
+    /// Three modes: what a buy charges and a sale returns, on the engine's Credits remaining row.
+    #[test]
+    fn market_shell_buy_and_sell_honour_the_three_price_modes() {
+        let price = market_price(BATTERY);
+        assert!(price > 1, "the sale's half must differ from the whole: {price}");
+        for (mode, charged, returned) in [
+            (PriceMode::Standard, price, price / 2),
+            (PriceMode::CharacterBuild, price, price),
+            (PriceMode::Cashless, 0, 0),
+        ] {
+            let root = market_root("market-modes");
+            let start = market_state_at_root(&root).unwrap();
+            assert_eq!(start.currency, "credits");
+            let held_before = start.held.len();
+
+            assert_eq!(moved(market_buy_at_root(&root, &market_request(BATTERY, mode)).unwrap()), charged, "{mode:?}");
+            let bought = market_state_at_root(&root).unwrap();
+            assert_eq!(bought.balance, start.balance - charged, "{mode:?} buy");
+            assert_eq!(bought.held.len(), held_before + 1, "{mode:?} buy");
+
+            let key = bought.held.last().unwrap().key.clone();
+            assert_eq!(moved(market_sell_at_root(&root, &market_request(&key, mode)).unwrap()), returned, "{mode:?}");
+            let sold = market_state_at_root(&root).unwrap();
+            assert_eq!(sold.balance, start.balance - charged + returned, "{mode:?} sale");
+            assert_eq!(sold.held.len(), held_before, "{mode:?} sale");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// A buy over the credits is the engine's refusal and saves nothing, in both paid modes;
+    /// Cashless adds the same item and moves nothing.
+    #[test]
+    fn market_shell_a_buy_over_the_credits_is_refused_in_the_paid_modes() {
+        let package = package().unwrap();
+        let root = market_root("market-refused");
+        let start = market_state_at_root(&root).unwrap();
+        let dear = package
+            .rules_of_kind("equipment")
+            .find(|r| !r.id.contains('#') && sf_loadout::is_buyable(r) && sf_loadout::price(r).unwrap() > start.balance)
+            .expect("an item dearer than the balance");
+        let revision = SavedCharacterStore::load(&root).unwrap().revision_id;
+        for mode in [PriceMode::Standard, PriceMode::CharacterBuild] {
+            match market_buy_at_root(&root, &market_request(&dear.id, mode)).unwrap() {
+                MarketShellOutcome::Blocked { diagnostics } => {
+                    assert!(diagnostics.iter().any(|d| d.id == sf_loadout::REFUSED_OVER_BUDGET), "{diagnostics:?}");
+                }
+                other @ MarketShellOutcome::Saved { .. } => panic!("{mode:?} bought it: {other:?}"),
+            }
+        }
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().revision_id, revision, "a refused buy saves nothing");
+        assert_eq!(market_state_at_root(&root).unwrap(), start);
+
+        assert_eq!(moved(market_buy_at_root(&root, &market_request(&dear.id, PriceMode::Cashless)).unwrap()), 0);
+        let after = market_state_at_root(&root).unwrap();
+        assert_eq!(after.balance, start.balance);
+        assert_eq!(after.held.len(), start.held.len() + 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// What a sale lost stays lost: on disk, through the choices dialog's save and at a new level.
+    #[test]
+    fn market_shell_the_credits_a_sale_lost_survive_a_reload_and_a_choices_save() {
+        let price = market_price(BATTERY);
+        let root = market_root("market-survives");
+        let start = market_state_at_root(&root).unwrap().balance;
+        moved(market_buy_at_root(&root, &market_request(BATTERY, PriceMode::Standard)).unwrap());
+        let key = market_state_at_root(&root).unwrap().held.last().unwrap().key.clone();
+        moved(market_sell_at_root(&root, &market_request(&key, PriceMode::Standard)).unwrap());
+        let expected = start - price + price / 2;
+        assert_eq!(market_state_at_root(&root).unwrap().balance, expected, "reloaded from disk");
+
+        let request = crate::sf_choices::SfChoicesRequest { character_id: "sf".into(), saved_at: "t".into(), choices: None };
+        let saved = crate::sf_choices::save_at_root(package().unwrap(), &root, &request).unwrap();
+        assert!(matches!(saved, crate::sf_creation::SfCreateResponse::Saved { .. }), "{saved:?}");
+        assert_eq!(market_state_at_root(&root).unwrap().balance, expected, "after a choices save");
+
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        let sheet = compute_sheet(package().unwrap(), &input).unwrap();
+        let rows = sheet.explanations();
+        let row = |id: &str| rows.iter().find(|e| e.id == id).unwrap().clone();
+        assert_eq!(i64::from(row("sf.credits.remaining").value), expected);
+        assert!(row("sf.credits.remaining").detail.contains("Market"), "{}", row("sf.credits.remaining").detail);
+        assert_eq!(i64::from(row("sf.credits.spent").value), 0, "the sold item is off the spent row");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A key off the list, and a sale naming a copy the character does not hold, are refused.
+    #[test]
+    fn market_shell_refuses_a_row_not_on_offer_and_a_copy_not_held() {
+        let root = market_root("market-keys");
+        for key in ["core:equipment:no_such_thing", "core:feat:toughness"] {
+            let outcome = market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)).unwrap();
+            assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+        }
+        for key in ["0|core:equipment:battery", "nonsense", "99|core:equipment:battery"] {
+            let outcome = market_sell_at_root(&root, &market_request(key, PriceMode::Standard)).unwrap();
+            assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
+        }
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The first armour goes on; a second is carried, because the engine refuses two worn. A
+    /// weapon is wielded and other gear carried.
+    #[test]
+    fn market_shell_wears_the_first_armour_and_carries_the_second() {
+        let root = market_root("market-armor");
+        let package = package().unwrap();
+        let state = |id: &str| {
+            let input = SavedCharacterStore::load(&root).unwrap().character_input;
+            input.chosen.equipment_selections.iter().rev().find(|s| s.item_id == id).unwrap().active_state
+        };
+        let worn_before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.iter().any(|s| {
+            s.active_state == ActiveState::EquippedActive && package.rule(&s.item_id).is_some_and(|r| r.tags.iter().any(|t| t == "ARMOR"))
+        });
+        assert!(!worn_before, "the seed starts with nothing worn");
+        for (id, expected) in [
+            ("core:equipment:second_skin", ActiveState::EquippedActive),
+            ("core:equipment:second_skin", ActiveState::SelectedInactive),
+            ("core:equipment:baton_tactical", ActiveState::EquippedActive),
+            ("core:equipment:laser_rifle_azimuth", ActiveState::EquippedActive),
+            (BATTERY, ActiveState::SelectedInactive),
+        ] {
+            moved(market_buy_at_root(&root, &market_request(id, PriceMode::Cashless)).unwrap());
+            assert_eq!(state(id), expected, "{id}");
+        }
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A character that never used the Market carries no adjustment, and a held copy's value holds
+    /// the upgrades on it (they were bought with it).
+    #[test]
+    fn market_shell_a_copy_sells_with_what_is_on_it() {
+        let package = package().unwrap();
+        let root = market_root("market-modifier");
+        let start = market_state_at_root(&root).unwrap().balance;
+        let item = "core:equipment:second_skin";
+        moved(market_buy_at_root(&root, &market_request(item, PriceMode::Standard)).unwrap());
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        assert!(!envelope.character_input.chosen.selected_choices.iter().any(|c| c.choice_set_id == MARKET_CREDITS_CHOICE));
+        let upgrade = package
+            .rules_of_kind("equipment_modifier")
+            .find(|m| !m.id.contains('#') && crate::sf_sheet_print::modifier_fits(package.rule(item).unwrap(), m).is_ok() && sf_loadout::price(m).is_ok_and(|p| p > 0 && p <= 100))
+            .expect("a cheap upgrade that fits");
+        let upgrade_price = sf_loadout::price(upgrade).unwrap();
+        envelope.character_input.chosen.equipment_selections.last_mut().unwrap().applied_modifiers.push(upgrade.id.clone());
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+
+        let state = market_state_at_root(&root).unwrap();
+        let copy = state.held.last().unwrap();
+        assert!(copy.name.contains(&upgrade.label), "{}", copy.name);
+        let value = market_price(item) + upgrade_price;
+        assert_eq!(state.balance, start - value);
+        assert_eq!(moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::CharacterBuild)).unwrap()), value);
+        assert_eq!(market_state_at_root(&root).unwrap().balance, start);
+        std::fs::remove_dir_all(&root).ok();
+    }
 }

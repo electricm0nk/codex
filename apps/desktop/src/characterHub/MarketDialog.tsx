@@ -41,6 +41,8 @@ const smallButton = {
 export interface MarketDialogViewProps {
   category: MarketCategory;
   onCategory: (category: MarketCategory) => void;
+  /** The tabs, when the system's catalog has fewer than Pathfinder's. */
+  categories?: ReadonlyArray<{ value: MarketCategory; label: string }>;
   search: string;
   onSearch: (search: string) => void;
   /** The current category's rows, already searched. */
@@ -108,7 +110,7 @@ export function MarketDialogView(props: MarketDialogViewProps) {
       <div style={{ borderBottom: '1px solid var(--color-border)', padding: '0.75rem 1.5rem 0' }}>
         <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} groupName="market-price-mode" />
         <div role="tablist" aria-label="Market categories" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.6rem' }}>
-          {MARKET_CATEGORIES.map((category) => {
+          {(props.categories ?? MARKET_CATEGORIES).map((category) => {
             const active = category.value === props.category;
             return (
               <button
@@ -260,6 +262,7 @@ export function MarketDialogView(props: MarketDialogViewProps) {
  */
 export function MarketDialog(props: {
   initialCategory: MarketCategory;
+  categories?: ReadonlyArray<{ value: MarketCategory; label: string }>;
   loadRows: (category: MarketCategory) => Promise<MarketRow[]>;
   currency: string;
   balance: number;
@@ -361,6 +364,7 @@ export function MarketDialog(props: {
           setSelectedKey(null);
           setBonus(0);
         }}
+        categories={props.categories}
         search={search}
         onSearch={setSearch}
         rows={searched}

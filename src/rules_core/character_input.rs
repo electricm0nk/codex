@@ -431,10 +431,13 @@ fn apply_equipment_selection(value: &str, parsed: &mut ParsedFixture) {
 }
 
 fn apply_equipment_modifier(value: &str, parsed: &mut ParsedFixture) {
-    // Same last-colon convention as `apply_equipment_selection`: item_id may
-    // contain its own colon (e.g. "item:longsword"), the modifier item_id does
-    // not, so the boundary is the final colon in the value.
-    let Some((item_id, modifier_item_id)) = value.rsplit_once(':') else {
+    // Both ids can hold colons: a Starfinder modifier is `core:equipment_modifier:mk_1`. The line
+    // comes after its item's `equipment=` line, so the item id is a held selection's. A line naming
+    // none falls back to the final colon, which words the diagnostic below.
+    let held = parsed.equipment_selections.iter().rev().find_map(|selection| {
+        value.strip_prefix(selection.item_id.as_str())?.strip_prefix(':').map(|modifier| (selection.item_id.as_str(), modifier))
+    });
+    let Some((item_id, modifier_item_id)) = held.or_else(|| value.rsplit_once(':')).map(|(i, m)| (i.to_owned(), m.to_owned())) else {
         parsed.diagnostics.push(diagnostic(
             "equipment_selections",
             format!(
@@ -463,7 +466,7 @@ fn apply_equipment_modifier(value: &str, parsed: &mut ParsedFixture) {
         return;
     };
 
-    selection.applied_modifiers.push(modifier_item_id.to_owned());
+    selection.applied_modifiers.push(modifier_item_id);
 }
 
 fn active_state_from_token(state: &str) -> Option<ActiveState> {
@@ -792,6 +795,18 @@ equipment_modifier=Longsword:Special Ability ~ +1 ~ Weapon\n"
             .map(|selection| selection.applied_modifiers.len())
             .collect();
         assert_eq!(copies, vec![0, 1]);
+    }
+
+    /// A Starfinder modifier's id holds colons of its own, so the final colon is not the boundary.
+    #[test]
+    fn an_equipment_modifier_line_keeps_a_modifier_id_with_colons() {
+        let fixture = format!(
+            "{FIXTURE}equipment=core:equipment:second_skin:equipped\n\
+equipment_modifier=core:equipment:second_skin:alien_archive_2:equipment_modifier:pet_carrier\n"
+        );
+        let input = load_character_input_fixture(&fixture).character_input.expect("fixture must parse cleanly");
+        let copy = input.chosen.equipment_selections.iter().find(|s| s.item_id == "core:equipment:second_skin").expect("the copy");
+        assert_eq!(copy.applied_modifiers, ["alien_archive_2:equipment_modifier:pet_carrier"]);
     }
 
     /// An `equipment_modifier=` line naming an item_id with no matching

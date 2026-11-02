@@ -2033,7 +2033,7 @@
           "op": "wait",
           "ms": 3000
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Defiance Series, Squad"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Defiance Series, Squad"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser rifle, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser rifle, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -2078,125 +2078,6 @@
           "ms": 1500
         },
         {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:defiance_series_squad"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_rifle_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
           "op": "click",
           "target": "Save choices"
         },
@@ -2220,7 +2101,7 @@
         "over_budget",
         "☰ Menu"
       ],
-      "notes": "SD-37 E6.5a: SF-Soldier-3's full loadout (artifacts/epic_0/seed-builds.md §1) chosen through the real app. The 1st-level soldier seed build (the E6.5 rows' creation steps, under its own name 'SF Smoke Loadout') is created, loaded and leveled to Soldier 3 through 'Level up' twice (E6.5); then the sheet's 'Feats, spells and gear' dialog (StarfinderChoicesDialog.tsx) takes the seed's four feats from the engine's feat list (Weapon Focus, Quick Draw, Deadly Aim, Coordinated Shot; each prerequisite the engine's verdict) and its seven items from the package's equipment list, each added through append_to_character (StarfinderAdapter: the Defiance Series Squad and the azimuth laser rifle equipped, baton, two batteries and two serums carried), and 'Save choices' saves through save_starfinder_choices. The sheet re-reads the character and prints the engine's totals: EAC 16, KAC 19, credits remaining 2045, bulk 4 = E0.4 (seed-hand-values.md R8/R9; E4.5-loadout-hand-values.md). landing-select-pathfinder restores the Pathfinder selection."
+      "notes": "SD-37 E6.5a: SF-Soldier-3's full loadout (artifacts/epic_0/seed-builds.md §1) chosen through the real app. The 1st-level soldier seed build (the E6.5 rows' creation steps, under its own name 'SF Smoke Loadout') is created, loaded and leveled to Soldier 3 through 'Level up' twice (E6.5); then the sheet's 'Feats, spells and gear' dialog (StarfinderChoicesDialog.tsx) takes the seed's four feats from the engine's feat list (Weapon Focus, Quick Draw, Deadly Aim, Coordinated Shot; each prerequisite the engine's verdict) and its seven items from the package's equipment list, each bought from the Market (buy_starfinder_market, sf_adapter.rs: SD-39 E3.5 moved this off the dialog; before, append_to_character: the Defiance Series Squad and the azimuth laser rifle equipped, baton, two batteries and two serums carried), and 'Save choices' saves through save_starfinder_choices. The sheet re-reads the character and prints the engine's totals: EAC 16, KAC 19, credits remaining 2045, bulk 4 = E0.4 (seed-hand-values.md R8/R9; E4.5-loadout-hand-values.md). landing-select-pathfinder restores the Pathfinder selection."
     },
     {
       "id": "build-starfinder-soldier",
@@ -2520,7 +2401,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Defiance Series, Squad"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Defiance Series, Squad"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser rifle, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser rifle, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -2563,125 +2444,6 @@
         {
           "op": "wait",
           "ms": 1500
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:defiance_series_squad"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_rifle_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -3358,7 +3120,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Lashunta tempweave, basic"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Lashunta tempweave, basic"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser pistol, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser pistol, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Medkit (Basic)"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Medkit (Basic)"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -3527,125 +3289,6 @@
         {
           "op": "wait",
           "ms": 1200
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:lashunta_tempweave_basic"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_pistol_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:medkit_basic"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -4298,7 +3941,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "D-suit I"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "D-suit I"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser pistol, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser pistol, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Medkit (Basic)"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Medkit (Basic)"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -4458,125 +4101,6 @@
         {
           "op": "wait",
           "ms": 1200
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:d_suit_i"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_pistol_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:medkit_basic"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -5055,7 +4579,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Carbon skin, graphite"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Carbon skin, graphite"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Semi-auto pistol, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Semi-auto pistol, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -5080,91 +4604,6 @@
         {
           "op": "wait",
           "ms": 1500
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:carbon_skin_graphite"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:semi_auto_pistol_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -6596,6 +6035,17 @@
     {"id": "sheet-market-sell", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Sell +1 Chain Shirt"}], "marker": "Sold +1 Chain Shirt for 625 gp.", "expect": ["Sold +1 Chain Shirt for 625 gp.", "Sell Chain Shirt"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: Aldric holds a plain Chain Shirt (seed) and a +1. Sell names the +1 and pays half of its own price, not half of 100 gp; the plain one stays. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
     {"id": "sheet-market-buy-weapon-carried", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "10"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Dagger"}, {"op": "click", "target": "Dagger"}, {"op": "click", "target": "Buy"}], "marker": "(carried, not wielded).", "expect": ["Bought Dagger for 2 gp (carried, not wielded).", "Sell Dagger"], "forbid": ["more than one real weapon"], "notes": "SD-39 E3.3: Market buys a weapon carried, and the player takes it in hand from the Weapons tab. E4.1 owns wear-or-carry."},
     {"id": "sheet-market-cashless", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Dagger"}, {"op": "click", "target": "Dagger"}, {"op": "click", "target": "Buy"}], "marker": "no money moved", "expect": ["Added Dagger; no money moved (carried, not wielded).", "Sell Dagger"], "forbid": ["Bought"], "notes": "SD-39 E3.3: the price-mode radio is honoured; Cashless adds the item and moves nothing."},
-    {"id": "sheet-market-enhancement-ac", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "key", "key": "Escape"}, {"op": "click", "target": "Defense"}], "marker": "AC BY SOURCE", "expect": ["Chain Shirt enhancement", "AC +1"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.4: a worn +1 has its own row in AC by Source, reading the engine's number. Market puts armor on; a second armor stacking is E4.1's slot refusal. An armor row's description can say 'spell failure', hence allowGlobalForbid."}
+    {"id": "sheet-market-enhancement-ac", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "key", "key": "Escape"}, {"op": "click", "target": "Defense"}], "marker": "AC BY SOURCE", "expect": ["Chain Shirt enhancement", "AC +1"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.4: a worn +1 has its own row in AC by Source, reading the engine's number. Market puts armor on; a second armor stacking is E4.1's slot refusal. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-starfinder-open", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}], "marker": "Balance: 2,045 credits", "expect": ["Balance: 2,045 credits", "60 credits", "Weapons", "Shields", "Magic items", "INVENTORY", "Sell Battery", "Cashless"], "forbid": ["Add carried", "Add equipped", "Plain"], "notes": "SD-39 E3.5: the Starfinder sheet's Market button opens the same dialog over its own catalog, in credits, off the engine's Credits remaining (the seed's hand value 2045). No +N picker: a row offers none. Rows here sit last and change the seed's credits for the rest of a run."},
+    {"id": "sheet-market-starfinder-buy", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Bought Battery for 60 credits.", "expect": ["Bought Battery for 60 credits.", "Balance: 1,985 credits"], "forbid": [], "notes": "SD-39 E3.5: a buy at the record's own Price, and the balance is the engine's row afterward. Runs on the seed as open-starfinder-soldier left it."},
+    {"id": "sheet-market-starfinder-sell", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Sell Battery"}, {"op": "wait", "ms": 2000}], "marker": "Sold Battery for 30 credits.", "expect": ["Sold Battery for 30 credits."], "forbid": [], "notes": "SD-39 E3.5: Buy 100% / Sell 50% on a system whose credits the engine derives from what is held: the sale returns half, and the other half stays gone (sf_loadout's credits_adjustment)."},
+    {"id": "sheet-market-starfinder-cashless", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Added Battery; no money moved.", "expect": ["Added Battery; no money moved."], "forbid": ["Bought"], "notes": "SD-39 E3.5: Cashless adds the item and moves nothing, though the engine charges every held item: its price is added back."},
+    {"id": "sheet-market-starfinder-refused", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser rifle, corona"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser rifle, corona"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "available", "expect": ["were available"], "forbid": ["Bought"], "notes": "SD-39 E3.5: over the credits, the engine's own refusal shows inside the dialog and nothing is added."},
+    {"id": "sheet-market-cyberpunk-open", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Heavy Pistol"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Heavy Pistol"}], "marker": "100 eddies", "expect": ["Balance: 500 eddies", "100 eddies", "Weapons", "Armor", "Shields", "Gear", "INVENTORY", "Cashless"], "forbid": ["Magic items", "Plain", "Add Weapon"], "notes": "SD-39 E3.5: the Cyberpunk RED sheet gets the Market it never had (no Add button existed): its tabs, eddies, the sheet's Cash as the balance, the kit as the Sell list. Jax Moreno, the seed, has 500eb (starting_kit). Rows here sit last and change Jax's cash."},
+    {"id": "sheet-market-cyberpunk-buy", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Heavy Pistol"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Heavy Pistol"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Bought Heavy Pistol for 100 eddies.", "expect": ["Bought Heavy Pistol for 100 eddies.", "Balance: 400 eddies", "Sell Heavy Pistol"], "forbid": [], "notes": "SD-39 E3.5: a buy at the shop's price (p341) moves the Cash and adds the weapon to the kit and the sheet."},
+    {"id": "sheet-market-cyberpunk-sell", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Sell Heavy Pistol"}, {"op": "wait", "ms": 2000}], "marker": "Sold Heavy Pistol for 50 eddies.", "expect": ["Sold Heavy Pistol for 50 eddies.", "Balance: 450 eddies"], "forbid": [], "notes": "SD-39 E3.5: half back under Buy 100% / Sell 50%."},
+    {"id": "sheet-market-cyberpunk-refused", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Metalgear Body Armor (SP18)"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Metalgear Body Armor (SP18)"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "costs 5000eb", "expect": ["Metalgear Body Armor (SP18) costs 5000eb; the character has 450eb"], "forbid": ["Bought"], "notes": "SD-39 E3.5: a buy over the Cash is refused and nothing is added."},
+    {"id": "sheet-market-cyberpunk-cashless", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Agent"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Agent"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Added Agent; no money moved.", "expect": ["Added Agent; no money moved.", "Balance: 450 eddies", "Sell Agent"], "forbid": ["Bought"], "notes": "SD-39 E3.5: Cashless moves nothing, and gear no sheet box prints is still held and sold from here."},
+    {"id": "sheet-market-restore-pathfinder", "screen": "landing", "steps": [{"op": "click", "target": "Pathfinder 1e"}], "marker": "Pathfinder 1e", "expect": ["Pathfinder 1e", "Starfinder 1e"], "notes": "SD-39 E3.5: the Starfinder and Cyberpunk Market rows leave their rule set selected, and any row after them that loads a Pathfinder seed needs this one (sheet-market-open-weapons went red without it, Aldric Ironhand not on the list)."}
   ]
 }

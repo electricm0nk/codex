@@ -458,7 +458,7 @@ impl CprKitCatalog {
     }
 
     /// One purchase priced: the item it gives, or why it is refused.
-    fn price(&self, purchase: &CprKitPurchase) -> Result<CprKitItem, String> {
+    pub fn price(&self, purchase: &CprKitPurchase) -> Result<CprKitItem, String> {
         let CprKitPurchase { kind, name, variant, quantity } = purchase;
         if *quantity == 0 {
             return Err(format!("{name}: buy a quantity of 1 or more"));
@@ -510,6 +510,21 @@ impl CprKitCatalog {
         };
         let fashion = kind == "fashion" || (kind == CYBERWARE && self.fashionware.contains(name));
         Ok(CprKitItem { section: "bought".to_owned(), kind: kind.clone(), name: label, quantity: *quantity, cost_eb: cost, fashion })
+    }
+
+    /// What one item puts on the sheet, by the same reading a whole kit gets ([`CprKitOutcome::sheet`]).
+    pub fn sheet_of_item(&self, item: &CprKitItem) -> CprKitSheet {
+        CprKitOutcome {
+            method: CprKitMethod::Fixed,
+            items: vec![item.clone()],
+            budget: 0,
+            spent: 0,
+            fashion_budget: 0,
+            fashion_spent: 0,
+            budget_source: String::new(),
+            names: self.names.clone(),
+        }
+        .sheet()
     }
 
     /// The kit the method gives with the player's picks and purchases, or every reason it is

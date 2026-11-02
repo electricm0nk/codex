@@ -1,8 +1,10 @@
 import { useState, type CSSProperties } from 'react';
 import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { loadSystemMarketState, type MarketShellStateDto } from '../boundary/systemMarket';
 import { RulesAndFeaturesSection } from './CharacterSheet';
 import { StarfinderChoicesDialog } from './StarfinderChoicesDialog';
 import { StarfinderLevelUpDialog } from './StarfinderLevelUpDialog';
+import { STARFINDER_MARKET_CATEGORIES, SystemMarketDialog } from './SystemMarketDialog';
 import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSection } from './starfinderSheetModel';
 
 /**
@@ -15,7 +17,8 @@ import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSec
  * "Level up" (SD-37 E6.5) opens the Starfinder level-up; once the level is saved the sheet
  * re-reads the character (`load_saved_character`) and shows the engine's totals at the new level.
  * "Feats, spells and gear" (SD-37 E6.5a) opens the choices dialog; once they are saved the sheet
- * re-reads the character the same way and prints the engine's EAC, KAC, credits and bulk.
+ * re-reads the character the same way and prints the engine's EAC, KAC, credits and bulk. "Market"
+ * buys and sells gear in credits (`SystemMarketDialog`), and the sheet re-reads the same way.
  */
 export function StarfinderCharacterSheet(props: {
   detail: LoadSavedCharacterResponse;
@@ -27,6 +30,7 @@ export function StarfinderCharacterSheet(props: {
   const [detail, setDetail] = useState(props.detail);
   const [levelUpOpen, setLevelUpOpen] = useState(false);
   const [choicesOpen, setChoicesOpen] = useState(false);
+  const [market, setMarket] = useState<MarketShellStateDto | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const sheet = buildStarfinderSheet(detail);
   const characterId = detail.summary.characterId;
@@ -51,6 +55,12 @@ export function StarfinderCharacterSheet(props: {
     setChoicesOpen(false);
     await reread(`Saved feats, spells and gear: ${totalsLine}`);
   }
+
+  function openMarket() {
+    loadSystemMarketState('starfinder', characterId)
+      .then(setMarket)
+      .catch((cause: unknown) => setStatus(cause instanceof Error ? cause.message : String(cause)));
+  }
   return (
     <section data-testid="sf-character-sheet" style={{ marginTop: '1.5rem' }}>
       <div style={{ alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
@@ -66,6 +76,9 @@ export function StarfinderCharacterSheet(props: {
           </button>
           <button type="button" data-testid="sf-sheet-choices" onClick={() => setChoicesOpen(true)} disabled={levelUpOpen || choicesOpen} style={buttonStyle}>
             Feats, spells and gear
+          </button>
+          <button type="button" data-testid="sf-sheet-market" onClick={openMarket} disabled={levelUpOpen || choicesOpen} style={buttonStyle}>
+            Market
           </button>
           <button type="button" data-testid="sf-sheet-open" onClick={props.onOpen} style={buttonStyle}>
             Open
@@ -88,6 +101,17 @@ export function StarfinderCharacterSheet(props: {
 
       {choicesOpen ? (
         <StarfinderChoicesDialog characterId={characterId} onClose={() => setChoicesOpen(false)} onSaved={(line) => void handleChoicesSaved(line)} />
+      ) : null}
+
+      {market ? (
+        <SystemMarketDialog
+          system="starfinder"
+          categories={STARFINDER_MARKET_CATEGORIES}
+          characterId={characterId}
+          initial={market}
+          onChanged={(line) => void reread(line)}
+          onClose={() => setMarket(null)}
+        />
       ) : null}
 
       {sheet.blocking.length === 0 ? null : (

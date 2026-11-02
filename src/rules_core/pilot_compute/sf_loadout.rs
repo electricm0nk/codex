@@ -39,6 +39,9 @@ pub struct SfLoadout {
     /// bought, and one with a `Bulk:` quality adds its bulk. A fusion states neither: the fusion
     /// seal that pays for it is a carried equipment record of its own.
     pub applied: Vec<RuleId>,
+    /// Credits beyond what the items' prices explain: the Market's price modes (a sale that returned
+    /// half, an item added without charge). 0 for a character that never used them.
+    pub credits_adjustment: i64,
 }
 
 /// The credits and bulk totals of one Starfinder character.
@@ -67,6 +70,7 @@ pub const AUGMENTATION_KINDS: [&str; 5] = ["Cybernetic", "Bio-Tech", "Magitech",
 const SRD_WEALTH: &str = "SRD Table 11-5 Character Wealth per Level (https://www.aonsrd.com/Rules.aspx?ID=230)";
 const SRD_BULK: &str = "SRD Carrying Capacity (https://www.aonsrd.com/Equipment.aspx)";
 const BUILD_CREDITS: &str = "the build's stated credits";
+const MARKET_CREDITS: &str = "sales below the price paid and items added without charge";
 
 fn refuse(id: &'static str, message: String) -> SfChassisRefusal {
     SfChassisRefusal { id, message }
@@ -77,7 +81,7 @@ fn total(terms: Vec<SfTerm>) -> SfTotal {
 }
 
 /// The text of every `StatBlock "<label>"` prose row of `rule`.
-fn stat_rows<'r>(rule: &'r SheetRule, label: &'r str) -> impl Iterator<Item = String> + 'r {
+pub fn stat_rows<'r>(rule: &'r SheetRule, label: &'r str) -> impl Iterator<Item = String> + 'r {
     rule.prose.iter().filter_map(move |seg| match &seg.family {
         ProseFamily::StatBlock(l) if l == label => {
             seg.pieces.iter().map(|p| if let ProsePiece::Text(s) = p { Some(s.as_str()) } else { None }).collect::<Option<String>>()
@@ -87,7 +91,7 @@ fn stat_rows<'r>(rule: &'r SheetRule, label: &'r str) -> impl Iterator<Item = St
 }
 
 /// The item's price in credits: its one `StatBlock "Price"` row.
-fn price(item: &SheetRule) -> Result<i64, SfChassisRefusal> {
+pub fn price(item: &SheetRule) -> Result<i64, SfChassisRefusal> {
     let rows: Vec<String> = stat_rows(item, "Price").collect();
     match rows.as_slice() {
         [one] => one.trim().parse::<i64>().map_err(|_| refuse(REFUSED_ITEM_PRICE, format!("{}: price {one:?} is not a number", item.id))),
@@ -109,6 +113,13 @@ fn bulk(item: &SheetRule) -> Result<ItemBulk, SfChassisRefusal> {
         [] => Err(refuse(REFUSED_ITEM_BULK, format!("{}: the record states no bulk", item.id))),
         many => Err(refuse(REFUSED_ITEM_BULK, format!("{}: {} bulk rows {many:?}", item.id, many.len()))),
     }
+}
+
+/// Whether the engine can carry `item`: it states one numeric price, and a bulk unless it is an
+/// augmentation, the two terms [`compute`] refuses a record without.
+pub fn is_buyable(item: &SheetRule) -> bool {
+    let augmentation = AUGMENTATION_KINDS.iter().any(|k| item.tags.iter().any(|t| t == *k));
+    price(item).is_ok() && (augmentation || bulk(item).is_ok())
 }
 
 /// The equipment record `id`, checked to be equipment.
@@ -189,14 +200,18 @@ pub fn compute(package: &SheetRulePackage, build: &SfBuild, loadout: &SfLoadout)
         });
     }
     let credits_spent = total(spent);
-    let remaining = starting.value - credits_spent.total;
-    if remaining < 0 {
-        return Err(refuse(REFUSED_OVER_BUDGET, format!("the loadout costs {} credits; {} were available", credits_spent.total, starting.value)));
+    let available = starting.value + loadout.credits_adjustment;
+    if available - credits_spent.total < 0 {
+        return Err(refuse(REFUSED_OVER_BUDGET, format!("the loadout costs {} credits; {available} were available", credits_spent.total)));
     }
-    let credits_remaining = total(vec![
+    let mut remaining_terms = vec![
         starting.clone(),
         SfTerm { label: "credits spent".into(), value: -credits_spent.total, source: "the carried items' prices".into() },
-    ]);
+    ];
+    if loadout.credits_adjustment != 0 {
+        remaining_terms.push(SfTerm { label: "Market price modes".into(), value: loadout.credits_adjustment, source: MARKET_CREDITS.into() });
+    }
+    let credits_remaining = total(remaining_terms);
     let bulk = total(bulk_terms);
     let limits = encumbrance::bulk_limits(build.chassis.ability_scores[0]);
     let condition = BulkCondition::of(bulk.total, limits);
@@ -214,6 +229,7 @@ pub(crate) mod seed_loadouts {
             starting_credits: None,
             carried: items.iter().map(|(id, q)| (format!("core:equipment:{id}"), *q)).collect(),
             applied: Vec::new(),
+            credits_adjustment: 0,
         };
         vec![
             ("SF-Soldier-3", l(&[("laser_rifle_azimuth", 1), ("baton_tactical", 1), ("battery", 2), ("serum_of_healing_mk_1", 2)])),
@@ -294,9 +310,9 @@ mod sf_seed {
     #[test]
     fn sf_seed_ten_light_items_add_one_bulk() {
         let soldier = seed_build("SF-Soldier-3");
-        let base = compute(package(), &soldier, &SfLoadout { starting_credits: Some(100_000), carried: vec![], applied: vec![] }).unwrap().bulk.total;
+        let base = compute(package(), &soldier, &SfLoadout { starting_credits: Some(100_000), carried: vec![], applied: vec![], credits_adjustment: 0 }).unwrap().bulk.total;
         for (n, extra) in [(9, 0), (10, 1), (19, 1), (20, 2)] {
-            let loadout = SfLoadout { starting_credits: Some(100_000), carried: vec![("core:equipment:serum_of_healing_mk_1".into(), n)], applied: vec![] };
+            let loadout = SfLoadout { starting_credits: Some(100_000), carried: vec![("core:equipment:serum_of_healing_mk_1".into(), n)], applied: vec![], credits_adjustment: 0 };
             assert_eq!(compute(package(), &soldier, &loadout).unwrap().bulk.total, base + extra, "{n} light items");
         }
     }
@@ -307,7 +323,7 @@ mod sf_seed {
     fn sf_seed_bulk_over_the_limits_gives_the_condition() {
         let envoy = seed_build("SF-Envoy-3");
         let with = |n: u32| {
-            let loadout = SfLoadout { starting_credits: Some(100_000), carried: vec![("core:equipment:medkit_basic".into(), n)], applied: vec![] };
+            let loadout = SfLoadout { starting_credits: Some(100_000), carried: vec![("core:equipment:medkit_basic".into(), n)], applied: vec![], credits_adjustment: 0 };
             compute(package(), &envoy, &loadout).unwrap()
         };
         assert_eq!(with(3).condition, BulkCondition::Unencumbered);
@@ -372,11 +388,11 @@ mod sf_seed {
     #[test]
     fn sf_seed_unresolvable_items_and_budgets_are_refused_by_name() {
         let soldier = seed_build("SF-Soldier-3");
-        let one = |id: &str| SfLoadout { starting_credits: None, carried: vec![(id.to_string(), 1)], applied: vec![] };
+        let one = |id: &str| SfLoadout { starting_credits: None, carried: vec![(id.to_string(), 1)], applied: vec![], credits_adjustment: 0 };
         assert_eq!(compute(package(), &soldier, &one("core:class:soldier")).unwrap_err().id, REFUSED_NOT_EQUIPMENT);
         assert_eq!(compute(package(), &soldier, &one("core:equipment:no_such_item")).unwrap_err().id, REFUSED_NOT_HELD);
         assert_eq!(compute(package(), &soldier, &one("armory:equipment:musical_instrument_basic")).unwrap_err().id, REFUSED_ITEM_BULK);
-        let broke = SfLoadout { starting_credits: Some(100), carried: vec![], applied: vec![] };
+        let broke = SfLoadout { starting_credits: Some(100), carried: vec![], applied: vec![], credits_adjustment: 0 };
         assert_eq!(compute(package(), &soldier, &broke).unwrap_err().id, REFUSED_OVER_BUDGET);
         let mut level_21 = soldier.clone();
         level_21.chassis.classes = vec![("core:class:soldier".into(), 21)];
