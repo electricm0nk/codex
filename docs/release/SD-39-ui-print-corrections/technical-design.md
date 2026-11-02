@@ -94,6 +94,7 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
 - UI: `MarketDialog.tsx` (new) replaces `buildItemPickerConfig`'s weapon/armor/gear branches
   (`CharacterSheet.tsx:255–300`); the Spell/Feat/Modifier branches stay. SF and CPR sheets get the same
   dialog with their catalogs and currency (E3.5).
+  The Sell list is `list_held_equipment`, not `corpusDerived.equippedItems` (`decisions.md §25`).
 
 ## §4 Feat guards (E1)
 

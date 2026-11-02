@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 15 of 53 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 17 of 54 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -58,6 +58,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E2 | E2.MC | complete | this commit | artifacts/epic_2/E2.MC_cycle_receipt.md |
 | E3 | E3.1 | complete | 93c596cc1c | artifacts/epic_3/E3.1_cycle_receipt.md |
 | E3 | E3.2 | complete | 61aad6b9ab | artifacts/epic_3/E3.2_cycle_receipt.md |
+| E3 | E3.3 | complete | f905c625d2 | artifacts/epic_3/E3.3_cycle_receipt.md |
 
 ## Epic reports
 
@@ -124,6 +125,8 @@ seed deltas, open blockers.)
 | E3.1 | Unpriced template twins, `Codex-Named Unit` rows | Hidden | Shown, as the old picker did |
 | E3.2 | A `+N` sale's refund when the bonus was attached free through Attach Modifier | The copy's offer price, what a `+N` sells for | A record of what was paid, which needs a new field; the free attach is the defect, E3.6 |
 | E3.2 | How a sale names a copy | `bonus` on the request: `0` plain, `N` a `+N`, absent the first | A list index, which the sheet's rows do not carry |
+| E3.3 | State a Market weapon is saved in | Carried, and the status line says so: the engine refuses a second wielded weapon | Wielded, which refuses every weapon on a Computed character; a retry after the refusal, which is E4.1's rule in the client |
+| E3.3 | How many rows the dialog renders | The first 200 by name, with a line saying so; search reaches the rest | All of the Magic item list at once (3,680 rows, E3.1's receipt) |
 
 ## Open blockers
 

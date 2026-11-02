@@ -50,7 +50,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 54
 | E2.MC | E2 merge check + Epic report | opus | complete | E2.4 | merged nothing; receipt artifacts/epic_2/E2.MC_cycle_receipt.md |
 | E3.1 | list_market + category fix + +N variants | opus | complete | E2.MC | commit 93c596cc1c + receipt commit; receipt artifacts/epic_3/E3.1_cycle_receipt.md; Armor cross-type 0 of 63 |
 | E3.2 | Sell + +N purchase on existing purchase_equipment | opus | complete | E3.1 | commit 61aad6b9ab + receipt commit; receipt artifacts/epic_3/E3.2_cycle_receipt.md; discovered E3.6 |
-| E3.3 | Market dialog replaces Add buttons (PF) | opus | waiting | E3.2 | |
+| E3.3 | Market dialog replaces Add buttons (PF) | opus | complete | E3.2 | commit f905c625d2 + receipt commit; receipt artifacts/epic_3/E3.3_cycle_receipt.md; 8 market rows green |
 | E3.4 | Enhancement bonus → AC/attack/damage rows | opus | waiting | E3.3 | |
 | E3.5 | SF + CPR Market shell | opus | waiting | E3.3 | side lane sf-cpr |
 | E3.6 | Attach Modifier charges the +N it attaches | opus | waiting | E3.3 | discovered by E3.2, decisions.md §21 |
