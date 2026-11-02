@@ -90,7 +90,7 @@ use dm_console_export::export_dm_console;
 use encounter_rating::rate_encounter;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
-use equipment_catalog::{list_equipment, list_equipment_catalog};
+use equipment_catalog::{list_equipment, list_equipment_catalog, list_market};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
 use companion_catalog::list_companion_catalog;
 use reference_library_catalog::list_reference_library_catalog;
@@ -349,6 +349,7 @@ fn main() {
             export_dm_console,
             rate_encounter,
             list_equipment,
+            list_market,
             list_spells,
             list_feats,
             // SD-27: the same catalog with each record's real prerequisite

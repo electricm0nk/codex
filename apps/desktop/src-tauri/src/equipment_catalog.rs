@@ -53,6 +53,7 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::body_slots::{enhanceable_tags, is_magic_marked};
 use codex::rules_core::equipment_resolver::equipment_catalog_rows;
 use codex::rules_core::rules_catalog::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
@@ -578,9 +579,177 @@ pub fn list_equipment(filter: EquipmentCatalogFilter) -> EquipmentCatalogRespons
     filter_equipment_catalog(&filter)
 }
 
+/// One Market list. Each catalog item belongs to exactly one, derived from its type tags
+/// ([`market_category_of`]). Equipment modifiers are in none: they are attached, not bought.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum MarketCategory {
+    Weapon,
+    Armor,
+    Shield,
+    Gear,
+    MagicItem,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketFilter {
+    pub category: MarketCategory,
+    /// Case-insensitive substring match against the row's shown name.
+    #[serde(default)]
+    pub name_contains: Option<String>,
+    /// Exact match against a book code in [`equipment_catalog_books`].
+    #[serde(default)]
+    pub book: Option<String>,
+}
+
+/// One `+N` a Market row can be bought at.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketVariantDto {
+    pub bonus: u8,
+    pub name: String,
+    /// The whole price: base + masterwork + the enhancement.
+    pub price_gp: f64,
+    /// The catalog key of the equipment modifier that carries the bonus, for
+    /// `attach_equipment_modifier`'s path. It has no price of its own.
+    pub modifier_key: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketEntryDto {
+    #[serde(flatten)]
+    pub entry: EquipmentCatalogEntryDto,
+    /// Empty when the row takes no `+N`.
+    pub variants: Vec<MarketVariantDto>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MarketResponse {
+    pub entries: Vec<MarketEntryDto>,
+    /// Why the type sidecar could not be read. `entries` is then empty: a category read from no
+    /// tags would be a guess.
+    #[serde(default)]
+    pub types_error: Option<String>,
+}
+
+/// Type tags that make a record a magic item even with no magic marker, and even when it is also
+/// tagged `Weapon` (a rod or a staff).
+const MAGIC_KIND_TAGS: &[&str] = &["Rod", "Staff", "Wand", "Scroll", "Potion", "Wondrous"];
+/// Type tags of what is fired rather than wielded. `Stack` is the packs (`Arrows (20)`).
+const AMMUNITION_TAGS: &[&str] = &["Ammunition", "Ammo", "Stack"];
+
+/// Which list a catalog row belongs in, first hit wins. The magic checks come first: a magic rod
+/// tagged `Weapon` is a magic item, so the mundane lists hold only mundane goods and a magic sword
+/// is on one list. A shield outranks a weapon (a shield with a bash stays a shield), as in
+/// [`codex::rules_core::body_slots`]. A row whose tags name no kind, including an arms row with no
+/// tags at all, is `Gear`: it stays buyable and never lands in a list it may not belong in.
+fn market_category_of(entry: &EquipmentCatalogEntryDto) -> Option<MarketCategory> {
+    if entry.category == "Equipmods" {
+        return None;
+    }
+    let tags: Vec<&str> = entry.types.iter().map(String::as_str).collect();
+    let has_any = |wanted: &[&str]| tags.iter().any(|tag| wanted.contains(tag));
+    Some(if entry.category == "MagicItems" || is_magic_marked(&tags) || has_any(MAGIC_KIND_TAGS) {
+        MarketCategory::MagicItem
+    } else if has_any(&["Barding"]) {
+        MarketCategory::Gear
+    } else if has_any(AMMUNITION_TAGS) {
+        MarketCategory::Weapon
+    } else if has_any(&["Shield"]) {
+        MarketCategory::Shield
+    } else if has_any(&["Armor"]) {
+        MarketCategory::Armor
+    } else if has_any(&["Weapon"]) {
+        MarketCategory::Weapon
+    } else {
+        MarketCategory::Gear
+    })
+}
+
+/// A row the Market does not offer. A template (key `Longsword`, named `Longsword (Base)`, no
+/// price) has a priced twin on the shelf, keyed by that name; a `Codex-Named Unit` has no name a
+/// buyer could recognize. The name alone does not make a template: `Holy Avenger` is also named
+/// `Longsword (Base)`, and it is an item of its own.
+fn hidden_from_market(entry: &EquipmentCatalogEntryDto) -> bool {
+    let is_template = entry.cost_gp.is_none() && entry.name == format!("{} (Base)", entry.key);
+    is_template || entry.name.starts_with("Codex-Named Unit")
+}
+
+/// The name a Market row shows. On a derived row the catalog's `name` is its base (`Arrows (20)`
+/// reads `Arrow (Base)`), which would describe another item.
+fn market_name(entry: &EquipmentCatalogEntryDto) -> String {
+    if entry.name.ends_with(" (Base)") { entry.key.clone() } else { entry.name.clone() }
+}
+
+/// The `+1`…`+5` a row is offered at. Only arms and armor with a price take one. No price means no
+/// offer, never an invented base. A free item takes one only as a base record (`Club (Base)`,
+/// `Quarterstaff (Base)`): the other free rows are attacks and summoned arms, not goods
+/// (`Touch Attack (Ray)`, `Mind Blade (…)`), and a negative price is a record's cost correction.
+fn market_variants(entry: &EquipmentCatalogEntryDto, name: &str) -> Vec<MarketVariantDto> {
+    let Some(base_gp) = entry.cost_gp else { return Vec::new() };
+    let is_good = base_gp > 0.0 || (base_gp == 0.0 && entry.key.ends_with(" (Base)"));
+    if entry.category != "ArmsArmor" || !is_good {
+        return Vec::new();
+    }
+    let tags: Vec<&str> = entry.types.iter().map(String::as_str).collect();
+    let Some(kind) = enhanceable_tags(&tags) else { return Vec::new() };
+    (1..=5)
+        .map(|bonus| MarketVariantDto {
+            bonus,
+            name: format!("+{bonus} {name}"),
+            price_gp: kind.price_gp(base_gp, bonus),
+            modifier_key: kind.modifier_key(bonus),
+        })
+        .collect()
+}
+
+/// Narrows a built catalog to one Market list. The first row of a key decides that key, as it does
+/// for `purchase_equipment`, so the price shown is the price charged.
+fn market_from_catalog(catalog: &EquipmentCatalogResponse, filter: &MarketFilter) -> MarketResponse {
+    if catalog.types_error.is_some() {
+        return MarketResponse { entries: Vec::new(), types_error: catalog.types_error.clone() };
+    }
+    let needle = filter.name_contains.as_ref().filter(|n| !n.is_empty()).map(|n| n.to_lowercase());
+    let mut seen = std::collections::HashSet::new();
+    let entries = catalog
+        .entries
+        .iter()
+        .filter(|entry| seen.insert(entry.key.as_str()))
+        .filter(|entry| !hidden_from_market(entry) && market_category_of(entry) == Some(filter.category))
+        .filter(|entry| filter.book.as_ref().is_none_or(|book| &entry.book == book))
+        .filter_map(|entry| {
+            let mut entry = entry.clone();
+            entry.name = market_name(&entry);
+            if needle.as_ref().is_some_and(|n| !entry.name.to_lowercase().contains(n.as_str())) {
+                return None;
+            }
+            let variants = market_variants(&entry, &entry.name);
+            Some(MarketEntryDto { entry, variants })
+        })
+        .collect();
+    MarketResponse { entries, types_error: None }
+}
+
+/// The catalog, built once: a Market dialog asks again on every tab and every search, the build
+/// reads every converted record, and nothing it reads changes while the app runs.
+fn built_catalog() -> &'static EquipmentCatalogResponse {
+    static BUILT: std::sync::OnceLock<EquipmentCatalogResponse> = std::sync::OnceLock::new();
+    BUILT.get_or_init(build_equipment_catalog)
+}
+
+/// One Market list: only the requested category, with the `+N` each row can be bought at.
+#[tauri::command]
+pub fn list_market(filter: MarketFilter) -> MarketResponse {
+    market_from_catalog(built_catalog(), &filter)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use codex::rules_core::equipment_resolver::equipment_catalog_row_by_key;
     use std::collections::{BTreeMap, BTreeSet};
 
     /// **The corpus-wide floor under the equipment catalog's prose.**
@@ -1890,4 +2059,262 @@ mod tests {
         assert!(percent >= 90, "only {percent}% of item rows carry a type ({typed}/{})", items.len());
     }
 
+    // ---- Market ----------------------------------------------------------------------------
+
+    fn market(category: MarketCategory) -> Vec<MarketEntryDto> {
+        let filter = MarketFilter { category, name_contains: None, book: None };
+        let response = market_from_catalog(built_catalog(), &filter);
+        assert!(response.types_error.is_none(), "type sidecar failed: {:?}", response.types_error);
+        response.entries
+    }
+
+    fn holds_tag(types: &[String], tags: &[&str]) -> bool {
+        types.iter().any(|tag| tags.contains(&tag.as_str()))
+    }
+
+    fn entry<'a>(entries: &'a [MarketEntryDto], key: &str) -> Option<&'a MarketEntryDto> {
+        entries.iter().find(|row| row.entry.key == key)
+    }
+
+    const ALL_MARKET_CATEGORIES: [MarketCategory; 5] = [
+        MarketCategory::Weapon,
+        MarketCategory::Armor,
+        MarketCategory::Shield,
+        MarketCategory::Gear,
+        MarketCategory::MagicItem,
+    ];
+
+    /// D3, the defect itself: the Add Armor list held ammunition, rods and weapons, because it
+    /// loaded the whole `ArmsArmor` engine category. The control proves this count can fail: the
+    /// same predicate over that old list is far from zero.
+    #[test]
+    fn market_category_filter_armor_holds_no_ammunition_weapon_or_rod_record() {
+        const CROSS_TYPE: &[&str] = &["Ammunition", "Ammo", "Weapon", "Rod", "Shield", "Barding", "Stack"];
+
+        let old_list: Vec<_> = built_catalog().entries.iter().filter(|e| e.category == "ArmsArmor").collect();
+        let old_cross = old_list.iter().filter(|e| holds_tag(&e.types, CROSS_TYPE)).count();
+        assert!(old_cross > 100, "control: the old ArmsArmor list must hold cross-type rows, got {old_cross}");
+
+        let armor = market(MarketCategory::Armor);
+        let cross: Vec<&str> = armor
+            .iter()
+            .filter(|row| holds_tag(&row.entry.types, CROSS_TYPE))
+            .map(|row| row.entry.key.as_str())
+            .collect();
+        println!("armor list cross-type records: {} of {}; old list: {old_cross} of {}", cross.len(), armor.len(), old_list.len());
+        assert!(cross.is_empty(), "cross-type rows in the Armor list: {cross:?}");
+        assert!(armor.len() > 40, "a near-empty Armor list passes the count vacuously: {}", armor.len());
+        assert!(armor.iter().all(|row| holds_tag(&row.entry.types, &["Armor"])), "every Armor row carries the tag");
+
+        assert!(entry(&armor, "Chain Shirt (Base)").is_some());
+        for absent in ["Longsword (Base)", "Arrow (Base)", "Arrows (20)", "Heavy Wooden Shield (Base)"] {
+            assert!(entry(&armor, absent).is_none(), "{absent} must not be in the Armor list");
+        }
+    }
+
+    #[test]
+    fn market_category_filter_files_the_named_records() {
+        let weapons = market(MarketCategory::Weapon);
+        let shields = market(MarketCategory::Shield);
+        let gear = market(MarketCategory::Gear);
+        let magic = market(MarketCategory::MagicItem);
+
+        for key in ["Longsword (Base)", "Arrow (Base)", "Arrows (20)", "Shuriken (Base)"] {
+            assert!(entry(&weapons, key).is_some(), "{key} is bought with the weapons");
+        }
+        assert!(entry(&shields, "Heavy Wooden Shield (Base)").is_some());
+        assert!(entry(&weapons, "Heavy Wooden Shield (Base)").is_none(), "a shield with a bash stays a shield");
+        assert!(entry(&gear, "Backpack").is_some() || gear.iter().any(|r| r.entry.name == "Backpack"));
+        assert!(gear.iter().any(|r| r.entry.key.contains("Barding")), "barding is the mount's gear");
+        assert!(entry(&magic, "Staff of Scorching").is_some() || magic.iter().any(|r| r.entry.name == "Staff of Scorching"));
+        assert!(entry(&weapons, "Staff of Scorching").is_none(), "a weapon-tagged staff is a magic item");
+    }
+
+    /// Market replaces the only other add path (E3.3), so a row left out of every list cannot be
+    /// bought at all. Every catalog key lands in exactly one list unless a named rule hides it.
+    #[test]
+    fn market_category_filter_files_every_row_once_and_loses_only_the_named_hides() {
+        let catalog = built_catalog();
+        let items: Vec<&EquipmentCatalogEntryDto> =
+            catalog.entries.iter().filter(|e| e.category != "Equipmods").collect();
+        let all_keys: BTreeSet<&str> = items.iter().map(|e| e.key.as_str()).collect();
+
+        let mut seen: BTreeMap<String, usize> = BTreeMap::new();
+        for category in ALL_MARKET_CATEGORIES {
+            let rows = market(category);
+            println!("{category:?}: {} rows", rows.len());
+            for row in rows {
+                assert_ne!(row.entry.category, "Equipmods", "{} is a modifier, not an item", row.entry.key);
+                *seen.entry(row.entry.key).or_default() += 1;
+            }
+        }
+        let twice: Vec<_> = seen.iter().filter(|(_, count)| **count > 1).collect();
+        assert!(twice.is_empty(), "keys in more than one list or twice in one: {twice:?}");
+
+        let listed_keys: BTreeSet<&str> = seen.keys().map(String::as_str).collect();
+        let lost: Vec<&str> = all_keys.difference(&listed_keys).copied().collect();
+        let unexplained: Vec<&&str> = lost
+            .iter()
+            .filter(|key| {
+                !items.iter().find(|e| e.key == **key).is_some_and(|first| hidden_from_market(first))
+            })
+            .collect();
+        println!("distinct item keys {}; listed {}; hidden by a named rule {}", all_keys.len(), listed_keys.len(), lost.len());
+        assert!(unexplained.is_empty(), "rows lost without a named rule: {unexplained:?}");
+
+        // A hidden template names its twin, and the twin is on sale. An item of its own that only
+        // shares the base's name stays on the shelf.
+        for key in lost.iter().filter(|key| !key.starts_with("Codex-Named Unit")) {
+            let twin = format!("{key} (Base)");
+            assert!(listed_keys.contains(twin.as_str()), "{key}'s twin {twin} is not listed");
+        }
+        for key in ["Holy Avenger", "Flame Tongue", "Mithral Shirt"] {
+            assert!(listed_keys.contains(key), "{key} was hidden as if it were a template");
+        }
+    }
+
+    /// The price a Market row shows is the price `purchase_equipment` charges: both read the first
+    /// row of a key, and 205 keys are held twice, some at two prices.
+    #[test]
+    fn market_category_filter_shows_the_price_a_purchase_charges() {
+        let mut checked = 0;
+        for category in ALL_MARKET_CATEGORIES {
+            for row in market(category) {
+                let charged = equipment_catalog_row_by_key(&row.entry.key).and_then(|r| r.cost_gp);
+                assert_eq!(row.entry.cost_gp, charged, "{}", row.entry.key);
+                checked += 1;
+            }
+        }
+        assert!(checked > 5000, "only {checked} rows checked");
+    }
+
+    #[test]
+    fn market_category_filter_narrows_by_name_and_book_and_shows_a_readable_name() {
+        let narrowed = market_from_catalog(
+            built_catalog(),
+            &MarketFilter {
+                category: MarketCategory::Weapon,
+                name_contains: Some("LONGSW".to_string()),
+                book: Some("CRB".to_string()),
+            },
+        );
+        assert!(!narrowed.entries.is_empty());
+        assert!(narrowed.entries.iter().all(|r| r.entry.book == "CRB" && r.entry.name.to_lowercase().contains("longsw")));
+
+        // The catalog's `name` on a derived row is its base (`Arrows (20)` reads `Arrow (Base)`):
+        // on a shop shelf that is a wrong item, so the key is shown.
+        let weapons = market(MarketCategory::Weapon);
+        assert_eq!(entry(&weapons, "Arrows (20)").unwrap().entry.name, "Arrows (20)");
+        assert_eq!(entry(&weapons, "Longsword (Base)").unwrap().entry.name, "Longsword");
+        assert!(weapons.iter().all(|r| !r.entry.name.ends_with(" (Base)")));
+    }
+
+    /// With no type data every row would land in the fallback list. That is a wrong answer, so the
+    /// list is empty and says why.
+    #[test]
+    fn market_category_filter_refuses_to_guess_without_type_data() {
+        let mut catalog = built_catalog().clone();
+        catalog.types_error = Some("could not read data/equipment_types.json".to_string());
+        let filter = MarketFilter { category: MarketCategory::Gear, name_contains: None, book: None };
+        let response = market_from_catalog(&catalog, &filter);
+        assert!(response.entries.is_empty());
+        assert_eq!(response.types_error.as_deref(), Some("could not read data/equipment_types.json"));
+    }
+
+    /// `price = base + masterwork + N² × unit`. The rows are the printed CRB examples and the
+    /// oracle's own cost chain: `cr_equipmods.lst`, `KEY:Special Ability ~ +N ~ Weapon`,
+    /// `BONUS:ITEMCOST|TYPE.WEAPON|2000*HEADPLUSTOTAL*HEADPLUSTOTAL` and `|300|` masterwork;
+    /// `~ Armor` and `~ Shield`, `1000*PLUSTOTAL*PLUSTOTAL` and `|150|` masterwork.
+    #[test]
+    fn enhancement_price_table_prices_all_five_bonuses_for_each_kind() {
+        let weapons = market(MarketCategory::Weapon);
+        let armor = market(MarketCategory::Armor);
+        let shields = market(MarketCategory::Shield);
+        let table: [(&[MarketEntryDto], &str, [f64; 5], &str); 4] = [
+            (&weapons, "Longsword (Base)", [2_315.0, 8_315.0, 18_315.0, 32_315.0, 50_315.0], "Weapon"),
+            (&weapons, "Quarterstaff (Base)", [2_300.0, 8_300.0, 18_300.0, 32_300.0, 50_300.0], "Weapon"),
+            (&armor, "Chain Shirt (Base)", [1_250.0, 4_250.0, 9_250.0, 16_250.0, 25_250.0], "Armor"),
+            (&shields, "Heavy Wooden Shield (Base)", [1_157.0, 4_157.0, 9_157.0, 16_157.0, 25_157.0], "Shield"),
+        ];
+        for (list, key, prices, family) in table {
+            let row = entry(list, key).unwrap_or_else(|| panic!("{key} is on sale"));
+            let got: Vec<(u8, f64, &str)> =
+                row.variants.iter().map(|v| (v.bonus, v.price_gp, v.modifier_key.as_str())).collect();
+            let want: Vec<(u8, f64, String)> = (1..=5u8)
+                .zip(prices)
+                .map(|(bonus, price)| (bonus, price, format!("Special Ability ~ +{bonus} ~ {family}")))
+                .collect();
+            assert_eq!(got.len(), 5, "{key}: {got:?}");
+            for (have, wanted) in got.iter().zip(&want) {
+                assert_eq!((have.0, have.1, have.2), (wanted.0, wanted.1, wanted.2.as_str()), "{key}");
+            }
+        }
+        assert_eq!(entry(&weapons, "Longsword (Base)").unwrap().variants[0].name, "+1 Longsword");
+    }
+
+    /// One code path attaches the bonus: `attach_equipment_modifier_at_root` gates a modifier on
+    /// this lookup alone, and charges its `cost_gp` when it has one. So the row must exist, and
+    /// must have no price of its own or the bonus is charged twice.
+    #[test]
+    fn enhancement_price_table_maps_each_offer_to_a_real_uncharged_eqmod() {
+        let mut offers = 0;
+        for category in [MarketCategory::Weapon, MarketCategory::Armor, MarketCategory::Shield] {
+            for row in market(category) {
+                for variant in &row.variants {
+                    let modifier = equipment_catalog_row_by_key(&variant.modifier_key)
+                        .unwrap_or_else(|| panic!("{} is not in the catalog", variant.modifier_key));
+                    assert_eq!(modifier.cost_gp, None, "{} would charge twice", variant.modifier_key);
+                    offers += 1;
+                }
+            }
+        }
+        println!("{offers} offers map to a catalog eqmod");
+        assert!(offers > 1000, "only {offers} offers");
+    }
+
+    #[test]
+    fn enhancement_price_table_offers_nothing_on_what_cannot_take_a_bonus() {
+        let weapons = market(MarketCategory::Weapon);
+        let armor = market(MarketCategory::Armor);
+        let gear = market(MarketCategory::Gear);
+        let shields = market(MarketCategory::Shield);
+        let none_on = [
+            (&weapons, "Arrow (Base)", "ammunition"),
+            (&weapons, "Arrows (20)", "a stack of ammunition"),
+            (&weapons, "Shuriken (Base)", "ammunition"),
+            (&weapons, "Touch Attack (Ray)", "not an item"),
+            (&weapons, "Brawler's Flurry", "not an item"),
+            (&weapons, "Mind Blade (Light Piercing)", "not an item"),
+            (&weapons, "Demon Armor Claw Attack", "a negative price"),
+            (&weapons, "Gauntlet (Part of Armor Suit)", "comes with the armor"),
+            (&weapons, "Holy Avenger", "no price: already magic"),
+            (&armor, "Mind Armor (Light)", "not an item"),
+            (&shields, "Mind Shield", "not an item"),
+            (&gear, "Backpack", "not arms or armor"),
+        ];
+        for (list, key, why) in none_on {
+            if let Some(row) = entry(list, key) {
+                assert!(row.variants.is_empty(), "{key} ({why}) has offers: {:?}", row.variants);
+            }
+        }
+        for key in ["Arrow (Base)", "Touch Attack (Ray)", "Holy Avenger"] {
+            assert!(entry(&weapons, key).is_some(), "{key} must be listed for this check to mean anything");
+        }
+        for list in [&gear, &market(MarketCategory::MagicItem)] {
+            assert!(list.iter().all(|r| r.variants.is_empty()), "gear and magic items take no +N");
+        }
+    }
+
+    #[test]
+    fn enhancement_price_table_reaches_the_wire_in_camel_case() {
+        let weapons = market(MarketCategory::Weapon);
+        let wire = serde_json::to_value(entry(&weapons, "Longsword (Base)").unwrap()).unwrap();
+        assert_eq!(wire["key"], "Longsword (Base)");
+        assert_eq!(wire["costGp"], 15.0);
+        assert_eq!(wire["variants"][0]["bonus"], 1);
+        assert_eq!(wire["variants"][0]["priceGp"], 2315.0);
+        assert_eq!(wire["variants"][0]["modifierKey"], "Special Ability ~ +1 ~ Weapon");
+        let filter: MarketFilter = serde_json::from_value(serde_json::json!({ "category": "magicItem" })).unwrap();
+        assert_eq!(filter.category, MarketCategory::MagicItem);
+    }
 }

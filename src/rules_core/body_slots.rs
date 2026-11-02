@@ -74,13 +74,9 @@ pub struct SlotTable {
     rows: Vec<SlotRow>,
 }
 
-/// Tags marking a record that cannot be bought as a mundane base for a `+N`: ammunition and barding
-/// (`epic-breakdown.md` E1.0), the already-magic markers (`Magic`, the price tiers, `Specific`,
-/// `Artifact`, `Cursed`, `Legendary`, `Psionic`), and what is not a lasting item at all.
-const NOT_ENHANCEABLE_TAGS: &[&str] = &[
-    "Ammunition",
-    "Ammo",
-    "Barding",
+/// Tags marking a record as already magic: `Magic`, the price tiers, `Specific`, `Artifact`,
+/// `Cursed`, `Legendary`, `Psionic`.
+const MAGIC_MARKER_TAGS: &[&str] = &[
     "Magic",
     "LeastMinor",
     "LesserMinor",
@@ -96,6 +92,14 @@ const NOT_ENHANCEABLE_TAGS: &[&str] = &[
     "Cursed",
     "Legendary",
     "Psionic",
+];
+
+/// Tags marking a mundane record that cannot be a base for a `+N` either: ammunition and barding
+/// (`epic-breakdown.md` E1.0), and what is not a lasting item at all.
+const NOT_ENHANCEABLE_TAGS: &[&str] = &[
+    "Ammunition",
+    "Ammo",
+    "Barding",
     "Consumable",
     "Improvised",
     "Natural",
@@ -227,19 +231,54 @@ pub fn slot_of(record: &SheetRule) -> Result<BodySlot, String> {
     slot_table().as_ref().map(|table| table.slot_of(record)).map_err(Clone::clone)
 }
 
+/// Whether a record's type tags mark it as already magic.
+pub fn is_magic_marked(tags: &[&str]) -> bool {
+    tags.iter().any(|tag| MAGIC_MARKER_TAGS.contains(tag))
+}
+
 /// Whether a record can be offered as `+1`…`+5`, and of which kind.
 pub fn enhanceable(record: &SheetRule) -> Option<Enhanceable> {
-    if NOT_ENHANCEABLE_TAGS.iter().any(|tag| has_tag(record, tag)) {
+    let tags: Vec<&str> = record.tags.iter().map(|tag| tag.as_str()).collect();
+    enhanceable_tags(&tags)
+}
+
+/// [`enhanceable`] over a record's type tags alone, for a caller holding a catalog row.
+pub fn enhanceable_tags(tags: &[&str]) -> Option<Enhanceable> {
+    if is_magic_marked(tags) || tags.iter().any(|tag| NOT_ENHANCEABLE_TAGS.contains(tag)) {
         return None;
     }
-    if has_tag(record, "Shield") {
+    if tags.contains(&"Shield") {
         Some(Enhanceable::Shield)
-    } else if has_tag(record, "Armor") {
+    } else if tags.contains(&"Armor") {
         Some(Enhanceable::Armor)
-    } else if has_tag(record, "Weapon") {
+    } else if tags.contains(&"Weapon") {
         Some(Enhanceable::Weapon)
     } else {
         None
+    }
+}
+
+impl Enhanceable {
+    /// What a `+N` of this kind costs over its base item: masterwork, then `N²` times the kind's
+    /// rate (armor and shield 150 gp + N² × 1,000 gp; weapon 300 gp + N² × 2,000 gp).
+    pub fn price_gp(self, base_gp: f64, bonus: u8) -> f64 {
+        let (masterwork, rate) = match self {
+            Self::Armor | Self::Shield => (150.0, 1_000.0),
+            Self::Weapon => (300.0, 2_000.0),
+        };
+        base_gp + masterwork + f64::from(bonus) * f64::from(bonus) * rate
+    }
+
+    /// The catalog key of the `equipment_modifier` record that carries a `+N` of this kind. These
+    /// hold the bonus. `PLUS1W`, `PLUS1A` and `PLUS1S` are hidden copies whose converted records
+    /// hold none, so attaching one would charge for a bonus that never arrives.
+    pub fn modifier_key(self, bonus: u8) -> String {
+        let family = match self {
+            Self::Armor => "Armor",
+            Self::Shield => "Shield",
+            Self::Weapon => "Weapon",
+        };
+        format!("Special Ability ~ +{bonus} ~ {family}")
     }
 }
 
@@ -479,6 +518,46 @@ mod tests {
             .collect();
         assert_eq!(committed, source);
         assert_eq!(source.len(), 26);
+    }
+
+    /// The keys are real records holding the bonus; the `PLUS…` twins hold none (see
+    /// [`Enhanceable::modifier_key`]). Read from the converted package, so a converter change that
+    /// moved the bonus would fail here.
+    #[test]
+    fn enhancement_price_table_modifier_keys_name_the_records_that_hold_the_bonus() {
+        let rules = rules_in("equipment_modifier");
+        let number_on = |id: &str| {
+            rules
+                .iter()
+                .filter(|r| r.id.as_str() == id || r.id.as_str().starts_with(&format!("{id}#")))
+                .any(|r| serde_json::to_value(&r.value).unwrap().get("Number").is_some())
+        };
+        for (kind, family) in
+            [(Enhanceable::Weapon, "weapon"), (Enhanceable::Armor, "armor"), (Enhanceable::Shield, "shield")]
+        {
+            for bonus in 1..=5u8 {
+                let family_title = kind.modifier_key(bonus);
+                assert!(family_title.ends_with(&format!("~ +{bonus} ~ {}", family[..1].to_uppercase() + &family[1..])));
+                let holder = format!("core_rulebook:equipment_modifier:special_ability_{bonus}_{family}");
+                assert!(number_on(&holder), "{holder} holds no number");
+                let letter = &family[..1];
+                let copy = format!("core_rulebook:equipment_modifier:plus{bonus}{letter}");
+                assert!(rules.iter().any(|r| r.id.as_str() == copy), "control: {copy} exists");
+                assert!(!number_on(&copy), "{copy} now holds a number: revisit modifier_key");
+            }
+        }
+    }
+
+    /// `decisions.md §8`. The base prices are CRB's: a +1 longsword is 2,315 gp, a +1 chain shirt 1,250 gp.
+    #[test]
+    fn enhancement_price_table_is_base_plus_masterwork_plus_the_square() {
+        for (bonus, weapon, armor) in
+            [(1, 2_315.0, 1_250.0), (2, 8_315.0, 4_250.0), (3, 18_315.0, 9_250.0), (4, 32_315.0, 16_250.0), (5, 50_315.0, 25_250.0)]
+        {
+            assert_eq!(Enhanceable::Weapon.price_gp(15.0, bonus), weapon);
+            assert_eq!(Enhanceable::Armor.price_gp(100.0, bonus), armor);
+            assert_eq!(Enhanceable::Shield.price_gp(100.0, bonus), armor);
+        }
     }
 
     #[test]
