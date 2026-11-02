@@ -23,11 +23,13 @@ const WIRE = {
     ],
     unresolvedItemIds: [],
   },
+  featBudget: [{ id: 'feats.budget.level.granted', value: 1, detail: 'Feats granted by a feat at every odd character level' }],
 };
 
 function readsTheWireShape() {
   const preview = readDraftSheetPreview(WIRE);
   assertEqual(preview.initiative.id, 'initiative.total', 'the engine row id');
+  assertEqual(preview.featBudget[0].id, 'feats.budget.level.granted', 'the budget rows cross the boundary');
   assertEqual(preview.initiative.value, 6, 'the engine total, not a front-end sum');
   assertEqual(preview.encumbrance.level, 'Light', 'the load tier');
   assertEqual(preview.encumbrance.perItem.length, 2, 'the carried items');
@@ -36,6 +38,7 @@ function readsTheWireShape() {
 function refusesAPayloadMissingAField() {
   for (const [label, raw] of [
     ['no initiative', { encumbrance: WIRE.encumbrance }],
+    ['no feat budget', { initiative: WIRE.initiative, encumbrance: WIRE.encumbrance }],
     ['no encumbrance', { initiative: WIRE.initiative }],
     ['initiative without a value', { ...WIRE, initiative: { id: 'initiative.total', detail: '' } }],
     ['encumbrance without a level', { ...WIRE, encumbrance: { ...WIRE.encumbrance, level: undefined } }],

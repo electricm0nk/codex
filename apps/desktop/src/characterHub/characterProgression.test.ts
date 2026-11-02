@@ -4,11 +4,14 @@ import {
   classHitDie,
   classSkillPointsBase,
   formatHeldClasses,
+  installFeatLevels,
   levelGrantsFeat,
   maxHitPoints,
   maxHitPointsWithSavedLevels,
+  openFeatSlots,
   parseHeldClasses,
   previewLevelUp,
+  readFeatBudget,
   totalCharacterLevel,
   totalSkillPoints,
   type HeldClass,
@@ -18,9 +21,56 @@ import { installClassRoster } from './classRoster';
 import { LOADING_CLASS_CATALOG, setClassCatalog } from './classCatalog';
 import { classRosterWire } from '../testSupport/classRosterWire';
 
+const budgetRows = (pool: string, granted: number, spent: number) => [
+  { id: `feats.budget.${pool}.granted`, value: granted },
+  { id: `feats.budget.${pool}.spent`, value: spent },
+  { id: `feats.budget.${pool}.remaining`, value: granted - spent },
+];
+
+function verifiesFeatBudgetReadsTheRowsAndDecidesNothingElse() {
+  const noise = [{ id: 'initiative.total', value: 3 }];
+  const room = readFeatBudget([...noise, ...budgetRows('level', 2, 1), ...budgetRows('fighter_bonus_feat', 2, 2)]);
+  assertEqual(room.pools.length, 2, 'two pools, the other row ignored');
+  assertEqual(room.pools[1].label, 'fighter bonus feat', 'the pool reads in words');
+  assertEqual(room.overBy, 0, 'nothing is over');
+  assert(room.canAdd, 'the level pool has room');
+  assertEqual(room.addBlockedReason, null, 'no reason when Add is open');
+
+  const full = readFeatBudget([...budgetRows('level', 1, 1), ...budgetRows('racial', 1, 1)]);
+  assertEqual(full.overBy, 0, 'exactly full is not over');
+  assert(!full.canAdd, 'exactly full takes no new feat');
+
+  const over = readFeatBudget(budgetRows('level', 1, 3));
+  assertEqual(over.overBy, 2, 'the over-budget count is the negative remaining');
+  assert(!over.canAdd, 'an over-budget save blocks adds');
+  assert(over.addBlockedReason?.includes('Over budget by 2') === true, 'the reason states it');
+
+  const none = readFeatBudget(noise);
+  assert(none.canAdd, 'no rows: the sheet claims nothing and the add path decides');
+  assertEqual(none.overBy, 0, 'no rows, no badge');
+}
+
+function verifiesOpenFeatSlotsCountOnlyThePoolsAnyFeatCanFill() {
+  const rows = [...budgetRows('level', 2, 0), ...budgetRows('racial', 1, 0), ...budgetRows('fighter_bonus_feat', 2, 0), ...budgetRows('bonus', 1, 0)];
+  assertEqual(openFeatSlots(rows), 4, 'level + racial + open bonus; the class pool is chosen on the sheet');
+  assertEqual(openFeatSlots([]), 0, 'no rows, no picks');
+}
+
+function verifiesAFeatLevelComesFromTheEngineList() {
+  installFeatLevels([2]);
+  const entries = buildLevelEntries([{ classId: 'class:fighter', classLabel: 'Fighter', level: 2 }]);
+  assert(!entries[0].features.includes('Feat'), 'level 1 is not on this list');
+  assert(entries[1].features.includes('Feat'), 'level 2 is');
+  installFeatLevels([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
+}
+
 async function main() {
   // SD-36 F4c: every class lookup reads the roster the engine serves (the real wire rows).
   installClassRoster(classRosterWire());
+  installFeatLevels([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
+  verifiesFeatBudgetReadsTheRowsAndDecidesNothingElse();
+  verifiesOpenFeatSlotsCountOnlyThePoolsAnyFeatCanFill();
+  verifiesAFeatLevelComesFromTheEngineList();
   verifiesParseHeldClassesSingleClass();
   verifiesParseHeldClassesRealMulticlassSummary();
   verifiesParseHeldClassesFallsBackToDerivedLabelForAnUnknownClass();

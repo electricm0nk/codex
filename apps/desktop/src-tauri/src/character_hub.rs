@@ -812,6 +812,30 @@ pub(crate) fn sheet_lines_for(
     }
 }
 
+/// The character's feat pools, read through the same package and racial traits as its sheet lines.
+fn feat_budget_for(
+    input: &CharacterInput,
+    base: &PilotBaseChassisComputation,
+) -> Result<codex::rules_core::feat_budget::FeatBudget, String> {
+    let package = sheet_rule_package().as_ref().map_err(Clone::clone)?;
+    let race_traits: Vec<String> =
+        resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
+    Ok(codex::rules_core::feat_budget::feat_budget(package, input, base, &race_traits))
+}
+
+/// `feats.budget.*` rows for the sheet. An unreadable package serves none: the sheet says so through
+/// `sheet_rules_unavailable_reason`, and the add path refuses with the same reason.
+fn feat_budget_rows(input: &CharacterInput, base: &PilotBaseChassisComputation) -> Vec<ExplanationDto> {
+    feat_budget_for(input, base).map_or_else(|_| Vec::new(), |budget| map_explanations_dto(&budget.explanation_rows()))
+}
+
+/// The character levels that grant a feat, for the level lists (the sheet's Progression, Create's
+/// per-level lines, the Level Up dialog's question of whether to ask for a feat).
+#[tauri::command]
+pub fn list_feat_levels() -> Vec<u8> {
+    codex::rules_core::feat_budget::levels_granting_a_feat(CHARACTER_LEVEL_CAP)
+}
+
 /// The per-character choice filter for the feat pool (SD-35 AT-35-E5-004; SD-34
 /// `decisions.md §17`): which feats THIS character qualifies for, and which it does not
 /// together with the requirement each one failed.
@@ -1753,7 +1777,48 @@ fn build_create_input(
         }
         crate::pf1_adapter::apply_add_feat_selection_with_target(&mut character_input, &feat.feat_id, target_choice);
     }
+    if !request.selected_feats.is_empty() {
+        seat_picked_feats(&mut character_input, feat_policy)?;
+    }
     Ok((character_input, equipment_cost_copper))
+}
+
+/// The defaults creation seeds for a player who picks nothing, in the order a pick displaces them,
+/// each with its choice slot. Weapon Focus is not here: the combat baseline requires it of every class.
+/// Dodge is last because a Monk's bonus-feat slot reads it.
+const DISPLACEABLE_SEEDED_FEATS: [(&str, &str); 2] =
+    [("feat:power_attack", "choice:level_1_character_feat"), ("feat:dodge", "choice:human_bonus_feat")];
+
+/// A feat the player picked takes the place of a seeded default while the character is over budget,
+/// so the sheet never shows a default the player's own choices left no room for. The default's slot
+/// goes with it: the engine reads a slot only when it is present, and refuses one that names anything
+/// but the default. Picks that still do not fit refuse the creation under `Enforce`.
+fn seat_picked_feats(input: &mut CharacterInput, feat_policy: FeatPolicy) -> Result<(), Vec<DiagnosticDto>> {
+    let unavailable = |message: String| vec![create_diagnostic("create.feat_prereqs_unavailable", message)];
+    let base = compute_pilot_base_chassis(input);
+    let mut budget = feat_budget_for(input, &base).map_err(unavailable)?;
+    for (seeded, slot) in DISPLACEABLE_SEEDED_FEATS {
+        if budget.over_by() == 0 {
+            break;
+        }
+        let Some(position) = input.chosen.selected_feats.iter().position(|feat| feat == seeded) else { continue };
+        input.chosen.selected_feats.remove(position);
+        input.chosen.selected_choices.retain(|c| !(c.choice_set_id == slot && c.selection_id == seeded));
+        budget = feat_budget_for(input, &base).map_err(unavailable)?;
+    }
+    if feat_policy == FeatPolicy::Enforce && budget.over_by() > 0 {
+        let over: Vec<String> = budget
+            .pools()
+            .iter()
+            .filter(|pool| pool.remaining() < 0)
+            .map(|pool| format!("the {} pool has {} of {} spent", pool.display_name(), pool.spent, pool.granted))
+            .collect();
+        return Err(vec![create_diagnostic(
+            "create.feat_budget",
+            format!("Too many feats are chosen by {}: {}.", budget.over_by(), over.join(", ")),
+        )]);
+    }
+    Ok(())
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1873,6 +1938,8 @@ pub struct DraftSheetPreviewDto {
     pub initiative: ExplanationDto,
     /// The draft's carried load, as the sheet's `corpusDerived.encumbrance`.
     pub encumbrance: EncumbranceDto,
+    /// The draft's `feats.budget.<pool>.{granted,spent,remaining}` rows, as the saved sheet's.
+    pub feat_budget: Vec<ExplanationDto>,
 }
 
 fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
@@ -1883,7 +1950,11 @@ fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftShe
         .into_iter()
         .find(|row| row.id == codex::rules_core::pilot_compute::INITIATIVE_TOTAL_ID)
         .ok_or_else(|| "the engine computed no initiative total for this draft".to_owned())?;
-    Ok(DraftSheetPreviewDto { initiative, encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance) })
+    Ok(DraftSheetPreviewDto {
+        initiative,
+        encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance),
+        feat_budget: feat_budget_rows(&input, &receipt.base),
+    })
 }
 
 #[tauri::command]
@@ -2625,6 +2696,7 @@ pub(crate) fn load_saved_character_at_root(
     // `contract::to_pilot_receipt`'s own reasoning for the identical pair.
     let mut explanations = map_explanations_dto(&corpus_receipt.base.explanations);
     explanations.extend(sheet_skill_trait_modifier_rows(&envelope.character_input));
+    explanations.extend(feat_budget_rows(&envelope.character_input, &corpus_receipt.base));
     let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
         &envelope.character_input,
         corpus_fixture_bundle(),
@@ -3694,13 +3766,21 @@ pub(crate) fn list_feats_for_character_at_root(
 ///   miss rather than over a rule.
 /// * **The error names the reason.** A refusal a player cannot act on is
 ///   as bad as no refusal at all.
+///
+/// The feat budget is checked first: a character with no room is told about the room, whichever
+/// feat it asked for.
 pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
     root: &Path,
     feat_id: &str,
     target: Option<&str>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    let (_, facts) = character_prereq_facts_at_root(root)?;
+    let (envelope, facts) = character_prereq_facts_at_root(root)?;
+    let package = sheet_rule_package().as_ref().map_err(Clone::clone)?;
+    let base = compute_pilot_base_chassis(&envelope.character_input);
+    if let Some(refusal) = feat_budget_for(&envelope.character_input, &base)?.refusal(package, feat_id) {
+        return Err(refusal);
+    }
     if let Some(report) =
         codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts)
     {
@@ -8324,7 +8404,7 @@ mod tests {
         let preview = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
         let wire = serde_json::to_value(&preview).unwrap();
         let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
-        assert_eq!(keys, BTreeSet::from(["initiative", "encumbrance"]));
+        assert_eq!(keys, BTreeSet::from(["initiative", "encumbrance", "featBudget"]));
         for key in ["id", "value", "detail"] {
             assert!(wire["initiative"].get(key).is_some(), "initiative.{key}: {wire}");
         }
@@ -9702,6 +9782,203 @@ mod tests {
     }
 
     // ----- SD-27: feat prerequisite enforcement -----
+
+    // ----- The feat budget at the mutation boundary -----
+
+    fn budget_row(loaded: &LoadSavedCharacterResponse, id: &str) -> Option<i16> {
+        loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    fn pool_numbers(loaded: &LoadSavedCharacterResponse, pool: &str) -> (Option<i16>, Option<i16>, Option<i16>) {
+        (
+            budget_row(loaded, &format!("feats.budget.{pool}.granted")),
+            budget_row(loaded, &format!("feats.budget.{pool}.spent")),
+            budget_row(loaded, &format!("feats.budget.{pool}.remaining")),
+        )
+    }
+
+    fn saved_feats(root: &Path) -> Vec<String> {
+        SavedCharacterStore::load(root).unwrap().character_input.chosen.selected_feats
+    }
+
+    #[test]
+    fn feat_budget_refuses_a_feat_past_the_budget_and_names_the_pool() {
+        // Human Fighter 1: level 1 + racial 1 + Fighter 1, all spent by the three seeded feats.
+        let root = tempdir("feat-budget-refused");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 1), &root).expect("save");
+        let before = saved_feats(&root);
+
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, "2026-11-01T00:00:00Z")
+            .expect_err("one feat past the budget is refused");
+
+        assert!(error.contains("pool"), "{error}");
+        assert!(error.contains("level pool has 0 of 1 left"), "{error}");
+        assert_eq!(saved_feats(&root), before, "a refused add writes nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn feat_budget_admits_a_feat_while_a_pool_has_room_and_after_a_level_grants_one() {
+        // Human Fighter 3 has two to spare; the third add is refused.
+        let root = tempdir("feat-budget-room");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 3), &root).expect("save");
+        for feat in ["Toughness", "Alertness"] {
+            let outcome = add_feat_selection_enforcing_prerequisites_at_root(&root, feat, None, "2026-11-01T00:00:00Z").expect(feat);
+            assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        }
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Endurance", None, "2026-11-01T00:00:00Z")
+            .expect_err("the budget is spent");
+        assert!(error.contains("pool"), "{error}");
+
+        // Level 4 is an even level: one more Fighter bonus feat. Weapon Focus moves into it, which
+        // frees an open slot, so a non-combat feat fits; the next add does not.
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        crate::pf1_adapter::apply_level_up(&mut envelope.character_input, FIGHTER_CLASS_ID);
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let outcome = add_feat_selection_enforcing_prerequisites_at_root(&root, "Endurance", None, "2026-11-01T00:00:00Z").expect("Endurance");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Cleave", None, "2026-11-01T00:00:00Z")
+            .expect_err("the budget is spent again");
+        assert!(error.contains("pool"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// R9: an over-budget save keeps every feat, loads, reads over budget on the rows, and refuses
+    /// adds until a removal brings it back.
+    #[test]
+    fn feat_budget_over_budget_save_keeps_every_feat_and_blocks_adds_until_a_removal() {
+        let root = tempdir("feat-budget-legacy");
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        for feat in ["Toughness", "Alertness"] {
+            envelope.character_input.chosen.selected_feats.push(feat.to_owned());
+        }
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let held = saved_feats(&root);
+
+        let loaded = load_saved_character_at_root(&root).expect("an over-budget save still loads");
+        assert_eq!(loaded.selected_feats, held, "nothing is deleted");
+        let shortfall: i16 = loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining") && r.value < 0).map(|r| -r.value).sum();
+        assert_eq!(shortfall, 2, "{:?}", loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.")).collect::<Vec<_>>());
+
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Cleave", None, "2026-11-01T00:00:00Z")
+            .expect_err("an over-budget save takes no new feat");
+        assert!(error.contains("over its feat budget by 2") && error.contains("pool"), "{error}");
+        assert_eq!(saved_feats(&root), held);
+
+        remove_feat_selection_at_root(&root, "Toughness", None, "2026-11-01T00:00:00Z").expect("remove");
+        remove_feat_selection_at_root(&root, "Alertness", None, "2026-11-01T00:00:00Z").expect("remove");
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Cleave", None, "2026-11-01T00:00:00Z")
+            .expect_err("back to exactly full");
+        assert!(!error.contains("over its feat budget"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn feat_budget_an_alternate_racial_trait_that_replaces_the_bonus_feat_takes_the_pool_away() {
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        let root = tempdir("feat-budget-alternate");
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        assert_eq!(pool_numbers(&load_saved_character_at_root(&root).unwrap(), "racial").0, Some(1));
+
+        envelope.character_input.chosen.selected_choices.extend(
+            resolve_alternate_trait_choices("race:human", &["Human ~ Dual Talent".to_owned()]).expect("a real alternate trait"),
+        );
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        assert_eq!(pool_numbers(&load_saved_character_at_root(&root).unwrap(), "racial").0, None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A character made on Create holds the player's picks in place of the seeded defaults, so a new
+    /// character is never over budget on the sheet by the feats its own form allowed.
+    #[test]
+    fn feat_budget_create_form_picks_take_the_place_of_the_seeded_defaults() {
+        let picks = |ids: &[&str]| ids.iter().map(|id| CreateFeatDto { feat_id: (*id).to_owned(), target: None }).collect::<Vec<_>>();
+        let root = tempdir("feat-budget-create");
+        let mut request = request_for_class("race:human", FIGHTER_CLASS_ID, 1);
+        request.selected_feats = picks(&["Toughness", "Alertness"]);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        assert!(loaded.selected_feats.iter().any(|f| f == "Toughness") && loaded.selected_feats.iter().any(|f| f == "Alertness"), "{:?}", loaded.selected_feats);
+        assert_eq!(loaded.selected_feats.len(), 3, "the Fighter's seeded Weapon Focus stays in its own pool: {:?}", loaded.selected_feats);
+        assert_eq!(
+            loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining")).map(|r| r.value).sum::<i16>(),
+            0
+        );
+        assert!(loaded.snapshot.is_some(), "the character still computes: {:?}", loaded.diagnostics);
+        std::fs::remove_dir_all(&root).ok();
+
+        // Every class keeps computing with the picks a level allows (Human Monk, whose Dodge the chassis reads).
+        for (race, class) in [("race:human", "class:monk"), ("race:elf", "class:wizard"), ("race:human", "class:wizard"), ("race:dwarf", "class:rogue")] {
+            let root = tempdir("feat-budget-create-class");
+            let mut request = request_for_class(race, class, 1);
+            request.selected_feats = if race == "race:human" { picks(&["Toughness", "Alertness"]) } else { picks(&["Toughness"]) };
+            let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+            assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{race} {class}: {response:?}");
+            let loaded = load_saved_character_at_root(&root).expect("load");
+            let shortfall = loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining") && r.value < 0).count();
+            assert_eq!(shortfall, 0, "{race} {class}: {:?}", loaded.selected_feats);
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    #[test]
+    fn feat_budget_create_refuses_more_picks_than_the_character_has() {
+        let root = tempdir("feat-budget-create-over");
+        let mut request = request_for_class("race:elf", "class:rogue", 1);
+        request.selected_feats = ["Toughness", "Alertness"].iter().map(|id| CreateFeatDto { feat_id: (*id).to_owned(), target: None }).collect();
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else { panic!("two picks on one slot must refuse: {response:?}") };
+        assert_eq!(diagnostics[0].id, "create.feat_budget");
+        assert!(diagnostics[0].message.contains("pool"), "{:?}", diagnostics[0]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// With no picks an Elf Wizard 1 holds the seeded Power Attack in its one slot and the combat
+    /// baseline's Weapon Focus for free: not over budget at birth.
+    #[test]
+    fn feat_budget_a_new_character_with_no_picks_is_not_over_budget() {
+        for (race, class) in [("race:elf", "class:wizard"), ("race:human", "class:wizard"), ("race:dwarf", "class:rogue"), ("race:human", "class:monk"), ("race:elf", "class:monk")] {
+            let root = tempdir("feat-budget-new");
+            let response = create_character_at_root(&root, &request_for_class(race, class, 1), "test-version".to_owned()).expect("create");
+            assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{race} {class}: {response:?}");
+            let loaded = load_saved_character_at_root(&root).expect("load");
+            let over: Vec<_> = loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining") && r.value < 0).collect();
+            assert!(over.is_empty(), "{race} {class}: {over:?} {:?}", loaded.selected_feats);
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The whole census at 1st level, with what creation seeds and nothing picked: no class starts
+    /// over budget. Covers the seeds alone; picks are covered by the tests above for four shapes.
+    #[test]
+    fn feat_budget_no_census_class_is_over_budget_at_birth() {
+        let mut checked = 0;
+        for class_id in codex::rules_core::class_census::census().keys() {
+            for race in ["race:human", "race:elf"] {
+                let input = compose_character_input(&request_for_class(race, class_id, 1));
+                let base = compute_pilot_base_chassis(&input);
+                let budget = feat_budget_for(&input, &base).expect("budget");
+                assert_eq!(budget.over_by(), 0, "{race} {class_id}: {:?} {:?}", input.chosen.selected_feats, budget.pools());
+                checked += 1;
+            }
+        }
+        assert!(checked > 200, "the sweep ran over the census: {checked}");
+    }
+
+    #[test]
+    fn feat_budget_rows_reach_the_create_screen_for_a_draft() {
+        let preview = draft_sheet_preview_impl(&request_for_class("race:human", FIGHTER_CLASS_ID, 3)).expect("preview");
+        let granted = |pool: &str| preview.feat_budget.iter().find(|r| r.id == format!("feats.budget.{pool}.granted")).map(|r| r.value);
+        assert_eq!(granted("level"), Some(2));
+        assert_eq!(granted("racial"), Some(1));
+        assert_eq!(granted("fighter_bonus_feat"), Some(2));
+    }
+
+    #[test]
+    fn feat_budget_level_list_is_the_engines_cadence_up_to_the_cap() {
+        assert_eq!(list_feat_levels(), vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
+    }
 
     /// The operator's exact reported defect, at the mutation boundary:
     /// **a Fighter 1 was allowed to take Improved Two-Weapon Fighting.**
@@ -13579,6 +13856,42 @@ mod starter_seed_tests {
             .expect("Spellcraft allocated");
         let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
         assert_eq!(spellcraft + 3 + int_mod, 12, "Spellcraft 5 + 3 + 4");
+    }
+
+    /// Aldric Ironhand, Human Fighter 3: 2 level feats (1st, 3rd; CRB p.112), the human's 1 (p.21) and
+    /// the Fighter's 2 (1st, 2nd; p.55) hold his 3 seeded combat feats with 2 to spare.
+    #[test]
+    fn feat_budget_rows_of_aldric_reach_the_sheet() {
+        let app_data_dir = temp_app_data_dir("feat-budget-aldric");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let aldric = load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID)).expect("load");
+        let elowen = load_saved_character_at_root(&character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID)).expect("load");
+        let tomas = load_saved_character_at_root(&character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID)).expect("load");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        let pool_numbers = |loaded: &LoadSavedCharacterResponse, pool: &str| {
+            let row = |field: &str| loaded.explanations.iter().find(|row| row.id == format!("feats.budget.{pool}.{field}")).map(|row| row.value);
+            (row("granted"), row("spent"), row("remaining"))
+        };
+        assert_eq!(pool_numbers(&aldric, "level").0, Some(2));
+        assert_eq!(pool_numbers(&aldric, "racial").0, Some(1));
+        assert_eq!(pool_numbers(&aldric, "fighter_bonus_feat"), (Some(2), Some(2), Some(0)));
+        let remaining_total: i16 = ["level", "racial", "fighter_bonus_feat"].iter().filter_map(|p| pool_numbers(&aldric, p).2).sum();
+        assert_eq!(remaining_total, 2);
+
+        // Elowen, Human Wizard 5: 3 level, 1 racial, 1 wizard; her Weapon Focus is the baseline's.
+        assert_eq!(pool_numbers(&elowen, "level").0, Some(3));
+        assert_eq!(pool_numbers(&elowen, "racial").0, Some(1));
+        assert_eq!(pool_numbers(&elowen, "wizard_bonus_feat").0, Some(1));
+
+        // Tomas, Human Cleric 3 / Fighter 2: 3 level, 1 racial, 2 Fighter.
+        assert_eq!(pool_numbers(&tomas, "level").0, Some(3));
+        assert_eq!(pool_numbers(&tomas, "fighter_bonus_feat").0, Some(2));
+
+        for seed in [&aldric, &elowen, &tomas] {
+            let over: Vec<_> = seed.explanations.iter().filter(|r| r.id.ends_with(".remaining") && r.id.starts_with("feats.budget.") && r.value < 0).collect();
+            assert!(over.is_empty(), "no starter is over budget: {over:?}");
+        }
     }
 
     /// SD-36 F7a (F7-8): Aldric Ironhand, Human Fighter 3, Int 14 (+2).

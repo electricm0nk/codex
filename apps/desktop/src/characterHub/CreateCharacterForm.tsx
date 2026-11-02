@@ -53,7 +53,7 @@ import { classFactsQueries } from './classFactsModel';
 import { listClassFacts } from '../boundary/listClassFacts';
 import { NO_FEAT_SKILL_BONUSES } from '../boundary/loadSavedCharacterDetail';
 import { listFeatsForDraft, type FeatCatalogEntryDto } from '../boundary/listFeats';
-import { creationFeatSlots, featItems } from './manageItems';
+import { featItems } from './manageItems';
 import { CreationEquipmentDialog, type CreationEquipmentItem } from './CreationEquipmentDialog';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { equipmentBudget } from './creationEquipmentModel';
@@ -116,7 +116,7 @@ import {
   rollStraightAbilityScores,
   type AbilityScoreMethodId,
 } from './abilityScoreMethods';
-import { buildLevelEntries, maxHitPoints } from './characterProgression';
+import { buildLevelEntries, maxHitPoints, openFeatSlots } from './characterProgression';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -412,6 +412,9 @@ export function CreateCharacterFields(props: {
   // Custom: GM grants and house-rule records; saved right after the character is created.
   const [custom, setCustom] = useState<CharacterCustom>(EMPTY_CUSTOM);
   const [draftPreview, setDraftPreview] = useState<DraftPreviewState>({ kind: 'noLevels' });
+  // How many feats the draft may pick, off the engine's budget rows. The last answer stands while
+  // the next is loading, so the count does not blink on every pick; `null` before the first one.
+  const [feats, setFeats] = useState<number | null>(null);
   const [levelFeatures, setLevelFeatures] = useState<LevelFeaturesState>({ kind: 'loading' });
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
@@ -465,7 +468,6 @@ export function CreateCharacterFields(props: {
   const isHuman = raceId === 'race:human';
   const skillPointsTotal = withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, abilityModifier(calculatedScore('intelligence')), isHuman), custom);
   const skillPointsLeft = (skillPointsTotal ?? 0) - skillPointsSpent(skillAllocation);
-  const feats = creationFeatSlots(characterLevel(levels), raceId);
 
   // The engine's class skills for the classes in the Levels list (the skills dialog marks them).
   useEffect(() => {
@@ -579,13 +581,17 @@ export function CreateCharacterFields(props: {
     const draft = buildRequest();
     if (draft === null) {
       setDraftPreview({ kind: 'noLevels' });
+      setFeats(null);
       return undefined;
     }
     let cancelled = false;
     setDraftPreview({ kind: 'loading' });
     loadDraftSheetPreview(draft)
       .then((preview) => {
-        if (!cancelled) setDraftPreview({ kind: 'ready', preview });
+        if (!cancelled) {
+          setDraftPreview({ kind: 'ready', preview });
+          setFeats(openFeatSlots(preview.featBudget));
+        }
       })
       .catch((cause: unknown) => {
         if (!cancelled) setDraftPreview({ kind: 'error', message: cause instanceof Error ? cause.message : String(cause) });
@@ -915,7 +921,7 @@ export function CreateCharacterFields(props: {
       setError(`Equipment costs more than the starting money (${equipmentSpend.text}) Open Manage on Equipment and remove something.`);
       return;
     }
-    if (selectedFeats.length > feats) {
+    if (feats !== null && selectedFeats.length > feats) {
       setError(`${selectedFeats.length} feats are chosen but this character has ${feats}: open Manage on Feats and remove ${selectedFeats.length - feats}.`);
       return;
     }
@@ -1260,7 +1266,7 @@ export function CreateCharacterFields(props: {
             {/* Feats: qualification is the draft character's own verdict from the backend. */}
             <ManageBox
               title="Feats"
-              remaining={heldClasses.length === 0 ? undefined : `${remainingSelections(feats, selectedFeats)} of ${feats} remaining`}
+              remaining={heldClasses.length === 0 || feats === null ? undefined : `${remainingSelections(feats, selectedFeats)} of ${feats} remaining`}
               summary={selectedFeats.map((id) => draftFeats?.find((entry) => entry.key === id)?.name ?? id)}
               disabledReason={heldClasses.length === 0 ? 'Add a level first: feats come with the character level.' : undefined}
               onManage={() => {

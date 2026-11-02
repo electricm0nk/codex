@@ -8,7 +8,6 @@ import {
   TRAIT_GROUP_LABELS,
   alternateTraitItems,
   characterTraitItems,
-  creationFeatSlots,
   featItems,
   traitBonusSummary,
   traitCountProblem,
@@ -71,15 +70,6 @@ function verifiesFeatItemsCarryTheDraftsVerdicts() {
   assert((chooser.unqualifiedReason ?? '').includes('target'), 'and says its target is chosen on the sheet');
   assertEqual(plain.qualified, true, 'no verdict means no restriction');
   assertEqual(featItems([feat(), feat()]).length, 1, 'a key listed twice is offered once');
-}
-
-function verifiesTheNumberOfFeatsACharacterStartsWith() {
-  assertEqual(creationFeatSlots(1, 'race:elf'), 1, 'one feat at 1st level');
-  assertEqual(creationFeatSlots(2, 'race:elf'), 1, 'none at 2nd');
-  assertEqual(creationFeatSlots(3, 'race:elf'), 2, 'another at 3rd');
-  assertEqual(creationFeatSlots(20, 'race:elf'), 10, 'ten by 20th');
-  assertEqual(creationFeatSlots(1, 'race:human'), 2, 'humans take a bonus feat');
-  assertEqual(creationFeatSlots(0, 'race:human'), 0, 'no levels, no feats');
 }
 
 function verifiesAlternateTraitsBecomeSelectableItemsAndStandardOnesBecomeInnate() {
@@ -165,5 +155,4 @@ verifiesAnIncompleteDescriptionIsFlagged();
 verifiesTraitBonusSummaries();
 verifiesCharacterTraitsAreAllQualifiedAndCarryTheirNumbers();
 verifiesFeatItemsCarryTheDraftsVerdicts();
-verifiesTheNumberOfFeatsACharacterStartsWith();
 console.log('manageItems.test.ts: all assertions passed');

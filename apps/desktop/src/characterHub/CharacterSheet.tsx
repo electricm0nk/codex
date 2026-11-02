@@ -111,8 +111,10 @@ import {
   maxHitPointsWithSavedLevels,
   parseHeldClasses,
   previewLevelUp,
+  readFeatBudget,
   totalCharacterLevel,
   totalSkillPoints,
+  type FeatBudgetView,
   type HeldClass,
   type LevelEntry,
 } from './characterProgression';
@@ -2455,6 +2457,8 @@ function FeatsTab(props: {
   chosenFeatTargets: ChosenFeatTargetsDto[];
   /** Persisted `chosen.selected_traits` ids, rendered in the Traits section below the feats. */
   selectedTraits: string[];
+  /** The engine's `feats.budget.*` rows, read: the badge and the Add control follow them. */
+  featBudget: FeatBudgetView;
   onAddFeat: () => void;
   /**
    * Removes one held copy of the feat, optionally taking the one recorded
@@ -2505,11 +2509,32 @@ function FeatsTab(props: {
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
         {catalogCoverage ?? 'Add feats from the real feat catalog.'}
       </p>
+      {props.featBudget.overBy > 0 ? (
+        <p role="status" style={{ color: 'var(--color-error)', fontSize: '0.82rem', fontWeight: 800, margin: '0 0 0.4rem', textAlign: 'center' }}>
+          over budget by {props.featBudget.overBy}
+        </p>
+      ) : null}
+      {props.featBudget.pools.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0 0 0.75rem', textAlign: 'center' }}>
+          {props.featBudget.pools.map((pool) => `${pool.label}: ${pool.spent} of ${pool.granted}`).join(' · ')}
+        </p>
+      ) : null}
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onAddFeat} style={addItemButtonStyle}>
+        <button
+          type="button"
+          onClick={props.onAddFeat}
+          disabled={!props.featBudget.canAdd}
+          title={props.featBudget.addBlockedReason ?? undefined}
+          style={{ ...addItemButtonStyle, ...(props.featBudget.canAdd ? {} : { cursor: 'default', opacity: 0.5 }) }}
+        >
           Add Feat
         </button>
       </div>
+      {props.featBudget.addBlockedReason !== null ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '-0.75rem 0 1rem', textAlign: 'center' }}>
+          {props.featBudget.addBlockedReason}
+        </p>
+      ) : null}
       {resolvedFeats.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
           No feats selected yet.
@@ -4303,6 +4328,7 @@ export function CharacterSheet(props: {
               selectedFeats={props.detail?.selectedFeats ?? []}
               selectedTraits={props.detail?.selectedTraits ?? []}
               chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
+              featBudget={readFeatBudget(engineRecords.explanations)}
               onAddFeat={() => setItemPickerOpen('feat')}
               onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
               onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
