@@ -77,6 +77,8 @@ export interface RemoveEquipmentSelectionRequest {
   savedAt: string;
   /** What removing the item returns: `standard` 50%, `characterBuild` 100%, `cashless` nothing. Absent means `standard`. */
   priceMode?: PriceMode;
+  /** Which held copy, when there are several: `0` a plain one, `N` a `+N`. Absent takes the first. */
+  bonus?: number;
 }
 
 export async function removeEquipmentSelection(

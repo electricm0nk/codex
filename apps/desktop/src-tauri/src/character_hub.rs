@@ -3294,6 +3294,58 @@ fn catalog_cost_gp(item_id: &str) -> Option<f64> {
     )
 }
 
+/// The `+N` offers Market shows on the row `item_id` names; empty when it shows none (no such row,
+/// or a row that takes no bonus). Read from `list_market` itself, so the price shown is the price
+/// charged and a row Market hides cannot be bought as a `+N`.
+fn market_offers(item_id: &str) -> Vec<crate::equipment_catalog::MarketVariantDto> {
+    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+    [
+        MarketCategory::Weapon,
+        MarketCategory::Armor,
+        MarketCategory::Shield,
+        MarketCategory::Gear,
+        MarketCategory::MagicItem,
+    ]
+    .into_iter()
+    .find_map(|category| {
+        list_market(MarketFilter { category, name_contains: None, book: None })
+            .entries
+            .into_iter()
+            .find(|row| row.entry.key.eq_ignore_ascii_case(item_id))
+            .map(|row| row.variants)
+    })
+    .unwrap_or_default()
+}
+
+/// The `+N` a held copy is, by the offers of its row: the highest bonus among its equipmods, 0 for
+/// a plain copy.
+fn copy_bonus(selection: &EquipmentSelection, offers: &[crate::equipment_catalog::MarketVariantDto]) -> u8 {
+    offers
+        .iter()
+        .filter(|offer| selection.applied_modifiers.contains(&offer.modifier_key))
+        .map(|offer| offer.bonus)
+        .max()
+        .unwrap_or(0)
+}
+
+/// Saves one new copy of `item_id`, holding `modifier_key` when it is a `+N`, in one save. The
+/// bonus goes on the new copy: `apply_attach_equipment_modifier` takes the first copy of an id,
+/// which would make an older plain item the one that was paid for.
+fn add_purchased_copy_at_root(
+    root: &Path,
+    item_id: &str,
+    modifier_key: Option<&str>,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
+        if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
+            copy.applied_modifiers.push(key.to_owned());
+        }
+    })
+}
+
 /// [`purchase_equipment_at_root`] under an explicit [`PriceMode`]. `Cashless` skips the price and
 /// affordability checks entirely and charges nothing; the other two buy at 100%.
 pub(crate) fn purchase_equipment_priced_at_root(
@@ -3303,8 +3355,42 @@ pub(crate) fn purchase_equipment_priced_at_root(
     saved_at: &str,
     mode: PriceMode,
 ) -> Result<PurchaseEquipmentResponse, String> {
+    purchase_equipment_offer_at_root(root, item_id, active_state, saved_at, mode, None)
+}
+
+/// [`purchase_equipment_priced_at_root`], optionally as a `+N`: the whole offer price replaces the
+/// catalog price, and the copy holds the offer's eqmod from the save that adds it. A bonus the row
+/// does not offer is refused in every mode, before anything is read from the balance.
+pub(crate) fn purchase_equipment_offer_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+    mode: PriceMode,
+    bonus: Option<u8>,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let offer = match bonus {
+        None => None,
+        Some(bonus) => {
+            let Some(offer) = market_offers(item_id).into_iter().find(|offer| offer.bonus == bonus) else {
+                return Ok(PurchaseEquipmentResponse::Blocked {
+                    diagnostics: vec![DiagnosticDto {
+                        id: "money.equipment_purchase.no_such_offer".to_owned(),
+                        message: format!(
+                            "'{item_id}' is not on offer at +{bonus}. The purchase was not applied \
+                             and no funds were charged."
+                        ),
+                        claim_blocking: true,
+                    }],
+                });
+            };
+            Some(offer)
+        }
+    };
+    let modifier_key = offer.as_ref().map(|offer| offer.modifier_key.as_str());
+
     if mode == PriceMode::Cashless {
-        return match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+        return match add_purchased_copy_at_root(root, item_id, modifier_key, active_state, saved_at)? {
             CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
             CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
                 let money = load_character_money_at_root(root)?;
@@ -3320,7 +3406,7 @@ pub(crate) fn purchase_equipment_priced_at_root(
     // resolver remains the fallback for ids that are not catalog keys at
     // all, notably the legacy `"item:longsword"` fixture namespace that
     // seeded characters still carry.
-    let Some(cost_gp) = catalog_cost_gp(item_id) else {
+    let Some(cost_gp) = offer.as_ref().map(|offer| offer.price_gp).or_else(|| catalog_cost_gp(item_id)) else {
         return Ok(PurchaseEquipmentResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "money.equipment_purchase.unknown_cost".to_owned(),
@@ -3351,7 +3437,7 @@ pub(crate) fn purchase_equipment_priced_at_root(
         });
     }
 
-    match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+    match add_purchased_copy_at_root(root, item_id, modifier_key, active_state, saved_at)? {
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
         }
@@ -3563,6 +3649,9 @@ pub struct PurchaseEquipmentRequest {
     /// Absent means `Standard` (buy at 100%).
     #[serde(default)]
     pub price_mode: PriceMode,
+    /// The `+N` to buy, one the Market row offers. Absent buys the plain item.
+    #[serde(default)]
+    pub bonus: Option<u8>,
 }
 
 /// Atomically resolves `item_id`'s real catalog cost, verifies the
@@ -3576,12 +3665,13 @@ pub fn purchase_equipment(
     request: PurchaseEquipmentRequest,
 ) -> Result<PurchaseEquipmentResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    purchase_equipment_priced_at_root(
+    purchase_equipment_offer_at_root(
         &root,
         &request.item_id,
         request.active_state.into(),
         &request.saved_at,
         request.price_mode,
+        request.bonus,
     )
 }
 
@@ -4186,20 +4276,62 @@ pub(crate) fn remove_equipment_selection_at_root(
     })
 }
 
-/// [`remove_equipment_selection_at_root`] that also sells the item back under `mode`: `Standard`
-/// returns 50% of its catalog price, `CharacterBuild` 100%, `Cashless` nothing. An item with no
-/// catalog price has nothing to refund and is removed all the same. The refund is applied only
-/// after the removal saved.
+/// [`remove_equipment_selection_at_root`] that also sells the item back under `mode`, taking the
+/// first copy; see [`sell_equipment_copy_at_root`].
 pub(crate) fn remove_equipment_selection_priced_at_root(
     root: &Path,
     item_id: &str,
     saved_at: &str,
     mode: PriceMode,
 ) -> Result<CreateCharacterResponse, String> {
-    let cost_copper = catalog_cost_gp(item_id).map(money::gp_to_copper);
-    let response = remove_equipment_selection_at_root(root, item_id, saved_at)?;
-    if let (CreateCharacterResponse::Saved { .. }, Some(cost_copper)) = (&response, cost_copper) {
-        let refund = refund_copper(cost_copper, mode);
+    sell_equipment_copy_at_root(root, item_id, saved_at, mode, None)
+}
+
+/// Removes one held copy of `item_id` and sells it back under `mode`: `Standard` returns 50% of
+/// what that copy costs, `CharacterBuild` 100%, `Cashless` nothing. A `+N` copy is priced at its
+/// Market offer; an item with no catalog price has nothing to refund and is removed all the same.
+/// The refund is applied only after the removal saved.
+///
+/// `bonus` names the copy when the character holds several: `0` a plain one, `N` a `+N`. Absent
+/// takes the first copy, the rule the sheet's Remove control has always had.
+pub(crate) fn sell_equipment_copy_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
+    bonus: Option<u8>,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let held = &envelope.character_input.chosen.equipment_selections;
+    let is_this_item = |selection: &EquipmentSelection| selection.item_id.eq_ignore_ascii_case(item_id);
+    // Only a copy with an equipmod can be a `+N`, and the sheet removes plain items far more often.
+    let offers = if held.iter().any(|selection| is_this_item(selection) && !selection.applied_modifiers.is_empty()) {
+        market_offers(item_id)
+    } else {
+        Vec::new()
+    };
+    let Some(index) = held
+        .iter()
+        .position(|selection| is_this_item(selection) && bonus.is_none_or(|bonus| copy_bonus(selection, &offers) == bonus))
+    else {
+        return Err(match bonus {
+            Some(bonus) if bonus > 0 => format!("'{item_id}' cannot be removed: this character does not carry a +{bonus} one"),
+            Some(_) => format!("'{item_id}' cannot be removed: this character does not carry a plain one"),
+            None => format!("'{item_id}' cannot be removed: this character does not carry it"),
+        });
+    };
+    let sold_bonus = copy_bonus(&held[index], &offers);
+    let cost_gp = offers
+        .iter()
+        .find(|offer| offer.bonus == sold_bonus)
+        .map(|offer| offer.price_gp)
+        .or_else(|| catalog_cost_gp(item_id));
+
+    let response = mutate_saved_character_at_root(root, saved_at, |character_input| {
+        character_input.chosen.equipment_selections.remove(index);
+    })?;
+    if let (CreateCharacterResponse::Saved { .. }, Some(cost_gp)) = (&response, cost_gp) {
+        let refund = refund_copper(money::gp_to_copper(cost_gp), mode);
         if refund > 0 {
             let refund_signed = i64::try_from(refund).map_err(|_| "refund overflows a signed 64-bit total".to_owned())?;
             adjust_character_money_at_root(root, refund_signed)?;
@@ -4556,20 +4688,23 @@ pub struct RemoveEquipmentSelectionRequest {
     /// `Cashless` returns nothing. Absent means `Standard`.
     #[serde(default)]
     pub price_mode: PriceMode,
+    /// Which held copy: `0` a plain one, `N` a `+N`. Absent takes the first copy.
+    #[serde(default)]
+    pub bonus: Option<u8>,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
 /// (with its applied equipmods), recomputes via the real engine, and
 /// re-saves — the inverse of `add_equipment_selection` / `purchase_equipment`.
 /// Sells the item back under the request's price mode (`Standard` 50%, `CharacterBuild` 100%,
-/// `Cashless` nothing); see `remove_equipment_selection_priced_at_root`.
+/// `Cashless` nothing); see `sell_equipment_copy_at_root`.
 #[tauri::command]
 pub fn remove_equipment_selection(
     app: tauri::AppHandle,
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    remove_equipment_selection_priced_at_root(&root, &request.item_id, &request.saved_at, request.price_mode)
+    sell_equipment_copy_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, request.bonus)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -9034,6 +9169,360 @@ mod tests {
         assert_eq!(after, before - 1, "the item is removed");
         assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 500, "an unpriced item has nothing to refund");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Market buying and selling: `+N` on the existing purchase and removal commands -----
+
+    /// The Market row these tests buy, at the +1 price `enhancement_price_table` pins: 15 gp +
+    /// 300 gp masterwork + 2,000 gp.
+    const MARKET_SWORD: &str = "Longsword (Base)";
+    const PLUS_ONE_SWORD_CP: i64 = 231_500;
+
+    /// Buys carried: the seed already wields the required Longsword, and a second wielded weapon is
+    /// its own refusal (`market_buy_sell_a_buy_the_engine_refuses_charges_nothing`).
+    fn market_buy(root: &Path, item_id: &str, bonus: Option<u8>, mode: PriceMode) -> PurchaseEquipmentResponse {
+        purchase_equipment_offer_at_root(root, item_id, ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", mode, bonus)
+            .expect("purchase call should not error")
+    }
+
+    fn market_sell(root: &Path, item_id: &str, bonus: Option<u8>, mode: PriceMode) -> Result<CreateCharacterResponse, String> {
+        sell_equipment_copy_at_root(root, item_id, "2026-11-02T00:00:01Z", mode, bonus)
+    }
+
+    fn held_selections(root: &Path) -> Vec<EquipmentSelection> {
+        SavedCharacterStore::load(root).unwrap().character_input.chosen.equipment_selections
+    }
+
+    fn balance(root: &Path) -> u64 {
+        load_character_money_at_root(root).unwrap().total_copper
+    }
+
+    /// A bought `+1` is one new selection holding the eqmod, charged the whole offer, in one save.
+    fn assert_market_buy_ok(label: &str, mode: PriceMode, funded: i64, left: u64) {
+        let root = fund_and_seed(label, funded);
+        let before = held_selections(&root);
+
+        let response = market_buy(&root, MARKET_SWORD, Some(1), mode);
+        let PurchaseEquipmentResponse::Purchased { money, .. } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(money.total_copper, left, "{label}: the response carries the balance");
+        assert_eq!(balance(&root), left, "{label}: the saved balance");
+
+        let after = SavedCharacterStore::load(&root).unwrap();
+        let held = &after.character_input.chosen.equipment_selections;
+        assert_eq!(held.len(), before.len() + 1, "{label}: one new selection");
+        let bought = held.last().unwrap();
+        assert_eq!(bought.item_id, MARKET_SWORD);
+        assert_eq!(bought.applied_modifiers, vec!["Special Ability ~ +1 ~ Weapon".to_owned()], "{label}");
+        assert_eq!(bought.active_state, ActiveState::SelectedInactive);
+        // A plain add is known to be one save; the same start must reach the same revision.
+        let one_save = fund_and_seed(&format!("{label}-one-save"), 0);
+        add_equipment_selection_at_root(&one_save, MARKET_SWORD, ActiveState::SelectedInactive, "2026-11-02T00:00:00Z")
+            .expect("plain add");
+        assert_eq!(
+            after.revision_id,
+            SavedCharacterStore::load(&one_save).unwrap().revision_id,
+            "{label}: the item and its eqmod are one save, one revision"
+        );
+        std::fs::remove_dir_all(&one_save).ok();
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A refused buy changes nothing: not the items, not the balance, not the revision.
+    fn assert_market_buy_refused(label: &str, item_id: &str, bonus: Option<u8>, mode: PriceMode, funded: i64, id: &str) {
+        let root = fund_and_seed(label, funded);
+        let before = SavedCharacterStore::load(&root).unwrap();
+
+        let response = market_buy(&root, item_id, bonus, mode);
+        let PurchaseEquipmentResponse::Blocked { diagnostics } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(diagnostics.iter().map(|d| d.id.as_str()).collect::<Vec<_>>(), vec![id], "{label}");
+        assert!(diagnostics.iter().all(|d| d.claim_blocking), "{label}");
+
+        let after = SavedCharacterStore::load(&root).unwrap();
+        assert_eq!(after.revision_id, before.revision_id, "{label}: nothing saved");
+        assert_eq!(
+            after.character_input.chosen.equipment_selections.len(),
+            before.character_input.chosen.equipment_selections.len(),
+            "{label}"
+        );
+        assert_eq!(balance(&root), funded as u64, "{label}: no money moved");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Selling a `+1` returns the mode's share of what a `+1` costs, not of the plain sword.
+    fn assert_market_sell(label: &str, mode: PriceMode, funded: i64, left_after_buy: u64, left_after_sale: u64) {
+        let root = fund_and_seed(label, funded);
+        let before = held_selections(&root).len();
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), mode), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(balance(&root), left_after_buy, "{label}: after the buy");
+
+        let response = market_sell(&root, MARKET_SWORD, Some(1), mode).expect("the sale");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{label}: {response:?}");
+        assert_eq!(balance(&root), left_after_sale, "{label}: after the sale");
+        assert_eq!(held_selections(&root).len(), before, "{label}: the copy is gone");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn market_buy_sell_standard_buy_ok() {
+        assert_market_buy_ok("market-standard-buy", PriceMode::Standard, 300_000, 68_500);
+    }
+
+    #[test]
+    fn market_buy_sell_standard_buy_refused_one_copper_short() {
+        assert_market_buy_refused(
+            "market-standard-refused",
+            MARKET_SWORD,
+            Some(1),
+            PriceMode::Standard,
+            PLUS_ONE_SWORD_CP - 1,
+            "money.equipment_purchase.insufficient_funds",
+        );
+    }
+
+    #[test]
+    fn market_buy_sell_standard_sell_returns_half_the_plus_one_price() {
+        assert_market_sell("market-standard-sell", PriceMode::Standard, 300_000, 68_500, 68_500 + 115_750);
+    }
+
+    #[test]
+    fn market_buy_sell_character_build_buy_ok() {
+        assert_market_buy_ok("market-build-buy", PriceMode::CharacterBuild, PLUS_ONE_SWORD_CP, 0);
+    }
+
+    #[test]
+    fn market_buy_sell_character_build_buy_refused_one_copper_short() {
+        assert_market_buy_refused(
+            "market-build-refused",
+            MARKET_SWORD,
+            Some(1),
+            PriceMode::CharacterBuild,
+            PLUS_ONE_SWORD_CP - 1,
+            "money.equipment_purchase.insufficient_funds",
+        );
+    }
+
+    #[test]
+    fn market_buy_sell_character_build_sell_nets_to_zero() {
+        assert_market_sell("market-build-sell", PriceMode::CharacterBuild, 300_000, 68_500, 300_000);
+    }
+
+    #[test]
+    fn market_buy_sell_cashless_buy_ok_with_no_money() {
+        assert_market_buy_ok("market-cashless-buy", PriceMode::Cashless, 0, 0);
+    }
+
+    /// Money cannot refuse a cashless buy, so the refusal this mode has is the one that is not about
+    /// money: a bonus Market does not offer.
+    #[test]
+    fn market_buy_sell_cashless_buy_refused_when_the_bonus_is_not_on_offer() {
+        assert_market_buy_refused(
+            "market-cashless-refused",
+            MARKET_SWORD,
+            Some(6),
+            PriceMode::Cashless,
+            500,
+            "money.equipment_purchase.no_such_offer",
+        );
+    }
+
+    #[test]
+    fn market_buy_sell_cashless_sell_moves_no_money() {
+        assert_market_sell("market-cashless-sell", PriceMode::Cashless, 500, 500, 500);
+    }
+
+    /// What is charged is what `list_market` shows, for every bonus of each kind.
+    #[test]
+    fn market_buy_sell_charges_the_price_the_market_row_shows() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let rows = [
+            (MarketCategory::Weapon, MARKET_SWORD, "Weapon"),
+            (MarketCategory::Armor, "Chain Shirt (Base)", "Armor"),
+            (MarketCategory::Shield, "Heavy Wooden Shield (Base)", "Shield"),
+        ];
+        for (category, key, family) in rows {
+            let listed = list_market(MarketFilter { category, name_contains: None, book: None });
+            let row = listed.entries.iter().find(|row| row.entry.key == key).expect("on sale");
+            assert_eq!(row.variants.len(), 5, "{key}");
+            for variant in &row.variants {
+                let funded = 6_000_000;
+                let root = fund_and_seed(&format!("market-price-{family}-{}", variant.bonus), funded);
+                // Armor and a shield are worn, which the seed leaves room for; the sword is carried.
+                let state = if family == "Weapon" { ActiveState::SelectedInactive } else { ActiveState::EquippedActive };
+                let response =
+                    purchase_equipment_offer_at_root(&root, key, state, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(variant.bonus))
+                        .expect("purchase call should not error");
+                assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{key}: {response:?}");
+                let charged = funded as u64 - balance(&root);
+                assert_eq!(charged, money::gp_to_copper(variant.price_gp), "{key} +{}", variant.bonus);
+                assert_eq!(
+                    held_selections(&root).last().unwrap().applied_modifiers,
+                    vec![format!("Special Ability ~ +{} ~ {family}", variant.bonus)],
+                );
+                std::fs::remove_dir_all(&root).ok();
+            }
+        }
+    }
+
+    #[test]
+    fn market_buy_sell_a_plain_buy_is_the_base_price_with_no_eqmod() {
+        let root = fund_and_seed("market-plain", 2_000);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(balance(&root), 500, "15 gp");
+        assert!(held_selections(&root).last().unwrap().applied_modifiers.is_empty());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A bonus Market does not offer is refused in every mode, money or none: a row with no offers,
+    /// a legacy id, and a bonus of 0.
+    #[test]
+    fn market_buy_sell_refuses_a_bonus_the_row_does_not_offer() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let gear = list_market(MarketFilter { category: MarketCategory::Gear, name_contains: None, book: None });
+        let plain_row = gear
+            .entries
+            .iter()
+            .find(|row| row.variants.is_empty() && row.entry.cost_gp.is_some_and(|gp| gp > 0.0))
+            .expect("a priced Gear row with no offers");
+        for (label, item, bonus) in [
+            ("market-no-offer-gear", plain_row.entry.key.as_str(), Some(1)),
+            ("market-no-offer-legacy", "item:longsword", Some(1)),
+            ("market-no-offer-zero", MARKET_SWORD, Some(0)),
+        ] {
+            for (name, mode) in [("std", PriceMode::Standard), ("build", PriceMode::CharacterBuild), ("cash", PriceMode::Cashless)] {
+                assert_market_buy_refused(
+                    &format!("{label}-{name}"),
+                    item,
+                    bonus,
+                    mode,
+                    6_000_000,
+                    "money.equipment_purchase.no_such_offer",
+                );
+            }
+        }
+    }
+
+    /// The engine's own refusal comes before any money: wielding a second real weapon beside the
+    /// required Longsword does not save, so nothing is charged and no copy holds the eqmod.
+    #[test]
+    fn market_buy_sell_a_buy_the_engine_refuses_charges_nothing() {
+        let root = fund_and_seed("market-engine-refused", 300_000);
+        let before = SavedCharacterStore::load(&root).unwrap();
+        let response = purchase_equipment_offer_at_root(
+            &root, MARKET_SWORD, ActiveState::EquippedActive, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(1),
+        )
+        .expect("purchase call should not error");
+        let PurchaseEquipmentResponse::Blocked { diagnostics } = response else {
+            panic!("{response:?}");
+        };
+        assert!(diagnostics.iter().any(|d| d.id == "combat.baseline_unsupported"), "{diagnostics:?}");
+        assert_eq!(balance(&root), 300_000);
+        let after = SavedCharacterStore::load(&root).unwrap();
+        assert_eq!(after.revision_id, before.revision_id);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The bonus goes on the copy just bought. `apply_attach_equipment_modifier` finds the first copy
+    /// of an id, so reusing it here would turn an older plain item into the `+1` and charge for it.
+    /// The two copies differ in state so the assertion can tell them apart.
+    #[test]
+    fn market_buy_sell_attaches_to_the_new_copy_not_an_older_plain_one() {
+        let root = fund_and_seed("market-new-copy", 300_000);
+        let shirt = "Chain Shirt (Base)";
+        let buy = |bonus, state| {
+            purchase_equipment_offer_at_root(&root, shirt, state, "2026-11-02T00:00:00Z", PriceMode::Standard, bonus)
+                .expect("purchase call should not error")
+        };
+        assert!(matches!(buy(None, ActiveState::SelectedInactive), PurchaseEquipmentResponse::Purchased { .. }));
+        assert!(matches!(buy(Some(1), ActiveState::EquippedActive), PurchaseEquipmentResponse::Purchased { .. }));
+        let held = held_selections(&root);
+        let copies: Vec<&EquipmentSelection> = held.iter().filter(|s| s.item_id == shirt).collect();
+        assert_eq!(copies.len(), 2);
+        for copy in copies {
+            let want: &[&str] = if copy.active_state == ActiveState::EquippedActive {
+                &["Special Ability ~ +1 ~ Armor"]
+            } else {
+                &[]
+            };
+            assert_eq!(copy.applied_modifiers, want, "{:?}", copy.active_state);
+        }
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Holding a plain sword and a `+1`, a sale names which one goes and is paid for that one; `+2`,
+    /// which the character does not hold, is an error and moves nothing.
+    #[test]
+    fn market_buy_sell_sells_the_named_copy_for_its_own_price() {
+        let root = fund_and_seed("market-named-copy", 300_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        let left = 300_000 - 1_500 - 231_500;
+        assert_eq!(balance(&root), left);
+
+        let refused = market_sell(&root, MARKET_SWORD, Some(2), PriceMode::Standard);
+        assert!(refused.is_err(), "{refused:?}");
+        assert_eq!(balance(&root), left, "a refused sale moves no money");
+
+        market_sell(&root, MARKET_SWORD, Some(1), PriceMode::Standard).expect("sell the +1");
+        assert_eq!(balance(&root), left + 115_750, "half of 2,315 gp");
+        let copies: Vec<usize> = held_selections(&root)
+            .iter()
+            .filter(|s| s.item_id == MARKET_SWORD)
+            .map(|s| s.applied_modifiers.len())
+            .collect();
+        assert_eq!(copies, vec![0], "the plain one is still held");
+
+        market_sell(&root, MARKET_SWORD, Some(0), PriceMode::Standard).expect("sell the plain one");
+        assert_eq!(balance(&root), left + 115_750 + 750, "half of 15 gp");
+        assert!(held_selections(&root).iter().all(|s| s.item_id != MARKET_SWORD));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Bonus 0 names the plain copy even when the `+1` comes first, and no bonus keeps the old
+    /// first-copy rule, paid for what that copy really is.
+    #[test]
+    fn market_buy_sell_the_plain_copy_is_named_by_zero_and_no_bonus_takes_the_first() {
+        let root = fund_and_seed("market-zero", 300_000);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        let left = 300_000 - 231_500 - 1_500;
+        market_sell(&root, MARKET_SWORD, Some(0), PriceMode::Standard).expect("sell the plain one");
+        assert_eq!(balance(&root), left + 750, "half of 15 gp");
+
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_sell(&root, MARKET_SWORD, None, PriceMode::Standard).expect("sell the first copy");
+        assert_eq!(balance(&root), left + 750 - 1_500 + 115_750, "the first copy is the +1");
+        let copies: Vec<usize> = held_selections(&root)
+            .iter()
+            .filter(|s| s.item_id == MARKET_SWORD)
+            .map(|s| s.applied_modifiers.len())
+            .collect();
+        assert_eq!(copies, vec![0]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn market_buy_sell_requests_carry_the_bonus_on_the_wire() {
+        let buy: PurchaseEquipmentRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "activeState": "EquippedActive", "savedAt": "t",
+            "priceMode": "cashless", "bonus": 3,
+        }))
+        .unwrap();
+        assert_eq!(buy.bonus, Some(3));
+        let plain: PurchaseEquipmentRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "activeState": "EquippedActive", "savedAt": "t",
+        }))
+        .unwrap();
+        assert_eq!(plain.bonus, None, "an old caller sends no bonus");
+        let sell: RemoveEquipmentSelectionRequest =
+            serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": MARKET_SWORD, "savedAt": "t", "bonus": 0})).unwrap();
+        assert_eq!(sell.bonus, Some(0));
+        let old: RemoveEquipmentSelectionRequest =
+            serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": MARKET_SWORD, "savedAt": "t"})).unwrap();
+        assert_eq!(old.bonus, None);
     }
 
     /// An unaffordable item must be honestly rejected -- no equipment

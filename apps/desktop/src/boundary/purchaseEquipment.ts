@@ -31,6 +31,8 @@ export interface PurchaseEquipmentRequest {
   savedAt: string;
   /** `cashless` adds the item without charging; otherwise it is bought at 100%. Absent means `standard`. */
   priceMode?: PriceMode;
+  /** The `+N` to buy, one the Market row offers: charged at that offer's price, with its eqmod on the new copy. Absent buys the plain item. */
+  bonus?: number;
 }
 
 export type PurchaseEquipmentOutcome =

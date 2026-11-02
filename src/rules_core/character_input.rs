@@ -444,9 +444,12 @@ fn apply_equipment_modifier(value: &str, parsed: &mut ParsedFixture) {
         return;
     };
 
+    // The nearest copy above this line, not the first: the writer puts each copy's modifiers
+    // straight after its own `equipment=` line, and copies of one item can differ.
     let Some(selection) = parsed
         .equipment_selections
         .iter_mut()
+        .rev()
         .find(|selection| selection.item_id == item_id)
     else {
         parsed.diagnostics.push(diagnostic(
@@ -768,6 +771,27 @@ equipment_modifier=item:longsword:Special Ability ~ Flaming ~ Weapon\n"
                 "Special Ability ~ Flaming ~ Weapon".to_string(),
             ]
         );
+    }
+
+    /// Two copies of one item: the writer puts each copy's modifiers straight after its own
+    /// `equipment=` line, so a modifier belongs to the nearest copy above it. Reading it onto the
+    /// first copy would, on reload, move a carried `+1`'s bonus onto a plain item being wielded.
+    #[test]
+    fn an_equipment_modifier_line_belongs_to_the_copy_just_above_it() {
+        let fixture = format!(
+            "{FIXTURE}equipment=Longsword:equipped\n\
+equipment=Longsword:selected_inactive\n\
+equipment_modifier=Longsword:Special Ability ~ +1 ~ Weapon\n"
+        );
+        let input = load_character_input_fixture(&fixture).character_input.expect("fixture must parse cleanly");
+        let copies: Vec<usize> = input
+            .chosen
+            .equipment_selections
+            .iter()
+            .filter(|selection| selection.item_id == "Longsword")
+            .map(|selection| selection.applied_modifiers.len())
+            .collect();
+        assert_eq!(copies, vec![0, 1]);
     }
 
     /// An `equipment_modifier=` line naming an item_id with no matching
