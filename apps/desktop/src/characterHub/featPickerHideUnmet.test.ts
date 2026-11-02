@@ -88,14 +88,13 @@ const deps = {
   loadSpells: noLoad,
   loadFeats: noLoad,
   loadFeatTargets: noLoad,
-  onSelectEquipment: noSelect,
   onSelectSpell: noSelect,
   onSelectFeat: noSelect,
   onSelectFeatTarget: noSelect,
   onSelectModifier: noSelect,
 };
 assertEqual(buildItemPickerConfig('feat', deps)?.offersHideUnavailable, true, 'Add Feat offers the box');
-for (const kind of ['weapon', 'armor', 'gear', 'spell', 'featTarget', 'modifier'] as const) {
+for (const kind of ['spell', 'featTarget', 'modifier'] as const) {
   assertEqual(buildItemPickerConfig(kind, deps)?.offersHideUnavailable, undefined, `${kind} does not`);
 }
 

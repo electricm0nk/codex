@@ -4340,6 +4340,62 @@ pub(crate) fn sell_equipment_copy_at_root(
     Ok(response)
 }
 
+/// One held copy, as the Market's Sell list shows it. `bonus` is the copy's `+N`, 0 when plain, and
+/// names that copy to `remove_equipment_selection`.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HeldEquipmentCopyDto {
+    pub item_id: String,
+    pub name: String,
+    pub bonus: u8,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListHeldEquipmentRequest {
+    pub character_id: String,
+}
+
+/// Every copy the character holds, read off the saved selections. Not `corpus_derived`'s
+/// `equipped_items`, which resolves against the bundled demo corpus and so leaves out most of what a
+/// character can buy, and every enhancement eqmod.
+pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    Ok(envelope
+        .character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state != ActiveState::Absent)
+        .map(|selection| {
+            let offers = if selection.applied_modifiers.is_empty() { Vec::new() } else { market_offers(&selection.item_id) };
+            let bonus = copy_bonus(selection, &offers);
+            let plain_name = || {
+                codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&selection.item_id)
+                    .map(|row| row.name.to_owned())
+                    .or_else(|| {
+                        codex::rules_core::equipment_resolver::equipment_id_resolve(
+                            &selection.item_id,
+                            codex::rules_core::rules_catalog::RuleSetId::Crb,
+                            corpus_fixture_bundle(),
+                        )
+                        .map(|(record, _)| record.name.clone())
+                    })
+                    .unwrap_or_else(|| selection.item_id.strip_prefix("item:").unwrap_or(&selection.item_id).to_owned())
+            };
+            let name = offers.iter().find(|offer| offer.bonus == bonus).map_or_else(plain_name, |offer| offer.name.clone());
+            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus }
+        })
+        .collect())
+}
+
+/// What the character holds, for the Market's Sell list; see [`list_held_equipment_at_root`].
+#[tauri::command]
+pub fn list_held_equipment(app: tauri::AppHandle, request: ListHeldEquipmentRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    list_held_equipment_at_root(&root)
+}
+
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RemoveFeatSelectionRequest {
@@ -9478,6 +9534,49 @@ mod tests {
         market_sell(&root, MARKET_SWORD, Some(0), PriceMode::Standard).expect("sell the plain one");
         assert_eq!(balance(&root), left + 115_750 + 750, "half of 15 gp");
         assert!(held_selections(&root).iter().all(|s| s.item_id != MARKET_SWORD));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The Sell list is every copy held, whatever the bundled demo corpus resolves: the sheet's
+    /// `equipped_items` leaves out a Dagger and the `+1` on a Longsword. Each row's bonus sells it.
+    #[test]
+    fn market_held_lists_every_copy_and_each_row_sells_itself() {
+        let root = fund_and_seed("market-held", 300_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        assert!(matches!(
+            purchase_equipment_offer_at_root(&root, "Dagger (Base)", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", PriceMode::Standard, None).unwrap(),
+            PurchaseEquipmentResponse::Purchased { .. }
+        ));
+
+        let held = list_held_equipment_at_root(&root).unwrap();
+        let not_absent = held_selections(&root).iter().filter(|s| s.active_state != ActiveState::Absent).count();
+        assert_eq!(held.len(), not_absent, "one row per copy");
+        let of = |id: &str| held.iter().filter(|row| row.item_id == id).map(|row| (row.name.as_str(), row.bonus)).collect::<Vec<_>>();
+        assert_eq!(of(MARKET_SWORD), vec![("Longsword", 0), ("+1 Longsword", 1)]);
+        assert_eq!(of("Dagger (Base)"), vec![("Dagger", 0)], "a record the demo corpus does not hold");
+
+        let plus_one = held.iter().find(|row| row.bonus == 1).unwrap();
+        let before = balance(&root);
+        market_sell(&root, &plus_one.item_id, Some(plus_one.bonus), PriceMode::Standard).expect("the row's bonus names its copy");
+        assert_eq!(balance(&root), before + 115_750, "half of 2,315 gp, so the +1 went");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A seeded legacy id still reads as an item, and a selection marked Absent is not held.
+    #[test]
+    fn market_held_names_a_legacy_id_and_skips_an_absent_selection() {
+        let root = fund_and_seed("market-held-legacy", 0);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        let selections = &mut envelope.character_input.chosen.equipment_selections;
+        selections.clear();
+        selections.push(EquipmentSelection { item_id: "item:longsword".to_owned(), equipped_or_active: true, active_state: ActiveState::EquippedActive, applied_modifiers: Vec::new() });
+        selections.push(EquipmentSelection { item_id: "Dagger".to_owned(), equipped_or_active: false, active_state: ActiveState::Absent, applied_modifiers: Vec::new() });
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+
+        let held = list_held_equipment_at_root(&root).unwrap();
+        assert_eq!(held.len(), 1, "{held:?}");
+        assert_eq!((held[0].item_id.as_str(), held[0].name.as_str(), held[0].bonus), ("item:longsword", "Longsword", 0));
         std::fs::remove_dir_all(&root).ok();
     }
 

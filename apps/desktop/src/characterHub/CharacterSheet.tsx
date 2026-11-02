@@ -74,9 +74,14 @@ import { getHideUnmetFeats, setHideUnmetFeats } from '../settings/featPickerPref
 import {
   HIDE_UNMET_FEATS_LABEL,
   describeFeatCatalogCoverage,
+  formatMarketPrice,
   mapEquipmentCatalogEntries,
   mapFeatCatalogEntries,
+  mapMarketEntries,
   mapSpellCatalogEntries,
+  marketActiveState,
+  marketMoneyMoved,
+  type MarketRow,
 } from './itemPickerFilter';
 import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
 import {
@@ -98,6 +103,9 @@ import type { BaseSavesDto, PilotSnapshotDto } from '../boundary/loadCreateChara
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
+import { MarketDialog } from './MarketDialog';
+import { listHeldEquipment, type HeldEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import { listMarket, type MarketCategory } from '../boundary/listMarket';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
 import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
 import {
@@ -161,7 +169,8 @@ import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
-import { adjustCharacterMoney, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
+import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
+import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
 import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
 
 /**
@@ -198,7 +207,7 @@ const ZERO_ABILITIES: AbilityScoresDto = {
   charisma: 0,
 };
 
-/** Shared style for the tab-content "Add …" affordances (Add Weapon / Add Armor / Add Spell / Print). */
+/** Shared style for the tab-content affordances (Market / Add Spell / Print). */
 const addItemButtonStyle: CSSProperties = {
   backgroundColor: 'var(--color-surface)',
   border: '1px solid var(--color-border)',
@@ -226,23 +235,9 @@ const removeItemButtonStyle: CSSProperties = {
   padding: '0.15rem 0.55rem',
 };
 
-/**
- * `EquipmentCategory` has no separate weapon-vs-armor variant (see
- * `equipment_catalog.rs`'s `EquipmentCategory` enum) — "ArmsArmor" is
- * one combined category covering both. Judgment call: both the Add Weapon
- * and Add Armor pickers narrow to this same category server-side and let
- * the user disambiguate by name in the search box, rather than blocking on
- * a category taxonomy the corpus doesn't expose yet.
- */
-const WEAPONS_AND_ARMOR_CATEGORY = 'ArmsArmor';
 const EQUIPMODS_CATEGORY = 'Equipmods';
-/**
- * v0.8 F-6: everything purchasable that is not arms & armor. The engine's
- * `EquipmentCategory` (each book's `rules_tables/<book>/equipment_tables.rs`)
- * has exactly four variants — `General`, `ArmsArmor`, `MagicItems`,
- * `Equipmods` — and `Equipmods` is the modifier picker's, not a purchase.
- */
-const GEAR_CATEGORIES = ['General', 'MagicItems'] as const;
+/** Pathfinder's money; Starfinder and Cyberpunk serve their own sheets. */
+const MARKET_CURRENCY = 'gp';
 
 /** The class id `list_class_creation_roster` serves for Wizard (`class:wizard`). */
 const WIZARD_CLASS_ID = 'class:wizard';
@@ -252,57 +247,35 @@ export interface ItemPickerConfig {
   searchPlaceholder: string;
   loadEntries: () => Promise<ItemPickerEntry[]>;
   onSelect: (entry: ItemPickerEntry) => void;
-  /** Category the picker opens on; absent opens on All. Only meaningful for catalogs with categories. */
-  initialGroup?: string;
   /** The picker shows the "Hide feats I don't qualify for" checkbox. */
   offersHideUnavailable?: true;
 }
 
 /**
- * Pure dispatch table backing the Add Weapon / Add Armor / Add Spell /
- * Add Feat / Attach Modifier onClick affordances (criterion 7.4): which
- * title to show, which real corpus query to run (`listEquipment` narrowed
- * to `ArmsArmor` or `Equipmods`, the unfiltered `listSpells`, or the
- * unfiltered `listFeats`), and which real mutation handler
- * (`addEquipmentSelection`-backed, `addSpellSelection`-backed,
- * `addFeatSelection`-backed, or `attachEquipmentModifier`-backed) the
- * user's pick gets routed to. Extracted from the render body so it is
+ * Pure dispatch table backing the Add Spell / Add Feat / Attach Modifier
+ * onClick affordances (criterion 7.4): which title to show, which real
+ * corpus query to run (`listEquipment` narrowed to `Equipmods`, the
+ * unfiltered `listSpells`, or the unfiltered `listFeats`), and which real
+ * mutation handler (`addSpellSelection`-backed, `addFeatSelection`-backed,
+ * or `attachEquipmentModifier`-backed) the user's pick gets routed to.
+ * Buying equipment is the Market's (`MarketDialog.tsx`). Extracted from the render body so it is
  * unit-testable without a DOM — this repo has no jsdom/testing-library —
  * per the same split already used for `itemPickerFilter.ts` and
  * `characterSheetRefresh.ts`.
  */
 export function buildItemPickerConfig(
-  kind: 'weapon' | 'armor' | 'gear' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null,
+  kind: 'spell' | 'feat' | 'featTarget' | 'modifier' | null,
   deps: {
     loadEquipment: (category: string) => Promise<ItemPickerEntry[]>;
     loadSpells: () => Promise<ItemPickerEntry[]>;
     loadFeats: () => Promise<ItemPickerEntry[]>;
     loadFeatTargets: () => Promise<ItemPickerEntry[]>;
-    onSelectEquipment: (entry: ItemPickerEntry) => void;
     onSelectSpell: (entry: ItemPickerEntry) => void;
     onSelectFeat: (entry: ItemPickerEntry) => void;
     onSelectFeatTarget: (entry: ItemPickerEntry) => void;
     onSelectModifier: (entry: ItemPickerEntry) => void;
   }
 ): ItemPickerConfig | null {
-  if (kind === 'weapon' || kind === 'armor') {
-    return {
-      title: kind === 'weapon' ? 'Add Weapon' : 'Add Armor',
-      searchPlaceholder: 'Search arms & armor…',
-      loadEntries: () => deps.loadEquipment(WEAPONS_AND_ARMOR_CATEGORY),
-      onSelect: deps.onSelectEquipment,
-      initialGroup: kind === 'weapon' ? 'Weapons' : 'Armor',
-    };
-  }
-  if (kind === 'gear') {
-    return {
-      title: 'Add Gear',
-      searchPlaceholder: 'Search gear & magic items…',
-      loadEntries: () =>
-        Promise.all(GEAR_CATEGORIES.map((category) => deps.loadEquipment(category))).then((lists) => lists.flat()),
-      onSelect: deps.onSelectEquipment,
-    };
-  }
   if (kind === 'spell') {
     return {
       title: 'Add Spell',
@@ -761,16 +734,13 @@ function WeaponsTab(props: {
   factsLoading: boolean;
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
-  onAddWeapon: () => void;
+  onOpenMarket: () => void;
   onPrint: () => void;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   /**
-   * Drops one carried copy of the item, with any equipmods attached to it.
-   * Does **not** refund the purchase — see
-   * `apply_remove_equipment_selection` in `character_hub.rs` for why
-   * sell-back is not modelled; the caption below states it so the player
-   * does not discover it by losing gold.
+   * Drops one carried copy of the item, with any equipmods attached to it, and sells it back
+   * under the current price mode; the caption below states it.
    */
   onRemoveWeapon: (itemId: string) => void;
 }) {
@@ -832,8 +802,8 @@ function WeaponsTab(props: {
 
       <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onAddWeapon} style={addItemButtonStyle}>
-          Add Weapon
+        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
+          Market
         </button>
         <button type="button" onClick={props.onPrint} style={addItemButtonStyle}>
           Print
@@ -901,9 +871,7 @@ function WeaponsTab(props: {
         ))
       )}
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0', textAlign: 'center' }}>
-        Dropping an item removes it from the loadout but does not refund what it cost — selling
-        equipment back is a real Pathfinder rule (usually half price) that this build does not model,
-        and crediting a made-up amount would be worse than crediting none.
+        Dropping an item sells it back under the pricing chosen above.
       </p>
 
       {/*
@@ -1434,9 +1402,15 @@ function DefenseTab(props: {
   durabilityBusy: boolean;
   durabilityError: string | null;
   onAdjustHp: (deltaHp: number) => void;
+  onOpenMarket: () => void;
 }) {
   return (
     <div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
+        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
+          Market
+        </button>
+      </div>
       <DurabilityPanel
         durability={props.durability}
         busy={props.durabilityBusy}
@@ -1639,13 +1613,11 @@ function EncumbrancePanel(props: { encumbrance: EncumbranceDto | undefined }) {
  */
 function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
-  onAddArmor: () => void;
-  /** v0.8 F-6: opens the `gear` picker (General + MagicItems). */
-  onAddGear: () => void;
+  onOpenMarket: () => void;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
-  /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
+  /** See `WeaponsTab.onRemoveWeapon` — the same command. */
   onRemoveItem: (itemId: string) => void;
   /** SD-36 Epic E desktop-P2-01: stow (SelectedInactive) or re-equip (EquippedActive) a carried item. */
   onSetActiveState: (itemId: string, activeState: 'EquippedActive' | 'SelectedInactive') => void;
@@ -1670,11 +1642,8 @@ function GearTab(props: {
       </p>
       <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onAddArmor} style={addItemButtonStyle}>
-          Add Armor
-        </button>
-        <button type="button" onClick={props.onAddGear} style={addItemButtonStyle}>
-          Add Gear
+        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
+          Market
         </button>
       </div>
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
@@ -1683,8 +1652,8 @@ function GearTab(props: {
           No corpus-reachable equipment selected yet.
         </p>
       ) : (
-        items.map((item) => (
-          <div key={item.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+        items.map((item, index) => (
+          <div key={`${item.itemId}::${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
             <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
               <div>
                 <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
@@ -2903,8 +2872,10 @@ export function CharacterSheet(props: {
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
   const [itemPickerOpen, setItemPickerOpen] = useState<
-    'weapon' | 'armor' | 'gear' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null
+    'spell' | 'feat' | 'featTarget' | 'modifier' | null
   >(null);
+  // The category the Market is open on; null while it is closed.
+  const [marketCategory, setMarketCategory] = useState<MarketCategory | null>(null);
   const [hideUnmetFeats, setHideUnmetFeatsState] = useState(() => getHideUnmetFeats());
   // Set between the two steps of adding a chooser feat: the feat has been
   // picked, and the picker has reopened for the thing it names.
@@ -3321,30 +3292,32 @@ export function CharacterSheet(props: {
   /**
    * Routes through `purchase_equipment` (v0.6 alpha swarm, risks-and-
    * open-questions.md item 9), not the plain `addEquipmentSelection` —
-   * the Add Weapon/Add Armor pickers only ever offer real catalog items
-   * with a real gold cost, so every pick here should atomically charge
-   * that cost against the persisted money balance rather than being a
-   * free grant. A `Blocked` purchase (insufficient funds, or an item with
-   * no known `cost_gp`) leaves both the equipment and the money balance
-   * untouched, same honest-Blocked invariant as every other mutation.
+   * the Market only ever offers real catalog items with a real gold cost,
+   * so every buy here should atomically charge that cost against the
+   * persisted money balance rather than being a free grant. A `Blocked`
+   * purchase (insufficient funds, or an item with no known `cost_gp`) leaves
+   * both the equipment and the money balance untouched, same honest-Blocked
+   * invariant as every other mutation. Resolves to the new balance, or null
+   * when nothing was bought and `mutationError` says why.
    */
-  async function handleAddEquipment(entry: ItemPickerEntry) {
+  async function handleAddEquipment(
+    itemId: string,
+    bonus: number,
+    activeState: ActiveStateDto,
+  ): Promise<CharacterMoneyDto | null> {
     setMutationError(null);
     try {
-      // The user picking an item from the catalog to add to their loadout
-      // is, by construction, actively equipping it — `EquippedActive` is
-      // the only choice that matches that action without asking the user
-      // to make an extra decision the picker's scope doesn't cover.
       const outcome = await purchaseEquipment({
         characterId: props.row.characterId,
-        itemId: entry.key,
-        activeState: 'EquippedActive',
+        itemId,
+        activeState,
         savedAt: new Date().toISOString(),
         priceMode,
+        ...(bonus > 0 ? { bonus } : {}),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
-        return;
+        return null;
       }
       props.onDetailRefreshed({
         summary: outcome.summary,
@@ -3374,8 +3347,10 @@ export function CharacterSheet(props: {
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
       await refreshEngineRecords();
+      return outcome.money;
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
+      return null;
     }
   }
 
@@ -3814,9 +3789,10 @@ export function CharacterSheet(props: {
   /**
    * Drops one carried copy of an item, with its equipmods, and sells it back under the current
    * price mode (50% by default, 100% in character-build mode, nothing when cashless). The balance
-   * is reloaded afterwards because a sale can change it.
+   * is reloaded afterwards because a sale can change it. `bonus` names the copy when there are
+   * several. Resolves to the new balance, or null when nothing was sold and `mutationError` says why.
    */
-  async function handleRemoveEquipment(itemId: string) {
+  async function handleRemoveEquipment(itemId: string, bonus?: number): Promise<CharacterMoneyDto | null> {
     setMutationError(null);
     try {
       const outcome = await removeEquipmentSelection({
@@ -3824,18 +3800,48 @@ export function CharacterSheet(props: {
         itemId,
         savedAt: new Date().toISOString(),
         priceMode,
+        ...(bonus === undefined ? {} : { bonus }),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
-        return;
+        return null;
       }
       await republishFromDisk();
       await refreshEngineRecords();
       // Selling an item back can return money (50% or 100% by price mode), so show the new balance.
-      setMoney(await loadCharacterMoney(props.row.characterId));
+      const balance = await loadCharacterMoney(props.row.characterId);
+      setMoney(balance);
+      return balance;
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
+      return null;
     }
+  }
+
+  /** A Market buy, and what to tell the player about it. */
+  async function handleMarketBuy(row: MarketRow, bonus: number, category: MarketCategory): Promise<string | null> {
+    const before = money.totalCopper;
+    const activeState = marketActiveState(category);
+    const after = await handleAddEquipment(row.key, bonus, activeState);
+    if (!after) {
+      return null;
+    }
+    const name = bonus > 0 ? (row.variants.find((variant) => variant.bonus === bonus)?.name ?? row.name) : row.name;
+    const paid = marketMoneyMoved(before, after.totalCopper);
+    return `${paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)}` : `Added ${name}; no money moved`}${
+      activeState === 'SelectedInactive' ? ' (carried, not wielded).' : '.'
+    }`;
+  }
+
+  /** A Market sale, and what to tell the player about it. */
+  async function handleMarketSell(copy: HeldEquipmentCopyDto): Promise<string | null> {
+    const before = money.totalCopper;
+    const after = await handleRemoveEquipment(copy.itemId, copy.bonus);
+    if (!after) {
+      return null;
+    }
+    const returned = marketMoneyMoved(before, after.totalCopper);
+    return returned > 0 ? `Sold ${copy.name} for ${formatMarketPrice(returned, MARKET_CURRENCY)}.` : `Removed ${copy.name}; no money moved.`;
   }
 
   /**
@@ -4219,7 +4225,7 @@ export function CharacterSheet(props: {
     { label: 'Print', onSelect: handlePrint },
   ];
 
-  // One generic `ItemPickerModal` backs all four "Add …" affordances — see
+  // One generic `ItemPickerModal` backs the "Add …" and modifier affordances — see
   // `buildItemPickerConfig`'s doc comment for the dispatch shape (title /
   // corpus query / mutate-handler per `itemPickerOpen` kind). When a
   // feat-gaining level-up is waiting on a pick (`pendingFeatLevelUp`), the
@@ -4253,7 +4259,6 @@ export function CharacterSheet(props: {
       }
       return Promise.resolve([]);
     },
-    onSelectEquipment: handleAddEquipment,
     onSelectSpell: handleAddSpell,
     onSelectFeat: pendingFeatLevelUp ? (entry) => void handleLevelUpFeatPick(entry) : handleAddFeat,
     onSelectFeatTarget: handleFeatTargetPicked,
@@ -4518,7 +4523,7 @@ export function CharacterSheet(props: {
                     factsLoading={classFacts.kind === 'loading'}
                     weaponDamage={engineRecords.weaponDamage}
                     corpusDerived={props.detail?.corpusDerived ?? null}
-                    onAddWeapon={() => setItemPickerOpen('weapon')}
+                    onOpenMarket={() => setMarketCategory('weapon')}
                     onPrint={handlePrint}
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
@@ -4535,6 +4540,7 @@ export function CharacterSheet(props: {
                     durabilityBusy={durabilityBusy}
                     durabilityError={durabilityError}
                     onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
+                    onOpenMarket={() => setMarketCategory('armor')}
                   />
                 ) : name === 'Spells' ? (
                   <SpellsTab
@@ -4551,8 +4557,7 @@ export function CharacterSheet(props: {
                 ) : name === 'Gear' ? (
                   <GearTab
                     corpusDerived={props.detail?.corpusDerived}
-                    onAddArmor={() => setItemPickerOpen('armor')}
-                    onAddGear={() => setItemPickerOpen('gear')}
+                    onOpenMarket={() => setMarketCategory('gear')}
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
                     onAttachModifier={handleAttachModifier}
@@ -4796,12 +4801,33 @@ export function CharacterSheet(props: {
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}
       />
 
+      {marketCategory ? (
+        <MarketDialog
+          initialCategory={marketCategory}
+          loadRows={(category) =>
+            listMarket({ category }).then((response) => {
+              if (response.typesError) {
+                throw new Error(`Categories unavailable: ${response.typesError}`);
+              }
+              return mapMarketEntries(response.entries);
+            })
+          }
+          currency={MARKET_CURRENCY}
+          balance={copperToGp(money.totalCopper)}
+          loadInventory={() => listHeldEquipment(props.row.characterId)}
+          onBuy={handleMarketBuy}
+          onSell={handleMarketSell}
+          priceMode={priceMode}
+          onPriceModeChange={setPriceMode}
+          error={mutationError}
+          onClose={() => setMarketCategory(null)}
+        />
+      ) : null}
       <ItemPickerModal
         open={itemPickerConfig !== null}
         title={itemPickerTitle}
         searchPlaceholder={itemPickerConfig?.searchPlaceholder ?? ''}
         loadEntries={itemPickerConfig?.loadEntries ?? (() => Promise.resolve([]))}
-        initialGroup={itemPickerConfig?.initialGroup}
         hideUnavailable={
           itemPickerConfig?.offersHideUnavailable
             ? {

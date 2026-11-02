@@ -453,7 +453,7 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-samurai"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
+      "marker": "Market",
       "expect": ["✓ Martial Weapons"],
       "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
       "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Samurai 1 (create-character-samurai's steps reach its sheet) opens the Weapons tab: the tier line reads '✓ Martial Weapons' (the deleted table printed '✗'), and the Skills panel names no class-skill Unknown."
@@ -463,7 +463,7 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-warrior"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
+      "marker": "Market",
       "expect": ["✓ Martial Weapons"],
       "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
       "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Warrior 1 (CRB NPC class): '✓ Martial Weapons'."
@@ -473,7 +473,7 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-magus"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
+      "marker": "Market",
       "expect": ["✓ Martial Weapons", "Caster Level"],
       "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
       "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Magus 1: '✓ Martial Weapons' and a Caster Level of 1 (the deleted table printed '—' for every caster outside six ids)."
@@ -684,8 +684,9 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
-      "expect": ["Add Weapon"],
+      "marker": "Market",
+      "expect": ["Market", "Print"],
+      "forbid": ["Add Weapon"],
       "notes": "SHEET_TABS[0]."
     },
     {
@@ -702,8 +703,9 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Gear" }],
-      "marker": "Add Armor",
-      "expect": ["Add Armor", "Add Gear"],
+      "marker": "Market",
+      "expect": ["Market"],
+      "forbid": ["Add Armor", "Add Gear"],
       "notes": "SHEET_TABS[2]."
     },
     {
@@ -742,18 +744,6 @@
       "expect": ["Actions"],
       "allowGlobalForbid": ["failure"],
       "notes": "SHEET_TABS[6]. Trait-add control (sheet-action-trait-add) lives on this tab. allowGlobalForbid 'failure' (SD-36 F6 merge-readiness B2): the Smoke Test PC (Elf Wizard 1) wears the create path's fixed Chain Shirt, and the Rules and features section prints its StatBlock rule text 'Arcane spell failure: 20%' (data/sheet_rules/core_rulebook/equipment/chain_shirt.json) -- correct PF1 text and the sole source of that string on this screen; the same exemption sheet-f6c-shaman-no-domain-line carries."
-    },
-    {
-      "id": "sheet-action-add-armor-gear-picker",
-      "screen": "sheet",
-      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-gear"],
-      "steps": [
-        { "op": "click", "target": "Add Armor" },
-        { "op": "key", "key": "Escape" }
-      ],
-      "marker": "Add Armor",
-      "expect": ["Add Armor"],
-      "notes": "ItemPickerModal (role=dialog, h2 title = the kind's own title, here 'Add Armor'; portals to document.body, see uiProbe.ts) opened via the Gear tab's Add Armor button (dispatch table in CharacterSheet.tsx also backs Add Gear/Add Spell/Add Feat through the same modal), then closed with Escape. CORRECTED 2026-09-18 (was misdiagnosed as an app defect specific to this catalog -- see git history for the retracted version of this note): `buildItemPickerConfig` routes Add Weapon and Add Armor through the IDENTICAL `loadEquipment('ArmsArmor')` query and the same catalog-agnostic `ItemPickerModal`/`mapEquipmentCatalogEntries` (a plain, uncomputed `.map()`, nothing prerequisite-checked or O(n^2) in it) -- there is no armor-specific render path for anything to be slow in, so a defect that only ever reproduced on 'this specific catalog' was never actually isolated to armor at all, only to whichever row happened to run into the stall. Reproduced directly (2026-09-18): a lone `key: Escape` command genuinely un-acknowledged for 24+ seconds after Add Armor opened, then a fresh command sent moments later (against the same still-open modal) completed in ~100ms -- the same screen-independent webview stall `run.mjs`'s own `CLICK_TARGET_WAIT_MS` comment already documents at length ('anywhere from well under a second up to 60+ seconds ... with no observed correlation to system load', separately confirmed live on settings-tab-* and equipment-catalog-open-and-search, both with zero large payloads). The real bug was harness-side: `pressKey`/`typeText` sent a single command with a bare 5000ms timeout and threw immediately on a miss, while `clickByNameChannel`/`selectByName` already retried the same class of command for up to `CLICK_TARGET_WAIT_MS` (150s) -- an inconsistency between ops, not a per-screen difference. Whichever op happened to be in flight when a stall hit failed fast here (and, via the dialog it left open behind it, blocked every row after it in a sequential run -- confirmed live: sheet-action-level-up-dialog, sheet-action-skill-allocation-dialog and sheet-action-hp-adjust all cascaded BLOCKED immediately after this row's own failure in one continuous run) while an identical stall hitting a `click` step was silently ridden out. Fixed by giving `pressKey`/`typeText` the same retry budget `click`/`select` already had; row confirmed green live 2026-09-18 on a fresh launch immediately after (full run ~2m45s -- the underlying stall still happened, the harness just rode it out instead of failing fast). One more artifact seen mid-investigation, worth naming so a future reader doesn't rediscover it as a new mystery: after one of these stalls, the modal's own DOM/probe state closed correctly (`dialogs: []`, correct screen content in `bodyText`) but the LAST PAINTED FRAME stayed a solid black rectangle over the modal's former screen region indefinitely -- clicks/scrolls landed correctly against the real (invisible) content underneath, only the pixels were stale. Did not clear via further input; cleared by `driver.sh launch` (a fresh WebKitGTK process). Consistent with a software-rasterizer (no GPU under Xvfb, see SKILL.md's own DRI3 note) compositor invalidation bug in this harness's specific renderer path, not a React/app-state bug -- the DOM was already correct the whole time it was showing black."
     },
     {
       "id": "sheet-action-add-feat",
@@ -1027,7 +1017,7 @@
       ],
       "marker": "MONEY",
       "expect": ["MONEY", "GP"],
-      "notes": "MoneyPanel lives inside the Gear tab, not a standalone tab of its own. Same disabled-until-typed constraint as HP; this row adds then spends the same 1gp back for a net-zero unattended run. The Gear tab also has its own unrelated 'Add' buttons (Add Armor/Add Gear) -- MoneyPanel's plain 'Add' is only unambiguous while no ItemPickerModal is open, which sheet-action-add-armor-gear-picker's own Escape guarantees by the time this row's reset-to-landing/setup chain re-runs it independently. Marker/expect uppercased ('MONEY' not 'Money') -- same CSS text-transform-vs-innerText note as sheet-tab-defense; confirmed live 2026-09-17."
+      "notes": "MoneyPanel lives inside the Gear tab, not a standalone tab of its own. Same disabled-until-typed constraint as HP; this row adds then spends the same 1gp back for a net-zero unattended run. Marker/expect uppercased ('MONEY' not 'Money') -- same CSS text-transform-vs-innerText note as sheet-tab-defense; confirmed live 2026-09-17."
     },
     {
       "id": "sheet-action-trait-add",
@@ -6597,6 +6587,14 @@
         "Level 6 Wizard"
       ],
       "notes": "SD-39 E2.3/E2.4: Escape closes the drawer; the level history is gone from the page."
-    }
+    },
+    {"id": "sheet-market-open-weapons", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Longspear"}], "marker": "Longspear", "expect": ["Balance: 0 gp", "INVENTORY", "Sell Longsword", "Weapons", "Armor", "Shields", "Magic items", "PRICING", "Cashless", "Pick an item to buy."], "forbid": ["Add Weapon"], "notes": "SD-39 E3.3: the Weapons tab's one Market button opens the dialog on its Weapons list (list_market), with the balance, the reused price-mode control, the category tabs and the character's inventory. Aldric Ironhand is the seed: no Create step, so these rows do not rest on the stale create-character rows (E2.4's red list). The row searches because the harness treats the word 'Loading' anywhere as still loading, and a crossbow's description says it. These rows sit last and change Aldric's money and gear for the rest of the run."},
+    {"id": "sheet-market-open-defense", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Defense"}, {"op": "click", "target": "Market"}], "marker": "Chain Shirt", "expect": ["Balance: 0 gp", "Chain Shirt"], "forbid": ["Longspear"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: the Defense tab has a Market button too, and it opens on Armor. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-filter-armor", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}], "marker": "Full Plate", "expect": ["Chain Shirt", "Full Plate", "INVENTORY"], "forbid": ["Arrow", "Rod of", "Longspear", "Add Armor", "Add Gear"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3 (D3): the Armor tab holds armor. The old Add Armor list held ammunition, rods and weapons. The Gear tab's Market opens on Gear; this row then clicks Armor. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-buy-refused", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+5"}, {"op": "click", "target": "Buy"}], "marker": "The purchase was not applied", "expect": ["The purchase was not applied", "25,250 gp", "Sell Chain Shirt"], "forbid": ["Bought", "Sell +5 Chain Shirt"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: a +5 Chain Shirt is more than Aldric holds at any point in this run. The backend's refusal shows inside the dialog, and nothing is added. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-buy", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}], "marker": "Bought +1 Chain Shirt for 1,250 gp.", "expect": ["Bought +1 Chain Shirt for 1,250 gp.", "Sell +1 Chain Shirt", "Balance: 750 gp"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: 2,000 gp added on the Money panel, then one save buys the +1 at list_market's price (100 + 150 + 1,000) and the balance follows. The seed starts at 0 gp, and this is the first row that funds it, so 750 is exact. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-sell", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Sell +1 Chain Shirt"}], "marker": "Sold +1 Chain Shirt for 625 gp.", "expect": ["Sold +1 Chain Shirt for 625 gp.", "Sell Chain Shirt"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: Aldric holds a plain Chain Shirt (seed) and a +1. Sell names the +1 and pays half of its own price, not half of 100 gp; the plain one stays. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-buy-weapon-carried", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "10"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Dagger"}, {"op": "click", "target": "Dagger"}, {"op": "click", "target": "Buy"}], "marker": "(carried, not wielded).", "expect": ["Bought Dagger for 2 gp (carried, not wielded).", "Sell Dagger"], "forbid": ["more than one real weapon"], "notes": "SD-39 E3.3: the engine refuses a second wielded weapon next to the required Longsword, so Market buys a weapon carried. E4.1 owns wear-or-carry."},
+    {"id": "sheet-market-cashless", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Dagger"}, {"op": "click", "target": "Dagger"}, {"op": "click", "target": "Buy"}], "marker": "no money moved", "expect": ["Added Dagger; no money moved (carried, not wielded).", "Sell Dagger"], "forbid": ["Bought"], "notes": "SD-39 E3.3: the price-mode radio is honoured; Cashless adds the item and moves nothing."}
   ]
 }

@@ -23,6 +23,13 @@ function verifiesTheSelectedModeIsMarkedAndExplained() {
   assert(!html.includes(PRICE_MODE_OPTIONS.find((o) => o.value === 'cashless')?.hint ?? 'x'), 'only the selected mode is explained');
 }
 
+function verifiesTwoControlsCanShowAtOnce() {
+  assert(render('standard').includes('name="equipment-price-mode"'), 'the default group');
+  const html = renderToStaticMarkup(createElement(PriceModeControl, { value: 'standard', onChange: () => {}, groupName: 'market-price-mode' }));
+  assert(html.includes('name="market-price-mode"') && !html.includes('equipment-price-mode'), 'one radio group would uncheck the other control');
+}
+
 verifiesAllThreeModesAreOffered();
+verifiesTwoControlsCanShowAtOnce();
 verifiesTheSelectedModeIsMarkedAndExplained();
 console.log('PriceModeControl.test.ts: all assertions passed');

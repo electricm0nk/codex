@@ -1,6 +1,9 @@
 import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { FeatCatalogEntryDto } from '../boundary/listFeats';
+import type { MarketCategory, MarketEntryDto, MarketVariantDto } from '../boundary/listMarket';
+import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
+import { copperToGp } from '../boundary/characterMoney';
 import { EQUIPMENT_CATEGORY_ORDER, equipmentCategoryFor } from './equipmentCategories';
 
 /**
@@ -323,4 +326,53 @@ export function itemPickerGroupCounts(
   return [...counts.entries()]
     .map(([group, count]) => ({ group, count }))
     .sort((a, b) => rank(a.group) - rank(b.group) || a.group.localeCompare(b.group));
+}
+
+/** A `list_market` row in the picker's row shape, plus what Market buys it at. */
+export interface MarketRow extends ItemPickerEntry {
+  /** The plain item's catalog price; `null` when the record has none. */
+  priceGp: number | null;
+  /** Empty when the row takes no `+N`. */
+  variants: MarketVariantDto[];
+}
+
+export function mapMarketEntries(entries: MarketEntryDto[]): MarketRow[] {
+  const picked = mapEquipmentCatalogEntries(entries);
+  return entries
+    .map((entry, index) => ({ ...picked[index], priceGp: entry.costGp, variants: entry.variants }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** The whole price of `row` at `bonus` (0 plain), as the backend listed it; `null` when it lists none. */
+export function marketPriceGp(row: MarketRow, bonus: number): number | null {
+  return bonus === 0 ? row.priceGp : row.variants.find((variant) => variant.bonus === bonus)?.priceGp ?? null;
+}
+
+export function formatMarketPrice(amount: number | null, currency: string): string {
+  return amount === null ? 'No listed price' : `${amount.toLocaleString('en-US', { maximumFractionDigits: 2 })} ${currency}`;
+}
+
+/**
+ * How many rows the Market renders at once. The Magic items list holds thousands, and search reaches
+ * the rest; the dialog says so when this bites.
+ */
+export const MARKET_ROW_LIMIT = 200;
+
+export function marketShownRows(rows: MarketRow[]): MarketRow[] {
+  return rows.slice(0, MARKET_ROW_LIMIT);
+}
+
+/**
+ * The state a Market purchase is saved in. A weapon goes in the pack: the engine refuses any second
+ * wielded weapon next to the required Longsword (`combat.baseline_unsupported`), so asking to wield
+ * it would make every weapon's Buy a refusal. Armor, shields and gear are put on, as the sheet's
+ * earlier pickers did.
+ */
+export function marketActiveState(category: MarketCategory): ActiveStateDto {
+  return category === 'weapon' ? 'SelectedInactive' : 'EquippedActive';
+}
+
+/** What a buy or sale moved, in gp, off the two balances the backend reported. */
+export function marketMoneyMoved(beforeCopper: number, afterCopper: number): number {
+  return copperToGp(Math.abs(afterCopper - beforeCopper));
 }

@@ -29,6 +29,10 @@ export function gpToCopper(valueInGp: number): number {
   return Math.round(valueInGp * COPPER_PER_GOLD);
 }
 
+export function copperToGp(valueInCopper: number): number {
+  return valueInCopper / COPPER_PER_GOLD;
+}
+
 /** Never throws for the common "no money saved yet" case — resolves to a zero balance instead, matching the Rust command's own default-when-absent behavior. Outside a Tauri runtime, also resolves to zero. */
 export async function loadCharacterMoney(characterId: string): Promise<CharacterMoneyDto> {
   if (!hasTauriRuntime()) {
