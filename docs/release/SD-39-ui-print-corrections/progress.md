@@ -60,6 +60,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E3 | E3.2 | complete | 61aad6b9ab | artifacts/epic_3/E3.2_cycle_receipt.md |
 | E3 | E3.3 | complete | f905c625d2 | artifacts/epic_3/E3.3_cycle_receipt.md |
 | E3 | E3.4 | complete | af1e860a9c | artifacts/epic_3/E3.4_cycle_receipt.md |
+| E3 | E3.5 | complete | 9efc712f1d | artifacts/epic_3/E3.5_cycle_receipt.md |
 
 ## Epic reports
 
@@ -131,6 +132,8 @@ seed deltas, open blockers.)
 | E3.4 | A `+N` on an item the demo corpus did not hold | Bundle the Market's arms and armor and the 15 modifiers, as converted records | A modifier counted with its host missing, which reads a `+1 Breastplate` as AC +1; loading the whole corpus, which the desktop's own header rules out |
 | E3.4 | A second real weapon in hand | Allowed: the Melee number is the Longsword's, others have their own row | Keep the refusal, which left a bought Longsword impossible to hold |
 | E3.4 | Offers that cannot show | Stop offering them, by a rule reading the same corpus | Named exceptions in a test, which leaves the charge standing |
+| E3.5 | How Starfinder honours three price modes when it derives credits from what is held | One saved `selected_choices` row the engine adds to Credits remaining | Hiding the control there, or a sidecar `compute_sheet` cannot see |
+| E3.5 | Cyberpunk RED starter items the shop has no name for | On the Sell list, for nothing, and the line says so | A hand-kept name table (R2) |
 
 ## Open blockers
 
