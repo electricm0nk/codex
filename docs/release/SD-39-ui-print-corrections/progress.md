@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 9 of 53 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 14 of 53 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -55,6 +55,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E2 | E2.2 | complete | f321378d43 | artifacts/epic_2/E2.2_cycle_receipt.md |
 | E2 | E2.3 | complete | c10cbc057c | artifacts/epic_2/E2.3_cycle_receipt.md |
 | E2 | E2.4 | complete | 22688208ec | artifacts/epic_2/E2.4_cycle_receipt.md |
+| E2 | E2.MC | complete | this commit | artifacts/epic_2/E2.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -88,6 +89,29 @@ seed deltas, open blockers.)
 **Retro (`scripts/retro.py summary --since 2026-11-01T15:44:40-05:00 --json`):** 14 corrections, 6 verification runs with 0 failed, 0 incidents, 0 reworks, 0 deferrals. No recurrence key, so no new check under R-W. Most corrections are of the package's own text again: `lead` 4, package rows 5.
 
 **Open blockers:** none for the operator. E9.4's eyeball still has the only look at chip pixels and the badge.
+
+### Epic report — E2 (layout), merge check on `origin/tranche-19` @ `cb790d950f`
+
+**Cards done:** E2.1, E2.2, E2.3, E2.4, E2.MC. No card discovered.
+
+| Figure | Value | Command |
+|---|---|---|
+| Frontend | typecheck exit 0; 177/177 test files; inventory 133 rows, 18 screens | `cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc` |
+| E2.4's rows + the two it edited | 6 of 6 green | `npm run ui-smoke -- --only <ids>`, `E2.MC/final-rows-results.json` |
+| Rows E2.4 left blocked, run alone | 49 green, 3 red, of 52 | `npm run ui-smoke -- --only <52 ids>`, `E2.MC/smoke52-results.json` |
+| Full suite, two runs added | 113 green, 17 red, 3 manual, of 133 | `python3` counting `status` in `E2.4/full-suite-results.json` + that file. Separate sessions, never one run |
+| The 17 reds | 11 created character not in Load (the row never presses Add level), 4 old level select, 1 `character-class`, 1 `Magic Items` | their `reason` fields; none in a file E2 changed |
+| E2's Rust, data, lockfile | 0 files | `git diff --name-only becaabd23c..cb790d950f -- '*.rs' data 'Cargo.*' \| awk 'END{print NR}'` |
+| Audit tests | sd24 wired 5, sd24 identifier 1, sd26 identifier 1; 0 failed | `cargo test --locked -j 8 --test <each> -- --test-threads=8` |
+| Combat row wrap | beside at 1400 wide, under at 1300; default window 1920 | `xdotool windowsize` on the running app, `E2.MC/width-*.png` |
+
+**Seed deltas (base = `becaabd23c`, built in its own tree; head = `cb790d950f`):** PF Aldric, Elowen, Tomas: `sha256.txt` identical. SF x4 and CPR x5: `diff -r` empty, files on both sides (`E2.MC/seed-deltas.txt`).
+
+**Refuted, both fixed here:** E2.1's acceptance grep printed 1, matching the `Show Progression` label; the package's command is corrected (`decisions.md §25`). E2.4's title row stayed green with the rail heading put back to `Progression`; it now forbids `PROGRESSION`, and the same mutation goes red. **Holds:** click-outside and focus return with a real pointer, the wrap, the column placement at 1920, and no moved panel on the SF or CPR sheets (R15 has nothing to move there).
+
+**Retro (`scripts/retro.py summary --since 2026-11-02T02:00:47-05:00 --json`):** 7 corrections (E2.1, E2.2, E2.3 one each; E2.MC 4), 0 incidents, 0 deferrals, no repeated subject, so no new check under R-W. Package rows again the most common subject: 4 of 7.
+
+**Open, for the lead, no operator ruling needed:** E1.6 is `ready` and nothing will dispatch it. The run script drains a prefix only before that prefix's own merge check, and E1.MC discovered it. Drain `E1` before the next merge check, or E9.5's scan stops the run on it at closure.
 
 ## Decisions taken on safe defaults
 

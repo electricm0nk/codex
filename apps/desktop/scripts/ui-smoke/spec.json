@@ -6462,9 +6462,10 @@
         "Show Progression"
       ],
       "forbid": [
-        "Hide Progression"
+        "Hide Progression",
+        "PROGRESSION"
       ],
-      "notes": "SD-39 E2.4: the Pathfinder sheet after E2.1. The left rail is titled 'Character Details' (was 'Progression'; renders uppercase) and holds the Show Progression button; Abilities and Skills render on the sheet. The harness asserts text on the page, not which column holds it, so the column placement is pinned by sheetLayout.test.ts and not by this row. Opens the second starter seed (Elowen Ashgrave) as open-seed-elowen does."
+      "notes": "SD-39 E2.4: the Pathfinder sheet after E2.1. The left rail is titled 'Character Details' (was 'Progression'; renders uppercase) and holds the Show Progression button; Abilities and Skills render on the sheet. 'PROGRESSION' is forbidden because the Details panel's own title also reads CHARACTER DETAILS, so only the forbid sees the old rail heading (E2.MC). The harness asserts text on the page, not which column holds it, so the column placement is pinned by sheetLayout.test.ts and not by this row. Opens the second starter seed (Elowen Ashgrave) as open-seed-elowen does."
     },
     {
       "id": "sheet-progression-drawer-open",
