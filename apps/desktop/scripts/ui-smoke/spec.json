@@ -760,12 +760,55 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-feats"],
       "steps": [
+        { "op": "click", "target": "Remove" },
+        { "op": "wait", "ms": 4000 },
         { "op": "click", "target": "Add Feat" },
-        { "op": "key", "key": "Escape" }
+        { "op": "wait", "ms": 6000 }
       ],
-      "marker": "Add Feat",
-      "expect": ["Add Feat"],
-      "notes": "Same ItemPickerModal, feat-catalog mode (list_feats_for_character); dialog h2 title is 'Add Feat'."
+      "marker": "Hide feats I don't qualify for",
+      "expect": ["Add Feat", "Hide feats I don't qualify for", "hidden (prerequisites not met)"],
+      "allowGlobalForbid": ["failure"],
+      "notes": "Same ItemPickerModal, feat-catalog mode (list_feats_for_character); dialog h2 title is 'Add Feat'. A fresh Elf Wizard 1 has no feat room (the feat budget refuses an Add), so Add Feat is disabled until the row first clicks Remove on the character's one feat; only then does the click open the picker. The marker is the picker's own checkbox label, so the row is red when no picker opens. The box is ticked by default, so the count line reads '... hidden (prerequisites not met)'. allowGlobalForbid 'failure': feat descriptions contain that word."
+    },
+    {
+      "id": "sheet-action-add-feat-unmet-listed",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-feats"],
+      "steps": [
+        { "op": "click", "target": "Remove" },
+        { "op": "wait", "ms": 4000 },
+        { "op": "click", "target": "Add Feat" },
+        { "op": "wait", "ms": 6000 },
+        { "op": "click", "target": "Hide feats I don't qualify for" },
+        { "op": "wait", "ms": 2000 },
+        { "op": "key", "key": "Escape" },
+        { "op": "wait", "ms": 2000 },
+        { "op": "click", "target": "Add Feat" },
+        { "op": "wait", "ms": 6000 }
+      ],
+      "marker": "Hide feats I don't qualify for",
+      "expect": ["Add Feat", "Hide feats I don't qualify for", "unavailable (prerequisites not met)", "Unavailable \u2014"],
+      "forbid": ["hidden (prerequisites not met)"],
+      "allowGlobalForbid": ["failure"],
+      "notes": "Unticks the picker's hide-unmet box, closes the picker and reopens it: the choice persisted (localStorage), so the reopened picker lists every feat, the unmet ones greyed with 'Unavailable \u2014 <unmet list>', and the count line reads 'unavailable (prerequisites not met)' instead of 'hidden'. The harness checks the bodyText once, after the last step, so the row ends with the box UNTICKED (the state the assertions need); the app-data root is per run, so the setting does not leave the run. Not covered: clicking a greyed row (its Add stays disabled; unit-tested on selectableItemPickerEntry), a level-up feat pick."
+    },
+    {
+      "id": "sheet-action-custom-dialog-chips",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
+      "steps": [
+        { "op": "click", "target": "Custom" },
+        { "op": "click", "target": "Edit Custom\u2026" },
+        { "op": "wait", "ms": 1000 },
+        { "op": "click", "target": "Feats (0)" },
+        { "op": "click", "target": "Grants (0)" },
+        { "op": "key", "key": "Escape" },
+        { "op": "click", "target": "Edit Custom\u2026" },
+        { "op": "wait", "ms": 1000 }
+      ],
+      "marker": "GM grants and house rules.",
+      "expect": ["Grants (0)", "Feats (0)", "Equipment (0)"],
+      "notes": "CustomDialog's top-row chips (role=tab). The row opens the sheet's Custom tab, opens the dialog, selects Feats then Grants (so the Feats chip is deselected, the case that lost its resting style before the chip style fix) and reopens the dialog. The probe reads text, not computed style: this proves the chips render, are reachable by name and survive a select/deselect/reopen cycle. Not covered: that a deselected chip's computed background equals the resting chip's, in light and dark, and that exactly one chip has aria-selected=true (the probe snapshot carries no computed style or aria-selected); the style function is unit-tested in customChip.test.ts and the eyeball is E9.4."
     },
     {
       "id": "sheet-action-add-spell",
