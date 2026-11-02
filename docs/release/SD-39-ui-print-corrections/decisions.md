@@ -94,7 +94,7 @@ discovered card that re-runs the converter once more, never a hand edit of `data
 bonus; class bonus pools such as Fighter combat feats), exposed as explanations rows
 `feats.budget.<pool>.granted|spent|remaining`. `add_feat_selection` refuses at `remaining == 0` for the
 pool the feat would consume unless the "ignore feat budget" override is on. Duplicate = same `feat_id`
-(and same `target` when the feat takes one) unless `stackable`. Hide-unmet default ticked;
+(and same `target` when the feat takes one) unless `repeatable` (§25). Hide-unmet default ticked;
 `FeatPrerequisiteReport` (`apps/desktop/src-tauri/src/feat_catalog.rs:33–69`) already supplies the unmet
 list. Legacy over-budget: keep, badge, block adds. **Enforced by:** E1.1–E1.3, G-3. **Revisit:** the
 operator may ask for a soft warning instead of a block: one flag in E1.1.
@@ -318,6 +318,9 @@ package made and what the code shows.
 
 | E1.1's FILES YOU OWN: `feat_budget.rs`, `mod.rs`, `character_hub.rs`, `CharacterSheet.tsx`, `CreateCharacterForm.tsx`, `characterProgression.ts` | The Create count is `creationFeatSlots` in `manageItems.ts`; the draft's rows cross `boundary/draftSheetPreview.ts`; the feat levels need a command (`main.rs`) loaded with the roster (`classRoster.ts`), because the roster's wire is pinned to an SD-36 artifact | The row is amended; these are E1.1's named fence exits |
 | A budget is a count against what the character holds | Creation seeds Power Attack, Weapon Focus and (human, monk) Dodge, and form picks were appended on top: Human Fighter 1 with 2 picks saved 5 feats on 3 slots. Weapon Focus is required of every class by `unmet_combat_posture_conditions`, and a slot naming anything but its default is claim-blocked by `validate_fighter_feat_choice_legality` | A pick displaces seeded Power Attack, then Dodge, and the default's slot with it. A non-Fighter's seeded `feat:weapon_focus` token is not charged. Saved characters are not rewritten: R9 applies to them |
+
+| E1.2 and §6: the duplicate guard reads `stackable` | No such field: `grep -c stackable src/rules_core/sheet_rule.rs` is 0. The field is `repeatable`, equal to PCGen `MULT:YES` (E1.0, F-15). Nor does "unless stackable" settle Weapon Focus (longsword) twice: the feat is `repeatable`, and that pick is still a duplicate | E1.2 reads `repeatable`. A repeatable feat with a chooser contract is refused on a target it already holds; one with no contract (Fleet) may always be taken again |
+| A Create pick is an add like any other, so a pick equal to a seeded default is a duplicate | The seeds are not shown on Create, so a refusal would refuse a choice the screen offers. Refusal is also wrong in the other direction: if the seed stays, a later pick can displace it, and the player loses the feat they picked | The pick takes the seed's place, with the seed's slot (Power Attack, Dodge). Weapon Focus is not displaceable, so Create refuses it on the seeded target. The same pick twice refuses with `create.feat_duplicate` |
 
 **Measured (`python3` over `data/sheet_rules/*/equipment/*.json`, 2026-11-01):** 7,386 records, 2,906 with a slot
 tag, 1,617 with a `Slot:` line, 27 where the two differ (E1.0; the 19 first written here left out the 8 `Slot: none` weapons); the prose wins. Items with neither have no slot.

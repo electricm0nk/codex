@@ -36,7 +36,7 @@ status: planning-ready
 | NR-3 | PDF output is deterministic for identical input (fonts bundled, no timestamps) | golden test hashes two runs equal |
 | NR-4 | A4 and US Letter both lay out without clipped text (Typst overflow warnings = 0) | E8.5 asserts Typst diagnostics empty |
 | NR-5 | Feat add refuses at zero remaining for the consumed pool; error names the pool | `cargo test feat_budget` |
-| NR-6 | Duplicate feat refused unless `stackable` with a different target | `cargo test feat_duplicate` |
+| NR-6 | Duplicate feat refused unless `repeatable`, and on a different target when the feat takes one | `cargo test feat_duplicate` |
 | NR-7 | Market lists only the requested category; the Armor list contains zero `Ammunition`/`Weapon`/`Rod` records | `cargo test market_category_filter` (counts per category = 0 cross-type) |
 | NR-8 | +N variant price = base + masterwork + N²×(1000 armor/shield \| 2000 weapon) gp | `cargo test enhancement_price_table` against the CRB table (5 armor + 5 weapon rows) |
 | NR-9 | Worn applies, carried does not: AC with armor `SelectedInactive` = AC without armor; weight equal in both states | `cargo test worn_vs_carried` on Aldric |
