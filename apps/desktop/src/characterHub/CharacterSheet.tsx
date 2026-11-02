@@ -4708,7 +4708,7 @@ export function CharacterSheet(props: {
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
-          {/* The 2x2 block under the name, then the combat boxes; both placed by SHEET_LAYOUT. */}
+          {/* Under the name, one row: the 2x2 beside the 1x4, which wraps under it when narrow. Placed by SHEET_LAYOUT. */}
           <div style={SHEET_REGION_STYLES.combatRow}>{renderSheetRegion('combatRow')}</div>
 
           {/* Weapons / Defense / Gear — bottom, spanning the middle. Printing renders every tab after page 1 instead. */}

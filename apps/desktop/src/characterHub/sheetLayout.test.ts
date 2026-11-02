@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { buildPrintCss } from './printLayout';
 import {
+  COMBAT_ROW_WRAP,
   CREATE_LAYOUT,
   SHEET_REGIONS,
   SHEET_REGION_STYLES,
@@ -44,6 +45,32 @@ function verifiesAbilitiesListsItsScoresVertically() {
 
 function verifiesAcAttackSpeedSavesAreOwnBoxesInOrder() {
   assertEqual(idsIn('combatStrip'), 'armorClass|attack|speed|saves', 'AC, Attack, Speed, Saves in that order');
+}
+
+function verifiesTheTwoByTwoAndTheOneByFourShareOneRowThatWraps() {
+  // decisions.md §7: one row holds the 2x2 beside the 1x4; below the breakpoint the 1x4 wraps under.
+  const row = SHEET_REGION_STYLES.combatRow;
+  assertEqual(row.display, 'flex', 'the combat row is a flex container');
+  assertEqual(row.flexDirection, 'row', 'it lays the 2x2 and the 1x4 side by side');
+  assertEqual(COMBAT_ROW_WRAP, 'wrap', 'the wrap style token');
+  assertEqual(row.flexWrap, COMBAT_ROW_WRAP, 'the combat row carries the wrap token');
+
+  const strip = SHEET_REGION_STYLES.combatStrip;
+  assertEqual(strip.flexDirection, 'column', 'the 1x4 lists its four boxes top to bottom');
+
+  // A wrap needs a width to wrap at: both children must claim one, or flex-wrap never fires.
+  const block = SHEET_LAYOUT.find((box) => box.id === 'squareBlock')?.boxStyle;
+  const stripBox = SHEET_LAYOUT.find((box) => box.id === 'combatStrip')?.boxStyle;
+  assertEqual(block?.flex, `0 1 ${SQUARE_BLOCK_STYLE.maxWidth}`, 'the 2x2 claims its capped width and takes no more');
+  assertEqual(stripBox?.flex, '1 1 320px', 'the 1x4 claims the width the wrap turns on, and fills what its line has left');
+
+  const source = readFileSync(new URL('./CharacterSheet.tsx', import.meta.url), 'utf8');
+  assert(
+    source.includes("<div style={SHEET_REGION_STYLES.combatRow}>{renderSheetRegion('combatRow')}</div>"),
+    'the sheet puts the row style on the element that holds the two boxes',
+  );
+  assert(source.includes("case 'combatStrip':\n        return <div style={boxStyle}>"), 'the strip draws with its registered style');
+  assert(/case 'squareBlock':\n\s*return \(\n\s*<div style=\{boxStyle\}>/.test(source), 'the 2x2 draws with its registered style');
 }
 
 function verifiesEveryRegisteredBoxLandsInARenderedStack() {
@@ -128,6 +155,7 @@ verifiesEveryRegistryHasUniqueIdsAndAStyle('CREATE_LAYOUT', CREATE_LAYOUT);
 verifiesTheBoxToRegionMap();
 verifiesAbilitiesListsItsScoresVertically();
 verifiesAcAttackSpeedSavesAreOwnBoxesInOrder();
+verifiesTheTwoByTwoAndTheOneByFourShareOneRowThatWraps();
 verifiesEveryRegisteredBoxLandsInARenderedStack();
 verifiesTheSheetRendersEveryRegionFromTheRegistry();
 verifiesTheRailHeadingAndTheProgressionButton();
