@@ -44,7 +44,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 53
 | E1.MC | E1 merge check + Epic report | opus | complete | E1.3, E1.4, E1.5 | merged nothing; receipt artifacts/epic_1/E1.MC_cycle_receipt.md |
 | E1.6 | Feat pools a class grants by offers; Hunter counted once | opus | ready | E1.MC | discovered by E1.MC, decisions.md §21; row-order next |
 | E2.1 | Layout registry + Abilities/Details moves + title | opus | complete | E1.MC | commit 7d935657cb + receipt commit; receipt artifacts/epic_2/E2.1_cycle_receipt.md |
-| E2.2 | Combat row 2x2 + 1x4 | opus | waiting | E2.1 | |
+| E2.2 | Combat row 2x2 + 1x4 | opus | complete | E2.1 | commit f321378d43 + receipt commit; receipt artifacts/epic_2/E2.2_cycle_receipt.md |
 | E2.3 | Show Progression drawer shell | opus | waiting | E2.2 | |
 | E2.4 | ui-smoke rows + inventory | sonnet | waiting | E2.3 | |
 | E2.MC | E2 merge check + Epic report | opus | waiting | E2.4 | |
