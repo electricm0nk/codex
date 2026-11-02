@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Greataxe (Base)",
+    "name": "Greataxe",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Greataxe (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greataxe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.TwoHanded.Slashing.Axe.Weapon Group Axes"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d12"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_greataxe_base.txt",
+    "record_key": "Greataxe (Base)"
+  }
+}

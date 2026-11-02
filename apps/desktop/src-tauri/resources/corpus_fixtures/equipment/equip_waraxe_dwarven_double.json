@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Waraxe (Dwarven Double)",
+    "name": "Waraxe (Dwarven Double)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_waraxe_dwarven_double.txt",
+    "record_key": "Waraxe (Dwarven Double)"
+  }
+}

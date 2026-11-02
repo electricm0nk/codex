@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Longhammer (Dwarven)",
+    "name": "Longhammer (Dwarven)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Longhammer, Dwarven"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Longhammer (Dwarven)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Dwarven.Bludgeoning.Exotic.Hammer.Reach"
+      },
+      {
+        "key": "COST",
+        "value": "70"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SPROP",
+        "value": "These heavy-headed bludgeons are often carved or cast with monstrous faces or drilled with tiny holes to create a menacing whistling as they are swung through the air.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_longhammer_dwarven.txt",
+    "record_key": "Longhammer (Dwarven)"
+  }
+}

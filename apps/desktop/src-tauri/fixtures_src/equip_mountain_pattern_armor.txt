@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Mountain Pattern Armor
+Mountain Pattern Armor	PROFICIENCY:ARMOR|Mountain Pattern Armor	TYPE:Armor.Medium.ArmorProfMedium.Suit.Standard	COST:250	WT:40		ACCHECK:-4		EQMOD:Material ~ Steel				MAXDEX:3		SPELLFAILURE:30		BONUS:COMBAT|AC|6|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

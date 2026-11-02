@@ -357,6 +357,10 @@ pub struct ResolvedEquipmentEffectDto {
     pub category: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub armor_class_bonus: Option<i16>,
+    /// The enhancement bonus this worn item's own `+N` adds on top of `armor_class_bonus`, its own
+    /// row in the AC breakdown. Absent when the item holds none.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub armor_class_enhancement: Option<i16>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_dex: Option<i16>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1318,6 +1322,7 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
                     equipment_record_key: effect.equipment_record_key.clone(),
                     category: format!("{:?}", effect.category),
                     armor_class_bonus: effect.armor_class_bonus,
+                    armor_class_enhancement: effect.armor_class_enhancement,
                     max_dex: effect.max_dex,
                     spell_failure: effect.spell_failure,
                     armor_check_penalty: effect.armor_check_penalty,
@@ -9130,6 +9135,284 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- a +N reaches the numbers the sheet reads, only while worn or wielded -----
+
+    /// A starter Aldric (Fighter 3, Longsword wielded, Chain Shirt worn) with money in hand, and
+    /// the directory to clean up.
+    fn enhancement_rows_aldric(label: &str) -> (PathBuf, PathBuf) {
+        let app_data_dir = tempdir(label);
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let root = characters_root_from_app_data_dir(&app_data_dir).join(DEFAULT_CHARACTER_ID);
+        adjust_character_money_at_root(&root, 10_000_000).expect("funding should succeed");
+        (app_data_dir, root)
+    }
+
+    /// The numbers a player reads: the two tiles, touch and flat-footed, and the Longsword's row.
+    #[derive(Debug, PartialEq, Clone, Copy)]
+    struct EnhancementRead {
+        melee: i16,
+        armor_class: i16,
+        touch: i16,
+        flat_footed: i16,
+        sword_attack: Option<i16>,
+        sword_damage: Option<i16>,
+    }
+
+    fn enhancement_read(root: &Path) -> EnhancementRead {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        let row = |id: &str| {
+            loaded.explanations.iter().find(|e| e.id == id).unwrap_or_else(|| panic!("no {id} row")).value
+        };
+        let sword = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longsword (Base)"));
+        EnhancementRead {
+            melee: snapshot.baseline_melee_attack_bonus,
+            armor_class: snapshot.baseline_armor_class,
+            touch: row("defense.touch_armor_class"),
+            flat_footed: row("defense.flat_footed_armor_class"),
+            sword_attack: sword.and_then(|w| w.enhancement_attack_bonus),
+            sword_damage: sword.and_then(|w| w.enhancement_damage_bonus),
+        }
+    }
+
+    fn enhancement_attach(root: &Path, item: &str, modifier: &str) {
+        let response = attach_equipment_modifier_at_root(root, item, modifier, "2026-11-02T00:00:00Z")
+            .expect("attach call should not error");
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+    }
+
+    fn enhancement_buy(root: &Path, item: &str, state: ActiveState, bonus: u8) {
+        let response = purchase_equipment_offer_at_root(root, item, state, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(bonus))
+            .expect("purchase call should not error");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+    }
+
+    /// The card's own case: Aldric with a `+1` on the sword he wields.
+    #[test]
+    fn enhancement_rows_a_wielded_plus_one_adds_to_attack_and_damage() {
+        let (dir, root) = enhancement_rows_aldric("enh-wielded");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +1 ~ Weapon");
+        let after = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(before.sword_attack, Some(0));
+        assert_eq!(before.sword_damage, Some(0));
+        assert_eq!(after.melee, before.melee + 1, "the Melee tile");
+        assert_eq!(after.sword_attack, Some(1), "the Weapons tab's attack column");
+        assert_eq!(after.sword_damage, Some(1), "the Weapons tab's damage column");
+        assert_eq!(after.armor_class, before.armor_class, "a weapon's +1 is not armor");
+    }
+
+    /// The same sword stowed: nothing it holds reaches a number. The Longsword is required for a
+    /// computed sheet, so the check reads the engine's own receipt, which has a row when it does.
+    #[test]
+    fn enhancement_rows_a_stowed_plus_one_adds_nothing() {
+        let (dir, root) = enhancement_rows_aldric("enh-stowed");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, MARKET_SWORD, ActiveState::SelectedInactive, 1);
+        let carried = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(carried, before, "a +1 sword in the pack beside the plain one in hand");
+
+        let mut input = compose_character_input(&request_for("race:human", 3));
+        let sword = input.chosen.equipment_selections.iter_mut().find(|s| s.item_id == "item:longsword").unwrap();
+        sword.applied_modifiers.push("Special Ability ~ +1 ~ Weapon".to_owned());
+        sword.active_state = ActiveState::SelectedInactive;
+        let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+        assert_eq!(receipt.corpus_derived.equipment_effects.attack_bonus_delta, None, "no weapon in hand");
+        assert!(
+            resolve_weapon_damage_breakdown(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3).is_empty(),
+            "a stowed sword has no damage row"
+        );
+    }
+
+    /// A worn `+N` armor adds to Armor Class and to flat-footed, and not to touch, which ignores armor.
+    #[test]
+    fn enhancement_rows_a_worn_armor_adds_its_bonus_to_ac() {
+        let (dir, root) = enhancement_rows_aldric("enh-armor");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +2 ~ Armor");
+        let after = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(after.armor_class, before.armor_class + 2);
+        assert_eq!(after.flat_footed, before.flat_footed + 2);
+        assert_eq!(after.touch, before.touch);
+        assert_eq!(after.melee, before.melee);
+        let shirt = loaded.corpus_derived.equipment_effects.per_item.iter().find(|e| e.item_id == "item:chain_shirt").unwrap();
+        assert_eq!(shirt.armor_class_bonus, Some(4), "the item's own row keeps the armor's own value");
+        assert_eq!(shirt.armor_class_enhancement, Some(2), "the enhancement is its own row");
+        assert_eq!(loaded.corpus_derived.equipment_effects.armor_class_delta, 6, "the panel's total is the rows' sum");
+    }
+
+    /// A carried `+N` armor or shield adds nothing; worn, a shield adds its own value and its `+N`.
+    #[test]
+    fn enhancement_rows_a_shield_counts_only_while_worn() {
+        let shield = "Heavy Wooden Shield (Base)";
+        let (dir, root) = enhancement_rows_aldric("enh-shield-carried");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, shield, ActiveState::SelectedInactive, 3);
+        enhancement_buy(&root, "Breastplate (Base)", ActiveState::SelectedInactive, 2);
+        assert_eq!(enhancement_read(&root), before, "carried");
+        std::fs::remove_dir_all(&dir).ok();
+
+        let (dir, root) = enhancement_rows_aldric("enh-shield-worn");
+        enhancement_buy(&root, shield, ActiveState::EquippedActive, 3);
+        let worn = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(worn.armor_class, before.armor_class + 2 + 3, "Heavy Wooden Shield's +2, and its +3");
+        assert_eq!(worn.touch, before.touch, "touch ignores a shield");
+        let row = loaded.corpus_derived.equipment_effects.per_item.iter().find(|e| e.item_id == shield).unwrap();
+        assert_eq!((row.armor_class_bonus, row.armor_class_enhancement), (Some(2), Some(3)));
+    }
+
+    /// Bonuses of one type do not stack with themselves. Two different `+N` on one copy: the higher.
+    #[test]
+    fn enhancement_rows_two_bonuses_on_one_copy_take_the_higher() {
+        let (dir, root) = enhancement_rows_aldric("enh-no-stack");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +1 ~ Weapon");
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +3 ~ Weapon");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +2 ~ Armor");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +1 ~ Armor");
+        let after = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after.melee, before.melee + 3);
+        assert_eq!(after.sword_damage, Some(3));
+        assert_eq!(after.armor_class, before.armor_class + 2);
+    }
+
+    /// A bonus of the wrong family, which Attach Modifier allows, moves nothing: each record's own
+    /// rule says what it applies to.
+    #[test]
+    fn enhancement_rows_a_bonus_of_the_wrong_family_adds_nothing() {
+        let (dir, root) = enhancement_rows_aldric("enh-wrong-kind");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +1 ~ Armor");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +1 ~ Weapon");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +1 ~ Shield");
+        let after = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after, before);
+    }
+
+    /// A `+1` Longsword off the Market is a weapon the character can hold: both in hand, then the
+    /// plain one stowed. The last Longsword in hand cannot be stowed; the sheet needs one.
+    #[test]
+    fn enhancement_rows_a_bought_sword_goes_in_hand_and_counts_there() {
+        let (dir, root) = enhancement_rows_aldric("enh-bought-sword");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, MARKET_SWORD, ActiveState::SelectedInactive, 1);
+        let at = "2026-11-02T00:00:00Z";
+        let wield = set_equipment_active_state_at_root(&root, MARKET_SWORD, ActiveState::EquippedActive, at).unwrap();
+        assert!(matches!(wield, CreateCharacterResponse::Saved { .. }), "{wield:?}");
+        assert_eq!(enhancement_read(&root).melee, before.melee + 1, "both in hand: the better one is swung");
+        let stow = set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, at).unwrap();
+        assert!(matches!(stow, CreateCharacterResponse::Saved { .. }), "{stow:?}");
+        let after = enhancement_read(&root);
+        assert_eq!(after.melee, before.melee + 1);
+        assert_eq!((after.sword_attack, after.sword_damage), (Some(1), Some(1)));
+
+        let last = set_equipment_active_state_at_root(&root, MARKET_SWORD, ActiveState::SelectedInactive, at).unwrap();
+        assert!(!matches!(last, CreateCharacterResponse::Saved { .. }), "{last:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A `+2` Dagger in the other hand has its own row, and the Longsword's number stays its own.
+    #[test]
+    fn enhancement_rows_a_second_weapon_has_its_own_row() {
+        let (dir, root) = enhancement_rows_aldric("enh-second-weapon");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, "Dagger (Base)", ActiveState::EquippedActive, 2);
+        let after = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after, before);
+        let dagger = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Dagger (Base)")).unwrap();
+        assert_eq!((dagger.enhancement_attack_bonus, dagger.enhancement_damage_bonus), (Some(2), Some(2)));
+    }
+
+    /// Every weapon the Market sells a `+N` of, in hand at its highest offer, has a row holding that
+    /// bonus. The Market offers none on what has no row to hold it: no damage die to add to, or no
+    /// record on this corpus (a `.COPY`/`.MOD` pair of rows, which a one-row fixture cannot hold).
+    #[test]
+    fn enhancement_rows_every_weapon_offer_reaches_its_row() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        const NO_ROW: [&str; 7] =
+            ["Net (Base)", "Snag Net", "Wrist Launcher", "Lasso", "Poisoned Sand Tube", "Mantis Blade", "Rending Claw Blades"];
+        let corpus = corpus_fixture_bundle();
+        let market = list_market(MarketFilter { category: MarketCategory::Weapon, name_contains: None, book: None });
+        assert_eq!(market.types_error, None);
+        for key in NO_ROW {
+            let row = market.entries.iter().find(|row| row.entry.key == key).unwrap_or_else(|| panic!("no {key} row"));
+            assert!(row.variants.is_empty(), "{key} has offers");
+        }
+        let mut checked = 0;
+        let mut missing = Vec::new();
+        for row in market.entries.iter().filter(|row| !row.variants.is_empty()) {
+            let key = row.entry.key.as_str();
+            checked += 1;
+            let top = row.variants.iter().max_by_key(|v| v.bonus).unwrap();
+            let mut input = compose_character_input(&request_for("race:human", 3));
+            input.chosen.equipment_selections.push(EquipmentSelection {
+                item_id: key.to_owned(),
+                equipped_or_active: true,
+                active_state: ActiveState::EquippedActive,
+                applied_modifiers: vec![top.modifier_key.clone()],
+            });
+            let effects = compute_pilot_with_corpus(&input, corpus).corpus_derived.equipment_effects;
+            let rows = resolve_weapon_damage_breakdown(&input, corpus, &effects, 3);
+            let bonus = rows.last().filter(|r| r.weapon_item_id == key).and_then(|r| r.weapon_enhancement.as_ref());
+            let want = i16::from(top.bonus);
+            if bonus.map(|b| (b.attack_bonus, b.damage_bonus)) != Some((want, want)) {
+                missing.push(key.to_owned());
+            }
+        }
+        println!("weapon rows with an offer: {checked}; not reaching a row: {}", missing.len());
+        assert!(checked > 0);
+        assert!(missing.is_empty(), "{}: {missing:#?}", missing.len());
+    }
+
+    /// Every armor and shield the Market sells a `+N` of, and every bonus it offers, resolves with
+    /// a number on the sheet's corpus. A row missing here would charge for a bonus that never
+    /// arrives, on an armor that adds no AC at all.
+    #[test]
+    fn enhancement_rows_every_armor_and_shield_offer_reaches_the_sheet_corpus() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let corpus = corpus_fixture_bundle();
+        let mut checked = 0;
+        let mut missing = Vec::new();
+        for category in [MarketCategory::Armor, MarketCategory::Shield] {
+            let market = list_market(MarketFilter { category, name_contains: None, book: None });
+            assert_eq!(market.types_error, None);
+            for row in market.entries.iter().filter(|row| !row.variants.is_empty()) {
+                checked += 1;
+                let selection = EquipmentSelection {
+                    item_id: row.entry.key.clone(),
+                    equipped_or_active: true,
+                    active_state: ActiveState::EquippedActive,
+                    applied_modifiers: row.variants.iter().map(|v| v.modifier_key.clone()).collect(),
+                };
+                let effects = codex::rules_core::equipment_effects::compute_equipment_effects(&[selection], corpus);
+                let found = effects.per_item.first();
+                let top = row.variants.iter().map(|v| i16::from(v.bonus)).max();
+                if found.and_then(|e| e.armor_class_enhancement) != top {
+                    missing.push(row.entry.key.clone());
+                }
+            }
+        }
+        println!("armor and shield rows with an offer: {checked}; not reaching the sheet: {}", missing.len());
+        assert!(
+            codex::rules_core::equipment_resolver::equipment_converted_resolve("item:shield", corpus).is_none(),
+            "the seeds carry an Absent `item:shield`; a record answering it would list a shield they do not hold"
+        );
+        assert!(checked > 0);
+        assert!(missing.is_empty(), "{}: {missing:#?}", missing.len());
+    }
+
     // ----- price modes: cashless / buy 100% sell 50% / character build (100% both ways) -----
 
     fn fund_and_seed(label: &str, copper: i64) -> std::path::PathBuf {
@@ -9466,9 +9749,14 @@ mod tests {
     #[test]
     fn market_buy_sell_a_buy_the_engine_refuses_charges_nothing() {
         let root = fund_and_seed("market-engine-refused", 300_000);
+        // No Longsword in hand: the sheet cannot compute, whatever the save adds.
+        let mut stowed = SavedCharacterStore::load(&root).unwrap();
+        let sword = stowed.character_input.chosen.equipment_selections.iter_mut().find(|s| s.item_id == "item:longsword").unwrap();
+        sword.active_state = ActiveState::SelectedInactive;
+        SavedCharacterStore::save(&stowed, &root).unwrap();
         let before = SavedCharacterStore::load(&root).unwrap();
         let response = purchase_equipment_offer_at_root(
-            &root, MARKET_SWORD, ActiveState::EquippedActive, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(1),
+            &root, "Chain Shirt (Base)", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(1),
         )
         .expect("purchase call should not error");
         let PurchaseEquipmentResponse::Blocked { diagnostics } = response else {
@@ -9916,7 +10204,7 @@ mod tests {
     }
 
     /// End-to-end proof that an attached-but-corpus-unresolvable modifier
-    /// (the desktop app's bundled demo corpus has zero equipmods records)
+    /// (the desktop app's bundled demo corpus holds only the `+N` equipmods)
     /// surfaces honestly through the real `corpusDerived` response rather
     /// than silently vanishing -- closes the loop this sub-task's
     /// `unresolved_equipment_item_ids` extension exists for.
@@ -9929,7 +10217,7 @@ mod tests {
         let response = attach_equipment_modifier_at_root(
             &root,
             "item:longsword",
-            "Special Ability ~ +1 ~ Weapon",
+            "Special Ability ~ Anarchic ~ Weapon",
             "2026-07-23T00:00:00Z",
         )
         .expect("attach call should not error");
@@ -9939,8 +10227,8 @@ mod tests {
                 assert!(
                     corpus_derived
                         .unresolved_equipment_item_ids
-                        .contains(&"Special Ability ~ +1 ~ Weapon".to_string()),
-                    "the bundled demo corpus has no equipmods records, so the attached modifier \
+                        .contains(&"Special Ability ~ Anarchic ~ Weapon".to_string()),
+                    "the bundled demo corpus has no Anarchic record, so the attached modifier \
                      must be traceable as unresolved rather than silently inert: {corpus_derived:?}"
                 );
             }
@@ -12837,6 +13125,7 @@ mod tests {
                 equipment_record_key: "Special Ability ~ Spell Resistance / 13 ~ Armor".to_owned(),
                 category: "Equipmods".to_owned(),
                 armor_class_bonus: None,
+                armor_class_enhancement: None,
                 max_dex: None,
                 spell_failure: None,
                 armor_check_penalty: None,

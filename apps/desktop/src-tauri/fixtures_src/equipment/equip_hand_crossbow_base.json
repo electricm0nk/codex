@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You can draw a hand crossbow back by hand. Loading a hand crossbow is a move action that provokes attacks of opportunity. You can shoot, but not load, a hand crossbow with one hand at no penalty. You can shoot a hand crossbow with each hand, but you take a penalty on attack rolls as if attacking with two light weapons.",
+    "key": "Hand Crossbow (Base)",
+    "name": "Hand Crossbow",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hand Crossbow (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Crossbow (Hand)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Ranged.Exotic.Container.Projectile.Piercing.Crossbow.Weapon Group Crossbows"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Bolt"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "RANGE",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "DESC",
+        "value": "You can draw a hand crossbow back by hand. Loading a hand crossbow is a move action that provokes attacks of opportunity. You can shoot, but not load, a hand crossbow with one hand at no penalty. You can shoot a hand crossbow with each hand, but you take a penalty on attack rolls as if attacking with two light weapons."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_hand_crossbow_base.txt",
+    "record_key": "Hand Crossbow (Base)"
+  }
+}

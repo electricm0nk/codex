@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Wakizashi
+Wakizashi																				PROFICIENCY:WEAPON|Wakizashi								TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.Light.Finesseable.Exotic.Piercing.Slashing.Deadly.BladeLight																											COST:35	WT:2										CRITMULT:x2	CRITRANGE:3							DAMAGE:1d6					EQMOD:Material ~ Steel																																									WIELD:Light								SIZE:M	SOURCEPAGE:p.40

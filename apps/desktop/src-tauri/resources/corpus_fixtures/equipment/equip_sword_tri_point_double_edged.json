@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Sword (Tri-Point Double-Edged)",
+    "name": "Sword (Tri-Point Double-Edged)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_sword_tri_point_double_edged.txt",
+    "record_key": "Sword (Tri-Point Double-Edged)"
+  }
+}

@@ -48,7 +48,7 @@
 //! wave-18 lane guarded only `damage_total::
 //! resolve_weapon_enhancement_modifier` (the `weapon_enhancement_bonus`
 //! top-level-selection consumer). It left `equipment_effects::
-//! resolve_weapon_to_hit_bonus` — the function actually called for
+//! attached_weapon_enhancement` — the function actually called for
 //! `to_hit_bonus`/`attack_bonus_delta` via `selection.applied_modifiers`,
 //! the SAME attachment shape `attach_equipment_modifier_at_root` uses —
 //! unguarded, so an equipped Amulet of Mighty Fists still leaked its

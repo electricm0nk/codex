@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Taiaha",
+    "name": "Taiaha",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Taiaha"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Exotic.Bludgeoning.Double.Hammer"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Resizable.Melee.Exotic.Piercing"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_taiaha.txt",
+    "record_key": "Taiaha"
+  }
+}

@@ -296,6 +296,8 @@ export interface ResolvedEquipmentEffectDto {
   /** `'ArmsArmor' | 'General' | 'MagicItems' | 'Equipmods'`. */
   category: string;
   armorClassBonus?: number;
+  /** The enhancement bonus this worn item's own `+N` adds on top of `armorClassBonus`. */
+  armorClassEnhancement?: number;
   maxDex?: number;
   spellFailure?: number;
   armorCheckPenalty?: number;

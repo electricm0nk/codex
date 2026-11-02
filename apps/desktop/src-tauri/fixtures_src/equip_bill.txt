@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Bill
+Bill																	PROFICIENCY:WEAPON|Bill				TYPE:Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Slashing.Polearm											COST:11	WT:11		CRITMULT:x3	CRITRANGE:1	DAMAGE:1d8				EQMOD:Special Quality ~ Brace.Special Quality ~ Disarm.Material ~ Wood					WIELD:TwoHanded			REACHMULT:2		SIZE:M	SOURCEPAGE:p.177

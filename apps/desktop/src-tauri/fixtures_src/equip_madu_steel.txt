@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Madu (Steel)
+Madu (Steel)														PROFICIENCY:SHIELD|Shield (Light)	TYPE:Shield.Light.Standard.Close									COST:50	WT:6		ACCHECK:-2								EQMOD:Material ~ Steel																														SOURCEPAGE:p.13	SPELLFAILURE:5																																	BONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0

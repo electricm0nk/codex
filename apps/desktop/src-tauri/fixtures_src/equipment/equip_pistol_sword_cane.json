@@ -1,0 +1,98 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Pistol (Sword Cane)",
+    "name": "Pistol (Sword Cane)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Sword Cane Pistol"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Pistol (Sword Cane)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Bludgeoning.Container.Projectile.Firearm.Weapon Group Firearms.Pistol.Double"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Martial.Standard.Piercing.Sword"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "1|FirearmBullet=1"
+      },
+      {
+        "key": "COST",
+        "value": "775"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHandOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "10"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.46"
+      },
+      {
+        "key": "SPROP",
+        "value": "Misfire 1 (5 ft.)"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_pistol_sword_cane.txt",
+    "record_key": "Pistol (Sword Cane)"
+  }
+}

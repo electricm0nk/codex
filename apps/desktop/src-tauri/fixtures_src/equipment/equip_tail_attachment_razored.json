@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tail Attachment (Razored)",
+    "name": "Tail Attachment (Razored)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tail Attachment, Razored"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Kobold Tail Attachment"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.KoboldTailAttachment.Slashing.Finesseable"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SPROP",
+        "value": "This metal wedge has a prickly edge on one of its sides.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_tail_attachment_razored.txt",
+    "record_key": "Tail Attachment (Razored)"
+  }
+}

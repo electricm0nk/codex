@@ -82,8 +82,7 @@ const render = (overrides: Partial<MarketDialogViewProps>) => renderToStaticMark
   assertEqual(formatMarketPrice(null, 'gp'), 'No listed price', 'no price is said, not zero');
 }
 
-// A weapon goes in the pack: the engine refuses any second wielded weapon next to the required
-// Longsword (`combat.baseline_unsupported`), so wielding it would make every weapon Buy a refusal.
+// A weapon goes in the pack, and the player takes it in hand from the Weapons tab.
 for (const category of MARKET_CATEGORIES) {
   assertEqual(
     marketActiveState(category.value),

@@ -363,10 +363,9 @@ export function marketShownRows(rows: MarketRow[]): MarketRow[] {
 }
 
 /**
- * The state a Market purchase is saved in. A weapon goes in the pack: the engine refuses any second
- * wielded weapon next to the required Longsword (`combat.baseline_unsupported`), so asking to wield
- * it would make every weapon's Buy a refusal. Armor, shields and gear are put on, as the sheet's
- * earlier pickers did.
+ * The state a Market purchase is saved in. A weapon goes in the pack, and the player takes it in hand
+ * from the Weapons tab: which hand it fills is the slot check's to decide. Armor, shields and gear are
+ * put on, as the sheet's earlier pickers did.
  */
 export function marketActiveState(category: MarketCategory): ActiveStateDto {
   return category === 'weapon' ? 'SelectedInactive' : 'EquippedActive';

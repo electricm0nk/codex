@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Chakram
+Chakram																PROFICIENCY:WEAPON|Chakram			TYPE:Weapon.Resizable.Martial.Ranged.Thrown.Standard.Slashing.Chakram												COST:1	WT:1		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d8				EQMOD:Material ~ Steel																RANGE:30				SIZE:M	SOURCEPAGE:p.177

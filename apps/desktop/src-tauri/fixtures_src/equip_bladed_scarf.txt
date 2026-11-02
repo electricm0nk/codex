@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: iswg_equip_arms_armor.lst, KEY: Bladed Scarf
+Bladed Scarf											PROFICIENCY:WEAPON|Bladed Scarf													TYPE:Weapon.Resizable.Melee.TwoHanded.Exotic.Finesseable.Standard.Slashing											COST:12	WT:2										CRITMULT:x2	CRITRANGE:1				DAMAGE:1d6	EQMOD:Material ~ Cloth.Special Quality ~ Disarm.Special Quality ~ Trip														WIELD:TwoHanded									SIZE:M	SOURCEPAGE:p.290

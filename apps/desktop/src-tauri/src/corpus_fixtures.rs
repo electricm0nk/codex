@@ -14,8 +14,9 @@
 //! not listed in `bundle.resources`, so no PCGen token text goes into the
 //! installer. Regenerate with `cargo run --locked --bin
 //! gen_desktop_fixture_corpus` then `--bin gen_settled_corpus`.
-//! This is enough to prove `compute_pilot_with_corpus` resolves real
-//! corpus data end-to-end in the live UI; it is not a general corpus
+//! It holds the arms and armor the Market sells a `+N` of, and those `+N`
+//! modifiers, so a worn or wielded `+N` moves the sheet's numbers
+//! (`enhancement_rows_*` in `character_hub.rs`); it is not a general corpus
 //! provider. Exhaustive corpus coverage is out of scope here (see
 //! `~/workspace/SD-19-core-rules-spell-equipment-reachability-scope-draft.md`
 //! §2.4/§2.5 — that coverage is already proven by the loop's own
@@ -23,8 +24,8 @@
 //!
 //! The `SourcePackageContent` is built once, lazily, and cached for the
 //! process lifetime — the underlying parsed records are leaked to get a
-//! `'static` borrow, which is fine for a fixed, ~4-record bundle built at
-//! most once per process.
+//! `'static` borrow, which is fine for a fixed bundle built at most once
+//! per process.
 
 use std::path::PathBuf;
 use std::sync::OnceLock;
@@ -35,15 +36,19 @@ use codex::rules_core::source_content::SourcePackageContent;
 use crate::authoring_workbench::resolve_package_path;
 
 const FIXTURE_RESOURCE_ROOT: &str = "resources/corpus_fixtures";
-/// The CONVERTED records this crate actually reads, in the
-/// `<root>/spell/*.json` + `<root>/equipment/*.json` layout
-/// `rules_core::corpus_loader` reads the real corpus in.
-const CONVERTED_RECORDS: &[&str] = &[
-    "spell/spell_abjuration.json",
-    "spell/spell_illusion.json",
-    "equipment/equip_longsword.json",
-    "equipment/equip_chain_shirt.json",
-];
+/// What the load must find, in the `<root>/spell/*.json` + `<root>/equipment/*.json` layout
+/// `rules_core::corpus_loader` reads the real corpus in: every converted record that shipped.
+const CONVERTED_RECORD_DIRS: &[&str] = &["spell", "equipment"];
+
+/// How many converted records are on disk beside the bundle.
+fn converted_record_count(dir: &std::path::Path) -> usize {
+    CONVERTED_RECORD_DIRS
+        .iter()
+        .filter_map(|kind| std::fs::read_dir(dir.join(kind)).ok())
+        .flatten()
+        .filter(|entry| entry.as_ref().is_ok_and(|e| e.path().extension().is_some_and(|ext| ext == "json")))
+        .count()
+}
 
 fn fixture_dir() -> Result<PathBuf, String> {
     resolve_package_path(FIXTURE_RESOURCE_ROOT)
@@ -64,11 +69,12 @@ fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
     // Loud, never partial: this is a bounded, committed package. An empty or short load means
     // the resource did not ship or the generator was not re-run, which is a broken build --
     // not a diagnostic to be collected and rendered as a character with no equipment.
+    let shipped = converted_record_count(&dir);
+    assert!(shipped > 0, "no converted record shipped under {}", dir.display());
     assert_eq!(
         package.len(),
-        CONVERTED_RECORDS.len(),
-        "bundled corpus fixture package must carry exactly {} converted records, got {} (diagnostics: {:?})",
-        CONVERTED_RECORDS.len(),
+        shipped,
+        "bundled corpus fixture package must carry all {shipped} converted records, got {} (diagnostics: {:?})",
         package.len(),
         package.diagnostics,
     );
@@ -90,7 +96,13 @@ mod tests {
     #[test]
     fn bundled_fixture_directory_resolves_and_contains_expected_files() {
         let dir = fixture_dir().expect("fixture dir must resolve in a source checkout");
-        for name in CONVERTED_RECORDS.iter() {
+        for name in [
+            "spell/spell_abjuration.json",
+            "spell/spell_illusion.json",
+            "equipment/equip_longsword.json",
+            "equipment/equip_chain_shirt.json",
+            "equipment/equip_special_ability_5_shield.json",
+        ] {
             assert!(
                 dir.join(name).is_file(),
                 "expected bundled fixture '{name}' at {}",
@@ -165,7 +177,7 @@ mod tests {
     }
 
     #[test]
-    fn corpus_fixture_bundle_has_two_spells_and_two_equipment_records() {
+    fn corpus_fixture_bundle_has_two_spells_and_every_market_arm_and_armor() {
         let corpus = corpus_fixture_bundle();
         assert_eq!(
             corpus.records_by_kind(SourceContentKind::Spell).len(),
@@ -174,8 +186,12 @@ mod tests {
         );
         assert_eq!(
             corpus.records_by_kind(SourceContentKind::Equipment).len(),
-            2,
-            "expected 2 bundled equipment records"
+            // The Market's 217 weapon + 51 armor and shield rows, less 2 weapons that are a `.COPY`/
+            // `.MOD` pair no one-row fixture can hold, and less 2 `Shield (Light/.../Quickdraw)`
+            // twins of `Quickdraw Shield (Light/...)`, whose names would answer the seeds'
+            // `item:shield` by normalized name. Then the 15 `+N` modifiers.
+            279,
+            "expected 279 bundled equipment records"
         );
     }
 }

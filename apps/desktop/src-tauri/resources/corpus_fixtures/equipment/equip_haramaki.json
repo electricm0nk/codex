@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Haramaki",
+    "name": "Haramaki"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_haramaki.txt",
+    "record_key": "Haramaki"
+  }
+}

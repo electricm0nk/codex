@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: arg_equip_arms_armor.lst, KEY: Tail Attachment (Spiked)
+Tail Attachment (Spiked)	OUTPUTNAME:Tail Attachment, Spiked		PROFICIENCY:WEAPON|Kobold Tail Attachment		TYPE:Weapon.Resizable.Melee.Light.KoboldTailAttachment.Piercing.Finesseable									COST:3	WT:2						CRITMULT:x3	CRITRANGE:1	DAMAGE:1d8	EQMOD:Material ~ Steel												WIELD:Light																														SPROP:This narrow spike tapers to a sharp point.|PRERULE:1,DisplayWeaponDetails

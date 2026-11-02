@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Lamellar (Leather)",
+    "name": "Lamellar (Leather)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Lamellar"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "60"
+      },
+      {
+        "key": "WT",
+        "value": "25"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Leather"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "3"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "20"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_lamellar_leather.txt",
+    "record_key": "Lamellar (Leather)"
+  }
+}

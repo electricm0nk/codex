@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: iswg_equip_arms_armor.lst, KEY: Klar (as weapon)
+Klar (as weapon)											PROFICIENCY:WEAPON|Klar															TYPE:Weapon.Resizable.Melee.OneHanded.Martial.Standard.Slashing													COST:12	WT:6										CRITMULT:x2	CRITRANGE:1				DAMAGE:1d6	EQMOD:Material ~ Steel																						WIELD:OneHanded									SIZE:M	SOURCEPAGE:p.290

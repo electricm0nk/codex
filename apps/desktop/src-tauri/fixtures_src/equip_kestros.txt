@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Kestros
+Kestros																				PROFICIENCY:WEAPON|Kestros								TYPE:Weapon.Resizable.Ranged.Exotic.Piercing.Sling																																					COST:1	WT:1										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d8					EQMOD:Material ~ Leather																																												RANGE:50						SOURCEPAGE:p.30

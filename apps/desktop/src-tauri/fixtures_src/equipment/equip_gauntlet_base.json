@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This metal glove lets you deal lethal damage rather than nonlethal damage with unarmed strikes. A strike with a gauntlet is otherwise considered an unarmed attack. The cost and weight given are for a single gauntlet. Medium and heavy armors (except breastplate) come with gauntlets. Your opponent cannot use a disarm action to disarm you of gauntlets.",
+    "key": "Gauntlet (Base)",
+    "name": "Gauntlet",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTADD",
+          "-1*(((SIZE<=3)*.5)+(SIZE==4)+(SIZE==5)+((SIZE>=6)*(2^(SIZE-5))))",
+          "PREMULT:3,[PREEQUIP:1,TYPE.Armor],[PREEQUIP:1,TYPE.Medium,TYPE.Heavy],[!PREEQUIP:1,Breastplate]"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gauntlet (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Gauntlet"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Simple.Light.Unarmed.Finesseable.Bludgeoning.Gauntlet.Close.Weapon Group Close.Weapon Group Natural"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d3"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "This metal glove lets you deal lethal damage rather than nonlethal damage with unarmed strikes. A strike with a gauntlet is otherwise considered an unarmed attack. The cost and weight given are for a single gauntlet. Medium and heavy armors (except breastplate) come with gauntlets. Your opponent cannot use a disarm action to disarm you of gauntlets."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_gauntlet_base.txt",
+    "record_key": "Gauntlet (Base)"
+  }
+}

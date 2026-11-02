@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Klar (as Shield)",
+    "name": "Klar (as Shield)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_klar_as_shield.txt",
+    "record_key": "Klar (as Shield)"
+  }
+}

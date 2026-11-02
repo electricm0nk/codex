@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: O-yoroi
+O-yoroi			PROFICIENCY:ARMOR|O-yoroi			TYPE:Armor.Heavy.ArmorProfHeavy.Suit.Standard	COST:1700	WT:45		ACCHECK:-6		EQMOD:Material ~ Steel				MAXDEX:2		SPELLFAILURE:35		BONUS:COMBAT|AC|8|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

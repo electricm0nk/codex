@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Musket (Double-Barreled)",
+    "name": "Musket (Double-Barreled)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_musket_double_barreled.txt",
+    "record_key": "Musket (Double-Barreled)"
+  }
+}

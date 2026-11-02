@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: arg_equip_arms_armor.lst, KEY: Tail Attachment (Long Lash)
+Tail Attachment (Long Lash)	OUTPUTNAME:Tail Attachment, Long Lash	PROFICIENCY:WEAPON|Kobold Tail Attachment		TYPE:Weapon.Resizable.Melee.Light.KoboldTailAttachment.Slashing.Reach.Finesseable								COST:15	WT:1						CRITMULT:x2	CRITRANGE:1	DAMAGE:1d6	EQMOD:Material ~ Steel												WIELD:Light								REACHMULT:2																					SPROP:This slender cord has tiny bits of glass and stone embedded in its length.|PRERULE:1,DisplayWeaponDetails

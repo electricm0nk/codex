@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: uc_equip_arms_armor.lst, KEY: Aklys (Gladiator)
+Aklys (Gladiator)				PROFICIENCY:WEAPON|Aklys					TYPE:Weapon.Resizable.GladiatorWeapon.Melee.Exotic.Bludgeoning.Ranged.Thrown.Performance.Trip																		COST:5	WT:2		CRITMULT:x2	CRITRANGE:1				DAMAGE:1d8				EQMOD:Special Quality ~ Performance.Material ~ Steel.Special Quality ~ Trip						WIELD:Light		RANGE:20

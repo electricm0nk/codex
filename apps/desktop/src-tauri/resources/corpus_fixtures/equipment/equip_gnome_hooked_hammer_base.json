@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A gnome hooked hammer is a double weapon--an ingenious tool with a hammer head at one end of its haft and a long, curved pick at the other. The hammer's blunt head is a bludgeoning weapon that deals 1d6 points of damage (crit x3). Its hook is a piercing weapon that deals 1d4 points of damage (crit x4). You can use either head as the primary weapon. Gnomes treat hooked hammers as martial weapons.",
+    "key": "Gnome Hooked Hammer (Base)",
+    "name": "Gnome Hooked Hammer"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_gnome_hooked_hammer_base.txt",
+    "record_key": "Gnome Hooked Hammer (Base)"
+  }
+}

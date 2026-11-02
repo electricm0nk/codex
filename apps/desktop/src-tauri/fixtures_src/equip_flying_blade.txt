@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Flying Blade
+Flying Blade																			PROFICIENCY:WEAPON|Flying Blade							TYPE:Weapon.Resizable.Melee.TwoHanded.Exotic.Slashing.BladeLight																																			COST:40	WT:12										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d12					EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.28

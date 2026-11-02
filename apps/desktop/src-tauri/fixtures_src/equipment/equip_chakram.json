@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Chakram",
+    "name": "Chakram",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Chakram"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Martial.Ranged.Thrown.Standard.Slashing.Chakram"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "RANGE",
+        "value": "30"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.177"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_chakram.txt",
+    "record_key": "Chakram"
+  }
+}

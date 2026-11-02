@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Wooden
+Wooden												PROFICIENCY:ARMOR|Wooden		TYPE:Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal		COST:20	WT:25								ACCHECK:-1		EQMOD:Material ~ Leather|Material ~ Wood															MAXDEX:3		SOURCEPAGE:p.180	SPELLFAILURE:15																																																																						BONUS:COMBAT|AC|3|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

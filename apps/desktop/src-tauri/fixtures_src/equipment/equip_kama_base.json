@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Similar to a sickle, a kama is a short, curved blade attached to a simple handle.",
+    "key": "Kama (Base)",
+    "name": "Kama",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kama (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Kama"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Exotic.Light.Finesseable.Slashing.Kama.BladeLight.Weapon Group Blades Light.Weapon Group Monk"
+      },
+      {
+        "key": "COST",
+        "value": "2"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Monk.Special Quality ~ Trip"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "Similar to a sickle, a kama is a short, curved blade attached to a simple handle."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_kama_base.txt",
+    "record_key": "Kama (Base)"
+  }
+}

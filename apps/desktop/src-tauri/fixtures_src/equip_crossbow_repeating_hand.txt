@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Crossbow (Repeating Hand)
+Crossbow (Repeating Hand)										OUTPUTNAME:Repeating Hand Crossbow		PROFICIENCY:WEAPON|Crossbow (Repeating Hand)					TYPE:Weapon.Resizable.Ranged.Exotic.Piercing																																						COST:800	WT:4										CRITMULT:x2	CRITRANGE:2							DAMAGE:1d4					EQMOD:Material ~ Wood																																													RANGE:30						SOURCEPAGE:p.35

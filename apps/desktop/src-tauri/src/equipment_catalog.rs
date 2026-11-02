@@ -53,8 +53,9 @@
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::body_slots::{enhanceable_tags, is_magic_marked};
-use codex::rules_core::equipment_resolver::equipment_catalog_rows;
+use codex::rules_core::body_slots::{enhanceable_tags, is_magic_marked, Enhanceable};
+use codex::rules_core::damage_total::resolve_base_damage_dice;
+use codex::rules_core::equipment_resolver::{equipment_catalog_rows, equipment_converted_resolve};
 use codex::rules_core::rules_catalog::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
@@ -696,6 +697,9 @@ fn market_variants(entry: &EquipmentCatalogEntryDto, name: &str) -> Vec<MarketVa
     }
     let tags: Vec<&str> = entry.types.iter().map(String::as_str).collect();
     let Some(kind) = enhanceable_tags(&tags) else { return Vec::new() };
+    if !bonus_reaches_the_sheet(&entry.key, kind) {
+        return Vec::new();
+    }
     (1..=5)
         .map(|bonus| MarketVariantDto {
             bonus,
@@ -704,6 +708,19 @@ fn market_variants(entry: &EquipmentCatalogEntryDto, name: &str) -> Vec<MarketVa
             modifier_key: kind.modifier_key(bonus),
         })
         .collect()
+}
+
+/// Whether a `+N` on this item would move a number the sheet reads: armor and shields need an AC
+/// value on the sheet's corpus, weapons a damage die to add to. A Net has none, and neither does a
+/// named magic weapon the corpus cannot hold, so selling either a `+N` would charge for a bonus that
+/// never arrives.
+fn bonus_reaches_the_sheet(key: &str, kind: Enhanceable) -> bool {
+    let corpus = crate::corpus_fixtures::corpus_fixture_bundle();
+    match kind {
+        Enhanceable::Armor | Enhanceable::Shield => equipment_converted_resolve(key, corpus)
+            .is_some_and(|record| record.stat_effect.armor_class_bonus.is_some()),
+        Enhanceable::Weapon => resolve_base_damage_dice(key, corpus).is_some(),
+    }
 }
 
 /// Narrows a built catalog to one Market list. The first row of a key decides that key, as it does

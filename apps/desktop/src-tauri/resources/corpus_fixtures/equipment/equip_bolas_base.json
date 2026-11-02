@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A bolas is a pair of weights, connected by a thin rope or cord. You can use this weapon to make a ranged trip attack against an opponent. You can't be tripped during your own trip attempt when using a bolas.",
+    "key": "Bolas (Base)",
+    "name": "Bolas"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_bolas_base.txt",
+    "record_key": "Bolas (Base)"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Leather armor is made up of pieces of hard boiled leather carefully sewn together.",
+    "key": "Leather Armor (Base)",
+    "name": "Leather Armor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "-1",
+          "TYPE=Armor",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "0",
+          "TYPE=BaseArmor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Leather Armor (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Leather"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "6"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "10"
+      },
+      {
+        "key": "DESC",
+        "value": "Leather armor is made up of pieces of hard boiled leather carefully sewn together."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_leather_armor_base.txt",
+    "record_key": "Leather Armor (Base)"
+  }
+}

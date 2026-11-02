@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Lamellar (Horn)
+Lamellar (Horn)		PROFICIENCY:ARMOR|Lamellar			TYPE:Armor.Medium.ArmorProfMedium.Suit.Standard	COST:100	WT:30		ACCHECK:-4		EQMOD:Material ~ Bone				MAXDEX:3		SPELLFAILURE:25		BONUS:COMBAT|AC|5|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

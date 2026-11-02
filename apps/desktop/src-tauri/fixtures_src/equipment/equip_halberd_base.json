@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A halberd is similar to a 5-foot-long spear, but it also has a small, axe-like head mounted near the tip.",
+    "key": "Halberd (Base)",
+    "name": "Halberd",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halberd (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Halberd"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.TwoHanded.Piercing.Slashing.Polearm.Weapon Group Polearms"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "12"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Brace.Special Quality ~ Trip"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "A halberd is similar to a 5-foot-long spear, but it also has a small, axe-like head mounted near the tip."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_halberd_base.txt",
+    "record_key": "Halberd (Base)"
+  }
+}

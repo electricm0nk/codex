@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Monk's Spade
+Monk's Spade																			PROFICIENCY:WEAPON|Monk's Spade							TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.TwoHanded.Martial.Bludgeoning.Slashing.Double.Monk.Polearm		ALTTYPE:Weapon.Resizable.Melee.Exotic.Piercing.Slashing																COST:20	WT:12										CRITMULT:x2	CRITRANGE:1	ALTCRITMULT:x2	ALTCRITRANGE:1	DAMAGE:1d6		ALTDAMAGE:1d6	EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.33

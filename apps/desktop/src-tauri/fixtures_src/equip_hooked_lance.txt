@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Hooked Lance
+Hooked Lance																			PROFICIENCY:WEAPON|Hooked Lance							TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.TwoHanded.Martial.Piercing.Monk.Spear																															COST:3	WT:10										CRITMULT:x4	CRITRANGE:1							DAMAGE:1d8					EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.29

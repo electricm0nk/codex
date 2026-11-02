@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: iswg_equip_arms_armor.lst, KEY: War Razor
+War Razor												PROFICIENCY:WEAPON|War Razor														TYPE:Weapon.Resizable.Melee.Light.Finesseable.Martial.Standard.Slashing												COST:8	WT:1										CRITMULT:x2	CRITRANGE:2				DAMAGE:1d4	EQMOD:Material ~ Steel																						WIELD:Light										SIZE:M	SOURCEPAGE:p.290

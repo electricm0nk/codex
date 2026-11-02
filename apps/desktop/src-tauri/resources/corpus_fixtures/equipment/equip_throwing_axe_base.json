@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Throwing Axe (Base)",
+    "name": "Throwing Axe"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_throwing_axe_base.txt",
+    "record_key": "Throwing Axe (Base)"
+  }
+}

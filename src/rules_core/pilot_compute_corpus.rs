@@ -28,7 +28,7 @@ use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentS
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::contract::encumbrance_size_for_race;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
-use crate::rules_core::equipment_resolver::equipment_id_resolve;
+use crate::rules_core::equipment_resolver::{equipment_converted_resolve, equipment_id_resolve};
 use crate::rules_core::feat_identity;
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::pilot_compute::{
@@ -398,7 +398,17 @@ pub fn compute_combat_baseline_from_corpus(
         ));
     }
 
-    require_active_state(input, LONGSWORD_ITEM_ID, ActiveState::EquippedActive, &mut unmet);
+    // A copy bought off the Market is the same Longsword under another id, so it meets this too.
+    let longsword_identity = equipment_converted_resolve(LONGSWORD_ITEM_ID, corpus).map(|record| record.identity.as_str());
+    let holds_a_longsword = input.chosen.equipment_selections.iter().any(|selection| {
+        selection.active_state == ActiveState::EquippedActive
+            && equipment_converted_resolve(&selection.item_id, corpus).map(|record| record.identity.as_str())
+                == longsword_identity
+            && longsword_identity.is_some()
+    });
+    if !holds_a_longsword {
+        require_active_state(input, LONGSWORD_ITEM_ID, ActiveState::EquippedActive, &mut unmet);
+    }
     require_active_state(input, POWER_ATTACK_ITEM_ID, ActiveState::SelectedInactive, &mut unmet);
 
     // v0.6 alpha swarm (creation-seed honesty fix): Dodge is deliberately NOT
@@ -434,11 +444,7 @@ pub fn compute_combat_baseline_from_corpus(
     // cared about. `compute_equipment_effects` already tolerates an
     // unresolvable selection gracefully (skips it, contributes nothing to
     // any total) -- this function trusts that same tolerance rather than
-    // re-imposing a stricter, blocking requirement on top of it. The one
-    // real requirement equipment resolution DOES need to enforce is below:
-    // genuine 2-real-weapon ambiguity, which `attack_bonus_delta` already
-    // detects on its own (an unresolvable item is never counted as a
-    // weapon, so it can't manufacture a false ambiguity here either).
+    // re-imposing a stricter, blocking requirement on top of it.
     let equipped: Vec<EquipmentSelection> = chosen
         .equipment_selections
         .iter()
@@ -447,16 +453,18 @@ pub fn compute_combat_baseline_from_corpus(
         .collect();
     let effects = compute_equipment_effects(&equipped, corpus);
 
-    // Longsword is required above, so `None` here specifically means a
-    // second real (successfully resolved) weapon is also equipped --
-    // genuinely ambiguous, same honest-absence reasoning `attack_bonus_delta`
-    // itself already uses.
-    let Some(attack_bonus_delta) = effects.attack_bonus_delta else {
-        unmet.push(
-            "more than one real weapon is equipped alongside the required Longsword; the \
-             resulting attack bonus is ambiguous"
-                .to_owned(),
-        );
+    // This number is the required Longsword's own. Another weapon in hand has its own row
+    // (`damage_total::resolve_weapon_damage_breakdown`) and does not change it; with two copies of
+    // the Longsword in hand the better one is the one swung. A Longsword the corpus cannot resolve
+    // has no number to read, which refuses rather than assuming +0.
+    let Some(attack_bonus_delta) = effects
+        .per_item
+        .iter()
+        .filter(|item| Some(item.equipment_record_key.as_str()) == longsword_identity)
+        .filter_map(|item| item.to_hit_bonus)
+        .max()
+    else {
+        unmet.push(format!("{LONGSWORD_ITEM_ID} resolves to no weapon in this corpus, so its attack bonus is unknown"));
         return Err(unmet);
     };
 

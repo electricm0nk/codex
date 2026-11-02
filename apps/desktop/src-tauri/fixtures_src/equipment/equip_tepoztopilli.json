@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tepoztopilli",
+    "name": "Tepoztopilli",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Tepoztopilli"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.TwoHanded.Martial.Piercing.Slashing.Polearm"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Fragile.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_tepoztopilli.txt",
+    "record_key": "Tepoztopilli"
+  }
+}

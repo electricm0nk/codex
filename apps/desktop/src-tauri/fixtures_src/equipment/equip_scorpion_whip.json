@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Scorpion Whip",
+    "name": "Scorpion Whip",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Scorpion Whip"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Light.Finesseable.Exotic.Slashing.Flail"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.36"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_scorpion_whip.txt",
+    "record_key": "Scorpion Whip"
+  }
+}

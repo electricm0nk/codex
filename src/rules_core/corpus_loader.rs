@@ -582,6 +582,60 @@ mod tests {
         assert!(computation.unresolved_item_ids.is_empty());
     }
 
+    /// A `+N` on one selection, over the real Core Rulebook records: armor and shield add it to AC,
+    /// one type does not stack, a family's bonus stays in its family, and a weapon adds it to both
+    /// rolls. The desktop's own path is `enhancement_rows_*` in its `character_hub.rs`.
+    #[test]
+    fn enhancement_rows_read_the_real_core_rulebook() {
+        use crate::rules_core::character_input::{load_character_input_fixture, ActiveState, EquipmentSelection};
+        use crate::rules_core::damage_total::resolve_weapon_damage_breakdown;
+        use crate::rules_core::equipment_effects::compute_equipment_effects;
+
+        let roots = [BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }];
+        let package = load_equipment_corpus(&roots);
+        let held = |item: &str, modifiers: &[&str]| EquipmentSelection {
+            item_id: item.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: modifiers.iter().map(|m| (*m).to_string()).collect(),
+        };
+        let ac = |selection: EquipmentSelection| {
+            let effects = compute_equipment_effects(&[selection], &package);
+            (effects.armor_class_delta, effects.per_item[0].armor_class_enhancement)
+        };
+
+        assert_eq!(ac(held("Breastplate (Base)", &[])), (6, None));
+        assert_eq!(ac(held("Breastplate (Base)", &["Special Ability ~ +2 ~ Armor"])), (8, Some(2)));
+        assert_eq!(ac(held("Heavy Steel Shield (Base)", &["Special Ability ~ +3 ~ Shield"])), (5, Some(3)));
+        assert_eq!(
+            ac(held("Breastplate (Base)", &["Special Ability ~ +1 ~ Armor", "Special Ability ~ +3 ~ Armor"])),
+            (9, Some(3)),
+            "one bonus type: the higher"
+        );
+        assert_eq!(ac(held("Breastplate (Base)", &["Special Ability ~ +2 ~ Shield"])), (6, None), "a shield's bonus");
+        assert_eq!(ac(held("Longsword (Base)", &["Special Ability ~ +2 ~ Armor"])), (0, None), "not armor");
+
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:1\n\
+             ability=strength:16\nability=dexterity:14\nability=constitution:14\nability=intelligence:10\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.equipment_selections = vec![held(
+            "Longsword (Base)",
+            &["Special Ability ~ +1 ~ Weapon", "Special Ability ~ +4 ~ Weapon"],
+        )];
+        let effects = compute_equipment_effects(&input.chosen.equipment_selections, &package);
+        assert_eq!(effects.attack_bonus_delta, Some(4));
+        let row = resolve_weapon_damage_breakdown(&input, &package, &effects, 0).remove(0).weapon_enhancement.unwrap();
+        assert_eq!((row.attack_bonus, row.damage_bonus), (4, 4));
+
+        input.chosen.equipment_selections[0].active_state = ActiveState::SelectedInactive;
+        let stowed = compute_equipment_effects(&[], &package);
+        assert!(resolve_weapon_damage_breakdown(&input, &package, &stowed, 0).is_empty(), "a stowed sword has no row");
+    }
+
     /// SD28-E14-F1: a real on-disk spell record (CRB's Animate Plants, seen
     /// while scoping the probe) loads and resolves with its real school
     /// intact through the unmodified `spell_id_resolve` path.

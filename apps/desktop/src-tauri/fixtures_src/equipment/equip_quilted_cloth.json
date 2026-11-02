@@ -1,0 +1,64 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Quilted Cloth",
+    "name": "Quilted Cloth",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Quilted Cloth"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "10"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_quilted_cloth.txt",
+    "record_key": "Quilted Cloth"
+  }
+}

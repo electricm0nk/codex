@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Nodachi
+Nodachi																				PROFICIENCY:WEAPON|Nodachi								TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.TwoHanded.Martial.Piercing.Slashing.Monk.Sword																													COST:60	WT:8										CRITMULT:x2	CRITRANGE:3							DAMAGE:1d10					EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.33

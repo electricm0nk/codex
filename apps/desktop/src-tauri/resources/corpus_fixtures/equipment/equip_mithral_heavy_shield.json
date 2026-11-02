@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Mithral Heavy Shield",
+    "name": "Mithral Heavy Shield"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_mithral_heavy_shield.txt",
+    "record_key": "Mithral Heavy Shield"
+  }
+}

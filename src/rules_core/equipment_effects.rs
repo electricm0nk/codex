@@ -53,7 +53,7 @@
 //! module reads settled values off
 //! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`]. Cycle 12
 //! finished the job here: `is_natural_attack_weapon`, `is_weapon_record`,
-//! `resolve_weapon_to_hit_bonus` and `resolve_eqm_weightdiv_effect` take a
+//! `attached_weapon_enhancement` and `resolve_eqm_weightdiv_effect` take a
 //! converted record, and the parser-row `eqmod_referenced_records` is deleted
 //! -- [`eqmod_referenced_converted_records`] is the only EQMOD resolution the
 //! live side has.
@@ -131,6 +131,9 @@ pub struct ResolvedEquipmentEffect {
     pub equipment_record_key: String,
     pub category: EquipmentCategory,
     pub armor_class_bonus: Option<i16>,
+    /// The enhancement bonus this selection's own `applied_modifiers` add to its armor or shield
+    /// value, already in `EquipmentEffects::armor_class_delta`. `None` when they add none.
+    pub armor_class_enhancement: Option<i16>,
     pub max_dex: Option<i16>,
     pub spell_failure: Option<f32>,
     /// Mirrors `EquipmentStatEffect::armor_check_penalty` exactly (v0.6
@@ -276,7 +279,7 @@ pub fn compute_equipment_effects(
             continue;
         };
         let to_hit_bonus = is_weapon_record(converted).then(|| {
-            let bonus = resolve_weapon_to_hit_bonus(converted, &selection.applied_modifiers, corpus);
+            let bonus = attached_weapon_enhancement(converted, &selection.applied_modifiers, corpus).tohit;
             weapon_count += 1;
             single_weapon_to_hit_bonus = bonus;
             bonus
@@ -358,6 +361,8 @@ pub fn compute_equipment_effects(
         if let Some(bonus) = effect.armor_class_bonus {
             armor_class_delta += bonus;
         }
+        let armor_class_enhancement = attached_armor_class_enhancement(converted, &selection.applied_modifiers, corpus);
+        armor_class_delta += armor_class_enhancement.unwrap_or(0);
         if let Some(dex) = effect.max_dex {
             max_dex_cap = Some(max_dex_cap.map_or(dex, |current| current.min(dex)));
         }
@@ -380,6 +385,7 @@ pub fn compute_equipment_effects(
             equipment_record_key: key,
             category,
             armor_class_bonus: effect.armor_class_bonus,
+            armor_class_enhancement,
             max_dex: effect.max_dex,
             spell_failure: effect.spell_failure,
             armor_check_penalty: effect.armor_check_penalty,
@@ -414,7 +420,9 @@ pub fn compute_equipment_effects(
 
 /// Resolves `applied_modifiers` (item_ids attached to one specific weapon
 /// selection -- see `character_input::EquipmentSelection`'s doc comment)
-/// against `corpus` and sums every TOHIT-affecting `equipmods` bonus. A
+/// against `corpus` and takes the highest of each roll's `equipmods` bonus: every such chain is typed
+/// `Enhancement`, and bonuses of one type do not stack (the rule
+/// [`equipmods::apply_eqmod_weapon_enhancement_bonus`] applies to a record's own `EQMOD:` list). A
 /// modifier item_id that doesn't resolve, or resolves to a non-`Equipmods`
 /// category, or an `Equipmods` record with no matching
 /// `BONUS:WEAPON|...|TYPE=Enhancement` chain, contributes nothing --
@@ -438,40 +446,60 @@ pub fn compute_equipment_effects(
 /// `CharacterSheet.tsx`'s "Attack Bonus" stat tile. Same guard as
 /// `resolve_weapon_enhancement_modifier`: skip a `natural_attack_only`
 /// bonus unless `weapon_record` itself is a real natural attack.
-fn resolve_weapon_to_hit_bonus(
+pub(crate) fn attached_weapon_enhancement(
     weapon_record: &CorpusEquipmentRecord,
     applied_modifiers: &[String],
     corpus: &SourcePackageContent,
-) -> i16 {
+) -> AttachedWeaponEnhancement {
     let weapon_is_natural_attack = is_natural_attack_weapon(weapon_record);
-    let mut total = 0;
-    for modifier_item_id in applied_modifiers {
-        let Some(record) = equipment_converted_resolve(modifier_item_id, corpus) else {
-            continue;
-        };
-        // `compute_equipmods_effect` already reads the record's own
-        // `BONUS:WEAPON|...|TYPE=Enhancement` chain directly (book-agnostic)
-        // and returns `None` if it's absent -- that check alone is the real,
-        // precise "is this an equipmods enhancement" test. The CRB-only
-        // `equipment_tables()` category gate this used to require first was
-        // strictly redundant with it, and silently dropped any non-CRB
-        // modifier's bonus before this check ever ran.
-        if let Some(bonus) = equipmods::compute_equipmods_effect(record) {
-            if bonus.natural_attack_only && !weapon_is_natural_attack {
-                continue;
-            }
-            if let Some(tohit) = bonus.tohit_bonus {
-                total += tohit;
-            }
-        }
-    }
-    total
+    let records: Vec<&CorpusEquipmentRecord> = applied_modifiers
+        .iter()
+        .filter_map(|modifier_item_id| equipment_converted_resolve(modifier_item_id, corpus))
+        .filter(|record| {
+            // `compute_equipmods_effect` already reads the record's own settled enhancement and
+            // returns `None` if it has none -- that alone is the precise "is this an equipmods
+            // enhancement" test, and it holds for a modifier of any book.
+            equipmods::compute_equipmods_effect(record)
+                .is_some_and(|bonus| !bonus.natural_attack_only || weapon_is_natural_attack)
+        })
+        .collect();
+    let mut highest = None;
+    equipmods::apply_eqmod_weapon_enhancement_bonus(&mut highest, &records);
+    highest.map_or_else(AttachedWeaponEnhancement::default, |bonus: WeaponEnhancementBonus| AttachedWeaponEnhancement {
+        tohit: bonus.tohit_bonus.unwrap_or(0),
+        damage: bonus.damage_bonus.unwrap_or(0),
+    })
+}
+
+/// What one weapon selection's own `applied_modifiers` add to its two rolls.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub(crate) struct AttachedWeaponEnhancement {
+    pub tohit: i16,
+    pub damage: i16,
+}
+
+/// What one armor or shield selection's own `applied_modifiers` add to its AC value: the highest
+/// (one type, no stacking), and only from a modifier of the host's family, which is what each
+/// record's own `ItemHas` rule says (`Special Ability ~ +1 ~ Armor` on armor, `~ Shield` on a
+/// shield). A host that states no AC value is neither, so a modifier on a weapon adds none.
+fn attached_armor_class_enhancement(
+    host: &CorpusEquipmentRecord,
+    applied_modifiers: &[String],
+    corpus: &SourcePackageContent,
+) -> Option<i16> {
+    host.stat_effect.armor_class_bonus?;
+    applied_modifiers
+        .iter()
+        .filter_map(|modifier_item_id| equipment_converted_resolve(modifier_item_id, corpus))
+        .filter(|modifier| modifier.is_shield == host.is_shield)
+        .filter_map(|modifier| modifier.armor_class_chain_bonus)
+        .max()
 }
 
 /// Resolves `applied_modifiers` against `corpus` and sums every attached
 /// modifier's `intelligent_item::compute_intelligent_item_effect`
 /// contribution (SD-31 intelligent-item resolver, operator ruling
-/// 2026-08-19). Mirrors `resolve_weapon_to_hit_bonus`'s own resolve-or-skip
+/// 2026-08-19). Mirrors `attached_weapon_enhancement`'s own resolve-or-skip
 /// discipline: a modifier item_id that doesn't resolve, or resolves to a
 /// record carrying none of this family's tokens, contributes nothing.
 /// Numeric fields (ability-score/Ego deltas) sum across every attached

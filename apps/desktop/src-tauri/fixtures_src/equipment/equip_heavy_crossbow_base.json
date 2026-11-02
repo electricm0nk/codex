@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "You draw a heavy crossbow back by turning a small winch. Loading a heavy crossbow is a fullround action that provokes attacks of opportunity.&nl;Normally, operating a heavy crossbow requires two hands. However, you can shoot, but not load, a heavy crossbow with one hand at a -4 penalty on attack rolls. You can shoot a heavy crossbow with each hand, but you take a penalty on attack rolls as if attacking with two one-handed weapons. This penalty is cumulative with the penalty for one-handed firing.",
+    "key": "Heavy Crossbow (Base)",
+    "name": "Heavy Crossbow",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Heavy Crossbow (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Crossbow (Heavy)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Ranged.Simple.Container.Projectile.Piercing.Crossbow.Weapon Group Crossbows"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|Bolt"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHandsOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "120"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.145"
+      },
+      {
+        "key": "DESC",
+        "value": "You draw a heavy crossbow back by turning a small winch. Loading a heavy crossbow is a fullround action that provokes attacks of opportunity.&nl;Normally, operating a heavy crossbow requires two hands. However, you can shoot, but not load, a heavy crossbow with one hand at a -4 penalty on attack rolls. You can shoot a heavy crossbow with each hand, but you take a penalty on attack rolls as if attacking with two one-handed weapons. This penalty is cumulative with the penalty for one-handed firing."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_heavy_crossbow_base.txt",
+    "record_key": "Heavy Crossbow (Base)"
+  }
+}

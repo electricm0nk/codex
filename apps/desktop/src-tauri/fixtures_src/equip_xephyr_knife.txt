@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: up_equipment.lst, KEY: Xephyr Knife
+Xephyr Knife	PROFICIENCY:WEAPON|Xephyr Knife	TYPE:Weapon.Melee.Light.Finesseable.Ranged.Thrown.Exotic.Standard.Piercing.Slashing.BladeLight	COST:15	WT:1		CRITMULT:x2	CRITRANGE:3	DAMAGE:1d6	SOURCEPAGE:p.340

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Taiaha
+Taiaha																				PROFICIENCY:WEAPON|Taiaha								TYPE:Weapon.Resizable.Melee.OneHanded.Exotic.Bludgeoning.Double.Hammer									ALTTYPE:Weapon.Resizable.Melee.Exotic.Piercing																		COST:10	WT:8										CRITMULT:x2	CRITRANGE:1	ALTCRITMULT:x2	ALTCRITRANGE:1	DAMAGE:1d10		ALTDAMAGE:1d6	EQMOD:Material ~ Wood																															ALTEQMOD:Material ~ Steel						WIELD:OneHanded							SIZE:M	SOURCEPAGE:p.38

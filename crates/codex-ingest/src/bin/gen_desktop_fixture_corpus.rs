@@ -6,9 +6,10 @@
 //!
 //! ## What this closes
 //!
-//! The desktop crate bundles four real corpus records as a Tauri resource so
-//! `compute_pilot_with_corpus` can be proved end-to-end in the live UI. Those
-//! records shipped as **raw `.lst` row text**, which meant the shipping binary
+//! The desktop crate bundles real corpus records as a Tauri resource for
+//! `compute_pilot_with_corpus` to read: the two spells and the Longsword that
+//! proved it end-to-end, then every armor and shield the Market sells a `+N` of,
+//! with the `+N` modifiers themselves. Those records once shipped as **raw `.lst` row text**, which meant the shipping binary
 //! parsed PCGen grammar and ran the converter over it at start-up:
 //! `rules_core::corpus_loader::load_lst_fixture_corpus` called
 //! `lst_parser::spell::parse_lst_spell_row`,
@@ -97,7 +98,18 @@ const FIXTURE_SRC_ROOT: &str = "apps/desktop/src-tauri/fixtures_src";
 /// What the installer carries.
 const FIXTURE_SHIP_ROOT: &str = "apps/desktop/src-tauri/resources/corpus_fixtures";
 const SPELL_FIXTURES: &[&str] = &["spell_abjuration.txt", "spell_illusion.txt"];
-const EQUIPMENT_FIXTURES: &[&str] = &["equip_longsword.txt", "equip_chain_shirt.txt"];
+
+/// The equipment inputs: every `equip_*.txt` under `src_root`, sorted. A list kept by hand here
+/// would be one more place a record can go missing from.
+fn equipment_fixtures(src_root: &Path) -> Result<Vec<String>, String> {
+    let entries = fs::read_dir(src_root).map_err(|err| format!("could not read {FIXTURE_SRC_ROOT}: {err}"))?;
+    let mut labels: Vec<String> = entries
+        .filter_map(|entry| entry.ok()?.file_name().into_string().ok())
+        .filter(|name| name.starts_with("equip_") && name.ends_with(".txt"))
+        .collect();
+    labels.sort();
+    Ok(labels)
+}
 
 /// The fixture's single record line: the first line that is neither a `#`
 /// comment nor blank. Same convention `tests/fixtures/rules_core/` uses and the
@@ -262,7 +274,7 @@ fn generate(src_root: &Path, ship_root: &Path) -> Result<Vec<Generated>, String>
         });
     }
 
-    for label in EQUIPMENT_FIXTURES {
+    for label in &equipment_fixtures(src_root)? {
         let text = fs::read_to_string(src_root.join(label))
             .map_err(|err| format!("could not read fixture '{label}': {err}"))?;
         let line = record_line(&text)

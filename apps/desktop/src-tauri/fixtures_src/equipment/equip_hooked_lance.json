@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Hooked Lance",
+    "name": "Hooked Lance",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Hooked Lance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.EasternWeapon.Eastern.Melee.TwoHanded.Martial.Piercing.Monk.Spear"
+      },
+      {
+        "key": "COST",
+        "value": "3"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d8"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_hooked_lance.txt",
+    "record_key": "Hooked Lance"
+  }
+}

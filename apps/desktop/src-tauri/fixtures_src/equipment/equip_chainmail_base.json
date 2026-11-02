@@ -1,0 +1,102 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Unlike a chain shirt, chainmail covers the legs and arms of the wearer. The suit includes gauntlets.",
+    "key": "Chainmail (Base)",
+    "name": "Chainmail",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "6",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "-3",
+          "TYPE=Armor",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "5",
+          "TYPE=BaseArmor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "-5",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chainmail (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Chainmail"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Medium.ArmorProfMedium.Suit"
+      },
+      {
+        "key": "COST",
+        "value": "150"
+      },
+      {
+        "key": "WT",
+        "value": "40"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-5"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "30"
+      },
+      {
+        "key": "DESC",
+        "value": "Unlike a chain shirt, chainmail covers the legs and arms of the wearer. The suit includes gauntlets."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_chainmail_base.txt",
+    "record_key": "Chainmail (Base)"
+  }
+}

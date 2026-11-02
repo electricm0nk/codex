@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Kusari Gusoku
+Kusari Gusoku		PROFICIENCY:ARMOR|Kusari Gusoku		TYPE:Armor.Heavy.ArmorProfHeavy.Suit.Standard	COST:350	WT:45		ACCHECK:-7		EQMOD:Material ~ Steel				MAXDEX:1		SPELLFAILURE:35		BONUS:COMBAT|AC|7|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

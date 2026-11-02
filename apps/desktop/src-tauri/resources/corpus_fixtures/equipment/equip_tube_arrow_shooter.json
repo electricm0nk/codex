@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tube Arrow Shooter",
+    "name": "Tube Arrow Shooter"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_tube_arrow_shooter.txt",
+    "record_key": "Tube Arrow Shooter"
+  }
+}

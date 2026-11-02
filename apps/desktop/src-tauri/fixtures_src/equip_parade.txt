@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Parade
+Parade								PROFICIENCY:ARMOR|Parade			TYPE:Armor.Light.ArmorProfLight.Suit.Standard						COST:25	WT:20		ACCHECK:-1		EQMOD:Material ~ Leather																				MAXDEX:5											SOURCEPAGE:p.13	SPELLFAILURE:15																															BONUS:COMBAT|AC|3|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

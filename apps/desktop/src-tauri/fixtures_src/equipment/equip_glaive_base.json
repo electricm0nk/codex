@@ -1,0 +1,83 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A glaive is a simple blade, mounted to the end of a pole about 7 feet in length.",
+    "key": "Glaive (Base)",
+    "name": "Glaive",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Glaive (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Glaive"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.TwoHanded.Slashing.Polearm.Weapon Group Polearms"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x3"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Reach"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "REACHMULT",
+        "value": "2"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "A glaive is a simple blade, mounted to the end of a pole about 7 feet in length."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_glaive_base.txt",
+    "record_key": "Glaive (Base)"
+  }
+}

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Lungchuan Tamo
+Lungchuan Tamo																			PROFICIENCY:WEAPON|Lungchuan Tamo							TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.Light.Finesseable.Ranged.Thrown.Martial.Piercing.Slashing.BladeLight																										COST:5	WT:1										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d4					EQMOD:Material ~ Steel																																													RANGE:10						SOURCEPAGE:p.32

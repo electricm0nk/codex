@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Improvised Weapon (Light)",
+    "name": "Improvised Weapon, Light"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_improvised_weapon_light.txt",
+    "record_key": "Improvised Weapon (Light)"
+  }
+}

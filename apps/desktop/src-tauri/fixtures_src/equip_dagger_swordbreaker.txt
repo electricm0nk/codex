@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Dagger (Swordbreaker)
+Dagger (Swordbreaker)								OUTPUTNAME:Swordbreaker Dagger	PROFICIENCY:WEAPON|Dagger (Swordbreaker)	TYPE:Weapon.Resizable.Melee.Light.Finesseable.Exotic.Standard.Dagger.Tengu											COST:10	WT:3		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d4				EQMOD:Special Quality ~ Disarm.Material ~ Steel									WIELD:Light							SIZE:M	SOURCEPAGE:p.177

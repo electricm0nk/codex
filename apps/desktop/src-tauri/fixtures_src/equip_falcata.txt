@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Falcata
+Falcata																PROFICIENCY:WEAPON|Falcata			TYPE:Weapon.Resizable.Melee.OneHanded.Exotic.Standard.Slashing.HeavyBlade.Tengu										COST:18	WT:4		CRITMULT:x3	CRITRANGE:2	DAMAGE:1d8				EQMOD:Material ~ Steel													WIELD:OneHanded						SIZE:M	SOURCEPAGE:p.177

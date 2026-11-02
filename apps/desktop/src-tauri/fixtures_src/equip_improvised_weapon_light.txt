@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Improvised Weapon (Light)
+Improvised Weapon, Light	KEY:Improvised Weapon (Light)		PROFICIENCY:WEAPON|Improvised Weapon	TYPE:Weapon.Resizable.Melee.Light.Finesseable.Simple.Standard.Bludgeoning.Mace.Hammer										COST:5	WT:4		CRITMULT:x2	CRITRANGE:1							DAMAGE:1d6				EQMOD:Material ~ Steel						WIELD:Light				SIZE:M	SPROP:Monk of the Empty Hand treats improvised weapon as equivalent of Light Mace

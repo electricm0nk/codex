@@ -1,0 +1,85 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Little more than heavy, quilted cloth, this armor provides only the most basic protection.",
+    "key": "Padded Armor (Base)",
+    "name": "Padded Armor",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "0",
+          "TYPE=BaseArmor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Padded Armor (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Padded"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Light.ArmorProfLight.Suit.Nonmetal"
+      },
+      {
+        "key": "COST",
+        "value": "5"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "0"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.151"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      },
+      {
+        "key": "DESC",
+        "value": "Little more than heavy, quilted cloth, this armor provides only the most basic protection."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_padded_armor_base.txt",
+    "record_key": "Padded Armor (Base)"
+  }
+}

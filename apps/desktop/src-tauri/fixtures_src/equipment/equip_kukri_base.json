@@ -1,0 +1,75 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A kukri is a curved blade, about 1 foot in length.",
+    "key": "Kukri (Base)",
+    "name": "Kukri",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kukri (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Kukri"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.Light.Finesseable.Slashing.BladeLight.Weapon Group Blades Light"
+      },
+      {
+        "key": "COST",
+        "value": "8"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "3"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.146"
+      },
+      {
+        "key": "DESC",
+        "value": "A kukri is a curved blade, about 1 foot in length."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_kukri_base.txt",
+    "record_key": "Kukri (Base)"
+  }
+}
