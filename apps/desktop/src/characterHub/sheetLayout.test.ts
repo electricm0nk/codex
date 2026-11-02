@@ -105,7 +105,7 @@ function verifiesTheRailHeadingAndTheProgressionButton() {
   const rail = source.slice(source.indexOf('className="sheet-left"'), source.indexOf('className="sheet-mid"'));
   assert(/>\s*Character Details\s*</.test(rail), 'the left-rail heading reads Character Details');
   assert(source.includes('Show Progression'), 'the rail offers Show Progression');
-  assert(/setProgressionOpen\(/.test(source), 'Show Progression changes what the rail shows; it is not a dead button');
+  assert(source.includes("dispatchProgressionDrawer({ type: 'open' })"), 'Show Progression opens its drawer; it is not a dead button');
 }
 
 function verifiesOrderNotArrayPositionDecidesPlacement() {

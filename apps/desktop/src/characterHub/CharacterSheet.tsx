@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, useEffect, useReducer, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import {
   loadSavedCharacterDetail,
@@ -43,6 +43,7 @@ import { PriceModeControl } from './PriceModeControl';
 import { loadCharacterHitPoints } from '../boundary/characterHitPoints';
 import type { HitPointLevelDto } from '../boundary/loadCreateCharacter';
 import { buildPrintCss, printableTabs } from './printLayout';
+import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
 import { EMPTY_CUSTOM, customIsEmpty, withCustomHitPoints, withCustomSkillPoints, type CharacterCustom } from './customModel';
@@ -2860,12 +2861,17 @@ export function CharacterSheet(props: {
     };
   }, [props.row.classSummary]);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
-  // Show Progression: the level history under its button in the left rail, closed until asked for.
-  const [progressionOpen, setProgressionOpen] = useState(false);
-  // Print mode: expands the left rail and its level history, and renders every tab after page 1 (see printLayout.ts).
+  // Show Progression: the level history in a drawer, closed until asked for.
+  const [progressionDrawer, dispatchProgressionDrawer] = useReducer(progressionDrawerReducer, PROGRESSION_DRAWER_CLOSED);
+  const progressionButtonRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (progressionDrawer.returnFocus) {
+      progressionButtonRef.current?.focus();
+    }
+  }, [progressionDrawer]);
+  // Print mode: expands the left rail, draws the level history in it (paper has no drawer), and renders every tab after page 1 (see printLayout.ts).
   const [printing, setPrinting] = useState(false);
   const railCollapsed = leftCollapsed && !printing;
-  const progressionVisible = progressionOpen || printing;
   function handlePrint() {
     setPrinting(true);
   }
@@ -4402,53 +4408,58 @@ export function CharacterSheet(props: {
             <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
           </div>
         );
-      case 'showProgression':
+      case 'showProgression': {
+        const progressionContent = (
+          <div>
+            {/* Each level taken and what it granted */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+              {currentBenefits.map((benefit) => (
+                <LevelBenefitCard
+                  key={`${benefit.classId}-${benefit.characterLevel}`}
+                  benefit={benefit}
+                  skillPoints={skillPointsFor(benefit)}
+                  variant="current"
+                />
+              ))}
+            </div>
+
+            {/* Next — the next level available for each held class */}
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', margin: '1rem 0 0.6rem' }}>
+              <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                Next
+              </span>
+              <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {nextBenefits.map((benefit) => (
+                <LevelBenefitCard
+                  key={`next-${benefit.classId}-${benefit.characterLevel}`}
+                  benefit={benefit}
+                  skillPoints={skillPointsFor(benefit)}
+                  variant="next"
+                />
+              ))}
+            </div>
+          </div>
+        );
         return (
           <div style={boxStyle}>
             <button
+              ref={progressionButtonRef}
               type="button"
-              aria-expanded={progressionVisible}
-              onClick={() => setProgressionOpen((open) => !open)}
+              aria-haspopup="dialog"
+              aria-expanded={progressionDrawer.open}
+              onClick={() => dispatchProgressionDrawer({ type: 'open' })}
               style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text-secondary)', cursor: 'pointer', fontWeight: 600, padding: '0.4rem 0.6rem' }}
             >
-              {progressionOpen ? 'Hide Progression' : 'Show Progression'}
+              Show Progression
             </button>
-            {progressionVisible ? (
-              <div>
-                {/* Each level taken and what it granted */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
-                  {currentBenefits.map((benefit) => (
-                    <LevelBenefitCard
-                      key={`${benefit.classId}-${benefit.characterLevel}`}
-                      benefit={benefit}
-                      skillPoints={skillPointsFor(benefit)}
-                      variant="current"
-                    />
-                  ))}
-                </div>
-
-                {/* Next — the next level available for each held class */}
-                <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', margin: '1rem 0 0.6rem' }}>
-                  <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
-                  <span style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                    Next
-                  </span>
-                  <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {nextBenefits.map((benefit) => (
-                    <LevelBenefitCard
-                      key={`next-${benefit.classId}-${benefit.characterLevel}`}
-                      benefit={benefit}
-                      skillPoints={skillPointsFor(benefit)}
-                      variant="next"
-                    />
-                  ))}
-                </div>
-              </div>
-            ) : null}
+            {printing ? progressionContent : null}
+            {progressionDrawer.open ? <ProgressionDrawer onAction={dispatchProgressionDrawer}>{progressionContent}</ProgressionDrawer> : null}
           </div>
         );
+      }
       case 'squareBlock':
         return (
           <div style={boxStyle}>
