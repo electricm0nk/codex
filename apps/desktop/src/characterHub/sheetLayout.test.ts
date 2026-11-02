@@ -3,8 +3,8 @@ import { assert, assertEqual } from '../testSupport/asserts';
 import { buildPrintCss } from './printLayout';
 import {
   CREATE_LAYOUT,
-  SHEET_COLUMNS,
-  SHEET_COLUMN_STYLES,
+  SHEET_REGIONS,
+  SHEET_REGION_STYLES,
   SHEET_LAYOUT,
   SQUARE_BLOCK_STYLE,
   SQUARE_BOX_STYLE,
@@ -26,33 +26,67 @@ function verifiesEveryRegistryHasUniqueIdsAndAStyle(name: string, layout: readon
   }
 }
 
-function verifiesAbilitiesIsOneVerticalColumn() {
-  const abilities = boxesInColumn(SHEET_LAYOUT, 'abilities').map((box) => box.id);
-  assertEqual(abilities.join('|'), 'abilities', 'the abilities column holds the Abilities box alone');
-  assertEqual(SHEET_COLUMN_STYLES.abilities.flexDirection, 'column', 'the abilities column stacks vertically');
+function idsIn(region: string): string {
+  return boxesInColumn<string, string>(SHEET_LAYOUT, region).map((box) => box.id).join('|');
+}
+
+function verifiesTheBoxToRegionMap() {
+  assertEqual(SHEET_REGIONS.join('|'), 'leftRail|combatRow|rightColumn', 'the three regions, left to right');
+  assertEqual(idsIn('leftRail'), 'portrait|levelXp|classPanel|characterDetails|showProgression', 'the left rail, top to bottom');
+  assertEqual(idsIn('combatRow'), 'squareBlock|combatStrip', 'the combat row holds the 2x2 and the strip');
+  assertEqual(idsIn('rightColumn'), 'abilities|skills', 'Abilities sits above Skills in the right column');
+}
+
+function verifiesAbilitiesListsItsScoresVertically() {
   const box = SHEET_LAYOUT.find((entry) => entry.id === 'abilities');
   assertEqual(box?.boxStyle.flexDirection, 'column', 'the Abilities box lists its six scores top to bottom');
 }
 
-function verifiesAcAttackSpeedSavesAreStackedOwnBoxesInOrder() {
-  const combat = boxesInColumn(SHEET_LAYOUT, 'combat').map((box) => box.id);
-  assertEqual(combat.join('|'), 'armorClass|attack|speed|saves', 'AC, Attack, Speed, Saves stack in that order');
-  assertEqual(SHEET_COLUMN_STYLES.combat.flexDirection, 'column', 'the combat boxes stack vertically, one box each');
+function verifiesAcAttackSpeedSavesAreOwnBoxesInOrder() {
+  assertEqual(idsIn('combatStrip'), 'armorClass|attack|speed|saves', 'AC, Attack, Speed, Saves in that order');
 }
 
-function verifiesEveryRegisteredBoxLandsInARenderedColumn() {
-  assertEqual(SHEET_COLUMNS.join('|'), 'abilities|combat', 'Abilities column left of the combat stack');
+function verifiesEveryRegisteredBoxLandsInARenderedStack() {
+  const rendered = new Set<string>(Object.keys(SHEET_REGION_STYLES));
   for (const box of SHEET_LAYOUT) {
-    assert(SHEET_COLUMNS.includes(box.column), `${box.id} sits in a column the sheet renders`);
+    assert(rendered.has(box.column), `${box.id} sits in a stack with a registered style`);
   }
+  for (const region of SHEET_REGIONS) {
+    assert(rendered.has(region), `${region} has a registered style`);
+  }
+}
+
+function verifiesTheSheetRendersEveryRegionFromTheRegistry() {
+  const source = readFileSync(new URL('./CharacterSheet.tsx', import.meta.url), 'utf8');
+  for (const region of [...SHEET_REGIONS, 'combatStrip']) {
+    assert(source.includes(`renderSheetRegion('${region}')`), `the sheet renders ${region} from the registry`);
+  }
+  for (const box of SHEET_LAYOUT) {
+    assert(source.includes(`case '${box.id}':`), `renderSheetBox draws ${box.id}`);
+  }
+  // Each panel is drawn in one place only, its registered box: a second JSX use is a box the registry does not place.
+  for (const panel of ['<PortraitUpload', '<DetailsPanel', '<AbilitiesPanel', '<SkillsPanel', '<SquareBlock', '<LevelBenefitCard']) {
+    const uses = source.split(panel).length - 1;
+    assert(uses === (panel === '<LevelBenefitCard' ? 2 : 1), `${panel} is drawn only from its registered box (found ${uses})`);
+  }
+  assert(!/SHEET_COLUMNS|SHEET_COLUMN_STYLES/.test(source), 'the old middle-only registry is gone');
+}
+
+function verifiesTheRailHeadingAndTheProgressionButton() {
+  const source = readFileSync(new URL('./CharacterSheet.tsx', import.meta.url), 'utf8');
+  assert(!/>\s*Progression\s*</.test(source), 'the left rail no longer carries a "Progression" heading');
+  const rail = source.slice(source.indexOf('className="sheet-left"'), source.indexOf('className="sheet-mid"'));
+  assert(/>\s*Character Details\s*</.test(rail), 'the left-rail heading reads Character Details');
+  assert(source.includes('Show Progression'), 'the rail offers Show Progression');
+  assert(/setProgressionOpen\(/.test(source), 'Show Progression changes what the rail shows; it is not a dead button');
 }
 
 function verifiesOrderNotArrayPositionDecidesPlacement() {
   // Rearranging is changing `order`; the array position must not matter.
   const reversed = [...SHEET_LAYOUT].reverse();
   assertEqual(
-    boxesInColumn(reversed, 'combat').map((box) => box.id).join('|'),
-    boxesInColumn(SHEET_LAYOUT, 'combat').map((box) => box.id).join('|'),
+    boxesInColumn(reversed, 'leftRail').map((box) => box.id).join('|'),
+    boxesInColumn(SHEET_LAYOUT, 'leftRail').map((box) => box.id).join('|'),
     'boxesInColumn sorts by order, not by array position',
   );
 }
@@ -91,9 +125,12 @@ function verifiesEveryPrintColumnClassIsAppliedBySheet() {
 
 verifiesEveryRegistryHasUniqueIdsAndAStyle('SHEET_LAYOUT', SHEET_LAYOUT);
 verifiesEveryRegistryHasUniqueIdsAndAStyle('CREATE_LAYOUT', CREATE_LAYOUT);
-verifiesAbilitiesIsOneVerticalColumn();
-verifiesAcAttackSpeedSavesAreStackedOwnBoxesInOrder();
-verifiesEveryRegisteredBoxLandsInARenderedColumn();
+verifiesTheBoxToRegionMap();
+verifiesAbilitiesListsItsScoresVertically();
+verifiesAcAttackSpeedSavesAreOwnBoxesInOrder();
+verifiesEveryRegisteredBoxLandsInARenderedStack();
+verifiesTheSheetRendersEveryRegionFromTheRegistry();
+verifiesTheRailHeadingAndTheProgressionButton();
 verifiesOrderNotArrayPositionDecidesPlacement();
 verifiesTheSquareBlockIsTwoByTwoSquares();
 verifiesCreateHasItsOwnRegistry();

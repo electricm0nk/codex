@@ -156,7 +156,7 @@ import { AbilitiesPanel } from './panels/AbilitiesPanel';
 import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './panels/CombatPanels';
 import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
 import { SquareBlock, initiativeRow } from './panels/SquareBlock';
-import { SHEET_COLUMNS, SHEET_COLUMN_STYLES, SHEET_LAYOUT, boxesInColumn, type SheetBoxId } from './sheetLayout';
+import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type SheetStack } from './sheetLayout';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
@@ -653,7 +653,7 @@ function CalculatedBioField(props: { label: string; value: string }) {
 }
 
 /**
- * Character bio / physical details panel across the top of the right column.
+ * Character bio / physical details panel in the left rail, under Class.
  * Alignment/Deity/Sex/Age/Height/Weight/Hair/Eyes are the character's own
  * choices, so they're editable here; Vision and Size are derived from race
  * and rendered read-only. Edits persist to the real `bio.json` sidecar via
@@ -2860,9 +2860,12 @@ export function CharacterSheet(props: {
     };
   }, [props.row.classSummary]);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
-  // Print mode: expands the progression rail and renders every tab after page 1 (see printLayout.ts).
+  // Show Progression: the level history under its button in the left rail, closed until asked for.
+  const [progressionOpen, setProgressionOpen] = useState(false);
+  // Print mode: expands the left rail and its level history, and renders every tab after page 1 (see printLayout.ts).
   const [printing, setPrinting] = useState(false);
   const railCollapsed = leftCollapsed && !printing;
+  const progressionVisible = progressionOpen || printing;
   function handlePrint() {
     setPrinting(true);
   }
@@ -4259,9 +4262,224 @@ export function CharacterSheet(props: {
       : itemPickerConfig?.title ?? '';
 
   /** The content of one sheet tab; used by the on-screen tab panel and by every printed tab section. */
-  /** One registered stat box (`SHEET_LAYOUT`), drawn with the shared panels in `./panels`. */
+  /** One registered sheet box (`SHEET_LAYOUT`). Moving a box is an edit to its entry there. */
   function renderSheetBox(id: SheetBoxId, boxStyle: CSSProperties): ReactNode {
     switch (id) {
+      case 'portrait':
+        return (
+          <div style={boxStyle}>
+            <PortraitUpload characterId={props.row.characterId} />
+          </div>
+        );
+      case 'levelXp':
+        return (
+          <div style={boxStyle}>
+            {/* Level / XP */}
+            <div style={{ ...panel, display: 'flex', gap: '0.5rem', padding: '0.4rem' }}>
+              <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', position: 'relative', textAlign: 'center' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Level</p>
+                <p style={{ fontWeight: 800, margin: 0 }}>{level}</p>
+                <button
+                  type="button"
+                  onClick={() => setLevelUpOpen(true)}
+                  title="Level up"
+                  aria-label="Level up"
+                  style={{
+                    alignItems: 'center',
+                    background: 'var(--color-accent)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    color: 'var(--color-on-accent)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    fontSize: '0.7rem',
+                    fontWeight: 800,
+                    height: 16,
+                    justifyContent: 'center',
+                    lineHeight: 1,
+                    padding: 0,
+                    position: 'absolute',
+                    right: 4,
+                    top: 4,
+                    width: 16,
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Caster Level</p>
+                <p style={{ fontWeight: 800, margin: 0 }} title={casterLevelSummary.unknown.join('; ') || undefined}>
+                  {casterLevelSummary.display}
+                </p>
+              </div>
+            </div>
+
+            {mutationError ? (
+              <p
+                role="alert"
+                style={{
+                  backgroundColor: 'var(--color-surface-2)',
+                  border: '1px solid var(--color-danger, #c0392b)',
+                  borderRadius: 6,
+                  color: 'var(--color-danger, #c0392b)',
+                  fontSize: '0.75rem',
+                  margin: 0,
+                  padding: '0.4rem 0.55rem',
+                }}
+              >
+                {mutationError}
+              </p>
+            ) : null}
+
+            {statusMessage ? (
+              <p
+                role="status"
+                style={{
+                  backgroundColor: 'var(--color-surface-2)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 6,
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.75rem',
+                  margin: 0,
+                  padding: '0.4rem 0.55rem',
+                }}
+              >
+                {statusMessage}
+              </p>
+            ) : null}
+
+            <LevelUpDialog
+              open={levelUpOpen}
+              onClose={() => setLevelUpOpen(false)}
+              characterId={props.row.characterId}
+              heldClasses={heldClasses}
+              intelligenceModifier={abilities.intelligence}
+              isHuman={isHuman}
+              onAccept={handleLevelUpAccept}
+            />
+          </div>
+        );
+      case 'classPanel':
+        return (
+          <div style={boxStyle}>
+            <NavCard label="Race" value={props.row.raceLabel} />
+            {/* SD-27: the ARG alternate racial traits this character
+                actually holds — now with the prose the engine rendered for
+                *this* character, not the bare name the key happens to
+                contain.
+
+                The card used to read "Adaptable Luck" and stop there, so
+                the sentence stating the number (already computed, already
+                carrying this character's feats) reached no screen at all.
+                Everything else about the section is unchanged: nothing at
+                all when no alternate was taken, because an empty
+                "Alternate Racial Traits" heading would imply the race has
+                none to offer, which is a different claim.
+
+                The full racial-trait list, standard rows included, is in
+                the Actions tab; this column stays the chosen-swaps digest
+                the left rail has always been. */}
+            {alternateTraitCards.map((row) => (
+              <RacialTraitCard key={row.key} row={row} />
+            ))}
+            {/* A chosen key whose resolution has not arrived (or could not
+                be produced) still names the choice, rather than vanishing
+                and leaving the player's own selection invisible. */}
+            {unresolvedAlternateTraitKeys.map((traitKey) => (
+              <NavCard
+                key={traitKey}
+                label="Alternate Racial Trait"
+                value={traitKey.split(' ~ ').slice(1).join(' ~ ') || traitKey}
+              />
+            ))}
+            <NavCard label="Class" value={classLabel} />
+          </div>
+        );
+      case 'characterDetails':
+        return (
+          <div className="print-details" style={boxStyle}>
+            <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
+          </div>
+        );
+      case 'showProgression':
+        return (
+          <div style={boxStyle}>
+            <button
+              type="button"
+              aria-expanded={progressionVisible}
+              onClick={() => setProgressionOpen((open) => !open)}
+              style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text-secondary)', cursor: 'pointer', fontWeight: 600, padding: '0.4rem 0.6rem' }}
+            >
+              {progressionOpen ? 'Hide Progression' : 'Show Progression'}
+            </button>
+            {progressionVisible ? (
+              <div>
+                {/* Each level taken and what it granted */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+                  {currentBenefits.map((benefit) => (
+                    <LevelBenefitCard
+                      key={`${benefit.classId}-${benefit.characterLevel}`}
+                      benefit={benefit}
+                      skillPoints={skillPointsFor(benefit)}
+                      variant="current"
+                    />
+                  ))}
+                </div>
+
+                {/* Next — the next level available for each held class */}
+                <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', margin: '1rem 0 0.6rem' }}>
+                  <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
+                  <span style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    Next
+                  </span>
+                  <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {nextBenefits.map((benefit) => (
+                    <LevelBenefitCard
+                      key={`next-${benefit.classId}-${benefit.characterLevel}`}
+                      benefit={benefit}
+                      skillPoints={skillPointsFor(benefit)}
+                      variant="next"
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        );
+      case 'squareBlock':
+        return (
+          <div style={boxStyle}>
+            <SquareBlock
+              hp={hp}
+              initiative={initiativeRow(engineRecords.explanations)}
+              encumbrance={props.detail?.corpusDerived?.encumbrance}
+              conditions={custom.conditions}
+            />
+          </div>
+        );
+      case 'combatStrip':
+        return <div style={boxStyle}>{renderSheetRegion('combatStrip')}</div>;
+      case 'skills':
+        return (
+          <div className="print-skills" style={boxStyle}>
+            <SkillsPanel
+              abilities={abilities}
+              heldClasses={heldClasses}
+              classSkills={classSkills}
+              classFactsLoading={classFacts.kind === 'loading'}
+              isHuman={isHuman}
+              allocation={skillAllocation}
+              realModifiers={snapshot?.selectedSkillModifiers}
+              featSkillBonuses={engineRecords.featSkillBonuses}
+              explanations={engineRecords.explanations}
+              onOpenDialog={() => setSkillDialogOpen(true)}
+              custom={custom}
+            />
+          </div>
+        );
       case 'abilities':
         return <AbilitiesPanel scores={engineRecords.abilityScores} abilities={abilities} boxStyle={boxStyle} />;
       case 'armorClass':
@@ -4273,6 +4491,11 @@ export function CharacterSheet(props: {
       case 'saves':
         return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
     }
+  }
+
+  /** The boxes of one stack, in registry order. Fragments, so `.sheet-right`'s print rule still sees them as its children. */
+  function renderSheetRegion(stack: SheetStack): ReactNode {
+    return boxesInColumn(SHEET_LAYOUT, stack).map((box) => <Fragment key={box.id}>{renderSheetBox(box.id, box.boxStyle)}</Fragment>);
   }
 
   function renderTabContent(name: Tab): ReactNode {
@@ -4452,9 +4675,9 @@ export function CharacterSheet(props: {
         </div>
       ) : null}
 
-      {/* Body: collapsible progression | stats + weapons | details + skills */}
+      {/* Body: collapsible left rail | identity + combat + tabs | abilities + skills */}
       <div className="sheet-cols" style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
-        {/* LEFT: collapsible level progression, separated by a vertical line */}
+        {/* LEFT: collapsible rail, separated by a vertical line */}
         <div
           className="sheet-left"
           style={{
@@ -4466,201 +4689,27 @@ export function CharacterSheet(props: {
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: railCollapsed ? 'center' : 'space-between', marginBottom: '0.6rem' }}>
             {!railCollapsed ? (
               <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                Progression
+                Character Details
               </span>
             ) : null}
             <button
               type="button"
               onClick={() => setLeftCollapsed((collapsed) => !collapsed)}
-              title={railCollapsed ? 'Expand progression' : 'Collapse progression'}
+              title={railCollapsed ? 'Expand character details' : 'Collapse character details'}
               style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text-secondary)', cursor: 'pointer', padding: '0.1rem 0.4rem' }}
             >
               {railCollapsed ? '»' : '«'}
             </button>
           </div>
 
-          {!railCollapsed ? (
-            <>
-              <div style={{ marginBottom: '0.75rem' }}>
-                <PortraitUpload characterId={props.row.characterId} />
-              </div>
-
-              {/* Level / XP */}
-              <div style={{ ...panel, display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', padding: '0.4rem' }}>
-                <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', position: 'relative', textAlign: 'center' }}>
-                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Level</p>
-                  <p style={{ fontWeight: 800, margin: 0 }}>{level}</p>
-                  <button
-                    type="button"
-                    onClick={() => setLevelUpOpen(true)}
-                    title="Level up"
-                    aria-label="Level up"
-                    style={{
-                      alignItems: 'center',
-                      background: 'var(--color-accent)',
-                      border: 'none',
-                      borderRadius: '50%',
-                      color: 'var(--color-on-accent)',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      fontSize: '0.7rem',
-                      fontWeight: 800,
-                      height: 16,
-                      justifyContent: 'center',
-                      lineHeight: 1,
-                      padding: 0,
-                      position: 'absolute',
-                      right: 4,
-                      top: 4,
-                      width: 16,
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-                <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>
-                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Caster Level</p>
-                  <p style={{ fontWeight: 800, margin: 0 }} title={casterLevelSummary.unknown.join('; ') || undefined}>
-                    {casterLevelSummary.display}
-                  </p>
-                </div>
-              </div>
-
-              {mutationError ? (
-                <p
-                  role="alert"
-                  style={{
-                    backgroundColor: 'var(--color-surface-2)',
-                    border: '1px solid var(--color-danger, #c0392b)',
-                    borderRadius: 6,
-                    color: 'var(--color-danger, #c0392b)',
-                    fontSize: '0.75rem',
-                    margin: '0 0 0.5rem',
-                    padding: '0.4rem 0.55rem',
-                  }}
-                >
-                  {mutationError}
-                </p>
-              ) : null}
-
-              {statusMessage ? (
-                <p
-                  role="status"
-                  style={{
-                    backgroundColor: 'var(--color-surface-2)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 6,
-                    color: 'var(--color-text-secondary)',
-                    fontSize: '0.75rem',
-                    margin: '0 0 0.5rem',
-                    padding: '0.4rem 0.55rem',
-                  }}
-                >
-                  {statusMessage}
-                </p>
-              ) : null}
-
-              <LevelUpDialog
-                open={levelUpOpen}
-                onClose={() => setLevelUpOpen(false)}
-                characterId={props.row.characterId}
-                heldClasses={heldClasses}
-                intelligenceModifier={abilities.intelligence}
-                isHuman={isHuman}
-                onAccept={handleLevelUpAccept}
-              />
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <NavCard label="Race" value={props.row.raceLabel} />
-                {/* SD-27: the ARG alternate racial traits this character
-                    actually holds — now with the prose the engine rendered for
-                    *this* character, not the bare name the key happens to
-                    contain.
-
-                    The card used to read "Adaptable Luck" and stop there, so
-                    the sentence stating the number (already computed, already
-                    carrying this character's feats) reached no screen at all.
-                    Everything else about the section is unchanged: nothing at
-                    all when no alternate was taken, because an empty
-                    "Alternate Racial Traits" heading would imply the race has
-                    none to offer, which is a different claim.
-
-                    The full racial-trait list, standard rows included, is in
-                    the Actions tab; this column stays the chosen-swaps digest
-                    the left rail has always been. */}
-                {alternateTraitCards.map((row) => (
-                  <RacialTraitCard key={row.key} row={row} />
-                ))}
-                {/* A chosen key whose resolution has not arrived (or could not
-                    be produced) still names the choice, rather than vanishing
-                    and leaving the player's own selection invisible. */}
-                {unresolvedAlternateTraitKeys.map((traitKey) => (
-                  <NavCard
-                    key={traitKey}
-                    label="Alternate Racial Trait"
-                    value={traitKey.split(' ~ ').slice(1).join(' ~ ') || traitKey}
-                  />
-                ))}
-                <NavCard label="Class" value={classLabel} />
-              </div>
-
-              {/* Current levels — each level taken and what it granted */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1rem' }}>
-                {currentBenefits.map((benefit) => (
-                  <LevelBenefitCard
-                    key={`${benefit.classId}-${benefit.characterLevel}`}
-                    benefit={benefit}
-                    skillPoints={skillPointsFor(benefit)}
-                    variant="current"
-                  />
-                ))}
-              </div>
-
-              {/* Next — the next level available for each held class */}
-              <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', margin: '1rem 0 0.6rem' }}>
-                <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
-                <span style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                  Next
-                </span>
-                <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {nextBenefits.map((benefit) => (
-                  <LevelBenefitCard
-                    key={`next-${benefit.classId}-${benefit.characterLevel}`}
-                    benefit={benefit}
-                    skillPoints={skillPointsFor(benefit)}
-                    variant="next"
-                  />
-                ))}
-              </div>
-            </>
-          ) : null}
+          {!railCollapsed ? <div style={SHEET_REGION_STYLES.leftRail}>{renderSheetRegion('leftRail')}</div> : null}
         </div>
 
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
-          {/* The 2x2 block under the name (SQUARE_BLOCK_LAYOUT): Initiative is the engine's
-              `initiative.total` row, Conditions the custom record's list (Normal when empty). */}
-          <SquareBlock
-            hp={hp}
-            initiative={initiativeRow(engineRecords.explanations)}
-            encumbrance={props.detail?.corpusDerived?.encumbrance}
-            conditions={custom.conditions}
-          />
-
-          {/* Stat block, placed by SHEET_LAYOUT (sheetLayout.ts): Abilities as one vertical
-              column, AC / Attack / Speed / Saves stacked as their own boxes beside it. */}
-          <div style={{ display: 'flex', gap: '0.6rem' }}>
-            {SHEET_COLUMNS.map((column) => (
-              <div key={column} style={SHEET_COLUMN_STYLES[column]}>
-                {boxesInColumn(SHEET_LAYOUT, column).map((box) => (
-                  <Fragment key={box.id}>{renderSheetBox(box.id, box.boxStyle)}</Fragment>
-                ))}
-              </div>
-            ))}
-          </div>
+          {/* The 2x2 block under the name, then the combat boxes; both placed by SHEET_LAYOUT. */}
+          <div style={SHEET_REGION_STYLES.combatRow}>{renderSheetRegion('combatRow')}</div>
 
           {/* Weapons / Defense / Gear — bottom, spanning the middle. Printing renders every tab after page 1 instead. */}
           {printing ? null : (
@@ -4697,26 +4746,9 @@ export function CharacterSheet(props: {
           )}
         </div>
 
-        {/* RIGHT: character details, then skills beneath */}
-        <div className="sheet-right" style={{ flex: '0 0 300px', minWidth: 0 }}>
-          <div className="print-details">
-            <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
-          </div>
-          <div className="print-skills">
-          <SkillsPanel
-            abilities={abilities}
-            heldClasses={heldClasses}
-            classSkills={classSkills}
-            classFactsLoading={classFacts.kind === 'loading'}
-            isHuman={isHuman}
-            allocation={skillAllocation}
-            realModifiers={snapshot?.selectedSkillModifiers}
-            featSkillBonuses={engineRecords.featSkillBonuses}
-            explanations={engineRecords.explanations}
-            onOpenDialog={() => setSkillDialogOpen(true)}
-            custom={custom}
-          />
-          </div>
+        {/* RIGHT: Abilities, then Skills */}
+        <div className="sheet-right" style={SHEET_REGION_STYLES.rightColumn}>
+          {renderSheetRegion('rightColumn')}
         </div>
       </div>
 
