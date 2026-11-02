@@ -59,6 +59,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E3 | E3.1 | complete | 93c596cc1c | artifacts/epic_3/E3.1_cycle_receipt.md |
 | E3 | E3.2 | complete | 61aad6b9ab | artifacts/epic_3/E3.2_cycle_receipt.md |
 | E3 | E3.3 | complete | f905c625d2 | artifacts/epic_3/E3.3_cycle_receipt.md |
+| E3 | E3.4 | complete | af1e860a9c | artifacts/epic_3/E3.4_cycle_receipt.md |
 
 ## Epic reports
 
@@ -127,6 +128,9 @@ seed deltas, open blockers.)
 | E3.2 | How a sale names a copy | `bonus` on the request: `0` plain, `N` a `+N`, absent the first | A list index, which the sheet's rows do not carry |
 | E3.3 | State a Market weapon is saved in | Carried, and the status line says so: the engine refuses a second wielded weapon | Wielded, which refuses every weapon on a Computed character; a retry after the refusal, which is E4.1's rule in the client |
 | E3.3 | How many rows the dialog renders | The first 200 by name, with a line saying so; search reaches the rest | All of the Magic item list at once (3,680 rows, E3.1's receipt) |
+| E3.4 | A `+N` on an item the demo corpus did not hold | Bundle the Market's arms and armor and the 15 modifiers, as converted records | A modifier counted with its host missing, which reads a `+1 Breastplate` as AC +1; loading the whole corpus, which the desktop's own header rules out |
+| E3.4 | A second real weapon in hand | Allowed: the Melee number is the Longsword's, others have their own row | Keep the refusal, which left a bought Longsword impossible to hold |
+| E3.4 | Offers that cannot show | Stop offering them, by a rule reading the same corpus | Named exceptions in a test, which leaves the charge standing |
 
 ## Open blockers
 
