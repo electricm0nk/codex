@@ -60,6 +60,7 @@
 //! `FACT:BaseSize|<code>` token. Callers pass a `SizeCategory` in.
 
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
+use crate::rules_core::equipment_effects::stand_in_record;
 use crate::rules_core::equipment_resolver::equipment_converted_resolve;
 use crate::rules_core::size::SizeCategory;
 use crate::rules_core::source_content::SourcePackageContent;
@@ -96,7 +97,7 @@ pub fn equipment_key_resolves_a_carried_weight(item_id: &str, corpus: &SourcePac
     let Some(record) = equipment_converted_resolve(item_id, corpus) else {
         return false;
     };
-    record.weight_lbs.is_some()
+    record.weight_lbs.is_some() || stand_in_record(record, corpus).is_some_and(|base| base.weight_lbs.is_some())
 }
 
 /// Max light/medium/heavy load in pounds for one Strength score, per PF1's
@@ -388,6 +389,10 @@ pub fn compute_encumbrance(
             continue;
         };
         let (weight, cost) = record.weight_and_cost();
+        // A derived record stating neither reads the record it is made from.
+        let stand_in = stand_in_record(record, corpus);
+        let weight = weight.or_else(|| stand_in.and_then(|base| base.weight_lbs));
+        let cost = cost.or_else(|| stand_in.and_then(|base| base.cost_gp));
 
         // Weight is what makes an item *carried* for encumbrance purposes,
         // so a record with no `WT:` token is unresolved. Cost is

@@ -110,7 +110,7 @@ pub fn recompute_character_at_root(root: &Path, character_id: &str) -> Recompute
     };
 
     // As `load_saved_character_at_root` reads it, or Recompute would take a worn custom item off the tiles.
-    let worn_custom_items = WornItemBonuses::at_root(root);
+    let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
     worn_custom_items.raise_abilities(&mut envelope.character_input);
     let mut snapshot = match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
         Ok((snapshot, _corpus_receipt)) => snapshot,

@@ -12,7 +12,7 @@ use codex::rules_core::contract::to_pilot_receipt;
 use codex::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
 use codex::rules_core::damage_total::resolve_weapon_damage_breakdown;
 use codex::rules_core::encumbrance::compute_encumbrance;
-use codex::rules_core::equipment_effects::compute_equipment_effects;
+use codex::rules_core::equipment_effects::{compute_equipment_effects, worn_item_stated_bonuses};
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::size::SizeCategory;
 use codex::rules_core::source_content::SourcePackageContent;
@@ -153,4 +153,99 @@ fn worn_vs_carried_damage_total_has_no_row_for_a_stowed_weapon() {
     let on = rows(&fighter());
     assert_eq!(on.len(), 1, "the Longsword");
     assert!(rows(&with_state(fighter(), SWORD, ActiveState::SelectedInactive)).is_empty());
+}
+
+// --- A worn item's stated numbers reach the totals. The sheet's own read of each is the same filter
+// in `apps/desktop/src-tauri/src/character_hub.rs`. ---
+
+fn worn(items: &[&str]) -> Vec<EquipmentSelection> {
+    items.iter().map(|item| selection(item, ActiveState::EquippedActive)).collect()
+}
+
+/// Two of one type take the higher, a row that loses reads zero, and the rows sum to the total.
+#[test]
+fn worn_item_applies_the_higher_of_one_armor_class_type() {
+    let corpus = core_rulebook();
+    let effects = compute_equipment_effects(&worn(&["Ring of Protection +1", "Ring of Protection +2"]), &corpus);
+    assert_eq!(effects.armor_class_delta, 2);
+    assert_eq!(effects.per_item[0].armor_class_bonus, Some(0));
+    assert_eq!(effects.per_item[1].armor_class_bonus, Some(2));
+
+    let two_types = compute_equipment_effects(&worn(&["Ring of Protection +1", "Amulet of Natural Armor +1"]), &corpus);
+    assert_eq!(two_types.armor_class_delta, 2, "two types add");
+    assert_eq!(two_types.armor_class_not_against_touch(), 1, "the amulet's");
+
+    // An armor's own `+N` belongs to its armor bonus: +2 Chain Shirt is 6 against Bracers +5.
+    let mut shirt = selection(SHIRT, ActiveState::EquippedActive);
+    shirt.applied_modifiers.push("Special Ability ~ +2 ~ Armor".to_owned());
+    let over_bracers = compute_equipment_effects(&[shirt, selection("Bracers of Armor +5", ActiveState::EquippedActive)], &corpus);
+    assert_eq!(over_bracers.armor_class_delta, 6);
+    assert_eq!(over_bracers.armor_class_not_against_touch(), 6);
+    assert_eq!(over_bracers.per_item[1].armor_class_bonus, Some(0), "the bracers cease");
+}
+
+/// A record stating no number reads the record it is made from; its own stated number stands.
+#[test]
+fn worn_item_applies_a_derived_record_reads_what_it_does_not_state() {
+    let corpus = core_rulebook();
+    let celestial = compute_equipment_effects(&worn(&["Celestial Armor"]), &corpus);
+    assert_eq!(celestial.armor_class_delta, 6, "Chainmail's");
+    assert_eq!(celestial.armor_class_not_against_touch(), 6);
+
+    let carried = [selection("Mithral Shirt", ActiveState::SelectedInactive), selection("Flame Tongue", ActiveState::SelectedInactive)];
+    let load = compute_encumbrance(&carried, &corpus, 10, SizeCategory::Medium);
+    assert_eq!(load.total_carried_weight_lbs, 24.0, "Mithral Shirt's own 20, Flame Tongue reads Longsword's 4");
+    assert!(load.unresolved_item_ids.is_empty(), "{:?}", load.unresolved_item_ids);
+}
+
+/// Saves and skills and scores, each by its settled type; carried, none.
+#[test]
+fn worn_item_applies_only_what_is_worn_and_stacks_each_target() {
+    let corpus = core_rulebook();
+    let both = worn_item_stated_bonuses(&worn(&["Cloak of Resistance +1", "Cloak of Resistance +3", "Ioun Stone (Pale green Prism)"]), &corpus);
+    assert_eq!(both.save("fortitude"), 4, "the higher resistance bonus, and the competence bonus");
+    assert_eq!(both.save("reflex"), 4);
+    assert_eq!(both.save("will"), 4);
+
+    let input = fighter();
+    let score = input.chosen.ability_scores.strength;
+    let belt = holding(input.clone(), "Belt of Giant Strength +2", ActiveState::EquippedActive);
+    let stated = worn_item_stated_bonuses(&belt.chosen.equipment_selections, &corpus);
+    let raised = stated.raised(&belt);
+    assert_eq!(raised.chosen.ability_scores.strength, score + 2);
+    assert_eq!(belt.chosen.ability_scores.strength, score, "the character itself does not change");
+
+    let boots = worn_item_stated_bonuses(&worn(&["Boots of Elvenkind"]), &corpus);
+    assert_eq!(boots.counted("skill:acrobatics", "Competence"), Some(5));
+
+    let stowed = holding(fighter(), "Cloak of Resistance +1", ActiveState::SelectedInactive);
+    let none = worn_item_stated_bonuses(&stowed.chosen.equipment_selections, &corpus);
+    assert_eq!(none.save("will"), 0, "carried adds 0");
+}
+
+/// What a chain settles to, off the book's own records: a type, `ALL`, a list, a luck formula and an
+/// untyped penalty are numbers; a chain that asks something of the wearer, or a choice, is not.
+#[test]
+fn worn_item_applies_settles_each_chain_shape() {
+    let rows = |book: &'static str, item: &str| -> Vec<(String, Option<String>, i16)> {
+        let dir = format!("data/corpus/{book}");
+        let roots = [BookCorpusRoot { book_id: book, dir: Path::new(&dir) }];
+        let corpus = load_equipment_corpus(&roots);
+        let record = codex::rules_core::equipment_resolver::equipment_converted_resolve(item, &corpus).expect(item);
+        record.stated_bonuses.iter().map(|b| (b.target.clone(), b.bonus_type.clone(), b.value)).collect()
+    };
+    let saves = |word: Option<&str>, value: i16| -> Vec<(String, Option<String>, i16)> {
+        ["save:fortitude", "save:reflex", "save:will"].iter().map(|t| (t.to_string(), word.map(str::to_owned), value)).collect()
+    };
+    assert_eq!(rows("occult_adventures", "Lucky Horseshoe"), saves(Some("Luck"), 1), "`1+Global_LuckBonus`");
+    assert_eq!(rows("ultimate_equipment", "Robe of Vermin"), saves(None, -2), "an untyped penalty");
+    assert_eq!(rows("core_rulebook", "Cloak of Resistance +3"), saves(Some("Resistance"), 3), "`BONUS:VAR`");
+    assert_eq!(
+        rows("inner_sea_gods", "Tankard Of The Drunken Hero"),
+        vec![("save:fortitude".to_owned(), Some("Resistance".to_owned()), 1), ("save:will".to_owned(), Some("Resistance".to_owned()), 1)],
+        "a list",
+    );
+    assert_eq!(rows("advanced_race_guide", "Halo of Inner Calm"), vec![], "`PRERACE`, `PREALIGN`");
+    assert_eq!(rows("ultimate_equipment", "Resplendent Robe of the Thespian"), vec![], "`PRECLASS`");
+    assert_eq!(rows("inner_sea_gods", "Rhombocrystal"), vec![], "`PREDEITY`");
 }

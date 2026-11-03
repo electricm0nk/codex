@@ -4,6 +4,7 @@
     "poison_violet_venom.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -26,6 +27,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -41,6 +43,7 @@
     "rock_medium.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -63,6 +66,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -78,6 +82,7 @@
     "rock_small.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -100,6 +105,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,

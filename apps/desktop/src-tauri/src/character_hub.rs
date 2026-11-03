@@ -21,6 +21,7 @@ use serde::{Deserialize, Serialize};
 use tauri::Manager;
 use uuid::Uuid;
 
+use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
 use crate::character_custom::{custom_or_empty, set_custom_item_state_at_root, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
 use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
@@ -2764,8 +2765,12 @@ pub(crate) fn load_saved_character_at_root(
 ) -> Result<LoadSavedCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     // This copy is what the sheet computes from, and is never saved.
-    let worn_custom_items = WornItemBonuses::at_root(root);
+    let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
     worn_custom_items.raise_abilities(&mut envelope.character_input);
+    // `resolve_unified_pilot_snapshot` raises its own copy by what is worn; so does what reads the
+    // scores beside it. So must this one, for the rows the load builds from them.
+    let sheet_input = worn_item_stated_bonuses(&envelope.character_input.chosen.equipment_selections, corpus_fixture_bundle())
+        .raised(&envelope.character_input);
 
     let (mut snapshot, diagnostics, corpus_receipt) =
         match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
@@ -2773,7 +2778,7 @@ pub(crate) fn load_saved_character_at_root(
             Err(diagnostics) => (
                 None,
                 diagnostics,
-                compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle()),
+                compute_pilot_with_corpus(&sheet_input, corpus_fixture_bundle()),
             ),
         };
 
@@ -2783,16 +2788,16 @@ pub(crate) fn load_saved_character_at_root(
     // `EquippedActive` effect set. Reused rather than recomputed, matching
     // `contract::to_pilot_receipt`'s own reasoning for the identical pair.
     let mut explanations = map_explanations_dto(&corpus_receipt.base.explanations);
-    explanations.extend(sheet_skill_trait_modifier_rows(&envelope.character_input));
-    explanations.extend(feat_budget_rows(&envelope.character_input, &corpus_receipt.base));
+    explanations.extend(sheet_skill_trait_modifier_rows(&sheet_input));
+    explanations.extend(feat_budget_rows(&sheet_input, &corpus_receipt.base));
     let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
-        &envelope.character_input,
+        &sheet_input,
         corpus_fixture_bundle(),
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
-        sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
+        sheet_lines_for(&sheet_input, &corpus_receipt.base);
     if let Some(snapshot) = snapshot.as_mut() {
         worn_custom_items.apply_to_snapshot(snapshot);
     }
@@ -2810,7 +2815,7 @@ pub(crate) fn load_saved_character_at_root(
         selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
         selected_traits: envelope.character_input.chosen.selected_traits.clone(),
         resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
-        ability_scores: effective_ability_scores_dto(&envelope.character_input),
+        ability_scores: effective_ability_scores_dto(&sheet_input),
         skill_allocations: map_skill_allocations_dto(&envelope.character_input),
         equipment_selections: map_equipment_selections_dto(&envelope.character_input),
         sheet_lines,
@@ -9937,6 +9942,201 @@ mod tests {
         assert_eq!(stowed, none, "a stowed ring");
         assert_eq!(worn.armor_class, none.armor_class + 1, "a worn ring's +1: {:?}", loaded.corpus_derived.equipment_effects);
         assert_eq!(worn.flat_footed, none.flat_footed + 1, "a deflection bonus holds when flat-footed");
+    }
+
+    // --- A worn item's stated numbers reach the totals (`decisions.md §9`, DoD 5). ---
+
+    fn worn_item_applies_saves(root: &Path) -> (i16, i16, i16) {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        (snapshot.total_saves.fortitude, snapshot.total_saves.reflex, snapshot.total_saves.will)
+    }
+
+    fn worn_item_applies_row(root: &Path, id: &str) -> Option<i16> {
+        load_saved_character_at_root(root).unwrap().explanations.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    /// CRB p.507: a resistance bonus on all three saves. Worn, every save moves, on the load and on
+    /// Recompute; carried, none does.
+    #[test]
+    fn worn_item_applies_a_cloak_of_resistance_to_every_save() {
+        let cloak = "Cloak of Resistance +1";
+        let (dir, root) = enhancement_rows_aldric("worn-item-cloak");
+        let none = worn_item_applies_saves(&root);
+        worn_vs_carried_hold(&root, cloak, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_saves(&root);
+        worn_vs_carried_set(&root, cloak, ActiveState::EquippedActive);
+        let worn = worn_item_applies_saves(&root);
+        let recomputed = crate::characterHub::recomputeCharacter::recompute_character_at_root(&root, DEFAULT_CHARACTER_ID);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(none, (5, 2, 2), "Aldric, as E4.2 measured him");
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, (6, 3, 3), "worn adds its +1 to each");
+        let character = recomputed.character.expect("recompute succeeds");
+        assert_eq!((character.total_saves.fortitude, character.total_saves.reflex, character.total_saves.will), (6, 3, 3), "Recompute reads the same");
+    }
+
+    /// CRB p.502: an enhancement bonus to Strength. The score moves, what it drives follows from the
+    /// engine, and the saved character does not change.
+    #[test]
+    fn worn_item_applies_a_belt_to_the_score_and_what_it_drives_and_not_the_save_file() {
+        let belt = "Belt of Giant Strength +2";
+        let (dir, root) = enhancement_rows_aldric("worn-item-belt");
+        let none = enhancement_read(&root);
+        let score = |root: &Path| load_saved_character_at_root(root).unwrap().ability_scores.strength;
+        let score_none = score(&root);
+        let saved_none = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores.strength;
+        worn_vs_carried_hold(&root, belt, ActiveState::SelectedInactive);
+        let carried = (score(&root), enhancement_read(&root));
+        worn_vs_carried_set(&root, belt, ActiveState::EquippedActive);
+        let worn = (score(&root), enhancement_read(&root));
+        let saved_worn = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores.strength;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(score_none, 19, "Aldric, as E4.2 measured him");
+        assert_eq!(carried, (19, none), "carried adds 0");
+        assert_eq!(worn.0, 21, "worn adds its +2");
+        assert_eq!(worn.1.melee, none.melee + 1, "19 to 21 is one more on the Strength modifier");
+        assert_eq!(saved_worn, saved_none, "the saved score does not change");
+    }
+
+    /// CRB p.504: a competence bonus on one skill, on the row every skill total reads.
+    #[test]
+    fn worn_item_applies_boots_of_elvenkind_to_the_one_skill() {
+        let boots = "Boots of Elvenkind";
+        let id = "skill.trait_modifier.acrobatics";
+        let (dir, root) = enhancement_rows_aldric("worn-item-boots");
+        let none = worn_item_applies_row(&root, id).unwrap_or(0);
+        worn_vs_carried_hold(&root, boots, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_row(&root, id).unwrap_or(0);
+        worn_vs_carried_set(&root, boots, ActiveState::EquippedActive);
+        let worn = worn_item_applies_row(&root, id).unwrap_or(0);
+        let climb = worn_item_applies_row(&root, "skill.trait_modifier.climb").unwrap_or(0);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, none + 5, "worn adds its +5");
+        assert_eq!(climb, 0, "and to no other skill");
+    }
+
+    /// A deflection bonus holds against touch and flat-footed; a natural armor bonus holds flat-footed
+    /// and not against touch.
+    #[test]
+    fn worn_item_applies_each_armor_class_type_to_its_own_touch_and_flat_footed() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-touch");
+        let none = enhancement_read(&root);
+        worn_vs_carried_hold(&root, "Ring of Protection +1", ActiveState::EquippedActive);
+        let ring = enhancement_read(&root);
+        worn_vs_carried_hold(&root, "Amulet of Natural Armor +1", ActiveState::EquippedActive);
+        let amulet = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!((none.armor_class, none.touch, none.flat_footed), (16, 12, 14), "Aldric, as E4.2 measured him");
+        assert_eq!((ring.armor_class, ring.touch, ring.flat_footed), (17, 13, 15), "deflection counts on all three");
+        assert_eq!((amulet.armor_class, amulet.touch, amulet.flat_footed), (18, 13, 16), "natural armor does not count against touch");
+    }
+
+    /// Two bonuses of one type take the higher, and AC by Source still sums to the panel.
+    #[test]
+    fn worn_item_applies_the_higher_of_two_bonuses_of_one_type() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-stack");
+        let none = enhancement_read(&root);
+        worn_vs_carried_hold(&root, "Ring of Protection +1", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Ring of Protection +2", ActiveState::EquippedActive);
+        let rings = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        worn_vs_carried_hold(&root, "Bracers of Armor +3", ActiveState::EquippedActive);
+        let low_bracers = enhancement_read(&root);
+        worn_vs_carried_set(&root, "Bracers of Armor +3", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Bracers of Armor +6", ActiveState::EquippedActive);
+        let high_bracers = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(rings.armor_class, none.armor_class + 2, "the +2, not +1 and +2");
+        assert_eq!(rings.touch, none.touch + 2);
+        let effects = &loaded.corpus_derived.equipment_effects;
+        assert_eq!(effects.armor_class_delta, effects.per_item.iter().filter_map(|e| e.armor_class_bonus).sum::<i16>(), "the rows sum to the panel");
+        assert_eq!(low_bracers, rings, "Bracers +3 under a Chain Shirt's +4 add nothing");
+        assert_eq!(high_bracers.armor_class, rings.armor_class + 2, "Bracers +6 over the shirt's +4");
+        assert_eq!(high_bracers.touch, rings.touch, "an armor bonus never counts against touch");
+    }
+
+    /// A derived record stating no number of its own reads the record it is made from.
+    #[test]
+    fn worn_item_applies_a_derived_armor_reads_its_base() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-derived");
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let bare = enhancement_read(&root);
+        let bare_weight = worn_vs_carried_weight(&root);
+        worn_vs_carried_hold(&root, "Mithral Shirt", ActiveState::EquippedActive);
+        let mithral = enhancement_read(&root);
+        let mithral_weight = worn_vs_carried_weight(&root);
+        worn_vs_carried_set(&root, "Mithral Shirt", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Celestial Armor", ActiveState::EquippedActive);
+        let celestial = enhancement_read(&root);
+        let celestial_weight = worn_vs_carried_weight(&root);
+        worn_vs_carried_hold(&root, "Flame Tongue", ActiveState::SelectedInactive);
+        let tongue_weight = worn_vs_carried_weight(&root);
+        let unresolved = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.unresolved_item_ids;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(bare.armor_class, 12, "the shirt stowed");
+        assert_eq!(mithral.armor_class, bare.armor_class + 4, "Mithral Shirt reads Chain Shirt's +4");
+        assert_eq!(mithral.touch, bare.touch, "and it is armor");
+        assert_eq!(mithral_weight, bare_weight + 20.0, "its own stated weight stands");
+        assert_eq!(celestial.armor_class, bare.armor_class + 6, "Celestial Armor reads Chainmail's +6; its own +3 is DEF-1");
+        assert_eq!(celestial_weight, mithral_weight + 40.0, "and Chainmail's 40 lb");
+        assert_eq!(tongue_weight, celestial_weight + 4.0, "Flame Tongue reads Longsword's 4 lb");
+        for item in ["Mithral Shirt", "Celestial Armor", "Flame Tongue"] {
+            assert!(!unresolved.iter().any(|id| id == item), "{item} in {unresolved:?}");
+        }
+    }
+
+    /// A stock item's settled type folds with a worn custom item's bonus of that type, on the number
+    /// the sheet reads, whichever is the higher.
+    #[test]
+    fn worn_item_applies_a_stock_type_folds_with_a_worn_custom_bonus() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-fold");
+        let none = enhancement_read(&root);
+        let saves_none = worn_item_applies_saves(&root);
+        let score_none = load_saved_character_at_root(&root).unwrap().ability_scores.strength;
+        worn_vs_carried_hold(&root, "Ring of Protection +2", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Cloak of Resistance +1", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Belt of Giant Strength +2", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Boots of Elvenkind", ActiveState::EquippedActive);
+        let stock = enhancement_read(&root);
+        custom_items_saved(&root, vec![
+            custom_item("low", "Low Ward", None, vec![custom_bonus("ac", "Deflection", 1), custom_bonus("ability:strength", "Enhancement", 1)]),
+            custom_item("high", "High Ward", None, vec![
+                custom_bonus("ac", "Deflection", 3),
+                custom_bonus("save:will", "Resistance", 3),
+                custom_bonus("ability:strength", "Enhancement", 4),
+                custom_bonus("skill:acrobatics", "Competence", 6),
+            ]),
+            custom_item("other", "Other Ward", None, vec![custom_bonus("ac", "Insight", 1)]),
+        ]);
+        custom_item_wear(&root, "low");
+        let low = (enhancement_read(&root), load_saved_character_at_root(&root).unwrap().ability_scores.strength);
+        custom_item_wear(&root, "high");
+        let high = enhancement_read(&root);
+        let high_saves = worn_item_applies_saves(&root);
+        let high_loaded = load_saved_character_at_root(&root).unwrap();
+        custom_item_wear(&root, "other");
+        let other = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(stock.armor_class, none.armor_class + 2);
+        assert_eq!(low, (stock, score_none + 2), "a lower custom bonus of the type adds nothing");
+        assert_eq!(high.armor_class, none.armor_class + 3, "the custom +3 over the ring's +2 is +3 in all");
+        assert_eq!(high.touch, none.touch + 3);
+        assert_eq!(high_saves, (saves_none.0 + 1, saves_none.1 + 1, saves_none.2 + 3), "the cloak's +1, and the custom +3 over it on Will");
+        assert_eq!(high_loaded.ability_scores.strength, score_none + 4, "the custom +4 over the belt's +2");
+        let acrobatics = high_loaded.explanations.iter().find(|row| row.id == "skill.trait_modifier.acrobatics").unwrap().value;
+        assert_eq!(acrobatics, 6, "the custom +6 over the boots' +5");
+        let effects = &high_loaded.corpus_derived.equipment_effects;
+        assert_eq!(effects.armor_class_delta, effects.per_item.iter().filter_map(|e| e.armor_class_bonus).sum::<i16>(), "the rows sum to the panel");
+        assert_eq!(other.armor_class, high.armor_class + 1, "another type adds");
     }
 
     /// A held item in the pack moves no number on the sheet, whatever the number is: Armor Class,

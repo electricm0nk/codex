@@ -51,6 +51,7 @@ use codex::rules_core::character_input::{
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
 use codex::rules_core::class_seeds::canonical_seeds_for;
+use codex::rules_core::equipment_effects::{worn_item_stated_bonuses, WornItemStatedBonuses};
 use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
@@ -801,6 +802,11 @@ pub(crate) fn resolve_unified_pilot_snapshot(
     character_input: &CharacterInput,
     corpus: &SourcePackageContent,
 ) -> Result<(PilotSnapshot, CorpusPilotReceipt), Vec<ComputationDiagnostic>> {
+    // What a worn item states on a score goes in at the score, on this copy, so what the score
+    // drives follows from the engine; what it states on a save goes on the save's total.
+    let worn_items = worn_item_stated_bonuses(&character_input.chosen.equipment_selections, corpus);
+    let raised_input = worn_items.raised(character_input);
+    let character_input = &raised_input;
     let receipt = build_pilot_headless_receipt(character_input);
     let mut corpus_receipt = compute_pilot_with_corpus(character_input, corpus);
 
@@ -829,7 +835,7 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 },
                 defense: PilotDefenseViewModel {
                     baseline_armor_class: combat.armor_class,
-                    total_save: receipt.computation.total_saves,
+                    total_save: worn_item_saves(receipt.computation.total_saves, &worn_items),
                     damage_reduction: receipt
                         .computation
                         .explanations
@@ -889,6 +895,16 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             // the widened path is what keeps a real equipped shield from
             // silently blanking three cells.
             upsert_corpus_aware_combat_explanations(&mut corpus_receipt, &combat);
+            for (id, save) in [
+                ("defense.total_save.fortitude", "fortitude"),
+                ("defense.total_save.reflex", "reflex"),
+                ("defense.total_save.will", "will"),
+            ] {
+                if let Some(row) = corpus_receipt.base.explanations.iter_mut().find(|row| row.id == id) {
+                    row.value += worn_items.save(save);
+                }
+            }
+            corpus_receipt.base.total_saves = snapshot.defense.total_save;
             Ok((snapshot, corpus_receipt))
         }
         (combat_result, skills_result) => {
@@ -928,6 +944,17 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             }
             Err(diagnostics)
         }
+    }
+}
+
+fn worn_item_saves(
+    saves: codex::rules_core::pilot_compute::BaseSaves,
+    worn_items: &WornItemStatedBonuses,
+) -> codex::rules_core::pilot_compute::BaseSaves {
+    codex::rules_core::pilot_compute::BaseSaves {
+        fortitude: saves.fortitude + worn_items.save("fortitude"),
+        reflex: saves.reflex + worn_items.save("reflex"),
+        will: saves.will + worn_items.save("will"),
     }
 }
 

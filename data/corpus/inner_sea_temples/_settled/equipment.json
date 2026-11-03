@@ -4,6 +4,7 @@
     "altar_of_the_dawnflower.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -26,6 +27,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -41,6 +43,7 @@
     "censuring_placard.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -63,6 +66,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -78,6 +82,7 @@
     "clay_whippoorwill.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -100,6 +105,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -115,6 +121,7 @@
     "dervish_sikke_knowledge_arcana.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -137,6 +144,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -152,6 +160,7 @@
     "dervish_sikke_knowledge_dungeoneering.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -174,6 +183,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -189,6 +199,7 @@
     "dervish_sikke_knowledge_engineering.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -211,6 +222,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -226,6 +238,7 @@
     "dervish_sikke_knowledge_geography.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -248,6 +261,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -263,6 +277,7 @@
     "dervish_sikke_knowledge_history.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -285,6 +300,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -300,6 +316,7 @@
     "dervish_sikke_knowledge_local.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -322,6 +339,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -337,6 +355,7 @@
     "dervish_sikke_knowledge_nature.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -359,6 +378,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -374,6 +394,7 @@
     "dervish_sikke_knowledge_nobility.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -396,6 +417,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -411,6 +433,7 @@
     "dervish_sikke_knowledge_planes.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -433,6 +456,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -448,6 +472,7 @@
     "dervish_sikke_knowledge_religion.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -470,6 +495,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -485,6 +511,7 @@
     "dervish_sikke_perform_act.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -507,6 +534,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -522,6 +550,7 @@
     "dervish_sikke_perform_comedy.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -544,6 +573,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -559,6 +589,7 @@
     "dervish_sikke_perform_dance.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -581,6 +612,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -596,6 +628,7 @@
     "dervish_sikke_perform_keyboard_instruments.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -618,6 +651,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -633,6 +667,7 @@
     "dervish_sikke_perform_oratory.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -655,6 +690,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -670,6 +706,7 @@
     "dervish_sikke_perform_percussion_instruments.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -692,6 +729,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -707,6 +745,7 @@
     "dervish_sikke_perform_sing.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -729,6 +768,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -744,6 +784,7 @@
     "dervish_sikke_perform_string_instruments.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -766,6 +807,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -781,6 +823,7 @@
     "dervish_sikke_perform_wind_instruments.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -803,6 +846,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -818,6 +862,7 @@
     "elixir_of_emulation.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -840,6 +885,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -855,6 +901,7 @@
     "fist_of_the_pit.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -877,6 +924,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -892,6 +940,7 @@
     "hateful_sting.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -914,6 +963,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -929,6 +979,7 @@
     "key_cloak.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -951,6 +1002,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -966,6 +1018,7 @@
     "mace_of_keys.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -988,6 +1041,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1003,6 +1057,7 @@
     "meltdown_safe.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1025,6 +1080,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1040,6 +1096,7 @@
     "neverspill_goblet.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1062,6 +1119,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1077,6 +1135,7 @@
     "nightpiercer.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1099,6 +1158,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1114,6 +1174,7 @@
     "parting_glass.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1136,6 +1197,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1151,6 +1213,7 @@
     "raiment_of_chains.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1173,6 +1236,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1188,6 +1252,7 @@
     "ring_of_the_faithful_dead.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1210,6 +1275,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1225,6 +1291,7 @@
     "saliharion.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1247,6 +1314,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1262,6 +1330,7 @@
     "scabbard_of_the_lost_kiss.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1284,6 +1353,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1299,6 +1369,7 @@
     "secure_paypack.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1321,6 +1392,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1336,6 +1408,7 @@
     "soul_candle.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1358,6 +1431,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1373,6 +1447,7 @@
     "stone_of_tomb_warding.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1395,6 +1470,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1410,6 +1486,7 @@
     "sunlord_s_feather.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1432,6 +1509,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1447,6 +1525,7 @@
     "thundering_collar.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1469,6 +1548,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1484,6 +1564,7 @@
     "universal_lock.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1506,6 +1587,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1521,6 +1603,7 @@
     "vaultbow.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1543,6 +1626,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1558,6 +1642,7 @@
     "watchful_tankard.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -1580,6 +1665,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,

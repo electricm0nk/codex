@@ -28,8 +28,8 @@ use crate::character_hub::{
 use codex::rules_core::body_slots::{slot_conflict, BodySlot};
 use codex::rules_core::character_input::{AbilityScores, ActiveState, CharacterInput};
 use codex::rules_core::pilot_view_model::PilotSnapshot;
-use codex::rules_core::game_system::GameSystem;
-use codex::rules_core::sheet_rule::stacking_types;
+use codex::rules_core::equipment_effects::{bonus_always_counts, worn_item_stated_bonuses, WornItemStatedBonuses, NOT_AGAINST_TOUCH};
+use codex::rules_core::source_content::SourcePackageContent;
 use codex::rules_core::skill_allocation::SHEET_SKILL_IDS;
 use codex::saved_character::local_store::SavedCharacterStore;
 
@@ -53,7 +53,6 @@ const BONUS_TYPES: [&str; 18] = [
     "Morale", "NaturalArmor", "Profane", "Racial", "Resistance", "Sacred", "Shield", "Size",
 ];
 /// What a touch attack ignores. An enhancement bonus to AC is one on armor or a shield.
-const NOT_AGAINST_TOUCH: [&str; 4] = ["Armor", "Shield", "NaturalArmor", "Enhancement"];
 /// The prefix naming a custom item to `set_equipment_active_state`, as `list_held_equipment` lists it.
 pub(crate) const CUSTOM_ITEM_PREFIX: &str = "custom:";
 
@@ -258,16 +257,33 @@ struct WornBonus {
     value: i16,
 }
 
-/// What the character's worn custom items add. A carried item is not in it. Same-type bonuses to one
-/// target take the higher, except a penalty, an untyped bonus and the types the game mode says stack
-/// ([`stacking_types`]), the rule of the sheet engine's `Var` fold.
+/// What the character's worn custom items add, and the sheet rows of a worn stock item's skill bonus.
+/// A carried item is not in it. Same-type bonuses to one target take the higher, except a penalty, an
+/// untyped bonus and the types the game mode says stack ([`bonus_always_counts`]), the rule of the
+/// sheet engine's `Var` fold. A stock item's score, save and Armor Class bonuses are already in the
+/// engine's numbers, so a custom bonus of that type adds only what it beats them by.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub(crate) struct WornItemBonuses(Vec<WornBonus>);
 
 impl WornItemBonuses {
     pub(crate) fn of(custom: &CharacterCustomDto) -> Self {
-        let stacking = stacking_types(GameSystem::Pathfinder1e);
-        let mut counted: Vec<WornBonus> = Vec::new();
+        Self::beside(custom, &WornItemStatedBonuses::default())
+    }
+
+    fn beside(custom: &CharacterCustomDto, stock: &WornItemStatedBonuses) -> Self {
+        let in_the_engine = |target: &str| !target.starts_with("skill:");
+        let mut counted: Vec<WornBonus> = stock
+            .rows()
+            .iter()
+            .filter(|row| !in_the_engine(&row.target))
+            .map(|row| WornBonus {
+                item_id: row.item_name.clone(),
+                item_name: row.item_name.clone(),
+                target: row.target.clone(),
+                bonus_type: row.bonus_type.clone().unwrap_or_else(|| UNTYPED.to_owned()),
+                value: row.value,
+            })
+            .collect();
         for record in custom.equipment.iter().filter(|record| record.worn) {
             for bonus in &record.bonuses {
                 let value = bonus.value.clamp(-MAX_BONUS_VALUE, MAX_BONUS_VALUE) as i16;
@@ -278,7 +294,7 @@ impl WornItemBonuses {
                     bonus_type: bonus.bonus_type.clone(),
                     value,
                 };
-                let always_counts = value < 0 || bonus.bonus_type == UNTYPED || stacking.contains(&bonus.bonus_type.as_str());
+                let always_counts = bonus_always_counts(value, Some(&bonus.bonus_type).filter(|word| *word != UNTYPED).map(String::as_str));
                 let same_type = counted
                     .iter()
                     .position(|held| held.value > 0 && held.target == row.target && held.bonus_type == row.bonus_type);
@@ -292,13 +308,26 @@ impl WornItemBonuses {
                 }
             }
         }
+        counted.retain_mut(|row| {
+            if !in_the_engine(&row.target) {
+                return true;
+            }
+            match stock.counted(&row.target, &row.bonus_type) {
+                Some(held) if !bonus_always_counts(row.value, Some(&row.bonus_type)) => {
+                    row.value -= held;
+                    row.value > 0
+                }
+                _ => true,
+            }
+        });
         Self(counted)
     }
 
-    /// The bonuses of the file beside this character. An unreadable `custom.json` adds nothing here,
-    /// so the sheet still opens; the Custom tab reads the same file and says what is wrong with it.
-    pub(crate) fn at_root(root: &Path) -> Self {
-        Self::of(&custom_or_empty(root))
+    /// The bonuses of the file beside this character, folded with what `input` wears. An unreadable
+    /// `custom.json` adds nothing here, so the sheet still opens; the Custom tab reads the same file
+    /// and says what is wrong with it.
+    pub(crate) fn at_root(root: &Path, input: &CharacterInput, corpus: &SourcePackageContent) -> Self {
+        Self::beside(&custom_or_empty(root), &worn_item_stated_bonuses(&input.chosen.equipment_selections, corpus))
     }
 
     fn sum(&self, target: &str, counts: impl Fn(&WornBonus) -> bool) -> i16 {
@@ -357,7 +386,7 @@ impl WornItemBonuses {
         for (id, target, moved) in rows {
             if let Some(row) = sheet.explanations.iter_mut().find(|row| row.id == id) {
                 row.value += moved;
-                row.detail = format!("{}; worn custom items: {}", row.detail, self.sources(target));
+                row.detail = format!("{}; worn items: {}", row.detail, self.sources(target));
             }
         }
 
@@ -371,15 +400,15 @@ impl WornItemBonuses {
                 match sheet.explanations.iter_mut().find(|row| row.id == id) {
                     Some(row) => {
                         row.value += self.total(target);
-                        row.detail = format!("{}; worn custom items: {sources}", row.detail);
+                        row.detail = format!("{}; worn items: {sources}", row.detail);
                     }
-                    None => sheet.explanations.push(ExplanationDto { id, value: self.total(target), detail: format!("Worn custom items: {sources}") }),
+                    None => sheet.explanations.push(ExplanationDto { id, value: self.total(target), detail: format!("Worn items: {sources}") }),
                 }
             }
             sheet.explanations.push(ExplanationDto {
                 id: format!("custom_item.{}", target.replace(':', ".")),
                 value: self.total(target),
-                detail: format!("Worn custom items: {sources}"),
+                detail: format!("Worn items: {sources}"),
             });
         }
 

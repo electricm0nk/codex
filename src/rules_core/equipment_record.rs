@@ -76,6 +76,16 @@ use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContr
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use crate::rules_core::equipment_effects::EquipmentStatEffect;
 
+/// One standing bonus an item states. `target` is the sheet's own word: `ability:strength`,
+/// `save:will`, `skill:acrobatics`.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct StatedBonus {
+    pub target: String,
+    /// The engine's word for the type. `None` adds to any other.
+    pub bonus_type: Option<String>,
+    pub value: i16,
+}
+
 /// One equipment or equipment-modifier item as the live side holds it: the
 /// converted, settled values of a corpus equipment record.
 ///
@@ -113,6 +123,16 @@ pub struct CorpusEquipmentRecord {
     /// effect and is never summed into a host item's armour total. Kept as
     /// its own field because a modifier record is read only for this value.
     pub armor_class_chain_bonus: Option<i16>,
+    /// The bonus type of the chain [`Self::stat_effect`]'s `armor_class_bonus` was read from, in the
+    /// engine's word (`Deflection`, `Armor`, `NaturalArmor`). `None` when the chain states none, or
+    /// says it stacks with itself, so it adds to any other.
+    #[serde(default)]
+    pub armor_class_bonus_type: Option<String>,
+    /// What the item states standing on the wearer's saves, ability scores and named skills, one
+    /// row per target. A condition (a class, a race, a deity) or a formula keeps a chain out: the
+    /// item's words print it.
+    #[serde(default)]
+    pub stated_bonuses: Vec<StatedBonus>,
     /// The item's settled circumstance bonus to one named skill.
     pub skill_check_bonus: Option<SkillCheckBonus>,
     /// The item's settled flat bonuses to named rules variables, one row per

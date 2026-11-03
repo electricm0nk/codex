@@ -4,6 +4,7 @@
     "equip_agile_breastplate.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 6,
         "base_damage_dice": null,
         "base_item": null,
@@ -28,6 +29,7 @@
           "max_dex": 3,
           "spell_failure": 25.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -43,6 +45,7 @@
     "equip_agile_half_plate.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 8,
         "base_damage_dice": null,
         "base_item": null,
@@ -67,6 +70,7 @@
           "max_dex": 0,
           "spell_failure": 40.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -82,6 +86,7 @@
     "equip_aklys_gladiator.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -114,6 +119,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -129,6 +135,7 @@
     "equip_armored_coat.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 4,
         "base_damage_dice": null,
         "base_item": null,
@@ -154,6 +161,7 @@
           "max_dex": 3,
           "spell_failure": 20.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -169,6 +177,7 @@
     "equip_atlatl.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -199,6 +208,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -214,6 +224,7 @@
     "equip_banded_mail_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 7,
         "base_damage_dice": null,
         "base_item": null,
@@ -236,6 +247,7 @@
           "max_dex": 1,
           "spell_failure": 35.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -256,6 +268,7 @@
     "equip_bardiche.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -287,6 +300,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -302,6 +316,7 @@
     "equip_bastard_sword_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -330,6 +345,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -345,6 +361,7 @@
     "equip_battered_blunderbuss.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -376,6 +393,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -391,6 +409,7 @@
     "equip_battered_musket.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -421,6 +440,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -436,6 +456,7 @@
     "equip_battered_pistol.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -466,6 +487,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -481,6 +503,7 @@
     "equip_battle_aspergillum.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -511,6 +534,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -526,6 +550,7 @@
     "equip_battleaxe_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -554,6 +579,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -569,6 +595,7 @@
     "equip_bayonet.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -599,6 +626,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -614,6 +642,7 @@
     "equip_bec_de_corbin.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -645,6 +674,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -660,6 +690,7 @@
     "equip_bill.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -692,6 +723,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -707,6 +739,7 @@
     "equip_bladed_scarf.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -739,6 +772,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -754,6 +788,7 @@
     "equip_blowgun_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -782,6 +817,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -797,6 +833,7 @@
     "equip_blunderbuss.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -828,6 +865,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -843,6 +881,7 @@
     "equip_bo_staff.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -873,6 +912,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -888,6 +928,7 @@
     "equip_bolas_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -919,6 +960,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -934,6 +976,7 @@
     "equip_breastplate_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 6,
         "base_damage_dice": null,
         "base_item": null,
@@ -956,6 +999,7 @@
           "max_dex": 3,
           "spell_failure": 25.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -976,6 +1020,7 @@
     "equip_broadsword_nine_ring.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1006,6 +1051,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1021,6 +1067,7 @@
     "equip_buckler_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -1043,6 +1090,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -1063,6 +1111,7 @@
     "equip_buckler_gun.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1093,6 +1142,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1108,6 +1158,7 @@
     "equip_butterfly_sword.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1138,6 +1189,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1153,6 +1205,7 @@
     "equip_cestus.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1183,6 +1236,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1198,6 +1252,7 @@
     "equip_chain_shirt.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 4,
         "base_damage_dice": null,
         "base_item": null,
@@ -1220,6 +1275,7 @@
           "max_dex": 4,
           "spell_failure": 20.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -1240,6 +1296,7 @@
     "equip_chain_spear.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1270,6 +1327,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1285,6 +1343,7 @@
     "equip_chainmail_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 6,
         "base_damage_dice": null,
         "base_item": null,
@@ -1307,6 +1366,7 @@
           "max_dex": 2,
           "spell_failure": 30.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -1327,6 +1387,7 @@
     "equip_chakram.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1357,6 +1418,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1372,6 +1434,7 @@
     "equip_claw_blades_catfolk.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1402,6 +1465,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": {
@@ -1422,6 +1486,7 @@
     "equip_club_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1450,6 +1515,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1465,6 +1531,7 @@
     "equip_composite_longbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1493,6 +1560,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1508,6 +1576,7 @@
     "equip_composite_shortbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1536,6 +1605,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1551,6 +1621,7 @@
     "equip_crossbow_double.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1581,6 +1652,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1596,6 +1668,7 @@
     "equip_crossbow_repeating_hand.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1626,6 +1699,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1641,6 +1715,7 @@
     "equip_culverin.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -1672,6 +1747,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1687,6 +1763,7 @@
     "equip_dagger_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1715,6 +1792,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1730,6 +1808,7 @@
     "equip_dagger_swordbreaker.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1761,6 +1840,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1776,6 +1856,7 @@
     "equip_dan_bong.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1806,6 +1887,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1821,6 +1903,7 @@
     "equip_dart_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1849,6 +1932,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1864,6 +1948,7 @@
     "equip_dire_flail_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1896,6 +1981,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1911,6 +1997,7 @@
     "equip_do_maru.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 5,
         "base_damage_dice": null,
         "base_item": null,
@@ -1936,6 +2023,7 @@
           "max_dex": 4,
           "spell_failure": 25.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1951,6 +2039,7 @@
     "equip_dogslicer.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -1982,6 +2071,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -1997,6 +2087,7 @@
     "equip_double_chicken_saber.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2027,6 +2118,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2042,6 +2134,7 @@
     "equip_double_hackbut.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -2072,6 +2165,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2087,6 +2181,7 @@
     "equip_dwarven_urgrosh_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2117,6 +2212,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2132,6 +2228,7 @@
     "equip_dwarven_waraxe_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2160,6 +2257,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2175,6 +2273,7 @@
     "equip_earth_breaker.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -2205,6 +2304,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2220,6 +2320,7 @@
     "equip_elven_curve_blade_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2248,6 +2349,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2263,6 +2365,7 @@
     "equip_elven_leafblade.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2293,6 +2396,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2308,6 +2412,7 @@
     "equip_elven_thornblade.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2338,6 +2443,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2353,6 +2459,7 @@
     "equip_emei_piercer.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2383,6 +2490,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2398,6 +2506,7 @@
     "equip_falcata.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2428,6 +2537,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2443,6 +2553,7 @@
     "equip_falchion_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -2471,6 +2582,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2486,6 +2598,7 @@
     "equip_field_plate.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 7,
         "base_damage_dice": null,
         "base_item": null,
@@ -2510,6 +2623,7 @@
           "max_dex": 1,
           "spell_failure": 35.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2525,6 +2639,7 @@
     "equip_fighting_fan.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2555,6 +2670,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2570,6 +2686,7 @@
     "equip_fire_lance.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2600,6 +2717,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2615,6 +2733,7 @@
     "equip_flindbar.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2647,6 +2766,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2662,6 +2782,7 @@
     "equip_flying_blade.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2692,6 +2813,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2707,6 +2829,7 @@
     "equip_four_mirror_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 6,
         "base_damage_dice": null,
         "base_item": null,
@@ -2731,6 +2854,7 @@
           "max_dex": 2,
           "spell_failure": 30.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2746,6 +2870,7 @@
     "equip_full_plate_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 9,
         "base_damage_dice": null,
         "base_item": null,
@@ -2768,6 +2893,7 @@
           "max_dex": 1,
           "spell_failure": 35.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -2788,6 +2914,7 @@
     "equip_gauntlet_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2816,6 +2943,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2831,6 +2959,7 @@
     "equip_gladius.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2861,6 +2990,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2876,6 +3006,7 @@
     "equip_glaive_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2906,6 +3037,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2921,6 +3053,7 @@
     "equip_glaive_guisarme.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2952,6 +3085,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -2967,6 +3101,7 @@
     "equip_gnome_hooked_hammer_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -2998,6 +3133,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3013,6 +3149,7 @@
     "equip_greataxe_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3041,6 +3178,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3056,6 +3194,7 @@
     "equip_greatclub_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3084,6 +3223,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3099,6 +3239,7 @@
     "equip_greatsword_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -3127,6 +3268,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3142,6 +3284,7 @@
     "equip_guisarme_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -3173,6 +3316,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3188,6 +3332,7 @@
     "equip_halberd_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3219,6 +3364,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3234,6 +3380,7 @@
     "equip_half_plate_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 8,
         "base_damage_dice": null,
         "base_item": null,
@@ -3256,6 +3403,7 @@
           "max_dex": 0,
           "spell_failure": 40.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -3276,6 +3424,7 @@
     "equip_halfling_sling_staff_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3304,6 +3453,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3319,6 +3469,7 @@
     "equip_hand_crossbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3347,6 +3498,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3362,6 +3514,7 @@
     "equip_handaxe_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3390,6 +3543,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3405,6 +3559,7 @@
     "equip_haramaki.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -3429,6 +3584,7 @@
           "max_dex": null,
           "spell_failure": 0.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3444,6 +3600,7 @@
     "equip_harpoon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3474,6 +3631,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3489,6 +3647,7 @@
     "equip_heavy_crossbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3517,6 +3676,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3532,6 +3692,7 @@
     "equip_heavy_flail_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3563,6 +3724,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3578,6 +3740,7 @@
     "equip_heavy_mace_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3606,6 +3769,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3621,6 +3785,7 @@
     "equip_heavy_pick_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3649,6 +3814,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3664,6 +3830,7 @@
     "equip_heavy_steel_shield_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 2,
         "base_damage_dice": {
           "count": 1,
@@ -3692,6 +3859,7 @@
           "max_dex": null,
           "spell_failure": 15.0
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [
           {
@@ -3712,6 +3880,7 @@
     "equip_heavy_wooden_shield_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 2,
         "base_damage_dice": {
           "count": 1,
@@ -3740,6 +3909,7 @@
           "max_dex": null,
           "spell_failure": 15.0
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [
           {
@@ -3760,6 +3930,7 @@
     "equip_hide_armor_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 4,
         "base_damage_dice": null,
         "base_item": null,
@@ -3782,6 +3953,7 @@
           "max_dex": 4,
           "spell_failure": 20.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -3802,6 +3974,7 @@
     "equip_hooked_axe.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3832,6 +4005,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3847,6 +4021,7 @@
     "equip_hooked_lance.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3877,6 +4052,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3892,6 +4068,7 @@
     "equip_horsechopper.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3922,6 +4099,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3937,6 +4115,7 @@
     "equip_hunga_munga.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -3967,6 +4146,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -3982,6 +4162,7 @@
     "equip_improvised_weapon_light.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4012,6 +4193,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4027,6 +4209,7 @@
     "equip_iron_brush.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4057,6 +4240,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4072,6 +4256,7 @@
     "equip_javelin_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4100,6 +4285,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4115,6 +4301,7 @@
     "equip_jolting_dart.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4145,6 +4332,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4160,6 +4348,7 @@
     "equip_jutte.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4190,6 +4379,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4205,6 +4395,7 @@
     "equip_kama_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4236,6 +4427,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4251,6 +4443,7 @@
     "equip_kama_double_chained.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4281,6 +4474,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4296,6 +4490,7 @@
     "equip_katana.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4326,6 +4521,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4341,6 +4537,7 @@
     "equip_katana_double_walking_stick.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4371,6 +4568,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4386,6 +4584,7 @@
     "equip_kerambit.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4416,6 +4615,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4431,6 +4631,7 @@
     "equip_kestros.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4461,6 +4662,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4476,6 +4678,7 @@
     "equip_khopesh.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4507,6 +4710,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4522,6 +4726,7 @@
     "equip_kikko_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 5,
         "base_damage_dice": null,
         "base_item": null,
@@ -4546,6 +4751,7 @@
           "max_dex": 4,
           "spell_failure": 20.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4561,6 +4767,7 @@
     "equip_klar.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -4583,6 +4790,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4598,6 +4806,7 @@
     "equip_klar_as_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -4620,6 +4829,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4635,6 +4845,7 @@
     "equip_klar_as_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4665,6 +4876,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4680,6 +4892,7 @@
     "equip_knuckle_axe.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4710,6 +4923,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4725,6 +4939,7 @@
     "equip_kukri_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4753,6 +4968,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4768,6 +4984,7 @@
     "equip_kusari_gusoku.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 7,
         "base_damage_dice": null,
         "base_item": null,
@@ -4792,6 +5009,7 @@
           "max_dex": 1,
           "spell_failure": 35.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4807,6 +5025,7 @@
     "equip_kusarigama_sickle_and_chain.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4837,6 +5056,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4852,6 +5072,7 @@
     "equip_kyoketsu_shoge.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -4882,6 +5103,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4897,6 +5119,7 @@
     "equip_lamellar_cuirass.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 2,
         "base_damage_dice": null,
         "base_item": null,
@@ -4921,6 +5144,7 @@
           "max_dex": 4,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4936,6 +5160,7 @@
     "equip_lamellar_horn.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 5,
         "base_damage_dice": null,
         "base_item": null,
@@ -4960,6 +5185,7 @@
           "max_dex": 3,
           "spell_failure": 25.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -4975,6 +5201,7 @@
     "equip_lamellar_iron.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 7,
         "base_damage_dice": null,
         "base_item": null,
@@ -4999,6 +5226,7 @@
           "max_dex": 0,
           "spell_failure": 40.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5014,6 +5242,7 @@
     "equip_lamellar_leather.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 4,
         "base_damage_dice": null,
         "base_item": null,
@@ -5038,6 +5267,7 @@
           "max_dex": 3,
           "spell_failure": 20.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5053,6 +5283,7 @@
     "equip_lamellar_steel.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 6,
         "base_damage_dice": null,
         "base_item": null,
@@ -5077,6 +5308,7 @@
           "max_dex": 3,
           "spell_failure": 25.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5092,6 +5324,7 @@
     "equip_lamellar_stone.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 8,
         "base_damage_dice": null,
         "base_item": null,
@@ -5114,6 +5347,7 @@
           "max_dex": 0,
           "spell_failure": 40.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5129,6 +5363,7 @@
     "equip_lance_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5159,6 +5394,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5174,6 +5410,7 @@
     "equip_lasso.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -5198,6 +5435,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5213,6 +5451,7 @@
     "equip_leaf_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 3,
         "base_damage_dice": null,
         "base_item": null,
@@ -5238,6 +5477,7 @@
           "max_dex": 5,
           "spell_failure": 15.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5253,6 +5493,7 @@
     "equip_leather_armor_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 2,
         "base_damage_dice": null,
         "base_item": null,
@@ -5275,6 +5516,7 @@
           "max_dex": 6,
           "spell_failure": 10.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -5295,6 +5537,7 @@
     "equip_light_crossbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5323,6 +5566,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5338,6 +5582,7 @@
     "equip_light_flail_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5369,6 +5614,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5384,6 +5630,7 @@
     "equip_light_hammer_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5412,6 +5659,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5427,6 +5675,7 @@
     "equip_light_mace_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5455,6 +5704,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5470,6 +5720,7 @@
     "equip_light_pick_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5498,6 +5749,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5513,6 +5765,7 @@
     "equip_light_steel_shield_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": {
           "count": 1,
@@ -5541,6 +5794,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [
           {
@@ -5561,6 +5815,7 @@
     "equip_light_wooden_shield_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": {
           "count": 1,
@@ -5589,6 +5844,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [
           {
@@ -5609,6 +5865,7 @@
     "equip_longaxe_dwarven.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5639,6 +5896,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5654,6 +5912,7 @@
     "equip_longbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5682,6 +5941,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5697,6 +5957,7 @@
     "equip_longhammer_dwarven.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -5727,6 +5988,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5742,6 +6004,7 @@
     "equip_longspear_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5773,6 +6036,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5788,6 +6052,7 @@
     "equip_longsword.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5816,6 +6081,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5831,6 +6097,7 @@
     "equip_lucerne_hammer.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5862,6 +6129,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5877,6 +6145,7 @@
     "equip_lungchuan_tamo.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -5907,6 +6176,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5922,6 +6192,7 @@
     "equip_madu_leather.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -5946,6 +6217,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -5961,6 +6233,7 @@
     "equip_madu_steel.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -5985,6 +6258,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6000,6 +6274,7 @@
     "equip_mancatcher.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6030,6 +6305,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6045,6 +6321,7 @@
     "equip_mattock.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -6076,6 +6353,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6091,6 +6369,7 @@
     "equip_mere_club.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6121,6 +6400,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6136,6 +6416,7 @@
     "equip_meteor_hammer.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6166,6 +6447,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6181,6 +6463,7 @@
     "equip_mithral_heavy_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 2,
         "base_damage_dice": null,
         "base_item": null,
@@ -6205,6 +6488,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6220,6 +6504,7 @@
     "equip_monk_s_spade.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6250,6 +6535,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6265,6 +6551,7 @@
     "equip_morningstar_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6293,6 +6580,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6308,6 +6596,7 @@
     "equip_mountain_pattern_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 6,
         "base_damage_dice": null,
         "base_item": null,
@@ -6332,6 +6621,7 @@
           "max_dex": 3,
           "spell_failure": 30.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6347,6 +6637,7 @@
     "equip_musket.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6377,6 +6668,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6392,6 +6684,7 @@
     "equip_musket_axe.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6422,6 +6715,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6437,6 +6731,7 @@
     "equip_musket_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6467,6 +6762,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6482,6 +6778,7 @@
     "equip_musket_warhammer.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6512,6 +6809,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6527,6 +6825,7 @@
     "equip_naginata.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6557,6 +6856,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6572,6 +6872,7 @@
     "equip_net_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -6594,6 +6895,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6609,6 +6911,7 @@
     "equip_nine_section_whip.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6639,6 +6942,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6654,6 +6958,7 @@
     "equip_nodachi.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6684,6 +6989,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6699,6 +7005,7 @@
     "equip_nunchaku_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6730,6 +7037,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6745,6 +7053,7 @@
     "equip_o_yoroi.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 8,
         "base_damage_dice": null,
         "base_item": null,
@@ -6769,6 +7078,7 @@
           "max_dex": 2,
           "spell_failure": 35.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6784,6 +7094,7 @@
     "equip_ogre_hook.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6814,6 +7125,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6829,6 +7141,7 @@
     "equip_orc_double_axe_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6859,6 +7172,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6874,6 +7188,7 @@
     "equip_padded_armor_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -6896,6 +7211,7 @@
           "max_dex": 8,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -6916,6 +7232,7 @@
     "equip_parade.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 3,
         "base_damage_dice": null,
         "base_item": null,
@@ -6940,6 +7257,7 @@
           "max_dex": 5,
           "spell_failure": 15.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -6955,6 +7273,7 @@
     "equip_pata.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -6985,6 +7304,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7000,6 +7320,7 @@
     "equip_pepperbox.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7030,6 +7351,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7045,6 +7367,7 @@
     "equip_pilum.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7075,6 +7398,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7090,6 +7414,7 @@
     "equip_pistol.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7120,6 +7445,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7135,6 +7461,7 @@
     "equip_pistol_coat.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7165,6 +7492,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7180,6 +7508,7 @@
     "equip_pistol_dagger.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7210,6 +7539,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7225,6 +7555,7 @@
     "equip_pistol_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7255,6 +7586,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7270,6 +7602,7 @@
     "equip_pistol_dragon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7301,6 +7634,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7316,6 +7650,7 @@
     "equip_pistol_sword_cane.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7346,6 +7681,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7361,6 +7697,7 @@
     "equip_poisoned_sand_tube.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -7385,6 +7722,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7400,6 +7738,7 @@
     "equip_punching_dagger_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7428,6 +7767,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7443,6 +7783,7 @@
     "equip_quadrens.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7473,6 +7814,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7488,6 +7830,7 @@
     "equip_quarterstaff_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7519,6 +7862,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7534,6 +7878,7 @@
     "equip_quickdraw_shield_light_steel.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": {
           "count": 1,
@@ -7564,6 +7909,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7579,6 +7925,7 @@
     "equip_quickdraw_shield_light_wooden.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": {
           "count": 1,
@@ -7609,6 +7956,7 @@
           "max_dex": null,
           "spell_failure": 5.0
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7624,6 +7972,7 @@
     "equip_quilted_cloth.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -7648,6 +7997,7 @@
           "max_dex": 8,
           "spell_failure": 10.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7663,6 +8013,7 @@
     "equip_ranseur_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -7694,6 +8045,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7709,6 +8061,7 @@
     "equip_rapier_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7737,6 +8090,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7752,6 +8106,7 @@
     "equip_repeating_heavy_crossbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7780,6 +8135,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7795,6 +8151,7 @@
     "equip_repeating_light_crossbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7823,6 +8180,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7838,6 +8196,7 @@
     "equip_revolver.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7868,6 +8227,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7883,6 +8243,7 @@
     "equip_rhomphaia.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -7913,6 +8274,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7928,6 +8290,7 @@
     "equip_rifle.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -7958,6 +8321,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -7973,6 +8337,7 @@
     "equip_rifle_pepperbox.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8003,6 +8368,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8018,6 +8384,7 @@
     "equip_rope_dart.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8048,6 +8415,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8063,6 +8431,7 @@
     "equip_sai_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8094,6 +8463,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8109,6 +8479,7 @@
     "equip_sansetsukon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8139,6 +8510,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8154,6 +8526,7 @@
     "equip_sap_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8184,6 +8557,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8199,6 +8573,7 @@
     "equip_sawtooth_sabre.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8229,6 +8604,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8244,6 +8620,7 @@
     "equip_scale_mail_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 5,
         "base_damage_dice": null,
         "base_item": null,
@@ -8266,6 +8643,7 @@
           "max_dex": 3,
           "spell_failure": 25.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -8286,6 +8664,7 @@
     "equip_scimitar_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8314,6 +8693,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8329,6 +8709,7 @@
     "equip_scizore.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8359,6 +8740,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8374,6 +8756,7 @@
     "equip_scorpion_whip.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8404,6 +8787,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8419,6 +8803,7 @@
     "equip_scythe_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -8449,6 +8834,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8464,6 +8850,7 @@
     "equip_sea_knife.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8494,6 +8881,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8509,6 +8897,7 @@
     "equip_shang_gou.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8539,6 +8928,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8554,6 +8944,7 @@
     "equip_short_sword_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8582,6 +8973,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8597,6 +8989,7 @@
     "equip_shortbow_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8625,6 +9018,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8640,6 +9034,7 @@
     "equip_shortspear_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8668,6 +9063,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8683,6 +9079,7 @@
     "equip_shotel.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8713,6 +9110,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8728,6 +9126,7 @@
     "equip_shotgun.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8759,6 +9158,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8774,6 +9174,7 @@
     "equip_shotgun_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8805,6 +9206,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8820,6 +9222,7 @@
     "equip_siangham_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8850,6 +9253,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8865,6 +9269,7 @@
     "equip_sibat.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8895,6 +9300,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8910,6 +9316,7 @@
     "equip_sica.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8940,6 +9347,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -8955,6 +9363,7 @@
     "equip_sickle_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -8985,6 +9394,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9000,6 +9410,7 @@
     "equip_silken_ceremonial_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -9024,6 +9435,7 @@
           "max_dex": null,
           "spell_failure": 0.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9039,6 +9451,7 @@
     "equip_slaver_s_crossbow_heavy.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -9071,6 +9484,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9086,6 +9500,7 @@
     "equip_slaver_s_crossbow_light.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -9118,6 +9533,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9133,6 +9549,7 @@
     "equip_sling_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -9161,6 +9578,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9176,6 +9594,7 @@
     "equip_snag_net.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -9200,6 +9619,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9215,6 +9635,7 @@
     "equip_spear_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -9245,6 +9666,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9260,6 +9682,7 @@
     "equip_spear_boar.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -9291,6 +9714,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9306,6 +9730,7 @@
     "equip_spear_chain.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -9337,6 +9762,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9352,6 +9778,7 @@
     "equip_special_ability_1_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ArmorEnhancement",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -9374,6 +9801,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9389,6 +9817,7 @@
     "equip_special_ability_1_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ShieldEnhancement",
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
@@ -9411,6 +9840,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9426,6 +9856,7 @@
     "equip_special_ability_1_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -9448,6 +9879,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": {
@@ -9468,6 +9900,7 @@
     "equip_special_ability_2_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ArmorEnhancement",
         "armor_class_chain_bonus": 2,
         "base_damage_dice": null,
         "base_item": null,
@@ -9490,6 +9923,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9505,6 +9939,7 @@
     "equip_special_ability_2_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ShieldEnhancement",
         "armor_class_chain_bonus": 2,
         "base_damage_dice": null,
         "base_item": null,
@@ -9527,6 +9962,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9542,6 +9978,7 @@
     "equip_special_ability_2_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -9564,6 +10001,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": {
@@ -9584,6 +10022,7 @@
     "equip_special_ability_3_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ArmorEnhancement",
         "armor_class_chain_bonus": 3,
         "base_damage_dice": null,
         "base_item": null,
@@ -9606,6 +10045,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9621,6 +10061,7 @@
     "equip_special_ability_3_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ShieldEnhancement",
         "armor_class_chain_bonus": 3,
         "base_damage_dice": null,
         "base_item": null,
@@ -9643,6 +10084,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9658,6 +10100,7 @@
     "equip_special_ability_3_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -9680,6 +10123,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": {
@@ -9700,6 +10144,7 @@
     "equip_special_ability_4_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ArmorEnhancement",
         "armor_class_chain_bonus": 4,
         "base_damage_dice": null,
         "base_item": null,
@@ -9722,6 +10167,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9737,6 +10183,7 @@
     "equip_special_ability_4_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ShieldEnhancement",
         "armor_class_chain_bonus": 4,
         "base_damage_dice": null,
         "base_item": null,
@@ -9759,6 +10206,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9774,6 +10222,7 @@
     "equip_special_ability_4_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -9796,6 +10245,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": {
@@ -9816,6 +10266,7 @@
     "equip_special_ability_5_armor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ArmorEnhancement",
         "armor_class_chain_bonus": 5,
         "base_damage_dice": null,
         "base_item": null,
@@ -9838,6 +10289,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9853,6 +10305,7 @@
     "equip_special_ability_5_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "ShieldEnhancement",
         "armor_class_chain_bonus": 5,
         "base_damage_dice": null,
         "base_item": null,
@@ -9875,6 +10328,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9890,6 +10344,7 @@
     "equip_special_ability_5_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -9912,6 +10367,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": {
@@ -9932,6 +10388,7 @@
     "equip_spiked_armor_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -9960,6 +10417,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -9975,6 +10433,7 @@
     "equip_spiked_chain_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 2,
@@ -10006,6 +10465,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10021,6 +10481,7 @@
     "equip_spiked_gauntlet_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10049,6 +10510,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10064,6 +10526,7 @@
     "equip_splint_mail_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 7,
         "base_damage_dice": null,
         "base_item": null,
@@ -10086,6 +10549,7 @@
           "max_dex": 0,
           "spell_failure": 40.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -10106,6 +10570,7 @@
     "equip_spring_blade.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10137,6 +10602,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10152,6 +10618,7 @@
     "equip_starknife_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10180,6 +10647,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10195,6 +10663,7 @@
     "equip_stoneplate.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 9,
         "base_damage_dice": null,
         "base_item": null,
@@ -10219,6 +10688,7 @@
           "max_dex": 1,
           "spell_failure": 35.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10234,6 +10704,7 @@
     "equip_studded_leather_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 3,
         "base_damage_dice": null,
         "base_item": null,
@@ -10256,6 +10727,7 @@
           "max_dex": 5,
           "spell_failure": 15.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -10276,6 +10748,7 @@
     "equip_swift_obsidian_greataxe.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10307,6 +10780,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10322,6 +10796,7 @@
     "equip_sword_cane.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10352,6 +10827,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10367,6 +10843,7 @@
     "equip_sword_seven_branched.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10397,6 +10874,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10412,6 +10890,7 @@
     "equip_sword_temple.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10444,6 +10923,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10459,6 +10939,7 @@
     "equip_sword_tri_point_double_edged.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10489,6 +10970,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10504,6 +10986,7 @@
     "equip_swordbreaker_dagger.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10534,6 +11017,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10549,6 +11033,7 @@
     "equip_taiaha.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10579,6 +11064,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10594,6 +11080,7 @@
     "equip_tail_attachment_long_lash.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10624,6 +11111,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10639,6 +11127,7 @@
     "equip_tail_attachment_pounder.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10669,6 +11158,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10684,6 +11174,7 @@
     "equip_tail_attachment_razored.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10714,6 +11205,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10729,6 +11221,7 @@
     "equip_tail_attachment_spiked.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10759,6 +11252,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10774,6 +11268,7 @@
     "equip_tail_attachment_sweeper.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10804,6 +11299,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10819,6 +11315,7 @@
     "equip_tailblade_ratfolk.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10849,6 +11346,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10864,6 +11362,7 @@
     "equip_tatami_do.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 7,
         "base_damage_dice": null,
         "base_item": null,
@@ -10888,6 +11387,7 @@
           "max_dex": 3,
           "spell_failure": 35.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10903,6 +11403,7 @@
     "equip_tekko_kagi_iron_claw.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10933,6 +11434,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10948,6 +11450,7 @@
     "equip_temple_sword.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -10978,6 +11481,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -10993,6 +11497,7 @@
     "equip_tepoztopilli.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11024,6 +11529,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11039,6 +11545,7 @@
     "equip_terbutje.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11069,6 +11576,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11084,6 +11592,7 @@
     "equip_terbutje_great.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11115,6 +11624,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11130,6 +11640,7 @@
     "equip_tetsubo.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11160,6 +11671,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11175,6 +11687,7 @@
     "equip_throwing_axe_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11203,6 +11716,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11218,6 +11732,7 @@
     "equip_throwing_shield.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11249,6 +11764,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11264,6 +11780,7 @@
     "equip_tiger_fork.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11294,6 +11811,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11309,6 +11827,7 @@
     "equip_tonfa.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11339,6 +11858,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11354,6 +11874,7 @@
     "equip_tower_shield_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Shield",
         "armor_class_chain_bonus": 4,
         "base_damage_dice": null,
         "base_item": null,
@@ -11376,6 +11897,7 @@
           "max_dex": 2,
           "spell_failure": 50.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -11396,6 +11918,7 @@
     "equip_trident_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11426,6 +11949,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11441,6 +11965,7 @@
     "equip_tube_arrow_shooter.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11471,6 +11996,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11486,6 +12012,7 @@
     "equip_two_bladed_sword_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11516,6 +12043,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11531,6 +12059,7 @@
     "equip_underwater_crossbow_heavy.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11561,6 +12090,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11576,6 +12106,7 @@
     "equip_underwater_crossbow_light.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11606,6 +12137,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11621,6 +12153,7 @@
     "equip_urumi.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11651,6 +12184,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11666,6 +12200,7 @@
     "equip_wahaika.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11696,6 +12231,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11711,6 +12247,7 @@
     "equip_wakizashi.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11741,6 +12278,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11756,6 +12294,7 @@
     "equip_war_razor.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11786,6 +12325,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11801,6 +12341,7 @@
     "equip_waraxe_dwarven_double.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11831,6 +12372,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11846,6 +12388,7 @@
     "equip_warhammer_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11874,6 +12417,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11889,6 +12433,7 @@
     "equip_whip_base.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -11922,6 +12467,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11937,6 +12483,7 @@
     "equip_wooden.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": "Armor",
         "armor_class_chain_bonus": 3,
         "base_damage_dice": null,
         "base_item": null,
@@ -11962,6 +12509,7 @@
           "max_dex": 3,
           "spell_failure": 15.0
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -11977,6 +12525,7 @@
     "equip_wrist_launcher.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
@@ -12002,6 +12551,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -12017,6 +12567,7 @@
     "equip_wrist_launcher_heavy.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -12048,6 +12599,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -12063,6 +12615,7 @@
     "equip_wushu_dart.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -12093,6 +12646,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -12108,6 +12662,7 @@
     "equip_wushu_dart_5.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -12139,6 +12694,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -12154,6 +12710,7 @@
     "equip_xephyr_knife.json": {
       "record": {
         "ability_score_bonus": null,
+        "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
           "count": 1,
@@ -12182,6 +12739,7 @@
           "max_dex": null,
           "spell_failure": null
         },
+        "stated_bonuses": [],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,

@@ -592,8 +592,8 @@ pub fn compute_combat_baseline_from_corpus(
     //
     // Touch AC is derived by SUBTRACTION from `armor_class` above -- see
     // `pilot_compute::touch_armor_class` for why that shape rather than a
-    // parallel formula. The excluded set is `effects.armor_class_delta`
-    // (`compute_equipment_effects`' summed armor + shield bonus) plus the
+    // parallel formula. The excluded set is what `effects` holds of a type a touch attack ignores
+    // (armor, shield, natural armor: a deflection bonus stays) plus the
     // feat-derived NATURAL armor the shared seam resolved -- taken from that
     // seam's own accessor, not by re-listing its fields, so a future natural-armor
     // feat leaves touch AC on both twins at once. The Dexterity contribution,
@@ -601,7 +601,7 @@ pub fn compute_combat_baseline_from_corpus(
     // correct for a touch attack.
     let touch = touch_armor_class(
         armor_class,
-        effects.armor_class_delta + feat_contributions.excluded_from_touch_armor_class(),
+        effects.armor_class_not_against_touch() + feat_contributions.excluded_from_touch_armor_class(),
     );
     // SD-27, decisions.md §28 (flat-footed defect, 2026-07-31): flat-footed AC
     // on the path the shipped sheet reads. It was the LAST of the four defense
@@ -623,13 +623,12 @@ pub fn compute_combat_baseline_from_corpus(
     //     `pilot_compute::flat_footed_armor_class` on why a Dexterity penalty
     //     is kept) and the shared seam's dodge-typed feat total, taken from its
     //     own accessor rather than by re-listing its fields.
-    //   KEPT -- `effects.armor_class_delta` (the resolved armor + shield
-    //     bonus), `size_armor_class_modifier`, and the seam's natural-armor
+    //   KEPT -- `effects.armor_class_delta` less any dodge-typed item, `size_armor_class_modifier`, and the seam's natural-armor
     //     half. None of the three is a dodge bonus or a Dexterity bonus.
     let flat_footed = flat_footed_armor_class(
         armor_class,
         dexterity_contribution,
-        feat_contributions.denied_to_flat_footed_armor_class(),
+        effects.armor_class_lost_flat_footed() + feat_contributions.denied_to_flat_footed_armor_class(),
     );
     // Shared formulas, deliberately not re-derived: `pilot_compute` owns both,
     // so the two engine paths cannot drift into two different CMB/CMD rules the

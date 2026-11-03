@@ -65,19 +65,138 @@ pub mod intelligent_item;
 pub mod magic_items;
 
 
-use crate::rules_core::character_input::EquipmentSelection;
+use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
 use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
 use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContribution;
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
-use crate::rules_core::equipment_record::CorpusEquipmentRecord;
+use crate::rules_core::equipment_record::{CorpusEquipmentRecord, StatedBonus};
 use crate::rules_core::equipment_resolver::{
     equipment_converted_resolve, equipment_id_resolve,
 };
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_catalog::crb::equipment_tables::{equipment_tables, EquipmentCategory};
 use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::game_system::GameSystem;
+use crate::rules_core::sheet_rule::stacking_types;
 use crate::rules_core::source_content::SourcePackageContent;
+
+/// The Armor Class bonus types a touch attack ignores.
+pub const NOT_AGAINST_TOUCH: [&str; 7] =
+    ["Armor", "ArmorEnhancement", "Shield", "ShieldEnhancement", "NaturalArmor", "NaturalArmorEnhancement", "Enhancement"];
+
+/// The record that stands in for what `record` does not state itself, one hop.
+pub fn stand_in_record<'a>(
+    record: &CorpusEquipmentRecord,
+    corpus: &SourcePackageContent<'a>,
+) -> Option<&'a CorpusEquipmentRecord> {
+    let base = equipment_converted_resolve(record.base_item.as_deref()?, corpus)?;
+    (base.identity != record.identity).then_some(base)
+}
+
+/// Whether a bonus adds whatever else is held: a penalty, an untyped bonus, and a type the game says
+/// stacks with itself. Any other takes the higher of its type on one target, the rule of the sheet
+/// engine's `Var` fold.
+pub fn bonus_always_counts(value: i16, bonus_type: Option<&str>) -> bool {
+    value < 0 || bonus_type.is_none_or(|word| stacking_types(GameSystem::Pathfinder1e).contains(&word))
+}
+
+/// One worn item's bonus that counts after stacking, and is already in the engine's totals.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct WornStatedBonus {
+    pub item_name: String,
+    pub target: String,
+    pub bonus_type: Option<String>,
+    pub value: i16,
+}
+
+/// What a character's worn stock items state on saves, ability scores, named skills and Armor Class,
+/// after stacking. Armor Class is also in [`EquipmentEffects`]; it is listed here so that another
+/// source of a bonus can fold with it.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct WornItemStatedBonuses(Vec<WornStatedBonus>);
+
+impl WornItemStatedBonuses {
+    pub fn rows(&self) -> &[WornStatedBonus] {
+        &self.0
+    }
+
+    fn total(&self, target: &str) -> i16 {
+        self.0.iter().filter(|row| row.target == target).map(|row| row.value).sum()
+    }
+
+    /// The save's total of what is worn: `save` is `fortitude`, `reflex` or `will`.
+    pub fn save(&self, save: &str) -> i16 {
+        self.total(&format!("save:{save}"))
+    }
+
+    /// What a bonus of `bonus_type` on `target` has to beat, when one of that type is already counted.
+    pub fn counted(&self, target: &str, bonus_type: &str) -> Option<i16> {
+        self.0
+            .iter()
+            .find(|row| row.target == target && row.value > 0 && row.bonus_type.as_deref() == Some(bonus_type))
+            .map(|row| row.value)
+    }
+
+    /// A copy of `input` with the worn scores raised, for what the sheet computes from. The saved
+    /// score does not change.
+    pub fn raised(&self, input: &CharacterInput) -> CharacterInput {
+        let mut raised = input.clone();
+        let scores = &mut raised.chosen.ability_scores;
+        scores.strength += self.total("ability:strength");
+        scores.dexterity += self.total("ability:dexterity");
+        scores.constitution += self.total("ability:constitution");
+        scores.intelligence += self.total("ability:intelligence");
+        scores.wisdom += self.total("ability:wisdom");
+        scores.charisma += self.total("ability:charisma");
+        raised
+    }
+}
+
+/// The worn selections' stated bonuses, stacked. A derived record stating none reads its stand-in's.
+pub fn worn_item_stated_bonuses(selections: &[EquipmentSelection], corpus: &SourcePackageContent) -> WornItemStatedBonuses {
+    let worn: Vec<EquipmentSelection> =
+        selections.iter().filter(|selection| selection.active_state == ActiveState::EquippedActive).cloned().collect();
+    let mut counted: Vec<WornStatedBonus> = Vec::new();
+    for selection in &worn {
+        let Some(record) = equipment_converted_resolve(&selection.item_id, corpus) else { continue };
+        let stated: &[StatedBonus] = match stand_in_record(record, corpus) {
+            Some(base) if record.stated_bonuses.is_empty() => &base.stated_bonuses,
+            _ => &record.stated_bonuses,
+        };
+        for bonus in stated {
+            let row = WornStatedBonus {
+                item_name: record.identity.clone(),
+                target: bonus.target.clone(),
+                bonus_type: bonus.bonus_type.clone(),
+                value: bonus.value,
+            };
+            let same_type = counted.iter().position(|held| {
+                held.value > 0 && held.target == row.target && held.bonus_type == row.bonus_type
+            });
+            match same_type {
+                Some(index) if !bonus_always_counts(row.value, row.bonus_type.as_deref()) => {
+                    if row.value > counted[index].value {
+                        counted[index] = row;
+                    }
+                }
+                _ => counted.push(row),
+            }
+        }
+    }
+    for effect in &compute_equipment_effects(&worn, corpus).per_item {
+        let value = effect.armor_class_bonus.unwrap_or(0) + effect.armor_class_enhancement.unwrap_or(0);
+        if value != 0 {
+            counted.push(WornStatedBonus {
+                item_name: effect.equipment_record_key.clone(),
+                target: "ac".to_owned(),
+                bonus_type: effect.armor_class_bonus_type.clone(),
+                value,
+            });
+        }
+    }
+    WornItemStatedBonuses(counted)
+}
 
 /// The settled records of the modifier items attached to this one, resolved
 /// against `corpus` in the order the item names them.
@@ -134,6 +253,9 @@ pub struct ResolvedEquipmentEffect {
     /// The enhancement bonus this selection's own `applied_modifiers` add to its armor or shield
     /// value, already in `EquipmentEffects::armor_class_delta`. `None` when they add none.
     pub armor_class_enhancement: Option<i16>,
+    /// The bonus type the two above count as. After stacking a bonus that lost to a higher one of
+    /// its type reads `Some(0)` above, so the rows still sum to `armor_class_delta`.
+    pub armor_class_bonus_type: Option<String>,
     pub max_dex: Option<i16>,
     pub spell_failure: Option<f32>,
     /// Mirrors `EquipmentStatEffect::armor_check_penalty` exactly (v0.6
@@ -251,6 +373,46 @@ pub struct EquipmentEffects {
     pub spell_resistance_total: Option<i16>,
 }
 
+impl EquipmentEffects {
+    fn armor_class_where(&self, keeps: impl Fn(&str) -> bool) -> i16 {
+        self.per_item
+            .iter()
+            .filter(|item| item.armor_class_bonus_type.as_deref().is_some_and(&keeps))
+            .map(|item| item.armor_class_bonus.unwrap_or(0) + item.armor_class_enhancement.unwrap_or(0))
+            .sum()
+    }
+
+    /// The part of `armor_class_delta` a touch attack ignores.
+    pub fn armor_class_not_against_touch(&self) -> i16 {
+        self.armor_class_where(|word| NOT_AGAINST_TOUCH.contains(&word))
+    }
+
+    /// The part of `armor_class_delta` a flat-footed character loses.
+    pub fn armor_class_lost_flat_footed(&self) -> i16 {
+        self.armor_class_where(|word| word == "Dodge")
+    }
+}
+
+/// Two bonuses of one type take the higher: each row that loses reads zero, and the total is the sum.
+fn stack_armor_class(per_item: &mut [ResolvedEquipmentEffect]) -> i16 {
+    let value = |item: &ResolvedEquipmentEffect| item.armor_class_bonus.unwrap_or(0) + item.armor_class_enhancement.unwrap_or(0);
+    for index in 0..per_item.len() {
+        let mine = value(&per_item[index]);
+        let word = per_item[index].armor_class_bonus_type.clone();
+        if bonus_always_counts(mine, word.as_deref()) {
+            continue;
+        }
+        let beaten = per_item.iter().enumerate().any(|(other, item)| {
+            item.armor_class_bonus_type == word && (value(item) > mine || (value(item) == mine && other < index))
+        });
+        if beaten {
+            per_item[index].armor_class_bonus = Some(0);
+            per_item[index].armor_class_enhancement = None;
+        }
+    }
+    per_item.iter().map(value).sum()
+}
+
 /// The equipment-effect engine seam (`technical-design.md` §2.4, adapted
 /// to real types — see module doc comment). Resolves every selection
 /// against the corpus, looks up its category in the canonical CRB
@@ -261,7 +423,6 @@ pub fn compute_equipment_effects(
     corpus: &SourcePackageContent,
 ) -> EquipmentEffects {
     let mut per_item = Vec::new();
-    let mut armor_class_delta: i16 = 0;
     let mut max_dex_cap: Option<i16> = None;
     let mut spell_failure_chance: Option<f32> = None;
     let mut armor_check_penalty_total: i16 = 0;
@@ -358,11 +519,8 @@ pub fn compute_equipment_effects(
                 .unwrap_or(EquipmentCategory::ArmsArmor)
         };
 
-        if let Some(bonus) = effect.armor_class_bonus {
-            armor_class_delta += bonus;
-        }
-        let armor_class_enhancement = attached_armor_class_enhancement(converted, &selection.applied_modifiers, corpus);
-        armor_class_delta += armor_class_enhancement.unwrap_or(0);
+        let armor_class_enhancement = attached_armor_class_enhancement(converted, &effect, &selection.applied_modifiers, corpus);
+        let armor_class_bonus_type = effect.armor_class_bonus.and_then(|_| armor_class_type_of(converted, corpus));
         if let Some(dex) = effect.max_dex {
             max_dex_cap = Some(max_dex_cap.map_or(dex, |current| current.min(dex)));
         }
@@ -386,6 +544,7 @@ pub fn compute_equipment_effects(
             category,
             armor_class_bonus: effect.armor_class_bonus,
             armor_class_enhancement,
+            armor_class_bonus_type,
             max_dex: effect.max_dex,
             spell_failure: effect.spell_failure,
             armor_check_penalty: effect.armor_check_penalty,
@@ -406,6 +565,7 @@ pub fn compute_equipment_effects(
     // for any weapon count -- `per_item[].to_hit_bonus` carries the real
     // value for the 2+-weapon case.
     let attack_bonus_delta = (weapon_count == 1).then_some(single_weapon_to_hit_bonus);
+    let armor_class_delta = stack_armor_class(&mut per_item);
 
     EquipmentEffects {
         per_item,
@@ -484,35 +644,35 @@ pub(crate) struct AttachedWeaponEnhancement {
 /// shield). A host that states no AC value is neither, so a modifier on a weapon adds none.
 fn attached_armor_class_enhancement(
     host: &CorpusEquipmentRecord,
+    host_effect: &EquipmentStatEffect,
     applied_modifiers: &[String],
     corpus: &SourcePackageContent,
 ) -> Option<i16> {
-    host.stat_effect.armor_class_bonus?;
+    host_effect.armor_class_bonus?;
+    let host_is_shield = host.is_shield || stand_in_record(host, corpus).is_some_and(|base| base.is_shield);
     applied_modifiers
         .iter()
         .filter_map(|modifier_item_id| equipment_converted_resolve(modifier_item_id, corpus))
-        .filter(|modifier| modifier.is_shield == host.is_shield)
+        .filter(|modifier| modifier.is_shield == host_is_shield)
         .filter_map(|modifier| modifier.armor_class_chain_bonus)
         .max()
 }
 
-/// Resolves `applied_modifiers` against `corpus` and sums every attached
-/// modifier's `intelligent_item::compute_intelligent_item_effect`
-/// contribution (SD-31 intelligent-item resolver, operator ruling
-/// 2026-08-19). Mirrors `attached_weapon_enhancement`'s own resolve-or-skip
-/// discipline: a modifier item_id that doesn't resolve, or resolves to a
-/// record carrying none of this family's tokens, contributes nothing.
-/// Numeric fields (ability-score/Ego deltas) sum across every attached
-/// modifier that carries them -- a real build attaches exactly one
-/// `Intelligent Item ~ Ability Score / <Ability> <N>` per mental ability
-/// (PCGen's own `REPLACES:` chain on these records prevents selecting two
-/// values for the same ability at once, see module doc comment), so
-/// summing is safe and matches how `Intelligent Item ~ Base`'s own
-/// literal 10-point baseline composes with a selected Ability Score
-/// modifier's delta. `alignment` takes the last attached modifier that
-/// carries one (a real build attaches at most one, per the same
-/// `REPLACES:` discipline on the alignment family). Returns `None` when no
-/// attached modifier contributes anything at all.
+/// The type the record's Armor Class counts as: its own, else its stand-in's, else that of a
+/// modifier the record names, which is where the number came from.
+fn armor_class_type_of(record: &CorpusEquipmentRecord, corpus: &SourcePackageContent) -> Option<String> {
+    record
+        .armor_class_bonus_type
+        .clone()
+        .or_else(|| stand_in_record(record, corpus).and_then(|base| base.armor_class_bonus_type.clone()))
+        .or_else(|| {
+            eqmod_referenced_converted_records(record, corpus)
+                .iter()
+                .find(|modifier| modifier.armor_class_chain_bonus.is_some())
+                .and_then(|modifier| modifier.armor_class_bonus_type.clone())
+        })
+}
+
 fn resolve_intelligent_item_contribution(
     applied_modifiers: &[String],
     corpus: &SourcePackageContent,
@@ -600,6 +760,13 @@ fn resolve_category_effect(
     corpus: &SourcePackageContent,
 ) -> EquipmentStatEffect {
     let mut effect = arms_armor::compute_arms_armor_effect(record);
+    if let Some(base) = stand_in_record(record, corpus) {
+        let stated = base.stat_effect;
+        effect.armor_class_bonus = effect.armor_class_bonus.or(stated.armor_class_bonus);
+        effect.max_dex = effect.max_dex.or(stated.max_dex);
+        effect.spell_failure = effect.spell_failure.or(stated.spell_failure);
+        effect.armor_check_penalty = effect.armor_check_penalty.or(stated.armor_check_penalty);
+    }
     let eqmod_records = eqmod_referenced_converted_records(record, corpus);
     arms_armor::apply_eqmod_armor_class_bonus(&mut effect, &eqmod_records);
     effect
