@@ -21,6 +21,7 @@
 
 pub mod bar_check;
 pub mod oracle_validation;
+pub mod pcg_import;
 pub mod pcgen_import;
 pub mod rules_package_out;
 
