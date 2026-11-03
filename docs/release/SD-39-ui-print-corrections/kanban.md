@@ -67,9 +67,9 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 55
 | E6.1 | Overrides toggles + enforcement | opus | waiting | E5.MC | |
 | E6.2 | Override tagging UI + DTO | opus | waiting | E6.1 | |
 | E6.MC | E6 merge check + Epic report | opus | waiting | E6.2 | |
-| E7.1 | .pcg reader + mapping + fixtures (ingest crate) | opus | partial | E1.0 | side lane ingest; receipt artifacts/epic_7/E7.1_cycle_receipt.md; the one remainder, ranks in Climb, Intimidate, Swim, is E7.3; E7.2 can run on this output |
-| E7.2 | Sidecar + Import button + report | opus | waiting | E6.MC, E7.1 | |
-| E7.3 | Engine reads Climb, Intimidate, Swim at the real rank; importer writes it | opus | waiting | E7.2 | discovered by E7.1, decisions.md §21; closes E7.1's remainder |
+| E7.1 | .pcg reader + mapping + fixtures (ingest crate) | opus | partial | E1.0 | side lane ingest; receipt artifacts/epic_7/E7.1_cycle_receipt.md; the one remainder, ranks in Climb, Intimidate, Swim, is E7.3; E7.2 can run on this output; a re-dispatch of 2026-11-03 declined, ownedBy:E7.3 (decisions.md §23), no code |
+| E7.2 | Sidecar + Import button + report | opus | waiting | E6.MC | runs on E7.1's commit 7cfaf2065f; E7.1 is partial until E7.3, so listing it here deadlocked the three, decisions.md §25 |
+| E7.3 | Engine reads Climb, Intimidate, Swim at the real rank; importer writes it | opus | waiting | E7.2 | discovered by E7.1, decisions.md §21; closes E7.1's remainder and moves E7.1's row to complete in its own closing commit |
 | E7.MC | E7 merge check + Epic report | opus | waiting | E7.3 | |
 | E8.1 | Print core: Typst, fonts, frame, PF layout, Save PDF cmd | opus | waiting | E7.MC | |
 | E8.2 | PF blocks + three options | opus | waiting | E8.1 | |
