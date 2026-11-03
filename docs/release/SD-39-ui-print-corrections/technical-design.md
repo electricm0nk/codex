@@ -78,7 +78,7 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
   defaults new items to `SelectedInactive` (carried) — a behaviour change the receipt states; the Market
   buy flow offers "equip now".
 - **UI.** Gear tab: `EquipmentPanel` (new, `apps/desktop/src/characterHub/EquipmentPanel.tsx`) with Worn
-  (by slot) and Carried lists, Equip/Unequip, the refusal message, the override tag.
+  (by slot) and Carried lists, Equip/Stow, the refusal message; E6.2 adds the override tag (`decisions.md §25`).
 
 ## §3 Market (E3)
 
