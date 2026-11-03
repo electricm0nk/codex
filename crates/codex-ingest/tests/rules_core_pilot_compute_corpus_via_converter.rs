@@ -416,25 +416,20 @@ mod corpus_aware_posture_widening_tests {
         );
     }
 
-    /// A second real weapon equipped alongside the required Longsword is
-    /// honestly ambiguous (same reasoning `attack_bonus_delta` itself
-    /// already uses) -- must Block, not guess or silently drop the second
-    /// weapon.
+    /// A second real weapon in hand beside the required Longsword has its own damage row, and the
+    /// Melee number stays the Longsword's: it neither blocks the build nor moves.
     #[test]
-    fn a_second_real_weapon_equipped_is_honestly_blocked_not_guessed() {
+    fn a_second_real_weapon_equipped_leaves_the_longswords_number_alone() {
         let corpus = corpus_with_fixture();
         let fixture =
             format!("{}equipment=Dagger (Base):equipped_worn_active\n", fixed_posture_fixture("class:fighter", 1));
         let input = load(&fixture);
         let base = build_pilot_headless_receipt(&input).computation;
 
-        let unmet = compute_combat_baseline_from_corpus(&base, &input, &corpus)
-            .expect_err("two real weapons equipped must be honestly blocked");
+        let result = compute_combat_baseline_from_corpus(&base, &input, &corpus)
+            .expect("a second weapon in hand must still reach Computed");
 
-        assert!(
-            unmet.iter().any(|message| message.contains("ambiguous")),
-            "expected the real ambiguous-attack-bonus diagnostic: {unmet:?}"
-        );
+        assert_eq!(result.melee_attack_bonus, base.baseline_melee_attack_bonus);
     }
 
     /// An equipped item that does not resolve against the corpus at all

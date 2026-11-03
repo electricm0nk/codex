@@ -220,7 +220,8 @@ pub(crate) struct CprMarketRow {
 /// ammunition's caliber, a fashion piece), at the engine's own price for that purchase.
 pub(crate) fn market_rows(catalog: &CprKitCatalog) -> Result<Vec<CprMarketRow>, String> {
     let mut rows = Vec::new();
-    for shop in catalog.shop().iter().filter(|s| MARKET_KINDS.contains(&s.kind.as_str())) {
+    // A deck is filed under `gear` too, and takes programs and hardware the Market does not keep.
+    for shop in catalog.shop().iter().filter(|s| MARKET_KINDS.contains(&s.kind.as_str()) && !s.name.starts_with("Cyberdeck (")) {
         let variants: Vec<Option<String>> =
             if shop.variants.is_empty() { vec![None] } else { shop.variants.iter().map(|v| Some(v.name.clone())).collect() };
         for variant in variants {

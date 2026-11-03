@@ -110,16 +110,19 @@ pub fn save_cyberpunk_criticals(app: tauri::AppHandle, request: CprCriticalsSave
 /// What one sale of a held kit entry takes and pays before the price mode: `(unit, price of a unit)`,
 /// off the Market row that prints the same name. A starter kit can print an item under a name the
 /// shop does not use (`Rope`, `Urbanflash Jacket`), with no price to go by: it sells for nothing,
-/// and says so. Cyberware and a deck, its programs and hardware are not on the Market: `None`.
+/// and says so. Cyberware and a deck, its programs and hardware are not on the Market: `None`. The
+/// row is read before the shop's other kinds, because a good can share a cyberware's name
+/// (`Radio Communicator`, `Dartgun`); what a kit installed says so by its section.
 fn market_terms(catalog: &CprKitCatalog, rows: &[CprMarketRow], entry: &CprKitEntry) -> Option<(u32, u32)> {
-    let installed = entry.section == "cyberware"
-        || entry.name.starts_with("Program: ")
-        || entry.name.starts_with("Cyberdeck (")
-        || catalog.shop().iter().any(|s| s.name == entry.name && ["cyberware", "cyberdeck", "net_hardware", "program"].contains(&s.kind.as_str()));
-    if installed {
+    if entry.section == "cyberware" || entry.name.starts_with("Program: ") || entry.name.starts_with("Cyberdeck (") {
         return None;
     }
-    Some(rows.iter().find(|r| r.item.name == entry.name).map_or((1, 0), |r| (r.unit, r.item.cost_eb)))
+    if let Some(row) = rows.iter().find(|r| r.item.name == entry.name) {
+        return Some((row.unit, row.item.cost_eb));
+    }
+    let installed =
+        catalog.shop().iter().any(|s| s.name == entry.name && ["cyberware", "cyberdeck", "net_hardware", "program"].contains(&s.kind.as_str()));
+    (!installed).then_some((1, 0))
 }
 
 /// The balance (the sheet's Cash) and every copy the kit holds that the Market buys back: ammunition
@@ -1323,5 +1326,69 @@ pub(crate) mod tests {
             assert!(matches!(outcome, MarketShellOutcome::Blocked { .. }), "{key}: {outcome:?}");
         }
         std::fs::remove_dir_all(root.parent().unwrap()).ok();
+    }
+
+    /// Every row the Market sells can be sold back, whatever else in the shop shares its name: 10
+    /// goods and the Dartgun share one with cyberware, and read as installed.
+    #[test]
+    fn market_shell_every_row_bought_is_on_the_sell_list() {
+        let catalog = CprKitCatalog::load(&corpus_root()).unwrap();
+        let rows = crate::cpr_catalog::market_rows(&catalog).unwrap();
+        let root = market_root("market-every-row", "Jax Moreno");
+        let cash = market_state_at_root(&root).unwrap().balance;
+        let mut not_on_the_list = Vec::new();
+        for row in &rows {
+            let held_before = market_state_at_root(&root).unwrap().held.len();
+            moved(market_buy_at_root(&root, &market_request(&row.row.key, PriceMode::Cashless)).unwrap());
+            let state = market_state_at_root(&root).unwrap();
+            let copy = state.held.iter().rev().find(|c| c.key.split_once('|').is_some_and(|(_, name)| name == row.item.name));
+            match copy {
+                Some(copy) if state.held.len() > held_before || row.unit > 1 => {
+                    moved(market_sell_at_root(&root, &market_request(&copy.key, PriceMode::Cashless)).unwrap());
+                }
+                _ => not_on_the_list.push(row.row.key.clone()),
+            }
+        }
+        println!("market rows bought and sold back: {} of {}", rows.len() - not_on_the_list.len(), rows.len());
+        assert!(rows.len() > 200, "{}", rows.len());
+        assert!(not_on_the_list.is_empty(), "{}: {not_on_the_list:#?}", not_on_the_list.len());
+        assert_eq!(market_state_at_root(&root).unwrap().balance, cash, "Cashless moved no money");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A deck takes programs and hardware on a deck with a slot count, which the Market does not
+    /// keep, so it sells none, under whichever kind the shop files it: three `gear` records were
+    /// listed, charged and reached no sheet.
+    #[test]
+    fn market_shell_lists_no_cyberdeck() {
+        let catalog = CprKitCatalog::load(&corpus_root()).unwrap();
+        let decks: Vec<String> = crate::cpr_catalog::market_rows(&catalog)
+            .unwrap()
+            .into_iter()
+            .filter(|row| row.item.name.starts_with("Cyberdeck ("))
+            .map(|row| row.row.key)
+            .collect();
+        assert!(decks.is_empty(), "{decks:#?}");
+    }
+
+    /// An installed item stays off the Sell list on every starter, even with a shop name of its own.
+    #[test]
+    fn market_shell_a_starter_installed_item_is_not_on_the_sell_list() {
+        let (_, requests): (Vec<_>, Vec<_>) = starter_requests("t").into_iter().unzip();
+        let mut cyberware = 0;
+        for request in requests {
+            let root = market_root("market-installed", &request.display_label);
+            let kit = CprCharacterStore::load_kit(&root).unwrap();
+            let held = market_state_at_root(&root).unwrap().held;
+            for (index, entry) in kit.items.iter().enumerate() {
+                if entry.section == "cyberware" {
+                    cyberware += 1;
+                    let key = format!("{index}|{}", entry.name);
+                    assert!(!held.iter().any(|c| c.key == key), "{} sells {}", request.display_label, entry.name);
+                }
+            }
+            std::fs::remove_dir_all(&root).ok();
+        }
+        assert!(cyberware > 0, "the starters hold cyberware, or this proves nothing");
     }
 }

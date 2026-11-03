@@ -2822,6 +2822,7 @@ pub(crate) fn map_equipment_selections_dto(
         .map(|selection| EquipmentSelectionImportDto {
             item_id: selection.item_id.clone(),
             active_state: selection.active_state.into(),
+            applied_modifiers: selection.applied_modifiers.clone(),
         })
         .collect()
 }
@@ -3322,6 +3323,17 @@ fn market_offers(item_id: &str) -> Vec<crate::equipment_catalog::MarketVariantDt
     .unwrap_or_default()
 }
 
+/// [`market_offers`] for a held copy, whose id can be a legacy one: creation gives every character
+/// `item:longsword`, and that is the Market's `Longsword (Base)` by the record both resolve to.
+fn copy_offers(item_id: &str) -> Vec<crate::equipment_catalog::MarketVariantDto> {
+    let offers = market_offers(item_id);
+    if !offers.is_empty() || !item_id.starts_with("item:") {
+        return offers;
+    }
+    codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus_fixture_bundle())
+        .map_or_else(Vec::new, |record| market_offers(&record.identity))
+}
+
 /// The `+N` a held copy is, by the offers of its row: the highest bonus among its equipmods, 0 for
 /// a plain copy.
 fn copy_bonus(selection: &EquipmentSelection, offers: &[crate::equipment_catalog::MarketVariantDto]) -> u8 {
@@ -3542,8 +3554,8 @@ pub enum AttachEquipmentModifierResponse {
 ///    its held `+M` offer, so buying plain and attaching costs what buying
 ///    the `+N` costs and a sale cannot pay for a bonus nobody paid for. A
 ///    bonus at or below the one held costs nothing and returns nothing. A
-///    row with no such offer, including a legacy `item:*` id, keeps the free
-///    attach above.
+///    legacy `item:*` id pays by the row its record is on ([`copy_offers`]).
+///    A row with no such offer keeps the free attach above.
 /// 3. **`Cashless` moves no money** for any modifier, so it needs no funds
 ///    (see [`PriceMode`]). The other two modes charge the same.
 ///
@@ -3605,7 +3617,7 @@ pub(crate) fn attach_equipment_modifier_priced_at_root(
         });
     };
 
-    let offers = market_offers(item_id);
+    let offers = copy_offers(item_id);
     let cost_copper = if mode == PriceMode::Cashless {
         0
     } else if let Some(offer) = offers.iter().find(|offer| offer.modifier_key == modifier_item_id) {
@@ -4350,7 +4362,7 @@ pub(crate) fn sell_equipment_copy_at_root(
     let is_this_item = |selection: &EquipmentSelection| selection.item_id.eq_ignore_ascii_case(item_id);
     // Only a copy with an equipmod can be a `+N`, and the sheet removes plain items far more often.
     let offers = if held.iter().any(|selection| is_this_item(selection) && !selection.applied_modifiers.is_empty()) {
-        market_offers(item_id)
+        copy_offers(item_id)
     } else {
         Vec::new()
     };
@@ -4408,7 +4420,7 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         .iter()
         .filter(|selection| selection.active_state != ActiveState::Absent)
         .map(|selection| {
-            let offers = if selection.applied_modifiers.is_empty() { Vec::new() } else { market_offers(&selection.item_id) };
+            let offers = if selection.applied_modifiers.is_empty() { Vec::new() } else { copy_offers(&selection.item_id) };
             let bonus = copy_bonus(selection, &offers);
             let plain_name = || {
                 codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&selection.item_id)
@@ -5609,6 +5621,10 @@ pub struct SkillAllocationDto {
 pub struct EquipmentSelectionImportDto {
     pub item_id: String,
     pub active_state: ActiveStateDto,
+    /// This copy's equipmods, so a `+N` that was paid for survives an export. Absent on a file
+    /// written before the field existed, and left out when the copy holds none.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub applied_modifiers: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -5718,7 +5734,7 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                         ActiveStateDto::EquippedActive
                     ),
                     active_state: equipment.active_state.into(),
-                    applied_modifiers: Vec::new(),
+                    applied_modifiers: equipment.applied_modifiers,
                 })
                 .collect(),
             selected_choices: dto
@@ -5797,6 +5813,7 @@ fn character_input_to_dto(input: &CharacterInput) -> CharacterInputDto {
                 .map(|equipment| EquipmentSelectionImportDto {
                     item_id: equipment.item_id.clone(),
                     active_state: equipment.active_state.into(),
+                    applied_modifiers: equipment.applied_modifiers.clone(),
                 })
                 .collect(),
             selected_choices: input
@@ -10163,7 +10180,6 @@ mod tests {
     #[test]
     fn market_attach_price_a_row_with_no_such_offer_attaches_free() {
         for (label, item_id, buy, modifier) in [
-            ("attach-legacy", "item:longsword", false, PLUS_ONE_KEY),
             ("attach-other-kind", MARKET_SWORD, true, "Special Ability ~ +1 ~ Armor"),
             ("attach-no-offers", "Net (Base)", true, PLUS_ONE_KEY),
         ] {
@@ -10177,6 +10193,42 @@ mod tests {
             assert_eq!(balance(&root), left, "{label}");
             std::fs::remove_dir_all(&root).ok();
         }
+    }
+
+    /// The gear every Pathfinder character starts with holds a legacy id, and a `+N` on it moves the
+    /// same numbers as one on the Market's copy, so it costs the same: `item:longsword` is the
+    /// Market's `Longsword (Base)`. Selling it back pays for what it is.
+    #[test]
+    fn market_attach_price_a_legacy_id_pays_for_its_market_row() {
+        for (label, mode, funded, left, after_sale) in [
+            ("attach-legacy-standard", PriceMode::Standard, 230_000, 0, 115_750),
+            ("attach-legacy-build", PriceMode::CharacterBuild, 230_000, 0, 231_500),
+            ("attach-legacy-cashless", PriceMode::Cashless, 500, 500, 500),
+        ] {
+            let root = fund_and_seed(label, funded);
+            assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Cashless), PurchaseEquipmentResponse::Purchased { .. }));
+            let response = market_attach(&root, "item:longsword", PLUS_ONE_KEY, mode);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}: the attach");
+            let held = list_held_equipment_at_root(&root).unwrap();
+            assert!(held.iter().any(|copy| copy.item_id == "item:longsword" && copy.bonus == 1 && copy.name == "+1 Longsword"), "{label}: {held:?}");
+            set_equipment_active_state_at_root(&root, MARKET_SWORD, ActiveState::EquippedActive, "2026-11-02T00:00:00Z").expect("the other copy goes in hand");
+            let sold = market_sell(&root, "item:longsword", Some(1), mode).expect("the sale");
+            assert!(matches!(sold, CreateCharacterResponse::Saved { .. }), "{label}: {sold:?}");
+            assert_eq!(balance(&root), after_sale, "{label}: the sale");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// One that cannot afford it is refused, and nothing is attached.
+    #[test]
+    fn market_attach_price_a_legacy_id_is_refused_what_it_cannot_afford() {
+        let root = fund_and_seed("attach-legacy-refused", 229_999);
+        let response = market_attach(&root, "item:longsword", PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Blocked { .. }), "{response:?}");
+        assert_eq!(balance(&root), 229_999);
+        assert!(held_selections(&root).iter().all(|copy| copy.applied_modifiers.is_empty()));
+        std::fs::remove_dir_all(&root).ok();
     }
 
     /// A modifier with a flat price is charged as it was, except that Cashless moves no money.
@@ -10343,11 +10395,13 @@ mod tests {
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
         // Balance starts at 0 cp -- if this were charged at all, it would
         // be Blocked as unaffordable, proving the free-attach path for
-        // real.
+        // real. A Net has no `+N` offer; a row with one is charged it.
+        add_equipment_selection_at_root(&root, "Net (Base)", ActiveState::SelectedInactive, "2026-07-23T00:00:00Z")
+            .expect("adding the net should not error");
 
         let response = attach_equipment_modifier_at_root(
             &root,
-            "item:longsword",
+            "Net (Base)",
             "Special Ability ~ +1 ~ Weapon",
             "2026-07-23T00:00:00Z",
         )
@@ -10363,15 +10417,15 @@ mod tests {
         }
 
         let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
-        let longsword = reloaded
+        let net = reloaded
             .character_input
             .chosen
             .equipment_selections
             .iter()
-            .find(|selection| selection.item_id == "item:longsword")
-            .expect("item:longsword must still be present");
+            .find(|selection| selection.item_id == "Net (Base)")
+            .expect("the net must still be present");
         assert_eq!(
-            longsword.applied_modifiers,
+            net.applied_modifiers,
             vec!["Special Ability ~ +1 ~ Weapon".to_string()],
             "the modifier must attach to the target selection's applied_modifiers, not a new top-level entry"
         );
@@ -15180,6 +15234,33 @@ mod tests {
         let mut request = request_for("race:human", 1);
         request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
         assert!(draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).is_err(), "an unbuildable draft is an error");
+    }
+
+    /// What was paid for leaves the machine with the character: an exported file holds each copy's
+    /// equipmods, on that copy, and a file written before the field existed still imports.
+    #[test]
+    fn market_buy_sell_an_export_and_import_keeps_what_each_copy_holds() {
+        let root = fund_and_seed("market-export", 1_000_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        let held_before = held_selections(&root);
+
+        let exported = export_character_to_json(&root).expect("export");
+        let imported = tempdir("market-import");
+        let response = import_character_from_json(&exported, &imported, "market-import-id", "2026-11-02T00:00:00Z", "test").expect("import");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+
+        let copies = |held: &[EquipmentSelection]| -> Vec<(String, Vec<String>)> {
+            held.iter().map(|s| (s.item_id.clone(), s.applied_modifiers.clone())).collect()
+        };
+        assert_eq!(copies(&held_selections(&imported)), copies(&held_before));
+
+        let plain = fund_and_seed("market-export-plain", 0);
+        let plain_file = export_character_to_json(&plain).expect("export");
+        assert!(!plain_file.contains("appliedModifiers"), "a character with no equipmod writes the file it always wrote");
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+        std::fs::remove_dir_all(&plain).ok();
     }
 }
 
