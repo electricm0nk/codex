@@ -16,11 +16,8 @@
 //! gen_desktop_fixture_corpus` then `--bin gen_settled_corpus`.
 //! It holds the arms and armor the Market sells a `+N` of, and those `+N`
 //! modifiers, so a worn or wielded `+N` moves the sheet's numbers
-//! (`enhancement_rows_*` in `character_hub.rs`); it is not a general corpus
-//! provider. Exhaustive corpus coverage is out of scope here (see
-//! `~/workspace/SD-19-core-rules-spell-equipment-reachability-scope-draft.md`
-//! §2.4/§2.5 — that coverage is already proven by the loop's own
-//! `CORPUS_ROOT`-gated tests against the real corpus, not by this bundle).
+//! (`enhancement_rows_*` in `character_hub.rs`). What else a character can hold
+//! comes after those, off the whole corpus (`add_what_a_character_can_hold`).
 //!
 //! The `SourcePackageContent` is built once, lazily, and cached for the
 //! process lifetime — the underlying parsed records are leaked to get a
@@ -31,9 +28,9 @@ use std::path::PathBuf;
 use std::sync::OnceLock;
 
 use codex::rules_core::corpus_loader::{load_book_corpus, BookCorpusRoot};
-use codex::rules_core::source_content::SourcePackageContent;
+use codex::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
-use crate::authoring_workbench::resolve_package_path;
+use crate::authoring_workbench::{codex_repo_root, resolve_package_path};
 
 const FIXTURE_RESOURCE_ROOT: &str = "resources/corpus_fixtures";
 /// How many records the load must find: the spell files, and the settled bundle's equipment. The
@@ -61,7 +58,7 @@ fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
     // `rules_core::corpus_loader` call the real on-disk corpus goes through
     // (`decisions.md` §19, ruling B16 -- no live path reads `pcgen_import` to build this).
     let roots = [BookCorpusRoot { book_id: "desktop_ui_fixtures", dir: dir.as_path() }];
-    let package = load_book_corpus(&roots);
+    let mut package = load_book_corpus(&roots);
 
     // Loud, never partial: this is a bounded, committed package. An empty or short load means
     // the resource did not ship or the generator was not re-run, which is a broken build --
@@ -75,7 +72,69 @@ fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
         package.len(),
         package.diagnostics,
     );
+    add_what_a_character_can_hold(&mut package);
     package
+}
+
+/// The whole corpus's equipment, after the fixture, so a Ring of Protection worn adds its +1 and a
+/// Backpack carried adds its 2 lb: the Market sells every record, and an item this bundle cannot
+/// resolve moves no number and reads as unresolved (`character_hub.rs`, `worn_vs_carried_*`). Every
+/// book's settled bundle ships (`resources/corpus_bundle/`), and a checkout reads `data/corpus/`.
+///
+/// What stays out, so that what the fixture already answers does not move:
+/// - a record whose identity is a name the fixture answers to. The resolver tries identity across
+///   every record first, so a later `Longsword` would answer before the fixture's `Longsword (Base)`.
+///   A record's own display name is no bar: the same pass order lets the fixture answer first.
+/// - a bare `Shield (...)`: the resolver folds a name's parenthesis away, so any of these would
+///   answer the seeds' Absent `item:shield`.
+/// - a modifier: `+N` is what the fixture holds; any other attaches as unresolved (DEF-1).
+///
+/// A book that fails to read says so on stderr and adds nothing; its items read as unresolved.
+fn add_what_a_character_can_hold(package: &mut SourcePackageContent<'static>) {
+    use codex::rules_core::game_system::GameSystem;
+    use codex::rules_core::source_content::{SourceContentPayload, SourceContentRecord};
+    use std::collections::HashSet;
+
+    let mut named: HashSet<String> = HashSet::new();
+    for record in package.records_by_kind(SourceContentKind::Equipment) {
+        if let SourceContentPayload::Equipment(fixture) = record.payload {
+            named.insert(fixture.identity.clone());
+            named.insert(fixture.name.clone());
+        }
+    }
+    let corpus_root = match codex_repo_root() {
+        Ok(root) => GameSystem::Pathfinder1e.package_roots(&root).corpus,
+        Err(err) => {
+            eprintln!("Sheet corpus: no corpus root ({err}); the sheet reads the fixture alone");
+            return;
+        }
+    };
+    let Ok(entries) = std::fs::read_dir(&corpus_root) else {
+        eprintln!("Sheet corpus: {} cannot be read; the sheet reads the fixture alone", corpus_root.display());
+        return;
+    };
+    let mut books: Vec<PathBuf> =
+        entries.filter_map(|entry| Some(entry.ok()?.path())).filter(|path| path.join("_settled/equipment.json").is_file()).collect();
+    // The first printing a name meets answers it: the Core Rulebook, then by name, so the answer
+    // is the same on every disk.
+    books.sort_by_key(|book| (!book.ends_with("core_rulebook"), book.clone()));
+    for book in books {
+        let bundle = match codex::rules_core::settled_corpus::read_equipment_bundle(&book) {
+            Ok(bundle) => bundle,
+            Err(err) => {
+                eprintln!("Sheet corpus: {} skipped: {err}", book.display());
+                continue;
+            }
+        };
+        for entry in bundle.records.into_values() {
+            let record = entry.record;
+            if record.is_modifier || record.name.starts_with("Shield (") || named.contains(&record.identity) {
+                continue;
+            }
+            named.insert(record.identity.clone());
+            package.push(SourceContentRecord::equipment(entry.source_ref, Box::leak(Box::new(record))));
+        }
+    }
 }
 
 /// The bundled corpus fixture set, built once and cached for the process
@@ -88,7 +147,6 @@ pub fn corpus_fixture_bundle() -> &'static SourcePackageContent<'static> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::source_content::SourceContentKind;
 
     /// A record dropped from the bundle can stay on disk: `tauri-build` copies resources and
     /// deletes none, and an install over an older version may leave a file. The loader skips a file
@@ -197,7 +255,7 @@ mod tests {
             "expected 2 bundled spell records"
         );
         assert_eq!(
-            corpus.records_by_kind(SourceContentKind::Equipment).len(),
+            codex::rules_core::settled_corpus::read_equipment_bundle(&fixture_dir().unwrap()).unwrap().records.len(),
             // The Market's 217 weapon + 51 armor and shield rows, less 2 weapons that are a `.COPY`/
             // `.MOD` pair no one-row fixture can hold, and less 2 `Shield (Light/.../Quickdraw)`
             // twins of `Quickdraw Shield (Light/...)`, whose names would answer the seeds'
@@ -205,5 +263,19 @@ mod tests {
             279,
             "expected 279 bundled equipment records"
         );
+    }
+
+    /// What the whole corpus adds does not move what the fixture answers: the fixture's own record
+    /// still answers a seed's token, and a bare `item:shield` still answers nothing.
+    #[test]
+    fn what_a_character_can_hold_leaves_the_fixture_answering_its_own_names() {
+        use codex::rules_core::equipment_resolver::equipment_converted_resolve;
+        let corpus = corpus_fixture_bundle();
+        assert!(corpus.records_by_kind(SourceContentKind::Equipment).len() > 279, "the corpus came in");
+        let identity = |item: &str| equipment_converted_resolve(item, corpus).map(|record| record.identity.as_str());
+        assert_eq!(identity("item:longsword"), Some("Longsword (Base)"));
+        assert_eq!(identity("item:chain_shirt"), Some("Chain Shirt (Base)"));
+        assert_eq!(identity("item:shield"), None);
+        assert_eq!(identity("Ring of Protection +1"), Some("Ring of Protection +1"));
     }
 }

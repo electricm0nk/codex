@@ -4596,8 +4596,8 @@ fn body_slot_of_item(item_id: &str) -> Result<BodySlot, String> {
 }
 
 /// A weapon's settled wield category, off its own record or the record it names as its stand-in
-/// (`Battleaxe` states none, and names `Battleaxe (Base)`). The whole corpus: the bundled fixture
-/// leaves out what the Market offers no `+N` of (`Blackaxe`).
+/// (`Battleaxe` states none, and names `Battleaxe (Base)`). Off `full_corpus_bundle`, where a name
+/// answers by its own book's record and not by the fixture's.
 fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_total::WieldCategory> {
     use codex::rules_core::equipment_resolver::equipment_converted_resolve;
     let corpus = crate::corpus_full::full_corpus_bundle();
@@ -9389,6 +9389,292 @@ mod tests {
         assert_eq!(shirt.armor_class_bonus, Some(4), "the item's own row keeps the armor's own value");
         assert_eq!(shirt.armor_class_enhancement, Some(2), "the enhancement is its own row");
         assert_eq!(loaded.corpus_derived.equipment_effects.armor_class_delta, 6, "the panel's total is the rows' sum");
+    }
+
+    // --- Worn adds its numbers, carried adds weight only (`decisions.md §9`). ---
+
+    /// One seed Aldric's sheet, as the wire carries it, less what a held item is allowed to move:
+    /// the lists of what is held, the load, and the item's own printed lines. Whatever is left is
+    /// every other number the sheet can read.
+    fn worn_vs_carried_sheet_less_the_pack(root: &Path, item: &str) -> serde_json::Value {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        let mut value = serde_json::to_value(&loaded).expect("the response serialises");
+        let object = value.as_object_mut().unwrap();
+        for held in ["summary", "equipmentSelections"] {
+            object.remove(held);
+        }
+        let derived = object.get_mut("corpusDerived").and_then(|d| d.as_object_mut()).unwrap();
+        for held in ["equippedItems", "unresolvedEquipmentItemIds", "encumbrance"] {
+            derived.remove(held);
+        }
+        let own_rule = format!(":equipment:{}", codex::rules_core::sheet_rule::slug(item));
+        object.get_mut("sheetLines").and_then(|l| l.as_array_mut()).unwrap().retain(|line| {
+            !line["id"].as_str().unwrap_or_default().contains(&own_rule)
+        });
+        value
+    }
+
+    fn worn_vs_carried_hold(root: &Path, item: &str, state: ActiveState) {
+        let response = add_equipment_selection_at_root(root, item, state, "2026-11-03T00:00:00Z")
+            .expect("holding the item should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{item}: {response:?}");
+    }
+
+    fn worn_vs_carried_set(root: &Path, item: &str, state: ActiveState) {
+        let response = set_equipment_active_state_at_root(root, item, state, "2026-11-03T00:01:00Z")
+            .expect("the request should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{item}: {response:?}");
+    }
+
+    fn worn_vs_carried_weight(root: &Path) -> f64 {
+        load_saved_character_at_root(root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs
+    }
+
+    /// Aldric's Armor Class with his Chain Shirt stowed is his Armor Class with no armor at all:
+    /// the armor's bonus, its check penalty and its Dexterity cap all leave together, and the
+    /// weight stays.
+    #[test]
+    fn worn_vs_carried_aldric_with_armor_stowed_reads_as_aldric_with_no_armor() {
+        let (worn_dir, worn_root) = enhancement_rows_aldric("wvc-armor-worn");
+        let worn = enhancement_read(&worn_root);
+        let worn_weight = worn_vs_carried_weight(&worn_root);
+        let worn_loaded = load_saved_character_at_root(&worn_root).unwrap();
+
+        let (stowed_dir, stowed_root) = enhancement_rows_aldric("wvc-armor-stowed");
+        worn_vs_carried_set(&stowed_root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let stowed = enhancement_read(&stowed_root);
+        let stowed_weight = worn_vs_carried_weight(&stowed_root);
+        let stowed_loaded = load_saved_character_at_root(&stowed_root).unwrap();
+
+        let (none_dir, none_root) = enhancement_rows_aldric("wvc-armor-none");
+        let mut envelope = SavedCharacterStore::load(&none_root).unwrap();
+        envelope.character_input.chosen.equipment_selections.retain(|s| s.item_id != "item:chain_shirt");
+        SavedCharacterStore::save(&envelope, &none_root).unwrap();
+        let none = enhancement_read(&none_root);
+        let none_weight = worn_vs_carried_weight(&none_root);
+        let none_loaded = load_saved_character_at_root(&none_root).unwrap();
+        let stowed_rest = worn_vs_carried_sheet_less_the_pack(&stowed_root, "chain shirt");
+        let none_rest = worn_vs_carried_sheet_less_the_pack(&none_root, "chain shirt");
+
+        for dir in [worn_dir, stowed_dir, none_dir] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+
+        assert_eq!(stowed, none, "the stowed read is the no-armor read");
+        assert_eq!(worn.armor_class, stowed.armor_class + 4, "a Chain Shirt's own +4 is what left");
+        assert_eq!(worn.touch, stowed.touch, "touch never held the armor");
+        assert_eq!(stowed_loaded.corpus_derived.equipment_effects.armor_class_delta, 0);
+        assert_eq!(stowed_loaded.corpus_derived.equipment_effects.max_dex_cap, None);
+        assert_eq!(stowed_loaded.corpus_derived.equipment_effects.armor_check_penalty_total, 0);
+        assert_eq!(worn_loaded.corpus_derived.equipment_effects.armor_class_delta, 4);
+        assert_eq!(stowed_rest, none_rest, "no other number on the sheet tells stowed from none");
+        assert_eq!(stowed_weight, worn_weight, "stowing moves no weight");
+        assert_eq!(none_weight + 25.0, stowed_weight, "the pack carries the shirt's own 25 lb");
+        assert_eq!(none_loaded.corpus_derived.equipment_effects.armor_class_delta, 0);
+    }
+
+    /// CRB p.481, Ring of Protection +1: "a deflection bonus". In the pack it adds nothing to
+    /// Armor Class; on a finger it adds 1. The numbers are the tile's, off the sheet's own load.
+    #[test]
+    fn worn_vs_carried_a_stowed_ring_of_protection_adds_nothing_and_worn_adds_one() {
+        let ring = "Ring of Protection +1";
+        let (dir, root) = enhancement_rows_aldric("wvc-ring");
+        let none = enhancement_read(&root);
+
+        worn_vs_carried_hold(&root, ring, ActiveState::SelectedInactive);
+        let stowed = enhancement_read(&root);
+        worn_vs_carried_set(&root, ring, ActiveState::EquippedActive);
+        let worn = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(stowed, none, "a stowed ring");
+        assert_eq!(worn.armor_class, none.armor_class + 1, "a worn ring's +1: {:?}", loaded.corpus_derived.equipment_effects);
+        assert_eq!(worn.flat_footed, none.flat_footed + 1, "a deflection bonus holds when flat-footed");
+    }
+
+    /// A held item in the pack moves no number on the sheet, whatever the number is: Armor Class,
+    /// attack, a save, an ability score or a skill. Each item here is one the book gives a number
+    /// to, one of each kind the engine's records state.
+    #[test]
+    fn worn_vs_carried_a_carried_item_moves_no_number_on_the_sheet() {
+        for item in [
+            "Ring of Protection +1",        // AC, deflection
+            "Amulet of Natural Armor +1",   // AC, natural
+            "Bracers of Armor +1",          // AC, armor
+            "Cloak of Resistance +1",       // saves
+            "Belt of Giant Strength +2",    // an ability score
+            "Boots of Elvenkind",           // a skill
+            "Breastplate (Base)",           // armor, check penalty, Dexterity cap
+            "Heavy Wooden Shield (Base)",   // a shield
+            "Dagger",                       // a second weapon
+        ] {
+            let (dir, root) = enhancement_rows_aldric("wvc-carried");
+            let before = worn_vs_carried_sheet_less_the_pack(&root, item);
+            worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+            let after = worn_vs_carried_sheet_less_the_pack(&root, item);
+            std::fs::remove_dir_all(&dir).ok();
+            assert_eq!(after, before, "{item} in the pack moved a number");
+        }
+    }
+
+    /// Weight counts both states. An item that states a weight adds it on being held, and stowing
+    /// or wearing it moves nothing, for armor, a magic item and plain gear alike.
+    #[test]
+    fn worn_vs_carried_weight_is_the_same_worn_and_carried_and_is_counted() {
+        for (item, pounds) in [
+            ("Cloak of Resistance +1", 1.0),
+            ("Belt of Giant Strength +2", 1.0),
+            ("Breastplate (Base)", 30.0),
+            ("Backpack", 2.0),
+            ("Rope (Hemp/50 ft)", 10.0),
+        ] {
+            let (dir, root) = enhancement_rows_aldric("wvc-weight");
+            let none = worn_vs_carried_weight(&root);
+            worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+            let carried = worn_vs_carried_weight(&root);
+            let mut envelope = SavedCharacterStore::load(&root).unwrap();
+            let held = envelope.character_input.chosen.equipment_selections.last_mut().unwrap();
+            held.active_state = ActiveState::EquippedActive;
+            held.equipped_or_active = true;
+            SavedCharacterStore::save(&envelope, &root).unwrap();
+            let worn = worn_vs_carried_weight(&root);
+            let unresolved = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.unresolved_item_ids;
+            std::fs::remove_dir_all(&dir).ok();
+            assert_eq!(carried, none + pounds, "{item} carried; unresolved: {unresolved:?}");
+            assert_eq!(worn, carried, "{item} worn");
+        }
+    }
+
+    /// The sheet's printed lines say the same as its numbers: a stowed item's line keeps its words
+    /// and gives no bonus, so no printed "+4" sits beside an Armor Class that does not hold it.
+    #[test]
+    fn worn_vs_carried_a_stowed_item_prints_its_words_and_no_bonus() {
+        let lines_of = |root: &Path, slug: &str| -> Vec<(String, String)> {
+            load_saved_character_at_root(root)
+                .unwrap()
+                .sheet_lines
+                .into_iter()
+                .filter(|line| line.id.contains(slug))
+                .map(|line| (line.label, line.value))
+                .collect()
+        };
+        let (dir, root) = enhancement_rows_aldric("wvc-lines");
+        let shirt = ":equipment:chain_shirt";
+        assert_eq!(
+            lines_of(&root, shirt),
+            [("Chain Shirt".to_owned(), String::new()), ("Chain Shirt (AC)".to_owned(), "+4".to_owned())],
+            "worn"
+        );
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        assert_eq!(lines_of(&root, shirt), [("Chain Shirt".to_owned(), String::new())], "stowed");
+
+        let ring = ":equipment:ring_of_protection_1";
+        worn_vs_carried_hold(&root, "Ring of Protection +1", ActiveState::SelectedInactive);
+        assert_eq!(lines_of(&root, ring), [("Ring of Protection +1".to_owned(), String::new())], "stowed");
+        worn_vs_carried_set(&root, "Ring of Protection +1", ActiveState::EquippedActive);
+        assert_eq!(lines_of(&root, ring), [("Ring of Protection +1".to_owned(), "+1".to_owned())], "worn");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Every Market row the sheet can be asked about has a record it can read, so buying it can
+    /// move a number and a weight. The rows that have none are named here, with why.
+    #[test]
+    fn worn_vs_carried_every_market_row_resolves_on_the_sheet_corpus() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        use codex::rules_core::equipment_resolver::equipment_converted_resolve;
+        use codex::rules_core::source_content::{SourceContentKind, SourceContentPayload};
+        let corpus = corpus_fixture_bundle();
+        // The resolver scans every record for each name; asking it only for the rows no identity
+        // answers keeps this a test of the shelf, not of its patience.
+        let identities: std::collections::HashSet<&str> = corpus
+            .records_by_kind(SourceContentKind::Equipment)
+            .into_iter()
+            .filter_map(|record| match record.payload {
+                SourceContentPayload::Equipment(item) => Some(item.identity.as_str()),
+                _ => None,
+            })
+            .collect();
+        let mut rows = 0;
+        let mut no_record = Vec::new();
+        for category in [
+            MarketCategory::Weapon,
+            MarketCategory::Armor,
+            MarketCategory::Shield,
+            MarketCategory::Gear,
+            MarketCategory::MagicItem,
+        ] {
+            for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                rows += 1;
+                if !identities.contains(row.entry.key.as_str())
+                    && equipment_converted_resolve(&row.entry.key, corpus).is_none()
+                {
+                    no_record.push(row.entry.key);
+                }
+            }
+        }
+        no_record.sort();
+        assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
+        // Every row that reads as unresolved when held, by why. The `.FORGET` pair are PCGen
+        // removal rows; the two `Shield (...)` are the Quickdraw Shield rows' twins, which would
+        // answer the seeds' `item:shield`; the rest have a sheet rule and no corpus record.
+        assert_eq!(
+            no_record,
+            [
+                "Apprentice Chapbook of Rul Thaven",
+                "Dust Knuckles.FORGET",
+                "False Face.FORGET",
+                "Insights of Far-Seeing Taernis",
+                "Journeyman Book of Rul Thaven",
+                "Lab Journal of Constance Inflix",
+                "Library of the Dancer of Skins",
+                "Manuscript of Jack Were-Son",
+                "Master Books of Rul Thaven",
+                "Otyugh Hide",
+                "Shield (Light/Steel/Quickdraw)",
+                "Shield (Light/Wooden/Quickdraw)",
+                "The Formulae of Master Gebr",
+            ],
+            "of {rows} rows"
+        );
+    }
+
+    /// A load rewrites nothing, and a stowed item is stowed when it comes back.
+    #[test]
+    fn worn_vs_carried_a_saved_item_keeps_its_saved_state() {
+        let (dir, root) = enhancement_rows_aldric("wvc-saved");
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let before = SavedCharacterStore::load(&root).unwrap();
+        let shirt = |envelope: &codex::saved_character::SavedCharacterEnvelope| {
+            envelope.character_input.chosen.equipment_selections.iter().find(|s| s.item_id == "item:chain_shirt").unwrap().active_state
+        };
+        assert_eq!(shirt(&before), ActiveState::SelectedInactive);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let after = SavedCharacterStore::load(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after.saved_at, before.saved_at, "a load saves nothing");
+        assert_eq!(shirt(&after), ActiveState::SelectedInactive);
+        let row = loaded.equipment_selections.iter().find(|s| s.item_id == "item:chain_shirt").unwrap();
+        assert!(matches!(row.active_state, ActiveStateDto::SelectedInactive), "{row:?}");
+    }
+
+    /// FSR-C3: Create's draft reads "29 lb carried" with no equipment chosen. The 29 is the kit
+    /// `compose_character_input` gives every character, Chain Shirt 25 and Longsword 4, and the
+    /// saved sheet from the same request reads the same, so draft and sheet are not twins apart.
+    #[test]
+    fn worn_vs_carried_the_29_lb_draft_is_the_required_kit_and_the_saved_sheet_agrees() {
+        let request = request_for("race:human", 1);
+        let draft = draft_sheet_preview_impl(&request).expect("the draft previews");
+        let root = tempdir("wvc-29-lb");
+        saved_or_panic(create_character_at_root(&root, &request, "test-version".to_owned()).unwrap());
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&root).ok();
+        let pounds = |id: &str| draft.encumbrance.per_item.iter().find(|i| i.item_id == id).unwrap().weight_lbs;
+
+        assert_eq!(draft.encumbrance.total_carried_weight_lbs, 29.0);
+        assert_eq!(pounds("item:chain_shirt"), 25.0);
+        assert_eq!(pounds("item:longsword"), 4.0);
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, 29.0, "the saved sheet");
     }
 
     /// A carried `+N` armor or shield adds nothing; worn, a shield adds its own value and its `+N`.
