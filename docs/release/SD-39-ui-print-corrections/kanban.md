@@ -54,7 +54,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 54
 | E3.4 | Enhancement bonus → AC/attack/damage rows | opus | complete | E3.3 | commit af1e860a9c + 1e81c4b92d + receipt commit; receipt artifacts/epic_3/E3.4_cycle_receipt.md; 210 + 49 offers reach the sheet |
 | E3.5 | SF + CPR Market shell | opus | complete | E3.3 | side lane sf-cpr; commit 9efc712f1d + receipt commit; receipt artifacts/epic_3/E3.5_cycle_receipt.md; 15 market_shell tests, 10 market rows green; seeds NO_DIFF |
 | E3.6 | Attach Modifier charges the +N it attaches | opus | complete | E3.3 | discovered by E3.2, decisions.md §21; commit c896b64374 + receipt commit; receipt artifacts/epic_3/E3.6_cycle_receipt.md; 18 market_attach_price tests |
-| E3.MC | E3 merge check + Epic report | opus | waiting | E3.4, E3.5, E3.6 | |
+| E3.MC | E3 merge check + Epic report | opus | complete | E3.4, E3.5, E3.6 | commit 6adc8d39c3 + receipt commit; receipt artifacts/epic_3/E3.MC_cycle_receipt.md; 4 refuted, all fixed here; no card discovered |
 | E4.1 | Slot check on set_equipment_active_state; wear if free | opus | waiting | E3.MC | |
 | E4.2 | Prove carried adds weight only | opus | waiting | E4.1 | |
 | E4.3 | Equipment panel | opus | waiting | E4.2 | |

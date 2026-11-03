@@ -1,0 +1,45 @@
+    #[test]
+    fn e3mcfast_sf_every_row() {
+        use crate::equipment_catalog::MarketCategory;
+        let t0 = std::time::Instant::now();
+        let package = package().unwrap();
+        let mut dump = serde_json::Map::new();
+        let mut all: Vec<(String, String, String)> = Vec::new();
+        for (n, category) in [("weapon", MarketCategory::Weapon), ("armor", MarketCategory::Armor), ("shield", MarketCategory::Shield), ("gear", MarketCategory::Gear), ("magic", MarketCategory::MagicItem)] {
+            let rows = crate::sf_catalog::market_rows(package, category);
+            dump.insert(n.to_owned(), serde_json::to_value(rows.iter().map(|r| (r.key.clone(), r.name.clone(), r.price, r.detail.clone(), package.rule(&r.key).map(|x| x.tags.clone()))).collect::<Vec<_>>()).unwrap());
+            all.extend(rows.iter().map(|r| (n.to_owned(), r.key.clone(), r.name.clone())));
+        }
+        std::fs::write("/home/ubuntu/cargo-target/e3mc-logs/probe/sf_market.json", serde_json::to_string(&dump).unwrap()).unwrap();
+        let all = std::sync::Arc::new(all);
+        let mut hs = Vec::new();
+        for lane in 0..8usize {
+            let all = all.clone();
+            hs.push(std::thread::Builder::new().stack_size(64 * 1024 * 1024).spawn(move || {
+                let root = market_root(&format!("probe-sf2-{lane}"));
+                let mut lines = Vec::new();
+                let mut done = 0;
+                for (i, (n, key, name)) in all.iter().enumerate() {
+                    if i % 8 != lane || t0.elapsed().as_secs() > 500 { continue; }
+                    done += 1;
+                    match market_buy_at_root(&root, &market_request(key, PriceMode::Cashless)) {
+                        Ok(MarketShellOutcome::Saved { .. }) => {
+                            let pos = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections.len() - 1;
+                            match market_sell_at_root(&root, &market_request(&format!("{pos}|{key}"), PriceMode::Cashless)) {
+                                Ok(MarketShellOutcome::Saved { .. }) => {}
+                                other => lines.push(format!("SELL {n} {key}: {other:?}")),
+                            }
+                        }
+                        Ok(MarketShellOutcome::Blocked { diagnostics }) => lines.push(format!("BLOCKED {n} {key} {name}: {:?}", diagnostics.iter().map(|d| d.id.clone()).collect::<Vec<_>>())),
+                        Err(e) => lines.push(format!("ERR {n} {key}: {e}")),
+                    }
+                }
+                std::fs::remove_dir_all(&root).ok();
+                (done, lines)
+            }).unwrap());
+        }
+        let mut done = 0; let mut lines = Vec::new();
+        for h in hs { let (d, l) = h.join().unwrap(); done += d; lines.extend(l); }
+        lines.sort();
+        std::fs::write("/home/ubuntu/cargo-target/e3mc-logs/probe/sf_every.txt", format!("rows {} done {done} secs {}\n{}\n", all.len(), t0.elapsed().as_secs(), lines.join("\n"))).unwrap();
+    }

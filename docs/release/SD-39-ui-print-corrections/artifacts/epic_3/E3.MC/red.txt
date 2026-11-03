@@ -1,0 +1,60 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-e3mc-probe/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 42.41s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-e3mc-probe/debug/deps/codex_desktop-e0a7a15da36d94bf)
+
+running 4 tests
+test cpr_adapter::tests::market_shell_lists_no_cyberdeck ... FAILED
+test cpr_adapter::tests::market_shell_a_starter_installed_item_is_not_on_the_sell_list ... ok
+test cpr_adapter::tests::market_shell_every_row_bought_is_on_the_sell_list ... FAILED
+test character_hub::tests::market_buy_sell_an_export_and_import_keeps_what_each_copy_holds has been running for over 60 seconds
+test character_hub::tests::market_buy_sell_an_export_and_import_keeps_what_each_copy_holds ... FAILED
+
+failures:
+
+---- cpr_adapter::tests::market_shell_lists_no_cyberdeck stdout ----
+
+thread 'cpr_adapter::tests::market_shell_lists_no_cyberdeck' (3994041) panicked at src/cpr_adapter.rs:1417:9:
+[
+    "gear|Cyberdeck (Excellent Quality)|",
+    "gear|Cyberdeck (Poor Quality)|",
+    "gear|Cyberdeck (Standard Quality)|",
+]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- cpr_adapter::tests::market_shell_every_row_bought_is_on_the_sell_list stdout ----
+market rows bought and sold back: 239 of 253
+
+thread 'cpr_adapter::tests::market_shell_every_row_bought_is_on_the_sell_list' (3994040) panicked at src/cpr_adapter.rs:1400:9:
+14: [
+    "weapon|Dartgun|",
+    "gear|Audio Recorder|",
+    "gear|Bug Detector|",
+    "gear|Chemical Analyzer|",
+    "gear|Cyberdeck (Excellent Quality)|",
+    "gear|Cyberdeck (Poor Quality)|",
+    "gear|Cyberdeck (Standard Quality)|",
+    "gear|Homing Tracer|",
+    "gear|Medscanner|",
+    "gear|Radar Detector|",
+    "gear|Radio Communicator|",
+    "gear|Radio Scanner/Music Player|",
+    "gear|Scrambler/Descrambler|",
+    "gear|Techscanner|",
+]
+
+---- character_hub::tests::market_buy_sell_an_export_and_import_keeps_what_each_copy_holds stdout ----
+
+thread 'character_hub::tests::market_buy_sell_an_export_and_import_keeps_what_each_copy_holds' (3994038) panicked at src/character_hub.rs:15378:9:
+assertion `left == right` failed
+  left: [("item:longsword", []), ("item:chain_shirt", []), ("item:shield", []), ("power_attack", []), ("Longsword (Base)", []), ("Longsword (Base)", [])]
+ right: [("item:longsword", []), ("item:chain_shirt", []), ("item:shield", []), ("power_attack", []), ("Longsword (Base)", []), ("Longsword (Base)", ["Special Ability ~ +1 ~ Weapon"])]
+
+
+failures:
+    character_hub::tests::market_buy_sell_an_export_and_import_keeps_what_each_copy_holds
+    cpr_adapter::tests::market_shell_every_row_bought_is_on_the_sell_list
+    cpr_adapter::tests::market_shell_lists_no_cyberdeck
+
+test result: FAILED. 1 passed; 3 failed; 0 ignored; 0 measured; 999 filtered out; finished in 64.82s
+
+error: test failed, to rerun pass `--bin codex-desktop`

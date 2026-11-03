@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 17 of 54 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 21 of 54 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -62,6 +62,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E3 | E3.4 | complete | af1e860a9c | artifacts/epic_3/E3.4_cycle_receipt.md |
 | E3 | E3.5 | complete | 9efc712f1d | artifacts/epic_3/E3.5_cycle_receipt.md |
 | E3 | E3.6 | complete | c896b64374 | artifacts/epic_3/E3.6_cycle_receipt.md |
+| E3 | E3.MC | complete | 6adc8d39c3 | artifacts/epic_3/E3.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -119,6 +120,32 @@ seed deltas, open blockers.)
 
 **Open, for the lead, no operator ruling needed:** E1.6 is `ready` and nothing will dispatch it. The run script drains a prefix only before that prefix's own merge check, and E1.MC discovered it. Drain `E1` before the next merge check, or E9.5's scan stops the run on it at closure.
 
+### Epic report — E3 (Market), merge check on `origin/tranche-19` @ `363b09f0e2`
+
+**Cards done:** E3.1, E3.2, E3.3, E3.4, E3.5, E3.6, E3.MC. No card discovered: what was found is fixed in 6adc8d39c3.
+
+| Figure | Value | Command |
+|---|---|---|
+| Root tests | 6,729 passed, 0 failed, 300 result lines, exit 0 | `cargo test --locked -j 8 --no-fail-fast -- --test-threads=8`; `awk` and Python agree |
+| `codex-ingest` tests | 1,842 passed, **1 failed**, 177 result lines; after the fix that suite 21 passed. Crate not re-run whole | same, with `-p codex-ingest`; then `--test rules_core_pilot_compute_corpus_via_converter` |
+| Desktop tests | 997 passed, 0 failed, 2 result lines (991 before this card's 6) | same, in `apps/desktop/src-tauri` |
+| Named filters | `market_category_filter` 6, `enhancement_price_table` 4, `market_buy_sell` 18, `market_held` 2, `enhancement_rows` 10, `market_attach_price` 20, `market_shell` 18; 0 `FAILED` | `awk` over the desktop log |
+| Frontend | typecheck exit 0; 182/182 test files; inventory 152 rows | `cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc` |
+| ui-smoke | 20 of 20 `sheet-market-*`; 14 of 14 tab and changed rows | `npm run ui-smoke -- --only <ids>`, `E3.MC/smoke-*-results.json` |
+| Sheet greps | `Add Weapon\|Add Armor\|Add Gear` 0, 0, 0; `MarketDialog` 3, 3, 3 | `grep -c` on the 3 sheets |
+| Rows bought and sold through the save path | PF 5,880 + 259 at top bonus, SF 2,308, CPR 250: 0 refused | `E3.MC/probes-*.rs.txt`, temporary tests, not committed as tests; CPR's is `market_shell_every_row_bought_is_on_the_sell_list` |
+| Armor cross-type | 0 of 63 | the test, and Python over the dump |
+| Mutations | 7 of 8 red; the survivor is equivalent | `E3.MC/mutations.txt` |
+| Unpriced rows, refused in paid modes | 1,448 of 5,880 | Python over the dump |
+
+**Seed deltas (base = `f80c0fcfda`, built in its own tree; head = the fixed tree):** PF Aldric, Elowen, Tomas: `sha256.txt` identical. SF x4 and CPR x5: `diff -r` empty, files on both sides.
+
+**Refuted, all fixed here:** a `codex-ingest` test red on the branch since E3.4, in a crate its receipt said it had not run; Export then Import dropped every paid `+N`; the seeded `item:longsword` and `item:chain_shirt` took a free `+5` past E3.6's charge; 14 of 253 Cyberpunk rows could not be sold, 3 of them decks §25 said were not listed. **Holds:** the Armor list, every row bought, no mint in 24 walks, R-11 on every tab, the twins.
+
+**Retro (`scripts/retro.py summary --since 2026-11-02T06:10:42-05:00 --json`, `E3.MC/retro-summary.json`):** 21 corrections, 2 incidents (`fresh-tree-empty-corpus-bundle`, `spec-json-append-conflict`, one each, 0 recurring), 0 deferrals, 1 rework. Subject `decisions.md` fired twice, a file and not a defect, so no new check under R-W. Written before this card's derived verify line.
+
+**Open blockers:** none on E3. **Open, for the lead, no operator ruling needed:** E1.6 is still `ready` and nothing dispatches it (E2's report). The mode switch (Cashless buy, Standard sale pays out) stands on all three systems; no card rules on it.
+
 ## Decisions taken on safe defaults
 
 | Card | Decision point | Default taken | Alternative not taken |
@@ -137,6 +164,8 @@ seed deltas, open blockers.)
 | E3.5 | Cyberpunk RED starter items the shop has no name for | On the Sell list, for nothing, and the line says so | A hand-kept name table (R2) |
 | E3.6 | A `+N` at or below the one a copy holds | Costs nothing, returns nothing; the copy stays what it was | A refusal, which the row does not ask for |
 | E3.6 | A flat-priced modifier under Cashless | No money moves | The old charge in every mode, from before the request had a mode |
+| E3.MC | Attach Modifier on a seeded `item:*` id | Charged by the row its record is on | Free, as E3.6's row said, which left every starting sword a free `+5` |
+| E3.MC | Cyberdecks the shop files under `gear` | Off the Market | Buying one onto the sheet, a deck the row rules out |
 
 ## Open blockers
 
