@@ -8337,7 +8337,7 @@ mod tests {
 
         let response = add_equipment_selection_at_root(
             &root,
-            "Wand of Cure Light Wounds",
+            "Otyugh Hide",
             ActiveState::EquippedActive,
             "2026-07-24T00:00:00Z",
         )
@@ -8354,8 +8354,8 @@ mod tests {
                 assert!(
                     corpus_derived
                         .unresolved_equipment_item_ids
-                        .contains(&"Wand of Cure Light Wounds".to_string()),
-                    "an item outside the bundled demo corpus must be traceable, not silently \
+                        .contains(&"Otyugh Hide".to_string()),
+                    "an item with no corpus record must be traceable, not silently \
                      dropped: {:?}",
                     corpus_derived.unresolved_equipment_item_ids
                 );
@@ -9617,7 +9617,8 @@ mod tests {
         assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
         // Every row that reads as unresolved when held, by why. The `.FORGET` pair are PCGen
         // removal rows; the two `Shield (...)` are the Quickdraw Shield rows' twins, which would
-        // answer the seeds' `item:shield`; the rest have a sheet rule and no corpus record.
+        // answer the seeds' `item:shield`; the Ranged Cannon's identity has the shape of a modifier,
+        // which stays out; the rest have a sheet rule and no corpus record.
         assert_eq!(
             no_record,
             [
@@ -9631,6 +9632,7 @@ mod tests {
                 "Manuscript of Jack Were-Son",
                 "Master Books of Rul Thaven",
                 "Otyugh Hide",
+                "Ranged Cannon ~ Clockwork Goliath",
                 "Shield (Light/Steel/Quickdraw)",
                 "Shield (Light/Wooden/Quickdraw)",
                 "The Formulae of Master Gebr",
@@ -9766,13 +9768,12 @@ mod tests {
     }
 
     /// Every weapon the Market sells a `+N` of, in hand at its highest offer, has a row holding that
-    /// bonus. The Market offers none on what has no row to hold it: no damage die to add to, or no
-    /// record on this corpus (a `.COPY`/`.MOD` pair of rows, which a one-row fixture cannot hold).
+    /// bonus. The Market offers none on what has no row to hold it: no damage die to add to.
     #[test]
     fn enhancement_rows_every_weapon_offer_reaches_its_row() {
         use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
-        const NO_ROW: [&str; 7] =
-            ["Net (Base)", "Snag Net", "Wrist Launcher", "Lasso", "Poisoned Sand Tube", "Mantis Blade", "Rending Claw Blades"];
+        const NO_ROW: [&str; 6] =
+            ["Net (Base)", "Snag Net", "Wrist Launcher", "Lasso", "Poisoned Sand Tube", "Mantis Blade"];
         let corpus = corpus_fixture_bundle();
         let market = list_market(MarketFilter { category: MarketCategory::Weapon, name_contains: None, book: None });
         assert_eq!(market.types_error, None);

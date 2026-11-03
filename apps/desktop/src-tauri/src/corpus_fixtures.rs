@@ -87,7 +87,8 @@ fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
 ///   A record's own display name is no bar: the same pass order lets the fixture answer first.
 /// - a bare `Shield (...)`: the resolver folds a name's parenthesis away, so any of these would
 ///   answer the seeds' Absent `item:shield`.
-/// - a modifier: `+N` is what the fixture holds; any other attaches as unresolved (DEF-1).
+/// - a modifier, whose identity is `Kind ~ Name ~ Target` (`is_modifier` is false on every settled
+///   record): `+N` is what the fixture holds; any other attaches as unresolved (DEF-1).
 ///
 /// A book that fails to read says so on stderr and adds nothing; its items read as unresolved.
 fn add_what_a_character_can_hold(package: &mut SourcePackageContent<'static>) {
@@ -128,7 +129,7 @@ fn add_what_a_character_can_hold(package: &mut SourcePackageContent<'static>) {
         };
         for entry in bundle.records.into_values() {
             let record = entry.record;
-            if record.is_modifier || record.name.starts_with("Shield (") || named.contains(&record.identity) {
+            if record.identity.contains(" ~ ") || record.name.starts_with("Shield (") || named.contains(&record.identity) {
                 continue;
             }
             named.insert(record.identity.clone());
@@ -277,5 +278,7 @@ mod tests {
         assert_eq!(identity("item:chain_shirt"), Some("Chain Shirt (Base)"));
         assert_eq!(identity("item:shield"), None);
         assert_eq!(identity("Ring of Protection +1"), Some("Ring of Protection +1"));
+        assert_eq!(identity("Special Ability ~ Anarchic ~ Weapon"), None, "DEF-1: `+N` only");
+        assert_eq!(identity("Special Ability ~ +1 ~ Weapon"), Some("Special Ability ~ +1 ~ Weapon"));
     }
 }
