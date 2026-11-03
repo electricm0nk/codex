@@ -47,7 +47,7 @@ operator moves scope between classes.
 |---|---|---|---|---|
 | FSR-C1 | Writer tests for `SF_SEED_LINES_OUT` / `CPR_SHEET_LINES_OUT` create their out dir | `docs/retro/sd38-retrospective.md` change 1 | not a user-facing correction; **but** R14 below makes E8.3 build it if the incident fires once | `grep -rl 'sf-seed-lines-out-dir-missing' docs/retro/events \| awk 'END{print NR}'` rises during SD-39 |
 | FSR-C2 | Full `npm run ui-smoke` as a gate; stale rows rewritten | SD-38 retro "did not work" (a) | ≈50 stale PF rows predate this bundle | E2.4's `npm run ui-smoke` report shows any red row SD-39 did not touch |
-| FSR-C3 | Create's draft preview shows "29 lb carried" with no equipment | `../tranche-17-ui/brief-2-layout.md:57` | not dictated; E4.2 reads the source while wiring weight and records the cause | E4.2's receipt names the cause and whether draft and saved sheet differ |
+| FSR-C3 | Create's draft preview shows "29 lb carried" with no equipment | `../tranche-17-ui/brief-2-layout.md:57` | Closed by E4.2: not a defect. 29 lb is the kit `compose_character_input` gives every character, Chain Shirt 25 + Longsword 4; draft and saved sheet read the same (`worn_vs_carried_the_29_lb_draft_is_the_required_kit_and_the_saved_sheet_agrees`) | E4.2's receipt names the cause and whether draft and saved sheet differ |
 | FSR-C4 | Level-up gating findings | tranche-17-ui open findings | not dictated | the operator names them |
 | FSR-C5 | Release-build eyeball (tranche-17-ui) | same | superseded by E9.4's eyeball for print; UI eyeball not dictated | the operator asks |
 | FSR-C6 | Graph re-index decision, licence sign-offs, FSR-C2 (SD-38 sample) | `../SD-38-cyberpunk-red/README.md §6` | operator decisions outside this bundle | the operator rules |

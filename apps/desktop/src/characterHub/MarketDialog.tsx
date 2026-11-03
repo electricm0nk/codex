@@ -342,8 +342,10 @@ export function MarketDialog(props: {
     setBusy(true);
     setStatus(null);
     try {
-      setStatus(await action());
+      // The list first, so the line saying what happened never sits over a list that has not caught up.
+      const outcome = await action();
       await reloadInventory();
+      setStatus(outcome);
     } finally {
       inFlight.current = false;
       setBusy(false);
