@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 56
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 57
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -59,8 +59,9 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 56
 | E4.2 | Prove carried adds weight only | opus | complete | E4.1 | commits 960de1b200, 3d91eab9a9 + receipt commit; receipt artifacts/epic_4/E4.2_cycle_receipt.md; discovered E4.5; root sweep exit 0, 20 market rows green, seeds NO_DIFF |
 | E4.3 | Equipment panel | opus | complete | E4.2 | commit 2123327b7b + receipt commit; receipt artifacts/epic_4/E4.3_cycle_receipt.md; override tag moved to E6.2 (cycle, decisions.md §25); root and desktop sweeps clean, 24 rows green, seeds NO_DIFF |
 | E4.4 | Custom item bonuses + slot | opus | complete | E4.3 | commit ab1300e371 + receipt commit; receipt artifacts/epic_4/E4.4_cycle_receipt.md; 11 custom_item_bonuses tests; desktop sweep clean, 26 rows green, seeds NO_DIFF |
-| E4.5 | A worn item's stated numbers reach the totals | opus | waiting | E4.4 | discovered by E4.2, decisions.md §21 |
-| E4.MC | E4 merge check + Epic report | opus | waiting | E4.5 | |
+| E4.5 | A worn item's stated numbers reach the totals | opus | complete | E4.4 | discovered by E4.2, decisions.md §21; commit efdf8ce4b2 + receipt commit; receipt artifacts/epic_4/E4.5_cycle_receipt.md; 7 desktop + 4 root worn_item_applies tests; both sweeps attributed, 2 test edits re-run; 26 ui-smoke rows green; seeds NO_DIFF; discovered E4.6 |
+| E4.6 | A worn item's stated attack, initiative and speed reach the totals | opus | waiting | E4.5 | discovered by E4.5, decisions.md §21 |
+| E4.MC | E4 merge check + Epic report | opus | waiting | E4.6 | |
 | E5.1 | Ledger file, stamped on every add | opus | waiting | E4.MC | |
 | E5.2 | Legacy ledger migration | opus | waiting | E5.1 | |
 | E5.3 | Drawer content from list_progression_ledger | opus | waiting | E5.2 | |

@@ -1,0 +1,479 @@
+     Running unittests src/lib.rs  :: test result: ok. 3044 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 371.32s
+     Running unittests src/bin/class_census.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 605.21s
+     Running unittests src/bin/pi_sweep_rules_tables.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/rules_tables_package.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/v06_class_state_dump.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/v06_content_state_dump.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/character_hub_list_saved_characters.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/character_input_record.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/cpr_corpus_manifest.rs  :: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/derived_evaluator_fixture_check_class_feature.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.92s
+     Running tests/derived_evaluator_fixture_check_class_feature_consumer_quantity.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 26.58s
+     Running tests/derived_evaluator_fixture_check_companion.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+     Running tests/derived_evaluator_fixture_check_companion_save_dc.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+     Running tests/derived_evaluator_fixture_check_monster.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+     Running tests/derived_evaluator_fixture_check_monster_sla.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.46s
+     Running tests/derived_evaluator_fixture_check_spell_range.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+     Running tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+     Running tests/equipment_gap_tables.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+     Running tests/ge06_failure_classifier.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.29s
+     Running tests/ge06_pilot_base_computation.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.55s
+     Running tests/ge06_pilot_combat_baseline.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.76s
+     Running tests/ge06_pilot_headless_receipt.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.96s
+     Running tests/ge06_pilot_input_contract.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ge06_pilot_selected_skill_modifiers.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.90s
+     Running tests/ge06_pilot_total_saves.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.61s
+     Running tests/ge06_pilot_view_model.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.20s
+     Running tests/ge08_package_file_lifecycle.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ge08_preview_bridge.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ge08_validation_and_diagnostics.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/generator_name_key_screening_static_audit.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/hybrid_diagnostic_grounded_contradiction.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.86s
+     Running tests/no_baked_manifest_dir_in_production.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+     Running tests/no_foreign_home_paths.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+     Running tests/package_store_atomic_write.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pi_blacklist_terms_rust_python_agree.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/pi_screening_regeneration_round_trip.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+     Running tests/pi_table_sweep.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.02s
+     Running tests/rules_catalog_feature_facts_read_the_package.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+     Running tests/rules_catalog_reads_the_package.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+     Running tests/rules_tables_citation_burn_down.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+     Running tests/saved_character_store_delete.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd13_barbarian_level1_chassis_baseline.rs  :: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.35s
+     Running tests/sd13_barbarian_rage_power_slots.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.42s
+     Running tests/sd13_bard_base_attack_and_saves.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.97s
+     Running tests/sd13_bard_bonus_spells.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.54s
+     Running tests/sd13_bard_fascinate_dc.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.93s
+     Running tests/sd13_bard_level1_spell_baseline.rs  :: test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.59s
+     Running tests/sd13_bard_spell_level_thresholds.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.36s
+     Running tests/sd13_bard_spell_save_dcs.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.59s
+     Running tests/sd13_bard_spells_known_counts.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.35s
+     Running tests/sd13_bard_spells_per_day_counts.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.68s
+     Running tests/sd13_bard_total_spells_per_day.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.57s
+     Running tests/sd13_bard_versatile_performance_slots.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.58s
+     Running tests/sd13_cleric_base_attack_and_saves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.39s
+     Running tests/sd13_cleric_domain_powers.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.08s
+     Running tests/sd13_cleric_level1_spell_baseline.rs  :: test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.00s
+     Running tests/sd13_druid_base_attack_and_saves.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.88s
+     Running tests/sd13_druid_level1_spell_baseline.rs  :: test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.56s
+     Running tests/sd13_dwarf_bounded_race_semantics.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.80s
+     Running tests/sd13_elf_race_semantics_recognition.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.97s
+     Running tests/sd13_fighter_bravery.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.98s
+     Running tests/sd13_fighter_favored_class_bonus_choice.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.60s
+     Running tests/sd13_fighter_level1_hit_point_baseline.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.46s
+     Running tests/sd13_fighter_level1_mandatory_milestone_classification.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.47s
+     Running tests/sd13_fighter_prerequisite_invalid_choice_blocking.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.19s
+     Running tests/sd13_gnome_race_semantics_recognition.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.73s
+     Running tests/sd13_half_elf_race_semantics_recognition.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.97s
+     Running tests/sd13_half_orc_bounded_race_semantics.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.56s
+     Running tests/sd13_half_orc_race_semantics_recognition.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.80s
+     Running tests/sd13_halfling_race_semantics_recognition.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.64s
+     Running tests/sd13_human_full_trait_bundle.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.96s
+     Running tests/sd13_hybrid_level1_chassis_baseline.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.85s
+     Running tests/sd13_monk_bonus_feat_choice.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.89s
+     Running tests/sd13_monk_bonus_feats_three_and_four.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.65s
+     Running tests/sd13_monk_level1_chassis_baseline.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.68s
+     Running tests/sd13_monk_second_bonus_feat.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.66s
+     Running tests/sd13_paladin_base_attack_and_saves.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.52s
+     Running tests/sd13_paladin_bonus_spells.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.36s
+     Running tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.44s
+     Running tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.41s
+     Running tests/sd13_paladin_level3_mercy.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.62s
+     Running tests/sd13_paladin_mercies_two_and_three.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.62s
+     Running tests/sd13_paladin_partial_caster_effective_caster_level.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.35s
+     Running tests/sd13_paladin_spell_level_thresholds.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.80s
+     Running tests/sd13_paladin_spell_save_dcs.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.65s
+     Running tests/sd13_paladin_spells_per_day_counts.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.56s
+     Running tests/sd13_paladin_total_spells_per_day.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.59s
+     Running tests/sd13_progression/main.rs  :: test result: ok. 1136 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 21.37s
+     Running tests/sd13_race_gnome_bounded_semantics.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.60s
+     Running tests/sd13_ranger_base_attack_and_saves.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.72s
+     Running tests/sd13_ranger_bonus_spells.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.92s
+     Running tests/sd13_ranger_combat_style_level_gate.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.17s
+     Running tests/sd13_ranger_favored_terrain_choice.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.98s
+     Running tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs  :: test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.23s
+     Running tests/sd13_ranger_second_favored_terrain.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.63s
+     Running tests/sd13_ranger_spell_burden_classification.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.87s
+     Running tests/sd13_ranger_spell_level_thresholds.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.68s
+     Running tests/sd13_ranger_spell_save_dcs.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.75s
+     Running tests/sd13_ranger_spells_per_day_counts.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.47s
+     Running tests/sd13_ranger_third_favored_enemy.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.55s
+     Running tests/sd13_ranger_total_spells_per_day.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.69s
+     Running tests/sd13_rogue_level1_chassis_baseline.rs  :: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.75s
+     Running tests/sd13_rogue_second_talent.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.72s
+     Running tests/sd13_rogue_talent_choice.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.70s
+     Running tests/sd13_rogue_talents_three_through_five.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.50s
+     Running tests/sd13_sorcerer_base_attack_and_saves.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.98s
+     Running tests/sd13_sorcerer_bloodline_class_skill_choice.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.75s
+     Running tests/sd13_sorcerer_bonus_spells.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.02s
+     Running tests/sd13_sorcerer_level1_spell_baseline.rs  :: test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.26s
+     Running tests/sd13_sorcerer_spell_level_thresholds.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.92s
+     Running tests/sd13_sorcerer_spell_save_dcs.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.96s
+     Running tests/sd13_sorcerer_spells_known_counts.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.41s
+     Running tests/sd13_sorcerer_spells_per_day_counts.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.54s
+     Running tests/sd13_sorcerer_total_spells_per_day.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.00s
+     Running tests/sd13_wizard_base_attack_and_saves.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.60s
+     Running tests/sd13_wizard_evocation_school_powers.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.55s
+     Running tests/sd13_wizard_level1_prepared_spell_baseline.rs  :: test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.63s
+     Running tests/sd13_wizard_spell_save_dcs.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.95s
+     Running tests/sd14_saved_character_envelope.rs  :: test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd18_barbarian_level11_greater_rage.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.68s
+     Running tests/sd18_dwarf_defensive_training.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.75s
+     Running tests/sd18_dwarf_greed.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.58s
+     Running tests/sd18_dwarf_hardy.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.76s
+     Running tests/sd18_dwarf_stability.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.70s
+     Running tests/sd18_dwarf_stonecunning.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.75s
+     Running tests/sd18_elf_elven_immunities.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.08s
+     Running tests/sd18_elf_elven_magic.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.80s
+     Running tests/sd18_elf_keen_senses.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.91s
+     Running tests/sd18_fighter_level11_armor_training3.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.92s
+     Running tests/sd18_gnome_defensive_training.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.95s
+     Running tests/sd18_gnome_hatred.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.96s
+     Running tests/sd18_gnome_illusion_resistance.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.88s
+     Running tests/sd18_gnome_keen_senses.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.85s
+     Running tests/sd18_half_elf_elven_immunities.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.91s
+     Running tests/sd18_half_elf_keen_senses.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.65s
+     Running tests/sd18_half_orc_intimidating.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.17s
+     Running tests/sd18_halfling_fearless.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.05s
+     Running tests/sd18_halfling_keen_senses.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.93s
+     Running tests/sd18_halfling_luck.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.91s
+     Running tests/sd18_halfling_sure_footed.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.95s
+     Running tests/sd18_monk_level11_diamond_body.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.53s
+     Running tests/sd18_paladin_level11_aura_of_justice.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.79s
+     Running tests/sd18_ranger_level11_quarry.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.75s
+     Running tests/sd18_ranger_level16_improved_evasion.rs  :: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.75s
+     Running tests/sd18_ranger_level17_hide_in_plain_sight.rs  :: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.46s
+     Running tests/sd18_rogue_level11_sneak_attack.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.59s
+     Running tests/sd18_widening/main.rs  :: test result: ok. 891 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 23.90s
+     Running tests/sd19_feat_catalog.rs  :: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd19_table_store_foundation.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_contract_boundary_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.51s
+     Running tests/sd20_contract_cell_map.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.42s
+     Running tests/sd20_contract_character_input.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_contract_feat_wiring.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.40s
+     Running tests/sd20_contract_level_up_preview.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.98s
+     Running tests/sd20_contract_pilot_receipt.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+     Running tests/sd20_contract_receipt_signature_threading.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running tests/sd20_contract_skill_wiring.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.47s
+     Running tests/sd20_damage_feat_effect.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_combat.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_general.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_item_creation.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_metamagic.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_prereqs_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_level_up_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.17s
+     Running tests/sd20_levelup_barbarian.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.95s
+     Running tests/sd20_levelup_bard.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.16s
+     Running tests/sd20_levelup_cleric.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.08s
+     Running tests/sd20_levelup_druid.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.37s
+     Running tests/sd20_levelup_fighter.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.57s
+     Running tests/sd20_levelup_monk.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.70s
+     Running tests/sd20_levelup_paladin.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.98s
+     Running tests/sd20_levelup_ranger.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.79s
+     Running tests/sd20_levelup_rogue.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.84s
+     Running tests/sd20_levelup_sorcerer.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.03s
+     Running tests/sd20_levelup_wizard.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.27s
+     Running tests/sd20_skill_allocation_class_skill.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.29s
+     Running tests/sd20_skill_allocation_cross_class.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.95s
+     Running tests/sd20_skill_allocation_max_rank_cap.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.35s
+     Running tests/sd20_skill_allocation_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.33s
+     Running tests/sd20_skill_allocation_untrained.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.23s
+     Running tests/sd21_epic6b_full_completion_reproducer.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.66s
+     Running tests/sd21_multiclass_fighter_wizard_chassis_computes.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.23s
+     Running tests/sd21_wizard_chassis_computes.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.75s
+     Running tests/sd21_wizard_prepared_spellbook.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.53s
+     Running tests/sd22_acg_class_arcanist_resolves.rs  :: test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_bloodrager_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_brawler_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_hunter_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_investigator_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_shaman_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_skald_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_slayer_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_swashbuckler_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_warpriest_resolves.rs  :: test result: ok. 6 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_equipment_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_acg_spell_list_resolves.rs  :: test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_apg_class_alchemist_resolves.rs  :: test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_cavalier_resolves.rs  :: test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_inquisitor_resolves.rs  :: test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_oracle_resolves.rs  :: test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_summoner_resolves.rs  :: test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_witch_resolves.rs  :: test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_equipment_resolves.rs  :: test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_apg_spell_list_resolves.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_beastiary1_subset_01_resolves.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_02_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_03_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_beastiary1_subset_04_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_05_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_06_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_beastiary1_subset_07_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_08_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_dm_toolkit_deterministic.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_dm_toolkit_happy_path_integration.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd24_acg_class_coverage_audit.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.94s
+     Running tests/sd24_acg_equipment_field_completion.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd24_apg_class_coverage_audit.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.42s
+     Running tests/sd24_equipment_coverage_audit.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd24_equipment_field_completion.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd24_identifier_discipline_audit.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+     Running tests/sd24_multiclass_deterministic.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.69s
+     Running tests/sd24_multiclass_dispatch_audit.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd24_multiclass_fighter_lv10.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.64s
+     Running tests/sd24_multiclass_fighter_wizard_split.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.23s
+     Running tests/sd24_multiclass_integration.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.60s
+     Running tests/sd24_multiclass_wizard_lv10.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.35s
+     Running tests/sd24_release_notes_structure.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd24_wired_integration_audit.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+     Running tests/sd24_wizard_level_up_spell_coverage.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.43s
+     Running tests/sd25_barbarian_level_up_explanation_filter_audit.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.20s
+     Running tests/sd25_bard_level_up_explanation_coverage.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.19s
+     Running tests/sd25_cleric_level_up_explanation_coverage.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 23.02s
+     Running tests/sd25_druid_level_up_explanation_filter_audit.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.18s
+     Running tests/sd25_monk_level_up_explanation_filter_audit.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.06s
+     Running tests/sd25_paladin_level_up_explanation_coverage.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.02s
+     Running tests/sd25_ranger_level_up_explanation_coverage.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.01s
+     Running tests/sd25_rogue_level_up_explanation_filter_audit.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.01s
+     Running tests/sd25_sorcerer_level_up_explanation_coverage.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.25s
+     Running tests/sd26_cache_core_rulebook.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.04s
+     Running tests/sd26_identifier_discipline_audit.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.57s
+     Running tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+     Running tests/sd27_ability_automatic_granted_race_traits.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+     Running tests/sd27_advanced_race_guide_cache_shape.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+     Running tests/sd27_alternate_racial_trait_reachability.rs  :: test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 129.68s
+     Running tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd27_apostrophes_do_not_split_id_slugs.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.42s
+     Running tests/sd27_arg_and_pu_feat_effects.rs  :: test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.88s
+     Running tests/sd27_book_license_record_counts.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.57s
+     Running tests/sd27_crb_race_corpus_pin.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/sd27_equipment_modifier_price_matches_corpus_cost_token.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+     Running tests/sd27_feat_effects_reach_both_compute_paths.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd27_flat_footed_armor_class.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.02s
+     Running tests/sd27_known_spells_must_be_on_the_class_spell_list.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.52s
+     Running tests/sd27_license_stripping_shape_v1.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.77s
+     Running tests/sd27_non_crb_spell_level_gate.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.35s
+     Running tests/sd27_pathfinder_unchained_cache_shape.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd27_pu_class_features_reach_by_corpus_key.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.54s
+     Running tests/sd27_pu_class_wiring_pin.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 45.94s
+     Running tests/sd27_pu_deferred_features_reach_the_character_sheet.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.26s
+     Running tests/sd27_pu_prose_derived_class_features_reach_the_sheet.rs  :: test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.63s
+     Running tests/sd27_race_size_resolution.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+     Running tests/sd27_size_modifiers_to_armor_class.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.74s
+     Running tests/sd27_size_modifiers_to_touch_cmb_cmd_and_attack.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.38s
+     Running tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.49s
+     Running tests/sd28_beastiary1_subset_09_resolves.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd29_declared_product_identity_in_shipped_race_traits.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+     Running tests/sd30_declared_product_identity_in_shipped_class_features.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.27s
+     Running tests/sd31_class_feature_corpus_key_uniqueness.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.57s
+     Running tests/sd31_crb_variant_spell_rows_resolve_against_their_base.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd31_lst_provenance_repair_is_durable.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.30s
+     Running tests/sd34_wave51_racial_sla_catalog_matches_the_corpus.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/sd35_class_feature_catalogs_read_converted_prose.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.00s
+     Running tests/sd35_live_side_names_no_ingest_qualifier.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd35_rendered_prose_carries_no_ingest_vocabulary.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.89s
+     Running tests/sd36_bloodline_pick_option.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.21s
+     Running tests/sd36_class_skill_from_record.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 80.02s
+     Running tests/sd36_f3_polish.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 147.06s
+     Running tests/sd36_f4_link_pick_namespace.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 198.41s
+     Running tests/sd36_f4pre_pool_choices.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.65s
+     Running tests/sd36_multiclass_any_class.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 75.01s
+     Running tests/sd36_sorcerer_bloodline_record.rs  :: test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 40.68s
+     Running tests/sd49_monk_level20_capstone.rs  :: test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.69s
+     Running tests/sd_governance_stub_registry_divergence.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sheet_rule_book_collision_census.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.32s
+     Running tests/sorcerer_draconic_bloodline_dragon_resistances.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.56s
+     Running tests/v06_beastiary1_natural_attack_grounding.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/v06_caster_level_every_casting_class.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 103.32s
+     Running tests/v06_companion_reaches_the_pilot_view_model.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.77s
+     Running tests/v06_druid_level16_to_20_widening.rs  :: test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.55s
+     Running tests/v06_durability.rs  :: test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/v06_equipment_cost_resolution.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+     Running tests/v06_hybrid_level1_no_spellcasting_is_computed.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 29.06s
+     Running tests/v06_money_conversion.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/v06_pilot_snapshot_damage_reduction.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.04s
+     Running tests/v06_rogue_ui_reachability.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.80s
+     Running tests/v06_selected_skill_class_skill_bonus.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.98s
+     Running tests/v06_stale_total_engine_deferral_resweep.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.76s
+     Running tests/v06_wizard_rogue_skill_allocation_grounding.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.43s
+     Running tests/wizard_abjuration_school_powers.rs  :: test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.48s
+     Running tests/worn_vs_carried.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.65s
+     Running unittests src/lib.rs  :: test result: ok. 701 passed; 0 failed; 11 ignored; 0 measured; 0 filtered out; finished in 57.62s
+     Running unittests src/bin/bonus_stack_reader.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/corpus_literal_sweep.rs  :: test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.75s
+     Running unittests src/bin/declared_pi_shipping_audit.rs  :: test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/derived_evaluator_fixture_check.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_class_raw_tokens.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_companion_raw_tokens.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/enrich_equipment_raw_tokens.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_monster_ability_raw_tokens.rs  :: test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/enrich_monster_raw_tokens.rs  :: test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/enrich_pu_class_feature_mod_closure.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/enrich_spell_raw_tokens.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/formula_interpreter.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_book_cache.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_acg.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_apg.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_beastiary.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_class_feature.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_equipment_gap.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_feat_gap.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_hand_authored_equipment.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_hand_authored_feat_dump.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_spell_lane_dump.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_spell_mod_access.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_cache_ultimate_equipment.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_class_feature_grants.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_core_rulebook_cache.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_desktop_fixture_corpus.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_equipment_gap_tables.rs  :: test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_equipment_types.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_feat_gap_tables.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_record_vars.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/gen_settled_corpus.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_apg_race_traits.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running unittests src/bin/ingest_class_spell_levels_arg.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_pu_classes.rs  :: test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/ingest_race_traits.rs  :: test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running unittests src/bin/ingest_races.rs  :: test result: ok. 44 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+     Running unittests src/bin/ingest_spells.rs  :: test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/pcg_import.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/reconcile_description_pi_stamps.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src/bin/repair_equipment_copy_citations.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/repair_lst_provenance.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/repair_spell_citations.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/restamp_wiring_class.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sf_corpus.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sf_formula_census.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_bucket_v_render.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_convert.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/sheet_rule_parity.rs  :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/v06_corpus_trap_report.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ability_pool_picks.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 258.02s
+     Running tests/class_proficiency_line_gate.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 751.45s
+     Running tests/class_records_and_closure_attestation.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.24s
+     Running tests/class_weapon_proficiency_grant_by_type.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.98s
+     Running tests/class_weapon_proficiency_via_converter.rs  :: test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 73.93s
+     Running tests/derived_evaluator_fixture_check.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.77s
+     Running tests/derived_evaluator_fixture_check_class_feature_description.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.60s
+     Running tests/derived_evaluator_fixture_check_monster_ability.rs  :: test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+     Running tests/feat_gap_tables.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+     Running tests/formula_interpreter_family_fixture_check.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+     Running tests/ge05_vendored_pcg_fixtures.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/ge06_selected_parity_dimensions.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.85s
+     Running tests/golden_case_fixture_schema.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pcc_entry_parse.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pcgen_runner_smoke.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 57.27s
+     Running tests/rules_core_class_feature_grant_consumer_via_converter.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.06s
+     Running tests/rules_core_class_feature_pool_catalog_via_converter.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.59s
+     Running tests/rules_core_class_skill_tables_via_converter.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_companion_chassis_via_converter.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.24s
+     Running tests/rules_core_damage_total_via_converter.rs  :: test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_derived_evaluator_fixture_check_via_converter.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_domain_power_via_converter.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_encumbrance_via_converter.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_equipment_effects_arms_armor_via_converter.rs  :: test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_equipmods_via_converter.rs  :: test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_general_via_converter.rs  :: test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_intelligent_item_via_converter.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_magic_items_via_converter.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_equipment_effects_via_converter.rs  :: test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+     Running tests/rules_core_equipment_record_via_converter.rs  :: test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.42s
+     Running tests/rules_core_equipment_resolver_via_converter.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_feats_all_via_converter.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/rules_core_pi_screening_via_converter.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_pilot_compute_corpus_via_converter.rs  :: test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.22s
+     Running tests/rules_core_pu_barbarian_features_via_converter.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/rules_core_pu_monk_features_via_converter.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/rules_core_pu_rogue_features_via_converter.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_race_creation_via_converter.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/rules_core_race_resolver_via_converter.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+     Running tests/rules_core_um_feat_tables_via_converter.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_weapon_tables_via_converter.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/rules_core_wizard_spell_list_via_converter.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd17_a_include_graph.rs  :: test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b1_martial_class.rs  :: test result: ok. 14 passed; 0 failed; 5 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b5_equipment.rs  :: test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.15s
+     Running tests/sd17_b_metadata_kinds.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd17_b_monster_stat_block.rs  :: test result: ok. 0 passed; 0 failed; 7 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_races_and_abilities.rs  :: test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_spellcasting_class.rs  :: test result: ok. 13 passed; 0 failed; 14 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_b_spells.rs  :: test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_c_ir_convert.rs  :: test result: ok. 45 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd17_d_record_aggregate.rs  :: test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd17_e_source_ir_shape.rs  :: test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd18_preloop_consumer_compose.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.01s
+     Running tests/sd19_equipment_arms_armor.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_equipmods.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_general.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_equipment_magic_items.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_abjuration.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_conjuration.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_divination.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_enchantment.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_evocation.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_illusion.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_necromancy.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_transmutation.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_school_universal.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd19_seam_shapes_correctness.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+     Running tests/sd20_contract_damage_wiring.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.22s
+     Running tests/sd20_contract_equipment_wiring.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.37s
+     Running tests/sd20_contract_spellbook_wiring.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.50s
+     Running tests/sd20_damage_aggregate_weapons.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+     Running tests/sd20_damage_base_dice.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd20_damage_critical_multiplier.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_critical_threat_range.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_str_modifier.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_total_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_damage_weapon_enhancement.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_arms_armor.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd20_equipment_effects_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_equipmods.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_general.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_equipment_magic_items.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd20_spellbook_abjuration.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd20_spellbook_conjuration.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_divination.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/sd20_spellbook_enchantment.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/sd20_spellbook_evocation.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_illusion.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_necromancy.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd20_spellbook_transmutation.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd20_spellbook_universal.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd20_tabletop_readiness_integration.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.14s
+     Running tests/sd26_cache_acg.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/sd26_cache_apg.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running tests/sd26_cache_beastiary.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+     Running tests/sd26_comparator.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.47s
+     Running tests/sd26_normalization.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd26_parity_report.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd26_pcgen_runner.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 34.65s
+     Running tests/sd26_pilot_case_verification.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 38.02s
+     Running tests/sd27_advanced_race_guide_parity.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.54s
+     Running tests/sd27_feat_prerequisite_enforcement.rs  :: test result: ok. 9 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 20.28s
+     Running tests/sd27_pathfinder_unchained_parity.rs  :: test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.07s
+     Running tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs  :: test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 28.73s
+     Running tests/sd27_resolved_racial_trait_display_values.rs  :: test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.16s
+     Running tests/sd31_e2_ground_truth_agreement.rs  :: test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd35_race_trait_prose_comes_from_the_converted_package.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.57s
+     Running tests/sf_core_proof.rs  :: test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 38.23s
+     Running tests/sf_drone_companion.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running tests/sf_formula_system.rs  :: test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+     Running tests/sf_global_default.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sf_license_registry.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sf_mapping_table.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+     Running tests/sheet_rule_convert_gate.rs  :: test result: ok. 48 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 575.65s
+     Running tests/sheet_rule_gated_fact_grants.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 251.40s
+     Running tests/sheet_rule_link_repair.rs  :: test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 397.93s
+     Running tests/sheet_rule_natural_attack_suffix_collision.rs  :: test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 248.17s
+     Running tests/sheet_rule_weapon_selectors.rs  :: test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 245.62s
+     Running tests/spell_cross_book_identity.rs  :: test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/table_generators_write_the_data_package.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+     Running tests/v06_apg_acg_feat_catalog.rs  :: test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running tests/v06_corpus_trap_report.rs  :: test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 50.78s
+     Running tests/v06_encumbrance.rs  :: test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/v06_wizard_pilot_case_verification.rs  :: test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 38.01s
+   Doc-tests codex :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+   Doc-tests codex_ingest :: test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

@@ -9069,10 +9069,11 @@ mod tests {
         let snapshot = load_saved_character_at_root(&root).unwrap().snapshot.unwrap();
         std::fs::remove_dir_all(&dir).ok();
 
-        // Deflection the higher (3), dodge stacks (1 + 2), armor 5, natural 2, two penalties stack (-2).
-        assert_eq!(worn.armor_class, none.armor_class + 3 + 3 + 5 + 2 - 2, "AC");
+        // Deflection the higher (3), dodge stacks (1 + 2), armor 5 over the Chain Shirt's 4 is +1,
+        // natural 2, two penalties stack (-2).
+        assert_eq!(worn.armor_class, none.armor_class + 3 + 3 + 1 + 2 - 2, "AC");
         assert_eq!(worn.touch, none.touch + 3 + 3 - 2, "armor and natural armor do not hold against touch");
-        assert_eq!(worn.flat_footed, none.flat_footed + 3 + 5 + 2 - 2, "dodge does not hold when flat-footed");
+        assert_eq!(worn.flat_footed, none.flat_footed + 3 + 1 + 2 - 2, "dodge does not hold when flat-footed");
         assert_eq!(snapshot.total_saves.will, snapshot_none.total_saves.will + 2 + 1 + 1, "resistance the higher, untyped stacks");
     }
 

@@ -69,7 +69,7 @@ grep -c 'Add Weapon\|Add Armor\|Add Gear' apps/desktop/src/characterHub/{Charact
 The CRB price table the test encodes (5 armor/shield + 5 weapon rows: +1 1,000/2,000 … +5 25,000/50,000
 gp, plus masterwork 150/300) is quoted in the test with its page cite.
 
-## G-6 Slots and custom items (DoD 5) — E4.1–E4.4, E4.MC
+## G-6 Slots and custom items (DoD 5) — E4.1–E4.6, E4.MC
 
 ```bash
 for t in slot_of slot_conflict worn_vs_carried custom_item_bonuses worn_item_applies; do cargo test --locked -j 8 $t -- --test-threads=8; done
@@ -116,7 +116,7 @@ grep -rln 'pcg' src apps/desktop/src apps/desktop/src-tauri/src      # only the 
 ```bash
 cd docs/release/SD-39-ui-print-corrections
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 56) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 57) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E9\.([5-9]|1[01]) / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c 'usable: yes' artifacts/epic_9/E9.4_cycle_receipt.md        # 3
 grep -c 'SD-39 INTERIM NOTES' release-notes.md                        # 0 at E9.8+

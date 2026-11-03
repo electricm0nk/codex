@@ -526,7 +526,12 @@ mod tests {
                 .tokens
                 .iter()
                 .find(|token| token.key == "BASEITEM")
-                .map(|token| token.value.clone());
+                .map(|token| token.value.clone())
+                // A record cut from a template names it as its name, with no token. 179 of 7803
+                // records; every other record reads as the token did.
+                .or_else(|| {
+                    (row.name != converted.identity && row.name.ends_with(" (Base)")).then(|| row.name.clone())
+                });
             if old_base_item != converted.base_item {
                 disagreements.push(format!(
                     "{id}: base item {old_base_item:?} != {:?}",
