@@ -267,7 +267,7 @@ export function MarketDialog(props: {
   currency: string;
   balance: number;
   loadInventory: () => Promise<HeldEquipmentCopyDto[]>;
-  onBuy: (row: MarketRow, bonus: number, category: MarketCategory) => Promise<string | null>;
+  onBuy: (row: MarketRow, bonus: number) => Promise<string | null>;
   onSell: (copy: HeldEquipmentCopyDto) => Promise<string | null>;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
@@ -382,7 +382,7 @@ export function MarketDialog(props: {
         onBuy={() => {
           const row = searched.find((candidate) => candidate.key === selectedKey);
           if (row) {
-            void act(() => props.onBuy(row, bonus, category));
+            void act(() => props.onBuy(row, bonus));
           }
         }}
         inventory={inventory}

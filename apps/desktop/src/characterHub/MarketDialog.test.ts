@@ -9,7 +9,7 @@ import {
   filterItemPickerEntries,
   formatMarketPrice,
   mapMarketEntries,
-  marketActiveState,
+  marketPlacementWords,
   marketMoneyMoved,
   marketPriceGp,
   marketShownRows,
@@ -82,14 +82,14 @@ const render = (overrides: Partial<MarketDialogViewProps>) => renderToStaticMark
   assertEqual(formatMarketPrice(null, 'gp'), 'No listed price', 'no price is said, not zero');
 }
 
-// A weapon goes in the pack, and the player takes it in hand from the Weapons tab.
-for (const category of MARKET_CATEGORIES) {
-  assertEqual(
-    marketActiveState(category.value),
-    category.value === 'weapon' ? 'SelectedInactive' : 'EquippedActive',
-    `${category.value} active state`,
-  );
-}
+// The status line says where the buy went, and the backend's refusal in its own words.
+assertEqual(marketPlacementWords('EquippedActive', null), 'worn', 'its slot was free');
+assertEqual(
+  marketPlacementWords('SelectedInactive', 'head slot is taken by Hat of Disguise'),
+  'carried: head slot is taken by Hat of Disguise',
+  'its slot was held',
+);
+assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item with no slot refuses nothing');
 
 // What the status line says came from two balances the backend returned.
 {

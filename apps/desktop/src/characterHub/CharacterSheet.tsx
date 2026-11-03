@@ -79,7 +79,7 @@ import {
   mapFeatCatalogEntries,
   mapMarketEntries,
   mapSpellCatalogEntries,
-  marketActiveState,
+  marketPlacementWords,
   marketMoneyMoved,
   type MarketRow,
 } from './itemPickerFilter';
@@ -3303,14 +3303,14 @@ export function CharacterSheet(props: {
   async function handleAddEquipment(
     itemId: string,
     bonus: number,
-    activeState: ActiveStateDto,
-  ): Promise<CharacterMoneyDto | null> {
+  ): Promise<{ money: CharacterMoneyDto; activeState: ActiveStateDto; carriedReason: string | null } | null> {
     setMutationError(null);
     try {
       const outcome = await purchaseEquipment({
         characterId: props.row.characterId,
         itemId,
-        activeState,
+        // Worn if its slot is free. The backend decides, and says where the copy went.
+        activeState: 'EquippedActive',
         savedAt: new Date().toISOString(),
         priceMode,
         ...(bonus > 0 ? { bonus } : {}),
@@ -3347,7 +3347,7 @@ export function CharacterSheet(props: {
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
       await refreshEngineRecords();
-      return outcome.money;
+      return { money: outcome.money, activeState: outcome.activeState, carriedReason: outcome.carriedReason };
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
       return null;
@@ -3820,18 +3820,16 @@ export function CharacterSheet(props: {
   }
 
   /** A Market buy, and what to tell the player about it. */
-  async function handleMarketBuy(row: MarketRow, bonus: number, category: MarketCategory): Promise<string | null> {
+  async function handleMarketBuy(row: MarketRow, bonus: number): Promise<string | null> {
     const before = money.totalCopper;
-    const activeState = marketActiveState(category);
-    const after = await handleAddEquipment(row.key, bonus, activeState);
-    if (!after) {
+    const bought = await handleAddEquipment(row.key, bonus);
+    if (!bought) {
       return null;
     }
     const name = bonus > 0 ? (row.variants.find((variant) => variant.bonus === bonus)?.name ?? row.name) : row.name;
-    const paid = marketMoneyMoved(before, after.totalCopper);
-    return `${paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)}` : `Added ${name}; no money moved`}${
-      activeState === 'SelectedInactive' ? ' (carried, not wielded).' : '.'
-    }`;
+    const paid = marketMoneyMoved(before, bought.money.totalCopper);
+    const where = marketPlacementWords(bought.activeState, bought.carriedReason);
+    return paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (${where}).` : `Added ${name}; no money moved (${where}).`;
   }
 
   /** A Market sale, and what to tell the player about it. */

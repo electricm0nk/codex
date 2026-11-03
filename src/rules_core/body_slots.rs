@@ -16,12 +16,19 @@
 //! (`decisions.md` SD-g): an outfit or a tattoo occupies nothing the slot check enforces.
 //!
 //! A `#bonusN` row carries its item's tags but no `Slot:` line, so a caller asks about the
-//! item's principal row. Tags cannot give a weapon's handedness for most ranged weapons (a longbow
-//! has no `TwoHanded` tag): only the tag is read here, and the settled
-//! [`crate::rules_core::equipment_record`] wield category is the answer for the hand check.
+//! item's principal row. [`slot_of`] reads only the `TwoHanded` tag for a weapon's hands;
+//! [`worn_slot`] is the answer for the hand check: the settled
+//! [`crate::rules_core::equipment_record`] wield category, then the kind of weapon for a record that
+//! states none (no bow or crossbow but the hand crossbows states one).
+//!
+//! [`slot_conflict`] is the check itself: what one more worn item would run into, from what is
+//! already worn. Nothing here reads or changes a saved character.
+
+use std::collections::BTreeMap;
 
 use serde::{Deserialize, Serialize};
 
+use crate::rules_core::damage_total::WieldCategory;
 use crate::rules_core::equipment_types::EQUIPMENT_TYPES_PATH;
 use crate::rules_core::sheet_rule::{ProsePiece, SheetRule};
 use crate::support::paths::repo_root;
@@ -231,6 +238,117 @@ pub fn slot_of(record: &SheetRule) -> Result<BodySlot, String> {
     slot_table().as_ref().map(|table| table.slot_of(record)).map_err(Clone::clone)
 }
 
+/// The slot a record fills when worn or wielded, with its hands settled.
+///
+/// `types` are the catalog's `TYPE:` tags for the row. A record derived from another (`Dagger
+/// (Adamantine)`, `Mithral Shirt`) can hold few or no tags of its own, and one printing of a name
+/// can lack what another states (`Madu`), so the slot is read over both.
+///
+/// A weapon's stated `wield_category` wins over [`slot_of`]'s tag, and a record with no other sign
+/// of a slot that states one is wielded (`Dagger (Bloodthirst)`). A weapon stating none is two-handed
+/// if it is a bow, or a crossbow that fires from a stock (`Projectile`; the repeating hand crossbow's
+/// row has no such tag). Any other weapon stating none stays as [`slot_of`] read it, one hand.
+pub fn worn_slot(record: &SheetRule, types: &[String], wield: Option<WieldCategory>) -> Result<BodySlot, String> {
+    let mut joined = record.clone();
+    joined.tags.extend(types.iter().cloned());
+    let slot = match slot_of(&joined)? {
+        BodySlot::None if wield.is_some() && slot_line(record).is_none() => BodySlot::WieldMain,
+        slot => slot,
+    };
+    if !matches!(slot, BodySlot::WieldMain | BodySlot::WieldTwoHanded) {
+        return Ok(slot);
+    }
+    Ok(match wield {
+        Some(WieldCategory::TwoHanded) => BodySlot::WieldTwoHanded,
+        Some(WieldCategory::Light | WieldCategory::OneHanded) => BodySlot::WieldMain,
+        None if has_tag(&joined, "Bow") || (has_tag(&joined, "Crossbow") && has_tag(&joined, "Projectile")) => {
+            BodySlot::WieldTwoHanded
+        }
+        None => slot,
+    })
+}
+
+/// How the sheet says a slot's name in a refusal.
+fn slot_words(slot: BodySlot) -> &'static str {
+    match slot {
+        BodySlot::Armor => "armor",
+        BodySlot::Shield => "shield",
+        BodySlot::Belt => "belt",
+        BodySlot::Body => "body",
+        BodySlot::Chest => "chest",
+        BodySlot::Eyes => "eyes",
+        BodySlot::Feet => "feet",
+        BodySlot::Hands => "hands",
+        BodySlot::Head => "head",
+        BodySlot::Headband => "headband",
+        BodySlot::Neck => "neck",
+        BodySlot::Ring => "ring",
+        BodySlot::Shoulders => "shoulders",
+        BodySlot::Wrist => "wrist",
+        BodySlot::WieldMain => "main hand",
+        BodySlot::WieldOff => "off hand",
+        BodySlot::WieldTwoHanded => "two-handed",
+        BodySlot::None => "no",
+    }
+}
+
+/// Puts one worn item on the body: a shield fills its slot and the off hand, a two-handed weapon
+/// both hands, a one-handed weapon the main hand and then the off hand.
+fn occupy<'a>(held: &mut BTreeMap<BodySlot, Vec<&'a str>>, slot: BodySlot, name: &'a str) {
+    let mut fill = |slot: BodySlot| held.entry(slot).or_default().push(name);
+    match slot {
+        BodySlot::None => {}
+        BodySlot::Shield => {
+            fill(BodySlot::Shield);
+            fill(BodySlot::WieldOff);
+        }
+        BodySlot::WieldTwoHanded => {
+            fill(BodySlot::WieldMain);
+            fill(BodySlot::WieldOff);
+        }
+        BodySlot::WieldMain | BodySlot::WieldOff => {
+            let main_held = held.get(&BodySlot::WieldMain).is_some_and(|names| !names.is_empty());
+            held.entry(if main_held { BodySlot::WieldOff } else { BodySlot::WieldMain }).or_default().push(name);
+        }
+        other => fill(other),
+    }
+}
+
+/// What stops one more item of `slot` going on, given what is `worn` as `(name, slot)` in saved
+/// order, or `None` when it fits. Worded `"<slot> slot is taken by <item>"`. A save already holding
+/// more than a slot allows stays as it is: this answers only for the item being added.
+pub fn slot_conflict(worn: &[(&str, BodySlot)], slot: BodySlot) -> Result<Option<String>, String> {
+    let table = slot_table().as_ref().map_err(Clone::clone)?;
+    let mut held: BTreeMap<BodySlot, Vec<&str>> = BTreeMap::new();
+    for (name, slot) in worn {
+        occupy(&mut held, *slot, name);
+    }
+    let holders = |slot: BodySlot| held.get(&slot).map_or(&[][..], Vec::as_slice);
+    let needs: &[BodySlot] = match slot {
+        BodySlot::None => &[],
+        BodySlot::Shield => &[BodySlot::Shield, BodySlot::WieldOff],
+        BodySlot::WieldTwoHanded => &[BodySlot::WieldMain, BodySlot::WieldOff],
+        BodySlot::WieldMain | BodySlot::WieldOff if holders(BodySlot::WieldOff).is_empty() => &[],
+        BodySlot::WieldMain | BodySlot::WieldOff => &[BodySlot::WieldMain],
+        BodySlot::Armor => &[BodySlot::Armor],
+        BodySlot::Belt => &[BodySlot::Belt],
+        BodySlot::Body => &[BodySlot::Body],
+        BodySlot::Chest => &[BodySlot::Chest],
+        BodySlot::Eyes => &[BodySlot::Eyes],
+        BodySlot::Feet => &[BodySlot::Feet],
+        BodySlot::Hands => &[BodySlot::Hands],
+        BodySlot::Head => &[BodySlot::Head],
+        BodySlot::Headband => &[BodySlot::Headband],
+        BodySlot::Neck => &[BodySlot::Neck],
+        BodySlot::Ring => &[BodySlot::Ring],
+        BodySlot::Shoulders => &[BodySlot::Shoulders],
+        BodySlot::Wrist => &[BodySlot::Wrist],
+    };
+    Ok(needs.iter().find(|need| holders(**need).len() >= table.capacity(**need) as usize).map(|need| {
+        format!("{} slot is taken by {}", slot_words(*need), holders(*need).join(" and "))
+    }))
+}
+
 /// Whether a record's type tags mark it as already magic.
 pub fn is_magic_marked(tags: &[&str]) -> bool {
     tags.iter().any(|tag| MAGIC_MARKER_TAGS.contains(tag))
@@ -285,7 +403,7 @@ impl Enhanceable {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::{BTreeMap, BTreeSet};
+    use std::collections::BTreeSet;
     use std::path::{Path, PathBuf};
 
     use crate::support::paths::pcgen_corpus_root;
@@ -338,6 +456,56 @@ mod tests {
         ] {
             assert_eq!(slot_of(by_id(&rules, id)).unwrap(), want, "{id}");
         }
+    }
+
+    #[test]
+    fn slot_conflict_worn_slot_reads_the_stated_wield_category_before_the_tags() {
+        let rules = rules_in("equipment");
+        let record = |id: &str| by_id(&rules, id);
+        let sword = record("core_rulebook:equipment:longsword_base");
+        assert_eq!(worn_slot(sword, &[], Some(WieldCategory::OneHanded)).unwrap(), BodySlot::WieldMain);
+        assert_eq!(worn_slot(sword, &[], Some(WieldCategory::TwoHanded)).unwrap(), BodySlot::WieldTwoHanded);
+        // The corpus states no category for these: a bow and a stocked crossbow are two hands,
+        // a thrown weapon and a sling stay one.
+        for (id, want) in [
+            ("core_rulebook:equipment:longbow_base", BodySlot::WieldTwoHanded),
+            ("core_rulebook:equipment:heavy_crossbow_base", BodySlot::WieldTwoHanded),
+            ("core_rulebook:equipment:javelin_base", BodySlot::WieldMain),
+            ("core_rulebook:equipment:sling_base", BodySlot::WieldMain),
+        ] {
+            assert_eq!(worn_slot(record(id), &[], None).unwrap(), want, "{id}");
+        }
+        // Not a weapon: the category has nothing to say.
+        let ring = record("core_rulebook:equipment:ring_of_protection_1");
+        assert_eq!(worn_slot(ring, &[], Some(WieldCategory::TwoHanded)).unwrap(), BodySlot::Ring);
+    }
+
+    #[test]
+    fn slot_conflict_the_check_over_slots_alone() {
+        use BodySlot::{Head, None as NoSlot, Ring, Shield, WieldMain, WieldTwoHanded};
+        let check = |worn: &[(&str, BodySlot)], slot| slot_conflict(worn, slot).unwrap();
+        assert_eq!(check(&[], Head), None);
+        assert_eq!(check(&[("Hat", Head)], Head).as_deref(), Some("head slot is taken by Hat"));
+        assert_eq!(check(&[("A", Ring)], Ring), None);
+        assert_eq!(check(&[("A", Ring), ("B", Ring)], Ring).as_deref(), Some("ring slot is taken by A and B"));
+        // No slot is never refused, on any body.
+        assert_eq!(check(&[("A", WieldTwoHanded), ("B", Head)], NoSlot), None);
+        // Hands: main, off, then full, whichever order they went on.
+        assert_eq!(check(&[("Sword", WieldMain)], WieldMain), None);
+        assert_eq!(
+            check(&[("Sword", WieldMain), ("Dagger", WieldMain)], WieldMain).as_deref(),
+            Some("main hand slot is taken by Sword"),
+        );
+        assert_eq!(check(&[("Sword", WieldMain)], Shield), None);
+        assert_eq!(
+            check(&[("Sword", WieldMain), ("Dagger", WieldMain)], Shield).as_deref(),
+            Some("off hand slot is taken by Dagger"),
+        );
+        assert_eq!(check(&[("Tower", Shield)], WieldMain), None);
+        assert_eq!(check(&[("Tower", Shield)], WieldTwoHanded).as_deref(), Some("off hand slot is taken by Tower"));
+        assert_eq!(check(&[("Sword", WieldMain)], WieldTwoHanded).as_deref(), Some("main hand slot is taken by Sword"));
+        assert_eq!(check(&[("Bow", WieldTwoHanded)], WieldMain).as_deref(), Some("main hand slot is taken by Bow"));
+        assert_eq!(check(&[("Bow", WieldTwoHanded)], Shield).as_deref(), Some("off hand slot is taken by Bow"));
     }
 
     #[test]

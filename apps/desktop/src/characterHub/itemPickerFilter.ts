@@ -362,13 +362,12 @@ export function marketShownRows(rows: MarketRow[]): MarketRow[] {
   return rows.slice(0, MARKET_ROW_LIMIT);
 }
 
-/**
- * The state a Market purchase is saved in. A weapon goes in the pack, and the player takes it in hand
- * from the Weapons tab: which hand it fills is the slot check's to decide. Armor, shields and gear are
- * put on, as the sheet's earlier pickers did.
- */
-export function marketActiveState(category: MarketCategory): ActiveStateDto {
-  return category === 'weapon' ? 'SelectedInactive' : 'EquippedActive';
+/** Where a Market purchase went, in the words after its price: worn, carried with the slot refusal, or carried. */
+export function marketPlacementWords(activeState: ActiveStateDto, carriedReason: string | null): string {
+  if (activeState === 'EquippedActive') {
+    return 'worn';
+  }
+  return carriedReason ? `carried: ${carriedReason}` : 'carried';
 }
 
 /** What a buy or sale moved, in gp, off the two balances the backend reported. */

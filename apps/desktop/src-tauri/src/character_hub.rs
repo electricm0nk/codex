@@ -21,6 +21,7 @@ use serde::{Deserialize, Serialize};
 use tauri::Manager;
 use uuid::Uuid;
 
+use codex::rules_core::body_slots::{slot_conflict, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
@@ -3223,10 +3224,33 @@ pub enum PurchaseEquipmentResponse {
         #[serde(rename = "corpusDerived")]
         corpus_derived: Box<CorpusDerivedDto>,
         money: CharacterMoneyDto,
+        /// Where the new copy went: `EquippedActive` when it was asked for and its slot was free.
+        #[serde(rename = "activeState")]
+        active_state: ActiveStateDto,
+        /// Why a copy asked to be worn is carried: the slot refusal's words. `None` for one worn, and
+        /// for one with no slot, which is carried with nothing refused (R18).
+        #[serde(rename = "carriedReason")]
+        carried_reason: Option<String>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
     },
+}
+
+/// Where a bought copy goes (R18). Asked to be worn, it is worn if its slot is free, and otherwise
+/// carried with the reason; an item with no slot is carried. A buy asking for carried stays carried.
+fn bought_copy_placement(root: &Path, item_id: &str, requested: ActiveState) -> Result<(ActiveState, Option<String>), String> {
+    if requested != ActiveState::EquippedActive {
+        return Ok((requested, None));
+    }
+    if body_slot_of_item(item_id)? == BodySlot::None {
+        return Ok((ActiveState::SelectedInactive, None));
+    }
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    Ok(match item_slot_conflict(&envelope.character_input, item_id)? {
+        Some(reason) => (ActiveState::SelectedInactive, Some(reason)),
+        None => (ActiveState::EquippedActive, None),
+    })
 }
 
 /// `purchase_equipment`'s real implementation: real correctness fix for
@@ -3415,13 +3439,15 @@ pub(crate) fn purchase_equipment_offer_at_root(
         }
     };
     let modifier_key = offer.as_ref().map(|offer| offer.modifier_key.as_str());
+    let (active_state, carried_reason) = bought_copy_placement(root, item_id, active_state)?;
+    let placed = ActiveStateDto::from(active_state);
 
     if mode == PriceMode::Cashless {
         return match add_purchased_copy_at_root(root, item_id, modifier_key, active_state, saved_at)? {
             CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
             CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
                 let money = load_character_money_at_root(root)?;
-                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
             }
         };
     }
@@ -3472,7 +3498,7 @@ pub(crate) fn purchase_equipment_offer_at_root(
             let cost_signed = i64::try_from(cost_copper)
                 .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
             let money = adjust_character_money_at_root(root, -cost_signed)?;
-            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
         }
     }
 }
@@ -4419,26 +4445,30 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         .equipment_selections
         .iter()
         .filter(|selection| selection.active_state != ActiveState::Absent)
-        .map(|selection| {
-            let offers = if selection.applied_modifiers.is_empty() { Vec::new() } else { copy_offers(&selection.item_id) };
-            let bonus = copy_bonus(selection, &offers);
-            let plain_name = || {
-                codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&selection.item_id)
-                    .map(|row| row.name.to_owned())
-                    .or_else(|| {
-                        codex::rules_core::equipment_resolver::equipment_id_resolve(
-                            &selection.item_id,
-                            codex::rules_core::rules_catalog::RuleSetId::Crb,
-                            corpus_fixture_bundle(),
-                        )
-                        .map(|(record, _)| record.name.clone())
-                    })
-                    .unwrap_or_else(|| selection.item_id.strip_prefix("item:").unwrap_or(&selection.item_id).to_owned())
-            };
-            let name = offers.iter().find(|offer| offer.bonus == bonus).map_or_else(plain_name, |offer| offer.name.clone());
-            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus }
-        })
+        .map(held_copy)
         .collect())
+}
+
+/// One selection as a held copy, with the name the sheet calls it by.
+fn held_copy(selection: &EquipmentSelection) -> HeldEquipmentCopyDto {
+    let offers = if selection.applied_modifiers.is_empty() { Vec::new() } else { copy_offers(&selection.item_id) };
+    let bonus = copy_bonus(selection, &offers);
+    let plain_name = || {
+        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&selection.item_id)
+            // A derived row's catalog name is its base's; say what the Market row says.
+            .map(|row| if row.name.ends_with(" (Base)") { row.key.to_owned() } else { row.name.to_owned() })
+            .or_else(|| {
+                codex::rules_core::equipment_resolver::equipment_id_resolve(
+                    &selection.item_id,
+                    codex::rules_core::rules_catalog::RuleSetId::Crb,
+                    corpus_fixture_bundle(),
+                )
+                .map(|(record, _)| record.name.clone())
+            })
+            .unwrap_or_else(|| selection.item_id.strip_prefix("item:").unwrap_or(&selection.item_id).to_owned())
+    };
+    let name = offers.iter().find(|offer| offer.bonus == bonus).map_or_else(plain_name, |offer| offer.name.clone());
+    HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus }
 }
 
 /// What the character holds, for the Market's Sell list; see [`list_held_equipment_at_root`].
@@ -4519,32 +4549,84 @@ pub fn set_equipment_active_state(
     )
 }
 
-/// Sets `active_state` on the first carried copy of `item_id` (the same
-/// case-insensitive first-match rule `apply_remove_equipment_selection`
-/// uses), keeping the derived `equipped_or_active` flag in step with it
-/// exactly as `EquipmentSelection`'s own doc comment requires. Returns
-/// `false` without mutating when the item is not carried.
+/// Which copy of `item_id` a state change moves: the first not already in that state, else the
+/// first (case-insensitive, as `apply_remove_equipment_selection` matches). Without the first rule,
+/// asking to wear a carried second copy would "succeed" on the copy already worn.
+fn state_change_target(selections: &[EquipmentSelection], item_id: &str, active_state: ActiveState) -> Option<usize> {
+    let copies = || selections.iter().enumerate().filter(|(_, selection)| selection.item_id.eq_ignore_ascii_case(item_id));
+    copies().find(|(_, selection)| selection.active_state != active_state).or_else(|| copies().next()).map(|(index, _)| index)
+}
+
+/// Sets `active_state` on the copy [`state_change_target`] names, keeping the derived
+/// `equipped_or_active` flag in step with it exactly as `EquipmentSelection`'s own doc comment
+/// requires. Returns `false` without mutating when the item is not carried.
 pub(crate) fn apply_set_equipment_active_state(
     character_input: &mut CharacterInput,
     item_id: &str,
     active_state: ActiveState,
 ) -> bool {
-    let Some(selection) = character_input
-        .chosen
-        .equipment_selections
-        .iter_mut()
-        .find(|selection| selection.item_id.eq_ignore_ascii_case(item_id))
-    else {
+    let selections = &mut character_input.chosen.equipment_selections;
+    let Some(index) = state_change_target(selections, item_id, active_state) else {
         return false;
     };
-    selection.active_state = active_state;
-    selection.equipped_or_active = active_state == ActiveState::EquippedActive;
+    selections[index].active_state = active_state;
+    selections[index].equipped_or_active = active_state == ActiveState::EquippedActive;
     true
 }
 
+/// The body slot `item_id` fills, read off its converted record. `None` when no record holds the
+/// id, which has no slot for the check to enforce. `Err` when the data itself cannot be read: that
+/// must not read as "this item has no slot" (`body_slots::slot_of`).
+fn body_slot_of_item(item_id: &str) -> Result<BodySlot, String> {
+    let package = codex::rules_core::corpus_loader::live_sheet_rules()
+        .ok_or_else(|| "the equipment records could not be read, so the body slots cannot be checked".to_owned())?;
+    let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
+    let Some(record) = package
+        .find("equipment", &codex::rules_core::sheet_rule::slug(needle))
+        .and_then(|id| package.rule(id))
+    else {
+        return Ok(BodySlot::None);
+    };
+    let types = codex::rules_core::equipment_types::equipment_types()
+        .as_ref()
+        .map_err(Clone::clone)?
+        .get(needle)
+        .map_or(&[][..], Vec::as_slice);
+    worn_slot(record, types, settled_wield_category(item_id))
+}
+
+/// A weapon's settled wield category, off its own record or the record it names as its stand-in
+/// (`Battleaxe` states none, and names `Battleaxe (Base)`). The whole corpus: the bundled fixture
+/// leaves out what the Market offers no `+N` of (`Blackaxe`).
+fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_total::WieldCategory> {
+    use codex::rules_core::equipment_resolver::equipment_converted_resolve;
+    let corpus = crate::corpus_full::full_corpus_bundle();
+    let record = equipment_converted_resolve(item_id, corpus)?;
+    record.wield_category.or_else(|| {
+        let base = record.base_item.as_deref()?;
+        equipment_converted_resolve(base, corpus)?.wield_category
+    })
+}
+
+/// What stops one more copy of `item_id` being worn over what `character_input` already wears,
+/// worded for the sheet.
+fn item_slot_conflict(character_input: &CharacterInput, item_id: &str) -> Result<Option<String>, String> {
+    let slot = body_slot_of_item(item_id)?;
+    let worn = character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .map(|selection| Ok((held_copy(selection).name, body_slot_of_item(&selection.item_id)?)))
+        .collect::<Result<Vec<_>, String>>()?;
+    let worn: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
+    slot_conflict(&worn, slot)
+}
+
 /// Refuses (as `Err`, leaving the saved character untouched) an item the
-/// character does not carry; past that, `mutate_saved_character_at_root`
-/// supplies the recompute-before-persist gate.
+/// character does not carry, and (as `Blocked`, the sheet's mutation message) a wear whose slot is
+/// held; past that, `mutate_saved_character_at_root` supplies the
+/// recompute-before-persist gate.
 pub(crate) fn set_equipment_active_state_at_root(
     root: &Path,
     item_id: &str,
@@ -4557,6 +4639,16 @@ pub(crate) fn set_equipment_active_state_at_root(
         return Err(format!(
             "'{item_id}' cannot change state: this character does not carry it"
         ));
+    }
+    let moves_a_copy_onto_the_body = active_state == ActiveState::EquippedActive
+        && state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, active_state)
+            .is_some_and(|index| envelope.character_input.chosen.equipment_selections[index].active_state != active_state);
+    if moves_a_copy_onto_the_body {
+        if let Some(message) = item_slot_conflict(&envelope.character_input, item_id)? {
+            return Ok(CreateCharacterResponse::Blocked {
+                diagnostics: vec![DiagnosticDto { id: "equipment.slot_taken".to_owned(), message, claim_blocking: true }],
+            });
+        }
     }
 
     mutate_saved_character_at_root(root, saved_at, |character_input| {
@@ -9837,14 +9929,8 @@ mod tests {
         let held = held_selections(&root);
         let copies: Vec<&EquipmentSelection> = held.iter().filter(|s| s.item_id == shirt).collect();
         assert_eq!(copies.len(), 2);
-        for copy in copies {
-            let want: &[&str] = if copy.active_state == ActiveState::EquippedActive {
-                &["Special Ability ~ +1 ~ Armor"]
-            } else {
-                &[]
-            };
-            assert_eq!(copy.applied_modifiers, want, "{:?}", copy.active_state);
-        }
+        assert!(copies[0].applied_modifiers.is_empty(), "{:?}", copies[0]);
+        assert_eq!(copies[1].applied_modifiers, ["Special Ability ~ +1 ~ Armor"]);
         std::fs::remove_dir_all(&root).ok();
     }
 
@@ -12737,6 +12823,280 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// A saved character with a Longsword in hand and a Chain Shirt on, as creation gives it, and
+    /// each named item held in the pack.
+    fn slot_conflict_character(label: &str, carried: &[&str]) -> PathBuf {
+        let root = tempdir(label);
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        for item in carried {
+            let response = add_equipment_selection_at_root(&root, item, ActiveState::SelectedInactive, LEVEL_UP_TEST_SAVED_AT)
+                .expect("holding the item should not error");
+            assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{item}: {response:?}");
+        }
+        root
+    }
+
+    fn slot_conflict_wear(root: &Path, item_id: &str) -> CreateCharacterResponse {
+        set_equipment_active_state_at_root(root, item_id, ActiveState::EquippedActive, "2026-11-02T00:00:00Z")
+            .expect("the request should not error")
+    }
+
+    fn slot_conflict_worn_count(root: &Path, item_id: &str) -> usize {
+        SavedCharacterStore::load(root)
+            .expect("reload should succeed")
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .filter(|selection| selection.item_id == item_id && selection.active_state == ActiveState::EquippedActive)
+            .count()
+    }
+
+    #[track_caller]
+    fn assert_slot_refused(response: &CreateCharacterResponse, message: &str) {
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("expected the slot refusal `{message}`, got {response:?}");
+        };
+        assert_eq!(diagnostics.len(), 1, "{diagnostics:?}");
+        assert_eq!(diagnostics[0].id, "equipment.slot_taken");
+        assert_eq!(diagnostics[0].message, message);
+        assert!(diagnostics[0].claim_blocking, "the sheet shows only claim-blocking diagnostics");
+    }
+
+    #[track_caller]
+    fn assert_worn(response: &CreateCharacterResponse) {
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    #[test]
+    fn slot_conflict_a_second_helmet_is_refused_and_named() {
+        let root = slot_conflict_character("slot-conflict-helmets", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Hat of Disguise"), "head slot is taken by Helm of Brilliance");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0, "the refused item stays carried");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The target is the carried copy, not the first of the id: the first copy is the one on the
+    /// head, and setting that one again would report success on a helmet that never moved.
+    #[test]
+    fn slot_conflict_a_second_copy_of_the_same_helmet_is_refused() {
+        let root = slot_conflict_character("slot-conflict-same-helmet", &["Hat of Disguise", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Hat of Disguise"), "head slot is taken by Hat of Disguise");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_two_rings_are_allowed_and_a_third_refused() {
+        let root = slot_conflict_character(
+            "slot-conflict-rings",
+            &["Ring of Protection +1", "Ring of Feather Falling", "Ring of Protection +2"],
+        );
+        assert_worn(&slot_conflict_wear(&root, "Ring of Protection +1"));
+        assert_worn(&slot_conflict_wear(&root, "Ring of Feather Falling"));
+        assert_slot_refused(
+            &slot_conflict_wear(&root, "Ring of Protection +2"),
+            "ring slot is taken by Ring of Protection +1 and Ring of Feather Falling",
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_stowing_frees_the_slot() {
+        let root = slot_conflict_character("slot-conflict-stow", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        set_equipment_active_state_at_root(&root, "Helm of Brilliance", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z")
+            .expect("stowing should not error");
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A shield fills the shield slot and the off hand, so it meets a second shield and an off-hand
+    /// weapon; a one-handed weapon takes the main hand, then the off hand.
+    #[test]
+    fn slot_conflict_shields_take_the_shield_slot_and_the_off_hand() {
+        let root = slot_conflict_character(
+            "slot-conflict-shields",
+            &["Shield (Heavy/Steel)", "Shield (Light/Steel)", "Dagger (Base)"],
+        );
+        assert_worn(&slot_conflict_wear(&root, "Shield (Heavy/Steel)"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Shield (Light/Steel)"), "shield slot is taken by Shield (Heavy/Steel)");
+        assert_slot_refused(&slot_conflict_wear(&root, "Dagger (Base)"), "main hand slot is taken by Longsword");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_a_shield_is_refused_when_a_weapon_holds_the_off_hand() {
+        let root = slot_conflict_character("slot-conflict-off-hand", &["Dagger (Base)", "Shield (Heavy/Steel)"]);
+        assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Shield (Heavy/Steel)"), "off hand slot is taken by Dagger");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The required Longsword holds the main hand and cannot be stowed (the sheet needs one), so
+    /// the hub can only show the refusal; `slot_conflict_the_check_over_slots_alone` holds the rest.
+    #[test]
+    fn slot_conflict_a_two_handed_weapon_is_refused_beside_the_longsword() {
+        for weapon in ["Greatsword (Base)", "Longbow (Base)", "Blackaxe"] {
+            let root = slot_conflict_character("slot-conflict-two-handed", &[weapon]);
+            assert_slot_refused(&slot_conflict_wear(&root, weapon), "main hand slot is taken by Longsword");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// Each way a row reaches its hands: stated, by a stand-in, by a tag, by the kind of weapon, by
+    /// the catalog's tags on a derived row with none of its own. And a book line of none.
+    #[test]
+    fn slot_conflict_each_shape_of_item_reaches_its_slot() {
+        for (item, want) in [
+            ("item:longsword", BodySlot::WieldMain),
+            ("Dagger (Base)", BodySlot::WieldMain),
+            ("Battleaxe", BodySlot::WieldMain),
+            ("Greatsword (Base)", BodySlot::WieldTwoHanded),
+            ("Blackaxe", BodySlot::WieldTwoHanded),
+            ("Flail (Heavy)", BodySlot::WieldTwoHanded),
+            ("Falchion", BodySlot::WieldTwoHanded),
+            ("Longbow (Base)", BodySlot::WieldTwoHanded),
+            ("Crossbow (Light)", BodySlot::WieldTwoHanded),
+            ("Hand Crossbow (Base)", BodySlot::WieldMain),
+            ("Dagger (Adamantine)", BodySlot::WieldMain),
+            ("Mithral Shirt", BodySlot::Armor),
+            ("item:chain_shirt", BodySlot::Armor),
+            ("Darkwood Shield", BodySlot::Shield),
+            ("Quickdraw Shield (Light/Steel)", BodySlot::Shield),
+            ("Madu (Leather)", BodySlot::Shield),
+            ("Hat of Disguise", BodySlot::Head),
+            ("Rod (Python)", BodySlot::None),
+            ("Arrow (Base)", BodySlot::None),
+            ("Rope (Hemp/50 ft.)", BodySlot::None),
+            ("no such item", BodySlot::None),
+        ] {
+            assert_eq!(body_slot_of_item(item).unwrap(), want, "{item}");
+        }
+    }
+
+    /// A rod tagged `Weapon` whose book line says `Slot: none` fills no hand, however many are held.
+    #[test]
+    fn slot_conflict_a_slot_none_weapon_rod_is_never_refused() {
+        let root = slot_conflict_character("slot-conflict-rod", &["Rod (Python)", "Rod (Python)", "Rod (Python)"]);
+        for _ in 0..3 {
+            assert_worn(&slot_conflict_wear(&root, "Rod (Python)"));
+        }
+        assert_eq!(slot_conflict_worn_count(&root, "Rod (Python)"), 3);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A save that already holds what the check would refuse stays as saved: nothing is moved on
+    /// load, and the over-full slot can still be emptied.
+    #[test]
+    fn slot_conflict_a_saved_over_full_slot_stays_and_can_be_stowed() {
+        let root = slot_conflict_character("slot-conflict-legacy", &[]);
+        for item in ["Helm of Brilliance", "Hat of Disguise"] {
+            add_equipment_selection_at_root(&root, item, ActiveState::EquippedActive, LEVEL_UP_TEST_SAVED_AT).unwrap();
+        }
+        assert_eq!(slot_conflict_worn_count(&root, "Helm of Brilliance"), 1);
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        set_equipment_active_state_at_root(&root, "Hat of Disguise", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z")
+            .expect("stowing should not error");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The whole shelf, not the named items: a row whose id finds no record reads as no slot and
+    /// would be carried forever. Every armor and shield has a slot, and a weapon row has none only
+    /// as ammunition or by the book's own line.
+    #[test]
+    fn slot_conflict_every_market_row_finds_its_record() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let started = std::time::Instant::now();
+        crate::corpus_full::full_corpus_bundle();
+        eprintln!("whole-corpus first load: {:?}", started.elapsed());
+        let package = codex::rules_core::corpus_loader::live_sheet_rules().expect("the package loads");
+        let mut no_record = Vec::new();
+        let mut rows = 0;
+        for category in [
+            MarketCategory::Weapon,
+            MarketCategory::Armor,
+            MarketCategory::Shield,
+            MarketCategory::Gear,
+            MarketCategory::MagicItem,
+        ] {
+            for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                rows += 1;
+                let id = package.find("equipment", &codex::rules_core::sheet_rule::slug(&row.entry.key));
+                let Some(id) = id else {
+                    no_record.push(row.entry.key);
+                    continue;
+                };
+                // Only the arms lists need the hands, which is what takes the time.
+                if !matches!(category, MarketCategory::Weapon | MarketCategory::Armor | MarketCategory::Shield) {
+                    continue;
+                }
+                let slot = body_slot_of_item(&row.entry.key).unwrap();
+                if slot != BodySlot::None {
+                    continue;
+                }
+                let tagged_ammunition =
+                    row.entry.types.iter().any(|tag| matches!(tag.as_str(), "Ammunition" | "Ammo" | "Stack"));
+                let book_says_none = package.rule(id).expect("found by id").prose.iter().any(|segment| {
+                    segment.pieces.iter().any(|piece| {
+                        matches!(piece, codex::rules_core::sheet_rule::ProsePiece::Text(text) if text.starts_with("Slot:"))
+                    })
+                });
+                assert!(matches!(category, MarketCategory::Weapon), "{category:?} {} has no slot", row.entry.key);
+                assert!(tagged_ammunition || book_says_none, "{} has no slot and no reason", row.entry.key);
+            }
+        }
+        eprintln!("market rows: {rows}; no record: {no_record:?}");
+        assert_eq!(no_record, ["Dust Knuckles.FORGET", "False Face.FORGET"], "the two rows a later book retires");
+    }
+
+    fn slot_conflict_buy(root: &Path, item_id: &str) -> PurchaseEquipmentResponse {
+        purchase_equipment_offer_at_root(root, item_id, ActiveState::EquippedActive, "2026-11-02T00:00:00Z", PriceMode::Cashless, None)
+            .expect("the purchase should not error")
+    }
+
+    #[test]
+    fn slot_conflict_a_bought_helmet_is_worn_when_the_head_is_free() {
+        let root = slot_conflict_character("slot-conflict-buy-free", &[]);
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Hat of Disguise") else {
+            panic!("the buy should go through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
+        assert_eq!(carried_reason, None);
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_a_bought_helmet_stays_carried_when_the_head_is_held() {
+        let root = slot_conflict_character("slot-conflict-buy-held", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Hat of Disguise") else {
+            panic!("the buy should go through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason.as_deref(), Some("head slot is taken by Helm of Brilliance"));
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0, "bought, and carried");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// R18: an item with no slot is carried, even when the buy asks for worn.
+    #[test]
+    fn slot_conflict_a_bought_item_with_no_slot_is_carried() {
+        let root = slot_conflict_character("slot-conflict-buy-none", &[]);
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Rope (Hemp/50 ft.)") else {
+            panic!("the buy should go through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason, None, "nothing refused it");
+        assert_eq!(slot_conflict_worn_count(&root, "Rope (Hemp/50 ft.)"), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// `Absent` too: the derived flag is false for every state but
     /// `EquippedActive`, matching the engine's own parse-time derivation
     /// (`character_input.rs`, `matches!(active_state, EquippedActive)`).
@@ -13667,6 +14027,8 @@ mod tests {
                 unresolved_equipment_item_ids: Vec::new(),
             }),
             money: money_dto_from_total(0),
+            active_state: ActiveStateDto::SelectedInactive,
+            carried_reason: Some("head slot is taken by Hat of Disguise".to_owned()),
         };
 
         let value = serde_json::to_value(&response).expect("response should serialize");
@@ -13675,6 +14037,8 @@ mod tests {
         assert_eq!(object.get("kind").and_then(|v| v.as_str()), Some("Purchased"));
         assert!(object.contains_key("corpusDerived"), "{object:?}");
         assert!(!object.contains_key("corpus_derived"), "{object:?}");
+        assert_eq!(object.get("activeState").and_then(|v| v.as_str()), Some("SelectedInactive"));
+        assert_eq!(object.get("carriedReason").and_then(|v| v.as_str()), Some("head slot is taken by Hat of Disguise"));
     }
 
     // ----- `level_up_character` (Criterion 17) -----
