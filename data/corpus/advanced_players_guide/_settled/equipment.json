@@ -2204,6 +2204,11 @@
             "bonus_type": null,
             "target": "skill:escape_artist",
             "value": 5
+          },
+          {
+            "bonus_type": null,
+            "target": "cmb",
+            "value": 5
           }
         ],
         "states_base_damage": false,

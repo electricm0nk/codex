@@ -112,6 +112,11 @@ function verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow() {
   assertEqual(withItemSpeed('30 ft.', []), '30 ft.', 'no row, no change');
   assertEqual(withItemSpeed('Unknown', rows), 'Unknown', 'an unknown speed stays unknown');
   assertEqual(withItemSpeed('5 ft.', [{ id: 'custom_item.speed', value: -10, detail: '' }]), '0 ft.', 'never below 0');
+  const halved = (feet: number) => [{ id: 'custom_item.speed_percent', value: 50, detail: '' }, { id: 'custom_item.speed', value: feet, detail: '' }];
+  assertEqual(withItemSpeed('30 ft.', halved(0)), '15 ft.', 'a Loadstone halves the land speed');
+  assertEqual(withItemSpeed('30 ft.', halved(10)), '20 ft.', 'and what an item adds to it');
+  assertEqual(withItemSpeed('25 ft.', halved(0)), '12 ft.', 'whole feet, rounded down');
+  assertEqual(withItemSpeed('Unknown', halved(10)), 'Unknown', 'an unknown speed stays unknown');
   assertEqual(withItemHitPoints(20, rows), 27, 'the row moves it');
   assertEqual(withItemHitPoints(null, rows), null, 'an unknown total stays unknown');
   assertEqual(withItemHitPoints(20, []), 20, 'no row, no change');

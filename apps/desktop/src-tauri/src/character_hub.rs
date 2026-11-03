@@ -10284,6 +10284,163 @@ mod tests {
         assert_eq!(trait_row, None, "no row nothing reads");
     }
 
+    /// What the Skills panel adds to each of its rows: the sheet's skills and the three families.
+    fn worn_item_every_skill_rows(root: &Path) -> std::collections::BTreeMap<String, i16> {
+        let loaded = load_saved_character_at_root(root).unwrap();
+        let families = ["skill:craft", "skill:perform", "skill:profession"];
+        let ids = codex::rules_core::skill_allocation::SHEET_SKILL_IDS.iter().chain(families.iter());
+        ids.map(|id| {
+            let skill = id.strip_prefix("skill:").unwrap();
+            let row = loaded.explanations.iter().find(|row| row.id == format!("skill.trait_modifier.{skill}"));
+            (skill.to_owned(), row.map_or(0, |row| row.value))
+        })
+        .collect()
+    }
+
+    fn worn_item_every_skill_moved(before: &std::collections::BTreeMap<String, i16>, after: &std::collections::BTreeMap<String, i16>) -> std::collections::BTreeMap<String, i16> {
+        after.iter().map(|(skill, value)| (skill.clone(), value - before[skill])).filter(|(_, moved)| *moved != 0).collect()
+    }
+
+    /// `SKILL|TYPE.Base|1|TYPE=Competence`: every row of the panel, the three families among them,
+    /// and the row of no one subtype. Carried, none.
+    #[test]
+    fn worn_item_applies_every_skill_a_pale_green_prism_moves_every_row() {
+        let stone = "Ioun Stone (Pale green Prism)";
+        let (dir, root) = enhancement_rows_aldric("every-skill-prism");
+        let none = worn_item_every_skill_rows(&root);
+        worn_vs_carried_hold(&root, stone, ActiveState::SelectedInactive);
+        let carried = worn_item_every_skill_rows(&root);
+        worn_vs_carried_set(&root, stone, ActiveState::EquippedActive);
+        let worn = worn_item_every_skill_rows(&root);
+        let subtype = worn_item_applies_row(&root, "skill.trait_modifier.perform_oratory");
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(none.len(), 35, "the panel's 32 and its 3 families");
+        assert_eq!(carried, none, "carried adds 0");
+        assert!(none.iter().all(|(skill, value)| worn[skill] == value + 1), "{worn:?}");
+        assert_eq!(subtype, None, "a set names the family row, not a subtype's");
+    }
+
+    /// Two sets that overlap on a row take the higher of their one type, on that row alone. A Mask's
+    /// `TYPE=Knowledge` and a set of one family both reach only what they name.
+    #[test]
+    fn worn_item_applies_every_skill_a_set_moves_its_rows_and_folds_on_each() {
+        let (dir, root) = enhancement_rows_aldric("every-skill-sets");
+        let none = worn_item_every_skill_rows(&root);
+        worn_vs_carried_hold(&root, "Bracers of the Glib Entertainer", ActiveState::EquippedActive);
+        let bracers = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        worn_vs_carried_hold(&root, "Ioun Stone (Pale green Prism)", ActiveState::EquippedActive);
+        let with_prism = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        worn_vs_carried_set(&root, "Ioun Stone (Pale green Prism)", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "Bracers of the Glib Entertainer", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Mask of a Thousand Tomes", ActiveState::EquippedActive);
+        let mask = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(bracers, [("perform".to_owned(), 5)].into_iter().collect(), "the family's row, and no other");
+        assert_eq!(with_prism["perform"], 5, "the higher of one type");
+        assert_eq!(with_prism["bluff"], 1);
+        assert_eq!(mask.len(), 10, "every Knowledge row: {mask:?}");
+        assert!(mask.iter().all(|(skill, value)| skill.starts_with("knowledge_") && *value == 10), "{mask:?}");
+    }
+
+    /// `COMBAT|ATTACK,AC|-2`, `SKILL|ALL|-2`, `VAR|CMD|-2`: a penalty on all of them, Armor Class and
+    /// its touch and flat-footed rows among them. Carried, none.
+    #[test]
+    fn worn_item_applies_every_skill_an_unlucky_figurine_takes_all_of_it_down() {
+        let figurine = "Unlucky Figurine";
+        let read = |root: &Path| (enhancement_read(root), worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap(), worn_item_every_skill_rows(root));
+        let (dir, root) = enhancement_rows_aldric("every-skill-figurine");
+        let none = read(&root);
+        worn_vs_carried_hold(&root, figurine, ActiveState::SelectedInactive);
+        let carried = read(&root);
+        worn_vs_carried_set(&root, figurine, ActiveState::EquippedActive);
+        let worn = read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn.0.melee, none.0.melee - 2);
+        assert_eq!(worn.0.armor_class, none.0.armor_class - 2, "the Armor Class half");
+        assert_eq!(worn.0.touch, none.0.touch - 2);
+        assert_eq!(worn.0.flat_footed, none.0.flat_footed - 2);
+        assert_eq!(worn.1, none.1 - 2);
+        assert!(none.2.iter().all(|(skill, value)| worn.2[skill] == value - 2), "{:?}", worn.2);
+    }
+
+    /// `VAR|CMB|5` and `VAR|CMD|4`, on the rows the tiles read, saying what moved them. An untyped
+    /// stock bonus adds to a custom one. Carried, none.
+    #[test]
+    fn worn_item_applies_every_skill_bare_cmb_and_cmd_move_their_rows() {
+        let read = |root: &Path| (worn_item_applies_row(root, "combat.combat_maneuver_bonus").unwrap(), worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap());
+        let (dir, root) = enhancement_rows_aldric("every-skill-cmb");
+        let none = read(&root);
+        for item in ["Boneless Leather", "Juggernaut's Pauldrons"] {
+            worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+        }
+        let carried = read(&root);
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "Boneless Leather", ActiveState::EquippedActive);
+        worn_vs_carried_set(&root, "Juggernaut's Pauldrons", ActiveState::EquippedActive);
+        let worn = read(&root);
+        let detail = load_saved_character_at_root(&root).unwrap().explanations.into_iter().find(|row| row.id == "defense.combat_maneuver_defense").unwrap().detail;
+        custom_items_saved(&root, vec![custom_item("c", "Charm", None, vec![custom_bonus("cmb", "Untyped", 1), custom_bonus("cmd", "Luck", 2)])]);
+        custom_item_wear(&root, "c");
+        let with_custom = read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, (none.0 + 5, none.1 + 4));
+        assert!(detail.contains("Juggernaut's Pauldrons"), "{detail}");
+        assert_eq!(with_custom, (worn.0 + 1, worn.1 + 2), "they fold in one list");
+    }
+
+    /// `MOVEMULT|TYPE.All|0.5`: a row the Speed tile multiplies by, beside the row it adds. Carried,
+    /// none; a second stone halves nothing more.
+    #[test]
+    fn worn_item_applies_every_skill_a_loadstone_states_its_multiplier() {
+        let stone = "Stone of Weight (Loadstone)";
+        let (dir, root) = enhancement_rows_aldric("every-skill-loadstone");
+        worn_vs_carried_hold(&root, stone, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_row(&root, "custom_item.speed_percent");
+        worn_vs_carried_set(&root, stone, ActiveState::EquippedActive);
+        let worn = worn_item_applies_row(&root, "custom_item.speed_percent");
+        worn_vs_carried_hold(&root, stone, ActiveState::EquippedActive);
+        let two = worn_item_applies_row(&root, "custom_item.speed_percent");
+        worn_vs_carried_hold(&root, "Boots of Striding And Springing", ActiveState::EquippedActive);
+        let speed = worn_item_applies_row(&root, "custom_item.speed");
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, None, "carried adds 0");
+        assert_eq!(worn, Some(50));
+        assert_eq!(two, Some(50));
+        assert_eq!(speed, Some(10), "the row it adds does not move");
+    }
+
+    /// A set's bonus and a custom bonus of its type take the higher on one row; another type adds.
+    #[test]
+    fn worn_item_applies_every_skill_a_set_folds_with_a_worn_custom_bonus() {
+        let (dir, root) = enhancement_rows_aldric("every-skill-fold");
+        let none = worn_item_every_skill_rows(&root);
+        worn_vs_carried_hold(&root, "Bracers of the Glib Entertainer", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Ioun Stone (Pale green Prism)", ActiveState::EquippedActive);
+        custom_items_saved(&root, vec![
+            custom_item("low", "Low Charm", None, vec![custom_bonus("skill:perform", "Competence", 3)]),
+            custom_item("high", "High Charm", None, vec![custom_bonus("skill:perform", "Competence", 7), custom_bonus("skill:bluff", "Competence", 2)]),
+            custom_item("other", "Other Charm", None, vec![custom_bonus("skill:perform", "Insight", 1)]),
+        ]);
+        custom_item_wear(&root, "low");
+        let low = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        custom_item_wear(&root, "high");
+        let high = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        custom_item_wear(&root, "other");
+        let other = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!((low["perform"], low["bluff"]), (5, 1), "a lower custom bonus adds nothing");
+        assert_eq!((high["perform"], high["bluff"], high["heal"]), (7, 2, 1), "the higher, row by row");
+        assert_eq!(other["perform"], 8, "another type adds");
+    }
+
     /// A held item in the pack moves no number on the sheet, whatever the number is: Armor Class,
     /// attack, a save, an ability score or a skill. Each item here is one the book gives a number
     /// to, one of each kind the engine's records state.

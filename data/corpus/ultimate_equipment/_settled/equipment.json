@@ -8877,7 +8877,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Competence",
+            "target": "skill_set:perform",
+            "value": 5
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -31886,6 +31892,11 @@
         "stated_bonuses": [
           {
             "bonus_type": null,
+            "target": "skill_set:knowledge",
+            "value": -2
+          },
+          {
+            "bonus_type": null,
             "target": "ability:intelligence",
             "value": -4
           }
@@ -35558,7 +35569,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": null,
+            "target": "cmd",
+            "value": 4
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -38809,7 +38826,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Competence",
+            "target": "skill_set:knowledge",
+            "value": 10
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -50455,6 +50478,11 @@
             "bonus_type": null,
             "target": "save:will",
             "value": -2
+          },
+          {
+            "bonus_type": null,
+            "target": "skill_set:all",
+            "value": -2
           }
         ],
         "states_base_damage": false,
@@ -58232,7 +58260,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Competence",
+            "target": "skill_set:perform",
+            "value": 2
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -60253,7 +60287,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Percent of speed",
+            "target": "speed_percent",
+            "value": 50
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -63580,7 +63620,7 @@
       "record": {
         "ability_score_bonus": null,
         "armor_class_bonus_type": null,
-        "armor_class_chain_bonus": null,
+        "armor_class_chain_bonus": -2,
         "base_damage_dice": null,
         "base_item": null,
         "cost_gp": 0.0,
@@ -63601,7 +63641,7 @@
         "spell_resistance_bonus": null,
         "stat_effect": {
           "armor_check_penalty": null,
-          "armor_class_bonus": null,
+          "armor_class_bonus": -2,
           "max_dex": null,
           "spell_failure": null
         },
@@ -63624,6 +63664,16 @@
           {
             "bonus_type": null,
             "target": "save:will",
+            "value": -2
+          },
+          {
+            "bonus_type": null,
+            "target": "skill_set:all",
+            "value": -2
+          },
+          {
+            "bonus_type": null,
+            "target": "cmd",
             "value": -2
           }
         ],

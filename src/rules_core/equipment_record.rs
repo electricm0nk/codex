@@ -77,7 +77,9 @@ use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use crate::rules_core::equipment_effects::EquipmentStatEffect;
 
 /// One standing bonus an item states. `target` is the sheet's own word: `ability:strength`,
-/// `save:will`, `skill:acrobatics`, `attack`, `initiative`, `speed`.
+/// `save:will`, `skill:acrobatics`, `attack`, `initiative`, `speed`, `cmb`, `cmd`; or `skill_set:all`
+/// and the like, a word `equipment_effects::skill_set_rows` reads as rows; or `speed_percent`, which
+/// is a multiplier in whole percent and not an addend.
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct StatedBonus {
     pub target: String,

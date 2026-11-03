@@ -89,6 +89,7 @@ use codex::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
 use codex::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use codex::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use codex::rules_core::equipment_effects::EquipmentStatEffect;
+use codex::rules_core::equipment_effects::skill_set_rows;
 use codex::rules_core::equipment_record::{CorpusEquipmentRecord, StatedBonus};
 use codex::rules_core::spell_record::CorpusSpellRecord;
 use crate::pcgen_import::ir_content_payload::{
@@ -588,7 +589,7 @@ fn armor_class_bonus_type_of(record: &EquipmentRecord) -> Option<String> {
         let qualifiers = &bonus.qualifiers;
         qualifiers.len() >= 3
             && qualifiers[0] == "COMBAT"
-            && qualifiers[1] == "AC"
+            && names_armor_class(&qualifiers[1])
             && !crate::pcgen_import::equipment_bonus_reader::declares_circumstance_bonus_type(bonus)
             && qualifiers[2].parse::<i16>().is_ok()
     });
@@ -643,6 +644,14 @@ fn save_target(save: &str) -> Option<&'static str> {
     })
 }
 
+/// A `SKILL` chain's name, where it names a set of the Skills panel's rows: `ALL`, `TYPE.Base`,
+/// `TYPE=Knowledge`. `LIST` is the item's own choice, so it is no set.
+fn skill_set_target(name: &str) -> Option<String> {
+    let set = name.strip_prefix("TYPE.").or_else(|| name.strip_prefix("TYPE=")).unwrap_or(name).to_ascii_lowercase();
+    let is_a_set = (name.starts_with("TYPE") || set == "all") && !skill_set_rows(&set).is_empty();
+    is_a_set.then(|| format!("skill_set:{set}"))
+}
+
 /// `Knowledge (Arcana)` is `skill:knowledge_arcana`, as the sheet lists it. A wildcard names no one
 /// skill, so it is not a target.
 fn skill_target(skill: &str) -> Option<String> {
@@ -678,8 +687,12 @@ fn speed_target(mode: &str) -> Option<&'static str> {
     matches!(mode, "TYPE.Walk" | "TYPE=Walk" | "TYPE.All" | "TYPE=All").then_some("speed")
 }
 
-/// Every standing bonus the record states on a save, an ability score, a named skill, attack,
-/// initiative or land speed.
+/// The word a `MOVEMULT` chain's whole-percent row counts as: it folds only with its own kind, and
+/// one counts.
+const SPEED_MULTIPLIER_WORD: &str = "Percent of speed";
+
+/// Every standing bonus the record states on a save, an ability score, a skill or a set of skills,
+/// attack, initiative, land speed, CMB or CMD, and a multiplier on land speed.
 fn stated_bonuses_of(record: &EquipmentRecord) -> Vec<StatedBonus> {
     let mut stated = Vec::new();
     for bonus in &record.bonus_chains {
@@ -687,18 +700,32 @@ fn stated_bonuses_of(record: &EquipmentRecord) -> Vec<StatedBonus> {
         if qualifiers.len() < 3 || !chain_is_standing(qualifiers) {
             continue;
         }
+        if qualifiers[0] == "MOVEMULT" {
+            if let (Some(_), Ok(multiplier)) = (speed_target(&qualifiers[1]), qualifiers[2].parse::<f64>()) {
+                stated.push(StatedBonus {
+                    target: "speed_percent".to_owned(),
+                    bonus_type: Some(SPEED_MULTIPLIER_WORD.to_owned()),
+                    value: (multiplier * 100.0).round() as i16,
+                });
+            }
+            continue;
+        }
         let Some(value) = chain_flat_value(&qualifiers[2]) else { continue };
         let names = qualifiers[1].split(',');
         let targets: Vec<String> = match qualifiers[0].as_str() {
             "STAT" => names.filter_map(stat_target).map(str::to_string).collect(),
-            "SKILL" => names.filter_map(skill_target).collect(),
+            "SKILL" => names.filter_map(|name| skill_set_target(name).or_else(|| skill_target(name))).collect(),
             "SAVE" if qualifiers[1].eq_ignore_ascii_case("ALL") => {
                 ["save:fortitude", "save:reflex", "save:will"].map(str::to_string).to_vec()
             }
             "SAVE" => names.filter_map(save_target).map(str::to_string).collect(),
             // `FortitudeSave_ResistanceBonus`: a save's variable, named for the save.
             "VAR" => names
-                .filter_map(|name| name.split_once("Save_").and_then(|(save, _)| save_target(save)))
+                .filter_map(|name| match name {
+                    "CMB" => Some("cmb"),
+                    "CMD" => Some("cmd"),
+                    _ => name.split_once("Save_").and_then(|(save, _)| save_target(save)),
+                })
                 .map(str::to_string)
                 .collect(),
             "COMBAT" => names.filter_map(combat_target).map(str::to_string).collect(),
@@ -822,6 +849,11 @@ fn equipment_token_i16(record: &EquipmentRecord, key: &str) -> Option<i16> {
     equipment_token_value(record, key).and_then(|value| value.parse().ok())
 }
 
+/// Whether a `COMBAT` chain's names hold Armor Class: `AC`, or `ATTACK,AC`.
+fn names_armor_class(names: &str) -> bool {
+    names.split(',').any(|name| name == "AC")
+}
+
 /// The first standing `BONUS:COMBAT|AC|<n>` chain's magnitude. A
 /// `TYPE=Circumstance` chain is excluded: by PF1's own definition it applies
 /// only while its holder is in a named situation, so it is not a standing
@@ -831,7 +863,7 @@ fn armor_class_chain_bonus_of(record: &EquipmentRecord) -> Option<i16> {
         let qualifiers = &bonus.qualifiers;
         let is_ac_bonus = qualifiers.len() >= 3
             && qualifiers[0] == "COMBAT"
-            && qualifiers[1] == "AC"
+            && names_armor_class(&qualifiers[1])
             && !crate::pcgen_import::equipment_bonus_reader::declares_circumstance_bonus_type(bonus);
         if is_ac_bonus {
             qualifiers[2].parse::<i16>().ok()

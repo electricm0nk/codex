@@ -79,6 +79,7 @@ use crate::rules_core::rules_catalog::crb::equipment_tables::{equipment_tables, 
 use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::game_system::GameSystem;
 use crate::rules_core::sheet_rule::stacking_types;
+use crate::rules_core::skill_allocation::SHEET_SKILL_IDS;
 use crate::rules_core::source_content::SourcePackageContent;
 
 /// The Armor Class bonus types a touch attack ignores.
@@ -110,9 +111,10 @@ pub struct WornStatedBonus {
     pub value: i16,
 }
 
-/// What a character's worn stock items state on saves, ability scores, named skills, attack,
-/// initiative, land speed and Armor Class, after stacking. Armor Class is also in [`EquipmentEffects`]; it is listed here so that another
-/// source of a bonus can fold with it.
+/// What a character's worn stock items state on saves, ability scores, skills, attack, initiative,
+/// land speed, CMB, CMD and Armor Class, after stacking, a skill set's bonus on each row of the set.
+/// Armor Class is also in [`EquipmentEffects`]; it is listed here so that another source of a bonus
+/// can fold with it.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct WornItemStatedBonuses(Vec<WornStatedBonus>);
 
@@ -169,6 +171,26 @@ impl WornItemStatedBonuses {
     }
 }
 
+/// The Skills panel's rows in a set a chain names, as `skill:<name>`: `all`, the book's `TYPE` words
+/// (`base`, `knowledge`, `perform`), and a key ability's word. Craft, Perform and Profession are one
+/// row each, whole. `tests/worn_vs_carried.rs` holds each set to the book's own skill records.
+pub fn skill_set_rows(set: &str) -> Vec<String> {
+    let every = || SHEET_SKILL_IDS.iter().map(|id| (*id).to_owned()).chain(["skill:craft", "skill:perform", "skill:profession"].map(str::to_owned));
+    let named = |skills: &[&str]| skills.iter().map(|skill| format!("skill:{skill}")).collect::<Vec<_>>();
+    let knowledge = || every().filter(|row| row.starts_with("skill:knowledge_"));
+    match set {
+        "all" | "base" => every().collect(),
+        "knowledge" => knowledge().collect(),
+        "craft" | "perform" | "profession" => named(&[set]),
+        "strength" => named(&["climb", "swim"]),
+        "dexterity" => named(&["acrobatics", "disable_device", "escape_artist", "fly", "ride", "sleight_of_hand", "stealth"]),
+        "intelligence" => named(&["appraise", "craft", "linguistics", "spellcraft"]).into_iter().chain(knowledge()).collect(),
+        "wisdom" => named(&["heal", "perception", "profession", "sense_motive", "survival"]),
+        "charisma" => named(&["bluff", "diplomacy", "disguise", "handle_animal", "intimidate", "perform", "use_magic_device"]),
+        _ => Vec::new(),
+    }
+}
+
 /// The worn selections' stated bonuses, stacked. A derived record stating none reads its stand-in's.
 pub fn worn_item_stated_bonuses(selections: &[EquipmentSelection], corpus: &SourcePackageContent) -> WornItemStatedBonuses {
     let worn: Vec<EquipmentSelection> =
@@ -181,22 +203,28 @@ pub fn worn_item_stated_bonuses(selections: &[EquipmentSelection], corpus: &Sour
             _ => &record.stated_bonuses,
         };
         for bonus in stated {
-            let row = WornStatedBonus {
-                item_name: record.identity.clone(),
-                target: bonus.target.clone(),
-                bonus_type: bonus.bonus_type.clone(),
-                value: bonus.value,
+            let targets = match bonus.target.strip_prefix("skill_set:") {
+                Some(set) => skill_set_rows(set),
+                None => vec![bonus.target.clone()],
             };
-            let same_type = counted.iter().position(|held| {
-                held.value > 0 && held.target == row.target && held.bonus_type == row.bonus_type
-            });
-            match same_type {
-                Some(index) if !bonus_always_counts(row.value, row.bonus_type.as_deref()) => {
-                    if row.value > counted[index].value {
-                        counted[index] = row;
+            for target in targets {
+                let row = WornStatedBonus {
+                    item_name: record.identity.clone(),
+                    target,
+                    bonus_type: bonus.bonus_type.clone(),
+                    value: bonus.value,
+                };
+                let same_type = counted.iter().position(|held| {
+                    held.value > 0 && held.target == row.target && held.bonus_type == row.bonus_type
+                });
+                match same_type {
+                    Some(index) if !bonus_always_counts(row.value, row.bonus_type.as_deref()) => {
+                        if row.value > counted[index].value {
+                            counted[index] = row;
+                        }
                     }
+                    _ => counted.push(row),
                 }
-                _ => counted.push(row),
             }
         }
     }

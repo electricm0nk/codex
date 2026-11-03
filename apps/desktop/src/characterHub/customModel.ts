@@ -134,10 +134,18 @@ export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | null
 const itemRowValue = (explanations: readonly ExplanationDto[], id: string): number =>
   explanations.find((row) => row.id === id)?.value ?? 0;
 
-/** The race's land speed with the engine's `custom_item.speed` row; an unknown speed stays unknown. */
+/**
+ * The race's land speed with the engine's `custom_item.speed` row, then its `custom_item.speed_percent`
+ * row in whole feet, rounded down; an unknown speed stays unknown.
+ */
 export function withItemSpeed(land: string, explanations: readonly ExplanationDto[]): string {
   const feet = /^(\d+) ft\.$/.exec(land);
-  return feet === null ? land : `${Math.max(0, Number(feet[1]) + itemRowValue(explanations, 'custom_item.speed'))} ft.`;
+  if (feet === null) {
+    return land;
+  }
+  const percent = explanations.find((row) => row.id === 'custom_item.speed_percent')?.value ?? 100;
+  const moved = Number(feet[1]) + itemRowValue(explanations, 'custom_item.speed');
+  return `${Math.max(0, Math.floor((moved * percent) / 100))} ft.`;
 }
 
 /** The hit point total with the engine's `custom_item.hit_points` row; an unknown total stays unknown. */

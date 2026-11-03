@@ -68739,6 +68739,11 @@
             "bonus_type": "Competence",
             "target": "save:will",
             "value": 1
+          },
+          {
+            "bonus_type": "Competence",
+            "target": "skill_set:base",
+            "value": 1
           }
         ],
         "states_base_damage": false,
@@ -108893,6 +108898,31 @@
           {
             "bonus_type": "Luck",
             "target": "save:will",
+            "value": 1
+          },
+          {
+            "bonus_type": "Luck",
+            "target": "skill_set:strength",
+            "value": 1
+          },
+          {
+            "bonus_type": "Luck",
+            "target": "skill_set:dexterity",
+            "value": 1
+          },
+          {
+            "bonus_type": "Luck",
+            "target": "skill_set:intelligence",
+            "value": 1
+          },
+          {
+            "bonus_type": "Luck",
+            "target": "skill_set:wisdom",
+            "value": 1
+          },
+          {
+            "bonus_type": "Luck",
+            "target": "skill_set:charisma",
             "value": 1
           }
         ],

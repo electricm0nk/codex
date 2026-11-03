@@ -445,7 +445,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Sacred",
+            "target": "skill_set:perform",
+            "value": 4
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,

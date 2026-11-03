@@ -12,7 +12,7 @@ use codex::rules_core::contract::to_pilot_receipt;
 use codex::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
 use codex::rules_core::damage_total::resolve_weapon_damage_breakdown;
 use codex::rules_core::encumbrance::compute_encumbrance;
-use codex::rules_core::equipment_effects::{compute_equipment_effects, worn_item_stated_bonuses};
+use codex::rules_core::equipment_effects::{compute_equipment_effects, skill_set_rows, worn_item_stated_bonuses};
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::size::SizeCategory;
 use codex::rules_core::source_content::SourcePackageContent;
@@ -254,6 +254,7 @@ fn worn_item_applies_settles_each_chain_shape() {
     assert_eq!(rows("occult_adventures", "Lucky Horseshoe"), saves(Some("Luck"), 1), "`1+Global_LuckBonus`");
     let mut robe = vec![("initiative".to_owned(), None, -5), ("attack".to_owned(), None, -2)];
     robe.extend(saves(None, -2));
+    robe.push(("skill_set:all".to_owned(), None, -2));
     assert_eq!(rows("ultimate_equipment", "Robe of Vermin"), robe, "an untyped penalty");
     assert_eq!(rows("ultimate_psionics", "Boots of Skating")[0], ("speed".to_owned(), Some("Enhancement".to_owned()), 15), "`MOVEADD|TYPE=Walk`");
     assert_eq!(rows("ultimate_equipment", "Pauldrons of the Jackass")[0], ("speed".to_owned(), None, -10), "`MOVEADD|TYPE.All`");
@@ -269,4 +270,95 @@ fn worn_item_applies_settles_each_chain_shape() {
     assert_eq!(rows("advanced_race_guide", "Halo of Inner Calm"), vec![], "`PRERACE`, `PREALIGN`");
     assert_eq!(rows("ultimate_equipment", "Resplendent Robe of the Thespian"), vec![], "`PRECLASS`");
     assert_eq!(rows("inner_sea_gods", "Rhombocrystal"), vec![], "`PREDEITY`");
+}
+
+fn book(book_id: &'static str) -> SourcePackageContent<'static> {
+    let dir: &'static str = Box::leak(format!("data/corpus/{book_id}").into_boxed_str());
+    let roots = [BookCorpusRoot { book_id, dir: Path::new(dir) }];
+    load_equipment_corpus(&roots)
+}
+
+/// A skill set's rows are the sets the book's own skill records state: `TYPE:Dexterity.ACHECK.Base`.
+/// A family's subtypes are its one row, and a skill's `(Untrained)` record is no row.
+#[test]
+fn worn_item_applies_every_skill_each_set_is_the_books_own_type() {
+    let mut stated: Vec<(String, Vec<String>)> = Vec::new();
+    for entry in std::fs::read_dir("data/corpus/core_rulebook/skill").expect("the book's skills") {
+        let text = std::fs::read_to_string(entry.unwrap().path()).unwrap();
+        let record: serde_json::Value = serde_json::from_str(&text).unwrap();
+        let data = &record["data"];
+        let key = data["key"].as_str().unwrap_or_default();
+        let types = data["raw_tokens"].as_array().into_iter().flatten().find(|token| token["key"] == "TYPE").and_then(|token| token["value"].as_str());
+        let Some(types) = types.filter(|_| !key.contains("Untrained")) else { continue };
+        let words: Vec<String> = key.split(|c: char| !c.is_ascii_alphanumeric()).filter(|word| !word.is_empty()).map(str::to_ascii_lowercase).collect();
+        let row = if ["craft", "perform", "profession"].contains(&words[0].as_str()) { format!("skill:{}", words[0]) } else { format!("skill:{}", words.join("_")) };
+        stated.push((row, types.split('.').map(str::to_ascii_lowercase).collect()));
+    }
+    assert!(stated.len() > 90, "the whole book, got {}", stated.len());
+    for set in ["base", "knowledge", "perform", "strength", "dexterity", "intelligence", "wisdom", "charisma"] {
+        let mut expected: Vec<String> = stated.iter().filter(|(_, types)| types.iter().any(|word| word == set)).map(|(row, _)| row.clone()).collect();
+        expected.sort();
+        expected.dedup();
+        let mut rows = skill_set_rows(set);
+        rows.sort();
+        assert_eq!(rows, expected, "{set}");
+    }
+    assert_eq!(skill_set_rows("all").len(), 35, "the panel's 32 and its 3 families");
+    assert_eq!(skill_set_rows("constitution"), Vec::<String>::new(), "no skill keys off it");
+}
+
+/// What each kind of chain settles to, off the book's own records.
+#[test]
+fn worn_item_applies_every_skill_settles_each_chain_shape() {
+    let rows = |book_id: &'static str, item: &str| -> Vec<(String, Option<String>, i16)> {
+        let corpus = book(book_id);
+        let record = codex::rules_core::equipment_resolver::equipment_converted_resolve(item, &corpus).expect(item);
+        record.stated_bonuses.iter().map(|b| (b.target.clone(), b.bonus_type.clone(), b.value)).collect()
+    };
+    let has = |book_id: &'static str, item: &str, target: &str, word: Option<&str>, value: i16| {
+        let held = rows(book_id, item);
+        assert!(held.contains(&(target.to_owned(), word.map(str::to_owned), value)), "{item}: {held:?}");
+    };
+    has("core_rulebook", "Ioun Stone (Pale green Prism)", "skill_set:base", Some("Competence"), 1);
+    has("ultimate_equipment", "Robe of Vermin", "skill_set:all", None, -2);
+    has("ultimate_equipment", "Bracers of the Glib Entertainer", "skill_set:perform", Some("Competence"), 5);
+    has("ultimate_equipment", "Staff of Accompaniment", "skill_set:perform", Some("Competence"), 2);
+    has("ultimate_equipment", "Mask of a Thousand Tomes", "skill_set:knowledge", Some("Competence"), 10);
+    has("ultimate_equipment", "Headband of Stupidity", "skill_set:knowledge", None, -2);
+    has("inner_sea_gods", "Blade Of Three Fancies", "skill_set:perform", Some("Sacred"), 4);
+    for set in ["strength", "dexterity", "intelligence", "wisdom", "charisma"] {
+        has("core_rulebook", "Stone of Good Luck (Luckstone)", &format!("skill_set:{set}"), Some("Luck"), 1);
+    }
+    has("advanced_players_guide", "Boneless Leather", "cmb", None, 5);
+    has("ultimate_equipment", "Juggernaut's Pauldrons", "cmd", None, 4);
+    has("ultimate_equipment", "Unlucky Figurine", "cmd", None, -2);
+    has("ultimate_equipment", "Unlucky Figurine", "attack", None, -2);
+    assert_eq!(rows("ultimate_equipment", "Stone of Weight (Loadstone)"), vec![("speed_percent".to_owned(), Some("Percent of speed".to_owned()), 50)]);
+}
+
+/// A set's bonus is on each of its rows, and folds there by type; carried, none.
+#[test]
+fn worn_item_applies_every_skill_a_set_stacks_on_each_row() {
+    let core = book("core_rulebook");
+    let prism = worn_item_stated_bonuses(&worn(&["Ioun Stone (Pale green Prism)"]), &core);
+    for row in skill_set_rows("all") {
+        assert_eq!(prism.counted(&row, "Competence"), Some(1), "{row}");
+    }
+    let stowed = [selection("Ioun Stone (Pale green Prism)", ActiveState::SelectedInactive)];
+    assert_eq!(worn_item_stated_bonuses(&stowed, &core).rows(), &[], "carried adds 0");
+
+    let ue = book("ultimate_equipment");
+    let figurine = worn(&["Unlucky Figurine"]);
+    let effects = compute_equipment_effects(&figurine, &ue);
+    assert_eq!(effects.armor_class_delta, -2, "`COMBAT|ATTACK,AC`: the Armor Class half");
+    assert_eq!(effects.max_dex_cap, None, "it is no armor");
+    assert_eq!(effects.armor_class_not_against_touch(), 0, "a touch attack does not ignore it");
+    assert_eq!(effects.armor_class_lost_flat_footed(), 0, "nor does being flat-footed");
+    let stated = worn_item_stated_bonuses(&figurine, &ue);
+    let on = |target: &str| stated.rows().iter().filter(|row| row.target == target).map(|row| row.value).sum::<i16>();
+    assert_eq!((on("skill:bluff"), on("skill:perform"), on("skill:knowledge_arcana")), (-2, -2, -2));
+    assert_eq!(on("ac"), -2);
+
+    let two = worn_item_stated_bonuses(&worn(&["Stone of Weight (Loadstone)", "Stone of Weight (Loadstone)"]), &ue);
+    assert_eq!(two.rows().len(), 1, "one multiplier counts: {:?}", two.rows());
 }

@@ -258,8 +258,11 @@ struct WornBonus {
     value: i16,
 }
 
+/// A stock item's targets that reach the sheet here and in no engine total, beside `skill:<name>`.
+const ONLY_THE_LOAD_HOLDS: [&str; 5] = ["initiative", "speed", "speed_percent", "cmb", "cmd"];
+
 /// What the character's worn custom items add, and what a worn stock item states on a number only the
-/// load holds: a skill's row, initiative's row and the speed row.
+/// load holds: a skill's row, initiative's, CMB's and CMD's rows and the speed rows.
 /// A carried item is not in it. Same-type bonuses to one target take the higher, except a penalty, an
 /// untyped bonus and the types the game mode says stack ([`bonus_always_counts`]), the rule of the
 /// sheet engine's `Var` fold. A stock item's score, save, attack and Armor Class bonuses are already in
@@ -273,7 +276,7 @@ impl WornItemBonuses {
     }
 
     fn beside(custom: &CharacterCustomDto, stock: &WornItemStatedBonuses) -> Self {
-        let in_the_engine = |target: &str| !target.starts_with("skill:") && target != "initiative" && target != "speed";
+        let in_the_engine = |target: &str| !target.starts_with("skill:") && !ONLY_THE_LOAD_HOLDS.contains(&target);
         let mut counted: Vec<WornBonus> = stock
             .rows()
             .iter()
