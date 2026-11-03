@@ -58,7 +58,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 56
 | E4.1 | Slot check on set_equipment_active_state; wear if free | opus | complete | E3.MC | commit 660246480a + receipt commits; receipt artifacts/epic_4/E4.1_cycle_receipt.md; desktop and root sweeps exit 0, 20 market rows green, seeds NO_DIFF |
 | E4.2 | Prove carried adds weight only | opus | complete | E4.1 | commits 960de1b200, 3d91eab9a9 + receipt commit; receipt artifacts/epic_4/E4.2_cycle_receipt.md; discovered E4.5; root sweep exit 0, 20 market rows green, seeds NO_DIFF |
 | E4.3 | Equipment panel | opus | complete | E4.2 | commit 2123327b7b + receipt commit; receipt artifacts/epic_4/E4.3_cycle_receipt.md; override tag moved to E6.2 (cycle, decisions.md §25); root and desktop sweeps clean, 24 rows green, seeds NO_DIFF |
-| E4.4 | Custom item bonuses + slot | opus | waiting | E4.3 | |
+| E4.4 | Custom item bonuses + slot | opus | complete | E4.3 | commit ab1300e371 + receipt commit; receipt artifacts/epic_4/E4.4_cycle_receipt.md; 11 custom_item_bonuses tests; desktop sweep clean, 26 rows green, seeds NO_DIFF |
 | E4.5 | A worn item's stated numbers reach the totals | opus | waiting | E4.4 | discovered by E4.2, decisions.md §21 |
 | E4.MC | E4 merge check + Epic report | opus | waiting | E4.5 | |
 | E5.1 | Ledger file, stamped on every add | opus | waiting | E4.MC | |
