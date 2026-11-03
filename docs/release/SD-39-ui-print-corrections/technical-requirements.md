@@ -43,7 +43,7 @@ status: planning-ready
 | NR-10 | Slot conflict refused with `"<slot> slot is taken by <item>"`; two rings allowed | `cargo test slot_conflict` |
 | NR-11 | Every new selection has a ledger row with `taken_at_level = Some(level)`; a legacy ledger has every row `assigned_on_upgrade = true` and assigned feats ≤ slots | `ledger_stamp`, `ledger_migration` tests |
 | NR-12 | Each override flag is consulted by exactly the command(s) `decisions.md §10` names; admitted records carry `override = Some(flag)` | `cargo test overrides_*` (8) |
-| NR-13 | `.pcg` import of every fixture produces a character that loads in the app without error; unknown keys counted in the report | `cargo test -p codex-ingest pcg_import_fixtures` |
+| NR-13 | A `.pcg` naming a race and classes Codex holds produces a character that loads in the app without error; one naming another converts, and the import returns the engine's refusal; PCGen 5 and older is refused by name; unknown keys counted in the report (`decisions.md §25`) | `cargo test -p codex-ingest pcg_import_fixtures` |
 | NR-14 | SF and CPR seed outputs byte-identical outside E3.5/E8.3; PF deltas explained field by field | G-1 |
 
 ## 3. Out of scope

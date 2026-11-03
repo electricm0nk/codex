@@ -21,7 +21,7 @@ here in its commit.
 |---|---|---|---|
 | F-1 | Files carrying `0.18.` that C1 bumps to `0.19.` | **14** | `grep -rln '0\.18\.' --include=*.json --include=*.toml --include=*.lock --include=*.ts --include=*.yml --include=*.py apps .github tools docs/architecture docs/release/current-release.json \| grep -v node_modules \| grep -v target \| awk 'END{print NR}'` |
 | F-2 | C1 commit file count (F-1 + `current-release.json`) | **15** | `git show --name-only --format= <c1-sha> \| awk 'NF' \| wc -l` |
-| F-3 | Cards in this bundle | **54** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md \| awk 'END{print NR}'` |
+| F-3 | Cards in this bundle | **55** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md \| awk 'END{print NR}'` |
 | F-4 | Chassis files present | **16** (13 required + `technical-design.md`, `technical-requirements.md`, `kanban.md`) | `find docs/release/SD-39-ui-print-corrections -maxdepth 2 -name '*.md' \| awk 'END{print NR}'` |
 
 ## §2 Surfaces the defects name (the before state)
@@ -39,7 +39,7 @@ here in its commit.
 | F-13 | Records `slot_of` resolves to a body slot | **2,838** of 7,386 rows; **2,130** of 6,223 principal rows (the unit a character holds); predicate: `slot_of` is not `none` | `cargo test --locked -j 8 --lib slot_of -- --test-threads=8 --nocapture`; a second implementation in Python over the same files agrees |
 | F-14 | PCGen `SLOTS:` in Core Rulebook lists = a count of hands or feet used, not a location, and not weapon handedness: the 2s are boots, gloves and bracers | values 2 (30), 1 (3), 0 (3) | `awk 'BEGIN{FS="\t"} {for(i=1;i<=NF;i++) if($i ~ /^SLOTS:/) c[$i]++} END{for(k in c) print k,c[k]}' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_rulebook/*.lst` |
 | F-15 | `repeatable: true` feats vs PCGen `MULT:YES` | **2,927** agree, **0** disagree, of 2,927 PF feat rows (207 repeatable); the other way, 172 of 174 `CATEGORY:FEAT` + `MULT:YES` rows in shipped books sit on a repeatable record and 2 are on no feat record | `cargo test --locked -j 8 --lib repeatable_equals -- --test-threads=8 --nocapture` |
-| F-16 | `.pcg` fixtures available | **5** in `scripts/oracle_harness/eqm-fixtures/` + **(E7.1)** under `$PCGEN_REPO_DIR` | `ls scripts/oracle_harness/eqm-fixtures/*.pcg \| awk 'END{print NR}'`; `find "$PCGEN_REPO_DIR" -name '*.pcg' \| awk 'END{print NR}'` |
+| F-16 | `.pcg` fixtures available | **13** in `scripts/oracle_harness/eqm-fixtures/` + **52** under `$PCGEN_REPO_DIR` on a full clone (42 in `code/testsuite/PCGfiles`, the CI cone; 4 of the rest are a local build's copies). Of the 65: 2 older than the format, refused by name; 37 save through `import_character`; 26 refused by the engine, each naming a class or race Codex does not hold (E7.1, `E7.1/desktop-oneoff.txt`) | `ls scripts/oracle_harness/eqm-fixtures/*.pcg \| awk 'END{print NR}'`; `find "$PCGEN_REPO_DIR" -name '*.pcg' \| awk 'END{print NR}'` |
 | F-17 | Feat-add commands that enforce prerequisites today | **1** (`add_feat_selection_enforcing_prerequisites_at_root`) | `grep -c 'enforcing_prerequisites_at_root' apps/desktop/src-tauri/src/character_hub.rs` (≥ 1) |
 | F-18 | Feat-budget or duplicate guards today | **0** | `grep -rn 'feat_budget\|feats_remaining\|duplicate feat' apps/desktop/src-tauri/src src/rules_core \| awk 'END{print NR}'` |
 

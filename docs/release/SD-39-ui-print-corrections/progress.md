@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 21 of 54 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 21 of 55 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -64,6 +64,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E3 | E3.6 | complete | c896b64374 | artifacts/epic_3/E3.6_cycle_receipt.md |
 | E3 | E3.MC | complete | 6adc8d39c3 | artifacts/epic_3/E3.MC_cycle_receipt.md |
 | E4 | E4.1 | partial | 660246480a | artifacts/epic_4/E4.1_cycle_receipt.md |
+| E7 | E7.1 | partial | 7cfaf2065f | artifacts/epic_7/E7.1_cycle_receipt.md |
 
 ## Epic reports
 

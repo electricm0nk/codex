@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 54
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 55
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -67,9 +67,10 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 54
 | E6.1 | Overrides toggles + enforcement | opus | waiting | E5.MC | |
 | E6.2 | Override tagging UI + DTO | opus | waiting | E6.1 | |
 | E6.MC | E6 merge check + Epic report | opus | waiting | E6.2 | |
-| E7.1 | .pcg reader + mapping + fixtures (ingest crate) | opus | waiting | E1.0 | side lane ingest |
+| E7.1 | .pcg reader + mapping + fixtures (ingest crate) | opus | partial | E1.0 | side lane ingest; receipt artifacts/epic_7/E7.1_cycle_receipt.md; the one remainder, ranks in Climb, Intimidate, Swim, is E7.3; E7.2 can run on this output |
 | E7.2 | Sidecar + Import button + report | opus | waiting | E6.MC, E7.1 | |
-| E7.MC | E7 merge check + Epic report | opus | waiting | E7.2 | |
+| E7.3 | Engine reads Climb, Intimidate, Swim at the real rank; importer writes it | opus | waiting | E7.2 | discovered by E7.1, decisions.md §21; closes E7.1's remainder |
+| E7.MC | E7 merge check + Epic report | opus | waiting | E7.3 | |
 | E8.1 | Print core: Typst, fonts, frame, PF layout, Save PDF cmd | opus | waiting | E7.MC | |
 | E8.2 | PF blocks + three options | opus | waiting | E8.1 | |
 | E8.3 | SF + CPR layout files | opus | waiting | E8.2 | |
