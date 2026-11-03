@@ -663,7 +663,23 @@ fn skill_target(skill: &str) -> Option<String> {
     Some(format!("skill:{}", words.join("_")))
 }
 
-/// Every standing bonus the record states on a save, an ability score or a named skill.
+/// A `COMBAT` chain's name, where it is a number on this sheet. `TOHIT.Ranged`, `.Thrown` and
+/// `.Unarmed` are not: the sheet totals one attack, Melee, so the item's words print them.
+fn combat_target(name: &str) -> Option<&'static str> {
+    match name {
+        "TOHIT" | "ATTACK" => Some("attack"),
+        "INITIATIVE" => Some("initiative"),
+        _ => None,
+    }
+}
+
+/// A `MOVEADD` or `POSTMOVEADD` chain's movement mode, where it moves the land speed the sheet prints.
+fn speed_target(mode: &str) -> Option<&'static str> {
+    matches!(mode, "TYPE.Walk" | "TYPE=Walk" | "TYPE.All" | "TYPE=All").then_some("speed")
+}
+
+/// Every standing bonus the record states on a save, an ability score, a named skill, attack,
+/// initiative or land speed.
 fn stated_bonuses_of(record: &EquipmentRecord) -> Vec<StatedBonus> {
     let mut stated = Vec::new();
     for bonus in &record.bonus_chains {
@@ -685,6 +701,8 @@ fn stated_bonuses_of(record: &EquipmentRecord) -> Vec<StatedBonus> {
                 .filter_map(|name| name.split_once("Save_").and_then(|(save, _)| save_target(save)))
                 .map(str::to_string)
                 .collect(),
+            "COMBAT" => names.filter_map(combat_target).map(str::to_string).collect(),
+            "MOVEADD" | "POSTMOVEADD" => names.filter_map(speed_target).map(str::to_string).collect(),
             _ => continue,
         };
         let bonus_type = chain_bonus_type(qualifiers);

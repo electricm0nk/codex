@@ -223,6 +223,20 @@ fn worn_item_applies_only_what_is_worn_and_stacks_each_target() {
     assert_eq!(none.save("will"), 0, "carried adds 0");
 }
 
+/// Attack, initiative and speed, each by its settled type; carried, none.
+#[test]
+fn worn_item_applies_attack_initiative_and_speed_by_type() {
+    let corpus = core_rulebook();
+    let stones = worn_item_stated_bonuses(&worn(&["Ioun Stone (Pale green Prism)", "Stone of Good Luck (Luckstone)", "Boots of Striding And Springing"]), &corpus);
+    assert_eq!(stones.counted("attack", "Competence"), Some(1));
+    assert_eq!(stones.counted("initiative", "Luck"), Some(1));
+    assert_eq!(stones.counted("speed", "Enhancement"), Some(10));
+
+    let stowed = [selection("Ioun Stone (Pale green Prism)", ActiveState::SelectedInactive), selection("Boots of Striding And Springing", ActiveState::SelectedInactive)];
+    let none = worn_item_stated_bonuses(&stowed, &corpus);
+    assert_eq!(none.rows(), &[], "carried adds 0");
+}
+
 /// What a chain settles to, off the book's own records: a type, `ALL`, a list, a luck formula and an
 /// untyped penalty are numbers; a chain that asks something of the wearer, or a choice, is not.
 #[test]
@@ -238,7 +252,14 @@ fn worn_item_applies_settles_each_chain_shape() {
         ["save:fortitude", "save:reflex", "save:will"].iter().map(|t| (t.to_string(), word.map(str::to_owned), value)).collect()
     };
     assert_eq!(rows("occult_adventures", "Lucky Horseshoe"), saves(Some("Luck"), 1), "`1+Global_LuckBonus`");
-    assert_eq!(rows("ultimate_equipment", "Robe of Vermin"), saves(None, -2), "an untyped penalty");
+    let mut robe = vec![("initiative".to_owned(), None, -5), ("attack".to_owned(), None, -2)];
+    robe.extend(saves(None, -2));
+    assert_eq!(rows("ultimate_equipment", "Robe of Vermin"), robe, "an untyped penalty");
+    assert_eq!(rows("ultimate_psionics", "Boots of Skating")[0], ("speed".to_owned(), Some("Enhancement".to_owned()), 15), "`MOVEADD|TYPE=Walk`");
+    assert_eq!(rows("ultimate_equipment", "Pauldrons of the Jackass")[0], ("speed".to_owned(), None, -10), "`MOVEADD|TYPE.All`");
+    assert_eq!(rows("core_rulebook", "Boots of Striding And Springing"), vec![("speed".to_owned(), Some("Enhancement".to_owned()), 10)], "`POSTMOVEADD`; `SITUATION` settles nothing");
+    assert_eq!(rows("ultimate_equipment", "Scattershot Bracers"), vec![], "`TOHIT.Ranged` is no number on this sheet");
+    assert_eq!(rows("ultimate_psionics", "Tempest's Blade"), vec![], "a formula");
     assert_eq!(rows("core_rulebook", "Cloak of Resistance +3"), saves(Some("Resistance"), 3), "`BONUS:VAR`");
     assert_eq!(
         rows("inner_sea_gods", "Tankard Of The Drunken Hero"),

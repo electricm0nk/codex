@@ -110,8 +110,8 @@ pub struct WornStatedBonus {
     pub value: i16,
 }
 
-/// What a character's worn stock items state on saves, ability scores, named skills and Armor Class,
-/// after stacking. Armor Class is also in [`EquipmentEffects`]; it is listed here so that another
+/// What a character's worn stock items state on saves, ability scores, named skills, attack,
+/// initiative, land speed and Armor Class, after stacking. Armor Class is also in [`EquipmentEffects`]; it is listed here so that another
 /// source of a bonus can fold with it.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct WornItemStatedBonuses(Vec<WornStatedBonus>);
@@ -128,6 +128,22 @@ impl WornItemStatedBonuses {
     /// The save's total of what is worn: `save` is `fortitude`, `reflex` or `will`.
     pub fn save(&self, save: &str) -> i16 {
         self.total(&format!("save:{save}"))
+    }
+
+    /// The Melee total's share of what is worn.
+    pub fn attack(&self) -> i16 {
+        self.total("attack")
+    }
+
+    /// `+1 Competence (Ioun Stone), -2 Untyped (Robe of Vermin)`, for the attack row's detail.
+    pub fn attack_sources(&self) -> String {
+        let words: Vec<String> = self
+            .0
+            .iter()
+            .filter(|row| row.target == "attack")
+            .map(|row| format!("{:+} {} ({})", row.value, row.bonus_type.as_deref().unwrap_or("Untyped"), row.item_name))
+            .collect();
+        words.join(", ")
     }
 
     /// What a bonus of `bonus_type` on `target` has to beat, when one of that type is already counted.

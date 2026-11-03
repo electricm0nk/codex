@@ -22080,6 +22080,11 @@
         "stated_bonuses": [
           {
             "bonus_type": "Luck",
+            "target": "attack",
+            "value": 2
+          },
+          {
+            "bonus_type": "Luck",
             "target": "save:fortitude",
             "value": 2
           },
@@ -29677,6 +29682,11 @@
           "spell_failure": null
         },
         "stated_bonuses": [
+          {
+            "bonus_type": "Luck",
+            "target": "attack",
+            "value": 2
+          },
           {
             "bonus_type": "Luck",
             "target": "save:fortitude",
@@ -61567,7 +61577,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Enhancement",
+            "target": "speed",
+            "value": 10
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -68191,7 +68207,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Enhancement",
+            "target": "speed",
+            "value": 30
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -68698,6 +68720,11 @@
           "spell_failure": null
         },
         "stated_bonuses": [
+          {
+            "bonus_type": "Competence",
+            "target": "attack",
+            "value": 1
+          },
           {
             "bonus_type": "Competence",
             "target": "save:fortitude",
@@ -79243,7 +79270,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Insight",
+            "target": "initiative",
+            "value": 1
+          }
+        ],
         "states_base_damage": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -108842,6 +108875,11 @@
           "spell_failure": null
         },
         "stated_bonuses": [
+          {
+            "bonus_type": "Luck",
+            "target": "initiative",
+            "value": 1
+          },
           {
             "bonus_type": "Luck",
             "target": "save:fortitude",

@@ -305,7 +305,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": null,
+            "target": "speed",
+            "value": 5
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -32018,7 +32024,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": null,
+            "target": "speed",
+            "value": -10
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": {
@@ -44107,6 +44119,11 @@
         "stated_bonuses": [
           {
             "bonus_type": null,
+            "target": "speed",
+            "value": -10
+          },
+          {
+            "bonus_type": null,
             "target": "ability:dexterity",
             "value": -4
           }
@@ -50414,6 +50431,16 @@
           "spell_failure": null
         },
         "stated_bonuses": [
+          {
+            "bonus_type": null,
+            "target": "initiative",
+            "value": -5
+          },
+          {
+            "bonus_type": null,
+            "target": "attack",
+            "value": -2
+          },
           {
             "bonus_type": null,
             "target": "save:fortitude",
@@ -59375,7 +59402,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Enhancement",
+            "target": "speed",
+            "value": 10
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,
@@ -63573,6 +63606,11 @@
           "spell_failure": null
         },
         "stated_bonuses": [
+          {
+            "bonus_type": null,
+            "target": "attack",
+            "value": -2
+          },
           {
             "bonus_type": null,
             "target": "save:fortitude",

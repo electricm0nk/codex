@@ -803,7 +803,7 @@ pub(crate) fn resolve_unified_pilot_snapshot(
     corpus: &SourcePackageContent,
 ) -> Result<(PilotSnapshot, CorpusPilotReceipt), Vec<ComputationDiagnostic>> {
     // What a worn item states on a score goes in at the score, on this copy, so what the score
-    // drives follows from the engine; what it states on a save goes on the save's total.
+    // drives follows from the engine; what it states on a save or on attack goes on that total.
     let worn_items = worn_item_stated_bonuses(&character_input.chosen.equipment_selections, corpus);
     let raised_input = worn_items.raised(character_input);
     let character_input = &raised_input;
@@ -831,7 +831,7 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 base_attack_bonus: receipt.computation.base_attack_bonus,
                 base_saves: receipt.computation.base_saves,
                 combat: PilotCombatViewModel {
-                    baseline_melee_attack_bonus: combat.melee_attack_bonus,
+                    baseline_melee_attack_bonus: combat.melee_attack_bonus + worn_items.attack(),
                 },
                 defense: PilotDefenseViewModel {
                     baseline_armor_class: combat.armor_class,
@@ -902,6 +902,13 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             ] {
                 if let Some(row) = corpus_receipt.base.explanations.iter_mut().find(|row| row.id == id) {
                     row.value += worn_items.save(save);
+                }
+            }
+            let attack_sources = worn_items.attack_sources();
+            if !attack_sources.is_empty() {
+                if let Some(row) = corpus_receipt.base.explanations.iter_mut().find(|row| row.id == "combat.baseline_melee_attack_bonus") {
+                    row.value += worn_items.attack();
+                    row.detail = format!("{}; worn items: {attack_sources}", row.detail);
                 }
             }
             corpus_receipt.base.total_saves = snapshot.defense.total_save;

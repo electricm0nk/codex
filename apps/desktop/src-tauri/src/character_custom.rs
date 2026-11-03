@@ -28,6 +28,7 @@ use crate::character_hub::{
 use codex::rules_core::body_slots::{slot_conflict, BodySlot};
 use codex::rules_core::character_input::{AbilityScores, ActiveState, CharacterInput};
 use codex::rules_core::pilot_view_model::PilotSnapshot;
+use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillNotFolded;
 use codex::rules_core::equipment_effects::{bonus_always_counts, worn_item_stated_bonuses, WornItemStatedBonuses, NOT_AGAINST_TOUCH};
 use codex::rules_core::source_content::SourcePackageContent;
 use codex::rules_core::skill_allocation::SHEET_SKILL_IDS;
@@ -257,11 +258,12 @@ struct WornBonus {
     value: i16,
 }
 
-/// What the character's worn custom items add, and the sheet rows of a worn stock item's skill bonus.
+/// What the character's worn custom items add, and what a worn stock item states on a number only the
+/// load holds: a skill's row, initiative's row and the speed row.
 /// A carried item is not in it. Same-type bonuses to one target take the higher, except a penalty, an
 /// untyped bonus and the types the game mode says stack ([`bonus_always_counts`]), the rule of the
-/// sheet engine's `Var` fold. A stock item's score, save and Armor Class bonuses are already in the
-/// engine's numbers, so a custom bonus of that type adds only what it beats them by.
+/// sheet engine's `Var` fold. A stock item's score, save, attack and Armor Class bonuses are already in
+/// the engine's numbers, so a custom bonus of that type adds only what it beats them by.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub(crate) struct WornItemBonuses(Vec<WornBonus>);
 
@@ -271,7 +273,7 @@ impl WornItemBonuses {
     }
 
     fn beside(custom: &CharacterCustomDto, stock: &WornItemStatedBonuses) -> Self {
-        let in_the_engine = |target: &str| !target.starts_with("skill:");
+        let in_the_engine = |target: &str| !target.starts_with("skill:") && target != "initiative" && target != "speed";
         let mut counted: Vec<WornBonus> = stock
             .rows()
             .iter()
@@ -382,8 +384,12 @@ impl WornItemBonuses {
             ("combat.combat_maneuver_bonus", "cmb", self.total("cmb")),
             ("defense.combat_maneuver_defense", "cmd", self.total("cmd")),
             ("initiative.total", "initiative", self.total("initiative")),
+            ("combat.baseline_melee_attack_bonus", "attack", self.total("attack")),
         ];
         for (id, target, moved) in rows {
+            if !self.0.iter().any(|bonus| bonus.target == target) {
+                continue;
+            }
             if let Some(row) = sheet.explanations.iter_mut().find(|row| row.id == id) {
                 row.value += moved;
                 row.detail = format!("{}; worn items: {}", row.detail, self.sources(target));
@@ -395,7 +401,18 @@ impl WornItemBonuses {
         targets.dedup();
         for target in targets {
             let sources = self.sources(target);
-            if let Some(skill) = target.strip_prefix("skill:") {
+            if let Some(skill) = target.strip_prefix("skill:").filter(|skill| !skill_has_a_sheet_row(skill)) {
+                // `Perform` is one row, and a bonus on one Perform is on no other: the number prints
+                // under the panel with its subtype, where the panel prints what no row adds.
+                for bonus in self.0.iter().filter(|bonus| bonus.target == target) {
+                    sheet.feat_skill_bonuses.situational.push(FeatSkillNotFolded {
+                        skill: skill.to_owned(),
+                        rule_id: bonus.item_id.clone(),
+                        label: format!("{}: {:+} {} on {}", bonus.item_name, bonus.value, bonus.bonus_type, skill_words(skill)),
+                        reason: "no row of its own on the sheet".to_owned(),
+                    });
+                }
+            } else if let Some(skill) = target.strip_prefix("skill:") {
                 let id = format!("skill.trait_modifier.{skill}");
                 match sheet.explanations.iter_mut().find(|row| row.id == id) {
                     Some(row) => {
@@ -436,6 +453,28 @@ impl WornItemBonuses {
                 weapon.feat_effects.push(WeaponFeatEffectDto { feat_key: bonus.item_name.clone(), damage_bonus: bonus.value });
             }
         }
+    }
+}
+
+/// Whether the Skills panel has a row for this skill: the sheet's skills, and the one row each of the
+/// three families with a subtype prints.
+fn skill_has_a_sheet_row(skill: &str) -> bool {
+    SHEET_SKILL_IDS.iter().any(|id| id.strip_prefix("skill:") == Some(skill)) || ["craft", "perform", "profession"].contains(&skill)
+}
+
+/// `perform_string_instruments` as the book writes it: `Perform (String Instruments)`.
+fn skill_words(skill: &str) -> String {
+    let title = |word: &str| {
+        let mut letters = word.chars();
+        letters.next().map(|first| first.to_ascii_uppercase().to_string() + letters.as_str()).unwrap_or_default()
+    };
+    let mut words = skill.split('_').map(title);
+    let family = words.next().unwrap_or_default();
+    let subtype: Vec<String> = words.collect();
+    if subtype.is_empty() {
+        family
+    } else {
+        format!("{family} ({})", subtype.join(" "))
     }
 }
 
