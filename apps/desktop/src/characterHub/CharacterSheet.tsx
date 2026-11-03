@@ -104,7 +104,8 @@ import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import { MarketDialog } from './MarketDialog';
-import { listHeldEquipment, type HeldEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import { EquipmentPanel } from './EquipmentPanel';
+import { listHeldEquipment, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
 import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
@@ -1619,8 +1620,11 @@ function GearTab(props: {
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
   /** See `WeaponsTab.onRemoveWeapon` — the same command. */
   onRemoveItem: (itemId: string) => void;
-  /** SD-36 Epic E desktop-P2-01: stow (SelectedInactive) or re-equip (EquippedActive) a carried item. */
-  onSetActiveState: (itemId: string, activeState: 'EquippedActive' | 'SelectedInactive') => void;
+  loadHeldEquipment: () => Promise<PlacedEquipmentCopyDto[]>;
+  /** A new value re-reads the Equipment control: any saved change arrives as a new detail. */
+  detail: unknown;
+  /** Stows or re-equips one copy; resolves to the refusal, word for word, or null when it saved. */
+  onSetActiveState: (copy: PlacedEquipmentCopyDto, activeState: 'EquippedActive' | 'SelectedInactive') => Promise<string | null>;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -1646,6 +1650,7 @@ function GearTab(props: {
           Market
         </button>
       </div>
+      <EquipmentPanel load={props.loadHeldEquipment} refreshKey={props.detail} onSetState={props.onSetActiveState} />
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
       {items.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
@@ -1682,22 +1687,6 @@ function GearTab(props: {
                   style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
                 >
                   Attach Modifier
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Stow ${item.equipmentRecordName}`}
-                  onClick={() => props.onSetActiveState(item.itemId, 'SelectedInactive')}
-                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
-                >
-                  Stow
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Re-equip ${item.equipmentRecordName}`}
-                  onClick={() => props.onSetActiveState(item.itemId, 'EquippedActive')}
-                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
-                >
-                  Re-equip
                 </button>
                 <button
                   type="button"
@@ -3741,28 +3730,27 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * SD-36 Epic E desktop-P2-01: stows, re-equips, or marks absent a carried item. Unlike
-   * `handleRemoveEquipment` this does not drop the item or its modifiers -- it flips
-   * `activeState` on the first carried copy, the same case-insensitive first-match rule
-   * `apply_remove_equipment_selection` uses.
+   * Stows or re-equips one held copy. Unlike `handleRemoveEquipment` this does not drop the item or
+   * its modifiers. Resolves to the refusal for the Equipment control to show, word for word, or null
+   * when the change saved.
    */
-  async function handleSetEquipmentActiveState(itemId: string, activeState: 'EquippedActive' | 'Absent' | 'SelectedInactive') {
-    setMutationError(null);
+  async function handleSetEquipmentActiveState(copy: PlacedEquipmentCopyDto, activeState: 'EquippedActive' | 'SelectedInactive'): Promise<string | null> {
     try {
       const outcome = await setEquipmentActiveState({
         characterId: props.row.characterId,
-        itemId,
+        itemId: copy.itemId,
+        bonus: copy.bonus,
         activeState,
         savedAt: new Date().toISOString(),
       });
       if (outcome.kind === 'Blocked') {
-        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
-        return;
+        return blockedMessageFromDiagnostics(outcome.diagnostics);
       }
       await republishFromDisk();
       await refreshEngineRecords();
+      return null;
     } catch (cause: unknown) {
-      setMutationError(cause instanceof Error ? cause.message : String(cause));
+      return cause instanceof Error ? cause.message : String(cause);
     }
   }
 
@@ -4561,7 +4549,9 @@ export function CharacterSheet(props: {
                     onPriceModeChange={setPriceMode}
                     onAttachModifier={handleAttachModifier}
                     onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
-                    onSetActiveState={(itemId, activeState) => void handleSetEquipmentActiveState(itemId, activeState)}
+                    loadHeldEquipment={() => listHeldEquipment(props.row.characterId)}
+                    detail={props.detail}
+                    onSetActiveState={handleSetEquipmentActiveState}
                     money={money}
                     moneyBusy={moneyBusy}
                     moneyError={moneyError}

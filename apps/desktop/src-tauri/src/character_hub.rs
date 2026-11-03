@@ -21,7 +21,7 @@ use serde::{Deserialize, Serialize};
 use tauri::Manager;
 use uuid::Uuid;
 
-use codex::rules_core::body_slots::{slot_conflict, worn_slot, BodySlot};
+use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
@@ -3140,7 +3140,7 @@ pub(crate) fn preview_level_up_at_root(
 /// request. A separate DTO (rather than deriving `Deserialize` on
 /// `ActiveState` itself) because the `codex` crate has zero dependencies —
 /// see this module's own top-of-file note.
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ActiveStateDto {
     EquippedActive,
     Absent,
@@ -3327,24 +3327,32 @@ fn catalog_cost_gp(item_id: &str) -> Option<f64> {
 /// The `+N` offers Market shows on the row `item_id` names; empty when it shows none (no such row,
 /// or a row that takes no bonus). Read from `list_market` itself, so the price shown is the price
 /// charged and a row Market hides cannot be bought as a `+N`.
+///
+/// Read once: the catalog behind `list_market` never changes in a run, and walking it for every
+/// copy of every held-list read cost seconds in a debug build, long enough to swallow a click on the
+/// Market's next button.
 fn market_offers(item_id: &str) -> Vec<crate::equipment_catalog::MarketVariantDto> {
-    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
-    [
-        MarketCategory::Weapon,
-        MarketCategory::Armor,
-        MarketCategory::Shield,
-        MarketCategory::Gear,
-        MarketCategory::MagicItem,
-    ]
-    .into_iter()
-    .find_map(|category| {
-        list_market(MarketFilter { category, name_contains: None, book: None })
-            .entries
-            .into_iter()
-            .find(|row| row.entry.key.eq_ignore_ascii_case(item_id))
-            .map(|row| row.variants)
-    })
-    .unwrap_or_default()
+    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter, MarketVariantDto};
+    static OFFERS: std::sync::OnceLock<BTreeMap<String, Vec<MarketVariantDto>>> = std::sync::OnceLock::new();
+    OFFERS
+        .get_or_init(|| {
+            let mut offers = BTreeMap::new();
+            for category in [
+                MarketCategory::Weapon,
+                MarketCategory::Armor,
+                MarketCategory::Shield,
+                MarketCategory::Gear,
+                MarketCategory::MagicItem,
+            ] {
+                for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                    offers.entry(row.entry.key.to_ascii_lowercase()).or_insert(row.variants);
+                }
+            }
+            offers
+        })
+        .get(&item_id.to_ascii_lowercase())
+        .cloned()
+        .unwrap_or_default()
 }
 
 /// [`market_offers`] for a held copy, whose id can be a legacy one: creation gives every character
@@ -4418,14 +4426,17 @@ pub(crate) fn sell_equipment_copy_at_root(
     Ok(response)
 }
 
-/// One held copy, as the Market's Sell list shows it. `bonus` is the copy's `+N`, 0 when plain, and
-/// names that copy to `remove_equipment_selection`.
+/// One held copy, as the Market's Sell list and the Gear tab's Equipment control show it. `bonus` is
+/// the copy's `+N`, 0 when plain, and names that copy to `remove_equipment_selection` and
+/// `set_equipment_active_state`. `slot` is where a worn copy sits, and what a carried one would take.
 #[derive(Debug, Clone, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HeldEquipmentCopyDto {
     pub item_id: String,
     pub name: String,
     pub bonus: u8,
+    pub active_state: ActiveStateDto,
+    pub slot: BodySlot,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -4434,23 +4445,39 @@ pub struct ListHeldEquipmentRequest {
     pub character_id: String,
 }
 
+/// The selection creation seeds for Power Attack (`pf1_adapter.rs`): a feat toggle the engine
+/// requires carried, with no item behind it.
+const FEAT_TOGGLE_ITEM_ID: &str = "power_attack";
+
 /// Every copy the character holds, read off the saved selections. Not `corpus_derived`'s
 /// `equipped_items`, which resolves against the bundled demo corpus and so leaves out most of what a
 /// character can buy, and every enhancement eqmod.
 pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    Ok(envelope
+    let held: Vec<&EquipmentSelection> = envelope
         .character_input
         .chosen
         .equipment_selections
         .iter()
-        .filter(|selection| selection.active_state != ActiveState::Absent)
-        .map(held_copy)
+        .filter(|selection| selection.active_state != ActiveState::Absent && selection.item_id != FEAT_TOGGLE_ITEM_ID)
+        .collect();
+    let slots = held.iter().map(|selection| body_slot_of_item(&selection.item_id)).collect::<Result<Vec<_>, String>>()?;
+    let is_worn = |index: &usize| held[*index].active_state == ActiveState::EquippedActive;
+    let worn: Vec<usize> = (0..held.len()).filter(is_worn).collect();
+    let mut places = worn_places(&worn.iter().map(|index| slots[*index]).collect::<Vec<_>>()).into_iter();
+    Ok(held
+        .iter()
+        .enumerate()
+        .map(|(index, selection)| {
+            let (name, bonus) = copy_name_and_bonus(selection);
+            let slot = if is_worn(&index) { places.next().unwrap_or(slots[index]) } else { slots[index] };
+            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus, active_state: selection.active_state.into(), slot }
+        })
         .collect())
 }
 
-/// One selection as a held copy, with the name the sheet calls it by.
-fn held_copy(selection: &EquipmentSelection) -> HeldEquipmentCopyDto {
+/// What the sheet calls one selection, and its `+N`.
+fn copy_name_and_bonus(selection: &EquipmentSelection) -> (String, u8) {
     let offers = if selection.applied_modifiers.is_empty() { Vec::new() } else { copy_offers(&selection.item_id) };
     let bonus = copy_bonus(selection, &offers);
     let plain_name = || {
@@ -4468,10 +4495,11 @@ fn held_copy(selection: &EquipmentSelection) -> HeldEquipmentCopyDto {
             .unwrap_or_else(|| selection.item_id.strip_prefix("item:").unwrap_or(&selection.item_id).to_owned())
     };
     let name = offers.iter().find(|offer| offer.bonus == bonus).map_or_else(plain_name, |offer| offer.name.clone());
-    HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus }
+    (name, bonus)
 }
 
-/// What the character holds, for the Market's Sell list; see [`list_held_equipment_at_root`].
+/// What the character holds, for the Market's Sell list and the Equipment control; see
+/// [`list_held_equipment_at_root`].
 #[tauri::command]
 pub fn list_held_equipment(app: tauri::AppHandle, request: ListHeldEquipmentRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
@@ -4527,6 +4555,10 @@ pub fn remove_feat_selection(
 pub struct SetEquipmentActiveStateRequest {
     pub character_id: String,
     pub item_id: String,
+    /// Which copy, when the character holds several: `0` a plain one, `N` a `+N`. Absent takes the
+    /// first copy not already in that state.
+    #[serde(default)]
+    pub bonus: Option<u8>,
     pub active_state: ActiveStateDto,
     pub saved_at: String,
 }
@@ -4541,19 +4573,33 @@ pub fn set_equipment_active_state(
     request: SetEquipmentActiveStateRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    set_equipment_active_state_at_root(
+    set_equipment_copy_state_at_root(
         &root,
         &request.item_id,
+        request.bonus,
         request.active_state.into(),
         &request.saved_at,
     )
 }
 
-/// Which copy of `item_id` a state change moves: the first not already in that state, else the
-/// first (case-insensitive, as `apply_remove_equipment_selection` matches). Without the first rule,
-/// asking to wear a carried second copy would "succeed" on the copy already worn.
-fn state_change_target(selections: &[EquipmentSelection], item_id: &str, active_state: ActiveState) -> Option<usize> {
-    let copies = || selections.iter().enumerate().filter(|(_, selection)| selection.item_id.eq_ignore_ascii_case(item_id));
+/// Which copy of `item_id` a state change moves: of the copies `bonus` names (all of them when
+/// absent), the first not already in that state, else the first (case-insensitive, as
+/// `apply_remove_equipment_selection` matches). Without the first rule, asking to wear a carried
+/// second copy would "succeed" on the copy already worn.
+fn state_change_target(selections: &[EquipmentSelection], item_id: &str, bonus: Option<u8>, active_state: ActiveState) -> Option<usize> {
+    let is_this_item = |selection: &EquipmentSelection| selection.item_id.eq_ignore_ascii_case(item_id);
+    // Only a copy with an equipmod can be a `+N`, as `sell_equipment_copy_at_root` reads it.
+    let offers = if bonus.is_some() && selections.iter().any(|selection| is_this_item(selection) && !selection.applied_modifiers.is_empty()) {
+        copy_offers(item_id)
+    } else {
+        Vec::new()
+    };
+    let copies = || {
+        selections
+            .iter()
+            .enumerate()
+            .filter(|(_, selection)| is_this_item(selection) && bonus.is_none_or(|bonus| copy_bonus(selection, &offers) == bonus))
+    };
     copies().find(|(_, selection)| selection.active_state != active_state).or_else(|| copies().next()).map(|(index, _)| index)
 }
 
@@ -4563,10 +4609,11 @@ fn state_change_target(selections: &[EquipmentSelection], item_id: &str, active_
 pub(crate) fn apply_set_equipment_active_state(
     character_input: &mut CharacterInput,
     item_id: &str,
+    bonus: Option<u8>,
     active_state: ActiveState,
 ) -> bool {
     let selections = &mut character_input.chosen.equipment_selections;
-    let Some(index) = state_change_target(selections, item_id, active_state) else {
+    let Some(index) = state_change_target(selections, item_id, bonus, active_state) else {
         return false;
     };
     selections[index].active_state = active_state;
@@ -4617,31 +4664,45 @@ fn item_slot_conflict(character_input: &CharacterInput, item_id: &str) -> Result
         .equipment_selections
         .iter()
         .filter(|selection| selection.active_state == ActiveState::EquippedActive)
-        .map(|selection| Ok((held_copy(selection).name, body_slot_of_item(&selection.item_id)?)))
+        .map(|selection| Ok((copy_name_and_bonus(selection).0, body_slot_of_item(&selection.item_id)?)))
         .collect::<Result<Vec<_>, String>>()?;
     let worn: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
     slot_conflict(&worn, slot)
 }
 
-/// Refuses (as `Err`, leaving the saved character untouched) an item the
-/// character does not carry, and (as `Blocked`, the sheet's mutation message) a wear whose slot is
-/// held; past that, `mutate_saved_character_at_root` supplies the
-/// recompute-before-persist gate.
+/// [`set_equipment_copy_state_at_root`] with no copy named.
+#[cfg(test)]
 pub(crate) fn set_equipment_active_state_at_root(
     root: &Path,
     item_id: &str,
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    set_equipment_copy_state_at_root(root, item_id, None, active_state, saved_at)
+}
+
+/// Refuses (as `Err`, leaving the saved character untouched) an item the
+/// character does not carry, and (as `Blocked`, the sheet's mutation message) a wear whose slot is
+/// held; past that, `mutate_saved_character_at_root` supplies the
+/// recompute-before-persist gate.
+pub(crate) fn set_equipment_copy_state_at_root(
+    root: &Path,
+    item_id: &str,
+    bonus: Option<u8>,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let mut probe = envelope.character_input.clone();
-    if !apply_set_equipment_active_state(&mut probe, item_id, active_state) {
-        return Err(format!(
-            "'{item_id}' cannot change state: this character does not carry it"
-        ));
+    if !apply_set_equipment_active_state(&mut probe, item_id, bonus, active_state) {
+        return Err(match bonus {
+            Some(bonus) if bonus > 0 => format!("'{item_id}' cannot change state: this character does not carry a +{bonus} one"),
+            Some(_) => format!("'{item_id}' cannot change state: this character does not carry a plain one"),
+            None => format!("'{item_id}' cannot change state: this character does not carry it"),
+        });
     }
     let moves_a_copy_onto_the_body = active_state == ActiveState::EquippedActive
-        && state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, active_state)
+        && state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, bonus, active_state)
             .is_some_and(|index| envelope.character_input.chosen.equipment_selections[index].active_state != active_state);
     if moves_a_copy_onto_the_body {
         if let Some(message) = item_slot_conflict(&envelope.character_input, item_id)? {
@@ -4652,7 +4713,7 @@ pub(crate) fn set_equipment_active_state_at_root(
     }
 
     mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_set_equipment_active_state(character_input, item_id, active_state);
+        apply_set_equipment_active_state(character_input, item_id, bonus, active_state);
     })
 }
 
@@ -10263,7 +10324,7 @@ mod tests {
         ));
 
         let held = list_held_equipment_at_root(&root).unwrap();
-        let not_absent = held_selections(&root).iter().filter(|s| s.active_state != ActiveState::Absent).count();
+        let not_absent = held_selections(&root).iter().filter(|s| s.active_state != ActiveState::Absent && s.item_id != FEAT_TOGGLE_ITEM_ID).count();
         assert_eq!(held.len(), not_absent, "one row per copy");
         let of = |id: &str| held.iter().filter(|row| row.item_id == id).map(|row| (row.name.as_str(), row.bonus)).collect::<Vec<_>>();
         assert_eq!(of(MARKET_SWORD), vec![("Longsword", 0), ("+1 Longsword", 1)]);
@@ -13188,6 +13249,82 @@ mod tests {
             &slot_conflict_wear(&root, "Ring of Protection +2"),
             "ring slot is taken by Ring of Protection +1 and Ring of Feather Falling",
         );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn equipment_panel_row(root: &Path, name: &str) -> HeldEquipmentCopyDto {
+        let held = list_held_equipment_at_root(root).unwrap();
+        held.iter().find(|row| row.name == name).unwrap_or_else(|| panic!("{name} not in {held:?}")).clone()
+    }
+
+    /// Each row says where its copy is: worn by slot, the second one-handed weapon in the off hand,
+    /// and a carried copy with the slot it would take.
+    #[test]
+    fn equipment_panel_every_held_copy_says_where_it_is() {
+        let root = slot_conflict_character("equipment-panel-places", &["Helm of Brilliance", "Hat of Disguise", "Dagger (Base)"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
+
+        let place = |name: &str| {
+            let row = equipment_panel_row(&root, name);
+            (row.active_state, row.slot)
+        };
+        assert_eq!(place("Helm of Brilliance"), (ActiveStateDto::EquippedActive, BodySlot::Head));
+        assert_eq!(place("Hat of Disguise"), (ActiveStateDto::SelectedInactive, BodySlot::Head));
+        assert_eq!(place("Longsword"), (ActiveStateDto::EquippedActive, BodySlot::WieldMain));
+        assert_eq!(place("Dagger"), (ActiveStateDto::EquippedActive, BodySlot::WieldOff));
+
+        set_equipment_active_state_at_root(&root, "Dagger (Base)", ActiveState::SelectedInactive, "2026-11-03T00:00:00Z").unwrap();
+        assert_eq!(place("Dagger").0, ActiveStateDto::SelectedInactive);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Creation's `power_attack` selection is a feat toggle the engine requires carried, not an item:
+    /// offering Equip on it, or Sell on the Market, would offer to break the character.
+    #[test]
+    fn equipment_panel_the_feat_toggle_is_not_a_held_item() {
+        let root = slot_conflict_character("equipment-panel-toggle", &[]);
+        assert!(held_selections(&root).iter().any(|selection| selection.item_id == "power_attack"), "the seed holds it");
+        let held = list_held_equipment_at_root(&root).unwrap();
+        assert!(held.iter().all(|row| row.item_id != "power_attack"), "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The panel lists copies, so its action names the one clicked: with a plain Dagger first, Equip
+    /// on the `+1` moves the `+1`.
+    #[test]
+    fn equipment_panel_a_state_change_moves_the_copy_it_names() {
+        let root = fund_and_seed("equipment-panel-copy", 300_000);
+        let at = "2026-11-03T00:00:00Z";
+        for bonus in [None, Some(1)] {
+            let bought = purchase_equipment_offer_at_root(&root, "Dagger (Base)", ActiveState::SelectedInactive, at, PriceMode::Cashless, bonus).unwrap();
+            assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "{bought:?}");
+        }
+        let state = |name: &str| equipment_panel_row(&root, name).active_state;
+
+        let worn = set_equipment_copy_state_at_root(&root, "Dagger (Base)", Some(1), ActiveState::EquippedActive, at).unwrap();
+        assert_worn(&worn);
+        assert_eq!(state("+1 Dagger"), ActiveStateDto::EquippedActive);
+        assert_eq!(state("Dagger"), ActiveStateDto::SelectedInactive);
+
+        set_equipment_copy_state_at_root(&root, "Dagger (Base)", Some(1), ActiveState::SelectedInactive, at).unwrap();
+        assert_eq!(state("+1 Dagger"), ActiveStateDto::SelectedInactive);
+        assert_eq!(state("Dagger"), ActiveStateDto::SelectedInactive);
+
+        let missing = set_equipment_copy_state_at_root(&root, "Dagger (Base)", Some(3), ActiveState::EquippedActive, at);
+        assert_eq!(missing.unwrap_err(), "'Dagger (Base)' cannot change state: this character does not carry a +3 one");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A named copy meets the same slot check: the refusal is the word-for-word message, and
+    /// nothing moves.
+    #[test]
+    fn equipment_panel_a_named_copy_meets_the_slot_refusal() {
+        let root = slot_conflict_character("equipment-panel-refused", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let refused = set_equipment_copy_state_at_root(&root, "Hat of Disguise", Some(0), ActiveState::EquippedActive, "2026-11-03T00:00:00Z").unwrap();
+        assert_slot_refused(&refused, "head slot is taken by Helm of Brilliance");
+        assert_eq!(equipment_panel_row(&root, "Hat of Disguise").active_state, ActiveStateDto::SelectedInactive);
         std::fs::remove_dir_all(&root).ok();
     }
 

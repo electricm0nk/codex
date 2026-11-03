@@ -308,10 +308,40 @@ fn occupy<'a>(held: &mut BTreeMap<BodySlot, Vec<&'a str>>, slot: BodySlot, name:
         }
         BodySlot::WieldMain | BodySlot::WieldOff => {
             let main_held = held.get(&BodySlot::WieldMain).is_some_and(|names| !names.is_empty());
-            held.entry(if main_held { BodySlot::WieldOff } else { BodySlot::WieldMain }).or_default().push(name);
+            held.entry(one_hand(main_held)).or_default().push(name);
         }
         other => fill(other),
     }
+}
+
+/// The hand a one-handed weapon goes in: the main hand, then the off hand.
+fn one_hand(main_held: bool) -> BodySlot {
+    if main_held {
+        BodySlot::WieldOff
+    } else {
+        BodySlot::WieldMain
+    }
+}
+
+/// Where each worn item sits, for slots as [`worn_slot`] reads them in saved order, so a list of
+/// what is worn says which hand as [`slot_conflict`] counts it. Only a one-handed weapon differs
+/// from its own slot.
+pub fn worn_places(worn: &[BodySlot]) -> Vec<BodySlot> {
+    let mut main_held = false;
+    worn.iter()
+        .map(|slot| match slot {
+            BodySlot::WieldMain | BodySlot::WieldOff => {
+                let hand = one_hand(main_held);
+                main_held = true;
+                hand
+            }
+            BodySlot::WieldTwoHanded => {
+                main_held = true;
+                BodySlot::WieldTwoHanded
+            }
+            other => *other,
+        })
+        .collect()
 }
 
 /// What stops one more item of `slot` going on, given what is `worn` as `(name, slot)` in saved
@@ -478,6 +508,19 @@ mod tests {
         // Not a weapon: the category has nothing to say.
         let ring = record("core_rulebook:equipment:ring_of_protection_1");
         assert_eq!(worn_slot(ring, &[], Some(WieldCategory::TwoHanded)).unwrap(), BodySlot::Ring);
+    }
+
+    /// `worn_places` agrees with what `slot_conflict` counts: a third one-handed weapon is refused
+    /// because the two before it fill the two hands the list names.
+    #[test]
+    fn equipment_panel_worn_places_name_the_hand() {
+        use BodySlot::*;
+        assert_eq!(worn_places(&[WieldMain, Armor, WieldMain]), vec![WieldMain, Armor, WieldOff]);
+        assert_eq!(worn_places(&[Shield, WieldMain]), vec![Shield, WieldMain], "a shield fills the off hand, not the main");
+        assert_eq!(worn_places(&[WieldTwoHanded, Ring, Ring]), vec![WieldTwoHanded, Ring, Ring]);
+        assert_eq!(worn_places(&[None]), vec![None]);
+        let two = [("Longsword", WieldMain), ("Dagger", WieldMain)];
+        assert_eq!(slot_conflict(&two, WieldMain).unwrap().as_deref(), Some("main hand slot is taken by Longsword"));
     }
 
     #[test]
