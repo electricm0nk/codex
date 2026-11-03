@@ -63,6 +63,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E3 | E3.5 | complete | 9efc712f1d | artifacts/epic_3/E3.5_cycle_receipt.md |
 | E3 | E3.6 | complete | c896b64374 | artifacts/epic_3/E3.6_cycle_receipt.md |
 | E3 | E3.MC | complete | 6adc8d39c3 | artifacts/epic_3/E3.MC_cycle_receipt.md |
+| E4 | E4.1 | partial | 660246480a | artifacts/epic_4/E4.1_cycle_receipt.md |
 
 ## Epic reports
 
