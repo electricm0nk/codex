@@ -46,7 +46,7 @@ import { buildPrintCss, printableTabs } from './printLayout';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
-import { EMPTY_CUSTOM, customIsEmpty, withCustomHitPoints, withCustomSkillPoints, type CharacterCustom } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, withCustomHitPoints, withCustomSkillPoints, withItemHitPoints, withItemSpeed, type CharacterCustom } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -105,7 +105,7 @@ import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/load
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import { MarketDialog } from './MarketDialog';
 import { EquipmentPanel } from './EquipmentPanel';
-import { listHeldEquipment, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
 import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
@@ -3129,6 +3129,10 @@ export function CharacterSheet(props: {
   // stays byte-for-byte the pre-existing `snapshot`-derived values until
   // then (PF1 behavior unchanged, per `cycles/3_5.md`'s GREEN text).
   const [recomputed, setRecomputed] = useState<RecomputedCharacterSnapshotDto | null>(null);
+  // A saved change makes what Recompute read stale, and these tiles prefer it over the load.
+  useEffect(() => {
+    setRecomputed(null);
+  }, [props.detail]);
   const [recomputing, setRecomputing] = useState(false);
   const [cloning, setCloning] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -3335,7 +3339,7 @@ export function CharacterSheet(props: {
       });
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
-      await refreshEngineRecords();
+      await refreshAfterPurchase();
       return { money: outcome.money, activeState: outcome.activeState, carriedReason: outcome.carriedReason };
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -3401,7 +3405,7 @@ export function CharacterSheet(props: {
       });
       setMoney(outcome.money);
       // Attaching a +1 enhancement changes that weapon's Enh. columns.
-      await refreshEngineRecords();
+      await refreshAfterPurchase();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -3631,6 +3635,18 @@ export function CharacterSheet(props: {
    * and it is the same read a reload of the app would do — which is exactly
    * the property a removal has to survive.
    */
+  /**
+   * A purchase's response carries the engine's snapshot with no worn custom item on it, so with one
+   * worn the tiles must come from the load, or a buy would take its bonus off them.
+   */
+  async function refreshAfterPurchase() {
+    if (custom.equipment.some((record) => record.worn)) {
+      await republishFromDisk();
+    } else {
+      await refreshEngineRecords();
+    }
+  }
+
   async function republishFromDisk() {
     const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
     props.onDetailRefreshed(loaded);
@@ -3748,6 +3764,10 @@ export function CharacterSheet(props: {
       }
       await republishFromDisk();
       await refreshEngineRecords();
+      // The Custom tab and dialog read the record's `worn`; a stale one would save it back.
+      if (copy.itemId.startsWith('custom:')) {
+        setCustom(await loadCharacterCustom(props.row.characterId));
+      }
       return null;
     } catch (cause: unknown) {
       return cause instanceof Error ? cause.message : String(cause);
@@ -4140,7 +4160,7 @@ export function CharacterSheet(props: {
     const held = heldClasses.find((candidate) => candidate.classId === spellRoutedClassId);
     return held ? { classId: held.classId, classLabel: held.classLabel } : null;
   })();
-  const hp = withCustomHitPoints(maxHitPointsWithSavedLevels(heldClasses, abilities.constitution, savedHitPoints), custom);
+  const hp = withItemHitPoints(withCustomHitPoints(maxHitPointsWithSavedLevels(heldClasses, abilities.constitution, savedHitPoints), custom), engineRecords.explanations);
   // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
   // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
   // by both compute paths). They were `baseAttackBonus + abilities.strength`
@@ -4490,7 +4510,7 @@ export function CharacterSheet(props: {
       case 'attack':
         return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
       case 'speed':
-        return <SpeedPanel land={landSpeed} boxStyle={boxStyle} />;
+        return <SpeedPanel land={withItemSpeed(landSpeed, engineRecords.explanations)} boxStyle={boxStyle} />;
       case 'saves':
         return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
     }
@@ -4803,7 +4823,7 @@ export function CharacterSheet(props: {
           }
           currency={MARKET_CURRENCY}
           balance={copperToGp(money.totalCopper)}
-          loadInventory={() => listHeldEquipment(props.row.characterId)}
+          loadInventory={() => listHeldEquipment(props.row.characterId).then(sellableCopies)}
           onBuy={handleMarketBuy}
           onSell={handleMarketSell}
           priceMode={priceMode}

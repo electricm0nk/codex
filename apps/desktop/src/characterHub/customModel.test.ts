@@ -1,14 +1,23 @@
 import { assert, assertEqual } from '../testSupport/asserts';
+import { sellableCopies } from '../boundary/listHeldEquipment';
+import { SKILLS, skillIdFor } from './skillsModel';
 import {
+  BONUS_TARGETS,
+  BONUS_TYPES,
   EMPTY_CUSTOM,
+  bonusLine,
+  customItemPlace,
   customIsEmpty,
   customProblems,
   customSummaryLines,
   grantTargetLabel,
   grantTotals,
+  newBonus,
   newGrant,
   newRecord,
   withCustomHitPoints,
+  withItemHitPoints,
+  withItemSpeed,
   withCustomSkillPoints,
   type CharacterCustom,
 } from './customModel';
@@ -58,8 +67,69 @@ function verifiesLabelsAndSummaries() {
   assertEqual(customSummaryLines(custom).join('|'), 'Boon of Pharasma: +1 Wisdom score|Feat: Racial Weapon Focus', 'one line per entry');
 }
 
+
+function verifiesTheBonusFormOffersTheRowsVocabulary() {
+  const targets = BONUS_TARGETS.map((option) => option.value);
+  for (const flat of ['attack', 'damage', 'ac', 'speed', 'initiative', 'hit_points', 'cmb', 'cmd', 'save:fortitude', 'save:reflex', 'save:will', 'ability:charisma']) {
+    assert(targets.includes(flat), `${flat} is offered`);
+  }
+  for (const skill of SKILLS) {
+    assert(targets.includes(skillIdFor(skill.name)), `${skill.name} is offered`);
+  }
+  assertEqual(new Set(targets).size, targets.length, 'no target twice');
+  assert(BONUS_TYPES.includes('Deflection') && BONUS_TYPES.includes('Untyped'), 'the card names deflection');
+  assertEqual(newBonus().value, 1, 'a new bonus is a number the form can save');
+}
+
+function verifiesABonusReadsAsThePlayerSaysIt() {
+  assertEqual(bonusLine({ target: 'ac', bonusType: 'Deflection', value: 1 }), '+1 deflection to AC', 'a typed bonus');
+  assertEqual(bonusLine({ target: 'skill:sense_motive', bonusType: 'Untyped', value: -2 }), '-2 to Sense Motive', 'untyped says no type');
+  assertEqual(bonusLine({ target: 'ability:strength', bonusType: 'NaturalArmor', value: 2 }), '+2 natural armor to Strength score', 'two words');
+}
+
+function verifiesWhereACustomItemIs() {
+  const blank = newRecord('a');
+  assertEqual(customItemPlace(blank), null, 'a text-only record has no place: it is unchanged');
+  assertEqual(customItemPlace({ ...blank, bonuses: [newBonus()] }), 'carried', 'it starts carried');
+  assertEqual(customItemPlace({ ...blank, slot: 'head' }), 'carried', 'a slot alone is held');
+  assertEqual(customItemPlace({ ...blank, slot: 'head', worn: true }), 'worn', 'worn says worn');
+}
+
+function verifiesTheBonusProblemsMatchTheBackend() {
+  const item = (bonus: { target: string; bonusType: string; value: number }) => ({ ...EMPTY_CUSTOM, equipment: [{ ...newRecord('a'), name: 'Hat', bonuses: [bonus] }] });
+  assertEqual(customProblems(item({ target: 'ac', bonusType: 'Deflection', value: 1 })).length, 0, 'the card\'s item saves');
+  assert(customProblems(item({ target: 'ac', bonusType: 'Deflection', value: 0 }))[0].includes('Hat'), 'a zero is named');
+  assertEqual(customProblems(item({ target: 'ac', bonusType: 'Deflection', value: 101 })).length, 1, 'past the range');
+  assertEqual(customProblems(item({ target: 'ac', bonusType: 'Deflection', value: 1.5 })).length, 1, 'not whole');
+}
+
+function verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow() {
+  const rows = [
+    { id: 'custom_item.speed', value: 10, detail: '' },
+    { id: 'custom_item.hit_points', value: 7, detail: '' },
+  ];
+  assertEqual(withItemSpeed('30 ft.', rows), '40 ft.', 'the row moves it');
+  assertEqual(withItemSpeed('30 ft.', []), '30 ft.', 'no row, no change');
+  assertEqual(withItemSpeed('Unknown', rows), 'Unknown', 'an unknown speed stays unknown');
+  assertEqual(withItemSpeed('5 ft.', [{ id: 'custom_item.speed', value: -10, detail: '' }]), '0 ft.', 'never below 0');
+  assertEqual(withItemHitPoints(20, rows), 27, 'the row moves it');
+  assertEqual(withItemHitPoints(null, rows), null, 'an unknown total stays unknown');
+  assertEqual(withItemHitPoints(20, []), 20, 'no row, no change');
+}
+
+function verifiesTheMarketCannotSellACustomItem() {
+  const copy = (itemId: string) => ({ itemId, name: itemId, bonus: 0 });
+  assertEqual(sellableCopies([copy('item:longsword'), copy('custom:a')]).map((row) => row.itemId).join(), 'item:longsword', 'the custom row is off the Sell list');
+}
+
 verifiesGrantTotalsSumPerTarget();
 verifiesTheSheetNumbersFollowTheGrants();
 verifiesBlankEntriesAreNamedProblemsNotSilentlyDropped();
 verifiesLabelsAndSummaries();
+verifiesTheBonusFormOffersTheRowsVocabulary();
+verifiesABonusReadsAsThePlayerSaysIt();
+verifiesWhereACustomItemIs();
+verifiesTheBonusProblemsMatchTheBackend();
+verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow();
+verifiesTheMarketCannotSellACustomItem();
 console.log('customModel.test.ts: all assertions passed');

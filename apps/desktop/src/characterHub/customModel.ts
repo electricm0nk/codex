@@ -4,10 +4,15 @@
  * Grants change numbers: an ability grant is baked into the saved ability score by the backend (so
  * every derived number follows from the engine), while `hit_points` and `skill_points` grants are
  * added by the sheet to the hit point total and the skill point pool. Records (custom feats,
- * equipment, spells and magic devices) are a name, a description and free-form stat lines; the
- * engine does not compute from them, they are listed and printed. The backend validates all of it;
- * `customProblems` is the same check run before sending so the dialog can say what to fix.
+ * equipment, spells and magic devices) are a name, a description and free-form stat lines, listed
+ * and printed. Custom equipment may also state typed bonuses and a body slot; worn, the backend
+ * applies them, so no total is added up here (`character_custom.rs`). The backend validates all of
+ * it; `customProblems` is the same check run before sending so the dialog can say what to fix.
  */
+
+import type { BodySlotDto } from '../boundary/listHeldEquipment';
+import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import { SKILLS, skillIdFor } from './skillsModel';
 
 export interface CustomGrant {
   id: string;
@@ -23,11 +28,22 @@ export interface CustomStat {
   value: string;
 }
 
+/** One number a custom item states, applied while it is worn. */
+export interface CustomBonus {
+  target: string;
+  bonusType: string;
+  value: number;
+}
+
 export interface CustomRecord {
   id: string;
   name: string;
   description: string;
   stats: CustomStat[];
+  /** Custom equipment only, as are `slot` and `worn`; the backend leaves all three off a text record. */
+  bonuses?: CustomBonus[];
+  slot?: BodySlotDto | null;
+  worn?: boolean;
 }
 
 export type CustomRecordKind = 'feats' | 'equipment' | 'spells' | 'devices';
@@ -65,6 +81,69 @@ export const GRANT_TARGETS: ReadonlyArray<{ value: string; label: string }> = [
   { value: 'hit_points', label: 'Hit points' },
   { value: 'skill_points', label: 'Skill points' },
 ];
+
+/** The backend's `bonus_target_is_known`, as the form offers it. */
+export const BONUS_TARGETS: ReadonlyArray<{ value: string; label: string }> = [
+  { value: 'ac', label: 'AC' },
+  { value: 'attack', label: 'Attack' },
+  { value: 'damage', label: 'Damage' },
+  { value: 'save:fortitude', label: 'Fortitude save' },
+  { value: 'save:reflex', label: 'Reflex save' },
+  { value: 'save:will', label: 'Will save' },
+  { value: 'initiative', label: 'Initiative' },
+  { value: 'speed', label: 'Speed' },
+  { value: 'hit_points', label: 'Hit points' },
+  { value: 'cmb', label: 'CMB' },
+  { value: 'cmd', label: 'CMD' },
+  ...ABILITY_NAMES.map((name) => ({ value: `ability:${name}`, label: `${titleCase(name)} score` })),
+  ...SKILLS.map((skill) => ({ value: skillIdFor(skill.name), label: skill.name })),
+];
+
+/** The backend's `BONUS_TYPES`, the sheet engine's words for a bonus's type. */
+export const BONUS_TYPES: readonly string[] = [
+  'Untyped', 'Alchemical', 'Armor', 'Circumstance', 'Competence', 'Deflection', 'Dodge', 'Enhancement', 'Insight', 'Luck',
+  'Morale', 'NaturalArmor', 'Profane', 'Racial', 'Resistance', 'Sacred', 'Shield', 'Size',
+];
+
+const MAX_BONUS_VALUE = 100;
+
+export function newBonus(): CustomBonus {
+  return { target: 'ac', bonusType: 'Untyped', value: 1 };
+}
+
+/** `NaturalArmor` as a player says it. */
+export function bonusTypeLabel(bonusType: string): string {
+  return bonusType === 'NaturalArmor' ? 'natural armor' : bonusType.toLowerCase();
+}
+
+/** `+1 deflection to AC`; an untyped bonus says no type. */
+export function bonusLine(bonus: CustomBonus): string {
+  const type = bonus.bonusType === 'Untyped' ? '' : `${bonusTypeLabel(bonus.bonusType)} `;
+  const target = BONUS_TARGETS.find((option) => option.value === bonus.target)?.label ?? bonus.target;
+  return `${bonus.value >= 0 ? '+' : ''}${bonus.value} ${type}to ${target}`;
+}
+
+/** Where a custom item is, or `null` for a text-only record, which is on no one's body. */
+export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | null {
+  if (!record.slot && (record.bonuses ?? []).length === 0) {
+    return null;
+  }
+  return record.worn ? 'worn' : 'carried';
+}
+
+const itemRowValue = (explanations: readonly ExplanationDto[], id: string): number =>
+  explanations.find((row) => row.id === id)?.value ?? 0;
+
+/** The race's land speed with the engine's `custom_item.speed` row; an unknown speed stays unknown. */
+export function withItemSpeed(land: string, explanations: readonly ExplanationDto[]): string {
+  const feet = /^(\d+) ft\.$/.exec(land);
+  return feet === null ? land : `${Math.max(0, Number(feet[1]) + itemRowValue(explanations, 'custom_item.speed'))} ft.`;
+}
+
+/** The hit point total with the engine's `custom_item.hit_points` row; an unknown total stays unknown. */
+export function withItemHitPoints(total: number | null, explanations: readonly ExplanationDto[]): number | null {
+  return total === null ? null : total + itemRowValue(explanations, 'custom_item.hit_points');
+}
 
 export function grantTargetLabel(target: string): string {
   return GRANT_TARGETS.find((option) => option.value === target)?.label ?? target;
@@ -148,6 +227,11 @@ export function customProblems(custom: CharacterCustom): string[] {
       }
       if (record.stats.some((stat) => stat.label.trim() === '' || stat.value.trim() === '')) {
         problems.push(`"${record.name || 'A custom ' + singular}" has a stat line with no label or no value.`);
+      }
+      for (const bonus of record.bonuses ?? []) {
+        if (!Number.isInteger(bonus.value) || bonus.value === 0 || Math.abs(bonus.value) > MAX_BONUS_VALUE) {
+          problems.push(`A bonus on "${record.name}" must be a whole number from -${MAX_BONUS_VALUE} to ${MAX_BONUS_VALUE}, and not 0.`);
+        }
       }
     }
   }

@@ -4,7 +4,7 @@ import type { BodySlotDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEq
 type ChangeableState = 'EquippedActive' | 'SelectedInactive';
 
 /** Slots as a list of what is worn runs: the hands, then down the body; what takes no slot is last. */
-const WORN_SLOTS: ReadonlyArray<{ slot: BodySlotDto; label: string }> = [
+export const WORN_SLOTS: ReadonlyArray<{ slot: BodySlotDto; label: string }> = [
   { slot: 'wield_main', label: 'Main hand' },
   { slot: 'wield_off', label: 'Off hand' },
   { slot: 'wield_two_handed', label: 'Both hands' },

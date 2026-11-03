@@ -1,4 +1,15 @@
-import { CUSTOM_RECORD_KINDS, customIsEmpty, grantTargetLabel, type CharacterCustom } from './customModel';
+import { wornLabel } from './EquipmentPanel';
+import { CUSTOM_RECORD_KINDS, bonusLine, customIsEmpty, customItemPlace, grantTargetLabel, type CharacterCustom, type CustomRecord } from './customModel';
+
+/** `Worn, Head` or `Carried`; the Gear tab's Equipment control moves it. */
+function placeLine(record: CustomRecord): string | null {
+  const place = customItemPlace(record);
+  if (place === null) {
+    return null;
+  }
+  const slot = record.slot && record.slot !== 'none' ? wornLabel(record.slot) : null;
+  return place === 'worn' ? (slot ? `Worn, ${slot}` : 'Worn') : slot ? `Carried (takes ${slot})` : 'Carried';
+}
 
 /**
  * The sheet's Custom tab: the GM's grants (each with the reason it was given) and the custom feats,
@@ -49,6 +60,14 @@ export function CustomTab(props: { custom: CharacterCustom; loading: boolean; er
             {props.custom[kind].map((record) => (
               <article key={record.id} style={{ borderTop: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
                 <strong>{record.name}</strong>
+                {placeLine(record) !== null ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.1rem 0' }}>{placeLine(record)}</p> : null}
+                {(record.bonuses ?? []).length > 0 ? (
+                  <ul style={{ margin: '0.2rem 0', paddingLeft: '1.1rem' }}>
+                    {(record.bonuses ?? []).map((bonus, index) => (
+                      <li key={index}>{bonusLine(bonus)}</li>
+                    ))}
+                  </ul>
+                ) : null}
                 {record.stats.length > 0 ? (
                   <ul style={{ margin: '0.2rem 0', paddingLeft: '1.1rem' }}>
                     {record.stats.map((stat, index) => (

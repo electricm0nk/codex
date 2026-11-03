@@ -44,6 +44,11 @@ export interface PlacedEquipmentCopyDto extends HeldEquipmentCopyDto {
   slot: BodySlotDto;
 }
 
+/** What the Market can buy back: a custom item is the GM's, and has no price. */
+export function sellableCopies<T extends HeldEquipmentCopyDto>(copies: T[]): T[] {
+  return copies.filter((copy) => !copy.itemId.startsWith('custom:'));
+}
+
 export async function listHeldEquipment(characterId: string): Promise<PlacedEquipmentCopyDto[]> {
   if (!hasTauriRuntime()) {
     throw new Error('Tauri runtime not available for listing held equipment');

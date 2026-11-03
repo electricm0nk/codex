@@ -21,6 +21,7 @@ use serde::{Deserialize, Serialize};
 use tauri::Manager;
 use uuid::Uuid;
 
+use crate::character_custom::{custom_or_empty, set_custom_item_state_at_root, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
 use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
@@ -2761,9 +2762,12 @@ fn sheet_skill_trait_modifier_rows(input: &CharacterInput) -> Vec<ExplanationDto
 pub(crate) fn load_saved_character_at_root(
     root: &Path,
 ) -> Result<LoadSavedCharacterResponse, String> {
-    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    // This copy is what the sheet computes from, and is never saved.
+    let worn_custom_items = WornItemBonuses::at_root(root);
+    worn_custom_items.raise_abilities(&mut envelope.character_input);
 
-    let (snapshot, diagnostics, corpus_receipt) =
+    let (mut snapshot, diagnostics, corpus_receipt) =
         match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
             Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
             Err(diagnostics) => (
@@ -2789,8 +2793,11 @@ pub(crate) fn load_saved_character_at_root(
     ));
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
         sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
+    if let Some(snapshot) = snapshot.as_mut() {
+        worn_custom_items.apply_to_snapshot(snapshot);
+    }
 
-    Ok(LoadSavedCharacterResponse {
+    let mut sheet = LoadSavedCharacterResponse {
         summary: summarize_envelope(&envelope),
         snapshot: snapshot.as_ref().map(map_snapshot_dto),
         diagnostics: map_diagnostics_dto(&diagnostics),
@@ -2809,7 +2816,9 @@ pub(crate) fn load_saved_character_at_root(
         sheet_lines,
         sheet_rules_unavailable_reason,
         feat_skill_bonuses,
-    })
+    };
+    worn_custom_items.apply_to_sheet(&mut sheet);
+    Ok(sheet)
 }
 
 /// `chosen.equipment_selections` as its wire DTO, order preserved.
@@ -3247,7 +3256,7 @@ fn bought_copy_placement(root: &Path, item_id: &str, requested: ActiveState) -> 
         return Ok((ActiveState::SelectedInactive, None));
     }
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    Ok(match item_slot_conflict(&envelope.character_input, item_id)? {
+    Ok(match item_slot_conflict(root, &envelope.character_input, item_id)? {
         Some(reason) => (ActiveState::SelectedInactive, Some(reason)),
         None => (ActiveState::EquippedActive, None),
     })
@@ -4464,8 +4473,17 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
     let slots = held.iter().map(|selection| body_slot_of_item(&selection.item_id)).collect::<Result<Vec<_>, String>>()?;
     let is_worn = |index: &usize| held[*index].active_state == ActiveState::EquippedActive;
     let worn: Vec<usize> = (0..held.len()).filter(is_worn).collect();
-    let mut places = worn_places(&worn.iter().map(|index| slots[*index]).collect::<Vec<_>>()).into_iter();
-    Ok(held
+    // A text-only custom record is a note on the Custom tab, not something held on the body.
+    let custom = custom_or_empty(root);
+    let custom_items: Vec<_> = custom.equipment.iter().filter(|record| record.slot.is_some() || !record.bonuses.is_empty()).collect();
+    let custom_slot = |index: usize| custom_items[index].slot.unwrap_or(BodySlot::None);
+    let worn_slots: Vec<BodySlot> = worn
+        .iter()
+        .map(|index| slots[*index])
+        .chain((0..custom_items.len()).filter(|index| custom_items[*index].worn).map(custom_slot))
+        .collect();
+    let mut places = worn_places(&worn_slots).into_iter();
+    let mut rows: Vec<HeldEquipmentCopyDto> = held
         .iter()
         .enumerate()
         .map(|(index, selection)| {
@@ -4473,7 +4491,22 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
             let slot = if is_worn(&index) { places.next().unwrap_or(slots[index]) } else { slots[index] };
             HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus, active_state: selection.active_state.into(), slot }
         })
-        .collect())
+        .collect();
+    rows.extend(custom_items.iter().enumerate().map(|(index, record)| {
+        let (active_state, slot) = if record.worn {
+            (ActiveState::EquippedActive, places.next().unwrap_or(custom_slot(index)))
+        } else {
+            (ActiveState::SelectedInactive, custom_slot(index))
+        };
+        HeldEquipmentCopyDto {
+            item_id: format!("{CUSTOM_ITEM_PREFIX}{}", record.id),
+            name: record.name.clone(),
+            bonus: 0,
+            active_state: active_state.into(),
+            slot,
+        }
+    }));
+    Ok(rows)
 }
 
 /// What the sheet calls one selection, and its `+N`.
@@ -4655,17 +4688,23 @@ fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_tot
     })
 }
 
-/// What stops one more copy of `item_id` being worn over what `character_input` already wears,
-/// worded for the sheet.
-fn item_slot_conflict(character_input: &CharacterInput, item_id: &str) -> Result<Option<String>, String> {
-    let slot = body_slot_of_item(item_id)?;
-    let worn = character_input
+/// Every worn selection on `character_input`, as `(name, slot)` in saved order.
+pub(crate) fn worn_stock_slots(character_input: &CharacterInput) -> Result<Vec<(String, BodySlot)>, String> {
+    character_input
         .chosen
         .equipment_selections
         .iter()
         .filter(|selection| selection.active_state == ActiveState::EquippedActive)
         .map(|selection| Ok((copy_name_and_bonus(selection).0, body_slot_of_item(&selection.item_id)?)))
-        .collect::<Result<Vec<_>, String>>()?;
+        .collect()
+}
+
+/// What stops one more copy of `item_id` being worn over what `character_input` and the custom items
+/// beside it at `root` already wear, worded for the sheet.
+fn item_slot_conflict(root: &Path, character_input: &CharacterInput, item_id: &str) -> Result<Option<String>, String> {
+    let slot = body_slot_of_item(item_id)?;
+    let mut worn = worn_stock_slots(character_input)?;
+    worn.extend(worn_custom_slots(&custom_or_empty(root)));
     let worn: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
     slot_conflict(&worn, slot)
 }
@@ -4692,6 +4731,9 @@ pub(crate) fn set_equipment_copy_state_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    if let Some(id) = item_id.strip_prefix(CUSTOM_ITEM_PREFIX) {
+        return set_custom_item_state_at_root(root, id, active_state, saved_at);
+    }
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let mut probe = envelope.character_input.clone();
     if !apply_set_equipment_active_state(&mut probe, item_id, bonus, active_state) {
@@ -4705,7 +4747,7 @@ pub(crate) fn set_equipment_copy_state_at_root(
         && state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, bonus, active_state)
             .is_some_and(|index| envelope.character_input.chosen.equipment_selections[index].active_state != active_state);
     if moves_a_copy_onto_the_body {
-        if let Some(message) = item_slot_conflict(&envelope.character_input, item_id)? {
+        if let Some(message) = item_slot_conflict(root, &envelope.character_input, item_id)? {
             return Ok(CreateCharacterResponse::Blocked {
                 diagnostics: vec![DiagnosticDto { id: "equipment.slot_taken".to_owned(), message, claim_blocking: true }],
             });
@@ -8712,8 +8754,8 @@ mod tests {
     // ---- Custom: GM grants and house-rule records (custom.json) -------------------------------------
 
     use crate::character_custom::{
-        load_character_custom_at_root, save_character_custom_at_root, CharacterCustomDto, CustomGrantDto, CustomRecordDto,
-        CustomStatDto,
+        load_character_custom_at_root, save_character_custom_at_root, CharacterCustomDto, CustomBonusDto, CustomGrantDto,
+        CustomRecordDto, CustomStatDto,
     };
 
     fn grant(id: &str, target: &str, value: i32) -> CustomGrantDto {
@@ -8726,6 +8768,7 @@ mod tests {
             name: name.to_owned(),
             description: "A thing the GM allowed.".to_owned(),
             stats: vec![CustomStatDto { label: "Damage".to_owned(), value: "1d8".to_owned() }],
+            ..Default::default()
         }
     }
 
@@ -8817,6 +8860,348 @@ mod tests {
         let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("a score of 0 is not playable");
         assert!(err.contains("wisdom"), "{err}");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // --- A custom item's stated numbers (`decisions.md §13`). ---
+
+    fn custom_bonus(target: &str, bonus_type: &str, value: i32) -> CustomBonusDto {
+        CustomBonusDto { target: target.to_owned(), bonus_type: bonus_type.to_owned(), value }
+    }
+
+    /// A carried custom item stating `bonuses`, in `slot`.
+    fn custom_item(id: &str, name: &str, slot: Option<BodySlot>, bonuses: Vec<CustomBonusDto>) -> CustomRecordDto {
+        CustomRecordDto { id: id.to_owned(), name: name.to_owned(), bonuses, slot, ..Default::default() }
+    }
+
+    fn custom_items_saved(root: &Path, items: Vec<CustomRecordDto>) {
+        let custom = CharacterCustomDto { equipment: items, ..Default::default() };
+        save_character_custom_at_root(root, &custom, "2026-11-03T00:00:00Z").expect("save");
+    }
+
+    fn custom_item_set(root: &Path, id: &str, state: ActiveState) -> CreateCharacterResponse {
+        set_equipment_active_state_at_root(root, &format!("custom:{id}"), state, "2026-11-03T00:00:01Z").expect("state call")
+    }
+
+    fn custom_item_wear(root: &Path, id: &str) {
+        let response = custom_item_set(root, id, ActiveState::EquippedActive);
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    fn sheet_json(root: &Path) -> serde_json::Value {
+        serde_json::to_value(load_saved_character_at_root(root).unwrap()).unwrap()
+    }
+
+    #[test]
+    fn custom_item_bonuses_worn_ac_plus_one_deflection_raises_ac_by_one_and_carried_adds_zero() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-ac");
+        let none = enhancement_read(&root);
+        let sheet_none = sheet_json(&root);
+        custom_items_saved(&root, vec![custom_item("r1", "Ring of Hats", Some(BodySlot::Ring), vec![custom_bonus("ac", "Deflection", 1)])]);
+        let carried = enhancement_read(&root);
+        let sheet_carried = sheet_json(&root);
+
+        custom_item_wear(&root, "r1");
+        let worn = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let on_disk = load_character_custom_at_root(&root).unwrap();
+
+        let stowed = custom_item_set(&root, "r1", ActiveState::SelectedInactive);
+        assert!(matches!(stowed, CreateCharacterResponse::Saved { .. }), "{stowed:?}");
+        let back = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "a carried custom item adds 0");
+        assert_eq!(sheet_carried, sheet_none, "and moves nothing else on the sheet");
+        assert_eq!(worn.armor_class, none.armor_class + 1, "the tile");
+        assert_eq!(worn.touch, none.touch + 1, "a deflection bonus holds against touch");
+        assert_eq!(worn.flat_footed, none.flat_footed + 1, "and when flat-footed");
+        assert_eq!(worn.melee, none.melee);
+        assert!(on_disk.equipment[0].worn, "the record says it is worn");
+        let effects = &loaded.corpus_derived.equipment_effects;
+        let row = effects.per_item.iter().find(|e| e.item_id == "custom:r1").expect("AC by Source has its row");
+        assert_eq!((row.equipment_record_key.as_str(), row.armor_class_bonus), ("Ring of Hats", Some(1)));
+        assert_eq!(effects.armor_class_delta, effects.per_item.iter().filter_map(|e| e.armor_class_bonus).sum::<i16>(), "the rows sum to the panel");
+        assert_eq!(back, none, "stowed, it adds 0 again");
+    }
+
+    #[test]
+    fn custom_item_bonuses_a_text_only_item_is_unchanged() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-text");
+        let sheet_none = sheet_json(&root);
+        custom_items_saved(&root, vec![record("t1", "Grandfather's Pipe")]);
+        let sheet = sheet_json(&root);
+        let raw = std::fs::read_to_string(root.join("custom.json")).unwrap();
+        let held = list_held_equipment_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(sheet, sheet_none, "no number moves");
+        for key in ["bonuses", "slot", "worn"] {
+            assert!(!raw.contains(&format!("\"{key}\"")), "{key} is not written for a text record: {raw}");
+        }
+        assert!(held.iter().all(|copy| !copy.item_id.starts_with("custom:")), "a text record is listed on the Custom tab only: {held:?}");
+    }
+
+    #[test]
+    fn custom_item_bonuses_the_file_speaks_camel_case_and_an_old_file_loads() {
+        let root = created_character("custom-bonus-wire");
+        std::fs::write(
+            root.join("custom.json"),
+            r#"{"equipment":[{"id":"a","name":"Old"},{"id":"b","name":"New","worn":true,"slot":"wield_off","bonuses":[{"target":"ac","bonusType":"Shield","value":2}]}]}"#,
+        )
+        .unwrap();
+        let loaded = load_character_custom_at_root(&root).expect("both shapes load");
+        std::fs::remove_dir_all(&root).ok();
+        assert_eq!(loaded.equipment[0], CustomRecordDto { id: "a".to_owned(), name: "Old".to_owned(), ..Default::default() });
+        assert_eq!(loaded.equipment[1].slot, Some(BodySlot::WieldOff));
+        assert_eq!(loaded.equipment[1].bonuses, vec![custom_bonus("ac", "Shield", 2)]);
+    }
+
+    /// Every target in `decisions.md §13` reaches the number the sheet reads for it.
+    #[test]
+    fn custom_item_bonuses_every_target_reaches_the_number_the_sheet_reads() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-targets");
+        let row = |sheet: &LoadSavedCharacterResponse, id: &str| sheet.explanations.iter().find(|e| e.id == id).map_or(0, |e| e.value);
+        let before = load_saved_character_at_root(&root).unwrap();
+        custom_items_saved(
+            &root,
+            vec![custom_item(
+                "g1",
+                "Gauntlet of Everything",
+                None,
+                vec![
+                    custom_bonus("attack", "Luck", 2),
+                    custom_bonus("damage", "Luck", 3),
+                    custom_bonus("save:fortitude", "Resistance", 1),
+                    custom_bonus("save:reflex", "Resistance", 2),
+                    custom_bonus("save:will", "Resistance", 3),
+                    custom_bonus("skill:perception", "Competence", 5),
+                    custom_bonus("skill:climb", "Competence", 4),
+                    custom_bonus("skill:craft", "Competence", 2),
+                    custom_bonus("speed", "Enhancement", 10),
+                    custom_bonus("initiative", "Insight", 2),
+                    custom_bonus("hit_points", "Untyped", 7),
+                    custom_bonus("cmb", "Morale", 1),
+                    custom_bonus("cmd", "Morale", 2),
+                ],
+            )],
+        );
+        custom_item_wear(&root, "g1");
+        let after = load_saved_character_at_root(&root).unwrap();
+        let recomputed = crate::characterHub::recomputeCharacter::recompute_character_at_root(&root, "g").character.expect("recompute");
+        let (b, a) = (before.snapshot.as_ref().unwrap(), after.snapshot.as_ref().unwrap());
+
+        assert_eq!(a.baseline_melee_attack_bonus, b.baseline_melee_attack_bonus + 2, "attack");
+        let sword = |sheet: &LoadSavedCharacterResponse| sheet.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longsword (Base)")).unwrap().feat_effects.clone();
+        let damage: Vec<(String, i16)> = sword(&after).iter().filter(|e| !sword(&before).iter().any(|f| f.feat_key == e.feat_key)).map(|e| (e.feat_key.clone(), e.damage_bonus)).collect();
+        assert_eq!(damage, vec![("Gauntlet of Everything".to_owned(), 3)], "damage is a row on every weapon");
+        assert_eq!(a.total_saves.fortitude, b.total_saves.fortitude + 1);
+        assert_eq!(a.total_saves.reflex, b.total_saves.reflex + 2);
+        assert_eq!(a.total_saves.will, b.total_saves.will + 3);
+        assert_eq!(a.base_saves.fortitude, b.base_saves.fortitude, "the base save is the class's");
+        for (id, moved) in [
+            ("skill.trait_modifier.perception", 5),
+            ("skill.trait_modifier.climb", 4),
+            ("skill.trait_modifier.craft", 2),
+            ("initiative.total", 2),
+            ("combat.combat_maneuver_bonus", 1),
+            ("defense.combat_maneuver_defense", 2),
+            ("custom_item.speed", 10),
+            ("custom_item.hit_points", 7),
+        ] {
+            assert_eq!(row(&after, id), row(&before, id) + moved, "{id}");
+        }
+        assert_eq!(recomputed.baseline_melee_attack_bonus, a.baseline_melee_attack_bonus, "Recompute reads the same melee");
+        assert_eq!(recomputed.total_saves.will, a.total_saves.will, "and the same saves");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// An ability bonus goes in at the score, so what the score drives follows from the engine. The
+    /// saved score stays the character's own.
+    #[test]
+    fn custom_item_bonuses_an_ability_bonus_moves_what_the_score_drives_and_not_the_save_file() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-ability");
+        let before = load_saved_character_at_root(&root).unwrap();
+        let saved_before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores;
+        custom_items_saved(&root, vec![custom_item("b1", "Belt of Oxen", Some(BodySlot::Belt), vec![custom_bonus("ability:strength", "Enhancement", 2), custom_bonus("ability:dexterity", "Enhancement", 2)])]);
+        custom_item_wear(&root, "b1");
+        let after = load_saved_character_at_root(&root).unwrap();
+        let recomputed = crate::characterHub::recomputeCharacter::recompute_character_at_root(&root, "b").character.expect("recompute");
+        let saved_after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(after.ability_scores.strength, before.ability_scores.strength + 2, "the score the panel prints");
+        let (b, a) = (before.snapshot.as_ref().unwrap(), after.snapshot.as_ref().unwrap());
+        assert_eq!(a.ability_modifiers.strength, b.ability_modifiers.strength + 1);
+        assert_eq!(a.baseline_melee_attack_bonus, b.baseline_melee_attack_bonus + 1, "Strength drives melee");
+        assert_eq!(a.baseline_armor_class, b.baseline_armor_class + 1, "Dexterity drives AC, under the Chain Shirt's max Dex");
+        assert_eq!(a.total_saves.reflex, b.total_saves.reflex + 1, "and Reflex");
+        assert_eq!(recomputed.baseline_armor_class, a.baseline_armor_class, "Recompute reads the same AC");
+        assert_eq!(saved_after, saved_before, "the saved score is not rewritten");
+    }
+
+    #[test]
+    fn custom_item_bonuses_stack_by_the_engines_rule() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-stack");
+        let none = enhancement_read(&root);
+        let snapshot_none = load_saved_character_at_root(&root).unwrap().snapshot.unwrap();
+        custom_items_saved(
+            &root,
+            vec![
+                custom_item("a", "Greater Deflector", None, vec![custom_bonus("ac", "Deflection", 3), custom_bonus("save:will", "Resistance", 2)]),
+                custom_item("b", "Lesser Deflector", None, vec![custom_bonus("ac", "Deflection", 1), custom_bonus("save:will", "Resistance", 1)]),
+                custom_item("c", "Dodgy Boots", None, vec![custom_bonus("ac", "Dodge", 1)]),
+                custom_item("d", "Dodgier Boots", None, vec![custom_bonus("ac", "Dodge", 2)]),
+                custom_item("e", "Plate Patch", None, vec![custom_bonus("ac", "Armor", 5)]),
+                custom_item("f", "Bark", None, vec![custom_bonus("ac", "NaturalArmor", 2)]),
+                custom_item("g", "Curse", None, vec![custom_bonus("ac", "Deflection", -1), custom_bonus("save:will", "Untyped", 1)]),
+                custom_item("h", "Curse Two", None, vec![custom_bonus("ac", "Deflection", -1), custom_bonus("save:will", "Untyped", 1)]),
+            ],
+        );
+        for id in ["a", "b", "c", "d", "e", "f", "g", "h"] {
+            custom_item_wear(&root, id);
+        }
+        let worn = enhancement_read(&root);
+        let snapshot = load_saved_character_at_root(&root).unwrap().snapshot.unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        // Deflection the higher (3), dodge stacks (1 + 2), armor 5, natural 2, two penalties stack (-2).
+        assert_eq!(worn.armor_class, none.armor_class + 3 + 3 + 5 + 2 - 2, "AC");
+        assert_eq!(worn.touch, none.touch + 3 + 3 - 2, "armor and natural armor do not hold against touch");
+        assert_eq!(worn.flat_footed, none.flat_footed + 3 + 5 + 2 - 2, "dodge does not hold when flat-footed");
+        assert_eq!(snapshot.total_saves.will, snapshot_none.total_saves.will + 2 + 1 + 1, "resistance the higher, untyped stacks");
+    }
+
+    #[test]
+    fn custom_item_bonuses_a_slot_is_a_slot_for_stock_and_custom_items_alike() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-slot");
+        let blocked = |response: CreateCharacterResponse| match response {
+            CreateCharacterResponse::Blocked { diagnostics } => diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "),
+            other => panic!("should be refused: {other:?}"),
+        };
+        // The Chain Shirt holds the armor slot.
+        custom_items_saved(
+            &root,
+            vec![
+                custom_item("v", "Vest of Hats", Some(BodySlot::Armor), vec![]),
+                custom_item("h", "Hat of Hats", Some(BodySlot::Head), vec![]),
+                custom_item("i", "Second Hat", Some(BodySlot::Head), vec![]),
+                custom_item("r1", "Ring One", Some(BodySlot::Ring), vec![]),
+                custom_item("r2", "Ring Two", Some(BodySlot::Ring), vec![]),
+                custom_item("r3", "Ring Three", Some(BodySlot::Ring), vec![]),
+            ],
+        );
+        let vest = blocked(custom_item_set(&root, "v", ActiveState::EquippedActive));
+        assert!(vest.contains("armor slot is taken by Chain Shirt"), "{vest}");
+
+        custom_item_wear(&root, "h");
+        let hat = blocked(custom_item_set(&root, "i", ActiveState::EquippedActive));
+        assert!(hat.contains("head slot is taken by Hat of Hats"), "{hat}");
+
+        custom_item_wear(&root, "r1");
+        custom_item_wear(&root, "r2");
+        let ring = blocked(custom_item_set(&root, "r3", ActiveState::EquippedActive));
+        assert!(ring.contains("ring slot is taken by Ring One and Ring Two"), "{ring}");
+
+        // A stock item meets the worn custom hat, stowing or buying.
+        worn_vs_carried_hold(&root, "Hat of Disguise", ActiveState::SelectedInactive);
+        let stock = blocked(set_equipment_active_state_at_root(&root, "Hat of Disguise", ActiveState::EquippedActive, "2026-11-03T00:00:02Z").unwrap());
+        assert!(stock.contains("head slot is taken by Hat of Hats"), "{stock}");
+
+        // The Custom dialog cannot save around the check, and writes nothing when it refuses.
+        let on_disk = load_character_custom_at_root(&root).unwrap();
+        let mut edited = on_disk.clone();
+        edited.equipment[2].worn = true;
+        let err = save_character_custom_at_root(&root, &edited, "2026-11-03T00:00:03Z").expect_err("a second hat");
+        assert!(err.contains("head slot is taken by Hat of Hats"), "{err}");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), on_disk);
+
+        // Stowed, the slot is free again.
+        assert!(matches!(custom_item_set(&root, "h", ActiveState::SelectedInactive), CreateCharacterResponse::Saved { .. }));
+        custom_item_wear(&root, "i");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn custom_item_bonuses_a_bought_item_is_carried_with_the_reason_when_a_custom_item_holds_its_slot() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-buy");
+        custom_items_saved(&root, vec![custom_item("h", "Hat of Hats", Some(BodySlot::Head), vec![])]);
+        custom_item_wear(&root, "h");
+        let response = purchase_equipment_offer_at_root(&root, "Hat of Disguise", ActiveState::EquippedActive, "2026-11-03T00:00:02Z", PriceMode::Cashless, None)
+            .expect("purchase call should not error");
+        std::fs::remove_dir_all(&dir).ok();
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = response else { panic!("{response:?}") };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive), "{active_state:?}");
+        assert_eq!(carried_reason.as_deref(), Some("head slot is taken by Hat of Hats"));
+    }
+
+    #[test]
+    fn custom_item_bonuses_the_equipment_control_lists_an_item_that_states_a_slot_or_a_bonus() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-held");
+        custom_items_saved(
+            &root,
+            vec![
+                custom_item("h", "Hat of Hats", Some(BodySlot::Head), vec![]),
+                custom_item("c", "Lucky Coin", None, vec![custom_bonus("initiative", "Luck", 1)]),
+                custom_item("o", "Offhand Sprig", Some(BodySlot::WieldOff), vec![]),
+            ],
+        );
+        custom_item_wear(&root, "h");
+        custom_item_wear(&root, "o");
+        let held = list_held_equipment_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        let row = |id: &str| held.iter().find(|copy| copy.item_id == id).unwrap_or_else(|| panic!("no {id} in {held:?}"));
+        assert_eq!((row("custom:h").name.as_str(), row("custom:h").slot), ("Hat of Hats", BodySlot::Head));
+        assert!(matches!(row("custom:h").active_state, ActiveStateDto::EquippedActive));
+        assert!(matches!(row("custom:c").active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(row("custom:c").slot, BodySlot::None);
+        assert_eq!(row("custom:o").slot, BodySlot::WieldOff, "the Longsword holds the main hand");
+    }
+
+    #[test]
+    fn custom_item_bonuses_what_cannot_be_applied_is_refused_whole() {
+        let root = created_character("custom-bonus-invalid");
+        let item = |bonus: CustomBonusDto| custom_item("x", "Thing", None, vec![bonus]);
+        let on_equipment = |bonus: CustomBonusDto| CharacterCustomDto { equipment: vec![item(bonus)], ..Default::default() };
+        let cases = [
+            (on_equipment(custom_bonus("luck", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("skill:basket_weaving", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("save:luck", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("ability:luck", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("ac", "Fortune", 1)), "unknown bonus type"),
+            (on_equipment(custom_bonus("ac", "Luck", 0)), "value"),
+            (on_equipment(custom_bonus("ac", "Luck", 101)), "value"),
+            (CharacterCustomDto { feats: vec![item(custom_bonus("ac", "Luck", 1))], ..Default::default() }, "only custom equipment"),
+            (CharacterCustomDto { spells: vec![CustomRecordDto { slot: Some(BodySlot::Head), ..record("s", "Thing") }], ..Default::default() }, "only custom equipment"),
+            (CharacterCustomDto { devices: vec![CustomRecordDto { worn: true, ..record("d", "Thing") }], ..Default::default() }, "only custom equipment"),
+        ];
+        for (custom, needle) in cases {
+            let err = save_character_custom_at_root(&root, &custom, "2026-11-03T00:00:00Z").expect_err("must be refused");
+            assert!(err.contains(needle), "{needle:?} in {err:?}");
+        }
+        assert!(!root.join("custom.json").exists(), "and writes nothing");
+
+        // A worn item cannot take a score out of the range a grant cannot leave either.
+        let cursed = custom_item("c", "Cursed Belt", None, vec![custom_bonus("ability:strength", "Untyped", -60)]);
+        custom_items_saved(&root, vec![cursed]);
+        let refused = custom_item_set(&root, "c", ActiveState::EquippedActive);
+        assert!(matches!(&refused, CreateCharacterResponse::Blocked { diagnostics } if diagnostics[0].message.contains("outside 1..=60")), "{refused:?}");
+        assert!(!load_character_custom_at_root(&root).unwrap().equipment[0].worn);
+        let unknown = set_equipment_active_state_at_root(&root, "custom:nope", ActiveState::EquippedActive, "2026-11-03T00:00:00Z");
+        assert!(unknown.is_err_and(|err| err.contains("does not carry it")));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The form's skill list is the sheet's (`skillsModel.ts`); each row must be a target the save
+    /// accepts, or a pick the form offers would be refused.
+    #[test]
+    fn custom_item_bonuses_every_skill_the_sheet_lists_is_a_target() {
+        let source = include_str!("../../src/characterHub/skillsModel.ts");
+        let names: Vec<&str> = source.split("{ name: '").skip(1).map(|rest| rest.split('\'').next().unwrap()).take(35).collect();
+        assert_eq!((names.first().copied(), names.last().copied(), names.len()), (Some("Acrobatics"), Some("Use Magic Device"), 35));
+        for name in names {
+            let slug: String = name.to_lowercase().replace(['(', ')'], "").trim().split(|c: char| !c.is_ascii_alphanumeric()).filter(|part| !part.is_empty()).collect::<Vec<_>>().join("_");
+            assert!(crate::character_custom::bonus_target_is_known(&format!("skill:{slug}")), "{name} -> {slug}");
+        }
     }
 
     // ---- Brief 2 E2: conditions on the custom record ------------------------------------------------
