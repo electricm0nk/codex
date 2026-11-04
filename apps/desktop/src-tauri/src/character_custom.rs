@@ -18,7 +18,7 @@
 //!   the engine returned, by the same stacking rule as the `Var` fold.
 
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
 use crate::character_hub::{
@@ -261,6 +261,10 @@ struct WornBonus {
 /// A stock item's targets that reach the sheet here and in no engine total, beside `skill:<name>`.
 const ONLY_THE_LOAD_HOLDS: [&str; 5] = ["initiative", "speed", "speed_percent", "cmb", "cmd"];
 
+/// The types of an Armor Class bonus that also count on CMD (CRB p.199). A penalty to Armor Class
+/// counts whatever its type, once, for an item that does not state CMD itself.
+const ON_CMD_TOO: [&str; 8] = ["Circumstance", "Deflection", "Dodge", "Insight", "Luck", "Morale", "Profane", "Sacred"];
+
 /// What the character's worn custom items add, and what a worn stock item states on a number only the
 /// load holds: a skill's row, initiative's, CMB's and CMD's rows and the speed rows.
 /// A carried item is not in it. Same-type bonuses to one target take the higher, except a penalty, an
@@ -325,6 +329,36 @@ impl WornItemBonuses {
                 _ => true,
             }
         });
+        let stock_armor_class = stock.rows().iter().filter(|row| row.target == "ac").map(|row| WornBonus {
+            item_id: row.item_name.clone(),
+            item_name: row.item_name.clone(),
+            target: row.target.clone(),
+            bonus_type: row.bonus_type.clone().unwrap_or_else(|| UNTYPED.to_owned()),
+            value: row.value,
+        });
+        // What is left of a custom bonus is what it adds over a stock one of its type, so these sum.
+        let armor_class: Vec<WornBonus> = stock_armor_class.chain(counted.iter().filter(|row| row.target == "ac").cloned()).collect();
+        let stated_on_cmd: Vec<WornBonus> = counted.iter().filter(|row| row.target == "cmd").cloned().collect();
+        let mut from_armor_class: BTreeMap<String, i16> = BTreeMap::new();
+        for row in armor_class {
+            let adds = if row.value < 0 {
+                if stated_on_cmd.iter().any(|stated| stated.item_name == row.item_name) { 0 } else { row.value }
+            } else if !ON_CMD_TOO.contains(&row.bonus_type.as_str()) {
+                0
+            } else if bonus_always_counts(row.value, Some(&row.bonus_type)) {
+                row.value
+            } else {
+                // One type on one number takes the higher, of what AC gives it and what CMD states.
+                let stated = stated_on_cmd.iter().filter(|held| held.bonus_type == row.bonus_type).map(|held| held.value).max().unwrap_or(0);
+                let so_far = from_armor_class.entry(row.bonus_type.clone()).or_default();
+                let before = stated.max(*so_far);
+                *so_far += row.value;
+                stated.max(*so_far) - before
+            };
+            if adds != 0 {
+                counted.push(WornBonus { target: "cmd".to_owned(), value: adds, ..row });
+            }
+        }
         Self(counted)
     }
 
@@ -557,6 +591,21 @@ fn write_custom(root: &Path, custom: &CharacterCustomDto) -> Result<(), String> 
     let path = root.join(CUSTOM_FILE_NAME);
     let json = serde_json::to_string_pretty(custom).map_err(|err| format!("failed to serialize custom data: {err}"))?;
     std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+/// Copies the file beside one character to beside another; no file, nothing to copy.
+pub(crate) fn copy_character_custom(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(CUSTOM_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(CUSTOM_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
+/// Writes what an imported file states, as it states it: its ability grants are already in the
+/// file's scores, so this is not a save that applies them.
+pub(crate) fn restore_character_custom_at_root(root: &Path, custom: &CharacterCustomDto) -> Result<(), String> {
+    write_custom(root, custom)
 }
 
 pub(crate) fn load_character_custom_at_root(root: &Path) -> Result<CharacterCustomDto, String> {

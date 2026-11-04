@@ -132,6 +132,16 @@ impl WornItemStatedBonuses {
         self.total(&format!("save:{save}"))
     }
 
+    /// What is worn adds to the Strength the load limits read, and to no other use of it.
+    pub fn load_score(&self) -> i16 {
+        self.total("load_score")
+    }
+
+    /// What is worn adds to the size's multiplier on the load limits.
+    pub fn load_multiplier(&self) -> i16 {
+        self.total("load_multiplier")
+    }
+
     /// The Melee total's share of what is worn.
     pub fn attack(&self) -> i16 {
         self.total("attack")

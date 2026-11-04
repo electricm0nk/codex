@@ -22,7 +22,7 @@ use tauri::Manager;
 use uuid::Uuid;
 
 use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
-use crate::character_custom::{custom_or_empty, set_custom_item_state_at_root, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
+use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
 use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
@@ -2209,6 +2209,8 @@ pub fn clone_character(
     let new_root = resolve_character_root(&app, &request.new_character_id)?;
     SavedCharacterStore::save(&envelope, &new_root).map_err(|err| err.message)?;
 
+    copy_character_custom(&source_root, &new_root)?;
+
     // Best-effort: carry the portrait over too, if the source has one.
     let source_portrait = source_root.join(PORTRAIT_FILE_NAME);
     if source_portrait.exists() {
@@ -2764,6 +2766,7 @@ pub(crate) fn load_saved_character_at_root(
     root: &Path,
 ) -> Result<LoadSavedCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let saved_input = envelope.character_input.clone();
     // This copy is what the sheet computes from, and is never saved.
     let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
     worn_custom_items.raise_abilities(&mut envelope.character_input);
@@ -2790,6 +2793,7 @@ pub(crate) fn load_saved_character_at_root(
     let mut explanations = map_explanations_dto(&corpus_receipt.base.explanations);
     explanations.extend(sheet_skill_trait_modifier_rows(&sheet_input));
     explanations.extend(feat_budget_rows(&sheet_input, &corpus_receipt.base));
+    budget_from_the_saved_intelligence(&mut explanations, &saved_input, &sheet_input);
     let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
         &sheet_input,
         corpus_fixture_bundle(),
@@ -2824,6 +2828,29 @@ pub(crate) fn load_saved_character_at_root(
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     Ok(sheet)
+}
+
+/// A worn item's Intelligence is a bonus that comes off with the item, and a headband grants its
+/// ranks in named skills (CRB p.502), so what is spent once and kept stays on the saved score: the
+/// skill point budget and a spellbook's size. `ability_modifier.intelligence.saved` tells the sheet
+/// which modifier its own budget and languages read. A sheet no item raises holds no such row.
+fn budget_from_the_saved_intelligence(explanations: &mut Vec<ExplanationDto>, saved_input: &CharacterInput, sheet_input: &CharacterInput) {
+    let saved_score = effective_ability_scores_dto(saved_input).intelligence;
+    if saved_score == effective_ability_scores_dto(sheet_input).intelligence {
+        return;
+    }
+    let saved_rows = map_explanations_dto(&compute_pilot_with_corpus(saved_input, corpus_fixture_bundle()).base.explanations);
+    for row in explanations.iter_mut().filter(|row| row.id == "class_chassis.skill_points" || row.id.contains(".spellbook_size.") || row.id.contains(".formula_book_size.")) {
+        if let Some(saved) = saved_rows.iter().find(|saved| saved.id == row.id) {
+            row.value = saved.value;
+            row.detail = saved.detail.clone();
+        }
+    }
+    explanations.push(ExplanationDto {
+        id: "ability_modifier.intelligence.saved".to_owned(),
+        value: (saved_score - 10).div_euclid(2),
+        detail: "Intelligence modifier before worn items: the skill point budget and languages read it".to_owned(),
+    });
 }
 
 /// `chosen.equipment_selections` as its wire DTO, order preserved.
@@ -5888,6 +5915,9 @@ pub struct CharacterInputDto {
 pub struct ImportedCharacterFileDto {
     pub display_label: String,
     pub character_input: CharacterInputDto,
+    /// `custom.json`, when the character has one. A file with none is the file it always was.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub custom: Option<CharacterCustomDto>,
 }
 
 fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
@@ -6092,6 +6122,9 @@ fn import_character_from_json(
     };
 
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if let Some(custom) = &parsed.custom {
+        restore_character_custom_at_root(root, custom)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
@@ -6155,9 +6188,11 @@ pub fn import_character(
 fn export_character_to_json(root: &Path) -> Result<String, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
+    let custom = load_character_custom_at_root(root)?;
     let dto = ImportedCharacterFileDto {
         display_label: envelope.display_label,
         character_input: character_input_to_dto(&envelope.character_input),
+        custom: (custom != CharacterCustomDto::default()).then_some(custom),
     };
 
     serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
@@ -8758,10 +8793,7 @@ mod tests {
 
     // ---- Custom: GM grants and house-rule records (custom.json) -------------------------------------
 
-    use crate::character_custom::{
-        load_character_custom_at_root, save_character_custom_at_root, CharacterCustomDto, CustomBonusDto, CustomGrantDto,
-        CustomRecordDto, CustomStatDto,
-    };
+    use crate::character_custom::{save_character_custom_at_root, CustomBonusDto, CustomGrantDto, CustomRecordDto, CustomStatDto};
 
     fn grant(id: &str, target: &str, value: i32) -> CustomGrantDto {
         CustomGrantDto { id: id.to_owned(), label: format!("grant {id}"), target: target.to_owned(), value, reason: "a god's boon".to_owned() }
@@ -9943,6 +9975,164 @@ mod tests {
         assert_eq!(stowed, none, "a stowed ring");
         assert_eq!(worn.armor_class, none.armor_class + 1, "a worn ring's +1: {:?}", loaded.corpus_derived.equipment_effects);
         assert_eq!(worn.flat_footed, none.flat_footed + 1, "a deflection bonus holds when flat-footed");
+    }
+
+    // --- What the merge check of the worn-item cards found. ---
+
+    /// CRB p.199: "any circumstance, deflection, dodge, insight, luck, morale, profane, and sacred
+    /// bonuses to AC" count on CMD, and "any penalties to a creature's AC also apply".
+    #[test]
+    fn worn_item_applies_cmd_takes_the_armor_class_bonuses_the_book_names() {
+        let cmd = |root: &Path| worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap();
+        let (dir, root) = enhancement_rows_aldric("worn-cmd-ring");
+        let none = cmd(&root);
+        worn_vs_carried_hold(&root, "Ring of Protection +2", ActiveState::SelectedInactive);
+        let carried = cmd(&root);
+        worn_vs_carried_set(&root, "Ring of Protection +2", ActiveState::EquippedActive);
+        let ring = cmd(&root);
+        let detail = load_saved_character_at_root(&root).unwrap().explanations.into_iter().find(|row| row.id == "defense.combat_maneuver_defense").unwrap().detail;
+        worn_vs_carried_hold(&root, "Ioun Stone (Dusty rose Prism)", ActiveState::EquippedActive);
+        let stone = cmd(&root);
+        worn_vs_carried_hold(&root, "Amulet of Natural Armor +1", ActiveState::EquippedActive);
+        let amulet = cmd(&root);
+        custom_items_saved(&root, vec![
+            custom_item("high", "High Ward", None, vec![custom_bonus("ac", "Deflection", 3)]),
+            custom_item("armor", "Thick Coat", None, vec![custom_bonus("ac", "Armor", 9)]),
+            custom_item("luck", "Charm", None, vec![custom_bonus("ac", "Luck", 1), custom_bonus("cmd", "Luck", 2)]),
+        ]);
+        custom_item_wear(&root, "high");
+        let high = cmd(&root);
+        custom_item_wear(&root, "armor");
+        let armor = cmd(&root);
+        custom_item_wear(&root, "luck");
+        let luck = cmd(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(ring, none + 2, "a deflection bonus counts");
+        assert!(detail.contains("Ring of Protection +2"), "the row says what moved it: {detail}");
+        assert_eq!(stone, ring + 1, "an insight bonus counts");
+        assert_eq!(amulet, stone, "a natural armor bonus does not");
+        assert_eq!(high, amulet + 1, "a custom +3 over the ring's +2 is +3 in all");
+        assert_eq!(armor, high, "an armor bonus does not");
+        assert_eq!(luck, armor + 2, "a luck +1 on AC and a luck +2 on CMD take the higher");
+    }
+
+    /// An Armor Class penalty counts on CMD, once when the item also states CMD itself.
+    #[test]
+    fn worn_item_applies_cmd_takes_an_armor_class_penalty_once() {
+        let cmd = |root: &Path| worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap();
+        let (dir, root) = enhancement_rows_aldric("worn-cmd-penalty");
+        let none = cmd(&root);
+        worn_vs_carried_hold(&root, "Goggles of Far Sight", ActiveState::EquippedActive);
+        let goggles = cmd(&root);
+        worn_vs_carried_set(&root, "Goggles of Far Sight", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Unlucky Figurine", ActiveState::EquippedActive);
+        let figurine = cmd(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(goggles, none - 1);
+        assert_eq!(figurine, none - 2, "its -2 on AC and its -2 on CMD are one penalty");
+    }
+
+    /// CRB p.502: a headband is a temporary bonus and grants ranks in named skills, not skill points
+    /// per level. What it moves it moves, and the budget stays on the saved score.
+    #[test]
+    fn worn_item_applies_intelligence_moves_the_spell_numbers_and_not_the_skill_budget() {
+        let item = "Headband of Vast Intelligence +2";
+        let dir = tempdir("worn-int");
+        seed_default_characters_at(&dir, "0.0.0-test").expect("seeding succeeds");
+        let root = characters_root_from_app_data_dir(&dir).join(SECOND_SEED_CHARACTER_ID);
+        let saved = "ability_modifier.intelligence.saved";
+        let book = "class_spell.wizard.spellbook_size.spell_level_1_and_higher";
+        let none = load_saved_character_at_root(&root).unwrap();
+        let read = |sheet: &LoadSavedCharacterResponse, id: &str| sheet.explanations.iter().find(|row| row.id == id).map(|row| row.value);
+        worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+        let carried = load_saved_character_at_root(&root).unwrap();
+        worn_vs_carried_set(&root, item, ActiveState::EquippedActive);
+        let worn = load_saved_character_at_root(&root).unwrap();
+        custom_items_saved(&root, vec![custom_item("c", "Wit Charm", None, vec![custom_bonus("ability:intelligence", "Insight", 2)])]);
+        custom_item_wear(&root, "c");
+        let with_custom = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(read(&none, saved), None, "no row on a sheet the item does not move");
+        assert_eq!(read(&carried, saved), None);
+        assert_eq!(worn.snapshot.as_ref().unwrap().ability_modifiers.intelligence, 5);
+        assert_eq!(read(&worn, "class_chassis.wizard.spell_save_dc.spell_level_1"), Some(16), "a spell's DC moves");
+        assert_eq!(read(&worn, saved), Some(4), "what the sheet budgets skill points from");
+        assert_eq!(read(&worn, "class_chassis.skill_points"), read(&none, "class_chassis.skill_points"));
+        assert_eq!(read(&worn, book), read(&none, book), "a spellbook's size is the saved score's");
+        assert_eq!(read(&with_custom, saved), Some(4), "a custom item's score is the same");
+        assert_eq!(read(&with_custom, "class_chassis.skill_points"), read(&none, "class_chassis.skill_points"));
+    }
+
+    /// APG p.308 `VAR|LOADSCORE|8`: Strength for carrying capacity only. UE p.212 `LOADMULT|TYPE=SIZE|3`:
+    /// the pinned oracle adds it to the size's multiplier (`LoadFacet.getLoadMultForSize`).
+    #[test]
+    fn worn_item_applies_load_numbers_move_the_load_limits() {
+        let limits = |root: &Path| {
+            let loaded = load_saved_character_at_root(root).unwrap();
+            let load = &loaded.corpus_derived.encumbrance;
+            (load.light_max_lbs, load.medium_max_lbs, load.heavy_max_lbs, loaded.ability_scores.strength)
+        };
+        let (dir, root) = enhancement_rows_aldric("worn-load");
+        let none = limits(&root);
+        worn_vs_carried_hold(&root, "Muleback Cords", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Heavyload Belt", ActiveState::SelectedInactive);
+        let carried = limits(&root);
+        worn_vs_carried_set(&root, "Muleback Cords", ActiveState::EquippedActive);
+        let cords = limits(&root);
+        worn_vs_carried_set(&root, "Muleback Cords", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "Heavyload Belt", ActiveState::EquippedActive);
+        let belt = limits(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!((none.0, none.1, none.2, none.3), (116.0, 233.0, 350.0, 19), "Aldric's Strength 19");
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(cords, (346.0, 693.0, 1040.0, 19), "Strength 27's row, and the score does not move");
+        assert_eq!(belt, (466.0, 933.0, 1400.0, 19), "four times Medium's heavy load, and its tiers");
+    }
+
+    /// A clone is the same character, Custom tab and all.
+    #[test]
+    fn worn_item_applies_custom_items_come_along_on_a_clone_and_a_round_trip() {
+        let (dir, root) = enhancement_rows_aldric("worn-custom-copies");
+        let plain = export_character_to_json(&root).unwrap();
+        custom_items_saved(&root, vec![custom_item("c", "Lucky Hat", Some(BodySlot::Head), vec![custom_bonus("ac", "Deflection", 2)])]);
+        custom_item_wear(&root, "c");
+        let worn = enhancement_read(&root);
+
+        let clone_root = tempdir("worn-custom-clone");
+        copy_character_custom(&root, &clone_root).expect("copies");
+        let cloned = load_character_custom_at_root(&clone_root).unwrap();
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("worn-custom-import");
+        let response = import_character_from_json(&file, &import_root, "imported", "2026-11-03T00:00:00Z", "0.0.0-test").unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let imported = enhancement_read(&import_root);
+        let refused = slot_conflict_wear_helm(&import_root);
+        let empty_root = tempdir("worn-custom-empty");
+        copy_character_custom(&empty_root, &clone_root).expect("no file is no copy");
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&clone_root).ok();
+        std::fs::remove_dir_all(&import_root).ok();
+        std::fs::remove_dir_all(&empty_root).ok();
+
+        assert_eq!(cloned.equipment.len(), 1);
+        assert!(cloned.equipment[0].worn, "still worn");
+        assert!(!plain.contains("\"custom\""), "a character with no custom data writes the file it always wrote");
+        assert_eq!(imported, worn, "the file's worn item applies");
+        assert!(refused.contains("head slot is taken by Lucky Hat"), "and holds its slot: {refused}");
+    }
+
+    fn slot_conflict_wear_helm(root: &Path) -> String {
+        worn_vs_carried_hold(root, "Helm of Brilliance", ActiveState::SelectedInactive);
+        match set_equipment_active_state_at_root(root, "Helm of Brilliance", ActiveState::EquippedActive, "2026-11-03T00:02:00Z").unwrap() {
+            CreateCharacterResponse::Blocked { diagnostics } => diagnostics[0].message.clone(),
+            other => format!("{other:?}"),
+        }
     }
 
     // --- A worn item's stated numbers reach the totals (`decisions.md §9`, DoD 5). ---

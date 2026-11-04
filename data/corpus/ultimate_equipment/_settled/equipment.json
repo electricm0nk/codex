@@ -32085,7 +32085,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": null,
+            "target": "load_multiplier",
+            "value": 3
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [],
         "weapon_enhancement": null,

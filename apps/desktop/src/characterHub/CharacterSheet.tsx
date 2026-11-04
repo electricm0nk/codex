@@ -46,7 +46,7 @@ import { buildPrintCss, printableTabs } from './printLayout';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
-import { EMPTY_CUSTOM, customIsEmpty, withCustomHitPoints, withCustomSkillPoints, withItemHitPoints, withItemSpeed, type CharacterCustom } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, savedIntelligenceModifier, withCustomHitPoints, withCustomSkillPoints, withItemHitPoints, withItemSpeed, type CharacterCustom } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -458,7 +458,8 @@ function SkillsPanel(props: {
   };
 
   const spent = skillPointsSpent(props.allocation);
-  const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman), props.custom);
+  const budgetIntelligence = savedIntelligenceModifier(props.abilities.intelligence, props.explanations);
+  const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, budgetIntelligence, props.isHuman), props.custom);
   const remaining = available === null ? null : available - spent;
   // SD-36 F6a: a held class the engine's class-skill reader cannot answer is named with its
   // reason, not silently scored as all-cross-class.
@@ -541,7 +542,7 @@ function SkillsPanel(props: {
         Languages
       </p>
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', margin: 0 }}>
-        {spokenLanguages(props.abilities.intelligence).join(', ')}
+        {spokenLanguages(budgetIntelligence).join(', ')}
       </p>
     </StatBox>
   );
@@ -4126,7 +4127,8 @@ export function CharacterSheet(props: {
   const casterLevelSummary = summarizeCasterLevel(heldClasses, classFacts);
   const classSkills = classSkillLookup(heldClasses, classFacts);
   const isHuman = props.row.raceLabel.toLowerCase() === 'human';
-  const skillPointsFor = (benefit: LevelEntry) => totalSkillPoints(benefit.skillPointsBase, abilities.intelligence, isHuman);
+  const budgetIntelligence = savedIntelligenceModifier(abilities.intelligence, engineRecords.explanations);
+  const skillPointsFor = (benefit: LevelEntry) => totalSkillPoints(benefit.skillPointsBase, budgetIntelligence, isHuman);
 
   // Every character level already taken (numbered by character level), then the
   // next level available for each held class.
@@ -4372,7 +4374,7 @@ export function CharacterSheet(props: {
               onClose={() => setLevelUpOpen(false)}
               characterId={props.row.characterId}
               heldClasses={heldClasses}
-              intelligenceModifier={abilities.intelligence}
+              intelligenceModifier={budgetIntelligence}
               isHuman={isHuman}
               onAccept={handleLevelUpAccept}
             />
@@ -4804,7 +4806,7 @@ export function CharacterSheet(props: {
         classSkills={classSkills}
         characterLevel={level}
         abilities={abilities}
-        totalPoints={withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman), custom)}
+        totalPoints={withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, budgetIntelligence, isHuman), custom)}
         allocation={skillAllocation}
         featSkillBonuses={engineRecords.featSkillBonuses}
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}

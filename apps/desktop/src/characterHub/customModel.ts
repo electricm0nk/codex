@@ -148,6 +148,14 @@ export function withItemSpeed(land: string, explanations: readonly ExplanationDt
   return `${Math.max(0, Math.floor((moved * percent) / 100))} ft.`;
 }
 
+/**
+ * The Intelligence modifier the skill point budget and languages read: the saved score's, the engine's
+ * `ability_modifier.intelligence.saved` row, when a worn item raises the sheet's.
+ */
+export function savedIntelligenceModifier(sheetModifier: number, explanations: readonly ExplanationDto[]): number {
+  return explanations.find((row) => row.id === 'ability_modifier.intelligence.saved')?.value ?? sheetModifier;
+}
+
 /** The hit point total with the engine's `custom_item.hit_points` row; an unknown total stays unknown. */
 export function withItemHitPoints(total: number | null, explanations: readonly ExplanationDto[]): number | null {
   return total === null ? null : total + itemRowValue(explanations, 'custom_item.hit_points');

@@ -60,7 +60,7 @@
 //! `FACT:BaseSize|<code>` token. Callers pass a `SizeCategory` in.
 
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
-use crate::rules_core::equipment_effects::stand_in_record;
+use crate::rules_core::equipment_effects::{stand_in_record, worn_item_stated_bonuses};
 use crate::rules_core::equipment_resolver::equipment_converted_resolve;
 use crate::rules_core::size::SizeCategory;
 use crate::rules_core::source_content::SourcePackageContent;
@@ -157,6 +157,23 @@ fn tiers_for_heavy_load(heavy_load: i64, size: SizeCategory) -> CarryingCapacity
         medium_max_lbs: (scaled * 2 / (denominator * 3)) as f64,
         // ENCUMBRANCE:Heavy|1
         heavy_max_lbs: (scaled / denominator) as f64,
+    }
+}
+
+/// `added` on the size's multiplier: the pinned oracle's `LoadFacet.getLoadMultForSize`, which adds
+/// `BONUS:LOADMULT|TYPE=SIZE` to it. The tiers follow from the heavy load, truncated.
+fn thresholds_with_size_multiplier(thresholds: CarryingCapacityThresholds, size: SizeCategory, added: i16) -> CarryingCapacityThresholds {
+    if added == 0 {
+        return thresholds;
+    }
+    let (numerator, denominator) = size.load_capacity_ratio();
+    let heavy = (thresholds.heavy_max_lbs * (numerator + i64::from(added) * denominator) as f64 / numerator as f64).floor();
+    CarryingCapacityThresholds {
+        // ENCUMBRANCE:Light|1/3
+        light_max_lbs: (heavy / 3.0).floor(),
+        // ENCUMBRANCE:Medium|2/3
+        medium_max_lbs: (heavy * 2.0 / 3.0).floor(),
+        heavy_max_lbs: heavy,
     }
 }
 
@@ -410,7 +427,8 @@ pub fn compute_encumbrance(
         per_item.push(CarriedItem { item_id: selection.item_id.clone(), weight_lbs, cost_gp });
     }
 
-    let thresholds = carrying_capacity_thresholds(strength_score, size);
+    let worn = worn_item_stated_bonuses(equipment_selections, corpus);
+    let thresholds = thresholds_with_size_multiplier(carrying_capacity_thresholds(strength_score + worn.load_score(), size), size, worn.load_multiplier());
     let level = classify_encumbrance(total_carried_weight_lbs, &thresholds);
 
     EncumbranceComputation {

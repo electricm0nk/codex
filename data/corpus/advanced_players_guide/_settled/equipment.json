@@ -1332,7 +1332,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": "Masterwork",
+            "target": "load_score",
+            "value": 1
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [
           {
@@ -9535,7 +9541,13 @@
           "max_dex": null,
           "spell_failure": null
         },
-        "stated_bonuses": [],
+        "stated_bonuses": [
+          {
+            "bonus_type": null,
+            "target": "load_score",
+            "value": 8
+          }
+        ],
         "states_base_damage": false,
         "var_bonuses": [
           {

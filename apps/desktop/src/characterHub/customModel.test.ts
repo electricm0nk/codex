@@ -17,6 +17,7 @@ import {
   newRecord,
   withCustomHitPoints,
   withItemHitPoints,
+  savedIntelligenceModifier,
   withItemSpeed,
   withCustomSkillPoints,
   type CharacterCustom,
@@ -108,6 +109,8 @@ function verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow() {
     { id: 'custom_item.speed', value: 10, detail: '' },
     { id: 'custom_item.hit_points', value: 7, detail: '' },
   ];
+  assertEqual(savedIntelligenceModifier(5, [{ id: 'ability_modifier.intelligence.saved', value: 4, detail: '' }]), 4, 'a worn item does not move the budget');
+  assertEqual(savedIntelligenceModifier(4, []), 4, 'no row, the sheet\'s modifier');
   assertEqual(withItemSpeed('30 ft.', rows), '40 ft.', 'the row moves it');
   assertEqual(withItemSpeed('30 ft.', []), '30 ft.', 'no row, no change');
   assertEqual(withItemSpeed('Unknown', rows), 'Unknown', 'an unknown speed stays unknown');

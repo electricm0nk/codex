@@ -692,7 +692,7 @@ fn speed_target(mode: &str) -> Option<&'static str> {
 const SPEED_MULTIPLIER_WORD: &str = "Percent of speed";
 
 /// Every standing bonus the record states on a save, an ability score, a skill or a set of skills,
-/// attack, initiative, land speed, CMB or CMD, and a multiplier on land speed.
+/// attack, initiative, land speed, CMB or CMD, a multiplier on land speed, and the load limits.
 fn stated_bonuses_of(record: &EquipmentRecord) -> Vec<StatedBonus> {
     let mut stated = Vec::new();
     for bonus in &record.bonus_chains {
@@ -724,11 +724,13 @@ fn stated_bonuses_of(record: &EquipmentRecord) -> Vec<StatedBonus> {
                 .filter_map(|name| match name {
                     "CMB" => Some("cmb"),
                     "CMD" => Some("cmd"),
+                    "LOADSCORE" => Some("load_score"),
                     _ => name.split_once("Save_").and_then(|(save, _)| save_target(save)),
                 })
                 .map(str::to_string)
                 .collect(),
             "COMBAT" => names.filter_map(combat_target).map(str::to_string).collect(),
+            "LOADMULT" if qualifiers[1] == "TYPE=SIZE" => vec!["load_multiplier".to_owned()],
             "MOVEADD" | "POSTMOVEADD" => names.filter_map(speed_target).map(str::to_string).collect(),
             _ => continue,
         };
