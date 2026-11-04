@@ -73,9 +73,10 @@ use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
 
+use crate::character_custom::custom_or_empty;
 use crate::character_hub::{
-    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_summary_dto,
-    summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
+    class_alignment_refusal_at_root, load_refusal_at_root, map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto,
+    map_summary_dto, summarize_envelope, CreateCharacterRequest, CreateCharacterResponse, DiagnosticDto,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
 use crate::character_ledger::{ledger_after_change_at_root, write_character_ledger_at_root};
@@ -1068,6 +1069,17 @@ pub(crate) fn mutate_saved_character_at_root(
     saved_at: &str,
     mutate: impl FnOnce(&mut CharacterInput),
 ) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_unless_at_root(root, saved_at, mutate, |_| None)
+}
+
+/// [`mutate_saved_character_at_root`], with one more refusal over the state the change would leave:
+/// `refuse` reads the same computation the save would rest on, and nothing is written when it answers.
+pub(crate) fn mutate_saved_character_unless_at_root(
+    root: &Path,
+    saved_at: &str,
+    mutate: impl FnOnce(&mut CharacterInput),
+    refuse: impl FnOnce(&CorpusPilotReceipt) -> Option<DiagnosticDto>,
+) -> Result<CreateCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let before = envelope.character_input.clone();
 
@@ -1082,6 +1094,9 @@ pub(crate) fn mutate_saved_character_at_root(
                 });
             }
         };
+    if let Some(diagnostic) = refuse(&corpus_receipt) {
+        return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] });
+    }
 
     let next_revision_id =
         next_mutation_revision_id(&envelope.character_id, &envelope.revision_id);
@@ -1199,6 +1214,9 @@ pub(crate) fn level_up_character_at_root(
     skill_allocations: Option<Vec<SkillAllocation>>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    if let Some(diagnostic) = class_alignment_refusal_at_root(root, class_id) {
+        return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] });
+    }
     mutate_saved_character_at_root(root, saved_at, |character_input| {
         apply_level_up_choices(character_input, class_id, additional_choices, skill_allocations);
     })
@@ -1231,9 +1249,13 @@ pub(crate) fn add_equipment_selection_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_equipment_selection(character_input, item_id, active_state);
-    })
+    let refuse = load_refusal_at_root(root, item_id);
+    mutate_saved_character_unless_at_root(
+        root,
+        saved_at,
+        |character_input| apply_add_equipment_selection(character_input, item_id, active_state),
+        refuse,
+    )
 }
 
 /// v0.6 alpha swarm items 1+27 sub-task 6: appends `modifier_item_id` onto
@@ -1366,9 +1388,53 @@ pub(crate) fn add_spell_selection_at_root(
     acquisition_mode: AcquisitionMode,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_spell_selection(character_input, spell_id, source_class_id, acquisition_mode);
+    add_spell_under_overrides_at_root(root, spell_id, source_class_id, |source| {
+        mutate_saved_character_at_root(root, saved_at, |character_input| {
+            apply_add_spell_selection(character_input, spell_id, source, acquisition_mode);
+        })
     })
+}
+
+/// The `source_class_id` of a spell the `spells_outside_class_list` override let in. It belongs to no
+/// class's list, slots or known count, so the engine's per-class rules do not read it, and the record
+/// itself says how the spell got here.
+pub(crate) const OVERRIDE_SPELL_SOURCE: &str = "override:spells_outside_class_list";
+
+/// Why `class_id` cannot hold this spell at all, whatever its level: off its list, or a class that
+/// does not cast. A class whose list was never ingested has nothing to refuse from.
+fn spell_outside_class_list(class_id: &str, spell_id: &str) -> Option<String> {
+    use crate::class_spell_levels::{build_class_spell_levels, SpellcastingStatus};
+    let answer = build_class_spell_levels(&[class_id.to_owned()]).classes.pop()?;
+    if answer.spellcasting == SpellcastingStatus::NonCaster {
+        let class_name = class_id.strip_prefix("class:").unwrap_or(class_id);
+        return Some(format!("a {class_name} does not cast spells, so no {class_name} can learn '{spell_id}'"));
+    }
+    codex::rules_core::pilot_compute::class_spell_membership_refusal(class_id, spell_id)
+}
+
+/// The spell add path's gate. Flag off, a spell outside the class's list is refused here for every
+/// class, where the engine only checks the classes with a known-spell rule. Flag on, the same spell,
+/// or one the engine's rules for that class refuse (a level the class has no slot for), is saved
+/// under [`OVERRIDE_SPELL_SOURCE`]; `add` does the save for a given source class.
+fn add_spell_under_overrides_at_root(
+    root: &Path,
+    spell_id: &str,
+    source_class_id: &str,
+    add: impl Fn(&str) -> Result<CreateCharacterResponse, String>,
+) -> Result<CreateCharacterResponse, String> {
+    let admitted = custom_or_empty(root).overrides.spells_outside_class_list;
+    let outside = spell_outside_class_list(source_class_id, spell_id);
+    match (admitted, outside) {
+        (false, Some(message)) => Ok(CreateCharacterResponse::Blocked {
+            diagnostics: vec![DiagnosticDto { id: "spell.outside_class_list".to_owned(), message, claim_blocking: true }],
+        }),
+        (false, None) => add(source_class_id),
+        (true, Some(_)) => add(OVERRIDE_SPELL_SOURCE),
+        (true, None) => match add(source_class_id)? {
+            CreateCharacterResponse::Blocked { .. } => add(OVERRIDE_SPELL_SOURCE),
+            saved => Ok(saved),
+        },
+    }
 }
 
 /// Appends BOTH a `Known` and a `Prepared` entry for the same spell, in one
@@ -1412,8 +1478,10 @@ pub(crate) fn record_and_prepare_spell_selection_at_root(
     source_class_id: &str,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_record_and_prepare_spell_selection(character_input, spell_id, source_class_id);
+    add_spell_under_overrides_at_root(root, spell_id, source_class_id, |source| {
+        mutate_saved_character_at_root(root, saved_at, |character_input| {
+            apply_record_and_prepare_spell_selection(character_input, spell_id, source);
+        })
     })
 }
 

@@ -46,7 +46,7 @@ import { buildPrintCss, printableTabs } from './printLayout';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
-import { EMPTY_CUSTOM, customIsEmpty, savedIntelligenceModifier, withCustomHitPoints, withCustomSkillPoints, withItemHitPoints, withItemSpeed, type CharacterCustom } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomHitPoints, withCustomSkillPoints, withItemHitPoints, withItemSpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -124,6 +124,7 @@ import {
   parseHeldClasses,
   previewLevelUp,
   readFeatBudget,
+  withBudgetOverride,
   totalCharacterLevel,
   totalSkillPoints,
   type FeatBudgetView,
@@ -3438,6 +3439,9 @@ export function CharacterSheet(props: {
       WIZARD_CLASS_ID
     );
     const catalog = await listSpells({ nameContains: null, school: null });
+    if (customOverrides(custom).spellsOutsideClassList) {
+      return mapSpellCatalogEntries(catalog.entries);
+    }
     if (!routing) {
       // No held class to attribute a pick to. `handleAddSpell` refuses the
       // pick anyway with its own message; narrowing against a class that
@@ -3512,7 +3516,11 @@ export function CharacterSheet(props: {
         setMutationError(refresh.message);
         return;
       }
-      props.onDetailRefreshed(refresh.detail);
+      // Under the override the backend may save the spell under its own source, which `newSpells`
+      // above cannot know, so the saved character is read back.
+      props.onDetailRefreshed(
+        customOverrides(custom).spellsOutsideClassList ? await loadSavedCharacterDetail({ characterId: props.row.characterId }) : refresh.detail
+      );
       // A spell add changes the caster's own `class_spell.*` records.
       await refreshEngineRecords();
     } catch (cause: unknown) {
@@ -4066,6 +4074,17 @@ export function CharacterSheet(props: {
     }
   }
 
+  /** One Overrides checkbox: saved at once, and every number follows, as a dialog save does. */
+  async function handleOverrideChange(key: keyof CustomOverrides, on: boolean) {
+    setCustomError(null);
+    try {
+      setCustom(await saveCharacterCustom(props.row.characterId, withOverride(custom, key, on), new Date().toISOString()));
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setCustomError(`The override was not saved: ${cause instanceof Error ? cause.message : String(cause)}`);
+    }
+  }
+
   async function handleSkillAllocationAccept(draft: Record<string, number>) {
     setMutationError(null);
     try {
@@ -4253,7 +4272,7 @@ export function CharacterSheet(props: {
     // reason, never offered-then-refused.
     loadFeats: () =>
       listFeatsForCharacter(props.row.characterId, { nameContains: null, category: null }).then((response) =>
-        mapFeatCatalogEntries(response.entries)
+        mapFeatCatalogEntries(response.entries, customOverrides(custom).featsWithoutPrerequisites)
       ),
     loadFeatTargets: () => {
       const kind = pendingFeatTarget?.targetKind ?? null;
@@ -4594,7 +4613,7 @@ export function CharacterSheet(props: {
               selectedFeats={props.detail?.selectedFeats ?? []}
               selectedTraits={props.detail?.selectedTraits ?? []}
               chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
-              featBudget={readFeatBudget(engineRecords.explanations)}
+              featBudget={withBudgetOverride(readFeatBudget(engineRecords.explanations), customOverrides(custom).ignoreFeatBudget)}
               onAddFeat={() => setItemPickerOpen('feat')}
               onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
               onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
@@ -4603,7 +4622,7 @@ export function CharacterSheet(props: {
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
                 ) : name === 'Custom' ? (
-                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} />
+                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} onOverrideChange={(key, on) => void handleOverrideChange(key, on)} />
                 ) : (
                   <ActionsTab
                     levelEntries={currentBenefits}

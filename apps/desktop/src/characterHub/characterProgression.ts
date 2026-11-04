@@ -248,6 +248,11 @@ export function readFeatBudget(rows: ReadonlyArray<{ id: string; value: number }
   return { pools: list, overBy, canAdd: addBlockedReason === null, addBlockedReason };
 }
 
+/** Under the feat budget override the Add button stays live; the badge and the pool lines still say what is spent. */
+export function withBudgetOverride(budget: FeatBudgetView, ignored: boolean): FeatBudgetView {
+  return ignored ? { ...budget, canAdd: true, addBlockedReason: null } : budget;
+}
+
 /** The pools any feat can fill: what Create lets the player pick. Class bonus feats are chosen on the sheet. */
 const OPEN_FEAT_POOLS: ReadonlySet<string> = new Set(['level', 'racial', 'bonus']);
 

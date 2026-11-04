@@ -1,5 +1,5 @@
 import { wornLabel } from './EquipmentPanel';
-import { CUSTOM_RECORD_KINDS, bonusLine, customIsEmpty, customItemPlace, grantTargetLabel, type CharacterCustom, type CustomRecord } from './customModel';
+import { CUSTOM_RECORD_KINDS, OVERRIDE_TOGGLES, bonusLine, customIsEmpty, customItemPlace, customOverrides, grantTargetLabel, type CharacterCustom, type CustomOverrides, type CustomRecord } from './customModel';
 
 /** `Worn, Head` or `Carried`; the Gear tab's Equipment control moves it. */
 function placeLine(record: CustomRecord): string | null {
@@ -16,8 +16,15 @@ function placeLine(record: CustomRecord): string | null {
  * equipment, spells and magic devices, with their stat lines and descriptions. Printed with the sheet
  * when there is anything to print. Editing opens the Custom dialog.
  */
-export function CustomTab(props: { custom: CharacterCustom; loading: boolean; error: string | null; onEdit: () => void }) {
+export function CustomTab(props: {
+  custom: CharacterCustom;
+  loading: boolean;
+  error: string | null;
+  onEdit: () => void;
+  onOverrideChange: (key: keyof CustomOverrides, on: boolean) => void;
+}) {
   const empty = customIsEmpty(props.custom);
+  const overrides = customOverrides(props.custom);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <div className="no-print" style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
@@ -33,6 +40,22 @@ export function CustomTab(props: { custom: CharacterCustom; loading: boolean; er
         </button>
       </div>
       {props.error !== null ? <p role="alert" style={{ color: 'var(--color-error)', margin: 0 }}>{props.error}</p> : null}
+      {props.loading ? null : (
+        <fieldset aria-label="Overrides" className="no-print" style={{ border: '1px solid var(--color-border)', borderRadius: 6, margin: 0, padding: '0.5rem 0.75rem' }}>
+          <legend style={{ fontSize: '1rem', fontWeight: 600 }}>Overrides</legend>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', margin: '0 0 0.4rem' }}>
+            Lets this character do what the rules would refuse.
+          </p>
+          <div style={{ display: 'grid', gap: '0.2rem 1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))' }}>
+            {OVERRIDE_TOGGLES.map(({ key, label }) => (
+              <label key={key} style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
+                <input type="checkbox" checked={overrides[key]} onChange={(event) => props.onOverrideChange(key, event.target.checked)} />
+                {label}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
       {props.loading ? <p style={{ margin: 0 }}>Loading…</p> : null}
       {!props.loading && empty && props.error === null ? (
         <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Nothing custom yet.</p>

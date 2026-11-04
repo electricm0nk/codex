@@ -387,6 +387,23 @@ impl PrereqFacts {
         PrereqFacts { package, held, facts, feat_index: feat_rule_index(package) }
     }
 
+    /// Why a character of `alignment` (`"LG"`) may not hold this feat, or `None`, including when the
+    /// feat has no converted record to read.
+    pub fn feat_alignment_unmet(&self, feat_key: &str, alignment: &str) -> Option<String> {
+        let id = self.feat_index.get(&crate::rules_core::feat_identity::fold(feat_key))?;
+        self.rule_alignment_unmet(id, alignment)
+    }
+
+    /// The same for a class, by its slug (`paladin`).
+    pub fn class_alignment_unmet(&self, class_slug: &str, alignment: &str) -> Option<String> {
+        self.rule_alignment_unmet(self.package.find("class", class_slug)?, alignment)
+    }
+
+    fn rule_alignment_unmet(&self, id: &str, alignment: &str) -> Option<String> {
+        let gate = &self.package.rule(id)?.applies;
+        converted_gate::alignment_unmet(self.package, &self.held, &self.facts, gate, alignment)
+    }
+
     /// The same, reading this checkout's own `data/sheet_rules/` package
     /// ([`corpus_loader::live_sheet_rules`](crate::rules_core::corpus_loader::live_sheet_rules)).
     /// `None` when that package is unavailable — never a verdict.

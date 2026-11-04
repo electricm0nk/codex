@@ -56,6 +56,52 @@ export interface CharacterCustom {
   devices: CustomRecord[];
   /** Conditions the character is under (`'Shaken'`); empty means the sheet shows `Normal`. */
   conditions: string[];
+  /** What the GM lets this character do without qualifying; the backend sends all eight. */
+  overrides?: CustomOverrides;
+}
+
+/** The backend's `Overrides`: each flag is read by the command enforcing that rule. */
+export interface CustomOverrides {
+  featsWithoutPrerequisites: boolean;
+  weaponsWithoutProficiency: boolean;
+  spellsOutsideClassList: boolean;
+  armorWithoutProficiency: boolean;
+  ignoreSlotLimits: boolean;
+  ignoreFeatBudget: boolean;
+  ignoreAlignmentRestrictions: boolean;
+  ignoreEncumbrance: boolean;
+}
+
+export const NO_OVERRIDES: CustomOverrides = {
+  featsWithoutPrerequisites: false,
+  weaponsWithoutProficiency: false,
+  spellsOutsideClassList: false,
+  armorWithoutProficiency: false,
+  ignoreSlotLimits: false,
+  ignoreFeatBudget: false,
+  ignoreAlignmentRestrictions: false,
+  ignoreEncumbrance: false,
+};
+
+/** The Custom tab's Overrides group, one checkbox each. */
+export const OVERRIDE_TOGGLES: ReadonlyArray<{ key: keyof CustomOverrides; label: string }> = [
+  { key: 'featsWithoutPrerequisites', label: 'Feats without prerequisites' },
+  { key: 'weaponsWithoutProficiency', label: 'Weapons without proficiency' },
+  { key: 'spellsOutsideClassList', label: 'Spells outside the class list or level' },
+  { key: 'armorWithoutProficiency', label: 'Armor and shields without proficiency' },
+  { key: 'ignoreSlotLimits', label: 'Ignore body slot limits' },
+  { key: 'ignoreFeatBudget', label: 'Ignore the feat budget' },
+  { key: 'ignoreAlignmentRestrictions', label: 'Ignore alignment restrictions' },
+  { key: 'ignoreEncumbrance', label: 'Ignore encumbrance' },
+];
+
+/** The character's flags, all off for data saved before they existed. */
+export function customOverrides(custom: CharacterCustom): CustomOverrides {
+  return { ...NO_OVERRIDES, ...custom.overrides };
+}
+
+export function withOverride(custom: CharacterCustom, key: keyof CustomOverrides, on: boolean): CharacterCustom {
+  return { ...custom, overrides: { ...customOverrides(custom), [key]: on } };
 }
 
 export const EMPTY_CUSTOM: CharacterCustom = { grants: [], feats: [], equipment: [], spells: [], devices: [], conditions: [] };

@@ -98,4 +98,21 @@ for (const kind of ['spell', 'featTarget', 'modifier'] as const) {
   assertEqual(buildItemPickerConfig(kind, deps)?.offersHideUnavailable, undefined, `${kind} does not`);
 }
 
+// Under the prerequisites override the same unmet row can be added, and still says what it lacks.
+const ADMITTED = mapFeatCatalogEntries(
+  [
+    entry('Improved Two-Weapon Fighting', {
+      eligible: false,
+      unavailableReason: 'requires base attack bonus at least 6',
+      met: [],
+      unmet: ['base attack bonus at least 6'],
+      unverified: [],
+      prerequisiteCount: 1,
+    }),
+  ],
+  true
+);
+assertEqual(ADMITTED[0].disabled, false, 'the override lets the unmet feat be picked');
+assert(ADMITTED[0].unverifiedNote?.includes('base attack bonus at least 6') === true, 'and the row still names what is missing');
+
 console.log('featPickerHideUnmet.test.ts: all assertions passed');

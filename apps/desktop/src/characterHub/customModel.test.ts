@@ -8,6 +8,10 @@ import {
   bonusLine,
   customItemPlace,
   customIsEmpty,
+  customOverrides,
+  NO_OVERRIDES,
+  OVERRIDE_TOGGLES,
+  withOverride,
   customProblems,
   customSummaryLines,
   grantTargetLabel,
@@ -130,6 +134,18 @@ function verifiesTheMarketCannotSellACustomItem() {
   assertEqual(sellableCopies([copy('item:longsword'), copy('custom:a')]).map((row) => row.itemId).join(), 'item:longsword', 'the custom row is off the Sell list');
 }
 
+function verifiesTheOverridesGroupHoldsTheBackendsEightFlags() {
+  assertEqual(OVERRIDE_TOGGLES.length, 8, 'eight toggles');
+  assertEqual(new Set(OVERRIDE_TOGGLES.map((toggle) => toggle.key)).size, 8, 'each flag once');
+  assertEqual(OVERRIDE_TOGGLES.map((toggle) => toggle.key).sort().join(), Object.keys(NO_OVERRIDES).sort().join(), 'every flag has its toggle');
+  assertEqual(customOverrides(EMPTY_CUSTOM).ignoreSlotLimits, false, 'data saved before the flags reads all off');
+  const on = withOverride(EMPTY_CUSTOM, 'ignoreSlotLimits', true);
+  assertEqual(customOverrides(on).ignoreSlotLimits, true, 'the flag is set');
+  assertEqual(customOverrides(on).ignoreEncumbrance, false, 'and no other');
+  assertEqual(customOverrides(withOverride(on, 'ignoreSlotLimits', false)).ignoreSlotLimits, false, 'and clears');
+  assertEqual(customIsEmpty(on), true, 'a flag alone prints no Custom page');
+}
+
 verifiesGrantTotalsSumPerTarget();
 verifiesTheSheetNumbersFollowTheGrants();
 verifiesBlankEntriesAreNamedProblemsNotSilentlyDropped();
@@ -140,4 +156,5 @@ verifiesWhereACustomItemIs();
 verifiesTheBonusProblemsMatchTheBackend();
 verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow();
 verifiesTheMarketCannotSellACustomItem();
+verifiesTheOverridesGroupHoldsTheBackendsEightFlags();
 console.log('customModel.test.ts: all assertions passed');

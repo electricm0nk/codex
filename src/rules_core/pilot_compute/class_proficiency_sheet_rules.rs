@@ -282,6 +282,49 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
     ProficiencyAnswer::Known(view)
 }
 
+/// Whether what `input` holds grants proficiency with one piece of armor or shield, named by its
+/// record's `label` and `tags`; `None` when the question is not one or cannot be answered.
+///
+/// A grant names a tag the armor states (`ArmorProfLight`, `Heavy`, `Tower`), or the armor itself
+/// (`Leather`), and classes, class features, feats and race traits all reach it through the same
+/// held set. A gated grant counts, since a character must never be refused over a gate this walk
+/// cannot open. `Some(false)` needs every held class to exist as a record whose closure the
+/// converter attests complete: an empty walk over anything else is not "proficient with nothing".
+pub fn armor_proficiency_in(
+    package: &SheetRulePackage,
+    seed: &HeldSeed,
+    facts: &CharacterFacts,
+    label: &str,
+    tags: &[String],
+) -> Option<bool> {
+    let has_tag = |wanted: &str| tags.iter().any(|tag| tag.eq_ignore_ascii_case(wanted));
+    let is_shield = has_tag("Shield");
+    let is_suit = has_tag("Armor") && has_tag("Suit");
+    if !is_shield && !is_suit {
+        return None;
+    }
+    let names_this_item = |group: &str| group.eq_ignore_ascii_case(label) || has_tag(group);
+    let covers = |prof: &ProfRef| match prof {
+        ProfRef::ArmorGroup(group) => !is_shield && names_this_item(group),
+        ProfRef::ShieldGroup(group) => {
+            is_shield && names_this_item(group.strip_prefix("Shield (").and_then(|g| g.strip_suffix(')')).unwrap_or(group))
+        }
+        _ => false,
+    };
+    let held = held_set(package, seed, facts);
+    let granted = held.rules.keys().filter(|id| !held.removed.contains(*id)).filter_map(|id| package.rule(id)).any(|rule| {
+        rule.grants.iter().any(|effect| match effect {
+            Effect::FactGrant(Fact::Proficiency(prof)) | Effect::GatedFactGrant { fact: Fact::Proficiency(prof), .. } => covers(prof),
+            _ => false,
+        })
+    });
+    if granted {
+        return Some(true);
+    }
+    let answerable = !seed.classes.is_empty() && seed.classes.iter().all(|(class, _)| package.find("class", class).is_some());
+    answerable.then_some(false)
+}
+
 /// `Some(rule id)` when the class principal, or any rule the class line grants at or below
 /// `class_level` (a class-selection class's base class line included), leads to a weapon grant.
 fn class_line_reaches_a_weapon_grant(package: &SheetRulePackage, principal: &str, class_slug: &str, class_level: u8) -> Option<RuleId> {
@@ -744,6 +787,53 @@ fn unadmitted_class_line_grant(
 
 #[cfg(test)]
 mod tests {
+    /// Every CRB base class against the book's Weapon and Armor Proficiency paragraph, at each of the
+    /// five kinds a class can differ on. `L M H` armor, then `s` shields (light and heavy), `T` tower.
+    #[test]
+    fn armor_proficiency_matches_the_core_rulebook_for_every_base_class() {
+        let package = crate::rules_core::corpus_loader::live_sheet_rules().expect("the converted package loads");
+        let items = [
+            ("Chain Shirt", 'L'),
+            ("Chainmail", 'M'),
+            ("Full Plate", 'H'),
+            ("Shield (Light/Wooden)", 's'),
+            ("Shield (Heavy/Steel)", 's'),
+            ("Shield (Tower)", 'T'),
+        ];
+        for (class, holds) in [
+            ("barbarian", "LMs"),
+            ("bard", "Ls"),
+            ("cleric", "LMs"),
+            ("druid", "LMs"),
+            ("fighter", "LMHsT"),
+            ("monk", ""),
+            ("paladin", "LMHs"),
+            ("ranger", "LMs"),
+            ("rogue", "L"),
+            ("sorcerer", ""),
+            ("wizard", ""),
+        ] {
+            let seed = HeldSeed { classes: vec![(class.to_owned(), 1)], ..HeldSeed::default() };
+            let facts = CharacterFacts { level: 1, class_levels: vec![(class.to_owned(), 1)], ..CharacterFacts::default() };
+            for (item, kind) in items {
+                let rule = package.find("equipment", &crate::rules_core::sheet_rule::slug(item)).and_then(|id| package.rule(id)).unwrap_or_else(|| panic!("{item}"));
+                let answer = armor_proficiency_in(package, &seed, &facts, &rule.label, &rule.tags);
+                assert_eq!(answer, Some(holds.contains(kind)), "{class} with {item} {:?}", rule.tags);
+            }
+        }
+    }
+
+    #[test]
+    fn armor_proficiency_does_not_answer_for_a_sword_or_a_class_with_no_record() {
+        let package = crate::rules_core::corpus_loader::live_sheet_rules().expect("the converted package loads");
+        let seed = HeldSeed { classes: vec![("wizard".to_owned(), 1)], ..HeldSeed::default() };
+        let facts = CharacterFacts { level: 1, class_levels: vec![("wizard".to_owned(), 1)], ..CharacterFacts::default() };
+        assert_eq!(armor_proficiency_in(package, &seed, &facts, "Longsword", &["Weapon".to_owned()]), None);
+        let unknown = HeldSeed { classes: vec![("no_such_class".to_owned(), 1)], ..HeldSeed::default() };
+        let tags = ["Armor".to_owned(), "Suit".to_owned(), "ArmorProfHeavy".to_owned()];
+        assert_eq!(armor_proficiency_in(package, &unknown, &facts, "Full Plate", &tags), None);
+    }
+
     use super::*;
 
     fn wizard() -> ClassWeaponProficiencyView {

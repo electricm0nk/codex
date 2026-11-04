@@ -14,6 +14,7 @@ import {
   parseHeldClasses,
   previewLevelUp,
   readFeatBudget,
+  withBudgetOverride,
   totalCharacterLevel,
   totalSkillPoints,
   type HeldClass,
@@ -103,6 +104,16 @@ function verifiesTheChoicesOfNoLevelReadTheSameWay() {
   assertEqual(JSON.stringify(lines), JSON.stringify(['Feats: Toughness']), 'a feat with no level');
 }
 
+function verifiesTheBudgetOverrideFreesTheAddButtonAndKeepsTheBadge() {
+  const spent = readFeatBudget(budgetRows('level', 1, 3));
+  assertEqual(spent.canAdd, false, 'over budget, no add');
+  assertEqual(withBudgetOverride(spent, false), spent, 'flag off changes nothing');
+  const admitted = withBudgetOverride(spent, true);
+  assertEqual(admitted.canAdd, true, 'flag on, the button is live');
+  assertEqual(admitted.addBlockedReason, null, 'and says nothing blocks it');
+  assertEqual(admitted.overBy, spent.overBy, 'the badge still counts what is over');
+}
+
 function verifiesFeatBudgetReadsTheRowsAndDecidesNothingElse() {
   const noise = [{ id: 'initiative.total', value: 3 }];
   const room = readFeatBudget([...noise, ...budgetRows('level', 2, 1), ...budgetRows('fighter_bonus_feat', 2, 2)]);
@@ -149,6 +160,7 @@ async function main() {
   installClassRoster(classRosterWire());
   installFeatLevels([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
   verifiesFeatBudgetReadsTheRowsAndDecidesNothingElse();
+verifiesTheBudgetOverrideFreesTheAddButtonAndKeepsTheBadge();
   verifiesOpenFeatSlotsCountOnlyThePoolsAnyFeatCanFill();
   verifiesAFeatLevelComesFromTheEngineList();
   verifiesParseHeldClassesSingleClass();

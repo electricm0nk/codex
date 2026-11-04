@@ -15,6 +15,7 @@
 //! `"item:longsword"`-style fixture namespace, which predates
 //! corpus-linkage and was never the corpus's own exact name.
 
+use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::source_content::SourceContentPayload;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_catalog::crb::equipment_tables::equipment_tables;
@@ -414,6 +415,40 @@ pub fn hand_authored_equipment_rows() -> &'static [EquipmentCatalogRow] {
 /// not something this function creates or is able to fix from here.
 pub fn equipment_catalog_row_by_key(key: &str) -> Option<&'static EquipmentCatalogRow> {
     equipment_catalog_rows().iter().find(|row| row.key == key)
+}
+
+/// True when `input` is definitively not proficient with this weapon, armor or shield. An item that
+/// is none of those, or a verdict the engine cannot reach, is false: an unknown never refuses.
+pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str) -> ItemProficiencyGap {
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::armor_proficiency_in;
+    use crate::rules_core::pilot_compute::{character_is_proficient_with, compute_pilot_base_chassis, equipped_weapon_stat_block};
+    use crate::rules_core::sheet_rule::{slug, CharacterFacts, HeldSeed};
+
+    let record = crate::rules_core::corpus_loader::live_sheet_rules().and_then(|package| {
+        let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
+        Some((package, package.rule(package.find("equipment", &slug(needle))?)?))
+    });
+    if let Some((package, rule)) = record {
+        let computation = compute_pilot_base_chassis(input);
+        let seed = HeldSeed::from_character(input, &computation);
+        let facts = CharacterFacts::from_character(input, &computation).with_linked_picks(package, &seed);
+        if let Some(proficient) = armor_proficiency_in(package, &seed, &facts, &rule.label, &rule.tags) {
+            return if proficient { ItemProficiencyGap::None } else { ItemProficiencyGap::Armor };
+        }
+    }
+    match equipped_weapon_stat_block(item_id).and_then(|weapon| character_is_proficient_with(input, weapon)) {
+        Some(false) => ItemProficiencyGap::Weapon,
+        _ => ItemProficiencyGap::None,
+    }
+}
+
+/// Which override, if any, a character needs to wear or wield an item.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ItemProficiencyGap {
+    None,
+    Weapon,
+    /// Armor or a shield.
+    Armor,
 }
 
 /// v0.6 alpha swarm (money-purchase coupling, risks-and-open-questions.md

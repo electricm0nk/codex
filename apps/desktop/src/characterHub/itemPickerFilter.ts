@@ -197,7 +197,7 @@ const FEAT_SOURCE_LABELS: Record<string, string> = {
   Pu: 'PU',
 };
 
-export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPickerEntry[] {
+export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[], admitUnmet = false): ItemPickerEntry[] {
   return entries.map((entry) => ({
     key: entry.key,
     name: entry.name,
@@ -217,12 +217,15 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
     // `eligibility` is absent on the character-less `listFeats` response,
     // which leaves every row selectable — the previous behaviour, unchanged,
     // for the browse surfaces that have no character to check against.
-    disabled: entry.eligibility ? !entry.eligibility.eligible : undefined,
+    // Under the prerequisites override an unmet feat can be added, and still says what it lacks.
+    disabled: entry.eligibility ? !entry.eligibility.eligible && !admitUnmet : undefined,
     disabledReason: entry.eligibility?.unavailableReason ?? undefined,
     unverifiedNote:
-      entry.eligibility && entry.eligibility.eligible && entry.eligibility.unverified.length > 0
-        ? entry.eligibility.unverified.join('; ')
-        : undefined,
+      entry.eligibility && !entry.eligibility.eligible && admitUnmet
+        ? `Allowed by override: ${entry.eligibility.unavailableReason ?? 'prerequisites not met'}`
+        : entry.eligibility && entry.eligibility.eligible && entry.eligibility.unverified.length > 0
+          ? entry.eligibility.unverified.join('; ')
+          : undefined,
   }));
 }
 

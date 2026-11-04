@@ -241,6 +241,9 @@ export function resolveSelectedSpellEntries(
  * rather than showing the raw token or inventing a name.
  */
 function describeSourceClass(classId: string): string {
+  if (classId.startsWith('override:')) {
+    return 'Allowed by override';
+  }
   const option = knownClass(classId);
   if (option) {
     return option.label;

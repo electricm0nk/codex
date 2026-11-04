@@ -3296,8 +3296,8 @@ fn bought_copy_placement(root: &Path, item_id: &str, requested: ActiveState) -> 
         return Ok((ActiveState::SelectedInactive, None));
     }
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    Ok(match item_slot_conflict(root, &envelope.character_input, item_id)? {
-        Some(reason) => (ActiveState::SelectedInactive, Some(reason)),
+    Ok(match wear_refusal(root, &envelope.character_input, item_id)? {
+        Some((_, reason)) => (ActiveState::SelectedInactive, Some(reason)),
         None => (ActiveState::EquippedActive, None),
     })
 }
@@ -3446,12 +3446,38 @@ fn add_purchased_copy_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
-        if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
-            copy.applied_modifiers.push(key.to_owned());
-        }
-    })
+    let refuse = load_refusal_at_root(root, item_id);
+    crate::pf1_adapter::mutate_saved_character_unless_at_root(
+        root,
+        saved_at,
+        |character_input| {
+            crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
+            if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
+                copy.applied_modifiers.push(key.to_owned());
+            }
+        },
+        refuse,
+    )
+}
+
+/// The refusal for one more copy of `item_id` in the pack: what would take the character past the
+/// most they can carry (`OverHeavyCapacity`), unless `ignore_encumbrance` is on. An item of no known
+/// weight adds nothing to refuse over.
+pub(crate) fn load_refusal_at_root(root: &Path, item_id: &str) -> impl FnOnce(&codex::rules_core::pilot_compute_corpus::CorpusPilotReceipt) -> Option<DiagnosticDto> {
+    let admitted = custom_or_empty(root).overrides.ignore_encumbrance;
+    let item_id = item_id.to_owned();
+    move |receipt| {
+        let load = &receipt.corpus_derived.encumbrance;
+        let adds_weight = load.per_item.iter().rev().find(|item| item.item_id == item_id).is_some_and(|item| item.weight_lbs > 0.0);
+        (!admitted && adds_weight && load.level == codex::rules_core::encumbrance::EncumbranceLevel::OverHeavyCapacity).then(|| DiagnosticDto {
+            id: "equipment.over_capacity".to_owned(),
+            message: format!(
+                "{item_id} would take the load to {} lb, past the {} lb this character can carry",
+                load.total_carried_weight_lbs, load.thresholds.heavy_max_lbs
+            ),
+            claim_blocking: true,
+        })
+    }
 }
 
 /// [`purchase_equipment_at_root`] under an explicit [`PriceMode`]. `Cashless` skips the price and
@@ -4087,21 +4113,59 @@ pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
     if let Some(refusal) = duplicate_feat_refusal(package, &envelope.character_input, feat_id, target) {
         return Err(refusal);
     }
+    let overrides = custom_or_empty(root).overrides;
     let base = compute_pilot_base_chassis(&envelope.character_input);
-    if let Some(refusal) = feat_budget_for(&envelope.character_input, &base)?.refusal(package, feat_id) {
-        return Err(refusal);
+    if !overrides.ignore_feat_budget {
+        if let Some(refusal) = feat_budget_for(&envelope.character_input, &base)?.refusal(package, feat_id) {
+            return Err(refusal);
+        }
     }
-    if let Some(report) =
-        codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts)
-    {
-        if let Some(reason) = report.unavailable_reason() {
-            return Err(format!(
-                "'{}' cannot be taken by this character: {reason}",
-                report.feat_key
-            ));
+    if !overrides.feats_without_prerequisites {
+        if let Some(report) = codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts) {
+            if let Some(reason) = report.unavailable_reason() {
+                return Err(format!("'{}' cannot be taken by this character: {reason}", report.feat_key));
+            }
+        }
+    }
+    if !overrides.ignore_alignment_restrictions {
+        if let Some(alignment) = stated_alignment_at_root(root) {
+            if let Some(reason) = facts.feat_alignment_unmet(feat_id, alignment) {
+                return Err(format!("'{feat_id}' cannot be taken by this character: {reason}"));
+            }
         }
     }
     add_feat_selection_at_root(root, feat_id, target, saved_at)
+}
+
+/// The alignment the character's bio states, in the rules' two letters, or `None` when it states none
+/// the rules can read: the record carries no alignment, so an unstated one never refuses.
+fn stated_alignment_at_root(root: &Path) -> Option<&'static str> {
+    let bio = load_character_bio_at_root(root).ok()?;
+    Some(match bio.alignment.trim().to_ascii_lowercase().as_str() {
+        "lawful good" | "lg" => "LG",
+        "neutral good" | "ng" => "NG",
+        "chaotic good" | "cg" => "CG",
+        "lawful neutral" | "ln" => "LN",
+        "true neutral" | "neutral" | "tn" | "n" => "TN",
+        "chaotic neutral" | "cn" => "CN",
+        "lawful evil" | "le" => "LE",
+        "neutral evil" | "ne" => "NE",
+        "chaotic evil" | "ce" => "CE",
+        _ => return None,
+    })
+}
+
+/// The refusal for a level of `class_id` this character's stated alignment rules out, unless
+/// `ignore_alignment_restrictions` is on.
+pub(crate) fn class_alignment_refusal_at_root(root: &Path, class_id: &str) -> Option<DiagnosticDto> {
+    if custom_or_empty(root).overrides.ignore_alignment_restrictions {
+        return None;
+    }
+    let alignment = stated_alignment_at_root(root)?;
+    let (_, facts) = character_prereq_facts_at_root(root).ok()?;
+    let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
+    let reason = facts.class_alignment_unmet(slug, alignment)?;
+    Some(DiagnosticDto { id: "class.alignment".to_owned(), message: format!("a {alignment} character cannot take a level of {slug}: {reason}"), claim_blocking: true })
 }
 
 // ---------------------------------------------------------------------------
@@ -4296,8 +4360,10 @@ pub(crate) fn remove_feat_selection_at_root(
         ));
     }
 
-    if let Some(dependency) = feat_removal_dependency_refusal(&before, &after) {
-        return Err(format!("'{feat_id}' cannot be removed: {dependency}"));
+    if !custom_or_empty(root).overrides.feats_without_prerequisites {
+        if let Some(dependency) = feat_removal_dependency_refusal(&before, &after) {
+            return Err(format!("'{feat_id}' cannot be removed: {dependency}"));
+        }
     }
 
     mutate_saved_character_at_root(root, saved_at, |character_input| {
@@ -4755,12 +4821,31 @@ pub(crate) fn worn_stock_slots(character_input: &CharacterInput) -> Result<Vec<(
 
 /// What stops one more copy of `item_id` being worn over what `character_input` and the custom items
 /// beside it at `root` already wear, worded for the sheet.
-fn item_slot_conflict(root: &Path, character_input: &CharacterInput, item_id: &str) -> Result<Option<String>, String> {
+fn item_slot_conflict(character_input: &CharacterInput, item_id: &str, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
+    if custom.overrides.ignore_slot_limits {
+        return Ok(None);
+    }
     let slot = body_slot_of_item(item_id)?;
     let mut worn = worn_stock_slots(character_input)?;
-    worn.extend(worn_custom_slots(&custom_or_empty(root)));
+    worn.extend(worn_custom_slots(custom));
     let worn: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
     slot_conflict(&worn, slot)
+}
+
+/// What stops this character putting one more copy of `item_id` on, as a diagnostic id and the sheet's
+/// words: the slot, then the proficiency. Each one yields to its override.
+fn wear_refusal(root: &Path, character_input: &CharacterInput, item_id: &str) -> Result<Option<(&'static str, String)>, String> {
+    use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
+    let custom = custom_or_empty(root);
+    if let Some(message) = item_slot_conflict(character_input, item_id, &custom)? {
+        return Ok(Some(("equipment.slot_taken", message)));
+    }
+    let admitted = match character_lacks_proficiency_with(character_input, item_id) {
+        ItemProficiencyGap::None => true,
+        ItemProficiencyGap::Weapon => custom.overrides.weapons_without_proficiency,
+        ItemProficiencyGap::Armor => custom.overrides.armor_without_proficiency,
+    };
+    Ok((!admitted).then(|| ("equipment.not_proficient", format!("this character is not proficient with {}", item_id.strip_prefix("item:").unwrap_or(item_id)))))
 }
 
 /// [`set_equipment_copy_state_at_root`] with no copy named.
@@ -4801,9 +4886,9 @@ pub(crate) fn set_equipment_copy_state_at_root(
         && state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, bonus, active_state)
             .is_some_and(|index| envelope.character_input.chosen.equipment_selections[index].active_state != active_state);
     if moves_a_copy_onto_the_body {
-        if let Some(message) = item_slot_conflict(root, &envelope.character_input, item_id)? {
+        if let Some((id, message)) = wear_refusal(root, &envelope.character_input, item_id)? {
             return Ok(CreateCharacterResponse::Blocked {
-                diagnostics: vec![DiagnosticDto { id: "equipment.slot_taken".to_owned(), message, claim_blocking: true }],
+                diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
             });
         }
     }
@@ -8909,6 +8994,7 @@ mod tests {
             spells: vec![record("s1", "Ember Step")],
             devices: vec![record("d1", "Rod of Small Mercies")],
             conditions: Vec::new(),
+            overrides: Default::default(),
         };
         save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
         assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
@@ -15081,6 +15167,382 @@ mod tests {
         assert_eq!(dagger.active_state, ActiveState::EquippedActive);
         assert!(dagger.equipped_or_active);
 
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    const OVERRIDES_AT: &str = "2026-11-04T00:00:00Z";
+
+    fn overrides_set(root: &Path, flip: impl FnOnce(&mut crate::character_custom::Overrides)) {
+        let mut custom = load_character_custom_at_root(root).unwrap();
+        flip(&mut custom.overrides);
+        save_character_custom_at_root(root, &custom, OVERRIDES_AT).expect("saving the flag");
+    }
+
+    /// Human Fighter `level`: Str 16 and the seeded Longsword and Chain Shirt.
+    fn overrides_fighter(label: &str, level: u8) -> PathBuf {
+        let root = tempdir(label);
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", level), &root).expect("save");
+        root
+    }
+
+    /// Elowen, Wizard 5, `carried` in the pack and nothing on the body but the Longsword the combat
+    /// baseline requires, which leaves her off hand free.
+    fn overrides_wizard(label: &str, carried: &str) -> (PathBuf, PathBuf) {
+        let (dir, root) = ledger_migration_seed(label, SECOND_SEED_CHARACTER_ID);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        for selection in &mut envelope.character_input.chosen.equipment_selections {
+            if selection.item_id != "item:longsword" {
+                selection.active_state = ActiveState::SelectedInactive;
+                selection.equipped_or_active = false;
+            }
+        }
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        let response = add_equipment_selection_at_root(&root, carried, ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        (dir, root)
+    }
+
+    #[track_caller]
+    fn overrides_refused(response: &CreateCharacterResponse, id: &str) {
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("expected the refusal {id}, got {response:?}");
+        };
+        assert_eq!(diagnostics.iter().map(|d| d.id.as_str()).collect::<Vec<_>>(), vec![id], "{diagnostics:?}");
+        assert!(diagnostics[0].claim_blocking, "the sheet shows only claim-blocking diagnostics");
+    }
+
+    fn overrides_prereq_add(root: &Path) -> Result<CreateCharacterResponse, String> {
+        add_feat_selection_enforcing_prerequisites_at_root(root, "Improved Two-Weapon Fighting", None, OVERRIDES_AT)
+    }
+
+    #[test]
+    fn overrides_feats_without_prerequisites_off_refuses() {
+        let root = overrides_fighter("overrides-prereq-off", 3);
+        let error = overrides_prereq_add(&root).expect_err("an unmet prerequisite refuses");
+        assert!(error.contains("cannot be taken by this character"), "{error}");
+        assert!(!saved_feats(&root).contains(&"Improved Two-Weapon Fighting".to_owned()));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_feats_without_prerequisites_on_admits() {
+        let root = overrides_fighter("overrides-prereq-on", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&overrides_prereq_add(&root).expect("admitted"));
+        assert!(saved_feats(&root).contains(&"Improved Two-Weapon Fighting".to_owned()));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_weapons_without_proficiency_off_refuses() {
+        let (dir, root) = overrides_wizard("overrides-weapon-off", "Rapier");
+        overrides_refused(&slot_conflict_wear(&root, "Rapier"), "equipment.not_proficient");
+        assert_eq!(slot_conflict_worn_count(&root, "Rapier"), 0);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_weapons_without_proficiency_on_admits() {
+        let (dir, root) = overrides_wizard("overrides-weapon-on", "Rapier");
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Rapier"));
+        assert_eq!(slot_conflict_worn_count(&root, "Rapier"), 1);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_spells_outside_class_list_off_refuses() {
+        let (dir, root) = ledger_migration_seed("overrides-spell-off", SECOND_SEED_CHARACTER_ID);
+        let response = add_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "spell.outside_class_list");
+        let spells = SavedCharacterStore::load(&root).unwrap().character_input.chosen.spells_selected;
+        assert!(!spells.iter().any(|spell| spell.spell_id == "Cure Light Wounds"), "{spells:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_spells_outside_class_list_on_admits() {
+        let (dir, root) = ledger_migration_seed("overrides-spell-on", SECOND_SEED_CHARACTER_ID);
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        let response = add_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap();
+        assert_worn(&response);
+        let spells = SavedCharacterStore::load(&root).unwrap().character_input.chosen.spells_selected;
+        assert!(spells.iter().any(|spell| spell.spell_id == "Cure Light Wounds"), "{spells:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_armor_without_proficiency_off_refuses() {
+        let (dir, root) = overrides_wizard("overrides-armor-off", "Chain Shirt");
+        overrides_refused(&slot_conflict_wear(&root, "Chain Shirt"), "equipment.not_proficient");
+        assert_eq!(slot_conflict_worn_count(&root, "Chain Shirt"), 0);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_armor_without_proficiency_on_admits() {
+        let (dir, root) = overrides_wizard("overrides-armor-on", "Chain Shirt");
+        overrides_set(&root, |flags| flags.armor_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Chain Shirt"));
+        assert_eq!(slot_conflict_worn_count(&root, "Chain Shirt"), 1);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_slot_limits_off_refuses() {
+        let root = slot_conflict_character("overrides-slot-off", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Hat of Disguise"), "head slot is taken by Helm of Brilliance");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_slot_limits_on_admits() {
+        let root = slot_conflict_character("overrides-slot-on", &["Helm of Brilliance", "Hat of Disguise"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_feat_budget_off_refuses() {
+        let root = overrides_fighter("overrides-budget-off", 1);
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT).expect_err("the budget is spent");
+        assert!(error.contains("pool"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_feat_budget_on_admits() {
+        let root = overrides_fighter("overrides-budget-on", 1);
+        overrides_set(&root, |flags| flags.ignore_feat_budget = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT).expect("admitted"));
+        assert!(saved_feats(&root).contains(&"Toughness".to_owned()));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn overrides_chaotic_fighter(label: &str) -> PathBuf {
+        let root = overrides_fighter(label, 1);
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Chaotic Evil".to_owned(), ..Default::default() }).expect("bio");
+        root
+    }
+
+    #[test]
+    fn overrides_ignore_alignment_restrictions_off_refuses() {
+        let root = overrides_chaotic_fighter("overrides-alignment-off");
+        let response = crate::pf1_adapter::level_up_character_at_root(&root, "class:paladin", Vec::new(), None, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "class.alignment");
+        let classes = SavedCharacterStore::load(&root).unwrap().character_input.chosen.class_levels;
+        assert_eq!(classes.len(), 1, "{classes:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_alignment_restrictions_on_admits() {
+        let root = overrides_chaotic_fighter("overrides-alignment-on");
+        overrides_set(&root, |flags| flags.ignore_alignment_restrictions = true);
+        assert_worn(&crate::pf1_adapter::level_up_character_at_root(&root, "class:paladin", Vec::new(), None, OVERRIDES_AT).unwrap());
+        let classes = SavedCharacterStore::load(&root).unwrap().character_input.chosen.class_levels;
+        assert!(classes.iter().any(|class| class.class_id == "class:paladin"), "{classes:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Str 3 holds at most 30 lb; the seeded Longsword and Chain Shirt are 29.
+    fn overrides_weak_fighter(label: &str) -> PathBuf {
+        let root = overrides_fighter(label, 1);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.ability_scores.strength = 3;
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        root
+    }
+
+    #[test]
+    fn overrides_ignore_encumbrance_off_refuses() {
+        let root = overrides_weak_fighter("overrides-load-off");
+        let response = add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "equipment.over_capacity");
+        let held = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections;
+        assert!(!held.iter().any(|selection| selection.item_id == "Full Plate"), "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_encumbrance_on_admits() {
+        let root = overrides_weak_fighter("overrides-load-on");
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        let held = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections;
+        assert!(held.iter().any(|selection| selection.item_id == "Full Plate"), "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_flags_are_saved_on_the_character_and_a_file_from_before_them_reads_all_off() {
+        let root = overrides_fighter("override-saved", 1);
+        std::fs::write(root.join("custom.json"), r#"{"grants":[]}"#).unwrap();
+        assert_eq!(load_character_custom_at_root(&root).unwrap().overrides, Default::default());
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        let saved = std::fs::read_to_string(root.join("custom.json")).unwrap();
+        assert!(saved.contains(r#""ignoreEncumbrance": true"#), "{saved}");
+        assert!(load_character_custom_at_root(&root).unwrap().overrides.ignore_encumbrance);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn override_helmet() -> CustomRecordDto {
+        CustomRecordDto { id: "c1".to_owned(), name: "GM Helm".to_owned(), slot: Some(BodySlot::Head), ..Default::default() }
+    }
+
+    /// `decisions.md §25`: the slot override reaches a custom item at both of its callers.
+    #[test]
+    fn override_slot_limits_reach_a_custom_item_at_the_wear_and_at_the_save() {
+        let root = slot_conflict_character("override-custom-slot", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let custom = CharacterCustomDto { equipment: vec![override_helmet()], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, OVERRIDES_AT).unwrap();
+
+        let refused = set_custom_item_state_at_root(&root, "c1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap();
+        assert_slot_refused(&refused, "head slot is taken by Helm of Brilliance");
+        let worn = CharacterCustomDto { equipment: vec![CustomRecordDto { worn: true, ..override_helmet() }], ..Default::default() };
+        let error = save_character_custom_at_root(&root, &worn, OVERRIDES_AT).expect_err("the save refuses it too");
+        assert_eq!(error, "head slot is taken by Helm of Brilliance");
+
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&set_custom_item_state_at_root(&root, "c1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+        assert!(load_character_custom_at_root(&root).unwrap().equipment[0].worn);
+        let on_the_save = CharacterCustomDto { overrides: load_character_custom_at_root(&root).unwrap().overrides, ..worn };
+        save_character_custom_at_root(&root, &on_the_save, OVERRIDES_AT).expect("flag on, the save admits it");
+
+        // Off again: what is on stays (a flag cannot be stuck on), and nothing new goes on.
+        overrides_set(&root, |flags| flags.ignore_slot_limits = false);
+        assert!(load_character_custom_at_root(&root).unwrap().equipment[0].worn, "the flag going off takes nothing off");
+        let stowed = set_equipment_active_state_at_root(&root, "Helm of Brilliance", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        assert_worn(&stowed);
+        assert_slot_refused(&slot_conflict_wear(&root, "Helm of Brilliance"), "head slot is taken by GM Helm");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_a_bought_weapon_stays_carried_with_the_reason_until_the_flag_is_on() {
+        let (dir, root) = overrides_wizard("override-buy-weapon", "Rope (Hemp/50 ft.)");
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason.as_deref(), Some("this character is not proficient with Rapier"));
+        assert_eq!(slot_conflict_worn_count(&root, "Rapier"), 0);
+
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
+        assert_eq!(carried_reason, None);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn override_encumbrance_refuses_a_buy_and_charges_nothing() {
+        let root = overrides_weak_fighter("override-buy-load");
+        let money = load_character_money_at_root(&root).unwrap();
+        let refused = purchase_equipment_priced_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        let PurchaseEquipmentResponse::Blocked { diagnostics } = refused else { panic!("the load refuses the buy") };
+        assert_eq!(diagnostics[0].id, "equipment.over_capacity");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, money.total_copper);
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        let admitted = purchase_equipment_priced_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert!(matches!(admitted, PurchaseEquipmentResponse::Purchased { .. }));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Lawful Good, against a feat whose converted gate wants a chaotic alignment. The prerequisites
+    /// flag is on throughout so its Charisma term is not what refuses.
+    #[test]
+    fn override_alignment_reaches_a_feat_and_an_unstated_alignment_never_refuses() {
+        let root = overrides_fighter("override-alignment-feat", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        let add = |root: &Path| add_feat_selection_enforcing_prerequisites_at_root(root, "Free Spirit", None, OVERRIDES_AT);
+
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Lawful Good".to_owned(), ..Default::default() }).unwrap();
+        let error = add(&root).expect_err("the stated alignment refuses");
+        assert!(error.contains("cannot be taken by this character"), "{error}");
+        assert!(error.contains("CG") || error.contains("alignment"), "{error}");
+
+        overrides_set(&root, |flags| flags.ignore_alignment_restrictions = true);
+        assert_worn(&add(&root).expect("the flag admits it"));
+
+        let unstated = overrides_fighter("override-alignment-unstated", 3);
+        overrides_set(&unstated, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&add(&unstated).expect("no alignment stated, nothing to refuse over"));
+        for dir in [&root, &unstated] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn override_every_alignment_word_the_sheet_offers_reads_as_two_letters() {
+        let root = overrides_fighter("override-alignment-words", 1);
+        for (words, code) in [
+            ("Lawful Good", "LG"), ("Neutral Good", "NG"), ("Chaotic Good", "CG"), ("Lawful Neutral", "LN"), ("True Neutral", "TN"),
+            ("Chaotic Neutral", "CN"), ("Lawful Evil", "LE"), ("Neutral Evil", "NE"), ("Chaotic Evil", "CE"),
+        ] {
+            save_character_bio_at_root(&root, &CharacterBioDto { alignment: words.to_owned(), ..Default::default() }).unwrap();
+            assert_eq!(stated_alignment_at_root(&root), Some(code), "{words}");
+        }
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Mostly harmless".to_owned(), ..Default::default() }).unwrap();
+        assert_eq!(stated_alignment_at_root(&root), None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_prerequisites_let_a_feat_go_that_another_held_feat_rests_on() {
+        let root = overrides_fighter("override-removal", 6);
+        for feat in ["Cleave", "Great Cleave"] {
+            assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, feat, None, OVERRIDES_AT).expect(feat));
+        }
+        let error = remove_feat_selection_at_root(&root, "Cleave", None, OVERRIDES_AT).expect_err("Great Cleave rests on it");
+        assert!(error.contains("cannot be removed"), "{error}");
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&remove_feat_selection_at_root(&root, "Cleave", None, OVERRIDES_AT).expect("the flag lets it go"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_a_spell_off_the_list_saves_under_its_own_source_and_the_character_still_computes() {
+        let (dir, root) = ledger_migration_seed("override-spell-source", SECOND_SEED_CHARACTER_ID);
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap());
+        assert_worn(&record_and_prepare_spell_selection_at_root(&root, "Bless", "class:wizard", OVERRIDES_AT).unwrap());
+        let envelope = SavedCharacterStore::load(&root).unwrap();
+        let source_of = |id: &str| envelope.character_input.chosen.spells_selected.iter().filter(|s| s.spell_id == id).map(|s| s.source_class_id.clone()).collect::<Vec<_>>();
+        assert_eq!(source_of("Cure Light Wounds"), vec![crate::pf1_adapter::OVERRIDE_SPELL_SOURCE.to_owned()]);
+        assert_eq!(source_of("Bless"), vec![crate::pf1_adapter::OVERRIDE_SPELL_SOURCE.to_owned(); 2]);
+
+        // A later save of the same character still reaches Computed, flag on or off: the record holds.
+        overrides_set(&root, |flags| flags.spells_outside_class_list = false);
+        assert_worn(&add_equipment_selection_at_root(&root, "Rope (Hemp/50 ft.)", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+
+        // A spell on her list stays hers under the flag; the override source is only for what needs it.
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Haste", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap());
+        let spells = SavedCharacterStore::load(&root).unwrap().character_input.chosen.spells_selected;
+        assert!(spells.iter().any(|s| s.spell_id == "Haste" && s.source_class_id == "class:wizard"), "{spells:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn override_a_fighter_is_refused_a_spell_and_a_class_with_no_ingested_list_is_not() {
+        let root = overrides_fighter("override-spell-fighter", 1);
+        let response = add_spell_selection_at_root(&root, "Fireball", FIGHTER_CLASS_ID, AcquisitionMode::Known, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "spell.outside_class_list");
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Fireball", FIGHTER_CLASS_ID, AcquisitionMode::Known, OVERRIDES_AT).unwrap());
         std::fs::remove_dir_all(&root).ok();
     }
 

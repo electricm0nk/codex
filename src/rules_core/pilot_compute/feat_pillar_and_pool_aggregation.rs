@@ -586,7 +586,7 @@ pub(super) fn resolve_prepared_spell_level(class_id: &str, spell_id: &str) -> Pr
 /// has no list for would be a fabricated rule, the mirror image of the
 /// fabricated level `class_spell_levels` exists to remove (see
 /// `docs/governance/no-stub-mvp-doctrine.md`).
-pub(super) fn class_spell_membership_refusal(class_id: &str, spell_id: &str) -> Option<String> {
+pub fn class_spell_membership_refusal(class_id: &str, spell_id: &str) -> Option<String> {
     if class_spell_levels::class_spell_level(class_id, spell_id).is_some() {
         return None;
     }

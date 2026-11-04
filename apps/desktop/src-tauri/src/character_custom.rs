@@ -109,6 +109,21 @@ pub struct CustomRecordDto {
     pub worn: bool,
 }
 
+/// What the GM lets this character do without qualifying. Each flag is read by the command that
+/// enforces the rule it names; off, which is the default, that command refuses.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct Overrides {
+    pub feats_without_prerequisites: bool,
+    pub weapons_without_proficiency: bool,
+    pub spells_outside_class_list: bool,
+    pub armor_without_proficiency: bool,
+    pub ignore_slot_limits: bool,
+    pub ignore_feat_budget: bool,
+    pub ignore_alignment_restrictions: bool,
+    pub ignore_encumbrance: bool,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CharacterCustomDto {
@@ -127,6 +142,9 @@ pub struct CharacterCustomDto {
     /// this field existed loads with none.
     #[serde(default)]
     pub conditions: Vec<String>,
+    /// `#[serde(default)]`: a `custom.json` saved before this field existed has every flag off.
+    #[serde(default)]
+    pub overrides: Overrides,
 }
 
 /// The targets a custom item's bonus may name (`decisions.md §13`). `ability:<name>` and
@@ -535,7 +553,7 @@ pub(crate) fn custom_or_empty(root: &Path) -> CharacterCustomDto {
 /// before it, in the slot check's words.
 fn slot_refusal(input: &CharacterInput, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
     let mine = worn_custom_slots(custom);
-    if mine.is_empty() {
+    if mine.is_empty() || custom.overrides.ignore_slot_limits {
         return Ok(None);
     }
     let mut worn = worn_stock_slots(input)?;
@@ -628,8 +646,11 @@ pub(crate) fn save_character_custom_at_root(root: &Path, custom: &CharacterCusto
     let (before, after) = (ability_totals(&previous), ability_totals(custom));
     let delta: Vec<i32> = (0..6).map(|slot| after[slot] - before[slot]).collect();
 
-    if let Some(refusal) = slot_refusal(&existing.character_input, custom)? {
-        return Err(refusal);
+    // An unchanged list wears nothing new: what the slot override let on stays when the flag goes off.
+    if worn_custom_slots(&previous) != worn_custom_slots(custom) {
+        if let Some(refusal) = slot_refusal(&existing.character_input, custom)? {
+            return Err(refusal);
+        }
     }
     let mut scores = existing.character_input.chosen.ability_scores.clone();
     for (slot, change) in delta.iter().enumerate() {
