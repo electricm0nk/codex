@@ -1333,7 +1333,7 @@ mod tests {
     fn a_blank_regain_is_rolled_with_the_seed_and_the_same_seed_keeps_it() {
         let root = saved_solo("therapyroll", None);
         let mut choices = CprCharacterStore::load_choices(&root).unwrap();
-        // Gills 12 + Grafted Muscle and Bone Lace 24: Humanity 80 - 36 = 44; the cap (74 or more) is above 44 + 24.
+        // Gills 12 + Grafted Muscle and Bone Lace 24: Humanity 80 - 36 = 44; the cap (76, EMP 8 x 10 less 4 for two pieces) is above 44 + 24.
         choices.cyberware.push(CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(12) });
         choices.cyberware.push(CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None, humanity_loss: Some(24) });
         CprCharacterStore::save_choices(&choices, &root).unwrap();

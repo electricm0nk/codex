@@ -377,7 +377,10 @@ pub(crate) fn ledger_after_custom_change_at_root(root: &Path, previous: &Charact
 pub(crate) fn write_character_ledger_at_root(root: &Path, ledger: &CharacterLedgerDto) -> Result<(), String> {
     let path = root.join(LEDGER_FILE_NAME);
     let json = serde_json::to_string_pretty(ledger).map_err(|err| format!("failed to serialize the ledger: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+    // Whole or not at all: a half-written file would refuse every later change on this character.
+    let temporary = root.join(format!("{LEDGER_FILE_NAME}.tmp"));
+    std::fs::write(&temporary, json).map_err(|err| format!("{}: {err}", temporary.display()))?;
+    std::fs::rename(&temporary, &path).map_err(|err| format!("{}: {err}", path.display()))
 }
 
 /// A feat as the drawer prints it. `target` is a chooser feat's target.

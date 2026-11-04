@@ -2216,6 +2216,7 @@ pub fn clone_character(
 
     copy_character_custom(&source_root, &new_root)?;
     copy_character_ledger(&source_root, &new_root)?;
+    copy_character_hit_points(&source_root, &new_root)?;
 
     // Best-effort: carry the portrait over too, if the source has one.
     let source_portrait = source_root.join(PORTRAIT_FILE_NAME);
@@ -5335,6 +5336,16 @@ fn validate_hit_point_levels(request: &CreateCharacterRequest) -> Option<CreateC
     None
 }
 
+/// Copies the saved results beside one character to beside another; no file, nothing to copy. The
+/// sheet's hit points and the drawer's hit die read this file, so a clone keeps both.
+pub(crate) fn copy_character_hit_points(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(HIT_POINTS_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(HIT_POINTS_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
 fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -> Result<(), String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let path = root.join(HIT_POINTS_FILE_NAME);
@@ -5942,6 +5953,9 @@ pub struct ImportedCharacterFileDto {
     /// `ledger.json`, when the character has one. An old file imports with none.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub ledger: Option<CharacterLedgerDto>,
+    /// `hit_points.json`, when the character saved any results. An old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hit_points: Option<CharacterHitPointsDto>,
 }
 
 fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
@@ -6152,6 +6166,9 @@ fn import_character_from_json(
     if let Some(ledger) = &parsed.ledger {
         restore_character_ledger_at_root(root, ledger, &envelope.character_input)?;
     }
+    if let Some(hit_points) = &parsed.hit_points {
+        save_character_hit_points_at_root(root, &hit_points.levels)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
@@ -6216,11 +6233,13 @@ fn export_character_to_json(root: &Path) -> Result<String, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
     let custom = load_character_custom_at_root(root)?;
+    let hit_points = load_character_hit_points_at_root(root)?;
     let dto = ImportedCharacterFileDto {
         display_label: envelope.display_label,
         character_input: character_input_to_dto(&envelope.character_input),
         custom: (custom != CharacterCustomDto::default()).then_some(custom),
         ledger: load_character_ledger_at_root(root)?,
+        hit_points: (hit_points != CharacterHitPointsDto::default()).then_some(hit_points),
     };
 
     serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
@@ -10497,6 +10516,50 @@ mod tests {
         let reason = list_progression_ledger_at_root(&root).expect_err("refuses");
         assert!(reason.contains("invalid ledger JSON"), "{reason}");
         std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_saved_hit_die_survives_a_clone_and_a_round_trip() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-hp-carry", DEFAULT_CHARACTER_ID);
+        let saved = |value: u8| HitPointLevelDto { class_id: FIGHTER_CLASS_ID.to_owned(), value };
+        save_character_hit_points_at_root(&root, &[saved(10), saved(3), saved(7)]).expect("saves");
+        let dice = |root: &Path| list_progression_ledger_at_root(root).expect("lists").levels.iter().map(|level| level.hit_die_result).collect::<Vec<_>>();
+        assert_eq!(dice(&root), [Some(10), Some(3), Some(7)]);
+
+        let clone_root = tempdir("progression-ledger-hp-clone");
+        copy_character_hit_points(&root, &clone_root).expect("copies");
+        assert_eq!(load_character_hit_points_at_root(&clone_root).unwrap(), load_character_hit_points_at_root(&root).unwrap());
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("progression-ledger-hp-import");
+        ledger_stamp_saved(import_character_from_json(&file, &import_root, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert_eq!(dice(&import_root), [Some(10), Some(3), Some(7)], "the sheet's hit points read this file too");
+
+        // A character with none stays one with none, and an old file imports with none.
+        let (bare_dir, bare_root) = ledger_migration_seed("progression-ledger-hp-bare", DEFAULT_CHARACTER_ID);
+        let bare_file = export_character_to_json(&bare_root).unwrap();
+        assert!(serde_json::from_str::<serde_json::Value>(&bare_file).unwrap().get("hitPoints").is_none());
+        let bare_import = tempdir("progression-ledger-hp-bare-import");
+        ledger_stamp_saved(import_character_from_json(&bare_file, &bare_import, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert!(!bare_import.join("hit_points.json").exists());
+        for each in [dir, clone_root, import_root, bare_dir, bare_import] {
+            std::fs::remove_dir_all(each).ok();
+        }
+    }
+
+    #[test]
+    fn ledger_stamp_a_write_that_cannot_finish_leaves_the_file_whole() {
+        // A half-written ledger refuses every later change, so a write replaces the file or leaves it.
+        let root = ledger_stamp_new_fighter("ledger-whole");
+        let before = std::fs::read(root.join("ledger.json")).unwrap();
+        std::fs::create_dir(root.join("ledger.json.tmp")).unwrap();
+        let ledger = load_character_ledger_at_root(&root).unwrap().unwrap();
+        assert!(write_character_ledger_at_root(&root, &CharacterLedgerDto { entries: Vec::new() }).is_err(), "the temporary path is taken");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), before);
+        std::fs::remove_dir(root.join("ledger.json.tmp")).unwrap();
+        write_character_ledger_at_root(&root, &ledger).unwrap();
+        assert_eq!(std::fs::read_dir(&root).unwrap().filter(|entry| entry.as_ref().unwrap().file_name() == "ledger.json.tmp").count(), 0);
+        std::fs::remove_dir_all(&root).ok();
     }
 
     #[test]
