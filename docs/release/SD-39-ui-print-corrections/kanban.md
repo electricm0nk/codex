@@ -65,7 +65,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 59
 | E4.MC | E4 merge check + Epic report | opus | complete | E4.7 | commit 8aedb292b7 + receipt commit; receipt artifacts/epic_4/E4.MC_cycle_receipt.md; 4 refuted, all fixed here; root 8602 passed, desktop 1059 passed, both 0 failed; 26 ui-smoke rows green; seeds NO_DIFF; no card discovered |
 | E5.1 | Ledger file, stamped on every add | opus | complete | E4.MC | commit 5b24205733 + receipt commit; receipt artifacts/epic_5/E5.1_cycle_receipt.md; 7 ledger_stamp tests; desktop 1066 passed, 0 failed; G-6 re-run for the fence exits; seeds NO_DIFF; no card discovered |
 | E5.2 | Legacy ledger migration | opus | complete | E5.1 | commit 0d1d7aa995 + receipt commit; receipt artifacts/epic_5/E5.2_cycle_receipt.md; 14 ledger_migration tests; root sweep exit 0; desktop 1077 passed, 1 failed (CPR clock-seeded test, attributed, E5.4); G-3 and G-6 re-run; seeds NO_DIFF; discovered E5.4 |
-| E5.3 | Drawer content from list_progression_ledger | opus | waiting | E5.2 | |
+| E5.3 | Drawer content from list_progression_ledger | opus | complete | E5.2 | commit ed89f74e53 + receipt commit; receipt artifacts/epic_5/E5.3_cycle_receipt.md; 11 progression_ledger tests; desktop 1089 passed, 0 failed; 184/184 frontend files; 6 ui-smoke rows green; seeds NO_DIFF; no card discovered |
 | E5.4 | CPR therapy test stops failing on one roll in ten | sonnet | ready | E5.2 | discovered by E5.2, decisions.md §21 |
 | E5.MC | E5 merge check + Epic report | opus | waiting | E5.3, E5.4 | |
 | E6.1 | Overrides toggles + enforcement | opus | waiting | E5.MC | |

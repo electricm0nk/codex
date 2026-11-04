@@ -75,6 +75,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E4 | E4.MC | complete | 8aedb292b7 + receipt commit | artifacts/epic_4/E4.MC_cycle_receipt.md |
 | E5 | E5.1 | complete | 5b24205733 + receipt commit | artifacts/epic_5/E5.1_cycle_receipt.md |
 | E5 | E5.2 | complete | 0d1d7aa995 + receipt commit | artifacts/epic_5/E5.2_cycle_receipt.md |
+| E5 | E5.3 | complete | ed89f74e53 + receipt commit | artifacts/epic_5/E5.3_cycle_receipt.md |
 
 ## Epic reports
 
@@ -209,6 +210,9 @@ seed deltas, open blockers.)
 | E5.1 | Rows held before a character's first ledger | Kept with no level and marked, E5.2's seam | Only the new row, which would stop E5.2 ever filling the rest |
 | E5.2 | A load that cannot build the ledger | Shows the sheet, writes nothing, says so on stderr, tries again next load | Failing a load for a file no sheet number reads |
 | E5.2 | Feats when first-come strands one | Earliest free slot, a feat moves only so a later one fits | First-come, whose rows would disagree with the budget's `over_by` |
+| E5.3 | Where a level's class features come from | The sheet's own `class_feature` lines at that level | The engine's explanations, most of which only a checkout holds |
+| E5.3 | An ability increase with no row | Says `none recorded`, and is not counted unspent | Counting it, when the sheet offers no pick to spend it on |
+| E5.3 | Which levels show an open slot | The latest, with totals from the budget, so they sum to the sheet's badge | Rows per level per pool, which a late choice makes read as two wrong levels |
 
 ## Open blockers
 

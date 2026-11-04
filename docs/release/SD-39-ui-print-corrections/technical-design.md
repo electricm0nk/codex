@@ -119,9 +119,11 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
   character as it stood at each level, classes in saved order: feats through `feat_slot_levels`, ranks
   through each level's budget, spells through what the class casts and its known table or book rows,
   ability increases at every 4th level. What no slot fits has no level. `decisions.md §25` has the rules.
-- `list_progression_ledger(character_id) -> Vec<LevelEntry>` (new command) assembles the drawer's rows
-  from `ledger.json` + the class catalog's per-level grants (`characterProgression.ts` logic moves
-  server-side so the drawer and the print Math block read one source).
+- `list_progression_ledger(character_id) -> {levels, withoutLevel}` (new command, off the main thread)
+  assembles the drawer's rows from `ledger.json`, or what the next load would write when there is no file,
+  and the character as it stood at each level: its sheet's class feature lines, feat budget, rank budget and
+  known tables, and `hit_points.json`. It writes nothing. `characterProgression.ts` holds the words the
+  drawer prints; its other logic stays for Create, the level-up preview and print (`decisions.md §25`).
 
 ## §6 Overrides (E6)
 
