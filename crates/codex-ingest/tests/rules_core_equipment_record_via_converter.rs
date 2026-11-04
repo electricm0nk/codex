@@ -213,12 +213,13 @@ mod tests {
                 })
             };
 
-            // --- the old `arms_armor::armor_class_bonus_from_bonus_chains` ---
+            // --- the old `arms_armor::armor_class_bonus_from_bonus_chains`, and since then a chain
+            // that names Armor Class in a list (`COMBAT|ATTACK,AC`) ---
             let old_ac_chain = row.bonus_chains.iter().find_map(|bonus| {
                 let q = &bonus.qualifiers;
                 if q.len() >= 3
                     && q[0] == "COMBAT"
-                    && q[1] == "AC"
+                    && q[1].split(',').any(|name| name == "AC")
                     && !equipment_bonus_reader::declares_circumstance_bonus_type(bonus)
                 {
                     q[2].parse::<i16>().ok()
