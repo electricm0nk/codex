@@ -7,6 +7,7 @@ import { exportCharacter } from '../boundary/exportCharacter';
 import { cloneCharacter } from '../boundary/cloneCharacter';
 import { loadDeleteCharacter } from '../boundary/loadDeleteCharacter';
 import { loadImportCharacter } from '../boundary/loadImportCharacter';
+import { importPcg, PCG_FILE_FILTER, pcgReportCounts, type PcgImportReport } from '../boundary/importPcg';
 import { loadCharacterPortrait } from '../boundary/characterPortrait';
 import { listStarterSeedErrors, restoreStarterCharacters } from '../boundary/restoreStarterCharacters';
 import { buildPreviewDetail } from './previewData';
@@ -24,7 +25,8 @@ import { restoreStarterCharactersMessage, starterSeedErrorsMessage } from './sta
  * Import all operate on the real desktop runtime — Delete removes the saved
  * character's on-disk directory via `delete_character`; Import reads a
  * user-picked JSON file via `import_character` and mints a fresh saved
- * character from it; Export serializes the character's real saved build
+ * character from it, or a PCGen file through the `pcg_import` sidecar
+ * (`import_pcg`), showing the sidecar's report; Export serializes the character's real saved build
  * (via `export_character`, not a locally-built summary payload) so a file
  * this screen exports is always a file this screen can re-import. Export
  * and Import both prompt via the native file dialog. Clone duplicates the
@@ -147,6 +149,84 @@ function fmt(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
 }
 
+/** What the Import button offers once clicked. */
+export function ImportFileChoices(props: { onCodexFile: () => void; onPcgenFile: () => void }) {
+  return (
+    <>
+      <button type="button" onClick={props.onCodexFile} style={barButton('default', true)}>
+        Codex file
+      </button>
+      <button type="button" onClick={props.onPcgenFile} style={barButton('default', true)}>
+        PCGen file
+      </button>
+    </>
+  );
+}
+
+function ReportList(props: { heading: string; items: string[] }) {
+  if (props.items.length === 0) {
+    return null;
+  }
+  return (
+    <div style={{ marginTop: '0.5rem' }}>
+      <h4 style={{ fontSize: '0.8rem', margin: 0 }}>{props.heading}</h4>
+      <ul style={{ fontSize: '0.8rem', margin: '0.2rem 0 0', paddingLeft: '1.1rem' }}>
+        {props.items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** The sidecar's report: what became of every line of the file, and every row the engine needed. */
+export function PcgImportReportPanel(props: { report: PcgImportReport; onClose: () => void }) {
+  const { report } = props;
+  const cell: CSSProperties = { borderTop: '1px solid var(--color-border)', fontSize: '0.75rem', overflowWrap: 'break-word', padding: '0.15rem 0.5rem 0.15rem 0', textAlign: 'left', verticalAlign: 'top' };
+  return (
+    <section aria-label="Import report" style={{ border: '1px solid var(--color-border)', borderRadius: 12, marginTop: '0.75rem', maxHeight: '18rem', overflowY: 'auto', padding: '0.75rem 1rem' }}>
+      <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.75rem' }}>
+        <h3 style={{ fontSize: '0.95rem', margin: 0 }}>Import report: {report.sourceFile}</h3>
+        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>Game mode: {report.gameMode}</span>
+        <div style={{ flex: 1 }} />
+        <button type="button" onClick={props.onClose} style={barButton('default', true)}>
+          Close report
+        </button>
+      </div>
+      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', margin: '0.35rem 0 0' }}>
+        {pcgReportCounts(report)
+          .map(({ outcome, count }) => `${count} ${outcome}`)
+          .join(' · ')}
+      </p>
+      <ReportList heading="Classes Codex does not hold" items={report.unmappedClasses} />
+      <ReportList heading="Race Codex does not hold" items={report.unmappedRace ? [report.unmappedRace] : []} />
+      <ReportList heading="Unknown keys" items={report.unknownKeys} />
+      <ReportList heading="Warnings" items={report.warnings} />
+      <table style={{ borderCollapse: 'collapse', marginTop: '0.5rem', width: '100%' }}>
+        <thead>
+          <tr>
+            {['Key', 'In the file', 'Outcome', 'In Codex'].map((heading) => (
+              <th key={heading} style={cell}>
+                {heading}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {report.lines.map((line, index) => (
+            <tr key={index}>
+              <td style={cell}>{line.key}</td>
+              <td style={cell}>{line.from}</td>
+              <td style={cell}>{line.outcome}</td>
+              <td style={cell}>{line.to}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}
+
 export function LoadCharacterScreen(props: {
   surface: CharacterHubListSurface | null;
   error: string | null;
@@ -162,6 +242,8 @@ export function LoadCharacterScreen(props: {
   const [cloning, setCloning] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [importing, setImporting] = useState(false);
+  const [choosingImport, setChoosingImport] = useState(false);
+  const [importReport, setImportReport] = useState<PcgImportReport | null>(null);
   const [restoring, setRestoring] = useState(false);
   const [seedNotice, setSeedNotice] = useState<string | null>(null);
 
@@ -307,26 +389,55 @@ export function LoadCharacterScreen(props: {
     }
   }
 
-  async function handleImport() {
+  async function pickImportFile(filter: { name: string; extensions: string[] }): Promise<string | null> {
+    setChoosingImport(false);
     if (!hasTauriRuntime()) {
       setStatus('Importing requires the desktop runtime.');
-      return;
+      return null;
     }
-    let filePath: string | null;
     try {
-      filePath = await open({
-        multiple: false,
-        filters: [{ name: 'Character JSON', extensions: ['json'] }],
-      });
+      return await open({ multiple: false, filters: [filter] });
     } catch (cause: unknown) {
       setStatus(cause instanceof Error ? cause.message : 'Could not open the file picker.');
-      return;
+      return null;
     }
+  }
+
+  async function handleImportPcgen() {
+    const filePath = await pickImportFile(PCG_FILE_FILTER);
     if (!filePath) {
       return;
     }
 
     setImporting(true);
+    setImportReport(null);
+    setStatus(`Importing ${filePath}…`);
+    try {
+      const { outcome, report } = await importPcg({ filePath, savedAt: new Date().toISOString() });
+      setImportReport(report);
+      if (outcome.kind === 'Saved') {
+        setStatus(`Imported "${outcome.summary.displayLabel}".`);
+        setSelectedId(outcome.summary.characterId);
+        props.onRefresh();
+      } else {
+        const refresh = toCharacterMutationRefresh(outcome, [], []);
+        setStatus(refresh.kind === 'blocked' ? `Import failed: ${refresh.message}` : 'Import failed.');
+      }
+    } catch (cause: unknown) {
+      setStatus(cause instanceof Error ? cause.message : 'Could not import the PCGen file.');
+    } finally {
+      setImporting(false);
+    }
+  }
+
+  async function handleImport() {
+    const filePath = await pickImportFile({ name: 'Character JSON', extensions: ['json'] });
+    if (!filePath) {
+      return;
+    }
+
+    setImporting(true);
+    setImportReport(null);
     try {
       const outcome = await loadImportCharacter({ filePath, savedAt: new Date().toISOString() });
       if (outcome.kind === 'Saved') {
@@ -452,6 +563,7 @@ export function LoadCharacterScreen(props: {
       </div>
 
       {status ? <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: '0.75rem 0 0' }}>{status}</p> : null}
+      {importReport ? <PcgImportReportPanel report={importReport} onClose={() => setImportReport(null)} /> : null}
 
       {/* Action bar */}
       <div style={{ borderTop: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', marginTop: '1rem', paddingTop: '1rem' }}>
@@ -474,12 +586,13 @@ export function LoadCharacterScreen(props: {
         </button>
         <button
           type="button"
-          onClick={handleImport}
+          onClick={() => setChoosingImport((choosing) => !choosing)}
           disabled={importing}
           style={barButton('default', !importing)}
         >
           {importing ? 'Importing…' : 'Import'}
         </button>
+        {choosingImport ? <ImportFileChoices onCodexFile={handleImport} onPcgenFile={handleImportPcgen} /> : null}
         <button type="button" onClick={handleRestore} disabled={restoring} style={barButton('default', !restoring)}>
           {restoring ? 'Restoring…' : 'Restore starter characters'}
         </button>

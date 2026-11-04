@@ -22,6 +22,7 @@
 // SKILL.md / verify-on-screen.sh for the concurrency rules this runner
 // inherits (RUN_DESKTOP_AGENT must be unique per concurrently-dispatched
 // agent; never 'default').
+import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -411,8 +412,51 @@ function pressKey(key) {
   }
 }
 
+// A native file dialog is an X window of its own, so this one step is OS-level input: the command
+// channel only reaches the webview. `relativePath` is from the repo root. GTK's chooser takes a typed
+// path after ctrl+L.
+function chooseInNativeFileDialog(relativePath) {
+  const env = { ...process.env, DISPLAY: `:${driver.displayNum()}` };
+  const xdotool = (...args) => spawnSync('xdotool', args, { encoding: 'utf8', env });
+  const deadline = Date.now() + 10000;
+  let dialog = '';
+  while (!dialog && Date.now() < deadline) {
+    dialog = xdotool('search', '--onlyvisible', '--name', '^Open').stdout.trim().split(/\s+/)[0] ?? '';
+    if (!dialog) {
+      sleepMs(250);
+    }
+  }
+  if (!dialog) {
+    throw new Error('no native file dialog appeared');
+  }
+  xdotool('windowfocus', '--sync', dialog);
+  xdotool('key', '--window', dialog, 'ctrl+l');
+  sleepMs(300);
+  xdotool('type', '--delay', '30', '--', resolve(driver.APP_ROOT, '..', '..', relativePath));
+  sleepMs(300);
+  xdotool('key', 'Return');
+}
+
+// A row with `sidecar: true` runs the app's `pcg_import`: built into the target directory the app
+// runs from, which is where a dev build looks for it. A failure stops the run, naming the build.
+function buildSidecar() {
+  const targetDir = process.env.CARGO_TARGET_DIR ?? join(driver.APP_ROOT, 'src-tauri', 'target');
+  console.log(`Building pcg_import into ${targetDir}...`);
+  const result = spawnSync('cargo', ['build', '--locked', '-p', 'codex-ingest', '--bin', 'pcg_import'], {
+    cwd: resolve(driver.APP_ROOT, '..', '..'),
+    env: { ...process.env, CARGO_TARGET_DIR: targetDir },
+    stdio: 'inherit',
+  });
+  if (result.status !== 0) {
+    throw new Error('cargo build of pcg_import failed');
+  }
+}
+
 function runStep(step) {
   switch (step.op) {
+    case 'nativeFile':
+      chooseInNativeFileDialog(step.text);
+      break;
     case 'click':
       clickByName(step.target, step.index);
       break;
@@ -774,6 +818,9 @@ function main() {
 
   const spec = loadSpec();
   const selected = selectRows(spec, args);
+  if (selected.some((row) => row.sidecar)) {
+    buildSidecar();
+  }
 
   // Denominator discipline: `results` always holds exactly one entry per
   // SELECTED row, from this very first write, before any row has actually

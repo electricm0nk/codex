@@ -6373,6 +6373,143 @@ pub fn import_character(
     )
 }
 
+// ----- `import_pcg`: a PCGen file, through the `pcg_import` sidecar -----
+//
+// The app never parses a `.pcg` (`decisions.md` R13). The sidecar turns one into the JSON
+// `import_character_from_json` reads, and this path writes what that function has no field for.
+
+/// One line of the import report: what became of one line of the file, or one row the engine needed.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PcgReportLineDto {
+    pub key: String,
+    pub from: String,
+    /// `mapped`, `custom`, `derived`, `setting` or `added`.
+    pub outcome: String,
+    pub to: String,
+}
+
+/// The report `pcg_import` writes, passed through to the player as it stands.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PcgImportReportDto {
+    pub source_file: String,
+    pub game_mode: String,
+    pub unknown_keys: Vec<String>,
+    pub unmapped_classes: Vec<String>,
+    pub unmapped_race: Option<String>,
+    pub warnings: Vec<String>,
+    pub lines: Vec<PcgReportLineDto>,
+}
+
+/// The sidecar file's fields `ImportedCharacterFileDto` does not read. Its `custom` that DTO does.
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct PcgSidecarExtras {
+    bio: CharacterBioDto,
+    money: StoredMoney,
+    report: PcgImportReportDto,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportPcgResponse {
+    pub outcome: CreateCharacterResponse,
+    pub report: PcgImportReportDto,
+}
+
+/// The bundler installs an `externalBin` beside the app under its bare name
+/// (`tauri.sidecar.json`), and a dev build finds it there when the root workspace built it into the
+/// same target directory.
+fn pcg_sidecar_beside(app_exe: &Path) -> Result<PathBuf, String> {
+    let directory = app_exe.parent().ok_or_else(|| format!("{} has no parent directory", app_exe.display()))?;
+    let sidecar = directory.join(format!("pcg_import{}", std::env::consts::EXE_SUFFIX));
+    if sidecar.is_file() {
+        Ok(sidecar)
+    } else {
+        Err(format!("The PCGen import tool (pcg_import) is missing from this install: {} does not exist.", sidecar.display()))
+    }
+}
+
+/// Runs the sidecar. A non-zero exit is the converter's own refusal, returned in its words.
+fn run_pcg_sidecar(sidecar: &Path, pcg_file: &Path, data_root: &Path, out: &Path) -> Result<(), String> {
+    let mut command = std::process::Command::new(sidecar);
+    command.arg(pcg_file).arg("--out").arg(out).arg("--data-root").arg(data_root);
+    // A console program started from a windowed app would otherwise flash a console window.
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+        command.creation_flags(CREATE_NO_WINDOW);
+    }
+    let output = command.output().map_err(|err| format!("The PCGen import tool (pcg_import) did not start: {}: {err}", sidecar.display()))?;
+    if output.status.success() {
+        Ok(())
+    } else {
+        Err(format!("The PCGen import tool (pcg_import) refused the file: {}", String::from_utf8_lossy(&output.stderr).trim()))
+    }
+}
+
+/// Reads the sidecar's JSON through `import_character_from_json`, then writes `bio.json` and
+/// `money.json`, which it ignores. `root` is a fresh character's: anything short of a whole saved
+/// character removes it, so a refused or failed import leaves nothing to list.
+fn import_pcg_json(
+    contents: &str,
+    root: &Path,
+    fresh_character_id: &str,
+    saved_at: &str,
+    app_version: &str,
+) -> Result<ImportPcgResponse, String> {
+    let extras: PcgSidecarExtras =
+        serde_json::from_str(contents).map_err(|err| format!("invalid PCGen import JSON: {err}"))?;
+    let written = import_character_from_json(contents, root, fresh_character_id, saved_at, app_version).and_then(|outcome| {
+        if matches!(outcome, CreateCharacterResponse::Saved { .. }) {
+            save_character_bio_at_root(root, &extras.bio)?;
+            if extras.money.total_copper > 0 {
+                let total = i64::try_from(extras.money.total_copper)
+                    .map_err(|_| format!("the file's money, {} cp, is more than a character can hold", extras.money.total_copper))?;
+                adjust_character_money_at_root(root, total)?;
+            }
+        }
+        Ok(outcome)
+    });
+    if !matches!(written, Ok(CreateCharacterResponse::Saved { .. })) && root.exists() {
+        std::fs::remove_dir_all(root).map_err(|err| format!("{}: {err}", root.display()))?;
+    }
+    Ok(ImportPcgResponse { outcome: written?, report: extras.report })
+}
+
+/// The whole path of a PCGen file: sidecar, then [`import_pcg_json`]. The JSON is a temporary file.
+fn import_pcg_with_sidecar(
+    sidecar: &Path,
+    pcg_file: &Path,
+    data_root: &Path,
+    root: &Path,
+    fresh_character_id: &str,
+    saved_at: &str,
+    app_version: &str,
+) -> Result<ImportPcgResponse, String> {
+    let out = std::env::temp_dir().join(format!("codex-pcg-import-{}.json", Uuid::new_v4()));
+    let result = run_pcg_sidecar(sidecar, pcg_file, data_root, &out).and_then(|()| {
+        let contents = std::fs::read_to_string(&out).map_err(|err| format!("{}: {err}", out.display()))?;
+        import_pcg_json(&contents, root, fresh_character_id, saved_at, app_version)
+    });
+    let _ = std::fs::remove_file(&out);
+    result
+}
+
+/// Off the main thread (`async`): a conversion takes seconds and would freeze the window.
+#[tauri::command(async)]
+pub fn import_pcg(app: tauri::AppHandle, request: ImportCharacterRequest) -> Result<ImportPcgResponse, String> {
+    let app_exe = std::env::current_exe().map_err(|err| format!("cannot locate the app binary: {err}"))?;
+    let sidecar = pcg_sidecar_beside(&app_exe)?;
+    let data_root = crate::authoring_workbench::codex_repo_root()?;
+    let fresh_character_id = Uuid::new_v4().to_string();
+    let root = resolve_character_root(&app, &fresh_character_id)?;
+    let app_version = app.package_info().version.to_string();
+    import_pcg_with_sidecar(&sidecar, Path::new(&request.file_path), &data_root, &root, &fresh_character_id, &request.saved_at, &app_version)
+}
+
 // ----- `export_character` (Storage Tier Minimal Fix, Criterion 24) -----
 
 /// Loads the saved character at `root` and serializes it into the exact
@@ -17375,6 +17512,167 @@ mod tests {
     }
 
     // ----- `level_up_character` (Criterion 17) -----
+
+    // ----- `.pcg` import: a built `pcg_import` through the import path -----
+
+    fn pcg_repo_root() -> PathBuf {
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..")
+    }
+
+    /// The real binary, built by the root workspace, and the path Cargo reports for it. Once a run.
+    fn pcg_built_sidecar() -> PathBuf {
+        static BUILT: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+        BUILT
+            .get_or_init(|| {
+                let cargo = std::env::var("CARGO").unwrap_or_else(|_| "cargo".to_owned());
+                // This test binary's own target directory, so the libraries both workspaces share build once.
+                let exe = std::env::current_exe().unwrap();
+                let target_dir = exe.ancestors().nth(3).expect("<target>/debug/deps/<test binary>");
+                let output = std::process::Command::new(cargo)
+                    .current_dir(pcg_repo_root())
+                    .env("CARGO_TARGET_DIR", target_dir)
+                    .args(["build", "--locked", "-p", "codex-ingest", "--bin", "pcg_import", "--message-format=json-render-diagnostics"])
+                    .output()
+                    .expect("cargo runs");
+                assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
+                String::from_utf8_lossy(&output.stdout)
+                    .lines()
+                    .filter_map(|line| serde_json::from_str::<serde_json::Value>(line).ok())
+                    .filter(|message| message["target"]["name"] == "pcg_import")
+                    .find_map(|message| message["executable"].as_str().map(PathBuf::from))
+                    .expect("cargo names the binary it built")
+            })
+            .clone()
+    }
+
+    /// `scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg`: a real PCGen save that holds three
+    /// items Codex has no record of, with the money and the bio lines it does not hold rewritten in.
+    fn pcg_fixture_file(label: &str, rewrite: impl Fn(&str) -> String) -> PathBuf {
+        let text = std::fs::read_to_string(pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg")).unwrap();
+        let path = tempdir(label).join("fixture.pcg");
+        std::fs::write(&path, rewrite(&text)).unwrap();
+        path
+    }
+
+    fn pcg_import_via_sidecar(pcg_file: &Path, root: &Path) -> Result<ImportPcgResponse, String> {
+        import_pcg_with_sidecar(&pcg_built_sidecar(), pcg_file, &pcg_repo_root(), root, "imported", "2026-11-04T00:00:00Z", "0.0.0-test")
+    }
+
+    #[test]
+    fn pcg_sidecar_a_built_binary_saves_a_character_that_loads_with_its_bio_money_and_custom_records() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-file", |text| {
+            text.replace("MONEY:0", "MONEY:125.5").replace("PLAYERNAME:sd-33-r6-eqm", "PLAYERNAME:Todd\nGENDER:Female\nAGE:31")
+        });
+        let characters = tempdir("pcg-sidecar-root");
+        let root = characters.join("imported");
+
+        let response = pcg_import_via_sidecar(&pcg_file, &root).expect("the import runs");
+        let CreateCharacterResponse::Saved { summary, .. } = &response.outcome else {
+            panic!("the fixture computes: {:?}", response.outcome);
+        };
+        assert_eq!(summary.display_label, "E5R6 eqm combo");
+
+        // What `import_character` ignores reached the character's own files.
+        let bio = load_character_bio_at_root(&root).unwrap();
+        assert_eq!((bio.player_name.as_str(), bio.alignment.as_str(), bio.sex.as_str(), bio.age.as_str()), ("Todd", "Lawful Neutral", "Female", "31"));
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 12_550);
+        let custom = load_character_custom_at_root(&root).unwrap();
+        let items: Vec<&str> = custom.equipment.iter().map(|item| item.name.as_str()).collect();
+        assert_eq!(items, ["SD33R6 ~ Leather Dragonhide", "SD33R6 ~ Shield Spiked", "SD33R6 ~ Outfit Darkleaf"]);
+        assert!(custom.feats.iter().any(|feat| feat.name == "Biography"), "{:?}", custom.feats);
+
+        // It loads, and the Custom tab can save what the importer wrote.
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(loaded.summary.display_label, "E5R6 eqm combo");
+        assert!(loaded.snapshot.is_some(), "the sheet computes");
+        save_character_custom_at_root(&root, &custom, "2026-11-04T00:00:01Z").expect("the Custom tab saves an imported set");
+
+        // The report reaches the caller, every line of it named.
+        assert_eq!(response.report.source_file, "fixture.pcg");
+        assert_eq!(response.report.game_mode, "Pathfinder_RPG");
+        assert!(response.report.lines.iter().any(|line| line.key == "MONEY" && line.outcome == "mapped"), "{:?}", response.report.lines);
+        assert!(response.report.lines.iter().any(|line| line.outcome == "added"), "the Longsword row is reported");
+    }
+
+    #[test]
+    fn pcg_sidecar_a_character_with_no_money_writes_no_money_file() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-no-money", |text| text.to_owned());
+        let root = tempdir("pcg-sidecar-no-money-root").join("imported");
+        pcg_import_via_sidecar(&pcg_file, &root).expect("the import runs");
+        assert!(root.join("bio.json").exists());
+        assert!(!root.join(MONEY_FILE_NAME).exists());
+    }
+
+    #[test]
+    fn pcg_sidecar_a_file_the_engine_refuses_saves_nothing_and_still_reports() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-refused", |text| text.replace("CLASS:Fighter|LEVEL:1", "CLASS:Test Nothing|LEVEL:1"));
+        let root = tempdir("pcg-sidecar-refused-root").join("imported");
+        let response = pcg_import_via_sidecar(&pcg_file, &root).expect("the import runs");
+        assert!(matches!(response.outcome, CreateCharacterResponse::Blocked { .. }), "{:?}", response.outcome);
+        assert_eq!(response.report.unmapped_classes, ["Test Nothing 1"]);
+        assert!(!root.exists(), "nothing is left of a refused import");
+    }
+
+    #[test]
+    fn pcg_sidecar_a_file_the_converter_refuses_returns_its_reason() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-old", |_| "An old file\nwith no version line\n".to_owned());
+        let root = tempdir("pcg-sidecar-old-root").join("imported");
+        let error = pcg_import_via_sidecar(&pcg_file, &root).expect_err("no version line");
+        assert!(error.contains("fixture.pcg"), "{error}");
+        assert!(!root.exists());
+    }
+
+    #[test]
+    fn pcg_sidecar_missing_gives_a_named_error() {
+        let install = tempdir("pcg-sidecar-missing");
+        let error = pcg_sidecar_beside(&install.join("codex-desktop")).expect_err("no sidecar there");
+        assert!(error.contains("pcg_import"), "{error}");
+        assert!(error.contains("PCGen import tool"), "{error}");
+        assert!(error.contains(install.to_str().unwrap()), "{error}");
+    }
+
+    #[test]
+    fn pcg_sidecar_is_found_beside_the_app_under_its_bare_name() {
+        let install = tempdir("pcg-sidecar-found");
+        let sidecar = install.join(format!("pcg_import{}", std::env::consts::EXE_SUFFIX));
+        std::fs::write(&sidecar, b"").unwrap();
+        assert_eq!(pcg_sidecar_beside(&install.join("codex-desktop")).unwrap(), sidecar);
+    }
+
+    #[test]
+    fn pcg_sidecar_a_failed_file_write_leaves_no_half_imported_character() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-half", |text| text.to_owned());
+        let out = tempdir("pcg-sidecar-half-json").join("out.json");
+        run_pcg_sidecar(&pcg_built_sidecar(), &pcg_file, &pcg_repo_root(), &out).unwrap();
+        let mut file: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(&out).unwrap()).unwrap();
+        file["money"]["totalCopper"] = serde_json::json!(u64::MAX);
+        let root = tempdir("pcg-sidecar-half-root").join("imported");
+        let result = import_pcg_json(&file.to_string(), &root, "imported", "2026-11-04T00:00:00Z", "0.0.0-test");
+        assert!(result.is_err(), "a balance past what the file can hold is an error");
+        assert!(!root.exists(), "nothing is left of a failed import");
+    }
+
+    /// The bundler reads `externalBin` only under `--config`, so a plain `cargo test` never needs the
+    /// binary; every publish job builds it first and bundles with that config.
+    #[test]
+    fn pcg_sidecar_ships_from_all_three_publish_jobs_and_never_from_the_base_config() {
+        let conf = std::fs::read_to_string(pcg_repo_root().join("apps/desktop/src-tauri/tauri.conf.json")).unwrap();
+        assert!(!conf.contains("externalBin"), "tauri-build fails when an externalBin is absent");
+        let sidecar_conf = std::fs::read_to_string(pcg_repo_root().join("apps/desktop/src-tauri/tauri.sidecar.json")).unwrap();
+        let sidecar_conf: serde_json::Value = serde_json::from_str(&sidecar_conf).unwrap();
+        assert_eq!(sidecar_conf["bundle"]["externalBin"], serde_json::json!(["binaries/pcg_import"]));
+        let workflow = std::fs::read_to_string(pcg_repo_root().join(".github/workflows/publish-tester-release.yml")).unwrap();
+        let builds: Vec<&str> = workflow.lines().filter(|line| line.contains("run: npx tauri build")).collect();
+        assert_eq!(builds.len(), 3, "{builds:?}");
+        for build in &builds {
+            assert!(build.contains("--config src-tauri/tauri.sidecar.json"), "{build}");
+        }
+        for triple in ["x86_64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-pc-windows-msvc"] {
+            assert!(workflow.contains(&format!("pcg_import-{triple}")), "{triple}");
+        }
+        let bin_builds = workflow.lines().filter(|line| line.contains("--bin pcg_import")).count();
+        assert_eq!(bin_builds, 3);
+    }
 
     fn tempdir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now()

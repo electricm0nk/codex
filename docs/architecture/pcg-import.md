@@ -15,7 +15,19 @@ holding `data/`: a packaged app passes its resource directory.
 | `custom.feats`, `custom.equipment`, `custom.spells` | `custom.json` (`CharacterCustomDto`) |
 | `report` | shown to the player: one line per line of the file, plus each row the file did not hold |
 
-`import_character` ignores the last four, so the sidecar's caller writes them after the save.
+`import_character_from_json` reads `custom` as an export's. It has no field for `bio`, `money` or `report`,
+so the sidecar's caller, `import_pcg` (`character_hub.rs`), writes the first two after the save and returns
+the third with the outcome. A refused or failed import removes the fresh character's directory.
+
+## How it ships
+
+`apps/desktop/src-tauri/tauri.sidecar.json` names `binaries/pcg_import` as `bundle.externalBin`, and is passed
+with `--config` only at bundling, because `tauri-build` fails on an absent `externalBin`. Each publish job in
+`.github/workflows/publish-tester-release.yml` builds the binary and copies it to
+`apps/desktop/src-tauri/binaries/pcg_import-<target triple>` first. An install holds it beside the app under
+its bare name, which is where `import_pcg` looks; a dev run finds it there when the root workspace built into
+the same `CARGO_TARGET_DIR`, and a missing one is a named error. `--data-root` is `codex_repo_root()`, the
+directory the app itself reads `data/` from.
 
 ## What the engine makes it add
 

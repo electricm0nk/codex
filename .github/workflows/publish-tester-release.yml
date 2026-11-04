@@ -313,9 +313,15 @@ jobs:
       # in the linux publish job now — the consumed `version` output is
       # ${{ needs.stamp.outputs.version }}.
 
+      - name: Build the PCGen import sidecar
+        run: |
+          cargo build --release --locked -p codex-ingest --bin pcg_import
+          mkdir -p apps/desktop/src-tauri/binaries
+          cp target/release/pcg_import apps/desktop/src-tauri/binaries/pcg_import-x86_64-unknown-linux-gnu
+
       - name: Build Linux artifact set
         working-directory: apps/desktop
-        run: npx tauri build --bundles deb,appimage --ci
+        run: npx tauri build --config src-tauri/tauri.sidecar.json --bundles deb,appimage --ci
 
       - name: Stage release artifacts
         id: stage
@@ -546,9 +552,15 @@ jobs:
       #   .app  — auto-derived from the binary when 'app' is in targets
       #   .dmg — installer bundle, controlled by bundle.macOS.dmg in
       #          tauri.conf.json
+      - name: Build the PCGen import sidecar
+        run: |
+          cargo build --release --locked -p codex-ingest --bin pcg_import --target aarch64-apple-darwin
+          mkdir -p apps/desktop/src-tauri/binaries
+          cp target/aarch64-apple-darwin/release/pcg_import apps/desktop/src-tauri/binaries/pcg_import-aarch64-apple-darwin
+
       - name: Build macOS artifact set
         working-directory: apps/desktop
-        run: npx tauri build --target aarch64-apple-darwin --bundles app,dmg --ci
+        run: npx tauri build --config src-tauri/tauri.sidecar.json --target aarch64-apple-darwin --bundles app,dmg --ci
 
       - name: Stage macOS release artifacts
         id: stage_macos
@@ -626,9 +638,16 @@ jobs:
       # on the ~107k-file data/corpus + data/sheet_rules resource bundle
       # (run 36595679219). Code-signing is intentionally deferred to a
       # follow-up — testers can click through SmartScreen.
+      - name: Build the PCGen import sidecar
+        shell: bash
+        run: |
+          cargo build --release --locked -p codex-ingest --bin pcg_import --target x86_64-pc-windows-msvc
+          mkdir -p apps/desktop/src-tauri/binaries
+          cp target/x86_64-pc-windows-msvc/release/pcg_import.exe apps/desktop/src-tauri/binaries/pcg_import-x86_64-pc-windows-msvc.exe
+
       - name: Build Windows artifact set
         working-directory: apps/desktop
-        run: npx tauri build --target x86_64-pc-windows-msvc --bundles nsis --ci
+        run: npx tauri build --config src-tauri/tauri.sidecar.json --target x86_64-pc-windows-msvc --bundles nsis --ci
 
       - name: Stage Windows release artifacts
         id: stage_windows
