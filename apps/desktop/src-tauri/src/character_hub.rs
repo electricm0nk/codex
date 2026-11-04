@@ -13900,6 +13900,50 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// ACG p.56: level 2 + one combat bonus feat at 4th. E1.MC's character, refused before this.
+    #[test]
+    fn feat_budget_an_elf_swashbuckler_4_takes_its_bonus_feat_and_a_third_noncombat_feat_is_refused() {
+        let root = tempdir("feat-budget-swash");
+        let mut envelope = level_up_test_envelope("race:elf", 1);
+        envelope.character_input = compose_character_input(&request_for_class("race:elf", "class:swashbuckler", 4));
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let row = |root: &std::path::Path, id: &str| {
+            load_saved_character_at_root(root).expect("load").explanations.iter().find(|r| r.id == id).map(|r| r.value)
+        };
+        assert_eq!(row(&root, "feats.budget.swashbuckler_bonus_feats.granted"), Some(1));
+
+        for feat in ["Toughness", "Improved Initiative"] {
+            add_feat_selection_enforcing_prerequisites_at_root(&root, feat, None, "2026-11-01T00:00:00Z").unwrap_or_else(|e| panic!("{feat}: {e}"));
+        }
+        assert_eq!(row(&root, "feats.budget.swashbuckler_bonus_feats.remaining"), Some(0));
+        assert_eq!(row(&root, "feats.budget.level.remaining"), Some(0));
+
+        let before = saved_feats(&root);
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Alertness", None, "2026-11-01T00:00:00Z")
+            .expect_err("a third non-combat feat has no pool");
+        assert!(error.contains("level pool has 0 of 2 left"), "{error}");
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Blind-Fight", None, "2026-11-01T00:00:00Z")
+            .expect_err("a combat feat past both pools has none either");
+        assert!(error.contains("swashbuckler bonus feats pool has 0 of 1 left"), "{error}");
+        assert_eq!(saved_feats(&root), before, "a refused add writes nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn feat_budget_rows_read_the_book_for_the_classes_e1_mc_refuted() {
+        let granted = |class: &str, level: u8, pool: &str| {
+            let input = compose_character_input(&request_for_class("race:elf", class, level));
+            let base = compute_pilot_base_chassis(&input);
+            feat_budget_for(&input, &base).expect("budget").pool(pool).map(|p| p.granted)
+        };
+        assert_eq!(granted("class:swashbuckler", 3, "swashbuckler_bonus_feats"), None);
+        assert_eq!(granted("class:swashbuckler", 20, "swashbuckler_bonus_feats"), Some(5));
+        assert_eq!(granted("class:gunslinger", 4, "gunslinger_bonus_feats"), Some(1));
+        assert_eq!(granted("class:gunslinger", 20, "gunslinger_bonus_feats"), Some(5));
+        assert_eq!(granted("class:hunter", 3, "hunter_teamwork_feats"), Some(1));
+        assert_eq!(granted("class:hunter", 18, "hunter_teamwork_feats"), Some(6));
+    }
+
     #[test]
     fn feat_budget_admits_a_feat_while_a_pool_has_room_and_after_a_level_grants_one() {
         // Human Fighter 3 has two to spare; the third add is refused.

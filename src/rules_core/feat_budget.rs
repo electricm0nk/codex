@@ -5,7 +5,9 @@
 //! whose `target` is `Pool(<feat pool>)` adds its evaluated value, so a Fighter 3's
 //! `fighter_bonus_feat` reads 2 off `fighter_bonus_feats` and an alternate racial trait that replaces
 //! `human_bonus_feat` takes the racial pool away. The one pool with no record is `level`: a feat at
-//! every odd character level is a rule of the game, not of any class or race.
+//! every odd character level is a rule of the game, not of any class or race. A class feature with no
+//! `Pool` target whose offer hands out feats is a pool too, sized by its offer's count (a Swashbuckler's
+//! `swashbuckler_bonus_feats`). A record's line repeated by the converter counts once.
 //!
 //! `selected_feats` is a flat list that does not say which pool an entry came from. Each entry is
 //! charged by a best-case assignment: restricted pools fill before open ones, and an entry moves to
@@ -18,8 +20,8 @@ use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::level_up_option_filter::FEAT_POOL;
 use crate::rules_core::pilot_compute::{ComputationExplanation, PilotBaseChassisComputation};
 use crate::rules_core::sheet_rule::{
-    evaluate_applies, evaluate_expr, held_set, id_slug, sibling_line_gate, split_rule_id, BonusTarget, CharacterFacts, EvalContext,
-    HeldSeed, OptionSet, SheetRule, SheetRulePackage, SheetValue,
+    evaluate_applies, evaluate_expr, held_set, id_slug, offer_selects, sibling_line_gate, split_rule_id, BonusTarget, CharacterFacts,
+    EvalContext, Expr, Granter, HeldSeed, HeldSet, OptionSet, Rat, SheetRule, SheetRulePackage, SheetValue,
 };
 
 /// A feat at every odd character level.
@@ -30,6 +32,10 @@ pub const RACIAL_POOL: &str = "racial";
 pub const OPEN_BONUS_POOL: &str = "bonus";
 
 const EXPLANATION_PREFIX: &str = "feats.budget";
+/// The pool a class feature sits in. A feat's own chooser sits in `feat`, a temporary pick in `internal`.
+const CLASS_FEATURE_POOL: &str = "special_ability";
+/// The pool of the rows an offer picks between before the feat list itself.
+const INTERNAL_POOL: &str = "internal";
 const FIGHTER_BONUS_FEAT_POOL: &str = "fighter_bonus_feat";
 /// The combat baseline requires Weapon Focus of every class, and creation seeds it in this token
 /// shape (`feat_pillar_and_pool_aggregation.rs`, `unmet_combat_posture_conditions`). A character
@@ -52,7 +58,7 @@ pub struct FeatPool {
     pub id: String,
     pub granted: i64,
     pub spent: i64,
-    /// `None`: any feat. `Some`: a feat carrying every tag of one of these sets (the rule's `offers`).
+    /// `None`: any feat. `Some`: a feat carrying every tag of one of these sets ([`admitted_sets`]).
     admits: Option<Vec<Vec<String>>>,
     /// The labels of the rules that grant it.
     sources: Vec<String>,
@@ -243,6 +249,93 @@ fn feat_pool_of(rule: &SheetRule) -> Option<&str> {
     (pool == FEAT_POOL || offers_feats || named_for_the_characters_feats(pool)).then_some(pool.as_str())
 }
 
+/// One rule's grant of feat picks.
+struct FeatGrant<'a> {
+    pool: &'a str,
+    amount: &'a Expr,
+    /// The tag lists of the offers it draws on; empty when the record names no list.
+    lists: Vec<&'a [String]>,
+}
+
+/// The feat picks `rule` hands out: its `Pool` row, or a class feature's offer.
+fn feat_grant_of<'a>(package: &'a SheetRulePackage, rule: &'a SheetRule) -> Option<FeatGrant<'a>> {
+    if let (Some(pool), SheetValue::Number(amount)) = (feat_pool_of(rule), &rule.value) {
+        return Some(FeatGrant { pool, amount, lists: feat_list_of(rule).into_iter().collect() });
+    }
+    offered_feat_grant(package, rule)
+}
+
+/// A class feature that hands out feats through an offer, with no `Pool` target: it comes with a class
+/// or archetype, and it offers a named feat list directly or through an `internal` row (the source's
+/// pick between a feat and a dare). Three look-alikes are not pools: a feat's own chooser and a temporary
+/// pick sit in other pools; a row only a pick can hold (`cavalier_tactician_feat`) is spent from the pool
+/// that picked it; and an empty list is a chooser over what the character already has.
+fn offered_feat_grant<'a>(package: &'a SheetRulePackage, rule: &'a SheetRule) -> Option<FeatGrant<'a>> {
+    let granted_outright = rule.granted_by.iter().any(|grant| matches!(grant.by, Granter::Class { .. } | Granter::Rule(_)));
+    if rule.target.is_some() || rule.pool != CLASS_FEATURE_POOL || !granted_outright {
+        return None;
+    }
+    let offer = rule.offers.as_ref()?;
+    let OptionSet::Rules { pool: from, tags, .. } = &offer.from else { return None };
+    if tags.is_empty() {
+        return None;
+    }
+    let lists: Vec<&[String]> = match from.as_str() {
+        FEAT_POOL => vec![tags.as_slice()],
+        INTERNAL_POOL => package.rules.values().filter(|row| offer_selects(offer, row)).filter_map(feat_list_of).filter(|list| !list.is_empty()).collect(),
+        _ => Vec::new(),
+    };
+    (!lists.is_empty()).then(|| FeatGrant { pool: split_rule_id(&rule.id).2, amount: &offer.count, lists })
+}
+
+/// The tags of `rule`'s offer, when it offers from the feat list.
+fn feat_list_of(rule: &SheetRule) -> Option<&[String]> {
+    match rule.offers.as_ref().map(|offer| &offer.from) {
+        Some(OptionSet::Rules { pool, tags, .. }) if pool == FEAT_POOL => Some(tags),
+        _ => None,
+    }
+}
+
+/// An offer's tags as [`FeatPool::admits`] reads them. They are the source category's `TYPE:A.B`, what
+/// the pool takes, so a feat need carry one: "combat or grit" (UC p.12), "combat or performance" (UC p.47).
+/// No feat in the package carries all three of the Gunslinger's. An empty list admits any tagged feat.
+fn admitted_sets(tags: &[String]) -> Vec<Vec<String>> {
+    if tags.is_empty() {
+        return vec![Vec::new()];
+    }
+    tags.iter().map(|tag| vec![tag.clone()]).collect()
+}
+
+/// Whether `rule` says again what `earlier`, a line of the same record, already said. The converter
+/// writes a source `.MOD` row twice, so `hunter_teamwork_feats#bonus6..11` repeat `#bonus0..5`, and a
+/// `-1` line of `fighter_bonus_feats` repeats too. The offer's own id names the line, not the grant.
+fn repeats_the_line(rule: &SheetRule, earlier: &SheetRule) -> bool {
+    let offered = |r: &SheetRule| r.offers.as_ref().map(|offer| (offer.count.clone(), offer.from.clone()));
+    split_rule_id(&rule.id) == split_rule_id(&earlier.id)
+        && rule.target == earlier.target
+        && rule.value == earlier.value
+        && rule.applies == earlier.applies
+        && offered(rule) == offered(earlier)
+}
+
+/// A grant's value. When it is a variable, a contribution the converter repeated counts once, for the
+/// same reason as [`repeats_the_line`]: the `.MOD` rows of `swashbuckler_bonus_feats` reach its pool
+/// variable twice, so the variable alone reads 2 at 4th. The sum is the engine's, less the repeats.
+fn grant_amount(amount: &Expr, held: &HeldSet, package: &SheetRulePackage, facts: &CharacterFacts, ctx: EvalContext) -> Rat {
+    let mut total = evaluate_expr(amount, held, package, facts, ctx.clone());
+    let (Expr::Var(var), false) = (amount, total.is_zero()) else { return total };
+    let Some(table) = package.vars.get(var) else { return total };
+    for (index, repeat) in table.contributions.iter().enumerate() {
+        if !table.contributions[..index].contains(repeat) || !held.holds_itself(&repeat.rule_id) || repeat.bonus_type.is_some() {
+            continue;
+        }
+        if evaluate_applies(&repeat.when, held, package, facts, ctx.clone()).includes() {
+            total = total + evaluate_expr(&Expr::neg(repeat.expr.clone()), held, package, facts, ctx.clone());
+        }
+    }
+    total
+}
+
 fn named_for_the_characters_feats(pool: &str) -> bool {
     let words = || pool.split('_');
     words().any(|w| w == "feat" || w == "feats") && !words().any(|w| w == "companion")
@@ -271,8 +364,12 @@ pub fn feat_budget(
 ) -> FeatBudget {
     let mut seed = HeldSeed::from_character(input, base);
     seed.race_traits.extend(race_traits.iter().cloned());
-    let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, &seed);
-    let held = held_set(package, &seed, &facts);
+    feat_budget_of_seed(package, input, base, &seed)
+}
+
+fn feat_budget_of_seed(package: &SheetRulePackage, input: &CharacterInput, base: &PilotBaseChassisComputation, seed: &HeldSeed) -> FeatBudget {
+    let facts = CharacterFacts::from_character(input, base).with_linked_picks(package, seed);
+    let held = held_set(package, seed, &facts);
 
     let mut pools: BTreeMap<String, FeatPool> = BTreeMap::new();
     let character_level: i64 = input.chosen.class_levels.iter().map(|c| i64::from(c.level)).sum();
@@ -288,12 +385,18 @@ pub fn feat_budget(
         },
     );
 
+    let mut counted: Vec<&SheetRule> = Vec::new();
     for (id, entry) in &held.rules {
         if held.removed.contains(id) {
             continue;
         }
         let Some(rule) = package.rule(id) else { continue };
-        let (Some(pool), SheetValue::Number(value)) = (feat_pool_of(rule), &rule.value) else { continue };
+        let Some(grant) = feat_grant_of(package, rule) else { continue };
+        if counted.iter().any(|earlier| repeats_the_line(rule, earlier)) {
+            continue;
+        }
+        counted.push(rule);
+        let pool = grant.pool;
         let ctx = EvalContext { holder_class: entry.holder_class.clone(), spell_level: entry.spell_level.unwrap_or(0), item_tags: Vec::new() };
         let gate = if id.contains('#') {
             sibling_line_gate(package, &held, &facts, rule, ctx.clone())
@@ -303,7 +406,7 @@ pub fn feat_budget(
         if !gate.includes() {
             continue;
         }
-        let amount = evaluate_expr(value, &held, package, &facts, ctx);
+        let amount = grant_amount(grant.amount, &held, package, &facts, ctx);
         let amount = if amount.den == 0 { 0 } else { amount.num / amount.den };
         let name = if pool != FEAT_POOL {
             pool
@@ -323,10 +426,8 @@ pub fn feat_budget(
         if !row.sources.contains(&rule.label) {
             row.sources.push(rule.label.clone());
         }
-        if let Some(OptionSet::Rules { pool: offered, tags, .. }) = rule.offers.as_ref().map(|o| &o.from)
-            && offered == FEAT_POOL
-        {
-            row.admits.get_or_insert_with(Vec::new).push(tags.clone());
+        for list in grant.lists {
+            row.admits.get_or_insert_with(Vec::new).extend(admitted_sets(list));
         }
     }
     pools.retain(|_, pool| pool.granted > 0 || pool.id == LEVEL_POOL);
@@ -567,6 +668,145 @@ mod tests {
             assert_eq!(numbers(&budget_of("fighter", 1, &[], &[feat]), "fighter_bonus_feat"), (1, 1, 0), "{feat}");
         }
         assert_eq!(numbers(&budget_of("fighter", 1, &[], &["Weapon Focus (Longbow)"]), "fighter_bonus_feat"), (1, 1, 0));
+    }
+
+    fn granted_at(class: &str, level: u8, pool: &str) -> Option<i64> {
+        budget_of(class, level, &[], &[]).pool(pool).map(|p| p.granted)
+    }
+
+    /// ACG p.56, UC p.12: a bonus feat at 4th and every four levels after. The grant is an offer, no `Pool` target.
+    #[test]
+    fn feat_budget_a_class_that_grants_by_an_offer_has_a_pool() {
+        for (class, pool) in [("swashbuckler", "swashbuckler_bonus_feats"), ("gunslinger", "gunslinger_bonus_feats")] {
+            assert_eq!(granted_at(class, 3, pool), None, "{class} 3");
+            for (level, want) in [(4, 1), (7, 1), (8, 2), (12, 3), (16, 4), (19, 4), (20, 5)] {
+                assert_eq!(granted_at(class, level, pool), Some(want), "{class} {level}");
+            }
+        }
+    }
+
+    #[test]
+    fn feat_budget_an_offered_pool_only_takes_what_the_book_lists() {
+        // Elf Swashbuckler 4: level 2 + bonus 1. Combat only.
+        let swash = budget_of("swashbuckler", 4, &[], &["feat:power_attack", "feat:toughness", "feat:improved_initiative"]);
+        assert_eq!(swash.over_by(), 0);
+        assert_eq!(numbers(&swash, "swashbuckler_bonus_feats"), (1, 1, 0));
+        let grit_is_not_combat = budget_of("swashbuckler", 4, &[], &["feat:extra_grit", "feat:toughness", "feat:alertness"]);
+        assert_eq!(grit_is_not_combat.over_by(), 1, "{:?}", grit_is_not_combat.pools());
+        // Gunslinger: "combat or grit" (UC p.12). Grit alone fits; all three tags are on no feat at all.
+        for feats in [["feat:extra_grit", "feat:toughness", "feat:alertness"], ["feat:power_attack", "feat:toughness", "feat:alertness"]] {
+            let budget = budget_of("gunslinger", 4, &[], &feats);
+            assert_eq!(budget.over_by(), 0, "{feats:?}");
+            assert_eq!(numbers(&budget, "gunslinger_bonus_feats"), (1, 1, 0), "{feats:?}");
+        }
+        let neither = budget_of("gunslinger", 4, &[], &["feat:endurance", "feat:toughness", "feat:alertness"]);
+        assert_eq!(neither.over_by(), 1);
+    }
+
+    /// `TYPE:A.B` on a source ability category lists what the pool takes; a feat need carry only one
+    /// (UC p.47's Gladiator: "combat or performance"). Psychic Warrior holds the same shape on a `Pool` row.
+    #[test]
+    fn feat_budget_an_offers_tag_list_is_any_of() {
+        for feat in ["feat:power_attack", "feat:greater_psionic_shot"] {
+            let budget = budget_of("psychic_warrior", 1, &[], &[feat, "feat:toughness"]);
+            assert_eq!(budget.over_by(), 0, "{feat}: {:?}", budget.pools());
+            assert_eq!(numbers(&budget, "psychic_warrior_feat"), (1, 1, 0), "{feat}");
+        }
+    }
+
+    /// ACG p.28: at 3rd and every three levels after. `#bonus6..11` repeat `#bonus0..5` line for line.
+    #[test]
+    fn feat_budget_a_repeated_line_counts_once() {
+        for (level, want) in [(3, 1), (6, 2), (9, 3), (12, 4), (15, 5), (18, 6), (20, 6)] {
+            assert_eq!(granted_at("hunter", level, "hunter_teamwork_feats"), Some(want), "hunter {level}");
+        }
+        assert_eq!(granted_at("hunter", 2, "hunter_teamwork_feats"), None);
+    }
+
+    fn budget_holding(class: &str, level: u8, rule_ids: &[&str]) -> FeatBudget {
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let mut input = input_for(&fixture, class, level);
+        input.chosen.selected_feats = Vec::new();
+        let base = compute_pilot_base_chassis(&input);
+        let mut seed = HeldSeed::from_character(&input, &base);
+        seed.rule_ids.extend(rule_ids.iter().map(|id| (*id).to_owned()));
+        feat_budget_of_seed(package(), &input, &base, &seed)
+    }
+
+    #[test]
+    fn feat_budget_an_archetypes_offer_is_read_by_the_same_rule() {
+        // The grant is read. Not its number: the class's own grant stays held once the archetype's
+        // off-switch rises (the held set only grows), so both rows add to one variable. E1.6's receipt
+        // says so; no live path holds an archetype.
+        let daring = &["advanced_class_guide:class_feature:swashbuckler_archetype_daring_infiltrator"];
+        assert!(package().rule(daring[0]).is_some());
+        let budget = budget_holding("swashbuckler", 4, daring);
+        let pool = budget.pool("daring_infiltrator_bonus_feats").unwrap_or_else(|| panic!("{:?}", budget.pools()));
+        assert!(pool.granted >= 1 && pool.admits(&HeldFeat { tag_sets: vec![vec!["Combat".to_owned()]] }), "{pool:?}");
+        assert!(budget_holding("swashbuckler", 3, daring).pool("daring_infiltrator_bonus_feats").is_none());
+
+        // OA p.100: at 4th, 8th, 12th and 16th.
+        let host = &["occult_adventures:class_feature:occultist_archetype_battle_host"];
+        assert!(package().rule(host[0]).is_some());
+        assert!(budget_holding("occultist", 3, host).pool("battle_host_bonus_feats").is_none());
+        for (level, want) in [(4, 1), (8, 2), (16, 4), (20, 4)] {
+            let budget = budget_holding("occultist", level, host);
+            assert_eq!(budget.pool("battle_host_bonus_feats").map(|p| p.granted), Some(want), "occultist {level}: {:?}", budget.pools());
+        }
+    }
+
+    /// A feat's own chooser picks among feats the character holds; it hands out nothing.
+    #[test]
+    fn feat_budget_a_feats_own_chooser_is_not_a_pool() {
+        let budget = budget_of("rogue", 3, &[], &["feat:martial_versatility", "feat:point_blank_master"]);
+        assert_eq!(budget.pools().iter().map(|p| p.id.as_str()).collect::<Vec<_>>(), ["level"], "{:?}", budget.pools());
+        assert_eq!(budget.over_by(), 0);
+        // Martial Flexibility's pick lasts a minute and takes no slot.
+        let brawler = budget_holding("brawler", 3, &["advanced_class_guide:class_feature:martial_flexibility_feat"]);
+        assert_eq!(brawler.pools().iter().map(|p| p.id.as_str()).collect::<Vec<_>>(), ["level", "brawler_bonus_feat"], "{:?}", brawler.pools());
+    }
+
+    /// What E1.6's receipt lists by name: the record holds the grant in prose, and its gates do not
+    /// carry the number. Dragon Disciple's two gates are both "at 2nd"; Sentinel's one is. Inventing a
+    /// count from them would be wrong at 5th and 7th, so these read no pool until the record holds one.
+    #[test]
+    fn feat_budget_a_grant_held_only_as_prose_invents_no_number() {
+        for (class, level) in [("dragon_disciple", 8), ("sentinel", 7)] {
+            let budget = budget_of(class, level, &[], &[]);
+            assert_eq!(budget.pools().iter().map(|p| p.id.as_str()).collect::<Vec<_>>(), ["level"], "{class}: {:?}", budget.pools());
+        }
+    }
+
+    /// The whole package, so a new record of this shape, or a look-alike the predicate lets in, is seen.
+    #[test]
+    fn feat_budget_the_offer_shape_reads_these_records_and_no_others() {
+        let mut read: Vec<&str> = package().rules.values().filter(|rule| offered_feat_grant(package(), rule).is_some()).map(|rule| rule.id.as_str()).collect();
+        read.sort_unstable();
+        assert_eq!(
+            read,
+            [
+                "advanced_class_guide:class_feature:daring_infiltrator_bonus_feats",
+                "advanced_class_guide:class_feature:swashbuckler_bonus_feats",
+                "occult_adventures:class_feature:battle_host_bonus_feats",
+                "ultimate_combat:class_feature:gunslinger_bonus_feats",
+            ]
+        );
+        let gunslinger = offered_feat_grant(package(), package().rule("ultimate_combat:class_feature:gunslinger_bonus_feats").unwrap()).unwrap();
+        assert_eq!(gunslinger.pool, "gunslinger_bonus_feats");
+        assert_eq!(gunslinger.lists, [&["GunslingerFeat".to_owned(), "Combat".to_owned(), "Grit".to_owned()][..]]);
+    }
+
+    #[test]
+    fn feat_budget_a_line_repeats_only_with_the_same_target_value_gate_and_offer() {
+        let line = |n: u8| package().rule(&format!("advanced_class_guide:class_feature:hunter_teamwork_feats#bonus{n}")).unwrap();
+        assert!(repeats_the_line(line(6), line(0)));
+        assert!(repeats_the_line(line(11), line(5)));
+        assert!(!repeats_the_line(line(1), line(0)), "another level's gate");
+        let principal = package().rule("advanced_class_guide:class_feature:hunter_teamwork_feats").unwrap();
+        assert!(!repeats_the_line(line(0), principal));
+        let other_record = package().rule("core_rulebook:class_feature:fighter_bonus_feats#bonus1").unwrap();
+        assert!(!repeats_the_line(other_record, line(0)));
+        assert!(repeats_the_line(package().rule("core_rulebook:class_feature:fighter_bonus_feats#bonus12").unwrap(), other_record));
     }
 
     #[test]
