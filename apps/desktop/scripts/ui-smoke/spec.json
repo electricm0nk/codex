@@ -5981,6 +5981,51 @@
       "notes": "SD-39 E2.3/E2.4: the drawer's X closes it; the level history is gone from the page. Click-outside is covered by ProgressionDrawer.test.ts only (the harness clicks named controls, not pixels)."
     },
     {
+      "id": "sheet-progression-ledger-aldric",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Aldric Ironhand"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 30000
+        }
+      ],
+      "marker": "Level 1 \u00b7 Fighter 1",
+      "expect": [
+        "Level 1 \u00b7 Fighter 1",
+        "Feats: Power Attack, Dodge, Weapon Focus",
+        "Assigned on upgrade",
+        "Class features: Armor Training",
+        "Unspent: 1 feat",
+        "Level 4 Fighter",
+        "NEXT"
+      ],
+      "forbid": [
+        "Level 1 Fighter",
+        "Reading the level history"
+      ],
+      "notes": "SD-39 E5.3: the drawer lists list_progression_ledger's rows for Aldric Ironhand (Fighter 3): each level with the feats taken at it, what its class features gained and what it left unspent, and the seed's rows are marked as worked out. 'Feats: ...' is printed only by the drawer (the Feats tab prints each feat by itself). 'Level 4 Fighter' is next level's card, which stays; 'Level 1 Fighter' was the old current-level card, which the ledger replaced in the drawer and print still draws. Leaves the drawer open; resetToLanding's Escape closes it."
+    },
+    {
       "id": "sheet-progression-drawer-close-escape",
       "screen": "sheet",
       "steps": [

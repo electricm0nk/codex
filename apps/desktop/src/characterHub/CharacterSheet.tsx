@@ -43,7 +43,7 @@ import { PriceModeControl } from './PriceModeControl';
 import { loadCharacterHitPoints } from '../boundary/characterHitPoints';
 import type { HitPointLevelDto } from '../boundary/loadCreateCharacter';
 import { buildPrintCss, printableTabs } from './printLayout';
-import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, progressionDrawerReducer } from './ProgressionDrawer';
+import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
 import { EMPTY_CUSTOM, customIsEmpty, savedIntelligenceModifier, withCustomHitPoints, withCustomSkillPoints, withItemHitPoints, withItemSpeed, type CharacterCustom } from './customModel';
@@ -4423,20 +4423,8 @@ export function CharacterSheet(props: {
           </div>
         );
       case 'showProgression': {
-        const progressionContent = (
-          <div>
-            {/* Each level taken and what it granted */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
-              {currentBenefits.map((benefit) => (
-                <LevelBenefitCard
-                  key={`${benefit.classId}-${benefit.characterLevel}`}
-                  benefit={benefit}
-                  skillPoints={skillPointsFor(benefit)}
-                  variant="current"
-                />
-              ))}
-            </div>
-
+        const progressionNext = (
+          <>
             {/* Next — the next level available for each held class */}
             <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', margin: '1rem 0 0.6rem' }}>
               <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
@@ -4455,6 +4443,23 @@ export function CharacterSheet(props: {
                 />
               ))}
             </div>
+          </>
+        );
+        const progressionContent = (
+          <div>
+            {/* Each level taken and what it granted */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
+              {currentBenefits.map((benefit) => (
+                <LevelBenefitCard
+                  key={`${benefit.classId}-${benefit.characterLevel}`}
+                  benefit={benefit}
+                  skillPoints={skillPointsFor(benefit)}
+                  variant="current"
+                />
+              ))}
+            </div>
+
+            {progressionNext}
           </div>
         );
         return (
@@ -4470,7 +4475,12 @@ export function CharacterSheet(props: {
               Show Progression
             </button>
             {printing ? progressionContent : null}
-            {progressionDrawer.open ? <ProgressionDrawer onAction={dispatchProgressionDrawer}>{progressionContent}</ProgressionDrawer> : null}
+            {progressionDrawer.open ? (
+              <ProgressionDrawer onAction={dispatchProgressionDrawer}>
+                <ProgressionLedger characterId={props.row.characterId} heldClasses={heldClasses} />
+                {progressionNext}
+              </ProgressionDrawer>
+            ) : null}
           </div>
         );
       }

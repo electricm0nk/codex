@@ -2,10 +2,12 @@ import { readFileSync } from 'node:fs';
 import { createElement, isValidElement, type ReactElement, type ReactNode } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { assert, assertEqual } from '../testSupport/asserts';
+import type { ProgressionLedgerDto, ProgressionLevelDto } from '../boundary/listProgressionLedger';
 import { buildPrintCss } from './printLayout';
 import {
   PROGRESSION_DRAWER_CLOSED,
   ProgressionDrawerPanel,
+  ProgressionLedgerView,
   progressionDrawerActionForKey,
   progressionDrawerReducer,
   type ProgressionDrawerAction,
@@ -99,10 +101,55 @@ function verifiesTheSheetHostsTheDrawerAndPrintKeepsTheHistory() {
   const box = source.slice(source.indexOf("case 'showProgression':"), source.indexOf("case 'squareBlock':"));
   assert(box.includes('ref={progressionButtonRef}'), 'focus returns to the Show Progression button');
   assert(box.includes("dispatchProgressionDrawer({ type: 'open' })"), 'the button opens the drawer');
-  assert(/progressionDrawer\.open \? <ProgressionDrawer onAction=\{dispatchProgressionDrawer\}>\{progressionContent\}<\/ProgressionDrawer>/.test(box), 'the drawer holds the former rail content');
+  assert(/progressionDrawer\.open \? \(\s*<ProgressionDrawer onAction=\{dispatchProgressionDrawer\}>\s*<ProgressionLedger characterId=\{props\.row\.characterId\} heldClasses=\{heldClasses\} \/>\s*\{progressionNext\}\s*<\/ProgressionDrawer>/.test(box), 'the drawer holds the ledger, then what the next level grants');
   assert(/printing \? progressionContent : null/.test(box), 'print draws the history in the rail');
   assert(buildPrintCss().includes('[role="dialog"]'), 'print hides dialogs, which is why the rail draws the history then');
   assert(/if \(progressionDrawer\.returnFocus\) \{\s*progressionButtonRef\.current\?\.focus\(\);/.test(source), 'the sheet acts on returnFocus');
+}
+
+const LEVEL: ProgressionLevelDto = {
+  characterLevel: 1,
+  classId: 'class:fighter',
+  classLevel: 1,
+  hitDieResult: null,
+  feats: [{ id: 'feat:power_attack', name: 'Power Attack', target: null }],
+  spells: [],
+  ranks: [],
+  abilityIncreases: [],
+  classFeatures: [],
+  abilityIncreaseDue: false,
+  unspent: { feats: 0, spells: 0, ranks: 0 },
+  assignedOnUpgrade: true,
+};
+const NOTHING = { feats: [], spells: [], ranks: [], abilityIncreases: [] };
+const HELD = [{ classId: 'class:fighter', classLabel: 'Fighter', level: 3 }];
+
+function viewHtml(state: Parameters<typeof ProgressionLedgerView>[0]['state']) {
+  return renderToStaticMarkup(createElement(ProgressionLedgerView, { state, heldClasses: HELD }));
+}
+
+function verifiesTheDrawerShowsALevelAndWhatItsRowsAreMarked() {
+  const ledger: ProgressionLedgerDto = { levels: [LEVEL, { ...LEVEL, characterLevel: 2, classLevel: 2, assignedOnUpgrade: false }], withoutLevel: NOTHING };
+  const html = viewHtml({ kind: 'loaded', ledger });
+  assert(html.includes('Level 1'), 'the first level is headed');
+  assert(html.includes('Fighter 1'), 'with the class level taken');
+  assert(html.includes('Feats: Power Attack'), 'its feat by name');
+  assertEqual(html.split('Assigned on upgrade').length - 1, 1, 'only the level whose rows were worked out says so');
+  assert(!html.includes('Not placed'), 'nothing to set apart, no heading for it');
+}
+
+function verifiesWhatHoldsNoLevelIsShownAndNotLost() {
+  const html = viewHtml({ kind: 'loaded', ledger: { levels: [LEVEL], withoutLevel: { ...NOTHING, feats: [{ id: 'feat:toughness', name: 'Toughness', target: null }] } } });
+  assert(html.includes('Not placed at a level'), 'the group is named');
+  assert(html.includes('Feats: Toughness'), 'the feat is listed there');
+}
+
+function verifiesLoadingAndFailureEachSaySo() {
+  assert(viewHtml({ kind: 'loading' }).includes('Reading the level history'), 'it says it is reading');
+  const failed = viewHtml({ kind: 'failed', reason: 'invalid ledger JSON' });
+  assert(failed.includes('invalid ledger JSON'), 'a failure names its reason');
+  assert(failed.includes('role="alert"'), 'and is announced');
+  assert(!failed.includes('Level 1'), 'never an empty history in its place');
 }
 
 verifiesEachOfTheThreeClosePathsClosesAndReturnsFocus();
@@ -111,5 +158,8 @@ verifiesOnlyEscapeIsACloseKey();
 verifiesThePanelIsAModalDialogOnTheLeft();
 verifiesThePanelWiresTheXAndTheOutsideClick();
 verifiesTheSheetHostsTheDrawerAndPrintKeepsTheHistory();
+verifiesTheDrawerShowsALevelAndWhatItsRowsAreMarked();
+verifiesWhatHoldsNoLevelIsShownAndNotLost();
+verifiesLoadingAndFailureEachSaySo();
 
 console.log('ProgressionDrawer.test.ts: all assertions passed');

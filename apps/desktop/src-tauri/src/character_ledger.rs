@@ -22,7 +22,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
 use crate::character_custom::{load_character_custom_at_root, CharacterCustomDto};
-use crate::character_hub::feat_budget_for;
+use crate::character_hub::{feat_budget_for, load_character_hit_points_at_root, sheet_lines_for, SheetLineDto};
+use crate::feat_catalog::build_feat_catalog;
 use codex::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use codex::rules_core::class_seeds::canonical_seeds_for;
 use codex::rules_core::feat_budget::feat_slot_levels;
@@ -377,6 +378,257 @@ pub(crate) fn write_character_ledger_at_root(root: &Path, ledger: &CharacterLedg
     let path = root.join(LEDGER_FILE_NAME);
     let json = serde_json::to_string_pretty(ledger).map_err(|err| format!("failed to serialize the ledger: {err}"))?;
     std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+}
+
+/// A feat as the drawer prints it. `target` is a chooser feat's target.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionFeatDto {
+    pub id: String,
+    pub name: String,
+    pub target: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionSpellDto {
+    /// The spell's id is the catalog's key, which is what the sheet's Spells tab prints.
+    pub id: String,
+    pub class_id: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionRanksDto {
+    pub skill_id: String,
+    pub ranks: u32,
+}
+
+/// `ability` is the name in the grant's target: `strength` for `ability:strength`.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionAbilityIncreaseDto {
+    pub ability: String,
+    pub points: u32,
+}
+
+/// What a set of ledger rows took, grouped for reading.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionChoicesDto {
+    pub feats: Vec<ProgressionFeatDto>,
+    pub spells: Vec<ProgressionSpellDto>,
+    pub ranks: Vec<ProgressionRanksDto>,
+    pub ability_increases: Vec<ProgressionAbilityIncreaseDto>,
+}
+
+/// A class feature line of the sheet that first appears at this level, or (`raised`) whose printed
+/// value changes here. `value` is what the sheet prints for it.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionClassFeatureDto {
+    pub id: String,
+    pub label: String,
+    pub value: String,
+    pub raised: bool,
+}
+
+/// Slots this level opened that nothing fills. A choice fills the earliest free slot, the migration's
+/// rule, so what is left over is the latest. Spells count only classes with a known table.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionUnspentDto {
+    pub feats: i64,
+    pub spells: i64,
+    pub ranks: i64,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionLevelDto {
+    pub character_level: u8,
+    pub class_id: String,
+    pub class_level: u8,
+    /// The hit die result saved for this class level, if one was (`hit_points.json`).
+    pub hit_die_result: Option<u8>,
+    #[serde(flatten)]
+    pub taken: ProgressionChoicesDto,
+    pub class_features: Vec<ProgressionClassFeatureDto>,
+    /// A Pathfinder character gains an ability increase at this level.
+    pub ability_increase_due: bool,
+    pub unspent: ProgressionUnspentDto,
+    /// Any row at this level had its level worked out afterwards.
+    pub assigned_on_upgrade: bool,
+}
+
+/// The character level by level, and what holds no level the character has: an over-budget row of a
+/// legacy save, or a row stamped above the character's level.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProgressionLedgerDto {
+    pub levels: Vec<ProgressionLevelDto>,
+    pub without_level: ProgressionChoicesDto,
+}
+
+fn add_choice(into: &mut ProgressionChoicesDto, row: &LedgerEntryDto, feat_names: &[(String, String)]) {
+    match row.kind {
+        LedgerKind::Feat => {
+            let name = feat_names.iter().find(|(key, _)| feat_identity::same(key, &row.id)).map_or_else(|| row.id.clone(), |(_, name)| name.clone());
+            into.feats.push(ProgressionFeatDto { id: row.id.clone(), name, target: row.target.clone() });
+        }
+        LedgerKind::Spell => into.spells.push(ProgressionSpellDto { id: row.id.clone(), class_id: row.target.clone() }),
+        LedgerKind::SkillRank => match into.ranks.iter_mut().find(|skill| skill.skill_id.eq_ignore_ascii_case(&row.id)) {
+            Some(skill) => skill.ranks += 1,
+            None => into.ranks.push(ProgressionRanksDto { skill_id: row.id.clone(), ranks: 1 }),
+        },
+        LedgerKind::AbilityIncrease => {
+            let ability = row.id.strip_prefix("ability:").unwrap_or(&row.id);
+            match into.ability_increases.iter_mut().find(|increase| increase.ability == ability) {
+                Some(increase) => increase.points += 1,
+                None => into.ability_increases.push(ProgressionAbilityIncreaseDto { ability: ability.to_owned(), points: 1 }),
+            }
+        }
+    }
+}
+
+/// The class and class level behind each character level, classes in saved order.
+fn class_of_each_level(input: &CharacterInput) -> Vec<(String, u8)> {
+    input.chosen.class_levels.iter().flat_map(|class| (1..=class.level).map(|at| (class.class_id.clone(), at))).collect()
+}
+
+/// A line's words without the count its rule offers: `Armor Training (armor training choice picks)`.
+fn feature_label(label: &str) -> String {
+    label.split_once(" (").filter(|(_, rest)| rest.ends_with(" picks)")).map_or(label, |(name, _)| name).to_owned()
+}
+
+/// The class features the sheet's "Rules and features" prints, as they arrive level by level: one
+/// row for a rule when it is first held, then a row for each of its lines whose value moves. These
+/// lines and not the engine's `class_feature.*` explanations, because a packaged app's corpus holds
+/// no class feature records, so most of those explanations exist only in a checkout.
+fn class_features_by_level(lines_by_level: &[Vec<SheetLineDto>]) -> Vec<Vec<ProgressionClassFeatureDto>> {
+    let rule_of = |id: &str| id.split_once('#').map_or(id, |(rule, _)| rule).to_owned();
+    let mut rules: BTreeSet<String> = BTreeSet::new();
+    let mut printed: BTreeMap<String, String> = BTreeMap::new();
+    lines_by_level
+        .iter()
+        .map(|lines| {
+            let features: Vec<&SheetLineDto> = lines.iter().filter(|line| line.kind == "class_feature").collect();
+            let mut gained = Vec::new();
+            for line in &features {
+                let rule = rule_of(&line.id);
+                if !rules.contains(&rule) {
+                    // A rule's own line names it; only a rule with none is named by its first.
+                    let named = features.iter().find(|other| other.id == rule).unwrap_or(line);
+                    gained.push(ProgressionClassFeatureDto { id: rule.clone(), label: feature_label(&named.label), value: named.value.clone(), raised: false });
+                    rules.insert(rule);
+                } else if printed.get(&line.id).is_some_and(|earlier| *earlier != line.value) {
+                    gained.push(ProgressionClassFeatureDto { id: line.id.clone(), label: feature_label(&line.label), value: line.value.clone(), raised: true });
+                }
+            }
+            for line in features {
+                printed.insert(line.id.clone(), line.value.clone());
+            }
+            gained
+        })
+        .collect()
+}
+
+/// Which levels' slots stay open when `unspent` of those `opened` have no choice in them: the latest,
+/// since a choice takes the earliest free slot. Adds each to `into`.
+fn add_unspent(into: &mut [i64], opened: &[i64], mut unspent: i64) {
+    for (level, room) in opened.iter().enumerate().rev() {
+        let here = unspent.min(*room).max(0);
+        into[level] += here;
+        unspent -= here;
+    }
+}
+
+/// How much each level adds to a running total.
+fn gained_each_level(totals: impl Iterator<Item = i64>) -> Vec<i64> {
+    let mut earlier = 0;
+    totals
+        .map(|total| {
+            let gained = total - earlier;
+            earlier = total;
+            gained
+        })
+        .collect()
+}
+
+/// What the drawer lists. Reads only: a character with no ledger file is shown the rows its next
+/// load will write. An unreadable file is an error, not an empty history.
+pub(crate) fn list_progression_ledger_at_root(root: &Path) -> Result<ProgressionLedgerDto, String> {
+    let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
+    let ledger = match load_character_ledger_at_root(root)? {
+        Some(ledger) => ledger,
+        None => rows_of_a_character_with_no_ledger(&input, &load_character_custom_at_root(root)?)?,
+    };
+    let level = character_level(&input);
+    let at_levels: Vec<CharacterInput> = (1..=level).map(|at| input_at_level(&input, at)).collect();
+    let bases: Vec<PilotBaseChassisComputation> = at_levels.iter().map(compute_pilot_base_chassis).collect();
+    let budgets = at_levels.iter().zip(&bases).map(|(at, base)| feat_budget_for(at, base)).collect::<Result<Vec<_>, _>>()?;
+
+    let feat_names: Vec<(String, String)> = build_feat_catalog().entries.into_iter().map(|entry| (entry.key, entry.name)).collect();
+    let mut result = ProgressionLedgerDto::default();
+    let mut taken = vec![ProgressionChoicesDto::default(); at_levels.len()];
+    let mut assigned = vec![false; at_levels.len()];
+    let mut spells_placed: BTreeMap<(String, u8), i64> = BTreeMap::new();
+    let mut ranks_placed = 0;
+    for row in &ledger.entries {
+        let Some(at) = row.taken_at_level.filter(|at| (1..=level).contains(at)).map(|at| usize::from(at - 1)) else {
+            add_choice(&mut result.without_level, row, &feat_names);
+            continue;
+        };
+        add_choice(&mut taken[at], row, &feat_names);
+        assigned[at] |= row.assigned_on_upgrade;
+        match (row.kind, row.target.as_deref()) {
+            (LedgerKind::SkillRank, _) => ranks_placed += 1,
+            (LedgerKind::Spell, Some(class)) => {
+                if let Some(spell_level) = spell_level_for_class(class, &row.id) {
+                    *spells_placed.entry((class.to_owned(), spell_level)).or_default() += 1;
+                }
+            }
+            _ => {}
+        }
+    }
+
+    let mut unspent_feats = vec![0; at_levels.len()];
+    // Across pools: the budget charges a feat to a pool, not a level, so which pool is open says nothing of when.
+    let opened_feats = gained_each_level(budgets.iter().map(|budget| budget.pools().iter().map(|pool| pool.granted).sum()));
+    let room_left = budgets.last().map_or(0, |budget| budget.pools().iter().map(|pool| pool.remaining().max(0)).sum());
+    add_unspent(&mut unspent_feats, &opened_feats, room_left);
+    let mut unspent_ranks = vec![0; at_levels.len()];
+    let rooms = ranks_each_level(&bases);
+    add_unspent(&mut unspent_ranks, &rooms, rooms.iter().sum::<i64>() - ranks_placed);
+    let mut unspent_spells = vec![0; at_levels.len()];
+    let slots = SpellSlots::of(&at_levels, &bases);
+    if let Some(last) = slots.levels.last() {
+        for (key, limit) in &last.known_limit {
+            let opened = gained_each_level(slots.levels.iter().map(|at| at.known_limit.get(key).copied().unwrap_or(0)));
+            add_unspent(&mut unspent_spells, &opened, limit - spells_placed.get(key).copied().unwrap_or(0));
+        }
+    }
+
+    let saved_hit_dice = load_character_hit_points_at_root(root)?.levels;
+    let lines_by_level: Vec<Vec<SheetLineDto>> = at_levels.iter().zip(&bases).map(|(at, base)| sheet_lines_for(at, base).0).collect();
+    let mut features = class_features_by_level(&lines_by_level).into_iter();
+    result.levels = class_of_each_level(&input)
+        .into_iter()
+        .zip(taken)
+        .enumerate()
+        .map(|(at, ((class_id, class_level), taken))| ProgressionLevelDto {
+            character_level: u8::try_from(at + 1).unwrap_or(u8::MAX),
+            hit_die_result: saved_hit_dice.iter().filter(|saved| saved.class_id == class_id).nth(usize::from(class_level) - 1).map(|saved| saved.value),
+            class_id,
+            class_level,
+            taken,
+            class_features: features.next().unwrap_or_default(),
+            ability_increase_due: (at + 1) % 4 == 0,
+            unspent: ProgressionUnspentDto { feats: unspent_feats[at], spells: unspent_spells[at], ranks: unspent_ranks[at] },
+            assigned_on_upgrade: assigned[at],
+        })
+        .collect();
+    Ok(result)
 }
 
 /// `None` when the character has no ledger file.

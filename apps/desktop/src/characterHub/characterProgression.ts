@@ -1,4 +1,6 @@
+import type { ProgressionChoicesDto, ProgressionLevelDto } from '../boundary/listProgressionLedger';
 import { knownClass } from './classCatalog';
+import { SKILLS, skillIdFor } from './skillsModel';
 
 /**
  * Pathfinder 1e level progression: per-class skill points and class features,
@@ -254,6 +256,81 @@ export function openFeatSlots(rows: ReadonlyArray<{ id: string; value: number }>
   return readFeatBudget(rows)
     .pools.filter((pool) => OPEN_FEAT_POOLS.has(pool.pool))
     .reduce((sum, pool) => sum + pool.granted, 0);
+}
+
+/** A word's id segments as a player reads them: `skill:basket_weaving` -> `Basket Weaving`. */
+function titleFromId(id: string): string {
+  const words = id.split(':').pop() ?? id;
+  return words
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function skillName(skillId: string): string {
+  return SKILLS.find((skill) => skillIdFor(skill.name) === skillId.toLowerCase())?.name ?? titleFromId(skillId);
+}
+
+function abilityIncreaseLine(choices: ProgressionChoicesDto): string | null {
+  return choices.abilityIncreases.length === 0
+    ? null
+    : `Ability increase: ${choices.abilityIncreases.map((row) => `${titleFromId(row.ability)} +${row.points}`).join(', ')}`;
+}
+
+function choiceLines(choices: ProgressionChoicesDto): string[] {
+  const lines: string[] = [];
+  if (choices.feats.length > 0) {
+    lines.push(`Feats: ${choices.feats.map((feat) => (feat.target ? `${feat.name} (${feat.target})` : feat.name)).join(', ')}`);
+  }
+  if (choices.spells.length > 0) {
+    lines.push(`Spells learned: ${choices.spells.map((spell) => spell.id).join(', ')}`);
+  }
+  if (choices.ranks.length > 0) {
+    const spent = choices.ranks.reduce((sum, row) => sum + row.ranks, 0);
+    lines.push(`Ranks spent: ${spent} (${choices.ranks.map((row) => `${skillName(row.skillId)} ${row.ranks}`).join(', ')})`);
+  }
+  return lines;
+}
+
+/** What holds no level, in the same words as a level's lines. */
+export function describeProgressionChoices(choices: ProgressionChoicesDto): string[] {
+  const increase = abilityIncreaseLine(choices);
+  return increase === null ? choiceLines(choices) : [...choiceLines(choices), increase];
+}
+
+function counted(count: number, singular: string): string[] {
+  return count > 0 ? [`${count} ${singular}${count === 1 ? '' : 's'}`] : [];
+}
+
+/**
+ * One row of `list_progression_ledger` as the drawer prints it. It reads the row and decides nothing:
+ * a line appears when the row states something, and an ability increase the level grants with nothing
+ * recording it says so rather than counting as unspent, since the sheet has no pick to spend it on.
+ */
+export function describeProgressionLevel(
+  level: ProgressionLevelDto,
+  heldClasses: readonly HeldClass[]
+): { heading: string; classLevel: string; lines: string[] } {
+  const classLabel = heldClasses.find((held) => held.classId === level.classId)?.classLabel ?? knownClass(level.classId)?.label ?? level.classId;
+  const lines: string[] = [];
+  if (level.hitDieResult !== null) {
+    lines.push(`Hit die result: ${level.hitDieResult}`);
+  }
+  if (level.classFeatures.length > 0) {
+    lines.push(`Class features: ${level.classFeatures.map((row) => (row.raised ? `${row.label} ${row.value}` : row.label)).join(', ')}`);
+  }
+  lines.push(...choiceLines(level));
+  const increase = abilityIncreaseLine(level);
+  if (increase !== null) {
+    lines.push(increase);
+  } else if (level.abilityIncreaseDue) {
+    lines.push('Ability increase: none recorded');
+  }
+  const unspent = [...counted(level.unspent.feats, 'feat'), ...counted(level.unspent.spells, 'spell'), ...counted(level.unspent.ranks, 'skill rank')];
+  if (unspent.length > 0) {
+    lines.push(`Unspent: ${unspent.join(', ')}`);
+  }
+  return { heading: `Level ${level.characterLevel}`, classLevel: `${classLabel} ${level.classLevel}`, lines };
 }
 
 function parseOneClass(segment: string): HeldClass {

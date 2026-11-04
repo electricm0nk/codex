@@ -2,6 +2,8 @@ import {
   buildLevelEntries,
   buildNextEntries,
   classHitDie,
+  describeProgressionChoices,
+  describeProgressionLevel,
   classSkillPointsBase,
   formatHeldClasses,
   installFeatLevels,
@@ -16,6 +18,7 @@ import {
   totalSkillPoints,
   type HeldClass,
 } from './characterProgression';
+import type { ProgressionLevelDto } from '../boundary/listProgressionLedger';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { installClassRoster } from './classRoster';
 import { LOADING_CLASS_CATALOG, setClassCatalog } from './classCatalog';
@@ -26,6 +29,79 @@ const budgetRows = (pool: string, granted: number, spent: number) => [
   { id: `feats.budget.${pool}.spent`, value: spent },
   { id: `feats.budget.${pool}.remaining`, value: granted - spent },
 ];
+
+const BLANK_LEVEL: ProgressionLevelDto = {
+  characterLevel: 4,
+  classId: 'class:fighter',
+  classLevel: 4,
+  hitDieResult: null,
+  feats: [],
+  spells: [],
+  ranks: [],
+  abilityIncreases: [],
+  classFeatures: [],
+  abilityIncreaseDue: false,
+  unspent: { feats: 0, spells: 0, ranks: 0 },
+  assignedOnUpgrade: false,
+};
+const FIGHTER_HELD: HeldClass[] = [{ classId: 'class:fighter', classLabel: 'Fighter', level: 4 }];
+
+function verifiesALevelReadsAsItsChoicesAndGains() {
+  const level: ProgressionLevelDto = {
+    ...BLANK_LEVEL,
+    hitDieResult: 7,
+    feats: [
+      { id: 'feat:weapon_focus', name: 'Weapon Focus', target: 'Longsword' },
+      { id: 'feat:dodge', name: 'Dodge', target: null },
+    ],
+    spells: [{ id: 'Magic Missile', classId: 'class:wizard' }],
+    ranks: [
+      { skillId: 'skill:knowledge_arcana', ranks: 3 },
+      { skillId: 'skill:climb', ranks: 1 },
+      { skillId: 'skill:basket_weaving', ranks: 1 },
+    ],
+    abilityIncreases: [{ ability: 'wisdom', points: 2 }],
+    classFeatures: [
+      { id: 'rule:armor_training', label: 'Armor Training', value: '', raised: false },
+      { id: 'rule:bonus_feats', label: 'Bonus Feats', value: '+2', raised: true },
+    ],
+    abilityIncreaseDue: true,
+    unspent: { feats: 1, spells: 0, ranks: 2 },
+  };
+  const entry = describeProgressionLevel(level, FIGHTER_HELD);
+  assertEqual(entry.heading, 'Level 4', 'the character level heads it');
+  assertEqual(entry.classLevel, 'Fighter 4', 'with the class level taken');
+  assertEqual(
+    JSON.stringify(entry.lines),
+    JSON.stringify([
+      'Hit die result: 7',
+      'Class features: Armor Training, Bonus Feats +2',
+      'Feats: Weapon Focus (Longsword), Dodge',
+      'Spells learned: Magic Missile',
+      'Ranks spent: 5 (Knowledge (Arcana) 3, Climb 1, Basket Weaving 1)',
+      'Ability increase: Wisdom +2',
+      'Unspent: 1 feat, 2 skill ranks',
+    ]),
+    'each line reads what the rows say, and nothing a row does not state is printed',
+  );
+}
+
+function verifiesAnIncreaseDueWithNoRowSaysSoWithoutCallingItASlot() {
+  const entry = describeProgressionLevel({ ...BLANK_LEVEL, abilityIncreaseDue: true }, FIGHTER_HELD);
+  assertEqual(JSON.stringify(entry.lines), JSON.stringify(['Ability increase: none recorded']), 'the level grants one and nothing records it');
+  assertEqual(JSON.stringify(describeProgressionLevel(BLANK_LEVEL, FIGHTER_HELD).lines), '[]', 'an empty level prints no empty lines');
+}
+
+function verifiesUnspentSpellsAndAClassNoRosterNames() {
+  const entry = describeProgressionLevel({ ...BLANK_LEVEL, classId: 'class:nobody', unspent: { feats: 0, spells: 1, ranks: 1 } }, []);
+  assertEqual(entry.classLevel, 'class:nobody 4', 'a class nothing names prints its id, not a guess');
+  assertEqual(JSON.stringify(entry.lines), JSON.stringify(['Unspent: 1 spell, 1 skill rank']), 'singulars read as singulars');
+}
+
+function verifiesTheChoicesOfNoLevelReadTheSameWay() {
+  const lines = describeProgressionChoices({ feats: [{ id: 'feat:toughness', name: 'Toughness', target: null }], spells: [], ranks: [], abilityIncreases: [] });
+  assertEqual(JSON.stringify(lines), JSON.stringify(['Feats: Toughness']), 'a feat with no level');
+}
 
 function verifiesFeatBudgetReadsTheRowsAndDecidesNothingElse() {
   const noise = [{ id: 'initiative.total', value: 3 }];
@@ -65,6 +141,10 @@ function verifiesAFeatLevelComesFromTheEngineList() {
 }
 
 async function main() {
+  verifiesALevelReadsAsItsChoicesAndGains();
+  verifiesAnIncreaseDueWithNoRowSaysSoWithoutCallingItASlot();
+  verifiesUnspentSpellsAndAClassNoRosterNames();
+  verifiesTheChoicesOfNoLevelReadTheSameWay();
   // SD-36 F4c: every class lookup reads the roster the engine serves (the real wire rows).
   installClassRoster(classRosterWire());
   installFeatLevels([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);

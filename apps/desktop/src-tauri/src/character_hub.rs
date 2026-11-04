@@ -22,7 +22,7 @@ use tauri::Manager;
 use uuid::Uuid;
 
 use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
-use crate::character_ledger::{build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto};
+use crate::character_ledger::{build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, list_progression_ledger_at_root, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto, ProgressionLedgerDto};
 use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
 use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
@@ -4580,6 +4580,20 @@ pub fn list_held_equipment(app: tauri::AppHandle, request: ListHeldEquipmentRequ
 
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
+pub struct ListProgressionLedgerRequest {
+    pub character_id: String,
+}
+
+/// The Show Progression drawer's rows; see [`list_progression_ledger_at_root`]. Runs one engine
+/// compute a level, so it stays off the main thread.
+#[tauri::command(async)]
+pub fn list_progression_ledger(app: tauri::AppHandle, request: ListProgressionLedgerRequest) -> Result<ProgressionLedgerDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    list_progression_ledger_at_root(&root)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct RemoveFeatSelectionRequest {
     pub character_id: String,
     pub feat_id: String,
@@ -5331,7 +5345,7 @@ fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -
 
 /// The saved hit point results, or an empty list when the character has none (created before the
 /// Levels list, or without rolls). Never an error for the ordinary "no file" case.
-fn load_character_hit_points_at_root(root: &Path) -> Result<CharacterHitPointsDto, String> {
+pub(crate) fn load_character_hit_points_at_root(root: &Path) -> Result<CharacterHitPointsDto, String> {
     let path = root.join(HIT_POINTS_FILE_NAME);
     if !path.exists() {
         return Ok(CharacterHitPointsDto::default());
@@ -8808,7 +8822,7 @@ mod tests {
     // ---- Custom: GM grants and house-rule records (custom.json) -------------------------------------
 
     use crate::character_custom::{save_character_custom_at_root, CustomBonusDto, CustomGrantDto, CustomRecordDto, CustomStatDto};
-    use crate::character_ledger::{LedgerEntryDto, LedgerKind};
+    use crate::character_ledger::{LedgerEntryDto, LedgerKind, ProgressionLevelDto};
 
     fn grant(id: &str, target: &str, value: i32) -> CustomGrantDto {
         CustomGrantDto { id: id.to_owned(), label: format!("grant {id}"), target: target.to_owned(), value, reason: "a god's boon".to_owned() }
@@ -10307,6 +10321,216 @@ mod tests {
         for dir in [&root, &clone_root, &import_root, &edited_root] {
             std::fs::remove_dir_all(dir).ok();
         }
+    }
+
+    // ----- the drawer's rows: each level the character has, read off the ledger and the engine -----
+
+    fn progression_ledger_feat_names(level: &ProgressionLevelDto) -> Vec<&str> {
+        level.taken.feats.iter().map(|feat| feat.name.as_str()).collect()
+    }
+
+    fn progression_ledger_features(level: &ProgressionLevelDto) -> Vec<(&str, &str, bool)> {
+        level.class_features.iter().map(|feature| (feature.label.as_str(), feature.value.as_str(), feature.raised)).collect()
+    }
+
+    fn progression_ledger_rank_total(ledger: &ProgressionLedgerDto) -> u32 {
+        ledger.levels.iter().flat_map(|level| &level.taken.ranks).map(|row| row.ranks).sum()
+    }
+
+    /// What the sheet's badge reads: the room left in every pool. The drawer must agree with it.
+    fn progression_ledger_budget_room(root: &Path) -> i64 {
+        let input = SavedCharacterStore::load(root).unwrap().character_input;
+        let budget = feat_budget_for(&input, &compute_pilot_base_chassis(&input)).unwrap();
+        budget.pools().iter().map(|pool| pool.remaining().max(0)).sum()
+    }
+
+    #[test]
+    fn progression_ledger_aldric_each_level_states_what_it_took_gained_and_left() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-aldric", DEFAULT_CHARACTER_ID);
+        load_saved_character_at_root(&root).expect("loads");
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let at: Vec<(u8, &str, u8)> = ledger.levels.iter().map(|level| (level.character_level, level.class_id.as_str(), level.class_level)).collect();
+        assert_eq!(at, [(1, "class:fighter", 1), (2, "class:fighter", 2), (3, "class:fighter", 3)]);
+
+        // A level feat, the human's and the Fighter's at 1. The Fighter's at 2 and the level feat at 3 are open.
+        assert_eq!(progression_ledger_feat_names(&ledger.levels[0]), ["Power Attack", "Dodge", "Weapon Focus"]);
+        assert!(ledger.levels[1].taken.feats.is_empty() && ledger.levels[2].taken.feats.is_empty());
+        let unspent_feats: Vec<i64> = ledger.levels.iter().map(|level| level.unspent.feats).collect();
+        assert_eq!(unspent_feats, [0, 1, 1]);
+        assert_eq!(unspent_feats.iter().sum::<i64>(), progression_ledger_budget_room(&root), "the drawer and the sheet's badge read one budget");
+
+        // The sheet's own lines, which a packaged app holds, unlike the corpus-backed explanations.
+        assert!(progression_ledger_features(&ledger.levels[0]).contains(&("Bonus Feats", "+1", false)), "{:?}", ledger.levels[0].class_features);
+        assert_eq!(progression_ledger_features(&ledger.levels[1]), [("Bonus Feats", "+2", true), ("Bravery", "", false)]);
+        assert_eq!(progression_ledger_features(&ledger.levels[2]), [("Armor Training", "", false)], "named once, with no count of picks");
+
+        let held_ranks: u32 = SavedCharacterStore::load(&root).unwrap().character_input.chosen.skill_allocations.iter().map(|skill| u32::from(skill.ranks)).sum();
+        assert_eq!(progression_ledger_rank_total(&ledger) + ledger.without_level.ranks.iter().map(|row| row.ranks).sum::<u32>(), held_ranks, "every rank held is listed once");
+        assert!(ledger.levels.iter().all(|level| level.assigned_on_upgrade), "the seed's rows were worked out: {ledger:?}");
+        assert!(ledger.levels.iter().all(|level| !level.ability_increase_due), "nothing below 4");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_elowen_places_her_spells_and_ranks_and_says_when_an_increase_is_due() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-elowen", SECOND_SEED_CHARACTER_ID);
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let spells_at = |level: usize| ledger.levels[level].taken.spells.iter().map(|spell| spell.id.as_str()).collect::<Vec<_>>();
+        assert_eq!(spells_at(0), ["Light"]);
+        assert_eq!(spells_at(4), ["Fireball"]);
+        assert_eq!(ledger.levels[0].taken.spells[0].class_id.as_deref(), Some("class:wizard"));
+        assert_eq!(progression_ledger_rank_total(&ledger), 35, "(2 + 4 + 1) x 5, as the seed's own comment says");
+        assert!(ledger.levels.iter().all(|level| level.unspent.ranks == 0), "all 35 are spent");
+        let per_level_ranks = |level: &ProgressionLevelDto| level.taken.ranks.iter().map(|row| row.ranks).sum::<u32>();
+        assert!(ledger.levels.iter().all(|level| per_level_ranks(level) == 7), "seven a level: {ledger:?}");
+
+        let due: Vec<u8> = ledger.levels.iter().filter(|level| level.ability_increase_due).map(|level| level.character_level).collect();
+        assert_eq!(due, [4]);
+        let first: Vec<&str> = progression_ledger_features(&ledger.levels[0]).iter().map(|(label, _, _)| *label).collect();
+        assert!(first.contains(&"Arcane Bond") && first.contains(&"Cantrips"), "a caster's features at 1: {first:?}");
+        assert!(ledger.levels[1..].iter().all(|level| level.class_features.is_empty()), "nothing a Wizard's sheet lines add after 1: {ledger:?}");
+        let unspent_feats: Vec<i64> = ledger.levels.iter().map(|level| level.unspent.feats).collect();
+        assert_eq!(unspent_feats.iter().sum::<i64>(), progression_ledger_budget_room(&root));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_multiclass_character_names_each_class_level_in_saved_order() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-tomas", THIRD_SEED_CHARACTER_ID);
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let at: Vec<(&str, u8)> = ledger.levels.iter().map(|level| (level.class_id.as_str(), level.class_level)).collect();
+        assert_eq!(at, [("class:cleric", 1), ("class:cleric", 2), ("class:cleric", 3), ("class:fighter", 1), ("class:fighter", 2)]);
+        assert_eq!(ledger.levels[0].taken.spells[0].id, "Cure Light Wounds");
+        assert_eq!(ledger.levels[2].taken.spells[0].id, "Spiritual Weapon");
+        // A second class's features arrive at its own first level.
+        let names = |level: usize| progression_ledger_features(&ledger.levels[level]).iter().map(|(label, _, _)| label.to_string()).collect::<Vec<_>>();
+        assert!(names(3).contains(&"Bonus Feats".to_owned()), "Fighter 1 at character level 4: {:?}", names(3));
+        assert!(names(4).contains(&"Bravery".to_owned()), "Fighter 2 at character level 5: {:?}", names(4));
+        assert!(names(2).iter().all(|name| name != "Bravery"), "not a Cleric's");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_choice_made_at_a_level_is_listed_there_with_its_target_and_no_upgrade_mark() {
+        let root = ledger_stamp_new_fighter("progression-ledger-stamped");
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:skill_focus", Some("Stealth"), LEDGER_AT).unwrap());
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let focus = ledger.levels[1].taken.feats.iter().find(|feat| feat.id == "feat:skill_focus").expect("taken at 2");
+        assert_eq!((focus.name.as_str(), focus.target.as_deref()), ("Skill Focus", Some("Stealth")));
+        assert!(ledger.levels.iter().all(|level| !level.assigned_on_upgrade), "recorded when made: {ledger:?}");
+
+        // A feat the picker pushes by its catalog key has the same name as the token shape.
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "Toughness", None, LEDGER_AT).unwrap());
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        assert!(progression_ledger_feat_names(&ledger.levels[1]).contains(&"Toughness"), "{ledger:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_saved_hit_die_is_listed_at_its_class_level_and_an_unsaved_one_is_not_made_up() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-hp", THIRD_SEED_CHARACTER_ID);
+        let saved = |class_id: &str, value: u8| HitPointLevelDto { class_id: class_id.to_owned(), value };
+        // Held in the order saved for each class, whatever the order between classes.
+        save_character_hit_points_at_root(&root, &[saved("class:fighter", 9), saved("class:cleric", 8), saved("class:cleric", 5)]).expect("saves");
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let results: Vec<Option<u8>> = ledger.levels.iter().map(|level| level.hit_die_result).collect();
+        assert_eq!(results, [Some(8), Some(5), None, Some(9), None]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_positive_grant_is_an_increase_at_the_level_it_was_made() {
+        let root = ledger_stamp_new_fighter("progression-ledger-grant");
+        let mut custom = crate::character_custom::CharacterCustomDto::default();
+        custom.grants.push(crate::character_custom::CustomGrantDto { id: "boon".to_owned(), label: "Boon".to_owned(), target: "ability:wisdom".to_owned(), value: 2, reason: String::new() });
+        crate::character_custom::save_character_custom_at_root(&root, &custom, LEDGER_AT).expect("saves");
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let increases = &ledger.levels[0].taken.ability_increases;
+        assert_eq!(increases.len(), 1, "two points of one ability is one line");
+        assert_eq!((increases[0].ability.as_str(), increases[0].points), ("wisdom", 2));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_row_with_no_level_or_above_the_character_is_listed_apart_and_never_lost() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-over", SECOND_SEED_CHARACTER_ID);
+        let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:iron_will", "feat:great_fortitude"];
+        ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let apart: Vec<&str> = ledger.without_level.feats.iter().map(|feat| feat.name.as_str()).collect();
+        assert_eq!(apart, ["Great Fortitude"]);
+        assert!(ledger.levels.iter().all(|level| level.unspent.feats == 0), "an over-budget character has no open slot: {ledger:?}");
+        let listed = ledger.levels.iter().map(|level| level.taken.feats.len()).sum::<usize>() + apart.len();
+        assert_eq!(listed, saved.len(), "every feat is kept (R9)");
+
+        // A row above the character (nothing writes one today; a hand-edited file could).
+        let mut rows: CharacterLedgerDto = load_character_ledger_at_root(&root).unwrap().unwrap_or_else(|| {
+            load_saved_character_at_root(&root).expect("loads");
+            load_character_ledger_at_root(&root).unwrap().expect("built")
+        });
+        rows.entries.iter_mut().find(|row| row.id == "feat:toughness").unwrap().taken_at_level = Some(9);
+        write_character_ledger_at_root(&root, &rows).unwrap();
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        assert_eq!(ledger.levels.len(), 5);
+        assert!(ledger.without_level.feats.iter().any(|feat| feat.name == "Toughness"), "{:?}", ledger.without_level);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_character_with_no_file_reads_what_its_load_will_write_and_writes_nothing() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-first", SECOND_SEED_CHARACTER_ID);
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none());
+        let before = ledger_migration_digests(&root);
+        let listed = list_progression_ledger_at_root(&root).expect("lists");
+        assert_eq!(ledger_migration_digests(&root), before, "listing writes nothing");
+        assert!(listed.levels[0].taken.feats.len() == 3);
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(list_progression_ledger_at_root(&root).expect("lists"), listed, "the rows the load wrote");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_an_unreadable_file_is_an_error_and_not_an_empty_history() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-bad", SECOND_SEED_CHARACTER_ID);
+        std::fs::write(root.join("ledger.json"), "{ not json").unwrap();
+        let reason = list_progression_ledger_at_root(&root).expect_err("refuses");
+        assert!(reason.contains("invalid ledger JSON"), "{reason}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_known_table_opens_spell_slots_and_a_book_does_not() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-known", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&root, |input| {
+            input.chosen.class_levels[0].class_id = "class:sorcerer".to_owned();
+            input.chosen.class_levels[0].level = 1;
+            ledger_migration_spells(input, "class:sorcerer", &["Light", "Magic Missile"]);
+        });
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        // A Sorcerer 1 knows four cantrips and two 1st-level spells (CRB table 3-15); one of each held.
+        assert_eq!(ledger.levels[0].unspent.spells, 4, "{ledger:?}");
+
+        // Elowen's book has room and states no slot she owes.
+        let (other, wizard) = ledger_migration_seed("progression-ledger-book", SECOND_SEED_CHARACTER_ID);
+        let book = list_progression_ledger_at_root(&wizard).expect("lists");
+        assert!(book.levels.iter().all(|level| level.unspent.spells == 0), "{book:?}");
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&other).ok();
+    }
+
+    #[test]
+    fn progression_ledger_the_wire_is_camel_case_with_the_choices_on_the_level() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-wire", DEFAULT_CHARACTER_ID);
+        let wire = serde_json::to_value(list_progression_ledger_at_root(&root).expect("lists")).unwrap();
+        let level = &wire["levels"][0];
+        assert!(level.get("hitDieResult").is_some(), "stated, null when nothing was saved: {level}");
+        for field in ["characterLevel", "classId", "classLevel", "feats", "spells", "ranks", "abilityIncreases", "classFeatures", "abilityIncreaseDue", "unspent", "assignedOnUpgrade"] {
+            assert!(!level[field].is_null(), "{field} is on the wire: {level}");
+        }
+        assert_eq!(level["feats"][0]["name"], "Power Attack");
+        assert!(wire["withoutLevel"]["feats"].is_array());
+        std::fs::remove_dir_all(&dir).ok();
     }
 
     // ----- a character saved before there was a ledger gets one on its first load, by slot order -----
