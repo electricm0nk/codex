@@ -77,6 +77,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E5 | E5.2 | complete | 0d1d7aa995 + receipt commit | artifacts/epic_5/E5.2_cycle_receipt.md |
 | E5 | E5.3 | complete | ed89f74e53 + receipt commit | artifacts/epic_5/E5.3_cycle_receipt.md |
 | E5 | E5.4 | complete | 3fe45c6f1c + receipt commit | artifacts/epic_5/E5.4_cycle_receipt.md |
+| E5 | E5.MC | complete | 2521d50e0a + receipt commit | artifacts/epic_5/E5.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -183,6 +184,31 @@ seed deltas, open blockers.)
 
 **Open blockers:** none on E4. **Open, for the operator (no card stops on it):** the required Longsword. It fills the main hand and the engine refuses stowing the last one, so a character holding it can never take a bought Greatsword in hand: it stays carried, with the reason (E4.1's receipt, `decisions.md §25`). R18's check is right; whether a character may give up the Longsword is a ruling. **Open, for the lead, no operator ruling needed:** E1.6 is still `ready` and nothing dispatches it (E2's and E3's reports).
 
+### Epic report — E5 (level ledger), merge check on `origin/tranche-19` @ `d119283068`
+
+**Cards done:** E5.1, E5.2, E5.3, E5.4, E5.MC. E5.4 was discovered in the epic. E5.MC discovered no card: what it found is fixed in 2521d50e0a.
+
+| Figure | Value | Command |
+|---|---|---|
+| G-8, desktop | `ledger_stamp` 8, `ledger_migration` 12, `progression_ledger` 12; 0 `FAILED` | `for t in ledger_stamp ledger_migration progression_ledger; do cargo test --locked -j 8 $t -- --test-threads=8; done` in `apps/desktop/src-tauri`, `E5.MC/g8.txt` |
+| G-8, root | `ledger_migration` 2 passed, 0 failed | `cargo test --locked -j 8 --lib ledger_migration -- --test-threads=8` |
+| Desktop tests | 1,091 passed, 0 failed, 2 ignored, 2 result lines, exit 0 | `cargo test --locked -j 8 --no-fail-fast -- --test-threads=8` in `apps/desktop/src-tauri`; `awk` and Python agree |
+| Root tests | Not re-run; E5.2's 8,604 passed, 0 failed, 70 ignored stands | `git diff --stat 0d1d7aa995 HEAD -- src crates data tests scripts` prints nothing |
+| Frontend | typecheck exit 0; 184/184 test files; `ui-smoke:doc` no file changed, 159 rows | `cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc` |
+| ui-smoke | 4 of 4: `sheet-progression-ledger-aldric`, `-drawer-open`, `-close-x`, `-close-escape` | `node scripts/ui-smoke/run.mjs --only <ids>`, `E5.MC/smoke-results.json` |
+| Staged packaged layout | Rows and listing identical to the checkout, 1,972 lines, four characters | `set_data_root` in the test itself, `E5.MC/packaged-ledger.txt` |
+| Roster | 137 classes x 4 levels, 30 unknown feats added: rows with no level equal the budget's `over_by` on all 548; no panic, no error | `E5.MC/roster.txt`, `probes.rs.diff.txt` |
+| Mutations | 15 of 15 red | `E5.MC/mutations.txt` |
+| E5.4's test | 40 of 40 by `--exact` | `E5.MC/e54-forty-runs.txt` |
+
+**Seed deltas (base = `460561601f`, built in its own tree; head = `2521d50e0a`):** PF Aldric, Elowen, Tomas: `diff -r` empty, `sha256.txt` identical. SF x4 and CPR x5: `diff -r` empty. 13 non-empty files (`E5.MC/seed-deltas.txt`). `sheet_rule_convert --check` exit 0 on both systems.
+
+**Refuted, both fixed here:** a clone or an export lost `hit_points.json`, so the drawer's hit die went blank and the clone's hit points changed; a `ledger.json` cut short mid-write refused every later change on that character. **Corrected, nothing lost:** E5.1's receipt says `re_save` reaches the one mutation path; it saves on its own and changes nothing the ledger records. **Holds:** the stamp through every writer of a Pathfinder character (`grep -rn 'SavedCharacterStore::save('`), multiclass ranks and spell slots on five mixes, malformed saves (no class, level 0, an unknown class) with no panic, the Restore path (it writes only where the directory is gone). **E5.2's 4 failures in 27:** the dice are not biased: 5,386 of 200,000 sequential seeds roll 21 or more (`E5.MC/rollsim.py.txt`, which reproduces seed 38's 21), and the shipped path rolled 12 of 300 from the clock, one process a run (`E5.MC/fresh-rolls.txt`). Against 35 of 1296, 4 or more in 27 has a chance of 0.0057, so that run reads as a tail and E5.4's mechanism stands.
+
+**Retro (`scripts/retro.py summary --since 2026-11-03T23:02:19-05:00 --json`, `E5.MC/retro-summary.json`):** 12 corrections (E5.1 3, E5.2 3, E5.3 3, E5.4 1, this card 2), 1 incident (`clock-seeded-test`), 0 deferrals, 0 reworks. No key fired more than once, so no new check under R-W. Package documents were wrong in 7 of the 12 subjects, as the corrections name them.
+
+**Open blockers:** none on E5. **Open, for the lead, no operator ruling needed and no DoD row I can name, so no card:** `load_saved_character` is a sync command and a first load computes once a level on it, where `list_progression_ledger` was made async for the same cost; Level 20 read 8.4 s mean, 15.3 s max in a debug build with other work running, and no release figure was taken. `bio.json` is not carried by a clone or an export (`clone_character`, `ImportedCharacterFileDto`), and print's Bio mode (R17, E8) reads it. Only creation saves a hit die (`save_character_hit_points_at_root` has no level-up caller), so levels gained later show none. E4.MC's "staged" worn tests did not install the data root (retro correction above) and were not re-run this way. E1.6 is still `ready` and nothing dispatches it (`kanban.md`).
+
 ## Decisions taken on safe defaults
 
 | Card | Decision point | Default taken | Alternative not taken |
@@ -214,6 +240,8 @@ seed deltas, open blockers.)
 | E5.3 | Where a level's class features come from | The sheet's own `class_feature` lines at that level | The engine's explanations, most of which only a checkout holds |
 | E5.3 | An ability increase with no row | Says `none recorded`, and is not counted unspent | Counting it, when the sheet offers no pick to spend it on |
 | E5.3 | Which levels show an open slot | The latest, with totals from the budget, so they sum to the sheet's badge | Rows per level per pool, which a late choice makes read as two wrong levels |
+| E5.MC | A saved hit die on a clone and an export | Carried, as `custom.json` and `ledger.json` are | Left blank, which is honest in the drawer and changes the sheet's hit points |
+| E5.MC | A first load's cost on the main thread | Left as it is, named for the lead | `load_saved_character` made async, which moves every system's load on a figure not taken in release |
 
 ## Open blockers
 

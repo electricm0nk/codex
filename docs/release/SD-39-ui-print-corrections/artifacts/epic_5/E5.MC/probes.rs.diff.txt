@@ -1,0 +1,146 @@
+diff --git a/apps/desktop/src-tauri/src/character_hub.rs b/apps/desktop/src-tauri/src/character_hub.rs
+index f9c18089c1..b48626d293 100644
+--- a/apps/desktop/src-tauri/src/character_hub.rs
++++ b/apps/desktop/src-tauri/src/character_hub.rs
+@@ -10582,6 +10582,34 @@ mod tests {
+             .collect()
+     }
+ 
++    #[test]
++    fn mcprobe_packaged_rows() {
++        if let Ok(stage) = std::env::var("MC_STAGE") {
++            crate::authoring_workbench::bind_rules_tables_package_root();
++            assert!(codex::set_data_root(PathBuf::from(stage)));
++        }
++        let out = std::env::var("MC_OUT").unwrap();
++        let mut text = String::new();
++        for id in [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID] {
++            let (dir, root) = ledger_migration_seed("mcprobe", id);
++            let rows = ledger_migration_rows(&root);
++            let listed = list_progression_ledger_at_root(&root).expect("lists");
++            text += &format!("=== {id}\n{}\n{}\n", serde_json::to_string_pretty(&rows).unwrap(), serde_json::to_string_pretty(&listed).unwrap());
++            std::fs::remove_dir_all(&dir).ok();
++        }
++        let (dir, root) = ledger_migration_seed("mcprobe-sorc", SECOND_SEED_CHARACTER_ID);
++        ledger_migration_edit(&root, |input| {
++            input.chosen.class_levels[0].class_id = "class:sorcerer".to_owned();
++            input.chosen.selected_choices.clear();
++            ledger_migration_spells(input, "class:sorcerer", &["Magic Missile", "Shield", "Fireball"]);
++        });
++        let rows = ledger_migration_rows(&root);
++        let listed = list_progression_ledger_at_root(&root).expect("lists");
++        text += &format!("=== sorc\n{}\n{}\n", serde_json::to_string_pretty(&rows).unwrap(), serde_json::to_string_pretty(&listed).unwrap());
++        std::fs::remove_dir_all(&dir).ok();
++        std::fs::write(out, text).unwrap();
++    }
++
+     #[test]
+     fn ledger_migration_elowen_runs_twice_to_the_same_file_and_reads_her_files_without_writing_them() {
+         let (dir, root) = ledger_migration_seed("ledger-migration-elowen", SECOND_SEED_CHARACTER_ID);
+diff --git a/apps/desktop/src-tauri/src/character_ledger.rs b/apps/desktop/src-tauri/src/character_ledger.rs
+index 99e8ba3748..54e178786b 100644
+--- a/apps/desktop/src-tauri/src/character_ledger.rs
++++ b/apps/desktop/src-tauri/src/character_ledger.rs
+@@ -681,4 +681,78 @@ mod tests {
+             assert!(can_cast(1), "{class_id} states no 1st-level casting at 20: {:?}", slots.levels[1].can_cast);
+         }
+     }
++
++    // PROBE (E5.MC, never committed)
++    #[test]
++    fn mcslow_probe_roster() {
++        let fixture = load_sweep_fixture().expect("census fixture");
++        let classes: Vec<String> = codex::rules_core::class_census::census().keys().cloned().collect();
++        println!("classes {}", classes.len());
++        let mut none_feat_bad = 0; let mut seen = 0;
++        for slug in &classes {
++            for level in [1u8, 5, 10, 20] {
++                let mut input = input_for(&fixture, slug, level);
++                // a pile of feats, past any budget
++                let t0 = std::time::Instant::now();
++                input.chosen.selected_feats.extend((0..30).map(|i| format!("feat:probe_{i}")));
++                let rows = match std::panic::catch_unwind(|| rows_of_a_character_with_no_ledger(&input, &CharacterCustomDto::default())) {
++                    Ok(Ok(rows)) => rows,
++                    Ok(Err(e)) => { println!("ERR {slug} {level}: {e}"); continue }
++                    Err(_) => { println!("PANIC {slug} {level}"); continue }
++                };
++                let at_top = input_at_level(&input, level);
++                let base = compute_pilot_base_chassis(&at_top);
++                let budget = feat_budget_for(&at_top, &base).unwrap();
++                let none_feats = rows.entries.iter().filter(|r| r.kind == LedgerKind::Feat && r.taken_at_level.is_none()).count() as i64;
++                seen += 1;
++                if none_feats != budget.over_by() { none_feat_bad += 1; println!("FEATS {slug} {level}: none {none_feats} over_by {}", budget.over_by()); }
++                let spells_none: Vec<_> = rows.entries.iter().filter(|r| r.kind == LedgerKind::Spell && r.taken_at_level.is_none()).map(|r| r.id.clone()).collect();
++                let spell_over: Vec<_> = rows.entries.iter().filter(|r| r.kind == LedgerKind::Spell && r.taken_at_level.is_some_and(|l| l > level)).collect();
++                let ranks_none = rows.entries.iter().filter(|r| r.kind == LedgerKind::SkillRank && r.taken_at_level.is_none()).count();
++                let total_spells = rows.entries.iter().filter(|r| r.kind == LedgerKind::Spell).count();
++                if !spells_none.is_empty() || !spell_over.is_empty() || ranks_none > 0 {
++                    println!("SEEDROW {slug} {level}: spells_total {total_spells} spells_none {spells_none:?} ranks_none {ranks_none}");
++                }
++                if level == 20 { println!("TIME {slug} {:?}", t0.elapsed()); }
++            }
++        }
++        println!("feats checked {seen}, bad {none_feat_bad}");
++    }
++
++    #[test]
++    fn mc_probe_multiclass_and_shapes() {
++        let fixture = load_sweep_fixture().expect("census fixture");
++        let show = |label: &str, input: &CharacterInput| {
++            let at: Vec<_> = (1..=character_level(input)).map(|l| input_at_level(input, l)).collect();
++            let bases: Vec<_> = at.iter().map(compute_pilot_base_chassis).collect();
++            println!("== {label}: skill rows {:?} rooms {:?}", bases.iter().map(skill_points).collect::<Vec<_>>(), ranks_each_level(&bases));
++            if let Some(top) = bases.last() { println!("  top casting rows: {:?}", top.explanations.iter().filter(|r| r.id.contains("per_day")).map(|r| (r.id.clone(), r.value)).collect::<Vec<_>>()); }
++            let slots = SpellSlots::of(&at, &bases);
++            for (i, s) in slots.levels.iter().enumerate() { println!("  L{}: cast {:?} known {:?} book {:?}", i+1, s.can_cast, s.known_limit, s.book_limit); }
++            let r = rows_of_a_character_with_no_ledger(input, &CharacterCustomDto::default()).unwrap();
++            for e in r.entries.iter().filter(|e| e.kind != LedgerKind::SkillRank) { println!("  row {:?} {} {:?} {:?}", e.kind, e.id, e.target, e.taken_at_level); }
++            println!("  ranks by level {:?}", r.entries.iter().filter(|e| e.kind == LedgerKind::SkillRank).map(|e| e.taken_at_level).collect::<Vec<_>>());
++        };
++        let mk = |classes: &[(&str, u8)], spells: &[(&str, &str)]| {
++            let mut input = input_for(&fixture, "fighter", 1);
++            input.chosen.class_levels = classes.iter().map(|(c, l)| CharacterClassLevel { class_id: (*c).to_owned(), level: *l, ..input.chosen.class_levels[0].clone() }).collect();
++            input.chosen.selected_choices = classes.iter().flat_map(|(c, l)| canonical_seeds_for(c.strip_prefix("class:").unwrap(), *l).0).collect();
++            input.chosen.spells_selected = spells.iter().map(|(s, c)| codex::rules_core::character_input::SpellSelection { spell_id: (*s).to_owned(), source_class_id: (*c).to_owned(), acquisition_mode: codex::rules_core::character_input::AcquisitionMode::Known }).collect();
++            input
++        };
++        show("fighter2 wizard3", &mk(&[("class:fighter", 2), ("class:wizard", 3)], &[("Magic Missile", "class:wizard"), ("Scorching Ray", "class:wizard"), ("Fireball", "class:wizard")]));
++        show("wizard5 EK3", &mk(&[("class:wizard", 5), ("class:eldritch_knight", 3)], &[("Fireball", "class:wizard"), ("Dimension Door", "class:wizard")]));
++        show("sorcerer1 bard1", &mk(&[("class:sorcerer", 1), ("class:bard", 1)], &[("Magic Missile", "class:sorcerer"), ("Shield", "class:sorcerer"), ("Grease", "class:sorcerer"), ("Cure Light Wounds", "class:bard")]));
++        show("cleric3 sorcerer2", &mk(&[("class:cleric", 3), ("class:sorcerer", 2)], &[("Bless", "class:cleric"), ("Magic Missile", "class:sorcerer")]));
++        show("wizard1 fighter1 wizard-late", &mk(&[("class:fighter", 4), ("class:wizard", 1)], &[("Magic Missile", "class:wizard")]));
++        show("paladin 4", &mk(&[("class:paladin", 4)], &[("Bless", "class:paladin")]));
++        let mut dull = mk(&[("class:fighter", 3)], &[]);
++        dull.chosen.ability_scores.intelligence = 6;
++        show("fighter3 int6", &dull);
++        // malformed
++        for (label, input) in [("no classes", mk(&[], &[])), ("level 0", mk(&[("class:fighter", 0)], &[])), ("unknown class", mk(&[("class:nope", 3)], &[("Bless", "class:nope")]))] {
++            let result = std::panic::catch_unwind(|| rows_of_a_character_with_no_ledger(&input, &CharacterCustomDto::default()));
++            println!("malformed {label}: {:?}", result.map(|r| r.map(|l| l.entries.len())));
++        }
++    }
+ }
+diff --git a/apps/desktop/src-tauri/src/cpr_improve.rs b/apps/desktop/src-tauri/src/cpr_improve.rs
+index 0d717d0d04..5bf9554ace 100644
+--- a/apps/desktop/src-tauri/src/cpr_improve.rs
++++ b/apps/desktop/src-tauri/src/cpr_improve.rs
+@@ -1369,6 +1369,19 @@ mod tests {
+         std::fs::remove_dir_all(root.parent().unwrap()).ok();
+     }
+ 
++    #[test]
++    fn mc_probe_fresh_seed_roll() {
++        let root = saved_solo("mcprobe", None);
++        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
++        choices.cyberware.push(CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(12) });
++        choices.cyberware.push(CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None, humanity_loss: Some(24) });
++        CprCharacterStore::save_choices(&choices, &root).unwrap();
++        let plan = request(0, vec![therapy("Extreme Humanity Loss", None)]);
++        let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
++        println!("MCROLL {}", row(&preview.rows, "cpr.improve.purchase.0.humanity_regained"));
++        std::fs::remove_dir_all(root.parent().unwrap()).ok();
++    }
++
+     /// The preview offers the three p. 230 therapies: Standard 2d6 (2-12) and Extreme 4d6 (4-24)
+     /// with their printed cost and DV, and Addiction with no dice and its printed effect.
+     #[test]

@@ -1,0 +1,1 @@
+fresh seed, one process a run: 300 rolls 12 of 21+
