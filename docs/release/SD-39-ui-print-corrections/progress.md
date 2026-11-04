@@ -80,6 +80,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E5 | E5.MC | complete | 2521d50e0a + receipt commit | artifacts/epic_5/E5.MC_cycle_receipt.md |
 | E6 | E6.1 | complete | 32ae8c1111 + receipt commit | artifacts/epic_6/E6.1_cycle_receipt.md |
 | E6 | E6.2 | complete | 0c4d7ce308 + receipt commit | artifacts/epic_6/E6.2_cycle_receipt.md |
+| E6 | E6.MC | complete | 356654dd52 + receipt commit | artifacts/epic_6/E6.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -211,6 +212,28 @@ seed deltas, open blockers.)
 
 **Open blockers:** none on E5. **Open, for the lead, no operator ruling needed and no DoD row I can name, so no card:** `load_saved_character` is a sync command and a first load computes once a level on it, where `list_progression_ledger` was made async for the same cost; Level 20 read 8.4 s mean, 15.3 s max in a debug build with other work running, and no release figure was taken. `bio.json` is not carried by a clone or an export (`clone_character`, `ImportedCharacterFileDto`), and print's Bio mode (R17, E8) reads it. Only creation saves a hit die (`save_character_hit_points_at_root` has no level-up caller), so levels gained later show none. E4.MC's "staged" worn tests did not install the data root (retro correction above) and were not re-run this way. E1.6 is still `ready` and nothing dispatches it (`kanban.md`).
 
+### Epic report — E6 (overrides), merge check on `origin/tranche-19` @ `f91eebe370`
+
+**Cards done:** E6.1, E6.2, E6.MC. E6.MC discovered no card: what it found is fixed in 356654dd52.
+
+| Figure | Value | Command |
+|---|---|---|
+| G-7, desktop | `overrides_` 16 of 16; `admitted_tag_` 13; `::override_` 19; 0 `FAILED` | `cargo test --locked -j 8 overrides_ -- --test-threads=8` in `apps/desktop/src-tauri`, counted by `awk` and Python on the sweep log |
+| Desktop tests | 1,139 passed, 0 failed, 2 ignored, 2 result lines, exit 0 | `cargo test --locked -j 8 --no-fail-fast -- --test-threads=8` in `apps/desktop/src-tauri`; `awk` and Python agree |
+| Root tests | 6,751 passed, 0 failed, 27 ignored, 301 result lines, exit 0 | the same at the root; `awk` and Python agree |
+| Frontend | typecheck exit 0; 185/185 test files; `ui-smoke:doc` 164 rows | `cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc` |
+| ui-smoke | 46 of 48 chosen rows green across a run and a re-run of 4; 2 red and stale (FSR-C2). E6.2's 3 rows and the 2 new ones green | `node scripts/ui-smoke/run.mjs --only <ids>`, `E6.MC/smoke-results.json`, `E6.MC/smoke2-results.json`. The full suite was not run |
+| CRB Market weapons a Wizard is refused | 1 of 164 before, 122 of 164 after; Improvised rows left out, which refused everyone before and no one after | a walk of `list_market`, `E6.MC/market-census.txt` |
+| Mutations | 21 of 21 red; the frontend affordance red before its fix | `E6.MC/mutations.txt` |
+
+**Seed deltas (base = `c94921873f`, built in its own tree; head = `356654dd52`):** PF Aldric, Elowen, Tomas: `diff -r` empty, `sha256.txt` identical. SF x4 and CPR x5: `diff -r` empty. 13 non-empty files (`E6.MC/seed-deltas.txt`). `crates` and `data` unchanged, so no `sheet_rule_convert` run.
+
+**Refuted, all fixed here:** the Market holds a weapon as `Longsword (Base)`, which no weapon lookup read. So the weapon flag had one real weapon to refuse (`Armor Spikes`), and, since E3, a worn Market weapon had no attack row and owed no -4. A race's own weapons and a deity's weapon were refused, so were Improvised rows for everyone and `Mind Shield` for a Fighter. Add Spell stayed withheld from a non-caster with the flag on, so that branch of the backend had no way in. A worn custom item moved onto a taken slot under the flag went untagged. With the flag off, what it let on refused every later change to any other worn custom item. **E6.1's 16 tests passed through all of this**: they ran on the literal `Rapier`, a key no screen sends. Each now has a test on the shipped key, and a mechanism at the source (`normalize_weapon_identity`), not a caution. **Holds:** the flags and tags through a file round trip, feats past budget and prerequisite through later changes, spells under the flag across 9 casting and non-casting classes, alignment on 20 classes, a tag going with its copy; E6.1's 35 of 189 and 37 of 2,774, E6.2's 102.
+
+**Retro (`scripts/retro.py summary --since 2026-11-04T06:50:46-05:00 --json`, `E6.MC/retro-summary.json`):** 8 corrections (E6.1 1, E6.2 1, this card 6), 1 incident (`test-key-not-the-shipped-key`, silent), 0 deferrals, 0 reworks. No key fired more than once, so no new check under R-W; the incident has its mechanism at the source. 6 of the 8 subjects are receipts or package rows, as the corrections name them.
+
+**Open blockers:** none on E6. **Open, for the lead, no operator ruling needed and no DoD row I can name, so no card:** an Elf Wizard's Longsword, or a Cleric's own weapon, is no longer refused and still reads -4 on the attack row, with words saying nothing grants it. `character_weapon_proficiency` runs inside the compute and reads classes and three feats; the race resolver it would need is in the desktop crate. The wrong number predates this bundle. The two stale ui-smoke rows are FSR-C2's. `append_to_character` wears with no check and no screen calls it. E1.6 is still `ready` and nothing dispatches it (`kanban.md`).
+
 ## Decisions taken on safe defaults
 
 | Card | Decision point | Default taken | Alternative not taken |
@@ -244,6 +267,9 @@ seed deltas, open blockers.)
 | E5.3 | Which levels show an open slot | The latest, with totals from the budget, so they sum to the sheet's badge | Rows per level per pool, which a late choice makes read as two wrong levels |
 | E5.MC | A saved hit die on a clone and an export | Carried, as `custom.json` and `ledger.json` are | Left blank, which is honest in the drawer and changes the sheet's hit points |
 | E5.MC | A first load's cost on the main thread | Left as it is, named for the lead | `load_saved_character` made async, which moves every system's load on a figure not taken in release |
+| E6.MC | An item a race or deity may grant | Not refused, since an unknown never refuses | Refused until the engine holds a deity, which refuses a Cleric the book allows |
+| E6.MC | An Improvised Weapon row | Never refused: anyone may pick one up, and the sheet states the penalty | Refused for all, a Fighter included |
+| E6.MC | A shield or suit stating no kind | An unknown, not refused, for a Wizard too | Refused for all, a Fighter included |
 
 ## Open blockers
 

@@ -1,0 +1,242 @@
+[
+{
+"id": "equipment-catalog-open-and-search",
+"status": "green",
+"reason": null
+},
+{
+"id": "equipment-catalog-chip-filter-and-back",
+"status": "red",
+"reason": "target not found: 'Magic Items (no element named 'Magic Items')' at row step 2/3 (click \"Magic Items\")"
+},
+{
+"id": "sheet-tab-gear",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-spells",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-tab-feats",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-action-add-feat",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-action-add-feat-unmet-listed",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-action-custom-dialog-chips",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-action-add-spell",
+"status": "green",
+"reason": null
+},
+{
+"id": "level-up-fighter6-into-arcane-archer-accept",
+"status": "red",
+"reason": "target not found: '12345678910 (no <select> named '12345678910')' at row step 7/25 (select \"12345678910\")"
+},
+{
+"id": "load-seed-wizard-fireball",
+"status": "green",
+"reason": null
+},
+{
+"id": "choices-starfinder-soldier-loadout",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-soldier",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-mystic",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-technomancer",
+"status": "green",
+"reason": null
+},
+{
+"id": "build-starfinder-envoy",
+"status": "green",
+"reason": null
+},
+{
+"id": "create-cyberpunk-complete-package-sheet",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-cyberpunk-complete-package-fixer",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-open-weapons",
+"status": "red",
+"reason": "target not found: 'Aldric Ironhand (no element named 'Aldric Ironhand')' at row step 2/8 (click \"Aldric Ironhand\")"
+},
+{
+"id": "sheet-market-open-defense",
+"status": "green",
+"reason": "auto-relaunch"
+},
+{
+"id": "sheet-market-filter-armor",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-buy-refused",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-buy",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-sell",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-buy-weapon-worn",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cashless",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-enhancement-ac",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-open",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-buy",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-sell",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-cashless",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-refused",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-open",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-buy",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-sell",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-refused",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-cashless",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-equipment-lists",
+"status": "red",
+"reason": "target not found: 'Aldric Ironhand (no element named 'Aldric Ironhand')' at row step 2/6 (click \"Aldric Ironhand\")"
+},
+{
+"id": "sheet-equipment-conflict",
+"status": "green",
+"reason": "auto-relaunch"
+},
+{
+"id": "sheet-equipment-unequip",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-equipment-equip",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-custom-item-worn",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-custom-item-stowed",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-override-tag-feat",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-override-tag-slot",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-override-tag-spell",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-override-market-weapon-not-proficient",
+"status": "red",
+"reason": "target not found: 'Rapier (no element named 'Rapier')' at row step 10/12 (click \"Rapier\")"
+},
+{
+"id": "sheet-override-tag-spell-non-caster",
+"status": "green",
+"reason": null
+}
+]
