@@ -549,15 +549,23 @@ pub(crate) fn custom_or_empty(root: &Path) -> CharacterCustomDto {
     load_character_custom_at_root(root).unwrap_or_default()
 }
 
-/// The first worn custom item that does not fit, after what `input` already wears and the worn items
-/// before it, in the slot check's words.
-fn slot_refusal(input: &CharacterInput, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
-    let mine = worn_custom_slots(custom);
-    if mine.is_empty() || custom.overrides.ignore_slot_limits {
+/// Whether `record` goes onto the body in this change: it was not worn before, or not there. What is
+/// already on stays, whatever let it on, so a change refuses only what it puts on.
+fn newly_placed(previous: &CharacterCustomDto, record: &CustomRecordDto) -> bool {
+    record.worn && !previous.equipment.iter().any(|before| before.id == record.id && before.worn && before.slot == record.slot)
+}
+
+/// The first custom item this change puts on that does not fit, after everything else worn, in the
+/// slot check's words.
+fn slot_refusal(input: &CharacterInput, previous: &CharacterCustomDto, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
+    if custom.overrides.ignore_slot_limits {
         return Ok(None);
     }
+    let placed_in = |records: Vec<CustomRecordDto>| worn_custom_slots(&CharacterCustomDto { equipment: records, ..Default::default() });
+    let (fresh, settled): (Vec<_>, Vec<_>) = custom.equipment.iter().cloned().partition(|record| newly_placed(previous, record));
     let mut worn = worn_stock_slots(input)?;
-    for (name, slot) in mine {
+    worn.extend(placed_in(settled));
+    for (name, slot) in placed_in(fresh) {
         let refs: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
         if let Some(refusal) = slot_conflict(&refs, slot)? {
             return Ok(Some(refusal));
@@ -626,7 +634,7 @@ pub(crate) fn set_custom_item_state_at_root(root: &Path, id: &str, active_state:
     custom.equipment[index].worn = active_state == ActiveState::EquippedActive;
     if custom.equipment[index].worn {
         let existing = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-        let refusal = match slot_refusal(&existing.character_input, &custom)? {
+        let refusal = match slot_refusal(&existing.character_input, &previous, &custom)? {
             Some(refusal) => Some(("equipment.slot_taken", refusal)),
             None => worn_score_refusal(&existing.character_input.chosen.ability_scores, &custom).map(|refusal| ("equipment.score_range", refusal)),
         };
@@ -684,11 +692,8 @@ pub(crate) fn save_character_custom_at_root(root: &Path, custom: &CharacterCusto
     let (before, after) = (ability_totals(&previous), ability_totals(custom));
     let delta: Vec<i32> = (0..6).map(|slot| after[slot] - before[slot]).collect();
 
-    // An unchanged list wears nothing new: what the slot override let on stays when the flag goes off.
-    if worn_custom_slots(&previous) != worn_custom_slots(custom) {
-        if let Some(refusal) = slot_refusal(&existing.character_input, custom)? {
-            return Err(refusal);
-        }
+    if let Some(refusal) = slot_refusal(&existing.character_input, &previous, custom)? {
+        return Err(refusal);
     }
     let mut scores = existing.character_input.chosen.ability_scores.clone();
     for (slot, change) in delta.iter().enumerate() {
@@ -717,8 +722,7 @@ pub(crate) fn save_character_custom_at_root(root: &Path, custom: &CharacterCusto
         }
     }
 
-    let newly_worn = (0..custom.equipment.len())
-        .filter(|index| custom.equipment[*index].worn && !previous.equipment.iter().any(|record| record.worn && record.id == custom.equipment[*index].id));
+    let newly_worn = (0..custom.equipment.len()).filter(|index| newly_placed(&previous, &custom.equipment[*index]));
     let admitted = slot_override_rows(&existing.character_input, custom, newly_worn)?;
     write_custom_and_ledger(root, &previous, custom, admitted)
 }

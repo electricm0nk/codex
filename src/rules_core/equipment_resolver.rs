@@ -419,27 +419,58 @@ pub fn equipment_catalog_row_by_key(key: &str) -> Option<&'static EquipmentCatal
 
 /// True when `input` is definitively not proficient with this weapon, armor or shield. An item that
 /// is none of those, or a verdict the engine cannot reach, is false: an unknown never refuses.
-pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str) -> ItemProficiencyGap {
-    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::armor_proficiency_in;
-    use crate::rules_core::pilot_compute::{character_is_proficient_with, compute_pilot_base_chassis, equipped_weapon_stat_block};
+/// `race_traits` are the keys the race resolver applied, which a seed cannot reach by itself.
+pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str, race_traits: &[String]) -> ItemProficiencyGap {
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{armor_proficiency_in, weapon_grant_in};
+    use crate::rules_core::pilot_compute::{character_is_proficient_with, compute_pilot_base_chassis};
     use crate::rules_core::sheet_rule::{slug, CharacterFacts, HeldSeed};
 
-    let record = crate::rules_core::corpus_loader::live_sheet_rules().and_then(|package| {
+    let package = crate::rules_core::corpus_loader::live_sheet_rules();
+    let held = || {
+        let computation = compute_pilot_base_chassis(input);
+        let mut seed = HeldSeed::from_character(input, &computation);
+        seed.race_traits.extend(race_traits.iter().cloned());
+        let facts = package.map(|package| CharacterFacts::from_character(input, &computation).with_linked_picks(package, &seed));
+        (seed, facts)
+    };
+    let record = package.and_then(|package| {
         let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
         Some((package, package.rule(package.find("equipment", &slug(needle))?)?))
     });
     if let Some((package, rule)) = record {
-        let computation = compute_pilot_base_chassis(input);
-        let seed = HeldSeed::from_character(input, &computation);
-        let facts = CharacterFacts::from_character(input, &computation).with_linked_picks(package, &seed);
-        if let Some(proficient) = armor_proficiency_in(package, &seed, &facts, &rule.label, &rule.tags) {
+        let (seed, facts) = held();
+        if let Some(facts) = &facts
+            && let Some(proficient) = armor_proficiency_in(package, &seed, facts, &rule.label, &rule.tags)
+        {
             return if proficient { ItemProficiencyGap::None } else { ItemProficiencyGap::Armor };
         }
     }
-    match equipped_weapon_stat_block(item_id).and_then(|weapon| character_is_proficient_with(input, weapon)) {
-        Some(false) => ItemProficiencyGap::Weapon,
+    let Some(weapon) = weapon_of_item(item_id) else {
+        return ItemProficiencyGap::None;
+    };
+    // A chair is nobody's weapon: anyone may pick one up, at the penalty the sheet already states.
+    if weapon.proficiency_name == Some("Improvised Weapon") || character_is_proficient_with(input, weapon) != Some(false) {
+        return ItemProficiencyGap::None;
+    }
+    // That verdict reads the classes' lists and the three proficiency feats. A race's familiarity, a
+    // class feature or a deity's weapon is in what the character holds.
+    let Some(package) = package else {
+        return ItemProficiencyGap::None;
+    };
+    let (seed, facts) = held();
+    match facts.map(|facts| weapon_grant_in(package, &seed, &facts, weapon)) {
+        Some(Some(false)) => ItemProficiencyGap::Weapon,
         _ => ItemProficiencyGap::None,
     }
+}
+
+/// The weapon a held item is, by any name it is held under: a named or material row
+/// (`Longsword (Cold Iron/Masterwork)`, `Flame Tongue`) names its base on its catalog row. `None` for
+/// an item that is not one the weapon table has.
+fn weapon_of_item(item_id: &str) -> Option<&'static crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    use crate::rules_core::pilot_compute::equipped_weapon_stat_block;
+    let key = item_id.strip_prefix("item:").unwrap_or(item_id);
+    equipped_weapon_stat_block(key).or_else(|| equipment_catalog_row_by_key(key).and_then(|row| equipped_weapon_stat_block(row.name)))
 }
 
 /// Which override, if any, a character needs to wear or wield an item.

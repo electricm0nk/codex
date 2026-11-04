@@ -9,7 +9,8 @@ import type { ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
  * `FACT:SpellType` token. No class name is special-cased here — F-10's
  * disclosed hand-assembled caster set is deleted. `classNotInCorpus` and a
  * missing/pending answer both fail open: withholding on a fact the engine
- * has not established would hide a legal action.
+ * has not established would hide a legal action. `admitsAnySpell` is the
+ * character's spell override: a class that does not cast can then hold one.
  */
 export type AddSpellAffordance =
   | { kind: 'Offered' }
@@ -19,6 +20,7 @@ export type AddSpellAffordance =
 export function resolveAddSpellAffordance(
   routedClass: { classId: string; classLabel: string } | null,
   classSpellLevels: readonly ClassSpellLevelsDto[],
+  admitsAnySpell = false,
 ): AddSpellAffordance {
   if (routedClass === null) {
     return { kind: 'Withheld', message: 'This character has no class to learn a spell from yet.' };
@@ -29,7 +31,7 @@ export function resolveAddSpellAffordance(
   }
   switch (entry.spellcasting) {
     case 'nonCaster':
-      return { kind: 'Withheld', message: `${routedClass.classLabel} does not cast spells, so there is nothing to add.` };
+      return admitsAnySpell ? { kind: 'Offered' } : { kind: 'Withheld', message: `${routedClass.classLabel} does not cast spells, so there is nothing to add.` };
     case 'casterListNotIngested':
       return {
         kind: 'OfferedUningested',

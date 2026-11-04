@@ -1455,6 +1455,7 @@ mod per_weapon_attack_total_tests {
     fn the_identity_fold_joins_equipment_ids_to_weapon_table_keys() {
         assert_eq!(normalize_weapon_identity("item:longsword"), "longsword");
         assert_eq!(normalize_weapon_identity("Longsword"), "longsword");
+        assert_eq!(normalize_weapon_identity("Longsword (Base)"), "longsword");
         assert_eq!(
             normalize_weapon_identity("item:longsword"),
             normalize_weapon_identity("Longsword"),

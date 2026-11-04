@@ -4896,7 +4896,8 @@ fn wear_check(root: &Path, character_input: &CharacterInput, item_id: &str) -> R
         }
         admitted.push(OverrideFlag::IgnoreSlotLimits);
     }
-    let gap = match character_lacks_proficiency_with(character_input, item_id) {
+    let race_traits: Vec<String> = resolve_racial_traits_for_character(character_input).applied_traits.into_iter().map(|t| t.key).collect();
+    let gap = match character_lacks_proficiency_with(character_input, item_id, &race_traits) {
         ItemProficiencyGap::None => None,
         ItemProficiencyGap::Weapon => Some((custom.overrides.weapons_without_proficiency, OverrideFlag::WeaponsWithoutProficiency)),
         ItemProficiencyGap::Armor => Some((custom.overrides.armor_without_proficiency, OverrideFlag::ArmorWithoutProficiency)),
@@ -4905,7 +4906,7 @@ fn wear_check(root: &Path, character_input: &CharacterInput, item_id: &str) -> R
         None => {}
         Some((true, flag)) => admitted.push(flag),
         Some((false, _)) => {
-            return Ok(Err(("equipment.not_proficient", format!("this character is not proficient with {}", item_id.strip_prefix("item:").unwrap_or(item_id)))));
+            return Ok(Err(("equipment.not_proficient", format!("this character is not proficient with {}", item_id.strip_prefix("item:").unwrap_or(item_id).trim_end_matches(" (Base)")))));
         }
     }
     Ok(Ok(admitted))
@@ -15681,6 +15682,203 @@ mod tests {
         for dir in [&root, &clone_root, &import_root, &edited_root] {
             std::fs::remove_dir_all(dir).ok();
         }
+    }
+
+    /// What the Market actually sells: `Longsword (Base)`, not `Longsword`. Against the book's list.
+    #[test]
+    fn override_a_market_row_is_read_under_the_key_the_market_sells_it_by() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{None as Known, Weapon};
+        let wizard = compose_character_input(&request_for_class("race:human", "class:wizard", 1));
+        let fighter = compose_character_input(&request_for_class("race:human", "class:fighter", 1));
+        let elf = compose_character_input(&request_for_class("race:elf", "class:rogue", 1));
+        for (input, item, gap) in [
+            (&wizard, "Longsword (Base)", Weapon),
+            (&wizard, "Greatsword (Base)", Weapon),
+            (&wizard, "Sword (Bastard)", Weapon),
+            (&wizard, "Longsword (Cold Iron/Masterwork)", Weapon),
+            (&wizard, "Crossbow (Light)", Known),
+            (&wizard, "Light Crossbow (Base)", Known),
+            (&wizard, "Quarterstaff (Base)", Known),
+            (&wizard, "Dagger (Base)", Known),
+            (&wizard, "Arrows (20)", Known),
+            (&wizard, "Improvised Weapon (1d4)", Known),
+            (&fighter, "Greatsword (Base)", Known),
+            (&fighter, "Improvised Weapon (1d4)", Known),
+            (&fighter, "Spiked Chain (Base)", Weapon),
+            (&elf, "Longsword (Base)", Known),
+            (&elf, "Greatsword (Base)", Weapon),
+        ] {
+            assert_eq!(override_gap(input, item), gap, "{:?} {item}", input.chosen.class_levels[0].class_id);
+        }
+    }
+
+    /// A weapon bought from the Market is held as `Rapier (Base)`. Its attack row and the penalty a
+    /// Wizard owes are the ones a `Rapier` gets: the flag let it on, and the sheet still says -4.
+    #[test]
+    fn override_a_market_weapon_worn_under_the_flag_has_its_attack_row_and_owes_the_penalty() {
+        let (dir, root) = overrides_wizard("override-market-attack", "Rope (Hemp/50 ft.)");
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        let bought = purchase_equipment_priced_at_root(&root, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        let PurchaseEquipmentResponse::Purchased { active_state, .. } = bought else { panic!("the buy goes through") };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier (Base)"), [Some(OverrideFlag::WeaponsWithoutProficiency)]);
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        let row = loaded.explanations.iter().find(|row| row.id == "combat.weapon_attack_bonus.rapier").expect("the attack row");
+        assert_eq!(row.value, -3, "{}", row.detail);
+        assert!(row.detail.contains("nonproficiency penalty (-4)"), "{}", row.detail);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn override_a_market_rapier_stays_carried_and_the_reason_names_it_plainly() {
+        let (dir, root) = overrides_wizard("override-market-key", "Rope (Hemp/50 ft.)");
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&root, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason.as_deref(), Some("this character is not proficient with Rapier"));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A shield or a suit whose tags state no kind cannot be named by any grant: an unknown, for a
+    /// Fighter as for a Wizard. The stated ones keep their answer.
+    #[test]
+    fn override_armor_that_states_no_kind_is_not_refused() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{Armor, None as Known};
+        let fighter = compose_character_input(&request_for_class("race:human", "class:fighter", 1));
+        let wizard = compose_character_input(&request_for_class("race:human", "class:wizard", 1));
+        assert_eq!(override_gap(&fighter, "Mind Shield"), Known);
+        assert_eq!(override_gap(&wizard, "Mind Shield"), Known);
+        assert_eq!(override_gap(&fighter, "Heavy Wooden Shield (Base)"), Known);
+        assert_eq!(override_gap(&wizard, "Heavy Wooden Shield (Base)"), Armor);
+        assert_eq!(override_gap(&wizard, "Chain Shirt (Base)"), Armor);
+    }
+
+    /// The proficiency half of [`wear_check`], for an item whose slot is also taken.
+    fn override_gap(input: &CharacterInput, item: &str) -> codex::rules_core::equipment_resolver::ItemProficiencyGap {
+        let traits: Vec<String> = resolve_racial_traits_for_character(input).applied_traits.into_iter().map(|t| t.key).collect();
+        codex::rules_core::equipment_resolver::character_lacks_proficiency_with(input, item, &traits)
+    }
+
+    /// Human Wizard 5 (Elowen) as `race_id`, with `carried` in the pack.
+    fn override_wizard_of_race(label: &str, race_id: &str, carried: &str) -> (PathBuf, PathBuf) {
+        let (dir, root) = overrides_wizard(label, carried);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.race_id = race_id.to_owned();
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        (dir, root)
+    }
+
+    /// The book gives an elf the longsword and a dwarf the battleaxe, whatever the class: nothing to
+    /// refuse, so no flag and no tag. A weapon the race does not know still refuses.
+    #[test]
+    fn override_a_weapon_the_race_grants_needs_no_flag_and_one_it_does_not_still_refuses() {
+        for (race, known, unknown) in [
+            ("race:elf", "Longsword", "Greatsword"),
+            ("race:elf", "Rapier", "Greatsword"),
+            ("race:elf", "Longbow", "Greatsword"),
+            ("race:dwarf", "Battleaxe", "Greatsword"),
+            ("race:dwarf", "Heavy Pick", "Greatsword"),
+            ("race:half-orc", "Falchion", "Greatsword"),
+            ("race:halfling", "Sling", "Greatsword"),
+        ] {
+            let (dir, root) = override_wizard_of_race("override-race-weapon", race, known);
+            let input = SavedCharacterStore::load(&root).unwrap().character_input;
+            assert_eq!(override_gap(&input, known), codex::rules_core::equipment_resolver::ItemProficiencyGap::None, "{race} {known}");
+            assert_eq!(override_gap(&input, unknown), codex::rules_core::equipment_resolver::ItemProficiencyGap::Weapon, "{race} {unknown}");
+            std::fs::remove_dir_all(&dir).ok();
+        }
+        let (dir, root) = override_wizard_of_race("override-race-wear", "race:elf", "Rapier");
+        assert_worn(&slot_conflict_wear(&root, "Rapier"));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None], "the rules allow it, so no flag let it in");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A cleric is proficient with the favored weapon of a deity the record does not read: an unknown
+    /// never refuses. Without that grant in the class line, the same weapon does.
+    #[test]
+    fn override_a_weapon_a_deity_may_grant_is_not_refused() {
+        use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
+        let cleric = compose_character_input(&request_for_class("race:human", "class:cleric", 1));
+        assert_eq!(character_lacks_proficiency_with(&cleric, "Longsword", &[]), ItemProficiencyGap::None);
+        let rogue = compose_character_input(&request_for_class("race:human", "class:rogue", 1));
+        assert_eq!(character_lacks_proficiency_with(&rogue, "Longsword", &[]), ItemProficiencyGap::Weapon);
+    }
+
+    /// Martial Weapon Proficiency names one weapon. It lets that one in and leaves the rest refused,
+    /// so a pick recorded on another weapon is not an unknown.
+    #[test]
+    fn override_martial_weapon_proficiency_lets_in_its_own_target_only() {
+        let (dir, root) = overrides_wizard("override-mwp", "Rapier");
+        overrides_set(&root, |flags| flags.ignore_feat_budget = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Martial Weapon Proficiency", Some("Rapier"), OVERRIDES_AT).unwrap());
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(matches!(wear_check(&root, &input, "Rapier").unwrap(), Ok(flags) if flags.is_empty()));
+        assert_eq!(override_gap(&input, "Greatsword"), codex::rules_core::equipment_resolver::ItemProficiencyGap::Weapon);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The book's armor feats are read as a class grant is.
+    #[test]
+    fn override_an_armor_feat_lets_its_armor_in_and_no_heavier() {
+        let (dir, root) = overrides_wizard("override-armor-feat", "Chain Shirt");
+        add_equipment_selection_at_root(&root, "Chainmail", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        overrides_set(&root, |flags| flags.ignore_feat_budget = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Armor Proficiency (Light)", None, OVERRIDES_AT).unwrap());
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(matches!(wear_check(&root, &input, "Chain Shirt").unwrap(), Ok(flags) if flags.is_empty()));
+        assert_eq!(wear_check(&root, &input, "Chainmail").unwrap().map_err(|(id, _)| id), Err("equipment.not_proficient"));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    fn override_ring(id: &str) -> CustomRecordDto {
+        CustomRecordDto { id: id.to_owned(), name: format!("GM {id}"), slot: Some(BodySlot::Ring), worn: true, ..Default::default() }
+    }
+
+    /// A worn record moved onto a taken slot goes there under the flag as surely as one newly put on.
+    #[test]
+    fn override_a_worn_custom_item_moved_onto_a_taken_slot_says_so() {
+        let root = slot_conflict_character("override-custom-moved", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let on_a_finger = CharacterCustomDto { equipment: vec![override_ring("r1")], ..Default::default() };
+        save_character_custom_at_root(&root, &on_a_finger, OVERRIDES_AT).unwrap();
+        let moved = CustomRecordDto { slot: Some(BodySlot::Head), ..override_ring("r1") };
+        let refused = save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![moved.clone()], ..Default::default() }, OVERRIDES_AT);
+        assert_eq!(refused.expect_err("flag off"), "head slot is taken by Helm of Brilliance");
+
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![moved], overrides, ..Default::default() }, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_on_copy(&root, "custom:r1"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// What the flag let on stays when it goes off. It must not then refuse a change to something else:
+    /// a ring taken off, a ring put on. A second thing on the head is still refused.
+    #[test]
+    fn override_off_what_the_slot_flag_let_on_does_not_refuse_a_change_to_another_item() {
+        let root = slot_conflict_character("override-custom-others", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let helm = CustomRecordDto { worn: true, ..override_helmet() };
+        let both = CharacterCustomDto { equipment: vec![helm.clone(), override_ring("r1")], overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &both, OVERRIDES_AT).unwrap();
+        overrides_set(&root, |flags| flags.ignore_slot_limits = false);
+
+        let without_the_ring = CharacterCustomDto { equipment: vec![helm.clone()], ..Default::default() };
+        save_character_custom_at_root(&root, &without_the_ring, OVERRIDES_AT).expect("taking a ring off is not about the head");
+        let another_ring = CharacterCustomDto { equipment: vec![helm.clone(), override_ring("r2")], ..Default::default() };
+        save_character_custom_at_root(&root, &another_ring, OVERRIDES_AT).expect("a ring is not about the head");
+        assert_worn(&set_custom_item_state_at_root(&root, "r2", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_worn(&set_custom_item_state_at_root(&root, "r2", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+
+        let second_helm = CustomRecordDto { id: "c2".to_owned(), ..helm.clone() };
+        let refused = save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![helm, override_ring("r2"), second_helm], ..Default::default() }, OVERRIDES_AT);
+        assert!(refused.expect_err("the head is full").contains("head slot is taken"));
+        std::fs::remove_dir_all(&root).ok();
     }
 
     fn override_helmet() -> CustomRecordDto {

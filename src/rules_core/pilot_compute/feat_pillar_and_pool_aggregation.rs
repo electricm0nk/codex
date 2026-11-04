@@ -2471,7 +2471,8 @@ pub(crate) fn require_selected_skill_rank(
 
 /// Folds an equipment `item_id` (`"item:longsword"`) or a
 /// `weapon_tables` key (`"Longsword"`) down to one comparable identity:
-/// lowercase, alphanumeric only, with any `item:` prefix dropped.
+/// lowercase, alphanumeric only, with any `item:` prefix dropped, and the ` (Base)` the Market's key
+/// carries (`Longsword (Base)` is the Longsword it sells).
 ///
 /// **This is deliberately a SECOND instance of the same idea as the
 /// desktop app's `normalizeFeatIdentity`, not a shared helper**, and the
@@ -2484,6 +2485,8 @@ pub(crate) fn require_selected_skill_rank(
 pub(super) fn normalize_weapon_identity(raw: &str) -> String {
     let without_prefix = raw.strip_prefix("item:").unwrap_or(raw);
     without_prefix
+        .strip_suffix(" (Base)")
+        .unwrap_or(without_prefix)
         .chars()
         .filter(|c| c.is_ascii_alphanumeric())
         .map(|c| c.to_ascii_lowercase())

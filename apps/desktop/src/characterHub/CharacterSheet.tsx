@@ -965,6 +965,8 @@ function SpellsTab(props: {
    * whether "Add Spell" is offered at all — see `addSpellAffordanceModel.ts`.
    */
   routedClass: { classId: string; classLabel: string } | null;
+  /** The spell override is on: a class that does not cast can still be offered "Add Spell". */
+  admitsAnySpell: boolean;
   onAddSpell: () => void;
   /**
    * Forgets the spell for that row's own source class, in every
@@ -1033,7 +1035,7 @@ function SpellsTab(props: {
   }, [sourceClassKey]);
 
   const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? [], classSpellLevels);
-  const addSpell = resolveAddSpellAffordance(props.routedClass, classSpellLevels);
+  const addSpell = resolveAddSpellAffordance(props.routedClass, classSpellLevels, props.admitsAnySpell);
   const schools = props.corpusDerived?.schoolCoverage ?? [];
   const spellbook = props.snapshot?.spellbook;
   // Real `class_spell.*.<total|base>_<spells|extracts>_per_day.*` records,
@@ -4604,6 +4606,7 @@ export function CharacterSheet(props: {
                   <SpellsTab
                     spellsSelected={props.detail?.spellsSelected ?? []}
                     admitted={engineRecords.admittedUnderOverride}
+                    admitsAnySpell={customOverrides(custom).spellsOutsideClassList}
                     corpusDerived={props.detail?.corpusDerived}
                     snapshot={props.detail?.snapshot}
                     explanations={engineRecords.explanations}

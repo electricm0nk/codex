@@ -321,8 +321,59 @@ pub fn armor_proficiency_in(
     if granted {
         return Some(true);
     }
-    let answerable = !seed.classes.is_empty() && seed.classes.iter().all(|(class, _)| package.find("class", class).is_some());
+    // No grant reads a kind the record does not state: a shield tagged only `Standard` cannot be named.
+    let states_its_kind = if is_shield {
+        ["Buckler", "Light", "Heavy", "Tower"].iter().any(|kind| has_tag(kind))
+    } else {
+        ["ArmorProfLight", "ArmorProfMedium", "ArmorProfHeavy", "Light", "Medium", "Heavy"].iter().any(|kind| has_tag(kind))
+    };
+    let answerable = states_its_kind && !seed.classes.is_empty() && seed.classes.iter().all(|(class, _)| package.find("class", class).is_some());
     answerable.then_some(false)
+}
+
+/// What everything `seed` holds says about one weapon, past the classes' own lists: a racial trait's
+/// familiarity, a class feature, a feat. `Some(true)`: a grant covers it, a gated one counts as
+/// [`armor_proficiency_in`]'s does. `Some(false)`: nothing names it. `None`: it could turn on what
+/// the record does not state, a deity's favored weapon or a pick not yet recorded.
+pub fn weapon_grant_in(
+    package: &SheetRulePackage,
+    seed: &HeldSeed,
+    facts: &CharacterFacts,
+    weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
+) -> Option<bool> {
+    use super::feat_pillar_and_pool_aggregation::{converted_view_covers_weapon, normalize_weapon_identity};
+    let held = held_set(package, seed, facts);
+    let mut acc = Accumulator::default();
+    let mut undecided = false;
+    let wanted = [Some(weapon.key), weapon.proficiency_name].map(|name| name.map(normalize_weapon_identity));
+    let picked = |choice: &str| {
+        facts.choices.get(choice).map(|picks| {
+            picks.iter().any(|(option, label)| [option, label].iter().any(|name| wanted.contains(&Some(normalize_weapon_identity(name)))))
+        })
+    };
+    for rule in held.rules.keys().filter(|id| !held.removed.contains(*id)).filter_map(|id| package.rule(id)) {
+        for effect in &rule.grants {
+            let (Effect::FactGrant(Fact::Proficiency(prof)) | Effect::GatedFactGrant { fact: Fact::Proficiency(prof), .. }) = effect else {
+                continue;
+            };
+            match prof {
+                ProfRef::DeityFavoredWeapon => undecided = true,
+                // A proficiency feat's target is the verdict's own to read, and it has read it.
+                ProfRef::Chosen(_) if split_rule_id(&rule.id).1 == "feat" => {}
+                ProfRef::Chosen(choice) => match picked(choice) {
+                    Some(true) => return Some(true),
+                    Some(false) => {}
+                    None => undecided = true,
+                },
+                ProfRef::Weapon(name) if wanted.contains(&Some(normalize_weapon_identity(name))) => return Some(true),
+                other => acc.fold(&Fact::Proficiency(other.clone()), "", None),
+            }
+        }
+    }
+    if converted_view_covers_weapon(&acc.finish(), weapon) {
+        return Some(true);
+    }
+    (!undecided).then_some(false)
 }
 
 /// `Some(rule id)` when the class principal, or any rule the class line grants at or below
