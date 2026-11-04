@@ -81,6 +81,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E6 | E6.1 | complete | 32ae8c1111 + receipt commit | artifacts/epic_6/E6.1_cycle_receipt.md |
 | E6 | E6.2 | complete | 0c4d7ce308 + receipt commit | artifacts/epic_6/E6.2_cycle_receipt.md |
 | E6 | E6.MC | complete | 356654dd52 + receipt commit | artifacts/epic_6/E6.MC_cycle_receipt.md |
+| E1 | E1.6 | complete | 2ce249f1fa + receipt commit | artifacts/epic_1/E1.6_cycle_receipt.md |
 
 ## Epic reports
 
@@ -89,7 +90,7 @@ seed deltas, open blockers.)
 
 ### Epic report — E1 (guards), merge check on `origin/tranche-19` @ `d3d215d4d9`
 
-**Cards done:** E1.0, E1.1, E1.2, E1.3, E1.4, E1.5, E1.MC. **Not closed:** E1.6, discovered here, `ready`, row-order next. The epic's guards are not finished until it lands.
+**Cards done:** E1.0, E1.1, E1.2, E1.3, E1.4, E1.5, E1.MC. **Not closed:** E1.6, discovered here, `ready`, row-order next. The epic's guards are not finished until it lands. *(E1.6 landed 2026-11-04: Swashbuckler and Gunslinger 1 at 4, 5 at 20; Hunter 6 at 18. Dragon Disciple and Sentinel still read no pool, named in its receipt.)*
 
 | Figure | Value | Command |
 |---|---|---|

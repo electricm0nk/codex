@@ -1,0 +1,24 @@
+test character_hub::tests::feat_budget_level_list_is_the_engines_cadence_up_to_the_cap ... ok
+test character_hub::tests::feat_budget_an_alternate_racial_trait_that_replaces_the_bonus_feat_takes_the_pool_away ... ok
+test character_hub::tests::feat_budget_create_refuses_more_picks_than_the_character_has ... ok
+test character_hub::tests::feat_budget_refuses_a_feat_past_the_budget_and_names_the_pool ... ok
+test character_hub::tests::feat_budget_rows_reach_the_create_screen_for_a_draft ... ok
+test character_hub::tests::feat_budget_a_new_character_with_no_picks_is_not_over_budget ... ok
+test character_hub::tests::feat_budget_over_budget_save_keeps_every_feat_and_blocks_adds_until_a_removal ... ok
+test character_hub::tests::overrides_ignore_feat_budget_off_refuses ... ok
+test character_hub::tests::feat_budget_an_elf_swashbuckler_4_takes_its_bonus_feat_and_a_third_noncombat_feat_is_refused ... FAILED
+test character_hub::tests::overrides_ignore_feat_budget_on_admits ... ok
+test character_hub::tests::feat_budget_rows_read_the_book_for_the_classes_e1_mc_refuted ... FAILED
+test character_hub::tests::feat_budget_admits_a_feat_while_a_pool_has_room_and_after_a_level_grants_one ... ok
+test character_hub::starter_seed_tests::feat_budget_rows_of_aldric_reach_the_sheet ... ok
+test character_hub::tests::feat_budget_create_form_picks_take_the_place_of_the_seeded_defaults ... ok
+test character_hub::tests::feat_budget_no_census_class_is_over_budget_at_birth has been running for over 60 seconds
+test character_hub::tests::feat_budget_no_census_class_is_over_budget_at_birth ... ok
+thread 'character_hub::tests::feat_budget_an_elf_swashbuckler_4_takes_its_bonus_feat_and_a_third_noncombat_feat_is_refused' (1605800) panicked at src/character_hub.rs:13913:9:
+assertion `left == right` failed
+  left: None
+thread 'character_hub::tests::feat_budget_rows_read_the_book_for_the_classes_e1_mc_refuted' (1605941) panicked at src/character_hub.rs:13940:9:
+assertion `left == right` failed
+  left: None
+test result: FAILED. 13 passed; 2 failed; 0 ignored; 0 measured; 1127 filtered out; finished in 375.90s
+error: test failed, to rerun pass `--bin codex-desktop`

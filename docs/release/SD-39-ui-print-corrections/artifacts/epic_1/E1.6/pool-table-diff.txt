@@ -1,0 +1,11 @@
+classes 137 137 same keys True
+class:gunslinger 
+  before {} 
+  after  {'gunslinger_bonus_feats': ['4:1', '8:2', '12:3', '16:4', '20:5']}
+class:hunter 
+  before {'hunter_teamwork_feats': ['3:2', '6:4', '9:6', '12:8', '15:10', '18:12']} 
+  after  {'hunter_teamwork_feats': ['3:1', '6:2', '9:3', '12:4', '15:5', '18:6']}
+class:swashbuckler 
+  before {} 
+  after  {'swashbuckler_bonus_feats': ['4:1', '8:2', '12:3', '16:4', '20:5']}
+changed 3 of 137

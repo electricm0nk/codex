@@ -42,7 +42,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 59
 | E1.5 | ui-smoke feat rows reach the picker | sonnet | complete | E1.3, E1.4 | commit ec9f0becf4 + receipt commit; receipt artifacts/epic_1/E1.5_cycle_receipt.md |
 | E1.4 | Add Custom chip styling fix | sonnet | complete | C1 | side lane ui-a; commit 18ca8b657c; receipt artifacts/epic_1/E1.4_cycle_receipt.md |
 | E1.MC | E1 merge check + Epic report | opus | complete | E1.3, E1.4, E1.5 | merged nothing; receipt artifacts/epic_1/E1.MC_cycle_receipt.md |
-| E1.6 | Feat pools a class grants by offers; Hunter counted once | opus | ready | E1.MC | discovered by E1.MC, decisions.md §21; row-order next |
+| E1.6 | Feat pools a class grants by offers; Hunter counted once | opus | complete | E1.MC | commit 2ce249f1fa + receipt commit; receipt artifacts/epic_1/E1.6_cycle_receipt.md |
 | E2.1 | Layout registry + Abilities/Details moves + title | opus | complete | E1.MC | commit 7d935657cb + receipt commit; receipt artifacts/epic_2/E2.1_cycle_receipt.md |
 | E2.2 | Combat row 2x2 + 1x4 | opus | complete | E2.1 | commit f321378d43 + receipt commit; receipt artifacts/epic_2/E2.2_cycle_receipt.md |
 | E2.3 | Show Progression drawer shell | opus | complete | E2.2 | commit c10cbc057c + receipt commit; receipt artifacts/epic_2/E2.3_cycle_receipt.md |
