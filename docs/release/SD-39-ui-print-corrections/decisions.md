@@ -62,6 +62,8 @@ The grill transcript is `artifacts/cycle_0/defects-and-rulings-2026-11-01.md`. T
 | R18 | A newly bought item | **Worn if its slot is free**; else carried, with the reason shown; no-slot items carried |
 | R19 | The Print button | **Makes the PDF and opens it in the system viewer**; you print from there |
 | R20 | Merged worktree `fix-perform-install` | **Removed** at launch, with its local branch |
+| R21 | Required gear (2026-11-04, operator) | **Nothing is ever required to be equipped.** "A character can walk around naked if they want to." A character can also own an item that is not carried, such as one left on the ground or at an inn: it adds no weight and no bonus. E7.4 and E7.5 |
+| R22 | A race's or a deity's weapon that reads -4 (2026-11-04, operator) | **Fix it in SD-39.** The bug predates the bundle. E7.6 |
 
 ## §4 — Print pipeline (R1, R2, R5, R6)
 

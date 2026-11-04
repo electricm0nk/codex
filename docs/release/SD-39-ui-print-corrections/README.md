@@ -43,11 +43,11 @@ Cyberpunk RED get the print engine, the layout moves and the Market shell (`deci
 | Slug | `ui-print-corrections` |
 | Canonical branch | `tranche-19`, cut by C1 from `origin/develop` @ `2b14020bc7` (PR #402 merge; `git rev-parse --short origin/develop` on 2026-11-01) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E1–E9 / **59 cards**, one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 57) |
+| Epics / cards | C, E1–E9 / **62 cards**, one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 62) |
 | Target version | `0.19.0`, stamped by C1's single commit on 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run (`decisions.md §16.2`) |
 | Cadence | N/A |
-| Closure gate | 59 cards `complete` (E9.4 needs the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 62 cards `complete` (E9.4 needs the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's defect list and grill rulings (`decisions.md §3`); PCGen pinned oracle for `.pcg` fixtures and SLOTS data (`scripts/pcgen-oracle-pin.env`) |
 
 ## 2. Files in this folder
@@ -65,7 +65,7 @@ Cyberpunk RED get the print engine, the layout moves and the Market shell (`deci
 | `content-unit-inventory.md` | Figures F-1…F-20 with commands: version surfaces, pickers, slots, seeds, print blocks |
 | `workflow-instruction.md` | The *how*: prefix, per-cycle procedure, receipt schema, closure order, rules R1–R19 |
 | `progress.md` | Live log; Cycle 0 receipt; epic reports; open blockers |
-| `kanban.md` | One row per card (59) |
+| `kanban.md` | One row per card (62) |
 | `release-notes.md` | Interim body (sentinel `SD-39 INTERIM NOTES`); replaced at E9.8 |
 | `artifacts/`, `artifacts/README.md` | Per-epic receipts and evidence; `cycle_0/` holds the authoring notes and the workflow prefix |
 | `references/`, `references/README.md` | Doctrine, skills, sibling bundles, retrospectives |
