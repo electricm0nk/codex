@@ -1,0 +1,283 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd39-e4.1": 3,
+      "sd39-e4.2": 3,
+      "sd39-e4.3": 3,
+      "sd39-e4.4": 4,
+      "sd39-e4.5": 3,
+      "sd39-e4.6": 3,
+      "sd39-e4.7": 2,
+      "sd39-e4.mc": 4,
+      "sd39-e7.1": 5
+    },
+    "by_subject": {
+      "CharacterSheet.tsx recomputed state": 1,
+      "E3.3 list_held_equipment": 1,
+      "E4.1-row": 1,
+      "E4.2 and E4.5 row": 1,
+      "E4.2-dispatch-prompt": 1,
+      "E4.4 receipt, export and clone not examined": 1,
+      "E4.5 dispatch prompt": 1,
+      "E4.5 receipt, raised scores": 1,
+      "E4.5 row, Ring of Protection": 1,
+      "E4.5-receipt": 1,
+      "E4.6 and E4.7 unsettled-chains.py as the remainder": 1,
+      "E4.6-row": 1,
+      "E4.7-dispatch": 1,
+      "body_slots.rs-doc": 1,
+      "content-unit-inventory": 1,
+      "content-unit-inventory-F-11": 1,
+      "decisions.md \u00a713": 2,
+      "decisions.md-section-25": 1,
+      "dispatch-prompt": 2,
+      "epic-breakdown": 1,
+      "epic-breakdown E4.3 FILES YOU OWN": 1,
+      "epic-breakdown E4.3 row": 1,
+      "epic-breakdown E4.5 row": 1,
+      "epic-breakdown-E4.7": 1,
+      "epic-breakdown.md E4.4 row": 1,
+      "sd39-kanban": 1,
+      "technical-design": 1,
+      "technical-design-E4.2": 1
+    },
+    "by_verification_method": {
+      "awk -F'|' '$2 ~ /E7\\.[123] /{print $2,$5,$6}' docs/release/SD-39-ui-print-corrections/kanban.md at c414299715; kanban.md header 'the script dispatches a card only when every dependency is complete'": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md | awk 'END{print NR}'": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'": 3,
+      "cargo test --locked -j 8 --bins equipment_panel: red E0609 no field active_state on HeldEquipmentCopyDto": 1,
+      "cargo test --locked -j 8 --bins equipment_panel_the_feat: red, then green; artifacts/epic_4/E4.3/red-feat-toggle.txt": 1,
+      "cargo test --locked -j 8 --bins worn_item_applies_cmd in apps/desktop/src-tauri, E4.MC/red.txt": 1,
+      "cargo test --locked -j 8 --bins worn_vs_carried in apps/desktop/src-tauri pre-fix: 2 failed": 1,
+      "cargo test --locked -j 8 -p codex-ingest --test rules_core_equipment_record_via_converter: 3 passed after the edit, 2 of 7803 records disagree before it": 1,
+      "character_hub.rs:9877 panic on set_equipment_active_state; worn_vs_carried_aldric_with_armor_stowed uses item:chain_shirt": 1,
+      "custom_item_bonuses_worn_ac_plus_one_deflection_raises_ac_by_one_and_carried_adds_zero": 1,
+      "e4mc_probe_twins in E4.MC/probe.rs: class_chassis.skill_points 30 -> 35; worn_item_applies_intelligence_moves_the_spell_numbers_and_not_the_skill_budget": 1,
+      "git diff --name-only 5eaf7ebddf..ab1300e371; git grep -n CustomRecordDto at 5eaf7ebddf -- src": 1,
+      "git show 5eaf7ebddf:apps/desktop/src/characterHub/CharacterSheet.tsx | awk '/setRecomputed\\(/{n++} END{print n+0}' prints 1": 1,
+      "git show decc2ec917:data/corpus/core_rulebook/_settled/equipment.json read with python3; the 179 is the count of base_item changes from a python3 diff of old and new bundles": 1,
+      "grep -n 'ignore_slot' apps/desktop/src-tauri/src/character_custom.rs -> no line; kanban.md Depends on column": 1,
+      "grep -n 'pub struct BonusType' -A3 src/rules_core/sheet_rule.rs; python3 count over data/sheet_rules bonus_type names": 1,
+      "grep -rln 'ActiveState::' src/rules_core/*.rs | awk 'END{print NR}' -> 8": 1,
+      "ls scripts/oracle_harness/eqm-fixtures/*.pcg | awk 'END{print NR}'": 1,
+      "pilot_compute_corpus.rs compute_selected_skill_modifiers_from_corpus via require_selected_skill_rank; first run of pcg_import_fixtures_a_file_of_held_classes_computes": 1,
+      "python3 count over data/corpus/*/equipment raw_bonus_chains: 53 SAVE chains; settled rows equal raw-derived rows: skill 209, ability 135, save 104": 1,
+      "python3 docs/release/SD-39-ui-print-corrections/artifacts/epic_4/E4.6/unsettled-chains.py": 1,
+      "python3 over apps/desktop/src-tauri/resources/corpus_fixtures/_settled/equipment.json: states_base_damage and not is_shield and wield_category is None": 1,
+      "python3 over raw_bonus_chains in E4.MC/chains.py; worn_item_applies_load_numbers_move_the_load_limits": 1,
+      "slot_conflict_a_second_copy_of_the_same_helmet_is_refused red: got Saved": 1,
+      "slot_conflict_every_market_row_finds_its_record over 5880 Market rows": 1,
+      "temporary desktop test over import_character_from_json, E7.1/desktop-oneoff.txt: E71 saved=37 blocked=26 bad=0": 1,
+      "worn_item_applies_attack_a_subtype_bonus_prints_with_its_subtype_and_moves_no_row; skillsModel.ts SKILLS holds one Perform row": 1,
+      "worn_item_applies_custom_items_come_along_on_a_clone_and_a_round_trip, left: 0 right: 1": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd39-e4.5",
+        "id": "1793720080129-sd39-e4.5-697491",
+        "summary": "E4.2 and E4.5 row claimed no consumer reads the numbers because var_bonuses, ability_score_bonus and skill_check_bonus exist and are unread; these three fields are the shape; actual BONUS:SAVE chains were never settled at all and those fields cannot state a list or a type, so a new settled field stated_bonuses reads STAT, SKILL, SAVE and the save VARs",
+        "ts": "2026-11-03T15:34:40Z"
+      },
+      {
+        "actor": "sd39-e4.6",
+        "id": "1793740424097-sd39-e4.6-3d6db0",
+        "summary": "dispatch-prompt claimed the card-count constant to re-count is 51; actual 57 at start of E4.6, 58 with E4.7",
+        "ts": "2026-11-03T21:13:44Z"
+      },
+      {
+        "actor": "sd39-e4.6",
+        "id": "1793740424237-sd39-e4.6-f3a750",
+        "summary": "E4.5-receipt claimed E4.6 and the conditional and formula chains are all that is left of worn items apply; actual 13 more flat standing chains move nothing, plus one speed multiplier; card E4.7",
+        "ts": "2026-11-03T21:13:44Z"
+      },
+      {
+        "actor": "sd39-e4.6",
+        "id": "1793740424371-sd39-e4.6-711f2a",
+        "summary": "E4.6-row claimed a subtype bonus can reach the family row; actual the family row is one number; adding one Perform's bonus misprints every other Perform, so it prints under the panel with its subtype",
+        "ts": "2026-11-03T21:13:44Z"
+      },
+      {
+        "actor": "sd39-e4.7",
+        "id": "1793751338726-sd39-e4.7-6419b0",
+        "summary": "epic-breakdown-E4.7 claimed E4.7's FILES YOU OWN is closed under reading ATTACK,AC's AC half; actual crates/codex-ingest/tests/rules_core_equipment_record_via_converter.rs re-derives the old COMBAT|AC read over the whole corpus and failed on Unlucky Figurine; the root sweep's one FAILED; its reference read now takes a list, row amended",
+        "ts": "2026-11-04T00:15:38Z"
+      },
+      {
+        "actor": "sd39-e4.7",
+        "id": "1793751338856-sd39-e4.7-7c8819",
+        "summary": "E4.7-dispatch claimed the desktop bins filter stays clean with 'Chain Shirt' as the item's name; actual Aldric's copy's id is item:chain_shirt",
+        "ts": "2026-11-04T00:15:38Z"
+      },
+      {
+        "actor": "sd39-e4.mc",
+        "id": "1793753897845-sd39-e4.mc-629758",
+        "summary": "E4.5 row, Ring of Protection claimed a worn deflection bonus reaches AC, touch and flat-footed, and that is all its twins; actual CMD stayed 18 with a worn Ring of Protection +2 (CRB p.199 counts it); left: 18 right: 20; now moves",
+        "ts": "2026-11-04T00:58:17Z"
+      },
+      {
+        "actor": "sd39-e4.mc",
+        "id": "1793753897990-sd39-e4.mc-86de47",
+        "summary": "E4.5 receipt, raised scores claimed what a raised score drives follows from the engine, every read of it correct; actual a worn Headband of Vast Intelligence +2 raised Elowen's skill budget 30 to 35 and her spellbook 15 to 16; the book grants ranks in named skills",
+        "ts": "2026-11-04T00:58:17Z"
+      },
+      {
+        "actor": "sd39-e4.mc",
+        "id": "1793753898120-sd39-e4.mc-1ea408",
+        "summary": "E4.4 receipt, export and clone not examined claimed custom.json was not examined on export, import or clone; left as a does-not-cover; actual clone_character and export_character_to_json both drop it, so a worn custom item and every Custom tab line were lost",
+        "ts": "2026-11-04T00:58:18Z"
+      },
+      {
+        "actor": "sd39-e4.mc",
+        "id": "1793753898260-sd39-e4.mc-a9c4f5",
+        "summary": "E4.6 and E4.7 unsettled-chains.py as the remainder claimed 39 flat standing chains are all that is left of worn items' numbers; actual the script lists only the heads it names; VAR LOADSCORE (2) and LOADMULT TYPE=SIZE (1 flat) move the load limits the sheet prints and it never read them",
+        "ts": "2026-11-04T00:58:18Z"
+      }
+    ],
+    "repeat_subjects": [
+      {
+        "count": 2,
+        "subject": "dispatch-prompt"
+      },
+      {
+        "count": 2,
+        "subject": "decisions.md \u00a713"
+      }
+    ],
+    "total": 30,
+    "with_blast_radius": 1
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd39-e4.1": 4,
+      "sd39-e4.2": 6,
+      "sd39-e4.3": 4,
+      "sd39-e4.4": 5,
+      "sd39-e4.5": 5,
+      "sd39-e4.6": 4,
+      "sd39-e4.7": 2,
+      "sd39-e4.mc": 5,
+      "sd39-e7.1": 6,
+      "sd39-main": 4
+    },
+    "by_origin": {
+      "agent": 36,
+      "derived": 9
+    },
+    "by_type": {
+      "correction": 30,
+      "incident": 3,
+      "rework": 3,
+      "verification": 9
+    },
+    "total": 45
+  },
+  "generated_at": "2026-11-04T04:01:03Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 21,
+    "events_per_commit": 2.1429,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        21
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "ui-smoke-driver-orphaned-app": 1,
+      "ui-smoke-marker-beats-reload": 2
+    },
+    "recent": [
+      {
+        "actor": "sd39-e4.1",
+        "id": "1793687002754-sd39-e4.1-ba449e",
+        "summary": "A ui-smoke driver from the previous E4.1 attempt was gone while its tauri dev, vite, app and Xvfb :61 kept running, 11 rows left not-run; r3 results.json read not-run for all rows while the receipt called them running (detected by pgrep for ui-smoke/run found nothing; r3.json/results.json status not-run; /proc environ RUN_DESKTOP_AGENT=sd39-e4.1 on the survivors)",
+        "ts": "2026-11-03T06:23:22Z"
+      },
+      {
+        "actor": "sd39-e4.2",
+        "id": "1793699526733-sd39-e4.2-d6de5f",
+        "summary": "sheet-market-buy-weapon-worn red once in sequence, green alone (detected by ui-smoke 20-row run)",
+        "ts": "2026-11-03T09:52:06Z"
+      },
+      {
+        "actor": "sd39-e4.3",
+        "id": "1793711087559-sd39-e4.3-c981e0",
+        "summary": "2 of 24 ui-smoke rows red on the first full run: sheet-market-sell (Sell click had no effect, status still read Bought) and my new sheet-equipment-unequip (read before the reload finished) (detected by npm run ui-smoke over the 24 rows; artifacts/epic_4/E4.3/ui-smoke-rows-run1-22of24.log)",
+        "ts": "2026-11-03T13:04:47Z"
+      }
+    ],
+    "recurring": [
+      {
+        "count": 2,
+        "recurrence_key": "ui-smoke-marker-beats-reload"
+      }
+    ],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 3
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/docs/retro/events",
+    "problems": [],
+    "shards": 10
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "a sweep found them, not the grep for second readers before the first write: base_item parity and the custom Armor row were each named in code I had read": 1,
+      "is_modifier is false on all 7803 settled records; I read the field name and did not count it before the first sweep": 1,
+      "the file's one-row-per-line format is not json.dumps(indent)": 1
+    },
+    "recent": [
+      {
+        "actor": "sd39-e4.2",
+        "id": "1793699526591-sd39-e4.2-313cd7",
+        "summary": "redid corpus_fixtures filter on is_modifier kept no modifier out, so Anarchic resolved; then a pinned list missed the row the new filter drops: is_modifier is false on all 7803 settled records; I read the field name and did not count it before the first sweep",
+        "ts": "2026-11-03T09:52:06Z"
+      },
+      {
+        "actor": "sd39-e4.4",
+        "id": "1793716348719-sd39-e4.4-5db651",
+        "summary": "redid spec.json inserted through json.dumps rewrote 14,035 lines: the file's one-row-per-line format is not json.dumps(indent)",
+        "ts": "2026-11-03T14:32:28Z"
+      },
+      {
+        "actor": "sd39-e4.5",
+        "id": "1793729455891-sd39-e4.5-531946",
+        "summary": "redid two pinned tests edited after the first sweep: the stack test and the base_item parity test: a sweep found them, not the grep for second readers before the first write: base_item parity and the custom Armor row were each named in code I had read",
+        "ts": "2026-11-03T18:10:55Z"
+      }
+    ],
+    "total": 3
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": 0.0,
+    "failed_runs": 0,
+    "runs": 9
+  },
+  "window": {
+    "since": "2026-11-02T22:12:59-05:00",
+    "spec": "2026-11-02T22:12:59-05:00",
+    "until": null
+  }
+}

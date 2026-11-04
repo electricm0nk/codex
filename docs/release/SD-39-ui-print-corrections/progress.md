@@ -72,6 +72,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E4 | E4.5 | complete | efdf8ce4b2 + receipt commit | artifacts/epic_4/E4.5_cycle_receipt.md |
 | E4 | E4.6 | complete | 5c21256395 + receipt commit | artifacts/epic_4/E4.6_cycle_receipt.md |
 | E4 | E4.7 | complete | b28d044e20 + receipt commit | artifacts/epic_4/E4.7_cycle_receipt.md |
+| E4 | E4.MC | complete | 8aedb292b7 + receipt commit | artifacts/epic_4/E4.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -155,6 +156,29 @@ seed deltas, open blockers.)
 
 **Open blockers:** none on E3. **Open, for the lead, no operator ruling needed:** E1.6 is still `ready` and nothing dispatches it (E2's report). The mode switch (Cashless buy, Standard sale pays out) stands on all three systems; no card rules on it.
 
+### Epic report — E4 (body slots and worn items), merge check on `origin/tranche-19` @ `d13e602b7a`
+
+**Cards done:** E4.1, E4.2, E4.3, E4.4, E4.5, E4.6, E4.7, E4.MC. E4.5, E4.6 and E4.7 were discovered in the epic. E4.MC discovered no card: what it found is fixed in 8aedb292b7.
+
+| Figure | Value | Command |
+|---|---|---|
+| Root tests | 8,602 passed, 0 failed, 70 ignored, 479 result lines, exit 0 | `cargo test --locked -j 8 --no-fail-fast --workspace -- --test-threads=8`; `awk` and Python agree |
+| Desktop tests | 1,059 passed, 0 failed, 2 ignored, 2 result lines, exit 0 | same, in `apps/desktop/src-tauri` |
+| Named filters, desktop + root | `slot_conflict` 14 + 2, `worn_vs_carried` 8 + 5, `equipment_panel` 4 + 1, `custom_item_bonuses` 11 + 0, `worn_item_applies` 24 + 8; 0 `FAILED` | `awk` over the two logs |
+| The worn tests off a staged packaged layout | 24 passed, 0 failed | `CODEX_DESKTOP_RESOURCE_DIR=<stage> cargo test --locked -j 8 --bins worn_item_applies`, `E4.MC/packaged-worn.txt` |
+| Frontend | typecheck exit 0; 183/183 test files; `ui-smoke:doc` no file changed | `cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc` |
+| ui-smoke | 26 of 26: `sheet-market-*`, `sheet-equipment-*`, `sheet-custom-item-*` | `npm run ui-smoke -- --only <ids>`, `E4.MC/smoke-results.json` |
+| Settled worn-item rows | 488 on 9,040 records | Python over `data/corpus/*/_settled/equipment.json`; `gen_settled_corpus --check` drifted=0 |
+| Mutations | 6 of 6 red | `E4.MC/mutations.txt` |
+
+**Seed deltas (base = `91537a6951`, built in its own tree; head = `8aedb292b7`):** PF Aldric, Elowen, Tomas: `sha256.txt` identical. SF x4 and CPR x5: `diff -r` empty, 13 files on each side (`E4.MC/seed-deltas.txt`).
+
+**Refuted, all fixed here:** a worn deflection or insight bonus left CMD alone (CRB p.199); a worn Headband of Vast Intelligence +2 raised Elowen's skill budget 30 to 35 and her spellbook 15 to 16, where the book grants ranks in named skills; a clone and an export lost `custom.json`, worn custom items with it; a worn Muleback Cords or Heavyload Belt left the load limits alone, because `unsettled-chains.py` counts only the heads it names. **Holds:** the slot check in both directions with custom items, Recompute against the load, saved states through an export, the bundle's fields, every mutation.
+
+**Retro (`scripts/retro.py summary --since 2026-11-02T22:12:59-05:00 --json`, `E4.MC/retro-summary.json`):** 30 corrections (E4 25, E7.1 5, the window it overlapped), 3 incidents (`ui-smoke-marker-beats-reload` 2, `ui-smoke-driver-orphaned-app` 1), 0 deferrals, 3 reworks. No key fired more than twice, so no new check under R-W. `ui-smoke-marker-beats-reload` is one more firing from needing one. Written before this card's derived verify line.
+
+**Open blockers:** none on E4. **Open, for the operator (no card stops on it):** the required Longsword. It fills the main hand and the engine refuses stowing the last one, so a character holding it can never take a bought Greatsword in hand: it stays carried, with the reason (E4.1's receipt, `decisions.md §25`). R18's check is right; whether a character may give up the Longsword is a ruling. **Open, for the lead, no operator ruling needed:** E1.6 is still `ready` and nothing dispatches it (E2's and E3's reports).
+
 ## Decisions taken on safe defaults
 
 | Card | Decision point | Default taken | Alternative not taken |
@@ -175,6 +199,9 @@ seed deltas, open blockers.)
 | E3.6 | A flat-priced modifier under Cashless | No money moves | The old charge in every mode, from before the request had a mode |
 | E3.MC | Attach Modifier on a seeded `item:*` id | Charged by the row its record is on | Free, as E3.6's row said, which left every starting sword a free `+5` |
 | E3.MC | Cyberdecks the shop files under `gear` | Off the Market | Buying one onto the sheet, a deck the row rules out |
+| E4.MC | A worn Intelligence bonus and the skill budget | The saved score budgets skill points, languages and a spellbook; DCs and spells per day move | The raised score, which pays points per level that stowing the item takes back |
+| E4.MC | An Armor Class penalty on an item that also states CMD | Counted once | Twice, -4 on a figurine that says -2 |
+| E4.MC | Heavyload Belt's `LOADMULT\|TYPE=SIZE\|3` | Added to the size's multiplier, as the pinned oracle does | Printing only its name, which leaves a stated number unread |
 
 ## Open blockers
 
