@@ -1322,6 +1322,11 @@ mod tests {
         std::fs::remove_dir_all(root.parent().unwrap()).ok();
     }
 
+    /// A seed whose Extreme roll (4d6) is 21 or more (35 of 1296 rolls): the kept regain then lands
+    /// where Humanity 44 + regain + a Standard 12 passes Maximum Humanity 76 (D-5), the shape that
+    /// failed this test on a clock-seeded run.
+    const HIGH_EXTREME_SEED: u32 = 38;
+
     /// A regain left blank is rolled on the therapy's dice with the request's seed; the same seed
     /// keeps it on apply; over 300 seeds every Standard roll lands in 2-12 and reaches both ends.
     #[test]
@@ -1332,11 +1337,12 @@ mod tests {
         choices.cyberware.push(CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(12) });
         choices.cyberware.push(CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None, humanity_loss: Some(24) });
         CprCharacterStore::save_choices(&choices, &root).unwrap();
-        let plan = request(0, vec![therapy("Extreme Humanity Loss", None)]);
+        let mut plan = request(0, vec![therapy("Extreme Humanity Loss", None)]);
+        plan.seed = Some(HIGH_EXTREME_SEED);
         let preview = preview_at_root(&corpus(), &root, &plan).expect("previews");
         assert_eq!(preview.refusal, None);
         let rolled = row(&preview.rows, "cpr.improve.purchase.0.humanity_regained");
-        assert!((4..=24).contains(&rolled), "{rolled}");
+        assert!((21..=24).contains(&rolled), "this seed must roll the worst case, 4d6 of 21 or more: {rolled}");
         let detail = &preview.rows.iter().find(|r| r.id == "cpr.improve.purchase.0.humanity_regained").unwrap().detail;
         assert!(detail.contains("rolled 4d6"), "{detail}");
         let mut seeded = request(0, vec![therapy("Extreme Humanity Loss", None)]);
@@ -1345,6 +1351,14 @@ mod tests {
         assert_eq!(row(&loaded.explanations, "cpr.derived.humanity_current"), 44 + rolled);
         assert_eq!(CprCharacterStore::load_choices(&root).unwrap().humanity_regained, Some(rolled as u16));
 
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+        // The sweep runs on a character no earlier apply has touched, so the kept regain above
+        // cannot sit between a Standard roll and Maximum Humanity.
+        let root = saved_solo("therapysweep", None);
+        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
+        choices.cyberware.push(CprCyberwareInstall { name: "Gills".to_owned(), mount: None, humanity_loss: Some(12) });
+        choices.cyberware.push(CprCyberwareInstall { name: "Grafted Muscle and Bone Lace".to_owned(), mount: None, humanity_loss: Some(24) });
+        CprCharacterStore::save_choices(&choices, &root).unwrap();
         let mut seen = std::collections::BTreeSet::new();
         for seed in 0..300 {
             let mut plan = request(0, vec![therapy("Standard Humanity Loss", None)]);
