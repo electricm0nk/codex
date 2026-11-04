@@ -5929,9 +5929,10 @@
       "expect": [
         "Level 6 Wizard",
         "NEXT",
-        "Skill points: 7"
+        "Skill points: 7",
+        "Class features: Abjuration Wizard Spells, Arcane Bond"
       ],
-      "notes": "SD-39 E2.3/E2.4: Show Progression opens the left drawer (role=dialog, aria-modal) with the level history for Elowen Ashgrave (Wizard 5, next level 6). 'Skill points: 7' is printed only there; the drawer reads 'Skill points: Unknown' until the class roster arrives (E2.3 receipt), hence the wait. Leaves the drawer open; resetToLanding's Escape closes it."
+      "notes": "SD-39 E2.3/E2.4: Show Progression opens the left drawer (role=dialog, aria-modal) with the level history for Elowen Ashgrave (Wizard 5, next level 6). The class features line is E5.3's guard: the app's corpus bundle holds no class feature records, so a source a checkout has and the app lacks would pass every unit test and print none of these. 'Skill points: 7' is printed only there; the drawer reads 'Skill points: Unknown' until the class roster arrives (E2.3 receipt), hence the wait. Leaves the drawer open; resetToLanding's Escape closes it."
     },
     {
       "id": "sheet-progression-drawer-close-x",
