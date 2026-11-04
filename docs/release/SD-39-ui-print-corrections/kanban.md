@@ -63,7 +63,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 58
 | E4.6 | A worn item's stated attack, initiative and speed reach the totals | opus | complete | E4.5 | discovered by E4.5, decisions.md §21; commit 5c21256395 + receipt commit; receipt artifacts/epic_4/E4.6_cycle_receipt.md; 6 desktop + 1 root worn_item_applies_attack tests; root 8599 passed, desktop 1048 passed, both 0 failed; seeds NO_DIFF; discovered E4.7 |
 | E4.7 | A worn item's every-skill, CMB, CMD, Armor Class and speed-multiplier numbers reach the totals | opus | complete | E4.6 | discovered by E4.6, decisions.md §21; commit b28d044e20 + receipt commit; receipt artifacts/epic_4/E4.7_cycle_receipt.md; 6 desktop + 3 root worn_item_applies_every_skill tests; desktop 1053+1 passed, 0 failed; root 8601 passed, 1 failed in the sweep, that suite's reference read fixed and 3 passed on re-run; seeds NO_DIFF |
 | E4.MC | E4 merge check + Epic report | opus | complete | E4.7 | commit 8aedb292b7 + receipt commit; receipt artifacts/epic_4/E4.MC_cycle_receipt.md; 4 refuted, all fixed here; root 8602 passed, desktop 1059 passed, both 0 failed; 26 ui-smoke rows green; seeds NO_DIFF; no card discovered |
-| E5.1 | Ledger file, stamped on every add | opus | waiting | E4.MC | |
+| E5.1 | Ledger file, stamped on every add | opus | complete | E4.MC | commit 5b24205733 + receipt commit; receipt artifacts/epic_5/E5.1_cycle_receipt.md; 7 ledger_stamp tests; desktop 1066 passed, 0 failed; G-6 re-run for the fence exits; seeds NO_DIFF; no card discovered |
 | E5.2 | Legacy ledger migration | opus | waiting | E5.1 | |
 | E5.3 | Drawer content from list_progression_ledger | opus | waiting | E5.2 | |
 | E5.MC | E5 merge check + Epic report | opus | waiting | E5.3 | |

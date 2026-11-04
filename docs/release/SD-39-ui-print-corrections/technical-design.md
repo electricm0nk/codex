@@ -107,11 +107,15 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
 
 ## §5 Level ledger (E5)
 
-- Saved selections (`src/saved_character/mod.rs`) gain `taken_at_level: Option<u8>` and
-  `assigned_on_upgrade: bool` on feat, spell, skill-rank and ability-increase records; schema version
-  bumps; `local_store.rs` runs `migrate_ledger()` once when the version is older (R8 slot-order fill).
+- `ledger.json` beside the character (`apps/desktop/src-tauri/src/character_ledger.rs`, `decisions.md §25`):
+  `{kind, id, target, taken_at_level, assigned_on_upgrade}`, one row a feat copy, a spell learned, a skill
+  rank or a point of positive ability grant. The saved character and its schema do not change.
+- Every Pathfinder change passes `mutate_saved_character_at_root`, which brings the ledger in step with
+  what the character holds; a held thing with no row is stamped at the character's level, a row nothing
+  holds goes. `save_character_custom_at_root` does the same for grants, and creation, `clone_character`
+  and the import file carry it. First-load migration by slot order is E5.2.
 - `list_progression_ledger(character_id) -> Vec<LevelEntry>` (new command) assembles the drawer's rows
-  from the saved selections + the class catalog's per-level grants (`characterProgression.ts` logic moves
+  from `ledger.json` + the class catalog's per-level grants (`characterProgression.ts` logic moves
   server-side so the drawer and the print Math block read one source).
 
 ## §6 Overrides (E6)
