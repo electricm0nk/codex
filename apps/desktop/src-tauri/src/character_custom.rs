@@ -21,7 +21,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
-use crate::character_ledger::{ledger_after_custom_change_at_root, write_character_ledger_at_root};
+use crate::character_ledger::{ledger_after_custom_change_at_root, write_character_ledger_at_root, AdmittedRecordDto, OverrideFlag};
 use crate::character_hub::{
     worn_stock_slots, CreateCharacterResponse, DiagnosticDto, ExplanationDto, LoadSavedCharacterResponse, ResolvedEquipmentEffectDto,
     WeaponFeatEffectDto,
@@ -567,6 +567,41 @@ fn slot_refusal(input: &CharacterInput, custom: &CharacterCustomDto) -> Result<O
     Ok(None)
 }
 
+/// Whether the rules would refuse this worn custom item a place beside everything else worn: the
+/// override let it on. Asked of the one record, so another's overflow does not tag it.
+fn custom_item_overflows_its_slot(input: &CharacterInput, custom: &CharacterCustomDto, index: usize) -> Result<bool, String> {
+    let Some(slot) = custom.equipment[index].slot.filter(|slot| *slot != BodySlot::None) else {
+        return Ok(false);
+    };
+    let mut others = custom.clone();
+    others.equipment.remove(index);
+    let mut worn = worn_stock_slots(input)?;
+    worn.extend(worn_custom_slots(&others));
+    let refs: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
+    Ok(slot_conflict(&refs, slot)?.is_some())
+}
+
+/// The rows for the custom items at `indices`, newly worn under `ignore_slot_limits`.
+fn slot_override_rows(input: &CharacterInput, custom: &CharacterCustomDto, indices: impl Iterator<Item = usize>) -> Result<Vec<AdmittedRecordDto>, String> {
+    let mut rows = Vec::new();
+    for index in indices {
+        if custom.overrides.ignore_slot_limits && custom_item_overflows_its_slot(input, custom, index)? {
+            rows.push(AdmittedRecordDto::copy(&format!("{CUSTOM_ITEM_PREFIX}{}", custom.equipment[index].id), 0, OverrideFlag::IgnoreSlotLimits));
+        }
+    }
+    Ok(rows)
+}
+
+/// Writes `custom.json` and what the ledger becomes for it, the ledger read before anything is written.
+fn write_custom_and_ledger(root: &Path, previous: &CharacterCustomDto, custom: &CharacterCustomDto, admitted: Vec<AdmittedRecordDto>) -> Result<(), String> {
+    let ledger = ledger_after_custom_change_at_root(root, previous, custom, admitted)?;
+    write_custom(root, custom)?;
+    if let Some(ledger) = ledger {
+        write_character_ledger_at_root(root, &ledger)?;
+    }
+    Ok(())
+}
+
 /// The same bound a grant's score keeps, on the score the sheet computes from.
 fn worn_score_refusal(scores: &AbilityScores, custom: &CharacterCustomDto) -> Option<String> {
     let worn = WornItemBonuses::of(custom);
@@ -582,7 +617,9 @@ fn worn_score_refusal(scores: &AbilityScores, custom: &CharacterCustomDto) -> Op
 /// A refusal is `Blocked`, as a stock item's is, and leaves both files as they were. Past that,
 /// `mutate_saved_character_at_root` supplies the recompute gate and the new revision.
 pub(crate) fn set_custom_item_state_at_root(root: &Path, id: &str, active_state: ActiveState, saved_at: &str) -> Result<CreateCharacterResponse, String> {
-    let mut custom = load_character_custom_at_root(root)?;
+    let previous = load_character_custom_at_root(root)?;
+    let mut custom = previous.clone();
+    let mut admitted = Vec::new();
     let Some(index) = custom.equipment.iter().position(|record| record.id == id) else {
         return Err(format!("'{CUSTOM_ITEM_PREFIX}{id}' cannot change state: this character does not carry it"));
     };
@@ -598,10 +635,11 @@ pub(crate) fn set_custom_item_state_at_root(root: &Path, id: &str, active_state:
                 diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
             });
         }
+        admitted = slot_override_rows(&existing.character_input, &custom, std::iter::once(index))?;
     }
     let outcome = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, |_| {})?;
     if matches!(outcome, CreateCharacterResponse::Saved { .. }) {
-        write_custom(root, &custom)?;
+        write_custom_and_ledger(root, &previous, &custom, admitted)?;
     }
     Ok(outcome)
 }
@@ -679,12 +717,10 @@ pub(crate) fn save_character_custom_at_root(root: &Path, custom: &CharacterCusto
         }
     }
 
-    let ledger = ledger_after_custom_change_at_root(root, &previous, custom)?;
-    write_custom(root, custom)?;
-    if let Some(ledger) = ledger {
-        write_character_ledger_at_root(root, &ledger)?;
-    }
-    Ok(())
+    let newly_worn = (0..custom.equipment.len())
+        .filter(|index| custom.equipment[*index].worn && !previous.equipment.iter().any(|record| record.worn && record.id == custom.equipment[*index].id));
+    let admitted = slot_override_rows(&existing.character_input, custom, newly_worn)?;
+    write_custom_and_ledger(root, &previous, custom, admitted)
 }
 
 #[derive(Debug, Clone, Deserialize)]

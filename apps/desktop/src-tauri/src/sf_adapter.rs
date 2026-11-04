@@ -783,6 +783,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
         };
         let scores = &input.chosen.ability_scores;
         Ok(LoadSavedCharacterResponse {
+            admitted_under_override: Vec::new(),
             summary: summary_dto(&envelope),
             snapshot: sheet.as_ref().ok().map(|_| snapshot_dto(&chassis)),
             diagnostics: chassis

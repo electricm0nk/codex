@@ -423,6 +423,7 @@ pub(crate) mod tests {
                 crate::character_hub::sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
             Ok(LoadSavedCharacterResponse {
+                admitted_under_override: Vec::new(),
                 summary,
                 snapshot,
                 diagnostics,

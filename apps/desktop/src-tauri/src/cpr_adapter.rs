@@ -574,6 +574,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows".to_owned()
         });
         Ok(LoadSavedCharacterResponse {
+            admitted_under_override: Vec::new(),
             summary: summary_dto(&character),
             snapshot: None,
             diagnostics: Vec::new(),

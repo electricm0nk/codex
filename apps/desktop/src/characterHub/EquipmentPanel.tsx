@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { BodySlotDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import { OverrideTag } from './OverrideTag';
 
 type ChangeableState = 'EquippedActive' | 'SelectedInactive';
 
@@ -90,7 +91,10 @@ export function EquipmentPanelView(props: EquipmentPanelViewProps) {
           {lists.worn.length === 0 ? <p style={quiet}>Nothing worn.</p> : null}
           {lists.worn.map((copy, index) => (
             <div key={`${copy.itemId}::${copy.bonus}::${index}`} style={row}>
-              <span>{`${wornLabel(copy.slot)}: ${copy.name}`}</span>
+              <span>
+                {`${wornLabel(copy.slot)}: ${copy.name}`}
+                {copy.override ? <OverrideTag flag={copy.override} /> : null}
+              </span>
               {action(copy, 'Stow', 'SelectedInactive')}
             </div>
           ))}
@@ -98,7 +102,10 @@ export function EquipmentPanelView(props: EquipmentPanelViewProps) {
           {lists.carried.length === 0 ? <p style={quiet}>Nothing carried.</p> : null}
           {lists.carried.map((copy, index) => (
             <div key={`${copy.itemId}::${copy.bonus}::${index}`} style={row}>
-              <span>{copy.name}</span>
+              <span>
+                {copy.name}
+                {copy.override ? <OverrideTag flag={copy.override} /> : null}
+              </span>
               {action(copy, 'Equip', 'EquippedActive')}
             </div>
           ))}

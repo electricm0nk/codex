@@ -22,7 +22,7 @@ use tauri::Manager;
 use uuid::Uuid;
 
 use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
-use crate::character_ledger::{build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, list_progression_ledger_at_root, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto, ProgressionLedgerDto};
+use crate::character_ledger::{admitted_records_at_root, AdmittedKind, AdmittedRecordDto, OverrideFlag, build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, list_progression_ledger_at_root, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto, ProgressionLedgerDto};
 use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
 use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
@@ -569,6 +569,10 @@ pub struct LoadSavedCharacterRequest {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadSavedCharacterResponse {
+    /// What the character holds that the rules would have refused, and the flag that let each in:
+    /// the tags on the sheet and in print. Left out when there is none.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub admitted_under_override: Vec<AdmittedRecordDto>,
     pub summary: CharacterSummaryDto,
     pub snapshot: Option<PilotSnapshotDto>,
     pub diagnostics: Vec<DiagnosticDto>,
@@ -2815,6 +2819,7 @@ pub(crate) fn load_saved_character_at_root(
     }
 
     let mut sheet = LoadSavedCharacterResponse {
+        admitted_under_override: admitted_records_at_root(root, &envelope.character_input),
         summary: summarize_envelope(&envelope),
         snapshot: snapshot.as_ref().map(map_snapshot_dto),
         diagnostics: map_diagnostics_dto(&diagnostics),
@@ -3288,17 +3293,17 @@ pub enum PurchaseEquipmentResponse {
 
 /// Where a bought copy goes (R18). Asked to be worn, it is worn if its slot is free, and otherwise
 /// carried with the reason; an item with no slot is carried. A buy asking for carried stays carried.
-fn bought_copy_placement(root: &Path, item_id: &str, requested: ActiveState) -> Result<(ActiveState, Option<String>), String> {
+fn bought_copy_placement(root: &Path, item_id: &str, requested: ActiveState) -> Result<(ActiveState, Option<String>, Vec<OverrideFlag>), String> {
     if requested != ActiveState::EquippedActive {
-        return Ok((requested, None));
+        return Ok((requested, None, Vec::new()));
     }
     if body_slot_of_item(item_id)? == BodySlot::None {
-        return Ok((ActiveState::SelectedInactive, None));
+        return Ok((ActiveState::SelectedInactive, None, Vec::new()));
     }
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    Ok(match wear_refusal(root, &envelope.character_input, item_id)? {
-        Some((_, reason)) => (ActiveState::SelectedInactive, Some(reason)),
-        None => (ActiveState::EquippedActive, None),
+    Ok(match wear_check(root, &envelope.character_input, item_id)? {
+        Err((_, reason)) => (ActiveState::SelectedInactive, Some(reason), Vec::new()),
+        Ok(flags) => (ActiveState::EquippedActive, None, flags),
     })
 }
 
@@ -3441,13 +3446,14 @@ fn copy_price_gp(item_id: &str, bonus: u8, offers: &[crate::equipment_catalog::M
 /// which would make an older plain item the one that was paid for.
 fn add_purchased_copy_at_root(
     root: &Path,
-    item_id: &str,
+    (item_id, bonus): (&str, u8),
     modifier_key: Option<&str>,
     active_state: ActiveState,
+    wear_flags: Vec<OverrideFlag>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    let refuse = load_refusal_at_root(root, item_id);
-    crate::pf1_adapter::mutate_saved_character_unless_at_root(
+    let gate = load_gate_at_root(root, item_id, bonus, wear_flags);
+    crate::pf1_adapter::mutate_saved_character_gated_at_root(
         root,
         saved_at,
         |character_input| {
@@ -3456,27 +3462,39 @@ fn add_purchased_copy_at_root(
                 copy.applied_modifiers.push(key.to_owned());
             }
         },
-        refuse,
+        gate,
     )
 }
 
-/// The refusal for one more copy of `item_id` in the pack: what would take the character past the
-/// most they can carry (`OverHeavyCapacity`), unless `ignore_encumbrance` is on. An item of no known
-/// weight adds nothing to refuse over.
-pub(crate) fn load_refusal_at_root(root: &Path, item_id: &str) -> impl FnOnce(&codex::rules_core::pilot_compute_corpus::CorpusPilotReceipt) -> Option<DiagnosticDto> {
+/// The check on one more copy of `item_id` in the pack: what would take the character past the most
+/// they can carry (`OverHeavyCapacity`) is refused, unless `ignore_encumbrance` is on, and then it is
+/// let in under that flag beside `wear_flags`. An item of no known weight adds nothing to refuse over.
+pub(crate) fn load_gate_at_root(
+    root: &Path,
+    item_id: &str,
+    bonus: u8,
+    wear_flags: Vec<OverrideFlag>,
+) -> impl FnOnce(&codex::rules_core::pilot_compute_corpus::CorpusPilotReceipt) -> Result<Vec<AdmittedRecordDto>, DiagnosticDto> {
     let admitted = custom_or_empty(root).overrides.ignore_encumbrance;
     let item_id = item_id.to_owned();
     move |receipt| {
         let load = &receipt.corpus_derived.encumbrance;
         let adds_weight = load.per_item.iter().rev().find(|item| item.item_id == item_id).is_some_and(|item| item.weight_lbs > 0.0);
-        (!admitted && adds_weight && load.level == codex::rules_core::encumbrance::EncumbranceLevel::OverHeavyCapacity).then(|| DiagnosticDto {
-            id: "equipment.over_capacity".to_owned(),
-            message: format!(
-                "{item_id} would take the load to {} lb, past the {} lb this character can carry",
-                load.total_carried_weight_lbs, load.thresholds.heavy_max_lbs
-            ),
-            claim_blocking: true,
-        })
+        let mut flags = wear_flags;
+        if adds_weight && load.level == codex::rules_core::encumbrance::EncumbranceLevel::OverHeavyCapacity {
+            if !admitted {
+                return Err(DiagnosticDto {
+                    id: "equipment.over_capacity".to_owned(),
+                    message: format!(
+                        "{item_id} would take the load to {} lb, past the {} lb this character can carry",
+                        load.total_carried_weight_lbs, load.thresholds.heavy_max_lbs
+                    ),
+                    claim_blocking: true,
+                });
+            }
+            flags.push(OverrideFlag::IgnoreEncumbrance);
+        }
+        Ok(flags.into_iter().map(|flag| AdmittedRecordDto::copy(&item_id, bonus, flag)).collect())
     }
 }
 
@@ -3522,11 +3540,12 @@ pub(crate) fn purchase_equipment_offer_at_root(
         }
     };
     let modifier_key = offer.as_ref().map(|offer| offer.modifier_key.as_str());
-    let (active_state, carried_reason) = bought_copy_placement(root, item_id, active_state)?;
+    let (active_state, carried_reason, wear_flags) = bought_copy_placement(root, item_id, active_state)?;
+    let copy_bonus = offer.as_ref().map_or(0, |offer| offer.bonus);
     let placed = ActiveStateDto::from(active_state);
 
     if mode == PriceMode::Cashless {
-        return match add_purchased_copy_at_root(root, item_id, modifier_key, active_state, saved_at)? {
+        return match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
             CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
             CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
                 let money = load_character_money_at_root(root)?;
@@ -3573,7 +3592,7 @@ pub(crate) fn purchase_equipment_offer_at_root(
         });
     }
 
-    match add_purchased_copy_at_root(root, item_id, modifier_key, active_state, saved_at)? {
+    match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
         }
@@ -4115,26 +4134,31 @@ pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
     }
     let overrides = custom_or_empty(root).overrides;
     let base = compute_pilot_base_chassis(&envelope.character_input);
-    if !overrides.ignore_feat_budget {
-        if let Some(refusal) = feat_budget_for(&envelope.character_input, &base)?.refusal(package, feat_id) {
+    let mut admitted = Vec::new();
+    let mut admit = |flag| admitted.push(AdmittedRecordDto::new(AdmittedKind::Feat, feat_id, flag));
+    if let Some(refusal) = feat_budget_for(&envelope.character_input, &base)?.refusal(package, feat_id) {
+        if !overrides.ignore_feat_budget {
             return Err(refusal);
         }
+        admit(OverrideFlag::IgnoreFeatBudget);
     }
-    if !overrides.feats_without_prerequisites {
-        if let Some(report) = codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts) {
-            if let Some(reason) = report.unavailable_reason() {
+    if let Some(report) = codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts) {
+        if let Some(reason) = report.unavailable_reason() {
+            if !overrides.feats_without_prerequisites {
                 return Err(format!("'{}' cannot be taken by this character: {reason}", report.feat_key));
             }
+            admit(OverrideFlag::FeatsWithoutPrerequisites);
         }
     }
-    if !overrides.ignore_alignment_restrictions {
-        if let Some(alignment) = stated_alignment_at_root(root) {
-            if let Some(reason) = facts.feat_alignment_unmet(feat_id, alignment) {
+    if let Some(alignment) = stated_alignment_at_root(root) {
+        if let Some(reason) = facts.feat_alignment_unmet(feat_id, alignment) {
+            if !overrides.ignore_alignment_restrictions {
                 return Err(format!("'{feat_id}' cannot be taken by this character: {reason}"));
             }
+            admit(OverrideFlag::IgnoreAlignmentRestrictions);
         }
     }
-    add_feat_selection_at_root(root, feat_id, target, saved_at)
+    crate::pf1_adapter::add_feat_selection_admitting_at_root(root, feat_id, target, saved_at, admitted)
 }
 
 /// The alignment the character's bio states, in the rules' two letters, or `None` when it states none
@@ -4155,17 +4179,23 @@ fn stated_alignment_at_root(root: &Path) -> Option<&'static str> {
     })
 }
 
-/// The refusal for a level of `class_id` this character's stated alignment rules out, unless
-/// `ignore_alignment_restrictions` is on.
-pub(crate) fn class_alignment_refusal_at_root(root: &Path, class_id: &str) -> Option<DiagnosticDto> {
-    if custom_or_empty(root).overrides.ignore_alignment_restrictions {
-        return None;
-    }
-    let alignment = stated_alignment_at_root(root)?;
-    let (_, facts) = character_prereq_facts_at_root(root).ok()?;
+/// The check on a level of `class_id` against this character's stated alignment: what it rules out is
+/// refused, unless `ignore_alignment_restrictions` is on, and then the level is let in under that flag.
+pub(crate) fn class_alignment_gate_at_root(root: &Path, class_id: &str) -> Result<Vec<AdmittedRecordDto>, DiagnosticDto> {
+    let Some(alignment) = stated_alignment_at_root(root) else {
+        return Ok(Vec::new());
+    };
+    let Ok((_, facts)) = character_prereq_facts_at_root(root) else {
+        return Ok(Vec::new());
+    };
     let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
-    let reason = facts.class_alignment_unmet(slug, alignment)?;
-    Some(DiagnosticDto { id: "class.alignment".to_owned(), message: format!("a {alignment} character cannot take a level of {slug}: {reason}"), claim_blocking: true })
+    let Some(reason) = facts.class_alignment_unmet(slug, alignment) else {
+        return Ok(Vec::new());
+    };
+    if custom_or_empty(root).overrides.ignore_alignment_restrictions {
+        return Ok(vec![AdmittedRecordDto::new(AdmittedKind::ClassLevel, class_id, OverrideFlag::IgnoreAlignmentRestrictions)]);
+    }
+    Err(DiagnosticDto { id: "class.alignment".to_owned(), message: format!("a {alignment} character cannot take a level of {slug}: {reason}"), claim_blocking: true })
 }
 
 // ---------------------------------------------------------------------------
@@ -4552,6 +4582,9 @@ pub struct HeldEquipmentCopyDto {
     pub bonus: u8,
     pub active_state: ActiveStateDto,
     pub slot: BodySlot,
+    /// The override that let this copy in, when one did.
+    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
+    pub override_flag: Option<OverrideFlag>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -4595,7 +4628,7 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         .map(|(index, selection)| {
             let (name, bonus) = copy_name_and_bonus(selection);
             let slot = if is_worn(&index) { places.next().unwrap_or(slots[index]) } else { slots[index] };
-            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus, active_state: selection.active_state.into(), slot }
+            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus, active_state: selection.active_state.into(), slot, override_flag: None }
         })
         .collect();
     rows.extend(custom_items.iter().enumerate().map(|(index, record)| {
@@ -4610,9 +4643,27 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
             bonus: 0,
             active_state: active_state.into(),
             slot,
+            override_flag: None,
         }
     }));
+    tag_admitted_copies(&mut rows, &admitted_records_at_root(root, &envelope.character_input));
     Ok(rows)
+}
+
+/// Puts each equipment row's flag on a copy it can name: one worn, for a flag about wearing, and of
+/// its own `+N` when one is left, since a modifier attached later moves that. A copy shows one flag;
+/// `admitted_under_override` on the load has all of them.
+fn tag_admitted_copies(copies: &mut [HeldEquipmentCopyDto], admitted: &[AdmittedRecordDto]) {
+    for row in admitted.iter().filter(|row| row.kind == AdmittedKind::Equipment) {
+        let wearing = row.override_flag.is_about_wearing();
+        let open = |copy: &HeldEquipmentCopyDto| {
+            copy.override_flag.is_none() && copy.item_id.eq_ignore_ascii_case(&row.id) && (!wearing || copy.active_state == ActiveStateDto::EquippedActive)
+        };
+        let found = copies.iter().position(|copy| open(copy) && copy.bonus == row.bonus).or_else(|| copies.iter().position(open));
+        if let Some(index) = found {
+            copies[index].override_flag = Some(row.override_flag);
+        }
+    }
 }
 
 /// What the sheet calls one selection, and its `+N`.
@@ -4822,9 +4873,6 @@ pub(crate) fn worn_stock_slots(character_input: &CharacterInput) -> Result<Vec<(
 /// What stops one more copy of `item_id` being worn over what `character_input` and the custom items
 /// beside it at `root` already wear, worded for the sheet.
 fn item_slot_conflict(character_input: &CharacterInput, item_id: &str, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
-    if custom.overrides.ignore_slot_limits {
-        return Ok(None);
-    }
     let slot = body_slot_of_item(item_id)?;
     let mut worn = worn_stock_slots(character_input)?;
     worn.extend(worn_custom_slots(custom));
@@ -4832,20 +4880,35 @@ fn item_slot_conflict(character_input: &CharacterInput, item_id: &str, custom: &
     slot_conflict(&worn, slot)
 }
 
-/// What stops this character putting one more copy of `item_id` on, as a diagnostic id and the sheet's
-/// words: the slot, then the proficiency. Each one yields to its override.
-fn wear_refusal(root: &Path, character_input: &CharacterInput, item_id: &str) -> Result<Option<(&'static str, String)>, String> {
+/// A diagnostic id and the sheet's words.
+type WearRefusal = (&'static str, String);
+
+/// Whether this character can put one more copy of `item_id` on: the flags it goes on under, none if
+/// the rules allow it, or a diagnostic id and the sheet's words for what stops it. The slot, then the
+/// proficiency. Each one yields to its override.
+fn wear_check(root: &Path, character_input: &CharacterInput, item_id: &str) -> Result<Result<Vec<OverrideFlag>, WearRefusal>, String> {
     use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
     let custom = custom_or_empty(root);
+    let mut admitted = Vec::new();
     if let Some(message) = item_slot_conflict(character_input, item_id, &custom)? {
-        return Ok(Some(("equipment.slot_taken", message)));
+        if !custom.overrides.ignore_slot_limits {
+            return Ok(Err(("equipment.slot_taken", message)));
+        }
+        admitted.push(OverrideFlag::IgnoreSlotLimits);
     }
-    let admitted = match character_lacks_proficiency_with(character_input, item_id) {
-        ItemProficiencyGap::None => true,
-        ItemProficiencyGap::Weapon => custom.overrides.weapons_without_proficiency,
-        ItemProficiencyGap::Armor => custom.overrides.armor_without_proficiency,
+    let gap = match character_lacks_proficiency_with(character_input, item_id) {
+        ItemProficiencyGap::None => None,
+        ItemProficiencyGap::Weapon => Some((custom.overrides.weapons_without_proficiency, OverrideFlag::WeaponsWithoutProficiency)),
+        ItemProficiencyGap::Armor => Some((custom.overrides.armor_without_proficiency, OverrideFlag::ArmorWithoutProficiency)),
     };
-    Ok((!admitted).then(|| ("equipment.not_proficient", format!("this character is not proficient with {}", item_id.strip_prefix("item:").unwrap_or(item_id)))))
+    match gap {
+        None => {}
+        Some((true, flag)) => admitted.push(flag),
+        Some((false, _)) => {
+            return Ok(Err(("equipment.not_proficient", format!("this character is not proficient with {}", item_id.strip_prefix("item:").unwrap_or(item_id)))));
+        }
+    }
+    Ok(Ok(admitted))
 }
 
 /// [`set_equipment_copy_state_at_root`] with no copy named.
@@ -4885,15 +4948,23 @@ pub(crate) fn set_equipment_copy_state_at_root(
     let moves_a_copy_onto_the_body = active_state == ActiveState::EquippedActive
         && state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, bonus, active_state)
             .is_some_and(|index| envelope.character_input.chosen.equipment_selections[index].active_state != active_state);
+    let mut admitted = Vec::new();
     if moves_a_copy_onto_the_body {
-        if let Some((id, message)) = wear_refusal(root, &envelope.character_input, item_id)? {
-            return Ok(CreateCharacterResponse::Blocked {
-                diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
-            });
+        match wear_check(root, &envelope.character_input, item_id)? {
+            Err((id, message)) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
+                });
+            }
+            Ok(flags) => {
+                let copy_bonus = state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, bonus, active_state)
+                    .map_or(0, |index| copy_name_and_bonus(&envelope.character_input.chosen.equipment_selections[index]).1);
+                admitted.extend(flags.into_iter().map(|flag| AdmittedRecordDto::copy(item_id, copy_bonus, flag)));
+            }
         }
     }
 
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
+    crate::pf1_adapter::mutate_saved_character_admitting_at_root(root, saved_at, admitted, |character_input| {
         apply_set_equipment_active_state(character_input, item_id, bonus, active_state);
     })
 }
@@ -10640,7 +10711,7 @@ mod tests {
         let before = std::fs::read(root.join("ledger.json")).unwrap();
         std::fs::create_dir(root.join("ledger.json.tmp")).unwrap();
         let ledger = load_character_ledger_at_root(&root).unwrap().unwrap();
-        assert!(write_character_ledger_at_root(&root, &CharacterLedgerDto { entries: Vec::new() }).is_err(), "the temporary path is taken");
+        assert!(write_character_ledger_at_root(&root, &CharacterLedgerDto::default()).is_err(), "the temporary path is taken");
         assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), before);
         std::fs::remove_dir(root.join("ledger.json.tmp")).unwrap();
         write_character_ledger_at_root(&root, &ledger).unwrap();
@@ -15389,6 +15460,227 @@ mod tests {
         assert!(saved.contains(r#""ignoreEncumbrance": true"#), "{saved}");
         assert!(load_character_custom_at_root(&root).unwrap().overrides.ignore_encumbrance);
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- What an override let in says so (`decisions.md §10`) -----
+
+    fn admitted_tag_rows(root: &Path) -> Vec<(AdmittedKind, String, OverrideFlag)> {
+        load_saved_character_at_root(root)
+            .expect("the sheet loads")
+            .admitted_under_override
+            .into_iter()
+            .map(|row| (row.kind, row.id, row.override_flag))
+            .collect()
+    }
+
+    fn admitted_tag_on_copy(root: &Path, item_id: &str) -> Vec<Option<OverrideFlag>> {
+        list_held_equipment_at_root(root).unwrap().into_iter().filter(|copy| copy.item_id == item_id).map(|copy| copy.override_flag).collect()
+    }
+
+    #[test]
+    fn admitted_tag_a_feat_past_its_prerequisites_says_so_and_a_feat_that_qualifies_does_not() {
+        let root = overrides_fighter("admitted-tag-prereq", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [], "the flag was on, and this feat did not need it");
+        assert_worn(&overrides_prereq_add(&root).unwrap());
+        let held = saved_feats(&root).into_iter().find(|feat| feat.contains("Improved Two-Weapon")).unwrap();
+        assert_eq!(admitted_tag_rows(&root), [(AdmittedKind::Feat, held, OverrideFlag::FeatsWithoutPrerequisites)]);
+
+        let wire = serde_json::to_value(load_saved_character_at_root(&root).unwrap()).unwrap();
+        assert_eq!(wire["admittedUnderOverride"][0]["override"], "featsWithoutPrerequisites", "{wire}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_character_that_used_no_override_sends_no_field() {
+        let root = overrides_fighter("admitted-tag-none", 3);
+        let wire = serde_json::to_value(load_saved_character_at_root(&root).unwrap()).unwrap();
+        assert!(wire.get("admittedUnderOverride").is_none(), "the seeds' renders must not move");
+        let held = serde_json::to_value(list_held_equipment_at_root(&root).unwrap()).unwrap();
+        assert!(held.as_array().unwrap().iter().all(|copy| copy.get("override").is_none()), "{held}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_feat_two_rules_refused_has_both_and_goes_when_the_feat_does() {
+        let root = overrides_fighter("admitted-tag-two", 1);
+        overrides_set(&root, |flags| {
+            flags.feats_without_prerequisites = true;
+            flags.ignore_feat_budget = true;
+        });
+        assert_worn(&overrides_prereq_add(&root).unwrap());
+        let held = saved_feats(&root).into_iter().find(|feat| feat.contains("Improved Two-Weapon")).unwrap();
+        assert_eq!(
+            admitted_tag_rows(&root),
+            [
+                (AdmittedKind::Feat, held.clone(), OverrideFlag::IgnoreFeatBudget),
+                (AdmittedKind::Feat, held.clone(), OverrideFlag::FeatsWithoutPrerequisites),
+            ]
+        );
+        assert_worn(&remove_feat_selection_at_root(&root, &held, None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [], "a row nothing holds goes");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_feat_against_the_alignment_says_so() {
+        let root = overrides_fighter("admitted-tag-alignment-feat", 3);
+        overrides_set(&root, |flags| {
+            flags.feats_without_prerequisites = true;
+            flags.ignore_alignment_restrictions = true;
+        });
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Lawful Good".to_owned(), ..Default::default() }).unwrap();
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Free Spirit", None, OVERRIDES_AT).unwrap());
+        assert!(admitted_tag_rows(&root).iter().any(|row| row.0 == AdmittedKind::Feat && row.2 == OverrideFlag::IgnoreAlignmentRestrictions));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_level_against_the_alignment_says_so() {
+        let root = overrides_chaotic_fighter("admitted-tag-alignment-class");
+        overrides_set(&root, |flags| flags.ignore_alignment_restrictions = true);
+        assert_worn(&crate::pf1_adapter::level_up_character_at_root(&root, "class:fighter", Vec::new(), None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [], "a Fighter has no alignment to break");
+        assert_worn(&crate::pf1_adapter::level_up_character_at_root(&root, "class:paladin", Vec::new(), None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [(AdmittedKind::ClassLevel, "class:paladin".to_owned(), OverrideFlag::IgnoreAlignmentRestrictions)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_spell_saved_under_the_override_says_so_once_and_one_on_the_list_does_not() {
+        let (dir, root) = ledger_migration_seed("admitted-tag-spell", SECOND_SEED_CHARACTER_ID);
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Haste", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), []);
+        assert_worn(&record_and_prepare_spell_selection_at_root(&root, "Bless", "class:wizard", OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [(AdmittedKind::Spell, "Bless".to_owned(), OverrideFlag::SpellsOutsideClassList)], "known and prepared are one spell");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_copy_worn_past_its_slot_says_so_and_the_flag_going_off_takes_nothing_back() {
+        let root = slot_conflict_character("admitted-tag-slot", &["Helm of Brilliance", "Hat of Disguise"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_eq!(admitted_tag_on_copy(&root, "Helm of Brilliance"), [None], "the slot was free");
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        assert_eq!(admitted_tag_on_copy(&root, "Hat of Disguise"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+        assert_eq!(admitted_tag_on_copy(&root, "Helm of Brilliance"), [None]);
+        let wire = serde_json::to_value(list_held_equipment_at_root(&root).unwrap()).unwrap();
+        assert!(wire.as_array().unwrap().iter().any(|copy| copy["override"] == "ignoreSlotLimits"), "{wire}");
+
+        overrides_set(&root, |flags| flags.ignore_slot_limits = false);
+        assert_eq!(admitted_tag_on_copy(&root, "Hat of Disguise"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+
+        let stow = set_equipment_active_state_at_root(&root, "Hat of Disguise", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        assert_worn(&stow);
+        assert_eq!(admitted_tag_on_copy(&root, "Hat of Disguise"), [None], "carried, it breaks no slot");
+        assert_eq!(admitted_tag_rows(&root), []);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_copy_worn_without_proficiency_says_which() {
+        let (dir, root) = overrides_wizard("admitted-tag-weapon", "Rapier");
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Rapier"));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [Some(OverrideFlag::WeaponsWithoutProficiency)]);
+        std::fs::remove_dir_all(&dir).ok();
+
+        let (dir, root) = overrides_wizard("admitted-tag-armor", "Chain Shirt");
+        overrides_set(&root, |flags| flags.armor_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Chain Shirt"));
+        assert_eq!(admitted_tag_on_copy(&root, "Chain Shirt"), [Some(OverrideFlag::ArmorWithoutProficiency)]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_buy_says_so_when_it_goes_on_under_the_flag_and_not_when_it_stays_carried() {
+        let (dir, root) = overrides_wizard("admitted-tag-buy", "Rope (Hemp/50 ft.)");
+        let buy = |root: &Path| purchase_equipment_priced_at_root(root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert!(matches!(buy(&root), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None], "refused, carried with the reason");
+
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        assert!(matches!(buy(&root), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None, Some(OverrideFlag::WeaponsWithoutProficiency)], "the worn copy, not the one in the pack");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_load_past_capacity_says_so_and_stays_while_the_copy_is_carried() {
+        let root = overrides_weak_fighter("admitted-tag-load");
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [Some(OverrideFlag::IgnoreEncumbrance)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_custom_item_past_its_slot_says_so_at_the_wear_and_at_the_save() {
+        let root = slot_conflict_character("admitted-tag-custom", &["Helm of Brilliance"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let custom = CharacterCustomDto { equipment: vec![override_helmet()], overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &custom, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [None], "carried");
+
+        assert_worn(&set_custom_item_state_at_root(&root, "c1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+        assert_worn(&set_custom_item_state_at_root(&root, "c1", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [None], "stowed");
+
+        let worn = CharacterCustomDto { equipment: vec![CustomRecordDto { worn: true, ..override_helmet() }], overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &worn, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+
+        let gone = CharacterCustomDto { overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &gone, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_rows(&root), [], "deleted, it holds no slot");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_custom_item_is_not_tagged_for_another_one_overflowing() {
+        let root = slot_conflict_character("admitted-tag-custom-other", &["Helm of Brilliance", "Hat of Disguise"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let ring = CustomRecordDto { id: "r1".to_owned(), name: "GM Ring".to_owned(), slot: Some(BodySlot::Ring), ..Default::default() };
+        save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![ring], overrides, ..Default::default() }, OVERRIDES_AT).unwrap();
+        assert_worn(&set_custom_item_state_at_root(&root, "r1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "custom:r1"), [None]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_clone_and_a_round_trip_carry_it_and_a_hand_edit_is_held_to_the_character() {
+        let root = overrides_fighter("admitted-tag-carry", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&overrides_prereq_add(&root).unwrap());
+        let rows = admitted_tag_rows(&root);
+        assert_eq!(rows.len(), 1);
+
+        let clone_root = tempdir("admitted-tag-carry-clone");
+        copy_character_ledger(&root, &clone_root).expect("copies");
+        assert_eq!(load_character_ledger_at_root(&clone_root).unwrap().unwrap().admitted.len(), 1);
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("admitted-tag-carry-import");
+        assert_worn(&import_character_from_json(&file, &import_root, "imported", OVERRIDES_AT, "0.0.0-test").unwrap());
+        assert_eq!(admitted_tag_rows(&import_root), rows);
+
+        let mut parsed: serde_json::Value = serde_json::from_str(&file).unwrap();
+        parsed["ledger"]["admitted"][0]["id"] = serde_json::json!("feat:never_held");
+        let edited_root = tempdir("admitted-tag-carry-edited");
+        assert_worn(&import_character_from_json(&parsed.to_string(), &edited_root, "edited", OVERRIDES_AT, "0.0.0-test").unwrap());
+        assert_eq!(admitted_tag_rows(&edited_root), []);
+        for dir in [&root, &clone_root, &import_root, &edited_root] {
+            std::fs::remove_dir_all(dir).ok();
+        }
     }
 
     fn override_helmet() -> CustomRecordDto {

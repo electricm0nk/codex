@@ -6,6 +6,7 @@ import type { AcquisitionModeDto } from './addSpellSelection';
 import type { RaceSelectionResponse } from './loadAlternateRacialTraits';
 import type { AbilityScoresDto } from './loadCreateCharacter';
 import type { SkillAllocationEntryDto } from './setSkillAllocations';
+import type { CustomOverrides } from '../characterHub/customModel';
 
 /** Mirrors `SpellSelectionImportDto` in `character_hub.rs` — a general-purpose round-trip shape, not import-only despite the name. */
 export interface SpellSelectionDto {
@@ -27,7 +28,23 @@ export interface LoadSavedCharacterRequest {
   characterId: string;
 }
 
+/** The backend's `OverrideFlag`: one of the `Overrides` keys `custom.json` saves. */
+export type OverrideFlagDto = keyof CustomOverrides;
+
+export type AdmittedKindDto = 'feat' | 'spell' | 'equipment' | 'class_level';
+
+/** One thing the character holds that the rules would have refused, and the flag that let it in. */
+export interface AdmittedRecordDto {
+  kind: AdmittedKindDto;
+  /** The id the character holds it by: what `selectedFeats` says, a spell's id, `class:paladin`. */
+  id: string;
+  bonus?: number;
+  override: OverrideFlagDto;
+}
+
 export interface LoadSavedCharacterResponse {
+  /** Left out when the character holds nothing under an override, and by a mutation's response: see `refreshEngineRecords`. */
+  admittedUnderOverride?: AdmittedRecordDto[];
   summary: CharacterSummaryDto;
   snapshot: PilotSnapshotDto | null;
   diagnostics: DiagnosticDto[];

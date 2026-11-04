@@ -1,4 +1,6 @@
+import type { OverrideFlagDto } from '../boundary/loadSavedCharacterDetail';
 import { wornLabel } from './EquipmentPanel';
+import { OverrideTag } from './OverrideTag';
 import { CUSTOM_RECORD_KINDS, OVERRIDE_TOGGLES, bonusLine, customIsEmpty, customItemPlace, customOverrides, grantTargetLabel, type CharacterCustom, type CustomOverrides, type CustomRecord } from './customModel';
 
 /** `Worn, Head` or `Carried`; the Gear tab's Equipment control moves it. */
@@ -22,6 +24,8 @@ export function CustomTab(props: {
   error: string | null;
   onEdit: () => void;
   onOverrideChange: (key: keyof CustomOverrides, on: boolean) => void;
+  /** Class levels an override let in; no other tab lists a level. */
+  admittedLevels: ReadonlyArray<{ label: string; levels: number; flag: OverrideFlagDto }>;
 }) {
   const empty = customIsEmpty(props.custom);
   const overrides = customOverrides(props.custom);
@@ -49,11 +53,17 @@ export function CustomTab(props: {
           <div style={{ display: 'grid', gap: '0.2rem 1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(16rem, 1fr))' }}>
             {OVERRIDE_TOGGLES.map(({ key, label }) => (
               <label key={key} style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
-                <input type="checkbox" checked={overrides[key]} onChange={(event) => props.onOverrideChange(key, event.target.checked)} />
+                <input type="checkbox" aria-label={label} checked={overrides[key]} onChange={(event) => props.onOverrideChange(key, event.target.checked)} />
                 {label}
               </label>
             ))}
           </div>
+          {props.admittedLevels.map((line) => (
+            <p key={`${line.label}::${line.flag}`} style={{ fontSize: '0.85rem', margin: '0.4rem 0 0' }}>
+              {`${line.levels} ${line.levels === 1 ? 'level' : 'levels'} of ${line.label}`}
+              <OverrideTag flag={line.flag} />
+            </p>
+          ))}
         </fieldset>
       )}
       {props.loading ? <p style={{ margin: 0 }}>Loading…</p> : null}

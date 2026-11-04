@@ -75,11 +75,11 @@ use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_custom::custom_or_empty;
 use crate::character_hub::{
-    class_alignment_refusal_at_root, load_refusal_at_root, map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto,
+    class_alignment_gate_at_root, load_gate_at_root, map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto,
     map_summary_dto, summarize_envelope, CreateCharacterRequest, CreateCharacterResponse, DiagnosticDto,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
-use crate::character_ledger::{ledger_after_change_at_root, write_character_ledger_at_root};
+use crate::character_ledger::{ledger_after_change_at_root, write_character_ledger_at_root, AdmittedRecordDto};
 use crate::characterHub::appendToCharacter::{
     append_to_character_at_root, AppendToCharacterResponse, ItemToAppendDto,
 };
@@ -1069,16 +1069,28 @@ pub(crate) fn mutate_saved_character_at_root(
     saved_at: &str,
     mutate: impl FnOnce(&mut CharacterInput),
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_unless_at_root(root, saved_at, mutate, |_| None)
+    mutate_saved_character_admitting_at_root(root, saved_at, Vec::new(), mutate)
 }
 
-/// [`mutate_saved_character_at_root`], with one more refusal over the state the change would leave:
-/// `refuse` reads the same computation the save would rest on, and nothing is written when it answers.
-pub(crate) fn mutate_saved_character_unless_at_root(
+/// [`mutate_saved_character_at_root`] for a change a command has already found the rules refuse:
+/// `admitted` is saved beside it, in the same breath.
+pub(crate) fn mutate_saved_character_admitting_at_root(
+    root: &Path,
+    saved_at: &str,
+    admitted: Vec<AdmittedRecordDto>,
+    mutate: impl FnOnce(&mut CharacterInput),
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_gated_at_root(root, saved_at, mutate, |_| Ok(admitted))
+}
+
+/// [`mutate_saved_character_at_root`], with one more check over the state the change would leave:
+/// `gate` reads the same computation the save would rest on. Its `Err` is a refusal and nothing is
+/// written; its `Ok` is what the change lets in under an override.
+pub(crate) fn mutate_saved_character_gated_at_root(
     root: &Path,
     saved_at: &str,
     mutate: impl FnOnce(&mut CharacterInput),
-    refuse: impl FnOnce(&CorpusPilotReceipt) -> Option<DiagnosticDto>,
+    gate: impl FnOnce(&CorpusPilotReceipt) -> Result<Vec<AdmittedRecordDto>, DiagnosticDto>,
 ) -> Result<CreateCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let before = envelope.character_input.clone();
@@ -1094,9 +1106,10 @@ pub(crate) fn mutate_saved_character_unless_at_root(
                 });
             }
         };
-    if let Some(diagnostic) = refuse(&corpus_receipt) {
-        return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] });
-    }
+    let admitted = match gate(&corpus_receipt) {
+        Ok(admitted) => admitted,
+        Err(diagnostic) => return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] }),
+    };
 
     let next_revision_id =
         next_mutation_revision_id(&envelope.character_id, &envelope.revision_id);
@@ -1104,7 +1117,7 @@ pub(crate) fn mutate_saved_character_unless_at_root(
     envelope.latest_authoritative_revision_ref = next_revision_id;
     envelope.saved_at = saved_at.to_owned();
 
-    let ledger = ledger_after_change_at_root(root, &before, &envelope.character_input)?;
+    let ledger = ledger_after_change_at_root(root, &before, &envelope.character_input, admitted)?;
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
     if let Some(ledger) = ledger {
         write_character_ledger_at_root(root, &ledger)?;
@@ -1214,10 +1227,11 @@ pub(crate) fn level_up_character_at_root(
     skill_allocations: Option<Vec<SkillAllocation>>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    if let Some(diagnostic) = class_alignment_refusal_at_root(root, class_id) {
-        return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] });
-    }
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
+    let admitted = match class_alignment_gate_at_root(root, class_id) {
+        Ok(admitted) => admitted,
+        Err(diagnostic) => return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] }),
+    };
+    mutate_saved_character_admitting_at_root(root, saved_at, admitted, |character_input| {
         apply_level_up_choices(character_input, class_id, additional_choices, skill_allocations);
     })
 }
@@ -1249,12 +1263,12 @@ pub(crate) fn add_equipment_selection_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    let refuse = load_refusal_at_root(root, item_id);
-    mutate_saved_character_unless_at_root(
+    let gate = load_gate_at_root(root, item_id, 0, Vec::new());
+    mutate_saved_character_gated_at_root(
         root,
         saved_at,
         |character_input| apply_add_equipment_selection(character_input, item_id, active_state),
-        refuse,
+        gate,
     )
 }
 
@@ -1368,12 +1382,23 @@ pub(crate) fn add_feat_selection_at_root(
     target: Option<&str>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    add_feat_selection_admitting_at_root(root, feat_id, target, saved_at, Vec::new())
+}
+
+/// [`add_feat_selection_at_root`] for a feat the rules refuse and an override let in.
+pub(crate) fn add_feat_selection_admitting_at_root(
+    root: &Path,
+    feat_id: &str,
+    target: Option<&str>,
+    saved_at: &str,
+    admitted: Vec<AdmittedRecordDto>,
+) -> Result<CreateCharacterResponse, String> {
     // Resolve before mutating: `mutate_saved_character_at_root` takes an
     // infallible closure, so a rejected target must surface as an error here
     // rather than as a silently feat-only save.
     let target_choice = resolve_feat_target_choice(feat_id, target)?;
 
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
+    mutate_saved_character_admitting_at_root(root, saved_at, admitted, |character_input| {
         apply_add_feat_selection_with_target(character_input, feat_id, target_choice.clone());
     })
 }

@@ -21,10 +21,11 @@ use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
-use crate::character_custom::{load_character_custom_at_root, CharacterCustomDto};
+use crate::character_custom::{load_character_custom_at_root, CharacterCustomDto, CUSTOM_ITEM_PREFIX};
 use crate::character_hub::{feat_budget_for, load_character_hit_points_at_root, sheet_lines_for, SheetLineDto};
 use crate::feat_catalog::build_feat_catalog;
-use codex::rules_core::character_input::{CharacterClassLevel, CharacterInput};
+use crate::pf1_adapter::OVERRIDE_SPELL_SOURCE;
+use codex::rules_core::character_input::{ActiveState, CharacterClassLevel, CharacterInput};
 use codex::rules_core::class_seeds::canonical_seeds_for;
 use codex::rules_core::feat_budget::feat_slot_levels;
 use codex::rules_core::pilot_compute::{compute_pilot_base_chassis, spells_known_table, PilotBaseChassisComputation};
@@ -58,10 +59,74 @@ pub struct LedgerEntryDto {
     pub assigned_on_upgrade: bool,
 }
 
+/// The `Overrides` flag a record came in under, in the words `custom.json` saves it by.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum OverrideFlag {
+    FeatsWithoutPrerequisites,
+    WeaponsWithoutProficiency,
+    SpellsOutsideClassList,
+    ArmorWithoutProficiency,
+    IgnoreSlotLimits,
+    IgnoreFeatBudget,
+    IgnoreAlignmentRestrictions,
+    IgnoreEncumbrance,
+}
+
+impl OverrideFlag {
+    /// The flag let a copy onto the body, so the record ends when the copy comes off. Only a load is
+    /// about holding it.
+    pub(crate) fn is_about_wearing(self) -> bool {
+        self != Self::IgnoreEncumbrance
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum AdmittedKind {
+    Feat,
+    Spell,
+    Equipment,
+    ClassLevel,
+}
+
+/// One thing the character holds that the rules would have refused, and the flag that let it in. A
+/// record two rules refused has a row for each. The flag going off later takes nothing back: the
+/// row says how the thing got here, and goes when the thing does.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AdmittedRecordDto {
+    pub kind: AdmittedKind,
+    /// The id the character holds it by; a custom item's is `custom:<id>`.
+    pub id: String,
+    /// The `+N` of an equipment copy.
+    #[serde(default, skip_serializing_if = "is_plain")]
+    pub bonus: u8,
+    #[serde(rename = "override")]
+    pub override_flag: OverrideFlag,
+}
+
+fn is_plain(bonus: &u8) -> bool {
+    *bonus == 0
+}
+
+impl AdmittedRecordDto {
+    pub(crate) fn new(kind: AdmittedKind, id: &str, override_flag: OverrideFlag) -> Self {
+        Self { kind, id: id.to_owned(), bonus: 0, override_flag }
+    }
+
+    pub(crate) fn copy(id: &str, bonus: u8, override_flag: OverrideFlag) -> Self {
+        Self { bonus, ..Self::new(AdmittedKind::Equipment, id, override_flag) }
+    }
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CharacterLedgerDto {
     #[serde(default)]
     pub entries: Vec<LedgerEntryDto>,
+    /// `#[serde(default)]`: a ledger saved before this field existed admitted nothing.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub admitted: Vec<AdmittedRecordDto>,
 }
 
 /// A thing the character holds that the ledger has a row for.
@@ -288,7 +353,7 @@ fn rows_of_a_character_with_no_ledger(input: &CharacterInput, custom: &Character
             LedgerEntryDto { kind: held.kind, id: held.id, target: held.target, taken_at_level, assigned_on_upgrade: true }
         })
         .collect();
-    Ok(CharacterLedgerDto { entries })
+    Ok(CharacterLedgerDto { entries, admitted: Vec::new() })
 }
 
 /// Builds the ledger of a character that has none. Nothing on the sheet reads it, so a failure does
@@ -336,42 +401,119 @@ fn in_step(ledger: &CharacterLedgerDto, held: &[Held], level: u8) -> CharacterLe
         taken_at_level: Some(level),
         assigned_on_upgrade: false,
     });
-    CharacterLedgerDto { entries: kept.chain(stamped).collect() }
+    CharacterLedgerDto { entries: kept.chain(stamped).collect(), admitted: ledger.admitted.clone() }
+}
+
+/// How many of the thing `row` names the character holds as the row needs it. A feat's row takes the
+/// spelling the character holds it by, so a screen can match it against `selected_feats`.
+fn holders_of(row: &mut AdmittedRecordDto, input: &CharacterInput, custom: &CharacterCustomDto) -> usize {
+    let chosen = &input.chosen;
+    match row.kind {
+        AdmittedKind::Feat => {
+            let held: Vec<&String> = chosen.selected_feats.iter().filter(|feat| feat_identity::same(feat, &row.id)).collect();
+            if let Some(feat) = held.first() {
+                row.id = (*feat).clone();
+            }
+            held.len()
+        }
+        AdmittedKind::Spell => chosen.spells_selected.iter().filter(|spell| spell.spell_id == row.id).count(),
+        AdmittedKind::ClassLevel => chosen.class_levels.iter().find(|class| class.class_id == row.id).map_or(0, |class| usize::from(class.level)),
+        AdmittedKind::Equipment => match row.id.strip_prefix(CUSTOM_ITEM_PREFIX) {
+            Some(id) => custom.equipment.iter().filter(|record| record.id == id && record.worn).count(),
+            None => chosen
+                .equipment_selections
+                .iter()
+                .filter(|selection| selection.item_id.eq_ignore_ascii_case(&row.id))
+                .filter(|selection| {
+                    if row.override_flag.is_about_wearing() {
+                        selection.active_state == ActiveState::EquippedActive
+                    } else {
+                        selection.active_state != ActiveState::Absent
+                    }
+                })
+                .count(),
+        },
+    }
+}
+
+/// `rows` with what the character no longer holds gone. Of two rows of one flag for one thing, with
+/// one left to hold, the earlier stays.
+fn admitted_in_step(rows: Vec<AdmittedRecordDto>, input: &CharacterInput, custom: &CharacterCustomDto) -> Vec<AdmittedRecordDto> {
+    let mut kept: Vec<AdmittedRecordDto> = Vec::new();
+    for mut row in rows {
+        let holders = holders_of(&mut row, input, custom);
+        let claimed = kept.iter().filter(|other| other.kind == row.kind && other.id.eq_ignore_ascii_case(&row.id) && other.override_flag == row.override_flag).count();
+        if claimed < holders {
+            kept.push(row);
+        }
+    }
+    kept
+}
+
+/// What the character holds under an override: the ledger's rows, and each spell the override saved
+/// under its own source, which says so itself. Nothing on the sheet's numbers reads this, so a ledger
+/// that cannot be read does not stop the sheet; it says so on stderr.
+pub(crate) fn admitted_records_at_root(root: &Path, input: &CharacterInput) -> Vec<AdmittedRecordDto> {
+    let mut rows = match load_character_ledger_at_root(root) {
+        Ok(ledger) => ledger.map_or_else(Vec::new, |ledger| ledger.admitted),
+        Err(reason) => {
+            eprintln!("{}: the override tags could not be read: {reason}", root.display());
+            Vec::new()
+        }
+    };
+    let mut spells = BTreeSet::new();
+    for spell in input.chosen.spells_selected.iter().filter(|spell| spell.source_class_id == OVERRIDE_SPELL_SOURCE) {
+        if spells.insert(spell.spell_id.as_str()) {
+            rows.push(AdmittedRecordDto::new(AdmittedKind::Spell, &spell.spell_id, OverrideFlag::SpellsOutsideClassList));
+        }
+    }
+    rows
 }
 
 /// The ledger to write after a change, or `None` when there is nothing to write: nothing the ledger
 /// records changed. A character with no ledger gets one only when something it records changes, and
 /// `legacy` is then what it already held.
-fn next_ledger(root: &Path, legacy: impl FnOnce() -> Result<CharacterLedgerDto, String>, before: &[Held], after: &[Held], level: u8) -> Result<Option<CharacterLedgerDto>, String> {
+fn next_ledger(
+    root: &Path,
+    legacy: impl FnOnce() -> Result<CharacterLedgerDto, String>,
+    before: &[Held],
+    input: &CharacterInput,
+    custom: &CharacterCustomDto,
+    admitted: Vec<AdmittedRecordDto>,
+) -> Result<Option<CharacterLedgerDto>, String> {
+    let after = held_by(input, custom);
     let stored = load_character_ledger_at_root(root)?;
-    if stored.is_none() && before == after {
+    if stored.is_none() && before == after && admitted.is_empty() {
         return Ok(None);
     }
     let from = match &stored {
         Some(stored) => stored.clone(),
         None => legacy()?,
     };
-    let next = in_step(&from, after, level);
+    let mut next = in_step(&from, &after, character_level(input));
+    next.admitted.extend(admitted);
+    next.admitted = admitted_in_step(next.admitted, input, custom);
     Ok((stored.as_ref() != Some(&next)).then_some(next))
 }
 
 /// What the ledger becomes when a change takes the character from `before` to `after`. Read before
 /// the character is saved, so a ledger that cannot be read refuses the change instead of following it.
-pub(crate) fn ledger_after_change_at_root(root: &Path, before: &CharacterInput, after: &CharacterInput) -> Result<Option<CharacterLedgerDto>, String> {
+/// `admitted` is what this change let in under an override.
+pub(crate) fn ledger_after_change_at_root(root: &Path, before: &CharacterInput, after: &CharacterInput, admitted: Vec<AdmittedRecordDto>) -> Result<Option<CharacterLedgerDto>, String> {
     let custom = load_character_custom_at_root(root)?;
-    next_ledger(root, || rows_of_a_character_with_no_ledger(before, &custom), &held_by(before, &custom), &held_by(after, &custom), character_level(after))
+    next_ledger(root, || rows_of_a_character_with_no_ledger(before, &custom), &held_by(before, &custom), after, &custom, admitted)
 }
 
 /// [`ledger_after_change_at_root`] for a new character: everything it holds was taken at its level.
 pub(crate) fn ledger_of_a_new_character(root: &Path, input: &CharacterInput) -> Result<Option<CharacterLedgerDto>, String> {
     let custom = load_character_custom_at_root(root)?;
-    next_ledger(root, || Ok(CharacterLedgerDto::default()), &[], &held_by(input, &custom), character_level(input))
+    next_ledger(root, || Ok(CharacterLedgerDto::default()), &[], input, &custom, Vec::new())
 }
 
-/// What the ledger becomes when the Custom tab's grants go from `previous` to `next`.
-pub(crate) fn ledger_after_custom_change_at_root(root: &Path, previous: &CharacterCustomDto, next: &CharacterCustomDto) -> Result<Option<CharacterLedgerDto>, String> {
+/// What the ledger becomes when the Custom tab's records go from `previous` to `next`.
+pub(crate) fn ledger_after_custom_change_at_root(root: &Path, previous: &CharacterCustomDto, next: &CharacterCustomDto, admitted: Vec<AdmittedRecordDto>) -> Result<Option<CharacterLedgerDto>, String> {
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
-    next_ledger(root, || rows_of_a_character_with_no_ledger(&input, previous), &held_by(&input, previous), &held_by(&input, next), character_level(&input))
+    next_ledger(root, || rows_of_a_character_with_no_ledger(&input, previous), &held_by(&input, previous), &input, next, admitted)
 }
 
 pub(crate) fn write_character_ledger_at_root(root: &Path, ledger: &CharacterLedgerDto) -> Result<(), String> {
@@ -657,7 +799,9 @@ pub(crate) fn copy_character_ledger(from: &Path, to: &Path) -> Result<(), String
 /// a row nothing holds goes, and a thing with no row is stamped at the character's level.
 pub(crate) fn restore_character_ledger_at_root(root: &Path, ledger: &CharacterLedgerDto, input: &CharacterInput) -> Result<(), String> {
     let custom = load_character_custom_at_root(root)?;
-    write_character_ledger_at_root(root, &in_step(ledger, &held_by(input, &custom), character_level(input)))
+    let mut restored = in_step(ledger, &held_by(input, &custom), character_level(input));
+    restored.admitted = admitted_in_step(restored.admitted, input, &custom);
+    write_character_ledger_at_root(root, &restored)
 }
 
 #[cfg(test)]

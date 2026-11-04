@@ -272,10 +272,10 @@ class TargetNotFoundError extends Error {
  * a late-acknowledged `click Load` had already opened the sheet, and every
  * re-send then failed on the vanished button).
  */
-function clickByNameChannel(name) {
+function clickByNameChannel(name, index) {
   // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
   // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
-  const result = sendUntilOk(cmdPath, probePath, { op: 'click', target: name }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
+  const result = sendUntilOk(cmdPath, probePath, { op: 'click', target: name, index }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new TargetNotFoundError(`${name}${result.error ? ` (${result.error})` : ''}`);
   }
@@ -323,8 +323,8 @@ function clickByNameXdotool(name) {
   }
 }
 
-function clickByName(name) {
-  return USE_XDOTOOL ? clickByNameXdotool(name) : clickByNameChannel(name);
+function clickByName(name, index) {
+  return USE_XDOTOOL ? clickByNameXdotool(name) : clickByNameChannel(name, index);
 }
 
 /**
@@ -414,7 +414,7 @@ function pressKey(key) {
 function runStep(step) {
   switch (step.op) {
     case 'click':
-      clickByName(step.target);
+      clickByName(step.target, step.index);
       break;
     case 'type':
       typeText(step.text);

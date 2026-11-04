@@ -105,10 +105,11 @@ import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/load
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import { MarketDialog } from './MarketDialog';
 import { EquipmentPanel } from './EquipmentPanel';
+import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
 import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
-import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
+import type { AdmittedRecordDto, ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
 import {
   featTargetPickerTitle,
   skillTargetOptions,
@@ -945,6 +946,8 @@ function UnresolvedNotice(props: { ids: string[]; kind: 'spell' | 'item' }) {
  */
 function SpellsTab(props: {
   spellsSelected: SpellSelectionDto[];
+  /** What the character holds under an override; a spell saved under the override's source shows its flag. */
+  admitted: AdmittedRecordDto[];
   corpusDerived: CorpusDerivedDto | undefined;
   /** Drives the spells-per-day block — see `spellsPerDayModel.ts`. */
   explanations: readonly ExplanationDto[];
@@ -1148,6 +1151,9 @@ function SpellsTab(props: {
                     {describeSpellSchoolAndLevel(row)}
                   </span>
                 )}
+                {row.sourceClassId.startsWith('override:')
+                  ? flagsOf(props.admitted, 'spell', row.raw).map((flag) => <OverrideTag key={flag} flag={flag} />)
+                  : null}
               </span>
               <button
                 type="button"
@@ -2425,6 +2431,8 @@ function FeatsTab(props: {
   selectedTraits: string[];
   /** The engine's `feats.budget.*` rows, read: the badge and the Add control follow them. */
   featBudget: FeatBudgetView;
+  /** What the character holds under an override; a feat's row shows its flags. */
+  admitted: AdmittedRecordDto[];
   onAddFeat: () => void;
   /**
    * Removes one held copy of the feat, optionally taking the one recorded
@@ -2509,7 +2517,12 @@ function FeatsTab(props: {
         resolvedFeats.map((row, index) => (
           <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
             <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
-              <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+              <span>
+                <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+                {flagsOf(props.admitted, 'feat', row.raw).map((flag) => (
+                  <OverrideTag key={flag} flag={flag} />
+                ))}
+              </span>
               {/*
                 A chooser feat's targets are removed one at a time (below,
                 beside each target), because one row can stand for two
@@ -3042,6 +3055,8 @@ export function CharacterSheet(props: {
     abilityScores: AbilityScoresDto | null;
     /** SD-36 F7a: the persisted skill allocation; `null` until a read carries it. */
     skillAllocations: SkillAllocationEntryDto[] | null;
+    /** What the character holds under an override; a mutation's response does not carry it. */
+    admittedUnderOverride: AdmittedRecordDto[];
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3051,6 +3066,7 @@ export function CharacterSheet(props: {
     featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
+    admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
   });
   useEffect(() => {
     let cancelled = false;
@@ -3063,6 +3079,7 @@ export function CharacterSheet(props: {
     featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
+    admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3076,6 +3093,7 @@ export function CharacterSheet(props: {
       featSkillBonuses: loaded.featSkillBonuses,
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
+      admittedUnderOverride: loaded.admittedUnderOverride ?? [],
           });
         }
       })
@@ -3671,6 +3689,7 @@ export function CharacterSheet(props: {
       featSkillBonuses: loaded.featSkillBonuses,
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
+      admittedUnderOverride: loaded.admittedUnderOverride ?? [],
     });
     await refreshDurability();
   }
@@ -4015,6 +4034,7 @@ export function CharacterSheet(props: {
       featSkillBonuses: loaded.featSkillBonuses,
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
+      admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4583,6 +4603,7 @@ export function CharacterSheet(props: {
                 ) : name === 'Spells' ? (
                   <SpellsTab
                     spellsSelected={props.detail?.spellsSelected ?? []}
+                    admitted={engineRecords.admittedUnderOverride}
                     corpusDerived={props.detail?.corpusDerived}
                     snapshot={props.detail?.snapshot}
                     explanations={engineRecords.explanations}
@@ -4614,6 +4635,7 @@ export function CharacterSheet(props: {
               selectedTraits={props.detail?.selectedTraits ?? []}
               chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
               featBudget={withBudgetOverride(readFeatBudget(engineRecords.explanations), customOverrides(custom).ignoreFeatBudget)}
+              admitted={engineRecords.admittedUnderOverride}
               onAddFeat={() => setItemPickerOpen('feat')}
               onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
               onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
@@ -4622,7 +4644,7 @@ export function CharacterSheet(props: {
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
                 ) : name === 'Custom' ? (
-                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} onOverrideChange={(key, on) => void handleOverrideChange(key, on)} />
+                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} onOverrideChange={(key, on) => void handleOverrideChange(key, on)} admittedLevels={classLevelsAdmitted(engineRecords.admittedUnderOverride, heldClasses)} />
                 ) : (
                   <ActionsTab
                     levelEntries={currentBenefits}

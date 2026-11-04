@@ -66,3 +66,8 @@ assert(render({ copies: [] }).includes('Nothing held yet.'), 'an empty list says
 const failed = render({ copies: null, loadError: 'Failed to list held equipment: gone' });
 assert(failed.includes('Failed to list held equipment: gone') && !failed.includes('Loading'), 'a failed read says why');
 assert(render({ busy: true }).includes('disabled'), 'buttons wait while a change is saving');
+
+const tagged = render({ copies: [{ ...copy('Hat of Disguise', 'EquippedActive', 'head'), override: 'ignoreSlotLimits' }, copy('Helm of Brilliance', 'EquippedActive', 'head'), { ...copy('Full Plate', 'SelectedInactive', 'armor'), override: 'ignoreEncumbrance' }] });
+assert(tagged.includes('Override: Ignore body slot limits'), 'a worn copy the override let on says so');
+assert(tagged.includes('Override: Ignore encumbrance'), 'a carried copy the override let in says so');
+assert(!html.includes('Override:'), 'a copy no override let in has no tag');

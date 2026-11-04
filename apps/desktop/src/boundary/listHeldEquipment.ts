@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
+import type { OverrideFlagDto } from './loadSavedCharacterDetail';
 import type { ActiveStateDto } from './setEquipmentActiveState';
 
 /**
@@ -42,6 +43,8 @@ export interface PlacedEquipmentCopyDto extends HeldEquipmentCopyDto {
   activeState: ActiveStateDto;
   /** Where a worn copy sits, and what a carried one would take. */
   slot: BodySlotDto;
+  /** The override that let this copy in; left out when the rules allowed it. */
+  override?: OverrideFlagDto;
 }
 
 /** What the Market can buy back: a custom item is the GM's, and has no price. */
