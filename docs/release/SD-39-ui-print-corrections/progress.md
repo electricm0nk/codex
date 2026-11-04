@@ -280,3 +280,5 @@ seed deltas, open blockers.)
 | Run id | START | Script path | Started |
 |---|---|---|---|
 | wf_e22fdf36-bc3 | C1 | session `workflows/scripts/sd39-ui-print-corrections-wf_e22fdf36-bc3.js` | 2026-11-01; stopped at C1 on a too-wide acceptance grep; the lead cleared it |
+| wf_921af6dd-933 | E1.0 | same | 2026-11-01; stopped at E1.MC: the script skipped discovered card E1.5; script fixed (`drainBoard`) |
+| wf_62657bd1-ded | E1.MC | same | 2026-11-01; stopped 2026-11-04 at E7.1: a re-dispatch declined, ownedBy:E7.3; the script had no E7.3 and did not reach E1.6; script fixed (`drainEarlier`, E7.3 in the E7 list) |
