@@ -108,7 +108,7 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 --test print_golden -- --t
 ```bash
 cargo test --locked -p codex-ingest -j 8 pcg_import_fixtures -- --test-threads=8
 bash scripts/verify.sh --only pcgen-residue-gate --only crate-wall
-grep -rln 'pcg' src apps/desktop/src apps/desktop/src-tauri/src      # only the sidecar caller and its boundary; read by hand in the receipt
+grep -rlE 'pcg([^e]|$)' src apps/desktop/src apps/desktop/src-tauri/src      # only the sidecar caller and its boundary; read by hand in the receipt
 ```
 
 ## G-12 Closure (DoD 10) — E9.1–E9.11

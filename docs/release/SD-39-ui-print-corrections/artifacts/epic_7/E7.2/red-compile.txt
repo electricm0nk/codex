@@ -1,0 +1,7 @@
+      1 error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 7 previous errors
+      1 error[E0223]: ambiguous associated type
+      1 error[E0425]: cannot find function `import_pcg_json` in this scope
+      1 error[E0425]: cannot find function `import_pcg_with_sidecar` in this scope
+      2 error[E0425]: cannot find function `pcg_sidecar_beside` in this scope
+      1 error[E0425]: cannot find function `run_pcg_sidecar` in this scope
+      1 error[E0425]: cannot find type `ImportPcgResponse` in this scope

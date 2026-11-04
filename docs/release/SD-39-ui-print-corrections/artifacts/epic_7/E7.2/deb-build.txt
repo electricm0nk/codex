@@ -1,0 +1,35 @@
+   Compiling muda v0.19.3
+    Finished `release` profile [optimized] target(s) in 5m 25s
+       Built application at: /home/ubuntu/cargo-target/sd39-main/release/codex-desktop
+    Bundling Codex_0.19.0_amd64.deb (/home/ubuntu/cargo-target/sd39-main/release/bundle/deb/Codex_0.19.0_amd64.deb)
+    Finished 1 bundle at:
+DEB_EXIT=0
+total 38200
+drwxr-xr-x 2 ubuntu ubuntu     4096 Nov  4 17:18 .
+drwxr-xr-x 5 ubuntu ubuntu     4096 Nov  4 17:18 ..
+-rwxr-xr-x 1 ubuntu ubuntu 31746136 Nov  4 17:18 codex-desktop
+-rwxr-xr-x 1 ubuntu ubuntu  7358376 Nov  4 17:18 pcg_import
+RES=/home/ubuntu/cargo-target/sd39-main-seeds/e7.2/deb/usr/lib/Codex
+/home/ubuntu/cargo-target/sd39-main-seeds/e7.2/deb/usr/lib/Codex:
+data
+resources
+tests
+
+/home/ubuntu/cargo-target/sd39-main-seeds/e7.2/deb/usr/lib/Codex/data:
+class_feature_grants
+converted
+corpus
+cyberpunk-red
+equipment_types.json
+rules_tables
+sheet_rules
+starfinder-1e
+E5R6 eqm combo: 37 report lines, 5 custom records, 0 unknown keys
+
+real	0m0.372s
+user	0m0.229s
+sys	0m0.143s
+SAME_AS_CHECKOUT
+E5R6 eqm combo: 37 report lines, 5 custom records, 0 unknown keys
+strace_lines=5622
+checkout_touches=0
