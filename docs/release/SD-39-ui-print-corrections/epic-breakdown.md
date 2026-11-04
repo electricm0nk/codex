@@ -59,8 +59,9 @@ whether the card holds a cargo slot.
 | E4.7 a worn item's every-skill, CMB, CMD, Armor Class and speed-multiplier numbers reach the totals (discovered by E4.6) | no | opus | yes | `ir_converter.rs`, `equipment_effects.rs`, `equipment_record.rs`, `pf1_adapter.rs`, `character_custom.rs`, `character_hub.rs`, `tests/worn_vs_carried.rs`, `customModel.ts`, `crates/codex-ingest/tests/rules_core_equipment_record_via_converter.rs`; `data/corpus/*/_settled/equipment.json`, `resources/corpus_fixtures/_settled/equipment.json` |
 | E4.MC | no | opus | yes | adversarial |
 | E5.1 ledger file beside `custom.json`, stamped on every add | no | opus | yes | `character_ledger.rs` (new), `character_hub.rs` add paths, `main.rs`, `pf1_adapter.rs` and `character_custom.rs` (fence exits, §23) |
-| E5.2 legacy ledger built once by slot order | no | opus | yes | `character_ledger.rs` |
+| E5.2 legacy ledger built once by slot order | no | opus | yes | `character_ledger.rs`; fence exits (`decisions.md §23`, §25): `character_hub.rs` (the load, tests), `src/rules_core/feat_budget.rs`, `src/rules_core/pilot_compute/mod.rs` |
 | E5.3 drawer content from `list_progression_ledger` | no | opus | yes | `character_hub.rs`, `main.rs`, `ProgressionDrawer.tsx`, `boundary/*.ts` |
+| E5.4 CPR therapy test stops failing on one roll in ten (discovered by E5.2) | no | sonnet | yes | `apps/desktop/src-tauri/src/cpr_improve.rs` tests |
 | E5.MC | no | opus | yes | adversarial |
 | E6.1 Overrides toggles + enforcement | no | opus | yes | `character_custom.rs`, `CustomTab.tsx`, every enforcing command |
 | E6.2 tagging in UI + DTO | no | opus | yes (npm) | `OverrideTag.tsx` (new), selection DTOs, `EquipmentPanel.tsx` |
@@ -87,7 +88,7 @@ whether the card holds a cargo slot.
 | E9.10 graphify LAST | no | sonnet | no | clean tree, HEAD = `origin/tranche-19` |
 | E9.11 PR (final action) + `pr-tests` wait | no | sonnet | no | operator merges |
 
-**Card count: 58** (C 2, E1 8, E2 5, E3 7, E4 8, E5 4, E6 3, E7 4, E8 6, E9 11).
+**Card count: 59** (C 2, E1 8, E2 5, E3 7, E4 8, E5 5, E6 3, E7 4, E8 6, E9 11).
 `kanban.md` holds the `diff … && echo SAME_IDS` command proving its rows and this file's IDs match.
 
 **Side lanes (the only parallelism):** `ui-a` (E1.4, `CustomDialog.tsx` + `customChip.ts`), `sf-cpr` (E3.5), `ingest`
@@ -175,8 +176,9 @@ its receipt as a fence exit.
 | ID | Criterion | FILES YOU OWN | Acceptance command | Does not cover |
 |---|---|---|---|---|
 | E5.1 | A `ledger.json` beside `custom.json` (the `character_custom.rs` pattern) records `{kind, id, target, taken_at_level, assigned_on_upgrade}` for each feat, spell, skill rank and ability increase; every add and remove path keeps it in step; a clone and an export and import carry it, as they carry `custom.json` (`copy_character_custom`, `ImportedCharacterFileDto`; `decisions.md §25`). Engine input (`selected_feats: Vec<String>`) does not change, so no saved-character schema changes. | `character_ledger.rs` (new), `character_hub.rs` add paths, `main.rs`, `pf1_adapter.rs` and `character_custom.rs` (fence exits, §23; `decisions.md §25`) | `cd apps/desktop/src-tauri && cargo test --locked -j 8 ledger_stamp -- --test-threads=8`; a character with no ledger file still loads | — |
-| E5.2 | On first load with no `ledger.json`, the ledger is built by slot order (R8) with `assigned_on_upgrade = true`; extras past the budget get `None` (SD-o); running it twice gives the same file; the character's own files are read, never rewritten. | `character_ledger.rs` | `cargo test --locked -j 8 ledger_migration -- --test-threads=8` (Elowen fixture; run twice = same; sha256 of the saved character file unchanged) | — |
+| E5.2 | On first load with no `ledger.json`, the ledger is built by slot order (R8) with `assigned_on_upgrade = true`; extras past the budget get `None` (SD-o); running it twice gives the same file; the character's own files are read, never rewritten. | `character_ledger.rs`; fence exits: `character_hub.rs`, `feat_budget.rs`, `pilot_compute/mod.rs` (`decisions.md §25`) | `cargo test --locked -j 8 ledger_migration -- --test-threads=8` (Elowen fixture; run twice = same; sha256 of the saved character file unchanged) | — |
 | E5.3 | `list_progression_ledger` returns per level: class level, feats (with targets), spells learned, ranks spent, class features, ability increase, unspent slots, `assigned_on_upgrade`; the drawer renders it; "next level grants" stays. | `character_hub.rs`, `main.rs`, `ProgressionDrawer.tsx`, `boundary/listProgressionLedger.ts` (new), `characterProgression.ts` | `cargo test --locked -j 8 progression_ledger -- --test-threads=8`; ui-smoke row: drawer shows "Level 1" and a feat name for Aldric | editing (DEF-6) |
+| E5.4 | `cpr_improve::tests::a_blank_regain_is_rolled_with_the_seed_and_the_same_seed_keeps_it` passes on every run. It seeds its Extreme therapy from the clock (`fresh_seed`), keeps that regain, then expects a Standard roll to reach 12 on the same character: on 4d6 of 19 or more (126 of 1296, `python3` over `itertools.product`) the D-5 cap of 74 stops it short, and the assert reads `Some(9)`, `Some(10)` or `Some(11)`. The rolled apply stays proved and the 2-12 sweep runs on a character the cap cannot reach. Test only: no shipping rule moves. | `cpr_improve.rs` tests | `cargo test --locked -j 8 a_blank_regain -- --test-threads=8`, then the test binary 40 times with `--exact`: 40 passed | Whether any other test rolls from `fresh_seed` with a limit on the result |
 | E5.MC | Adversarial; Epic report. | receipts | E5 commands green | — |
 
 ## Epic E6 — overrides
@@ -215,7 +217,7 @@ its receipt as a fence exit.
 | E9.2 | Fresh install (.deb and AppImage, clean profile): Settings → Update → Check shows no "unknown"; open a seed, Save PDF works and the PDF opens. | receipt | observed values pasted; SD-l if impossible | — |
 | E9.3 | Widest verify once on the final code: root + desktop `cargo test`, `npm run typecheck && npm test && npm run ui-smoke:doc`, `bash scripts/verify.sh --full --show-actuals -j 8`; every FAILED attributed; PF/SF/CPR seed deltas listed. | receipt, `scripts/verify-baselines.env` if floors move | all green or attributed; `grep -c 'FAIL' <log>` → 0 | — |
 | E9.4 | **Operator gate.** Three PDFs (Aldric PF full, SF-Soldier-3 basic, Streetrat Solo basic) saved to `artifacts/epic_9/E9.4/`; the operator prints them and writes `usable: yes` ×3 (or the defects) in the receipt. | `artifacts/epic_9/E9.4/**` | `grep -c 'usable: yes' artifacts/epic_9/E9.4_cycle_receipt.md` → 3 | — |
-| E9.5 | Final-acceptance scan (`workflow-instruction.md §11` step 1): 58 rows, every non-exempt row `complete`, every DEF/FSR revisit command run and pasted. | `progress.md` | the §11 awk prints nothing | — |
+| E9.5 | Final-acceptance scan (`workflow-instruction.md §11` step 1): 59 rows, every non-exempt row `complete`, every DEF/FSR revisit command run and pasted. | `progress.md` | the §11 awk prints nothing | — |
 | E9.6 | `docs/retro/sd39-retrospective.md` written from `retro.py summary --since 2026-11-01 --json`, cited from `references/README.md` in the same commit. | `docs/retro/sd39-retrospective.md`, `references/README.md` | `grep -c sd39-retrospective references/README.md` ≥ 1 | — |
 | E9.7 | Every `sd39-*` worktree and `sd39/*` branch except `sd39-main` removed, every `cargo-target/sd39-*` except `sd39-main` deleted; counts found/removed. The script's last step removes `sd39-main` and its target dir after the PR. | — | `git worktree list \| grep -c sd39` → 1; `ls /home/ubuntu/cargo-target \| grep -c sd39` ≤ 1 | — |
 | E9.8 | `release-notes.md` final body; sentinel gone; resolver passes. | `release-notes.md` | `grep -c 'SD-39 INTERIM NOTES' release-notes.md` → 0; `python3 tools/release/resolve_release_notes.py --repo-root .` exit 0; `python3 scripts/tranche/validate-tranche-notes.py --release-notes-path docs/release/SD-39-ui-print-corrections/release-notes.md` | — |

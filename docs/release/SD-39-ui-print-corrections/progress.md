@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 30 of 58 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 31 of 59 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -74,6 +74,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E4 | E4.7 | complete | b28d044e20 + receipt commit | artifacts/epic_4/E4.7_cycle_receipt.md |
 | E4 | E4.MC | complete | 8aedb292b7 + receipt commit | artifacts/epic_4/E4.MC_cycle_receipt.md |
 | E5 | E5.1 | complete | 5b24205733 + receipt commit | artifacts/epic_5/E5.1_cycle_receipt.md |
+| E5 | E5.2 | complete | 0d1d7aa995 + receipt commit | artifacts/epic_5/E5.2_cycle_receipt.md |
 
 ## Epic reports
 
@@ -206,6 +207,8 @@ seed deltas, open blockers.)
 | E5.1 | What an ability increase is, with no such selection on the Pathfinder sheet | A positive `ability:<name>` grant, one row a point | The score moving, which reads a lifted curse as an increase |
 | E5.1 | Where the stamp lives | The one mutation path, by what is held before and after | A call at each command, a list a new command can miss |
 | E5.1 | Rows held before a character's first ledger | Kept with no level and marked, E5.2's seam | Only the new row, which would stop E5.2 ever filling the rest |
+| E5.2 | A load that cannot build the ledger | Shows the sheet, writes nothing, says so on stderr, tries again next load | Failing a load for a file no sheet number reads |
+| E5.2 | Feats when first-come strands one | Earliest free slot, a feat moves only so a later one fits | First-come, whose rows would disagree with the budget's `over_by` |
 
 ## Open blockers
 

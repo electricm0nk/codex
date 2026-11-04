@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 58
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 59
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -64,9 +64,10 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 58
 | E4.7 | A worn item's every-skill, CMB, CMD, Armor Class and speed-multiplier numbers reach the totals | opus | complete | E4.6 | discovered by E4.6, decisions.md §21; commit b28d044e20 + receipt commit; receipt artifacts/epic_4/E4.7_cycle_receipt.md; 6 desktop + 3 root worn_item_applies_every_skill tests; desktop 1053+1 passed, 0 failed; root 8601 passed, 1 failed in the sweep, that suite's reference read fixed and 3 passed on re-run; seeds NO_DIFF |
 | E4.MC | E4 merge check + Epic report | opus | complete | E4.7 | commit 8aedb292b7 + receipt commit; receipt artifacts/epic_4/E4.MC_cycle_receipt.md; 4 refuted, all fixed here; root 8602 passed, desktop 1059 passed, both 0 failed; 26 ui-smoke rows green; seeds NO_DIFF; no card discovered |
 | E5.1 | Ledger file, stamped on every add | opus | complete | E4.MC | commit 5b24205733 + receipt commit; receipt artifacts/epic_5/E5.1_cycle_receipt.md; 7 ledger_stamp tests; desktop 1066 passed, 0 failed; G-6 re-run for the fence exits; seeds NO_DIFF; no card discovered |
-| E5.2 | Legacy ledger migration | opus | waiting | E5.1 | |
+| E5.2 | Legacy ledger migration | opus | complete | E5.1 | commit 0d1d7aa995 + receipt commit; receipt artifacts/epic_5/E5.2_cycle_receipt.md; 14 ledger_migration tests; root sweep exit 0; desktop 1077 passed, 1 failed (CPR clock-seeded test, attributed, E5.4); G-3 and G-6 re-run; seeds NO_DIFF; discovered E5.4 |
 | E5.3 | Drawer content from list_progression_ledger | opus | waiting | E5.2 | |
-| E5.MC | E5 merge check + Epic report | opus | waiting | E5.3 | |
+| E5.4 | CPR therapy test stops failing on one roll in ten | sonnet | ready | E5.2 | discovered by E5.2, decisions.md §21 |
+| E5.MC | E5 merge check + Epic report | opus | waiting | E5.3, E5.4 | |
 | E6.1 | Overrides toggles + enforcement | opus | waiting | E5.MC | |
 | E6.2 | Override tagging UI + DTO | opus | waiting | E6.1 | |
 | E6.MC | E6 merge check + Epic report | opus | waiting | E6.2 | |

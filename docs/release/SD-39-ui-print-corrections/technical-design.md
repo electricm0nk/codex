@@ -113,7 +113,12 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
 - Every Pathfinder change passes `mutate_saved_character_at_root`, which brings the ledger in step with
   what the character holds; a held thing with no row is stamped at the character's level, a row nothing
   holds goes. `save_character_custom_at_root` does the same for grants, and creation, `clone_character`
-  and the import file carry it. First-load migration by slot order is E5.2.
+  and the import file carry it.
+- A character with no file gets one on its first Pathfinder load, or its first change if that comes
+  sooner (`rows_of_a_character_with_no_ledger`), every row `assigned_on_upgrade`. Slots are read off the
+  character as it stood at each level, classes in saved order: feats through `feat_slot_levels`, ranks
+  through each level's budget, spells through what the class casts and its known table or book rows,
+  ability increases at every 4th level. What no slot fits has no level. `decisions.md §25` has the rules.
 - `list_progression_ledger(character_id) -> Vec<LevelEntry>` (new command) assembles the drawer's rows
   from `ledger.json` + the class catalog's per-level grants (`characterProgression.ts` logic moves
   server-side so the drawer and the print Math block read one source).
