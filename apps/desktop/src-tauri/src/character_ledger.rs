@@ -11,12 +11,23 @@
 //!
 //! An ability increase is a positive `ability:<name>` grant, one row a point: the Pathfinder sheet
 //! has no other writer of a score after creation, and a penalty is not an increase.
+//!
+//! A character saved before there was a ledger gets one on its first load, or at its first change
+//! if that comes sooner ([`rows_of_a_character_with_no_ledger`]): each thing it holds goes in the
+//! earliest slot of its kind, in saved order, marked as worked out afterwards. What no slot fits has
+//! no level. The rules numbers are the engine's, read off the character as it stood at each level.
 
 use serde::{Deserialize, Serialize};
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
 use crate::character_custom::{load_character_custom_at_root, CharacterCustomDto};
-use codex::rules_core::character_input::CharacterInput;
+use crate::character_hub::feat_budget_for;
+use codex::rules_core::character_input::{CharacterClassLevel, CharacterInput};
+use codex::rules_core::class_seeds::canonical_seeds_for;
+use codex::rules_core::feat_budget::feat_slot_levels;
+use codex::rules_core::pilot_compute::{compute_pilot_base_chassis, spells_known_table, PilotBaseChassisComputation};
+use codex::rules_core::rules_catalog::class_spell_levels::class_spell_level;
 use codex::rules_core::{feat_effects, feat_identity};
 use codex::saved_character::local_store::SavedCharacterStore;
 
@@ -39,7 +50,7 @@ pub struct LedgerEntryDto {
     pub id: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub target: Option<String>,
-    /// `None` only on a row of a character saved before there was a ledger.
+    /// `None` only on a row of a character saved before there was a ledger that no slot fits.
     pub taken_at_level: Option<u8>,
     /// The level was worked out afterwards, not recorded when the choice was made.
     #[serde(default)]
@@ -106,13 +117,190 @@ fn character_level(input: &CharacterInput) -> u8 {
     input.chosen.class_levels.iter().fold(0, |total: u8, class| total.saturating_add(class.level))
 }
 
-/// The rows of a character saved before there was a ledger, whose levels nothing recorded.
-fn rows_of_a_character_with_no_ledger(before: &[Held]) -> CharacterLedgerDto {
-    CharacterLedgerDto {
-        entries: before
-            .iter()
-            .map(|held| LedgerEntryDto { kind: held.kind, id: held.id.clone(), target: held.target.clone(), taken_at_level: None, assigned_on_upgrade: true })
-            .collect(),
+/// The character as it stood at `level`, its classes taken in saved order. Its spells are each class's
+/// canonical ones: a spell above that level's reach would make the engine state no casting rows at all.
+fn input_at_level(input: &CharacterInput, level: u8) -> CharacterInput {
+    let mut left = level;
+    let mut at = input.clone();
+    at.chosen.class_levels = input
+        .chosen
+        .class_levels
+        .iter()
+        .filter_map(|class| {
+            let taken = class.level.min(left);
+            left -= taken;
+            (taken > 0).then(|| CharacterClassLevel { level: taken, ..class.clone() })
+        })
+        .collect();
+    at.chosen.spells_selected = at
+        .chosen
+        .class_levels
+        .iter()
+        .flat_map(|class| canonical_seeds_for(class.class_id.strip_prefix("class:").unwrap_or(&class.class_id), class.level).1)
+        .collect();
+    at
+}
+
+fn explanation_value(base: &PilotBaseChassisComputation, id: &str) -> Option<i64> {
+    base.explanations.iter().find(|row| row.id == id).map(|row| i64::from(row.value))
+}
+
+/// The class's skill points at this level plus a human's extra rank a level, which is no class's term.
+fn skill_points(base: &PilotBaseChassisComputation) -> i64 {
+    explanation_value(base, "class_chassis.skill_points").or_else(|| explanation_value(base, "multiclass.skill_points")).unwrap_or(0)
+}
+
+/// How many ranks each level of the character can place.
+fn ranks_each_level(bases: &[PilotBaseChassisComputation]) -> Vec<i64> {
+    let mut earlier = 0;
+    bases
+        .iter()
+        .map(|base| {
+            let points = skill_points(base);
+            let gained = (points - earlier).max(0) + explanation_value(base, "race.human.trait_bundle.extra_skill_ranks").unwrap_or(0);
+            earlier = points;
+            gained
+        })
+        .collect()
+}
+
+/// The spell level a selection is learned at. An Oracle draws on the Cleric's list.
+fn spell_level_for_class(class_id: &str, spell_id: &str) -> Option<u8> {
+    class_spell_level(class_id, spell_id).or_else(|| if class_id == "class:oracle" { class_spell_level("class:cleric", spell_id) } else { None })
+}
+
+/// `<head>.spell_level_<n>[_and_higher]` or the alchemist's `extract_level_<n>`.
+fn row_spell_level(id: &str) -> Option<(&str, u8)> {
+    let (head, tail) = id.rsplit_once('.')?;
+    let level = tail.strip_prefix("spell_level_").or_else(|| tail.strip_prefix("extract_level_"))?;
+    Some((head, level.strip_suffix("_and_higher").unwrap_or(level).parse().ok()?))
+}
+
+/// What one character level lets each class learn. Keys are a class id and a spell level.
+#[derive(Default, Clone)]
+struct SpellsAtLevel {
+    can_cast: BTreeSet<(String, u8)>,
+    known_limit: BTreeMap<(String, u8), i64>,
+    book_limit: BTreeMap<(String, u8), i64>,
+}
+
+/// The spell slots of a character's levels and what has gone in them so far.
+struct SpellSlots {
+    levels: Vec<SpellsAtLevel>,
+    /// (class id, spell level, index into `levels`).
+    placed: Vec<(String, u8, usize)>,
+}
+
+impl SpellSlots {
+    fn of(at_levels: &[CharacterInput], bases: &[PilotBaseChassisComputation]) -> Self {
+        let mut levels: Vec<SpellsAtLevel> = Vec::new();
+        for (input, base) in at_levels.iter().zip(bases) {
+            // Access stays once opened, and a known table that stops (a Bard's ends at 10) stays at its last row.
+            let mut now = levels.last().cloned().unwrap_or_default();
+            for class in &input.chosen.class_levels {
+                let row_part = format!(".{}.", class.class_id.strip_prefix("class:").unwrap_or(&class.class_id));
+                now.book_limit.retain(|(id, _), _| *id != class.class_id);
+                for (head, spell_level, value) in base.explanations.iter().filter(|row| row.id.contains(&row_part)).filter_map(|row| row_spell_level(&row.id).map(|(head, level)| (head, level, i64::from(row.value)))) {
+                    if (head.ends_with("spells_per_day") || head.ends_with("extracts_per_day")) && value > 0 {
+                        now.can_cast.insert((class.class_id.clone(), spell_level));
+                    }
+                    if head.ends_with("book_size") {
+                        now.book_limit.insert((class.class_id.clone(), spell_level), value);
+                    }
+                }
+                let table = spells_known_table(&class.class_id, class.level).unwrap_or_default();
+                for (spell_level, known) in table.iter().enumerate().filter_map(|(level, known)| Some((u8::try_from(level).ok()?, i64::from((*known)?)))) {
+                    now.known_limit.insert((class.class_id.clone(), spell_level), known);
+                    if known > 0 {
+                        now.can_cast.insert((class.class_id.clone(), spell_level));
+                    }
+                }
+            }
+            levels.push(now);
+        }
+        SpellSlots { levels, placed: Vec::new() }
+    }
+
+    fn placed_by(&self, class_id: &str, level: usize, counts: impl Fn(u8) -> bool) -> i64 {
+        self.placed.iter().filter(|(id, spell_level, at)| id == class_id && *at <= level && counts(*spell_level)).count() as i64
+    }
+
+    /// Whether one more spell of `spell_level` learned at `from` stays inside every later limit. A
+    /// spellbook's row for `n` bounds level `n` and higher; its row for 0 bounds cantrips alone.
+    fn fits(&self, class_id: &str, spell_level: u8, from: usize) -> bool {
+        (from..self.levels.len()).all(|level| {
+            let limits = &self.levels[level];
+            let in_known = limits.known_limit.get(&(class_id.to_owned(), spell_level)).is_none_or(|limit| self.placed_by(class_id, level, |other| other == spell_level) < *limit);
+            let bound_by_book = |bound: u8| {
+                limits.book_limit.get(&(class_id.to_owned(), bound)).is_none_or(|limit| self.placed_by(class_id, level, |other| if bound == 0 { other == 0 } else { other >= bound }) < *limit)
+            };
+            in_known && if spell_level == 0 { bound_by_book(0) } else { (1..=spell_level).all(bound_by_book) }
+        })
+    }
+
+    /// The earliest level with a slot for this spell. A spell its class has no list level for, and
+    /// one its class never reaches, has no level.
+    fn place(&mut self, class_id: &str, spell_id: &str) -> Option<u8> {
+        let spell_level = spell_level_for_class(class_id, spell_id)?;
+        let key = (class_id.to_owned(), spell_level);
+        let at = (0..self.levels.len()).find(|level| self.levels[*level].can_cast.contains(&key) && self.fits(class_id, spell_level, *level))?;
+        self.placed.push((class_id.to_owned(), spell_level, at));
+        u8::try_from(at + 1).ok()
+    }
+}
+
+/// The rows of a character saved before there was a ledger, by slot order (R8): feats through the
+/// level, racial and class pools from where each is granted, spells through what each class level
+/// lets the class know, ranks through each level's budget and no faster than the character's level
+/// (CRB p.87), ability increases at every 4th level. The level was worked out, so every row says so.
+fn rows_of_a_character_with_no_ledger(input: &CharacterInput, custom: &CharacterCustomDto) -> Result<CharacterLedgerDto, String> {
+    let level = character_level(input);
+    let at_levels: Vec<CharacterInput> = (1..=level).map(|at| input_at_level(input, at)).collect();
+    let bases: Vec<PilotBaseChassisComputation> = at_levels.iter().map(compute_pilot_base_chassis).collect();
+    let budgets = at_levels.iter().zip(&bases).map(|(at, base)| feat_budget_for(at, base)).collect::<Result<Vec<_>, _>>()?;
+
+    let mut feats = feat_slot_levels(&input.chosen.selected_feats, &budgets).into_iter();
+    let mut spells = SpellSlots::of(&at_levels, &bases);
+    let mut rank_room = ranks_each_level(&bases);
+    let mut ranks_of_skill: BTreeMap<String, usize> = BTreeMap::new();
+    let mut increases = 0u32;
+    let entries = held_by(input, custom)
+        .into_iter()
+        .map(|held| {
+            let taken_at_level = match held.kind {
+                LedgerKind::Feat => feats.next().flatten(),
+                LedgerKind::Spell => held.target.as_deref().and_then(|class| spells.place(class, &held.id)),
+                LedgerKind::SkillRank => {
+                    let rank = ranks_of_skill.entry(held.id.to_ascii_lowercase()).or_default();
+                    *rank += 1;
+                    let at = (*rank - 1..rank_room.len()).find(|level| rank_room[*level] > 0);
+                    at.and_then(|at| {
+                        rank_room[at] -= 1;
+                        u8::try_from(at + 1).ok()
+                    })
+                }
+                LedgerKind::AbilityIncrease => {
+                    increases += 1;
+                    u8::try_from(increases * 4).ok().filter(|at| *at <= level)
+                }
+            };
+            LedgerEntryDto { kind: held.kind, id: held.id, target: held.target, taken_at_level, assigned_on_upgrade: true }
+        })
+        .collect();
+    Ok(CharacterLedgerDto { entries })
+}
+
+/// Builds the ledger of a character that has none. Nothing on the sheet reads it, so a failure does
+/// not stop the sheet: it writes nothing, says so on stderr, and the next load tries again.
+pub(crate) fn build_character_ledger_on_first_load(root: &Path, input: &CharacterInput) {
+    if root.join(LEDGER_FILE_NAME).exists() {
+        return;
+    }
+    let built = load_character_custom_at_root(root)
+        .and_then(|custom| rows_of_a_character_with_no_ledger(input, &custom))
+        .and_then(|ledger| write_character_ledger_at_root(root, &ledger));
+    if let Err(reason) = built {
+        eprintln!("{}: the level ledger was not built, and the next load tries again: {reason}", root.display());
     }
 }
 
@@ -151,13 +339,18 @@ fn in_step(ledger: &CharacterLedgerDto, held: &[Held], level: u8) -> CharacterLe
 }
 
 /// The ledger to write after a change, or `None` when there is nothing to write: nothing the ledger
-/// records changed. A character with no ledger gets one only when something it records changes.
-fn next_ledger(root: &Path, before: &[Held], after: &[Held], level: u8) -> Result<Option<CharacterLedgerDto>, String> {
+/// records changed. A character with no ledger gets one only when something it records changes, and
+/// `legacy` is then what it already held.
+fn next_ledger(root: &Path, legacy: impl FnOnce() -> Result<CharacterLedgerDto, String>, before: &[Held], after: &[Held], level: u8) -> Result<Option<CharacterLedgerDto>, String> {
     let stored = load_character_ledger_at_root(root)?;
     if stored.is_none() && before == after {
         return Ok(None);
     }
-    let next = in_step(&stored.clone().unwrap_or_else(|| rows_of_a_character_with_no_ledger(before)), after, level);
+    let from = match &stored {
+        Some(stored) => stored.clone(),
+        None => legacy()?,
+    };
+    let next = in_step(&from, after, level);
     Ok((stored.as_ref() != Some(&next)).then_some(next))
 }
 
@@ -165,19 +358,19 @@ fn next_ledger(root: &Path, before: &[Held], after: &[Held], level: u8) -> Resul
 /// the character is saved, so a ledger that cannot be read refuses the change instead of following it.
 pub(crate) fn ledger_after_change_at_root(root: &Path, before: &CharacterInput, after: &CharacterInput) -> Result<Option<CharacterLedgerDto>, String> {
     let custom = load_character_custom_at_root(root)?;
-    next_ledger(root, &held_by(before, &custom), &held_by(after, &custom), character_level(after))
+    next_ledger(root, || rows_of_a_character_with_no_ledger(before, &custom), &held_by(before, &custom), &held_by(after, &custom), character_level(after))
 }
 
 /// [`ledger_after_change_at_root`] for a new character: everything it holds was taken at its level.
 pub(crate) fn ledger_of_a_new_character(root: &Path, input: &CharacterInput) -> Result<Option<CharacterLedgerDto>, String> {
     let custom = load_character_custom_at_root(root)?;
-    next_ledger(root, &[], &held_by(input, &custom), character_level(input))
+    next_ledger(root, || Ok(CharacterLedgerDto::default()), &[], &held_by(input, &custom), character_level(input))
 }
 
 /// What the ledger becomes when the Custom tab's grants go from `previous` to `next`.
 pub(crate) fn ledger_after_custom_change_at_root(root: &Path, previous: &CharacterCustomDto, next: &CharacterCustomDto) -> Result<Option<CharacterLedgerDto>, String> {
     let input = SavedCharacterStore::load(root).map_err(|err| err.message)?.character_input;
-    next_ledger(root, &held_by(&input, previous), &held_by(&input, next), character_level(&input))
+    next_ledger(root, || rows_of_a_character_with_no_ledger(&input, previous), &held_by(&input, previous), &held_by(&input, next), character_level(&input))
 }
 
 pub(crate) fn write_character_ledger_at_root(root: &Path, ledger: &CharacterLedgerDto) -> Result<(), String> {
@@ -210,4 +403,30 @@ pub(crate) fn copy_character_ledger(from: &Path, to: &Path) -> Result<(), String
 pub(crate) fn restore_character_ledger_at_root(root: &Path, ledger: &CharacterLedgerDto, input: &CharacterInput) -> Result<(), String> {
     let custom = load_character_custom_at_root(root)?;
     write_character_ledger_at_root(root, &in_step(ledger, &held_by(input, &custom), character_level(input)))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use codex::rules_core::class_census::load_sweep_fixture;
+    use codex::rules_core::class_seeds::input_for;
+    use codex::rules_core::rules_catalog::class_spell_levels::classes_with_spell_lists;
+
+    /// A class the slots could not read would give every one of its spells no level, in silence.
+    /// Every class with a spell list states what it can cast, by a row or by its known table. Levels
+    /// 10 and 20: a Bard's rows and table stop at 10, and a Paladin has no spells before 4.
+    #[test]
+    fn ledger_migration_every_class_with_a_spell_list_can_place_a_spell() {
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let classes: Vec<&str> = classes_with_spell_lists().into_iter().chain(["class:oracle"]).collect();
+        assert_eq!(classes.len(), 18, "the 17 lists and the Oracle, on the Cleric's: {classes:?}");
+        for class_id in classes {
+            let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
+            let at_levels = [input_for(&fixture, slug, 10), input_for(&fixture, slug, 20)];
+            let bases: Vec<_> = at_levels.iter().map(compute_pilot_base_chassis).collect();
+            let slots = SpellSlots::of(&at_levels, &bases);
+            let can_cast = |spell_level: u8| slots.levels[1].can_cast.contains(&(class_id.to_owned(), spell_level));
+            assert!(can_cast(1), "{class_id} states no 1st-level casting at 20: {:?}", slots.levels[1].can_cast);
+        }
+    }
 }

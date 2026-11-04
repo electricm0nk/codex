@@ -304,6 +304,26 @@ mod prestige_class_features_campaign;
 mod race_seams;
 mod skills_and_saves;
 mod spellcasting;
+
+/// How many spells of each level a class knows at `class_level`, indexed by spell level, for a class
+/// with a spells-known table. `None` is a class with no such table: it casts from a whole list or a
+/// book. An entry of `None` is a spell level the table does not open at that class level.
+pub fn spells_known_table(class_id: &str, class_level: u8) -> Option<Vec<Option<i16>>> {
+    let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
+    Some(match slug {
+        "sorcerer" => class_sorcerer_wizard::sorcerer_spells_known_table(class_level).to_vec(),
+        "oracle" => class_oracle::oracle_spells_known_table(class_level).to_vec(),
+        "bard" => class_bard_skald::bard_spells_known_table(class_level).to_vec(),
+        "skald" => class_bard_skald::skald_spells_known_table(class_level).to_vec(),
+        "inquisitor" => class_inquisitor_warpriest::inquisitor_spells_known_table(class_level).to_vec(),
+        "hunter" => class_hunter_cavalier_swashbuckler::hunter_spells_known_table(class_level).to_vec(),
+        // The Bloodrager's table starts at 1st-level spells, and a 0 is a level not yet open.
+        "bloodrager" => std::iter::once(None)
+            .chain(class_barbarian::bloodrager_spells_known(class_level).unwrap_or_default().into_iter().map(|known| (known > 0).then_some(known)))
+            .collect(),
+        _ => return None,
+    })
+}
 mod untabled_base_class_features;
 // `pub`, not `pub(crate)`: some of the moved items were bare `pub fn`/`pub
 // struct`/... directly in this module before the split (reachable from

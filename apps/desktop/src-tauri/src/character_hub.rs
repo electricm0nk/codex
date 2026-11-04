@@ -22,7 +22,7 @@ use tauri::Manager;
 use uuid::Uuid;
 
 use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
-use crate::character_ledger::{copy_character_ledger, ledger_of_a_new_character, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto};
+use crate::character_ledger::{build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto};
 use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
 use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
@@ -821,7 +821,7 @@ pub(crate) fn sheet_lines_for(
 }
 
 /// The character's feat pools, read through the same package and racial traits as its sheet lines.
-fn feat_budget_for(
+pub(crate) fn feat_budget_for(
     input: &CharacterInput,
     base: &PilotBaseChassisComputation,
 ) -> Result<codex::rules_core::feat_budget::FeatBudget, String> {
@@ -2772,6 +2772,7 @@ pub(crate) fn load_saved_character_at_root(
     root: &Path,
 ) -> Result<LoadSavedCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    build_character_ledger_on_first_load(root, &envelope.character_input);
     let saved_input = envelope.character_input.clone();
     // This copy is what the sheet computes from, and is never saved.
     let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
@@ -10308,12 +10309,299 @@ mod tests {
         }
     }
 
+    // ----- a character saved before there was a ledger gets one on its first load, by slot order -----
+
+    fn ledger_migration_seed(label: &str, id: &str) -> (PathBuf, PathBuf) {
+        let dir = tempdir(label);
+        seed_default_characters_at(&dir, "0.0.0-test").expect("seeding succeeds");
+        let root = characters_root_from_app_data_dir(&dir).join(id);
+        (dir, root)
+    }
+
+    /// Saves a legacy shape directly: no change path runs, so no ledger is written.
+    fn ledger_migration_edit(root: &Path, edit: impl FnOnce(&mut CharacterInput)) {
+        let mut envelope = SavedCharacterStore::load(root).unwrap();
+        edit(&mut envelope.character_input);
+        SavedCharacterStore::save(&envelope, root).unwrap();
+        assert!(load_character_ledger_at_root(root).unwrap().is_none());
+    }
+
+    fn ledger_migration_rows(root: &Path) -> Vec<LedgerEntryDto> {
+        load_saved_character_at_root(root).expect("loads");
+        ledger_stamp_rows(root)
+    }
+
+    fn ledger_migration_levels(rows: &[LedgerEntryDto], kind: LedgerKind) -> Vec<(String, Option<u8>)> {
+        rows.iter().filter(|row| row.kind == kind).map(|row| (row.id.clone(), row.taken_at_level)).collect()
+    }
+
+    fn ledger_migration_named(rows: &[(&str, Option<u8>)]) -> Vec<(String, Option<u8>)> {
+        rows.iter().map(|(id, level)| ((*id).to_owned(), *level)).collect()
+    }
+
+    fn ledger_migration_spells(input: &mut CharacterInput, class_id: &str, spells: &[&str]) {
+        input.chosen.spells_selected = spells
+            .iter()
+            .map(|spell| SpellSelection { spell_id: (*spell).to_owned(), source_class_id: class_id.to_owned(), acquisition_mode: AcquisitionMode::Known })
+            .collect();
+    }
+
+    /// Every file beside the character, by name, with its digest.
+    fn ledger_migration_digests(root: &Path) -> BTreeMap<String, String> {
+        std::fs::read_dir(root)
+            .unwrap()
+            .map(|entry| {
+                let path = entry.unwrap().path();
+                let digest: String = <sha2::Sha256 as sha2::Digest>::digest(std::fs::read(&path).unwrap()).iter().map(|byte| format!("{byte:02x}")).collect();
+                (path.file_name().unwrap().to_string_lossy().into_owned(), digest)
+            })
+            .collect()
+    }
+
+    #[test]
+    fn ledger_migration_elowen_runs_twice_to_the_same_file_and_reads_her_files_without_writing_them() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-elowen", SECOND_SEED_CHARACTER_ID);
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none(), "a starter is a character saved with no ledger");
+        let before = ledger_migration_digests(&root);
+
+        let rows = ledger_migration_rows(&root);
+        let mut after = ledger_migration_digests(&root);
+        let first = std::fs::read(root.join("ledger.json")).expect("the first load wrote it");
+        assert!(after.remove("ledger.json").is_some());
+        assert_eq!(after, before, "every file the character already had is byte for byte what it was");
+
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), first, "a second load leaves it alone");
+        std::fs::remove_file(root.join("ledger.json")).unwrap();
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), first, "built again from nothing, the same bytes");
+
+        assert!(rows.iter().all(|row| row.assigned_on_upgrade), "{rows:?}");
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Feat),
+            ledger_migration_named(&[("feat:power_attack", Some(1)), ("feat:dodge", Some(1)), ("feat:weapon_focus", Some(1))]),
+        );
+        // Light is a cantrip; Fireball is a 3rd-level spell, which a Wizard reaches at 5th.
+        assert_eq!(ledger_migration_levels(&rows, LedgerKind::Spell), ledger_migration_named(&[("Light", Some(1)), ("Fireball", Some(5))]));
+
+        // (2 wizard + 4 Int + 1 human) a level: 35 ranks, 7 at each of 5 levels, all placed.
+        let ranks = ledger_migration_levels(&rows, LedgerKind::SkillRank);
+        assert_eq!(ranks.len(), 35);
+        for level in 1..=5u8 {
+            assert_eq!(ranks.iter().filter(|(_, at)| *at == Some(level)).count(), 7, "level {level}: {ranks:?}");
+        }
+        // Ranks never pass the character's level at the time (CRB p.87).
+        let spellcraft: Vec<_> = ranks.iter().filter(|(id, _)| id == "skill:spellcraft").map(|(_, at)| at.unwrap()).collect();
+        assert_eq!(spellcraft, [1, 2, 3, 4, 5]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_multiclass_character_takes_its_classes_in_saved_order() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-tomas", THIRD_SEED_CHARACTER_ID);
+        let rows = ledger_migration_rows(&root);
+        // A level feat and the human's at 1, the next level feat at 3. The Fighter's pool is level 4's.
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Feat),
+            ledger_migration_named(&[("feat:power_attack", Some(1)), ("feat:dodge", Some(1)), ("feat:weapon_focus", Some(3))]),
+        );
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Spell),
+            ledger_migration_named(&[("Cure Light Wounds", Some(1)), ("Spiritual Weapon", Some(3))]),
+        );
+        let ranks = ledger_migration_levels(&rows, LedgerKind::SkillRank);
+        assert_eq!(ranks.len(), 15);
+        assert!(ranks.iter().all(|(_, at)| at.is_some()), "(2 + 0 + 1) a level across both classes: {ranks:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_feats_past_the_budget_get_no_level_and_feed_the_badge() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-over", SECOND_SEED_CHARACTER_ID);
+        let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:iron_will", "feat:great_fortitude"];
+        ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+        let rows = ledger_migration_rows(&root);
+        // Wizard 5, human: two at 1, one at 3, one at 5, and the Wizard's bonus feat at 5, whose record
+        // states no restriction (E1.1's receipt). Weapon Focus takes no slot (it is the posture's).
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Feat),
+            ledger_migration_named(&[
+                ("feat:power_attack", Some(1)),
+                ("feat:dodge", Some(1)),
+                ("feat:weapon_focus", Some(1)),
+                ("feat:toughness", Some(3)),
+                ("feat:endurance", Some(5)),
+                ("feat:iron_will", Some(5)),
+                ("feat:great_fortitude", None),
+            ]),
+        );
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        let budget = feat_budget_for(&input, &compute_pilot_base_chassis(&input)).unwrap();
+        assert_eq!(budget.over_by(), 1, "the row with no level is the feat the badge counts");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_class_pool_slot_opens_at_its_grant_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-pool", SECOND_SEED_CHARACTER_ID);
+        let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:empower_spell"];
+        ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+        let rows = ledger_migration_rows(&root);
+        // Level 5 grants one level feat; the second place at 5 is the Wizard's bonus feat.
+        let at_five: Vec<_> = ledger_migration_levels(&rows, LedgerKind::Feat).into_iter().filter(|(_, at)| *at == Some(5)).map(|(id, _)| id).collect();
+        assert_eq!(at_five, ["feat:endurance", "feat:empower_spell"]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_ranks_past_the_budget_get_no_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-ranks", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&root, |input| input.chosen.skill_allocations.push(SkillAllocation { skill_id: "skill:perception".to_owned(), ranks: 5 }));
+        let ranks = ledger_migration_levels(&ledger_migration_rows(&root), LedgerKind::SkillRank);
+        let unplaced: Vec<_> = ranks.iter().filter(|(_, at)| at.is_none()).map(|(id, _)| id.as_str()).collect();
+        assert_eq!(unplaced, ["skill:perception"; 5], "35 fit, in saved order; the last 5 do not");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// CRB p.72 Table 3-15: a Sorcerer knows 2 first-level spells at 1, 3 at 3, 4 at 5; 1 second-level at 4, 2 at 5.
+    #[test]
+    fn ledger_migration_a_spontaneous_caster_fills_its_known_table() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-known", SECOND_SEED_CHARACTER_ID);
+        let sorcerer = "class:sorcerer";
+        ledger_migration_edit(&root, |input| {
+            input.chosen.class_levels[0].class_id = sorcerer.to_owned();
+            ledger_migration_spells(input, sorcerer, &["Light", "Mage Armor", "Shield", "Grease", "Sleep", "Color Spray", "Invisibility", "Web", "Knock"]);
+        });
+        let rows = ledger_migration_rows(&root);
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Spell),
+            ledger_migration_named(&[
+                ("Light", Some(1)),
+                ("Mage Armor", Some(1)),
+                ("Shield", Some(1)),
+                ("Grease", Some(3)),
+                ("Sleep", Some(5)),
+                ("Color Spray", None),
+                ("Invisibility", Some(4)),
+                ("Web", Some(5)),
+                ("Knock", None),
+            ]),
+        );
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A spellbook's rows bound "this level and higher"; a spell above what the class casts has no slot.
+    #[test]
+    fn ledger_migration_a_wizard_fills_her_spellbook_and_a_spell_she_cannot_cast_has_no_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-book", SECOND_SEED_CHARACTER_ID);
+        let wizard = "class:wizard";
+        ledger_migration_edit(&root, |input| ledger_migration_spells(input, wizard, &["Fireball", "Fly", "Haste", "Mage Armor", "Unbound Cantrip Nobody Printed"]));
+        let rows = ledger_migration_rows(&root);
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Spell),
+            ledger_migration_named(&[
+                ("Fireball", Some(5)),
+                ("Fly", Some(5)),
+                ("Haste", None),
+                ("Mage Armor", Some(1)),
+                ("Unbound Cantrip Nobody Printed", None),
+            ]),
+            "two 3rd-level pages at Wizard 5, Int 18 (spellbook_size.spell_level_3_and_higher)",
+        );
+
+        let (young_dir, young) = ledger_migration_seed("ledger-migration-young", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&young, |input| {
+            input.chosen.class_levels[0].level = 1;
+            ledger_migration_spells(input, wizard, &["Fireball"]);
+        });
+        assert_eq!(ledger_migration_levels(&ledger_migration_rows(&young), LedgerKind::Spell), ledger_migration_named(&[("Fireball", None)]));
+        for dir in [&dir, &young_dir] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn ledger_migration_ability_increases_fall_at_every_fourth_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-ability", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&root, |input| input.chosen.class_levels[0].level = 9);
+        let custom = CharacterCustomDto { grants: vec![grant("boon", "ability:strength", 3), grant("curse", "ability:dexterity", -2)], ..CharacterCustomDto::default() };
+        std::fs::write(root.join("custom.json"), serde_json::to_string(&custom).unwrap()).unwrap();
+        let rows = ledger_migration_rows(&root);
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::AbilityIncrease),
+            ledger_migration_named(&[("ability:strength", Some(4)), ("ability:strength", Some(8)), ("ability:strength", None)]),
+        );
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_ledger_the_character_has_is_not_rebuilt_and_a_broken_one_does_not_stop_the_sheet() {
+        let root = ledger_stamp_new_fighter("ledger-migration-kept");
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:endurance", None, LEDGER_AT).unwrap());
+        let stamped = std::fs::read(root.join("ledger.json")).unwrap();
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), stamped, "stamped rows are never reassigned");
+
+        std::fs::write(root.join("ledger.json"), "not json").unwrap();
+        load_saved_character_at_root(&root).expect("no number on the sheet reads the ledger");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), b"not json", "a load does not overwrite what it cannot read");
+
+        // A custom file it cannot read would lose the ability rows, so nothing is built until it can be.
+        std::fs::remove_file(root.join("ledger.json")).unwrap();
+        std::fs::write(root.join("custom.json"), "not json").unwrap();
+        load_saved_character_at_root(&root).expect("the sheet already reads such a file as empty");
+        assert!(!root.join("ledger.json").exists());
+        std::fs::remove_file(root.join("custom.json")).unwrap();
+        load_saved_character_at_root(&root).expect("loads");
+        assert!(root.join("ledger.json").exists(), "the next load builds it");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The command's own path, and only Pathfinder: the ledger is PF only.
+    #[test]
+    fn ledger_migration_runs_on_the_adapter_load_of_a_pathfinder_character_and_no_other() {
+        let dir = tempdir("ledger-migration-adapter");
+        seed_default_characters_at(&dir, "0.0.0-test").expect("seeding succeeds");
+        let (mut pathfinder, mut other) = (0, 0);
+        for entry in std::fs::read_dir(characters_root_from_app_data_dir(&dir)).unwrap() {
+            let root = entry.unwrap().path();
+            if !root.is_dir() {
+                continue;
+            }
+            crate::rule_system_adapter::load_saved_character_via_envelope(&root).expect("loads");
+            if codex::saved_character::local_store::peek_game_system(&root).unwrap() == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() {
+                other += 1;
+                assert!(!root.join("ledger.json").exists(), "{root:?}");
+            } else {
+                pathfinder += 1;
+                assert!(!ledger_stamp_rows(&root).is_empty(), "{root:?}");
+            }
+        }
+        assert_eq!((pathfinder, other), (3, 3), "the three PF starters and the three CPR starters");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_change_before_any_load_builds_the_same_rows_and_stamps_itself() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-change", SECOND_SEED_CHARACTER_ID);
+        let (load_dir, loaded) = ledger_migration_seed("ledger-migration-change-load", SECOND_SEED_CHARACTER_ID);
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        let changed = ledger_stamp_rows(&root);
+        let toughness = changed.iter().find(|row| row.id == "feat:toughness").unwrap();
+        assert_eq!((toughness.taken_at_level, toughness.assigned_on_upgrade), (Some(5), false), "made now, at the level she is");
+        let built = ledger_migration_rows(&loaded);
+        let without: Vec<_> = changed.iter().filter(|row| row.id != "feat:toughness").cloned().collect();
+        assert_eq!(without, built, "a change and a load agree on what nothing recorded");
+        for dir in [&dir, &load_dir] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
     #[test]
     fn ledger_stamp_a_character_with_no_ledger_file_still_loads_and_no_schema_moves() {
         let (dir, root) = enhancement_rows_aldric("ledger-legacy");
         assert!(load_character_ledger_at_root(&root).unwrap().is_none(), "a starter is a character saved with no ledger");
-        let loaded = load_saved_character_at_root(&root).expect("loads");
-        assert!(loaded.snapshot.is_some(), "{:?}", loaded.diagnostics);
         let plain = export_character_to_json(&root).unwrap();
         assert!(!plain.contains("\"ledger\""), "a character with no ledger writes the file it always wrote");
 
@@ -10330,13 +10618,13 @@ mod tests {
         copy_character_ledger(&root, &clone_root).expect("no file is no copy");
         assert!(load_character_ledger_at_root(&clone_root).unwrap().is_none());
 
-        // The first new choice keeps what was already held, with no level claimed for it, and a stamp for itself.
+        // The first new choice builds what was already held by slot order, and stamps itself.
         let held_before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats.len();
         ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
         let rows = ledger_stamp_rows(&root);
         let legacy: Vec<_> = rows.iter().filter(|row| row.kind == LedgerKind::Feat && row.id != "feat:toughness").collect();
         assert_eq!(legacy.len(), held_before, "{rows:?}");
-        assert!(legacy.iter().all(|row| row.taken_at_level.is_none() && row.assigned_on_upgrade), "{legacy:?}");
+        assert!(legacy.iter().all(|row| row.taken_at_level.is_some() && row.assigned_on_upgrade), "{legacy:?}");
         assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), [Some(3)], "Aldric is a Fighter 3");
 
         // Engine input and saved character are as they were: the saved files do not know the ledger.

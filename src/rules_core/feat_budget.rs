@@ -201,29 +201,31 @@ fn display_rank(pool: &FeatPool) -> u8 {
     }
 }
 
-/// A maximum assignment of feats to pool capacity (augmenting paths): `None` for a feat left out.
-/// Pools are tried in slice order, so earlier pools fill first.
-fn assign(pools: &[FeatPool], held: &[HeldFeat]) -> Vec<Option<usize>> {
-    fn place(feat: usize, pools: &[FeatPool], held: &[HeldFeat], seen: &mut [bool], slots: &mut [Option<usize>]) -> bool {
-        for (index, pool) in pools.iter().enumerate() {
-            if seen[index] || !pool.admits(&held[feat]) {
-                continue;
-            }
-            seen[index] = true;
-            let charged = slots.iter().filter(|slot| **slot == Some(index)).count() as i64;
-            if charged < pool.granted {
+/// Places `feat`, moving a feat already placed when that makes room (one augmenting path).
+fn place(feat: usize, pools: &[FeatPool], held: &[HeldFeat], seen: &mut [bool], slots: &mut [Option<usize>]) -> bool {
+    for (index, pool) in pools.iter().enumerate() {
+        if seen[index] || !pool.admits(&held[feat]) {
+            continue;
+        }
+        seen[index] = true;
+        let charged = slots.iter().filter(|slot| **slot == Some(index)).count() as i64;
+        if charged < pool.granted {
+            slots[feat] = Some(index);
+            return true;
+        }
+        for other in 0..held.len() {
+            if slots[other] == Some(index) && place(other, pools, held, seen, slots) {
                 slots[feat] = Some(index);
                 return true;
             }
-            for other in 0..held.len() {
-                if slots[other] == Some(index) && place(other, pools, held, seen, slots) {
-                    slots[feat] = Some(index);
-                    return true;
-                }
-            }
         }
-        false
     }
+    false
+}
+
+/// A maximum assignment of feats to pool capacity (augmenting paths): `None` for a feat left out.
+/// Pools are tried in slice order, so earlier pools fill first.
+fn assign(pools: &[FeatPool], held: &[HeldFeat]) -> Vec<Option<usize>> {
     let mut slots = vec![None; held.len()];
     for feat in 0..held.len() {
         let mut seen = vec![false; pools.len()];
@@ -345,6 +347,44 @@ pub fn feat_budget(
     FeatBudget::settled(pools.into_values().collect(), held_feats)
 }
 
+/// The character level of the pool slot each entry of `selected_feats` fills, given the character's
+/// budget at each of its levels from 1 up (`by_level`). `None` is a feat no assignment fits: as many
+/// as [`FeatBudget::over_by`], the latest in saved order.
+///
+/// A slot opens where its pool's grant rises. Slots are tried earliest first, so saved order fills
+/// them in order, and a feat moves to a later slot when that lets a later feat fit. The feat the
+/// combat baseline requires takes no slot; it was held from the character's first level.
+pub fn feat_slot_levels(selected_feats: &[String], by_level: &[FeatBudget]) -> Vec<Option<u8>> {
+    let Some(now) = by_level.last() else { return vec![None; selected_feats.len()] };
+    let mut slots: Vec<(usize, FeatPool)> = Vec::new();
+    for (index, budget) in by_level.iter().enumerate() {
+        for pool in &budget.pools {
+            let earlier = index.checked_sub(1).and_then(|previous| by_level[previous].pool(&pool.id)).map_or(0, |p| p.granted);
+            slots.extend((earlier..pool.granted).map(|_| (index, FeatPool { granted: 1, spent: 0, ..pool.clone() })));
+        }
+    }
+    slots.sort_by_key(|(index, pool)| (*index, fill_rank(pool)));
+    let pools: Vec<FeatPool> = slots.iter().map(|(_, pool)| pool.clone()).collect();
+    let mut filled: Vec<Option<usize>> = vec![None; now.held.len()];
+    for feat in 0..now.held.len() {
+        // The earliest free slot, so an earlier feat keeps its place until a later one cannot fit without moving it.
+        let free = (0..pools.len()).find(|slot| !filled.contains(&Some(*slot)) && pools[*slot].admits(&now.held[feat]));
+        if free.is_some() {
+            filled[feat] = free;
+        } else {
+            place(feat, &pools, &now.held, &mut vec![false; pools.len()], &mut filled);
+        }
+    }
+    let mut charged = filled.into_iter().map(|slot| slot.and_then(|slot| u8::try_from(slots[slot].0 + 1).ok()));
+
+    let exempt = if now.pool(FIGHTER_BONUS_FEAT_POOL).is_none() {
+        selected_feats.iter().position(|feat| feat == POSTURE_FEAT_TOKEN)
+    } else {
+        None
+    };
+    (0..selected_feats.len()).map(|index| if exempt == Some(index) { Some(1) } else { charged.next().flatten() }).collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -374,6 +414,35 @@ mod tests {
     }
 
     const HUMAN: &[&str] = &["Human ~ Bonus Feat"];
+
+    fn slot_levels(class: &str, level: u8, race_traits: &[&str], feats: &[&str]) -> Vec<Option<u8>> {
+        let saved: Vec<String> = feats.iter().map(|feat| (*feat).to_owned()).collect();
+        let by_level: Vec<FeatBudget> = (1..=level).map(|at| budget_of(class, at, race_traits, feats)).collect();
+        let levels = feat_slot_levels(&saved, &by_level);
+        let unplaced = levels.iter().filter(|level| level.is_none()).count() as i64;
+        assert_eq!(unplaced, by_level.last().unwrap().over_by(), "{levels:?}");
+        levels
+    }
+
+    /// CRB p.55, p.112: a level slot and a Fighter slot at 1, a Fighter slot at 2. First-come would give
+    /// Weapon Focus the open slot and leave Toughness, not a combat feat, nowhere to go. Which combat
+    /// feat moves up is the assignment's choice; that all three fit is the rule.
+    #[test]
+    fn ledger_migration_a_feat_moves_to_a_later_slot_when_that_lets_a_later_feat_fit() {
+        let feats = ["feat:power_attack", "feat:weapon_focus", "feat:toughness"];
+        assert_eq!(slot_levels("fighter", 2, &[], &feats), [Some(2), Some(1), Some(1)]);
+    }
+
+    #[test]
+    fn ledger_migration_slots_open_at_their_grant_levels_and_the_rest_have_no_level() {
+        // Human Fighter 3: racial, level and Fighter at 1, Fighter at 2, level at 3.
+        let feats = ["feat:power_attack", "feat:cleave", "feat:dodge", "feat:mobility", "feat:weapon_focus", "feat:toughness"];
+        assert_eq!(slot_levels("fighter", 3, HUMAN, &feats), [Some(1), Some(1), Some(1), Some(2), Some(3), None]);
+        // A Rogue holds Weapon Focus by the baseline, not on a slot, so the next feat still has level 1's.
+        let saved = ["feat:weapon_focus", "feat:toughness", "feat:endurance"];
+        assert_eq!(slot_levels("rogue", 3, &[], &saved), [Some(1), Some(1), Some(3)]);
+        assert_eq!(feat_slot_levels(&["feat:toughness".to_owned()], &[]), [None], "a character with no level has no slot");
+    }
 
     /// CRB p.55 (Fighter), p.21 (Human), p.112 (a feat at every odd level).
     #[test]
