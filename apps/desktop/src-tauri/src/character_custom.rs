@@ -21,6 +21,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
+use crate::character_ledger::{ledger_after_custom_change_at_root, write_character_ledger_at_root};
 use crate::character_hub::{
     worn_stock_slots, CreateCharacterResponse, DiagnosticDto, ExplanationDto, LoadSavedCharacterResponse, ResolvedEquipmentEffectDto,
     WeaponFeatEffectDto,
@@ -657,7 +658,12 @@ pub(crate) fn save_character_custom_at_root(root: &Path, custom: &CharacterCusto
         }
     }
 
-    write_custom(root, custom)
+    let ledger = ledger_after_custom_change_at_root(root, &previous, custom)?;
+    write_custom(root, custom)?;
+    if let Some(ledger) = ledger {
+        write_character_ledger_at_root(root, &ledger)?;
+    }
+    Ok(())
 }
 
 #[derive(Debug, Clone, Deserialize)]

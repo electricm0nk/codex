@@ -78,6 +78,7 @@ use crate::character_hub::{
     summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
+use crate::character_ledger::{ledger_after_change_at_root, write_character_ledger_at_root};
 use crate::characterHub::appendToCharacter::{
     append_to_character_at_root, AppendToCharacterResponse, ItemToAppendDto,
 };
@@ -1068,6 +1069,7 @@ pub(crate) fn mutate_saved_character_at_root(
     mutate: impl FnOnce(&mut CharacterInput),
 ) -> Result<CreateCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let before = envelope.character_input.clone();
 
     mutate(&mut envelope.character_input);
 
@@ -1087,7 +1089,11 @@ pub(crate) fn mutate_saved_character_at_root(
     envelope.latest_authoritative_revision_ref = next_revision_id;
     envelope.saved_at = saved_at.to_owned();
 
+    let ledger = ledger_after_change_at_root(root, &before, &envelope.character_input)?;
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if let Some(ledger) = ledger {
+        write_character_ledger_at_root(root, &ledger)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),

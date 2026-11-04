@@ -22,6 +22,7 @@ use tauri::Manager;
 use uuid::Uuid;
 
 use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
+use crate::character_ledger::{copy_character_ledger, ledger_of_a_new_character, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto};
 use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
 use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
@@ -2125,7 +2126,11 @@ pub(crate) fn create_character_at_root(
         character_input,
     };
 
+    let ledger = ledger_of_a_new_character(root, &envelope.character_input)?;
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if let Some(ledger) = ledger {
+        write_character_ledger_at_root(root, &ledger)?;
+    }
     if !request.hit_point_levels.is_empty() {
         save_character_hit_points_at_root(root, &request.hit_point_levels)?;
     }
@@ -2210,6 +2215,7 @@ pub fn clone_character(
     SavedCharacterStore::save(&envelope, &new_root).map_err(|err| err.message)?;
 
     copy_character_custom(&source_root, &new_root)?;
+    copy_character_ledger(&source_root, &new_root)?;
 
     // Best-effort: carry the portrait over too, if the source has one.
     let source_portrait = source_root.join(PORTRAIT_FILE_NAME);
@@ -5918,6 +5924,9 @@ pub struct ImportedCharacterFileDto {
     /// `custom.json`, when the character has one. A file with none is the file it always was.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub custom: Option<CharacterCustomDto>,
+    /// `ledger.json`, when the character has one. An old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ledger: Option<CharacterLedgerDto>,
 }
 
 fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
@@ -6125,6 +6134,9 @@ fn import_character_from_json(
     if let Some(custom) = &parsed.custom {
         restore_character_custom_at_root(root, custom)?;
     }
+    if let Some(ledger) = &parsed.ledger {
+        restore_character_ledger_at_root(root, ledger, &envelope.character_input)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
@@ -6193,6 +6205,7 @@ fn export_character_to_json(root: &Path) -> Result<String, String> {
         display_label: envelope.display_label,
         character_input: character_input_to_dto(&envelope.character_input),
         custom: (custom != CharacterCustomDto::default()).then_some(custom),
+        ledger: load_character_ledger_at_root(root)?,
     };
 
     serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
@@ -8794,6 +8807,7 @@ mod tests {
     // ---- Custom: GM grants and house-rule records (custom.json) -------------------------------------
 
     use crate::character_custom::{save_character_custom_at_root, CustomBonusDto, CustomGrantDto, CustomRecordDto, CustomStatDto};
+    use crate::character_ledger::{LedgerEntryDto, LedgerKind};
 
     fn grant(id: &str, target: &str, value: i32) -> CustomGrantDto {
         CustomGrantDto { id: id.to_owned(), label: format!("grant {id}"), target: target.to_owned(), value, reason: "a god's boon".to_owned() }
@@ -10092,6 +10106,253 @@ mod tests {
         assert_eq!(carried, none, "carried adds 0");
         assert_eq!(cords, (346.0, 693.0, 1040.0, 19), "Strength 27's row, and the score does not move");
         assert_eq!(belt, (466.0, 933.0, 1400.0, 19), "four times Medium's heavy load, and its tiers");
+    }
+
+    // ----- the level ledger follows every add and remove -----
+
+    fn ledger_stamp_rows(root: &Path) -> Vec<LedgerEntryDto> {
+        load_character_ledger_at_root(root).expect("the ledger reads").expect("a ledger file").entries
+    }
+
+    /// The levels of the rows for one thing, in file order.
+    fn ledger_stamp_levels(root: &Path, kind: LedgerKind, id: &str) -> Vec<Option<u8>> {
+        ledger_stamp_rows(root).iter().filter(|row| row.kind == kind && row.id == id).map(|row| row.taken_at_level).collect()
+    }
+
+    fn ledger_stamp_saved(response: CreateCharacterResponse) {
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    /// A Human Fighter 1 made the way a player makes one.
+    fn ledger_stamp_new_fighter(label: &str) -> PathBuf {
+        let root = tempdir(label);
+        ledger_stamp_saved(create_character_at_root(&root, &request_for("race:human", 1), "0.0.0-test".to_owned()).expect("creates"));
+        root
+    }
+
+    const LEDGER_AT: &str = "2026-11-03T00:00:00Z";
+
+    /// The three ranks the pilot's skill slice requires, and `acrobatics` ranks of a fourth.
+    fn ledger_stamp_ranks(acrobatics: u8) -> Vec<SkillAllocation> {
+        [("skill:climb", 1), ("skill:swim", 1), ("skill:intimidate", 1), ("skill:acrobatics", acrobatics)]
+            .into_iter()
+            .map(|(skill, ranks)| SkillAllocation { skill_id: skill.to_owned(), ranks })
+            .collect()
+    }
+
+    #[test]
+    fn ledger_stamp_a_new_character_holds_a_row_for_all_it_took_at_its_level() {
+        let root = ledger_stamp_new_fighter("ledger-new");
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        let rows = ledger_stamp_rows(&root);
+        let feats = rows.iter().filter(|row| row.kind == LedgerKind::Feat).count();
+        assert_eq!(feats, input.chosen.selected_feats.len(), "{rows:?}");
+        assert!(feats > 0, "a Fighter 1 is seeded with feats");
+        assert!(rows.iter().all(|row| row.taken_at_level == Some(1) && !row.assigned_on_upgrade), "{rows:?}");
+        std::fs::remove_dir_all(&root).ok();
+
+        let root = tempdir("ledger-new-levels");
+        let mut request = request_for("race:human", 1);
+        request.additional_levels = vec![FIGHTER_CLASS_ID.to_owned()];
+        ledger_stamp_saved(create_character_at_root(&root, &request, "0.0.0-test".to_owned()).expect("creates"));
+        assert!(ledger_stamp_rows(&root).iter().all(|row| row.taken_at_level == Some(2)), "made at 2, taken at 2");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_every_add_path_stamps_the_level_the_character_is_now() {
+        let root = ledger_stamp_new_fighter("ledger-adds");
+
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), [Some(1)]);
+
+        // A level-up and then its feat, as the sheet does it: two calls, and the feat is the new level's.
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:endurance", None, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:endurance"), [Some(2)]);
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), [Some(1)], "an earlier row keeps its level");
+
+        ledger_stamp_saved(add_spell_selection_at_root(&root, "Mage Armor", "class:wizard", AcquisitionMode::Known, LEDGER_AT).unwrap());
+        ledger_stamp_saved(record_and_prepare_spell_selection_at_root(&root, "Shield", "class:wizard", LEDGER_AT).unwrap());
+        // Preparing a spell already learned learns nothing.
+        ledger_stamp_saved(add_spell_selection_at_root(&root, "Mage Armor", "class:wizard", AcquisitionMode::Prepared, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Spell, "Mage Armor"), [Some(2)]);
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Spell, "Shield"), [Some(2)], "known and prepared is one spell learned");
+        let shield = ledger_stamp_rows(&root).into_iter().find(|row| row.id == "Shield").unwrap();
+        assert_eq!(shield.target.as_deref(), Some("class:wizard"));
+
+        // Skill ranks arrive wholesale: only the ranks that are new are this level's.
+        ledger_stamp_saved(set_skill_allocations_at_root(&root, ledger_stamp_ranks(1), LEDGER_AT).unwrap());
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), Some(ledger_stamp_ranks(2)), LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::SkillRank, "skill:acrobatics"), [Some(2), Some(3)]);
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::SkillRank, "skill:swim"), [Some(1)], "a rank already held keeps its level");
+
+        // An ability increase is written on the Custom tab, the sheet's one way to raise a score.
+        let custom = CharacterCustomDto { grants: vec![grant("level-4", "ability:wisdom", 1)], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), [Some(3)]);
+
+        // Any other caller of the one mutation path, the appending adapter among them.
+        ledger_stamp_saved(mutate_saved_character_at_root(&root, LEDGER_AT, |input| input.chosen.selected_feats.push("feat:alertness".to_owned())).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:alertness"), [Some(3)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_a_chooser_feat_records_each_copys_target() {
+        let root = ledger_stamp_new_fighter("ledger-targets");
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:skill_focus", Some("Stealth"), LEDGER_AT).unwrap());
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:skill_focus", Some("Climb"), LEDGER_AT).unwrap());
+        let focus = |root: &Path| {
+            ledger_stamp_rows(root).into_iter().filter(|row| row.id == "feat:skill_focus").map(|row| (row.target, row.taken_at_level)).collect::<Vec<_>>()
+        };
+        assert_eq!(focus(&root), [(Some("Stealth".to_owned()), Some(1)), (Some("Climb".to_owned()), Some(2))]);
+
+        // Taking back the first leaves the second's row and level.
+        ledger_stamp_saved(remove_feat_selection_at_root(&root, "feat:skill_focus", Some("Stealth"), LEDGER_AT).unwrap());
+        assert_eq!(focus(&root), [(Some("Climb".to_owned()), Some(2))]);
+
+        // A feat whose target changes is the same feat: the level it was taken at stands.
+        ledger_stamp_saved(mutate_saved_character_at_root(&root, LEDGER_AT, |input| {
+            input.chosen.selected_choices.retain(|choice| !choice.selection_id.contains("Climb"));
+        }).unwrap());
+        assert_eq!(focus(&root), [(None, Some(2))]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_every_remove_path_takes_its_row_and_only_its_row() {
+        let root = ledger_stamp_new_fighter("ledger-removes");
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_spell_selection_at_root(&root, "Mage Armor", "class:wizard", AcquisitionMode::Known, LEDGER_AT).unwrap());
+        ledger_stamp_saved(set_skill_allocations_at_root(&root, ledger_stamp_ranks(1), LEDGER_AT).unwrap());
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), Some(ledger_stamp_ranks(2)), LEDGER_AT).unwrap());
+        let two_grants = CharacterCustomDto { grants: vec![grant("boon", "ability:wisdom", 2), grant("curse", "ability:strength", -2)], ..Default::default() };
+        save_character_custom_at_root(&root, &two_grants, LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), [Some(2), Some(2)], "one row a point");
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:strength"), [], "a penalty is no increase");
+        let others = ledger_stamp_rows(&root).into_iter().filter(|row| row.kind == LedgerKind::Feat && row.id != "feat:toughness").collect::<Vec<_>>();
+        assert!(!others.is_empty());
+
+        ledger_stamp_saved(remove_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), []);
+        ledger_stamp_saved(remove_spell_selection_at_root(&root, "Mage Armor", "class:wizard", LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Spell, "Mage Armor"), []);
+        ledger_stamp_saved(set_skill_allocations_at_root(&root, ledger_stamp_ranks(1), LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::SkillRank, "skill:acrobatics"), [Some(1)], "the later rank goes first");
+
+        let one_point = CharacterCustomDto { grants: vec![grant("boon", "ability:wisdom", 1)], ..Default::default() };
+        save_character_custom_at_root(&root, &one_point, LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), [Some(2)]);
+        // Lifting the curse raises the score and is no increase either.
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:strength"), []);
+        save_character_custom_at_root(&root, &CharacterCustomDto::default(), LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), []);
+
+        let kept = ledger_stamp_rows(&root).into_iter().filter(|row| row.kind == LedgerKind::Feat).collect::<Vec<_>>();
+        assert_eq!(kept, others, "the other feats' rows did not move");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_a_change_the_character_refuses_stamps_nothing() {
+        let root = ledger_stamp_new_fighter("ledger-refused");
+        let before = std::fs::read(root.join("ledger.json")).unwrap();
+        let response = mutate_saved_character_at_root(&root, LEDGER_AT, |input| {
+            input.chosen.selected_feats.push("feat:toughness".to_owned());
+            input.chosen.class_levels[0].level = 0;
+        })
+        .unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Blocked { .. }), "{response:?}");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), before);
+
+        // A ledger that cannot be read refuses the change: the character does not move without it.
+        std::fs::write(root.join("ledger.json"), "not json").unwrap();
+        let saved_before = SavedCharacterStore::load(&root).unwrap().revision_id;
+        let refused = add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap_err();
+        assert!(refused.contains("invalid ledger JSON"), "{refused}");
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().revision_id, saved_before);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_a_clone_and_a_round_trip_carry_it() {
+        let root = ledger_stamp_new_fighter("ledger-carry");
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        let rows = ledger_stamp_rows(&root);
+
+        let clone_root = tempdir("ledger-carry-clone");
+        copy_character_ledger(&root, &clone_root).expect("copies");
+        assert_eq!(ledger_stamp_rows(&clone_root), rows);
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("ledger-carry-import");
+        ledger_stamp_saved(import_character_from_json(&file, &import_root, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert_eq!(ledger_stamp_rows(&import_root), rows, "levels survive the file, not stamped afresh at the import");
+
+        // A file edited by hand is held to the character it describes.
+        let mut parsed: serde_json::Value = serde_json::from_str(&file).unwrap();
+        let entries = parsed["ledger"]["entries"].as_array_mut().unwrap();
+        let toughness = entries.iter().position(|row| row["id"] == "feat:toughness").unwrap();
+        entries.remove(toughness);
+        entries.push(serde_json::json!({"kind": "feat", "id": "feat:never_held", "taken_at_level": 1, "assigned_on_upgrade": false}));
+        let edited_root = tempdir("ledger-carry-edited");
+        ledger_stamp_saved(import_character_from_json(&parsed.to_string(), &edited_root, "edited", LEDGER_AT, "0.0.0-test").unwrap());
+        assert_eq!(ledger_stamp_levels(&edited_root, LedgerKind::Feat, "feat:never_held"), []);
+        assert_eq!(ledger_stamp_levels(&edited_root, LedgerKind::Feat, "feat:toughness"), [Some(2)]);
+
+        for dir in [&root, &clone_root, &import_root, &edited_root] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn ledger_stamp_a_character_with_no_ledger_file_still_loads_and_no_schema_moves() {
+        let (dir, root) = enhancement_rows_aldric("ledger-legacy");
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none(), "a starter is a character saved with no ledger");
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert!(loaded.snapshot.is_some(), "{:?}", loaded.diagnostics);
+        let plain = export_character_to_json(&root).unwrap();
+        assert!(!plain.contains("\"ledger\""), "a character with no ledger writes the file it always wrote");
+
+        // A change to something the ledger does not record writes none.
+        ledger_stamp_saved(mutate_saved_character_at_root(&root, LEDGER_AT, |_| {}).unwrap());
+        worn_vs_carried_hold(&root, "Helm of Brilliance", ActiveState::SelectedInactive);
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none());
+
+        // An import of that file carries none either, and copying nothing is no error.
+        let import_root = tempdir("ledger-legacy-import");
+        ledger_stamp_saved(import_character_from_json(&plain, &import_root, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert!(load_character_ledger_at_root(&import_root).unwrap().is_none());
+        let clone_root = tempdir("ledger-legacy-clone");
+        copy_character_ledger(&root, &clone_root).expect("no file is no copy");
+        assert!(load_character_ledger_at_root(&clone_root).unwrap().is_none());
+
+        // The first new choice keeps what was already held, with no level claimed for it, and a stamp for itself.
+        let held_before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats.len();
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        let rows = ledger_stamp_rows(&root);
+        let legacy: Vec<_> = rows.iter().filter(|row| row.kind == LedgerKind::Feat && row.id != "feat:toughness").collect();
+        assert_eq!(legacy.len(), held_before, "{rows:?}");
+        assert!(legacy.iter().all(|row| row.taken_at_level.is_none() && row.assigned_on_upgrade), "{legacy:?}");
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), [Some(3)], "Aldric is a Fighter 3");
+
+        // Engine input and saved character are as they were: the saved files do not know the ledger.
+        let envelope = SavedCharacterStore::load(&root).unwrap();
+        assert_eq!(envelope.schema_version, CURRENT_SAVED_CHARACTER_SCHEMA_VERSION);
+        assert_eq!(envelope.character_input.chosen.selected_feats.last().map(String::as_str), Some("feat:toughness"));
+        for file in std::fs::read_dir(&root).unwrap() {
+            let path = file.unwrap().path();
+            if path.file_name().is_some_and(|name| name != "ledger.json") && path.is_file() {
+                let text = String::from_utf8_lossy(&std::fs::read(&path).unwrap()).into_owned();
+                assert!(!text.contains("taken_at_level"), "{}", path.display());
+            }
+        }
+        for path in [&dir, &import_root, &clone_root] {
+            std::fs::remove_dir_all(path).ok();
+        }
     }
 
     /// A clone is the same character, Custom tab and all.

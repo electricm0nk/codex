@@ -4,6 +4,7 @@ mod browser_handoff;
 mod campaign_drive;
 mod character_custom;
 mod character_hub;
+mod character_ledger;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
