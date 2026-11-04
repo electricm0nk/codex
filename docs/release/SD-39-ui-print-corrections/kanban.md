@@ -66,7 +66,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 59
 | E5.1 | Ledger file, stamped on every add | opus | complete | E4.MC | commit 5b24205733 + receipt commit; receipt artifacts/epic_5/E5.1_cycle_receipt.md; 7 ledger_stamp tests; desktop 1066 passed, 0 failed; G-6 re-run for the fence exits; seeds NO_DIFF; no card discovered |
 | E5.2 | Legacy ledger migration | opus | complete | E5.1 | commit 0d1d7aa995 + receipt commit; receipt artifacts/epic_5/E5.2_cycle_receipt.md; 14 ledger_migration tests; root sweep exit 0; desktop 1077 passed, 1 failed (CPR clock-seeded test, attributed, E5.4); G-3 and G-6 re-run; seeds NO_DIFF; discovered E5.4 |
 | E5.3 | Drawer content from list_progression_ledger | opus | complete | E5.2 | commit ed89f74e53 + receipt commit; receipt artifacts/epic_5/E5.3_cycle_receipt.md; 11 progression_ledger tests; desktop 1089 passed, 0 failed; 184/184 frontend files; 6 ui-smoke rows green; seeds NO_DIFF; no card discovered |
-| E5.4 | CPR therapy test stops failing on one roll in ten | sonnet | ready | E5.2 | discovered by E5.2, decisions.md §21 |
+| E5.4 | CPR therapy test stops failing on a high Extreme roll | sonnet | complete | E5.2 | discovered by E5.2, decisions.md §21; commit 3fe45c6f1c + receipt commit; receipt artifacts/epic_5/E5.4_cycle_receipt.md; test pinned to a 21-roll seed, RED Some(11), GREEN, 40 of 40 exact runs; figures corrected 19/74 to 21/76 |
 | E5.MC | E5 merge check + Epic report | opus | waiting | E5.3, E5.4 | |
 | E6.1 | Overrides toggles + enforcement | opus | waiting | E5.MC | |
 | E6.2 | Override tagging UI + DTO | opus | waiting | E6.1 | |

@@ -76,6 +76,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E5 | E5.1 | complete | 5b24205733 + receipt commit | artifacts/epic_5/E5.1_cycle_receipt.md |
 | E5 | E5.2 | complete | 0d1d7aa995 + receipt commit | artifacts/epic_5/E5.2_cycle_receipt.md |
 | E5 | E5.3 | complete | ed89f74e53 + receipt commit | artifacts/epic_5/E5.3_cycle_receipt.md |
+| E5 | E5.4 | complete | 3fe45c6f1c + receipt commit | artifacts/epic_5/E5.4_cycle_receipt.md |
 
 ## Epic reports
 
