@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 47 of 65 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 49 of 65 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -91,6 +91,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E8 | E8.1 | complete | f8c29c3eeb, 784ae6fde5, dd4006a843 + receipt commit (row added by E8.2) | artifacts/epic_8/E8.1_cycle_receipt.md |
 | E8 | E8.2 | complete | ed2000b229 + receipt commit | artifacts/epic_8/E8.2_cycle_receipt.md |
 | E8 | E8.3 | complete | 3fc88b76a2 + receipt commit | artifacts/epic_8/E8.3_cycle_receipt.md |
+| E8 | E8.4 | complete | c226f02337 + receipt commit | artifacts/epic_8/E8.4_cycle_receipt.md |
 
 ## Epic reports
 
@@ -325,6 +326,8 @@ seed deltas, open blockers.)
 | E8.2 | Where the campaigns' descriptions come from | The caller sends them (`PrintRequest.campaigns`); the backend cannot read the frontend's `localStorage` | A new backend campaign store, which R17 ("no new field") rules out |
 | E8.3 | The SF and CPR print order | Each screen's order: Starfinder's sections as `buildStarfinderSheet` pushes them; Cyberpunk RED's boxes column by column as `cyberpunkSheetLayout.ts` stacks them (left, then right) | A new order made up for paper, which E9.4's eyeball can still ask for |
 | E8.3 | Critical Injuries on the CPR print | The injuries the character has, under their table, with the engine's words | The screen's whole checklist with unticked boxes, which holds no value of the character's |
+| E8.4 | Where Settings, Print paper lives | A Print tab the Settings dialog draws itself | A row in Appearance (paper is not appearance), or `App.tsx` passing the panel (no card owns it) |
+| E8.4 | Campaign notes on a print without the Bio box | None sent | Sending them always, which the backend would not print |
 
 ## Open blockers
 
