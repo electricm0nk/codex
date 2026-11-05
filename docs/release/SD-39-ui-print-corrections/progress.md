@@ -90,6 +90,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E7 | E7.MC | complete | c8ba870af8, e65cef12fd + receipt commit | artifacts/epic_7/E7.MC_cycle_receipt.md |
 | E8 | E8.1 | complete | f8c29c3eeb, 784ae6fde5, dd4006a843 + receipt commit (row added by E8.2) | artifacts/epic_8/E8.1_cycle_receipt.md |
 | E8 | E8.2 | complete | ed2000b229 + receipt commit | artifacts/epic_8/E8.2_cycle_receipt.md |
+| E8 | E8.3 | complete | 3fc88b76a2 + receipt commit | artifacts/epic_8/E8.3_cycle_receipt.md |
 
 ## Epic reports
 
@@ -322,6 +323,8 @@ seed deltas, open blockers.)
 | E8.2 | Skill totals the engine does not hold | Ranks printed, the total `—`, discovered card E8.7 gives each one backend value | Re-adding the Skills panel's TypeScript sum in Rust (NR-2) |
 | E8.2 | Where the option blocks print | Each on pages of its own, after the sheet | Run on under Actions, where an option with nothing to print would not change the page count |
 | E8.2 | Where the campaigns' descriptions come from | The caller sends them (`PrintRequest.campaigns`); the backend cannot read the frontend's `localStorage` | A new backend campaign store, which R17 ("no new field") rules out |
+| E8.3 | The SF and CPR print order | Each screen's order: Starfinder's sections as `buildStarfinderSheet` pushes them; Cyberpunk RED's boxes column by column as `cyberpunkSheetLayout.ts` stacks them (left, then right) | A new order made up for paper, which E9.4's eyeball can still ask for |
+| E8.3 | Critical Injuries on the CPR print | The injuries the character has, under their table, with the engine's words | The screen's whole checklist with unticked boxes, which holds no value of the character's |
 
 ## Open blockers
 

@@ -64,7 +64,14 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
   block inputs. SF uses `sf_sheet_print.rs`'s seed lines the same way.
 - **Tests.** `pdf-extract` (or `lopdf` text ops) as a dev-dependency pulls the text back; golden tests
   assert: every sheet value string appears, block headings appear in the layout file's order, page count
-  per (system, paper, options). Fixtures = the six seeds (`decisions.md §18`) + the three CPR seeds.
+  per (system, paper, options). Fixtures = the six seeds (`decisions.md §18`) + the five CPR sheet fixtures
+  (`cpr_adapter::tests::sheet_fixture_characters`; corrected by E8.3).
+- **Recorded by E8.3:** `print/layout/sf1e.rs` and `print/layout/cpr.rs` lay out what each system's screen
+  shows (`starfinderSheetModel.ts`, `cyberpunkSheetModel.ts`): the numbers are the `sf.*` / `cpr.` explanation
+  rows, the dice, names and words the printed lines (`sheet_lines`, from `sf_sheet_print.rs` and
+  `cpr_sheet_print.rs`); a row no box names prints under "Other Totals", a line no box places under "Rules and
+  Features". The print path loads through `load_saved_character_via_envelope`, the `load_saved_character`
+  command's router.
 
 ## §2 Body slots and worn vs carried (E1.0, E4)
 

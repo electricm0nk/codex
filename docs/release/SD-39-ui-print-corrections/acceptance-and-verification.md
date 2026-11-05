@@ -34,8 +34,10 @@ cargo run --locked -j 8 -p codex-ingest --bin sheet_rule_convert -- --check
 cargo run --locked -j 8 -p codex-ingest --bin sheet_rule_convert -- --system starfinder-1e --check
 ```
 
-`mkdir -p <dir>` is in the command because the writer tests panic on a missing directory (SD-38 retro §2);
-E8.3 builds the in-test control if the incident fires once (R14).
+`mkdir -p <dir>` is kept in the command, but the control is already in the tests: both writers create their
+out directory (`create_dir_all`, `sf_sheet_print.rs`, `cpr_sheet_print.rs`) since SD-38 E4.8 (`dd4bbbbb90`). E8.3
+found the incident at 0 in SD-39 (`grep -rl 'sf-seed-lines-out-dir-missing' docs/retro/events` → 3 files, all
+`sd38-*`), so R14 had nothing left to build (`decisions.md §25`).
 
 ## G-2 Data unchanged unless a proof failed (E1.0)
 
