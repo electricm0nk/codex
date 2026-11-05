@@ -4923,8 +4923,7 @@ fn wear_check(root: &Path, character_input: &CharacterInput, item_id: &str) -> R
         }
         admitted.push(OverrideFlag::IgnoreSlotLimits);
     }
-    let race_traits: Vec<String> = resolve_racial_traits_for_character(character_input).applied_traits.into_iter().map(|t| t.key).collect();
-    let gap = match character_lacks_proficiency_with(character_input, item_id, &race_traits) {
+    let gap = match character_lacks_proficiency_with(character_input, item_id) {
         ItemProficiencyGap::None => None,
         ItemProficiencyGap::Weapon => Some((custom.overrides.weapons_without_proficiency, OverrideFlag::WeaponsWithoutProficiency)),
         ItemProficiencyGap::Armor => Some((custom.overrides.armor_without_proficiency, OverrideFlag::ArmorWithoutProficiency)),
@@ -6154,6 +6153,10 @@ pub struct ImportedCharacterFileDto {
     /// `hit_points.json`, when the character saved any results. An old file imports with none.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub hit_points: Option<CharacterHitPointsDto>,
+    /// `bio.json`, when the character has one: its deity decides a favored weapon's attack row. An
+    /// old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub bio: Option<CharacterBioDto>,
 }
 
 fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
@@ -6358,6 +6361,9 @@ fn import_character_from_json(
     };
 
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if let Some(bio) = &parsed.bio {
+        save_character_bio_at_root(root, bio)?;
+    }
     if let Some(custom) = &parsed.custom {
         restore_character_custom_at_root(root, custom)?;
     }
@@ -6569,12 +6575,14 @@ fn export_character_to_json(root: &Path) -> Result<String, String> {
 
     let custom = load_character_custom_at_root(root)?;
     let hit_points = load_character_hit_points_at_root(root)?;
+    let bio = load_character_bio_at_root(root)?;
     let dto = ImportedCharacterFileDto {
         display_label: envelope.display_label,
         character_input: character_input_to_dto(&envelope.character_input),
         custom: (custom != CharacterCustomDto::default()).then_some(custom),
         ledger: load_character_ledger_at_root(root)?,
         hit_points: (hit_points != CharacterHitPointsDto::default()).then_some(hit_points),
+        bio: (bio != CharacterBioDto::default()).then_some(bio),
     };
 
     serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
@@ -16462,8 +16470,7 @@ mod tests {
 
     /// The proficiency half of [`wear_check`], for an item whose slot is also taken.
     fn override_gap(input: &CharacterInput, item: &str) -> codex::rules_core::equipment_resolver::ItemProficiencyGap {
-        let traits: Vec<String> = resolve_racial_traits_for_character(input).applied_traits.into_iter().map(|t| t.key).collect();
-        codex::rules_core::equipment_resolver::character_lacks_proficiency_with(input, item, &traits)
+        codex::rules_core::equipment_resolver::character_lacks_proficiency_with(input, item)
     }
 
     /// Human Wizard 5 (Elowen) as `race_id`, with `carried` in the pack.
@@ -16500,15 +16507,117 @@ mod tests {
         std::fs::remove_dir_all(&dir).ok();
     }
 
-    /// A cleric is proficient with the favored weapon of a deity the record does not read: an unknown
-    /// never refuses. Without that grant in the class line, the same weapon does.
+    /// A Human Cleric 1, created through the real command, holding the starting Longsword.
+    fn race_weapon_proficiency_cleric(label: &str) -> PathBuf {
+        let root = tempdir(label);
+        let response = create_character_at_root(&root, &request_for_class("race:human", "class:cleric", 1), "test-version".to_owned()).unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        root
+    }
+
+    fn race_weapon_proficiency_deity(root: &Path, deity: &str) {
+        save_character_bio_at_root(root, &CharacterBioDto { deity: deity.to_owned(), ..Default::default() }).unwrap();
+    }
+
+    /// The sheet's attack row for the Longsword, off the real load.
+    fn race_weapon_proficiency_row(root: &Path) -> String {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        loaded.explanations.iter().find(|e| e.id == "combat.weapon_attack_bonus.longsword").expect("a Longsword row").detail.clone()
+    }
+
+    fn race_weapon_proficiency_gap(root: &Path, item: &str) -> codex::rules_core::equipment_resolver::ItemProficiencyGap {
+        override_gap(&SavedCharacterStore::load(root).unwrap().character_input, item)
+    }
+
+    /// One answer: the row and the refusal move together, for a race.
     #[test]
-    fn override_a_weapon_a_deity_may_grant_is_not_refused() {
-        use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
-        let cleric = compose_character_input(&request_for_class("race:human", "class:cleric", 1));
-        assert_eq!(character_lacks_proficiency_with(&cleric, "Longsword", &[]), ItemProficiencyGap::None);
-        let rogue = compose_character_input(&request_for_class("race:human", "class:rogue", 1));
-        assert_eq!(character_lacks_proficiency_with(&rogue, "Longsword", &[]), ItemProficiencyGap::Weapon);
+    fn race_weapon_proficiency_an_elfs_longsword_reads_no_penalty_and_is_not_refused() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{None as Known, Weapon};
+        let (human_dir, human) = override_wizard_of_race("race-prof-human", "race:human", "Rapier");
+        assert!(race_weapon_proficiency_row(&human).contains("-4 nonproficiency penalty: nothing this character holds grants"));
+        assert_eq!(race_weapon_proficiency_gap(&human, "Longsword (Base)"), Weapon);
+
+        let (elf_dir, elf) = override_wizard_of_race("race-prof-elf", "race:elf", "Rapier");
+        let row = race_weapon_proficiency_row(&elf);
+        assert!(!row.contains("nonproficiency penalty:") && !row.contains("nothing this character holds grants"), "{row}");
+        assert!(row.contains("(Weapon Familiarity)"), "{row}");
+        for item in ["Longsword (Base)", "Longbow (Base)", "Shortbow (Base)", "Rapier (Base)"] {
+            assert_eq!(race_weapon_proficiency_gap(&elf, item), Known, "{item}");
+        }
+        assert_eq!(race_weapon_proficiency_gap(&elf, "Greatsword (Base)"), Weapon, "nothing grants it");
+        std::fs::remove_dir_all(&human_dir).ok();
+        std::fs::remove_dir_all(&elf_dir).ok();
+    }
+
+    /// The deity is the bio's words: writing it moves the row and the refusal, clearing it moves them
+    /// back, and another deity's weapon stays refused. A name no rule holds says so on the row.
+    #[test]
+    fn race_weapon_proficiency_a_clerics_deity_comes_from_the_bio() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{None as Known, Weapon};
+        let root = race_weapon_proficiency_cleric("race-prof-cleric");
+        let row = race_weapon_proficiency_row(&root);
+        assert!(row.contains("-4 nonproficiency penalty") && row.contains("no deity is recorded"), "{row}");
+        assert_eq!(race_weapon_proficiency_gap(&root, "Longsword (Base)"), Weapon);
+
+        race_weapon_proficiency_deity(&root, "Iomedae");
+        let row = race_weapon_proficiency_row(&root);
+        assert!(!row.contains("nonproficiency penalty:") && row.contains("favored weapon"), "{row}");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert!(loaded.snapshot.is_some(), "the row blocks nothing: {:?}", loaded.diagnostics);
+        assert_eq!(race_weapon_proficiency_gap(&root, "Longsword (Base)"), Known);
+        assert_eq!(race_weapon_proficiency_gap(&root, "Greatsword (Base)"), Weapon, "Gorum's, not hers");
+
+        race_weapon_proficiency_deity(&root, "Cayden Cailean");
+        assert_eq!(race_weapon_proficiency_gap(&root, "Rapier (Base)"), Known, "a two-word name");
+        assert_eq!(race_weapon_proficiency_gap(&root, "Longsword (Base)"), Weapon, "the old deity's weapon goes");
+
+        race_weapon_proficiency_deity(&root, "The Light of Morning");
+        let row = race_weapon_proficiency_row(&root);
+        assert!(row.contains("no deity the rules hold is named the_light_of_morning"), "{row}");
+
+        race_weapon_proficiency_deity(&root, "");
+        assert!(race_weapon_proficiency_row(&root).contains("no deity is recorded"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The deity moves a number now, so it travels with the file: Export then Import reads the same row.
+    #[test]
+    fn race_weapon_proficiency_a_deity_survives_export_then_import() {
+        let root = race_weapon_proficiency_cleric("race-prof-export");
+        race_weapon_proficiency_deity(&root, "Iomedae");
+        let before = race_weapon_proficiency_row(&root);
+        let file = export_character_to_json(&root).unwrap();
+
+        let imported = tempdir("race-prof-import");
+        let outcome = import_character_from_json(&file, &imported, "char-imported", OVERRIDES_AT, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_bio_at_root(&imported).unwrap().deity, "Iomedae");
+        assert_eq!(race_weapon_proficiency_row(&imported), before);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+    }
+
+    /// The Market's buy reads the same answer: worn, where a human Wizard's goes carried.
+    #[test]
+    fn race_weapon_proficiency_the_market_buys_it_worn() {
+        let (dir, elf) = override_wizard_of_race("race-prof-market", "race:elf", "Dagger");
+        set_equipment_active_state_at_root(&elf, "item:longsword", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&elf, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive), "{carried_reason:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A seed writes no deity, so its saved input and every render stay as they were.
+    #[test]
+    fn race_weapon_proficiency_the_seeds_hold_no_deity_row() {
+        let (dir, root) = ledger_migration_seed("race-prof-seed", SECOND_SEED_CHARACTER_ID);
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(!input.chosen.selected_choices.iter().any(|c| c.choice_set_id == codex::rules_core::pilot_compute::CHARACTER_DEITY_CHOICE_ID));
+        std::fs::remove_dir_all(&dir).ok();
     }
 
     /// Martial Weapon Proficiency names one weapon. It lets that one in and leaves the rest refused,

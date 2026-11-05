@@ -2537,8 +2537,9 @@ pub(crate) enum WeaponProficiencyVerdict {
     /// Decided. `printed` carries every converted grant the class-level
     /// facts could not decide (a gated grant, a player's pick, a deity's
     /// weapon), each with its condition: printed on the sheet, never
-    /// counted (paper-sheet doctrine).
-    Known { proficient: bool, printed: Vec<String> },
+    /// counted (paper-sheet doctrine). `granted_by` names a grant from past
+    /// the class lists and the three feats: a race's, a deity's.
+    Known { proficient: bool, printed: Vec<String>, granted_by: Option<String> },
     /// Not decidable from what the engine holds; `reason` names why, per
     /// class, and reaches the claim-blocking diagnostic verbatim.
     Unknown { reason: String },
@@ -2587,18 +2588,22 @@ impl WeaponProficiencyVerdict {
 /// (`class_proficiency_sheet_rules::class_weapon_proficiency_view`), matched
 /// per weapon by [`converted_view_covers_weapon`]; the reader's `Unknown`
 /// stays Unknown and carries its reason.
+///
+/// **Past the classes** (operator ruling R22): a weapon no class list covers goes to
+/// [`held_weapon_grant`], which reads the race's resolved traits, what the character holds and
+/// the favored weapon of its recorded deity. A weapon a held rule makes Martial returns to the
+/// class lists as Martial. With no deity recorded a Cleric's favored weapon is nothing to grant,
+/// so the row reads the -4 and prints why.
 pub(crate) fn character_weapon_proficiency(
     input: &CharacterInput,
     weapon: &weapon_tables::WeaponTableEntry,
 ) -> WeaponProficiencyVerdict {
-    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
-        class_weapon_proficiency_view, ProficiencyAnswer,
-    };
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::held_weapon_grant;
     let grants = crate::rules_core::feat_effects::weapon_proficiency_grants_from_feats(
         &effective_character_feats(input),
         &input.chosen.selected_choices,
     );
-    let granted = || WeaponProficiencyVerdict::Known { proficient: true, printed: Vec::new() };
+    let granted = || WeaponProficiencyVerdict::Known { proficient: true, printed: Vec::new(), granted_by: None };
     // Simple Weapon Proficiency grants the whole Simple tier, exactly as a
     // class's own `AUTO:WEAPONPROF|TYPE=Simple` does.
     if grants.grants_simple_tier
@@ -2619,6 +2624,41 @@ pub(crate) fn character_weapon_proficiency(
         return granted();
     }
 
+    let (mut any_proficient, mut printed, mut unknown) = class_lists_answer(input, weapon);
+    let mut granted_by = None;
+    // What the character holds past its class lists: a race's familiarity, a class feature, its
+    // deity's weapon. Here, so the sheet's row and the Market's refusal read one answer.
+    if !any_proficient && let Some(held) = held_weapon_grant(input, weapon) {
+        granted_by = held.granted_by;
+        any_proficient = granted_by.is_some();
+        if !any_proficient && let Some(by) = held.treated_as_martial_by {
+            let martial = weapon_tables::WeaponTableEntry { proficiency: Some(weapon_tables::WeaponProficiency::Martial), ..*weapon };
+            any_proficient = class_lists_answer(input, &martial).0;
+            granted_by = any_proficient.then_some(by);
+        }
+        if !any_proficient {
+            unknown.extend(held.undecided);
+            printed.extend(held.printed);
+        }
+    }
+    // SD-36 F3b: a union is decided by any one member that grants it -- a class
+    // with no answer can only ADD a proficiency, never take one away, so it
+    // leaves the verdict Unknown only when no class grants this weapon.
+    if !unknown.is_empty() && !any_proficient {
+        return WeaponProficiencyVerdict::Unknown { reason: unknown.join("; ") };
+    }
+    WeaponProficiencyVerdict::Known { proficient: any_proficient, printed, granted_by }
+}
+
+/// The union of the character's classes' own lists: whether one covers `weapon`, what the sheet
+/// prints beside it, and each class with no answer.
+fn class_lists_answer(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+) -> (bool, Vec<String>, Vec<String>) {
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+        class_weapon_proficiency_view, ProficiencyAnswer,
+    };
     let mut any_proficient = false;
     let mut printed: Vec<String> = Vec::new();
     let mut unknown: Vec<String> = Vec::new();
@@ -2696,13 +2736,7 @@ pub(crate) fn character_weapon_proficiency(
             }
         }
     }
-    // SD-36 F3b: a union is decided by any one member that grants it -- a class
-    // with no answer can only ADD a proficiency, never take one away, so it
-    // leaves the verdict Unknown only when no class grants this weapon.
-    if !unknown.is_empty() && !any_proficient {
-        return WeaponProficiencyVerdict::Unknown { reason: unknown.join("; ") };
-    }
-    WeaponProficiencyVerdict::Known { proficient: any_proficient, printed }
+    (any_proficient, printed, unknown)
 }
 
 /// The identity a weapon is compared on against a converted proficiency name: its
@@ -2934,10 +2968,15 @@ pub(super) fn ground_per_weapon_combat_totals(
                  character holds grants proficiency with this weapon -- neither a class grant nor \
                  Simple/Martial/Exotic Weapon Proficiency naming it."
             ),
-            Some(true) => " The character is proficient with this weapon (class grant or a \
+            Some(true) => match &full_verdict {
+                WeaponProficiencyVerdict::Known { granted_by: Some(by), .. } => {
+                    format!(" The character is proficient with this weapon ({by}), so no nonproficiency penalty applies.")
+                }
+                _ => " The character is proficient with this weapon (class grant or a \
                  Simple/Martial/Exotic Weapon Proficiency feat naming it), so no nonproficiency \
                  penalty applies."
-                .to_owned(),
+                    .to_owned(),
+            },
             None => format!(
                 " Proficiency is UNRESOLVED ({}), so no nonproficiency penalty is applied in \
                  either direction and this total is not claimed to account for one.",
@@ -3555,7 +3594,7 @@ mod converted_record_proficiency_fallback_tests {
             selection_id: COMMONER_CANONICAL_WEAPON.to_owned(),
         });
         match character_weapon_proficiency(&seeded, crb_weapon("Club")) {
-            WeaponProficiencyVerdict::Known { proficient, printed } => {
+            WeaponProficiencyVerdict::Known { proficient, printed, .. } => {
                 assert!(proficient, "the chosen Club is proficient");
                 assert!(printed.iter().any(|p| p.contains("proficient with the chosen weapon (Club)")), "{printed:?}");
             }
@@ -3752,5 +3791,163 @@ mod initiative_total_tests {
         let input = as_class("class:gunslinger", 3);
         assert_eq!(value(&input, "class_feature.uc.gunslinger.gunslinger_initiative"), Some(2), "the row exists");
         assert_eq!(total(&input), 2, "Dex +2 only");
+    }
+}
+
+/// A race's and a deity's weapon proficiency on the verdict every reader shares (operator ruling
+/// R22). The Wizard's static row names none of the race rows' weapons, so a pass is the race's.
+#[cfg(test)]
+mod race_weapon_proficiency_tests {
+    use super::{build_pilot_headless_receipt, character_weapon_proficiency, CharacterClassLevel, CharacterInput, WeaponProficiencyVerdict};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+    use crate::rules_core::pilot_compute::{CHARACTER_DEITY_CHOICE_ID, RACE_ALTERNATE_TRAIT_CHOICE_ID};
+    use crate::rules_core::rules_catalog::crb::weapon_tables::{self, WeaponTableEntry};
+
+    const FIGHTER: &str =
+        include_str!("../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
+
+    fn character(race: &str, class: &str) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER).character_input.expect("valid fixture");
+        input.chosen.race_id = race.to_owned();
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: class.to_owned(), level: 1 }];
+        input
+    }
+
+    fn of_deity(mut input: CharacterInput, deity: &str) -> CharacterInput {
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: CHARACTER_DEITY_CHOICE_ID.to_owned(),
+            selection_id: deity.to_owned(),
+        });
+        input
+    }
+
+    fn weapon(key: &str) -> &'static WeaponTableEntry {
+        weapon_tables::WEAPON_TABLE.iter().find(|w| w.key == key).expect("CRB weapon table row")
+    }
+
+    fn proficient(input: &CharacterInput, key: &str) -> Option<bool> {
+        character_weapon_proficiency(input, weapon(key)).proficient()
+    }
+
+    /// The attack row's words, with `key` the one weapon in hand.
+    fn attack_row(input: &CharacterInput, key: &str) -> String {
+        let mut input = input.clone();
+        let slug = key.to_lowercase().replace(' ', "_");
+        for selection in &mut input.chosen.equipment_selections {
+            if selection.item_id == "item:longsword" {
+                selection.item_id = format!("item:{slug}");
+            }
+        }
+        let id = format!("combat.weapon_attack_bonus.{slug}");
+        let receipt = build_pilot_headless_receipt(&input);
+        let row = receipt.computation.explanations.iter().find(|e| e.id == id);
+        row.unwrap_or_else(|| panic!("no {id} row")).detail.clone()
+    }
+
+    #[test]
+    fn race_weapon_proficiency_every_named_weapon_of_the_core_familiarities() {
+        for (race, weapons) in [
+            ("race:elf", &["Longsword", "Longbow", "Composite Longbow", "Shortbow", "Composite Shortbow", "Rapier"][..]),
+            ("race:dwarf", &["Battleaxe", "Heavy Pick", "Warhammer"]),
+            ("race:half-orc", &["Greataxe", "Falchion"]),
+            ("race:halfling", &["Sling"]),
+        ] {
+            let human = character("race:human", "class:wizard");
+            let of_race = character(race, "class:wizard");
+            for key in weapons {
+                assert_eq!(proficient(&human, key), Some(false), "a human wizard holds no {key}");
+                assert_eq!(proficient(&of_race, key), Some(true), "{race} {key}");
+            }
+            assert_eq!(proficient(&of_race, "Greatsword"), Some(false), "{race} is not given a Greatsword");
+        }
+    }
+
+    /// "Treat any weapon with the word in its name as a martial weapon": a class with the Martial
+    /// tier is proficient, a class without it is not. The Gnome has only this half.
+    #[test]
+    fn race_weapon_proficiency_a_familiar_weapon_is_martial_for_that_race() {
+        for (race, key) in [
+            ("race:dwarf", "Dwarven Urgrosh"),
+            ("race:elf", "Elven Curve Blade"),
+            ("race:gnome", "Gnome Hooked Hammer"),
+            ("race:half-orc", "Orc Double Axe"),
+            ("race:halfling", "Halfling Sling Staff"),
+        ] {
+            assert_eq!(proficient(&character("race:human", "class:fighter"), key), Some(false), "human {key}: Exotic");
+            assert_eq!(proficient(&character(race, "class:fighter"), key), Some(true), "{race} fighter {key}");
+            assert_eq!(proficient(&character(race, "class:wizard"), key), Some(false), "{race} wizard {key}");
+        }
+    }
+
+    /// An alternate trait that replaces the familiarity takes the weapons with it, through the
+    /// same resolver the sheet's trait list reads.
+    #[test]
+    fn race_weapon_proficiency_an_alternate_trait_replacing_it_takes_it_away() {
+        let mut input = character("race:elf", "class:wizard");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: RACE_ALTERNATE_TRAIT_CHOICE_ID.to_owned(),
+            selection_id: "race_trait:Elf ~ Fleet-Footed".to_owned(),
+        });
+        assert_eq!(proficient(&input, "Longsword"), Some(false));
+        assert_eq!(proficient(&input, "Dagger"), Some(true), "the class's own list stays");
+    }
+
+    #[test]
+    fn race_weapon_proficiency_a_deitys_favored_weapon_is_the_clerics() {
+        let cleric = || character("race:human", "class:cleric");
+        for (deity, key) in [
+            ("deity:iomedae", "Longsword"),
+            ("deity:gorum", "Greatsword"),
+            ("deity:sarenrae", "Scimitar"),
+            ("deity:cayden_cailean", "Rapier"),
+        ] {
+            assert_eq!(proficient(&of_deity(cleric(), deity), key), Some(true), "{deity} {key}");
+        }
+        assert_eq!(proficient(&of_deity(cleric(), "deity:iomedae"), "Greatsword"), Some(false), "not her weapon");
+        // The grant is the Cleric's: a Wizard of the same deity holds nothing from her.
+        assert_eq!(proficient(&of_deity(character("race:human", "class:wizard"), "deity:iomedae"), "Longsword"), Some(false));
+    }
+
+    /// No deity written down, or one the rules do not hold: nothing grants the weapon, the -4 stands,
+    /// and the sheet says why.
+    #[test]
+    fn race_weapon_proficiency_a_cleric_with_no_deity_the_rules_hold_is_told_so() {
+        let cleric = || character("race:human", "class:cleric");
+        for (input, words) in [
+            (cleric(), "no deity is recorded"),
+            (of_deity(cleric(), "deity:the_light_of_morning"), "no deity the rules hold is named the_light_of_morning"),
+        ] {
+            match character_weapon_proficiency(&input, weapon("Longsword")) {
+                WeaponProficiencyVerdict::Known { proficient, printed, .. } => {
+                    assert!(!proficient);
+                    assert!(printed.iter().any(|line| line.contains(words)), "{printed:?}");
+                }
+                unknown => panic!("{unknown:?}"),
+            }
+        }
+    }
+
+    /// The row: no -4, and none of the words that say nothing grants it.
+    #[test]
+    fn race_weapon_proficiency_reaches_the_attack_row() {
+        for input in [
+            character("race:elf", "class:wizard"),
+            of_deity(character("race:human", "class:cleric"), "deity:iomedae"),
+        ] {
+            let row = attack_row(&input, "Longsword");
+            assert!(!row.contains("nonproficiency penalty:"), "{row}");
+            assert!(!row.contains("nothing this character holds grants"), "{row}");
+            assert!(row.contains("proficient with this weapon"), "{row}");
+        }
+        let row = attack_row(&character("race:elf", "class:wizard"), "Greatsword");
+        assert!(row.contains("-4 nonproficiency penalty: nothing this character holds grants"), "{row}");
+    }
+
+    /// The same weapon, in hand: Melee moves by exactly the 4.
+    #[test]
+    fn race_weapon_proficiency_reaches_the_melee_total() {
+        let melee = |input: &CharacterInput| build_pilot_headless_receipt(input).computation.baseline_melee_attack_bonus;
+        // A Dwarf has no familiarity with a Longsword, and neither race moves Strength or size.
+        assert_eq!(melee(&character("race:elf", "class:wizard")), melee(&character("race:dwarf", "class:wizard")) + 4);
     }
 }

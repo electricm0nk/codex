@@ -877,18 +877,10 @@ pub(super) fn compute_combat_baseline(
     // Simple tier, and Brawler carries a whole weapon GROUP grant
     // ("Close") that does not contain the Longsword ("Blades Heavy").
     //
-    // Known modelling boundary, deliberately not papered over: BOTH Cleric
-    // (`cr_abilities_class.lst`, `Weapon and Armor Proficiency ~ Cleric`)
+    // BOTH Cleric (`cr_abilities_class.lst`, `Weapon and Armor Proficiency ~ Cleric`)
     // and Inquisitor (`apg_abilities_globalvar.lst:340`,
-    // `CATEGORY=Class|Inquisitor.MOD`) carry
-    // `AUTO:WEAPONPROF|DEITYWEAPONS` on top of their listed grants, so a
-    // character of either class whose deity favors the Longsword IS
-    // proficient in real PF1. No deity is modelled anywhere in this engine
-    // (`DEITY:` exists only as a `source_content` record kind, never as a
-    // chosen-input field) and none is present in this posture, so
-    // DEITYWEAPONS contributes nothing here and the penalty correctly
-    // applies -- but a future deity surface must revisit this, not assume
-    // these two classes are always non-proficient.
+    // `CATEGORY=Class|Inquisitor.MOD`) carry `AUTO:WEAPONPROF|DEITYWEAPONS` on top of
+    // their listed grants: the verdict reads the character's recorded deity.
     let full_verdict = in_hand.map(|(_, weapon)| character_weapon_proficiency(input, weapon));
     let proficiency_verdict = full_verdict.as_ref().and_then(WeaponProficiencyVerdict::proficient);
     let nonproficiency_penalty = match proficiency_verdict {

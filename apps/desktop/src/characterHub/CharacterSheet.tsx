@@ -2902,6 +2902,7 @@ export function CharacterSheet(props: {
   // weapon" step). items-1-and-27-scoping.md sub-task 6.
   const [pendingModifierAttachment, setPendingModifierAttachment] = useState<ResolvedEquipmentDto | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
+  const sheetDeity = useRef('');
   // Loads the real persisted bio (or the all-empty default for a character
   // that has never saved one) whenever the sheet opens on a different
   // character. A load failure just leaves the blank default up rather than
@@ -2939,6 +2940,7 @@ export function CharacterSheet(props: {
     loadCharacterBio(props.row.characterId)
       .then((loaded) => {
         if (!cancelled) {
+          sheetDeity.current = loaded.deity;
           setBio(loaded);
         }
       })
@@ -3963,6 +3965,11 @@ export function CharacterSheet(props: {
   async function handleBioBlur() {
     try {
       await updateCharacterBio(props.row.characterId, bio);
+      // The one bio field the rules read: a Cleric's deity decides a favored weapon's attack row.
+      if (bio.deity !== sheetDeity.current) {
+        sheetDeity.current = bio.deity;
+        props.onDetailRefreshed(await loadSavedCharacterDetail({ characterId: props.row.characterId }));
+      }
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : 'Could not save the bio fields.');
     }

@@ -26,7 +26,8 @@
 //!    decidable from class-level facts ([`gate_is_class_decidable`]) and evaluates true;
 //!    decidable and false is skipped; anything else (a race, a feat, a deity, a record the
 //!    corpus does not carry, a situational clause) is NOT counted and its words go to
-//!    `printed_conditions` -- the paper sheet prints the rule, it does not guess.
+//!    `printed_conditions` -- the paper sheet prints the rule, it does not guess. What the whole
+//!    character holds past its class is [`weapon_grant_in`]'s.
 //!
 //! # Unknown, never "proficient with nothing"
 //!
@@ -71,7 +72,7 @@ use crate::rules_core::rules_catalog::crb::weapon_tables::WeaponProficiency;
 use crate::rules_core::sheet_rule::{
     held_set, resolve_gated_fact_grant, split_rule_id, Applies, BonusTarget, CharacterFacts, Choice, Effect, EvalContext, Expr,
     Fact, GatedFact, Granter, HeldSeed, HeldSet, Holdable, OptionSet, ProfRef, RuleId, SheetRule, SheetRulePackage,
-    SheetValue,
+    SheetValue, DEITY_FAVORED_WEAPON_FACT, WEAPON_TREATED_AS_MARTIAL_FACT,
 };
 use crate::rules_core::sheet_rule_package;
 
@@ -331,49 +332,145 @@ pub fn armor_proficiency_in(
     answerable.then_some(false)
 }
 
-/// What everything `seed` holds says about one weapon, past the classes' own lists: a racial trait's
-/// familiarity, a class feature, a feat. `Some(true)`: a grant covers it, a gated one counts as
-/// [`armor_proficiency_in`]'s does. `Some(false)`: nothing names it. `None`: it could turn on what
-/// the record does not state, a deity's favored weapon or a pick not yet recorded.
+/// What everything a character holds says about one weapon, past the classes' own lists.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct HeldWeaponGrant {
+    /// The words of the grant that covers it: a racial trait's label, a deity's favored weapon.
+    pub granted_by: Option<String>,
+    /// A held rule makes this weapon Martial for its holder: the classes' lists decide it again.
+    pub treated_as_martial_by: Option<String>,
+    /// A grant that could cover it and turns on what the record does not state.
+    pub undecided: Vec<String>,
+    /// What the sheet prints beside a weapon nothing covers.
+    pub printed: Vec<String>,
+}
+
+/// A racial trait's familiarity, a class feature, a feat, the favored weapon of the character's
+/// recorded deity (`CHARACTER_DEITY_CHOICE_ID`, picked up from `facts.choices`). A gated grant counts
+/// on its gate; one its gate cannot decide is undecided, as an unrecorded pick that offers the weapon is.
 pub fn weapon_grant_in(
     package: &SheetRulePackage,
     seed: &HeldSeed,
     facts: &CharacterFacts,
     weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
-) -> Option<bool> {
+) -> HeldWeaponGrant {
     use super::feat_pillar_and_pool_aggregation::{converted_view_covers_weapon, normalize_weapon_identity};
     let held = held_set(package, seed, facts);
-    let mut acc = Accumulator::default();
-    let mut undecided = false;
+    let mut answer = HeldWeaponGrant::default();
     let wanted = [Some(weapon.key), weapon.proficiency_name].map(|name| name.map(normalize_weapon_identity));
-    let picked = |choice: &str| {
-        facts.choices.get(choice).map(|picks| {
-            picks.iter().any(|(option, label)| [option, label].iter().any(|name| wanted.contains(&Some(normalize_weapon_identity(name)))))
-        })
+    let names_it = |name: &str| wanted.contains(&Some(normalize_weapon_identity(name)));
+    let picked = |choice: &str| facts.choices.get(choice).map(|picks| picks.iter().any(|(option, label)| names_it(option) || names_it(label)));
+    let favored = || -> Result<bool, String> {
+        let Some((deity, _)) = facts.choices.get(super::CHARACTER_DEITY_CHOICE_ID).and_then(|picks| picks.first()) else {
+            return Err("no deity is recorded".to_owned());
+        };
+        let Some(rule) = package.find("deity", deity).and_then(|id| package.rule(id)) else {
+            return Err(format!("no deity the rules hold is named {deity}"));
+        };
+        Ok(rule.grants.iter().any(|effect| {
+            matches!(effect, Effect::FactDeclare { name, value } if name == DEITY_FAVORED_WEAPON_FACT && names_it(value))
+        }))
     };
-    for rule in held.rules.keys().filter(|id| !held.removed.contains(*id)).filter_map(|id| package.rule(id)) {
+    for (id, entry) in held.rules.iter().filter(|(id, _)| !held.removed.contains(*id)) {
+        let Some(rule) = package.rule(id) else { continue };
+        let ctx = EvalContext { holder_class: entry.holder_class.clone(), ..EvalContext::default() };
         for effect in &rule.grants {
-            let (Effect::FactGrant(Fact::Proficiency(prof)) | Effect::GatedFactGrant { fact: Fact::Proficiency(prof), .. }) = effect else {
-                continue;
+            let (fact, when) = match effect {
+                Effect::FactGrant(fact) => (fact, None),
+                Effect::GatedFactGrant { fact, when } => (fact, Some(when)),
+                _ => continue,
             };
-            match prof {
-                ProfRef::DeityFavoredWeapon => undecided = true,
-                // A proficiency feat's target is the verdict's own to read, and it has read it.
-                ProfRef::Chosen(_) if split_rule_id(&rule.id).1 == "feat" => {}
-                ProfRef::Chosen(choice) => match picked(choice) {
-                    Some(true) => return Some(true),
-                    Some(false) => {}
-                    None => undecided = true,
+            let Fact::Proficiency(prof) = fact else { continue };
+            let conditional = match when.map(|when| resolve_gated_fact_grant(fact, when, package, &held, facts, ctx.clone())) {
+                Some(GatedFact::Excluded) => continue,
+                Some(GatedFact::Conditional { .. }) => true,
+                Some(GatedFact::Granted(_)) | None => false,
+            };
+            let covers = match prof {
+                ProfRef::DeityFavoredWeapon => match favored() {
+                    Ok(covers) => covers,
+                    Err(words) => {
+                        let line = format!("a deity's favored weapon: {words}");
+                        if !answer.printed.contains(&line) {
+                            answer.printed.push(line);
+                        }
+                        false
+                    }
                 },
-                ProfRef::Weapon(name) if wanted.contains(&Some(normalize_weapon_identity(name))) => return Some(true),
-                other => acc.fold(&Fact::Proficiency(other.clone()), "", None),
+                // A proficiency feat's target is the verdict's own to read, and it has read it.
+                ProfRef::Chosen(_) if split_rule_id(&rule.id).1 == "feat" => false,
+                ProfRef::Chosen(choice) => match picked(choice) {
+                    Some(covers) => covers,
+                    None => {
+                        let offers_it = match rule.offers.as_ref().map(|offer| &offer.from) {
+                            Some(OptionSet::Weapons(options)) => options.iter().any(|option| names_it(option)),
+                            _ => true,
+                        };
+                        if offers_it {
+                            answer.undecided.push(format!("{}: the character records no weapon under {choice}", rule.label));
+                        }
+                        false
+                    }
+                },
+                ProfRef::Weapon(name) => names_it(name),
+                other => {
+                    let mut acc = Accumulator::default();
+                    acc.fold(&Fact::Proficiency(other.clone()), "", None);
+                    converted_view_covers_weapon(&acc.finish(), weapon)
+                }
+            };
+            if !covers {
+                continue;
+            }
+            if conditional {
+                answer.undecided.push(format!("{}: turns on what the character record does not state", rule.label));
+            } else {
+                answer.granted_by.get_or_insert_with(|| match prof {
+                    ProfRef::DeityFavoredWeapon => "the favored weapon of the character's deity".to_owned(),
+                    _ => rule.label.clone(),
+                });
             }
         }
+        let martial = rule.grants.iter().any(|effect| {
+            matches!(effect, Effect::FactDeclare { name, value } if name == WEAPON_TREATED_AS_MARTIAL_FACT && names_it(value))
+        });
+        if martial {
+            answer.treated_as_martial_by.get_or_insert_with(|| rule.label.clone());
+        }
     }
-    if converted_view_covers_weapon(&acc.finish(), weapon) {
-        return Some(true);
+    answer
+}
+
+/// [`weapon_grant_in`] for a character record: its race's resolved traits on the seed, no
+/// computation read, since the computation calls this. `None` with no converted package in hand.
+/// A pure function of the record and the weapon, and one compute asks several times, so the last
+/// answers are kept.
+pub(crate) fn held_weapon_grant(
+    input: &crate::rules_core::character_input::CharacterInput,
+    weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
+) -> Option<HeldWeaponGrant> {
+    const KEPT: usize = 256;
+    static CACHE: OnceLock<Mutex<BTreeMap<(String, &'static str), HeldWeaponGrant>>> = OnceLock::new();
+    let package = crate::rules_core::corpus_loader::live_sheet_rules()?;
+    let key = format!("{:?}", input.chosen);
+    let cache = CACHE.get_or_init(|| Mutex::new(BTreeMap::new()));
+    if let Some(answer) = cache.lock().ok().and_then(|held| held.get(&(key.clone(), weapon.key)).cloned()) {
+        return Some(answer);
     }
-    (!undecided).then_some(false)
+    let mut seed = HeldSeed::from_record(input);
+    seed.race_traits = crate::rules_core::race_resolver::applied_race_trait_keys(
+        &input.chosen.race_id,
+        &super::selected_alternate_trait_keys(input),
+    );
+    let facts = CharacterFacts::from_record(input).with_linked_picks(package, &seed);
+    let answer = weapon_grant_in(package, &seed, &facts, weapon);
+    if let Ok(mut held) = cache.lock() {
+        if held.len() >= KEPT {
+            held.clear();
+        }
+        held.insert((key, weapon.key), answer.clone());
+    }
+    Some(answer)
 }
 
 /// `Some(rule id)` when the class principal, or any rule the class line grants at or below

@@ -648,6 +648,16 @@ stay Unknown by named mechanism (`every_census_class_has_a_known_proficiency_ans
 `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md`). The weapon union over a mix is
 decidable by any one granting class.
 
+**One verdict past the class lists.** `character_weapon_proficiency` is what every attack row, the Melee
+total and the wear and buy refusal (`character_lacks_proficiency_with`) read. A weapon no class list covers
+goes to `held_weapon_grant`, which seeds what the record holds, with the race's traits off
+`race_resolver::applied_race_trait_keys`, and reads the grants held. It reads no computation, since the
+computation calls it. Two facts the converter declares on the record, never grants, finish it:
+`DeityFavoredWeapon` on a deity (read when a held class rule grants `ProfRef::DeityFavoredWeapon`, for the
+deity on the `character.deity` row `SavedCharacterStore::load` writes from `bio.json`), and
+`WeaponTreatedAsMartial` on a race's familiarity (the class lists decide that weapon again as Martial).
+No deity recorded, or none the rules hold, grants nothing: the -4 stands and the row prints why.
+
 **Class skills, sub-classes, bloodlines, picks.** Class skills are read from the converted record
 (`class_skill_sheet_rules`); a sub-class choice (`SUBCLASS:`), an ability-category pick (a bloodline), a
 natural-attack helper, a selection pool the oracle fills, and a character's Path-A pick linked to its

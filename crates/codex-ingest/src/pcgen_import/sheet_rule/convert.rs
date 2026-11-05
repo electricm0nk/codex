@@ -1922,6 +1922,33 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             }
             _ => ctx.defect("sf-price-unresolved", format!("{}: {v}", ctx.record.id)),
         },
+        // A deity's favored weapon, for the classes whose grant names it (`ProfRef::DeityFavoredWeapon`).
+        // Declared on the deity's record and never granted there: a deity is not held.
+        "DEITYWEAP" if ctx.tree.system == GameSystem::Pathfinder1e => {
+            for weapon in v.split('|').map(str::trim).filter(|w| !w.is_empty()) {
+                acc.grants.push(Effect::FactDeclare { name: DEITY_FAVORED_WEAPON_FACT.to_string(), value: tag_word(weapon) });
+            }
+        }
+        // A race's familiarity, `TYPE.Elven=Martial`: those weapons are Martial for its holder, so
+        // proficiency still turns on the Martial tier. Membership resolves here, as every `TYPE`
+        // selector does. Only the Martial rows reach a sheet: `Shieldbash=Simple` names no weapon.
+        "CHANGEPROF" if ctx.tree.system == GameSystem::Pathfinder1e => {
+            if let Some((list, "Martial")) = v.split_once('=') {
+                let membership = weapon_membership::index(ctx.tree);
+                let mut weapons = BTreeSet::new();
+                for item in list.split(',').map(str::trim).filter(|w| !w.is_empty()) {
+                    match item.strip_prefix("TYPE.").or_else(|| item.strip_prefix("TYPE=")) {
+                        Some(raw) => weapons.extend(membership.members_with_all(&tags_of(raw))),
+                        None => {
+                            weapons.insert(item.to_string());
+                        }
+                    }
+                }
+                for weapon in weapons {
+                    acc.grants.push(Effect::FactDeclare { name: WEAPON_TREATED_AS_MARTIAL_FACT.to_string(), value: weapon });
+                }
+            }
+        }
         // ---- identity / metadata rows ------------------------------------------------------
         "KEY" | "SORTKEY" | "SOURCEPAGE" | "SOURCELONG" | "SOURCESHORT" | "SOURCEWEB" | "SOURCEDATE" | "SOURCELINK" | "KIT" | "STARTFEATS" | "LEVELSPERFEAT" | "RACETYPE"
         | "RACESUBTYPE" | "SUBRACE" | "DEITYWEAP" | "ALIGN" | "USEUNTRAINED" | "ROLE" | "NAMEOPT" | "ITYPE" | "REPLACES" | "FORMATCAT" | "ASSIGNTOALL" | "REGION" | "REMOVABLE" | "VARIANTS"

@@ -70,56 +70,10 @@ use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, ResolvedTra
 
 use crate::authoring_workbench::codex_repo_root;
 
-/// The corpus books that carry race content today. A book with no `race/`
-/// or `race_trait/` directory contributes nothing and is not an error, so
-/// this list is safe to extend as further books are ingested.
-/// `pub(crate)` so `corpus_ingest_diagnostic` reports a per-book race count
-/// over exactly the books this catalog actually searches — including a book
-/// that is searched and contributes nothing (ARG), which is a measured zero
-/// rather than an omission.
-pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
-    "core_rulebook",
-    "beastiary",
-    "advanced_race_guide",
-    "advanced_players_guide",
-    "monster_codex",
-    "inner_sea_races",
-    "horror_adventures",
-    // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15): the chassis + standard
-    // traits for 6 newly-modelled races (`ingest_races::IN_SCOPE_RACES`),
-    // filed under `bestiary_2` per `advanced_race_guide.pcc`'s own
-    // `# B2 races` section, exactly the way core_rulebook/beastiary already
-    // are.
-    "bestiary_2",
-    // Bestiary 5, SD-31 Epic 1 follow-on batch (2026-08-15): Skinwalker's
-    // chassis + 9 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
-    // Skinwalker's HERITAGE rows are not ingested by this batch (see
-    // `ingest_races.rs`'s `skinwalker` entry doc comment) -- this book
-    // loads the chassis + default-tier trait set only, same shape as the
-    // other flat, non-heritage race books above.
-    "bestiary_5",
-    // Bestiary 6, SD-31 wave-24 integration cycle (2026-08-20): Rougarou's
-    // chassis + 8 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
-    // Confirmed a flat, non-heritage shape (no `*_subrace.lst` file, no
-    // `Rougarou_Replace*` flag ever set to `True` anywhere in the pinned
-    // oracle) -- same shape as Bestiary 2/5 above, not the Dhampir-style
-    // heritage gap an earlier note wrongly grouped it with.
-    "bestiary_6",
-    // Bestiary 3, SD-32 `decisions.md §25` cycle 2: 5 Adopted-Race selector
-    // records (`ingest_race_traits.rs`'s new `selector_only` `BookSource`).
-    // Loaded, unlike Bestiary 2/5/6, purely for its 5 selector rows -- this
-    // book contributes zero chassis and zero standard-tier traits of its own
-    // (its 5 target races' chassis are ARG-native, already loaded under
-    // `advanced_race_guide`), so it never appears in `RACE_CATALOG_BOOKS`
-    // below, the same way ARG/APG/MC/ISR/HA are loaded here without
-    // contributing catalog rows.
-    "bestiary_3",
-];
+pub(crate) use codex::rules_core::race_resolver::RACE_CORPUS_BOOKS;
 
 /// [`RACE_CORPUS_BOOKS`] keyed by game system (SD-37 E1.2): the list above is the
-/// [`GameSystem::Pathfinder1e`] entry, read from that system's corpus root. The list keeps
-/// its own declaration because `race_resolver`'s pin test and `sheet_rule_parity` read it
-/// from this file's source text.
+/// [`GameSystem::Pathfinder1e`] entry, read from that system's corpus root.
 pub(crate) const RACE_CORPUS_BOOK_REGISTRY: BookRegistry<&str> = BookRegistry::pathfinder_only(RACE_CORPUS_BOOKS);
 
 /// Which ingested book a catalog entry came from. Short codes are the wire

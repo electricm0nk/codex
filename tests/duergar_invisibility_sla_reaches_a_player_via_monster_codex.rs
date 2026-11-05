@@ -129,12 +129,12 @@ fn corpus() -> RaceCorpus {
 /// source rather than trusted.
 #[test]
 fn the_loaded_books_are_the_ones_the_app_loads() {
-    let src = std::fs::read_to_string("apps/desktop/src-tauri/src/race_catalog.rs")
-        .expect("the desktop race catalog source is readable from the repo root");
+    let src = std::fs::read_to_string("src/rules_core/race_resolver.rs")
+        .expect("the race resolver source is readable from the repo root");
     let decl = src
-        .split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =")
+        .split("pub const RACE_CORPUS_BOOKS: &[&str] =")
         .nth(1)
-        .expect("RACE_CORPUS_BOOKS is declared in race_catalog.rs");
+        .expect("RACE_CORPUS_BOOKS is declared in race_resolver.rs");
     let list = decl.split(';').next().expect("the declaration terminates");
     let shipped: Vec<String> =
         list.split('"').skip(1).step_by(2).map(str::to_owned).collect();

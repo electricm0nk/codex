@@ -418,30 +418,27 @@ pub fn equipment_catalog_row_by_key(key: &str) -> Option<&'static EquipmentCatal
 }
 
 /// True when `input` is definitively not proficient with this weapon, armor or shield. An item that
-/// is none of those, or a verdict the engine cannot reach, is false: an unknown never refuses.
-/// `race_traits` are the keys the race resolver applied, which a seed cannot reach by itself.
-pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str, race_traits: &[String]) -> ItemProficiencyGap {
-    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{armor_proficiency_in, weapon_grant_in};
+/// is none of those, or a verdict the engine cannot reach, is false: an unknown never refuses. A
+/// weapon reads the one verdict the sheet's attack rows read.
+pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str) -> ItemProficiencyGap {
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::armor_proficiency_in;
     use crate::rules_core::pilot_compute::{character_is_proficient_with, compute_pilot_base_chassis};
     use crate::rules_core::sheet_rule::{slug, CharacterFacts, HeldSeed};
 
     let package = crate::rules_core::corpus_loader::live_sheet_rules();
-    let held = || {
-        let computation = compute_pilot_base_chassis(input);
-        let mut seed = HeldSeed::from_character(input, &computation);
-        seed.race_traits.extend(race_traits.iter().cloned());
-        let facts = package.map(|package| CharacterFacts::from_character(input, &computation).with_linked_picks(package, &seed));
-        (seed, facts)
-    };
     let record = package.and_then(|package| {
         let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
         Some((package, package.rule(package.find("equipment", &slug(needle))?)?))
     });
     if let Some((package, rule)) = record {
-        let (seed, facts) = held();
-        if let Some(facts) = &facts
-            && let Some(proficient) = armor_proficiency_in(package, &seed, facts, &rule.label, &rule.tags)
-        {
+        let computation = compute_pilot_base_chassis(input);
+        let mut seed = HeldSeed::from_character(input, &computation);
+        seed.race_traits = crate::rules_core::race_resolver::applied_race_trait_keys(
+            &input.chosen.race_id,
+            &crate::rules_core::pilot_compute::selected_alternate_trait_keys(input),
+        );
+        let facts = CharacterFacts::from_character(input, &computation).with_linked_picks(package, &seed);
+        if let Some(proficient) = armor_proficiency_in(package, &seed, &facts, &rule.label, &rule.tags) {
             return if proficient { ItemProficiencyGap::None } else { ItemProficiencyGap::Armor };
         }
     }
@@ -452,16 +449,7 @@ pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str, r
     if weapon.proficiency_name == Some("Improvised Weapon") || character_is_proficient_with(input, weapon) != Some(false) {
         return ItemProficiencyGap::None;
     }
-    // That verdict reads the classes' lists and the three proficiency feats. A race's familiarity, a
-    // class feature or a deity's weapon is in what the character holds.
-    let Some(package) = package else {
-        return ItemProficiencyGap::None;
-    };
-    let (seed, facts) = held();
-    match facts.map(|facts| weapon_grant_in(package, &seed, &facts, weapon)) {
-        Some(Some(false)) => ItemProficiencyGap::Weapon,
-        _ => ItemProficiencyGap::None,
-    }
+    ItemProficiencyGap::Weapon
 }
 
 /// The weapon a held item is, by any name it is held under: a named or material row

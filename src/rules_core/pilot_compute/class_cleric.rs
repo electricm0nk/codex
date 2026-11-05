@@ -1974,8 +1974,8 @@ mod cleric_dispatch_widening_safety_tests {
         // The old 6 was a real wrong number, not a changed expectation:
         // this baseline swings a Longsword, and Cleric's corpus grant is
         // the Simple tier plus `AUTO:WEAPONPROF|DEITYWEAPONS`. The
-        // Longsword is Martial, and no deity is modelled anywhere in this
-        // engine, so a Cleric here is genuinely non-proficient and owes
+        // Longsword is Martial, and this fixture records no deity, so a
+        // Cleric here is genuinely non-proficient and owes
         // PF1's -4 (`WEAPONNONPROFPENALTY` in
         // `system/gameModes/Pathfinder/miscinfo.lst:193`).
         assert_eq!(

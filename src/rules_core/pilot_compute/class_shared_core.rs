@@ -3134,6 +3134,11 @@ pub(super) fn explain_human_trait_bundle(
 /// which returns only the first.
 pub const RACE_ALTERNATE_TRAIT_CHOICE_ID: &str = "choice:race_alternate_trait";
 
+/// The row carrying the character's written-down deity as the rules name it (`deity:iomedae`), for
+/// the one reader that needs it: a class's grant of its deity's favored weapon. The bio is what the
+/// player types; `SavedCharacterStore::load` keeps this row equal to it.
+pub const CHARACTER_DEITY_CHOICE_ID: &str = "character.deity";
+
 /// The choice-set id under which a real character-creation-time companion/
 /// mount species pick is persisted on `ChosenCharacterState::selected_
 /// choices` — SD-32 T12 `epic-10-reference-library-residual-reach` row 20
