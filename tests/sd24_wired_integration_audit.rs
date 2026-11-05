@@ -164,12 +164,20 @@ fn no_zero_tolerance_forbidden_tokens_in_shipping_source() {
             )) && line.contains("Would render for system")
                 && line.contains("not yet implemented"))
     };
+    // SD-39 E8.1 (`decisions.md §25`): the desktop lockfile names a third-party crate,
+    // `proc-macro-hack`, which `typst-library` pulls in (through `hayagriva`, `biblatex`,
+    // `unic-langid`). A lockfile line is a package name, not shipping prose; matched by the
+    // lockfile's path *and* that exact quoted name, so any other token in it still fails.
+    let is_lockfile_proc_macro_hack = |line: &str| {
+        line.starts_with("apps/desktop/src-tauri/Cargo.lock:") && line.contains("\"proc-macro-hack\"")
+    };
     let hits: Vec<String> = hits
         .into_iter()
         .filter(|line| {
             !is_plant_growth_full_spell_text(line)
                 && !is_tophet_swallow_whole_full_text(line)
                 && !is_registry_0002_stub_adapter_exception(line)
+                && !is_lockfile_proc_macro_hack(line)
         })
         .collect();
     assert!(
