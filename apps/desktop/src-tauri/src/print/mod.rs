@@ -18,10 +18,10 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
-use crate::character_custom::custom_or_empty;
-use crate::character_hub::{
-    list_held_equipment_at_root, load_character_bio_at_root, load_saved_character_at_root, resolve_character_root,
-};
+use crate::character_custom::{custom_or_empty, CharacterCustomDto};
+use crate::character_hub::{list_held_equipment_at_root, load_character_bio_at_root, resolve_character_root};
+use crate::rule_system_adapter::load_saved_character_via_envelope;
+use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
 pub use model::Paper;
 
 /// What to print: the paper, and the three option boxes (operator ruling R4, stacking: none of
@@ -64,8 +64,8 @@ pub fn sheet_font_families() -> Vec<String> {
     typst::font_families()
 }
 
-/// Renders the character saved at `root` to a PDF. Pathfinder only until E8.3 adds the other two
-/// systems' layout files; another system is refused by name, never printed as a Pathfinder sheet.
+/// Renders the character saved at `root` to a PDF through its system's layout file (Pathfinder,
+/// Starfinder, Cyberpunk RED); another system is refused by name, never printed as another's sheet.
 pub fn render_sheet_pdf_at_root(root: &Path, request: &PrintRequest) -> Result<RenderedSheet, String> {
     let document = sheet_document_at_root(root, request)?;
     let typeset = typst::typeset(&document)?;
@@ -75,22 +75,27 @@ pub fn render_sheet_pdf_at_root(root: &Path, request: &PrintRequest) -> Result<R
 /// The sheet the character saved at `root` prints as: its system's layout file over what the
 /// screen reads -- the load response, the owned copies (`list_held_equipment_at_root`), the
 /// Custom tab's records and the bio -- and the request's options.
+///
+/// The load is the one the `load_saved_character` command makes (`load_saved_character_via_envelope`,
+/// which serves a Pathfinder save exactly as `load_saved_character_at_root` does). Starfinder and
+/// Cyberpunk RED have no owned-copies list and no Custom tab, so their sources hold none.
 pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<model::SheetDocument, String> {
-    let loaded = load_saved_character_at_root(root)?;
-    match loaded.summary.game_system.as_str() {
-        "pf1" => {
-            let sources = blocks::SheetSources {
-                loaded: &loaded,
-                held: list_held_equipment_at_root(root)?,
-                custom: custom_or_empty(root),
-                bio: load_character_bio_at_root(root)?,
-                request,
-            };
-            Ok(layout::pf1e::layout(&sources))
-        }
-        other => Err(format!("print.unsupported_system: no print layout for game system `{other}` yet")),
-    }
+    let loaded = load_saved_character_via_envelope(root)?;
+    let system = loaded.summary.game_system.as_str();
+    let layout: fn(&blocks::SheetSources) -> model::SheetDocument = match system {
+        "pf1" => layout::pf1e::layout,
+        STARFINDER_RULE_SYSTEM_ID => layout::sf1e::layout,
+        CYBERPUNK_RED_ID => layout::cpr::layout,
+        other => return Err(format!("print.unsupported_system: no print layout for game system `{other}`")),
+    };
+    let (held, custom) =
+        if system == "pf1" { (list_held_equipment_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
+    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, request };
+    Ok(layout(&sources))
 }
+
+/// The `game_system` a Cyberpunk RED save carries.
+const CYBERPUNK_RED_ID: &str = codex::rules_core::game_system::GameSystem::CyberpunkRed.id();
 
 /// What a save wrote: where, how many bytes, and any warning Typst raised making it (a sheet
 /// that does not fit its paper says so here rather than printing clipped in silence; NR-4).

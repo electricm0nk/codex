@@ -33,7 +33,7 @@ fn line_values(line: &SheetLineDto) -> Vec<String> {
 
 /// A sheet line as a row: its label and values, its condition and words under it. A number line
 /// is a computed value; its derivation is the rule itself, which no `explanations` row records.
-fn line_row(line: &SheetLineDto) -> SheetRow {
+pub(crate) fn line_row(line: &SheetLineDto) -> SheetRow {
     let row = SheetRow::new(line.label.clone(), line_values(line))
         .with_notes(line.condition.iter().map(|condition| format!("Condition: {condition}")))
         .with_notes(line.prose.split('\n').map(str::to_owned));
