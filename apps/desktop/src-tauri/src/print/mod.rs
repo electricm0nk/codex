@@ -184,3 +184,6 @@ pub fn print_sheet_pdf(app: tauri::AppHandle, request: PrintSheetPdfRequest) -> 
 
 #[cfg(test)]
 mod print_smoke;
+
+#[cfg(test)]
+mod print_golden;
