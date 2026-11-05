@@ -5,8 +5,9 @@
 //! `SheetDocument` (`model.rs`), which the shared Typst frame (`resources/print/*.typ`) typesets
 //! with the bundled fonts only (`typst.rs`). The print path computes no number (NR-2).
 //!
-//! `save_sheet_pdf` is the Save PDF sink: the frontend's save-as dialog names the file, this
-//! writes the PDF there and opens it in the system's PDF viewer (`tauri-plugin-opener`).
+//! The two sinks (operator rulings R5, R19): `save_sheet_pdf` writes the PDF where the frontend's
+//! save-as dialog said and opens it; `print_sheet_pdf` writes it to a temp file and opens that in
+//! the system's PDF viewer, where the player prints. Both open through `tauri-plugin-opener`.
 
 pub mod layout;
 pub mod model;
@@ -91,6 +92,48 @@ pub fn save_sheet_pdf(app: tauri::AppHandle, request: SaveSheetPdfRequest) -> Re
     app.opener()
         .open_path(saved.file_path.clone(), None::<&str>)
         .map_err(|err| format!("Saved {}, but it could not be opened: {err}", saved.file_path))?;
+    Ok(saved)
+}
+
+/// The Print sink's file: `<temp_root>/codex-print/<character_id>.pdf`, replaced by each print of
+/// that character, so printing never piles up files.
+pub fn write_print_copy_at_root(
+    root: &Path,
+    character_id: &str,
+    request: &PrintRequest,
+    temp_root: &Path,
+) -> Result<SavedSheetPdf, String> {
+    let dir = temp_root.join("codex-print");
+    std::fs::create_dir_all(&dir).map_err(|err| format!("{}: {err}", dir.display()))?;
+    write_sheet_pdf_at_root(root, request, &dir.join(format!("{character_id}.pdf")))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PrintSheetPdfRequest {
+    pub character_id: String,
+    #[serde(default)]
+    pub paper: Paper,
+}
+
+/// Print (operator ruling R19): makes the PDF in the system temp directory and opens it in the
+/// system's PDF viewer; the player prints from there. The same opener works on Linux, macOS and
+/// Windows (`decisions.md §25`).
+#[tauri::command]
+pub fn print_sheet_pdf(app: tauri::AppHandle, request: PrintSheetPdfRequest) -> Result<SavedSheetPdf, String> {
+    use tauri_plugin_opener::OpenerExt;
+    // `resolve_character_root` refuses an id that is not a plain character id, so the file name
+    // below cannot leave the print directory.
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let saved = write_print_copy_at_root(
+        &root,
+        &request.character_id,
+        &PrintRequest { paper: request.paper },
+        &std::env::temp_dir(),
+    )?;
+    app.opener()
+        .open_path(saved.file_path.clone(), None::<&str>)
+        .map_err(|err| format!("Made {}, but it could not be opened: {err}", saved.file_path))?;
     Ok(saved)
 }
 

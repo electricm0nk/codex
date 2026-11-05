@@ -315,6 +315,7 @@ fn main() {
             delete_character,
             export_character_json,
             print::save_sheet_pdf,
+            print::print_sheet_pdf,
             export_character,
             import_character,
             import_pcg,

@@ -8,7 +8,7 @@
 //! cargo test --locked -j 8 print_smoke -- --test-threads=8
 //! ```
 
-use super::{render_sheet_pdf_at_root, sheet_font_families, write_sheet_pdf_at_root, Paper, PrintRequest};
+use super::{render_sheet_pdf_at_root, sheet_font_families, write_print_copy_at_root, write_sheet_pdf_at_root, Paper, PrintRequest};
 use crate::character_hub::{load_saved_character_at_root, seed_default_characters_at};
 use std::path::{Path, PathBuf};
 
@@ -171,3 +171,18 @@ fn print_smoke_save_writes_the_rendered_pdf_to_the_chosen_path() {
     assert!(refused.contains("no-such-dir"), "the refusal names the path: {refused}");
 }
 
+
+#[test]
+fn print_smoke_print_writes_a_temp_copy_named_for_the_character() {
+    // Operator ruling R19: Print makes the PDF and opens it in the system viewer, from a temp file.
+    let root = seeded_aldric("print");
+    let temp = std::env::temp_dir().join(format!("codex-print-smoke-{}-temp", std::process::id()));
+    let _ = std::fs::remove_dir_all(&temp);
+    let first = write_print_copy_at_root(&root, ALDRIC_ID, &PrintRequest { paper: Paper::A4 }, &temp).expect("the print copy writes");
+    assert_eq!(PathBuf::from(&first.file_path), temp.join("codex-print").join(format!("{ALDRIC_ID}.pdf")));
+    assert!(std::fs::read(&first.file_path).expect("the copy reads back") == render(&root, Paper::A4));
+    // A second print replaces the copy rather than piling files up.
+    let second = write_print_copy_at_root(&root, ALDRIC_ID, &PrintRequest { paper: Paper::Letter }, &temp).expect("a second print writes");
+    assert_eq!(first.file_path, second.file_path);
+    assert!(std::fs::read(&second.file_path).expect("the copy reads back") == render(&root, Paper::Letter));
+}
