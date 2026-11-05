@@ -28,7 +28,7 @@ status: planning-ready
 | R-11 | Market replaces the Add buttons before Market is complete → a tab with no way to add items | low | high | E3.3 removes the buttons in the same card that lands the dialog; E3.MC checks every tab has an add path | yes |
 | R-12 | Print "Show the math" has gaps where no explanations row exists | certain for some values | low | SD-a prints "(no derivation recorded)"; E8.5 counts them per seed and the receipt lists them (candidates for a later bundle) | n/a |
 | R-14 | Sidecar missing from one platform's bundle | medium | medium | `tauri.sidecar.json` + all three publish jobs (E7.2); Windows and macOS are only proved by CI at publish after the merge, **not by this run** | no — stated in the notes |
-| R-15 | An imported character holds a Longsword and Weapon Focus its PCGen file does not, because the combat baseline is the Longsword's (`compute_combat_baseline_from_corpus`) and Create gives every character the same | certain, by design of the engine today | medium | each is an `added` line in the import report (E7.1); widening the baseline is outside this bundle's scope | no |
+| R-15 | An imported character holds Weapon Focus and the `power_attack` row its PCGen file does not, because Create gives every character the same. E7.4 took the added Longsword away (`pcg_import` adds no gear) | certain, by design of the engine today | medium | each is an `added` line in the import report (E7.1); widening the baseline is outside this bundle's scope | no |
 | R-13 | Clippy found only after commit (SD-38 retro change 3) | high | low | R16: `cargo clippy --locked --tests` before the first local commit of any `.rs` card | yes |
 
 ## 2. Open questions → defaults taken

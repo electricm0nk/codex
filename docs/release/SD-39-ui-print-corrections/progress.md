@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 43 of 62 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 45 of 63 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -87,6 +87,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E7 | E7.4 | complete | a4150fc4b1 + receipt commit | artifacts/epic_7/E7.4_cycle_receipt.md |
 | E7 | E7.5 | complete | a44e177d18 + receipt commit | artifacts/epic_7/E7.5_cycle_receipt.md |
 | E7 | E7.6 | complete | ac9bb659ae + receipt commit | artifacts/epic_7/E7.6_cycle_receipt.md |
+| E7 | E7.MC | complete | c8ba870af8, e65cef12fd + receipt commit | artifacts/epic_7/E7.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -240,6 +241,37 @@ seed deltas, open blockers.)
 
 **Open blockers:** none on E6. **Open, for the lead, no operator ruling needed and no DoD row I can name, so no card:** an Elf Wizard's Longsword, or a Cleric's own weapon, is no longer refused and still reads -4 on the attack row, with words saying nothing grants it. `character_weapon_proficiency` runs inside the compute and reads classes and three feats; the race resolver it would need is in the desktop crate. The wrong number predates this bundle. The two stale ui-smoke rows are FSR-C2's. `append_to_character` wears with no check and no screen calls it. E1.6 is still `ready` and nothing dispatches it (`kanban.md`).
 
+### Epic report — E7 (`.pcg` import, gear, proficiency), merge check on `origin/tranche-19` @ `6f5bdef517`, fixes in `c8ba870af8` and `e65cef12fd`
+
+**Cards done:** E7.1, E7.2, E7.3, E7.4, E7.5, E7.6, E7.MC. **Discovered: E7.7** (a weapon stating no damage dice, `Net (Base)`, has no attack row), `ready`, 63 cards.
+
+| Figure | Value | Command |
+|---|---|---|
+| E7 commands | `pcg_import_fixtures` 12 of 12; root `selected_skill` 28, `race_weapon_proficiency` 8; desktop `no_required_gear` 11, `left_behind` 11, `race_weapon_proficiency` 7, `character_money_` 8. 0 failed. `bash scripts/verify.sh --only pcgen-residue-gate --only crate-wall` `RESULT: PASS`; in `apps/desktop`, the sidecar built as the Linux publish job builds it, then `npx tauri build --config src-tauri/tauri.sidecar.json --bundles deb` exit 0, the deb holding `usr/bin/pcg_import`, `usr/bin/codex-desktop` and `usr/lib/Codex/data/` with `cyberpunk-red` and `starfinder-1e` (`dpkg-deb -c`). | each row's own command, `awk` over the log |
+| Root tests | 6,771 passed, 0 failed, 27 ignored, 301 result lines, exit 0, at c8ba870af8 | `cargo test --locked -j 8 --no-fail-fast -- --test-threads=8`; `awk` and Python agree |
+| Desktop tests | 1,180 passed, 0 failed, 2 ignored, 2 result lines, exit 0, at e65cef12fd's tree (E7.6's 1,172 plus 5 and 3) | the same in `apps/desktop/src-tauri` |
+| `codex-ingest` | 1,857 passed, 1 failed, 43 ignored, 178 result lines, exit 101, at c8ba870af8. The one, `v06_wizard_pilot_case_verification::full_pipeline_runs_end_to_end_for_the_wizard_pilot_case`, failed on PCGen's gradle download during the internet outage (`Unable to process url: https://api.adoptium.net/...`); after it, `cargo test --locked -p codex-ingest -j 8 --test v06_wizard_pilot_case_verification` 3 passed, 0 failed | `cargo test --locked -p codex-ingest -j 8 --no-fail-fast -- --test-threads=8` |
+| Frontend | typecheck 0; 187/187 test files; `ui-smoke:doc` 168 rows | `cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc` |
+| ui-smoke | 40 of 40 chosen rows green at their last run: the 37 that touch Gear, Market, Custom and overrides 35/37, the 2 red the rows the harness stalled on before each auto-relaunch, both green re-run alone (`smoke-rerun-results.json`); `load-character-import-pcgen` and `-opens` (`smoke-import-results.json`); `sheet-bio-deity-moves-melee` (`smoke-deity-results.json`), red three times while its steps were wrong | `node scripts/ui-smoke/run.mjs --only <ids>`, `E7.MC/smoke-results.json`. The full suite was not run |
+| `.pcg` fixtures through the real sidecar and import path | 37 saved, 26 refused by the engine, 2 refused by the reader, 0 that saved and do not load, of 65 | `mcp_p5_every_fixture`, `E7.MC/probes-before.txt` |
+| Packaged tree | 63 of 63 converted files equal the checkout's, under a tree shaped as `tauri.conf.json` maps the resources; desktop `race_weapon_proficiency` 7 of 7 passed. The tree's first cut held no `data/cyberpunk-red` or `data/starfinder-1e`, and 4 failed on `cpr_creation.read_failed`, a fault of the tree, not the app; rebuilt with every `bundle.resources` mapping of `tauri.conf.json` under it | `pcg_import --data-root`, `E7.MC/packaged-tree.txt`; `CODEX_REPO_ROOT=<tree> cargo test --bins race_weapon_proficiency` |
+| No gear | 63 of 63 base classes compute with everything stowed, left behind, none held, and a Greatsword alone; 74 prestige classes are not first classes | `mcp_p6_every_class_no_gear`, `E7.MC/probes-before.txt` |
+| Deity weapons | 442 of 464 declarations on the CRB table not refused for a Cleric of that deity, 0 refused; the other 22 name a weapon off the table (Net, Bite, War Razor and 4 more) | `mcq_p1_deity_census`, `E7.MC/probes-before.txt` |
+| Row against refusal | 71 of 71 attack-bearing `(Base)` Market rows agree, of 77, on 9 characters: Wizard of 7 core races, Cleric of Iomedae, Cleric of none. The 6 are 5 ammunition rows and Net | `mcq_p2`, 4 before the fixes and 5 after, `E7.MC/probes-before.txt`, `market-census-after.txt` |
+| Mutations | 7 of 7 red, 1 first run on the wrong filter and re-aimed | `E7.MC/mutations.txt` |
+| `sheet_rule_convert --check` | exit 0, Pathfinder and Starfinder | G-1 |
+
+**Seed deltas (base = `2a726046d6`, E6.MC's close, built in its own tree; head = `c8ba870af8`):** PF Aldric, Elowen, Tomas: 1 path each, `/explanations/17/detail` of `combat.weapon_attack_bonus.longsword`, text, the stale "task #80" clause. No number moves. SF x4 and CPR x5: `diff -r` empty (`E7.MC/seed-deltas.txt`). So every E7 card's "none" holds at the epic's width, this card's one text path apart.
+
+**Refuted, all fixed here:** an attack row read Strength for every bow, crossbow and javelin. A shield stand-in worn first was the Melee number (`pf_Cleric.pcg` read -2 with a Morningstar row of 2). A Fighter's shield bash read -4 and "nothing grants" while the refusal let him wear it. A clone lost its deity, and with it the favored weapon. A clone and an Export then Import lost the character's money (36,345 cp read 0). `DEITY:None` became a deity named None. **E7.4's 9 and E7.6's 5 tests passed through all of this**: they asserted Melee and melee weapons, and neither reached clone. **Holds:** E7.1's 37/26/2; the sidecar's output under a packaged tree; 63 of 63 classes with no gear; left behind (a mutation of each reader goes red); the deity row writes nothing to the ledger; deity weapons by proficiency name, `Sword (Short)` and `Mace (Heavy)` included; the holders Cleric, Inquisitor and Warpriest by deity.
+
+**Retro (`scripts/retro.py summary --since 2026-11-03T00:00:00 --actor sd39-e7.1 ... --actor sd39-e7.mc --json`, `E7.MC/retro-summary.json`):** 24 corrections (E7.1 5, E7.2 2, E7.3 3, E7.4 3, E7.5 1, E7.6 2, this card 8, one of them correcting another of mine), 2 incidents (`wrote-in-lead-checkout`, `network-outage-mid-run`, once each), 0 deferrals, 0 reworks. No key fired more than once, so no new check under R-W. 23 of the 24 subjects are receipts, package rows or my own retro line
+
+**Open blockers:** none on E7. The two ui-smoke rows that went red in the long run (`sheet-market-open-weapons`, `sheet-equipment-lists`) were the rows the harness stalled on before each auto-relaunch, and are green re-run alone. E8.1 depends on E7.MC, not E7.7, so the script's `drainBoard` must run E7.7 before E8.
+
+**Sweep (`workflow-instruction.md §10` step 3):** `sd39-*` worktrees other than `sd39-main`: 1 found (`sd39-e7mc`, detached at c8ba870af8, merged, unlocked, its one edit the same blob as e65cef12fd's `spec.json`), 1 removed; `cargo-target/sd39-*` other than `sd39-main`: 1 found (40 G), 1 removed. `git worktree list | grep -c sd39` → 1; `ls /home/ubuntu/cargo-target | grep -c sd39` → 1.
+
+
 ## Decisions taken on safe defaults
 
 | Card | Decision point | Default taken | Alternative not taken |
@@ -278,6 +310,9 @@ seed deltas, open blockers.)
 | E6.MC | A shield or suit stating no kind | An unknown, not refused, for a Wizard too | Refused for all, a Fighter included |
 | E7.6 | A Cleric with no deity recorded, or one no rule holds | -4, refused, and the row prints why: the row and the refusal read one answer. Reverses E6.MC above | Unknown, which claim-blocks every Cleric holding the starting Longsword |
 | E7.6 | Where the deity's weapon and a race's Martial weapons live | Declared by the converter on the record, one more run, 469 files (§5's revisit, G-2 amended) | A hand-kept table; reading the corpus live, which a packaged app does not ship |
+| E7.MC | A table shield's bash | A row, with the shield's own proficiency | No row, which the corpus path gives a stand-in shield and the table path never did; left two-sided and named in the receipt |
+| E7.MC | A thrown Dagger | Strength, since the table says it is melee and the sheet records no throw | Two rows per weapon |
+| E7.MC | A clone's and an export's money | Carried, as the other sidecar files are | Left for the lead, which this card's first draft did |
 
 ## Open blockers
 

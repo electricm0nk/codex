@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 59
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 63
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -77,7 +77,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 59
 | E7.4 | No gear is required: a character computes with nothing worn or wielded | opus | complete | E7.3 | commit a4150fc4b1 + receipt commit; receipt artifacts/epic_7/E7.4_cycle_receipt.md; operator ruling R21; 9 no_required_gear tests, 14 loadouts through both twins; pcg_import_fixtures 11 passed; root 4 pins rewritten, their suites 22 passed; ingest 1857 and desktop 1158+1 passed, 0 failed; seeds NO_DIFF; no card discovered |
 | E7.5 | Owned but not carried: Left behind on the Equipment panel | opus | complete | E7.4 | commit a44e177d18 + receipt commit; receipt artifacts/epic_7/E7.5_cycle_receipt.md; operator ruling R21, 2026-11-04 |
 | E7.6 | A race's and a deity's weapon proficiency reach the attack row | opus | complete | E7.5 | commit ac9bb659ae + receipt commit; receipt artifacts/epic_7/E7.6_cycle_receipt.md; operator ruling R22, 2026-11-04 |
-| E7.MC | E7 merge check + Epic report | opus | waiting | E7.6 | |
+| E7.MC | E7 merge check + Epic report | opus | complete | E7.6 | commits c8ba870af8, e65cef12fd + receipt commit; receipt artifacts/epic_7/E7.MC_cycle_receipt.md; 6 defects fixed, 1 card discovered (E7.7), E7 commands green; root 6,771 passed, 0 failed, 27 ignored, 301 result lines, exit 0, at c8ba870af8, desktop 1,180 passed, 0 failed, 2 ignored, 2 result lines, exit 0, at e65cef12fd's tree (E7.6's 1,172 plus 5 and 3), ingest 1,857 passed, 1 failed, 43 ignored, 178 result lines, exit 101, at c8ba870af8. The one, `v06_wizard_pilot_case_verification::full_pipeline_runs_end_to_end_for_the_wizard_pilot_case`, failed on PCGen's gradle download during the internet outage (`Unable to process url: https://api.adoptium.net/...`); after it, `cargo test --locked -p codex-ingest -j 8 --test v06_wizard_pilot_case_verification` 3 passed, 0 failed; seeds: one text path on each PF seed, SF and CPR none |
+| E7.7 | A weapon stating no damage dice has an attack row | opus | ready | E7.MC | discovered by E7.MC (`decisions.md §21`); `Net (Base)` is held and reads no attack row |
 | E8.1 | Print core: Typst, fonts, frame, PF layout, Save PDF cmd | opus | waiting | E7.MC | |
 | E8.2 | PF blocks + three options | opus | waiting | E8.1 | |
 | E8.3 | SF + CPR layout files | opus | waiting | E8.2 | |
