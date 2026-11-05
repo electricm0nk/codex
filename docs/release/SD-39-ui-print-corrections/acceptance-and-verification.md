@@ -43,6 +43,10 @@ E8.3 builds the in-test control if the incident fires once (R14).
 git diff --name-only <c1-sha>..HEAD -- data/sheet_rules | awk 'END{print NR}'     # 0, unless E1.0's receipt names the failed proof
 ```
 
+Amended by E7.6 (`decisions.md §25`): its converter run is the one exception, 469 files. From the commit after
+it the count is 0 again, and `sheet_rule_convert --check` in G-1 holds the data to the converter:
+`git diff --name-only <E7.6-sha>..HEAD -- data/sheet_rules | awk 'END{print NR}'`.
+
 ## G-3 Feat guards (DoD 3) — E1.1–E1.3, E1.MC
 
 ```bash
@@ -132,7 +136,7 @@ and E9.2's observed fresh-install values.
 | Gate | Receipt(s) | Evidence path |
 |---|---|---|
 | G-1 | every card | `artifacts/epic_<n>/<card>_cycle_receipt.md` "Seed deltas" |
-| G-2 | E1.0 | `artifacts/epic_1/E1.0_cycle_receipt.md` + `E1.0/key-diff.txt` |
+| G-2 | E1.0, E7.6 | `artifacts/epic_1/E1.0_cycle_receipt.md` + `E1.0/key-diff.txt`; `artifacts/epic_7/E7.6_cycle_receipt.md` |
 | G-3…G-8 | the named cards + MC | per-epic receipts |
 | G-9, G-10 | E8.1, E8.4, E8.5, E8.MC | `artifacts/epic_8/`, the 24 PDFs kept under `artifacts/epic_8/E8.5/` (git-ignored if > 5 MiB total; hashes committed) |
 | G-11 | E7.1, E7.2 | `artifacts/epic_7/` + `E7.1/import-report-<fixture>.md` |

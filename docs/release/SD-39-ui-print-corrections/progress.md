@@ -86,6 +86,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E7 | E7.3 | complete (closes E7.1) | f6ed94b1e7 + receipt commit | artifacts/epic_7/E7.3_cycle_receipt.md |
 | E7 | E7.4 | complete | a4150fc4b1 + receipt commit | artifacts/epic_7/E7.4_cycle_receipt.md |
 | E7 | E7.5 | complete | a44e177d18 + receipt commit | artifacts/epic_7/E7.5_cycle_receipt.md |
+| E7 | E7.6 | complete | ac9bb659ae + receipt commit | artifacts/epic_7/E7.6_cycle_receipt.md |
 
 ## Epic reports
 
@@ -275,6 +276,8 @@ seed deltas, open blockers.)
 | E6.MC | An item a race or deity may grant | Not refused, since an unknown never refuses | Refused until the engine holds a deity, which refuses a Cleric the book allows |
 | E6.MC | An Improvised Weapon row | Never refused: anyone may pick one up, and the sheet states the penalty | Refused for all, a Fighter included |
 | E6.MC | A shield or suit stating no kind | An unknown, not refused, for a Wizard too | Refused for all, a Fighter included |
+| E7.6 | A Cleric with no deity recorded, or one no rule holds | -4, refused, and the row prints why: the row and the refusal read one answer. Reverses E6.MC above | Unknown, which claim-blocks every Cleric holding the starting Longsword |
+| E7.6 | Where the deity's weapon and a race's Martial weapons live | Declared by the converter on the record, one more run, 469 files (§5's revisit, G-2 amended) | A hand-kept table; reading the corpus live, which a packaged app does not ship |
 
 ## Open blockers
 

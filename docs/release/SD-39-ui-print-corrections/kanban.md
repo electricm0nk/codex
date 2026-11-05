@@ -76,7 +76,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 59
 | E7.3 | Engine reads Climb, Intimidate, Swim at the real rank; importer writes it | opus | complete | E7.2 | commit f6ed94b1e7 + receipt commit; receipt artifacts/epic_7/E7.3_cycle_receipt.md; both twins read the rank, no rank reads untrained, Athletic and Persuasive +4 at 10; root selected_skill 28 passed, pcg_import_fixtures 11 passed, desktop 1149+1 passed, 0 failed; 187/187 frontend files; seeds NO_DIFF; no card discovered |
 | E7.4 | No gear is required: a character computes with nothing worn or wielded | opus | complete | E7.3 | commit a4150fc4b1 + receipt commit; receipt artifacts/epic_7/E7.4_cycle_receipt.md; operator ruling R21; 9 no_required_gear tests, 14 loadouts through both twins; pcg_import_fixtures 11 passed; root 4 pins rewritten, their suites 22 passed; ingest 1857 and desktop 1158+1 passed, 0 failed; seeds NO_DIFF; no card discovered |
 | E7.5 | Owned but not carried: Left behind on the Equipment panel | opus | complete | E7.4 | commit a44e177d18 + receipt commit; receipt artifacts/epic_7/E7.5_cycle_receipt.md; operator ruling R21, 2026-11-04 |
-| E7.6 | A race's and a deity's weapon proficiency reach the attack row | opus | waiting | E7.5 | operator ruling R22, 2026-11-04 |
+| E7.6 | A race's and a deity's weapon proficiency reach the attack row | opus | complete | E7.5 | commit ac9bb659ae + receipt commit; receipt artifacts/epic_7/E7.6_cycle_receipt.md; operator ruling R22, 2026-11-04 |
 | E7.MC | E7 merge check + Epic report | opus | waiting | E7.6 | |
 | E8.1 | Print core: Typst, fonts, frame, PF layout, Save PDF cmd | opus | waiting | E7.MC | |
 | E8.2 | PF blocks + three options | opus | waiting | E8.1 | |
