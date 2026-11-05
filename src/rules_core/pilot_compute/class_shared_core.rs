@@ -1605,6 +1605,9 @@ pub(super) const CRITICAL_MASTERY_FEAT_SELECTION: &str = "feat:critical_mastery"
 
 pub(super) const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
 
+/// The weapon table's own word for the group `HEAVY_BLADES_GROUP_SELECTION` chooses.
+pub(super) const HEAVY_BLADES_WEAPON_GROUP: &str = "Blades Heavy";
+
 pub(super) const BOWS_GROUP_SELECTION: &str = "group:bows";
 
 pub(super) const POLEARMS_GROUP_SELECTION: &str = "group:polearms";

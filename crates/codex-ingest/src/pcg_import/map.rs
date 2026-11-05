@@ -5,8 +5,8 @@
 //! line of the file is never dropped, and every line has exactly one report line.
 //!
 //! **Rows the file does not hold.** The app saves a character only when the rules engine computes
-//! it, and today the engine reads its combat baseline off a held Longsword, a held Weapon Focus and
-//! each class's default picks, the rows Create gives every new character. Those rows are added here,
+//! it, and today the engine reads its combat baseline off a held Weapon Focus and each class's
+//! default picks, the rows Create gives every new character. Those rows are added here,
 //! each with an `Added` report line, rather than the import being refused for lacking them. A spell
 //! the engine's class list refuses would refuse the whole character, so it becomes a custom spell.
 
@@ -133,7 +133,6 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
 const SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
 const WORN: &str = "EquippedActive";
 const CARRIED: &str = "SelectedInactive";
-const LONGSWORD_ITEM: &str = "item:longsword";
 const POWER_ATTACK_ROW: &str = "power_attack";
 const WEAPON_FOCUS_FEAT: &str = "feat:weapon_focus";
 const FIGHTER_BONUS_CHOICE: &str = "choice:fighter_bonus_feat";
@@ -750,14 +749,6 @@ impl<'a> Importer<'a> {
         if !feat_identity::holds(&self.feats, WEAPON_FOCUS_FEAT) {
             self.feats.push(WEAPON_FOCUS_FEAT.to_owned());
             self.added(&format!("selectedFeats {WEAPON_FOCUS_FEAT}"), WHY);
-        }
-        let holds_longsword = self
-            .equipment
-            .iter()
-            .any(|row| row.active_state == WORN && fold(&row.item_id) == "longsword");
-        if !holds_longsword {
-            self.equipment.push(EquipmentWire { item_id: LONGSWORD_ITEM.to_owned(), active_state: WORN.to_owned(), applied_modifiers: Vec::new() });
-            self.added(&format!("equipmentSelections {LONGSWORD_ITEM} worn"), WHY);
         }
         self.equipment.push(EquipmentWire { item_id: POWER_ATTACK_ROW.to_owned(), active_state: CARRIED.to_owned(), applied_modifiers: Vec::new() });
         self.added(&format!("equipmentSelections {POWER_ATTACK_ROW}"), WHY);

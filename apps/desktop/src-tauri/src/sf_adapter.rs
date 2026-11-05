@@ -1505,6 +1505,33 @@ pub(crate) mod tests {
         assert_eq!(after.bulk.total, before.bulk.total + 1, "{:?}", after.bulk);
     }
 
+    /// A Starfinder Soldier holding nothing, or holding it all stowed, computes: armour and weapons
+    /// are read when worn and never asked for.
+    #[test]
+    fn no_required_gear_starfinder_soldier_computes_with_nothing_worn() {
+        let package = package().expect("the Starfinder package loads");
+        let seed = crate::rule_system_adapter::tests::sf_soldier_3_input();
+        let geared = StarfinderAdapter.chassis_resolve(&seed);
+        assert!(!geared.diagnostics.iter().any(|d| d.claim_blocking), "{:?}", geared.diagnostics);
+
+        let mut stowed = seed.clone();
+        for selection in &mut stowed.chosen.equipment_selections {
+            selection.active_state = ActiveState::SelectedInactive;
+        }
+        let mut none = seed.clone();
+        none.chosen.equipment_selections.clear();
+        for (label, input) in [("stowed", &stowed), ("none", &none)] {
+            compute_sheet(package, input).unwrap_or_else(|r| panic!("{label}: {r:?}"));
+            let chassis = StarfinderAdapter.chassis_resolve(input);
+            assert!(!chassis.diagnostics.iter().any(|d| d.claim_blocking), "{label}: {:?}", chassis.diagnostics);
+            assert_eq!(chassis.base_attack_bonus, geared.base_attack_bonus, "{label}");
+            let row = |id: &str| chassis.explanations.iter().find(|row| row.id == id).map(|row| row.value);
+            let geared_row = |id: &str| geared.explanations.iter().find(|row| row.id == id).map(|row| row.value);
+            assert!(row("sf.eac").is_some(), "{label}: {:?}", chassis.explanations.iter().map(|r| &r.id).collect::<Vec<_>>());
+            assert!(row("sf.eac") < geared_row("sf.eac"), "{label}: no armor reads lower");
+        }
+    }
+
     /// A build the readers refuse is one claim-blocking diagnostic carrying the
     /// refusal's id and message, and every number 0.
     #[test]

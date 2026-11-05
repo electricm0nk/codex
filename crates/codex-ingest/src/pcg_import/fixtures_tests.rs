@@ -324,7 +324,7 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
 
     // In no line of the file, and each one says so.
     let added: Vec<&str> = file.report.lines.iter().filter(|line| line.outcome == Outcome::Added).map(|line| line.to.as_str()).collect();
-    assert!(added.iter().any(|to| to.contains("item:longsword")), "{added:?}");
+    assert!(!added.iter().any(|to| to.contains("item:longsword")), "no gear is required: {added:?}");
     assert!(!added.iter().any(|to| to.contains("weapon_focus") && to.contains("selectedFeats")), "the file holds Weapon Focus: {added:?}");
     assert_eq!(engine_verdict(&character_input(&file)), Ok(()));
 }

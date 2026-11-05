@@ -27,7 +27,8 @@
 //!     instead.
 
 use codex::rules_core::character_input::{
-    AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
+    AbilityScores, ActiveState, CharacterClassLevel, CharacterInput, ChosenCharacterState,
+    EquipmentSelection, SkillAllocation,
 };
 use codex::rules_core::contract::{
     printed_sheet_cell_map, to_pilot_receipt, PrintedSheetCellValue,
@@ -143,19 +144,27 @@ fn skill_cells_are_never_blocked_by_the_old_chassis_single_posture_diagnostic() 
         },
     ];
 
+    // Armor the chassis holds no number for: its check penalty is not known on that path.
+    input.chosen.equipment_selections.push(EquipmentSelection {
+        item_id: "item:full_plate".to_string(),
+        equipped_or_active: true,
+        active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
+    });
+
     let corpus = empty_corpus("sd20_contract_skill_wiring_deviation");
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
     let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
-    // The old chassis-level diagnostic still fires on this fixture, which wears no Chain Shirt (the
-    // rank itself stopped being a condition at E7.3). Its field is zeroed by that diagnostic, and
+    // The old chassis-level diagnostic still fires on this fixture, which wears armor that path
+    // cannot read (neither a rank nor a Chain Shirt is a condition). Its field is zeroed by it, and
     // the cell below still reads Epic 4's real number.
     assert!(
         receipt
             .diagnostics
             .iter()
             .any(|d| d.id == "skill.selected_modifier.unsupported" && d.claim_blocking),
-        "no Chain Shirt must still trip the old chassis check's \
+        "armor the chassis cannot read must still trip the old chassis check's \
          skill.selected_modifier.unsupported diagnostic: {:?}",
         receipt.diagnostics
     );

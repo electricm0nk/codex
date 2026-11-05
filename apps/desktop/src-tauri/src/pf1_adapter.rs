@@ -63,7 +63,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
 use codex::rules_core::pilot_compute_corpus::{
     compute_combat_baseline_from_corpus, compute_pilot_with_corpus,
-    compute_selected_skill_modifiers_from_corpus, CorpusAwareCombatBaseline, CorpusPilotReceipt,
+    compute_selected_skill_modifiers_from_corpus, corpus_weapon_attack_rows, CorpusAwareCombatBaseline, CorpusPilotReceipt,
 };
 use codex::rules_core::pilot_view_model::{
     PilotCombatViewModel, PilotCompanionViewModel, PilotDefenseViewModel, PilotSkillViewModel,
@@ -518,16 +518,11 @@ impl RuleSystemAdapter for Pf1Adapter {
 /// reach `Computed`.
 ///
 /// **That fixed loadout is the GE-06 deterministic pilot fixture**
-/// (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`),
-/// not a product decision about starting gear: the Longsword, Chain Shirt,
-/// absent shield, inactive Power Attack toggle and rank-1
-/// Climb/Intimidate/Swim allocations are exactly the posture the engine's
-/// bounded combat/skill slice was built and validated against. Every
-/// character created in the app is handed it because the engine computes
-/// no combat numbers for anything else, and `create_character` refuses to
-/// persist a build that is not `Computed`. Widening it is real, scoped
-/// engine work (a general armor/weapon-to-training-group model), not an
-/// adapter change.
+/// (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`):
+/// the Longsword, Chain Shirt, absent shield, inactive Power Attack toggle and
+/// rank-1 Climb/Intimidate/Swim allocations. Every character starts with it,
+/// and none of its items is required afterward: the engine computes with
+/// nothing worn or wielded (the Power Attack row is a feat's switch, not gear).
 ///
 /// `feat:dodge` used to be part of that fixed claim and no longer is: see
 /// the `selected_feats` construction below for why a *feat* claim is
@@ -897,6 +892,8 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             // the widened path is what keeps a real equipped shield from
             // silently blanking three cells.
             upsert_corpus_aware_combat_explanations(&mut corpus_receipt, &combat);
+            let weapon_rows = corpus_weapon_attack_rows(&corpus_receipt.base, character_input, corpus);
+            corpus_receipt.base.explanations.extend(weapon_rows);
             for (id, save) in [
                 ("defense.total_save.fortitude", "fortitude"),
                 ("defense.total_save.reflex", "reflex"),
@@ -931,10 +928,9 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 diagnostics.push(ComputationDiagnostic {
                     id: "combat.baseline_unsupported".to_owned(),
                     message: format!(
-                        "baseline combat totals require every equipped item to resolve \
-                         against the corpus with known math (armor/shield loadout is \
-                         widened; the Longsword and Dodge/Weapon Focus requirements are \
-                         unchanged); unmet conditions: {}",
+                        "baseline combat totals need a supported chassis, the Power Attack \
+                         row and Weapon Focus, and no item is required to be worn; unmet \
+                         conditions: {}",
                         unmet.join("; ")
                     ),
                     claim_blocking: true,
@@ -1034,6 +1030,26 @@ fn upsert_corpus_aware_combat_explanations(
                      reused here -- it describes a different formula"
                 ),
             });
+    }
+
+    // Melee and Armor Class keep the row the fixed-posture path wrote, whose prose names its terms.
+    // That path refuses armor it holds no numbers for, and the sheet reads this one, so the row is
+    // written here then.
+    for (id, value) in [
+        ("combat.baseline_melee_attack_bonus", combat.melee_attack_bonus),
+        ("defense.baseline_armor_class", combat.armor_class),
+    ] {
+        if !corpus_receipt.base.explanations.iter().any(|explanation| explanation.id == id) {
+            corpus_receipt.base.explanations.push(ComputationExplanation {
+                id: id.to_owned(),
+                value,
+                detail: format!(
+                    "{id} = {value}, computed by the corpus-aware combat baseline \
+                     (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this \
+                     character's actual resolved equipment loadout"
+                ),
+            });
+        }
     }
 }
 

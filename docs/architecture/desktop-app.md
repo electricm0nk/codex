@@ -262,8 +262,9 @@ app-data dir and runs `seed_default_characters_at(app_data_dir, app_version)` ov
   created character regardless of class (Power Attack, Dodge from the Human bonus-feat slot, Weapon
   Focus (longsword); longsword + chain shirt equipped; 1 rank each in Climb/Intimidate/Swim). Elowen
   carries it too, so her sheet lists Power Attack although Str 8 is below its Str 13 prerequisite, and
-  her AC counts the chain shirt. That is the create path's posture for every class, not a seed-only
-  choice; see the F6e receipt.
+  her AC counts the chain shirt. That is what the create path gives every class, not a seed-only
+  choice; see the F6e receipt. None of the items is required afterward: stowed or sold, the character
+  still computes.
 
 ## Corpus root resolution
 

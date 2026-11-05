@@ -34,8 +34,7 @@ directory the app itself reads `data/` from.
 The app saves a character only when the rules engine computes it. These rows are in no PCGen file, and
 each carries an `added` report line:
 
-- A worn `item:longsword`, unless the file wears one, and the `power_attack` row. The combat baseline is
-  the Longsword's.
+- The `power_attack` row. No item is added: a character computes with nothing worn or wielded.
 - `feat:weapon_focus`, unless the file holds Weapon Focus; `choice:fighter_bonus_feat` on any Fighter.
 - Each class's default picks from `class_seeds::canonical_seeds_for`. PCGen's own school, bloodline or
   domain is not read into them; a `DOMAIN` line is a custom feat.

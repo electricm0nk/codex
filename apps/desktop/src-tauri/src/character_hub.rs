@@ -10175,8 +10175,7 @@ mod tests {
         assert_eq!(after.armor_class, before.armor_class, "a weapon's +1 is not armor");
     }
 
-    /// The same sword stowed: nothing it holds reaches a number. The Longsword is required for a
-    /// computed sheet, so the check reads the engine's own receipt, which has a row when it does.
+    /// The same sword stowed: nothing it holds reaches a number.
     #[test]
     fn enhancement_rows_a_stowed_plus_one_adds_nothing() {
         let (dir, root) = enhancement_rows_aldric("enh-stowed");
@@ -12001,7 +12000,7 @@ mod tests {
     }
 
     /// A `+1` Longsword off the Market is a weapon the character can hold: both in hand, then the
-    /// plain one stowed. The last Longsword in hand cannot be stowed; the sheet needs one.
+    /// plain one stowed. The last one stows too: no weapon is required.
     #[test]
     fn enhancement_rows_a_bought_sword_goes_in_hand_and_counts_there() {
         let (dir, root) = enhancement_rows_aldric("enh-bought-sword");
@@ -12018,8 +12017,221 @@ mod tests {
         assert_eq!((after.sword_attack, after.sword_damage), (Some(1), Some(1)));
 
         let last = set_equipment_active_state_at_root(&root, MARKET_SWORD, ActiveState::SelectedInactive, at).unwrap();
-        assert!(!matches!(last, CreateCharacterResponse::Saved { .. }), "{last:?}");
+        assert!(matches!(last, CreateCharacterResponse::Saved { .. }), "{last:?}");
+        assert_eq!(enhancement_read(&root).melee, before.melee - 1, "the sword's Weapon Focus goes with it");
         std::fs::remove_dir_all(&dir).ok();
+    }
+
+    // ----- no gear is required: a character computes with nothing worn or wielded -----
+
+    fn no_required_gear_row(loaded: &LoadSavedCharacterResponse, id: &str) -> Option<i16> {
+        loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    fn no_required_gear_attack_rows(loaded: &LoadSavedCharacterResponse) -> Vec<String> {
+        loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_attack_bonus.")).map(|row| row.id.clone()).collect()
+    }
+
+    /// Hand-derived from Aldric's sheet (Str +4, Dex +1, Con +2, Wis +1, Cha -1, base attack +3, Dodge,
+    /// 1 rank in each selected skill, each a class skill): nothing about him but the gear moves.
+    #[test]
+    fn no_required_gear_every_item_stowed_saves_and_computes() {
+        let (dir, root) = enhancement_rows_aldric("nrg-stowed");
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        assert_eq!(snapshot.base_attack_bonus, 3);
+        assert_eq!(snapshot.baseline_melee_attack_bonus, 7, "base attack and Strength: no Weapon Focus without its weapon");
+        assert_eq!(snapshot.baseline_armor_class, 12, "10, Dex +1, Dodge +1");
+        assert_eq!(no_required_gear_row(&loaded, "defense.touch_armor_class"), Some(12));
+        assert_eq!(no_required_gear_row(&loaded, "defense.flat_footed_armor_class"), Some(10));
+        assert_eq!(no_required_gear_row(&loaded, "combat.combat_maneuver_bonus"), Some(7));
+        assert_eq!(no_required_gear_row(&loaded, "defense.combat_maneuver_defense"), Some(18), "10, base attack, Str, Dex");
+        assert_eq!(
+            (snapshot.total_saves.fortitude, snapshot.total_saves.reflex, snapshot.total_saves.will),
+            (5, 2, 2)
+        );
+        let skills = &snapshot.selected_skill_modifiers;
+        assert_eq!((skills.climb, skills.intimidate, skills.swim), (8, 3, 8), "no armor, no check penalty");
+
+        assert!(loaded.weapon_damage.is_empty(), "{:?}", loaded.weapon_damage);
+        assert_eq!(no_required_gear_attack_rows(&loaded), Vec::<String>::new());
+        let melee = loaded.explanations.iter().find(|row| row.id == "combat.baseline_melee_attack_bonus").expect("the row");
+        assert_eq!(melee.value, 7);
+        assert!(melee.detail.contains("no weapon in hand") && !melee.detail.contains("Longsword"), "{}", melee.detail);
+        let armor = loaded.explanations.iter().find(|row| row.id == "defense.baseline_armor_class").expect("the row");
+        assert_eq!(armor.value, 12);
+        assert!(!armor.detail.contains("Chain Shirt"), "{}", armor.detail);
+        let climb = loaded.explanations.iter().find(|row| row.id == "skill.selected_modifier.climb").expect("the row");
+        assert_eq!(climb.value, 8);
+        assert!(!climb.detail.contains("Chain Shirt"), "{}", climb.detail);
+    }
+
+    /// Selling what he starts with saves too, and a character who holds no item at all computes
+    /// the same numbers. The `power_attack` row is a feat's switch, not an item.
+    #[test]
+    fn no_required_gear_no_items_at_all_saves_and_computes() {
+        let (dir, root) = enhancement_rows_aldric("nrg-sold");
+        for item in ["item:longsword", "item:chain_shirt"] {
+            let sold = sell_equipment_copy_at_root(&root, item, "2026-11-04T00:00:00Z", PriceMode::Cashless, None).unwrap();
+            assert!(matches!(sold, CreateCharacterResponse::Saved { .. }), "{item}: {sold:?}");
+        }
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.equipment_selections.retain(|selection| selection.item_id == "power_attack");
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        assert_eq!((snapshot.baseline_melee_attack_bonus, snapshot.baseline_armor_class), (7, 12));
+        assert!(loaded.weapon_damage.is_empty());
+        assert_eq!(build_pilot_headless_receipt(&envelope.character_input).status, HeadlessReceiptStatus::Computed);
+    }
+
+    /// The operator's case: the Longsword stowed, a bought Greatsword taken in hand. The row is the
+    /// Greatsword's, Weapon Focus (Longsword) stays with the Longsword, and a `+1` counts.
+    #[test]
+    fn no_required_gear_a_bought_greatsword_goes_in_hand_once_the_longsword_is_stowed() {
+        let greatsword = "Greatsword (Base)";
+        let (dir, root) = enhancement_rows_aldric("nrg-greatsword");
+        let carried = market_buy(&root, greatsword, Some(1), PriceMode::Cashless);
+        assert!(matches!(carried, PurchaseEquipmentResponse::Purchased { .. }), "{carried:?}");
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, greatsword, ActiveState::EquippedActive);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        assert_eq!(snapshot.baseline_melee_attack_bonus, 8, "base attack +3, Strength +4, its +1");
+        assert_eq!(no_required_gear_attack_rows(&loaded), ["combat.weapon_attack_bonus.greatsword"]);
+        assert_eq!(no_required_gear_row(&loaded, "combat.weapon_attack_bonus.greatsword"), Some(7));
+        assert_eq!(loaded.weapon_damage.len(), 1, "{:?}", loaded.weapon_damage);
+        assert_eq!(loaded.weapon_damage[0].weapon_record_key.as_deref(), Some(greatsword));
+        assert_eq!(loaded.weapon_damage[0].enhancement_attack_bonus, Some(1));
+    }
+
+    /// Each loadout through both twins: the corpus path the sheet reads and the headless one. They
+    /// read the same weapon and the same armor, with no item required by either.
+    #[test]
+    fn no_required_gear_both_twins_read_the_same_loadout() {
+        let corpus = corpus_fixture_bundle();
+        let dressed = |class: &str, level: u8, worn: &[&str]| {
+            let mut input = compose_character_input(&request_for_class("race:human", class, level));
+            input.chosen.equipment_selections.retain(|selection| selection.item_id == "power_attack");
+            input.chosen.selected_choices.retain(|choice| choice.choice_set_id != "choice:fighter_weapon_training_group");
+            if class == FIGHTER_CLASS_ID_FOR_SEED && level >= 5 {
+                input.chosen.selected_choices.push(SelectedChoice {
+                    choice_set_id: "choice:fighter_weapon_training_group".to_owned(),
+                    selection_id: "group:heavy_blades".to_owned(),
+                });
+            }
+            for item in worn {
+                input.chosen.equipment_selections.push(EquipmentSelection {
+                    item_id: (*item).to_owned(),
+                    equipped_or_active: true,
+                    active_state: ActiveState::EquippedActive,
+                    applied_modifiers: Vec::new(),
+                });
+            }
+            input
+        };
+        // (class, level, worn, melee, armor class). The request's Human has Strength +4 and Dexterity +2;
+        // each holds Dodge; a Fighter has base attack equal to its level, a Wizard 3 has +1.
+        for (class, level, worn, melee, armor_class) in [
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &[][..], 7, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["item:longsword"][..], 8, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["item:chain_shirt"][..], 7, 17),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["item:longsword", "item:chain_shirt"][..], 8, 17),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["Greatsword (Base)"][..], 7, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["Dagger (Base)", "item:longsword"][..], 7, 13),
+            // A bow is not swung: the number is the one with nothing in hand.
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["Longbow (Base)"][..], 7, 13),
+            // Weapon Training is Heavy Blades: a Greatsword has it and a Dagger does not.
+            (FIGHTER_CLASS_ID_FOR_SEED, 5, &["item:longsword"][..], 11, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 5, &["Greatsword (Base)"][..], 10, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 5, &["Dagger (Base)"][..], 9, 13),
+            // A Wizard's Longsword keeps the seed's number; the Dagger is theirs and a Greatsword owes -4.
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &[][..], 5, 13),
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &["item:longsword"][..], 2, 13),
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &["Dagger (Base)"][..], 5, 13),
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &["Greatsword (Base)"][..], 1, 13),
+        ] {
+            let input = dressed(class, level, worn);
+            let (snapshot, _) = resolve_unified_pilot_snapshot(&input, corpus)
+                .unwrap_or_else(|d| panic!("{class} {level} {worn:?}: {d:?}"));
+            assert_eq!(
+                (snapshot.combat.baseline_melee_attack_bonus, snapshot.defense.baseline_armor_class),
+                (melee, armor_class),
+                "the sheet's twin: {class} {level} {worn:?}"
+            );
+            let headless = build_pilot_headless_receipt(&input);
+            assert_eq!(headless.status, HeadlessReceiptStatus::Computed, "{class} {level} {worn:?}: {:?}", headless.computation.diagnostics);
+            assert_eq!(
+                (headless.computation.baseline_melee_attack_bonus, headless.computation.baseline_armor_class),
+                (melee, armor_class),
+                "the headless twin: {class} {level} {worn:?}"
+            );
+            let skills = &headless.computation.selected_skill_modifiers;
+            let sheet = &snapshot.skill.selected_modifier;
+            assert_eq!((skills.climb, skills.intimidate, skills.swim), (sheet.climb, sheet.intimidate, sheet.swim), "{class} {level} {worn:?}");
+        }
+    }
+
+    /// A weapon the CRB table holds by no name of its own has its attack row too, on the twin the sheet
+    /// reads, with the base weapon's answers: a Dagger variant, and an other-book weapon. Neither row
+    /// is the Longsword's. Aldric: base attack +3, Strength +4.
+    #[test]
+    fn no_required_gear_a_weapon_off_the_table_has_its_own_attack_row() {
+        for (weapon, row, value) in [("Dagger (Adamantine)", "combat.weapon_attack_bonus.daggeradamantine", 7), ("Blackaxe", "combat.weapon_attack_bonus.blackaxe", 7)] {
+            let (dir, root) = enhancement_rows_aldric("nrg-off-table");
+            worn_vs_carried_hold(&root, weapon, ActiveState::SelectedInactive);
+            worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+            worn_vs_carried_set(&root, weapon, ActiveState::EquippedActive);
+            let loaded = load_saved_character_at_root(&root).unwrap();
+            std::fs::remove_dir_all(&dir).ok();
+            assert_eq!(no_required_gear_attack_rows(&loaded), [row], "{weapon}");
+            assert_eq!(no_required_gear_row(&loaded, row), Some(value), "{weapon}");
+            assert_eq!(loaded.weapon_damage.len(), 1, "{weapon}: {:?}", loaded.weapon_damage);
+        }
+    }
+
+    /// Armor the headless twin holds no number for is refused by it and read by the sheet's twin,
+    /// never computed as no armor at all. A shield the same.
+    #[test]
+    fn no_required_gear_armor_the_headless_twin_cannot_read_is_not_read_as_none() {
+        let mut input = compose_character_input(&request_for("race:human", 3));
+        input.chosen.equipment_selections.retain(|selection| selection.item_id == "power_attack");
+        input.chosen.equipment_selections.push(EquipmentSelection {
+            item_id: "Full Plate (Base)".to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        });
+        let headless = build_pilot_headless_receipt(&input);
+        assert_eq!(headless.status, HeadlessReceiptStatus::Blocked);
+        assert!(headless.computation.diagnostics.iter().any(|d| d.id == "combat.baseline_unsupported" && d.message.contains("Full Plate")), "{:?}", headless.computation.diagnostics);
+        let (snapshot, _) = resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle()).expect("the sheet's twin reads it");
+        assert!(snapshot.defense.baseline_armor_class > 13, "{}", snapshot.defense.baseline_armor_class);
+    }
+
+    /// The default character keeps what creation gives it: only the requirement went.
+    #[test]
+    fn no_required_gear_creation_still_gives_the_starting_items() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let held: Vec<(&str, ActiveState)> =
+            input.chosen.equipment_selections.iter().map(|selection| (selection.item_id.as_str(), selection.active_state)).collect();
+        assert_eq!(
+            held,
+            [
+                ("item:longsword", ActiveState::EquippedActive),
+                ("item:chain_shirt", ActiveState::EquippedActive),
+                ("item:shield", ActiveState::Absent),
+                ("power_attack", ActiveState::SelectedInactive),
+            ]
+        );
     }
 
     /// A `+2` Dagger in the other hand has its own row, and the Longsword's number stays its own.
@@ -12217,8 +12429,7 @@ mod tests {
     const MARKET_SWORD: &str = "Longsword (Base)";
     const PLUS_ONE_SWORD_CP: i64 = 231_500;
 
-    /// Buys carried: the seed already wields the required Longsword, and a second wielded weapon is
-    /// its own refusal (`market_buy_sell_a_buy_the_engine_refuses_charges_nothing`).
+    /// Buys carried: the seed's hands are full of its Longsword or not, this does not ask.
     fn market_buy(root: &Path, item_id: &str, bonus: Option<u8>, mode: PriceMode) -> PurchaseEquipmentResponse {
         purchase_equipment_offer_at_root(root, item_id, ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", mode, bonus)
             .expect("purchase call should not error")
@@ -12444,16 +12655,15 @@ mod tests {
         }
     }
 
-    /// The engine's own refusal comes before any money: wielding a second real weapon beside the
-    /// required Longsword does not save, so nothing is charged and no copy holds the eqmod.
+    /// The engine's own refusal comes before any money: a build it cannot compute does not save, so
+    /// nothing is charged and no copy holds the eqmod.
     #[test]
     fn market_buy_sell_a_buy_the_engine_refuses_charges_nothing() {
         let root = fund_and_seed("market-engine-refused", 300_000);
-        // No Longsword in hand: the sheet cannot compute, whatever the save adds.
-        let mut stowed = SavedCharacterStore::load(&root).unwrap();
-        let sword = stowed.character_input.chosen.equipment_selections.iter_mut().find(|s| s.item_id == "item:longsword").unwrap();
-        sword.active_state = ActiveState::SelectedInactive;
-        SavedCharacterStore::save(&stowed, &root).unwrap();
+        // Weapon Focus gone: the sheet cannot compute, whatever the save adds.
+        let mut unsupported = SavedCharacterStore::load(&root).unwrap();
+        unsupported.character_input.chosen.selected_feats.retain(|feat| feat != "feat:weapon_focus");
+        SavedCharacterStore::save(&unsupported, &root).unwrap();
         let before = SavedCharacterStore::load(&root).unwrap();
         let response = purchase_equipment_offer_at_root(
             &root, "Chain Shirt (Base)", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(1),
@@ -16439,8 +16649,9 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// The required Longsword holds the main hand and cannot be stowed (the sheet needs one), so
-    /// the hub can only show the refusal; `slot_conflict_the_check_over_slots_alone` holds the rest.
+    /// A Longsword in the main hand refuses them until it is stowed
+    /// (`no_required_gear_a_bought_greatsword_goes_in_hand_once_the_longsword_is_stowed`);
+    /// `slot_conflict_the_check_over_slots_alone` holds the rest.
     #[test]
     fn slot_conflict_a_two_handed_weapon_is_refused_beside_the_longsword() {
         for weapon in ["Greatsword (Base)", "Longbow (Base)", "Blackaxe"] {

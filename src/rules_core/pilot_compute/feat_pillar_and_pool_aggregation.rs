@@ -1255,8 +1255,8 @@ pub(super) fn compute_selected_skill_modifiers(
         diagnostics.push(ComputationDiagnostic {
             id: "skill.selected_modifier.unsupported".to_owned(),
             message: format!(
-                "selected skill modifiers are only computed on a grounded {} with the grounded \
-                 Chain Shirt armor-check penalty; unmet conditions: {}",
+                "selected skill modifiers are only computed on a grounded {} with a worn item's \
+                 armor-check penalty known; unmet conditions: {}",
                 supported_class_chassis_description(),
                 unmet.join("; ")
             ),
@@ -1290,8 +1290,11 @@ pub(super) fn compute_selected_skill_modifiers(
     // armor training from level 3, so the armor-check skills rise at that milestone.
     // The posture check above guarantees a supported Fighter level here.
     let level = supported_fighter_level(input).unwrap_or(1);
-    let armor_check_penalty = effective_chain_shirt_armor_check_penalty(level);
-    let armor_check_detail = if fighter_armor_training(level).armor_check_reduction > 0 {
+    let chain_shirt_worn = is_worn(input, CHAIN_SHIRT_ITEM_ID);
+    let armor_check_penalty = if chain_shirt_worn { effective_chain_shirt_armor_check_penalty(level) } else { 0 };
+    let armor_check_detail = if !chain_shirt_worn {
+        "no armor worn (+0)".to_owned()
+    } else if fighter_armor_training(level).armor_check_reduction > 0 {
         format!(
             "Chain Shirt armor-check penalty ({armor_check_penalty:+}, reduced from \
              {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} by Fighter armor training)"
@@ -2455,13 +2458,8 @@ pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) ->
         ));
     }
 
-    // Climb and Swim totals depend on the grounded Chain Shirt armor-check posture.
-    require_active_state(
-        input,
-        CHAIN_SHIRT_ITEM_ID,
-        ActiveState::EquippedActive,
-        &mut unmet,
-    );
+    // Climb and Swim take a worn Chain Shirt's armor-check penalty, and no penalty with no armor.
+    worn_items_this_path_cannot_read(input, &mut unmet);
 
     unmet
 }
@@ -2479,7 +2477,7 @@ pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) ->
 /// identities for the engine. Different languages, different processes,
 /// no seam between them to share across. If a third instance ever appears
 /// *within* Rust, that one should be shared with this rather than added.
-pub(super) fn normalize_weapon_identity(raw: &str) -> String {
+pub(crate) fn normalize_weapon_identity(raw: &str) -> String {
     let without_prefix = raw.strip_prefix("item:").unwrap_or(raw);
     without_prefix
         .strip_suffix(" (Base)")
@@ -2787,13 +2785,8 @@ pub(crate) fn converted_view_covers_weapon(
 /// an attack total, the feat-granted damage bonus, and the threat range.
 ///
 /// **Additive by design.** This does NOT touch
-/// `combat.baseline_melee_attack_bonus`, which is a single-fixture GE-06
-/// special case hardcoded to the Longsword (its own detail string says
-/// so) and asserted against by a large number of existing suites.
-/// Generalising that one -- widening its posture gate and driving its
-/// hardcoded `WEAPON_FOCUS_TO_HIT_BONUS` off the real
-/// `choice:weapon_focus_target` chooser -- is genuinely separate surgery,
-/// deferred as its own task (#80). Until then the two coexist.
+/// `combat.baseline_melee_attack_bonus`, the sheet's Melee number for the first melee weapon in hand
+/// (`melee_weapon_in_hand`). The two coexist: this row has a line per weapon in hand.
 ///
 /// **The five weapon feats do not all land on the same surface**, which
 /// their shared naming actively disguises. Corpus payload slots decide it:
@@ -2981,10 +2974,15 @@ pub(super) fn ground_per_weapon_combat_totals(
                  modifier ({size_attack_modifier:+}) = \
                  {attack_total}.{focus_detail}{finesse_detail}{proficiency_detail} Only the Focus \
                  feats reach this total -- the Specialization feats are damage and Improved \
-                 Critical is threat range, both grounded separately. Separate from \
-                 combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 \
-                 fixture total until task #80 generalises it",
-                weapon.key
+                 Critical is threat range, both grounded separately.{}",
+                weapon.key,
+                if slug == normalize_weapon_identity(LONGSWORD_ITEM_ID) {
+                    " Separate from combat.baseline_melee_attack_bonus, which stays a Longsword-specific \
+                     GE-06 fixture total until task #80 generalises it"
+                } else {
+                    " Separate from combat.baseline_melee_attack_bonus, which is the Melee number for \
+                     the first melee weapon in hand"
+                }
             ),
         });
 
@@ -3067,19 +3065,7 @@ pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<Str
         ));
     }
 
-    require_active_state(
-        input,
-        LONGSWORD_ITEM_ID,
-        ActiveState::EquippedActive,
-        &mut unmet,
-    );
-    require_active_state(
-        input,
-        CHAIN_SHIRT_ITEM_ID,
-        ActiveState::EquippedActive,
-        &mut unmet,
-    );
-    require_active_state(input, SHIELD_ITEM_ID, ActiveState::Absent, &mut unmet);
+    worn_items_this_path_cannot_read(input, &mut unmet);
     require_active_state(
         input,
         POWER_ATTACK_ITEM_ID,
@@ -3145,6 +3131,106 @@ pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<Str
     }
 
     unmet
+}
+
+/// Whether the named item is worn or in hand.
+pub(super) fn is_worn(input: &CharacterInput, item_id: &str) -> bool {
+    input
+        .chosen
+        .equipment_selections
+        .iter()
+        .any(|selection| selection.item_id == item_id && selection.active_state == ActiveState::EquippedActive)
+}
+
+/// A real weapon from the CRB weapon table. The table's four shields carry no weapon proficiency:
+/// one on the arm is armor to this engine, not a weapon in hand.
+fn table_weapon(item_id: &str) -> Option<&'static weapon_tables::WeaponTableEntry> {
+    equipped_weapon_stat_block(item_id).filter(|weapon| weapon.proficiency_name.is_some())
+}
+
+/// Nothing is required to be worn. What this path refuses is a number it does not hold: it has no
+/// corpus, so it knows the Chain Shirt's numbers and the weapon table and nothing of any other armor
+/// or a shield. Read as no armor, those would compute a wrong Armor Class; the corpus path, which the
+/// sheet reads, resolves them. Beside a worn Chain Shirt another item is ignored, as it always was.
+fn worn_items_this_path_cannot_read(input: &CharacterInput, unmet: &mut Vec<String>) {
+    if is_worn(input, SHIELD_ITEM_ID) {
+        unmet.push(format!("{SHIELD_ITEM_ID} is worn, and this path holds no numbers for a shield"));
+    }
+    if is_worn(input, CHAIN_SHIRT_ITEM_ID) {
+        return;
+    }
+    for selection in &input.chosen.equipment_selections {
+        if selection.active_state == ActiveState::EquippedActive
+            && selection.item_id != SHIELD_ITEM_ID
+            && table_weapon(&selection.item_id).is_none()
+        {
+            unmet.push(format!("{} is worn, and this path holds no numbers for it", selection.item_id));
+        }
+    }
+}
+
+/// The weapon the sheet's Melee number is for: the first melee weapon in hand, in the order the
+/// character holds them, which is the order the hands fill (`body_slots`). `None` with no weapon in
+/// hand, or only a bow: Melee is then base attack, the governing ability and size. With its item id.
+pub(crate) fn melee_weapon_in_hand(
+    input: &CharacterInput,
+) -> Option<(&str, &'static weapon_tables::WeaponTableEntry)> {
+    input.chosen.equipment_selections.iter().find_map(|selection| {
+        if selection.active_state != ActiveState::EquippedActive {
+            return None;
+        }
+        table_weapon(&selection.item_id)
+            .filter(|weapon| weapon.is_melee)
+            .map(|weapon| (selection.item_id.as_str(), weapon))
+    })
+}
+
+/// The feat bonus to hit with the named weapon. The feat seeded at creation names no target, and the
+/// target it stands for is the Longsword (`feat:weapon_focus`, every class's seed).
+pub(crate) fn weapon_focus_bonus_for(input: &CharacterInput, weapon_name: &str) -> i16 {
+    let facts = crate::rules_core::feat_effects::weapon_focus_facts_from_choices(
+        &effective_character_feats(input),
+        &input.chosen.selected_choices,
+    );
+    let wanted = normalize_weapon_identity(weapon_name);
+    match facts.iter().find(|fact| normalize_weapon_identity(&fact.weapon_name) == wanted) {
+        Some(fact) => fact.attack_bonus,
+        None if facts.is_empty() && wanted == normalize_weapon_identity(LONGSWORD_ITEM_ID) => {
+            WEAPON_FOCUS_TO_HIT_BONUS
+        }
+        None => 0,
+    }
+}
+
+/// Weapon Training's bonus on this weapon: the canonical choice is Heavy Blades, so it is that
+/// group's weapons that take it.
+pub(crate) fn weapon_training_bonus_for(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+    level: u8,
+) -> i16 {
+    if weapon.weapon_group == Some(HEAVY_BLADES_WEAPON_GROUP) {
+        fighter_weapon_training_attack_bonus(input, level)
+    } else {
+        0
+    }
+}
+
+/// The ability modifier governing the attack roll with this weapon: Strength, or Dexterity through
+/// Weapon Finesse on a finesseable weapon when it is the higher (the corpus token is
+/// `max(STR,DEX)-STR`).
+pub(crate) fn melee_attack_ability_modifier(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+    ability_modifiers: &AbilityModifiers,
+) -> i16 {
+    let finesse = crate::rules_core::feat_effects::holds_weapon_finesse(&effective_character_feats(input))
+        && weapon_tables::weapon_is_finesseable(weapon);
+    if finesse {
+        ability_modifiers.strength.max(ability_modifiers.dexterity)
+    } else {
+        ability_modifiers.strength
+    }
 }
 
 /// Record an unmet condition unless the named item has exactly `expected` state.

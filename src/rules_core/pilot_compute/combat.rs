@@ -794,13 +794,11 @@ mod base_class_weapon_and_armor_proficiency_tests {
     }
 }
 
-/// Compute the deterministic baseline melee attack bonus and armor class, or
-/// block the claim if the input is not the exact supported pilot posture.
+/// Compute the baseline melee attack bonus and armor class from what is in hand and worn, or block
+/// the claim on what this path has no number for (`unmet_combat_posture_conditions`).
 ///
-/// This is intentionally not a combat engine. It computes only the GE-06
-/// deterministic Longsword/Chain Shirt/Dodge/no-shield baseline. Any deviation
-/// from that exact posture is refused with a claim-blocking diagnostic rather
-/// than fabricating combat totals.
+/// This is intentionally not a combat engine. Melee is the first melee weapon in hand's, or base
+/// attack, Strength and size with none; Armor Class reads a worn Chain Shirt, or no armor.
 pub(super) fn compute_combat_baseline(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -814,8 +812,8 @@ pub(super) fn compute_combat_baseline(
         diagnostics.push(ComputationDiagnostic {
             id: "combat.baseline_unsupported".to_owned(),
             message: format!(
-                "baseline combat totals are only computed for the exact GE-06 deterministic \
-                 Longsword/Chain Shirt/Dodge/no-shield posture; unmet conditions: {}",
+                "baseline combat totals are only computed for a supported chassis and a loadout \
+                 this path holds numbers for; unmet conditions: {}",
                 unmet.join("; ")
             ),
             claim_blocking: true,
@@ -829,13 +827,16 @@ pub(super) fn compute_combat_baseline(
     // unknown-race diagnostic four times for the same single unknown.
     let size = combat_size_modifiers(input, diagnostics);
 
-    // Baseline melee attack bonus: Fighter BAB + STR modifier + Weapon Focus
-    // (Longsword) + Weapon Training (from level 5, Heavy Blades). Power Attack is
-    // selected but inactive, contributing 0. The posture check above guarantees a
-    // supported Fighter level here.
+    // Baseline melee attack bonus: BAB + the governing ability + the weapon in hand's Weapon Focus
+    // and Weapon Training (from level 5, Heavy Blades). Power Attack is selected but inactive,
+    // contributing 0.
     let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = ability_modifiers.strength;
-    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    let in_hand = melee_weapon_in_hand(input);
+    let attack_ability_modifier =
+        in_hand.map_or(strength_modifier, |(_, weapon)| melee_attack_ability_modifier(input, weapon, ability_modifiers));
+    let focus_bonus = in_hand.map_or(0, |(_, weapon)| weapon_focus_bonus_for(input, weapon.key));
+    let weapon_training_bonus = in_hand.map_or(0, |(_, weapon)| weapon_training_bonus_for(input, weapon, level));
     // v0.6 alpha swarm, risks item 8: Bard Inspire Courage's competence
     // bonus on attack rolls applies here -- class-ownership-gated by
     // `active_bard_inspire_courage_attack_bonus` construction, 0 for every
@@ -888,30 +889,30 @@ pub(super) fn compute_combat_baseline(
     // DEITYWEAPONS contributes nothing here and the penalty correctly
     // applies -- but a future deity surface must revisit this, not assume
     // these two classes are always non-proficient.
-    let longsword = equipped_weapon_stat_block(LONGSWORD_ITEM_ID);
-    let full_verdict = longsword.map(|weapon| character_weapon_proficiency(input, weapon));
+    let full_verdict = in_hand.map(|(_, weapon)| character_weapon_proficiency(input, weapon));
     let proficiency_verdict = full_verdict.as_ref().and_then(WeaponProficiencyVerdict::proficient);
     let nonproficiency_penalty = match proficiency_verdict {
         Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
         Some(true) => 0,
         // Unknown: refuse to guess in either direction. The diagnostic
         // below claim-blocks so no number is presented as trustworthy.
+        // No weapon in hand: there is no proficiency to ask about.
         None => 0,
     };
-    if proficiency_verdict.is_none() {
+    if let (Some((item_id, _)), None) = (in_hand, proficiency_verdict) {
         // SD-36 Epic F step 2: the reason is the converted-record reader's own
         // (`class_proficiency_sheet_rules`), per class -- a class with neither a
         // static row nor a Known converted answer.
         let reason = match &full_verdict {
             Some(WeaponProficiencyVerdict::Unknown { reason }) => reason.clone(),
-            _ => format!("{LONGSWORD_ITEM_ID} is missing from the weapon table"),
+            _ => format!("{item_id} is missing from the weapon table"),
         };
         diagnostics.push(ComputationDiagnostic {
             id: "combat.baseline_weapon_proficiency_unknown".to_owned(),
             message: format!(
                 "the baseline melee attack bonus applies PF1's \
                  {WEAPON_NONPROFICIENCY_ATTACK_PENALTY} nonproficiency penalty only when \
-                 this character's proficiency with {LONGSWORD_ITEM_ID} is actually known, \
+                 this character's proficiency with {item_id} is actually known, \
                  and it is not: at least one class in {:?} has neither a \
                  {COMPILED_MODULE_CITATION}::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES row nor a Known \
                  answer from the converted rule package ({reason}), so the attack total below \
@@ -935,8 +936,8 @@ pub(super) fn compute_combat_baseline(
     // receive it") rather than leaving it to be rediscovered; this closes it,
     // and that doc comment is updated in the same change.
     let melee_attack_bonus = base_attack_bonus
-        + strength_modifier
-        + WEAPON_FOCUS_TO_HIT_BONUS
+        + attack_ability_modifier
+        + focus_bonus
         + size.armor_class_and_attack
         + weapon_training_bonus
         + inspire_courage_attack_bonus
@@ -966,13 +967,14 @@ pub(super) fn compute_combat_baseline(
     // Stated explicitly rather than folded silently into the total: a
     // player looking at a lower-than-expected attack bonus must be able to
     // see WHY from the explanation alone.
-    let nonproficiency_detail = match proficiency_verdict {
-        Some(false) => format!(
+    let weapon_words = in_hand.map_or("no weapon in hand", |(_, weapon)| weapon.key);
+    let nonproficiency_detail = match (in_hand, proficiency_verdict) {
+        (None, _) | (_, Some(true)) => String::new(),
+        (_, Some(false)) => format!(
             " {WEAPON_NONPROFICIENCY_ATTACK_PENALTY} nonproficiency penalty (this class has no \
-             Longsword proficiency in the corpus)"
+             {weapon_words} proficiency in the corpus)"
         ),
-        Some(true) => String::new(),
-        None => " (nonproficiency penalty UNRESOLVED -- see \
+        (_, None) => " (nonproficiency penalty UNRESOLVED -- see \
                  combat.baseline_weapon_proficiency_unknown)"
             .to_owned(),
     };
@@ -985,12 +987,20 @@ pub(super) fn compute_combat_baseline(
     );
 
     let class_label = class_summary_label(input);
+    let ability_words = if attack_ability_modifier == strength_modifier { "Strength" } else { "Dexterity" };
+    let (weapon_heading, focus_detail) = match in_hand {
+        Some((_, weapon)) if focus_bonus != 0 => {
+            (format!("for the {}", weapon.key), format!(" + Weapon Focus ({}) (+{focus_bonus})", weapon.key))
+        }
+        Some((_, weapon)) => (format!("for the {}", weapon.key), String::new()),
+        None => (format!("with {weapon_words}"), String::new()),
+    };
     explanations.push(ComputationExplanation {
         id: "combat.baseline_melee_attack_bonus".to_owned(),
         value: melee_attack_bonus,
         detail: format!(
-            "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}) \
+            "Baseline melee attack bonus {weapon_heading}: {class_label} base attack bonus (+{base_attack_bonus}) \
+             + {ability_words} modifier (+{attack_ability_modifier}){focus_detail} \
              + {} size modifier ({:+}, PF1 Table 8-1 -- attack rolls take the same size modifier as Armor Class)\
              {weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}{nonproficiency_detail}; \
              Power Attack is selected but inactive (+0) = {melee_attack_bonus}",
@@ -998,12 +1008,16 @@ pub(super) fn compute_combat_baseline(
         ),
     });
 
-    // Baseline armor class: 10 + Chain Shirt armor bonus + capped DEX + Dodge,
-    // with no shield (absent posture contributes 0). Fighter armor training from
-    // level 3 raises the Chain Shirt maximum Dexterity bonus.
-    let effective_max_dex = CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase;
+    // Baseline armor class: 10 + a worn Chain Shirt's armor bonus + capped DEX + Dodge, with no
+    // shield (this path refuses one, contributing 0 here). Fighter armor training from level 3
+    // raises the Chain Shirt maximum Dexterity bonus; with no armor there is no cap.
+    let chain_shirt_worn = is_worn(input, CHAIN_SHIRT_ITEM_ID);
+    let armor_bonus = if chain_shirt_worn { CHAIN_SHIRT_ARMOR_BONUS } else { 0 };
     let dexterity_modifier = ability_modifiers.dexterity;
-    let dexterity_contribution = dexterity_modifier.min(effective_max_dex);
+    let effective_max_dex = chain_shirt_worn.then(|| CHAIN_SHIRT_MAX_DEX + fighter_armor_training(level).max_dex_increase);
+    let dexterity_contribution = effective_max_dex.map_or(dexterity_modifier, |cap| dexterity_modifier.min(cap));
+    let armor_words = if chain_shirt_worn { "Chain Shirt armor bonus" } else { "no armor worn" };
+    let max_dex_detail = effective_max_dex.map_or_else(String::new, |cap| format!(" within MAXDEX:{cap}"));
     // v0.6 alpha swarm, risks item 8: Barbarian Rage's Armor Class penalty
     // applies here -- class-ownership-gated by `active_barbarian_rage_bonus`
     // construction, 0 for every non-Barbarian or not-currently-raging
@@ -1153,7 +1167,7 @@ pub(super) fn compute_combat_baseline(
     let size_armor_class_modifier = size.armor_class_and_attack;
     let size_label = size.label;
     let armor_class = ARMOR_CLASS_BASE
-        + CHAIN_SHIRT_ARMOR_BONUS
+        + armor_bonus
         + dexterity_contribution
         + size_armor_class_modifier
         + dodge_armor_class_bonus
@@ -1172,8 +1186,8 @@ pub(super) fn compute_combat_baseline(
         id: "defense.baseline_armor_class".to_owned(),
         value: armor_class,
         detail: format!(
-            "Baseline armor class: base {ARMOR_CLASS_BASE} + Chain Shirt armor bonus (+{CHAIN_SHIRT_ARMOR_BONUS}) \
-             + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
+            "Baseline armor class: base {ARMOR_CLASS_BASE} + {armor_words} (+{armor_bonus}) \
+             + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier}{max_dex_detail}) \
              + {size_label} size modifier ({size_armor_class_modifier:+}, PF1 Table 8-1) \
              + Dodge (+{dodge_armor_class_bonus}, only for a character actually carrying \
              {DODGE_FEAT_ID}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
@@ -1221,7 +1235,7 @@ pub(super) fn compute_combat_baseline(
     //     never ignored by a touch attack).
     // There is no shield term to exclude: this posture requires the shield
     // absent, contributing 0.
-    let excluded_from_touch = CHAIN_SHIRT_ARMOR_BONUS
+    let excluded_from_touch = armor_bonus
         + alchemist_mutagen_ac_bonus_value
         + draconic_dragon_resistances_natural_armor_bonus
         // The feat-derived half comes from the shared seam's own accessor, not
@@ -1235,7 +1249,7 @@ pub(super) fn compute_combat_baseline(
         value: touch_armor_class_total,
         detail: format!(
             "Touch armor class: the armor class above ({armor_class}) with the contributors a \
-             touch attack ignores removed -- Chain Shirt armor bonus (-{CHAIN_SHIRT_ARMOR_BONUS}), \
+             touch attack ignores removed -- {armor_words} (-{armor_bonus}), \
              Alchemist Mutagen natural armor (-{alchemist_mutagen_ac_bonus_value}), Sorcerer \
              Draconic Bloodline natural armor (-{draconic_dragon_resistances_natural_armor_bonus}), \
              ARG Armor of the Pit natural armor (-{armor_of_the_pit_natural_armor_bonus}); \
@@ -1309,8 +1323,8 @@ pub(super) fn compute_combat_baseline(
              (-{natures_whispers_ac_bonus}, which stands in for that bonus), and every \
              dodge-typed bonus (-{dodge_typed_armor_class_bonuses}: Dodge's \
              {DODGE_AC_BONUS:+}, per PF1 \"any situation that denies you your Dexterity bonus \
-             to Armor Class also denies you dodge bonuses\"). The Chain Shirt armor bonus \
-             (+{CHAIN_SHIRT_ARMOR_BONUS}), the {size_label} size modifier \
+             to Armor Class also denies you dodge bonuses\"). The {armor_words} \
+             (+{armor_bonus}), the {size_label} size modifier \
              ({size_armor_class_modifier:+}), every natural armor and sacred/profane bonus, \
              every penalty, and Brawler's AC Bonus (+{brawler_ac_bonus_value}, whose own rule \
              text applies it even when flat-footed) are all retained = \

@@ -250,24 +250,21 @@ fn wizard_level3_with_ge06_combat_posture_clears_the_selected_skill_diagnostic()
 }
 
 #[test]
-fn wizard_level3_without_the_ge06_combat_posture_still_stays_blocked() {
-    // Negative control: E6b.1 widens the CLASS gate only. A Wizard 3 that
-    // does not also carry the exact GE-06 combat/skill posture (the
-    // unmodified fixture, with no equipment/skill selections at all) still
-    // gets a claim-blocking `combat.baseline_unsupported` /
-    // `skill.selected_modifier.unsupported` diagnostic -- this is genuine
-    // posture-gating, not a class-gate bypass.
+fn wizard_level3_without_the_ge06_feats_still_stays_blocked() {
+    // Negative control: E6b.1 widens the CLASS gate only. A Wizard 3 that does not hold the feats and
+    // the Power Attack row (the unmodified fixture) gets a claim-blocking
+    // `combat.baseline_unsupported` diagnostic -- this is genuine gating, not a class-gate bypass. Gear
+    // is no part of it, and the selected skills, which ask only for the chassis, compute.
     let input = load(WIZARD_LEVEL_3_FIXTURE);
     let computation = compute_pilot_base_chassis(&input);
 
+    let combat = computation.diagnostics.iter().find(|d| d.id == "combat.baseline_unsupported");
+    let combat = combat.unwrap_or_else(|| panic!("the feats are missing: {:?}", computation.diagnostics));
+    assert!(combat.message.contains("feat:weapon_focus"), "{}", combat.message);
+    assert!(!combat.message.contains("item:"), "no item is asked for: {}", combat.message);
     assert!(
-        has_diagnostic(&computation, "combat.baseline_unsupported"),
-        "a Wizard 3 without the GE-06 gear/feat posture must stay blocked: {:?}",
-        computation.diagnostics
-    );
-    assert!(
-        has_diagnostic(&computation, "skill.selected_modifier.unsupported"),
-        "a Wizard 3 without the GE-06 skill posture must stay blocked: {:?}",
+        !has_diagnostic(&computation, "skill.selected_modifier.unsupported"),
+        "the selected skills ask for no gear: {:?}",
         computation.diagnostics
     );
 }

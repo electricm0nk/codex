@@ -268,35 +268,28 @@ fn an_allocation_outside_the_slice_leaves_the_three_totals_unchanged() {
 }
 
 #[test]
-fn absent_chain_shirt_blocks_skill_modifiers() {
-    // Break the deterministic Chain Shirt posture that grounds the Climb/Swim
-    // armor-check penalty. The selected-skill surface must refuse to fabricate
-    // totals that pretend the equipment-effect surface is grounded.
+fn absent_chain_shirt_reads_no_armor_check_penalty() {
+    // No armor is required: with the Chain Shirt gone the two armor-check skills lose its penalty
+    // and the character still computes. Fixture: Str +4, Cha -1, rank 1 and a class skill in each.
     let mutated = DETERMINISTIC_FIXTURE.replace(
         "equipment=item:chain_shirt:equipped_worn_active",
         "equipment=item:chain_shirt:absent",
     );
     assert!(
         mutated.contains("equipment=item:chain_shirt:absent"),
-        "test setup should have broken the Chain Shirt posture"
+        "test setup should have removed the Chain Shirt"
     );
     let input = load(&mutated);
 
     let computation = compute_pilot_base_chassis(&input);
 
     assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "absent Chain Shirt must produce a claim-blocking diagnostic: {:?}",
+        !computation.diagnostics.iter().any(|d| d.claim_blocking),
+        "no armor is not a refusal: {:?}",
         computation.diagnostics
     );
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("skill.selected_modifier.")),
-        "absent Chain Shirt must withhold selected-skill explanations: {:?}",
-        computation.explanations
-    );
+    let skills = &computation.selected_skill_modifiers;
+    assert_eq!((skills.climb, skills.intimidate, skills.swim), (8, 3, 8));
 }
 
 #[test]

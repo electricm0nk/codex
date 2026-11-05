@@ -1150,6 +1150,29 @@ pub(crate) mod tests {
         root
     }
 
+    /// A Cyberpunk RED Solo with no armor, no weapon and an empty kit loads: the sheet reads what
+    /// is held and asks for nothing.
+    #[test]
+    fn no_required_gear_cyberpunk_solo_loads_with_nothing_held() {
+        let root = market_root("no-required-gear", "Jax Moreno");
+        let geared = load_saved_character_via_envelope(&root).expect("the starter loads");
+        let mut choices = CprCharacterStore::load_choices(&root).unwrap();
+        assert!(!choices.armor.is_empty() && !choices.weapons.is_empty(), "the starter holds gear: {choices:?}");
+        choices.armor.clear();
+        choices.weapons.clear();
+        let mut kit = CprCharacterStore::load_kit(&root).unwrap();
+        kit.items.clear();
+        CprCharacterStore::save_choices(&choices, &root).unwrap();
+        CprCharacterStore::save_kit(&kit, &root).unwrap();
+
+        let loaded = load_saved_character_via_envelope(&root).expect("nothing held still loads");
+        std::fs::remove_dir_all(root.parent().unwrap()).ok();
+        assert!(loaded.diagnostics.is_empty(), "{:?}", loaded.diagnostics);
+        let row = |sheet: &LoadSavedCharacterResponse, id: &str| sheet.explanations.iter().find(|row| row.id == id).map(|row| row.value);
+        assert!(row(&loaded, "cpr.stat.int").is_some(), "{:?}", loaded.explanations.iter().map(|r| &r.id).collect::<Vec<_>>());
+        assert_eq!(row(&loaded, "cpr.stat.int"), row(&geared, "cpr.stat.int"));
+    }
+
     fn market_request(key: &str, price_mode: PriceMode) -> MarketShellRequest {
         MarketShellRequest { character_id: "c".into(), key: key.into(), price_mode, saved_at: "t".into() }
     }

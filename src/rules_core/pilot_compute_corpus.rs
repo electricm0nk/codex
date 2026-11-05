@@ -25,6 +25,7 @@
 use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
+use crate::rules_core::damage_total::resolve_base_damage_dice;
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::contract::encumbrance_size_for_race;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
@@ -36,15 +37,17 @@ use crate::rules_core::pilot_compute::{
     combat_maneuver_bonus, combat_maneuver_defense, compute_pilot_base_chassis,
     equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
     fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
-    fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
+    has_supported_class_chassis, melee_attack_ability_modifier, normalize_weapon_identity, require_active_state,
+    ComputationExplanation,
+    weapon_focus_bonus_for, weapon_training_bonus_for,
     selected_skill_climb_is_class_skill, selected_skill_ranks,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
     selected_skill_class_skill_unknowns,
     supported_fighter_level, PilotBaseChassisComputation, ARMOR_CLASS_BASE, CLASS_SKILL_BONUS,
     CLIMB_SKILL_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
-    INTIMIDATE_SKILL_ID, LONGSWORD_ITEM_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
+    INTIMIDATE_SKILL_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
     POWER_ATTACK_ITEM_ID, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
-    WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS,
+    WEAPON_FOCUS_LONGSWORD_SELECTION,
     WEAPON_NONPROFICIENCY_ATTACK_PENALTY, WIZARD_CLASS_ID,
 };
 use crate::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
@@ -383,6 +386,18 @@ pub struct CorpusAwareCombatBaseline {
     pub combat_maneuver_defense: i16,
 }
 
+/// The weapon-table row of a record in hand: its own, or the base item's when it is a variant
+/// (`Dagger (Adamantine)` is a Dagger). `None` for a weapon from another book.
+fn weapon_table_row_of(
+    record_key: &str,
+    corpus: &SourcePackageContent,
+) -> Option<&'static crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    equipped_weapon_stat_block(record_key).or_else(|| {
+        let record = equipment_converted_resolve(record_key, corpus)?;
+        equipped_weapon_stat_block(record.base_item.as_deref()?)
+    })
+}
+
 pub fn compute_combat_baseline_from_corpus(
     base: &PilotBaseChassisComputation,
     input: &CharacterInput,
@@ -398,17 +413,6 @@ pub fn compute_combat_baseline_from_corpus(
         ));
     }
 
-    // A copy bought off the Market is the same Longsword under another id, so it meets this too.
-    let longsword_identity = equipment_converted_resolve(LONGSWORD_ITEM_ID, corpus).map(|record| record.identity.as_str());
-    let holds_a_longsword = input.chosen.equipment_selections.iter().any(|selection| {
-        selection.active_state == ActiveState::EquippedActive
-            && equipment_converted_resolve(&selection.item_id, corpus).map(|record| record.identity.as_str())
-                == longsword_identity
-            && longsword_identity.is_some()
-    });
-    if !holds_a_longsword {
-        require_active_state(input, LONGSWORD_ITEM_ID, ActiveState::EquippedActive, &mut unmet);
-    }
     require_active_state(input, POWER_ATTACK_ITEM_ID, ActiveState::SelectedInactive, &mut unmet);
 
     // v0.6 alpha swarm (creation-seed honesty fix): Dodge is deliberately NOT
@@ -453,20 +457,25 @@ pub fn compute_combat_baseline_from_corpus(
         .collect();
     let effects = compute_equipment_effects(&equipped, corpus);
 
-    // This number is the required Longsword's own. Another weapon in hand has its own row
+    // The number is the first melee weapon in hand's. Another weapon in hand has its own row
     // (`damage_total::resolve_weapon_damage_breakdown`) and does not change it; with two copies of
-    // the Longsword in hand the better one is the one swung. A Longsword the corpus cannot resolve
-    // has no number to read, which refuses rather than assuming +0.
-    let Some(attack_bonus_delta) = effects
-        .per_item
-        .iter()
-        .filter(|item| Some(item.equipment_record_key.as_str()) == longsword_identity)
-        .filter_map(|item| item.to_hit_bonus)
-        .max()
-    else {
-        unmet.push(format!("{LONGSWORD_ITEM_ID} resolves to no weapon in this corpus, so its attack bonus is unknown"));
-        return Err(unmet);
-    };
+    // that weapon in hand the better one is the one swung. With none in hand it is base attack, the
+    // governing ability and size.
+    let main_hand = effects.per_item.iter().find(|item| {
+        is_weapon_in_hand(&item.equipment_record_key, corpus)
+            // A bow in hand is not swung. The table says; a weapon it does not hold counts as swung.
+            && weapon_table_row_of(&item.equipment_record_key, corpus).is_none_or(|weapon| weapon.is_melee)
+    });
+    let attack_bonus_delta = main_hand.map_or(0, |main| {
+        effects
+            .per_item
+            .iter()
+            .filter(|item| item.equipment_record_key == main.equipment_record_key)
+            .filter_map(|item| item.to_hit_bonus)
+            .max()
+            .unwrap_or(0)
+    });
+    let weapon = main_hand.and_then(|main| weapon_table_row_of(&main.equipment_record_key, corpus));
 
     // v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29): the
     // nonproficiency penalty must be applied HERE TOO, not only in
@@ -476,23 +485,24 @@ pub fn compute_combat_baseline_from_corpus(
     // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
     // exists to catch, and it caught it: applying the penalty on only one
     // of the two paths made Wizard level 1 read 4 here and 0 there. Both
-    // paths swing the same required Longsword against the same character,
+    // paths swing the same weapon against the same character,
     // so any proficiency rule that applies to one applies identically to
     // the other -- and this corpus-aware path is the intended eventual
     // replacement for the hardcoded one, so shipping it without the
     // penalty would just re-introduce the same silent overstatement later.
-    let nonproficiency_penalty = match equipped_weapon_stat_block(LONGSWORD_ITEM_ID)
-        .and_then(|weapon| character_is_proficient_with(input, weapon))
-    {
-        Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
-        Some(true) => 0,
-        None => {
+    //
+    // A weapon the CRB table does not hold has no answer here and owes no penalty; it has its own row.
+    let nonproficiency_penalty = match weapon.map(|weapon| (weapon, character_is_proficient_with(input, weapon))) {
+        Some((_, Some(false))) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+        Some((_, Some(true))) | None => 0,
+        Some((weapon, None)) => {
             // Unknown, never assumed. Same contract as the hardcoded path:
             // refuse to produce a number rather than guess a penalty.
             unmet.push(format!(
-                "this character's proficiency with {LONGSWORD_ITEM_ID} is unknown (a class in \
+                "this character's proficiency with {} is unknown (a class in \
                  the mix has no ingested weapon-proficiency record), so the nonproficiency \
-                 penalty cannot be resolved"
+                 penalty cannot be resolved",
+                weapon.key
             ));
             0
         }
@@ -519,7 +529,12 @@ pub fn compute_combat_baseline_from_corpus(
 
     let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = base.ability_modifiers.strength;
-    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    let weapon_training_bonus = weapon.map_or(0, |weapon| weapon_training_bonus_for(input, weapon, level));
+    let attack_ability_modifier =
+        weapon.map_or(strength_modifier, |weapon| melee_attack_ability_modifier(input, weapon, &base.ability_modifiers));
+    let focus_bonus = main_hand.map_or(0, |main| {
+        weapon_focus_bonus_for(input, weapon.map_or(main.equipment_record_key.as_str(), |weapon| weapon.key))
+    });
     // The size modifier is applied HERE TOO, not only in
     // `pilot_compute::compute_combat_baseline`, for exactly the reason the
     // nonproficiency penalty above states: this is the path
@@ -529,8 +544,8 @@ pub fn compute_combat_baseline_from_corpus(
     // pins the two paths equal. One-sided application would both leave the
     // shipped sheet wrong and break that parity test.
     let melee_attack_bonus = base.base_attack_bonus
-        + strength_modifier
-        + WEAPON_FOCUS_TO_HIT_BONUS
+        + attack_ability_modifier
+        + focus_bonus
         + size_armor_class_modifier
         + weapon_training_bonus
         + attack_bonus_delta
@@ -658,6 +673,65 @@ pub fn compute_combat_baseline_from_corpus(
         combat_maneuver_bonus: cmb,
         combat_maneuver_defense: cmd,
     })
+}
+
+/// A weapon, by the signal the Weapons row itself reads: it has damage dice, its own or its base
+/// item's. A shield's bash is not a weapon in hand to this engine.
+fn is_weapon_in_hand(record_key: &str, corpus: &SourcePackageContent) -> bool {
+    resolve_base_damage_dice(record_key, corpus).is_some()
+        && !equipment_converted_resolve(record_key, corpus).is_some_and(|record| record.is_shield)
+}
+
+/// The attack row of a weapon in hand the CRB table does not hold by its own name, which the headless
+/// path cannot ground (`ground_per_weapon_combat_totals`): a variant such as `Dagger (Adamantine)`,
+/// or another book's weapon. The same terms: base attack, the governing ability, the Focus feats, the
+/// penalty when the table's answer is known, size. Its `+N` is on its Weapons row, as a table weapon's is.
+pub fn corpus_weapon_attack_rows(
+    base: &PilotBaseChassisComputation,
+    input: &CharacterInput,
+    corpus: &SourcePackageContent,
+) -> Vec<ComputationExplanation> {
+    let equipped: Vec<EquipmentSelection> = input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .cloned()
+        .collect();
+    let size = race_size_for_race_token(&input.chosen.race_id).map_or(0, |size| size.armor_class_size_modifier());
+    let mut rows: Vec<ComputationExplanation> = Vec::new();
+    for item in compute_equipment_effects(&equipped, corpus).per_item {
+        let key = item.equipment_record_key.as_str();
+        let id = format!("combat.weapon_attack_bonus.{}", normalize_weapon_identity(key));
+        if !is_weapon_in_hand(key, corpus)
+            || equipped_weapon_stat_block(key).is_some()
+            || rows.iter().any(|row| row.id == id)
+        {
+            continue;
+        }
+        let weapon = weapon_table_row_of(key, corpus);
+        let ability = weapon.map_or(base.ability_modifiers.strength, |weapon| {
+            melee_attack_ability_modifier(input, weapon, &base.ability_modifiers)
+        });
+        let focus = weapon_focus_bonus_for(input, weapon.map_or(key, |weapon| weapon.key));
+        let (penalty, proficiency_detail) = match weapon.and_then(|weapon| character_is_proficient_with(input, weapon)) {
+            Some(false) => (WEAPON_NONPROFICIENCY_ATTACK_PENALTY, ""),
+            Some(true) => (0, ""),
+            None => (0, " Whether this character is proficient with it is not known, so no penalty is applied."),
+        };
+        let value = base.base_attack_bonus + ability + focus + penalty + size;
+        rows.push(ComputationExplanation {
+            id,
+            value,
+            detail: format!(
+                "Attack bonus with the equipped {key}: base attack bonus ({:+}) + governing ability \
+                 modifier ({ability:+}) + weapon feats ({focus:+}) + nonproficiency penalty ({penalty}) \
+                 + size modifier ({size:+}) = {value}.{proficiency_detail}",
+                base.base_attack_bonus
+            ),
+        });
+    }
+    rows
 }
 
 /// v0.6 alpha swarm items 1+27 sub-task 4: real, corpus-resolved
