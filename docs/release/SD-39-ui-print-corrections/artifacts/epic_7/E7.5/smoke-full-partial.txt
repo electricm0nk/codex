@@ -1,0 +1,35 @@
+PASS  landing-render
+PASS  landing-ruleset-chips
+PASS  settings-tab-google-drive-disconnect
+PASS  landing-campaign-gate
+PASS  settings-open
+PASS  settings-tab-appearance
+PASS  settings-theme-select-and-manage-themes-modal
+PASS  settings-tab-google-drive
+PASS  settings-tab-update
+PASS  settings-tab-bug
+PASS  settings-tab-enhancement
+PASS  settings-tab-developer
+PASS  settings-close-esc
+PASS  settings-tab-google-drive-save
+PASS  equipment-catalog-open-and-search
+FAIL  equipment-catalog-chip-filter-and-back  -- target not found: 'Magic Items (no element named 'Magic Items')' at row step 2/3 (click "Magic Items")
+PASS  spell-catalog-open-and-search
+PASS  spell-catalog-chip-filter-and-back
+PASS  class-catalog-open-and-search
+PASS  class-catalog-back
+PASS  race-catalog-open-and-search
+PASS  race-catalog-alternate-traits-tab
+PASS  race-catalog-back
+PASS  monster-catalog-open-and-search
+PASS  monster-catalog-back
+PASS  companion-catalog-open-and-search
+PASS  companion-catalog-back
+PASS  intelligent-item-catalog-open-and-search
+PASS  intelligent-item-catalog-back
+PASS  corpus-ingest-diagnostic
+FAIL  create-character-render  -- select not found: 'character-class'
+PASS  create-character-fill-and-submit
+PASS  create-character-back
+FAIL  create-character-samurai  -- target not found: 'F4 Smoke Alpha (no element named 'F4 Smoke Alpha')' at row step 13/14 (click "F4 Smoke Alpha")
+FAIL  create-character-magus  -- target not found: 'F4 Smoke Bravo (no element named 'F4 Smoke Bravo')' at row step 13/14 (click "F4 Smoke Bravo")

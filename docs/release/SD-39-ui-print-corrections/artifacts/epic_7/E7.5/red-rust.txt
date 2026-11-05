@@ -1,0 +1,110 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src-tauri)
+warning: field `from_state` is never read
+    --> src/character_hub.rs:4530:16
+     |
+4528 | pub(crate) struct CopyNamed {
+     |                   --------- field in this struct
+4529 |     pub(crate) bonus: Option<u8>,
+4530 |     pub(crate) from_state: Option<ActiveState>,
+     |                ^^^^^^^^^^
+     |
+     = note: `CopyNamed` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `codex-desktop` (bin "codex-desktop" test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 18s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-b51aea73009681a5)
+
+running 11 tests
+test character_hub::tests::left_behind_can_be_sold_and_the_sale_takes_the_copy_named ... FAILED
+test character_hub::tests::left_behind_the_requests_name_the_state_on_the_wire ... ok
+test character_hub::tests::left_behind_each_row_moves_its_own_copy ... FAILED
+test character_hub::tests::market_held_names_a_legacy_id_and_lists_an_absent_selection_as_left_behind ... FAILED
+test character_hub::tests::left_behind_wearing_it_meets_the_slot_check ... FAILED
+test character_hub::tests::left_behind_picking_up_meets_the_load_check ... FAILED
+test character_hub::tests::left_behind_the_loadout_shield_was_never_owned ... ok
+test character_hub::tests::left_behind_a_custom_item_has_the_third_state ... FAILED
+test character_hub::tests::left_behind_adds_no_weight_and_no_bonus_and_the_item_stays_owned ... FAILED
+test character_hub::tests::left_behind_attach_takes_the_copy_in_hand ... FAILED
+test character_hub::tests::left_behind_keeps_a_plus_n_through_export_and_import has been running for over 60 seconds
+test character_hub::tests::left_behind_keeps_a_plus_n_through_export_and_import ... FAILED
+
+failures:
+
+---- character_hub::tests::left_behind_can_be_sold_and_the_sale_takes_the_copy_named stdout ----
+
+thread 'character_hub::tests::left_behind_can_be_sold_and_the_sale_takes_the_copy_named' (2098245) panicked at src/character_hub.rs:12874:9:
+assertion `left == right` failed
+  left: [SelectedInactive]
+ right: [Absent, SelectedInactive]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- character_hub::tests::left_behind_each_row_moves_its_own_copy stdout ----
+
+thread 'character_hub::tests::left_behind_each_row_moves_its_own_copy' (2098246) panicked at src/character_hub.rs:12852:9:
+assertion `left == right` failed: the carried one went
+  left: [SelectedInactive]
+ right: [EquippedActive, Absent]
+
+---- character_hub::tests::market_held_names_a_legacy_id_and_lists_an_absent_selection_as_left_behind stdout ----
+
+thread 'character_hub::tests::market_held_names_a_legacy_id_and_lists_an_absent_selection_as_left_behind' (2098334) panicked at src/character_hub.rs:13031:9:
+assertion `left == right` failed: [HeldEquipmentCopyDto { item_id: "item:longsword", name: "Longsword", bonus: 0, active_state: EquippedActive, slot: WieldMain, override_flag: None }]
+  left: 1
+ right: 2
+
+---- character_hub::tests::left_behind_wearing_it_meets_the_slot_check stdout ----
+
+thread 'character_hub::tests::left_behind_wearing_it_meets_the_slot_check' (2098325) panicked at src/character_hub.rs:12950:62:
+index out of bounds: the len is 0 but the index is 0
+
+---- character_hub::tests::left_behind_picking_up_meets_the_load_check stdout ----
+
+thread 'character_hub::tests::left_behind_picking_up_meets_the_load_check' (2098248) panicked at src/character_hub.rs:12930:9:
+assertion `left == right` failed: left behind, it is not what the load is over
+  left: []
+ right: [None]
+
+---- character_hub::tests::left_behind_a_custom_item_has_the_third_state stdout ----
+
+thread 'character_hub::tests::left_behind_a_custom_item_has_the_third_state' (2098242) panicked at src/character_hub.rs:12979:9:
+assertion `left == right` failed
+  left: SelectedInactive
+ right: Absent
+
+---- character_hub::tests::left_behind_adds_no_weight_and_no_bonus_and_the_item_stays_owned stdout ----
+
+thread 'character_hub::tests::left_behind_adds_no_weight_and_no_bonus_and_the_item_stays_owned' (2098243) panicked at src/character_hub.rs:12816:9:
+assertion `left == right` failed
+  left: []
+ right: [("Chain Shirt", 0, Absent)]
+
+---- character_hub::tests::left_behind_attach_takes_the_copy_in_hand stdout ----
+
+thread 'character_hub::tests::left_behind_attach_takes_the_copy_in_hand' (2098244) panicked at src/character_hub.rs:12964:9:
+assertion `left == right` failed
+  left: [("Longsword", 0, SelectedInactive)]
+ right: [("Longsword", 0, Absent), ("+1 Longsword", 1, SelectedInactive)]
+
+---- character_hub::tests::left_behind_keeps_a_plus_n_through_export_and_import stdout ----
+
+thread 'character_hub::tests::left_behind_keeps_a_plus_n_through_export_and_import' (2098247) panicked at src/character_hub.rs:12904:9:
+assertion `left == right` failed
+  left: []
+ right: [("+1 Longsword", 1, Absent)]
+
+
+failures:
+    character_hub::tests::left_behind_a_custom_item_has_the_third_state
+    character_hub::tests::left_behind_adds_no_weight_and_no_bonus_and_the_item_stays_owned
+    character_hub::tests::left_behind_attach_takes_the_copy_in_hand
+    character_hub::tests::left_behind_can_be_sold_and_the_sale_takes_the_copy_named
+    character_hub::tests::left_behind_each_row_moves_its_own_copy
+    character_hub::tests::left_behind_keeps_a_plus_n_through_export_and_import
+    character_hub::tests::left_behind_picking_up_meets_the_load_check
+    character_hub::tests::left_behind_wearing_it_meets_the_slot_check
+    character_hub::tests::market_held_names_a_legacy_id_and_lists_an_absent_selection_as_left_behind
+
+test result: FAILED. 2 passed; 9 failed; 0 ignored; 0 measured; 1159 filtered out; finished in 63.55s
+
+error: test failed, to rerun pass `--bin codex-desktop`
