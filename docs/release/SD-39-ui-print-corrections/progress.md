@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 46 of 64 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 47 of 65 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -88,6 +88,8 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E7 | E7.5 | complete | a44e177d18 + receipt commit | artifacts/epic_7/E7.5_cycle_receipt.md |
 | E7 | E7.6 | complete | ac9bb659ae + receipt commit | artifacts/epic_7/E7.6_cycle_receipt.md |
 | E7 | E7.MC | complete | c8ba870af8, e65cef12fd + receipt commit | artifacts/epic_7/E7.MC_cycle_receipt.md |
+| E8 | E8.1 | complete | f8c29c3eeb, 784ae6fde5, dd4006a843 + receipt commit (row added by E8.2) | artifacts/epic_8/E8.1_cycle_receipt.md |
+| E8 | E8.2 | complete | ed2000b229 + receipt commit | artifacts/epic_8/E8.2_cycle_receipt.md |
 
 ## Epic reports
 
@@ -316,6 +318,10 @@ seed deltas, open blockers.)
 | E8.1 | Where the print's fonts and templates live at run time | Compiled into the binary (`include_bytes!`, `include_str!`): the same bytes in a test, a dev run and every installer | A `bundle.resources` lookup, unproven for a packaged build by any E8.1 test |
 | E8.1 | Hit Points and Speed on the printed Combat block | Left out, and discovered card E8.6 gives each one backend value | Printing them by re-deriving the screen's TypeScript arithmetic in Rust (NR-2), or printing the backend durability max HP, which reaches max HP by another rule (no saved rolls, no grants, three classes) |
 | E8.1 | Which fonts | Liberation Sans 2.1.5, OFL 1.1, the face `technical-design.md §1` names, copied from the box's `fonts-liberation` 1:2.1.5-3 with its licence | DejaVu (Bitstream Vera licence, not OFL); Typst's own embedded fonts (a feature that pulls more than one family) |
+| E8.2 | When an override tag prints | On every sheet, on the record it let in | Only in "full" (all three options), which would hide on a basic sheet how a record got there |
+| E8.2 | Skill totals the engine does not hold | Ranks printed, the total `—`, discovered card E8.7 gives each one backend value | Re-adding the Skills panel's TypeScript sum in Rust (NR-2) |
+| E8.2 | Where the option blocks print | Each on pages of its own, after the sheet | Run on under Actions, where an option with nothing to print would not change the page count |
+| E8.2 | Where the campaigns' descriptions come from | The caller sends them (`PrintRequest.campaigns`); the backend cannot read the frontend's `localStorage` | A new backend campaign store, which R17 ("no new field") rules out |
 
 ## Open blockers
 

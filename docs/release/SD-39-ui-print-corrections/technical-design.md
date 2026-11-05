@@ -46,8 +46,9 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
 - Blocks **flow**: Typst lays out pages; the layout file never names an inch. Page 1 of PF = identity,
   combat, abilities, saves, skills; weapons/armor/inventory next; feats/features; spells; then the
   optional Spellbook (full text per known spell from the spell catalog), Math (one line per explanations
-  row the sheet shows, grouped by sheet value), BioNotes (bio + campaign notes from `campaignModel.ts`'s
-  store).
+  row the sheet shows, grouped by sheet value), BioNotes (bio + the description of each campaign whose party lists the character; those
+  live in `campaignModel.ts`'s localStorage, so the caller sends them in `PrintRequest.campaigns`,
+  `decisions.md §25`).
 - Typst as a library: `typst` + `typst-pdf` (E8.1 records versions and `Cargo.lock` lines).
   **Recorded by E8.1:** `typst = "=0.15.1"`, `typst-layout = "=0.15.1"`, `typst-pdf = "=0.15.1"` (`apps/desktop/src-tauri/Cargo.toml`;
   `awk '/^name = "(typst|typst-pdf|typst-layout|krilla)"$/{n=$3; getline; print n, $3}' apps/desktop/src-tauri/Cargo.lock`

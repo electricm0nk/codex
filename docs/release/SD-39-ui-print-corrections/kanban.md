@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 64
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 65
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -80,11 +80,12 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 64
 | E7.MC | E7 merge check + Epic report | opus | complete | E7.6 | commits c8ba870af8, e65cef12fd + receipt commit; receipt artifacts/epic_7/E7.MC_cycle_receipt.md; 6 defects fixed, 1 card discovered (E7.7), E7 commands green; root 6,771 passed, 0 failed, 27 ignored, 301 result lines, exit 0, at c8ba870af8, desktop 1,180 passed, 0 failed, 2 ignored, 2 result lines, exit 0, at e65cef12fd's tree (E7.6's 1,172 plus 5 and 3), ingest 1,857 passed, 1 failed, 43 ignored, 178 result lines, exit 101, at c8ba870af8. The one, `v06_wizard_pilot_case_verification::full_pipeline_runs_end_to_end_for_the_wizard_pilot_case`, failed on PCGen's gradle download during the internet outage (`Unable to process url: https://api.adoptium.net/...`); after it, `cargo test --locked -p codex-ingest -j 8 --test v06_wizard_pilot_case_verification` 3 passed, 0 failed; seeds: one text path on each PF seed, SF and CPR none |
 | E7.7 | A weapon stating no damage dice has an attack row | opus | ready | E7.MC | discovered by E7.MC (`decisions.md §21`); `Net (Base)` is held and reads no attack row |
 | E8.1 | Print core: Typst, fonts, frame, PF layout, Save PDF cmd | opus | complete | E7.MC | commits f8c29c3eeb, 784ae6fde5, dd4006a843 + receipt commit; receipt artifacts/epic_8/E8.1_cycle_receipt.md; typst and typst-pdf 0.15.1; Liberation Sans 2.1.5 (OFL) compiled in; save_sheet_pdf and print_sheet_pdf; print_smoke 6 passed; desktop 1,186 passed, 0 failed; sd24 audit 5 passed after a named lockfile exception; Aldric A4 and Letter byte-equal across runs; seeds NO_DIFF; discovered E8.6 (Hit Points and Speed have no single backend value) |
-| E8.2 | PF blocks + three options | opus | waiting | E8.1 | |
+| E8.2 | PF blocks + three options | opus | complete | E8.1 | commit ed2000b229 + receipt commit; receipt artifacts/epic_8/E8.2_cycle_receipt.md; 15 block types, Spellbook, Show the math, Bio and campaign notes each on pages of their own; print_pf_blocks 8 passed, print_smoke 6 passed; desktop 1,194 passed, 0 failed; (no derivation recorded) Aldric 18 of 50, Elowen 17 of 57; seeds NO_DIFF; discovered E8.7 (skill totals have no single backend value) |
 | E8.3 | SF + CPR layout files | opus | waiting | E8.2 | |
 | E8.4 | Settings paper + dialog + buttons + retire CSS print | opus | waiting | E8.3 | |
 | E8.5 | Golden suite 24 PDFs | opus | waiting | E8.4 | |
 | E8.6 | Hit Points and Speed: one backend value for screen and print | opus | waiting | E8.4 | discovered by E8.1 (`decisions.md §21`); the screen derives both in TypeScript, so the print cannot carry them under NR-2 |
+| E8.7 | Skill totals: one backend value for screen and print | opus | waiting | E8.4 | discovered by E8.2 (`decisions.md §21`); the Skills panel sums each total in TypeScript and the engine states three, so the print prints ranks and `—` under NR-2 |
 | E8.MC | E8 merge check + Epic report | opus | waiting | E8.5 | |
 | E9.1 | Packaged resources + clean build | opus | waiting | E8.MC | |
 | E9.2 | Fresh-install acceptance | sonnet | waiting | E9.1 | |
