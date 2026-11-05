@@ -9,6 +9,7 @@
 //! save-as dialog said and opens it; `print_sheet_pdf` writes it to a temp file and opens that in
 //! the system's PDF viewer, where the player prints. Both open through `tauri-plugin-opener`.
 
+pub mod blocks;
 pub mod layout;
 pub mod model;
 mod typst;
@@ -17,15 +18,37 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
-use crate::character_hub::{load_saved_character_at_root, resolve_character_root};
+use crate::character_custom::custom_or_empty;
+use crate::character_hub::{
+    list_held_equipment_at_root, load_character_bio_at_root, load_saved_character_at_root, resolve_character_root,
+};
 pub use model::Paper;
 
-/// What to print. E8.2 adds the three option boxes (Spellbook, Show the math, Bio and campaign
-/// notes); the paper is the one choice E8.1 makes.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
+/// What to print: the paper, and the three option boxes (operator ruling R4, stacking: none of
+/// them is "basic", all three is "full").
+/// Every field defaults: a request naming only the paper prints the basic sheet.
+#[derive(Debug, Clone, PartialEq, Eq, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", default)]
 pub struct PrintRequest {
     pub paper: Paper,
+    /// Spellbook: the full text of every spell the character holds.
+    pub spellbook: bool,
+    /// Show the math: every engine row behind a printed number.
+    pub math: bool,
+    /// Bio and campaign notes: the character's bio and its campaigns' descriptions (R17).
+    pub bio: bool,
+    /// The campaigns whose party lists this character. They live in the frontend's store
+    /// (`campaignModel.ts`), which the backend cannot read, so the caller sends them.
+    pub campaigns: Vec<CampaignNote>,
+}
+
+/// One campaign the character is in: its name and its description, as the Campaign screen saved them.
+#[derive(Debug, Clone, PartialEq, Eq, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CampaignNote {
+    pub name: String,
+    #[serde(default)]
+    pub description: String,
 }
 
 /// A rendered sheet: the PDF bytes and every warning Typst raised (none, on a sheet that fits).
@@ -44,14 +67,29 @@ pub fn sheet_font_families() -> Vec<String> {
 /// Renders the character saved at `root` to a PDF. Pathfinder only until E8.3 adds the other two
 /// systems' layout files; another system is refused by name, never printed as a Pathfinder sheet.
 pub fn render_sheet_pdf_at_root(root: &Path, request: &PrintRequest) -> Result<RenderedSheet, String> {
-    let loaded = load_saved_character_at_root(root)?;
-    let system = loaded.summary.game_system.as_str();
-    let document = match system {
-        "pf1" => layout::pf1e::layout(&loaded, request.paper.typst_name()),
-        other => return Err(format!("print.unsupported_system: no print layout for game system `{other}` yet")),
-    };
+    let document = sheet_document_at_root(root, request)?;
     let typeset = typst::typeset(&document)?;
     Ok(RenderedSheet { pdf: typeset.pdf, warnings: typeset.warnings })
+}
+
+/// The sheet the character saved at `root` prints as: its system's layout file over what the
+/// screen reads -- the load response, the owned copies (`list_held_equipment_at_root`), the
+/// Custom tab's records and the bio -- and the request's options.
+pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<model::SheetDocument, String> {
+    let loaded = load_saved_character_at_root(root)?;
+    match loaded.summary.game_system.as_str() {
+        "pf1" => {
+            let sources = blocks::SheetSources {
+                loaded: &loaded,
+                held: list_held_equipment_at_root(root)?,
+                custom: custom_or_empty(root),
+                bio: load_character_bio_at_root(root)?,
+                request,
+            };
+            Ok(layout::pf1e::layout(&sources))
+        }
+        other => Err(format!("print.unsupported_system: no print layout for game system `{other}` yet")),
+    }
 }
 
 /// What a save wrote: where, how many bytes, and any warning Typst raised making it (a sheet
@@ -75,8 +113,9 @@ pub fn write_sheet_pdf_at_root(root: &Path, request: &PrintRequest, target: &Pat
 #[serde(rename_all = "camelCase")]
 pub struct SaveSheetPdfRequest {
     pub character_id: String,
-    #[serde(default)]
-    pub paper: Paper,
+    /// The paper and the option boxes.
+    #[serde(flatten)]
+    pub print: PrintRequest,
     /// The path the save-as dialog returned.
     pub file_path: String,
 }
@@ -88,7 +127,7 @@ pub fn save_sheet_pdf(app: tauri::AppHandle, request: SaveSheetPdfRequest) -> Re
     use tauri_plugin_opener::OpenerExt;
     let root = resolve_character_root(&app, &request.character_id)?;
     let target = PathBuf::from(&request.file_path);
-    let saved = write_sheet_pdf_at_root(&root, &PrintRequest { paper: request.paper }, &target)?;
+    let saved = write_sheet_pdf_at_root(&root, &request.print, &target)?;
     app.opener()
         .open_path(saved.file_path.clone(), None::<&str>)
         .map_err(|err| format!("Saved {}, but it could not be opened: {err}", saved.file_path))?;
@@ -112,8 +151,9 @@ pub fn write_print_copy_at_root(
 #[serde(rename_all = "camelCase")]
 pub struct PrintSheetPdfRequest {
     pub character_id: String,
-    #[serde(default)]
-    pub paper: Paper,
+    /// The paper and the option boxes.
+    #[serde(flatten)]
+    pub print: PrintRequest,
 }
 
 /// Print (operator ruling R19): makes the PDF in the system temp directory and opens it in the
@@ -128,7 +168,7 @@ pub fn print_sheet_pdf(app: tauri::AppHandle, request: PrintSheetPdfRequest) -> 
     let saved = write_print_copy_at_root(
         &root,
         &request.character_id,
-        &PrintRequest { paper: request.paper },
+        &request.print,
         &std::env::temp_dir(),
     )?;
     app.opener()

@@ -5663,7 +5663,7 @@ fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), 
 /// `load_character_portrait`'s own `Ok(None)`-for-absent shape (bio's
 /// equivalent "absent" value is the default-empty DTO, since every field is
 /// already optional-shaped as an empty string rather than an `Option`).
-fn load_character_bio_at_root(root: &Path) -> Result<CharacterBioDto, String> {
+pub(crate) fn load_character_bio_at_root(root: &Path) -> Result<CharacterBioDto, String> {
     let path = root.join(BIO_FILE_NAME);
     if !path.exists() {
         return Ok(CharacterBioDto::default());
