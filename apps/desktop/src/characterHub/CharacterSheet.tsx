@@ -664,7 +664,7 @@ function DetailsPanel(props: {
           </select>
         </BioField>
         <BioField label="Deity">
-          <input style={bioFieldInputStyle} value={bio.deity} onChange={(event) => onBioChange({ deity: event.target.value })} onBlur={onBioBlur} />
+          <input aria-label="Deity" style={bioFieldInputStyle} value={bio.deity} onChange={(event) => onBioChange({ deity: event.target.value })} onBlur={onBioBlur} />
         </BioField>
         <BioField label="Sex">
           <select style={bioFieldInputStyle} value={bio.sex} onChange={(event) => onBioChange({ sex: event.target.value })} onBlur={onBioBlur}>

@@ -657,6 +657,8 @@ computation calls it. Two facts the converter declares on the record, never gran
 deity on the `character.deity` row `SavedCharacterStore::load` writes from `bio.json`), and
 `WeaponTreatedAsMartial` on a race's familiarity (the class lists decide that weapon again as Martial).
 No deity recorded, or none the rules hold, grants nothing: the -4 stands and the row prints why.
+A table shield names no weapon proficiency, so its bash is read by `held_shield_proficiency`, the reader the
+refusal uses. An attack row reads Dexterity for a weapon that cannot be swung (`attack_ability_modifier_for`).
 
 **Class skills, sub-classes, bloodlines, picks.** Class skills are read from the converted record
 (`class_skill_sheet_rules`); a sub-class choice (`SUBCLASS:`), an ability-category pick (a bloodline), a

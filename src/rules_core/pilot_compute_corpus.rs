@@ -28,7 +28,7 @@ use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentS
 use crate::rules_core::damage_total::resolve_base_damage_dice;
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::contract::encumbrance_size_for_race;
-use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
+use crate::rules_core::equipment_effects::{compute_equipment_effects, stand_in_record, EquipmentEffects};
 use crate::rules_core::equipment_resolver::{equipment_converted_resolve, equipment_id_resolve};
 use crate::rules_core::feat_identity;
 use crate::rules_core::race_resolver::race_size_for_race_token;
@@ -37,7 +37,7 @@ use crate::rules_core::pilot_compute::{
     combat_maneuver_bonus, combat_maneuver_defense, compute_pilot_base_chassis,
     equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
     fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
-    has_supported_class_chassis, melee_attack_ability_modifier, normalize_weapon_identity, require_active_state,
+    attack_ability_modifier_for, has_supported_class_chassis, melee_attack_ability_modifier, normalize_weapon_identity, require_active_state,
     ComputationExplanation,
     weapon_focus_bonus_for, weapon_training_bonus_for,
     selected_skill_climb_is_class_skill, selected_skill_ranks,
@@ -676,10 +676,13 @@ pub fn compute_combat_baseline_from_corpus(
 }
 
 /// A weapon, by the signal the Weapons row itself reads: it has damage dice, its own or its base
-/// item's. A shield's bash is not a weapon in hand to this engine.
+/// item's. A shield's bash is not a weapon in hand to this engine, and a catalog row whose base is a
+/// shield (`Shield (Light/Steel)`, `Lion's Shield`) is a shield.
 fn is_weapon_in_hand(record_key: &str, corpus: &SourcePackageContent) -> bool {
     resolve_base_damage_dice(record_key, corpus).is_some()
-        && !equipment_converted_resolve(record_key, corpus).is_some_and(|record| record.is_shield)
+        && !equipment_converted_resolve(record_key, corpus).is_some_and(|record| {
+            record.is_shield || stand_in_record(record, corpus).is_some_and(|base| base.is_shield)
+        })
 }
 
 /// The attack row of a weapon in hand the CRB table does not hold by its own name, which the headless
@@ -711,7 +714,7 @@ pub fn corpus_weapon_attack_rows(
         }
         let weapon = weapon_table_row_of(key, corpus);
         let ability = weapon.map_or(base.ability_modifiers.strength, |weapon| {
-            melee_attack_ability_modifier(input, weapon, &base.ability_modifiers)
+            attack_ability_modifier_for(input, weapon, &base.ability_modifiers)
         });
         let focus = weapon_focus_bonus_for(input, weapon.map_or(key, |weapon| weapon.key));
         let (penalty, proficiency_detail) = match weapon.and_then(|weapon| character_is_proficient_with(input, weapon)) {

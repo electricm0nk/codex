@@ -286,8 +286,13 @@ impl<'a> Importer<'a> {
                 self.mapped(line, "bio.alignment");
             }
             "DEITY" => {
-                self.bio.deity = line.value().to_owned();
-                self.mapped(line, "bio.deity");
+                // PCGen's word for no deity. The bio's Deity is read by the rules, so it stays empty.
+                if line.value() == "None" {
+                    self.note(line, Outcome::Derived, "no deity");
+                } else {
+                    self.bio.deity = line.value().to_owned();
+                    self.mapped(line, "bio.deity");
+                }
             }
             "PLAYERNAME" => self.bio_field(line, "bio.playerName", |bio| &mut bio.player_name),
             "GENDER" => self.bio_field(line, "bio.sex", |bio| &mut bio.sex),

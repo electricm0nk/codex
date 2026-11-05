@@ -441,6 +441,23 @@ pub fn weapon_grant_in(
     answer
 }
 
+/// The shield proficiency a character's record holds for one of the weapon table's shields, on the
+/// reader the Market's refusal uses. `None` with no converted package or no answer.
+pub(crate) fn held_shield_proficiency(
+    input: &crate::rules_core::character_input::CharacterInput,
+    weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
+) -> Option<bool> {
+    let package = crate::rules_core::corpus_loader::live_sheet_rules()?;
+    let rule = package.rule(package.find("equipment", &crate::rules_core::sheet_rule::slug(&format!("{} (Base)", weapon.key)))?)?;
+    let mut seed = HeldSeed::from_record(input);
+    seed.race_traits = crate::rules_core::race_resolver::applied_race_trait_keys(
+        &input.chosen.race_id,
+        &super::selected_alternate_trait_keys(input),
+    );
+    let facts = CharacterFacts::from_record(input).with_linked_picks(package, &seed);
+    armor_proficiency_in(package, &seed, &facts, &rule.label, &rule.tags)
+}
+
 /// [`weapon_grant_in`] for a character record: its race's resolved traits on the seed, no
 /// computation read, since the computation calls this. `None` with no converted package in hand.
 /// A pure function of the record and the weapon, and one compute asks several times, so the last

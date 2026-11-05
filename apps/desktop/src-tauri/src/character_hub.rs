@@ -2186,7 +2186,18 @@ pub fn clone_character(
     request: CloneCharacterRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let source_root = resolve_character_root(&app, &request.character_id)?;
-    let source_envelope = SavedCharacterStore::load(&source_root).map_err(|err| err.message)?;
+    let new_root = resolve_character_root(&app, &request.new_character_id)?;
+    clone_character_at_roots(&source_root, &new_root, &request, &app.package_info().version.to_string())
+}
+
+/// `clone_character` between two character folders, without an `AppHandle`.
+fn clone_character_at_roots(
+    source_root: &Path,
+    new_root: &Path,
+    request: &CloneCharacterRequest,
+    app_version: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let source_envelope = SavedCharacterStore::load(source_root).map_err(|err| err.message)?;
 
     let mut character_input = source_envelope.character_input.clone();
     character_input.case_id = Some(request.new_character_id.clone());
@@ -2207,7 +2218,7 @@ pub fn clone_character(
         revision_kind: SavedCharacterRevisionKind::Authoritative,
         saved_at: request.saved_at.clone(),
         schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
-        app_or_runtime_version: app.package_info().version.to_string(),
+        app_or_runtime_version: app_version.to_owned(),
         content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
         game_system: GAME_SYSTEM_ID.to_owned(),
         latest_authoritative_revision_ref: format!("{}.rev.1", request.new_character_id),
@@ -2215,12 +2226,12 @@ pub fn clone_character(
         character_input,
     };
 
-    let new_root = resolve_character_root(&app, &request.new_character_id)?;
-    SavedCharacterStore::save(&envelope, &new_root).map_err(|err| err.message)?;
+    SavedCharacterStore::save(&envelope, new_root).map_err(|err| err.message)?;
 
-    copy_character_custom(&source_root, &new_root)?;
-    copy_character_ledger(&source_root, &new_root)?;
-    copy_character_hit_points(&source_root, &new_root)?;
+    copy_character_custom(source_root, new_root)?;
+    copy_character_ledger(source_root, new_root)?;
+    copy_character_hit_points(source_root, new_root)?;
+    copy_character_bio(source_root, new_root)?;
 
     // Best-effort: carry the portrait over too, if the source has one.
     let source_portrait = source_root.join(PORTRAIT_FILE_NAME);
@@ -5619,6 +5630,15 @@ pub struct CharacterBioDto {
 /// first write to a character directory either. Split from the
 /// `#[tauri::command]` wrapper below so it is unit-testable without an
 /// `AppHandle`.
+/// A clone keeps its source's bio: the deity on it moves a sheet number. No file is no copy.
+fn copy_character_bio(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(BIO_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(BIO_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
 fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let path = root.join(BIO_FILE_NAME);
@@ -12119,6 +12139,53 @@ mod tests {
         assert!(!climb.detail.contains("Chain Shirt"), "{}", climb.detail);
     }
 
+    /// A bow is aimed, not swung: its row reads Dexterity on both paths, a table weapon's and a variant's.
+    /// Aldric: base attack +3, Strength +4, Dexterity +1. A thrown Javelin is the same, a Dagger is melee.
+    #[test]
+    fn no_required_gear_a_ranged_weapon_reads_dexterity() {
+        let (dir, root) = enhancement_rows_aldric("nrg-ranged");
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        for (item, id, value) in [
+            ("Longbow (Base)", "combat.weapon_attack_bonus.longbow", 4),
+            ("Javelin (Base)", "combat.weapon_attack_bonus.javelin", 4),
+            ("Dagger (Base)", "combat.weapon_attack_bonus.dagger", 7),
+        ] {
+            purchase_equipment_priced_at_root(&root, item, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+            let loaded = load_saved_character_at_root(&root).unwrap();
+            let row = loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{item}: no row"));
+            assert_eq!(row.value, value, "{item}: {}", row.detail);
+            assert_eq!(loaded.snapshot.as_ref().unwrap().baseline_melee_attack_bonus, 7, "the bow does not move Melee");
+            set_equipment_active_state_at_root(&root, item, ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        }
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A shield is not the Melee number, by any name it is held under: the table's, or a catalog row
+    /// whose base is a shield (`Shield (Light/Steel)`, what a `.pcg` holds; `Lion's Shield`). Worn first,
+    /// such a row read as the first melee weapon in hand, at its -4 for anyone.
+    #[test]
+    fn no_required_gear_a_shield_is_not_the_melee_number() {
+        let (dir, root) = enhancement_rows_aldric("nrg-shield");
+        let base = SavedCharacterStore::load(&root).unwrap();
+        for shield in ["Heavy Steel Shield (Base)", "Shield (Light/Steel)", "Lion's Shield", "Darkwood Shield"] {
+            SavedCharacterStore::save(&base, &root).unwrap();
+            let mut envelope = base.clone();
+            envelope.character_input.chosen.equipment_selections.insert(
+                0,
+                EquipmentSelection {
+                    item_id: shield.to_owned(),
+                    active_state: ActiveState::EquippedActive,
+                    equipped_or_active: true,
+                    applied_modifiers: Vec::new(),
+                },
+            );
+            SavedCharacterStore::save(&envelope, &root).unwrap();
+            let loaded = load_saved_character_at_root(&root).unwrap();
+            assert_eq!(loaded.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(8), "{shield}: the Longsword's, with its Weapon Focus");
+        }
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
     /// Selling what he starts with saves too, and a character who holds no item at all computes
     /// the same numbers. The `power_attack` row is a feat's switch, not an item.
     #[test]
@@ -16608,6 +16675,59 @@ mod tests {
             panic!("the buy goes through");
         };
         assert!(matches!(active_state, ActiveStateDto::EquippedActive), "{carried_reason:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The deity moves a number, so a clone keeps it as Export then Import does. The store rewrites the
+    /// row from `bio.json` on every load, so a clone with no bio read -4 on its source's own weapon.
+    #[test]
+    fn race_weapon_proficiency_a_deity_survives_a_clone() {
+        let source = race_weapon_proficiency_cleric("race-prof-clone-source");
+        race_weapon_proficiency_deity(&source, "Iomedae");
+        let before = race_weapon_proficiency_row(&source);
+        assert!(!before.contains("nonproficiency penalty:"), "{before}");
+
+        let clone = tempdir("race-prof-clone");
+        let request = CloneCharacterRequest {
+            character_id: "source".to_owned(),
+            new_character_id: "char-clone".to_owned(),
+            new_display_label: "The clone".to_owned(),
+            saved_at: OVERRIDES_AT.to_owned(),
+        };
+        let outcome = clone_character_at_roots(&source, &clone, &request, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_bio_at_root(&clone).unwrap().deity, "Iomedae");
+        assert_eq!(race_weapon_proficiency_row(&clone), before);
+        std::fs::remove_dir_all(&source).ok();
+        std::fs::remove_dir_all(&clone).ok();
+    }
+
+    /// A shield's bash has no weapon proficiency of its own: it is read by the shield proficiency the
+    /// Market's refusal reads, so a Fighter owes no -4 and a Wizard does, and the row says which.
+    #[test]
+    fn race_weapon_proficiency_a_shield_bash_reads_what_the_refusal_reads() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{Armor, None as Known};
+        const SHIELD: &str = "Heavy Steel Shield (Base)";
+        let row = |root: &Path| {
+            let loaded = load_saved_character_at_root(root).unwrap();
+            loaded.explanations.iter().find(|e| e.id == "combat.weapon_attack_bonus.heavysteelshield").expect("a shield row").clone()
+        };
+
+        let (dir, fighter) = enhancement_rows_aldric("race-prof-shield-fighter");
+        worn_vs_carried_set(&fighter, "item:longsword", ActiveState::SelectedInactive);
+        purchase_equipment_priced_at_root(&fighter, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert_eq!(race_weapon_proficiency_gap(&fighter, SHIELD), Known);
+        let bash = row(&fighter);
+        assert_eq!(bash.value, 7, "base attack +3, Strength +4: {}", bash.detail);
+        assert!(!bash.detail.contains("nonproficiency penalty:"), "{}", bash.detail);
+        std::fs::remove_dir_all(&dir).ok();
+
+        let (dir, wizard) = overrides_wizard("race-prof-shield-wizard", "Dagger");
+        overrides_set(&wizard, |flags| flags.armor_without_proficiency = true);
+        purchase_equipment_priced_at_root(&wizard, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert_eq!(race_weapon_proficiency_gap(&wizard, SHIELD), Armor);
+        let bash = row(&wizard);
+        assert!(bash.detail.contains("nonproficiency penalty:"), "{}", bash.detail);
         std::fs::remove_dir_all(&dir).ok();
     }
 

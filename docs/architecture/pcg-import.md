@@ -71,7 +71,7 @@ not in the table becomes a custom feat and is named in `report.unknownKeys`.
 | `MONEY` | mapped | money.totalCopper, gp x 100 |
 | `LANGUAGE` | mapped | the Languages custom feat (the Pathfinder sheet has no language list to fill) |
 | `ALIGN` | mapped | bio.alignment |
-| `DEITY` | mapped | bio.deity |
+| `DEITY` | mapped, `None` derived as no deity | bio.deity |
 | `CHARACTERNAME` | mapped | displayLabel |
 | `PLAYERNAME` | mapped | bio.playerName |
 | `GENDER` | mapped | bio.sex |

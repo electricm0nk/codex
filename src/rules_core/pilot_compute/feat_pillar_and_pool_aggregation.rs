@@ -2598,7 +2598,14 @@ pub(crate) fn character_weapon_proficiency(
     input: &CharacterInput,
     weapon: &weapon_tables::WeaponTableEntry,
 ) -> WeaponProficiencyVerdict {
-    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::held_weapon_grant;
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{held_shield_proficiency, held_weapon_grant};
+    // The table's four shields name no weapon proficiency: a bash is read by the shield's own.
+    if weapon.proficiency_name.is_none() {
+        return match held_shield_proficiency(input, weapon) {
+            Some(proficient) => WeaponProficiencyVerdict::Known { proficient, printed: Vec::new(), granted_by: None },
+            None => WeaponProficiencyVerdict::Unknown { reason: format!("nothing states who is proficient with a {}", weapon.key) },
+        };
+    }
     let grants = crate::rules_core::feat_effects::weapon_proficiency_grants_from_feats(
         &effective_character_feats(input),
         &input.chosen.selected_choices,
@@ -2922,9 +2929,17 @@ pub(super) fn ground_per_weapon_combat_totals(
         // there is no verified number to subtract. Naming it rather than
         // inventing one.
         let finesse_applies = has_weapon_finesse && weapon_tables::weapon_is_finesseable(weapon);
-        let attack_ability_modifier =
-            if finesse_applies { strength_modifier.max(dexterity_modifier) } else { strength_modifier };
-        let finesse_detail = if !has_weapon_finesse {
+        // A weapon that cannot be swung is aimed or thrown: Dexterity governs it (CRB Chapter 8).
+        let attack_ability_modifier = if !weapon.is_melee {
+            dexterity_modifier
+        } else if finesse_applies {
+            strength_modifier.max(dexterity_modifier)
+        } else {
+            strength_modifier
+        };
+        let finesse_detail = if !weapon.is_melee {
+            format!(" Dexterity ({dexterity_modifier:+}) governs a weapon used at range.")
+        } else if !has_weapon_finesse {
             String::new()
         } else if !finesse_applies {
             format!(
@@ -3013,15 +3028,10 @@ pub(super) fn ground_per_weapon_combat_totals(
                  modifier ({size_attack_modifier:+}) = \
                  {attack_total}.{focus_detail}{finesse_detail}{proficiency_detail} Only the Focus \
                  feats reach this total -- the Specialization feats are damage and Improved \
-                 Critical is threat range, both grounded separately.{}",
+                 Critical is threat range, both grounded separately. Separate from \
+                 combat.baseline_melee_attack_bonus, which is the Melee number for the first melee \
+                 weapon in hand.",
                 weapon.key,
-                if slug == normalize_weapon_identity(LONGSWORD_ITEM_ID) {
-                    " Separate from combat.baseline_melee_attack_bonus, which stays a Longsword-specific \
-                     GE-06 fixture total until task #80 generalises it"
-                } else {
-                    " Separate from combat.baseline_melee_attack_bonus, which is the Melee number for \
-                     the first melee weapon in hand"
-                }
             ),
         });
 
@@ -3258,6 +3268,19 @@ pub(crate) fn weapon_training_bonus_for(
 /// The ability modifier governing the attack roll with this weapon: Strength, or Dexterity through
 /// Weapon Finesse on a finesseable weapon when it is the higher (the corpus token is
 /// `max(STR,DEX)-STR`).
+/// The ability a weapon's attack roll reads: Dexterity for one that cannot be swung.
+pub(crate) fn attack_ability_modifier_for(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+    ability_modifiers: &AbilityModifiers,
+) -> i16 {
+    if weapon.is_melee {
+        melee_attack_ability_modifier(input, weapon, ability_modifiers)
+    } else {
+        ability_modifiers.dexterity
+    }
+}
+
 pub(crate) fn melee_attack_ability_modifier(
     input: &CharacterInput,
     weapon: &weapon_tables::WeaponTableEntry,

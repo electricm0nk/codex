@@ -270,6 +270,13 @@ fn pcg_import_fixtures_a_spell_is_kept_or_custom_and_most_are_kept() {
 }
 
 /// `pf_Paladin.pcg`, a whole level 6 character, field by field against the file's own lines.
+/// `DEITY:None` is PCGen's word for no deity. The bio's Deity moves a Cleric's weapon row, which says
+/// "no deity the rules hold is named none" of a name and "no deity is recorded" of nothing.
+#[test]
+fn pcg_import_fixtures_deity_none_is_no_deity() {
+    assert_eq!(oracle_fixture("3e_SWizSam.pcg").bio.deity, "");
+}
+
 #[test]
 fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     let file = oracle_fixture("pf_Paladin.pcg");
