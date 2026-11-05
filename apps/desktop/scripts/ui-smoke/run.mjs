@@ -23,7 +23,7 @@
 // inherits (RUN_DESKTOP_AGENT must be unique per concurrently-dispatched
 // agent; never 'default').
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -413,15 +413,16 @@ function pressKey(key) {
 }
 
 // A native file dialog is an X window of its own, so this one step is OS-level input: the command
-// channel only reaches the webview. `relativePath` is from the repo root. GTK's chooser takes a typed
-// path after ctrl+L.
+// channel only reaches the webview. `relativePath` is from the repo root (an absolute path is kept
+// as given). GTK's chooser takes a typed path after ctrl+L. An open dialog's title starts "Open"; a
+// save dialog's starts "Save", and its target is removed first so GTK asks no overwrite question.
 function chooseInNativeFileDialog(relativePath) {
   const env = { ...process.env, DISPLAY: `:${driver.displayNum()}` };
   const xdotool = (...args) => spawnSync('xdotool', args, { encoding: 'utf8', env });
   const deadline = Date.now() + 10000;
   let dialog = '';
   while (!dialog && Date.now() < deadline) {
-    dialog = xdotool('search', '--onlyvisible', '--name', '^Open').stdout.trim().split(/\s+/)[0] ?? '';
+    dialog = xdotool('search', '--onlyvisible', '--name', '^(Open|Save)').stdout.trim().split(/\s+/)[0] ?? '';
     if (!dialog) {
       sleepMs(250);
     }
@@ -429,10 +430,21 @@ function chooseInNativeFileDialog(relativePath) {
   if (!dialog) {
     throw new Error('no native file dialog appeared');
   }
+  const target = resolve(driver.APP_ROOT, '..', '..', relativePath);
+  const saving = xdotool('getwindowname', dialog).stdout.startsWith('Save');
+  if (saving) {
+    rmSync(target, { force: true });
+  }
   xdotool('windowfocus', '--sync', dialog);
   xdotool('key', '--window', dialog, 'ctrl+l');
   sleepMs(300);
-  xdotool('type', '--delay', '30', '--', resolve(driver.APP_ROOT, '..', '..', relativePath));
+  if (saving) {
+    // A save dialog selects the offered name up to its extension; select all of it, so the typed
+    // path replaces "name.pdf" whole rather than becoming "path.pdf.pdf".
+    xdotool('key', '--window', dialog, 'ctrl+a');
+    sleepMs(200);
+  }
+  xdotool('type', '--delay', '30', '--', target);
   sleepMs(300);
   xdotool('key', 'Return');
 }

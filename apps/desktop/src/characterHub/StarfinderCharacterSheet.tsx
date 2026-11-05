@@ -5,6 +5,7 @@ import { RulesAndFeaturesSection } from './CharacterSheet';
 import { StarfinderChoicesDialog } from './StarfinderChoicesDialog';
 import { StarfinderLevelUpDialog } from './StarfinderLevelUpDialog';
 import { STARFINDER_MARKET_CATEGORIES, SystemMarketDialog } from './SystemMarketDialog';
+import { PrintDialog } from './PrintDialog';
 import { buildStarfinderSheet, type StarfinderSheetCell, type StarfinderSheetSection } from './starfinderSheetModel';
 
 /**
@@ -32,6 +33,7 @@ export function StarfinderCharacterSheet(props: {
   const [choicesOpen, setChoicesOpen] = useState(false);
   const [market, setMarket] = useState<MarketShellStateDto | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [printOpen, setPrintOpen] = useState(false);
   const sheet = buildStarfinderSheet(detail);
   const characterId = detail.summary.characterId;
 
@@ -80,6 +82,9 @@ export function StarfinderCharacterSheet(props: {
           <button type="button" data-testid="sf-sheet-market" onClick={openMarket} disabled={levelUpOpen || choicesOpen} style={buttonStyle}>
             Market
           </button>
+          <button type="button" data-testid="sf-sheet-print" onClick={() => setPrintOpen(true)} style={buttonStyle}>
+            Print
+          </button>
           <button type="button" data-testid="sf-sheet-open" onClick={props.onOpen} style={buttonStyle}>
             Open
           </button>
@@ -94,6 +99,8 @@ export function StarfinderCharacterSheet(props: {
           {status}
         </p>
       )}
+
+      {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} onClose={() => setPrintOpen(false)} /> : null}
 
       {levelUpOpen ? (
         <StarfinderLevelUpDialog characterId={characterId} onClose={() => setLevelUpOpen(false)} onLeveledUp={(line) => void handleLeveledUp(line)} />

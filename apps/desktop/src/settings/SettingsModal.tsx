@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { SETTINGS_DIALOG_SIZE } from '../layout/screenLayout';
+import { PrintPanel } from './PrintPanel';
 
 /**
  * Centered, Obsidian-style settings dialog: a left options rail plus a
@@ -7,10 +8,11 @@ import { SETTINGS_DIALOG_SIZE } from '../layout/screenLayout';
  * added by extending `SETTINGS_TABS` and the `panels` map the caller passes.
  */
 
-export type SettingsTab = 'appearance' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer';
+export type SettingsTab = 'appearance' | 'print' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer';
 
 export const SETTINGS_TABS: ReadonlyArray<{ id: SettingsTab; label: string }> = [
   { id: 'appearance', label: 'Appearance' },
+  { id: 'print', label: 'Print' },
   { id: 'google-drive', label: 'Google Drive' },
   { id: 'update', label: 'Update' },
   { id: 'bug', label: 'Bug Report' },
@@ -23,7 +25,8 @@ export function SettingsModal(props: {
   activeTab: SettingsTab;
   onTabChange: (tab: SettingsTab) => void;
   onClose: () => void;
-  panels: Record<SettingsTab, ReactNode>;
+  /** The caller's panels; the modal draws the Print tab's panel itself. */
+  panels: Record<Exclude<SettingsTab, 'print'>, ReactNode>;
 }) {
   const { open, onClose } = props;
 
@@ -160,7 +163,7 @@ export function SettingsModal(props: {
               ×
             </button>
           </header>
-          <div style={{ flex: 1, fontSize: '1.05rem', overflowY: 'auto', padding: '1.75rem' }}>{props.panels[props.activeTab]}</div>
+          <div style={{ flex: 1, fontSize: '1.05rem', overflowY: 'auto', padding: '1.75rem' }}>{props.activeTab === 'print' ? <PrintPanel /> : props.panels[props.activeTab]}</div>
         </section>
       </div>
     </div>

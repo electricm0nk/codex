@@ -7,6 +7,7 @@ import { RulesAndFeaturesSection } from './CharacterSheet';
 import { CyberpunkImproveDialog } from './CyberpunkImproveDialog';
 import { boxesInColumn } from './sheetLayout';
 import { CYBERPUNK_MARKET_CATEGORIES, SystemMarketDialog } from './SystemMarketDialog';
+import { PrintDialog } from './PrintDialog';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
 import {
   buildCyberpunkSheet,
@@ -59,6 +60,7 @@ export function CyberpunkCharacterSheet(props: {
   const [improving, setImproving] = useState(false);
   const [market, setMarket] = useState<MarketShellStateDto | null>(null);
   const [marketError, setMarketError] = useState<string | null>(null);
+  const [printOpen, setPrintOpen] = useState(false);
   const mounted = useRef(true);
   useEffect(
     () => () => {
@@ -166,6 +168,9 @@ export function CyberpunkCharacterSheet(props: {
           <button type="button" data-testid="cpr-sheet-market" onClick={openMarket} style={buttonStyle}>
             Market
           </button>
+          <button type="button" data-testid="cpr-sheet-print" onClick={() => setPrintOpen(true)} style={buttonStyle}>
+            Print
+          </button>
           <button type="button" data-testid="cpr-sheet-open" onClick={props.onOpen} style={buttonStyle}>
             Open
           </button>
@@ -174,6 +179,8 @@ export function CyberpunkCharacterSheet(props: {
           </button>
         </div>
       </div>
+
+      {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} onClose={() => setPrintOpen(false)} /> : null}
 
       {improving ? (
         <CyberpunkImproveDialog

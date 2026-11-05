@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
 import { assert, assertEqual } from '../testSupport/asserts';
-import { buildPrintCss } from './printLayout';
 import {
   COMBAT_ROW_WRAP,
   CREATE_LAYOUT,
@@ -92,9 +91,10 @@ function verifiesTheSheetRendersEveryRegionFromTheRegistry() {
     assert(source.includes(`case '${box.id}':`), `renderSheetBox draws ${box.id}`);
   }
   // Each panel is drawn in one place only, its registered box: a second JSX use is a box the registry does not place.
+  // The rail's second LevelBenefitCard was the CSS print copy of the history, retired by E8.4.
   for (const panel of ['<PortraitUpload', '<DetailsPanel', '<AbilitiesPanel', '<SkillsPanel', '<SquareBlock', '<LevelBenefitCard']) {
     const uses = source.split(panel).length - 1;
-    assert(uses === (panel === '<LevelBenefitCard' ? 2 : 1), `${panel} is drawn only from its registered box (found ${uses})`);
+    assert(uses === 1, `${panel} is drawn only from its registered box (found ${uses})`);
   }
   assert(!/SHEET_COLUMNS|SHEET_COLUMN_STYLES/.test(source), 'the old middle-only registry is gone');
 }
@@ -139,17 +139,6 @@ function verifiesCreateHasItsOwnRegistry() {
   assert((skills?.order ?? 0) > (abilities?.order ?? 0), 'Skills sits below Abilities');
 }
 
-function verifiesEveryPrintColumnClassIsAppliedBySheet() {
-  // printLayout.ts places page 1 by these classes; a class the sheet never applies makes its
-  // print rule match nothing (`.sheet-mid` was missing before Brief 2).
-  const css = buildPrintCss();
-  const source = readFileSync(new URL('./CharacterSheet.tsx', import.meta.url), 'utf8');
-  for (const name of ['sheet-cols', 'sheet-left', 'sheet-mid', 'sheet-right']) {
-    assert(css.includes(`.${name} `), `print css targets .${name}`);
-    assert(source.includes(`className="${name}"`), `CharacterSheet.tsx applies className="${name}" for the print rule`);
-  }
-}
-
 verifiesEveryRegistryHasUniqueIdsAndAStyle('SHEET_LAYOUT', SHEET_LAYOUT);
 verifiesEveryRegistryHasUniqueIdsAndAStyle('CREATE_LAYOUT', CREATE_LAYOUT);
 verifiesTheBoxToRegionMap();
@@ -162,5 +151,4 @@ verifiesTheRailHeadingAndTheProgressionButton();
 verifiesOrderNotArrayPositionDecidesPlacement();
 verifiesTheSquareBlockIsTwoByTwoSquares();
 verifiesCreateHasItsOwnRegistry();
-verifiesEveryPrintColumnClassIsAppliedBySheet();
 console.log('sheetLayout.test.ts: all assertions passed');

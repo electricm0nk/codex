@@ -42,7 +42,7 @@ import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { PriceModeControl } from './PriceModeControl';
 import { loadCharacterHitPoints } from '../boundary/characterHitPoints';
 import type { HitPointLevelDto } from '../boundary/loadCreateCharacter';
-import { buildPrintCss, printableTabs } from './printLayout';
+import { PrintDialog } from './PrintDialog';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
@@ -2844,34 +2844,12 @@ export function CharacterSheet(props: {
       progressionButtonRef.current?.focus();
     }
   }, [progressionDrawer]);
-  // Print mode: expands the left rail, draws the level history in it (paper has no drawer), and renders every tab after page 1 (see printLayout.ts).
-  const [printing, setPrinting] = useState(false);
-  const railCollapsed = leftCollapsed && !printing;
+  // Print (SD-39 E8.4): the Print dialog renders the sheet with the Rust print pipeline (R1).
+  const [printOpen, setPrintOpen] = useState(false);
+  const railCollapsed = leftCollapsed;
   function handlePrint() {
-    setPrinting(true);
+    setPrintOpen(true);
   }
-  useEffect(() => {
-    if (!printing) {
-      return undefined;
-    }
-    const done = () => setPrinting(false);
-    window.addEventListener('afterprint', done);
-    // Not every webview fires `afterprint`; the print media query turning off is the second signal.
-    const printQuery = window.matchMedia('print');
-    const onQueryChange = (event: MediaQueryListEvent) => {
-      if (!event.matches) {
-        done();
-      }
-    };
-    printQuery.addEventListener('change', onQueryChange);
-    // Let the print-mode render commit and paint before the system print dialog takes over.
-    const frame = window.requestAnimationFrame(() => window.requestAnimationFrame(() => window.print()));
-    return () => {
-      window.removeEventListener('afterprint', done);
-      printQuery.removeEventListener('change', onQueryChange);
-      window.cancelAnimationFrame(frame);
-    };
-  }, [printing]);
   const [levelUpOpen, setLevelUpOpen] = useState(false);
   // Covers every saved-character mutation this sheet can trigger (level-up,
   // add-equipment, add-spell) — one error slot, not three near-duplicates,
@@ -4494,23 +4472,6 @@ export function CharacterSheet(props: {
             </div>
           </>
         );
-        const progressionContent = (
-          <div>
-            {/* Each level taken and what it granted */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.5rem' }}>
-              {currentBenefits.map((benefit) => (
-                <LevelBenefitCard
-                  key={`${benefit.classId}-${benefit.characterLevel}`}
-                  benefit={benefit}
-                  skillPoints={skillPointsFor(benefit)}
-                  variant="current"
-                />
-              ))}
-            </div>
-
-            {progressionNext}
-          </div>
-        );
         return (
           <div style={boxStyle}>
             <button
@@ -4523,7 +4484,6 @@ export function CharacterSheet(props: {
             >
               Show Progression
             </button>
-            {printing ? progressionContent : null}
             {progressionDrawer.open ? (
               <ProgressionDrawer onAction={dispatchProgressionDrawer}>
                 <ProgressionLedger characterId={props.row.characterId} heldClasses={heldClasses} />
@@ -4577,7 +4537,7 @@ export function CharacterSheet(props: {
     }
   }
 
-  /** The boxes of one stack, in registry order. Fragments, so `.sheet-right`'s print rule still sees them as its children. */
+  /** The boxes of one stack, in registry order, as fragments. */
   function renderSheetRegion(stack: SheetStack): ReactNode {
     return boxesInColumn(SHEET_LAYOUT, stack).map((box) => <Fragment key={box.id}>{renderSheetBox(box.id, box.boxStyle)}</Fragment>);
   }
@@ -4750,19 +4710,6 @@ export function CharacterSheet(props: {
         </span>
       </div>
 
-      <style>{buildPrintCss()}</style>
-      {printing ? (
-        <div
-          className="no-print"
-          role="status"
-          style={{ alignItems: 'center', backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 8, display: 'flex', gap: '0.75rem', margin: '0.5rem 1.5rem', padding: '0.5rem 0.9rem' }}
-        >
-          <span style={{ flex: 1 }}>Print layout is showing. Finish or cancel the print dialog; this returns to the sheet afterwards.</span>
-          <button type="button" onClick={() => setPrinting(false)}>
-            Back to the sheet
-          </button>
-        </div>
-      ) : null}
 
       {/* Body: collapsible left rail | identity + combat + tabs | abilities + skills */}
       <div className="sheet-cols" style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
@@ -4800,8 +4747,7 @@ export function CharacterSheet(props: {
           {/* Under the name, one row: the 2x2 beside the 1x4, which wraps under it when narrow. Placed by SHEET_LAYOUT. */}
           <div style={SHEET_REGION_STYLES.combatRow}>{renderSheetRegion('combatRow')}</div>
 
-          {/* Weapons / Defense / Gear — bottom, spanning the middle. Printing renders every tab after page 1 instead. */}
-          {printing ? null : (
+          {/* Weapons / Defense / Gear — bottom, spanning the middle. */}
           <div style={{ marginTop: '0.4rem' }}>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>
               {SHEET_TABS.map((name) => {
@@ -4832,7 +4778,6 @@ export function CharacterSheet(props: {
               {renderTabContent(tab)}
             </div>
           </div>
-          )}
         </div>
 
         {/* RIGHT: Abilities, then Skills */}
@@ -4841,14 +4786,9 @@ export function CharacterSheet(props: {
         </div>
       </div>
 
-      {printing
-        ? printableTabs({ hasPets: buildPetsTabView(snapshot).kind === 'Companion', hasCustom: !customIsEmpty(custom) }).map((name, index) => (
-            <section key={name} className={index === 0 ? 'print-tab print-tab-first' : 'print-tab'}>
-              <h2>{name}</h2>
-              {renderTabContent(name)}
-            </section>
-          ))
-        : null}
+      {printOpen ? (
+        <PrintDialog characterId={props.row.characterId} displayLabel={props.row.displayLabel} onClose={() => setPrintOpen(false)} />
+      ) : null}
 
       <CustomDialog
         open={customDialogOpen}
