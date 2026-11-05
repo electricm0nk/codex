@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 45 of 63 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 46 of 64 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -313,6 +313,9 @@ seed deltas, open blockers.)
 | E7.MC | A table shield's bash | A row, with the shield's own proficiency | No row, which the corpus path gives a stand-in shield and the table path never did; left two-sided and named in the receipt |
 | E7.MC | A thrown Dagger | Strength, since the table says it is melee and the sheet records no throw | Two rows per weapon |
 | E7.MC | A clone's and an export's money | Carried, as the other sidecar files are | Left for the lead, which this card's first draft did |
+| E8.1 | Where the print's fonts and templates live at run time | Compiled into the binary (`include_bytes!`, `include_str!`): the same bytes in a test, a dev run and every installer | A `bundle.resources` lookup, unproven for a packaged build by any E8.1 test |
+| E8.1 | Hit Points and Speed on the printed Combat block | Left out, and discovered card E8.6 gives each one backend value | Printing them by re-deriving the screen's TypeScript arithmetic in Rust (NR-2), or printing the backend durability max HP, which reaches max HP by another rule (no saved rolls, no grants, three classes) |
+| E8.1 | Which fonts | Liberation Sans 2.1.5, OFL 1.1, the face `technical-design.md §1` names, copied from the box's `fonts-liberation` 1:2.1.5-3 with its licence | DejaVu (Bitstream Vera licence, not OFL); Typst's own embedded fonts (a feature that pulls more than one family) |
 
 ## Open blockers
 

@@ -48,7 +48,11 @@ apps/desktop/src-tauri/src/print/mod.rs       (new)  #[tauri::command] print_she
   optional Spellbook (full text per known spell from the spell catalog), Math (one line per explanations
   row the sheet shows, grouped by sheet value), BioNotes (bio + campaign notes from `campaignModel.ts`'s
   store).
-- Typst as a library: `typst` + `typst-pdf` (E8.1 records versions and `Cargo.lock` lines). Fonts: OFL
+- Typst as a library: `typst` + `typst-pdf` (E8.1 records versions and `Cargo.lock` lines).
+  **Recorded by E8.1:** `typst = "=0.15.1"`, `typst-layout = "=0.15.1"`, `typst-pdf = "=0.15.1"` (`apps/desktop/src-tauri/Cargo.toml`;
+  `awk '/^name = "(typst|typst-pdf|typst-layout|krilla)"$/{n=$3; getline; print n, $3}' apps/desktop/src-tauri/Cargo.lock`
+  prints typst 0.15.1, typst-layout 0.15.1, typst-pdf 0.15.1, krilla 0.8.2); tests read back with `pdf-extract` 0.12.1 and `lopdf` 0.42.0
+  (dev only). Fonts: Liberation Sans 2.1.5, SIL OFL 1.1, compiled into the binary (`decisions.md §25`). Fonts: OFL
   families under `apps/desktop/src-tauri/resources/fonts/` (e.g. Liberation Sans/Serif), listed in
   `tauri.conf.json bundle.resources` and asserted in `tests/packaged_resources.rs`; the Typst world loads
   **only** these fonts (no system font search), so output is identical on every machine.

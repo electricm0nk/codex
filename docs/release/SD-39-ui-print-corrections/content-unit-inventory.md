@@ -21,7 +21,7 @@ here in its commit.
 |---|---|---|---|
 | F-1 | Files carrying `0.18.` that C1 bumps to `0.19.` | **14** | `grep -rln '0\.18\.' --include=*.json --include=*.toml --include=*.lock --include=*.ts --include=*.yml --include=*.py apps .github tools docs/architecture docs/release/current-release.json \| grep -v node_modules \| grep -v target \| awk 'END{print NR}'` |
 | F-2 | C1 commit file count (F-1 + `current-release.json`) | **15** | `git show --name-only --format= <c1-sha> \| awk 'NF' \| wc -l` |
-| F-3 | Cards in this bundle | **63** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md \| awk 'END{print NR}'` |
+| F-3 | Cards in this bundle | **64** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md \| awk 'END{print NR}'` |
 | F-4 | Chassis files present | **16** (13 required + `technical-design.md`, `technical-requirements.md`, `kanban.md`) | `find docs/release/SD-39-ui-print-corrections -maxdepth 2 -name '*.md' \| awk 'END{print NR}'` |
 
 ## §2 Surfaces the defects name (the before state)
