@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { assert, assertEqual } from '../testSupport/asserts';
-import { EquipmentPanelView, equipmentPanelLists, wornLabel } from './EquipmentPanel';
+import { EquipmentPanelView, equipmentPanelLists, equipmentRowActions, wornLabel } from './EquipmentPanel';
 
 function copy(name: string, activeState: PlacedEquipmentCopyDto['activeState'], slot: PlacedEquipmentCopyDto['slot'], bonus = 0): PlacedEquipmentCopyDto {
   return { itemId: name, name, bonus, activeState, slot };
@@ -29,9 +29,11 @@ assertEqual(lists.carried.map((row) => row.name).join(', '), 'Hat of Disguise, +
 assertEqual(wornLabel('wield_off'), 'Off hand', 'the slot the backend placed the copy in');
 assertEqual(wornLabel('none'), 'No slot', 'a worn item with no slot says so');
 
-// An Absent copy is not held; the backend leaves it out, and nothing here would list it as worn.
-assertEqual(equipmentPanelLists([copy('Gone', 'Absent', 'head')]).worn.length, 0, 'Absent is not worn');
-assertEqual(equipmentPanelLists([copy('Gone', 'Absent', 'head')]).carried.length, 0, 'Absent is not carried');
+// An Absent copy is owned and on neither list of what the character has with them.
+const away = equipmentPanelLists([copy('Gone', 'Absent', 'head'), copy('+1 Dagger', 'Absent', 'wield_main', 1)]);
+assertEqual(away.worn.length, 0, 'Absent is not worn');
+assertEqual(away.carried.length, 0, 'Absent is not carried');
+assertEqual(away.leftBehind.map((row) => row.name).join(', '), 'Gone, +1 Dagger', 'Absent has its own group, in saved order');
 
 const calls: Array<[string, number, string]> = [];
 function render(props: Partial<Parameters<typeof EquipmentPanelView>[0]>) {
@@ -55,6 +57,22 @@ assert(html.includes('>Stow +1 Chain Shirt<') === false, 'a carried copy is not 
 assert(html.includes('>Equip +1 Chain Shirt<'), 'a carried copy is offered Equip, by the name of that copy');
 assert(html.includes('>Stow Longsword<'), 'a worn copy is offered Stow');
 assert(html.includes('>Equip Longsword<') === false, 'a worn copy is not offered Equip');
+
+// Every owned copy has three states; each row offers what it can move to.
+assert(html.includes('>Leave Longsword behind<'), 'a worn copy can be left behind');
+assert(html.includes('>Leave +1 Chain Shirt behind<'), 'a carried copy can be left behind');
+assert(html.includes('>Left behind<'), 'the third group is named');
+assert(html.includes('Nothing left behind.'), 'and says when it is empty');
+const owned = render({ copies: [copy('+1 Dagger', 'Absent', 'wield_main', 1)] });
+assert(owned.includes('>+1 Dagger<') || owned.includes('+1 Dagger</span>'), 'a left-behind copy stays on the panel and keeps its +N');
+assert(owned.includes('>Pick up +1 Dagger<'), 'and can be picked up');
+assert(!owned.includes('Leave +1 Dagger behind'), 'it is already left behind');
+assert(!owned.includes('Equip +1 Dagger'), 'it comes back through Carried');
+assert(!owned.includes('Nothing held yet.'), 'a character whose items are all left behind holds something');
+const moves = (row: PlacedEquipmentCopyDto) => equipmentRowActions(row).map((action) => `${action.label} > ${action.to}`).join('; ');
+assertEqual(moves(copy('Sword', 'EquippedActive', 'wield_main')), 'Stow Sword > SelectedInactive; Leave Sword behind > Absent', 'a worn row');
+assertEqual(moves(copy('Sword', 'SelectedInactive', 'wield_main')), 'Equip Sword > EquippedActive; Leave Sword behind > Absent', 'a carried row');
+assertEqual(moves(copy('Sword', 'Absent', 'wield_main')), 'Pick up Sword > SelectedInactive', 'a left-behind row');
 
 const refusal = 'head slot is taken by Hat of Disguise';
 assert(render({ refusal }).includes(`role="alert"`), 'a refusal is an alert');

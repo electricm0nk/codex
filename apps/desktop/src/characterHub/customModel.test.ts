@@ -98,6 +98,7 @@ function verifiesWhereACustomItemIs() {
   assertEqual(customItemPlace({ ...blank, bonuses: [newBonus()] }), 'carried', 'it starts carried');
   assertEqual(customItemPlace({ ...blank, slot: 'head' }), 'carried', 'a slot alone is held');
   assertEqual(customItemPlace({ ...blank, slot: 'head', worn: true }), 'worn', 'worn says worn');
+  assertEqual(customItemPlace({ ...blank, slot: 'head', leftBehind: true }), 'left_behind', 'left behind says so');
 }
 
 function verifiesTheBonusProblemsMatchTheBackend() {

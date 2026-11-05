@@ -1303,16 +1303,21 @@ pub fn apply_attach_equipment_modifier(
     item_id: &str,
     modifier_item_id: &str,
 ) -> bool {
-    let Some(selection) = character_input
-        .chosen
-        .equipment_selections
-        .iter_mut()
-        .find(|selection| selection.item_id == item_id)
-    else {
+    let selections = &mut character_input.chosen.equipment_selections;
+    let Some(index) = first_copy_in_hand(selections, |selection| selection.item_id == item_id) else {
         return false;
     };
-    selection.applied_modifiers.push(modifier_item_id.to_owned());
+    selections[index].applied_modifiers.push(modifier_item_id.to_owned());
     true
+}
+
+/// The first selection `names_it` accepts, one the character has with them before one left behind.
+/// For a caller that names an item and not a copy, whose copies the player can see only by state.
+pub(crate) fn first_copy_in_hand(selections: &[EquipmentSelection], names_it: impl Fn(&EquipmentSelection) -> bool) -> Option<usize> {
+    selections
+        .iter()
+        .position(|selection| names_it(selection) && selection.active_state != ActiveState::Absent)
+        .or_else(|| selections.iter().position(names_it))
 }
 
 /// Appends one entry to `chosen.spells_selected`. Every other field is

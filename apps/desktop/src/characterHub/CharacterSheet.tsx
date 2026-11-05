@@ -1633,8 +1633,8 @@ function GearTab(props: {
   loadHeldEquipment: () => Promise<PlacedEquipmentCopyDto[]>;
   /** A new value re-reads the Equipment control: any saved change arrives as a new detail. */
   detail: unknown;
-  /** Stows or re-equips one copy; resolves to the refusal, word for word, or null when it saved. */
-  onSetActiveState: (copy: PlacedEquipmentCopyDto, activeState: 'EquippedActive' | 'SelectedInactive') => Promise<string | null>;
+  /** Moves one copy between worn, carried and left behind; resolves to the refusal, word for word, or null when it saved. */
+  onSetActiveState: (copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto) => Promise<string | null>;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -3776,16 +3776,17 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * Stows or re-equips one held copy. Unlike `handleRemoveEquipment` this does not drop the item or
+   * Moves one owned copy between worn, carried and left behind. Unlike `handleRemoveEquipment` this does not drop the item or
    * its modifiers. Resolves to the refusal for the Equipment control to show, word for word, or null
    * when the change saved.
    */
-  async function handleSetEquipmentActiveState(copy: PlacedEquipmentCopyDto, activeState: 'EquippedActive' | 'SelectedInactive'): Promise<string | null> {
+  async function handleSetEquipmentActiveState(copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto): Promise<string | null> {
     try {
       const outcome = await setEquipmentActiveState({
         characterId: props.row.characterId,
         itemId: copy.itemId,
         bonus: copy.bonus,
+        fromState: copy.activeState,
         activeState,
         savedAt: new Date().toISOString(),
       });
@@ -3831,7 +3832,7 @@ export function CharacterSheet(props: {
    * is reloaded afterwards because a sale can change it. `bonus` names the copy when there are
    * several. Resolves to the new balance, or null when nothing was sold and `mutationError` says why.
    */
-  async function handleRemoveEquipment(itemId: string, bonus?: number): Promise<CharacterMoneyDto | null> {
+  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto): Promise<CharacterMoneyDto | null> {
     setMutationError(null);
     try {
       const outcome = await removeEquipmentSelection({
@@ -3840,6 +3841,7 @@ export function CharacterSheet(props: {
         savedAt: new Date().toISOString(),
         priceMode,
         ...(bonus === undefined ? {} : { bonus }),
+        ...(fromState === undefined ? {} : { fromState }),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
@@ -3873,7 +3875,7 @@ export function CharacterSheet(props: {
   /** A Market sale, and what to tell the player about it. */
   async function handleMarketSell(copy: HeldEquipmentCopyDto): Promise<string | null> {
     const before = money.totalCopper;
-    const after = await handleRemoveEquipment(copy.itemId, copy.bonus);
+    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState);
     if (!after) {
       return null;
     }

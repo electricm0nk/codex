@@ -44,6 +44,8 @@ export interface CustomRecord {
   bonuses?: CustomBonus[];
   slot?: BodySlotDto | null;
   worn?: boolean;
+  /** Owned and not on the character; never with `worn`. */
+  leftBehind?: boolean;
 }
 
 export type CustomRecordKind = 'feats' | 'equipment' | 'spells' | 'devices';
@@ -170,11 +172,11 @@ export function bonusLine(bonus: CustomBonus): string {
 }
 
 /** Where a custom item is, or `null` for a text-only record, which is on no one's body. */
-export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | null {
+export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | 'left_behind' | null {
   if (!record.slot && (record.bonuses ?? []).length === 0) {
     return null;
   }
-  return record.worn ? 'worn' : 'carried';
+  return record.worn ? 'worn' : record.leftBehind ? 'left_behind' : 'carried';
 }
 
 const itemRowValue = (explanations: readonly ExplanationDto[], id: string): number =>

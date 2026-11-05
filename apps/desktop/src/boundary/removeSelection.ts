@@ -2,6 +2,7 @@ import { invoke } from '@tauri-apps/api/core';
 import type { PriceMode } from '../characterHub/priceMode';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { CreateCharacterOutcome } from './loadCreateCharacter';
+import type { ActiveStateDto } from './setEquipmentActiveState';
 
 /**
  * Write desktop boundary for the three selection-removal commands — the
@@ -79,6 +80,8 @@ export interface RemoveEquipmentSelectionRequest {
   priceMode?: PriceMode;
   /** Which held copy, when there are several: `0` a plain one, `N` a `+N`. Absent takes the first. */
   bonus?: number;
+  /** The state the row shows this copy in. Omitted, a copy in hand goes before one left behind. */
+  fromState?: ActiveStateDto;
 }
 
 export async function removeEquipmentSelection(

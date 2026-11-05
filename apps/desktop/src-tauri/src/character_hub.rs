@@ -3725,13 +3725,9 @@ pub(crate) fn attach_equipment_modifier_priced_at_root(
 
     let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
         .map_err(|err| err.message)?;
-    // The copy `apply_attach_equipment_modifier` takes: the first of the id.
-    let target = envelope
-        .character_input
-        .chosen
-        .equipment_selections
-        .iter()
-        .find(|selection| selection.item_id == item_id);
+    // The copy `apply_attach_equipment_modifier` takes.
+    let selections = &envelope.character_input.chosen.equipment_selections;
+    let target = crate::pf1_adapter::first_copy_in_hand(selections, |selection| selection.item_id == item_id).map(|index| &selections[index]);
     let Some(target) = target else {
         return Ok(AttachEquipmentModifierResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
@@ -4478,12 +4474,8 @@ pub(crate) fn apply_remove_equipment_selection(
     character_input: &mut CharacterInput,
     item_id: &str,
 ) -> bool {
-    let Some(index) = character_input
-        .chosen
-        .equipment_selections
-        .iter()
-        .position(|selection| selection.item_id.eq_ignore_ascii_case(item_id))
-    else {
+    let selections = &character_input.chosen.equipment_selections;
+    let Some(index) = crate::pf1_adapter::first_copy_in_hand(selections, |selection| selection.item_id.eq_ignore_ascii_case(item_id)) else {
         return false;
     };
     character_input.chosen.equipment_selections.remove(index);
@@ -4522,6 +4514,14 @@ pub(crate) fn remove_equipment_selection_priced_at_root(
     sell_equipment_copy_at_root(root, item_id, saved_at, mode, None)
 }
 
+/// Which of a character's copies of an item a row means: its `+N`, and the state it shows it in.
+/// Either left out leaves the choice to the command's own first-copy rule.
+#[derive(Debug, Clone, Copy, Default)]
+pub(crate) struct CopyNamed {
+    pub(crate) bonus: Option<u8>,
+    pub(crate) from_state: Option<ActiveState>,
+}
+
 /// Removes one held copy of `item_id` and sells it back under `mode`: `Standard` returns 50% of
 /// what that copy costs, `CharacterBuild` 100%, `Cashless` nothing. A `+N` copy is priced at its
 /// Market offer; an item with no catalog price has nothing to refund and is removed all the same.
@@ -4536,6 +4536,18 @@ pub(crate) fn sell_equipment_copy_at_root(
     mode: PriceMode,
     bonus: Option<u8>,
 ) -> Result<CreateCharacterResponse, String> {
+    sell_held_copy_at_root(root, item_id, saved_at, mode, CopyNamed { bonus, from_state: None })
+}
+
+/// [`sell_equipment_copy_at_root`] of the copy a row names. Named by no state, a copy the character
+/// has with them goes before one left behind.
+pub(crate) fn sell_held_copy_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
+    CopyNamed { bonus, from_state }: CopyNamed,
+) -> Result<CreateCharacterResponse, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let held = &envelope.character_input.chosen.equipment_selections;
     let is_this_item = |selection: &EquipmentSelection| selection.item_id.eq_ignore_ascii_case(item_id);
@@ -4545,10 +4557,9 @@ pub(crate) fn sell_equipment_copy_at_root(
     } else {
         Vec::new()
     };
-    let Some(index) = held
-        .iter()
-        .position(|selection| is_this_item(selection) && bonus.is_none_or(|bonus| copy_bonus(selection, &offers) == bonus))
-    else {
+    let Some(index) = crate::pf1_adapter::first_copy_in_hand(held, |selection| {
+        is_this_item(selection) && bonus.is_none_or(|bonus| copy_bonus(selection, &offers) == bonus) && from_state.is_none_or(|state| selection.active_state == state)
+    }) else {
         return Err(match bonus {
             Some(bonus) if bonus > 0 => format!("'{item_id}' cannot be removed: this character does not carry a +{bonus} one"),
             Some(_) => format!("'{item_id}' cannot be removed: this character does not carry a plain one"),
@@ -4597,7 +4608,16 @@ pub struct ListHeldEquipmentRequest {
 /// requires carried, with no item behind it.
 const FEAT_TOGGLE_ITEM_ID: &str = "power_attack";
 
-/// Every copy the character holds, read off the saved selections. Not `corpus_derived`'s
+/// The fixed loadout's row (`pf1_adapter.rs`): `Absent` from creation, with no record behind it, in
+/// every save and seed. `Absent` on anything else is an item left behind.
+const LOADOUT_NO_SHIELD_ITEM_ID: &str = "item:shield";
+
+/// Whether a selection is an item the character owns, in any of the three states.
+fn is_owned_copy(selection: &EquipmentSelection) -> bool {
+    selection.item_id != FEAT_TOGGLE_ITEM_ID && !(selection.item_id == LOADOUT_NO_SHIELD_ITEM_ID && selection.active_state == ActiveState::Absent)
+}
+
+/// Every copy the character owns, worn, carried or left behind, read off the saved selections. Not `corpus_derived`'s
 /// `equipped_items`, which resolves against the bundled demo corpus and so leaves out most of what a
 /// character can buy, and every enhancement eqmod.
 pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
@@ -4607,7 +4627,7 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         .chosen
         .equipment_selections
         .iter()
-        .filter(|selection| selection.active_state != ActiveState::Absent && selection.item_id != FEAT_TOGGLE_ITEM_ID)
+        .filter(|selection| is_owned_copy(selection))
         .collect();
     let slots = held.iter().map(|selection| body_slot_of_item(&selection.item_id)).collect::<Result<Vec<_>, String>>()?;
     let is_worn = |index: &usize| held[*index].active_state == ActiveState::EquippedActive;
@@ -4634,6 +4654,8 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
     rows.extend(custom_items.iter().enumerate().map(|(index, record)| {
         let (active_state, slot) = if record.worn {
             (ActiveState::EquippedActive, places.next().unwrap_or(custom_slot(index)))
+        } else if record.left_behind {
+            (ActiveState::Absent, custom_slot(index))
         } else {
             (ActiveState::SelectedInactive, custom_slot(index))
         };
@@ -4763,6 +4785,10 @@ pub struct SetEquipmentActiveStateRequest {
     /// first copy not already in that state.
     #[serde(default)]
     pub bonus: Option<u8>,
+    /// The state the row asking for this shows its copy in. With two copies of one `+N`, one worn
+    /// and one left behind, it is the only thing that says which one moves.
+    #[serde(default)]
+    pub from_state: Option<ActiveStateDto>,
     pub active_state: ActiveStateDto,
     pub saved_at: String,
 }
@@ -4777,20 +4803,20 @@ pub fn set_equipment_active_state(
     request: SetEquipmentActiveStateRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    set_equipment_copy_state_at_root(
+    set_held_copy_state_at_root(
         &root,
         &request.item_id,
-        request.bonus,
+        CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) },
         request.active_state.into(),
         &request.saved_at,
     )
 }
 
-/// Which copy of `item_id` a state change moves: of the copies `bonus` names (all of them when
-/// absent), the first not already in that state, else the first (case-insensitive, as
+/// Which copy of `item_id` a state change moves: of the copies `copy` names (all of them when it
+/// names none), the first not already in that state, else the first (case-insensitive, as
 /// `apply_remove_equipment_selection` matches). Without the first rule, asking to wear a carried
 /// second copy would "succeed" on the copy already worn.
-fn state_change_target(selections: &[EquipmentSelection], item_id: &str, bonus: Option<u8>, active_state: ActiveState) -> Option<usize> {
+fn state_change_target(selections: &[EquipmentSelection], item_id: &str, CopyNamed { bonus, from_state }: CopyNamed, active_state: ActiveState) -> Option<usize> {
     let is_this_item = |selection: &EquipmentSelection| selection.item_id.eq_ignore_ascii_case(item_id);
     // Only a copy with an equipmod can be a `+N`, as `sell_equipment_copy_at_root` reads it.
     let offers = if bonus.is_some() && selections.iter().any(|selection| is_this_item(selection) && !selection.applied_modifiers.is_empty()) {
@@ -4803,6 +4829,7 @@ fn state_change_target(selections: &[EquipmentSelection], item_id: &str, bonus: 
             .iter()
             .enumerate()
             .filter(|(_, selection)| is_this_item(selection) && bonus.is_none_or(|bonus| copy_bonus(selection, &offers) == bonus))
+            .filter(|(_, selection)| from_state.is_none_or(|state| selection.active_state == state))
     };
     copies().find(|(_, selection)| selection.active_state != active_state).or_else(|| copies().next()).map(|(index, _)| index)
 }
@@ -4813,11 +4840,11 @@ fn state_change_target(selections: &[EquipmentSelection], item_id: &str, bonus: 
 pub(crate) fn apply_set_equipment_active_state(
     character_input: &mut CharacterInput,
     item_id: &str,
-    bonus: Option<u8>,
+    copy: CopyNamed,
     active_state: ActiveState,
 ) -> bool {
     let selections = &mut character_input.chosen.equipment_selections;
-    let Some(index) = state_change_target(selections, item_id, bonus, active_state) else {
+    let Some(index) = state_change_target(selections, item_id, copy, active_state) else {
         return false;
     };
     selections[index].active_state = active_state;
@@ -4934,40 +4961,51 @@ pub(crate) fn set_equipment_copy_state_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    set_held_copy_state_at_root(root, item_id, CopyNamed { bonus, from_state: None }, active_state, saved_at)
+}
+
+/// [`set_equipment_copy_state_at_root`] of the copy a row names. A copy coming back from being left
+/// behind is one more thing to carry, so it meets the check a purchase does.
+pub(crate) fn set_held_copy_state_at_root(
+    root: &Path,
+    item_id: &str,
+    copy: CopyNamed,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
     if let Some(id) = item_id.strip_prefix(CUSTOM_ITEM_PREFIX) {
         return set_custom_item_state_at_root(root, id, active_state, saved_at);
     }
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    let mut probe = envelope.character_input.clone();
-    if !apply_set_equipment_active_state(&mut probe, item_id, bonus, active_state) {
-        return Err(match bonus {
+    let selections = &envelope.character_input.chosen.equipment_selections;
+    let Some(target) = state_change_target(selections, item_id, copy, active_state).map(|index| &selections[index]) else {
+        return Err(match copy.bonus {
             Some(bonus) if bonus > 0 => format!("'{item_id}' cannot change state: this character does not carry a +{bonus} one"),
             Some(_) => format!("'{item_id}' cannot change state: this character does not carry a plain one"),
             None => format!("'{item_id}' cannot change state: this character does not carry it"),
         });
-    }
-    let moves_a_copy_onto_the_body = active_state == ActiveState::EquippedActive
-        && state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, bonus, active_state)
-            .is_some_and(|index| envelope.character_input.chosen.equipment_selections[index].active_state != active_state);
-    let mut admitted = Vec::new();
-    if moves_a_copy_onto_the_body {
+    };
+    let copy_bonus = copy_name_and_bonus(target).1;
+    let mut wear_flags = Vec::new();
+    if active_state == ActiveState::EquippedActive && target.active_state != active_state {
         match wear_check(root, &envelope.character_input, item_id)? {
             Err((id, message)) => {
                 return Ok(CreateCharacterResponse::Blocked {
                     diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
                 });
             }
-            Ok(flags) => {
-                let copy_bonus = state_change_target(&envelope.character_input.chosen.equipment_selections, item_id, bonus, active_state)
-                    .map_or(0, |index| copy_name_and_bonus(&envelope.character_input.chosen.equipment_selections[index]).1);
-                admitted.extend(flags.into_iter().map(|flag| AdmittedRecordDto::copy(item_id, copy_bonus, flag)));
-            }
+            Ok(flags) => wear_flags = flags,
         }
     }
-
-    crate::pf1_adapter::mutate_saved_character_admitting_at_root(root, saved_at, admitted, |character_input| {
-        apply_set_equipment_active_state(character_input, item_id, bonus, active_state);
-    })
+    let mutate = |character_input: &mut CharacterInput| {
+        apply_set_equipment_active_state(character_input, item_id, copy, active_state);
+    };
+    if target.active_state == ActiveState::Absent && active_state != ActiveState::Absent {
+        let gate = load_gate_at_root(root, item_id, copy_bonus, wear_flags);
+        return crate::pf1_adapter::mutate_saved_character_gated_at_root(root, saved_at, mutate, gate);
+    }
+    let admitted = wear_flags.into_iter().map(|flag| AdmittedRecordDto::copy(item_id, copy_bonus, flag)).collect();
+    crate::pf1_adapter::mutate_saved_character_admitting_at_root(root, saved_at, admitted, mutate)
 }
 
 // ----- v0.8 B-4: `add_trait_selection` / `remove_trait_selection` -----
@@ -5205,6 +5243,9 @@ pub struct RemoveEquipmentSelectionRequest {
     /// Which held copy: `0` a plain one, `N` a `+N`. Absent takes the first copy.
     #[serde(default)]
     pub bonus: Option<u8>,
+    /// The state the row selling this shows its copy in, as on `set_equipment_active_state`.
+    #[serde(default)]
+    pub from_state: Option<ActiveStateDto>,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
@@ -5218,7 +5259,7 @@ pub fn remove_equipment_selection(
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    sell_equipment_copy_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, request.bonus)
+    sell_held_copy_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) })
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -12742,8 +12783,9 @@ mod tests {
         ));
 
         let held = list_held_equipment_at_root(&root).unwrap();
-        let not_absent = held_selections(&root).iter().filter(|s| s.active_state != ActiveState::Absent && s.item_id != FEAT_TOGGLE_ITEM_ID).count();
-        assert_eq!(held.len(), not_absent, "one row per copy");
+        // The fixed loadout's Absent `item:shield` and the feat toggle are the two rows that are not copies.
+        let copies = held_selections(&root).iter().filter(|s| s.item_id != FEAT_TOGGLE_ITEM_ID && s.item_id != "item:shield").count();
+        assert_eq!(held.len(), copies, "one row per copy");
         let of = |id: &str| held.iter().filter(|row| row.item_id == id).map(|row| (row.name.as_str(), row.bonus)).collect::<Vec<_>>();
         assert_eq!(of(MARKET_SWORD), vec![("Longsword", 0), ("+1 Longsword", 1)]);
         assert_eq!(of("Dagger (Base)"), vec![("Dagger", 0)], "a record the demo corpus does not hold");
@@ -12755,9 +12797,246 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// A seeded legacy id still reads as an item, and a selection marked Absent is not held.
+    // ----- R21: owned but not carried -----
+
+    fn left_behind_set(root: &Path, item_id: &str, copy: CopyNamed, state: ActiveState) -> CreateCharacterResponse {
+        set_held_copy_state_at_root(root, item_id, copy, state, "2026-11-05T00:00:00Z").expect("state call")
+    }
+
+    fn left_behind_rows(root: &Path, item_id: &str) -> Vec<(String, u8, ActiveStateDto)> {
+        list_held_equipment_at_root(root).unwrap().into_iter().filter(|row| row.item_id == item_id).map(|row| (row.name, row.bonus, row.active_state)).collect()
+    }
+
+    fn left_behind_load_lbs(root: &Path) -> f64 {
+        load_saved_character_at_root(root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs
+    }
+
+    const LEFT_BEHIND: CopyNamed = CopyNamed { bonus: None, from_state: Some(ActiveState::Absent) };
+    const CARRIED: CopyNamed = CopyNamed { bonus: None, from_state: Some(ActiveState::SelectedInactive) };
+    const IN_HAND: CopyNamed = CopyNamed { bonus: None, from_state: Some(ActiveState::EquippedActive) };
+
+    /// Left behind weighs nothing and gives nothing, and the sheet reads as it does stowed but for the
+    /// load. The row stays, in its own state, and picking it up gives the weight back.
     #[test]
-    fn market_held_names_a_legacy_id_and_skips_an_absent_selection() {
+    fn left_behind_adds_no_weight_and_no_bonus_and_the_item_stays_owned() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-weight");
+        let full_load = left_behind_load_lbs(&root);
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let stowed = enhancement_read(&root);
+        assert_eq!(left_behind_load_lbs(&root), full_load, "stowed still weighs");
+
+        assert_worn(&left_behind_set(&root, "item:chain_shirt", CARRIED, ActiveState::Absent));
+        assert_worn(&left_behind_set(&root, "item:longsword", CARRIED, ActiveState::Absent));
+        assert_eq!(left_behind_load_lbs(&root), full_load - 29.0, "the Chain Shirt's 25 lb and the Longsword's 4 lb");
+        assert_eq!(enhancement_read(&root), stowed, "no bonus of any kind");
+        assert_eq!(enhancement_read(&root).armor_class, 12);
+        assert_eq!(left_behind_rows(&root, "item:chain_shirt"), [("Chain Shirt".to_owned(), 0, ActiveStateDto::Absent)]);
+        assert_eq!(left_behind_rows(&root, "item:longsword"), [("Longsword".to_owned(), 0, ActiveStateDto::Absent)]);
+        let saved = held_selections(&root);
+        assert!(saved.iter().filter(|s| s.item_id == "item:longsword").all(|s| !s.equipped_or_active), "{saved:?}");
+
+        assert_worn(&left_behind_set(&root, "item:chain_shirt", LEFT_BEHIND, ActiveState::SelectedInactive));
+        assert_eq!(left_behind_load_lbs(&root), full_load - 4.0, "picked up, it weighs again");
+        assert_eq!(left_behind_rows(&root, "item:chain_shirt"), [("Chain Shirt".to_owned(), 0, ActiveStateDto::SelectedInactive)]);
+        assert_worn(&left_behind_set(&root, "item:chain_shirt", CARRIED, ActiveState::EquippedActive));
+        assert_eq!(enhancement_read(&root).armor_class, 16, "and worn, it counts");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The fixed loadout's `item:shield` is Absent and was never owned: told apart, not rewritten, so a
+    /// save made before this reads the same and no seed moves.
+    #[test]
+    fn left_behind_the_loadout_shield_was_never_owned() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-shield");
+        assert!(held_selections(&root).iter().any(|s| s.item_id == "item:shield" && s.active_state == ActiveState::Absent), "the row is still in the save");
+        let held = list_held_equipment_at_root(&root).unwrap();
+        assert!(!held.iter().any(|row| row.item_id == "item:shield"), "{held:?}");
+        assert!(!held.iter().any(|row| row.active_state == ActiveStateDto::Absent), "a seed has nothing left behind: {held:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Two plain copies: the row asked names its own. Without that, "first not already in that state"
+    /// moves a worn Dagger when the carried one is left behind, and the left-behind one when the worn
+    /// one is stowed.
+    #[test]
+    fn left_behind_each_row_moves_its_own_copy() {
+        let root = slot_conflict_character("left-behind-own-copy", &["Dagger (Base)", "Dagger (Base)"]);
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CARRIED, ActiveState::EquippedActive));
+        let states = |root: &Path| left_behind_rows(root, "Dagger (Base)").into_iter().map(|row| row.2).collect::<Vec<_>>();
+        assert_eq!(states(&root), [ActiveStateDto::EquippedActive, ActiveStateDto::SelectedInactive]);
+
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CARRIED, ActiveState::Absent));
+        assert_eq!(states(&root), [ActiveStateDto::EquippedActive, ActiveStateDto::Absent], "the carried one went");
+
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", IN_HAND, ActiveState::SelectedInactive));
+        assert_eq!(states(&root), [ActiveStateDto::SelectedInactive, ActiveStateDto::Absent], "the worn one was stowed");
+
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", LEFT_BEHIND, ActiveState::SelectedInactive));
+        assert_eq!(states(&root), [ActiveStateDto::SelectedInactive, ActiveStateDto::SelectedInactive]);
+
+        let error = set_held_copy_state_at_root(&root, "Dagger (Base)", LEFT_BEHIND, ActiveState::SelectedInactive, "2026-11-05T00:00:00Z").unwrap_err();
+        assert!(error.contains("does not carry"), "no copy is in the state the row showed: {error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The Market's row sells the copy it shows, and a row that names no state, like the sheet's Drop,
+    /// takes a copy the character has with them.
+    #[test]
+    fn left_behind_can_be_sold_and_the_sale_takes_the_copy_named() {
+        let root = fund_and_seed("left-behind-sell", 300_000);
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CopyNamed::default(), ActiveState::Absent));
+        let states = |root: &Path| left_behind_rows(root, "Dagger (Base)").into_iter().map(|row| row.2).collect::<Vec<_>>();
+        assert_eq!(states(&root), [ActiveStateDto::Absent, ActiveStateDto::SelectedInactive]);
+        let before = balance(&root);
+
+        sell_held_copy_at_root(&root, "Dagger (Base)", "2026-11-05T00:00:00Z", PriceMode::Standard, CopyNamed { bonus: Some(0), from_state: Some(ActiveState::SelectedInactive) }).unwrap();
+        assert_eq!(states(&root), [ActiveStateDto::Absent], "the carried one went");
+        assert_eq!(balance(&root), before + 100, "half of 2 gp, as any sale");
+
+        sell_held_copy_at_root(&root, "Dagger (Base)", "2026-11-05T00:00:00Z", PriceMode::Standard, LEFT_BEHIND).unwrap();
+        assert_eq!(states(&root), [], "a copy left behind can be sold");
+        assert_eq!(balance(&root), before + 200);
+
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CopyNamed::default(), ActiveState::Absent));
+        market_sell(&root, "Dagger (Base)", None, PriceMode::Standard).unwrap();
+        assert_eq!(states(&root), [ActiveStateDto::Absent], "naming no state takes the copy in hand, not the one at the inn");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A left-behind copy keeps its `+N` through a load and through Export then Import, and adds it
+    /// to nothing until it is back in hand.
+    #[test]
+    fn left_behind_keeps_a_plus_n_through_export_and_import() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-plus");
+        assert_worn(&left_behind_set(&root, "item:longsword", IN_HAND, ActiveState::SelectedInactive));
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        let none_in_hand = enhancement_read(&root);
+        assert_worn(&left_behind_set(&root, MARKET_SWORD, CARRIED, ActiveState::Absent));
+        assert_eq!(enhancement_read(&root), none_in_hand);
+        let row = ("+1 Longsword".to_owned(), 1, ActiveStateDto::Absent);
+        assert_eq!(left_behind_rows(&root, MARKET_SWORD), std::slice::from_ref(&row));
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("left-behind-import");
+        let response = import_character_from_json(&file, &import_root, "imported", "2026-11-05T00:00:00Z", "0.0.0-test").unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        assert_eq!(left_behind_rows(&import_root, MARKET_SWORD), [row], "and off the reloaded file");
+        assert_eq!(enhancement_read(&import_root), none_in_hand);
+
+        assert_worn(&left_behind_set(&import_root, MARKET_SWORD, CopyNamed { bonus: Some(1), from_state: Some(ActiveState::Absent) }, ActiveState::SelectedInactive));
+        assert_eq!(left_behind_rows(&import_root, MARKET_SWORD), [("+1 Longsword".to_owned(), 1, ActiveStateDto::SelectedInactive)]);
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&import_root).ok();
+    }
+
+    /// Picking up is one more thing to carry, so it meets the check a purchase does: otherwise leaving
+    /// one thing behind, buying another and fetching the first walks past the most they can carry.
+    /// An override's row goes when the copy stops counting, and comes back with it.
+    #[test]
+    fn left_behind_picking_up_meets_the_load_check() {
+        let root = overrides_weak_fighter("left-behind-load");
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [Some(OverrideFlag::IgnoreEncumbrance)]);
+
+        assert_worn(&left_behind_set(&root, "Full Plate", CARRIED, ActiveState::Absent));
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [None], "left behind, it is not what the load is over");
+
+        overrides_set(&root, |flags| flags.ignore_encumbrance = false);
+        let refused = left_behind_set(&root, "Full Plate", LEFT_BEHIND, ActiveState::SelectedInactive);
+        overrides_refused(&refused, "equipment.over_capacity");
+        assert_eq!(left_behind_rows(&root, "Full Plate")[0].2, ActiveStateDto::Absent, "nothing moved");
+
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&left_behind_set(&root, "Full Plate", LEFT_BEHIND, ActiveState::SelectedInactive));
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [Some(OverrideFlag::IgnoreEncumbrance)], "fetched under the flag, it says so");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Straight from left behind onto the body meets the wear check too.
+    #[test]
+    fn left_behind_wearing_it_meets_the_slot_check() {
+        let root = slot_conflict_character("left-behind-slot", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&left_behind_set(&root, "Hat of Disguise", CARRIED, ActiveState::Absent));
+        assert_slot_refused(&left_behind_set(&root, "Hat of Disguise", LEFT_BEHIND, ActiveState::EquippedActive), "head slot is taken by Helm of Brilliance");
+        assert_eq!(left_behind_rows(&root, "Hat of Disguise")[0].2, ActiveStateDto::Absent);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The sheet's Attach Modifier names only the id: it goes on a copy in hand, not on one at the inn.
+    #[test]
+    fn left_behind_attach_takes_the_copy_in_hand() {
+        let root = fund_and_seed("left-behind-attach", 3_000_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        assert_worn(&left_behind_set(&root, MARKET_SWORD, CopyNamed::default(), ActiveState::Absent));
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        let rows = left_behind_rows(&root, MARKET_SWORD);
+        assert_eq!(rows, [("Longsword".to_owned(), 0, ActiveStateDto::Absent), ("+1 Longsword".to_owned(), 1, ActiveStateDto::SelectedInactive)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A custom item has all three states too, off `custom.json`, and the same round trip.
+    #[test]
+    fn left_behind_a_custom_item_has_the_third_state() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-custom");
+        let plain = enhancement_read(&root);
+        custom_items_saved(&root, vec![custom_item("c", "Lucky Hat", Some(BodySlot::Head), vec![custom_bonus("ac", "Deflection", 2)])]);
+        custom_item_wear(&root, "c");
+        assert_eq!(enhancement_read(&root).armor_class, plain.armor_class + 2);
+
+        assert!(matches!(custom_item_set(&root, "c", ActiveState::Absent), CreateCharacterResponse::Saved { .. }));
+        let state = |root: &Path| left_behind_rows(root, "custom:c")[0].2;
+        assert_eq!(state(&root), ActiveStateDto::Absent);
+        assert_eq!(enhancement_read(&root), plain, "no bonus");
+        let record = load_character_custom_at_root(&root).unwrap().equipment.remove(0);
+        assert!(record.left_behind && !record.worn, "{record:?}");
+
+        let file = export_character_to_json(&root).unwrap();
+        assert!(file.contains("\"leftBehind\": true"), "on the wire as the frontend reads it");
+        let import_root = tempdir("left-behind-custom-import");
+        import_character_from_json(&file, &import_root, "imported", "2026-11-05T00:00:00Z", "0.0.0-test").unwrap();
+        assert_eq!(state(&import_root), ActiveStateDto::Absent, "through Export then Import");
+
+        assert!(matches!(custom_item_set(&root, "c", ActiveState::SelectedInactive), CreateCharacterResponse::Saved { .. }));
+        assert_eq!(state(&root), ActiveStateDto::SelectedInactive);
+        assert!(!load_character_custom_at_root(&root).unwrap().equipment[0].left_behind);
+
+        custom_item_wear(&root, "c");
+        assert!(!load_character_custom_at_root(&root).unwrap().equipment[0].left_behind);
+        assert_eq!(state(&root), ActiveStateDto::EquippedActive);
+
+        let mut both = custom_item("d", "Both", Some(BodySlot::Head), Vec::new());
+        both.worn = true;
+        both.left_behind = true;
+        let custom = CharacterCustomDto { equipment: vec![both], ..Default::default() };
+        let error = save_character_custom_at_root(&root, &custom, "2026-11-05T00:00:00Z").unwrap_err();
+        assert!(error.contains("worn and left behind"), "{error}");
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&import_root).ok();
+    }
+
+    #[test]
+    fn left_behind_the_requests_name_the_state_on_the_wire() {
+        let set: SetEquipmentActiveStateRequest = serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": "i", "fromState": "Absent", "activeState": "SelectedInactive", "savedAt": "t"})).unwrap();
+        assert!(matches!(set.from_state, Some(ActiveStateDto::Absent)));
+        let sell: RemoveEquipmentSelectionRequest = serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": "i", "savedAt": "t", "fromState": "Absent"})).unwrap();
+        assert!(matches!(sell.from_state, Some(ActiveStateDto::Absent)));
+        let old: RemoveEquipmentSelectionRequest = serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": "i", "savedAt": "t"})).unwrap();
+        assert!(old.from_state.is_none());
+    }
+
+    /// A seeded legacy id still reads as an item, and a selection marked Absent is owned: it is listed
+    /// as what it is (R21).
+    #[test]
+    fn market_held_names_a_legacy_id_and_lists_an_absent_selection_as_left_behind() {
         let root = fund_and_seed("market-held-legacy", 0);
         let mut envelope = SavedCharacterStore::load(&root).unwrap();
         let selections = &mut envelope.character_input.chosen.equipment_selections;
@@ -12767,8 +13046,9 @@ mod tests {
         SavedCharacterStore::save(&envelope, &root).unwrap();
 
         let held = list_held_equipment_at_root(&root).unwrap();
-        assert_eq!(held.len(), 1, "{held:?}");
+        assert_eq!(held.len(), 2, "{held:?}");
         assert_eq!((held[0].item_id.as_str(), held[0].name.as_str(), held[0].bonus), ("item:longsword", "Longsword", 0));
+        assert_eq!((held[1].item_id.as_str(), held[1].active_state), ("Dagger", ActiveStateDto::Absent));
         std::fs::remove_dir_all(&root).ok();
     }
 

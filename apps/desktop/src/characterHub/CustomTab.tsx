@@ -9,6 +9,9 @@ function placeLine(record: CustomRecord): string | null {
   if (place === null) {
     return null;
   }
+  if (place === 'left_behind') {
+    return 'Left behind';
+  }
   const slot = record.slot && record.slot !== 'none' ? wornLabel(record.slot) : null;
   return place === 'worn' ? (slot ? `Worn, ${slot}` : 'Worn') : slot ? `Carried (takes ${slot})` : 'Carried';
 }

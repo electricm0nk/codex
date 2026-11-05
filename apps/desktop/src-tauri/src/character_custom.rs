@@ -90,7 +90,7 @@ pub struct CustomBonusDto {
 }
 
 /// A custom feat, item, spell or device: a raw object the GM gives stats and a description. Custom
-/// equipment may also state `bonuses` and a `slot`, and is `worn` or carried; a record with none of
+/// equipment may also state `bonuses` and a `slot`, and is `worn`, carried or `left_behind`; a record with none of
 /// the three is saved as the text record it always was.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -107,6 +107,9 @@ pub struct CustomRecordDto {
     pub slot: Option<BodySlot>,
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub worn: bool,
+    /// Owned and not on the character: on the ground, at an inn. Never with `worn`.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub left_behind: bool,
 }
 
 /// What the GM lets this character do without qualifying. Each flag is read by the command that
@@ -189,8 +192,11 @@ fn validate_records(kind: &str, records: &[CustomRecordDto], seen: &mut BTreeSet
                 return Err(format!("{:?} has a stat line over {MAX_STAT_TEXT} characters", record.name));
             }
         }
-        if kind != "equipment" && (!record.bonuses.is_empty() || record.slot.is_some() || record.worn) {
+        if kind != "equipment" && (!record.bonuses.is_empty() || record.slot.is_some() || record.worn || record.left_behind) {
             return Err(format!("{:?}: only custom equipment can state bonuses, take a slot or be worn", record.name));
+        }
+        if record.worn && record.left_behind {
+            return Err(format!("{:?} cannot be both worn and left behind", record.name));
         }
         if record.bonuses.len() > MAX_STATS {
             return Err(format!("{:?} has more than {MAX_STATS} bonuses", record.name));
@@ -621,7 +627,7 @@ fn worn_score_refusal(scores: &AbilityScores, custom: &CharacterCustomDto) -> Op
     })
 }
 
-/// Wears or stows one custom item, the backend half of the Equipment control for a `custom:<id>` row.
+/// Wears, stows or leaves behind one custom item, the backend half of the Equipment control for a `custom:<id>` row.
 /// A refusal is `Blocked`, as a stock item's is, and leaves both files as they were. Past that,
 /// `mutate_saved_character_at_root` supplies the recompute gate and the new revision.
 pub(crate) fn set_custom_item_state_at_root(root: &Path, id: &str, active_state: ActiveState, saved_at: &str) -> Result<CreateCharacterResponse, String> {
@@ -632,6 +638,7 @@ pub(crate) fn set_custom_item_state_at_root(root: &Path, id: &str, active_state:
         return Err(format!("'{CUSTOM_ITEM_PREFIX}{id}' cannot change state: this character does not carry it"));
     };
     custom.equipment[index].worn = active_state == ActiveState::EquippedActive;
+    custom.equipment[index].left_behind = active_state == ActiveState::Absent;
     if custom.equipment[index].worn {
         let existing = SavedCharacterStore::load(root).map_err(|err| err.message)?;
         let refusal = match slot_refusal(&existing.character_input, &previous, &custom)? {

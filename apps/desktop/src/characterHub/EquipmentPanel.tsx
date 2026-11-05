@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { BodySlotDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import type { ActiveStateDto } from '../boundary/setEquipmentActiveState';
 import { OverrideTag } from './OverrideTag';
-
-type ChangeableState = 'EquippedActive' | 'SelectedInactive';
 
 /** Slots as a list of what is worn runs: the hands, then down the body; what takes no slot is last. */
 export const WORN_SLOTS: ReadonlyArray<{ slot: BodySlotDto; label: string }> = [
@@ -30,13 +29,27 @@ export function wornLabel(slot: BodySlotDto): string {
   return WORN_SLOTS.find((row) => row.slot === slot)?.label ?? slot;
 }
 
-/** Worn rows by slot, two in one slot in saved order, and carried rows in saved order. */
-export function equipmentPanelLists(copies: PlacedEquipmentCopyDto[]): { worn: PlacedEquipmentCopyDto[]; carried: PlacedEquipmentCopyDto[] } {
+/** Worn rows by slot, two in one slot in saved order; carried and left-behind rows in saved order. */
+export function equipmentPanelLists(copies: PlacedEquipmentCopyDto[]): { worn: PlacedEquipmentCopyDto[]; carried: PlacedEquipmentCopyDto[]; leftBehind: PlacedEquipmentCopyDto[] } {
   const order = (copy: PlacedEquipmentCopyDto) => WORN_SLOTS.findIndex((row) => row.slot === copy.slot);
   return {
     worn: copies.filter((copy) => copy.activeState === 'EquippedActive').sort((a, b) => order(a) - order(b)),
     carried: copies.filter((copy) => copy.activeState === 'SelectedInactive'),
+    leftBehind: copies.filter((copy) => copy.activeState === 'Absent'),
   };
+}
+
+/** What a row can do: what a copy has with the character can be left behind; what is left behind comes back through Carried. */
+export function equipmentRowActions(copy: PlacedEquipmentCopyDto): Array<{ label: string; to: ActiveStateDto }> {
+  const leave = { label: `Leave ${copy.name} behind`, to: 'Absent' as const };
+  switch (copy.activeState) {
+    case 'EquippedActive':
+      return [{ label: `Stow ${copy.name}`, to: 'SelectedInactive' }, leave];
+    case 'SelectedInactive':
+      return [{ label: `Equip ${copy.name}`, to: 'EquippedActive' }, leave];
+    case 'Absent':
+      return [{ label: `Pick up ${copy.name}`, to: 'SelectedInactive' }];
+  }
 }
 
 const heading = { fontSize: '0.8rem', margin: '0.6rem 0 0.25rem' };
@@ -59,20 +72,19 @@ export interface EquipmentPanelViewProps {
   /** The backend's refusal of the last change, word for word. */
   refusal: string | null;
   busy: boolean;
-  onSetState: (copy: PlacedEquipmentCopyDto, activeState: ChangeableState) => void;
+  onSetState: (copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto) => void;
 }
 
 export function EquipmentPanelView(props: EquipmentPanelViewProps) {
   const lists = equipmentPanelLists(props.copies ?? []);
-  const action = (copy: PlacedEquipmentCopyDto, word: 'Stow' | 'Equip', activeState: ChangeableState) => (
-    <button
-      type="button"
-      disabled={props.busy}
-      onClick={() => props.onSetState(copy, activeState)}
-      style={actionButton}
-    >
-      {`${word} ${copy.name}`}
-    </button>
+  const actions = (copy: PlacedEquipmentCopyDto) => (
+    <span style={{ display: 'flex', flexShrink: 0, gap: '0.3rem' }}>
+      {equipmentRowActions(copy).map((action) => (
+        <button key={action.to} type="button" disabled={props.busy} onClick={() => props.onSetState(copy, action.to)} style={actionButton}>
+          {action.label}
+        </button>
+      ))}
+    </span>
   );
   return (
     <section aria-label="Equipment" className="no-print" style={{ marginBottom: '1.25rem' }}>
@@ -95,7 +107,7 @@ export function EquipmentPanelView(props: EquipmentPanelViewProps) {
                 {`${wornLabel(copy.slot)}: ${copy.name}`}
                 {copy.override ? <OverrideTag flag={copy.override} /> : null}
               </span>
-              {action(copy, 'Stow', 'SelectedInactive')}
+              {actions(copy)}
             </div>
           ))}
           <h4 style={heading}>Carried</h4>
@@ -106,7 +118,18 @@ export function EquipmentPanelView(props: EquipmentPanelViewProps) {
                 {copy.name}
                 {copy.override ? <OverrideTag flag={copy.override} /> : null}
               </span>
-              {action(copy, 'Equip', 'EquippedActive')}
+              {actions(copy)}
+            </div>
+          ))}
+          <h4 style={heading}>Left behind</h4>
+          {lists.leftBehind.length === 0 ? <p style={quiet}>Nothing left behind.</p> : null}
+          {lists.leftBehind.map((copy, index) => (
+            <div key={`${copy.itemId}::${copy.bonus}::${index}`} style={row}>
+              <span>
+                {copy.name}
+                {copy.override ? <OverrideTag flag={copy.override} /> : null}
+              </span>
+              {actions(copy)}
             </div>
           ))}
         </>
@@ -116,14 +139,14 @@ export function EquipmentPanelView(props: EquipmentPanelViewProps) {
 }
 
 /**
- * The Gear tab's Equipment control: every held copy, worn by slot or carried, off
+ * The Gear tab's Equipment control: every owned copy, worn by slot, carried or left behind, off
  * `list_held_equipment`. Re-reads when `refreshKey` changes, which every saved change to the
  * character does. A refusal stays on screen until the next change is asked for.
  */
 export function EquipmentPanel(props: {
   load: () => Promise<PlacedEquipmentCopyDto[]>;
   refreshKey: unknown;
-  onSetState: (copy: PlacedEquipmentCopyDto, activeState: ChangeableState) => Promise<string | null>;
+  onSetState: (copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto) => Promise<string | null>;
 }) {
   const [copies, setCopies] = useState<PlacedEquipmentCopyDto[] | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);

@@ -20,6 +20,8 @@ export interface SetEquipmentActiveStateRequest {
   itemId: string;
   /** Which copy, when the character holds several: `0` a plain one, `N` a `+N`. Omit for the first. */
   bonus?: number;
+  /** The state the row shows this copy in, which says which of two alike moves. Omit for the first not already in `activeState`. */
+  fromState?: ActiveStateDto;
   activeState: ActiveStateDto;
   savedAt: string;
 }

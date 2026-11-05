@@ -4,7 +4,7 @@ import type { OverrideFlagDto } from './loadSavedCharacterDetail';
 import type { ActiveStateDto } from './setEquipmentActiveState';
 
 /**
- * Read-only desktop boundary over what a character holds, one row per copy, for the Market's Sell
+ * Read-only desktop boundary over what a character owns, one row per copy, for the Market's Sell
  * list and the Gear tab's Equipment control. Invokes `list_held_equipment`, which reads the saved
  * selections.
  */
@@ -15,6 +15,8 @@ export interface HeldEquipmentCopyDto {
   name: string;
   /** The copy's `+N`, 0 when plain; names this copy to `removeEquipmentSelection` and `setEquipmentActiveState`. */
   bonus: number;
+  /** Where the copy is, for a list that knows it; `Absent` is owned and left behind. */
+  activeState?: ActiveStateDto;
 }
 
 /** `BodySlot` in `body_slots.rs`, on the wire. */

@@ -198,7 +198,7 @@ export function MarketDialogView(props: MarketDialogViewProps) {
           {props.inventory?.map((copy, index) => (
             <div key={`${copy.itemId}::${index}`} style={{ marginBottom: '0.35rem' }}>
               <button type="button" disabled={props.busy} onClick={() => props.onSell(copy)} style={{ ...smallButton, textAlign: 'left', width: '100%' }}>
-                {`Sell ${copy.name}`}
+                {`Sell ${copy.name}${copy.activeState === 'Absent' ? ' (left behind)' : ''}`}
               </button>
             </div>
           ))}

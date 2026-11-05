@@ -118,6 +118,9 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   assert(html.includes('aria-selected="true"') && html.includes('role="tab"'), 'the current category is marked');
   assert(html.includes('placeholder="Search the market…"'), 'search box');
   assert(html.includes('>Sell +1 Longsword</button>'), 'an inventory row has a Sell action naming the copy');
+  const away = render({ inventory: [{ itemId: 'Dagger (Base)', name: 'Dagger', bonus: 0, activeState: 'Absent' }, { itemId: 'Dagger (Base)', name: 'Dagger', bonus: 0, activeState: 'SelectedInactive' }] });
+  assert(away.includes('>Sell Dagger (left behind)</button>'), 'a copy left behind can be sold, and two copies read apart');
+  assert(away.includes('>Sell Dagger</button>'), 'a copy in hand reads as it always did');
   assert(html.includes('aria-label="Equipment pricing"'), 'the price mode control is reused');
   assert(html.includes('name="market-price-mode"'), 'its radios are not the sheet tab\'s group');
   assert(html.includes('2,000 gp'), 'the balance carries the currency label');
@@ -164,7 +167,7 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   }
   assert(sheet.includes('<MarketDialog'), 'the sheet renders the dialog');
   assert(sheet.includes('listMarket('), 'its rows are list_market\'s, not a bundled list');
-  assert(sheet.includes('handleRemoveEquipment(copy.itemId, copy.bonus)'), 'Sell names the copy');
+  assert(sheet.includes('handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState)'), 'Sell names the copy');
   assert(sheet.includes('listHeldEquipment('), 'the Sell list is every held copy, not the demo corpus\'s equippedItems');
 }
 
