@@ -41,6 +41,7 @@ mod companion_pool_catalog;
 mod intelligent_item_catalog;
 mod monster_catalog;
 mod pf1_adapter;
+mod print;
 mod race_catalog;
 mod race_trait_picker;
 mod reference_library_catalog;
@@ -313,6 +314,7 @@ fn main() {
             adjust_character_hp,
             delete_character,
             export_character_json,
+            print::save_sheet_pdf,
             export_character,
             import_character,
             import_pcg,

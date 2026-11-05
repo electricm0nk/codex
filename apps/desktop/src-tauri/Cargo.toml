@@ -29,6 +29,11 @@ tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
 tauri-plugin-dialog = "2"
 codex = { path = "../../.." }
+# SD-39 E8.1 (`decisions.md §4`, operator rulings R1/R2): the sheet PDF is typeset by Typst used as
+# a library. Pinned to the exact release E8.1 recorded (`technical-design.md §1`).
+typst = "=0.15.1"
+typst-layout = "=0.15.1"
+typst-pdf = "=0.15.1"
 
 [dev-dependencies]
 # SD-36 Epic A / operator ruling D1: the PCGen converter and oracle crate is
@@ -40,3 +45,6 @@ codex = { path = "../../.." }
 # leaks raw PCGen syntax are the only reason this crate names the tool side
 # at all.
 codex-ingest = { path = "../../../crates/codex-ingest" }
+# SD-39 E8.1: the print tests read the PDF back -- its text and its page boxes.
+pdf-extract = "0.12.1"
+lopdf = "0.42"
