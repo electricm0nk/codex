@@ -10,14 +10,14 @@ holding `data/`: a packaged app passes its resource directory.
 | Field | Read by |
 |---|---|
 | `displayLabel`, `characterInput` | `import_character`, as `ImportedCharacterFileDto` |
-| `bio` | `bio.json` (`CharacterBioDto`) |
-| `money.totalCopper` | `money.json` |
+| `bio` | `bio.json` (`CharacterBioDto`), by `import_character`, as an export's |
+| `money.totalCopper` | `money.json`, by `import_character`, as an export's; nothing written at 0 |
 | `custom.feats`, `custom.equipment`, `custom.spells` | `custom.json` (`CharacterCustomDto`) |
 | `report` | shown to the player: one line per line of the file, plus each row the file did not hold |
 
-`import_character_from_json` reads `custom` as an export's. It has no field for `bio`, `money` or `report`,
-so the sidecar's caller, `import_pcg` (`character_hub.rs`), writes the first two after the save and returns
-the third with the outcome. A refused or failed import removes the fresh character's directory.
+`import_character_from_json` reads `custom`, `bio` and `money` as an export's. It has no field for `report`,
+so the sidecar's caller, `import_pcg` (`character_hub.rs`), returns it with the outcome, and writes the bio
+again after the save, an empty one included. A refused or failed import removes the fresh character's directory.
 
 ## How it ships
 

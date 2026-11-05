@@ -2232,6 +2232,7 @@ fn clone_character_at_roots(
     copy_character_ledger(source_root, new_root)?;
     copy_character_hit_points(source_root, new_root)?;
     copy_character_bio(source_root, new_root)?;
+    copy_character_money(source_root, new_root)?;
 
     // Best-effort: carry the portrait over too, if the source has one.
     let source_portrait = source_root.join(PORTRAIT_FILE_NAME);
@@ -5639,6 +5640,15 @@ fn copy_character_bio(from: &Path, to: &Path) -> Result<(), String> {
     std::fs::copy(&source, to.join(BIO_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
 }
 
+/// A clone holds what its source holds. No file is no copy.
+fn copy_character_money(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(MONEY_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(MONEY_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
 fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let path = root.join(BIO_FILE_NAME);
@@ -5721,7 +5731,7 @@ const MONEY_FILE_NAME: &str = "money.json";
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-struct StoredMoney {
+pub struct StoredMoney {
     #[serde(default)]
     total_copper: u64,
 }
@@ -6177,6 +6187,9 @@ pub struct ImportedCharacterFileDto {
     /// old file imports with none.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bio: Option<CharacterBioDto>,
+    /// `money.json`, when the character holds any. An old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub money: Option<StoredMoney>,
 }
 
 fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
@@ -6393,6 +6406,11 @@ fn import_character_from_json(
     if let Some(hit_points) = &parsed.hit_points {
         save_character_hit_points_at_root(root, &hit_points.levels)?;
     }
+    if let Some(money) = parsed.money.as_ref().filter(|money| money.total_copper > 0) {
+        let total = i64::try_from(money.total_copper)
+            .map_err(|_| format!("the file's money, {} cp, is more than a character can hold", money.total_copper))?;
+        adjust_character_money_at_root(root, total)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
@@ -6474,7 +6492,6 @@ pub struct PcgImportReportDto {
 #[serde(rename_all = "camelCase")]
 struct PcgSidecarExtras {
     bio: CharacterBioDto,
-    money: StoredMoney,
     report: PcgImportReportDto,
 }
 
@@ -6532,11 +6549,6 @@ fn import_pcg_json(
     let written = import_character_from_json(contents, root, fresh_character_id, saved_at, app_version).and_then(|outcome| {
         if matches!(outcome, CreateCharacterResponse::Saved { .. }) {
             save_character_bio_at_root(root, &extras.bio)?;
-            if extras.money.total_copper > 0 {
-                let total = i64::try_from(extras.money.total_copper)
-                    .map_err(|_| format!("the file's money, {} cp, is more than a character can hold", extras.money.total_copper))?;
-                adjust_character_money_at_root(root, total)?;
-            }
         }
         Ok(outcome)
     });
@@ -6596,6 +6608,7 @@ fn export_character_to_json(root: &Path) -> Result<String, String> {
     let custom = load_character_custom_at_root(root)?;
     let hit_points = load_character_hit_points_at_root(root)?;
     let bio = load_character_bio_at_root(root)?;
+    let total_copper = load_character_money_at_root(root)?.total_copper;
     let dto = ImportedCharacterFileDto {
         display_label: envelope.display_label,
         character_input: character_input_to_dto(&envelope.character_input),
@@ -6603,6 +6616,7 @@ fn export_character_to_json(root: &Path) -> Result<String, String> {
         ledger: load_character_ledger_at_root(root)?,
         hit_points: (hit_points != CharacterHitPointsDto::default()).then_some(hit_points),
         bio: (bio != CharacterBioDto::default()).then_some(bio),
+        money: (total_copper > 0).then_some(StoredMoney { total_copper }),
     };
 
     serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
@@ -16660,6 +16674,52 @@ mod tests {
         assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
         assert_eq!(load_character_bio_at_root(&imported).unwrap().deity, "Iomedae");
         assert_eq!(race_weapon_proficiency_row(&imported), before);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+    }
+
+    /// A copy holds what its source holds. Clone and Export carry the other sidecars; money stayed behind.
+    #[test]
+    fn character_money_survives_a_clone() {
+        let source = race_weapon_proficiency_cleric("money-clone-source");
+        let held = adjust_character_money_at_root(&source, 12_345).unwrap().total_copper;
+        let clone = tempdir("money-clone");
+        let request = CloneCharacterRequest {
+            character_id: "source".to_owned(),
+            new_character_id: "char-clone".to_owned(),
+            new_display_label: "The clone".to_owned(),
+            saved_at: OVERRIDES_AT.to_owned(),
+        };
+        let outcome = clone_character_at_roots(&source, &clone, &request, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_money_at_root(&clone).unwrap().total_copper, held);
+        std::fs::remove_dir_all(&source).ok();
+        std::fs::remove_dir_all(&clone).ok();
+    }
+
+    #[test]
+    fn character_money_survives_export_then_import() {
+        let root = race_weapon_proficiency_cleric("money-export");
+        let held = adjust_character_money_at_root(&root, 12_345).unwrap().total_copper;
+        let file = export_character_to_json(&root).unwrap();
+        let imported = tempdir("money-import");
+        let outcome = import_character_from_json(&file, &imported, "char-imported", OVERRIDES_AT, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_money_at_root(&imported).unwrap().total_copper, held);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+    }
+
+    /// A file written before money travelled imports as it always did: no money file, a zero balance.
+    #[test]
+    fn character_money_an_old_export_imports_with_none() {
+        let root = race_weapon_proficiency_cleric("money-old-export");
+        std::fs::remove_file(root.join(MONEY_FILE_NAME)).unwrap();
+        let file = export_character_to_json(&root).unwrap();
+        assert!(!file.contains("\"money\""), "a character with no money writes no field");
+        let imported = tempdir("money-old-import");
+        import_character_from_json(&file, &imported, "char-imported", OVERRIDES_AT, "test-version").unwrap();
+        assert_eq!(load_character_money_at_root(&imported).unwrap().total_copper, 0);
         std::fs::remove_dir_all(&root).ok();
         std::fs::remove_dir_all(&imported).ok();
     }
