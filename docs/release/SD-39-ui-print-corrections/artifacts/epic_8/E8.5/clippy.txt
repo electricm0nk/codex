@@ -1,0 +1,2 @@
+$ cd apps/desktop/src-tauri && cargo clippy --locked --tests -j 8
+      1     Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 15s

@@ -104,7 +104,7 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 print_smoke -- --test-thre
 ## G-10 Print golden suite (DoD 1) — E8.5, E8.MC
 
 ```bash
-cd apps/desktop/src-tauri && cargo test --locked -j 8 --test print_golden -- --test-threads=8
+cd apps/desktop/src-tauri && cargo test --locked -j 8 print_golden -- --test-threads=8   # a module of the binary (no lib target; decisions.md §25)
 # 24 passed: {pf1e,sf1e,cpr} × {A4,Letter} × {none,spellbook,math,all}
 # each: text present, headings in layout order, page count asserted, Typst diagnostics 0, two runs byte-equal
 ```
