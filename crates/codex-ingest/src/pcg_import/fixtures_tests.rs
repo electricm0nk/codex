@@ -388,14 +388,28 @@ fn pcg_import_fixtures_the_mapping_doc_lists_every_key() {
     assert!(MAPPING.iter().any(|(_, rule)| matches!(rule, KeyRule::Setting)));
 }
 
-/// What the engine cannot hold yet is said out loud: a rank the file bought in a pinned skill is on
-/// the sheet's custom feat and in a warning, and the row the engine reads is at the pin.
+/// The file's rank is the row the engine reads, on all three, with nothing held back. A file with no
+/// row in one writes none: the engine reads it untrained, and the character still computes.
 #[test]
-fn pcg_import_fixtures_a_pinned_skill_keeps_the_file_rank_where_it_can_be_read() {
+fn pcg_import_fixtures_a_files_rank_in_climb_intimidate_swim_is_the_row_the_engine_reads() {
     let file = oracle_fixture("35e_L10(fighter-human).pcg");
-    let rank = file.character_input.chosen.skill_allocations.iter().find(|skill| skill.skill_id == "skill:climb").map(|skill| skill.ranks);
-    assert_eq!(rank, Some(1));
-    let held = file.custom.feats.iter().find(|record| record.name == "Skill ranks from PCGen").expect("the file's ranks");
-    assert!(held.stats.iter().any(|stat| stat.label == "climb" && stat.value == "13"), "{held:?}");
-    assert!(file.report.warnings.iter().any(|warning| warning.contains("skill:climb: the file buys 13 ranks")), "{:?}", file.report.warnings);
+    let rank_of = |skill: &str| file.character_input.chosen.skill_allocations.iter().find(|row| row.skill_id == skill).map(|row| row.ranks);
+    assert_eq!(rank_of("skill:climb"), Some(13));
+    assert!(!file.custom.feats.iter().any(|record| record.name == "Skill ranks from PCGen"), "{:?}", file.custom.feats);
+    assert!(!file.report.warnings.iter().any(|warning| warning.contains("the file buys")), "{:?}", file.report.warnings);
+    assert!(!file.report.lines.iter().any(|line| line.outcome == Outcome::Added && line.to.contains("skillAllocations")), "no rank is added");
+
+    let input = character_input(&file);
+    engine_verdict(&input).expect("the file's own ranks compute");
+    let total = |input: &CharacterInput| {
+        let receipt = build_pilot_headless_receipt(input);
+        compute_selected_skill_modifiers_from_corpus(&receipt.computation, input, app_corpus()).expect("computes").climb
+    };
+    let mut at_eleven = input.clone();
+    at_eleven.chosen.skill_allocations.iter_mut().find(|row| row.skill_id == "skill:climb").unwrap().ranks = 11;
+    assert_eq!(total(&input) - total(&at_eleven), 2, "the total follows the rank");
+
+    let mut no_rank = input.clone();
+    no_rank.chosen.skill_allocations.retain(|row| row.skill_id != "skill:climb");
+    engine_verdict(&no_rank).expect("no rank reads untrained, it does not refuse");
 }

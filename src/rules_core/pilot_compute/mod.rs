@@ -116,9 +116,9 @@
 
 use super::character_input::{
     AbilityScores, ActiveState, AcquisitionMode, CharacterClassLevel, CharacterInput,
-    SkillAllocation,
 };
 use super::description_completion::{feat_description_completion, ZeroMagnitudeResolution};
+use super::feat_effects::SelectedSkillRanks;
 use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, resolve_metamagic_feat_effect};
 use super::rules_catalog::acg::{self, AcgClassId};
 use super::rules_catalog::acg::shaman_spell_list;

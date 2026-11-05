@@ -4066,11 +4066,10 @@ export function CharacterSheet(props: {
    * Persists the dialog's full draft allocation via `set_skill_allocations`
    * (a wholesale replace, not a delta — see `setSkillAllocations`'s doc
    * comment). On `Blocked` the on-disk character (and this panel's
-   * `skillAllocation` state) is left exactly as it was — the compute
-   * engine still holds Climb/Intimidate/Swim at the GE-06 rank-1 posture
-   * (chain shirt equipped), so moving any of those three off rank 1 comes
-   * back blocked with real diagnostics; ranks in every other skill are
-   * accepted (SD-36 F7a).
+   * `skillAllocation` state) is left exactly as it was. A rank is never the
+   * reason: the engine reads each skill at its own rank, and one with no rank
+   * untrained. A build the engine refuses for something else comes back blocked
+   * with its real diagnostics.
    */
   /**
    * Saves the Custom dialog. An ability grant changes the saved ability score (a new revision), so

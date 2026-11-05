@@ -37,13 +37,13 @@ use crate::rules_core::pilot_compute::{
     equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
     fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
-    require_selected_skill_rank, selected_skill_climb_is_class_skill,
+    selected_skill_climb_is_class_skill, selected_skill_ranks,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
     selected_skill_class_skill_unknowns,
     supported_fighter_level, PilotBaseChassisComputation, ARMOR_CLASS_BASE, CLASS_SKILL_BONUS,
     CLIMB_SKILL_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
     INTIMIDATE_SKILL_ID, LONGSWORD_ITEM_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
-    POWER_ATTACK_ITEM_ID, SELECTED_SKILL_RANK, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
+    POWER_ATTACK_ITEM_ID, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
     WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS,
     WEAPON_NONPROFICIENCY_ATTACK_PENALTY, WIZARD_CLASS_ID,
 };
@@ -666,10 +666,8 @@ pub fn compute_combat_baseline_from_corpus(
 /// Shirt armor-check penalty. Widens the exact "Chain Shirt equipped"
 /// requirement to any resolvable armor loadout (or none), using real
 /// `armor_check_penalty_total` (`equipment_effects::compute_equipment_effects`)
-/// in place of the old Chain-Shirt-specific constant -- the skill-allocation
-/// posture itself (exactly Climb/Intimidate/Swim at rank 1; since SD-36 F7a, ranks in other
-/// skills no longer refuse it) is unchanged, same as `compute_combat_baseline_from_corpus`
-/// leaves the weapon/feat requirements unchanged.
+/// in place of the old Chain-Shirt-specific constant. A rank is never a condition: each total
+/// reads the character's own, and no rank reads untrained.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct CorpusAwareSelectedSkillModifiers {
     pub climb: i16,
@@ -682,7 +680,6 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     input: &CharacterInput,
     corpus: &SourcePackageContent,
 ) -> Result<CorpusAwareSelectedSkillModifiers, Vec<String>> {
-    let allocations = &input.chosen.skill_allocations;
     let mut unmet = Vec::new();
 
     if !has_supported_class_chassis(input) {
@@ -691,13 +688,6 @@ pub fn compute_selected_skill_modifiers_from_corpus(
              {WIZARD_CLASS_ID} levels 1-{MAX_SUPPORTED_WIZARD_LEVEL} chassis"
         ));
     }
-
-    let expected = [CLIMB_SKILL_ID, INTIMIDATE_SKILL_ID, SWIM_SKILL_ID];
-    for skill_id in expected {
-        require_selected_skill_rank(allocations, skill_id, &mut unmet);
-    }
-    // SD-36 F7a (F7-8): ranks in any other skill feed none of the three totals; not refused
-    // (the headless twin's `unmet_selected_skill_posture_conditions` says the same).
 
     // v0.6 alpha swarm sub-task 4: deliberately does not require every
     // EquippedActive selection to resolve against corpus -- see
@@ -727,18 +717,21 @@ pub fn compute_selected_skill_modifiers_from_corpus(
         (effects.armor_check_penalty_total + fighter_armor_training(level).armor_check_reduction)
             .min(0);
 
-    let rank = i16::from(SELECTED_SKILL_RANK);
+    let climb_rank = selected_skill_ranks(input, CLIMB_SKILL_ID);
+    let intimidate_rank = selected_skill_ranks(input, INTIMIDATE_SKILL_ID);
+    let swim_rank = selected_skill_ranks(input, SWIM_SKILL_ID);
     // v0.6 alpha swarm, Investigator full-build closure: three independent
     // per-skill checks, not one shared scalar -- see
     // `selected_skill_climb_is_class_skill`'s own doc comment in
     // `pilot_compute.rs` for why (Investigator's own real class-skill list
-    // is a genuine partial match, Climb/Intimidate yes, Swim no).
+    // is a genuine partial match, Climb/Intimidate yes, Swim no). The +3 also needs a rank in the
+    // skill (CRB Chapter 4).
     let climb_class_skill_bonus =
-        if selected_skill_climb_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+        if climb_rank > 0 && selected_skill_climb_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
     let intimidate_class_skill_bonus =
-        if selected_skill_intimidate_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+        if intimidate_rank > 0 && selected_skill_intimidate_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
     let swim_class_skill_bonus =
-        if selected_skill_swim_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+        if swim_rank > 0 && selected_skill_swim_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
 
     // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): the same shared
     // seam `pilot_compute::compute_selected_skill_modifiers` reads. Before it,
@@ -750,16 +743,16 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     let feat_contributions =
         feat_derived_pillar_contributions(input, base.ability_modifiers.strength);
 
-    let climb = rank
+    let climb = climb_rank
         + base.ability_modifiers.strength
         + climb_class_skill_bonus
         + armor_check_penalty
         + feat_contributions.climb_skill_bonus();
-    let intimidate = rank
+    let intimidate = intimidate_rank
         + base.ability_modifiers.charisma
         + intimidate_class_skill_bonus
         + feat_contributions.intimidate_skill_bonus();
-    let swim = rank
+    let swim = swim_rank
         + base.ability_modifiers.strength
         + swim_class_skill_bonus
         + armor_check_penalty

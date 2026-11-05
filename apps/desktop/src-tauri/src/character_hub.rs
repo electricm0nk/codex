@@ -14957,13 +14957,46 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// A rank in Climb, Intimidate or Swim is the character's own (E7.3): off rank 1 saves, the sheet
+    /// reads it, and a skill left out reads untrained instead of refusing the build.
+    #[test]
+    fn set_skill_allocations_at_root_persists_a_real_rank_and_the_sheet_reads_it() {
+        let root = tempdir("set-skill-allocations-real-rank");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        let read = |root: &std::path::Path| {
+            let skills = load_saved_character_at_root(root).expect("loads").snapshot.expect("computes").selected_skill_modifiers;
+            (skills.climb, skills.intimidate, skills.swim)
+        };
+        let (climb, intimidate, swim) = read(&root);
+
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![
+                SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 13 },
+                SkillAllocation { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+            ],
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("set skill allocations call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(reloaded.character_input.chosen.skill_allocations.len(), 2);
+        // Climb rises by the 12 ranks; Swim loses its rank and its +3 class-skill bonus.
+        assert_eq!(read(&root), (climb + 12, intimidate, swim - 4));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// Mirrors `level_up_character_at_root`'s own "never persist an unproven
-    /// build" proof: an out-of-posture skill allocation must leave the
-    /// on-disk envelope exactly as it was, not silently apply.
+    /// build" proof: a mutation of a build the engine refuses for another reason
+    /// must leave the on-disk envelope exactly as it was, not silently apply.
     #[test]
     fn set_skill_allocations_at_root_does_not_persist_when_resulting_build_is_blocked() {
         let root = tempdir("set-skill-allocations-blocked");
-        let envelope = level_up_test_envelope("race:human", 1);
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        envelope.character_input.chosen.class_levels[0].class_id = "class:no_such_class".to_owned();
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
         let response = set_skill_allocations_at_root(
@@ -14976,7 +15009,7 @@ mod tests {
         match response {
             CreateCharacterResponse::Blocked { .. } => {}
             CreateCharacterResponse::Saved { .. } => {
-                panic!("rank 2 Climb alone is outside the supported posture and must not reach Computed")
+                panic!("a class the engine holds no record of must not reach Computed")
             }
         }
 

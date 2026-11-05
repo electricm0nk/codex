@@ -138,10 +138,6 @@ const POWER_ATTACK_ROW: &str = "power_attack";
 const WEAPON_FOCUS_FEAT: &str = "feat:weapon_focus";
 const FIGHTER_BONUS_CHOICE: &str = "choice:fighter_bonus_feat";
 const FIGHTER_BONUS_SELECTION: &str = "feat:weapon_focus:weapon:longsword";
-/// The engine's selected-skill slice computes these three only at exactly one rank
-/// (`require_selected_skill_rank`), and refuses the character otherwise.
-const PINNED_SKILLS: [&str; 3] = ["skill:climb", "skill:intimidate", "skill:swim"];
-const PINNED_RANK: u8 = 1;
 const ABILITY_NAMES: [(&str, &str); 6] = [
     ("STR", "strength"),
     ("DEX", "dexterity"),
@@ -765,34 +761,6 @@ impl<'a> Importer<'a> {
         }
         self.equipment.push(EquipmentWire { item_id: POWER_ATTACK_ROW.to_owned(), active_state: CARRIED.to_owned(), applied_modifiers: Vec::new() });
         self.added(&format!("equipmentSelections {POWER_ATTACK_ROW}"), WHY);
-        self.pin_selected_skills();
-    }
-
-    /// A rank the engine cannot hold yet is kept where the player can read it, on a custom feat
-    /// and in the report, rather than being lost or refusing the whole character.
-    fn pin_selected_skills(&mut self) {
-        let mut held_back = Vec::new();
-        for skill_id in PINNED_SKILLS {
-            let rank = match self.skills.iter_mut().find(|skill| skill.skill_id == skill_id) {
-                Some(skill) => std::mem::replace(&mut skill.ranks, PINNED_RANK),
-                None => {
-                    self.skills.push(SkillWire { skill_id: skill_id.to_owned(), ranks: PINNED_RANK });
-                    0
-                }
-            };
-            if rank != PINNED_RANK {
-                held_back.push(CustomStat { label: skill_id.trim_start_matches("skill:").to_owned(), value: rank.to_string() });
-                self.report.warnings.push(format!(
-                    "{skill_id}: the file buys {rank} ranks; Codex's rules engine holds this skill at {PINNED_RANK} rank today, so the sheet's total reads {PINNED_RANK}"
-                ));
-                self.added(&format!("skillAllocations {skill_id} {PINNED_RANK}"), "the rules engine computes a character only at this rank");
-            }
-        }
-        if !held_back.is_empty() && self.custom.feats.len() < MAX_RECORDS {
-            let description = "The ranks the PCGen file bought in the skills Codex's rules engine holds at 1 rank.";
-            let record = custom_record("feat", self.custom.feats.len(), "Skill ranks from PCGen", description, held_back);
-            self.custom.feats.push(record);
-        }
     }
 
     /// Adds the file's spells one at a time, known before prepared. The engine's class lists are

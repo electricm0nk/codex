@@ -1581,8 +1581,6 @@ pub(crate) const INTIMIDATE_SKILL_ID: &str = "skill:intimidate";
 
 pub(crate) const SWIM_SKILL_ID: &str = "skill:swim";
 
-pub(crate) const SELECTED_SKILL_RANK: u8 = 1;
-
 pub(crate) const CLASS_SKILL_BONUS: i16 = 3;
 
 pub(super) const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;

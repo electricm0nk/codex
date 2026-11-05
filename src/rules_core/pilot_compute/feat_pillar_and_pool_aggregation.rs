@@ -1004,6 +1004,17 @@ pub(crate) fn selected_skill_class_skill(input: &CharacterInput, skill: &str) ->
     if unknown.is_empty() { SelectedClassSkill::No } else { SelectedClassSkill::Unknown(unknown) }
 }
 
+/// The ranks the character holds in `skill_id`. No row reads untrained, 0.
+pub(crate) fn selected_skill_ranks(input: &CharacterInput, skill_id: &str) -> i16 {
+    input
+        .chosen
+        .skill_allocations
+        .iter()
+        .filter(|allocation| allocation.skill_id == skill_id)
+        .map(|allocation| i16::from(allocation.ranks))
+        .sum()
+}
+
 /// The claim-blocking diagnostic id for a selected skill whose class-skill status no class
 /// answers.
 pub(crate) const SELECTED_SKILL_CLASS_SKILL_UNKNOWN: &str = "skill.selected_modifier.class_skill_unknown";
@@ -1024,11 +1035,13 @@ pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool
     selected_skill_class_skill(input, "swim") == SelectedClassSkill::Yes
 }
 
-/// Every selected skill whose class-skill status is Unknown, as `"<skill>: <reasons>"` -- the
-/// claim-blocking words both the headless and the corpus path raise.
+/// Every selected skill the character holds a rank in whose class-skill status is Unknown, as
+/// `"<skill>: <reasons>"` -- the claim-blocking words both the headless and the corpus path raise. A
+/// skill with no rank takes no +3 either way, so there is nothing to decide.
 pub(crate) fn selected_skill_class_skill_unknowns(input: &CharacterInput) -> Vec<String> {
     SELECTED_SKILLS
         .iter()
+        .filter(|skill| selected_skill_ranks(input, &format!("skill:{skill}")) > 0)
         .filter_map(|skill| match selected_skill_class_skill(input, skill) {
             SelectedClassSkill::Unknown(reasons) => Some(format!("{skill}: {}", reasons.join("; "))),
             _ => None,
@@ -1210,6 +1223,11 @@ pub fn feat_derived_pillar_contributions(
         skill_bonuses: crate::rules_core::feat_effects::skill_bonuses_from_feats(
             &feats,
             strength_modifier,
+            SelectedSkillRanks {
+                climb: selected_skill_ranks(input, CLIMB_SKILL_ID),
+                intimidate: selected_skill_ranks(input, INTIMIDATE_SKILL_ID),
+                swim: selected_skill_ranks(input, SWIM_SKILL_ID),
+            },
         ),
         // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Sure and Fleet is
         // the only one of the Advanced Race Guide's 187 feats whose
@@ -1237,9 +1255,8 @@ pub(super) fn compute_selected_skill_modifiers(
         diagnostics.push(ComputationDiagnostic {
             id: "skill.selected_modifier.unsupported".to_owned(),
             message: format!(
-                "selected skill modifiers are only computed for the exact GE-06 deterministic \
-                 level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded {}) with the \
-                 grounded Chain Shirt armor-check penalty; unmet conditions: {}",
+                "selected skill modifiers are only computed on a grounded {} with the grounded \
+                 Chain Shirt armor-check penalty; unmet conditions: {}",
                 supported_class_chassis_description(),
                 unmet.join("; ")
             ),
@@ -1265,7 +1282,9 @@ pub(super) fn compute_selected_skill_modifiers(
         return SelectedSkillModifiers::default();
     }
 
-    let rank = i16::from(SELECTED_SKILL_RANK);
+    let climb_rank = selected_skill_ranks(input, CLIMB_SKILL_ID);
+    let intimidate_rank = selected_skill_ranks(input, INTIMIDATE_SKILL_ID);
+    let swim_rank = selected_skill_ranks(input, SWIM_SKILL_ID);
 
     // The Chain Shirt armor-check penalty applied to Climb/Swim is reduced by Fighter
     // armor training from level 3, so the armor-check skills rise at that milestone.
@@ -1286,29 +1305,37 @@ pub(super) fn compute_selected_skill_modifiers(
     // see selected_skill_climb_is_class_skill's own doc comment for why
     // this is three independent per-skill checks, not one shared scalar,
     // since Investigator's own real class-skill list is a genuine partial
-    // match (Climb/Intimidate yes, Swim no).
-    let climb_class_skill_bonus_applies = selected_skill_climb_is_class_skill(input);
+    // match (Climb/Intimidate yes, Swim no). The +3 also needs a rank in the skill (CRB Chapter 4).
+    let no_ranks_detail = |skill: &str| format!("no class-skill bonus (no ranks in {skill})");
+    let climb_class_skill_bonus_applies = climb_rank > 0 && selected_skill_climb_is_class_skill(input);
     let climb_class_skill_bonus = if climb_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
     let climb_class_skill_bonus_detail = if climb_class_skill_bonus_applies {
         format!("class-skill bonus ({climb_class_skill_bonus:+})")
+    } else if climb_rank == 0 {
+        no_ranks_detail("Climb")
     } else {
         "no class-skill bonus (Climb is not a class skill for this character's class)".to_owned()
     };
 
-    let intimidate_class_skill_bonus_applies = selected_skill_intimidate_is_class_skill(input);
+    let intimidate_class_skill_bonus_applies =
+        intimidate_rank > 0 && selected_skill_intimidate_is_class_skill(input);
     let intimidate_class_skill_bonus =
         if intimidate_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
     let intimidate_class_skill_bonus_detail = if intimidate_class_skill_bonus_applies {
         format!("class-skill bonus ({intimidate_class_skill_bonus:+})")
+    } else if intimidate_rank == 0 {
+        no_ranks_detail("Intimidate")
     } else {
         "no class-skill bonus (Intimidate is not a class skill for this character's class)"
             .to_owned()
     };
 
-    let swim_class_skill_bonus_applies = selected_skill_swim_is_class_skill(input);
+    let swim_class_skill_bonus_applies = swim_rank > 0 && selected_skill_swim_is_class_skill(input);
     let swim_class_skill_bonus = if swim_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
     let swim_class_skill_bonus_detail = if swim_class_skill_bonus_applies {
         format!("class-skill bonus ({swim_class_skill_bonus:+})")
+    } else if swim_rank == 0 {
+        no_ranks_detail("Swim")
     } else {
         "no class-skill bonus (Swim is not a class skill for this character's class)".to_owned()
     };
@@ -1401,7 +1428,7 @@ pub(super) fn compute_selected_skill_modifiers(
     };
 
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let climb = rank
+    let climb = climb_rank
         + ability_modifiers.strength
         + climb_class_skill_bonus
         + armor_check_penalty
@@ -1414,7 +1441,7 @@ pub(super) fn compute_selected_skill_modifiers(
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
-            "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
+            "Selected Climb modifier: rank {climb_rank} + Strength modifier ({:+}) + \
              {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
              + feat bonus (+{}, Athletic if selected){arg_feat_climb_detail}\
              {raging_climber_swimmer_detail}{} = {climb}",
@@ -1424,7 +1451,7 @@ pub(super) fn compute_selected_skill_modifiers(
     });
 
     // Intimidate (CHA, not an armor-check skill): rank + CHA + class-skill.
-    let intimidate = rank
+    let intimidate = intimidate_rank
         + ability_modifiers.charisma
         + intimidate_class_skill_bonus
         + touch_of_good_skill_bonus
@@ -1435,7 +1462,7 @@ pub(super) fn compute_selected_skill_modifiers(
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
-            "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
+            "Selected Intimidate modifier: rank {intimidate_rank} + Charisma modifier ({:+}) + \
              {intimidate_class_skill_bonus_detail}{touch_of_good_skill_detail} + feat bonus \
              (+{}, Persuasive and/or Intimidating Prowess if selected){stern_gaze_detail}{} = \
              {intimidate}",
@@ -1450,7 +1477,7 @@ pub(super) fn compute_selected_skill_modifiers(
     // lands on a total this engine computes. Class-ownership-gated and
     // explicit-choice-gated by construction, 0 for everyone else.
     let flight_hex_swim_bonus = witch_flight_hex_swim_bonus(input);
-    let swim = rank
+    let swim = swim_rank
         + ability_modifiers.strength
         + swim_class_skill_bonus
         + armor_check_penalty
@@ -1463,7 +1490,7 @@ pub(super) fn compute_selected_skill_modifiers(
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
         detail: format!(
-            "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
+            "Selected Swim modifier: rank {swim_rank} + Strength modifier ({:+}) + \
              {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
              + feat bonus (+{}, Athletic if selected) + Witch Flight hex \
              (+{flight_hex_swim_bonus}){raging_climber_swimmer_detail}{} = {swim}",
@@ -2412,12 +2439,10 @@ pub(super) fn ground_standalone_feat_skill_facts(
 /// Return the list of unmet conditions for the exact deterministic selected-skill
 /// posture. An empty list means the posture is fully supported.
 ///
-/// The bounded posture requires a Fighter level 1–3 chassis, exactly the three
-/// selected class skills (Climb, Intimidate, Swim) each at rank 1 with no other
-/// skill allocations, and the grounded Chain Shirt armor-check posture that the
-/// Climb/Swim totals depend on.
+/// The bounded posture requires a supported class chassis and the grounded Chain
+/// Shirt armor-check posture that the Climb/Swim totals depend on. A rank is never
+/// a condition: each total reads the character's own, and no rank reads untrained.
 pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String> {
-    let allocations = &input.chosen.skill_allocations;
     let mut unmet = Vec::new();
 
     // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
@@ -2430,16 +2455,6 @@ pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) ->
         ));
     }
 
-    let expected = [CLIMB_SKILL_ID, INTIMIDATE_SKILL_ID, SWIM_SKILL_ID];
-    for skill_id in expected {
-        require_selected_skill_rank(allocations, skill_id, &mut unmet);
-    }
-
-    // SD-36 F7a (F7-8): ranks in any OTHER skill no longer refuse the slice. They feed none of
-    // the three totals computed here (each total reads its own skill's ranks), and refusing them
-    // made every real allocation -- a Wizard's Spellcraft -- a Blocked build. The three
-    // selected skills themselves stay at the GE-06 rank-1 posture above.
-
     // Climb and Swim totals depend on the grounded Chain Shirt armor-check posture.
     require_active_state(
         input,
@@ -2449,24 +2464,6 @@ pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) ->
     );
 
     unmet
-}
-
-/// Record an unmet condition unless the named skill is allocated exactly the
-/// supported deterministic rank.
-pub(crate) fn require_selected_skill_rank(
-    allocations: &[SkillAllocation],
-    skill_id: &str,
-    unmet: &mut Vec<String>,
-) {
-    let actual = allocations
-        .iter()
-        .find(|a| a.skill_id == skill_id)
-        .map(|a| a.ranks);
-    if actual != Some(SELECTED_SKILL_RANK) {
-        unmet.push(format!(
-            "{skill_id} must be allocated rank {SELECTED_SKILL_RANK} for the selected-skill slice, got {actual:?}"
-        ));
-    }
 }
 
 /// Folds an equipment `item_id` (`"item:longsword"`) or a

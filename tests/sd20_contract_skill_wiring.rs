@@ -122,9 +122,9 @@ fn skill_cells_are_never_blocked_by_the_old_chassis_single_posture_diagnostic() 
     let mut input = fighter_with_rank_1_skills();
     // 2 ranks in Climb: the OLD chassis check
     // (`compute_selected_skill_modifiers`'s `unmet_selected_skill_posture_conditions`)
-    // requires *exactly* rank 1 in Climb/Intimidate/Swim and nothing else
-    // -- 2 ranks trips its claim-blocking `skill.selected_modifier.unsupported`
-    // diagnostic. Before this cycle, that diagnostic gated
+    // used to require *exactly* rank 1 in Climb/Intimidate/Swim and trip its
+    // claim-blocking `skill.selected_modifier.unsupported` diagnostic. Before
+    // this cycle, that diagnostic gated
     // `sheet.skill.climb`/`.intimidate`/`.swim` to `Blocked`. This is the
     // exact "old check only handled rank-1" deviation the task brief
     // names.
@@ -147,22 +147,18 @@ fn skill_cells_are_never_blocked_by_the_old_chassis_single_posture_diagnostic() 
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
     let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
-    // Confirm the OLD chassis-level diagnostic really does still fire for
-    // this posture (pilot_compute.rs is untouched trunk) -- this is what
-    // proves the fix is a real improvement, not a test that happens to
-    // avoid the old gate entirely.
+    // The old chassis-level diagnostic still fires on this fixture, which wears no Chain Shirt (the
+    // rank itself stopped being a condition at E7.3). Its field is zeroed by that diagnostic, and
+    // the cell below still reads Epic 4's real number.
     assert!(
         receipt
             .diagnostics
             .iter()
             .any(|d| d.id == "skill.selected_modifier.unsupported" && d.claim_blocking),
-        "2 ranks in Climb must still trip the old chassis check's \
-         skill.selected_modifier.unsupported diagnostic (unrelated trunk behavior, unchanged \
-         by this cycle): {:?}",
+        "no Chain Shirt must still trip the old chassis check's \
+         skill.selected_modifier.unsupported diagnostic: {:?}",
         receipt.diagnostics
     );
-    // And the chassis's own (now-unused-for-cells) field is still zeroed
-    // by that diagnostic, confirming this is genuinely the old gate firing.
     assert_eq!(receipt.chassis.selected_skill_modifiers.climb, 0);
 
     // Epic 4's allocate_skill_ranks has no notion of that posture at all

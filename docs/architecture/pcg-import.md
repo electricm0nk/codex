@@ -39,8 +39,6 @@ each carries an `added` report line:
 - `feat:weapon_focus`, unless the file holds Weapon Focus; `choice:fighter_bonus_feat` on any Fighter.
 - Each class's default picks from `class_seeds::canonical_seeds_for`. PCGen's own school, bloodline or
   domain is not read into them; a `DOMAIN` line is a custom feat.
-- Climb, Intimidate and Swim at exactly 1 rank (`require_selected_skill_rank`). The file's own ranks are
-  printed on the `Skill ranks from PCGen` custom feat and in a report warning.
 
 A spell the engine's class list refuses (`class_spell.*`) would refuse the character, so it is a custom spell.
 

@@ -26,11 +26,9 @@ import {
  * `onAccept` only hands the draft allocation back to the caller — this
  * component has no I/O of its own (matching `LevelUpDialog`'s split). The
  * caller (`CharacterSheet`'s `handleSkillAllocationAccept`) persists it via
- * the real `set_skill_allocations` Tauri command. Note the compute engine's
- * `Computed` path still holds Climb/Intimidate/Swim at the GE-06 rank-1 posture
- * (chain shirt equipped -- `unmet_selected_skill_posture_conditions`): moving
- * any of those three off rank 1 comes back `Blocked` with real diagnostics.
- * Ranks in every other skill are accepted (SD-36 F7a).
+ * the real `set_skill_allocations` Tauri command. The engine reads each skill at
+ * its own rank, and one with no rank untrained; only a build it refuses for
+ * something else comes back `Blocked`, with real diagnostics.
  */
 
 export function SkillAllocationDialog(props: {
