@@ -101,6 +101,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E9 | E9.1 | complete | 250f547e96 + receipt commit | artifacts/epic_9/E9.1_cycle_receipt.md |
 | E9 | E9.2 | complete | receipt commit | artifacts/epic_9/E9.2_cycle_receipt.md |
 | E9 | E9.3 | complete | receipt commit | artifacts/epic_9/E9.3_cycle_receipt.md |
+| E9 | E9.4 | partial | receipt commit | artifacts/epic_9/E9.4_cycle_receipt.md |
 
 ## Epic reports
 
