@@ -5971,7 +5971,7 @@ fn money_dto_from_total(total_copper: u64) -> CharacterMoneyDto {
 /// no `money.json` has ever been saved for this character -- mirrors
 /// `load_character_bio_at_root`'s own "no error for the common absent
 /// case" shape.
-fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String> {
+pub(crate) fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String> {
     let path = root.join(MONEY_FILE_NAME);
     if !path.exists() {
         return Ok(money_dto_from_total(0));
@@ -5989,7 +5989,7 @@ fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String
 /// Fails honestly with an insufficient-funds error rather than silently
 /// allowing a negative balance -- PF1 characters cannot carry negative
 /// money.
-fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> Result<CharacterMoneyDto, String> {
+pub(crate) fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> Result<CharacterMoneyDto, String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
     let current_total_copper = load_character_money_at_root(root)?.total_copper;

@@ -153,6 +153,10 @@ pub fn inventory(sources: &SheetSources) -> SheetBlock {
         SheetRow::new("Medium load up to", [pounds(encumbrance.medium_max_lbs)]).derived(Vec::new()),
         SheetRow::new("Heavy load up to", [pounds(encumbrance.heavy_max_lbs)]).derived(Vec::new()),
     ]);
+    // The Gear tab's money tiles, as `load_character_money` breaks the saved copper down.
+    if let Some(money) = &sources.money {
+        rows.extend([("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)].map(|(label, value)| SheetRow::new(label, [value.to_string()])));
+    }
     SheetBlock::new("Inventory", rows)
 }
 

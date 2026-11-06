@@ -29,7 +29,7 @@ pub use skills::skills;
 pub use spells::{spellbook, spells};
 
 use crate::character_custom::CharacterCustomDto;
-use crate::character_hub::{CharacterBioDto, ExplanationDto, HeldEquipmentCopyDto, LoadSavedCharacterResponse};
+use crate::character_hub::{CharacterBioDto, CharacterMoneyDto, ExplanationDto, HeldEquipmentCopyDto, LoadSavedCharacterResponse};
 use crate::character_ledger::{AdmittedKind, OverrideFlag};
 use crate::print::model::Derivation;
 use crate::print::PrintRequest;
@@ -41,6 +41,8 @@ pub struct SheetSources<'a> {
     pub held: Vec<HeldEquipmentCopyDto>,
     pub custom: CharacterCustomDto,
     pub bio: CharacterBioDto,
+    /// The Gear tab's money (`load_character_money`): Pathfinder only, `None` on the other sheets.
+    pub money: Option<CharacterMoneyDto>,
     pub request: &'a PrintRequest,
 }
 
@@ -110,3 +112,4 @@ pub(crate) fn trim_number(value: f64) -> String {
 
 #[cfg(test)]
 mod print_pf_blocks;
+

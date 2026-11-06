@@ -90,7 +90,8 @@ pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<mod
     };
     let (held, custom) =
         if system == "pf1" { (list_held_equipment_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
-    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, request };
+    let money = if system == "pf1" { Some(crate::character_hub::load_character_money_at_root(root)?) } else { None };
+    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, request };
     Ok(layout(&sources))
 }
 

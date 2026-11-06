@@ -1,6 +1,7 @@
-//! Skills: each skill the character put ranks in (and Climb, Intimidate and Swim, which the engine
-//! always totals), its ranks, and the load response's total (`skill.total.<skill>`), the one value
-//! the Skills panel reads too (E8.7). A ranked skill with no panel row has no total: `—`.
+//! Skills: every skill the Skills panel lists (one `skill.total.<skill>` row each, E8.7), every skill
+//! the character put ranks in, and Climb, Intimidate and Swim, which the engine always totals: its
+//! ranks and the load response's total, the one value the panel reads too. A ranked skill with no
+//! panel row has no total: `—`.
 
 use super::{words_of, SheetSources};
 use crate::print::layout::{signed, NO_VALUE};
@@ -19,7 +20,8 @@ pub fn skills(sources: &SheetSources) -> SheetBlock {
         .map(|allocation| allocation.skill_id.strip_prefix("skill:").unwrap_or(&allocation.skill_id).to_owned())
         .collect();
     for row in &loaded.explanations {
-        if let Some(slug) = row.id.strip_prefix(ENGINE_TOTAL_PREFIX) {
+        // Every Skills panel row has its total (E8.7), ranked or not, and the panel lists them all.
+        if let Some(slug) = row.id.strip_prefix(ENGINE_TOTAL_PREFIX).or_else(|| row.id.strip_prefix(TOTAL_PREFIX)) {
             if !slugs.iter().any(|held| held == slug) {
                 slugs.push(slug.to_owned());
             }

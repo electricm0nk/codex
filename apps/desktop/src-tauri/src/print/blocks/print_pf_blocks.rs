@@ -19,6 +19,7 @@ use std::path::{Path, PathBuf};
 
 const ALDRIC_ID: &str = "00000000-0000-0000-0000-000000000001";
 const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
+const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
 /// The 13 blocks every Pathfinder sheet prints, in the layout file's order.
@@ -201,6 +202,54 @@ fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
             let row = loaded.explanations.iter().find(|row| row.id == format!("skill.total.{slug}")).expect("the row");
             assert_eq!(row.value, *value, "{tag}: {slug} is the book's total: {}", row.detail);
         }
+    }
+}
+
+/// The Skills panel lists every skill with its total, ranked or not (`skill.total.<skill>`, one row
+/// per panel row since E8.7), so the basic sheet does too: an unranked Perception is still a number
+/// the player reads off the sheet.
+#[test]
+fn print_pf_blocks_every_skills_panel_total_prints_ranked_or_not() {
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    for (tag, id) in [("all-skills-aldric", ALDRIC_ID), ("all-skills-elowen", ELOWEN_ID), ("all-skills-tomas", TOMAS_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let text = pdf_text(&render(&root, &request(false, false, false)));
+        let skills = &text[text.find("Skills").expect("Skills")..text.find("Weapons").expect("Weapons")];
+        let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")).collect();
+        assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
+        for row in totals {
+            let slug = row.id.strip_prefix("skill.total.").expect("a skill total");
+            let ranks: u32 = loaded
+                .skill_allocations
+                .iter()
+                .filter(|allocation| allocation.skill_id.strip_prefix("skill:") == Some(slug))
+                .map(|allocation| u32::from(allocation.ranks))
+                .sum();
+            let line = format!("{} {} {}", super::skills::skill_name(slug), ranks, signed(row.value));
+            assert!(skills.contains(&line), "{tag}: the Skills block prints `{line}`: {skills}");
+        }
+    }
+}
+
+/// The Gear tab's money tiles (PP, GP, SP, CP, `load_character_money`) and the Details panel's Size
+/// and Vision (the race roster's, `deriveRaceTraits`) print on the basic sheet as the screen shows them.
+#[test]
+fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
+    let root = seeded("money-size", ALDRIC_ID);
+    crate::character_hub::adjust_character_money_at_root(&root, 1_234_567).expect("money adjusts");
+    let money = crate::character_hub::load_character_money_at_root(&root).expect("money loads");
+    assert!(money.platinum > 0 && money.gold > 0 && money.silver > 0 && money.copper > 0, "{money:?}");
+    let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+    let roster = crate::character_hub::list_race_creation_roster();
+    let race = roster.races.iter().find(|race| race.race_id == loaded.summary.race_id).expect("the seed's race is on the roster");
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    let identity = &text[text.find("Identity").expect("Identity")..text.find("Combat").expect("Combat")];
+    assert!(identity.contains(&format!("Size {}", race.size)), "Size {}: {identity}", race.size);
+    assert!(identity.contains(&format!("Vision {}", race.vision)), "Vision {}: {identity}", race.vision);
+    let inventory = &text[text.find("Inventory").expect("Inventory")..text.find("Feats").expect("Feats")];
+    for (label, value) in [("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)] {
+        assert!(inventory.contains(&format!("{label} {value}")), "{label} {value}: {inventory}");
     }
 }
 

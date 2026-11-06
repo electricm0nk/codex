@@ -8,14 +8,32 @@ use crate::print::model::{SheetBlock, SheetRow};
 
 pub fn identity(sources: &SheetSources) -> SheetBlock {
     let summary = &sources.loaded.summary;
+    let (size, vision) = size_and_vision(sources);
     SheetBlock::new(
         "Identity",
         vec![
             SheetRow::new("Name", [summary.display_label.clone()]),
             SheetRow::new("Race", [race_label(&summary.race_id)]),
             SheetRow::new("Class", [class_label(&summary.class_summary)]),
+            SheetRow::new("Size", [size]),
+            SheetRow::new("Vision", [vision]),
         ],
     )
+}
+
+/// The Details panel's Size and Vision: the race roster's (`list_race_creation_roster`, what
+/// `deriveRaceTraits` reads), `Unknown` for a race it does not hold, and an alternate racial trait's
+/// senses row where the engine computed one (Minesight), as the screen shows them.
+fn size_and_vision(sources: &SheetSources) -> (String, String) {
+    const UNKNOWN: &str = "Unknown";
+    let roster = crate::character_hub::list_race_creation_roster();
+    let race = roster.races.iter().find(|race| race.race_id == sources.loaded.summary.race_id);
+    let size = race.map_or_else(|| UNKNOWN.to_owned(), |race| race.size.clone());
+    let vision = match sources.explanation("race.dwarf.alternate_trait.minesight.senses") {
+        Some(row) => format!("Darkvision {} ft.", row.value),
+        None => race.map_or_else(|| UNKNOWN.to_owned(), |race| race.vision.clone()),
+    };
+    (size, vision)
 }
 
 pub fn combat(sources: &SheetSources) -> SheetBlock {
