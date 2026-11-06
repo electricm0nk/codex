@@ -5,13 +5,14 @@
 //! read what the Character Sheet reads; nothing here computes a number (NR-2).
 
 use crate::print::blocks::{self, SheetSources};
-use crate::print::model::SheetDocument;
+use crate::print::layout::NO_VALUE;
+use crate::print::model::{SheetBlock, SheetDocument, SheetRow};
 
 /// The sheet's blocks, in print order.
 pub fn layout(sources: &SheetSources) -> SheetDocument {
     let mut sheet = vec![
         blocks::identity(sources),
-        blocks::combat(sources),
+        combat(sources),
         blocks::abilities(sources),
         blocks::skills(sources),
         blocks::weapons(sources),
@@ -36,4 +37,17 @@ pub fn layout(sources: &SheetSources) -> SheetDocument {
         sheet.push(blocks::bio_notes(sources));
     }
     SheetDocument { title: sources.loaded.summary.display_label.clone(), paper: request.paper.typst_name(), blocks: sheet }
+}
+
+/// The Combat block, with the load response's `hit_points.max` first and its `speed.land` last: the
+/// one value each that the sheet's Hit Points and Speed tiles show. No row prints a dash.
+fn combat(sources: &SheetSources) -> SheetBlock {
+    let mut block = blocks::combat(sources);
+    let line = |label: &str, id: &str, unit: &str| {
+        let value = sources.explanation(id).map_or_else(|| NO_VALUE.to_owned(), |row| format!("{}{unit}", row.value));
+        SheetRow::new(label, [value]).derived(sources.derivation_of(id))
+    };
+    block.rows.insert(0, line("Hit Points", "hit_points.max", ""));
+    block.rows.push(line("Speed", "speed.land", " ft."));
+    block
 }

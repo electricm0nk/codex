@@ -40,13 +40,11 @@ import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { PriceModeControl } from './PriceModeControl';
-import { loadCharacterHitPoints } from '../boundary/characterHitPoints';
-import type { HitPointLevelDto } from '../boundary/loadCreateCharacter';
 import { PrintDialog } from './PrintDialog';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
-import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomHitPoints, withCustomSkillPoints, withItemHitPoints, withItemSpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -121,7 +119,6 @@ import {
   buildNextEntries,
   formatHeldClasses,
   levelGrantsFeat,
-  maxHitPointsWithSavedLevels,
   parseHeldClasses,
   previewLevelUp,
   readFeatBudget,
@@ -2932,27 +2929,6 @@ export function CharacterSheet(props: {
     };
   }, [props.row.characterId]);
 
-  // The hit point results saved at creation (one die result per level); empty when none were saved.
-  const [savedHitPoints, setSavedHitPoints] = useState<HitPointLevelDto[]>([]);
-  useEffect(() => {
-    let cancelled = false;
-    loadCharacterHitPoints(props.row.characterId)
-      .then((loaded) => {
-        if (!cancelled) {
-          setSavedHitPoints(loaded.levels);
-        }
-      })
-      .catch(() => {
-        // Unreadable file: fall back to the default rule rather than a broken sheet.
-        if (!cancelled) {
-          setSavedHitPoints([]);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [props.row.characterId]);
-
   // Custom: the GM's grants and house-rule records (`custom.json`).
   const [custom, setCustom] = useState<CharacterCustom>(EMPTY_CUSTOM);
   const [customLoading, setCustomLoading] = useState(true);
@@ -4166,7 +4142,7 @@ export function CharacterSheet(props: {
   // rather than the old `?? 'Medium'` / `?? 'Normal'` defaults — the panel
   // captions these as calculated from race, so a guess reads as a rules
   // fact. See `deriveRaceTraits`.
-  const { size, vision: standardVision, landSpeed } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
+  const { size, vision: standardVision } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
   // SD-27: `deriveRaceTraits` reads the race *roster*, which describes the
   // unmodified race and knows nothing about a chosen alternate racial trait. A
   // Dwarf who took ARG's Minesight has 90 ft darkvision, and this cell used to
@@ -4189,7 +4165,9 @@ export function CharacterSheet(props: {
     const held = heldClasses.find((candidate) => candidate.classId === spellRoutedClassId);
     return held ? { classId: held.classId, classLabel: held.classLabel } : null;
   })();
-  const hp = withItemHitPoints(withCustomHitPoints(maxHitPointsWithSavedLevels(heldClasses, abilities.constitution, savedHitPoints), custom), engineRecords.explanations);
+  // E8.6: the engine's `hit_points.max` and `speed.land` rows, computed in Rust from the saved rolls,
+  // the GM's grants and worn items; the printed sheet carries the same two values.
+  const hp = sheetHitPoints(engineRecords.explanations);
   // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
   // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
   // by both compute paths). They were `baseAttackBonus + abilities.strength`
@@ -4531,7 +4509,7 @@ export function CharacterSheet(props: {
       case 'attack':
         return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
       case 'speed':
-        return <SpeedPanel land={withItemSpeed(landSpeed, engineRecords.explanations)} boxStyle={boxStyle} />;
+        return <SpeedPanel land={sheetLandSpeed(engineRecords.explanations)} boxStyle={boxStyle} />;
       case 'saves':
         return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
     }

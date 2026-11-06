@@ -20,9 +20,9 @@ import {
   newGrant,
   newRecord,
   withCustomHitPoints,
-  withItemHitPoints,
+  sheetHitPoints,
   savedIntelligenceModifier,
-  withItemSpeed,
+  sheetLandSpeed,
   withCustomSkillPoints,
   type CharacterCustom,
 } from './customModel';
@@ -110,24 +110,21 @@ function verifiesTheBonusProblemsMatchTheBackend() {
 }
 
 function verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow() {
+  // Hit Points and Speed are the load response's one value each (`hit_points.max`, `speed.land`),
+  // computed in Rust with the worn items' rows already in them; the sheet adds nothing.
   const rows = [
     { id: 'custom_item.speed', value: 10, detail: '' },
     { id: 'custom_item.hit_points', value: 7, detail: '' },
+    { id: 'hit_points.max', value: 35, detail: '' },
+    { id: 'speed.land', value: 40, detail: '' },
   ];
   assertEqual(savedIntelligenceModifier(5, [{ id: 'ability_modifier.intelligence.saved', value: 4, detail: '' }]), 4, 'a worn item does not move the budget');
   assertEqual(savedIntelligenceModifier(4, []), 4, 'no row, the sheet\'s modifier');
-  assertEqual(withItemSpeed('30 ft.', rows), '40 ft.', 'the row moves it');
-  assertEqual(withItemSpeed('30 ft.', []), '30 ft.', 'no row, no change');
-  assertEqual(withItemSpeed('Unknown', rows), 'Unknown', 'an unknown speed stays unknown');
-  assertEqual(withItemSpeed('5 ft.', [{ id: 'custom_item.speed', value: -10, detail: '' }]), '0 ft.', 'never below 0');
-  const halved = (feet: number) => [{ id: 'custom_item.speed_percent', value: 50, detail: '' }, { id: 'custom_item.speed', value: feet, detail: '' }];
-  assertEqual(withItemSpeed('30 ft.', halved(0)), '15 ft.', 'a Loadstone halves the land speed');
-  assertEqual(withItemSpeed('30 ft.', halved(10)), '20 ft.', 'and what an item adds to it');
-  assertEqual(withItemSpeed('25 ft.', halved(0)), '12 ft.', 'whole feet, rounded down');
-  assertEqual(withItemSpeed('Unknown', halved(10)), 'Unknown', 'an unknown speed stays unknown');
-  assertEqual(withItemHitPoints(20, rows), 27, 'the row moves it');
-  assertEqual(withItemHitPoints(null, rows), null, 'an unknown total stays unknown');
-  assertEqual(withItemHitPoints(20, []), 20, 'no row, no change');
+  assertEqual(sheetLandSpeed(rows), '40 ft.', 'the engine row, as the tile writes it; the item row is already in it');
+  assertEqual(sheetLandSpeed([{ id: 'speed.land', value: 0, detail: '' }]), '0 ft.', 'a speed of 0 is a speed');
+  assertEqual(sheetLandSpeed(rows.slice(0, 2)), 'Unknown', 'no row: unknown, never a guessed 30 ft.');
+  assertEqual(sheetHitPoints(rows), 35, 'the engine row; the item row is already in it');
+  assertEqual(sheetHitPoints(rows.slice(0, 2)), null, 'no row: unknown');
 }
 
 function verifiesTheMarketCannotSellACustomItem() {

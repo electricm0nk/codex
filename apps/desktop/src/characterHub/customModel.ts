@@ -13,6 +13,7 @@
 import type { BodySlotDto } from '../boundary/listHeldEquipment';
 import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
 import { SKILLS, skillIdFor } from './skillsModel';
+import { UNKNOWN_RACE_TRAIT } from './characterHubModel';
 
 export interface CustomGrant {
   id: string;
@@ -179,21 +180,17 @@ export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | 'lef
   return record.worn ? 'worn' : record.leftBehind ? 'left_behind' : 'carried';
 }
 
-const itemRowValue = (explanations: readonly ExplanationDto[], id: string): number =>
-  explanations.find((row) => row.id === id)?.value ?? 0;
+const engineRowValue = (explanations: readonly ExplanationDto[], id: string): number | null =>
+  explanations.find((row) => row.id === id)?.value ?? null;
 
 /**
- * The race's land speed with the engine's `custom_item.speed` row, then its `custom_item.speed_percent`
- * row in whole feet, rounded down; an unknown speed stays unknown.
+ * The land speed the Speed tile shows: the engine's `speed.land` row (the race's base speed with what
+ * worn items add, computed in Rust, the value the printed sheet carries too), or `Unknown` when the
+ * engine states none (a race with no creation chassis; the browser preview).
  */
-export function withItemSpeed(land: string, explanations: readonly ExplanationDto[]): string {
-  const feet = /^(\d+) ft\.$/.exec(land);
-  if (feet === null) {
-    return land;
-  }
-  const percent = explanations.find((row) => row.id === 'custom_item.speed_percent')?.value ?? 100;
-  const moved = Number(feet[1]) + itemRowValue(explanations, 'custom_item.speed');
-  return `${Math.max(0, Math.floor((moved * percent) / 100))} ft.`;
+export function sheetLandSpeed(explanations: readonly ExplanationDto[]): string {
+  const feet = engineRowValue(explanations, 'speed.land');
+  return feet === null ? UNKNOWN_RACE_TRAIT : `${feet} ft.`;
 }
 
 /**
@@ -204,9 +201,13 @@ export function savedIntelligenceModifier(sheetModifier: number, explanations: r
   return explanations.find((row) => row.id === 'ability_modifier.intelligence.saved')?.value ?? sheetModifier;
 }
 
-/** The hit point total with the engine's `custom_item.hit_points` row; an unknown total stays unknown. */
-export function withItemHitPoints(total: number | null, explanations: readonly ExplanationDto[]): number | null {
-  return total === null ? null : total + itemRowValue(explanations, 'custom_item.hit_points');
+/**
+ * The maximum hit points the Hit Points tile shows: the engine's `hit_points.max` row (the class
+ * levels, saved rolls, Constitution, the GM's grants and worn items, computed in Rust, the value the
+ * printed sheet carries too), or `null` (Unknown) when the engine states none.
+ */
+export function sheetHitPoints(explanations: readonly ExplanationDto[]): number | null {
+  return engineRowValue(explanations, 'hit_points.max');
 }
 
 export function grantTargetLabel(target: string): string {

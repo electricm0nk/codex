@@ -2829,6 +2829,9 @@ pub(crate) fn load_saved_character_at_root(
     if let Some(snapshot) = snapshot.as_mut() {
         worn_custom_items.apply_to_snapshot(snapshot);
     }
+    let constitution_modifier = snapshot
+        .as_ref()
+        .map_or(corpus_receipt.base.ability_modifiers.constitution, |snapshot| snapshot.ability_modifiers.constitution);
 
     let mut sheet = LoadSavedCharacterResponse {
         admitted_under_override: admitted_records_at_root(root, &envelope.character_input),
@@ -2852,7 +2855,99 @@ pub(crate) fn load_saved_character_at_root(
         feat_skill_bonuses,
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
+    push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
     Ok(sheet)
+}
+
+/// The sheet's maximum hit points (`hit_points.max`) and land speed (`speed.land`): the one value
+/// the Character Sheet's Hit Points and Speed tiles and the printed Combat block all read. Pushed
+/// after the worn items' `custom_item.hit_points`, `custom_item.speed` and `custom_item.speed_percent`
+/// rows, which each adds. A total the engine cannot state (an unsaved level of a class with no known
+/// hit die; a race with no creation chassis) gets no row, and the sheet prints it as unknown.
+fn push_hit_points_and_speed_rows(root: &Path, input: &CharacterInput, constitution_modifier: i16, explanations: &mut Vec<ExplanationDto>) {
+    let item_row = |id: &str| explanations.iter().find(|row| row.id == id).map(|row| row.value);
+    let hit_points = max_hit_points_row(root, input, constitution_modifier, item_row("custom_item.hit_points"));
+    let speed = land_speed_row(&input.chosen.race_id, item_row("custom_item.speed"), item_row("custom_item.speed_percent"));
+    explanations.extend(hit_points);
+    explanations.extend(speed);
+}
+
+/// Every held class level's hit points, plus the GM's `hit_points` grants and what worn items add.
+/// A level with a saved result (`hit_points.json`) counts as saved, plus the Constitution modifier,
+/// at least 1; the class's results past the levels it holds are ignored, and the order classes were
+/// added in does not matter. With no saved result at all, the character's first level takes the
+/// full die and every other the die's average (`hit_die_source::hit_points_from_die`). A level
+/// past the saved ones takes the average.
+fn max_hit_points_row(root: &Path, input: &CharacterInput, constitution_modifier: i16, worn_items: Option<i16>) -> Option<ExplanationDto> {
+    // An unreadable file reads as none saved, as the sheet always has.
+    let saved = load_character_hit_points_at_root(root).map(|file| file.levels).unwrap_or_default();
+    let (total, terms) = class_hit_points_total(&input.chosen.class_levels, &saved, constitution_modifier)?;
+    let grants: i16 = custom_or_empty(root)
+        .grants
+        .iter()
+        .filter(|grant| grant.target == "hit_points")
+        .map(|grant| i16::try_from(grant.value).unwrap_or(0))
+        .sum();
+    let worn = worn_items.unwrap_or(0);
+    let mut detail = format!(
+        "{} (the full die at the first level, the die's average after it, a saved roll as saved; Constitution {constitution_modifier:+} per level, at least 1)",
+        terms.join("; ")
+    );
+    if grants != 0 {
+        detail.push_str(&format!("; GM grants {grants:+}"));
+    }
+    if worn != 0 {
+        detail.push_str(&format!("; worn items {worn:+}"));
+    }
+    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + grants + worn, detail })
+}
+
+/// The held classes' hit points and one term per class for the row's detail; `None` with no class
+/// held, or when a level with no saved result belongs to a class with no known hit die.
+fn class_hit_points_total(class_levels: &[CharacterClassLevel], saved: &[HitPointLevelDto], constitution_modifier: i16) -> Option<(i16, Vec<String>)> {
+    use codex::rules_core::pilot_compute::hit_die_source::{hit_die_source, hit_points_from_die};
+    if class_levels.is_empty() {
+        return None;
+    }
+    let mut total: i16 = 0;
+    let mut terms: Vec<String> = Vec::new();
+    for (index, held) in class_levels.iter().enumerate() {
+        let results: Vec<u8> = saved.iter().filter(|level| level.class_id == held.class_id).map(|level| level.value).take(usize::from(held.level)).collect();
+        let unsaved = held.level.saturating_sub(u8::try_from(results.len()).unwrap_or(u8::MAX));
+        let mut term: i16 = results.iter().map(|value| (i16::from(*value) + constitution_modifier).max(1)).sum();
+        if unsaved > 0 {
+            let source = hit_die_source(&held.class_id)?;
+            term += hit_points_from_die(source.die, unsaved, saved.is_empty() && index == 0, constitution_modifier);
+        }
+        let rolls = if results.is_empty() { String::new() } else { format!(", {} saved roll(s)", results.len()) };
+        terms.push(format!("{} {}: {term}{rolls}", held.class_id, held.level));
+        total += term;
+    }
+    Some((total, terms))
+}
+
+/// Land speed in feet: `base` plus what worn items add, then their percent, whole feet rounded
+/// down, never below 0.
+fn land_speed_feet(base: i32, worn_feet: Option<i16>, worn_percent: Option<i16>) -> i32 {
+    ((base + i32::from(worn_feet.unwrap_or(0))) * i32::from(worn_percent.unwrap_or(100))).div_euclid(100).max(0)
+}
+
+/// The race's base land speed (its creation chassis, as the race roster states it) plus what worn
+/// items add (`custom_item.speed`), then their `custom_item.speed_percent` in whole feet rounded
+/// down, never below 0.
+fn land_speed_row(race_id: &str, worn_feet: Option<i16>, worn_percent: Option<i16>) -> Option<ExplanationDto> {
+    let corpus = crate::race_catalog::race_corpus().as_ref().ok()?;
+    let race_key = corpus.resolve_key(race_id)?;
+    let base = race_creation_chassis(&corpus.resolve(race_key, &[])?).ok()?.base_speed_ft;
+    let value = i16::try_from(land_speed_feet(base, worn_feet, worn_percent)).ok()?;
+    let mut detail = format!("{race_key} base land speed {base} ft.");
+    if let Some(moved) = worn_feet {
+        detail.push_str(&format!("; worn items {moved:+} ft."));
+    }
+    if let Some(percent) = worn_percent {
+        detail.push_str(&format!("; worn items {percent}% of it, whole feet rounded down"));
+    }
+    Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
 }
 
 /// A worn item's Intelligence is a bonus that comes off with the item, and a headband grants its
@@ -10030,6 +10125,43 @@ mod tests {
             assert!(SavedCharacterStore::load(&root).is_err(), "{label}: nothing may be saved");
             std::fs::remove_dir_all(&root).ok();
         }
+    }
+
+    /// The sheet's `hit_points.max` (E8.6): the saved results drive the total; levels gained after
+    /// creation take the average. Ported from the screen's retired `maxHitPointsWithSavedLevels`.
+    #[test]
+    fn class_hit_points_total_follows_the_saved_results() {
+        let held = |levels: &[(&str, u8)]| -> Vec<CharacterClassLevel> {
+            levels.iter().map(|(class_id, level)| CharacterClassLevel { class_id: (*class_id).to_owned(), level: *level }).collect()
+        };
+        let rolls = |values: &[(&str, u8)]| -> Vec<HitPointLevelDto> {
+            values.iter().map(|(class_id, value)| HitPointLevelDto { class_id: (*class_id).to_owned(), value: *value }).collect()
+        };
+        let total = |levels: &[CharacterClassLevel], saved: &[HitPointLevelDto], con: i16| class_hit_points_total(levels, saved, con).map(|(value, _)| value);
+        let fighter3 = held(&[("class:fighter", 3)]);
+        assert_eq!(total(&fighter3, &[], 2), Some(10 + 2 + 2 * (6 + 2)), "no saved results: the full d10, then its average 6, Con every level");
+        let f = "class:fighter";
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 7), (f, 3)]), 2), Some(12 + 9 + 5), "every saved result plus Constitution");
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 7)]), 2), Some(12 + 9 + 8), "a level gained after creation takes the average");
+        let fighter_wizard = held(&[("class:fighter", 1), ("class:wizard", 1)]);
+        assert_eq!(total(&fighter_wizard, &rolls(&[("class:wizard", 5), (f, 10)]), 0), Some(15), "the order the classes were added in does not matter");
+        assert_eq!(total(&held(&[(f, 6), ("class:arcane_archer", 1)]), &[], 0), Some(10 + 5 * 6 + 6), "only the first character level takes the full die");
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 1), (f, 2)]), -5), Some(5 + 1 + 1), "each level is worth at least 1 hp");
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 6), (f, 6), (f, 6)]), 0), Some(22), "results beyond the levels held are ignored");
+        assert_eq!(total(&held(&[("class:some_future_class", 1)]), &[], 0), None, "a class with no known die is unknown, never guessed");
+        assert_eq!(total(&[], &[], 0), None, "no class held, no total");
+    }
+
+    /// The sheet's `speed.land` (E8.6): what worn items add, then their percent, whole feet rounded
+    /// down, never below 0. Ported from the screen's retired `withItemSpeed`.
+    #[test]
+    fn land_speed_feet_adds_then_scales_worn_items() {
+        assert_eq!(land_speed_feet(30, Some(10), None), 40, "the row moves it");
+        assert_eq!(land_speed_feet(30, None, None), 30, "no row, no change");
+        assert_eq!(land_speed_feet(5, Some(-10), None), 0, "never below 0");
+        assert_eq!(land_speed_feet(30, None, Some(50)), 15, "a Loadstone halves the land speed");
+        assert_eq!(land_speed_feet(30, Some(10), Some(50)), 20, "and what an item adds to it");
+        assert_eq!(land_speed_feet(25, None, Some(50)), 12, "whole feet, rounded down");
     }
 
     #[test]

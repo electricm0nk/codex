@@ -186,3 +186,69 @@ fn print_smoke_print_writes_a_temp_copy_named_for_the_character() {
     assert_eq!(first.file_path, second.file_path);
     assert!(std::fs::read(&second.file_path).expect("the copy reads back") == render(&root, Paper::Letter));
 }
+
+/// The load response's `hit_points.max` and `speed.land` rows (E8.6): the one value the sheet's
+/// Hit Points and Speed tiles read, and the one the Combat block prints.
+fn hit_points_and_speed(root: &Path) -> (i16, i16) {
+    let loaded = load_saved_character_at_root(root).expect("the character loads");
+    let row = |id: &str| {
+        loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("the load response has the {id} row")).value
+    };
+    (row("hit_points.max"), row("speed.land"))
+}
+
+#[test]
+fn print_smoke_hit_points_and_speed_print_the_load_responses_one_value_for_aldric() {
+    let root = seeded_aldric("hp-speed");
+    let (hit_points, speed) = hit_points_and_speed(&root);
+    // Aldric is a Human (30 ft., CRB p.27) Fighter 3 (d10) with Constitution 14 (+2) and no saved
+    // rolls: 10 + 2, then the d10's average 6 + 2 twice (CRB p.30).
+    assert_eq!((hit_points, speed), (28, 30), "Aldric's maximum hit points and land speed");
+    let text = pdf_text(&render(&root, Paper::A4));
+    for line in [format!("Hit Points {hit_points}"), format!("Speed {speed} ft.")] {
+        assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
+    }
+    let at = |label: &str| text.find(label).unwrap_or_else(|| panic!("{label} printed: {text}"));
+    assert!(at("Combat") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Hit Points in the Combat block: {text}");
+    assert!(at("Combat") < at("Speed") && at("Speed") < at("Abilities"), "Speed in the Combat block: {text}");
+}
+
+#[test]
+fn print_smoke_hit_points_and_speed_carry_a_gm_grant_and_a_worn_speed_item() {
+    use crate::character_custom::{save_character_custom_at_root, CharacterCustomDto, CustomBonusDto, CustomGrantDto, CustomRecordDto};
+    use codex::rules_core::body_slots::BodySlot;
+    use codex::rules_core::character_input::ActiveState;
+
+    let root = seeded_aldric("hp-speed-custom");
+    let (base_hit_points, base_speed) = hit_points_and_speed(&root);
+    let bonus = |target: &str, value: i32| CustomBonusDto { target: target.to_owned(), bonus_type: "Enhancement".to_owned(), value };
+    let custom = CharacterCustomDto {
+        grants: vec![CustomGrantDto {
+            id: "g1".to_owned(),
+            label: "Blessing of the Hearth".to_owned(),
+            target: "hit_points".to_owned(),
+            value: 5,
+            reason: "the GM's quest reward".to_owned(),
+        }],
+        equipment: vec![CustomRecordDto {
+            id: "boots".to_owned(),
+            name: "Boots of the Long Road".to_owned(),
+            slot: Some(BodySlot::Feet),
+            bonuses: vec![bonus("speed", 10), bonus("hit_points", 3)],
+            ..Default::default()
+        }],
+        ..Default::default()
+    };
+    save_character_custom_at_root(&root, &custom, "2026-11-05T00:00:00Z").expect("custom.json saves");
+    // Carried: the grant counts, the boots do not.
+    assert_eq!(hit_points_and_speed(&root), (base_hit_points + 5, base_speed), "a grant moves hit points; carried boots move nothing");
+    let worn = crate::character_hub::set_equipment_active_state_at_root(&root, "custom:boots", ActiveState::EquippedActive, "2026-11-05T00:00:01Z")
+        .expect("the boots go on");
+    assert!(matches!(worn, crate::character_hub::CreateCharacterResponse::Saved { .. }), "{worn:?}");
+    let (hit_points, speed) = hit_points_and_speed(&root);
+    assert_eq!((hit_points, speed), (base_hit_points + 5 + 3, base_speed + 10), "worn boots add their hit points and speed");
+    let text = pdf_text(&render(&root, Paper::A4));
+    for line in [format!("Hit Points {hit_points}"), format!("Speed {speed} ft.")] {
+        assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
+    }
+}
