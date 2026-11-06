@@ -94,6 +94,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E8 | E8.4 | complete | c226f02337 + receipt commit | artifacts/epic_8/E8.4_cycle_receipt.md |
 | E8 | E8.5 | complete | 043be0aa10 + receipt commit | artifacts/epic_8/E8.5_cycle_receipt.md |
 | E8 | E8.6 | complete | 76dd143469, 53303ba64e + receipt commit | artifacts/epic_8/E8.6_cycle_receipt.md |
+| E8 | E8.7 | complete | 49a156e423, bac3dd4ab9 + receipt commit | artifacts/epic_8/E8.7_cycle_receipt.md |
 
 ## Epic reports
 
@@ -333,6 +334,8 @@ seed deltas, open blockers.)
 | E8.6 | Where the one value lives | Two `explanations` rows of the load response (`hit_points.max`, `speed.land`), pushed after the worn-item rows; Show the math prints their detail | A new response field, which the print's derivation lines would not see |
 | E8.6 | Each level's floor with no saved rolls | At least 1 hp per level (the engine's `hit_points_from_die`; the saved-roll path already did) | The retired `maxHitPoints`' floor on the sum only; differs only at Con modifier ≤ −(die average) |
 | E8.6 | The HP tracker's own Max | Left on `load_character_durability`'s rule (the card's "does not cover") and named in the receipt | Pointing the tracker at `hit_points.max`, a change to the tracker's current-HP default no card scoped |
+| E8.7 | Where each skill total lives | One `skill.total.<skill>` `explanations` row per Skills panel row (35), the panel's own rule ported to Rust; Show the math prints its detail | The engine's `allocate_skill_ranks` totals, whose narrower class-skill lists would move the screen's values |
+| E8.7 | The allocation dialog's total for an unsaved draft | The saved row while a row's ranks are unchanged, `on save` once changed, none on Create | A TypeScript preview sum (NR-2), or a preview command no card scoped |
 
 ## Open blockers
 
