@@ -42,7 +42,7 @@ pub fn combat(sources: &SheetSources) -> SheetBlock {
     let plain = |value: Option<i16>| value.map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string());
     let with_sign = |value: Option<i16>| value.map_or_else(|| NO_VALUE.to_owned(), signed);
     let line = |label: &str, value: String, source: &str| SheetRow::new(label, [value]).derived(sources.derivation_of(source));
-    SheetBlock::new(
+    let mut block = SheetBlock::new(
         "Combat",
         vec![
             line("Armor Class", plain(snapshot.map(|s| s.baseline_armor_class)), "defense.baseline_armor_class"),
@@ -57,7 +57,12 @@ pub fn combat(sources: &SheetSources) -> SheetBlock {
             line("Reflex", with_sign(snapshot.map(|s| s.total_saves.reflex)), "defense.total_save.reflex"),
             line("Will", with_sign(snapshot.map(|s| s.total_saves.will)), "defense.total_save.will"),
         ],
-    )
+    );
+    // The Defense tab's `Damage Reduction: <n>/—`, printed whenever the screen shows one.
+    if let Some(reduction) = snapshot.and_then(|s| s.damage_reduction) {
+        block.rows.push(line("Damage Reduction", format!("{reduction}/—"), "class_feature.barbarian.damage_reduction"));
+    }
+    block
 }
 
 pub fn abilities(sources: &SheetSources) -> SheetBlock {
@@ -107,8 +112,7 @@ pub(crate) fn class_label(class_summary: &str) -> String {
         .filter(|segment| !segment.is_empty())
         .map(|segment| {
             let (class_id, level) = segment.rsplit_once(':').unwrap_or((segment, ""));
-            let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
-            let name = rule_label("class", slug).unwrap_or_else(|| slug.to_owned());
+            let name = class_name(class_id);
             if level.is_empty() {
                 name
             } else {
@@ -121,4 +125,11 @@ pub(crate) fn class_label(class_summary: &str) -> String {
     } else {
         held.join(" / ")
     }
+}
+
+/// `class:fighter` (or `fighter`) reads `Fighter`: the converted class record's own label, or the
+/// slug for a class with no record, as the roster does.
+pub(crate) fn class_name(class_id: &str) -> String {
+    let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
+    rule_label("class", slug).unwrap_or_else(|| slug.to_owned())
 }

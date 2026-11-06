@@ -346,3 +346,98 @@ fn print_pf_blocks_a_left_behind_item_is_owned_with_no_weight() {
     // The loadout's `item:shield` row and the Power Attack toggle are not things the character owns.
     assert!(!inventory.contains("power_attack") && !inventory.contains("shield"), "{inventory}");
 }
+
+/// E8.8: the Class Features panel lists every `class_feature.*` / `class_chassis.*` row the engine
+/// computed (`buildClassFeatureSurface`), each with its class, its label and its value, so the basic
+/// sheet prints every one. The label is the panel's own rule: `golden/class_feature_labels.json`
+/// holds every seed's panel rows, which `classFeatureLabelParity.test.ts` holds the panel to and this
+/// test holds the print and the seeds' own load to.
+#[test]
+fn print_pf_blocks_every_class_features_panel_row_prints_its_label_and_value() {
+    let fixture: serde_json::Value =
+        serde_json::from_str(include_str!("../golden/class_feature_labels.json")).expect("the label fixture is JSON");
+    for (tag, id) in [("aldric", ALDRIC_ID), ("elowen", ELOWEN_ID), ("tomas", TOMAS_ID)] {
+        let root = seeded(&format!("class-features-{tag}"), id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let seed = &fixture[tag];
+        assert_eq!(seed["characterId"].as_str(), Some(id), "{tag}: the fixture names the seed");
+        let is_class_record = |row: &&crate::character_hub::ExplanationDto| {
+            row.id.starts_with("class_feature.") || row.id.starts_with("class_chassis.")
+        };
+        let listed: Vec<(String, i64)> = loaded
+            .explanations
+            .iter()
+            .filter(is_class_record)
+            .filter(|row| !row.id.ends_with(".unsupported"))
+            .map(|row| (row.id.clone(), i64::from(row.value)))
+            .collect();
+        let expected = seed["features"].as_array().expect("features is a list");
+        let fixture_rows: Vec<(String, i64)> = expected
+            .iter()
+            .map(|row| (row["id"].as_str().expect("id").to_owned(), row["value"].as_i64().expect("value")))
+            .collect();
+        assert_eq!(listed, fixture_rows, "{tag}: the fixture holds every row the panel lists, in the engine's order");
+        let unsupported: Vec<&str> = loaded
+            .explanations
+            .iter()
+            .filter(is_class_record)
+            .filter(|row| row.id.ends_with(".unsupported"))
+            .map(|row| row.id.as_str())
+            .collect();
+        let fixture_unsupported: Vec<&str> =
+            seed["notComputed"].as_array().expect("notComputed is a list").iter().map(|id| id.as_str().expect("an id")).collect();
+        assert_eq!(unsupported, fixture_unsupported, "{tag}: the fixture holds every row the panel files as not computed");
+
+        let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+        let block = document.blocks.iter().find(|block| block.heading == "Class Features").expect("Class Features");
+        let text = pdf_text(&render(&root, &request(false, false, false)));
+        // Up to the Custom heading: a feature's own label may hold the word "Spells".
+        let start = text.find("Class Features").expect("Class Features");
+        let features = &text[start..start + text[start..].find("Custom").expect("Custom")];
+        for row in expected {
+            let class = row["classLabel"].as_str().unwrap_or("Chassis");
+            let label = format!("{class}: {}", row["label"].as_str().expect("label"));
+            let value = row["value"].as_i64().expect("value").to_string();
+            let printed = block
+                .rows
+                .iter()
+                .find(|printed| printed.label == label)
+                .unwrap_or_else(|| panic!("{tag}: the Class Features block holds `{label}`: {:?}", block.rows));
+            assert_eq!(printed.values, vec![value.clone()], "{tag}: `{label}` prints its value");
+            let line = format!("{label} {value}");
+            assert!(features.contains(&line), "{tag}: the PDF's Class Features prints `{line}`: {features}");
+        }
+    }
+}
+
+/// E8.8: the Defense tab shows `Damage Reduction: <n>/—` whenever the snapshot holds one, so the
+/// basic sheet prints it then, and not otherwise. No seed holds one (the engine grounds it for a
+/// Barbarian), so the snapshot is given one here.
+#[test]
+fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
+    let root = seeded("damage-reduction", ALDRIC_ID);
+    let mut loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let basic = request(false, false, false);
+    let typeset_text = |loaded: &crate::character_hub::LoadSavedCharacterResponse| {
+        let sources = super::SheetSources {
+            loaded,
+            held: list_held_equipment_at_root(&root).expect("held copies list"),
+            custom: load_character_custom_at_root(&root).unwrap_or_default(),
+            bio: crate::character_hub::load_character_bio_at_root(&root).expect("bio loads"),
+            money: Some(crate::character_hub::load_character_money_at_root(&root).expect("money loads")),
+            request: &basic,
+        };
+        let document = crate::print::layout::pf1e::layout(&sources);
+        let typeset = crate::print::typst::typeset(&document).expect("the sheet typesets");
+        assert!(typeset.warnings.is_empty(), "Typst reports no diagnostics: {:?}", typeset.warnings);
+        pdf_text(&typeset.pdf)
+    };
+    assert_eq!(loaded.snapshot.as_ref().and_then(|snapshot| snapshot.damage_reduction), None, "the seed holds no Damage Reduction");
+    let none = typeset_text(&loaded);
+    assert!(!none.contains("Damage Reduction"), "no Damage Reduction prints when the screen shows none: {none}");
+
+    loaded.snapshot.as_mut().expect("Aldric computes a snapshot").damage_reduction = Some(3);
+    let text = typeset_text(&loaded);
+    let combat = &text[text.find("Combat").expect("Combat")..text.find("Abilities").expect("Abilities")];
+    assert!(combat.contains("Damage Reduction 3/—"), "the Combat block prints `Damage Reduction 3/—`: {combat}");
+}

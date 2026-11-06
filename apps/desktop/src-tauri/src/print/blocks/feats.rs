@@ -2,7 +2,7 @@
 //! features", `sheet_lines`); the numbers are the engine's (`feats.budget.*` rows, a sheet line's
 //! printed value). An override tag prints on the feat it let in (E6.2).
 
-use super::core::rule_label;
+use super::core::{class_name, rule_label};
 use super::{derivation, words_of, SheetSources};
 use crate::character_hub::SheetLineDto;
 use crate::character_ledger::AdmittedKind;
@@ -82,14 +82,88 @@ pub fn feats(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Feats", rows)
 }
 
-pub fn class_features(sources: &SheetSources) -> SheetBlock {
-    let mut rows: Vec<SheetRow> = sources
+/// The record families the Class Features panel lists (`classFeaturesModel.ts`), and the suffix of
+/// a row it files under "not computed" instead.
+const CLASS_RECORD_PREFIXES: [&str; 2] = ["class_feature.", "class_chassis."];
+const UNSUPPORTED_SUFFIX: &str = ".unsupported";
+
+/// `sneak_attack` reads `Sneak Attack`; `base_save.will` reads `Base Save Will`: the panel's
+/// `humanise`, ported (every `.`, `_` or space splits a word; each word's first letter raised).
+fn humanise(segments: &[&str]) -> String {
+    segments
+        .join(" ")
+        .split(|c: char| c == '.' || c == '_' || c.is_whitespace())
+        .filter(|word| !word.is_empty())
+        .map(|word| {
+            let mut chars = word.chars();
+            chars.next().map(|first| first.to_uppercase().chain(chars).collect::<String>()).unwrap_or_default()
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
+/// A class record's owning class token and its label: the panel's `splitId`, ported. The class is
+/// looked for at the first segment after the prefix and one further in (a book's namespace,
+/// `class_feature.pu.<class>.…`); a leading `corpus_record` family segment is not part of the label.
+fn split_class_record<'a>(id: &'a str, held: &[(String, String)]) -> (Option<&'a str>, String) {
+    let after: Vec<&str> = id.split('.').skip(1).collect();
+    for index in 0..=1 {
+        if index + 1 >= after.len() {
+            break;
+        }
+        if held.iter().any(|(token, _)| token == after[index]) {
+            let mut rest = &after[index + 1..];
+            if rest.len() > 1 && rest[0] == "corpus_record" {
+                rest = &rest[1..];
+            }
+            return (Some(after[index]), humanise(rest));
+        }
+    }
+    (None, humanise(&after))
+}
+
+/// Every row the Class Features panel lists, as it lists it: the held class's name (`Chassis` for a
+/// record naming none), the label and the engine's value, in the engine's order. The value is the
+/// row's own; Show the math prints the row behind it.
+fn class_record_rows(sources: &SheetSources) -> Vec<SheetRow> {
+    let held: Vec<(String, String)> = sources
         .loaded
-        .sheet_lines
-        .iter()
-        .filter(|line| line.kind == "class" || line.kind == "class_feature")
-        .map(line_row)
+        .summary
+        .class_summary
+        .split(',')
+        .map(str::trim)
+        .filter(|segment| !segment.is_empty())
+        .map(|segment| {
+            let class_id = segment.rsplit_once(':').map_or(segment, |(class_id, _)| class_id);
+            let token = class_id.rsplit(':').next().unwrap_or(class_id);
+            (token.to_owned(), class_name(class_id))
+        })
         .collect();
+    sources
+        .loaded
+        .explanations
+        .iter()
+        .filter(|row| CLASS_RECORD_PREFIXES.iter().any(|prefix| row.id.starts_with(prefix)) && !row.id.ends_with(UNSUPPORTED_SUFFIX))
+        .map(|row| {
+            let (token, label) = split_class_record(&row.id, &held);
+            let class = token
+                .and_then(|token| held.iter().find(|(held_token, _)| held_token == token))
+                .map_or("Chassis", |(_, name)| name.as_str());
+            SheetRow::new(format!("{class}: {label}"), [row.value.to_string()]).derived(vec![derivation(row)])
+        })
+        .collect()
+}
+
+pub fn class_features(sources: &SheetSources) -> SheetBlock {
+    let mut rows = class_record_rows(sources);
+    rows.extend(
+        sources
+            .loaded
+            .sheet_lines
+            .iter()
+            .filter(|line| line.kind == "class" || line.kind == "class_feature")
+            .map(line_row),
+    );
     // The levels an override let in: no tab lists a level, so the Custom tab and this block do.
     for row in sources.loaded.admitted_under_override.iter().filter(|row| row.kind == AdmittedKind::ClassLevel) {
         rows.push(SheetRow::new(format!("A level of {}", row.id), Vec::<String>::new()).with_notes([super::override_tag(row.override_flag)]));
