@@ -386,6 +386,81 @@ pub struct CorpusAwareCombatBaseline {
     pub combat_maneuver_defense: i16,
 }
 
+/// A weapon the CRB table does not hold, read from its record's type tags (`data/equipment_types.json`):
+/// `Net (Base)` is `Ranged`, `Thrown`, `Exotic`. `None` unless the tags name a `Weapon` that is not
+/// `Ammunition`. The tags give the tier, the group and whether it is swung; a weapon with no
+/// tier tag has no proficiency answer, and owes no penalty. Its damage fields are empty: this
+/// entry answers the attack roll only, and the Weapons row reads the record's own damage.
+pub fn tagged_weapon_entry(identity: &str) -> Option<crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    use crate::rules_core::rules_catalog::crb::weapon_tables::{WeaponProficiency, WeaponTableEntry};
+    let identity = identity.strip_prefix("item:").unwrap_or(identity);
+    let (key, tags) = crate::rules_core::equipment_types::equipment_types().as_ref().ok()?.get_key_value(identity)?;
+    let has = |word: &str| tags.iter().any(|tag| tag == word);
+    if !has("Weapon") || has("Ammunition") {
+        return None;
+    }
+    let key: &'static str = key.as_str();
+    Some(WeaponTableEntry {
+        key,
+        damage_die: "",
+        critical_threat_range_width: 1,
+        critical_multiplier: 2,
+        proficiency_name: Some(key.strip_suffix(" (Base)").unwrap_or(key)),
+        proficiency: if has("Simple") {
+            Some(WeaponProficiency::Simple)
+        } else if has("Martial") {
+            Some(WeaponProficiency::Martial)
+        } else if has("Exotic") {
+            Some(WeaponProficiency::Exotic)
+        } else {
+            None
+        },
+        weapon_group: tags.iter().find_map(|tag| tag.strip_prefix("Weapon Group ")),
+        is_melee: has("Melee"),
+        is_ranged: has("Ranged"),
+    })
+}
+
+/// Whether `input` is proficient with a weapon read from its tags: the one verdict a table weapon
+/// reads, and `None`, owing no penalty, for a weapon whose tags name no tier (a Tanglefoot Bag).
+/// The Market's refusal reads this too.
+pub fn tagged_weapon_proficiency(
+    input: &CharacterInput,
+    weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
+) -> Option<bool> {
+    weapon.proficiency?;
+    character_is_proficient_with(input, weapon)
+}
+
+/// Whether `input` is proficient with the weapon a record in hand is: the table's verdict, or the
+/// tags' when the table does not hold it.
+fn held_weapon_proficiency(
+    input: &CharacterInput,
+    record_key: &str,
+    weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
+    corpus: &SourcePackageContent,
+) -> Option<bool> {
+    if weapon_table_row_of(record_key, corpus).is_some() {
+        character_is_proficient_with(input, weapon)
+    } else {
+        tagged_weapon_proficiency(input, weapon)
+    }
+}
+
+/// The weapon a record in hand is: its table row, else what its type tags say, its own or its base
+/// item's.
+fn weapon_entry_of(
+    record_key: &str,
+    corpus: &SourcePackageContent,
+) -> Option<crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    weapon_table_row_of(record_key, corpus).copied().or_else(|| {
+        tagged_weapon_entry(record_key).or_else(|| {
+            let record = equipment_converted_resolve(record_key, corpus)?;
+            tagged_weapon_entry(&record.identity).or_else(|| tagged_weapon_entry(record.base_item.as_deref()?))
+        })
+    })
+}
+
 /// The weapon-table row of a record in hand: its own, or the base item's when it is a variant
 /// (`Dagger (Adamantine)` is a Dagger). `None` for a weapon from another book.
 fn weapon_table_row_of(
@@ -463,8 +538,8 @@ pub fn compute_combat_baseline_from_corpus(
     // governing ability and size.
     let main_hand = effects.per_item.iter().find(|item| {
         is_weapon_in_hand(&item.equipment_record_key, corpus)
-            // A bow in hand is not swung. The table says; a weapon it does not hold counts as swung.
-            && weapon_table_row_of(&item.equipment_record_key, corpus).is_none_or(|weapon| weapon.is_melee)
+            // A bow in hand is not swung. The table or the tags say; a weapon neither holds counts as swung.
+            && weapon_entry_of(&item.equipment_record_key, corpus).is_none_or(|weapon| weapon.is_melee)
     });
     let attack_bonus_delta = main_hand.map_or(0, |main| {
         effects
@@ -475,7 +550,9 @@ pub fn compute_combat_baseline_from_corpus(
             .max()
             .unwrap_or(0)
     });
-    let weapon = main_hand.and_then(|main| weapon_table_row_of(&main.equipment_record_key, corpus));
+    let weapon = main_hand.and_then(|main| weapon_entry_of(&main.equipment_record_key, corpus));
+    // Only the table's answer can refuse; a weapon read from its tags owes the penalty it is known to.
+    let on_table = main_hand.is_some_and(|main| weapon_table_row_of(&main.equipment_record_key, corpus).is_some());
 
     // v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29): the
     // nonproficiency penalty must be applied HERE TOO, not only in
@@ -492,9 +569,13 @@ pub fn compute_combat_baseline_from_corpus(
     // penalty would just re-introduce the same silent overstatement later.
     //
     // A weapon the CRB table does not hold has no answer here and owes no penalty; it has its own row.
-    let nonproficiency_penalty = match weapon.map(|weapon| (weapon, character_is_proficient_with(input, weapon))) {
+    let nonproficiency_penalty = match main_hand
+        .zip(weapon.as_ref())
+        .map(|(main, weapon)| (weapon, held_weapon_proficiency(input, &main.equipment_record_key, weapon, corpus)))
+    {
         Some((_, Some(false))) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
         Some((_, Some(true))) | None => 0,
+        Some((_, None)) if !on_table => 0,
         Some((weapon, None)) => {
             // Unknown, never assumed. Same contract as the hardcoded path:
             // refuse to produce a number rather than guess a penalty.
@@ -529,11 +610,12 @@ pub fn compute_combat_baseline_from_corpus(
 
     let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = base.ability_modifiers.strength;
-    let weapon_training_bonus = weapon.map_or(0, |weapon| weapon_training_bonus_for(input, weapon, level));
-    let attack_ability_modifier =
-        weapon.map_or(strength_modifier, |weapon| melee_attack_ability_modifier(input, weapon, &base.ability_modifiers));
+    let weapon_training_bonus = weapon.as_ref().map_or(0, |weapon| weapon_training_bonus_for(input, weapon, level));
+    let attack_ability_modifier = weapon
+        .as_ref()
+        .map_or(strength_modifier, |weapon| melee_attack_ability_modifier(input, weapon, &base.ability_modifiers));
     let focus_bonus = main_hand.map_or(0, |main| {
-        weapon_focus_bonus_for(input, weapon.map_or(main.equipment_record_key.as_str(), |weapon| weapon.key))
+        weapon_focus_bonus_for(input, weapon.as_ref().map_or(main.equipment_record_key.as_str(), |weapon| weapon.key))
     });
     // The size modifier is applied HERE TOO, not only in
     // `pilot_compute::compute_combat_baseline`, for exactly the reason the
@@ -675,11 +757,12 @@ pub fn compute_combat_baseline_from_corpus(
     })
 }
 
-/// A weapon, by the signal the Weapons row itself reads: it has damage dice, its own or its base
-/// item's. A shield's bash is not a weapon in hand to this engine, and a catalog row whose base is a
-/// shield (`Shield (Light/Steel)`, `Lion's Shield`) is a shield.
+/// A weapon: it has damage dice, its own or its base item's, the signal the Weapons row reads; or its
+/// type tags name a weapon that is not ammunition (`Net (Base)`, a Tanglefoot Bag). A shield's bash
+/// is not a weapon in hand to this engine, and a catalog row whose base is a shield
+/// (`Shield (Light/Steel)`, `Lion's Shield`) is a shield.
 fn is_weapon_in_hand(record_key: &str, corpus: &SourcePackageContent) -> bool {
-    resolve_base_damage_dice(record_key, corpus).is_some()
+    (resolve_base_damage_dice(record_key, corpus).is_some() || weapon_entry_of(record_key, corpus).is_some())
         && !equipment_converted_resolve(record_key, corpus).is_some_and(|record| {
             record.is_shield || stand_in_record(record, corpus).is_some_and(|base| base.is_shield)
         })
@@ -712,12 +795,12 @@ pub fn corpus_weapon_attack_rows(
         {
             continue;
         }
-        let weapon = weapon_table_row_of(key, corpus);
-        let ability = weapon.map_or(base.ability_modifiers.strength, |weapon| {
+        let weapon = weapon_entry_of(key, corpus);
+        let ability = weapon.as_ref().map_or(base.ability_modifiers.strength, |weapon| {
             attack_ability_modifier_for(input, weapon, &base.ability_modifiers)
         });
-        let focus = weapon_focus_bonus_for(input, weapon.map_or(key, |weapon| weapon.key));
-        let (penalty, proficiency_detail) = match weapon.and_then(|weapon| character_is_proficient_with(input, weapon)) {
+        let focus = weapon_focus_bonus_for(input, weapon.as_ref().map_or(key, |weapon| weapon.key));
+        let (penalty, proficiency_detail) = match weapon.as_ref().and_then(|weapon| held_weapon_proficiency(input, key, weapon, corpus)) {
             Some(false) => (WEAPON_NONPROFICIENCY_ATTACK_PENALTY, ""),
             Some(true) => (0, ""),
             None => (0, " Whether this character is proficient with it is not known, so no penalty is applied."),

@@ -12579,6 +12579,91 @@ mod tests {
         }
     }
 
+    /// Aldric with the Market rows `keys` in hand alone, his Longsword stowed.
+    fn no_required_gear_hold_alone(root: &Path, keys: &[&str]) -> LoadSavedCharacterResponse {
+        let mut envelope = SavedCharacterStore::load(root).unwrap();
+        for selection in &mut envelope.character_input.chosen.equipment_selections {
+            if selection.active_state == ActiveState::EquippedActive && selection.item_id != FEAT_TOGGLE_ITEM_ID {
+                selection.active_state = ActiveState::SelectedInactive;
+            }
+        }
+        for key in keys {
+            envelope.character_input.chosen.equipment_selections.push(EquipmentSelection {
+                item_id: (*key).to_owned(),
+                active_state: ActiveState::EquippedActive,
+                equipped_or_active: true,
+                applied_modifiers: Vec::new(),
+            });
+        }
+        SavedCharacterStore::save(&envelope, root).unwrap();
+        load_saved_character_at_root(root).unwrap()
+    }
+
+    /// A weapon whose record states no damage dice is still a weapon in hand: its type tags say so,
+    /// and decide its ability and proficiency. Aldric (base attack +3, Str +4, Dex +1, a Fighter: not
+    /// proficient with an Exotic weapon). A thrown Net is aimed, so it reads Dexterity and leaves
+    /// Melee where it was; a Crimson Bluff is swung, and with nothing else in hand it is the Melee
+    /// number. The Market's refusal reads the same answer.
+    #[test]
+    fn no_required_gear_a_weapon_stating_no_damage_has_its_own_attack_row() {
+        let (dir, root) = enhancement_rows_aldric("nrg-no-damage");
+        let net = no_required_gear_hold_alone(&root, &["Net (Base)"]);
+        let swung = no_required_gear_hold_alone(&root, &["Crimson Bluff"]);
+        let beside = no_required_gear_hold_alone(&root, &["item:longsword", "Net (Base)"]);
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(no_required_gear_attack_rows(&net), ["combat.weapon_attack_bonus.net"], "{:?}", net.diagnostics);
+        let row = net.explanations.iter().find(|row| row.id == "combat.weapon_attack_bonus.net").unwrap();
+        assert_eq!(row.value, 0, "+3, Dex +1, -4: {}", row.detail);
+        assert!(row.detail.contains("nonproficiency penalty (-4)"), "{}", row.detail);
+        assert_eq!(net.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(7), "a Net is not swung");
+        assert!(net.weapon_damage.is_empty(), "a Net deals no damage: {:?}", net.weapon_damage);
+
+        assert_eq!(no_required_gear_row(&swung, "combat.weapon_attack_bonus.crimsonbluff"), Some(3), "+3, Str +4, -4");
+        assert_eq!(swung.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(3), "{:?}", swung.diagnostics);
+
+        assert_eq!(beside.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(8), "the Longsword's, with its Weapon Focus");
+        assert_eq!(no_required_gear_row(&beside, "combat.weapon_attack_bonus.net"), Some(0));
+
+        use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
+        assert_eq!(character_lacks_proficiency_with(&input, "Net (Base)"), ItemProficiencyGap::Weapon);
+    }
+
+    /// The whole Weapons shelf, held at once: every row whose type tags name a weapon has its attack
+    /// row, and the 64 that do not (ammunition, and packs of it) have none. 480 rows: 416 and 64. The
+    /// one weapon with no row is the Ranged Cannon, which has no record on the sheet's corpus
+    /// (`worn_vs_carried_every_market_row_resolves_on_the_sheet_corpus` names it and why).
+    #[test]
+    fn no_required_gear_every_market_weapon_has_an_attack_row_and_ammunition_none() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let rows = list_market(MarketFilter { category: MarketCategory::Weapon, name_contains: None, book: None }).entries;
+        let slug = |key: &str| -> String {
+            let key = key.strip_suffix(" (Base)").unwrap_or(key);
+            key.chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect()
+        };
+        let (weapons, others): (Vec<_>, Vec<_>) = rows.iter().partition(|row| row.entry.types.iter().any(|t| t == "Weapon"));
+        assert_eq!((rows.len(), weapons.len(), others.len()), (480, 416, 64));
+        let (dir, root) = enhancement_rows_aldric("nrg-shelf");
+        let keys: Vec<&str> = rows.iter().map(|row| row.entry.key.as_str()).collect();
+        let loaded = no_required_gear_hold_alone(&root, &keys);
+        std::fs::remove_dir_all(&dir).ok();
+        assert!(loaded.snapshot.is_some(), "{:?}", loaded.diagnostics);
+        let ids: std::collections::BTreeSet<String> = no_required_gear_attack_rows(&loaded).into_iter().collect();
+        let missing: Vec<&str> = weapons
+            .iter()
+            .map(|row| row.entry.key.as_str())
+            .filter(|key| !ids.contains(&format!("combat.weapon_attack_bonus.{}", slug(key))))
+            .collect();
+        assert_eq!(missing, ["Ranged Cannon ~ Clockwork Goliath"]);
+        let ammunition: Vec<&str> = others
+            .iter()
+            .map(|row| row.entry.key.as_str())
+            .filter(|key| ids.contains(&format!("combat.weapon_attack_bonus.{}", slug(key))))
+            .collect();
+        assert_eq!(ammunition, Vec::<&str>::new());
+    }
+
     /// A weapon the CRB table holds by no name of its own has its attack row too, on the twin the sheet
     /// reads, with the base weapon's answers: a Dagger variant, and an other-book weapon. Neither row
     /// is the Longsword's. Aldric: base attack +3, Strength +4.

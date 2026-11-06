@@ -443,7 +443,12 @@ pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str) -
         }
     }
     let Some(weapon) = weapon_of_item(item_id) else {
-        return ItemProficiencyGap::None;
+        // A weapon the table does not hold reads its type tags, as its attack row does.
+        let tagged = crate::rules_core::pilot_compute_corpus::tagged_weapon_entry(item_id);
+        return match tagged.and_then(|weapon| crate::rules_core::pilot_compute_corpus::tagged_weapon_proficiency(input, &weapon)) {
+            Some(false) => ItemProficiencyGap::Weapon,
+            _ => ItemProficiencyGap::None,
+        };
     };
     // A chair is nobody's weapon: anyone may pick one up, at the penalty the sheet already states.
     if weapon.proficiency_name == Some("Improvised Weapon") || character_is_proficient_with(input, weapon) != Some(false) {
