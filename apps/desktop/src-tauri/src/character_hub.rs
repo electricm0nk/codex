@@ -2856,7 +2856,119 @@ pub(crate) fn load_saved_character_at_root(
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
+    let ability_modifiers = snapshot.as_ref().map_or(corpus_receipt.base.ability_modifiers, |snapshot| snapshot.ability_modifiers);
+    let selected_skill_modifiers = snapshot.as_ref().map(|snapshot| snapshot.skill.selected_modifier);
+    push_skill_total_rows(&envelope.character_input, ability_modifiers, selected_skill_modifiers, &mut sheet);
     Ok(sheet)
+}
+
+/// The Skills panel's rows, as `skill:<name>` (`skillsModel.ts`'s `SKILLS`): the book's skills, each
+/// Knowledge on its own row, Craft, Perform and Profession one row each.
+fn sheet_skill_row_ids() -> Vec<String> {
+    codex::rules_core::equipment_effects::skill_set_rows("all")
+}
+
+/// The ability that governs a Skills panel row, by the engine's own key-ability sets
+/// (`equipment_effects::skill_set_rows`, held to the book's skill records by `tests/worn_vs_carried.rs`).
+fn sheet_skill_ability(skill_id: &str, modifiers: codex::rules_core::pilot_compute::AbilityModifiers) -> Option<(&'static str, i16)> {
+    use codex::rules_core::equipment_effects::skill_set_rows;
+    [
+        ("Strength", modifiers.strength),
+        ("Dexterity", modifiers.dexterity),
+        ("Intelligence", modifiers.intelligence),
+        ("Wisdom", modifiers.wisdom),
+        ("Charisma", modifiers.charisma),
+    ]
+    .into_iter()
+    .find(|(word, _)| skill_set_rows(&word.to_ascii_lowercase()).iter().any(|row| row == skill_id))
+}
+
+/// What a skill's total is made of, before the trait, drawback and worn-item row.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct SkillTotalTerms {
+    ability_modifier: i16,
+    ranks: i16,
+    class_skill: bool,
+    feat_bonus: i16,
+}
+
+/// PF1 (CRB Chapter 4): ranks, the key ability's modifier, +3 for a class skill once it has a
+/// rank, and the feat bonus the engine folded for it.
+fn skill_total(terms: SkillTotalTerms) -> i16 {
+    terms.ability_modifier + terms.ranks + if terms.class_skill && terms.ranks > 0 { 3 } else { 0 } + terms.feat_bonus
+}
+
+/// The feat bonus the engine folded for a skill (`knowledge_local`): its own total plus every family
+/// total it belongs to (`knowledge`), the class-skill family rule (`ClassSkillView::contains`).
+fn folded_feat_skill_bonus(bonuses: &codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses, skill: &str) -> i16 {
+    let own = bonuses.skills.get(skill).copied().unwrap_or(0);
+    let families: i32 = bonuses
+        .groups
+        .iter()
+        .filter(|(family, _)| skill == family.as_str() || skill.strip_prefix(family.as_str()).is_some_and(|rest| rest.starts_with('_')))
+        .map(|(_, value)| *value)
+        .sum();
+    i16::try_from(own + families).unwrap_or(0)
+}
+
+/// One `skill.total.<skill>` row per Skills panel row: the one total the panel and the printed
+/// Skills block both read. Climb, Intimidate and Swim take the engine's own total
+/// (`skill.selected_modifier`) when the character computes; every other row adds ranks, the key
+/// ability's modifier, a class skill's +3 (any held class's converted class skills, the same
+/// reader `list_class_facts` serves) and the folded feat bonus. Each then adds its
+/// `skill.trait_modifier` row (traits, drawbacks, worn items), which must already be on the sheet.
+fn push_skill_total_rows(
+    input: &CharacterInput,
+    abilities: codex::rules_core::pilot_compute::AbilityModifiers,
+    selected: Option<codex::rules_core::pilot_compute::SelectedSkillModifiers>,
+    sheet: &mut LoadSavedCharacterResponse,
+) {
+    use codex::rules_core::pilot_compute::class_skill_sheet_rules::{class_skill_view, ClassSkillAnswer};
+    let class_views: Vec<(String, ClassSkillAnswer)> = input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|held| (held.class_id.clone(), class_skill_view(&codex::rules_core::sheet_rule::id_slug(&held.class_id), held.level)))
+        .collect();
+    let mut rows = Vec::new();
+    for skill_id in sheet_skill_row_ids() {
+        let Some((ability, ability_modifier)) = sheet_skill_ability(&skill_id, abilities) else { continue };
+        let skill = skill_id.trim_start_matches("skill:");
+        let ranks: i16 = input.chosen.skill_allocations.iter().filter(|allocation| allocation.skill_id == skill_id).map(|allocation| i16::from(allocation.ranks)).sum();
+        let granted_by: Vec<&str> = class_views
+            .iter()
+            .filter(|(_, answer)| matches!(answer, ClassSkillAnswer::Known(view) if view.contains(skill)))
+            .map(|(class_id, _)| class_id.as_str())
+            .collect();
+        let terms = SkillTotalTerms { ability_modifier, ranks, class_skill: !granted_by.is_empty(), feat_bonus: folded_feat_skill_bonus(&sheet.feat_skill_bonuses, skill) };
+        let engine_total = selected.and_then(|modifiers| match skill {
+            "climb" => Some(modifiers.climb),
+            "intimidate" => Some(modifiers.intimidate),
+            "swim" => Some(modifiers.swim),
+            _ => None,
+        });
+        let trait_row = format!("skill.trait_modifier.{skill}");
+        let trait_modifier = sheet.explanations.iter().find(|row| row.id == trait_row).map_or(0, |row| row.value);
+        let mut detail = match engine_total {
+            Some(total) => format!("{total:+} the engine's total (skill.selected_modifier.{skill})"),
+            None => {
+                let mut words = format!("{ranks} ranks; {ability} {ability_modifier:+}");
+                if terms.class_skill && ranks > 0 {
+                    words.push_str(&format!("; class skill +3 ({})", granted_by.join(", ")));
+                }
+                if terms.feat_bonus != 0 {
+                    words.push_str(&format!("; feats {:+}", terms.feat_bonus));
+                }
+                words
+            }
+        };
+        if trait_modifier != 0 {
+            detail.push_str(&format!("; {trait_row} {trait_modifier:+}"));
+        }
+        let value = engine_total.unwrap_or_else(|| skill_total(terms)) + trait_modifier;
+        rows.push(ExplanationDto { id: format!("skill.total.{skill}"), value, detail });
+    }
+    sheet.explanations.extend(rows);
 }
 
 /// The sheet's maximum hit points (`hit_points.max`) and land speed (`speed.land`): the one value
@@ -10150,6 +10262,31 @@ mod tests {
         assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 6), (f, 6), (f, 6)]), 0), Some(22), "results beyond the levels held are ignored");
         assert_eq!(total(&held(&[("class:some_future_class", 1)]), &[], 0), None, "a class with no known die is unknown, never guessed");
         assert_eq!(total(&[], &[], 0), None, "no class held, no total");
+    }
+
+    /// The sheet's `skill.total.<skill>` sum (E8.7), ported from the Skills panel's retired
+    /// `skillModifier` and `featSkillBonusFor` tests.
+    #[test]
+    fn skill_total_adds_ranks_ability_class_skill_and_feats() {
+        let terms = |ability_modifier: i16, ranks: i16, class_skill: bool, feat_bonus: i16| SkillTotalTerms { ability_modifier, ranks, class_skill, feat_bonus };
+        assert_eq!(skill_total(terms(4, 5, true, 0)), 12, "Spellcraft: 5 ranks + Int +4 + class skill 3");
+        assert_eq!(skill_total(terms(4, 0, true, 0)), 4, "a class skill with no rank takes no +3");
+        assert_eq!(skill_total(terms(-1, 2, false, 0)), 1, "a cross-class skill adds no +3");
+        assert_eq!(skill_total(terms(1, 0, false, 2)), 3, "Perception: Wis +1, 0 ranks, Alertness +2");
+        let bonuses = codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses {
+            skills: [("knowledge_local".to_owned(), 1)].into_iter().collect(),
+            groups: [("knowledge".to_owned(), 2)].into_iter().collect(),
+            ..Default::default()
+        };
+        assert_eq!(folded_feat_skill_bonus(&bonuses, "knowledge_local"), 3, "the family +2 and the exact +1 add");
+        assert_eq!(folded_feat_skill_bonus(&bonuses, "knowledge_arcana"), 2, "the family only");
+        assert_eq!(folded_feat_skill_bonus(&bonuses, "linguistics"), 0, "not a member");
+        assert_eq!(sheet_skill_row_ids().len(), 35, "the Skills panel's 35 rows");
+        let modifiers = codex::rules_core::pilot_compute::AbilityModifiers { strength: 1, dexterity: 2, constitution: 3, intelligence: 4, wisdom: 5, charisma: 6 };
+        for (skill, value) in [("skill:climb", 1), ("skill:fly", 2), ("skill:craft", 4), ("skill:knowledge_planes", 4), ("skill:profession", 5), ("skill:perform", 6)] {
+            assert_eq!(sheet_skill_ability(skill, modifiers).map(|(_, modifier)| modifier), Some(value), "{skill}");
+        }
+        assert!(sheet_skill_row_ids().iter().all(|skill| sheet_skill_ability(skill, modifiers).is_some()), "every row has a key ability");
     }
 
     /// The sheet's `speed.land` (E8.6): what worn items add, then their percent, whole feet rounded
@@ -19790,15 +19927,16 @@ mod tests {
         let response = load_saved_character_at_root(&root).expect("saved rogue should load");
         let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
 
-        // The load appends the feat budget's rows and the sheet's Hit Points and Speed (E8.6), which
-        // are not the chassis's records.
+        // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6) and one
+        // total per Skills panel row (E8.7), which are not the chassis's records.
         let sheet_totals = ["hit_points.max", "speed.land"];
-        let (appended, chassis): (Vec<_>, Vec<_>) = response
-            .explanations
-            .iter()
-            .partition(|row| row.id.starts_with("feats.budget.") || sheet_totals.contains(&row.id.as_str()));
+        let (appended, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| {
+            row.id.starts_with("feats.budget.") || row.id.starts_with("skill.total.") || sheet_totals.contains(&row.id.as_str())
+        });
         let budget: Vec<_> = appended.iter().filter(|row| row.id.starts_with("feats.budget.")).collect();
         assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
+        let skill_totals = appended.iter().filter(|row| row.id.starts_with("skill.total.")).count();
+        assert_eq!(skill_totals, 35, "one total per Skills panel row");
         for id in sheet_totals {
             assert_eq!(appended.iter().filter(|row| row.id == id).count(), 1, "one {id} row");
         }

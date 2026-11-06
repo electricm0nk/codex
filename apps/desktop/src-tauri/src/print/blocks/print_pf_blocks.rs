@@ -136,9 +136,9 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
     let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
     let text = pdf_text(&render(&root, &request(false, false, false)));
     let expected = [
-        // Skills: ranks, and the engine's total where it holds one.
-        "Spellcraft 5".to_owned(),
-        format!("Climb 1 {}", signed(explained("skill.selected_modifier.climb"))),
+        // Skills: ranks, and the load response's total.
+        format!("Spellcraft 5 {}", signed(explained("skill.total.spellcraft"))),
+        format!("Climb 1 {}", signed(explained("skill.total.climb"))),
         // Weapons: the dice stay literal; each facet its own cell.
         "Longsword 1d8".to_owned(),
         "19-20/x2".to_owned(),
@@ -158,6 +158,49 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
     ];
     for line in expected {
         assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
+    }
+}
+
+/// E8.7: every skill a seed holds ranks in prints its ranks and the load response's own total
+/// (`skill.total.<skill>`), the value the Skills panel reads. A few totals are also held to the book
+/// (CRB Chapter 4: ranks + the key ability's modifier + 3 for a class skill with a rank).
+#[test]
+fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    let book = [
+        // Aldric, Human Fighter 3: Str +4, Dex +1, Int +2, Wis +1; Ride, Survival and Knowledge
+        // (Dungeoneering) are Fighter class skills.
+        (ALDRIC_ID, "ride", 3 + 1 + 3),
+        (ALDRIC_ID, "survival", 3 + 1 + 3),
+        (ALDRIC_ID, "knowledge_dungeoneering", 3 + 2 + 3),
+        // Elowen, Human Wizard 5: Int +4, Dex +2; Spellcraft, Fly and Knowledge (Arcana) are Wizard
+        // class skills.
+        (ELOWEN_ID, "spellcraft", 5 + 4 + 3),
+        (ELOWEN_ID, "fly", 5 + 2 + 3),
+        (ELOWEN_ID, "knowledge_arcana", 5 + 4 + 3),
+    ];
+    for (tag, id) in [("skills-aldric", ALDRIC_ID), ("skills-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let text = pdf_text(&render(&root, &request(false, false, false)));
+        let skills = &text[text.find("Skills").expect("Skills")..text.find("Weapons").expect("Weapons")];
+        let ranked: Vec<_> = loaded.skill_allocations.iter().filter(|allocation| allocation.ranks > 0).collect();
+        assert!(ranked.len() >= 7, "{tag}: the seed holds ranks in at least 7 skills: {ranked:?}");
+        for allocation in ranked {
+            let slug = allocation.skill_id.strip_prefix("skill:").expect("a skill id");
+            let total = loaded
+                .explanations
+                .iter()
+                .find(|row| row.id == format!("skill.total.{slug}"))
+                .unwrap_or_else(|| panic!("{tag}: the load response has the skill.total.{slug} row"))
+                .value;
+            let line = format!("{} {} {}", super::skills::skill_name(slug), allocation.ranks, signed(total));
+            assert!(skills.contains(&line), "{tag}: the Skills block prints `{line}`: {skills}");
+        }
+        for (_, slug, value) in book.iter().filter(|(seed, _, _)| *seed == id) {
+            let row = loaded.explanations.iter().find(|row| row.id == format!("skill.total.{slug}")).expect("the row");
+            assert_eq!(row.value, *value, "{tag}: {slug} is the book's total: {}", row.detail);
+        }
     }
 }
 

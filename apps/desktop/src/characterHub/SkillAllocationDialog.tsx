@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { AbilityScoresDto } from '../boundary/loadCreateCharacter';
 import type { HeldClass } from './characterProgression';
-import type { FeatSkillBonusesDto } from '../boundary/loadSavedCharacterDetail';
+import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
 import {
   DEFAULT_PICK_MARKER,
   SKILLS,
-  featSkillBonusFor,
   skillPointsStatus,
   isClassSkill,
   type ClassSkillLookup,
   maxClassSkillRanks,
   maxCrossClassSkillRanks,
-  skillModifier,
+  sheetSkillTotal,
   skillPointsSpent,
 } from './skillsModel';
 
@@ -29,6 +27,10 @@ import {
  * the real `set_skill_allocations` Tauri command. The engine reads each skill at
  * its own rank, and one with no rank untrained; only a build it refuses for
  * something else comes back `Blocked`, with real diagnostics.
+ *
+ * Each row's total is the saved character's `skill.total.<skill>` row (E8.7), computed in Rust; a
+ * row whose ranks the draft has changed reads "on save" until the engine states its new total. With
+ * no saved character (the Create form) no total is shown: nothing is summed here.
  */
 
 export function SkillAllocationDialog(props: {
@@ -38,12 +40,11 @@ export function SkillAllocationDialog(props: {
   /** SD-36 F6a: the engine's class skills for the held classes (`classSkillLookup`). */
   classSkills: ClassSkillLookup;
   characterLevel: number;
-  abilities: AbilityScoresDto;
   /** `null` when a held class states no skill ranks per level: nothing can be allocated. */
   totalPoints: number | null;
   allocation: Record<string, number>;
-  /** SD-36 F6b: the engine's feat skill-bonus fold; each previewed total includes its bonus. */
-  featSkillBonuses: FeatSkillBonusesDto;
+  /** The saved character's explanations, whose `skill.total.<skill>` rows each row prints. */
+  explanations?: readonly ExplanationDto[];
   onAccept: (allocation: Record<string, number>) => void;
 }) {
   const [draft, setDraft] = useState<Record<string, number>>(props.allocation);
@@ -143,8 +144,8 @@ export function SkillAllocationDialog(props: {
           {SKILLS.map((skill) => {
             const classSkill = isClassSkill(props.classSkills, skill.name);
             const ranks = draft[skill.name] ?? 0;
-            const abilityMod = props.abilities[skill.ability];
-            const total = skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name));
+            const saved = ranks === (props.allocation[skill.name] ?? 0);
+            const total = props.explanations && saved ? sheetSkillTotal(props.explanations, skill.name) : null;
             const max = classSkill ? maxClassSkillRanks(props.characterLevel) : maxCrossClassSkillRanks(props.characterLevel);
             return (
               <div key={skill.name} style={{ alignItems: 'center', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.5rem', padding: '0.4rem 0' }}>
@@ -184,9 +185,11 @@ export function SkillAllocationDialog(props: {
                 >
                   +
                 </button>
-                <span style={{ color: 'var(--color-text-secondary)', minWidth: 34, textAlign: 'right' }}>
-                  {total >= 0 ? `+${total}` : total}
-                </span>
+                {props.explanations ? (
+                  <span style={{ color: 'var(--color-text-secondary)', minWidth: 34, textAlign: 'right' }}>
+                    {!saved ? 'on save' : total === null ? '—' : total >= 0 ? `+${total}` : total}
+                  </span>
+                ) : null}
               </div>
             );
           })}

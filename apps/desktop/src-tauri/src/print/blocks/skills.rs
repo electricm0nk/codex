@@ -1,14 +1,14 @@
-//! Skills: each skill the character put ranks in, its ranks, and the total where the engine holds
-//! one (`skill.selected_modifier.<skill>`). The Skills panel adds the rest up in TypeScript
-//! (`skillsModel.ts`'s `skillModifier`), so print cannot carry that sum without a second
-//! derivation (NR-2): it prints `—` there. Discovered card E8.7 gives every skill total one
-//! backend value.
+//! Skills: each skill the character put ranks in (and Climb, Intimidate and Swim, which the engine
+//! always totals), its ranks, and the load response's total (`skill.total.<skill>`), the one value
+//! the Skills panel reads too (E8.7). A ranked skill with no panel row has no total: `—`.
 
 use super::{words_of, SheetSources};
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{SheetBlock, SheetRow};
 
-const TOTAL_PREFIX: &str = "skill.selected_modifier.";
+/// The engine always totals these three, so they print with no rank too.
+const ENGINE_TOTAL_PREFIX: &str = "skill.selected_modifier.";
+const TOTAL_PREFIX: &str = "skill.total.";
 
 pub fn skills(sources: &SheetSources) -> SheetBlock {
     let loaded = sources.loaded;
@@ -19,7 +19,7 @@ pub fn skills(sources: &SheetSources) -> SheetBlock {
         .map(|allocation| allocation.skill_id.strip_prefix("skill:").unwrap_or(&allocation.skill_id).to_owned())
         .collect();
     for row in &loaded.explanations {
-        if let Some(slug) = row.id.strip_prefix(TOTAL_PREFIX) {
+        if let Some(slug) = row.id.strip_prefix(ENGINE_TOTAL_PREFIX) {
             if !slugs.iter().any(|held| held == slug) {
                 slugs.push(slug.to_owned());
             }

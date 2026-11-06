@@ -51,7 +51,6 @@ import {
 import { LOADING_CLASS_FACTS, failedClassFacts, loadedClassFacts, type ClassFactsState } from './classFactsModel';
 import { classFactsQueries } from './classFactsModel';
 import { listClassFacts } from '../boundary/listClassFacts';
-import { NO_FEAT_SKILL_BONUSES } from '../boundary/loadSavedCharacterDetail';
 import { listFeatsForDraft, type FeatCatalogEntryDto } from '../boundary/listFeats';
 import { featItems } from './manageItems';
 import { CreationEquipmentDialog, type CreationEquipmentItem } from './CreationEquipmentDialog';
@@ -1671,17 +1670,8 @@ export function CreateCharacterFields(props: {
               heldClasses={heldClasses}
               classSkills={classSkillLookup(heldClasses, classFacts)}
               characterLevel={characterLevel(levels)}
-              abilities={{
-                strength: abilityModifier(calculatedScore('strength')),
-                dexterity: abilityModifier(calculatedScore('dexterity')),
-                constitution: abilityModifier(calculatedScore('constitution')),
-                intelligence: abilityModifier(calculatedScore('intelligence')),
-                wisdom: abilityModifier(calculatedScore('wisdom')),
-                charisma: abilityModifier(calculatedScore('charisma')),
-              }}
               totalPoints={skillPointsTotal}
               allocation={skillAllocation}
-              featSkillBonuses={NO_FEAT_SKILL_BONUSES}
               onAccept={(next) => {
                 setSkillAllocation(next);
                 setSkillsTouched(true);

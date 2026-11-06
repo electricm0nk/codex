@@ -151,13 +151,11 @@ import {
   SKILLS,
   allocationFromPersisted,
   classSkillLookup,
-  featSkillBonusFor,
   featSkillBonusesWithoutARow,
-  traitSkillModifierFor,
   isClassSkill,
+  sheetSkillTotal,
   type ClassSkillLookup,
   persistedFromAllocation,
-  skillModifier,
   skillPointsSpent,
   totalSkillPointsAvailable,
 } from './skillsModel';
@@ -434,28 +432,19 @@ function SkillsPanel(props: {
   /** `list_class_facts` has not answered yet: a loading line shows instead of the Unknown note. */
   classFactsLoading: boolean;
   allocation: Record<string, number>;
-  realModifiers?: { climb: number; intimidate: number; swim: number };
   /**
-   * SD-36 F6b: the engine's feat skill-bonus fold (`featSkillBonuses` on the sheet response). Added
-   * to every row the panel totals itself; a row the engine totals (`realModifiers`) prints the
-   * engine's own figure.
+   * SD-36 F6b: the engine's feat skill-bonus fold (`featSkillBonuses` on the sheet response). The
+   * totals already hold what it folds; the panel prints what no row adds.
    */
   featSkillBonuses: FeatSkillBonusesDto;
   /**
-   * Brief 1 F3b: the sheet response's explanations. Each row adds the engine's
-   * `skill.trait_modifier.<skill>` value (trait bonuses, Meticulous's untrained -2), which neither
-   * the panel's own sum nor `realModifiers` carries.
+   * The sheet response's explanations. Each row prints its `skill.total.<skill>` row (E8.7), the one
+   * total the printed sheet reads too.
    */
   explanations: readonly ExplanationDto[];
   onOpenDialog: () => void;
   custom: CharacterCustom;
 }) {
-  const REAL_MODIFIER_BY_SKILL: Record<string, number | undefined> = {
-    Climb: props.realModifiers?.climb,
-    Intimidate: props.realModifiers?.intimidate,
-    Swim: props.realModifiers?.swim,
-  };
-
   const spent = skillPointsSpent(props.allocation);
   const budgetIntelligence = savedIntelligenceModifier(props.abilities.intelligence, props.explanations);
   const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, budgetIntelligence, props.isHuman), props.custom);
@@ -508,14 +497,10 @@ function SkillsPanel(props: {
         {SKILLS.map((skill) => {
           const classSkill = isClassSkill(props.classSkills, skill.name);
           const ranks = props.allocation[skill.name] ?? 0;
-          const abilityMod = props.abilities[skill.ability];
-          const real = REAL_MODIFIER_BY_SKILL[skill.name];
-          const total =
-            (real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name))) +
-            traitSkillModifierFor(props.explanations, skill.name);
+          const total = sheetSkillTotal(props.explanations, skill.name);
           return (
             <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
-              <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
+              <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{total === null ? '—' : fmt(total)}</span>
               <span style={{ color: classSkill ? 'var(--color-text)' : 'var(--color-text-secondary)' }}>{skill.name}</span>
               {ranks > 0 ? <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem' }}>({ranks})</span> : null}
               {classSkill && props.classSkills.isDefaultPick(skill.name) ? (
@@ -4494,7 +4479,6 @@ export function CharacterSheet(props: {
               classFactsLoading={classFacts.kind === 'loading'}
               isHuman={isHuman}
               allocation={skillAllocation}
-              realModifiers={snapshot?.selectedSkillModifiers}
               featSkillBonuses={engineRecords.featSkillBonuses}
               explanations={engineRecords.explanations}
               onOpenDialog={() => setSkillDialogOpen(true)}
@@ -4785,10 +4769,9 @@ export function CharacterSheet(props: {
         heldClasses={heldClasses}
         classSkills={classSkills}
         characterLevel={level}
-        abilities={abilities}
         totalPoints={withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, budgetIntelligence, isHuman), custom)}
         allocation={skillAllocation}
-        featSkillBonuses={engineRecords.featSkillBonuses}
+        explanations={engineRecords.explanations}
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}
       />
 
