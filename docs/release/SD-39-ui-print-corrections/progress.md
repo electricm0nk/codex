@@ -93,6 +93,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E8 | E8.3 | complete | 3fc88b76a2 + receipt commit | artifacts/epic_8/E8.3_cycle_receipt.md |
 | E8 | E8.4 | complete | c226f02337 + receipt commit | artifacts/epic_8/E8.4_cycle_receipt.md |
 | E8 | E8.5 | complete | 043be0aa10 + receipt commit | artifacts/epic_8/E8.5_cycle_receipt.md |
+| E8 | E8.6 | complete | 76dd143469, 53303ba64e + receipt commit | artifacts/epic_8/E8.6_cycle_receipt.md |
 
 ## Epic reports
 
@@ -329,6 +330,9 @@ seed deltas, open blockers.)
 | E8.3 | Critical Injuries on the CPR print | The injuries the character has, under their table, with the engine's words | The screen's whole checklist with unticked boxes, which holds no value of the character's |
 | E8.4 | Where Settings, Print paper lives | A Print tab the Settings dialog draws itself | A row in Appearance (paper is not appearance), or `App.tsx` passing the panel (no card owns it) |
 | E8.4 | Campaign notes on a print without the Bio box | None sent | Sending them always, which the backend would not print |
+| E8.6 | Where the one value lives | Two `explanations` rows of the load response (`hit_points.max`, `speed.land`), pushed after the worn-item rows; Show the math prints their detail | A new response field, which the print's derivation lines would not see |
+| E8.6 | Each level's floor with no saved rolls | At least 1 hp per level (the engine's `hit_points_from_die`; the saved-roll path already did) | The retired `maxHitPoints`' floor on the sum only; differs only at Con modifier ≤ −(die average) |
+| E8.6 | The HP tracker's own Max | Left on `load_character_durability`'s rule (the card's "does not cover") and named in the receipt | Pointing the tracker at `hit_points.max`, a change to the tracker's current-HP default no card scoped |
 
 ## Open blockers
 

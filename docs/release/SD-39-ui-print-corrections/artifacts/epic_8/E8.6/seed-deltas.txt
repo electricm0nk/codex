@@ -1,0 +1,25 @@
+base: rendered at c972d1e4c9 before any edit; head: at 76dd143469
+SF diff -r exit 0 
+CPR diff -r exit 0 
+files: sf 4 4 cpr 5 5
+PF aldric:
+  /explanations[hit_points.max]/detail: '<absent>' -> "class:fighter 3: 28 (the full die at the first level, the die's average after it, a saved roll as saved; Constitution +2 per level, at least 1)"  (additive-field)
+  /explanations[hit_points.max]/id: '<absent>' -> 'hit_points.max'  (additive-field)
+  /explanations[hit_points.max]/value: '<absent>' -> 28  (additive-field)
+  /explanations[speed.land]/detail: '<absent>' -> 'Human base land speed 30 ft.'  (additive-field)
+  /explanations[speed.land]/id: '<absent>' -> 'speed.land'  (additive-field)
+  /explanations[speed.land]/value: '<absent>' -> 30  (additive-field)
+PF elowen:
+  /explanations[hit_points.max]/detail: '<absent>' -> "class:wizard 5: 27 (the full die at the first level, the die's average after it, a saved roll as saved; Constitution +1 per level, at least 1)"  (additive-field)
+  /explanations[hit_points.max]/id: '<absent>' -> 'hit_points.max'  (additive-field)
+  /explanations[hit_points.max]/value: '<absent>' -> 27  (additive-field)
+  /explanations[speed.land]/detail: '<absent>' -> 'Human base land speed 30 ft.'  (additive-field)
+  /explanations[speed.land]/id: '<absent>' -> 'speed.land'  (additive-field)
+  /explanations[speed.land]/value: '<absent>' -> 30  (additive-field)
+PF tomas:
+  /explanations[hit_points.max]/detail: '<absent>' -> "class:cleric 3: 24; class:fighter 2: 16 (the full die at the first level, the die's average after it, a saved roll as saved; Constitution +2 per level, at least 1)"  (additive-field)
+  /explanations[hit_points.max]/id: '<absent>' -> 'hit_points.max'  (additive-field)
+  /explanations[hit_points.max]/value: '<absent>' -> 40  (additive-field)
+  /explanations[speed.land]/detail: '<absent>' -> 'Human base land speed 30 ft.'  (additive-field)
+  /explanations[speed.land]/id: '<absent>' -> 'speed.land'  (additive-field)
+  /explanations[speed.land]/value: '<absent>' -> 30  (additive-field)
