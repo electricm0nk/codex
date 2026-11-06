@@ -28,7 +28,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E9
 cd docs/release/SD-39-ui-print-corrections
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 65
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 66
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -86,8 +86,9 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 65
 | E8.5 | Golden suite 24 PDFs | opus | complete | E8.4 | commit 043be0aa10 + receipt commit; receipt artifacts/epic_8/E8.5_cycle_receipt.md; `print_golden` 24 passed (Elowen, SF-Mystic-5, cpr-netrunner-decked × A4, Letter × none, Spellbook, Show the math, all): Typst diagnostics 0, two renders byte-equal, MediaBox, golden page count and headings, every label, value and note inside its block; the suite is a module of the binary, not `tests/` (no lib target; one §25 row, G-10 command corrected); mutation 3 of 3 caught; desktop 1,225 passed, 0 failed; seeds NO_DIFF; no card discovered |
 | E8.6 | Hit Points and Speed: one backend value for screen and print | opus | complete | E8.4 | discovered by E8.1 (`decisions.md §21`); commits 76dd143469, 53303ba64e + receipt commit; receipt artifacts/epic_8/E8.6_cycle_receipt.md; the load response's `hit_points.max` and `speed.land` rows (Rust: saved rolls or the hit die, Con, GM grants, worn items; race chassis speed with worn feet and percent); both tiles read them, the PF Combat block prints them; `maxHitPointsWithSavedLevels`, `withItemHitPoints`, `withItemSpeed` gone (28 references to 0); print_smoke 8 passed; desktop 1,229 passed, 0 failed; 190/190 frontend files; seeds: PF two additive rows each, SF and CPR none; no card discovered |
 | E8.7 | Skill totals: one backend value for screen and print | opus | complete | E8.4 | discovered by E8.2 (`decisions.md §21`); commits 49a156e423, bac3dd4ab9 + receipt commit; receipt artifacts/epic_8/E8.7_cycle_receipt.md; one `skill.total.<skill>` row per Skills panel row (35, Rust: ranks, key ability, class skill +3, folded feats, trait/drawback/worn row; Climb, Intimidate, Swim the engine's own); the panel and the PF Skills block read it; `skillModifier`, `featSkillBonusFor`, `traitSkillModifierFor` gone (27 references to 0); print_pf_blocks 9 passed; desktop 1,232 passed, 0 failed; 190/190 frontend files; golden 24 passed; seeds: PF 35 additive rows each, SF and CPR none; no card discovered |
-| E8.MC | E8 merge check + Epic report | opus | waiting | E8.5 | |
-| E9.1 | Packaged resources + clean build | opus | waiting | E8.MC | |
+| E8.MC | E8 merge check + Epic report | opus | complete | E8.5 | commit 9cd987c1dd + receipt commit; receipt artifacts/epic_8/E8.MC_cycle_receipt.md; refuted: the basic PF sheet left out 28/25/29 of 35 skill totals, the money and Size/Vision (fixed), and the Class Features figures and Damage Reduction (card E8.8); the NR-2 grep could not fail (`grep -n` on a directory; now `grep -rn`, 0); desktop 1,235 passed, 0 failed; golden 24 passed (6 PF page counts moved); seeds NO_DIFF; discovered E8.8 |
+| E8.8 | Class Features figures and Damage Reduction on the basic PF sheet | opus | ready | E8.MC | discovered by E8.MC (`decisions.md §21`); `pf-probe-report.txt` uncited rows |
+| E9.1 | Packaged resources + clean build | opus | waiting | E8.MC, E8.8 | |
 | E9.2 | Fresh-install acceptance | sonnet | waiting | E9.1 | |
 | E9.3 | Widest verify once | sonnet | waiting | E9.2 | |
 | E9.4 | Operator eyeball: three printed sheets | sonnet | waiting | E9.3 | operator signs |

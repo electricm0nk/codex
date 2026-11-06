@@ -1,0 +1,59 @@
+cpr | cpr.reputation.facedown_roll | Facedown | dice | 4 + 1d10 | Facedown: COOL + Reputation + 1d10, 4 + 1d10 (p. 194) | 
+cpr | cpr.weapon.0.damage | Medium Pistol damage | dice | 2d6 | Medium Pistol: 2d6 single shot damage (p342) | 
+cpr | cpr.weapon.0.name | Weapon | words | Medium Pistol | Medium Pistol: ranged weapon (p342) | 
+cpr | cpr.weapon.0.concealable | Medium Pistol concealable | words | Yes | Medium Pistol can be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.0.range_dv.6 | Medium Pistol range DV at 201 to 400 m/yds | words | N/A | Medium Pistol: no range DV at 201 to 400 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.weapon.0.range_dv.7 | Medium Pistol range DV at 401 to 800 m/yds | words | N/A | Medium Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.weapon.1.damage | Heavy Pistol damage | dice | 3d6 | Heavy Pistol: 3d6 single shot damage (p342) | 
+cpr | cpr.weapon.1.name | Weapon | words | Heavy Pistol | Heavy Pistol: ranged weapon (p342) | 
+cpr | cpr.weapon.1.concealable | Heavy Pistol concealable | words | Yes | Heavy Pistol can be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.1.range_dv.6 | Heavy Pistol range DV at 201 to 400 m/yds | words | N/A | Heavy Pistol: no range DV at 201 to 400 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.weapon.1.range_dv.7 | Heavy Pistol range DV at 401 to 800 m/yds | words | N/A | Heavy Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.weapon.2.damage | Very Heavy Pistol damage | dice | 4d6 | Very Heavy Pistol: 4d6 single shot damage (p342) | 
+cpr | cpr.weapon.2.name | Weapon | words | Very Heavy Pistol | Very Heavy Pistol: ranged weapon (p342) | 
+cpr | cpr.weapon.2.concealable | Very Heavy Pistol concealable | words | No | Very Heavy Pistol cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.2.range_dv.6 | Very Heavy Pistol range DV at 201 to 400 m/yds | words | N/A | Very Heavy Pistol: no range DV at 201 to 400 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.weapon.2.range_dv.7 | Very Heavy Pistol range DV at 401 to 800 m/yds | words | N/A | Very Heavy Pistol: no range DV at 401 to 800 m/yds; the Pistol row prints N/A (p174) | 
+cpr | cpr.weapon.3.damage | SMG damage | dice | 2d6 | SMG: 2d6 single shot damage (p342) | 
+cpr | cpr.weapon.3.name | Weapon | words | SMG | SMG: ranged weapon (p342) | 
+cpr | cpr.weapon.3.concealable | SMG concealable | words | Yes | SMG can be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.3.range_dv.7 | SMG range DV at 401 to 800 m/yds | words | N/A | SMG: no range DV at 401 to 800 m/yds; the SMG row prints N/A (p174) | 
+cpr | cpr.weapon.4.damage | Heavy SMG damage | dice | 3d6 | Heavy SMG: 3d6 single shot damage (p342) | 
+cpr | cpr.weapon.4.name | Weapon | words | Heavy SMG | Heavy SMG: ranged weapon (p342) | 
+cpr | cpr.weapon.4.concealable | Heavy SMG concealable | words | No | Heavy SMG cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.4.range_dv.7 | Heavy SMG range DV at 401 to 800 m/yds | words | N/A | Heavy SMG: no range DV at 401 to 800 m/yds; the SMG row prints N/A (p174) | 
+cpr | cpr.weapon.5.damage | Shotgun damage | dice | 5d6 | Shotgun: 5d6 single shot damage (p342) | 
+cpr | cpr.weapon.5.name | Weapon | words | Shotgun | Shotgun: ranged weapon (p342) | 
+cpr | cpr.weapon.5.concealable | Shotgun concealable | words | No | Shotgun cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.5.range_dv.6 | Shotgun range DV at 201 to 400 m/yds | words | N/A | Shotgun: no range DV at 201 to 400 m/yds; the Shotgun (Slug) row prints N/A (p174) | 
+cpr | cpr.weapon.5.range_dv.7 | Shotgun range DV at 401 to 800 m/yds | words | N/A | Shotgun: no range DV at 401 to 800 m/yds; the Shotgun (Slug) row prints N/A (p174) | 
+cpr | cpr.weapon.6.damage | Assault Rifle damage | dice | 5d6 | Assault Rifle: 5d6 single shot damage (p342) | 
+cpr | cpr.weapon.6.name | Weapon | words | Assault Rifle | Assault Rifle: ranged weapon (p342) | 
+cpr | cpr.weapon.6.concealable | Assault Rifle concealable | words | No | Assault Rifle cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.7.damage | Sniper Rifle damage | dice | 5d6 | Sniper Rifle: 5d6 single shot damage (p342) | 
+cpr | cpr.weapon.7.name | Weapon | words | Sniper Rifle | Sniper Rifle: ranged weapon (p342) | 
+cpr | cpr.weapon.7.concealable | Sniper Rifle concealable | words | No | Sniper Rifle cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.8.damage | Bows & Crossbows damage | dice | 4d6 | Bows & Crossbows: 4d6 single shot damage (p342) | 
+cpr | cpr.weapon.8.name | Weapon | words | Bows & Crossbows | Bows & Crossbows: ranged weapon (p342) | 
+cpr | cpr.weapon.8.concealable | Bows & Crossbows concealable | words | No | Bows & Crossbows cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.8.range_dv.6 | Bows & Crossbows range DV at 201 to 400 m/yds | words | N/A | Bows & Crossbows: no range DV at 201 to 400 m/yds; the Bows & Crossbow row prints N/A (p174) | 
+cpr | cpr.weapon.8.range_dv.7 | Bows & Crossbows range DV at 401 to 800 m/yds | words | N/A | Bows & Crossbows: no range DV at 401 to 800 m/yds; the Bows & Crossbow row prints N/A (p174) | 
+cpr | cpr.weapon.9.damage | Grenade Launcher damage | dice | 6d6 | Grenade Launcher: 6d6 single shot damage (p342) | 
+cpr | cpr.weapon.9.name | Weapon | words | Grenade Launcher | Grenade Launcher: ranged weapon (p342) | 
+cpr | cpr.weapon.9.concealable | Grenade Launcher concealable | words | No | Grenade Launcher cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.9.range_dv.7 | Grenade Launcher range DV at 401 to 800 m/yds | words | N/A | Grenade Launcher: no range DV at 401 to 800 m/yds; the Grenade Launcher row prints N/A (p174) | 
+cpr | cpr.weapon.10.damage | Rocket Launcher damage | dice | 8d6 | Rocket Launcher: 8d6 single shot damage (p342) | 
+cpr | cpr.weapon.10.name | Weapon | words | Rocket Launcher | Rocket Launcher: ranged weapon (p342) | 
+cpr | cpr.weapon.10.concealable | Rocket Launcher concealable | words | No | Rocket Launcher cannot be concealed under clothing with the Conceal/Reveal Object Skill (p342) | 
+cpr | cpr.weapon.11.damage | Heavy Melee Weapon damage | dice | 3d6 | Heavy Melee Weapon: 3d6 single shot damage (p093) | 
+cpr | cpr.weapon.11.name | Weapon | words | Heavy Melee Weapon | Heavy Melee Weapon: melee weapon (p093) | 
+cpr | cpr.weapon.11.hands | Heavy Melee Weapon hands | words | Varies by type | Heavy Melee Weapon Hands Required: Varies by type (p093) | 
+cpr | cpr.weapon.11.concealable | Heavy Melee Weapon concealable | words | No | Heavy Melee Weapon cannot be concealed under clothing with the Conceal/Reveal Object Skill (p093) | 
+role_ability | cpr.print.role_ability.solo | Combat Awareness | words |  | When combat begins (before Initiative is rolled), anytime outside of combat, or in combat with an Action, a Solo may divide the total number of points they have in their Combat Awareness Role Ability among the following abilities. If a Solo chooses to not change their point assignments, their previous ones persist. Activating some of these abilities will cost the Solo more points than others: (Cyberpunk RED core rulebook p147) | Combat Awareness Rank 4; Combat Awareness points 4
+weapon_special | cpr.print.weapon.3 | SMG | words |  | SMG: alternate fire Autofire (3) • Suppressive Fire (Cyberpunk RED core rulebook p342) | Skill Base 10; ROF 1; Autofire Skill Base 8
+weapon_special | cpr.print.weapon.4 | Heavy SMG | words |  | Heavy SMG: alternate fire Autofire (3) • Suppressive Fire (Cyberpunk RED core rulebook p342) | Skill Base 10; ROF 1; Autofire Skill Base 8
+weapon_special | cpr.print.weapon.5 | Shotgun | words |  | Shotgun: alternate fire Shotgun Shell (Cyberpunk RED core rulebook p342) | Skill Base 9; ROF 1
+weapon_special | cpr.print.weapon.6 | Assault Rifle | words |  | Assault Rifle: alternate fire Autofire (4) • Suppressive Fire (Cyberpunk RED core rulebook p342) | Skill Base 9; ROF 1; Autofire Skill Base 8
+weapon_special | cpr.print.weapon.8 | Bows & Crossbows | words |  | Bows & Crossbows: alternate fire Arrows (Cyberpunk RED core rulebook p342) | Skill Base 6; ROF 1
+weapon_special | cpr.print.weapon.9 | Grenade Launcher | words |  | Grenade Launcher: alternate fire Explosive (Cyberpunk RED core rulebook p342) | Skill Base 6; ROF 1
+weapon_special | cpr.print.weapon.10 | Rocket Launcher | words |  | Rocket Launcher: alternate fire Explosive (Cyberpunk RED core rulebook p342) | Skill Base 6; ROF 1

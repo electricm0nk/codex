@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 50 of 65 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 53 of 66 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -95,6 +95,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E8 | E8.5 | complete | 043be0aa10 + receipt commit | artifacts/epic_8/E8.5_cycle_receipt.md |
 | E8 | E8.6 | complete | 76dd143469, 53303ba64e + receipt commit | artifacts/epic_8/E8.6_cycle_receipt.md |
 | E8 | E8.7 | complete | 49a156e423, bac3dd4ab9 + receipt commit | artifacts/epic_8/E8.7_cycle_receipt.md |
+| E8 | E8.MC | complete | 9cd987c1dd + receipt commit | artifacts/epic_8/E8.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -278,6 +279,29 @@ seed deltas, open blockers.)
 
 **Sweep (`workflow-instruction.md §10` step 3):** `sd39-*` worktrees other than `sd39-main`: 1 found (`sd39-e7mc`, detached at c8ba870af8, merged, unlocked, its one edit the same blob as e65cef12fd's `spec.json`), 1 removed; `cargo-target/sd39-*` other than `sd39-main`: 1 found (40 G), 1 removed. `git worktree list | grep -c sd39` → 1; `ls /home/ubuntu/cargo-target | grep -c sd39` → 1.
 
+
+### Epic report — E8 (print), merge check on `origin/tranche-19` @ `bc1d909905`, fixes in `9cd987c1dd`
+
+**Cards done:** E8.1, E8.2, E8.3, E8.4, E8.5, E8.6, E8.7, E8.MC. **Discovered: E8.8** (Class Features figures and Damage Reduction on the basic PF sheet), `ready`; E9.1 now depends on it. 66 cards.
+
+| Figure | Value | Command |
+|---|---|---|
+| E8 commands | print_smoke 8, print_pf_blocks 11, print_golden 24, print_sf 4, print_cpr 4; 0 failed | `cd apps/desktop/src-tauri && cargo test --locked -j 8 print:: -- --test-threads=8`, per-suite awk over `E8.MC/desktop-sweep.txt` |
+| NR-2 | 0 lines | `grep -rn 'fn compute\|calc(' apps/desktop/src-tauri/src/print/ \| awk 'END{print NR}'` (the package's `grep -n` read no file; corrected) |
+| G-9 | 0 lines | `grep -rn 'window.print\|printLayout' apps/desktop/src \| awk 'END{print NR}'` |
+| Desktop tests | 1,235 passed, 0 failed, 2 ignored, 2 result lines, at 9cd987c1dd | `cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8`; awk and Python agree |
+| Skill totals on the basic PF sheet | 35 of 35 per seed (Aldric, Elowen, Tomas); were 7, 10, 6 | `E8.MC/probe.rs.txt` → `pf-probe-report.txt`; `print_pf_blocks_every_skills_panel_total_prints_ranked_or_not` |
+| Clippy, sd24 | desktop clippy exit 0; `verify.sh --only clippy` PASS; sd24 5 passed | §6 steps 4 and 6 |
+
+**Seed deltas (base = `bc1d909905`, built in its own tree; head = `9cd987c1dd`):** PF ×3, SF ×4, CPR ×5: none. Over the epic, E8.6 added 2 and E8.7 35 additive rows per PF seed (their receipts); no SF or CPR path moved in any E8 card.
+
+**Refuted:** the basic PF sheet printed only ranked skills (28, 25, 29 of 35 totals missing), no money and no Size or Vision, all fixed here; it prints no Class Features figure (Elowen's force missile 7 a day) and no Damage Reduction, card E8.8. The package's NR-2 grep could not fail. **Held:** NR-2 by reading every non-test line of `print/`; SF and CPR every engine row once; golden 24 (6 PF page counts moved by the added rows); E8.6 and E8.7 seeds additive only.
+
+**Retro (`scripts/retro.py summary --since 2026-11-05T15:00:00-05:00 --json`, `E8.MC/retro-summary.json`):** 8 corrections (E8.1 1 caught by E8.1, E8.2 2, E8.3 2, E8.5 1, this card 2), 2 incidents (`sd24` lockfile token, `pkill -f` killing its own shell, once each), 5 reworks, 7 verifications, 0 deferrals. No key fired more than twice, so no new check under R-W. 5 of 8 subjects are this package's own rows or design text.
+
+**Open blockers:** none on E8. Not E8's: **E7.7 is still `ready`** (`awk -F'|' '$2 ~ /E7.7/ {print $5}' kanban.md`), though E7's report said the script must run it before E8; it must land before E9.5.
+
+**Sweep (`workflow-instruction.md §10` step 3):** `sd39-*` worktrees other than `sd39-main`: 1 found (`sd39-e8mc-base`, this card's base render, detached at bc1d909905, clean, unlocked), 1 removed; `cargo-target/sd39-*` other than `sd39-main`: 1 found, 1 removed. `git worktree list | grep -c sd39` → 1; `ls /home/ubuntu/cargo-target | grep -c sd39` → 1.
 
 ## Decisions taken on safe defaults
 

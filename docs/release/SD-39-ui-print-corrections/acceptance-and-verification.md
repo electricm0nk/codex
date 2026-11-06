@@ -97,7 +97,7 @@ for t in ledger_stamp ledger_migration progression_ledger; do cargo test --locke
 
 ```bash
 grep -rn 'window.print\|printLayout' apps/desktop/src | awk 'END{print NR}'   # 0
-grep -n 'fn compute\|calc(' apps/desktop/src-tauri/src/print/ | awk 'END{print NR}'   # 0 (NR-2)
+grep -rn 'fn compute\|calc(' apps/desktop/src-tauri/src/print/ | awk 'END{print NR}'   # 0 (NR-2)
 cd apps/desktop/src-tauri && cargo test --locked -j 8 print_smoke -- --test-threads=8
 ```
 
@@ -122,7 +122,7 @@ grep -rlE 'pcg([^e]|$)' src apps/desktop/src apps/desktop/src-tauri/src      # o
 ```bash
 cd docs/release/SD-39-ui-print-corrections
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 65) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 66) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E9\.([5-9]|1[01]) / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c 'usable: yes' artifacts/epic_9/E9.4_cycle_receipt.md        # 3
 grep -c 'SD-39 INTERIM NOTES' release-notes.md                        # 0 at E9.8+

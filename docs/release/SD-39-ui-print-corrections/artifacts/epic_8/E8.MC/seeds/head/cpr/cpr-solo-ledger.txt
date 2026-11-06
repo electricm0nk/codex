@@ -1,0 +1,3 @@
+cpr | cpr.reputation.facedown_roll | Facedown | dice | 4 + 1d10 | Facedown: COOL + Reputation + 1d10, 4 + 1d10 (p. 194) | 
+cpr | cpr.ammo.0.name | Ammunition | words | Basic VH Pistol Ammunition | Basic VH Pistol Ammunition, as entered | 
+cpr | cpr.ammo.1.name | Ammunition | words | Basic Rifle Ammunition | Basic Rifle Ammunition, as entered | 

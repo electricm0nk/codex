@@ -1,0 +1,14 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 41.61s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-346f4bf97ce644fa)
+
+running 1 test
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically has been running for over 60 seconds
+pf-seed-render manifest_dir=/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src-tauri
+pf-seed-render aldric sha256=c337d40e3511add523a772b712ee5c8ec7ed79145cd70652ebf8d048cee595a2 bytes=60939
+pf-seed-render elowen sha256=3dd46961d83cb70cfcae2f3fc05a5c212914cbf7e8711d46f187885cce714a32 bytes=88513
+pf-seed-render tomas sha256=39fb7a7bfa383fe07599262ce84895ccc1af5b0907e258535b2ecee1a8b76e72 bytes=85372
+test character_hub::pf_seed_render_hash::pf_seed_render_hash_renders_every_seed_deterministically ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1235 filtered out; finished in 71.31s
+

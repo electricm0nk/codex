@@ -32,7 +32,7 @@ status: planning-ready
 | ID | Requirement | Verified by |
 |---|---|---|
 | NR-1 | No live-code PCGen parsing: `src/`, `apps/desktop/**` contain no `.pcg`/`.lst` reader | `pcgen-residue-gate` stage; `grep -rlE 'pcg([^e]\|$)' src apps/desktop/src apps/desktop/src-tauri/src` read by hand in E7.2's receipt |
-| NR-2 | Every sheet number printed comes from an explanations row or the saved DTO; no TSX or Typst re-derives a number | E8.MC review; `grep -n 'fn compute\|calc(' apps/desktop/src-tauri/src/print/` empty |
+| NR-2 | Every sheet number printed comes from an explanations row or the saved DTO; no TSX or Typst re-derives a number | E8.MC review; `grep -rn 'fn compute\|calc(' apps/desktop/src-tauri/src/print/` empty |
 | NR-3 | PDF output is deterministic for identical input (fonts bundled, no timestamps) | golden test hashes two runs equal |
 | NR-4 | A4 and US Letter both lay out without clipped text (Typst overflow warnings = 0) | E8.5 asserts Typst diagnostics empty |
 | NR-5 | Feat add refuses at zero remaining for the consumed pool; error names the pool | `cargo test feat_budget` |
