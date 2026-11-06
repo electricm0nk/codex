@@ -19790,9 +19790,18 @@ mod tests {
         let response = load_saved_character_at_root(&root).expect("saved rogue should load");
         let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
 
-        // The load appends the feat budget's rows, which are not the chassis's records.
-        let (budget, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| row.id.starts_with("feats.budget."));
+        // The load appends the feat budget's rows and the sheet's Hit Points and Speed (E8.6), which
+        // are not the chassis's records.
+        let sheet_totals = ["hit_points.max", "speed.land"];
+        let (appended, chassis): (Vec<_>, Vec<_>) = response
+            .explanations
+            .iter()
+            .partition(|row| row.id.starts_with("feats.budget.") || sheet_totals.contains(&row.id.as_str()));
+        let budget: Vec<_> = appended.iter().filter(|row| row.id.starts_with("feats.budget.")).collect();
         assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
+        for id in sheet_totals {
+            assert_eq!(appended.iter().filter(|row| row.id == id).count(), 1, "one {id} row");
+        }
         assert_eq!(
             chassis.len(),
             engine.base.explanations.len(),
