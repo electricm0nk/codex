@@ -17969,7 +17969,8 @@ mod tests {
             .explanations
             .iter()
             .map(|e| e.id.as_str())
-            .filter(|id| id.contains("talent") || id.contains("ledge"))
+            // `skill.total.knowledge_*` (E8.7) holds "ledge" too, and is no talent's record.
+            .filter(|id| !id.starts_with("skill.total.") && (id.contains("talent") || id.contains("ledge")))
             .collect();
         assert_eq!(talent_records, vec!["class_chassis.rogue.talent_choice"], "recognition only, value 0");
         assert_eq!(
@@ -19041,6 +19042,40 @@ mod tests {
         }
         let committed = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
         assert!(committed == live, "{} drifted from the live fold; rerun with CODEX_WRITE_F6B_WIRE=1", path.display());
+    }
+
+    /// E8.7: Alertness (CRB p.117) on the census Human Fighter 1 reaches the load response's
+    /// Perception and Sense Motive totals (+2 each, 0 ranks), and no other skill's. Ported from the
+    /// Skills panel's retired Alertness test, now end to end through the load.
+    #[test]
+    fn skill_totals_carry_alertness_on_perception_and_sense_motive_only() {
+        let fixture = codex::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let plain = codex::rules_core::class_seeds::input_for(&fixture, "fighter", 1);
+        let mut alert = plain.clone();
+        alert.chosen.selected_feats.retain(|f| f != "feat:power_attack");
+        alert.chosen.selected_feats.push("feat:alertness".to_owned());
+        for choice in alert.chosen.selected_choices.iter_mut() {
+            if choice.choice_set_id == "choice:level_1_character_feat" {
+                choice.selection_id = "feat:alertness".to_owned();
+            }
+        }
+        let totals = |tag: &str, input: CharacterInput| -> BTreeMap<String, i16> {
+            let loaded = load_saved_character_at_root(&saved_root_for(tag, input)).expect("loads");
+            loaded.explanations.iter().filter_map(|row| row.id.strip_prefix("skill.total.").map(|skill| (skill.to_owned(), row.value))).collect()
+        };
+        let before = totals("skill-totals-plain", plain);
+        let after = totals("skill-totals-alertness", alert);
+        assert_eq!(before.len(), 35, "one total per Skills panel row");
+        // A level-1 pick other than the seeded default leaves this build without a snapshot
+        // (`feat_choice.non_canonical`), so its Climb, Intimidate and Swim are the sum, not the
+        // engine's own total (which also takes the armor check penalty): those three are set apart.
+        let engine_totalled = ["climb", "intimidate", "swim"];
+        let moved: Vec<(&String, i16)> = after
+            .iter()
+            .filter(|(skill, value)| !engine_totalled.contains(&skill.as_str()) && before.get(*skill) != Some(*value))
+            .map(|(skill, value)| (skill, value - before[skill]))
+            .collect();
+        assert_eq!(moved, vec![(&"perception".to_owned(), 2), (&"sense_motive".to_owned(), 2)], "exactly the two skills Alertness names, +2 each");
     }
 
     #[test]
