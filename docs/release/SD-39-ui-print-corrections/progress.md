@@ -96,6 +96,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E8 | E8.6 | complete | 76dd143469, 53303ba64e + receipt commit | artifacts/epic_8/E8.6_cycle_receipt.md |
 | E8 | E8.7 | complete | 49a156e423, bac3dd4ab9 + receipt commit | artifacts/epic_8/E8.7_cycle_receipt.md |
 | E8 | E8.MC | complete | 9cd987c1dd + receipt commit | artifacts/epic_8/E8.MC_cycle_receipt.md |
+| E8 | E8.8 | complete | 6994fad450 + receipt commit | artifacts/epic_8/E8.8_cycle_receipt.md |
 | E7 | E7.7 | complete | 5dfc4c48ff + receipt commit | artifacts/epic_7/E7.7_cycle_receipt.md |
 
 ## Epic reports
@@ -361,6 +362,8 @@ seed deltas, open blockers.)
 | E8.6 | The HP tracker's own Max | Left on `load_character_durability`'s rule (the card's "does not cover") and named in the receipt | Pointing the tracker at `hit_points.max`, a change to the tracker's current-HP default no card scoped |
 | E8.7 | Where each skill total lives | One `skill.total.<skill>` `explanations` row per Skills panel row (35), the panel's own rule ported to Rust; Show the math prints its detail | The engine's `allocate_skill_ranks` totals, whose narrower class-skill lists would move the screen's values |
 | E8.7 | The allocation dialog's total for an unsaved draft | The saved row while a row's ranks are unchanged, `on save` once changed, none on Create | A TypeScript preview sum (NR-2), or a preview command no card scoped |
+| E8.8 | Where the shared label rule lives | The panel's `splitId`/`humanise` ported once into the print (`feats.rs`), held to one fixture of every seed's panel rows by a Rust and a TS test | The label on the load response (a field on every class row and the panel rewired), or a hand-kept table (ruled out) |
+| E8.8 | How a Class Features row reads on paper | `<class>: <label> <value>`, `Chassis` where no held class owns it (the panel's gutter); the row's detail in Show the math | The detail under every row on the basic sheet |
 
 ## Open blockers
 

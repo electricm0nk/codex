@@ -1,0 +1,15 @@
+Population: per seed, the rows the Class Features panel lists (class_feature.* / class_chassis.*, not .unsupported;
+classFeaturesModel.ts buildClassFeatureSurface) against the rows the basic sheet cited on the untouched tree
+(E8.MC/pf-probe-report.txt, rows absent from its `uncited` lines).
+
+seed    panel-listed  cited-before  uncited-before  printed-after (label + value, print_pf_blocks test)
+aldric  9             1             8               9
+elowen  26            5             21              26
+tomas   9             1             8               9
+total   44            7             37              44
+
+Command A (Python over the base render + probe report): see receipt; Command B:
+  for s in aldric elowen tomas; do jq -r '.explanations[].id' <base>/pf/$s.json | awk '/^class_(feature|chassis)\./ && !/\.unsupported$/{n++} END{print n+0}'; done
+  -> 9, 26, 9
+.unsupported rows among class records on the three seeds: 0, 0, 0 (fixture notComputed lists).
+multiclass.* rows: Tomas 27 (jq -r '.explanations[].id' <base>/pf/tomas.json | awk '/^multiclass\./{n++} END{print n}'), not panel-listed (card's "does not cover").
