@@ -390,3 +390,4 @@ seed deltas, open blockers.)
 | wf_81f1bec8-94e | E7.MC | same | 2026-11-05; reached the E9.4 operator gate; operator signed 2026-11-07 |
 | E9 | E9.10 | complete | receipt commit | artifacts/epic_9/E9.10_cycle_receipt.md; graphify run at cd873a6d0d, guard hit exit 1 (648327 vs 648328), graph.json untouched, receipt filed |
 | E9 | E9.11 | complete | receipt commit | artifacts/epic_9/E9.11_cycle_receipt.md; pre-PR scan clean; PR tranche-19 to develop opened as the final action; operator merges |
+| E9 | E9.11 | blocked-escalated | docs commit | PR #403 open; `Test (PR into develop)` red twice on runner loss at the desktop shell tests (run 42405549929), not a test failure |
