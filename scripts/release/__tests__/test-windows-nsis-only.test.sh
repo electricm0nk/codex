@@ -6,7 +6,7 @@ set -euo pipefail
 WF="$(cd "$(dirname "$0")/../../.." && pwd)/.github/workflows/publish-tester-release.yml"
 fail() { echo "FAIL: $*" >&2; exit 1; }
 
-grep -qE 'tauri build --target x86_64-pc-windows-msvc --bundles nsis --ci' "$WF" \
+grep -qE 'tauri build( --config [^ ]+)? --target x86_64-pc-windows-msvc --bundles nsis --ci' "$WF" \
   || fail "windows build must use --bundles nsis only"
 grep -qE -- '--bundles msi' "$WF" && fail "windows build must not request msi"
 grep -q 'ERROR: No .msi artifact found' "$WF" && fail "stage step must not require an .msi"
