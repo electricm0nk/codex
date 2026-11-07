@@ -106,6 +106,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E9 | E9.6 | complete | receipt commit | artifacts/epic_9/E9.6_cycle_receipt.md |
 | E9 | E9.7 | complete | receipt commit | artifacts/epic_9/E9.7_cycle_receipt.md; nothing to remove (found 0, removed 0) |
 | E9 | E9.8 | complete | receipt commit | artifacts/epic_9/E9.8_cycle_receipt.md; final release notes, sentinel gone |
+| E9 | E9.9 | partial | receipt commit | artifacts/epic_9/E9.9_cycle_receipt.md; truth-up half done, Opus claims critic pending |
 
 ## Epic reports
 
