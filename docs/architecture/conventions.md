@@ -3,7 +3,7 @@
 > Scope: naming standards and cross-cutting code conventions — the rules a new contributor
 > follows to name a file, a function, a test, a branch, or a commit the way this repo already
 > does, plus the structural idioms every plane converges on independently.
-> Last verified: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the two paragraphs that cited the removed
+> Last verified: **2026-11-07 against `tranche-19` (SD-39 E9.9)** for the boundary-wrapper file count only (`ls apps/desktop/src/boundary/*.ts | wc -l` = 110); earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the two paragraphs that cited the removed
 > `rules_tables` module (the book-id convention and the guard-then-dispatch resolver shape, now under
 > `src/rules_core/rules_catalog/`); the rest was last verified 2026-09-20 against `tranche/16` and not re-derived.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
@@ -356,7 +356,7 @@ Full worked example in [desktop-app.md](./desktop-app.md) §"The surface/runtime
 ### Boundary wrapper rule
 
 Components never call `invoke()` inline; each Tauri command family gets one wrapper under
-`apps/desktop/src/boundary/` (74 files as of this verification —
+`apps/desktop/src/boundary/` (110 files as of this verification, SD-39 E9.9 —
 `ls apps/desktop/src/boundary/*.ts | wc -l`, wrapper + test pairs), gated on `boundary/runtime.ts`'s
 `hasTauriRuntime()`. **When adding a new Tauri command**: add a `boundary/<command>.ts` wrapper
 unless you have a testability seam like one of the three verified direct-`invoke()` exceptions, in

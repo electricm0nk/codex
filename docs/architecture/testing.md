@@ -4,7 +4,7 @@
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60` (PR #396)** (SD-37 E7.9a): `packaged_resources.rs` and `no_baked_manifest_dir_in_production.rs` added below; floors as recorded in `scripts/verify-baselines.env`.
-> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the test-count floors (re-recorded by SD-38 E7.4
+> Last verified: **2026-11-07 against `tranche-19` (SD-39 E9.9)** for the test-count floors, file counts and floors line (re-derived from `scripts/verify-baselines.env` and `ls`); earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the test-count floors (re-recorded by SD-38 E7.4
 > from one full `verify.sh` run on `efe5e27a0a`: 53 stages passed, 0 failed), the root test-file count, the frontend test-file counts, the
 > ui-smoke spec size and the Cyberpunk RED gates below. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The three crates" counts,
 > §"`scripts/verify.sh`" stage counts, the Starfinder gates and the ui-smoke spec size, each re-derived by the command beside
@@ -134,11 +134,11 @@ points — `codex-desktop` never links `codex-ingest` in a normal build; the arr
 that it is dev-only.*
 
 - **`codex` (repo root)** — `cargo test --locked` runs unit tests inside `src/` plus every
-  integration test file under `tests/*.rs`. There are **291** files matching `tests/*.rs`
+  integration test file under `tests/*.rs`. There are **292** files matching `tests/*.rs`
   (`ls tests/*.rs | wc -l`, current). The last full-run floors recorded in
   `scripts/verify-baselines.env` (`grep -E '^[A-Z_]+=' scripts/verify-baselines.env | tail -n 20`,
-  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=3019`,
-  `BASELINE_ROOT_FULL_TESTS=6707`, `BASELINE_ROOT_TEST_BINARIES=299` (re-recorded by SD-38 E7.4). The post-Epic-A
+  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=3067`,
+  `BASELINE_ROOT_FULL_TESTS=6771`, `BASELINE_ROOT_TEST_BINARIES=300` (re-recorded by SD-39 E9.3). The post-Epic-A
   drop in root's counts was sharp (from `3402`/`7876`/`414` pre-Epic-A) because ~821 unit
   tests and ~859 integration-test entries that used to live under root src/pcgen_import and
   src/oracle_validation (former paths, no longer valid — both are now
@@ -147,8 +147,8 @@ that it is dev-only.*
   comment block for the full reconciliation).
 - **`codex-ingest` (`crates/codex-ingest`)** — `cargo test --locked -p codex-ingest` (from repo
   root; it's a workspace member) or `cd crates/codex-ingest && cargo test --locked`. Recorded
-  floors: `BASELINE_INGEST_FULL_TESTS=1841`, `BASELINE_INGEST_TEST_BINARIES=176` (`ls crates/codex-ingest/tests/*.rs | wc -l` → 126
-  `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | wc -l` → 49 `src/bin/*.rs` unit-test targets, plus the lib target: 126 + 49 + 1 = 176). Its `#[ignore]`-gated
+  floors: `BASELINE_INGEST_FULL_TESTS=1858`, `BASELINE_INGEST_TEST_BINARIES=177` (`ls crates/codex-ingest/tests/*.rs | wc -l` → 126
+  `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | wc -l` → 50 `src/bin/*.rs` unit-test targets, plus the lib target: 126 + 50 + 1 = 177). Its `#[ignore]`-gated
   suites are the oracle-parity tier (see [Corpus-gated tests](#corpus-gated-tests)); they need a
   real, pinned local PCGen checkout and do not run in a plain `cargo test`.
 - **`codex-desktop` (`apps/desktop/src-tauri`)** — `cd apps/desktop/src-tauri && cargo test --locked`.
@@ -162,7 +162,7 @@ that it is dev-only.*
   [The corpus bundle](#the-corpus-bundle-and-its-parity-test) below), `spell_catalog.rs`,
   `race_catalog.rs`, `equipment_catalog.rs`, `character_hub.rs`, `update/transaction.rs`,
   `characterHub/appendToCharacter.rs`, `rule_system_adapter.rs`, `pf1_adapter.rs`, and
-  `corpus_ingest_diagnostic.rs`, plus `update/seed.rs` and `update/deb_install.rs` (installed-state seeding and the `.deb` self-update verification, tested through injected `DebSystem`/config-dir seams). The one exception to "inline modules only" is `apps/desktop/src-tauri/tests/packaged_resources.rs`, an integration test that lays out only what `tauri.conf.json` bundles and asserts the rules engine can build the class roster from it; it must stay a single `#[test]` because the data root it installs is process-wide (see [desktop-app.md](./desktop-app.md) §How the rules crate finds its data). The root crate gained `tests/no_baked_manifest_dir_in_production.rs` for the same defect class. Recorded floor: `BASELINE_DESKTOP_TESTS=700` (frontend: `BASELINE_FRONTEND_TEST_FILES=137`) (re-derive: the
+  `corpus_ingest_diagnostic.rs`, plus `update/seed.rs` and `update/deb_install.rs` (installed-state seeding and the `.deb` self-update verification, tested through injected `DebSystem`/config-dir seams). The one exception to "inline modules only" is `apps/desktop/src-tauri/tests/packaged_resources.rs`, an integration test that lays out only what `tauri.conf.json` bundles and asserts the rules engine can build the class roster from it; it must stay a single `#[test]` because the data root it installs is process-wide (see [desktop-app.md](./desktop-app.md) §How the rules crate finds its data). The root crate gained `tests/no_baked_manifest_dir_in_production.rs` for the same defect class. Recorded floor: `BASELINE_DESKTOP_TESTS=1240` (frontend: `BASELINE_FRONTEND_TEST_FILES=191`) (re-derive: the
   desktop test-count line `scripts/verify.sh`'s `desktop` stage prints).
 
 ```
@@ -190,7 +190,7 @@ Runs `node scripts/run-tests.mjs` (`apps/desktop/package.json` `scripts.test`) �
 `spawnSync`s each one individually through `tsx`. Each test file is a self-executing script (no
 `describe`/`it` wrapper); it asserts directly and exits non-zero on the first failed assertion.
 There are currently **169** `*.test.ts` files (`find apps/desktop/src -iname "*.test.ts" | wc -l`);
-the last recorded floor, `BASELINE_FRONTEND_TEST_FILES`, is `173` (the `frontend-test` stage printed `173/173 files` in the SD-38 E7.4 full run; the runner globs more than the `*.test.ts` pattern this line counts, so the two numbers are not expected to match). The runner
+the last recorded floor, `BASELINE_FRONTEND_TEST_FILES`, is `191` (the `frontend-test` stage printed `191/191 files` in the SD-39 E9.3 full run; the runner globs more than the `*.test.ts` pattern this line counts, so the two numbers are not expected to match). The runner
 prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files passed.` summary line.
 
 ### Standalone scripts

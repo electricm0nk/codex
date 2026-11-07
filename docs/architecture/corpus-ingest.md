@@ -13,6 +13,8 @@
 > were not re-derived this pass beyond path existence.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
+> SD-39 E9.9 (2026-11-07, `tranche-19`): `crates/codex-ingest` also holds `src/pcg_import/` and the `pcg_import` binary (the `.pcg` sidecar); see [pcg-import.md](./pcg-import.md). `ls crates/codex-ingest/src/bin/*.rs | wc -l` = 50. The rest of this file was not re-derived.
+
 ## The crate wall
 
 *New 2026-09-20, SD-36 Epic A / operator ruling D1.* The whole of this document's subject — the
