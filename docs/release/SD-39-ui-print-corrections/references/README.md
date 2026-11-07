@@ -23,7 +23,7 @@
 
 - `../../../retro/sd38-retrospective.md` — the six "Changes for SD-39" → R14–R19.
 - `../../../retro/sd37-retrospective.md`, `../../../retro/sd36-retrospective.md`.
-- `../../../retro/sd39-retrospective.md` — written and cited here at E9.6.
+- `../../../retro/sd39-retrospective.md` — SD-39's own, written and cited here at E9.6 (2026-11-07).
 
 ## Operator rulings
 
