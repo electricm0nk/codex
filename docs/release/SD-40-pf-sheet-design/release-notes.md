@@ -18,7 +18,7 @@ resolver passes from C1 on (`decisions.md §2`). Nothing publishes from `tranche
   skills in two columns, weapons as a table, …), and write-in space where a player writes at the table.
 - Print styles: Basic, Basic + Bio, Full with the math, Spellbook; the print dialog offers them in place
   of the three option boxes.
-- Density: Aldric's basic sheet fits two pages on A4 and US Letter.
+- Density: denser sheets, designed for US Letter first; the page counts before → after are reported at E5.4.
 - Starfinder and Cyberpunk RED sheets print as before.
 
 Final figures, commands, the page counts before → after and the operator's two sign-offs are filled in

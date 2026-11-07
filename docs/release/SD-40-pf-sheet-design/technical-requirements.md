@@ -40,12 +40,13 @@ status: planning-ready
 | NR-7 | Every look has a template file and every template a variant | `print_pf_blocks_every_look_has_its_template` |
 | NR-8 | Page 1 of Aldric Basic holds the five step-1 blocks on one page, both papers | G-4 |
 | NR-9 | Presets are data: adding one is a list in `layout/pf1e.rs`; the dialog offers exactly the four | G-5 |
-| NR-10 | Density ceilings hold on both papers (`pages_max` per case) | G-6 |
+| NR-10 | Page counts are recorded, not capped: every look card's receipt lists each PF case's page count before → after on both papers; no test asserts a page-count ceiling (`decisions.md §10`, §22) | receipts' "Golden deltas" rows; G-6 |
 | NR-11 | Every look/layout card's receipt has a "Looked at" row naming its PNGs and the reference compared | `grep -L 'Looked at' artifacts/epic_[1-4]/*_cycle_receipt.md` prints only the non-look cards named in G-8 |
 | NR-12 | Write-in space exists where `decisions.md §11` lists it | E2.MC, E3.MC, E5.2 |
 | NR-13 | PF seed renders unchanged (no DTO, no engine value moves) | G-1 |
+| NR-14 | The 14 stale ui-smoke rows (F-21) pass by name under `npm run ui-smoke`; none deleted, skipped or marked manual | E0.2; G-9 |
 
 ## 3. Out of scope
 
-DEF-1…DEF-4 and FSR-C1…C6 (`forward-scope-register.md`); any engine or converter change; any book
+DEF-1…DEF-4 and FSR-C2…C6 (`forward-scope-register.md`; FSR-C1 is Committed as COM-9, card E0.2); any engine or converter change; any book
 content; SF1e and CPR looks; the Hermes kanban (retired).

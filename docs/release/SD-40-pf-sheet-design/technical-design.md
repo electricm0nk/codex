@@ -141,8 +141,8 @@ until E3 gives it looks and E4 the presets.
 - `PrintDialog.tsx`: a radio group `Print style` (four presets, Basic checked) replaces the `Include`
   fieldset; the paper select and both buttons stay; `data-testid="print-preset-<preset>"`; two ui-smoke
   rows (open the dialog, pick Full, Save PDF writes a file; pick Spellbook on Elowen).
-- Density: `print_golden.json` cases gain `"pages_max"`; `print_golden.rs` asserts `pages <= pages_max`
-  beside the exact count; the exact count still re-records on purpose only.
+- Density: no page-count ceiling (`decisions.md §10`, §22); `print_golden.json` keeps each case's exact
+  `pages` count, re-recorded on purpose only with before → after in the receipt.
 
 ## §6 Does not cover
 

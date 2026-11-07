@@ -44,11 +44,11 @@ later (`decisions.md §3`).
 | Slug | `pf-sheet-design` |
 | Canonical branch | `tranche-20`, cut 2026-11-07 from `tranche-19` @ `d4489b3557` (`git merge-base HEAD origin/tranche-19`); catches up to `develop` after SD-39 merges (`decisions.md` SD-o) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E0–E5 / **23 cards**, one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 23) |
+| Epics / cards | C, E0–E5 / **24 cards**, one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 24) |
 | Target version | `0.20.0`, stamped by C1's single commit on 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run (`decisions.md §13.2`); ends cleanly at each gate |
 | Cadence | N/A |
-| Closure gate | 23 cards `complete` (E2.G and E5.2 need the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 24 cards `complete` (E2.G and E5.2 need the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's brief (`artifacts/cycle_0/operator-brief-2026-11-07.md`); PCGen pinned oracle for the reference picture only (`scripts/pcgen-oracle-pin.env`) |
 
 ## 2. Files in this folder
@@ -56,8 +56,8 @@ later (`decisions.md §3`).
 | File | Job |
 |---|---|
 | `scope-draft.md` | The defect in the operator's words, the code's state today, the Definition of Done, epic order |
-| `decisions.md` | §1–§21: the seven rulings R1–R7, the three layers in code, vocabulary, presets, density, look rules, unattended protocol with safe defaults SD-a…SD-p, closure order, pre-launch corrections |
-| `forward-scope-register.md` | Committed, implied, candidate rows; DEF-1…DEF-4; FSR-C1 is the operator's question |
+| `decisions.md` | §1–§22: the seven rulings R1–R7, the three layers in code, vocabulary, presets, density, look rules, unattended protocol with safe defaults SD-a…SD-p, closure order, pre-launch corrections, the operator's answers of 2026-11-07 (§22) |
+| `forward-scope-register.md` | Committed, implied, candidate rows; DEF-1…DEF-4; FSR-C1 is Committed (COM-9), owned by card E0.2 |
 | `technical-design.md` | Today's module map with line counts; the model, dispatcher and grid; the vocabulary fixture; the proof harness; page 1's composition; presets and the dialog |
 | `technical-requirements.md` | Prerequisites P-1…P-9, normative requirements NR-1…NR-13 |
 | `epic-breakdown.md` | §0 parallel/serial map (leads), per-card criteria with FILES YOU OWN, acceptance commands, "does not cover" |
@@ -66,7 +66,7 @@ later (`decisions.md §3`).
 | `content-unit-inventory.md` | Figures F-1…F-27 with commands: version surfaces, blocks, templates, pages, PCGen sheets, UI ids, targets |
 | `workflow-instruction.md` | The *how*: prefix, per-cycle procedure with the look-at-your-output step, receipt schema, closure order, rules R2–R24 |
 | `progress.md` | Live log; Cycle 0 receipt; epic reports; open blockers |
-| `kanban.md` | One row per card (23) |
+| `kanban.md` | One row per card (24) |
 | `release-notes.md` | Interim body (sentinel `SD-40 INTERIM NOTES`); replaced at E5.4 |
 | `artifacts/`, `artifacts/README.md` | Per-epic receipts, PNGs and evidence; `cycle_0/` holds the brief, the C0 receipt and the workflow prefix |
 | `references/`, `references/README.md` | Doctrine, skills, sibling bundles, retrospectives |
@@ -99,17 +99,20 @@ Repo files read `0.20.0` after C1.
 
 ## 6. Author's calls not covered by an operator ruling (review before launch)
 
+Rows 5, 6 and 9 were the package's three open questions; the operator answered them on 2026-11-07
+(`decisions.md §22`: "1: B", "2: A", "3: No hard limits").
+
 | # | Call | Default taken | Where |
 |---|---|---|---|
 | 1 | Package location | `docs/release/SD-40-…/` (repo tooling and every sibling live here) | `decisions.md §1` |
 | 2 | Grid width and the model's shapes | 12 columns; `id` / `look` / `place` on `SheetBlock`, `columns` on `SheetDocument`; `columns == 1` keeps today's loop for SF/CPR | `decisions.md §4` |
 | 3 | Vocabulary mechanism | a JSON fixture read by a Rust test and a TS test | `decisions.md §5` |
 | 4 | Combat block split along the UI's box ids | yes | `decisions.md §8` |
-| 5 | Preset semantics | Spellbook = the spellbook pages alone; Full = everything; SF/CPR derive their old options from the preset | `decisions.md §9` |
-| 6 | Density ceilings before E0.1 measures | Aldric Basic ≤ 2, Elowen Basic ≤ 3, …; Letter-first design | `decisions.md §10` |
+| 5 | Preset semantics | **Resolved, operator answer "2: A" (2026-11-07):** Spellbook = the spell pages alone; Full = everything; SF/CPR derive their old options from the preset | `decisions.md §9`, §22 |
+| 6 | Density | **Resolved, operator answer "3: No hard limits" (2026-11-07):** no page-count ceiling; page counts recorded per case in every receipt (before → after); the operator judges density by eye at E2.G and E5.2; Letter-first design | `decisions.md §10`, §22 |
 | 7 | Look rules | black and white, Liberation Sans only, 8 pt floor, write-in list | `decisions.md §11` |
 | 8 | Feats print compact everywhere; Full picks a `feats-full` look | one look per preset choice, chosen by the list | `epic-breakdown.md` E3.1, E4.1 |
-| 9 | **The 14 stale ui-smoke rows** (SD-39 retro change 5 says "give them an owner in SD-40"; the operator asked for a small print bundle) | **operator question:** recommended answer = not in SD-40; route to the next corrections bundle; if "include", one Sonnet card E5.0 before E5.1 | `forward-scope-register.md` FSR-C1 |
+| 9 | **The 14 stale ui-smoke rows** (SD-39 retro change 5 says "give them an owner in SD-40") | **Resolved, operator answer "1: B" (2026-11-07):** card E0.2 (opus, side lane `smoke` parallel to E1) repairs them; it lands before E4.2 (both write `spec.json`) | `forward-scope-register.md` FSR-C1 / COM-9; `epic-breakdown.md` E0.2; `decisions.md §22` |
 | 10 | Catch-up to `develop` | the lead rebases `tranche-20` between epics, once, after SD-39 merges | `decisions.md` SD-o |
 
 ## 7. Initial-package construction

@@ -19,27 +19,30 @@ status: planning-ready
 | R-2 | A look re-derives a number in Typst (a sum, a modifier) | medium | high | NR-2 greps on `print/` and `resources/print/`; blocks carry strings only (`model.rs`); E2.MC/E3.MC read every `.typ` | yes (move it to the engine row or drop it) |
 | R-3 | SF1e / CPR output drifts through the shared frame or dispatcher | medium | medium | `columns == 1` keeps the old loop; G-2 diffs their golden text and page counts against C1's every card; SD-g: never re-baseline | yes (fix the frame) |
 | R-4 | PCGen headless render fails (classpath, settings dir, hand-authored `.pcg` refused) | medium | medium | §6 names the launcher the harness already uses; SD-h falls back to a testsuite `.pcg`; `blocked-escalated` only if PCGen will not run at all | partly |
-| R-5 | Page 1 does not fit Letter at a readable size | medium | medium | Letter-first design (§10); SD-b shrink-then-move order; 8 pt floor; `pages_max` | yes |
-| R-6 | Golden page counts churn every card, hiding a real regression | high | low | each receipt lists before → after per case with the reason; `pages_max` ceilings never move up (SD-b); E4.MC reads the whole series | n/a (by design) |
-| R-7 | Serial main lane + one side lane: a `ref` lane commit to `artifacts/` conflicts with a main-lane doc edit | low | low | `ref` writes only under `artifacts/epic_0/`, `kanban.md` and `progress.md` rows via §5's rebase protocol; SD-k | yes |
+| R-5 | Page 1 does not fit Letter at a readable size | medium | medium | Letter-first design (§10); SD-b shrink-then-move order; 8 pt floor; the operator's eye at E2.G (no page-count ceiling, `decisions.md §22`) | yes |
+| R-6 | Golden page counts churn every card, hiding a real regression | high | low | each receipt lists before → after per case with the reason (SD-f); E4.MC reads the whole series; the operator judges density by eye at E2.G and E5.2 (no ceiling, `decisions.md §22`) | n/a (by design) |
+| R-7 | Serial main lane + two side lanes: a `ref` or `smoke` lane commit conflicts with a main-lane doc edit | low | low | `ref` writes only under `artifacts/epic_0/E0.1/`; `smoke` only `spec.json`, `docs/testing/ui-smoke-inventory.md` and `artifacts/epic_0/E0.2/`; both plus their `kanban.md` and `progress.md` rows via §5's rebase protocol; SD-k | yes |
 | R-8 | `tranche-19` merges to `develop` mid-run; `tranche-20` must catch up | certain | medium | SD-o: the lead rebases between epics, re-runs G-2, logs it; never mid-card | no — lead action |
 | R-9 | PNG artefacts bloat the repo | medium | low | SD-p: 60 dpi, ≤ 12 pages and ≤ 2 MB per card directory | yes |
 | R-10 | The preset change breaks the app between E4.1 and E4.2 | low | high | E4.1 keeps the booleans and maps them; E4.2 removes them with both DTOs in one card | yes |
 | R-11 | A look card's acceptance command passes on the base (cannot fail) | high (SD-39 retro §"did not work") | medium | R21: the lead runs each card's command on the pre-change tree before dispatch and requires a failure; the card quotes RED | yes |
 | R-12 | FILES YOU OWN misses a second call site (SD-39: five cards) | medium | low | R22: the lead's pre-dispatch `git grep` over each producer named in the row; fence exits (§19) | yes |
 | R-13 | The operator's gate finds defects → the run must stop and restart | expected | low | gate defects are discovered cards; `START=<card>` restart; two waits by design | n/a |
+| R-14 | E0.2 and E4.2 both write `spec.json`; or a stale row is "repaired" by deleting or skipping it | medium | medium | serial edge E0.2 → E4.2 in `kanban.md` (R24); E0.2's acceptance runs the 14 ids by name, requires all 14 green and all 14 still in `spec.json` with the row count unchanged (G-9) | yes |
 
 ## 2. Open questions → defaults taken
+
+None is open: the operator answered the last three on 2026-11-07 (`decisions.md §22`).
 
 | Question | Default | Where |
 |---|---|---|
 | Package path `docs/release` vs `docs/stc` | `docs/release` | `decisions.md §1` |
-| What "Spellbook" preset prints | the spellbook pages alone | `decisions.md §9` |
-| Density numbers before E0.1 measures | Aldric Basic ≤ 2, Elowen Basic ≤ 3, … | `decisions.md §10` |
+| What "Spellbook" preset prints | **answered "2: A" (2026-11-07):** the spell pages alone; Full prints everything | `decisions.md §9`, §22 |
+| Density limits | **answered "3: No hard limits" (2026-11-07):** no page-count ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2 | `decisions.md §10`, §22 |
 | Fonts and colour | Liberation Sans only; black and white | `decisions.md §11` |
 | Grid width | 12 columns | `decisions.md §4` |
 | Combat block split | along the UI's box ids | `decisions.md §8` |
-| The 14 stale ui-smoke rows (retro change 5) | **operator question**, `README.md §6` | `forward-scope-register.md` FSR-C1 |
+| The 14 stale ui-smoke rows (retro change 5) | **answered "1: B" (2026-11-07):** card E0.2 owns them | `forward-scope-register.md` FSR-C1, `decisions.md §22` |
 
 ## 3. Non-self-healable conditions (card → `blocked-escalated`)
 

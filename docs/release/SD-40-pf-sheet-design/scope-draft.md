@@ -53,9 +53,10 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
 5. **Presets.** The print dialog offers **Basic, Basic + Bio, Full with the math, Spellbook**; each is a
    layout list in `layout/pf1e.rs`; the three option checkboxes are gone; SF1e and CPR print the same
    presets through their flow layouts (`decisions.md §9`).
-6. **Density.** On A4 **and** US Letter: Aldric Basic ≤ 2 pages, Elowen (Wizard 5) Basic ≤ 3 pages, every
-   preset's page count asserted as a ceiling in `print_golden.json` (`pages_max`); the targets are
-   confirmed or corrected by E0.1 against the PCGen reference render (`decisions.md §10`).
+6. **Density.** On A4 **and** US Letter, designed Letter-first, with **no page-count ceiling** (operator
+   answer "3: No hard limits", `decisions.md §22`): every look card's receipt records each PF case's page
+   count before → after, E0.1 records PCGen's counts as the reference figure, and the operator judges
+   density by eye at E2.G and E5.2 (`decisions.md §10`).
 7. **Looked at.** Every look or layout card rasterized its own output (`pdftoppm -r 60 -png`), read the
    PNGs, compared them to the reference pictures, and kept the PNGs under `artifacts/` with a "Looked at"
    row in its receipt (`workflow-instruction.md §6` step 8).
@@ -68,17 +69,21 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
 10. **Closure.** All cards `complete` → final-acceptance scan → retrospective written and cited → sweep →
     release notes → architecture truth-up + claims critic → **graphify LAST** → **PR last**
     (`decisions.md §15`). The operator merges.
+11. **Stale ui-smoke rows (E0.2).** The 14 rows SD-39's E2.4 full run recorded red pass by name under
+    `npm run ui-smoke`, each repaired to the current UI or rewritten to match it, none deleted (FSR-C1 →
+    COM-9, operator answer "1: B", `decisions.md §22`; G-9).
 
 ## 3. Not in the Definition of Done (planned deferrals, `forward-scope-register.md §4`)
 
 SF1e and CPR looks and grids (they adopt the architecture later); a new font family; colour; portrait
 image on the sheet; pixel-snapshot tests; a custom layout editor in the app; PCGen's companion / notes /
-condensed sheets as presets; the 14 stale ui-smoke rows (FSR-C1, operator's call).
+condensed sheets as presets.
 
 ## 4. Epic order
 
-C → E0 (reference render + block map, side lane) → E1 (layout model + grid + harness) → E2 (step-1 looks)
-→ **E2.G operator gate** → E3 (remaining looks) → E4 (presets + dialog + density ceilings) → E5 (closure,
+C → E0 (reference render + block map, side lane `ref`; the 14 stale ui-smoke rows, side lane `smoke`, landing
+before E4.2) → E1 (layout model + grid + harness) → E2 (step-1 looks)
+→ **E2.G operator gate** → E3 (remaining looks) → E4 (presets + dialog) → E5 (closure,
 with the **E5.2 final look**). The main lane is serial: every look card edits `resources/print/*.typ`,
 `print/typst.rs`'s look table and `print/golden/print_golden.json` (`epic-breakdown.md §0`).
 

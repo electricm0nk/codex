@@ -119,7 +119,8 @@ by:** E2.1. **Revisit:** none.
 
 ## §9 — Presets are layouts; the dialog offers presets (R1, R5; DEFAULT on semantics)
 
-**OPERATOR on the names:** Basic, Basic + Bio, Full with the math, Spellbook. **DEFAULT on semantics:**
+**OPERATOR on the names:** Basic, Basic + Bio, Full with the math, Spellbook. **OPERATOR on semantics**
+(answer "2: A", 2026-11-07, §22, confirming the author's design below):
 `PrintPreset { Basic, BasicBio, Full, Spellbook }` on `PrintRequest`, replacing the three booleans
 (`spellbook`, `math`, `bio`). Basic = the sheet; Basic + Bio = the sheet + bio and campaign notes; Full =
 sheet + spellbook + show the math + bio; Spellbook = the spellbook pages alone (a booklet; PCGen's
@@ -132,20 +133,22 @@ with SF/CPR `basic` and `full` text byte-identical to the old `none` and `all` (
 `spellbook` now spells-only (named delta). E4.1 lands presets with the booleans still accepted and mapped
 (absent preset: none → Basic, bio only → BasicBio, spellbook only → Spellbook, otherwise Full) so the app
 keeps printing between E4.1 and E4.2; E4.2 removes the booleans from both DTOs. **Enforced by:** E4.1,
-E4.2, E4.MC, G-2, G-5. **Revisit:** the operator may want Spellbook = sheet + spellbook; one list edit.
+E4.2, E4.MC, G-2, G-5. **Revisit:** resolved by the operator (§22: Spellbook prints spell pages only; Full prints everything);
+a later change of mind is one list edit.
 **Not taken:** keeping the checkboxes beside the presets (two ways to say one thing).
 
-## §10 — Density targets and Letter (R5, R7; DEFAULT until E0.1 measures)
+## §10 — Density and Letter (R5, R7; OPERATOR answer "3: No hard limits", 2026-11-07, §22)
 
-Provisional ceilings, asserted as `pages_max` per golden case in `print_golden.json` (E4.1), on both
-papers: Aldric Basic ≤ **2**, Basic + Bio ≤ 3, Full ≤ 8; Elowen Basic ≤ **3**, Spellbook ≤ 6, Full ≤ 12.
-E0.1 records the PCGen std and simple page counts for Aldric (`pdfinfo <pdf> | awk '/Pages/{print $2}'`)
-and corrects these rows if PCGen std fits Aldric in fewer pages than 2; a looser target than PCGen's is
-never taken. **Letter first:** page 1 is designed to fit US Letter's printable height (11 in − margins);
-A4 is taller and gets the slack, so one design serves both papers (`Paper::Letter` already exists:
-`model.rs`). **Enforced by:** E0.1 (figures), E2.3 (page 1 on Letter), E4.1 (`pages_max`), G-6.
-**Revisit:** a ceiling that a preset cannot meet without dropping data is a discovered card on the look
-that is wasting space, never a raised ceiling.
+**No page-count ceiling.** No golden case, test or gate asserts a maximum page count; there is no
+`pages_max`. Page counts are recorded per case in each receipt (before → after, with the reason) and the
+operator judges density by eye at E2.G and E5.2. E0.1 records the PCGen std and simple page counts for
+Aldric (`pdfinfo <pdf> | awk '/Pages/{print $2}'`) here and in `content-unit-inventory.md` F-13 as the
+reference figure a look card compares its own output against, never as a limit. The exact `pages` count
+in `print_golden.json` stays a regression pin that re-records on purpose only (SD-f). **Letter first:**
+page 1 is designed to fit US Letter's printable height (11 in − margins); A4 is taller and gets the
+slack, so one design serves both papers (`Paper::Letter` already exists: `model.rs`). **Enforced by:**
+E0.1 (figures), E2.3 (page 1 on Letter), every look card's receipt (page counts before → after), the
+operator's eye at E2.G and E5.2, G-6. **Revisit:** the operator names a limit; no card invents one.
 
 ## §11 — Look rules (R6; DEFAULT)
 
@@ -187,11 +190,11 @@ autonomous mode", "run to 100% DoD without asking"):
 | # | Decision point | Safe default |
 |---|---|---|
 | SD-a | A look's proportions, rule weights, box sizes | Copy the PCGen reference picture's proportions (`artifacts/epic_0/E0.1/*.png`); log the choice in the receipt's "Looked at" row; never ask |
-| SD-b | A block overflows its grid cell or the page-1 ceiling | Typst flows the overflow; if the preset's `pages_max` breaks, shrink that block's body to the 8 pt floor, then move the lowest-priority page-1 block (weapons) to page 2; never drop data; never raise the ceiling |
+| SD-b | A block overflows its grid cell or a step-1 block spills off page 1 | Typst flows the overflow; for a page-1 spill, shrink that block's body to the 8 pt floor, then move the lowest-priority page-1 block (weapons) to page 2; never drop data |
 | SD-c | A block has nothing to print | Page 1: the look with blank cells; later pages: the heading and two ruled lines (§11) |
 | SD-d | Colour | None; black, greys ≥ `luma(230)` for fills |
 | SD-e | Typst raises a warning | Fix it before claiming; a warning is NR-4's failure |
-| SD-f | A PF golden page count moves | Re-record `print_golden.json` with before → after in the receipt, and the `pages_max` still holds |
+| SD-f | A PF golden page count moves | Re-record `print_golden.json` with before → after in the receipt (no ceiling, §10) |
 | SD-g | SF1e or CPR golden text or page count differs from C1's | A defect; fix it; never re-baseline (G-2) |
 | SD-h | The PCGen headless render fails on the hand-authored `.pcg` | Use `$PCGEN_REPO_DIR/code/testsuite/PCGfiles/35e_L10(fighter-human).pcg` or `pf_Paladin.pcg` for the picture, say so in the receipt; if PCGen will not run at all, E0.1 is `blocked-escalated` naming the exception |
 | SD-i | Usage-limit stop | Stop dispatching, write a resume receipt (§13.3) |
@@ -282,3 +285,16 @@ writing:
 | "15 block types" (SD-39 F-23) | 16 block builders (`grep -h '^pub fn ' apps/desktop/src-tauri/src/print/blocks/*.rs \| awk 'END{print NR}'`), Spells and Spellbook sharing a type | F-5 states both figures with their predicates |
 | The bare PCGen jar renders sheets | `java -jar build/libs/pcgen-6.09.08.RC1.jar --help` → `NoClassDefFoundError`; the installed distribution (`build/install/pcgen`, 44 jars, FOP 2.11 among them) runs: `./pcgen --help` prints the `-c/-E/-o/-s` options | §6 names the installed launcher and the harness script that already uses it |
 | A version grep on `0\.19\.` names the surfaces | `apps/desktop/package-lock.json` matches on `"node": "^20.19.0"` engine lines (3) and its own `version` is `0.14.0` | C1's set is SD-39's 14 files by `git show`, not a grep; the grep excludes lockfiles |
+
+## §22 — Operator answers 2026-11-07
+
+The operator answered the package's three open questions (`README.md §6` rows 9, 5, 6) on 2026-11-07:
+
+| # | Question | Answer | Effect in this package |
+|---|---|---|---|
+| 1 | The 14 stale red ui-smoke rows (FSR-C1; SD-39 FSR-C2; retro change 5) | **"1: B"**: add one small card in SD-40 that owns them | Card **E0.2** "Repair the 14 stale ui-smoke rows" (`opus`), side lane `smoke` parallel to E1; it writes `apps/desktop/scripts/ui-smoke/spec.json`, the regenerated `docs/testing/ui-smoke-inventory.md` and whatever the rows need (its FILES YOU OWN); **serial edge E0.2 → E4.2**, which also writes `spec.json` (`kanban.md` E4.2 `Depends on`; R24). Each row is repaired to the current UI or rewritten to match it, never deleted to make the count pass. FSR-C1 → Committed COM-9; DoD 11; G-9; NR-14. Cards 23 → 24 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 24) |
+| 2 | What the Spellbook preset prints | **"2: A"**: Spellbook prints spell pages only; Full prints everything | §9's design stands as written; no card changes |
+| 3 | Density ceilings (`pages_max`) | **"3: No hard limits"** | §10 rewritten: no page-count ceiling as a test or gate; page counts are recorded per case in each receipt (before → after) and the operator judges density by eye at E2.G and E5.2. Letter-first design kept. NR-10, G-6, E0.1, E4.1, E4.MC, SD-b, SD-f, R-5, R-6, DoD 6 rewritten to match |
+
+**Enforced by:** `kanban.md` (E0.2 row; E4.2 depends on E0.2); E0.2's acceptance and G-9; G-6 and NR-10
+as rewritten. **Revisit:** the operator.

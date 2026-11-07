@@ -29,7 +29,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E5
 cd docs/release/SD-40-pf-sheet-design
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 23
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 24
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -37,6 +37,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 23
 | C0 | Package committed + Cycle 0 receipt | lead | complete | — | this commit; branch cut by the lead 2026-11-07 |
 | C1 | 0.20.0 on 14 surfaces + notes pointer | haiku | ready | C0 | |
 | E0.1 | PCGen reference render + block map + density figures | opus | ready | C0 | side lane `ref`; no cargo |
+| E0.2 | Repair the 14 stale ui-smoke rows | opus | waiting | C1 | side lane `smoke` beside E1; lands before E4.2 (both write `spec.json`); operator answer "1: B", decisions.md §22 |
 | E1.1 | Layout model: id, look, place, columns; dispatcher; grid; vocabulary fixture | opus | waiting | C1 | |
 | E1.2 | Proof harness: print_proof + rasterize.sh | sonnet | waiting | E1.1 | |
 | E1.MC | E1 merge check + Epic report | opus | waiting | E1.2, E0.1 | |
@@ -49,8 +50,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 23
 | E3.2 | Defense, gear (worn / carried / left behind), money looks | opus | waiting | E3.1 | |
 | E3.3 | Spells, spellbook, bio, math, custom, pets, character details looks | opus | waiting | E3.2 | |
 | E3.MC | E3 merge check + Epic report | opus | waiting | E3.3 | |
-| E4.1 | Presets as lists; PrintPreset; pages_max; golden cases renamed | opus | waiting | E3.MC | |
-| E4.2 | Print dialog offers presets; booleans removed; ui-smoke rows | opus | waiting | E4.1 | |
+| E4.1 | Presets as lists; PrintPreset; golden cases renamed | opus | waiting | E3.MC | |
+| E4.2 | Print dialog offers presets; booleans removed; ui-smoke rows | opus | waiting | E4.1, E0.2 | serial edge E0.2 → E4.2 (`spec.json`) |
 | E4.MC | E4 merge check + Epic report | opus | waiting | E4.2 | |
 | E5.1 | Widest verify + clean build + packaged resources | sonnet | waiting | E4.MC | |
 | E5.2 | OPERATOR GATE: the full set printed, `usable: yes` ×5 | sonnet | waiting | E5.1 | the run ends here until the operator signs |

@@ -9,6 +9,7 @@ logs and outputs beside it under `epic_<n>/<card>/`.
 | `cycle_0/` | `operator-brief-2026-11-07.md` (the brief with the operator's rulings); `C0_cycle_receipt.md`; `sd40-workflow.js` (written at launch) |
 | `cycle_1/` | C1's receipt |
 | `epic_0/E0.1/` | the **reference picture**: `aldric.pcg` (hand-authored, tool-side), `aldric-pcgen-std.pdf`, `aldric-pcgen-simple.pdf` (and an Elowen spellbook if cheap), their 60 dpi PNGs, `block-map.md`; ≤ 4 MB; **never shipped, never read by a test** |
+| `epic_0/E0.2/` | `stale-ids.txt` (the 14 ids, F-21's command), the ui-smoke `results.json` of the 14 rows, E0.2's notes |
 | `epic_1/` … `epic_4/` | receipts; `<card>/*.png` the card looked at (60 dpi, ≤ 12 pages, ≤ 2 MB per card) |
 | `epic_2/E2.G/` | the two Aldric page-1 PDFs (A4, Letter) and PNGs the operator prints; the signed receipt |
 | `epic_5/E5.2/` | the ten PDFs of the full set and their PNGs; the signed receipt |

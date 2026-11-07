@@ -21,7 +21,7 @@ back here in its commit.
 |---|---|---|---|
 | F-1 | Version surfaces C1 bumps to `0.20.` (the files SD-39's C1 bumped, less the pointer) | **14** | `git show --name-only --format= 49d598c13a \| awk 'NF' \| grep -vc current-release.json` |
 | F-2 | C1 commit file count (F-1 + `current-release.json`) | **15** | `git show --name-only --format= <sha> \| awk 'NF' \| wc -l` |
-| F-3 | Cards in this bundle | **23** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'` |
+| F-3 | Cards in this bundle | **24** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'` |
 | F-4 | Chassis files present | **16** (13 required + `technical-design.md`, `technical-requirements.md`, `kanban.md`) | `find docs/release/SD-40-pf-sheet-design -maxdepth 2 -name '*.md' \| awk 'END{print NR}'` |
 
 ## §2 The print module today (the before state)
@@ -59,15 +59,15 @@ back here in its commit.
 | F | Figure | Value | Command |
 |---|---|---|---|
 | F-20 | `verify.sh` stages (full) | **53** | `bash scripts/verify.sh --list \| awk 'NR>1 && $2=="yes"' \| awk 'END{print NR}'` |
-| F-21 | ui-smoke rows; stale red rows (SD-39 FSR-C2, operator's call) | **173**; **14** | `python3 -c "import json;print(len(json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']))"`; `../SD-39-ui-print-corrections/artifacts/epic_9/E9.5_cycle_receipt.md` FSR-C2 row |
+| F-21 | ui-smoke rows; stale red rows (SD-39 FSR-C2; owned by E0.2) | **173**; **14** | `python3 -c "import json;print(len(json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']))"`; `python3 -c "import json;print('\n'.join(r['id'] for r in json.load(open('docs/release/SD-39-ui-print-corrections/artifacts/epic_2/E2.4/full-suite-results.json')) if r['status']=='red'))" \| awk 'END{print NR}'` (the id list E0.2 repairs; SD-39 E9.5 FSR-C2 row) |
 | F-22 | PDF tools on this box | `pdftoppm`, `pdftotext`, `pdfinfo` present; no viewer | `which pdftoppm pdftotext pdfinfo` |
 | F-23 | PF starter seeds the harness prints | **2** (Aldric Fighter 3 `…0001`, Elowen Wizard 5 `…0002`) | `grep -n 'ALDRIC_ID\|ELOWEN_ID' apps/desktop/src-tauri/src/print/print_smoke.rs apps/desktop/src-tauri/src/print/print_golden.rs` |
 
-## §6 Targets (asserted at E4.1; provisional until E0.1 measures, `decisions.md §10`)
+## §6 Recorded figures (no page-count ceiling: `decisions.md §10`, §22)
 
 | F | Figure | Value | Command |
 |---|---|---|---|
-| F-24 | Aldric Basic pages, A4 and Letter | **≤ 2** | `pdfinfo <dir>/aldric-<paper>-basic.pdf \| awk '/Pages/{print $2}'` after `PRINT_PROOF_OUT=<dir> cargo test print_proof` |
-| F-25 | Elowen Basic pages (the golden PF character) | **≤ 3** | `python3 -c "import json;d=json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'));print(d['pf1e-a4-basic']['pages'],d['pf1e-letter-basic']['pages'])"` |
+| F-24 | Aldric Basic pages, A4 and Letter | **(recorded per receipt; no ceiling)** | `pdfinfo <dir>/aldric-<paper>-basic.pdf \| awk '/Pages/{print $2}'` after `PRINT_PROOF_OUT=<dir> cargo test print_proof` |
+| F-25 | Elowen Basic pages (the golden PF character) | **(recorded per receipt; no ceiling)** | `python3 -c "import json;d=json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'));print(d['pf1e-a4-basic']['pages'],d['pf1e-letter-basic']['pages'])"` |
 | F-26 | Looks at closure | **≥ 23** files (table + 7 E2.1 + skills + weapons + 4 E3.1 + 3 E3.2 + 7 E3.3) | `ls apps/desktop/src-tauri/resources/print/looks/*.typ \| awk 'END{print NR}'` |
 | F-27 | Presets | **4** | `grep -c 'PrintPreset::' apps/desktop/src-tauri/src/print/layout/pf1e.rs` (≥ 4) |

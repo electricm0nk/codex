@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 1 of 23 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 1 of 24 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut (= `tranche-19`'s tip, 2026-11-07); C1's commit re-pins it |
 
@@ -30,7 +30,8 @@ resume `START=` card)
   one generic table per block, no grid, 24 text goldens, `Paper::Letter` already present, the dialog's
   three checkboxes, `SheetBoxId` 13 / `SHEET_TABS` 8, the PCGen installed launcher runs headlessly
   (`./pcgen --help`), the oracle on pin, poppler present, 14 version surfaces by `git show 49d598c13a`.
-- Author calls without an operator ruling: `README.md §6` rows 1–10; row 9 is an operator question.
+- Author calls without an operator ruling: `README.md §6` rows 1–10; rows 5, 6 and 9
+  were the open questions, answered by the operator on 2026-11-07 (below).
 - Brief corrections: `decisions.md §21` (Letter already exists; 16 builders not 15; the bare jar does not
   run; the version grep's lockfile false positives).
 - **UNATTENDED MODE after launch:** `decisions.md §13`; E2.G and E5.2 are the two planned waits.
@@ -42,6 +43,13 @@ Command: `grep -rhoE '<[a-z_-]+>' docs/release/SD-40-pf-sheet-design/*.md | sort
 run before commit; the list is pasted in `artifacts/cycle_0/C0_cycle_receipt.md`. Every token is in the
 `workflow-instruction.md §9` allowed list; zero bugs. Deferred values: `(E0.1)` figures in
 `content-unit-inventory.md` F-13, F-14; `0.20.<run>`; the run id.
+
+## Operator answers (2026-11-07)
+
+`decisions.md §22`: "1: B" (card E0.2 owns the 14 stale ui-smoke rows; E4.2 waits on it), "2: A"
+(Spellbook prints spell pages only; Full prints everything), "3: No hard limits" (no page-count
+ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2). Cards 23 → 24
+(`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`).
 
 ## Cycle log
 

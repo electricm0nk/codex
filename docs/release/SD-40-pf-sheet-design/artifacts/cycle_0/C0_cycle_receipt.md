@@ -22,3 +22,4 @@
 
 Command: `grep -rhoE '<[a-z_-]+>' docs/release/SD-40-pf-sheet-design/*.md | sort | uniq -c | sort -rn`
 (run 2026-11-07 before commit; pasted by the lead's pre-launch re-read if it differs).
+- **Amendment (2026-11-07, after C0):** the operator answered the three open questions (`decisions.md §22`): "1: B" adds card E0.2, so cards are now **24** (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'` → 24); "3: No hard limits" removes the density ceilings (line 16's "provisional ceilings" no longer applies, `decisions.md §10`); "2: A" confirms Spellbook = spell pages only. The figures above are C0's as recorded.

@@ -38,8 +38,9 @@ the golden baseline (P-9, E1.1).
   concurrency and tiering source of truth.
 - **Tiering** (`decisions.md §12`): `opus` for looks, layouts, the model and every merge check; `sonnet`
   for the harness, the two gate cards and every long wait; `haiku` for C1. Merge checks never downgraded.
-- **Concurrency:** one serial main lane plus one side lane (`ref`, E0.1, no cargo). **At most 3 cargo
-  lanes** (the main lane; a merge check's base build; nothing else).
+- **Concurrency:** one serial main lane plus two side lanes (`ref`, E0.1, no cargo; `smoke`, E0.2, the
+  app build for ui-smoke, landing before E4.2). **At most 3 cargo lanes** (the main lane; a merge check's
+  base build; the `smoke` lane; nothing else).
 
 ### 2.1 Agent environment — the shared dispatch prefix
 
@@ -51,10 +52,10 @@ ENVIRONMENT (SD-40, binding — every rule here applies to you):
 - export PATH="$HOME/.cargo/bin:$PATH"
 - export RETRO_ACTOR=sd40-<card-id>          # the ONLY value you bind, e.g. RETRO_ACTOR=sd40-e2.1
 - ONE WRITER PER TREE. The main lane works in /home/ubuntu/workspace/repos/codex/.worktrees/sd40-main
-  (branch tranche-20). The side lane `ref` makes its OWN tree first, from the pushed branch:
+  (branch tranche-20). Each side lane (`ref`, `smoke`) makes its OWN tree first, from the pushed branch:
       git -C /home/ubuntu/workspace/repos/codex fetch origin tranche-20
-      git -C /home/ubuntu/workspace/repos/codex worktree add -b sd40/ref \
-          /home/ubuntu/workspace/repos/codex/.worktrees/sd40-ref origin/tranche-20
+      git -C /home/ubuntu/workspace/repos/codex worktree add -b sd40/<lane> \
+          /home/ubuntu/workspace/repos/codex/.worktrees/sd40-<lane> origin/tranche-20
   Start EVERY command with `cd <your tree> &&` (the shell's directory resets). Never write in
   /home/ubuntu/workspace/repos/codex itself (the lead's checkout) and NEVER in
   /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main (another session's tree, decisions.md §20).
@@ -75,12 +76,12 @@ ENVIRONMENT (SD-40, binding — every rule here applies to you):
 - LONG RUNS: anything that may run > 10 minutes: write a not-run skeleton results file FIRST, then
   `nohup <cmd> > <log> 2>&1 & echo $! > <pidfile>` and poll inside this turn.
 - FRONTEND: in apps/desktop run `npm run typecheck && npm test && npm run ui-smoke:doc` for any
-  frontend or spec.json change; `npm run ui-smoke` for a card that adds a ui-smoke row, always with
+  frontend or spec.json change; `npm run ui-smoke` for a card that adds or repairs a ui-smoke row, always with
   `export RUN_DESKTOP_AGENT=sd40-<card-id>` first.
 - `decisions.md §21` WINS over older text in this package. Reuse before you build: read the existing
   print code your card names first (print/model.rs, print/typst.rs, resources/print/*.typ).
 - A test filter that matches 0 tests is a FAIL. Run each filter in the cargo workspace that holds the test.
-- WORKTREES: the side lane removes its own worktree, its local sd40/ref branch and its CARGO_TARGET_DIR
+- WORKTREES: each side lane removes its own worktree, its local sd40/<lane> branch and its CARGO_TARGET_DIR
   when its work is pushed.
 - SEEDS AND GOLDENS (G-1, G-2): PF seed render hashes are UNCHANGED by every card (diff empty); SF1e and
   CPR golden TEXT and PAGE COUNTS equal C1's (diff empty) except the E4.1 renaming decisions.md §9 names;
@@ -150,9 +151,9 @@ Load the `workflow-authoring` skill first. Plain JavaScript:
 2. **A script has no file access**, so the card list is in the script and each dispatched agent reads
    `kanban.md`: it returns `declined` if a `Depends on` is not `complete`. Each agent returns
    `{status, sha, receipt, discovered}`; `discovered` card IDs run before that epic's merge check (R8).
-3. `pipeline()` in the main lane; `parallel()` only for the `ref` side lane, which makes its own
+3. `pipeline()` in the main lane; `parallel()` only for the `ref` and `smoke` side lanes, each of which makes its own
    worktree per the prefix (never the harness's isolation: its base is the session checkout).
-4. Cargo lanes stay ≤ 3 by construction: the main lane and a merge check's base build.
+4. Cargo lanes stay ≤ 3 by construction: the main lane, a merge check's base build and the `smoke` lane.
 5. **Every `agent()` sets `model`** from the Tier column, on the same line as `agent(`. Check:
    `awk '/agent\(/ && !/model:/' <script>` prints nothing. Tier is exactly `opus`, `sonnet` or `haiku`;
    C0 (`lead`) is never dispatched; E5.4 is two calls (`sonnet` notes + truth-up, then `opus` critic);
@@ -184,11 +185,12 @@ const go = async (card) => { quotaGate(); return run(card) }
 
 phase('C — package + cut');          const ref = go(E0_1)                 // side lane ref, no cargo
                                       await go(C1)
+                                      const smoke = go(E0_2)               // side lane smoke, beside E1–E4.1
 phase('E1 — model + grid');          await go(E1_1); await go(E1_2); await ref; await go(E1_MC)
 phase('E2 — page-1 looks + gate');   for (const c of [E2_1, E2_2, E2_3, E2_MC]) await go(c)
                                       { const r = await go(E2_G); if (r.status !== 'complete') return resumeReceipt('E2.G') }
 phase('E3 — remaining looks');       for (const c of [E3_1, E3_2, E3_3, E3_MC]) await go(c)
-phase('E4 — presets');               for (const c of [E4_1, E4_2, E4_MC]) await go(c)
+phase('E4 — presets');               await go(E4_1); await smoke; await go(E4_2); await go(E4_MC)   // E0.2 → E4.2 (spec.json)
 phase('E5 — closure + final look');  await go(E5_1)
                                       { const r = await go(E5_2); if (r.status !== 'complete') return resumeReceipt('E5.2') }
                                       for (const c of [E5_3, E5_4a, E5_4b, E5_5]) await go(c)
@@ -205,11 +207,11 @@ Phase titles above match these rows. Shared-file writer order: `epic-breakdown.m
 | Phase / epic | Cards | Parallel? | File-touch set | Gated on |
 |---|---|---|---|---|
 | C — package + cut | C0, C1 | no | this package; the 14 F-1 surfaces + `current-release.json` | — |
-| E0 — reference | E0.1 | **yes** (`ref`, beside C1 and E1.1) | `artifacts/epic_0/**`; its F-12–F-14 and `decisions.md §10` figure rows; its `kanban.md`/`progress.md` rows | C0 |
+| E0 — reference | E0.1, E0.2 | **yes** (`ref` beside C1 and E1.1; `smoke` beside E1.1–E4.1) | E0.1: `artifacts/epic_0/E0.1/**`, its F-12–F-14 and `decisions.md §10` figure rows; E0.2: `apps/desktop/scripts/ui-smoke/spec.json` (the 14 rows), `docs/testing/ui-smoke-inventory.md`, `artifacts/epic_0/E0.2/**` and the harness or `data-testid` files its FILES YOU OWN allows; each its own `kanban.md`/`progress.md` rows | C0 (E0.1); C1 (E0.2); **E4.2 waits on E0.2** |
 | E1 — model + grid | E1.1, E1.2, E1.MC | no | `print/{model,typst,mod}.rs`, `print/blocks/{mod,core}.rs`, `print/layout/{mod,pf1e}.rs`, `resources/print/*.typ`, `looks/table.typ` *(new)*, `print/golden/*.json`, the print test modules, `sheetLayout.test.ts`, `print/print_proof.rs` *(new)*, `scripts/print/rasterize.sh` *(new)* | C1 (E1.1); E0.1 (E1.MC) |
 | E2 — page-1 looks + gate | E2.1–E2.3, E2.MC, E2.G | no | `print/blocks/{core,skills,gear}.rs`, `print/layout/pf1e.rs`, `print/model.rs`, `print/typst.rs`, `looks/*.typ` *(new)*, `print/golden/*.json`, the print test modules, `artifacts/epic_2/**` | E1.MC |
 | E3 — remaining looks | E3.1–E3.3, E3.MC | no | `print/blocks/{feats,gear,spells,bio_notes,math,extras,core}.rs`, `print/layout/pf1e.rs`, `print/model.rs`, `print/typst.rs`, `looks/*.typ`, `print/golden/*.json`, the print test modules, `artifacts/epic_3/**` | E2.G |
-| E4 — presets | E4.1, E4.2, E4.MC | no | `print/mod.rs`, `print/layout/{mod,pf1e}.rs`, `print/print_golden.rs`, `print/golden/print_golden.json`, `print/print_proof.rs`, `PrintDialog.tsx` + test, `boundary/saveSheetPdf.ts` + test, `spec.json`, `docs/testing/ui-smoke-inventory.md` | E3.MC |
+| E4 — presets | E4.1, E4.2, E4.MC | no | `print/mod.rs`, `print/layout/{mod,pf1e}.rs`, `print/print_golden.rs`, `print/golden/print_golden.json`, `print/print_proof.rs`, `PrintDialog.tsx` + test, `boundary/saveSheetPdf.ts` + test, `spec.json`, `docs/testing/ui-smoke-inventory.md` | E3.MC; E0.2 (before E4.2) |
 | E5 — closure + final look | E5.1–E5.5 | no | `tests/packaged_resources.rs`, `scripts/verify-baselines.env`, `docs/retro/sd40-retrospective.md`, `docs/architecture/**`, graph outputs, this folder, `artifacts/epic_5/**` | E4.MC |
 
 **Fences.** A lane that needs a file outside its row returns `declined` with `ownedBy:<card>` unless
@@ -321,8 +323,8 @@ on `origin/tranche-20` and merge nothing.
   golden text delta the card cannot remove (SD-g); PCGen refusing to run at all (SD-h); `CLAIM-EXISTS`.
 - **Blocker doctrine:** cleared or escalated, never deferred. The test: was this scope in the Definition
   of Done at scoping? If yes, it is a blocker.
-- **Disk:** after the side lane ends, `df -h /` and `git worktree list`; prune the merged, unlocked,
-  clean `sd40-ref` worktree and its `CARGO_TARGET_DIR`. Never remove a `locked` tree or `sd39-main`.
+- **Disk:** after each side lane ends, `df -h /` and `git worktree list`; prune the merged, unlocked,
+  clean `sd40-ref` / `sd40-smoke` worktree and its `CARGO_TARGET_DIR`. Never remove a `locked` tree or `sd39-main`.
 
 ## 9. Placeholder-resolution checklist
 
@@ -385,7 +387,7 @@ before launch. The author's run is recorded in `progress.md`.
 | R2 No hand-kept desktop tables | a look prints what the block holds; no table of values in Typst or TSX | E2.MC, E3.MC |
 | R3 Merge checks stay on Opus | every `*.MC` is `opus` | `awk -F'\|' '$2 ~ /MC/ && $4 !~ /opus/' kanban.md` prints nothing |
 | R4 `ownedBy` declines | a declined item naming a later card goes to that card | script review |
-| R5 Isolated app-data root | any app-launching harness uses a per-run `XDG_DATA_HOME` | E4.2, E5.1 receipts |
+| R5 Isolated app-data root | any app-launching harness uses a per-run `XDG_DATA_HOME` | E0.2, E4.2, E5.1 receipts |
 | R6 Long waits on Sonnet+ | no Haiku on runs that may exceed 20 min | Tier of E5.1, E5.5 ≠ haiku |
 | R7 Per-system status | every receipt reports PF seed / SF / CPR / PF golden deltas | `grep -L 'Golden deltas' artifacts/epic_*/*_cycle_receipt.md` prints nothing |
 | R8 The script reads the board | dispatch only when every `Depends on` is `complete` | script review |
@@ -396,9 +398,9 @@ before launch. The author's run is recorded in `progress.md`.
 | R13 Re-derive copied figures | every figure with its command | receipts |
 | R15 FILES YOU OWN is closed | each card greps producers and second call sites before its first write; the receipt has the closure-check row | `grep -L 'closure check' artifacts/epic_*/*_cycle_receipt.md` prints nothing |
 | R16 Clippy before the first commit | `cargo clippy --locked --tests` before any `.rs` card's first local commit | receipt row |
-| R17 Full ui-smoke has an owner | the full suite is **not** a gate in SD-40 (FSR-C1 is the operator's call) | this row |
+| R17 Full ui-smoke has an owner | the full suite is **not** a gate in SD-40; the 14 stale red rows are owned by card E0.2 (FSR-C1 → COM-9, operator answer "1: B", `decisions.md §22`), whose acceptance runs those 14 by name | E0.2 receipt; G-9 |
 | R18 Re-count at discovery | the card that adds a discovered row edits the card-count constant in G-8 and `kanban.md` in the same commit | E5.3's `ROW_COUNT` check never fires |
-| R19 Observed concurrency | `git status --porcelain` and `git worktree list` before dispatching the side lane | the lead's dispatch log |
+| R19 Observed concurrency | `git status --porcelain` and `git worktree list` before dispatching either side lane | the lead's dispatch log |
 | R20 Zero tests is a fail | a filter matching 0 tests proves nothing; receipts quote the `N passed` line | receipts |
 
 ### 12.2 SD-39 retrospective changes (R21–R24, `docs/retro/sd39-retrospective.md` "Changes for SD-40")
@@ -408,9 +410,10 @@ before launch. The author's run is recorded in `progress.md`.
 | **R21 RED before dispatch** | the lead runs every card's acceptance command on the pre-change tree and requires a failure or non-zero exit; a command that passes on the base is a defect in the brief, fixed before dispatch (change 1) | the dispatch prompt carries the RED output; the receipt's RED row equals it |
 | **R22 Second call sites by `git grep`** | the lead derives each card's second-call-site list over the producers named in its row before dispatch (change 2) | the dispatch log in `progress.md` names the grep per card |
 | **R23 Name the population** | every non-MC card's "Does not cover" row names the population it proved and its denominator (change 4) | `grep -L 'denominator\|of [0-9]' artifacts/epic_*/*_cycle_receipt.md` read by each MC |
-| **R24 One writer per JSON array** | only one card per epic appends to `spec.json` (E4.2 in SD-40); a side lane never does (change 3, a note: it fired once) | §3 file-touch sets |
+| **R24 One writer per JSON array** | one writer at a time on `spec.json`: E0.2 (side lane `smoke`) edits the 14 stale rows in place and appends or removes none, then E4.2 appends two; the serial edge E0.2 → E4.2 is a `Depends on` in `kanban.md`; no other card writes it (change 3, a note: it fired once) | §3 file-touch sets; `kanban.md` E4.2 row |
 
-Change 5 (an owner for the stale ui-smoke rows) is FSR-C1, an operator question (`README.md §6`).
+Change 5 (an owner for the stale ui-smoke rows) is FSR-C1, owned by card E0.2 (operator answer "1: B",
+2026-11-07, `decisions.md §22`).
 
 ### 12.3 Per-cycle and measurement rules
 

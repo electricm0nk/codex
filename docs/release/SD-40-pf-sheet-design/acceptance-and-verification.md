@@ -11,7 +11,7 @@ status: planning-ready
 
 # SD-40 Acceptance and Verification
 
-Gates G-1…G-8 map the Definition of Done (`scope-draft.md §2`) to commands. Run each cargo filter from
+Gates G-1…G-9 map the Definition of Done (`scope-draft.md §2`) to commands. Run each cargo filter from
 `apps/desktop/src-tauri` (the print module is a `#[cfg(test)]` module of that binary). **A filter that
 matches 0 tests is a FAIL, not a pass** (R20). Every closure gate is also a fenced command a reader can
 copy without unescaping.
@@ -67,17 +67,18 @@ grep -rn 'PRINT_OPTION_BOXES\|spellbook: bool\|math: bool' apps/desktop/src apps
 cd apps/desktop && npx tsx src/characterHub/PrintDialog.test.ts && grep -c 'print-preset-' src/characterHub/PrintDialog.test.ts   # exit 0; >= 4
 ```
 
-## G-6 Density (DoD 6) — E4.1, E4.MC, E5.1
+## G-6 Density (DoD 6) — every look card, E4.1, E4.MC; the operator's eye at E2.G and E5.2
+
+No page-count ceiling (`decisions.md §10`; operator answer "3: No hard limits", §22). The gate is a
+record plus the operator's eye; no command asserts a maximum.
 
 ```bash
-python3 -c "import json;d=json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'));bad=[k for k,v in d.items() if 'pages_max' not in v or v['pages']>v['pages_max']];print(len(d),bad)"   # 24 []
-python3 -c "import json;d=json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'));print({k:(v['pages'],v['pages_max']) for k,v in d.items() if k.startswith('pf1e')})"   # pasted in the receipt; pf1e-*-basic pages <= 2 (Elowen is the golden PF character: <= 3), per decisions.md §10
-cd apps/desktop/src-tauri && cargo test --locked -j 8 print_golden -- --test-threads=8        # 24 passed (asserts pages <= pages_max)
+python3 -c "import json;d=json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'));print({k:v['pages'] for k,v in d.items() if k.startswith('pf1e')})"   # pasted in the receipt, before → after
+cd apps/desktop/src-tauri && cargo test --locked -j 8 print_golden -- --test-threads=8        # 24 passed (the exact count is a regression pin, re-recorded on purpose only)
 ```
 
-Aldric's own ceilings (Basic ≤ 2 on both papers) are asserted by `print_proof`'s page-count check
-(E4.1 adds it: `PRINT_PROOF_OUT` set → it also asserts each PDF's page count ≤ the `pages_max` of the
-matching golden case family) and read by hand from `pdfinfo` in E4.MC's receipt.
+Aldric's page counts per preset and paper are read with `pdfinfo <pdf> | awk '/Pages/{print $2}'` over
+the `print_proof` output and recorded in E4.MC's receipt beside PCGen's (F-13).
 
 ## G-7 No PCGen in live code (R3) — E0.1, every `*.MC`, E5.1
 
@@ -92,7 +93,7 @@ grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ | awk 'END{print 
 ```bash
 cd docs/release/SD-40-pf-sheet-design
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 23) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 24) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[3-5] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c 'usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md        # 1
 grep -c 'usable: yes' artifacts/epic_5/E5.2_cycle_receipt.md        # 5
@@ -104,6 +105,16 @@ grep -L 'Looked at' artifacts/epic_[1-4]/*_cycle_receipt.md | grep -v 'E1.1_\|E1
 Plus the template §6 step 1a items: `cargo test --test packaged_resources` (desktop),
 `cargo test --test no_baked_manifest_dir_in_production` (root), `python3 -m pytest tools/release -q`.
 
+## G-9 The 14 stale ui-smoke rows (DoD 11) — E0.2; re-read at E4.MC
+
+```bash
+cd docs/release/SD-40-pf-sheet-design
+test -s artifacts/epic_0/E0.2/stale-ids.txt || { echo NO_IDS; exit 2; }
+awk 'END{print NR}' artifacts/epic_0/E0.2/stale-ids.txt                                       # 14
+python3 -c "import json,sys;rows=json.load(open('../../../apps/desktop/scripts/ui-smoke/spec.json'))['rows'];s={r['id'] for r in rows};ids=open(sys.argv[1]).read().split();print(len(rows),sum(i in s for i in ids))" artifacts/epic_0/E0.2/stale-ids.txt   # 173 14 at E0.2 (none deleted); 175 14 after E4.2
+python3 -c "import json,sys;r={x['id']:x['status'] for x in json.load(open(sys.argv[1]))};ids=open(sys.argv[2]).read().split();print(sum(r.get(i)=='green' for i in ids),[i for i in ids if r.get(i)!='green'])" artifacts/epic_0/E0.2/results.json artifacts/epic_0/E0.2/stale-ids.txt   # 14 []
+```
+
 ## Artifact map
 
 | Gate | Receipt(s) | Evidence path |
@@ -112,6 +123,7 @@ Plus the template §6 step 1a items: `cargo test --test packaged_resources` (des
 | G-3 | E1.1, E1.MC, E3.2 | `artifacts/epic_1/`, `print/golden/block_vocabulary.json` |
 | G-4 | E2.3, E2.MC, E2.G | `artifacts/epic_2/E2.G/` (the two PDFs, their PNGs, the signed receipt) |
 | G-5, G-6 | E4.1, E4.2, E4.MC | `artifacts/epic_4/`, `print/golden/print_golden.json` |
+| G-9 | E0.2, E4.MC | `artifacts/epic_0/E0.2/` (`stale-ids.txt`, `results.json`) |
 | G-7 | E0.1, every MC | `artifacts/epic_0/E0.1/` (the reference set, never shipped) |
 | R7 "Looked at" | every look/layout card and MC | `artifacts/epic_<n>/<card>/*.png` |
 | G-8 | E5.1–E5.5 | `artifacts/epic_5/`, `artifacts/epic_5/E5.2/` (10 PDFs, signed receipt), `receipts.md`, `docs/retro/sd40-retrospective.md` |
