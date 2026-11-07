@@ -23,6 +23,10 @@ status: planning-ready
 (the lead writes the run id and script path here the moment the run starts; after each gate the
 resume `START=` card)
 
+| Run | Started | Start card | Script | Outcome |
+|---|---|---|---|---|
+| wf_00f61ec5-013 | 2026-11-07 | C1 | `artifacts/cycle_0/sd40-workflow.js` (session copy in the lead's scratchpad) | running; stops at E2.G |
+
 ## Cycle 0 — package authored (2026-11-07, planning session, Fable 5.1)
 
 - Source: the lead's brief carrying the operator's seven rulings (`artifacts/cycle_0/operator-brief-2026-11-07.md`).
