@@ -1,0 +1,80 @@
+# DEF/FSR revisit commands, run at E9.5 on tree ab0ba60b83 (tranche-19), 2026-11-07T18:11:23Z
+
+## FSR-C1
+$ grep -rl 'sf-seed-lines-out-dir-missing' docs/retro/events | awk 'END{print NR}'
+4
+$ (python) occurrences of that key in events
+4
+
+## grep 'special abilit'
+$ grep -rli 'special abilit' docs/release/SD-*/scope-draft.md | grep -v SD-39 | awk 'END{print NR}'
+1
+  file: docs/release/SD-29-corpus-wide-catch-up-lanes/scope-draft.md
+
+## grep 'armor upgrade'
+$ grep -rli 'armor upgrade' docs/release/SD-*/scope-draft.md | grep -v SD-39 | awk 'END{print NR}'
+0
+
+## grep 'install location'
+$ grep -rli 'install location' docs/release/SD-*/scope-draft.md | grep -v SD-39 | awk 'END{print NR}'
+0
+
+## grep 'pcgen xml'
+$ grep -rli 'pcgen xml' docs/release/SD-*/scope-draft.md | grep -v SD-39 | awk 'END{print NR}'
+0
+
+## grep 'pixel snapshot'
+$ grep -rli 'pixel snapshot' docs/release/SD-*/scope-draft.md | grep -v SD-39 | awk 'END{print NR}'
+0
+
+## grep 'edit past level'
+$ grep -rli 'edit past level' docs/release/SD-*/scope-draft.md | grep -v SD-39 | awk 'END{print NR}'
+0
+
+## FSR-C7
+$ git worktree list | grep -c ci-opt-level
+0
+
+## scope-drafts present in this tree
+29
+no SD-4x package in tranche-19
+
+# Readings of the two hits above (the package's commands were imprecise; corrected in
+# forward-scope-register.md in this commit, retro corrections 1794075395012-sd39-e9.5-fcf946 and -dd14bc)
+
+## FSR-C1, corrected command (incidents from sd39-* actors carrying the key)
+$ awk '/"actor": "sd39-/ && /"recurrence_key": "sf-seed-lines-out-dir-missing"/' docs/retro/events/*.jsonl | awk 'END{print NR}'
+0
+  (same with sd38- -> 3: the predicate can fire; the 4th file of the old count is docs/retro/events/sd39-e8.3.jsonl, a correction that names the key)
+
+## DEF-1, corrected command (scope drafts added or changed since SD-39's launch)
+$ git log --since=2026-11-01 --diff-filter=AM --name-only --format= -- 'docs/release/SD-*/scope-draft.md' | sort -u | grep -v SD-39 | xargs -r grep -lis 'special abilit' | awk 'END{print NR}'
+0
+  (without --since -> 1: the old hit is SD-29 (added 472acb4fd3, 2026-08-10), line 121, monster stat-block 'special abilities')
+  DEF-2..6 same window, 'armor upgrade': 0
+  DEF-2..6 same window, 'install location': 0
+  DEF-2..6 same window, 'pcgen xml': 0
+  DEF-2..6 same window, 'pixel snapshot': 0
+  DEF-2..6 same window, 'edit past level': 0
+
+## FSR-C2 (condition: E2.4's npm run ui-smoke report shows a red row SD-39 did not touch) -- CONDITION MET
+$ python3 -c over artifacts/epic_2/E2.4/full-suite-results.json counting status
+Counter({'green': 64, 'blocked': 52, 'red': 14, 'manual': 3})   # 133 rows
+red (14, all stale, none an SD-39 row, per E2.4's receipt): equipment-catalog-chip-filter-and-back,
+create-character-render, create-character-samurai, create-character-magus, create-character-warrior,
+sheet-f6a-samurai-weapons, sheet-f6a-warrior-weapons, sheet-f6a-magus-caster-level,
+sheet-f6c-shaman-no-domain-line, create-character-kineticist, create-character-inquisitor-generic,
+level-up-fighter6-into-arcane-archer, level-up-fighter6-into-arcane-archer-accept,
+level-up-fighter6-blockers-and-labels
+Disposition: a Candidate, not in the DoD; only the operator moves it (FSR header). Recorded for the
+operator; E9.3 did not run ui-smoke rows, so 14 is E2.4's reading, not re-measured here.
+
+## FSR-C3 -- closed by E4.2 (artifacts/epic_4/E4.2_cycle_receipt.md line 10): 29 lb = Chain Shirt 25 +
+Longsword 4 of the required kit; draft and saved sheet both 29.0. Not a defect.
+
+## FSR-C4 (level-up gating), FSR-C5 (release-build UI eyeball), FSR-C6 (graph re-index, licences)
+Condition: the operator names / asks / rules. No such ruling in decisions.md §3 or §25, and E9.4's
+sign-off (artifacts/epic_9/E9.4_cycle_receipt.md line 30) moves only print layout, looks and density to
+SD-40. Not triggered.
+
+## DEF-5 -- n/a (superseded by R10b).

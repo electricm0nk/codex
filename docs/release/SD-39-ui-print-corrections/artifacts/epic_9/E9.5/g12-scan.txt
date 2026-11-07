@@ -1,0 +1,10 @@
+$ G-12 block
+--- awk 1 (row count, prints nothing when 66)
+--- awk 2 (non-exempt rows not complete)
+--- usable: yes
+3
+--- interim sentinel
+1
+--- resolve_release_notes
+docs/release/SD-39-ui-print-corrections/release-notes.md
+exit 0
