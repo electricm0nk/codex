@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 61 of 66 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 63 of 66 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -105,6 +105,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E9 | E9.5 | complete | receipt commit | artifacts/epic_9/E9.5_cycle_receipt.md |
 | E9 | E9.6 | complete | receipt commit | artifacts/epic_9/E9.6_cycle_receipt.md |
 | E9 | E9.7 | complete | receipt commit | artifacts/epic_9/E9.7_cycle_receipt.md; nothing to remove (found 0, removed 0) |
+| E9 | E9.8 | complete | receipt commit | artifacts/epic_9/E9.8_cycle_receipt.md; final release notes, sentinel gone |
 
 ## Epic reports
 
