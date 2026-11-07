@@ -1,7 +1,7 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the Cyberpunk RED routing note, the
+> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the `ledger.json` sidecar. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the Cyberpunk RED routing note, the
 > store-ownership rule and the six-seed list below. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the `game_system` routing note below. The rest was last verified
 > 2026-09-29 against `tranche/16`. Earlier: **2026-09-29 against `tranche/16` (`165cc205e7`)** — added the SD-36 F6e starter-seeds
 > section (`starter_seeds()` is a list, each entry with its own marker; `character_hub.rs`,
@@ -105,7 +105,7 @@ const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
   encoding — is documented in [testing.md](./testing.md); this module only
   consumes it.
 
-**Four further sidecar files can exist in the same bundle directory, written
+**Further sidecar files can exist in the same bundle directory, written
 directly by `apps/desktop/src-tauri/src/character_hub.rs` rather than through
 `SavedCharacterStore::save`/the envelope grammar** — none of them are part of
 `SavedCharacterEnvelope` or `CharacterInput`; each is its own independent
@@ -118,8 +118,9 @@ once for that character:
 | `bio.json` | `BIO_FILE_NAME` | `update_character_bio` | no bio saved yet — `load_character_bio` returns `CharacterBioDto::default()` (all-empty), not an error |
 | `money.json` | `MONEY_FILE_NAME` | `adjust_character_money` | zero balance — `load_character_money` returns a zero `CharacterMoneyDto`, not an error |
 | `hp.json` | `HP_FILE_NAME` | `adjust_character_hp` | current HP defaults to computed max HP — `load_character_durability` derives a default rather than erroring |
+| `ledger.json` | `LEDGER_FILE_NAME` (`character_ledger.rs`) | every Pathfinder change through `mutate_saved_character_at_root`, and an ability grant on the Custom tab | no ledger yet — the first load (or first change) builds one from what the character holds, each thing in the earliest slot of its kind, marked as worked out afterwards; `list_progression_ledger` reads it. The engine never reads it and no number depends on it |
 
-All four share one design rationale, stated directly in `character_hub.rs`'s
+The first four share one design rationale, stated directly in `character_hub.rs`'s
 own comments: each is data the rules engine does not need to compute a
 character (money and HP tracking, narrative bio fields, a portrait image),
 so none of it belongs in `CharacterInput` — putting it there would make it
