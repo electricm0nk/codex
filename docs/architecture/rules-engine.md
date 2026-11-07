@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless rules-computation spine for Pathfinder 1e, Starfinder 1e and Cyberpunk RED — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
+> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for `body_slots.rs` and `feat_budget.rs`. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
 > engine), the `GameSystem` description and the module-map note. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §3e (the Starfinder 1e
 > generic chassis: the `sf_*` readers, `game_system.rs`, the engine master link) and for every reference to the
 > Pathfinder rules tables, now a data package read through `src/rules_core/rules_catalog/` (the compiled `rules_tables`
@@ -1071,6 +1071,10 @@ per-book corpus-gap rows — not just CRB/APG/ACG) — see
 Ingesting those records does **not** ground their
 mechanical effects: `src/rules_core/feat_effects.rs` still grounds computed effects for a small
 subset of CRB feats only.
+
+**`src/rules_core/body_slots.rs`** — which body slot an equipment record occupies, whether the worn set conflicts, and whether the record takes a `+N` enhancement (`slot_of`, `worn_slot`, `slot_conflict`, `enhanceable`). The record's `Slot:` line wins, then barding and ammunition (no slot), then a slot tag, then the tag-to-slot table in `data/equipment_types.json` under `slots` (written by `gen_equipment_types` from the pinned oracle's slot list), so a table change is one data row.
+
+**`src/rules_core/feat_budget.rs`** — how many feats a Pathfinder 1e character may hold, pool by pool, and which pool each held feat is charged to (`feat_budget`, `FeatBudget::pools`, `over_by`, `refusal`, `explanation_rows`; `level_grants_feat` and `levels_granting_a_feat` for the odd-level `level` pool). The pools come from the rules the character holds, never a per-class table: every held rule whose `target` is `Pool(<feat pool>)` adds its evaluated value.
 
 **`src/rules_core/equipment_effects.rs`** (Epic 5) + submodules + `src/rules_core/equipment_resolver.rs` + `src/rules_core/spell_resolver.rs` —
 `compute_equipment_effects(equipped: &[EquipmentSelection], corpus) -> EquipmentEffects` dispatches
