@@ -24,3 +24,14 @@ This file holds YAML receipts appended by the closure scripts: architecture trut
   evidence_tier_before: doc set last verified at tranche-18 (command count 103, Print = window.print())
   evidence_tier_after: doc set verified at tranche-19 for the rows above; testing.md, conventions.md, corpus-ingest.md not re-read line by line (see receipt Does not cover)
   receipt_note: "architecture-truth-up done by hand-mapping: the script's index parser (|| row pattern) reads 0 rows of a single-pipe README table, so its own run reports 'none'. The one-liners were run through the script with --dry-run --force and both pass. The Opus claims critic (E9.9 second half) follows and is not in this block."
+
+- cycle_id: 2026-11-07T-claims-critic
+  row_or_kind: architecture:claims_critic
+  bundle: SD-39
+  branch: tranche-19
+  branch_tip_before: d4489b3557
+  docs_touched: [corpus-ingest.md, desktop-app.md, glossary.md, persistence.md, release-pipeline.md, rules-engine.md, status.md]
+  cited_path_check: pass  # was MISSING src/pcg_import/ at d4489b3557; fixed
+  relative_link_check: pass
+  release_notes_changes: none  # no false claim found
+  receipt_note: "Opus claims critic over the truth-up's added lines and release-notes.md; seven corrections, listed in artifacts/epic_9/E9.9_cycle_receipt.md 'Claims critic'."
