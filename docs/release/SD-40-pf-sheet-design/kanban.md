@@ -35,7 +35,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 24
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
 |---|---|---|---|---|---|
 | C0 | Package committed + Cycle 0 receipt | lead | complete | — | this commit; branch cut by the lead 2026-11-07 |
-| C1 | 0.20.0 on 14 surfaces + notes pointer | haiku | ready | C0 | |
+| C1 | 0.20.0 on 14 surfaces + notes pointer | haiku | complete | C0 | version commit `3ceeb63b66`; receipt `artifacts/cycle_1/C1_cycle_receipt.md` |
 | E0.1 | PCGen reference render + block map + density figures | opus | ready | C0 | side lane `ref`; no cargo |
 | E0.2 | Repair the 14 stale ui-smoke rows | opus | waiting | C1 | side lane `smoke` beside E1; lands before E4.2 (both write `spec.json`); operator answer "1: B", decisions.md §22 |
 | E1.1 | Layout model: id, look, place, columns; dispatcher; grid; vocabulary fixture | opus | waiting | C1 | |
