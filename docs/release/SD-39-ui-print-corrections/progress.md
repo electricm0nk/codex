@@ -101,7 +101,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E9 | E9.1 | complete | 250f547e96 + receipt commit | artifacts/epic_9/E9.1_cycle_receipt.md |
 | E9 | E9.2 | complete | receipt commit | artifacts/epic_9/E9.2_cycle_receipt.md |
 | E9 | E9.3 | complete | receipt commit | artifacts/epic_9/E9.3_cycle_receipt.md |
-| E9 | E9.4 | partial | receipt commit | artifacts/epic_9/E9.4_cycle_receipt.md |
+| E9 | E9.4 | complete | operator sign-off commit | artifacts/epic_9/E9.4_cycle_receipt.md |
 
 ## Epic reports
 
@@ -380,3 +380,5 @@ seed deltas, open blockers.)
 | wf_e22fdf36-bc3 | C1 | session `workflows/scripts/sd39-ui-print-corrections-wf_e22fdf36-bc3.js` | 2026-11-01; stopped at C1 on a too-wide acceptance grep; the lead cleared it |
 | wf_921af6dd-933 | E1.0 | same | 2026-11-01; stopped at E1.MC: the script skipped discovered card E1.5; script fixed (`drainBoard`) |
 | wf_62657bd1-ded | E1.MC | same | 2026-11-01; stopped 2026-11-04 at E7.1: a re-dispatch declined, ownedBy:E7.3; the script had no E7.3 and did not reach E1.6; script fixed (`drainEarlier`, E7.3 in the E7 list) |
+| wf_e868cf50-1ae | E7.2 | same | 2026-11-04; stopped at E7.MC: an internet outage used all 4 attempts |
+| wf_81f1bec8-94e | E7.MC | same | 2026-11-05; reached the E9.4 operator gate; operator signed 2026-11-07 |
