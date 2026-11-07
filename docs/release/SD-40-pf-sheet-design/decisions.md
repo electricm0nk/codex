@@ -143,7 +143,10 @@ a later change of mind is one list edit.
 `pages_max`. Page counts are recorded per case in each receipt (before → after, with the reason) and the
 operator judges density by eye at E2.G and E5.2. E0.1 records the PCGen std and simple page counts for
 Aldric (`pdfinfo <pdf> | awk '/Pages/{print $2}'`) here and in `content-unit-inventory.md` F-13 as the
-reference figure a look card compares its own output against, never as a limit. The exact `pages` count
+reference figure a look card compares its own output against, never as a limit. **E0.1 figures (2026-11-07):** Aldric on PCGen std = **3** pages, on simple = **3** pages
+(`pdfinfo artifacts/epic_0/E0.1/aldric-pcgen-std.pdf | awk '/Pages/{print $2}'`, same for
+`aldric-pcgen-simple.pdf`); PCGen page 1 holds the whole combat sheet incl. weapons and armor, page 2
+equipment, feats and features, page 3 the bio. Reference, not a ceiling (§22). The exact `pages` count
 in `print_golden.json` stays a regression pin that re-records on purpose only (SD-f). **Letter first:**
 page 1 is designed to fit US Letter's printable height (11 in − margins); A4 is taller and gets the
 slack, so one design serves both papers (`Paper::Letter` already exists: `model.rs`). **Enforced by:**
