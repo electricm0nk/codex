@@ -388,3 +388,4 @@ seed deltas, open blockers.)
 | wf_62657bd1-ded | E1.MC | same | 2026-11-01; stopped 2026-11-04 at E7.1: a re-dispatch declined, ownedBy:E7.3; the script had no E7.3 and did not reach E1.6; script fixed (`drainEarlier`, E7.3 in the E7 list) |
 | wf_e868cf50-1ae | E7.2 | same | 2026-11-04; stopped at E7.MC: an internet outage used all 4 attempts |
 | wf_81f1bec8-94e | E7.MC | same | 2026-11-05; reached the E9.4 operator gate; operator signed 2026-11-07 |
+| E9 | E9.10 | complete | receipt commit | artifacts/epic_9/E9.10_cycle_receipt.md; graphify run at cd873a6d0d, guard hit exit 1 (648327 vs 648328), graph.json untouched, receipt filed |

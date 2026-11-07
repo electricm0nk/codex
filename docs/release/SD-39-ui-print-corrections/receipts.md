@@ -35,3 +35,17 @@ This file holds YAML receipts appended by the closure scripts: architecture trut
   relative_link_check: pass
   release_notes_changes: none  # no false claim found
   receipt_note: "Opus claims critic over the truth-up's added lines and release-notes.md; seven corrections, listed in artifacts/epic_9/E9.9_cycle_receipt.md 'Claims critic'."
+
+- cycle_id: 2026-11-07T18:42:16Z
+  row_or_kind: graphify:update
+  bundle: SD-39
+  branch: cd873a6d0df9a92c762d19e38083794f62ce8460
+  integration_target: develop
+  branch_tip: cd873a6d
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1388.6
+  log_path: graphify-out/.truth-up-run-2026-11-07T18:42:16Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: "node-count guard hit (exit 1): new graph 648327 nodes vs existing graph.json 648328 (net -1), graph.json NOT written, nothing force-applied, no force flag used. Indexed SHA cd873a6d0df9a92c762d19e38083794f62ce8460 = origin/tranche-19, unfiltered git status --porcelain empty immediately before the run. The worktree had no graph.json (graphify-out is gitignored); seeded by copy from the lead checkout graphify-out (lead checkout untouched). Same -1 as SD-38 E7.10. Operator ruling needed: accept the guard-hit as non-blocking (2026-07-20 policy) or authorize a full semantic rebuild."
