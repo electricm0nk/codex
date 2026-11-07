@@ -18,6 +18,31 @@ pub(crate) fn signed(value: i16) -> String {
 /// What a cell prints when the engine holds no value for it: a dash, never a guessed number.
 pub(crate) const NO_VALUE: &str = "—";
 
+/// One entry of a layout (SD-40 `decisions.md §4`): a block's vocabulary id, its builder, and its
+/// place on the page grid. A layout is an ordered `&[Placed]`; a print style is one such list.
+pub(crate) struct Placed {
+    pub id: &'static str,
+    pub build: fn(&SheetSources) -> SheetBlock,
+    pub place: Place,
+}
+
+impl Placed {
+    /// A block across the whole page.
+    pub const fn full(id: &'static str, build: fn(&SheetSources) -> SheetBlock) -> Self {
+        Self { id, build, place: Place::FULL }
+    }
+
+    /// A block from column `x`, `span` columns wide.
+    pub const fn at(id: &'static str, build: fn(&SheetSources) -> SheetBlock, x: u8, span: u8) -> Self {
+        Self { id, build, place: Place { x, span } }
+    }
+
+    /// The block, built over `sources`, under its id at its place (its look the builder's).
+    pub fn block(&self, sources: &SheetSources) -> SheetBlock {
+        (self.build)(sources).with_id(self.id).at(self.place)
+    }
+}
+
 // The Starfinder and Cyberpunk RED sheets (E8.3) lay out the engine's explanation rows and printed
 // lines the way their screens do (`starfinderSheetModel.ts`, `cyberpunkSheetModel.ts`): every
 // number is one row's value, a row no block names prints under "Other totals" and a line no block
@@ -27,7 +52,7 @@ use std::collections::BTreeSet;
 
 use crate::character_hub::{DiagnosticDto, ExplanationDto, LoadSavedCharacterResponse, SheetLineDto};
 use crate::print::blocks::{self, derivation, line_row, SheetSources};
-use crate::print::model::{Derivation, SheetBlock, SheetRow};
+use crate::print::model::{Derivation, Place, SheetBlock, SheetRow};
 
 /// One cell: an engine row's value (as the screen formats it), an engine printed line's text
 /// (dice, a name, words), or nothing.

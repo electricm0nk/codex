@@ -441,3 +441,81 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
     let combat = &text[text.find("Combat").expect("Combat")..text.find("Abilities").expect("Abilities")];
     assert!(combat.contains("Damage Reduction 3/—"), "the Combat block prints `Damage Reduction 3/—`: {combat}");
 }
+
+/// The screen's and the paper's one vocabulary (SD-40 `decisions.md §5`): every block the
+/// Pathfinder sheet prints, option pages too, carries an id the shared fixture lists, once.
+/// `sheetLayout.test.ts` holds the fixture's UI-sourced ids to the screen's registry and tabs.
+#[test]
+fn print_pf_blocks_every_pf_block_id_is_in_the_shared_vocabulary() {
+    let vocabulary: serde_json::Value =
+        serde_json::from_str(include_str!("../golden/block_vocabulary.json")).expect("the vocabulary fixture is JSON");
+    let vocabulary = vocabulary.as_object().expect("the vocabulary is an object of ids");
+    for (tag, id) in [("vocabulary-aldric", ALDRIC_ID), ("vocabulary-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let document = sheet_document_at_root(&root, &request(true, true, true)).expect("the document builds");
+        let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+        for block in &document.blocks {
+            assert!(vocabulary.contains_key(block.id), "{tag}: block {:?} prints as id {:?}, which block_vocabulary.json lists", block.heading, block.id);
+        }
+        let mut unique = ids.clone();
+        unique.sort_unstable();
+        unique.dedup();
+        assert_eq!(unique.len(), ids.len(), "{tag}: each block id prints once: {ids:?}");
+        assert!(!ids.contains(&"identity") && ids.contains(&"characterDetails"), "{tag}: the identity block is the screen's characterDetails: {ids:?}");
+    }
+}
+
+/// Each look names one Typst template (SD-40 `decisions.md §4`): `typst.rs`'s `LOOKS` holds one
+/// entry per `Look` variant by its JSON name, `resources/print/looks/` holds that file and no other,
+/// `blocks.typ` dispatches to it, and a block in that look typesets with no diagnostic.
+#[test]
+fn print_pf_blocks_every_look_has_its_template() {
+    use crate::print::model::{Look, SheetBlock, SheetDocument, SheetRow};
+    use crate::print::typst::LOOKS;
+    let dispatcher = include_str!("../../../resources/print/blocks.typ");
+    let looks_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("resources/print/looks");
+    let mut on_disk: Vec<String> = std::fs::read_dir(&looks_dir)
+        .expect("resources/print/looks is a directory")
+        .map(|entry| entry.expect("a directory entry").file_name().to_string_lossy().into_owned())
+        .collect();
+    on_disk.sort();
+    let mut named: Vec<String> = Look::ALL.iter().map(|look| format!("{}.typ", look.name())).collect();
+    named.sort();
+    assert_eq!(on_disk, named, "one template file per look, and no file without a look");
+    assert_eq!(LOOKS.len(), Look::ALL.len(), "typst.rs holds one LOOKS entry per look");
+    for look in Look::ALL {
+        let name = look.name();
+        assert_eq!(serde_json::to_value(look).expect("a look serialises"), serde_json::json!(name), "{name}: the JSON name is the template's");
+        let template = LOOKS.iter().find(|(entry, _)| *entry == name).map(|(_, text)| *text).unwrap_or_else(|| panic!("{name}: LOOKS holds it"));
+        assert_eq!(template, std::fs::read_to_string(looks_dir.join(format!("{name}.typ"))).expect("the template reads"), "{name}: LOOKS holds the file");
+        assert!(dispatcher.contains(&format!("\"/looks/{name}.typ\"")), "{name}: blocks.typ imports its template");
+        let mut block = SheetBlock::new("Look Probe", vec![SheetRow::new("Probe label", ["probe value".to_owned()])]);
+        block.look = look;
+        let document = SheetDocument { title: "Look probe".to_owned(), paper: "a4", blocks: vec![block] };
+        let typeset = crate::print::typst::typeset(&document).unwrap_or_else(|err| panic!("{name}: typesets: {err}"));
+        assert!(typeset.warnings.is_empty(), "{name}: Typst reports no diagnostics: {:?}", typeset.warnings);
+        let text = pdf_text(&typeset.pdf);
+        assert!(text.contains("Look Probe") && text.contains("Probe label") && text.contains("probe value"), "{name}: prints the block: {text}");
+    }
+}
+
+/// The page grid (SD-40 `decisions.md §4`): the Pathfinder layout places the Combat block beside
+/// the Abilities on page 1's 12 columns, and a block placed past the grid's last column is refused
+/// by name before Typst sees it, never clipped or wrapped in silence.
+#[test]
+fn print_pf_blocks_a_place_past_the_grid_is_refused() {
+    use crate::print::model::{Place, GRID_COLUMNS};
+    let root = seeded("place-past-grid", ALDRIC_ID);
+    let mut document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    assert_eq!(document.columns(), GRID_COLUMNS, "the Pathfinder sheet prints on the page grid");
+    let place = |id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{id} prints")).place;
+    assert_eq!(place("combatStrip"), Place { x: 0, span: 6 }, "the Combat block takes the row's left half");
+    assert_eq!(place("abilities"), Place { x: 6, span: 6 }, "the Abilities sit beside it, on the right half");
+    let combat = document.blocks.iter().position(|block| block.id == "combatStrip").expect("the Combat block");
+    assert_eq!(document.blocks[combat + 1].id, "abilities", "one row: Combat, then Abilities beside it");
+    crate::print::typst::typeset(&document).expect("the layout's own places typeset");
+
+    document.blocks[combat + 1].place = Place { x: 8, span: 6 };
+    let refused = crate::print::typst::typeset(&document).expect_err("a block past column 12 is refused");
+    assert!(refused.contains("print.layout") && refused.contains("abilities") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
+}

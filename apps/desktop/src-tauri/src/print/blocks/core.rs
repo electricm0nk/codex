@@ -1,4 +1,4 @@
-//! Identity, Combat and Abilities (E8.1's three blocks, moved here from the layout file by E8.2).
+//! Identity (the screen's Character Details), Combat and Abilities (E8.1's three blocks, moved here from the layout file by E8.2).
 //! Each value is the field the screen's tile reads (`CharacterSheet.tsx`'s `ac`, `touch`,
 //! `flatFooted`, `cmb`, `cmd`, `saves`, `initiativeRow`, `AbilitiesPanel`).
 
@@ -6,7 +6,9 @@ use super::SheetSources;
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{SheetBlock, SheetRow};
 
-pub fn identity(sources: &SheetSources) -> SheetBlock {
+/// The screen's Character Details (`characterDetails`, SD-40 `decisions.md §5`), printed under
+/// the heading Identity: name, race, class, size, vision.
+pub fn character_details(sources: &SheetSources) -> SheetBlock {
     let summary = &sources.loaded.summary;
     let (size, vision) = size_and_vision(sources);
     SheetBlock::new(

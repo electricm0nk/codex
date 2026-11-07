@@ -1,7 +1,8 @@
 //! `SheetDocument` → PDF bytes through Typst used as a library (SD-39 `decisions.md §4`).
 //!
-//! The Typst world here is closed: its only files are the shared frame and blocks templates
-//! (`resources/print/*.typ`, compiled into the binary), the sheet's own JSON and the generated main
+//! The Typst world here is closed: its only files are the shared frame and blocks templates and
+//! the block looks (`resources/print/*.typ`, `resources/print/looks/*.typ`, compiled into the
+//! binary), the sheet's own JSON and the generated main
 //! file; its only fonts are the bundled OFL Liberation Sans faces (`resources/fonts/`, compiled
 //! in). It never searches the system's fonts, never reads the disk and never asks for the date,
 //! so one sheet prints the same bytes on every machine (NR-3).
@@ -18,11 +19,17 @@ use typst::{Library, LibraryExt, World};
 use typst_layout::PagedDocument;
 use typst_pdf::PdfOptions;
 
+use serde::Serialize;
+
 use crate::print::model::SheetDocument;
 
-/// The shared page frame and blocks (operator ruling R2).
+/// The shared page frame and the look dispatcher (operator ruling R2; SD-40 `decisions.md §4`).
 const FRAME_TYP: &str = include_str!("../../resources/print/frame.typ");
 const BLOCKS_TYP: &str = include_str!("../../resources/print/blocks.typ");
+
+/// The block looks (SD-40 `decisions.md §4`): one Typst template per `Look`, by the name the
+/// sheet's JSON gives it, served at `/looks/<name>.typ`; `blocks.typ` dispatches on that name.
+pub(crate) const LOOKS: &[(&str, &str)] = &[("table", include_str!("../../resources/print/looks/table.typ"))];
 
 /// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).
 const FONT_FILES: [&[u8]; 4] = [
@@ -60,19 +67,19 @@ fn file_id(path: &str) -> FileId {
 
 struct SheetWorld {
     main: Source,
-    frame: Source,
-    blocks: Source,
+    /// The frame, the dispatcher and every look.
+    templates: Vec<Source>,
     sheet_json: Bytes,
 }
 
 impl SheetWorld {
     fn new(sheet_json: Vec<u8>) -> Self {
-        Self {
-            main: Source::new(file_id("/main.typ"), MAIN_TYP.to_owned()),
-            frame: Source::new(file_id("/frame.typ"), FRAME_TYP.to_owned()),
-            blocks: Source::new(file_id("/blocks.typ"), BLOCKS_TYP.to_owned()),
-            sheet_json: Bytes::new(sheet_json),
-        }
+        let mut templates = vec![
+            Source::new(file_id("/frame.typ"), FRAME_TYP.to_owned()),
+            Source::new(file_id("/blocks.typ"), BLOCKS_TYP.to_owned()),
+        ];
+        templates.extend(LOOKS.iter().map(|(name, text)| Source::new(file_id(&format!("/looks/{name}.typ")), (*text).to_owned())));
+        Self { main: Source::new(file_id("/main.typ"), MAIN_TYP.to_owned()), templates, sheet_json: Bytes::new(sheet_json) }
     }
 }
 
@@ -90,8 +97,8 @@ impl World for SheetWorld {
     }
 
     fn source(&self, id: FileId) -> FileResult<Source> {
-        [&self.main, &self.frame, &self.blocks]
-            .into_iter()
+        std::iter::once(&self.main)
+            .chain(self.templates.iter())
             .find(|source| source.id() == id)
             .cloned()
             .ok_or_else(|| not_found(id))
@@ -135,9 +142,23 @@ fn describe(diagnostics: &[SourceDiagnostic]) -> Vec<String> {
         .collect()
 }
 
-/// Typesets `document` through the shared frame into PDF bytes. An error is Typst's own words.
+/// What the frame is given: the sheet, and the columns it lays its blocks on.
+#[derive(Serialize)]
+struct SheetJson<'a> {
+    #[serde(flatten)]
+    document: &'a SheetDocument,
+    columns: u8,
+}
+
+/// Typesets `document` through the shared frame into PDF bytes. A layout the page grid cannot
+/// print as listed is refused by name (`SheetDocument::check_places`); another error is Typst's own words.
 pub fn typeset(document: &SheetDocument) -> Result<TypesetSheet, String> {
-    let sheet_json = serde_json::to_vec(document).map_err(|err| format!("the sheet does not serialise: {err}"))?;
+    document.check_places()?;
+    if let Some(block) = document.blocks.iter().find(|block| !LOOKS.iter().any(|(name, _)| *name == block.look.name())) {
+        return Err(format!("print.look: block `{}` ({}) names the look `{}`, which has no template", block.id, block.heading, block.look.name()));
+    }
+    let sheet = SheetJson { document, columns: document.columns() };
+    let sheet_json = serde_json::to_vec(&sheet).map_err(|err| format!("the sheet does not serialise: {err}"))?;
     let world = SheetWorld::new(sheet_json);
     let warned = typst::compile::<PagedDocument>(&world);
     let warnings = describe(&warned.warnings);

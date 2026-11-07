@@ -1,11 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { assert, assertEqual } from '../testSupport/asserts';
+import { SHEET_TABS } from './CharacterSheet';
 import {
   COMBAT_ROW_WRAP,
   CREATE_LAYOUT,
   SHEET_REGIONS,
   SHEET_REGION_STYLES,
   SHEET_LAYOUT,
+  SQUARE_BLOCK_LAYOUT,
   SQUARE_BLOCK_STYLE,
   SQUARE_BOX_STYLE,
   boxesInColumn,
@@ -139,6 +141,43 @@ function verifiesCreateHasItsOwnRegistry() {
   assert((skills?.order ?? 0) > (abilities?.order ?? 0), 'Skills sits below Abilities');
 }
 
+interface VocabularyEntry {
+  ui: 'SheetBoxId' | 'SquareBoxId' | 'SHEET_TABS' | null;
+  printOnly?: string;
+}
+
+function verifiesThePrintVocabularyIsTheScreens() {
+  // SD-40 decisions.md §5: screen and paper share one vocabulary. The printed sheet's block ids are
+  // listed in `print/golden/block_vocabulary.json`; the Rust side's `print_pf_blocks` holds every
+  // Pathfinder print block id to it, and this holds every UI-sourced id to the registry or the tabs.
+  const vocabulary = JSON.parse(
+    readFileSync(new URL('../../src-tauri/src/print/golden/block_vocabulary.json', import.meta.url), 'utf8'),
+  ) as Record<string, VocabularyEntry>;
+  const sources: Record<NonNullable<VocabularyEntry['ui']>, Set<string>> = {
+    SheetBoxId: new Set(SHEET_LAYOUT.map((box) => box.id)),
+    SquareBoxId: new Set(SQUARE_BLOCK_LAYOUT.map((box) => box.id)),
+    SHEET_TABS: new Set(SHEET_TABS.map((tab) => tab.toLowerCase())),
+  };
+  for (const [id, entry] of Object.entries(vocabulary)) {
+    if (entry.ui === null) {
+      assert(typeof entry.printOnly === 'string' && entry.printOnly.length > 0, `${id}: a print-only id names its reason`);
+      for (const ids of Object.values(sources)) {
+        assert(!ids.has(id), `${id}: a print-only id is not also a screen id`);
+      }
+    } else {
+      assert(sources[entry.ui] !== undefined, `${id}: its UI source ${entry.ui} is one of the three`);
+      assert(sources[entry.ui].has(id), `${id}: the screen's ${entry.ui} holds it`);
+    }
+  }
+  // Both ways: every box and tab the screen draws has its line, so a new box adds one (§5 Revisit).
+  for (const [ui, ids] of Object.entries(sources)) {
+    for (const id of ids) {
+      assertEqual(vocabulary[id]?.ui, ui, `the vocabulary lists the screen's ${ui} ${id}`);
+    }
+  }
+  assert(!('identity' in vocabulary), 'the print block once called identity is the screen\'s characterDetails');
+}
+
 verifiesEveryRegistryHasUniqueIdsAndAStyle('SHEET_LAYOUT', SHEET_LAYOUT);
 verifiesEveryRegistryHasUniqueIdsAndAStyle('CREATE_LAYOUT', CREATE_LAYOUT);
 verifiesTheBoxToRegionMap();
@@ -151,4 +190,5 @@ verifiesTheRailHeadingAndTheProgressionButton();
 verifiesOrderNotArrayPositionDecidesPlacement();
 verifiesTheSquareBlockIsTwoByTwoSquares();
 verifiesCreateHasItsOwnRegistry();
+verifiesThePrintVocabularyIsTheScreens();
 console.log('sheetLayout.test.ts: all assertions passed');
