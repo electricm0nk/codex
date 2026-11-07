@@ -381,7 +381,7 @@ incremental repair passes. See [getting-started.md](./getting-started.md).
 
 ## Version stamp
 
-The `<major>.<tranche>.<build>` version minted by the publish workflow's `stamp` job (`0.16.${GITHUB_RUN_NUMBER}`) and written into `apps/desktop/package.json` and `src-tauri/tauri.conf.json` before every build. The committed files stay at `0.<tranche>.0`. `Cargo.toml` is not stamped, so display code uses Tauri's `package_info().version`, never `CARGO_PKG_VERSION`. See [release-pipeline.md](./release-pipeline.md) §Stamp delivery.
+The `<major>.<tranche>.<build>` version minted by the publish workflow's `stamp` job (`0.19.${GITHUB_RUN_NUMBER}`) and written into `apps/desktop/package.json` and `src-tauri/tauri.conf.json` before every build. The committed files stay at `0.<tranche>.0`. `Cargo.toml` is not stamped, so display code uses Tauri's `package_info().version`, never `CARGO_PKG_VERSION`. See [release-pipeline.md](./release-pipeline.md) §Stamp delivery.
 
 ## Wiring class
 

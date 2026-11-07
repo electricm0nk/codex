@@ -234,7 +234,7 @@ in only one namespace is invisible to whichever consumer reads the other one.
 
 ### Branches, commit scope, and PR titles
 
-- **A release/tranche branch is `tranche/N`** (`tranche/16`, current), cut once per SD-N bundle,
+- **A release/tranche branch is `tranche/N` or `tranche-N`** (`tranche-19`, current; the hyphen form is used since tranche-18), cut once per SD-N bundle,
   merged to `develop` at closure. Never delete a merged tranche branch's remote sibling casually —
   see `docs/architecture/release-pipeline.md` for the branch-promotion gate this feeds.
 - **An ad-hoc work branch is `<type>/<slug>`**, mirroring the commit-type vocabulary below:
