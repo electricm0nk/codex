@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 2 of 24 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 7 of 24 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -65,11 +65,26 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E1.1 | E1.1 | complete | ad412a4a88 + receipt commit | artifacts/epic_1/E1.1_cycle_receipt.md |
 | E1.2 | E1.2 | complete | (this commit) | artifacts/epic_1/E1.2_cycle_receipt.md |
 | E0.2 | E0.2 | complete | 02b9fa99da + receipt commit | artifacts/epic_0/E0.2_cycle_receipt.md |
+| E1.MC | E1.MC | complete | a537c27737 + receipt commit | artifacts/epic_1/E1.MC_cycle_receipt.md |
 
 ## Epic reports
 
 (the merge-check card of each epic appends its block here: cards, refuted claims and fixes, golden
 deltas, what was looked at, retro summary, worktrees swept)
+
+### Epic report — E1 (model + grid), by E1.MC, 2026-11-07
+
+- **Cards done:** E1.1, E1.2, E1.MC — 3 of 3 (`awk -F'|' '$2 ~ /^ E1\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 3). Dependencies E0.1, C1 complete.
+- **Re-derived on origin/tranche-20 `ce077e4466`:** `cd apps/desktop/src-tauri && cargo test --locked -j 8 print_ -- --test-threads=8` → 65 passed, 0 failed (`awk '/^test .* \.\.\. ok$/{n++} END{print n}'` and `grep -c ' \.\.\. ok$'` → 65, 65); desktop full `--no-fail-fast` → 1244 + 2 passed, 0 `FAILED`; NR-2 `grep -rnE '\b(calc|eval)\(' apps/desktop/src-tauri/resources/print/ | awk 'END{print NR}'` → 0; vocabulary 30 ids; TS vocabulary test exit 0; rasterize 130 PNGs from 16 PDFs, exit 2 on an empty dir.
+- **G-1:** C1 `3ceeb63b66` built in its own tree and target dir; `diff base/sha256.txt head/sha256.txt` → empty (3 PF seeds).
+- **G-2:** SF1e ×8 + CPR ×8: text and page loop → no output; `sha256sum` base vs head → 16 of 16 byte-identical; `sf1e.rs`/`cpr.rs` diff since C1 → 0 lines; `print_golden.json` diff since C1 → 0 lines.
+- **Page counts per golden case (C1 → E1 head, `pdfinfo <pdf> | awk '/Pages/{print $2}'`):** PF (Elowen) a4-none 5 → 5, a4-spellbook 6 → 6, a4-math 12 → 12, a4-all 14 → 14, letter-none 5 → 5, letter-spellbook 6 → 6, letter-math 12 → 12, letter-all 14 → 14. SF1e a4/letter: none 8, spellbook 12, math 12, all 17 (unchanged). CPR a4/letter: none 4, spellbook 5, math 10, all 12 (unchanged). Proof harness Aldric: none 4/4, spellbook 5/5, math 8/9, all 10/11 (A4/Letter).
+- **Population probe:** PF seeds 3 of 3 × 2 papers × 4 option sets = 24 renders on the grid, 0 diagnostics (new standing test `print_smoke_every_pf_seed_renders_through_the_grid_with_no_diagnostics`). `.pcg` imports: 65 files (13 repo + 52 oracle) → 37 saved, 26 engine-blocked, 2 converter-refused; 296 renders, all `columns=12`, 0 diagnostics (one-off scratch-tree probe, `artifacts/epic_1/E1.MC/pcg_probe.tsv`).
+- **Refuted claims and fixes:** the E1.MC criterion's `.pcg` fixture path (`crates/codex-ingest/tests` holds 0) → corrected in `epic-breakdown.md`; E1.1's untested `check_places` branches → test added, mutation-proved; 2-of-3 seed coverage → 3 of 3. No E1.1/E1.2 code claim refuted.
+- **Looked at:** `artifacts/epic_1/E1.MC/*.png` beside `artifacts/epic_0/E0.1/aldric-pcgen-std-1.png`: the grid row prints clean on both papers; what is left (generic table look, blank under Abilities, no write-in space, abilities on the right) is E2's.
+- **Retro summary:** `python3 scripts/retro.py summary --since 2026-11-07 --actor sd40-e1.1 --actor sd40-e1.2 --actor sd40-e1.mc` → 4 events, all `correction`; subjects: E1.1 FILES YOU OWN (packaged_resources.rs), decisions §4 `columns` field, the rasterize path in §6 step 8/E1.2, the E1.MC fixture path. No recurrence key fired more than once (none set). The category recurs: 4 of 4 E1 corrections (and E0's 2) are this package's own wording, caught before implementation; no new control (R-W threshold is a key firing more than twice).
+- **Open blockers:** none.
+- **Worktrees swept:** `.worktrees/sd40-e1mc-base` (E1.MC's scratch base/probe tree) and `/home/ubuntu/cargo-target/sd40-e1mc-base`; `/home/ubuntu/cargo-target/sd40-proof` and `empty-dir` (E1.2's proof dirs). No other `sd40-*` side worktree existed (`git worktree list`). `sd40-main` kept.
 
 ## Lead's dispatch log
 
