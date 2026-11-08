@@ -12,12 +12,30 @@
 
 #import "/blocks.typ": sheet-block, block-look
 
-#let grid-run(columns, run) = grid(
-  columns: (1fr,) * columns,
-  column-gutter: 0.8em,
-  row-gutter: 1em,
-  ..run.map(b => grid.cell(x: b.place.x, colspan: b.place.span, block-look(b))),
-)
+// A block marked `under` shares the cell of the block before it, stacked beneath it, so a column
+// of short blocks can sit beside a tall one.
+#let grid-run(columns, run) = {
+  let cells = ()
+  for b in run {
+    if b.place.under and cells.len() > 0 {
+      let cell = cells.pop()
+      cell.push(b)
+      cells.push(cell)
+    } else {
+      cells.push((b,))
+    }
+  }
+  grid(
+    columns: (1fr,) * columns,
+    column-gutter: 0.8em,
+    row-gutter: 1em,
+    ..cells.map(cell => grid.cell(
+      x: cell.first().place.x,
+      colspan: cell.first().place.span,
+      if cell.len() == 1 { block-look(cell.first()) } else { stack(spacing: 1em, ..cell.map(block-look)) },
+    )),
+  )
+}
 
 #let sheet(doc) = {
   set document(title: doc.title, date: none)

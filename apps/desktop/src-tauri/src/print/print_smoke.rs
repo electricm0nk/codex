@@ -146,10 +146,10 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
         assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
     }
     // The blocks, in the PF layout file's order: the Combat block split along the screen's boxes
-    // (SD-40 `decisions.md §8`).
+    // (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3): each row's cells left to right.
     let at = |heading: &str| text.find(heading).unwrap_or_else(|| panic!("heading {heading} printed: {text}"));
-    assert!(at("Identity") < at("Abilities") && at("Abilities") < at("Hit Points"), "Identity, Abilities, Hit Points in order: {text}");
-    assert!(at("Hit Points") < at("Armor Class") && at("Armor Class") < at("Saving Throws") && at("Saving Throws") < at("Attack"), "Hit Points, Armor Class, Saving Throws, Attack in order: {text}");
+    assert!(at("Identity") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Identity, Hit Points, Abilities in order: {text}");
+    assert!(at("Abilities") < at("Armor Class") && at("Armor Class") < at("Attack") && at("Attack") < at("Saving Throws"), "Abilities, Armor Class, Attack, Saving Throws in order: {text}");
 }
 
 #[test]

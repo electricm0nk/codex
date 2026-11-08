@@ -34,7 +34,12 @@ impl Placed {
 
     /// A block from column `x`, `span` columns wide.
     pub const fn at(id: &'static str, build: fn(&SheetSources) -> SheetBlock, x: u8, span: u8) -> Self {
-        Self { id, build, place: Place { x, span } }
+        Self { id, build, place: Place::at(x, span) }
+    }
+
+    /// A block stacked under the one before it, in that block's cell (column `x`, `span` wide).
+    pub const fn under(id: &'static str, build: fn(&SheetSources) -> SheetBlock, x: u8, span: u8) -> Self {
+        Self { id, build, place: Place::under(x, span) }
     }
 
     /// The block, built over `sources`, under its id at its place (its look the builder's).

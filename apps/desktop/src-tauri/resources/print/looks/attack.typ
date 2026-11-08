@@ -1,5 +1,5 @@
-// The `attack` look (SD-40 E2.1): Base Attack Bonus, Melee, CMB and CMD, each a labelled box on
-// its own line, the label first. It formats strings it is given; it computes nothing (NR-2).
+// The `attack` look (SD-40 E2.1; E2.3 two to a line): Base Attack Bonus, Melee, CMB and CMD,
+// each a labelled box, the label first. It formats strings it is given; it computes nothing (NR-2).
 
 #let heading-of(b) = {
   text(size: 12pt, weight: "bold", b.heading)
@@ -25,15 +25,27 @@
   }
 }
 
+// Two labelled boxes to a line (Base Attack Bonus and Melee, then CMB and CMD), so the block sits
+// low beside the Armor Class on page 1.
 #let look(b) = {
   let n = b.value_columns
+  let pair = (1fr,) + (1.1cm,) * n
   block(breakable: false, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
     #grid(
-      columns: (1fr,) + (1.4cm,) * n,
-      column-gutter: 0.15cm,
-      row-gutter: 0.15cm,
-      ..b.rows.map(r => (align(horizon, text(weight: "bold", r.label)), ..r.values.map(v => value-box(v, height: 0.7cm)))).flatten(),
+      columns: pair + (0.3cm,) + pair,
+      column-gutter: 0.12cm,
+      row-gutter: 0.12cm,
+      ..b.rows.chunks(2).map(two => {
+        let cells = ()
+        for (i, r) in two.enumerate() {
+          if i > 0 { cells.push([]) }
+          cells.push(align(horizon, text(size: 9pt, weight: "bold", r.label)))
+          cells += r.values.map(v => value-box(v, height: 0.6cm))
+        }
+        if two.len() == 1 { cells += ([],) * (1 + 1 + n) }
+        cells
+      }).flatten(),
     )
     #notes-of(b)
   ]

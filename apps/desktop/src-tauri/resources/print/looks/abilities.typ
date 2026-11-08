@@ -44,7 +44,7 @@
     let out = (align(horizon, text(weight: "bold", r.label)),)
     for (i, v) in r.values.enumerate() {
       if i > 0 and operators { out.push(align(center + horizon, caption(op(i)))) }
-      out.push(value-box(v))
+      out.push(value-box(v, height: 0.6cm))
     }
     out
   }
@@ -58,7 +58,7 @@
     #grid(
       columns: columns,
       column-gutter: 0.15cm,
-      row-gutter: 0.18cm,
+      row-gutter: 0.12cm,
       ..b.rows.map(cells-of).flatten(),
       ..footer,
     )

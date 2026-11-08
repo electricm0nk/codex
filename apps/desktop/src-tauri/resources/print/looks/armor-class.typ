@@ -47,8 +47,10 @@
     )
     #if parts.len() > 0 {
       v(0.15cm)
+      // Each part's cell as wide as its word asks (a few letters' room more), so "Deflection"
+      // keeps clear of "Misc" beside the Abilities on page 1.
       grid(
-        columns: (1fr,) * parts.len(),
+        columns: parts.map(r => (r.label.len() + 4) * 1fr),
         column-gutter: 0.12cm,
         ..parts.map(r => labelled(r, height: 0.75cm, size: 10pt)),
       )

@@ -28,7 +28,7 @@
 
 #let captions = ("Total", "Base", "Ability", "Misc")
 #let label-column = 1fr
-#let box-width = 1.1cm
+#let box-width = 0.85cm
 #let operators = true
 
 #let look(b) = {
@@ -37,14 +37,14 @@
   let op(i) = if not operators { none } else if i == 1 { "=" } else { "+" }
   let columns = (label-column,)
   for i in range(n) {
-    if i > 0 and operators { columns.push(0.35cm) }
+    if i > 0 and operators { columns.push(0.3cm) }
     columns.push(box-width)
   }
   let cells-of(r) = {
     let out = (align(horizon, text(weight: "bold", r.label)),)
     for (i, v) in r.values.enumerate() {
       if i > 0 and operators { out.push(align(center + horizon, caption(op(i)))) }
-      out.push(value-box(v))
+      out.push(value-box(v, height: 0.6cm))
     }
     out
   }
@@ -57,8 +57,8 @@
     #heading-of(b)
     #grid(
       columns: columns,
-      column-gutter: 0.15cm,
-      row-gutter: 0.18cm,
+      column-gutter: 0.1cm,
+      row-gutter: 0.12cm,
       ..b.rows.map(cells-of).flatten(),
       ..footer,
     )

@@ -56,7 +56,7 @@ impl SheetDocument {
         let row_open = |cursor: u16, before: &str| {
             Err(format!("print.layout: the row before {before} ends at column {cursor} of the {columns}-column grid; a row is filled before it ends"))
         };
-        for block in &self.blocks {
+        for (index, block) in self.blocks.iter().enumerate() {
             let (x, span) = (u16::from(block.place.x), u16::from(block.place.span));
             if span == 0 || x + span > columns {
                 return Err(format!(
@@ -65,6 +65,25 @@ impl SheetDocument {
                     block.heading,
                     x + span
                 ));
+            }
+            if block.place.under {
+                // Stacked under the block before it, in that block's cell: the same columns, no break.
+                let above = index.checked_sub(1).map(|before| &self.blocks[before]);
+                match above {
+                    Some(above) if !block.new_page && above.place.x == block.place.x && above.place.span == block.place.span => continue,
+                    Some(above) => {
+                        return Err(format!(
+                            "print.layout: block `{}` ({}) is stacked under `{}` but is not in its cell (columns {x}..{} against {}..{}, or a page break)",
+                            block.id,
+                            block.heading,
+                            above.id,
+                            x + span,
+                            above.place.x,
+                            above.place.x + above.place.span
+                        ))
+                    }
+                    None => return Err(format!("print.layout: block `{}` ({}) is stacked under no block", block.id, block.heading)),
+                }
             }
             if cursor == columns {
                 cursor = 0;
@@ -112,12 +131,15 @@ pub enum Look {
     /// The skills in two narrow columns: the class-skill box, the name with its armor-check mark,
     /// the total, the key ability, the ranks and the misc write-in.
     Skills,
+    /// The weapons table: a line per weapon in hand (attack, damage dice, Str, enhancement, damage
+    /// bonus, threat, critical, wield), two blank lines and the ammunition write-in.
+    Weapons,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 9] = [
+    pub const ALL: [Look; 10] = [
         Look::Table,
         Look::Abilities,
         Look::HitPoints,
@@ -127,6 +149,7 @@ impl Look {
         Look::Saves,
         Look::Speed,
         Look::Skills,
+        Look::Weapons,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -141,20 +164,34 @@ impl Look {
             Look::Saves => "saves",
             Look::Speed => "speed",
             Look::Skills => "skills",
+            Look::Weapons => "weapons",
         }
     }
 }
 
-/// Where a block sits on the page grid: its first column `x` (from 0) and how many columns it spans.
+/// Where a block sits on the page grid: its first column `x` (from 0) and how many columns it spans;
+/// `under`: in the cell of the block before it, stacked under that block (the same columns), so a
+/// column of short blocks sits beside a tall one.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 pub struct Place {
     pub x: u8,
     pub span: u8,
+    pub under: bool,
 }
 
 impl Place {
     /// Across the whole page.
-    pub const FULL: Place = Place { x: 0, span: GRID_COLUMNS };
+    pub const FULL: Place = Place::at(0, GRID_COLUMNS);
+
+    /// From column `x`, `span` columns wide, in a cell of its own.
+    pub const fn at(x: u8, span: u8) -> Self {
+        Place { x, span, under: false }
+    }
+
+    /// From column `x`, `span` columns wide, stacked under the block before it in that block's cell.
+    pub const fn under(x: u8, span: u8) -> Self {
+        Place { x, span, under: true }
+    }
 }
 
 impl Default for Place {

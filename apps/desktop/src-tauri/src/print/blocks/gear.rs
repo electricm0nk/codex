@@ -6,13 +6,31 @@
 use super::{derivation, override_tag, pounds, trim_number, words_of, SheetSources};
 use crate::character_hub::{ActiveStateDto, WeaponDamageDto};
 use crate::print::layout::{signed, NO_VALUE};
-use crate::print::model::{SheetBlock, SheetRow};
+use crate::print::model::{Look, SheetBlock, SheetRow};
 
+/// The engine's per-weapon rows, each a cell of its weapon's line: (id prefix, caption).
 const WEAPON_ROWS: [(&str, &str); 3] = [
     ("combat.weapon_attack_bonus.", "Attack bonus"),
     ("combat.weapon_damage_bonus.", "Damage bonus"),
     ("combat.weapon_threat_range_low.", "Threat range from"),
 ];
+
+/// The key the engine files a weapon's rows under: its record's name without the `item:` prefix
+/// and the ` (Base)` suffix, letters and digits only, lower-cased (`Longsword (Base)` reads
+/// `longsword`), as `normalize_weapon_identity` in the rules core files them.
+fn weapon_row_key(record: &str) -> String {
+    let record = record.strip_prefix("item:").unwrap_or(record);
+    record.strip_suffix(" (Base)").unwrap_or(record).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect()
+}
+
+/// A per-weapon row as its cell prints it: the threat range's first number as is, a bonus signed.
+fn weapon_cell(prefix: &str, row: Option<&crate::character_hub::ExplanationDto>) -> String {
+    match row {
+        Some(row) if prefix.ends_with("threat_range_low.") => row.value.to_string(),
+        Some(row) => signed(row.value),
+        None => NO_VALUE.to_owned(),
+    }
+}
 
 fn optional_signed(value: Option<i16>) -> String {
     value.map_or_else(|| NO_VALUE.to_owned(), signed)
@@ -41,36 +59,62 @@ fn critical(weapon: &WeaponDamageDto) -> String {
     }
 }
 
+/// The Weapons block (SD-40 E2.3): one line per weapon in hand, its cells the attack bonus, the
+/// damage dice, the Strength and enhancement damage, the damage bonus, the threat range's first
+/// number and the critical, then the wield; the engine's three per-weapon rows are cells of that
+/// line (and the rows behind it in Show the math), not lines of their own. A per-weapon row no
+/// weapon in hand matches still prints, as a line of its own. The `weapons` look adds the blank
+/// lines and the ammunition write-in.
 pub fn weapons(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![SheetRow::new(
         "Weapon",
-        ["Damage", "Str", "Enh.", "Critical", "Wield"].map(str::to_owned),
+        ["Attack", "Damage", "Str", "Enh.", "Dmg", "Threat", "Critical", "Wield"].map(str::to_owned),
     )];
+    let mut placed: Vec<&str> = Vec::new();
     for weapon in &sources.loaded.weapon_damage {
+        let name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
+        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
+        let found: Vec<(&str, Option<&crate::character_hub::ExplanationDto>)> = WEAPON_ROWS
+            .iter()
+            .map(|(prefix, _)| (*prefix, sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key.as_str()))))
+            .collect();
+        placed.extend(found.iter().filter_map(|(_, row)| row.map(|row| row.id.as_str())));
         let dice = weapon.base_dice.map_or_else(|| NO_VALUE.to_owned(), |dice| format!("{}d{}", dice.count, dice.die_size));
         let wield = weapon.wield_category.as_deref().map_or_else(|| NO_VALUE.to_owned(), spaced_words);
         let notes = weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus)));
+        let [attack, damage, threat] = [0, 1, 2].map(|index| weapon_cell(found[index].0, found[index].1));
         rows.push(
             SheetRow::new(
-                item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref()),
-                [dice, optional_signed(weapon.str_damage_modifier), optional_signed(weapon.enhancement_damage_bonus), critical(weapon), wield],
+                name,
+                [
+                    attack,
+                    dice,
+                    optional_signed(weapon.str_damage_modifier),
+                    optional_signed(weapon.enhancement_damage_bonus),
+                    damage,
+                    threat,
+                    critical(weapon),
+                    wield,
+                ],
             )
             .with_notes(notes)
-            .derived(Vec::new()),
+            .derived(found.iter().filter_map(|(_, row)| row.map(derivation)).collect()),
         );
     }
     for row in &sources.loaded.explanations {
+        if placed.contains(&row.id.as_str()) {
+            continue;
+        }
         for (prefix, label) in WEAPON_ROWS {
             if let Some(weapon) = row.id.strip_prefix(prefix) {
-                let value = if prefix.ends_with("threat_range_low.") { row.value.to_string() } else { signed(row.value) };
-                rows.push(SheetRow::new(format!("{label} ({})", weapon.replace('_', " ")), [value]).derived(vec![derivation(row)]));
+                rows.push(SheetRow::new(format!("{label} ({})", weapon.replace('_', " ")), [weapon_cell(prefix, Some(row))]).derived(vec![derivation(row)]));
             }
         }
     }
     if rows.len() == 1 {
         rows.push(SheetRow::new("No weapon is wielded.", Vec::<String>::new()));
     }
-    SheetBlock::new("Weapons", rows)
+    SheetBlock::new("Weapons", rows).in_look(Look::Weapons)
 }
 
 /// `OneHanded` reads `One Handed`.

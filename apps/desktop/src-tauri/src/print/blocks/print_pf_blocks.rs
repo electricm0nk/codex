@@ -23,18 +23,18 @@ const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
 /// The 18 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
-/// along the screen's boxes (SD-40 `decisions.md §8`).
+/// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3).
 const BASE_HEADINGS: [&str; 18] = [
     "Identity",
-    "Abilities",
     "Hit Points",
-    "Armor Class",
     "Initiative",
-    "Saving Throws",
+    "Abilities",
+    "Armor Class",
     "Attack",
-    "Speed",
     "Skills",
     "Weapons",
+    "Saving Throws",
+    "Speed",
     "Armor",
     "Inventory",
     "Feats",
@@ -147,10 +147,8 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
         // Skills: the load response's total, the key ability's modifier, the ranks.
         format!("Spellcraft {} Int {} 5", signed(explained("skill.total.spellcraft")), signed(modifiers.intelligence)),
         format!("Climb* {} Str {} 1", signed(explained("skill.total.climb")), signed(modifiers.strength)),
-        // Weapons: the dice stay literal; each facet its own cell.
-        "Longsword 1d8".to_owned(),
-        "19-20/x2".to_owned(),
-        format!("Attack bonus (longsword) {}", signed(explained("combat.weapon_attack_bonus.longsword"))),
+        // Weapons: the dice stay literal; each facet its own cell, the engine's attack bonus one of them.
+        format!("Longsword 19-20/x2 · One Handed {} 1d8", signed(explained("combat.weapon_attack_bonus.longsword"))),
         // Armor: the worn armor's own numbers.
         "Chain Shirt +4".to_owned(),
         // Inventory: the encumbrance the engine computed.
@@ -527,15 +525,16 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     let mut document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
     assert_eq!(document.columns(), GRID_COLUMNS, "the Pathfinder sheet prints on the page grid");
     let place = |id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{id} prints")).place;
-    assert_eq!(place("abilities"), Place { x: 0, span: 6 }, "the Abilities take the row's left half");
-    assert_eq!(place("hitPoints"), Place { x: 6, span: 6 }, "the Hit Points sit beside them, on the right half");
+    assert_eq!(place("abilities"), Place::at(0, 6), "the Abilities take the row's left half");
+    assert_eq!(place("armorClass"), Place::at(6, 6), "the Armor Class sits beside them, on the right half");
+    assert_eq!(place("attack"), Place::under(6, 6), "the Attack is stacked under the Armor Class");
     let abilities = document.blocks.iter().position(|block| block.id == "abilities").expect("the Abilities block");
-    assert_eq!(document.blocks[abilities + 1].id, "hitPoints", "one row: Abilities, then Hit Points beside them");
+    assert_eq!(document.blocks[abilities + 1].id, "armorClass", "one row: Abilities, then Armor Class beside them");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
 
-    document.blocks[abilities + 1].place = Place { x: 8, span: 6 };
+    document.blocks[abilities + 1].place = Place::at(8, 6);
     let refused = crate::print::typst::typeset(&document).expect_err("a block past column 12 is refused");
-    assert!(refused.contains("print.layout") && refused.contains("hitPoints") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
+    assert!(refused.contains("print.layout") && refused.contains("armorClass") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
 }
 
 /// The page grid's other refusals (`SheetDocument::check_places`, SD-40 `decisions.md §21`): a block
@@ -545,7 +544,7 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
 fn print_pf_blocks_a_row_left_open_or_out_of_order_is_refused() {
     use crate::print::model::{Place, SheetBlock, SheetDocument, SheetRow};
     let block = |id: &'static str, x: u8, span: u8| {
-        SheetBlock::new(id, vec![SheetRow::new("Probe", ["1".to_owned()])]).with_id(id).at(Place { x, span })
+        SheetBlock::new(id, vec![SheetRow::new("Probe", ["1".to_owned()])]).with_id(id).at(Place::at(x, span))
     };
     let sheet = |blocks: Vec<SheetBlock>| SheetDocument { title: "Grid probe".to_owned(), paper: "a4", blocks };
 
@@ -564,6 +563,18 @@ fn print_pf_blocks_a_row_left_open_or_out_of_order_is_refused() {
 
     let empty = sheet(vec![block("empty", 0, 0)]).check_places().expect_err("a block of no width");
     assert!(empty.contains("`empty`") && empty.contains("past the 12-column grid"), "{empty}");
+
+    // A block stacked `under` another shares that block's cell (SD-40 E2.3): the same columns.
+    let under = |id: &'static str, x: u8, span: u8| block(id, x, span).at(Place::under(x, span));
+    sheet(vec![block("tall", 0, 7), block("top", 7, 5), under("middle", 7, 5), under("bottom", 7, 5), block("next", 0, 12)])
+        .check_places()
+        .expect("a column of stacked blocks beside a tall one: printable");
+    let astray = sheet(vec![block("left", 0, 6), under("astray", 6, 6), block("right", 6, 6)]).check_places().expect_err("stacked in another cell");
+    assert!(astray.contains("`astray`") && astray.contains("stacked under `left`") && astray.contains("not in its cell"), "{astray}");
+    let alone = sheet(vec![under("alone", 0, 12)]).check_places().expect_err("stacked under nothing");
+    assert!(alone.contains("`alone`") && alone.contains("stacked under no block"), "{alone}");
+    let broken = sheet(vec![block("top", 0, 12), under("broken", 0, 12).on_new_page()]).check_places().expect_err("a stacked block on a new page");
+    assert!(broken.contains("`broken`") && broken.contains("not in its cell"), "{broken}");
 }
 
 /// (block id, heading, look, row label, the row's cells, the engine row behind its number)
@@ -629,7 +640,7 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
         }
 
         let text = pdf_text(&render(&root, &request(false, false, false)));
-        assert_in_order(&text, &["Hit Points", "Armor Class", "Initiative", "Saving Throws", "Attack", "Speed", "Skills"]);
+        assert_in_order(&text, &["Hit Points", "Initiative", "Armor Class", "Attack", "Skills", "Saving Throws", "Speed"]);
         for line in [
             format!("Total {}", row("hit_points.max").value),
             format!("Touch {}", row("defense.touch_armor_class").value),
@@ -714,9 +725,9 @@ fn print_pf_blocks_skills_print_every_panel_row_in_two_columns() {
         let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
         let skills = document.blocks.iter().find(|block| block.id == "skills").expect("the Skills block");
         assert_eq!(skills.look.name(), "skills", "{tag}: the Skills print in their own look");
-        assert_eq!(skills.place, Place { x: 0, span: 7 }, "{tag}: the Skills span 7 of the 12 columns");
+        assert_eq!(skills.place, Place::at(0, 7), "{tag}: the Skills span 7 of the 12 columns");
         let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
-        assert_eq!(weapons.place, Place { x: 7, span: 5 }, "{tag}: the Weapons print beside the Skills");
+        assert_eq!(weapons.place, Place::at(7, 5), "{tag}: the Weapons print beside the Skills");
 
         let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")).collect();
         assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
@@ -772,6 +783,97 @@ fn print_pf_blocks_skills_print_every_panel_row_in_two_columns() {
         }
         for caption in ["Tot.", "Abil.", "Rk.", "Misc", "key ability modifier", "ranks", "class skill", "armor check penalty"] {
             assert!(block.contains(caption), "{tag}: the columns are captioned `{caption}`: {block}");
+        }
+    }
+}
+
+/// The Weapons look (SD-40 E2.3): one table, a line per weapon in hand, each the engine's
+/// per-weapon rows (`combat.weapon_attack_bonus.<weapon>`, `combat.weapon_damage_bonus.<weapon>`,
+/// `combat.weapon_threat_range_low.<weapon>`) as cells of that weapon's line, never lines of their
+/// own, beside the damage facets the Weapons tab shows (dice literal, Str, enhancement, critical,
+/// wield); the feat notes under the line; then two blank lines and an ammunition write-in for the
+/// pencil.
+#[test]
+fn print_pf_blocks_weapons_print_as_one_table() {
+    use crate::print::model::Derivation;
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    for (tag, id) in [("weapons-aldric", ALDRIC_ID), ("weapons-elowen", ELOWEN_ID), ("weapons-tomas", TOMAS_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+        let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+        assert_eq!(weapons.look.name(), "weapons", "{tag}: the Weapons print in their own look");
+        assert!(!loaded.weapon_damage.is_empty(), "{tag}: the seed holds a weapon in hand");
+        let per_weapon: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_")).collect();
+        assert_eq!(per_weapon.len(), 3 * loaded.weapon_damage.len(), "{tag}: three engine rows per weapon in hand");
+        for weapon in &loaded.weapon_damage {
+            // The engine keys a weapon's rows by its record's name, letters and digits only.
+            let key = weapon.weapon_record_key.as_deref().expect("the seed's weapon resolves");
+            let key = key.strip_prefix("item:").unwrap_or(key);
+            let slug: String = key.strip_suffix(" (Base)").unwrap_or(key).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect();
+            let row = |prefix: &str| per_weapon.iter().find(|row| row.id == format!("{prefix}{slug}")).unwrap_or_else(|| panic!("{tag}: {prefix}{slug}"));
+            let (attack, damage, threat) = (row("combat.weapon_attack_bonus."), row("combat.weapon_damage_bonus."), row("combat.weapon_threat_range_low."));
+            let dice = weapon.base_dice.as_ref().map(|dice| format!("{}d{}", dice.count, dice.die_size)).expect("the seed's weapon has dice");
+            let [low, high] = weapon.critical_threat_range.expect("the seed's weapon has a threat range");
+            let critical = format!("{}/x{}", if low == high { low.to_string() } else { format!("{low}-{high}") }, weapon.critical_multiplier.expect("a multiplier"));
+            let line = weapons
+                .rows
+                .iter()
+                .find(|line| line.values.first() == Some(&signed(attack.value)) && line.values.get(1) == Some(&dice))
+                .unwrap_or_else(|| panic!("{tag}: a line for {key}: {:?}", weapons.rows));
+            assert_eq!(
+                line.values,
+                vec![
+                    signed(attack.value),
+                    dice.clone(),
+                    weapon.str_damage_modifier.map_or_else(|| "—".to_owned(), signed),
+                    weapon.enhancement_damage_bonus.map_or_else(|| "—".to_owned(), signed),
+                    signed(damage.value),
+                    threat.value.to_string(),
+                    critical.clone(),
+                    weapon.wield_category.as_deref().map(|wield| if wield == "OneHanded" { "One Handed" } else { wield }.to_owned()).expect("a wield category"),
+                ],
+                "{tag}: {key}'s line: attack, damage dice, Str, enhancement, damage bonus, threat, critical, wield"
+            );
+            let behind: Vec<Derivation> =
+                [attack, damage, threat].iter().map(|row| Derivation { source: format!("{} = {}", row.id, row.value), detail: row.detail.clone() }).collect();
+            assert_eq!(line.derivation.as_deref(), Some(&behind[..]), "{tag}: {key}'s line keeps the three engine rows behind it");
+        }
+        for line in &weapons.rows {
+            assert!(
+                !["Attack bonus (", "Damage bonus (", "Threat range from ("].iter().any(|prefix| line.label.starts_with(prefix)),
+                "{tag}: a weapon's engine row is a cell of its line, not a line `{}`",
+                line.label
+            );
+        }
+        let text = pdf_text(&render(&root, &request(false, false, false)));
+        let block = &text[text.find("Weapons").expect("Weapons")..];
+        for caption in ["Attack", "Damage", "Str", "Enh.", "Dmg", "Threat", "Critical", "Ammunition"] {
+            assert!(block.contains(caption), "{tag}: the Weapons look prints `{caption}`: {block}");
+        }
+    }
+}
+
+/// Page 1 (operator ruling R5, SD-40 `technical-design.md §4`): on Letter and on A4, the first
+/// page holds the character's details and every step-1 block (abilities, hit points, initiative,
+/// armor class, attack, saves, speed, skills, weapons), each found by its heading and its first
+/// printed words in the PDF's text before page 1's footer.
+#[test]
+fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
+    use crate::print::print_golden::{block_anchor, page_one, PAGE_ONE_BLOCKS};
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    for (tag, id) in [("page-one-aldric", ALDRIC_ID), ("page-one-elowen", ELOWEN_ID), ("page-one-tomas", TOMAS_ID)] {
+        let root = seeded(tag, id);
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let pdf = render(&root, &printed);
+            let text = pdf_text(&pdf);
+            let first = unspaced(page_one(&text, &document.title, page_count(&pdf)).unwrap_or_else(|| panic!("{tag} {paper:?}: page 1's footer prints: {text}")));
+            for block_id in PAGE_ONE_BLOCKS {
+                let block = document.blocks.iter().find(|block| block.id == block_id).unwrap_or_else(|| panic!("{tag}: the {block_id} block"));
+                assert!(first.contains(&block_anchor(block)), "{tag} {paper:?}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
+            }
         }
     }
 }
