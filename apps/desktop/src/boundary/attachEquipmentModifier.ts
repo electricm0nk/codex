@@ -3,6 +3,7 @@ import { formatError, hasTauriRuntime } from './runtime';
 import type { CharacterSummaryDto } from './loadListSavedCharacters';
 import type { PilotSnapshotDto, CorpusDerivedDto, DiagnosticDto } from './loadCreateCharacter';
 import type { CharacterMoneyDto } from './characterMoney';
+import type { PriceMode } from '../characterHub/priceMode';
 
 /**
  * Write desktop boundary for atomically attaching an Equipmods-category
@@ -11,13 +12,13 @@ import type { CharacterMoneyDto } from './characterMoney';
  * validates `modifierItemId` against the real equipment catalog and
  * `itemId` against the character's actual equipment selections, then
  * mirrors `purchase_equipment`'s resolve-cost -> check-affordability ->
- * mutate -> charge sequencing — with one deliberate difference: an unknown
- * `cost_gp` attaches for free rather than blocking, since the real CRB
- * weapon/armor enhancement records (+1 through +10) have no flat catalog
- * price at all (real PF1 enhancement pricing is a bonus-squared formula) —
- * see `attach_equipment_modifier_at_root`'s own doc comment in
- * `character_hub.rs` for the full reasoning. Only a modifier with a real,
- * known `cost_gp` (e.g. Masterwork) is ever actually charged.
+ * mutate -> charge sequencing, under `priceMode`. A `+N` the copy's Market row
+ * offers is charged that offer less what the copy already holds, so a plain
+ * copy brought up to `+N` costs what buying the `+N` costs. Otherwise a modifier
+ * with a real, known `cost_gp` (e.g. Masterwork) is charged that, and an unknown
+ * `cost_gp` attaches for free rather than blocking. Cashless moves no money.
+ * See `attach_equipment_modifier_at_root`'s own doc comment in
+ * `character_hub.rs` for the full reasoning.
  *
  * A distinct outcome union from `PurchaseEquipmentOutcome` (not reused,
  * despite the identical field set) so the two commands' `kind` tags stay
@@ -32,6 +33,8 @@ export interface AttachEquipmentModifierRequest {
   /** The Equipmods-category item being attached. */
   modifierItemId: string;
   savedAt: string;
+  /** How the charge moves money, the mode shown on the equipment screen. */
+  priceMode: PriceMode;
 }
 
 export type AttachEquipmentModifierOutcome =

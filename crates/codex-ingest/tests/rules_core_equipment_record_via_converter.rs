@@ -213,12 +213,13 @@ mod tests {
                 })
             };
 
-            // --- the old `arms_armor::armor_class_bonus_from_bonus_chains` ---
+            // --- the old `arms_armor::armor_class_bonus_from_bonus_chains`, and since then a chain
+            // that names Armor Class in a list (`COMBAT|ATTACK,AC`) ---
             let old_ac_chain = row.bonus_chains.iter().find_map(|bonus| {
                 let q = &bonus.qualifiers;
                 if q.len() >= 3
                     && q[0] == "COMBAT"
-                    && q[1] == "AC"
+                    && q[1].split(',').any(|name| name == "AC")
                     && !equipment_bonus_reader::declares_circumstance_bonus_type(bonus)
                 {
                     q[2].parse::<i16>().ok()
@@ -526,7 +527,12 @@ mod tests {
                 .tokens
                 .iter()
                 .find(|token| token.key == "BASEITEM")
-                .map(|token| token.value.clone());
+                .map(|token| token.value.clone())
+                // A record cut from a template names it as its name, with no token. 179 of 7803
+                // records; every other record reads as the token did.
+                .or_else(|| {
+                    (row.name != converted.identity && row.name.ends_with(" (Base)")).then(|| row.name.clone())
+                });
             if old_base_item != converted.base_item {
                 disagreements.push(format!(
                     "{id}: base item {old_base_item:?} != {:?}",

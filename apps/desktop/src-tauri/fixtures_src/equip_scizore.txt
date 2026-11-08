@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Scizore
+Scizore																				PROFICIENCY:WEAPON|Scizore								TYPE:Weapon.Resizable.Melee.OneHanded.Martial.Piercing.Gauntlet																																			COST:20	WT:3										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d10					EQMOD:Material ~ Steel																																									WIELD:OneHanded							SIZE:M	SOURCEPAGE:p.36

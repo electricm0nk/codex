@@ -84,12 +84,12 @@ const DETERMINISTIC_FIXTURE: &str =
 /// `decisions.md §44.2`). A test that cannot see a new book cannot report that
 /// the new book broke something.
 fn app_loaded_books() -> Vec<String> {
-    let src = std::fs::read_to_string("apps/desktop/src-tauri/src/race_catalog.rs")
-        .expect("the desktop race catalog source is readable from the repo root");
+    let src = std::fs::read_to_string("src/rules_core/race_resolver.rs")
+        .expect("the race resolver source is readable from the repo root");
     let decl = src
-        .split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =")
+        .split("pub const RACE_CORPUS_BOOKS: &[&str] =")
         .nth(1)
-        .expect("RACE_CORPUS_BOOKS is declared in race_catalog.rs");
+        .expect("RACE_CORPUS_BOOKS is declared in race_resolver.rs");
     let list = decl.split(';').next().expect("the declaration terminates");
     list.split('"').skip(1).step_by(2).map(str::to_owned).collect()
 }

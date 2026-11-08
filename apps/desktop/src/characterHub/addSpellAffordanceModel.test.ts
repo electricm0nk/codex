@@ -42,4 +42,10 @@ assertEqual(resolveAddSpellAffordance(null, levels).kind, 'Withheld', 'no held c
 const summoner = resolveAddSpellAffordance({ classId: 'class:summoner', classLabel: 'Summoner' }, [entry('class:summoner', 'nonCaster', false)]);
 assertEqual(summoner.kind, 'Withheld', 'no TS class-name list overrides the engine verdict');
 
+// The Overrides group's spell flag lets a class that does not cast hold a spell (`decisions.md §10`):
+// the backend saves it under its own source, so the tab must offer the way there.
+assertEqual(resolveAddSpellAffordance({ classId: 'class:fighter', classLabel: 'Fighter' }, levels, true).kind, 'Offered', 'nonCaster, flag on → offered');
+assertEqual(resolveAddSpellAffordance({ classId: 'class:fighter', classLabel: 'Fighter' }, levels, false).kind, 'Withheld', 'nonCaster, flag off → withheld');
+assertEqual(resolveAddSpellAffordance(null, levels, true).kind, 'Withheld', 'no held class: the flag gives nothing to route the pick through');
+
 console.log('addSpellAffordanceModel tests passed');

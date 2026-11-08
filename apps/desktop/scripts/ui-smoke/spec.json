@@ -1,5 +1,5 @@
 {
-  "$comment": "Row shape: {id, screen, setup?: [rowIds], steps: [{op, target?, text?, key?, ticks?, ms?}], marker, expect: [string], headingExact?: string (one h1-h3 must read exactly this, from the probe's headings), noHeadingMarkers?: true (no h1-h3 may carry ::before text, from the probe's headingMarkers), forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?: reason, notes}. `setup` is FLAT, not recursive: it runs only the listed rows' own `steps`, never THEIR `setup` -- a row meant to be reused as another row's setup entry must list every ancestor it itself needs, explicitly, in order (see e.g. `settings-theme-select-and-manage-themes-modal`'s own setup). `op: 'select'` (target, text) picks an `<option>` on the `<select>` located by `target` -- added to run.mjs because CreateCharacterForm's race/class selects carry no accessible name of their own (a `<select>`'s `nameOf()` is its full concatenated option text, since that's non-empty textContent, so `target` must be a substring unique to the wanted select's own option list, e.g. one of its option's exact text, not the select's id); `text` is matched against each `<option>`'s own text/value. `op: 'scroll'` takes an optional `direction: 'up'|'down'` (default 'down', unchanged from before) -- 'up' exists because resetToLanding() (run before every row's own setup/steps) clicks RESET_CLICK_NAMES by raw xdotool coordinate, not the DOM channel, and cannot recover a target scrolled to a negative on-screen y (a tall form's own 'Back'/'Cancel' pushed off the top by content added below it, e.g. a create-character outcome panel) -- a row that leaves the page scrolled down should scroll back up as its own last step so the NEXT row's resetToLanding can find a landing-reachable control; see create-character-fill-and-submit's own trailing scroll step. Generated docs/testing/ui-smoke-inventory.md is rendered FROM this file by render-inventory.mjs -- edit this file, not the doc. Names in `target`/`selectsNonEmpty` are matched against the live uiProbe.ts snapshot's targets/selects by exact `name` (trimmed textContent || aria-label || placeholder || title || id, and select#<n> for the handful of anonymous <select>s -- see uiProbe.ts). `expect`/`marker`/`forbid` strings are matched against bodyText, which is captured via `innerText` (respects CSS, e.g. `text-transform: uppercase` renders the text differently than its mixed-case source prop/string) -- assert the case that actually renders, not the source string. Global forbid strings (applied by run.mjs to every row unless listed in that row's own `allowGlobalForbid`): 'could be read from the corpus', 'failure', 'Failed to load', 'requires the desktop runtime', 'undefined', 'NaN', '[object Object]', and 'Loading' still present after the row's wait budget. Denominator discipline: run.mjs writes results.json with EVERY selected row present (status 'not-run', reason 'not executed') before any row executes, and each row's own entry is replaced in place as it finishes -- a run killed mid-way (e.g. a 10-minute shell-call timeout) leaves a results.json whose row count still matches the run's own denominator, with the unexecuted rows explicit as 'not-run', never silently absent (see lib/resultsSkeleton.mjs). `--resume` (with `--out` pointed at a directory that already holds a results.json from a prior invocation): skips re-running any row whose entry there is already 'green' or 'manual' (carried forward verbatim), and re-runs every other row ('not-run', 'red', 'blocked', or missing from that file entirely) -- see lib/resultsSkeleton.mjs's buildResumeState. The final summary line reads '<green>/<total> green, <red> red, <blocked> blocked, <manual> manual, <not-run> not-run (M = <total> rows)'; run.mjs exits non-zero if red, blocked, OR not-run is nonzero. Auto-recover: if 2 consecutive rows both look like a command-channel stall (resetToLanding never reaching a recognizable screen, or a click/type/key/select's own long retry budget -- CLICK_TARGET_WAIT_MS -- still running out; NOT a row that ran cleanly but asserted false), run.mjs relaunches the app once (driver.sh launch) and retries the CURRENT (second) row before recording it, capped at 3 relaunches per run; a retry that then passes gets 'auto-relaunch' as its own `reason`.",
+  "$comment": "Row shape: {id, screen, sidecar?: true (run.mjs builds pcg_import into the app's target directory first), setup?: [rowIds], steps: [{op, target?, index? (the nth control of that name, on click and select), text?, key?, ticks?, ms?}], marker, expect: [string], headingExact?: string (one h1-h3 must read exactly this, from the probe's headings), noHeadingMarkers?: true (no h1-h3 may carry ::before text, from the probe's headingMarkers), forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?: reason, notes}. `setup` is FLAT, not recursive: it runs only the listed rows' own `steps`, never THEIR `setup` -- a row meant to be reused as another row's setup entry must list every ancestor it itself needs, explicitly, in order (see e.g. `settings-theme-select-and-manage-themes-modal`'s own setup). `op: 'nativeFile'` (text: a path from the repo root) types that path into the native file dialog the previous step opened, OS-level input because the command channel only reaches the webview. `op: 'select'` (target, text) picks an `<option>` on the `<select>` located by `target` -- added to run.mjs because CreateCharacterForm's race/class selects carry no accessible name of their own (a `<select>`'s `nameOf()` is its full concatenated option text, since that's non-empty textContent, so `target` must be a substring unique to the wanted select's own option list, e.g. one of its option's exact text, not the select's id); `text` is matched against each `<option>`'s own text/value. `op: 'scroll'` takes an optional `direction: 'up'|'down'` (default 'down', unchanged from before) -- 'up' exists because resetToLanding() (run before every row's own setup/steps) clicks RESET_CLICK_NAMES by raw xdotool coordinate, not the DOM channel, and cannot recover a target scrolled to a negative on-screen y (a tall form's own 'Back'/'Cancel' pushed off the top by content added below it, e.g. a create-character outcome panel) -- a row that leaves the page scrolled down should scroll back up as its own last step so the NEXT row's resetToLanding can find a landing-reachable control; see create-character-fill-and-submit's own trailing scroll step. Generated docs/testing/ui-smoke-inventory.md is rendered FROM this file by render-inventory.mjs -- edit this file, not the doc. Names in `target`/`selectsNonEmpty` are matched against the live uiProbe.ts snapshot's targets/selects by exact `name` (trimmed textContent || aria-label || placeholder || title || id, and select#<n> for the handful of anonymous <select>s -- see uiProbe.ts). `expect`/`marker`/`forbid` strings are matched against bodyText, which is captured via `innerText` (respects CSS, e.g. `text-transform: uppercase` renders the text differently than its mixed-case source prop/string) -- assert the case that actually renders, not the source string. Global forbid strings (applied by run.mjs to every row unless listed in that row's own `allowGlobalForbid`): 'could be read from the corpus', 'failure', 'Failed to load', 'requires the desktop runtime', 'undefined', 'NaN', '[object Object]', and 'Loading' still present after the row's wait budget. Denominator discipline: run.mjs writes results.json with EVERY selected row present (status 'not-run', reason 'not executed') before any row executes, and each row's own entry is replaced in place as it finishes -- a run killed mid-way (e.g. a 10-minute shell-call timeout) leaves a results.json whose row count still matches the run's own denominator, with the unexecuted rows explicit as 'not-run', never silently absent (see lib/resultsSkeleton.mjs). `--resume` (with `--out` pointed at a directory that already holds a results.json from a prior invocation): skips re-running any row whose entry there is already 'green' or 'manual' (carried forward verbatim), and re-runs every other row ('not-run', 'red', 'blocked', or missing from that file entirely) -- see lib/resultsSkeleton.mjs's buildResumeState. The final summary line reads '<green>/<total> green, <red> red, <blocked> blocked, <manual> manual, <not-run> not-run (M = <total> rows)'; run.mjs exits non-zero if red, blocked, OR not-run is nonzero. Auto-recover: if 2 consecutive rows both look like a command-channel stall (resetToLanding never reaching a recognizable screen, or a click/type/key/select's own long retry budget -- CLICK_TARGET_WAIT_MS -- still running out; NOT a row that ran cleanly but asserted false), run.mjs relaunches the app once (driver.sh launch) and retries the CURRENT (second) row before recording it, capped at 3 relaunches per run; a retry that then passes gets 'auto-relaunch' as its own `reason`.",
   "rows": [
     {
       "id": "landing-render",
@@ -453,7 +453,7 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-samurai"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
+      "marker": "Market",
       "expect": ["✓ Martial Weapons"],
       "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
       "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Samurai 1 (create-character-samurai's steps reach its sheet) opens the Weapons tab: the tier line reads '✓ Martial Weapons' (the deleted table printed '✗'), and the Skills panel names no class-skill Unknown."
@@ -463,7 +463,7 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-warrior"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
+      "marker": "Market",
       "expect": ["✓ Martial Weapons"],
       "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
       "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Warrior 1 (CRB NPC class): '✓ Martial Weapons'."
@@ -473,7 +473,7 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-magus"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
+      "marker": "Market",
       "expect": ["✓ Martial Weapons", "Caster Level"],
       "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
       "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Magus 1: '✓ Martial Weapons' and a Caster Level of 1 (the deleted table printed '—' for every caster outside six ids)."
@@ -684,8 +684,9 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Weapons" }],
-      "marker": "Add Weapon",
-      "expect": ["Add Weapon"],
+      "marker": "Market",
+      "expect": ["Market", "Print"],
+      "forbid": ["Add Weapon"],
       "notes": "SHEET_TABS[0]."
     },
     {
@@ -702,8 +703,9 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Gear" }],
-      "marker": "Add Armor",
-      "expect": ["Add Armor", "Add Gear"],
+      "marker": "Market",
+      "expect": ["Market"],
+      "forbid": ["Add Armor", "Add Gear"],
       "notes": "SHEET_TABS[2]."
     },
     {
@@ -744,28 +746,59 @@
       "notes": "SHEET_TABS[6]. Trait-add control (sheet-action-trait-add) lives on this tab. allowGlobalForbid 'failure' (SD-36 F6 merge-readiness B2): the Smoke Test PC (Elf Wizard 1) wears the create path's fixed Chain Shirt, and the Rules and features section prints its StatBlock rule text 'Arcane spell failure: 20%' (data/sheet_rules/core_rulebook/equipment/chain_shirt.json) -- correct PF1 text and the sole source of that string on this screen; the same exemption sheet-f6c-shaman-no-domain-line carries."
     },
     {
-      "id": "sheet-action-add-armor-gear-picker",
-      "screen": "sheet",
-      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-gear"],
-      "steps": [
-        { "op": "click", "target": "Add Armor" },
-        { "op": "key", "key": "Escape" }
-      ],
-      "marker": "Add Armor",
-      "expect": ["Add Armor"],
-      "notes": "ItemPickerModal (role=dialog, h2 title = the kind's own title, here 'Add Armor'; portals to document.body, see uiProbe.ts) opened via the Gear tab's Add Armor button (dispatch table in CharacterSheet.tsx also backs Add Gear/Add Spell/Add Feat through the same modal), then closed with Escape. CORRECTED 2026-09-18 (was misdiagnosed as an app defect specific to this catalog -- see git history for the retracted version of this note): `buildItemPickerConfig` routes Add Weapon and Add Armor through the IDENTICAL `loadEquipment('ArmsArmor')` query and the same catalog-agnostic `ItemPickerModal`/`mapEquipmentCatalogEntries` (a plain, uncomputed `.map()`, nothing prerequisite-checked or O(n^2) in it) -- there is no armor-specific render path for anything to be slow in, so a defect that only ever reproduced on 'this specific catalog' was never actually isolated to armor at all, only to whichever row happened to run into the stall. Reproduced directly (2026-09-18): a lone `key: Escape` command genuinely un-acknowledged for 24+ seconds after Add Armor opened, then a fresh command sent moments later (against the same still-open modal) completed in ~100ms -- the same screen-independent webview stall `run.mjs`'s own `CLICK_TARGET_WAIT_MS` comment already documents at length ('anywhere from well under a second up to 60+ seconds ... with no observed correlation to system load', separately confirmed live on settings-tab-* and equipment-catalog-open-and-search, both with zero large payloads). The real bug was harness-side: `pressKey`/`typeText` sent a single command with a bare 5000ms timeout and threw immediately on a miss, while `clickByNameChannel`/`selectByName` already retried the same class of command for up to `CLICK_TARGET_WAIT_MS` (150s) -- an inconsistency between ops, not a per-screen difference. Whichever op happened to be in flight when a stall hit failed fast here (and, via the dialog it left open behind it, blocked every row after it in a sequential run -- confirmed live: sheet-action-level-up-dialog, sheet-action-skill-allocation-dialog and sheet-action-hp-adjust all cascaded BLOCKED immediately after this row's own failure in one continuous run) while an identical stall hitting a `click` step was silently ridden out. Fixed by giving `pressKey`/`typeText` the same retry budget `click`/`select` already had; row confirmed green live 2026-09-18 on a fresh launch immediately after (full run ~2m45s -- the underlying stall still happened, the harness just rode it out instead of failing fast). One more artifact seen mid-investigation, worth naming so a future reader doesn't rediscover it as a new mystery: after one of these stalls, the modal's own DOM/probe state closed correctly (`dialogs: []`, correct screen content in `bodyText`) but the LAST PAINTED FRAME stayed a solid black rectangle over the modal's former screen region indefinitely -- clicks/scrolls landed correctly against the real (invisible) content underneath, only the pixels were stale. Did not clear via further input; cleared by `driver.sh launch` (a fresh WebKitGTK process). Consistent with a software-rasterizer (no GPU under Xvfb, see SKILL.md's own DRI3 note) compositor invalidation bug in this harness's specific renderer path, not a React/app-state bug -- the DOM was already correct the whole time it was showing black."
-    },
-    {
       "id": "sheet-action-add-feat",
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-feats"],
       "steps": [
+        { "op": "click", "target": "Remove" },
+        { "op": "wait", "ms": 4000 },
         { "op": "click", "target": "Add Feat" },
-        { "op": "key", "key": "Escape" }
+        { "op": "wait", "ms": 6000 }
       ],
-      "marker": "Add Feat",
-      "expect": ["Add Feat"],
-      "notes": "Same ItemPickerModal, feat-catalog mode (list_feats_for_character); dialog h2 title is 'Add Feat'."
+      "marker": "Hide feats I don't qualify for",
+      "expect": ["Add Feat", "Hide feats I don't qualify for", "hidden (prerequisites not met)"],
+      "allowGlobalForbid": ["failure"],
+      "notes": "Same ItemPickerModal, feat-catalog mode (list_feats_for_character); dialog h2 title is 'Add Feat'. A fresh Elf Wizard 1 has no feat room (the feat budget refuses an Add), so Add Feat is disabled until the row first clicks Remove on the character's one feat; only then does the click open the picker. The marker is the picker's own checkbox label, so the row is red when no picker opens. The box is ticked by default, so the count line reads '... hidden (prerequisites not met)'. allowGlobalForbid 'failure': feat descriptions contain that word."
+    },
+    {
+      "id": "sheet-action-add-feat-unmet-listed",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-feats"],
+      "steps": [
+        { "op": "click", "target": "Remove" },
+        { "op": "wait", "ms": 4000 },
+        { "op": "click", "target": "Add Feat" },
+        { "op": "wait", "ms": 6000 },
+        { "op": "click", "target": "Hide feats I don't qualify for" },
+        { "op": "wait", "ms": 2000 },
+        { "op": "key", "key": "Escape" },
+        { "op": "wait", "ms": 2000 },
+        { "op": "click", "target": "Add Feat" },
+        { "op": "wait", "ms": 6000 }
+      ],
+      "marker": "Hide feats I don't qualify for",
+      "expect": ["Add Feat", "Hide feats I don't qualify for", "unavailable (prerequisites not met)", "Unavailable \u2014"],
+      "forbid": ["hidden (prerequisites not met)"],
+      "allowGlobalForbid": ["failure"],
+      "notes": "Unticks the picker's hide-unmet box, closes the picker and reopens it: the choice persisted (localStorage), so the reopened picker lists every feat, the unmet ones greyed with 'Unavailable \u2014 <unmet list>', and the count line reads 'unavailable (prerequisites not met)' instead of 'hidden'. The harness checks the bodyText once, after the last step, so the row ends with the box UNTICKED (the state the assertions need); the app-data root is per run, so the setting does not leave the run. Not covered: clicking a greyed row (its Add stays disabled; unit-tested on selectableItemPickerEntry), a level-up feat pick."
+    },
+    {
+      "id": "sheet-action-custom-dialog-chips",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
+      "steps": [
+        { "op": "click", "target": "Custom" },
+        { "op": "click", "target": "Edit Custom\u2026" },
+        { "op": "wait", "ms": 1000 },
+        { "op": "click", "target": "Feats (0)" },
+        { "op": "click", "target": "Grants (0)" },
+        { "op": "key", "key": "Escape" },
+        { "op": "click", "target": "Edit Custom\u2026" },
+        { "op": "wait", "ms": 1000 }
+      ],
+      "marker": "GM grants and house rules.",
+      "expect": ["Grants (0)", "Feats (0)", "Equipment (0)"],
+      "notes": "CustomDialog's top-row chips (role=tab). The row opens the sheet's Custom tab, opens the dialog, selects Feats then Grants (so the Feats chip is deselected, the case that lost its resting style before the chip style fix) and reopens the dialog. The probe reads text, not computed style: this proves the chips render, are reachable by name and survive a select/deselect/reopen cycle. Not covered: that a deselected chip's computed background equals the resting chip's, in light and dark, and that exactly one chip has aria-selected=true (the probe snapshot carries no computed style or aria-selected); the style function is unit-tested in customChip.test.ts and the eyeball is E9.4."
     },
     {
       "id": "sheet-action-add-spell",
@@ -984,7 +1017,7 @@
       ],
       "marker": "MONEY",
       "expect": ["MONEY", "GP"],
-      "notes": "MoneyPanel lives inside the Gear tab, not a standalone tab of its own. Same disabled-until-typed constraint as HP; this row adds then spends the same 1gp back for a net-zero unattended run. The Gear tab also has its own unrelated 'Add' buttons (Add Armor/Add Gear) -- MoneyPanel's plain 'Add' is only unambiguous while no ItemPickerModal is open, which sheet-action-add-armor-gear-picker's own Escape guarantees by the time this row's reset-to-landing/setup chain re-runs it independently. Marker/expect uppercased ('MONEY' not 'Money') -- same CSS text-transform-vs-innerText note as sheet-tab-defense; confirmed live 2026-09-17."
+      "notes": "MoneyPanel lives inside the Gear tab, not a standalone tab of its own. Same disabled-until-typed constraint as HP; this row adds then spends the same 1gp back for a net-zero unattended run. Marker/expect uppercased ('MONEY' not 'Money') -- same CSS text-transform-vs-innerText note as sheet-tab-defense; confirmed live 2026-09-17."
     },
     {
       "id": "sheet-action-trait-add",
@@ -1204,8 +1237,39 @@
       "steps": [],
       "marker": "",
       "expect": [],
-      "manual": "handleImport opens a native OS file-open dialog (Tauri's dialog plugin) -- xdotool has no DOM to drive inside it.",
+      "manual": "Import, then Codex file, opens a native OS file-open dialog (Tauri's dialog plugin). The PCGen file branch is driven by load-character-import-pcgen; this branch is not.",
       "notes": "LoadCharacterScreen's 'Import' button."
+    },
+    {
+      "id": "load-character-import-pcgen",
+      "screen": "load",
+      "sidecar": true,
+      "steps": [
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "click", "target": "Import" },
+        { "op": "click", "target": "PCGen file" },
+        { "op": "nativeFile", "text": "scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg" },
+        { "op": "wait", "ms": 30000 }
+      ],
+      "marker": "Import report: sd33r6_eqm_combo.pcg",
+      "expect": ["Imported \"E5R6 eqm combo\".", "Import report: sd33r6_eqm_combo.pcg", "Game mode: Pathfinder_RPG", "SD33R6 ~ Leather Dragonhide", "Human Fighter 1"],
+      "notes": "SD-39 E7.2: Import, PCGen file, a real fixture through the real native dialog and the real pcg_import (the row builds it). Human Fighter 1 is the list row, which no starter reads, so the row is red unless the list holds the character. A debug conversion takes about 13 s (E7.1 receipt, one file)."
+    },
+    {
+      "id": "load-character-import-pcgen-opens",
+      "screen": "sheet",
+      "sidecar": true,
+      "setup": ["load-character-import-pcgen"],
+      "steps": [
+        { "op": "click", "target": "Load" },
+        { "op": "wait", "ms": 3000 },
+        { "op": "click", "target": "Custom" },
+        { "op": "wait", "ms": 1000 }
+      ],
+      "marker": "E5R6 eqm combo",
+      "expect": ["E5R6 eqm combo", "SD33R6 ~ Leather Dragonhide", "Biography"],
+      "allowGlobalForbid": ["failure"],
+      "notes": "SD-39 E7.2: the imported character opens on its sheet, and its custom.json reached the Custom tab."
     },
     {
       "id": "manual-character-export",
@@ -1301,8 +1365,8 @@
         { "op": "key", "key": "Shift" }
       ],
       "marker": "Wizard level 3",
-      "expect": ["Elowen Ashgrave", "Wizard 5", "HIT POINTS\n27", "Skill points: 7", "Fireball", "Wizard level 3"],
-      "notes": "SD-36 F6e: opens the second starter seed, Elowen Ashgrave (Human Wizard 5), on her Spells tab: Fireball, recorded and prepared, labelled with its Wizard spell level (3) from list_class_spell_levels -- the spell the operator named. Clicks the row by its displayLabel prefix (same mechanism as load-character-select-and-open). The seed is a real saved character built through the create path (compose_character_input + the record-and-prepare spell mutation), never a hand-written file. LAST row of the spec on purpose: it ends scrolled down so the screenshot shows the Fireball rows, and a row scrolled down is the one resetToLanding cannot recover from (see the $comment's scroll note) -- nothing runs after it."
+      "expect": ["Elowen Ashgrave", "Wizard 5", "HIT POINTS\n27", "Fireball", "Wizard level 3"],
+      "notes": "SD-36 F6e: opens the second starter seed, Elowen Ashgrave (Human Wizard 5), on her Spells tab: Fireball, recorded and prepared, labelled with its Wizard spell level (3) from list_class_spell_levels -- the spell the operator named. Clicks the row by its displayLabel prefix (same mechanism as load-character-select-and-open). The seed is a real saved character built through the create path (compose_character_input + the record-and-prepare spell mutation), never a hand-written file. LAST row of the spec on purpose: it ends scrolled down so the screenshot shows the Fireball rows, and a row scrolled down is the one resetToLanding cannot recover from (see the $comment's scroll note) -- nothing runs after it. No longer expects 'Skill points: 7': since the Show Progression drawer (SD-39 E2.1/E2.3) only the drawer prints it, and sheet-progression-drawer-open asserts it there."
     },
     {
       "id": "create-starfinder-soldier",
@@ -2000,7 +2064,7 @@
           "op": "wait",
           "ms": 3000
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Defiance Series, Squad"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Defiance Series, Squad"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser rifle, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser rifle, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -2045,125 +2109,6 @@
           "ms": 1500
         },
         {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:defiance_series_squad"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_rifle_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
           "op": "click",
           "target": "Save choices"
         },
@@ -2187,7 +2132,7 @@
         "over_budget",
         "☰ Menu"
       ],
-      "notes": "SD-37 E6.5a: SF-Soldier-3's full loadout (artifacts/epic_0/seed-builds.md §1) chosen through the real app. The 1st-level soldier seed build (the E6.5 rows' creation steps, under its own name 'SF Smoke Loadout') is created, loaded and leveled to Soldier 3 through 'Level up' twice (E6.5); then the sheet's 'Feats, spells and gear' dialog (StarfinderChoicesDialog.tsx) takes the seed's four feats from the engine's feat list (Weapon Focus, Quick Draw, Deadly Aim, Coordinated Shot; each prerequisite the engine's verdict) and its seven items from the package's equipment list, each added through append_to_character (StarfinderAdapter: the Defiance Series Squad and the azimuth laser rifle equipped, baton, two batteries and two serums carried), and 'Save choices' saves through save_starfinder_choices. The sheet re-reads the character and prints the engine's totals: EAC 16, KAC 19, credits remaining 2045, bulk 4 = E0.4 (seed-hand-values.md R8/R9; E4.5-loadout-hand-values.md). landing-select-pathfinder restores the Pathfinder selection."
+      "notes": "SD-37 E6.5a: SF-Soldier-3's full loadout (artifacts/epic_0/seed-builds.md §1) chosen through the real app. The 1st-level soldier seed build (the E6.5 rows' creation steps, under its own name 'SF Smoke Loadout') is created, loaded and leveled to Soldier 3 through 'Level up' twice (E6.5); then the sheet's 'Feats, spells and gear' dialog (StarfinderChoicesDialog.tsx) takes the seed's four feats from the engine's feat list (Weapon Focus, Quick Draw, Deadly Aim, Coordinated Shot; each prerequisite the engine's verdict) and its seven items from the package's equipment list, each bought from the Market (buy_starfinder_market, sf_adapter.rs: SD-39 E3.5 moved this off the dialog; before, append_to_character: the Defiance Series Squad and the azimuth laser rifle equipped, baton, two batteries and two serums carried), and 'Save choices' saves through save_starfinder_choices. The sheet re-reads the character and prints the engine's totals: EAC 16, KAC 19, credits remaining 2045, bulk 4 = E0.4 (seed-hand-values.md R8/R9; E4.5-loadout-hand-values.md). landing-select-pathfinder restores the Pathfinder selection."
     },
     {
       "id": "build-starfinder-soldier",
@@ -2487,7 +2432,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Defiance Series, Squad"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Defiance Series, Squad"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser rifle, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser rifle, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -2530,125 +2475,6 @@
         {
           "op": "wait",
           "ms": 1500
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:defiance_series_squad"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_rifle_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -3325,7 +3151,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Lashunta tempweave, basic"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Lashunta tempweave, basic"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser pistol, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser pistol, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Medkit (Basic)"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Medkit (Basic)"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -3494,125 +3320,6 @@
         {
           "op": "wait",
           "ms": 1200
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:lashunta_tempweave_basic"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_pistol_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:medkit_basic"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -4265,7 +3972,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "D-suit I"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "D-suit I"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser pistol, azimuth"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser pistol, azimuth"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Medkit (Basic)"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Medkit (Basic)"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -4425,125 +4132,6 @@
         {
           "op": "wait",
           "ms": 1200
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:d_suit_i"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:laser_pistol_azimuth"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:battery"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:medkit_basic"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -5022,7 +4610,7 @@
           "op": "wait",
           "ms": 3500
         },
-        {
+        {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Carbon skin, graphite"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Carbon skin, graphite"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Semi-auto pistol, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Semi-auto pistol, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Baton, tactical"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Baton, tactical"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Magic items"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Serum of Healing Mk 1"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Serum of Healing Mk 1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 800}, {
           "op": "click",
           "target": "Feats, spells and gear"
         },
@@ -5047,91 +4635,6 @@
         {
           "op": "wait",
           "ms": 1500
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:carbon_skin_graphite"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:semi_auto_pistol_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add equipped"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:baton_tactical"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
-        },
-        {
-          "op": "select",
-          "target": "— choose equipment —",
-          "text": "core:equipment:serum_of_healing_mk_1"
-        },
-        {
-          "op": "wait",
-          "ms": 500
-        },
-        {
-          "op": "click",
-          "target": "Add carried"
-        },
-        {
-          "op": "wait",
-          "ms": 2000
         },
         {
           "op": "click",
@@ -6387,6 +5890,257 @@
         "☰ Menu"
       ],
       "notes": "SD-37 E6.6: the second Pathfinder starter seed, Elowen Ashgrave (Human Wizard 5), opened from the isolated store. load-seed-wizard-fireball (the last row of the spec) additionally opens her Spells tab."
-    }
+    },
+    {
+      "id": "sheet-layout-title-and-columns",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        }
+      ],
+      "marker": "☰ Menu",
+      "expect": [
+        "Elowen Ashgrave",
+        "Wizard 5",
+        "CHARACTER DETAILS",
+      "ABILITIES",
+      "Acrobatics",
+        "Show Progression"
+      ],
+      "forbid": [
+        "Hide Progression",
+        "PROGRESSION"
+      ],
+      "notes": "SD-39 E2.4: the Pathfinder sheet after E2.1. The left rail is titled 'Character Details' (was 'Progression'; renders uppercase) and holds the Show Progression button; Abilities and Skills render on the sheet. 'PROGRESSION' is forbidden because the Details panel's own title also reads CHARACTER DETAILS, so only the forbid sees the old rail heading (E2.MC). The harness asserts text on the page, not which column holds it, so the column placement is pinned by sheetLayout.test.ts and not by this row. Opens the second starter seed (Elowen Ashgrave) as open-seed-elowen does."
+    },
+    {
+      "id": "sheet-progression-drawer-open",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 60000
+        }
+      ],
+      "marker": "Level 6 Wizard",
+      "expect": [
+        "Level 6 Wizard",
+        "NEXT",
+        "Skill points: 7",
+        "Class features: Abjuration Wizard Spells, Arcane Bond"
+      ],
+      "notes": "SD-39 E2.3/E2.4: Show Progression opens the left drawer (role=dialog, aria-modal) with the level history for Elowen Ashgrave (Wizard 5, next level 6). The class features line is E5.3's guard: the app's corpus bundle holds no class feature records, so a source a checkout has and the app lacks would pass every unit test and print none of these. 'Skill points: 7' is printed only there; the drawer reads 'Skill points: Unknown' until the class roster arrives (E2.3 receipt), hence the wait. Leaves the drawer open; resetToLanding's Escape closes it."
+    },
+    {
+      "id": "sheet-progression-drawer-close-x",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "click",
+          "target": "×"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        }
+      ],
+      "marker": "Show Progression",
+      "expect": [
+        "Elowen Ashgrave",
+        "Show Progression"
+      ],
+      "forbid": [
+        "Level 6 Wizard"
+      ],
+      "notes": "SD-39 E2.3/E2.4: the drawer's X closes it; the level history is gone from the page. Click-outside is covered by ProgressionDrawer.test.ts only (the harness clicks named controls, not pixels)."
+    },
+    {
+      "id": "sheet-progression-ledger-aldric",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Aldric Ironhand"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 30000
+        }
+      ],
+      "marker": "Level 1 \u00b7 Fighter 1",
+      "expect": [
+        "Level 1 \u00b7 Fighter 1",
+        "Feats: Power Attack, Dodge, Weapon Focus",
+        "Assigned on upgrade",
+        "Class features: Armor Training",
+        "Unspent: 1 feat",
+        "Level 4 Fighter",
+        "NEXT"
+      ],
+      "forbid": [
+        "Level 1 Fighter",
+        "Reading the level history"
+      ],
+      "notes": "SD-39 E5.3: the drawer lists list_progression_ledger's rows for Aldric Ironhand (Fighter 3): each level with the feats taken at it, what its class features gained and what it left unspent, and the seed's rows are marked as worked out. 'Feats: ...' is printed only by the drawer (the Feats tab prints each feat by itself). 'Level 4 Fighter' is next level's card, which stays; 'Level 1 Fighter' was the old current-level card, which the ledger replaced in the drawer and print still draws. Leaves the drawer open; resetToLanding's Escape closes it."
+    },
+    {
+      "id": "sheet-progression-drawer-close-escape",
+      "screen": "sheet",
+      "steps": [
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "Elowen Ashgrave"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "click",
+          "target": "Show Progression"
+        },
+        {
+          "op": "wait",
+          "ms": 2000
+        },
+        {
+          "op": "key",
+          "key": "Escape"
+        },
+        {
+          "op": "wait",
+          "ms": 1000
+        }
+      ],
+      "marker": "Show Progression",
+      "expect": [
+        "Elowen Ashgrave",
+        "Show Progression"
+      ],
+      "forbid": [
+        "Level 6 Wizard"
+      ],
+      "notes": "SD-39 E2.3/E2.4: Escape closes the drawer; the level history is gone from the page."
+    },
+    {"id": "sheet-market-open-weapons", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Longspear"}], "marker": "Longspear", "expect": ["Balance: 0 gp", "INVENTORY", "Sell Longsword", "Weapons", "Armor", "Shields", "Magic items", "PRICING", "Cashless", "Pick an item to buy."], "forbid": ["Add Weapon"], "notes": "SD-39 E3.3: the Weapons tab's one Market button opens the dialog on its Weapons list (list_market), with the balance, the reused price-mode control, the category tabs and the character's inventory. Aldric Ironhand is the seed: no Create step, so these rows do not rest on the stale create-character rows (E2.4's red list). The row searches because the harness treats the word 'Loading' anywhere as still loading, and a crossbow's description says it. These rows sit last and change Aldric's money and gear for the rest of the run."},
+    {"id": "sheet-market-open-defense", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Defense"}, {"op": "click", "target": "Market"}], "marker": "Chain Shirt", "expect": ["Balance: 0 gp", "Chain Shirt"], "forbid": ["Longspear"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: the Defense tab has a Market button too, and it opens on Armor. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-filter-armor", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}], "marker": "Full Plate", "expect": ["Chain Shirt", "Full Plate", "INVENTORY"], "forbid": ["Arrow", "Rod of", "Longspear", "Add Armor", "Add Gear"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3 (D3): the Armor tab holds armor. The old Add Armor list held ammunition, rods and weapons. The Gear tab's Market opens on Gear; this row then clicks Armor. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-buy-refused", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+5"}, {"op": "click", "target": "Buy"}], "marker": "The purchase was not applied", "expect": ["The purchase was not applied", "25,250 gp", "Sell Chain Shirt"], "forbid": ["Bought", "Sell +5 Chain Shirt"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: a +5 Chain Shirt is more than Aldric holds at any point in this run. The backend's refusal shows inside the dialog, and nothing is added. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-buy", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}], "marker": "Bought +1 Chain Shirt for 1,250 gp (carried: armor slot is taken by Chain Shirt).", "expect": ["Bought +1 Chain Shirt for 1,250 gp (carried: armor slot is taken by Chain Shirt).", "Sell +1 Chain Shirt", "Balance: 750 gp"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: 2,000 gp added on the Money panel, then one save buys the +1 at list_market's price (100 + 150 + 1,000) and the balance follows. The seed starts at 0 gp, and this is the first row that funds it, so 750 is exact. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-sell", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Sell +1 Chain Shirt"}], "marker": "Sold +1 Chain Shirt for 625 gp.", "expect": ["Sold +1 Chain Shirt for 625 gp.", "Sell Chain Shirt"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.3: Aldric holds a plain Chain Shirt (seed) and a +1. Sell names the +1 and pays half of its own price, not half of 100 gp; the plain one stays. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-buy-weapon-worn", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "10"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Dagger"}, {"op": "click", "target": "Dagger"}, {"op": "click", "target": "Buy"}], "marker": "(worn).", "expect": ["Bought Dagger for 2 gp (worn).", "Sell Dagger"], "forbid": ["more than one real weapon"], "notes": "SD-39 E4.1: a bought item is worn if its slot is free: the Longsword holds the main hand, and a Dagger takes the off hand."},
+    {"id": "sheet-market-cashless", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Dagger"}, {"op": "click", "target": "Dagger"}, {"op": "click", "target": "Buy"}], "marker": "no money moved", "expect": ["Added Dagger; no money moved (", "Sell Dagger"], "forbid": ["Bought"], "notes": "SD-39 E3.3: the price-mode radio is honoured; Cashless adds the item and moves nothing. Where the Dagger goes depends on the hands the row before left free, so the row does not read it."},
+    {"id": "sheet-market-enhancement-ac", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "gp amount"}, {"op": "type", "text": "2000"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Armor"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Chain Shirt"}, {"op": "click", "target": "Sell Chain Shirt"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Chain Shirt"}, {"op": "click", "target": "+1"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "key", "key": "Escape"}, {"op": "click", "target": "Defense"}], "marker": "AC BY SOURCE", "expect": ["Chain Shirt enhancement", "AC +1"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E3.4: a worn +1 has its own row in AC by Source, reading the engine's number. A second armor is carried (E4.1's slot refusal), so the plain Chain Shirt is sold first. An armor row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-market-starfinder-open", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}], "marker": "Balance: 2,045 credits", "expect": ["Balance: 2,045 credits", "60 credits", "Weapons", "Shields", "Magic items", "INVENTORY", "Sell Battery", "Cashless"], "forbid": ["Add carried", "Add equipped", "Plain"], "notes": "SD-39 E3.5: the Starfinder sheet's Market button opens the same dialog over its own catalog, in credits, off the engine's Credits remaining (the seed's hand value 2045). No +N picker: a row offers none. Rows here sit last and change the seed's credits for the rest of a run."},
+    {"id": "sheet-market-starfinder-buy", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Bought Battery for 60 credits.", "expect": ["Bought Battery for 60 credits.", "Balance: 1,985 credits"], "forbid": [], "notes": "SD-39 E3.5: a buy at the record's own Price, and the balance is the engine's row afterward. Runs on the seed as open-starfinder-soldier left it."},
+    {"id": "sheet-market-starfinder-sell", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Sell Battery"}, {"op": "wait", "ms": 2000}], "marker": "Sold Battery for 30 credits.", "expect": ["Sold Battery for 30 credits."], "forbid": [], "notes": "SD-39 E3.5: Buy 100% / Sell 50% on a system whose credits the engine derives from what is held: the sale returns half, and the other half stays gone (sf_loadout's credits_adjustment)."},
+    {"id": "sheet-market-starfinder-cashless", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Battery"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Battery"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Added Battery; no money moved.", "expect": ["Added Battery; no money moved."], "forbid": ["Bought"], "notes": "SD-39 E3.5: Cashless adds the item and moves nothing, though the engine charges every held item: its price is added back."},
+    {"id": "sheet-market-starfinder-refused", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Laser rifle, corona"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Laser rifle, corona"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "available", "expect": ["were available"], "forbid": ["Bought"], "notes": "SD-39 E3.5: over the credits, the engine's own refusal shows inside the dialog and nothing is added."},
+    {"id": "sheet-market-cyberpunk-open", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Heavy Pistol"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Heavy Pistol"}], "marker": "100 eddies", "expect": ["Balance: 500 eddies", "100 eddies", "Weapons", "Armor", "Shields", "Gear", "INVENTORY", "Cashless"], "forbid": ["Magic items", "Plain", "Add Weapon"], "notes": "SD-39 E3.5: the Cyberpunk RED sheet gets the Market it never had (no Add button existed): its tabs, eddies, the sheet's Cash as the balance, the kit as the Sell list. Jax Moreno, the seed, has 500eb (starting_kit). Rows here sit last and change Jax's cash."},
+    {"id": "sheet-market-cyberpunk-buy", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Heavy Pistol"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Heavy Pistol"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Bought Heavy Pistol for 100 eddies.", "expect": ["Bought Heavy Pistol for 100 eddies.", "Balance: 400 eddies", "Sell Heavy Pistol"], "forbid": [], "notes": "SD-39 E3.5: a buy at the shop's price (p341) moves the Cash and adds the weapon to the kit and the sheet."},
+    {"id": "sheet-market-cyberpunk-sell", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Sell Heavy Pistol"}, {"op": "wait", "ms": 2000}], "marker": "Sold Heavy Pistol for 50 eddies.", "expect": ["Sold Heavy Pistol for 50 eddies.", "Balance: 450 eddies"], "forbid": [], "notes": "SD-39 E3.5: half back under Buy 100% / Sell 50%."},
+    {"id": "sheet-market-cyberpunk-refused", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Armor"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Metalgear Body Armor (SP18)"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Metalgear Body Armor (SP18)"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "costs 5000eb", "expect": ["Metalgear Body Armor (SP18) costs 5000eb; the character has 450eb"], "forbid": ["Bought"], "notes": "SD-39 E3.5: a buy over the Cash is refused and nothing is added."},
+    {"id": "sheet-market-cyberpunk-cashless", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Market"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 800}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Agent"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Agent"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 2000}], "marker": "Added Agent; no money moved.", "expect": ["Added Agent; no money moved.", "Balance: 450 eddies", "Sell Agent"], "forbid": ["Bought"], "notes": "SD-39 E3.5: Cashless moves nothing, and gear no sheet box prints is still held and sold from here."},
+    {"id": "sheet-market-restore-pathfinder", "screen": "landing", "steps": [{"op": "click", "target": "Pathfinder 1e"}], "marker": "Pathfinder 1e", "expect": ["Pathfinder 1e", "Starfinder 1e"], "notes": "SD-39 E3.5: the Starfinder and Cyberpunk Market rows leave their rule set selected, and any row after them that loads a Pathfinder seed needs this one (sheet-market-open-weapons went red without it, Aldric Ironhand not on the list)."},
+    {"id": "sheet-equipment-lists", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}], "marker": "Main hand: Longsword", "expect": ["Equipment", "Worn", "Carried", "Main hand: Longsword"], "forbid": [], "notes": "SD-39 E4.3: the Gear tab's Equipment control lists what Aldric wears by slot, off list_held_equipment."},
+    {"id": "sheet-equipment-conflict", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Magic items"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Hat of Disguise"}, {"op": "click", "target": "Hat of Disguise"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Magic items"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Helm of Brilliance"}, {"op": "click", "target": "Helm of Brilliance"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Equip Helm of Brilliance"}, {"op": "wait", "ms": 1500}], "marker": "head slot is taken by Hat of Disguise", "expect": ["head slot is taken by Hat of Disguise", "Head: Hat of Disguise", "Helm of Brilliance"], "forbid": ["Head: Helm of Brilliance"], "notes": "SD-39 E4.3: two head items bought Cashless. The first is worn, the second carried. Equip on the second shows the backend's refusal word for word, and nothing moves."},
+    {"id": "sheet-equipment-unequip", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Stow Hat of Disguise"}, {"op": "wait", "ms": 2000}], "marker": "Equip Hat of Disguise", "expect": ["Equip Hat of Disguise", "Helm of Brilliance"], "forbid": ["Head: Hat of Disguise", "head slot is taken"], "notes": "SD-39 E4.3: runs on what sheet-equipment-conflict bought. Stow moves the Hat to Carried and frees the head slot."},
+    {"id": "sheet-equipment-equip", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Equip Helm of Brilliance"}, {"op": "wait", "ms": 2000}], "marker": "Head: Helm of Brilliance", "expect": ["Head: Helm of Brilliance", "Hat of Disguise"], "forbid": ["head slot is taken", "Head: Hat of Disguise"], "notes": "SD-39 E4.3: runs on what sheet-equipment-unequip left. The head slot is free, so the Helm goes on."},
+    {"id": "sheet-equipment-left-behind", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Leave Hat of Disguise behind"}, {"op": "wait", "ms": 2000}], "marker": "Pick up Hat of Disguise", "expect": ["Left behind", "Pick up Hat of Disguise", "Head: Helm of Brilliance"], "forbid": ["Equip Hat of Disguise", "Leave Hat of Disguise behind", "Nothing left behind."], "notes": "SD-39 E7.5 (R21): runs on what sheet-equipment-equip left. The Hat stays on the panel in its own group, offered Pick up; the fixed loadout's item:shield does not appear beside it."},
+    {"id": "sheet-bio-deity-moves-melee", "screen": "sheet", "setup": ["create-character-render"], "steps": [{"op": "click", "target": "character-name"}, {"op": "type", "text": "Deity Smoke Cleric"}, {"op": "select", "target": "Human (CRB)", "text": "Human (CRB)"}, {"op": "select", "target": "Inquisitor", "text": "class:cleric"}, {"op": "click", "target": "Add level"}, {"op": "click", "target": "Create character"}, {"op": "wait", "ms": 3000}, {"op": "scroll", "ticks": 40, "direction": "up"}, {"op": "key", "key": "Shift"}, {"op": "click", "target": "Back"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Deity Smoke Cleric"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Deity"}, {"op": "type", "text": "Iomedae"}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "gp amount"}, {"op": "wait", "ms": 4000}], "marker": "Deity Smoke Cleric", "expect": ["Deity Smoke Cleric", "MELEE\n+5"], "forbid": ["MELEE\n+1"], "notes": "SD-39 E7.MC (R22): the Bio panel's Deity, on blur, reloads the sheet: the Longsword is the favored weapon of Iomedae, so the -4 goes from the Melee tile: +1 before (Strength +4, Weapon Focus +1, -4), +5 after. The click on the money box moves focus, which is the blur: the command channel focuses a text-entry control, and a click on anything else leaves focus where it was. Before E7.MC nothing exercised this refresh (E7.6's receipt)."},
+    {"id": "sheet-custom-item-worn", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "click", "target": "Edit Custom…"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Equipment (0)"}, {"op": "click", "target": "Add custom equipment"}, {"op": "click", "target": "Custom equipment name"}, {"op": "type", "text": "Ring of Hats"}, {"op": "select", "target": "Main hand", "text": "ring"}, {"op": "click", "target": "Add bonus"}, {"op": "select", "target": "untyped", "text": "Deflection"}, {"op": "click", "target": "Save"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Equip Ring of Hats"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Defense"}], "marker": "AC BY SOURCE", "expect": ["Ring of Hats", "AC +1"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E4.4: a custom item declared in the dialog (slot, +1 deflection to AC), worn from the Gear tab's Equipment control, has its row in AC by Source. The tile's own number is proved by custom_item_bonuses_worn_ac_plus_one_deflection_raises_ac_by_one_and_carried_adds_zero. A row's description can say 'spell failure', hence allowGlobalForbid."},
+    {"id": "sheet-custom-item-stowed", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Stow Ring of Hats"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 1000}], "marker": "Carried (takes Ring)", "expect": ["Ring of Hats", "+1 deflection to AC"], "forbid": ["Worn, Ring"], "notes": "SD-39 E4.4: stowed from the Equipment control, the Custom tab reads the fresh record. Depends on sheet-custom-item-worn having run in this app-data root."},
+    {"id": "sheet-override-tag-feat", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Feats without prerequisites"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Feats"}, {"op": "click", "target": "Add Feat"}, {"op": "wait", "ms": 6000}, {"op": "click", "target": "Search feats…"}, {"op": "type", "text": "Improved Two-Weapon Fighting"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Improved Two-Weapon Fighting"}, {"op": "click", "target": "Add", "index": 1}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Feats without prerequisites"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Feats"}, {"op": "wait", "ms": 1000}], "marker": "Override: Feats without prerequisites", "expect": ["Override: Feats without prerequisites", "Improved Two-Weapon Fighting"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E6.2: the Custom tab's toggle, driven; a feat Aldric does not qualify for, added; its row on the Feats tab carries the tag. The picker's Add is the second control of that name; the Traits section's disabled Add is the first. The row then turns the flag off, which puts the toggle back for what runs later and shows the tag staying. The feat stays on Aldric."},
+    {"id": "sheet-override-tag-slot", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Magic items"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Goggles of Minute Seeing"}, {"op": "click", "target": "Goggles of Minute Seeing"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Magic items"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Eyes of the Eagle"}, {"op": "click", "target": "Eyes of the Eagle"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}, {"op": "key", "key": "Escape"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Ignore body slot limits"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Equip Eyes of the Eagle"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Ignore body slot limits"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}], "marker": "Override: Ignore body slot limits", "expect": ["Override: Ignore body slot limits", "Eyes: Eyes of the Eagle", "Eyes: Goggles of Minute Seeing"], "forbid": ["eyes slot is taken"], "notes": "SD-39 E6.2: two items for the eyes bought Cashless, the second carried. With the slot override on, Equip puts it on over the first and the Equipment control tags it. The row then turns the flag off, which puts the toggle back and shows the tag staying."},
+    {"id": "sheet-override-tag-spell", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Elowen Ashgrave"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Spells outside the class list or level"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Spells"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Add Spell"}, {"op": "wait", "ms": 4000}, {"op": "click", "target": "Search spells…"}, {"op": "type", "text": "Cure Light Wounds"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Cure Light Wounds"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Spells outside the class list or level"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Spells"}, {"op": "wait", "ms": 1500}], "marker": "Override: Spells outside the class list or level", "expect": ["Override: Spells outside the class list or level", "Cure Light Wounds", "Allowed by override"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E6.2: a spell off the Wizard's list, added with the override on, tagged on the Spells tab. The row then turns the flag off. The spell stays on Elowen."},
+    {"id": "sheet-override-market-weapon-not-proficient", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Elowen Ashgrave"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "click", "target": "Cashless"}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Market"}, {"op": "click", "target": "Search the market"}, {"op": "type", "text": "Rapier"}, {"op": "click", "target": "Rapier"}, {"op": "click", "target": "Buy"}, {"op": "wait", "ms": 3000}], "marker": "not proficient with Rapier", "expect": ["not proficient with Rapier", "no money moved"], "forbid": ["(worn)", "Rapier (Base)"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E6.MC: the Market sells a weapon under the key `Rapier (Base)`, which the proficiency check did not read until this card. A Wizard's Rapier stays carried, with the reason."},
+    {"id": "sheet-override-tag-spell-non-caster", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Spells outside the class list or level"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Spells"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Add Spell"}, {"op": "wait", "ms": 4000}, {"op": "click", "target": "Search spells…"}, {"op": "type", "text": "Cure Light Wounds"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Cure Light Wounds"}, {"op": "click", "target": "Add"}, {"op": "wait", "ms": 3000}], "marker": "Override: Spells outside the class list or level", "expect": ["Override: Spells outside the class list or level", "Cure Light Wounds", "Allowed by override"], "forbid": ["does not cast spells"], "allowGlobalForbid": ["failure"], "notes": "SD-39 E6.MC: a Fighter casts nothing, so the tab withholds Add Spell until the override is on; the tag shows at once, with no toggle between the add and the read. The flag and the spell stay on Aldric, so this row runs last of the Aldric rows."},
+    {"id": "sheet-print-dialog-opens", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Print"}, {"op": "wait", "ms": 500}], "marker": "Print Aldric Ironhand", "expect": ["Print Aldric Ironhand", "Paper", "Spellbook", "Show the math", "Bio and campaign notes", "Save PDF", "Cancel"], "forbid": ["Print layout is showing"], "notes": "SD-39 E8.4: the Pathfinder sheet's Print opens the Print dialog (operator rulings R3, R4, R5): the paper from Settings, Print, the three option boxes and the two buttons. The browser print path, whose banner the forbid names, is gone. The paper select's options are not asserted: bodyText is innerText, which reads a <select> as nothing; printPaper.test.ts and PrintPanel.test.ts hold them."},
+    {"id": "sheet-print-save-pdf", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Weapons"}, {"op": "click", "target": "Print"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Save PDF"}, {"op": "nativeFile", "text": "/tmp/codex-ui-smoke-print-aldric.pdf"}, {"op": "wait", "ms": 6000}], "marker": "Saved /tmp/codex-ui-smoke-print-aldric.pdf (", "expect": ["Saved /tmp/codex-ui-smoke-print-aldric.pdf (", "bytes) and opened it."], "forbid": ["could not be opened", "Tauri runtime not available"], "notes": "SD-39 E8.4: Save PDF through the real GTK save dialog and the real save_sheet_pdf; the line names the file the backend wrote and its byte count, which it states only after the write. run.mjs removes a save dialog's target before typing it, so a second run asks no overwrite question; the file is outside the checkout, so no run leaves litter."},
+    {"id": "sheet-print-starfinder-dialog-opens", "screen": "sheet", "setup": ["build-starfinder-soldier"], "steps": [{"op": "click", "target": "Open"}, {"op": "click", "target": "SF Seed Soldier"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 2500}, {"op": "click", "target": "Print"}, {"op": "wait", "ms": 500}], "marker": "Print SF Seed Soldier", "expect": ["Print SF Seed Soldier", "Paper", "Spellbook", "Show the math", "Bio and campaign notes", "Save PDF"], "forbid": [], "notes": "SD-39 E8.4: the Starfinder sheet's Print button opens the same dialog. sheet-print-restore-pathfinder restores the Pathfinder selection."},
+    {"id": "sheet-print-cyberpunk-save-pdf", "screen": "sheet", "steps": [{"op": "click", "target": "Cyberpunk Red"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Jax Moreno"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Print"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Save PDF"}, {"op": "nativeFile", "text": "/tmp/codex-ui-smoke-print-jax.pdf"}, {"op": "wait", "ms": 6000}], "marker": "Saved /tmp/codex-ui-smoke-print-jax.pdf (", "expect": ["Print Jax Moreno", "Saved /tmp/codex-ui-smoke-print-jax.pdf (", "bytes) and opened it."], "forbid": ["could not be opened"], "notes": "SD-39 E8.4: the Cyberpunk RED sheet's Print button opens the dialog and Save PDF writes the sheet through the real save dialog and save_sheet_pdf."},
+    {"id": "sheet-print-restore-pathfinder", "screen": "landing", "steps": [{"op": "click", "target": "Pathfinder 1e"}], "marker": "Pathfinder 1e", "expect": ["Pathfinder 1e", "Starfinder 1e"], "notes": "SD-39 E8.4: the Starfinder and Cyberpunk print rows leave their rule set selected; this restores Pathfinder for any row after them."}
   ]
 }

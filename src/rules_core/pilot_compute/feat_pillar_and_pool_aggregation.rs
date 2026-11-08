@@ -586,7 +586,7 @@ pub(super) fn resolve_prepared_spell_level(class_id: &str, spell_id: &str) -> Pr
 /// has no list for would be a fabricated rule, the mirror image of the
 /// fabricated level `class_spell_levels` exists to remove (see
 /// `docs/governance/no-stub-mvp-doctrine.md`).
-pub(super) fn class_spell_membership_refusal(class_id: &str, spell_id: &str) -> Option<String> {
+pub fn class_spell_membership_refusal(class_id: &str, spell_id: &str) -> Option<String> {
     if class_spell_levels::class_spell_level(class_id, spell_id).is_some() {
         return None;
     }
@@ -1004,6 +1004,17 @@ pub(crate) fn selected_skill_class_skill(input: &CharacterInput, skill: &str) ->
     if unknown.is_empty() { SelectedClassSkill::No } else { SelectedClassSkill::Unknown(unknown) }
 }
 
+/// The ranks the character holds in `skill_id`. No row reads untrained, 0.
+pub(crate) fn selected_skill_ranks(input: &CharacterInput, skill_id: &str) -> i16 {
+    input
+        .chosen
+        .skill_allocations
+        .iter()
+        .filter(|allocation| allocation.skill_id == skill_id)
+        .map(|allocation| i16::from(allocation.ranks))
+        .sum()
+}
+
 /// The claim-blocking diagnostic id for a selected skill whose class-skill status no class
 /// answers.
 pub(crate) const SELECTED_SKILL_CLASS_SKILL_UNKNOWN: &str = "skill.selected_modifier.class_skill_unknown";
@@ -1024,11 +1035,13 @@ pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool
     selected_skill_class_skill(input, "swim") == SelectedClassSkill::Yes
 }
 
-/// Every selected skill whose class-skill status is Unknown, as `"<skill>: <reasons>"` -- the
-/// claim-blocking words both the headless and the corpus path raise.
+/// Every selected skill the character holds a rank in whose class-skill status is Unknown, as
+/// `"<skill>: <reasons>"` -- the claim-blocking words both the headless and the corpus path raise. A
+/// skill with no rank takes no +3 either way, so there is nothing to decide.
 pub(crate) fn selected_skill_class_skill_unknowns(input: &CharacterInput) -> Vec<String> {
     SELECTED_SKILLS
         .iter()
+        .filter(|skill| selected_skill_ranks(input, &format!("skill:{skill}")) > 0)
         .filter_map(|skill| match selected_skill_class_skill(input, skill) {
             SelectedClassSkill::Unknown(reasons) => Some(format!("{skill}: {}", reasons.join("; "))),
             _ => None,
@@ -1210,6 +1223,11 @@ pub fn feat_derived_pillar_contributions(
         skill_bonuses: crate::rules_core::feat_effects::skill_bonuses_from_feats(
             &feats,
             strength_modifier,
+            SelectedSkillRanks {
+                climb: selected_skill_ranks(input, CLIMB_SKILL_ID),
+                intimidate: selected_skill_ranks(input, INTIMIDATE_SKILL_ID),
+                swim: selected_skill_ranks(input, SWIM_SKILL_ID),
+            },
         ),
         // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Sure and Fleet is
         // the only one of the Advanced Race Guide's 187 feats whose
@@ -1237,9 +1255,8 @@ pub(super) fn compute_selected_skill_modifiers(
         diagnostics.push(ComputationDiagnostic {
             id: "skill.selected_modifier.unsupported".to_owned(),
             message: format!(
-                "selected skill modifiers are only computed for the exact GE-06 deterministic \
-                 level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded {}) with the \
-                 grounded Chain Shirt armor-check penalty; unmet conditions: {}",
+                "selected skill modifiers are only computed on a grounded {} with a worn item's \
+                 armor-check penalty known; unmet conditions: {}",
                 supported_class_chassis_description(),
                 unmet.join("; ")
             ),
@@ -1265,14 +1282,19 @@ pub(super) fn compute_selected_skill_modifiers(
         return SelectedSkillModifiers::default();
     }
 
-    let rank = i16::from(SELECTED_SKILL_RANK);
+    let climb_rank = selected_skill_ranks(input, CLIMB_SKILL_ID);
+    let intimidate_rank = selected_skill_ranks(input, INTIMIDATE_SKILL_ID);
+    let swim_rank = selected_skill_ranks(input, SWIM_SKILL_ID);
 
     // The Chain Shirt armor-check penalty applied to Climb/Swim is reduced by Fighter
     // armor training from level 3, so the armor-check skills rise at that milestone.
     // The posture check above guarantees a supported Fighter level here.
     let level = supported_fighter_level(input).unwrap_or(1);
-    let armor_check_penalty = effective_chain_shirt_armor_check_penalty(level);
-    let armor_check_detail = if fighter_armor_training(level).armor_check_reduction > 0 {
+    let chain_shirt_worn = is_worn(input, CHAIN_SHIRT_ITEM_ID);
+    let armor_check_penalty = if chain_shirt_worn { effective_chain_shirt_armor_check_penalty(level) } else { 0 };
+    let armor_check_detail = if !chain_shirt_worn {
+        "no armor worn (+0)".to_owned()
+    } else if fighter_armor_training(level).armor_check_reduction > 0 {
         format!(
             "Chain Shirt armor-check penalty ({armor_check_penalty:+}, reduced from \
              {CHAIN_SHIRT_ARMOR_CHECK_PENALTY:+} by Fighter armor training)"
@@ -1286,29 +1308,37 @@ pub(super) fn compute_selected_skill_modifiers(
     // see selected_skill_climb_is_class_skill's own doc comment for why
     // this is three independent per-skill checks, not one shared scalar,
     // since Investigator's own real class-skill list is a genuine partial
-    // match (Climb/Intimidate yes, Swim no).
-    let climb_class_skill_bonus_applies = selected_skill_climb_is_class_skill(input);
+    // match (Climb/Intimidate yes, Swim no). The +3 also needs a rank in the skill (CRB Chapter 4).
+    let no_ranks_detail = |skill: &str| format!("no class-skill bonus (no ranks in {skill})");
+    let climb_class_skill_bonus_applies = climb_rank > 0 && selected_skill_climb_is_class_skill(input);
     let climb_class_skill_bonus = if climb_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
     let climb_class_skill_bonus_detail = if climb_class_skill_bonus_applies {
         format!("class-skill bonus ({climb_class_skill_bonus:+})")
+    } else if climb_rank == 0 {
+        no_ranks_detail("Climb")
     } else {
         "no class-skill bonus (Climb is not a class skill for this character's class)".to_owned()
     };
 
-    let intimidate_class_skill_bonus_applies = selected_skill_intimidate_is_class_skill(input);
+    let intimidate_class_skill_bonus_applies =
+        intimidate_rank > 0 && selected_skill_intimidate_is_class_skill(input);
     let intimidate_class_skill_bonus =
         if intimidate_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
     let intimidate_class_skill_bonus_detail = if intimidate_class_skill_bonus_applies {
         format!("class-skill bonus ({intimidate_class_skill_bonus:+})")
+    } else if intimidate_rank == 0 {
+        no_ranks_detail("Intimidate")
     } else {
         "no class-skill bonus (Intimidate is not a class skill for this character's class)"
             .to_owned()
     };
 
-    let swim_class_skill_bonus_applies = selected_skill_swim_is_class_skill(input);
+    let swim_class_skill_bonus_applies = swim_rank > 0 && selected_skill_swim_is_class_skill(input);
     let swim_class_skill_bonus = if swim_class_skill_bonus_applies { CLASS_SKILL_BONUS } else { 0 };
     let swim_class_skill_bonus_detail = if swim_class_skill_bonus_applies {
         format!("class-skill bonus ({swim_class_skill_bonus:+})")
+    } else if swim_rank == 0 {
+        no_ranks_detail("Swim")
     } else {
         "no class-skill bonus (Swim is not a class skill for this character's class)".to_owned()
     };
@@ -1401,7 +1431,7 @@ pub(super) fn compute_selected_skill_modifiers(
     };
 
     // Climb (STR, armor-check skill): rank + STR + class-skill + Chain Shirt ACP.
-    let climb = rank
+    let climb = climb_rank
         + ability_modifiers.strength
         + climb_class_skill_bonus
         + armor_check_penalty
@@ -1414,7 +1444,7 @@ pub(super) fn compute_selected_skill_modifiers(
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
-            "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
+            "Selected Climb modifier: rank {climb_rank} + Strength modifier ({:+}) + \
              {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
              + feat bonus (+{}, Athletic if selected){arg_feat_climb_detail}\
              {raging_climber_swimmer_detail}{} = {climb}",
@@ -1424,7 +1454,7 @@ pub(super) fn compute_selected_skill_modifiers(
     });
 
     // Intimidate (CHA, not an armor-check skill): rank + CHA + class-skill.
-    let intimidate = rank
+    let intimidate = intimidate_rank
         + ability_modifiers.charisma
         + intimidate_class_skill_bonus
         + touch_of_good_skill_bonus
@@ -1435,7 +1465,7 @@ pub(super) fn compute_selected_skill_modifiers(
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
-            "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
+            "Selected Intimidate modifier: rank {intimidate_rank} + Charisma modifier ({:+}) + \
              {intimidate_class_skill_bonus_detail}{touch_of_good_skill_detail} + feat bonus \
              (+{}, Persuasive and/or Intimidating Prowess if selected){stern_gaze_detail}{} = \
              {intimidate}",
@@ -1450,7 +1480,7 @@ pub(super) fn compute_selected_skill_modifiers(
     // lands on a total this engine computes. Class-ownership-gated and
     // explicit-choice-gated by construction, 0 for everyone else.
     let flight_hex_swim_bonus = witch_flight_hex_swim_bonus(input);
-    let swim = rank
+    let swim = swim_rank
         + ability_modifiers.strength
         + swim_class_skill_bonus
         + armor_check_penalty
@@ -1463,7 +1493,7 @@ pub(super) fn compute_selected_skill_modifiers(
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
         detail: format!(
-            "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
+            "Selected Swim modifier: rank {swim_rank} + Strength modifier ({:+}) + \
              {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
              + feat bonus (+{}, Athletic if selected) + Witch Flight hex \
              (+{flight_hex_swim_bonus}){raging_climber_swimmer_detail}{} = {swim}",
@@ -2412,12 +2442,10 @@ pub(super) fn ground_standalone_feat_skill_facts(
 /// Return the list of unmet conditions for the exact deterministic selected-skill
 /// posture. An empty list means the posture is fully supported.
 ///
-/// The bounded posture requires a Fighter level 1–3 chassis, exactly the three
-/// selected class skills (Climb, Intimidate, Swim) each at rank 1 with no other
-/// skill allocations, and the grounded Chain Shirt armor-check posture that the
-/// Climb/Swim totals depend on.
+/// The bounded posture requires a supported class chassis and the grounded Chain
+/// Shirt armor-check posture that the Climb/Swim totals depend on. A rank is never
+/// a condition: each total reads the character's own, and no rank reads untrained.
 pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) -> Vec<String> {
-    let allocations = &input.chosen.skill_allocations;
     let mut unmet = Vec::new();
 
     // SD-21 E6b.1: widened from a Fighter-only gate to the same dispatch-supported
@@ -2430,48 +2458,16 @@ pub(super) fn unmet_selected_skill_posture_conditions(input: &CharacterInput) ->
         ));
     }
 
-    let expected = [CLIMB_SKILL_ID, INTIMIDATE_SKILL_ID, SWIM_SKILL_ID];
-    for skill_id in expected {
-        require_selected_skill_rank(allocations, skill_id, &mut unmet);
-    }
-
-    // SD-36 F7a (F7-8): ranks in any OTHER skill no longer refuse the slice. They feed none of
-    // the three totals computed here (each total reads its own skill's ranks), and refusing them
-    // made every real allocation -- a Wizard's Spellcraft -- a Blocked build. The three
-    // selected skills themselves stay at the GE-06 rank-1 posture above.
-
-    // Climb and Swim totals depend on the grounded Chain Shirt armor-check posture.
-    require_active_state(
-        input,
-        CHAIN_SHIRT_ITEM_ID,
-        ActiveState::EquippedActive,
-        &mut unmet,
-    );
+    // Climb and Swim take a worn Chain Shirt's armor-check penalty, and no penalty with no armor.
+    worn_items_this_path_cannot_read(input, &mut unmet);
 
     unmet
 }
 
-/// Record an unmet condition unless the named skill is allocated exactly the
-/// supported deterministic rank.
-pub(crate) fn require_selected_skill_rank(
-    allocations: &[SkillAllocation],
-    skill_id: &str,
-    unmet: &mut Vec<String>,
-) {
-    let actual = allocations
-        .iter()
-        .find(|a| a.skill_id == skill_id)
-        .map(|a| a.ranks);
-    if actual != Some(SELECTED_SKILL_RANK) {
-        unmet.push(format!(
-            "{skill_id} must be allocated rank {SELECTED_SKILL_RANK} for the selected-skill slice, got {actual:?}"
-        ));
-    }
-}
-
 /// Folds an equipment `item_id` (`"item:longsword"`) or a
 /// `weapon_tables` key (`"Longsword"`) down to one comparable identity:
-/// lowercase, alphanumeric only, with any `item:` prefix dropped.
+/// lowercase, alphanumeric only, with any `item:` prefix dropped, and the ` (Base)` the Market's key
+/// carries (`Longsword (Base)` is the Longsword it sells).
 ///
 /// **This is deliberately a SECOND instance of the same idea as the
 /// desktop app's `normalizeFeatIdentity`, not a shared helper**, and the
@@ -2481,9 +2477,11 @@ pub(crate) fn require_selected_skill_rank(
 /// identities for the engine. Different languages, different processes,
 /// no seam between them to share across. If a third instance ever appears
 /// *within* Rust, that one should be shared with this rather than added.
-pub(super) fn normalize_weapon_identity(raw: &str) -> String {
+pub(crate) fn normalize_weapon_identity(raw: &str) -> String {
     let without_prefix = raw.strip_prefix("item:").unwrap_or(raw);
     without_prefix
+        .strip_suffix(" (Base)")
+        .unwrap_or(without_prefix)
         .chars()
         .filter(|c| c.is_ascii_alphanumeric())
         .map(|c| c.to_ascii_lowercase())
@@ -2539,8 +2537,9 @@ pub(crate) enum WeaponProficiencyVerdict {
     /// Decided. `printed` carries every converted grant the class-level
     /// facts could not decide (a gated grant, a player's pick, a deity's
     /// weapon), each with its condition: printed on the sheet, never
-    /// counted (paper-sheet doctrine).
-    Known { proficient: bool, printed: Vec<String> },
+    /// counted (paper-sheet doctrine). `granted_by` names a grant from past
+    /// the class lists and the three feats: a race's, a deity's.
+    Known { proficient: bool, printed: Vec<String>, granted_by: Option<String> },
     /// Not decidable from what the engine holds; `reason` names why, per
     /// class, and reaches the claim-blocking diagnostic verbatim.
     Unknown { reason: String },
@@ -2589,18 +2588,29 @@ impl WeaponProficiencyVerdict {
 /// (`class_proficiency_sheet_rules::class_weapon_proficiency_view`), matched
 /// per weapon by [`converted_view_covers_weapon`]; the reader's `Unknown`
 /// stays Unknown and carries its reason.
+///
+/// **Past the classes** (operator ruling R22): a weapon no class list covers goes to
+/// [`held_weapon_grant`], which reads the race's resolved traits, what the character holds and
+/// the favored weapon of its recorded deity. A weapon a held rule makes Martial returns to the
+/// class lists as Martial. With no deity recorded a Cleric's favored weapon is nothing to grant,
+/// so the row reads the -4 and prints why.
 pub(crate) fn character_weapon_proficiency(
     input: &CharacterInput,
     weapon: &weapon_tables::WeaponTableEntry,
 ) -> WeaponProficiencyVerdict {
-    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
-        class_weapon_proficiency_view, ProficiencyAnswer,
-    };
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{held_shield_proficiency, held_weapon_grant};
+    // The table's four shields name no weapon proficiency: a bash is read by the shield's own.
+    if weapon.proficiency_name.is_none() {
+        return match held_shield_proficiency(input, weapon) {
+            Some(proficient) => WeaponProficiencyVerdict::Known { proficient, printed: Vec::new(), granted_by: None },
+            None => WeaponProficiencyVerdict::Unknown { reason: format!("nothing states who is proficient with a {}", weapon.key) },
+        };
+    }
     let grants = crate::rules_core::feat_effects::weapon_proficiency_grants_from_feats(
         &effective_character_feats(input),
         &input.chosen.selected_choices,
     );
-    let granted = || WeaponProficiencyVerdict::Known { proficient: true, printed: Vec::new() };
+    let granted = || WeaponProficiencyVerdict::Known { proficient: true, printed: Vec::new(), granted_by: None };
     // Simple Weapon Proficiency grants the whole Simple tier, exactly as a
     // class's own `AUTO:WEAPONPROF|TYPE=Simple` does.
     if grants.grants_simple_tier
@@ -2621,6 +2631,41 @@ pub(crate) fn character_weapon_proficiency(
         return granted();
     }
 
+    let (mut any_proficient, mut printed, mut unknown) = class_lists_answer(input, weapon);
+    let mut granted_by = None;
+    // What the character holds past its class lists: a race's familiarity, a class feature, its
+    // deity's weapon. Here, so the sheet's row and the Market's refusal read one answer.
+    if !any_proficient && let Some(held) = held_weapon_grant(input, weapon) {
+        granted_by = held.granted_by;
+        any_proficient = granted_by.is_some();
+        if !any_proficient && let Some(by) = held.treated_as_martial_by {
+            let martial = weapon_tables::WeaponTableEntry { proficiency: Some(weapon_tables::WeaponProficiency::Martial), ..*weapon };
+            any_proficient = class_lists_answer(input, &martial).0;
+            granted_by = any_proficient.then_some(by);
+        }
+        if !any_proficient {
+            unknown.extend(held.undecided);
+            printed.extend(held.printed);
+        }
+    }
+    // SD-36 F3b: a union is decided by any one member that grants it -- a class
+    // with no answer can only ADD a proficiency, never take one away, so it
+    // leaves the verdict Unknown only when no class grants this weapon.
+    if !unknown.is_empty() && !any_proficient {
+        return WeaponProficiencyVerdict::Unknown { reason: unknown.join("; ") };
+    }
+    WeaponProficiencyVerdict::Known { proficient: any_proficient, printed, granted_by }
+}
+
+/// The union of the character's classes' own lists: whether one covers `weapon`, what the sheet
+/// prints beside it, and each class with no answer.
+fn class_lists_answer(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+) -> (bool, Vec<String>, Vec<String>) {
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+        class_weapon_proficiency_view, ProficiencyAnswer,
+    };
     let mut any_proficient = false;
     let mut printed: Vec<String> = Vec::new();
     let mut unknown: Vec<String> = Vec::new();
@@ -2698,13 +2743,7 @@ pub(crate) fn character_weapon_proficiency(
             }
         }
     }
-    // SD-36 F3b: a union is decided by any one member that grants it -- a class
-    // with no answer can only ADD a proficiency, never take one away, so it
-    // leaves the verdict Unknown only when no class grants this weapon.
-    if !unknown.is_empty() && !any_proficient {
-        return WeaponProficiencyVerdict::Unknown { reason: unknown.join("; ") };
-    }
-    WeaponProficiencyVerdict::Known { proficient: any_proficient, printed }
+    (any_proficient, printed, unknown)
 }
 
 /// The identity a weapon is compared on against a converted proficiency name: its
@@ -2787,13 +2826,8 @@ pub(crate) fn converted_view_covers_weapon(
 /// an attack total, the feat-granted damage bonus, and the threat range.
 ///
 /// **Additive by design.** This does NOT touch
-/// `combat.baseline_melee_attack_bonus`, which is a single-fixture GE-06
-/// special case hardcoded to the Longsword (its own detail string says
-/// so) and asserted against by a large number of existing suites.
-/// Generalising that one -- widening its posture gate and driving its
-/// hardcoded `WEAPON_FOCUS_TO_HIT_BONUS` off the real
-/// `choice:weapon_focus_target` chooser -- is genuinely separate surgery,
-/// deferred as its own task (#80). Until then the two coexist.
+/// `combat.baseline_melee_attack_bonus`, the sheet's Melee number for the first melee weapon in hand
+/// (`melee_weapon_in_hand`). The two coexist: this row has a line per weapon in hand.
 ///
 /// **The five weapon feats do not all land on the same surface**, which
 /// their shared naming actively disguises. Corpus payload slots decide it:
@@ -2895,9 +2929,17 @@ pub(super) fn ground_per_weapon_combat_totals(
         // there is no verified number to subtract. Naming it rather than
         // inventing one.
         let finesse_applies = has_weapon_finesse && weapon_tables::weapon_is_finesseable(weapon);
-        let attack_ability_modifier =
-            if finesse_applies { strength_modifier.max(dexterity_modifier) } else { strength_modifier };
-        let finesse_detail = if !has_weapon_finesse {
+        // A weapon that cannot be swung is aimed or thrown: Dexterity governs it (CRB Chapter 8).
+        let attack_ability_modifier = if !weapon.is_melee {
+            dexterity_modifier
+        } else if finesse_applies {
+            strength_modifier.max(dexterity_modifier)
+        } else {
+            strength_modifier
+        };
+        let finesse_detail = if !weapon.is_melee {
+            format!(" Dexterity ({dexterity_modifier:+}) governs a weapon used at range.")
+        } else if !has_weapon_finesse {
             String::new()
         } else if !finesse_applies {
             format!(
@@ -2941,10 +2983,15 @@ pub(super) fn ground_per_weapon_combat_totals(
                  character holds grants proficiency with this weapon -- neither a class grant nor \
                  Simple/Martial/Exotic Weapon Proficiency naming it."
             ),
-            Some(true) => " The character is proficient with this weapon (class grant or a \
+            Some(true) => match &full_verdict {
+                WeaponProficiencyVerdict::Known { granted_by: Some(by), .. } => {
+                    format!(" The character is proficient with this weapon ({by}), so no nonproficiency penalty applies.")
+                }
+                _ => " The character is proficient with this weapon (class grant or a \
                  Simple/Martial/Exotic Weapon Proficiency feat naming it), so no nonproficiency \
                  penalty applies."
-                .to_owned(),
+                    .to_owned(),
+            },
             None => format!(
                 " Proficiency is UNRESOLVED ({}), so no nonproficiency penalty is applied in \
                  either direction and this total is not claimed to account for one.",
@@ -2982,9 +3029,9 @@ pub(super) fn ground_per_weapon_combat_totals(
                  {attack_total}.{focus_detail}{finesse_detail}{proficiency_detail} Only the Focus \
                  feats reach this total -- the Specialization feats are damage and Improved \
                  Critical is threat range, both grounded separately. Separate from \
-                 combat.baseline_melee_attack_bonus, which stays a Longsword-specific GE-06 \
-                 fixture total until task #80 generalises it",
-                weapon.key
+                 combat.baseline_melee_attack_bonus, which is the Melee number for the first melee \
+                 weapon in hand.",
+                weapon.key,
             ),
         });
 
@@ -3067,19 +3114,7 @@ pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<Str
         ));
     }
 
-    require_active_state(
-        input,
-        LONGSWORD_ITEM_ID,
-        ActiveState::EquippedActive,
-        &mut unmet,
-    );
-    require_active_state(
-        input,
-        CHAIN_SHIRT_ITEM_ID,
-        ActiveState::EquippedActive,
-        &mut unmet,
-    );
-    require_active_state(input, SHIELD_ITEM_ID, ActiveState::Absent, &mut unmet);
+    worn_items_this_path_cannot_read(input, &mut unmet);
     require_active_state(
         input,
         POWER_ATTACK_ITEM_ID,
@@ -3145,6 +3180,119 @@ pub(super) fn unmet_combat_posture_conditions(input: &CharacterInput) -> Vec<Str
     }
 
     unmet
+}
+
+/// Whether the named item is worn or in hand.
+pub(super) fn is_worn(input: &CharacterInput, item_id: &str) -> bool {
+    input
+        .chosen
+        .equipment_selections
+        .iter()
+        .any(|selection| selection.item_id == item_id && selection.active_state == ActiveState::EquippedActive)
+}
+
+/// A real weapon from the CRB weapon table. The table's four shields carry no weapon proficiency:
+/// one on the arm is armor to this engine, not a weapon in hand.
+fn table_weapon(item_id: &str) -> Option<&'static weapon_tables::WeaponTableEntry> {
+    equipped_weapon_stat_block(item_id).filter(|weapon| weapon.proficiency_name.is_some())
+}
+
+/// Nothing is required to be worn. What this path refuses is a number it does not hold: it has no
+/// corpus, so it knows the Chain Shirt's numbers and the weapon table and nothing of any other armor
+/// or a shield. Read as no armor, those would compute a wrong Armor Class; the corpus path, which the
+/// sheet reads, resolves them. Beside a worn Chain Shirt another item is ignored, as it always was.
+fn worn_items_this_path_cannot_read(input: &CharacterInput, unmet: &mut Vec<String>) {
+    if is_worn(input, SHIELD_ITEM_ID) {
+        unmet.push(format!("{SHIELD_ITEM_ID} is worn, and this path holds no numbers for a shield"));
+    }
+    if is_worn(input, CHAIN_SHIRT_ITEM_ID) {
+        return;
+    }
+    for selection in &input.chosen.equipment_selections {
+        if selection.active_state == ActiveState::EquippedActive
+            && selection.item_id != SHIELD_ITEM_ID
+            && table_weapon(&selection.item_id).is_none()
+        {
+            unmet.push(format!("{} is worn, and this path holds no numbers for it", selection.item_id));
+        }
+    }
+}
+
+/// The weapon the sheet's Melee number is for: the first melee weapon in hand, in the order the
+/// character holds them, which is the order the hands fill (`body_slots`). `None` with no weapon in
+/// hand, or only a bow: Melee is then base attack, the governing ability and size. With its item id.
+pub(crate) fn melee_weapon_in_hand(
+    input: &CharacterInput,
+) -> Option<(&str, &'static weapon_tables::WeaponTableEntry)> {
+    input.chosen.equipment_selections.iter().find_map(|selection| {
+        if selection.active_state != ActiveState::EquippedActive {
+            return None;
+        }
+        table_weapon(&selection.item_id)
+            .filter(|weapon| weapon.is_melee)
+            .map(|weapon| (selection.item_id.as_str(), weapon))
+    })
+}
+
+/// The feat bonus to hit with the named weapon. The feat seeded at creation names no target, and the
+/// target it stands for is the Longsword (`feat:weapon_focus`, every class's seed).
+pub(crate) fn weapon_focus_bonus_for(input: &CharacterInput, weapon_name: &str) -> i16 {
+    let facts = crate::rules_core::feat_effects::weapon_focus_facts_from_choices(
+        &effective_character_feats(input),
+        &input.chosen.selected_choices,
+    );
+    let wanted = normalize_weapon_identity(weapon_name);
+    match facts.iter().find(|fact| normalize_weapon_identity(&fact.weapon_name) == wanted) {
+        Some(fact) => fact.attack_bonus,
+        None if facts.is_empty() && wanted == normalize_weapon_identity(LONGSWORD_ITEM_ID) => {
+            WEAPON_FOCUS_TO_HIT_BONUS
+        }
+        None => 0,
+    }
+}
+
+/// Weapon Training's bonus on this weapon: the canonical choice is Heavy Blades, so it is that
+/// group's weapons that take it.
+pub(crate) fn weapon_training_bonus_for(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+    level: u8,
+) -> i16 {
+    if weapon.weapon_group == Some(HEAVY_BLADES_WEAPON_GROUP) {
+        fighter_weapon_training_attack_bonus(input, level)
+    } else {
+        0
+    }
+}
+
+/// The ability modifier governing the attack roll with this weapon: Strength, or Dexterity through
+/// Weapon Finesse on a finesseable weapon when it is the higher (the corpus token is
+/// `max(STR,DEX)-STR`).
+/// The ability a weapon's attack roll reads: Dexterity for one that cannot be swung.
+pub(crate) fn attack_ability_modifier_for(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+    ability_modifiers: &AbilityModifiers,
+) -> i16 {
+    if weapon.is_melee {
+        melee_attack_ability_modifier(input, weapon, ability_modifiers)
+    } else {
+        ability_modifiers.dexterity
+    }
+}
+
+pub(crate) fn melee_attack_ability_modifier(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+    ability_modifiers: &AbilityModifiers,
+) -> i16 {
+    let finesse = crate::rules_core::feat_effects::holds_weapon_finesse(&effective_character_feats(input))
+        && weapon_tables::weapon_is_finesseable(weapon);
+    if finesse {
+        ability_modifiers.strength.max(ability_modifiers.dexterity)
+    } else {
+        ability_modifiers.strength
+    }
 }
 
 /// Record an unmet condition unless the named item has exactly `expected` state.
@@ -3469,7 +3617,7 @@ mod converted_record_proficiency_fallback_tests {
             selection_id: COMMONER_CANONICAL_WEAPON.to_owned(),
         });
         match character_weapon_proficiency(&seeded, crb_weapon("Club")) {
-            WeaponProficiencyVerdict::Known { proficient, printed } => {
+            WeaponProficiencyVerdict::Known { proficient, printed, .. } => {
                 assert!(proficient, "the chosen Club is proficient");
                 assert!(printed.iter().any(|p| p.contains("proficient with the chosen weapon (Club)")), "{printed:?}");
             }
@@ -3666,5 +3814,163 @@ mod initiative_total_tests {
         let input = as_class("class:gunslinger", 3);
         assert_eq!(value(&input, "class_feature.uc.gunslinger.gunslinger_initiative"), Some(2), "the row exists");
         assert_eq!(total(&input), 2, "Dex +2 only");
+    }
+}
+
+/// A race's and a deity's weapon proficiency on the verdict every reader shares (operator ruling
+/// R22). The Wizard's static row names none of the race rows' weapons, so a pass is the race's.
+#[cfg(test)]
+mod race_weapon_proficiency_tests {
+    use super::{build_pilot_headless_receipt, character_weapon_proficiency, CharacterClassLevel, CharacterInput, WeaponProficiencyVerdict};
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+    use crate::rules_core::pilot_compute::{CHARACTER_DEITY_CHOICE_ID, RACE_ALTERNATE_TRAIT_CHOICE_ID};
+    use crate::rules_core::rules_catalog::crb::weapon_tables::{self, WeaponTableEntry};
+
+    const FIGHTER: &str =
+        include_str!("../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
+
+    fn character(race: &str, class: &str) -> CharacterInput {
+        let mut input = load_character_input_fixture(FIGHTER).character_input.expect("valid fixture");
+        input.chosen.race_id = race.to_owned();
+        input.chosen.class_levels = vec![CharacterClassLevel { class_id: class.to_owned(), level: 1 }];
+        input
+    }
+
+    fn of_deity(mut input: CharacterInput, deity: &str) -> CharacterInput {
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: CHARACTER_DEITY_CHOICE_ID.to_owned(),
+            selection_id: deity.to_owned(),
+        });
+        input
+    }
+
+    fn weapon(key: &str) -> &'static WeaponTableEntry {
+        weapon_tables::WEAPON_TABLE.iter().find(|w| w.key == key).expect("CRB weapon table row")
+    }
+
+    fn proficient(input: &CharacterInput, key: &str) -> Option<bool> {
+        character_weapon_proficiency(input, weapon(key)).proficient()
+    }
+
+    /// The attack row's words, with `key` the one weapon in hand.
+    fn attack_row(input: &CharacterInput, key: &str) -> String {
+        let mut input = input.clone();
+        let slug = key.to_lowercase().replace(' ', "_");
+        for selection in &mut input.chosen.equipment_selections {
+            if selection.item_id == "item:longsword" {
+                selection.item_id = format!("item:{slug}");
+            }
+        }
+        let id = format!("combat.weapon_attack_bonus.{slug}");
+        let receipt = build_pilot_headless_receipt(&input);
+        let row = receipt.computation.explanations.iter().find(|e| e.id == id);
+        row.unwrap_or_else(|| panic!("no {id} row")).detail.clone()
+    }
+
+    #[test]
+    fn race_weapon_proficiency_every_named_weapon_of_the_core_familiarities() {
+        for (race, weapons) in [
+            ("race:elf", &["Longsword", "Longbow", "Composite Longbow", "Shortbow", "Composite Shortbow", "Rapier"][..]),
+            ("race:dwarf", &["Battleaxe", "Heavy Pick", "Warhammer"]),
+            ("race:half-orc", &["Greataxe", "Falchion"]),
+            ("race:halfling", &["Sling"]),
+        ] {
+            let human = character("race:human", "class:wizard");
+            let of_race = character(race, "class:wizard");
+            for key in weapons {
+                assert_eq!(proficient(&human, key), Some(false), "a human wizard holds no {key}");
+                assert_eq!(proficient(&of_race, key), Some(true), "{race} {key}");
+            }
+            assert_eq!(proficient(&of_race, "Greatsword"), Some(false), "{race} is not given a Greatsword");
+        }
+    }
+
+    /// "Treat any weapon with the word in its name as a martial weapon": a class with the Martial
+    /// tier is proficient, a class without it is not. The Gnome has only this half.
+    #[test]
+    fn race_weapon_proficiency_a_familiar_weapon_is_martial_for_that_race() {
+        for (race, key) in [
+            ("race:dwarf", "Dwarven Urgrosh"),
+            ("race:elf", "Elven Curve Blade"),
+            ("race:gnome", "Gnome Hooked Hammer"),
+            ("race:half-orc", "Orc Double Axe"),
+            ("race:halfling", "Halfling Sling Staff"),
+        ] {
+            assert_eq!(proficient(&character("race:human", "class:fighter"), key), Some(false), "human {key}: Exotic");
+            assert_eq!(proficient(&character(race, "class:fighter"), key), Some(true), "{race} fighter {key}");
+            assert_eq!(proficient(&character(race, "class:wizard"), key), Some(false), "{race} wizard {key}");
+        }
+    }
+
+    /// An alternate trait that replaces the familiarity takes the weapons with it, through the
+    /// same resolver the sheet's trait list reads.
+    #[test]
+    fn race_weapon_proficiency_an_alternate_trait_replacing_it_takes_it_away() {
+        let mut input = character("race:elf", "class:wizard");
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: RACE_ALTERNATE_TRAIT_CHOICE_ID.to_owned(),
+            selection_id: "race_trait:Elf ~ Fleet-Footed".to_owned(),
+        });
+        assert_eq!(proficient(&input, "Longsword"), Some(false));
+        assert_eq!(proficient(&input, "Dagger"), Some(true), "the class's own list stays");
+    }
+
+    #[test]
+    fn race_weapon_proficiency_a_deitys_favored_weapon_is_the_clerics() {
+        let cleric = || character("race:human", "class:cleric");
+        for (deity, key) in [
+            ("deity:iomedae", "Longsword"),
+            ("deity:gorum", "Greatsword"),
+            ("deity:sarenrae", "Scimitar"),
+            ("deity:cayden_cailean", "Rapier"),
+        ] {
+            assert_eq!(proficient(&of_deity(cleric(), deity), key), Some(true), "{deity} {key}");
+        }
+        assert_eq!(proficient(&of_deity(cleric(), "deity:iomedae"), "Greatsword"), Some(false), "not her weapon");
+        // The grant is the Cleric's: a Wizard of the same deity holds nothing from her.
+        assert_eq!(proficient(&of_deity(character("race:human", "class:wizard"), "deity:iomedae"), "Longsword"), Some(false));
+    }
+
+    /// No deity written down, or one the rules do not hold: nothing grants the weapon, the -4 stands,
+    /// and the sheet says why.
+    #[test]
+    fn race_weapon_proficiency_a_cleric_with_no_deity_the_rules_hold_is_told_so() {
+        let cleric = || character("race:human", "class:cleric");
+        for (input, words) in [
+            (cleric(), "no deity is recorded"),
+            (of_deity(cleric(), "deity:the_light_of_morning"), "no deity the rules hold is named the_light_of_morning"),
+        ] {
+            match character_weapon_proficiency(&input, weapon("Longsword")) {
+                WeaponProficiencyVerdict::Known { proficient, printed, .. } => {
+                    assert!(!proficient);
+                    assert!(printed.iter().any(|line| line.contains(words)), "{printed:?}");
+                }
+                unknown => panic!("{unknown:?}"),
+            }
+        }
+    }
+
+    /// The row: no -4, and none of the words that say nothing grants it.
+    #[test]
+    fn race_weapon_proficiency_reaches_the_attack_row() {
+        for input in [
+            character("race:elf", "class:wizard"),
+            of_deity(character("race:human", "class:cleric"), "deity:iomedae"),
+        ] {
+            let row = attack_row(&input, "Longsword");
+            assert!(!row.contains("nonproficiency penalty:"), "{row}");
+            assert!(!row.contains("nothing this character holds grants"), "{row}");
+            assert!(row.contains("proficient with this weapon"), "{row}");
+        }
+        let row = attack_row(&character("race:elf", "class:wizard"), "Greatsword");
+        assert!(row.contains("-4 nonproficiency penalty: nothing this character holds grants"), "{row}");
+    }
+
+    /// The same weapon, in hand: Melee moves by exactly the 4.
+    #[test]
+    fn race_weapon_proficiency_reaches_the_melee_total() {
+        let melee = |input: &CharacterInput| build_pilot_headless_receipt(input).computation.baseline_melee_attack_bonus;
+        // A Dwarf has no familiarity with a Longsword, and neither race moves Strength or size.
+        assert_eq!(melee(&character("race:elf", "class:wizard")), melee(&character("race:dwarf", "class:wizard")) + 4);
     }
 }

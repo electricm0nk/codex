@@ -634,6 +634,12 @@ pub enum Fact {
     NaturalAttack(String),
 }
 
+/// `Effect::FactDeclare` name on a deity's record: one weapon it favors.
+pub const DEITY_FAVORED_WEAPON_FACT: &str = "DeityFavoredWeapon";
+
+/// `Effect::FactDeclare` name on a rule: a weapon that is Martial for whoever holds the rule.
+pub const WEAPON_TREATED_AS_MARTIAL_FACT: &str = "WeaponTreatedAsMartial";
+
 #[cfg_attr(test, derive(schemars::JsonSchema))]
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum CountsAs {
@@ -1562,6 +1568,31 @@ impl CharacterFacts {
         }
     }
 
+    /// The facts the character record gives with no computation, for a reader the computation itself
+    /// calls (the weapon proficiency verdict). Base attack, saves, totals and speed are not here.
+    pub fn from_record(input: &crate::rules_core::character_input::CharacterInput) -> CharacterFacts {
+        let chosen = &input.chosen;
+        let class_levels: Vec<(ClassId, i64)> =
+            chosen.class_levels.iter().map(|c| (id_slug(&c.class_id), i64::from(c.level))).collect();
+        let s = &chosen.ability_scores;
+        let ability_scores = [s.strength, s.dexterity, s.constitution, s.intelligence, s.wisdom, s.charisma].map(i64::from);
+        let mut picks = CharacterFacts::default();
+        for c in &chosen.selected_choices {
+            picks.record_pick(&c.choice_set_id, &c.selection_id);
+        }
+        CharacterFacts {
+            level: class_levels.iter().map(|(_, l)| *l).sum(),
+            class_levels,
+            ability_scores,
+            ability_mods: ability_scores.map(|score| (score - 10).div_euclid(2)),
+            choices: picks.choices,
+            pick_namespaces: picks.pick_namespaces,
+            race: Some(id_slug(&chosen.race_id)),
+            feat_sub_choices: feat_sub_choices(chosen),
+            ..CharacterFacts::default()
+        }
+    }
+
     /// Record one selected choice `choice_set_id -> selection_id` (`choice:cleric_domain ->
     /// domain:air`): the option is the selection's member slug ([`id_slug`], `air`), named by
     /// its last segment (`air`), and the segment before it (`domain`) is kept as the pick's
@@ -1607,9 +1638,8 @@ impl HeldSeed {
         input: &crate::rules_core::character_input::CharacterInput,
         computation: &crate::rules_core::pilot_compute::PilotBaseChassisComputation,
     ) -> HeldSeed {
-        let chosen = &input.chosen;
-        let classes: Vec<(String, i64)> =
-            chosen.class_levels.iter().map(|c| (id_slug(&c.class_id), i64::from(c.level))).collect();
+        let mut seed = HeldSeed::from_record(input);
+        let classes = &seed.classes;
         let mut class_features = Vec::new();
         for e in &computation.explanations {
             let Some(rest) = e.id.strip_prefix("class_feature.") else { continue };
@@ -1623,6 +1653,16 @@ impl HeldSeed {
                 .unwrap_or_else(|| classes.first().map(|(c, _)| c.clone()).unwrap_or_default());
             class_features.push((owner, e.id.clone()));
         }
+        seed.class_features = class_features;
+        seed
+    }
+
+    /// The seed the character record gives with no computation, so with no chassis-grounded class
+    /// features: for a reader the computation itself calls.
+    pub fn from_record(input: &crate::rules_core::character_input::CharacterInput) -> HeldSeed {
+        let chosen = &input.chosen;
+        let classes: Vec<(String, i64)> =
+            chosen.class_levels.iter().map(|c| (id_slug(&c.class_id), i64::from(c.level))).collect();
         // A feat recorded with its sub-choice (`"Weapon Focus (Longbow)"`) names the same converted
         // record as `weapon_focus`: the seed carries both shapes, so the feat is held either way
         // (SD-36 F3p; was local to `feat_prereqs::PrereqFacts::new`).
@@ -1641,7 +1681,7 @@ impl HeldSeed {
             spells: chosen.spells_selected.iter().map(|s| id_slug(&s.spell_id)).collect(),
             skills: chosen.skill_allocations.iter().filter(|a| a.ranks > 0).map(|a| id_slug(&a.skill_id)).collect(),
             race_traits: Vec::new(),
-            class_features,
+            class_features: Vec::new(),
             rule_ids: Vec::new(),
         }
     }

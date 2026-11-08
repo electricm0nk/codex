@@ -23,8 +23,8 @@ import {
  * creation form, the level-up dialog and the sheet's "Feats, spells and gear" dialog share.
  * Every option list, prerequisite verdict, spells-known total and sheet total is the engine's
  * preview (`preview`); the panel only edits the player's choices (`choices`, reported through
- * `onChange`). `onAddGear`, when given, adds an item through the caller's own save path (the
- * sheet appends it through the Starfinder adapter); otherwise the item joins the choices.
+ * `onChange`). `equipment`, when given, offers the list a new item is added from: the creation
+ * form's, where no saved character exists yet. A saved character's gear comes from the Market.
  */
 
 const SECTION_STYLE: CSSProperties = { border: '1px solid var(--color-border)', borderRadius: 8, margin: '0 0 0.75rem', padding: '0.6rem 0.9rem' };
@@ -51,9 +51,8 @@ const ROW_STYLE: CSSProperties = { alignItems: 'center', display: 'flex', flexWr
 export function StarfinderChoicesPanel(props: {
   preview: SfChoicesPreviewDto;
   choices: SfChoicesDto;
-  equipment: SfEquipmentOptionDto[];
+  equipment?: SfEquipmentOptionDto[];
   onChange: (choices: SfChoicesDto) => void;
-  onAddGear?: (itemId: string, equipped: boolean) => void;
 }) {
   const { preview, choices, onChange } = props;
   const [itemId, setItemId] = useState('');
@@ -63,11 +62,7 @@ export function StarfinderChoicesPanel(props: {
     if (itemId === '') {
       return;
     }
-    if (props.onAddGear) {
-      props.onAddGear(itemId, equipped);
-    } else {
-      onChange(addGear(choices, itemId, equipped));
-    }
+    onChange(addGear(choices, itemId, equipped));
     setItemId('');
   }
 
@@ -187,22 +182,24 @@ export function StarfinderChoicesPanel(props: {
             ) : null}
           </div>
         ))}
-        <div style={ROW_STYLE}>
-          <select aria-label="Choose equipment" style={SELECT_STYLE} value={itemId} onChange={(event) => setItemId(event.target.value)}>
-            <option value="">— choose equipment —</option>
-            {props.equipment.map((option) => (
-              <option key={option.id} value={option.id}>
-                {equipmentOptionLabel(option)}
-              </option>
-            ))}
-          </select>
-          <button type="button" style={SMALL_BUTTON_STYLE} disabled={itemId === ''} onClick={() => add(true)}>
-            Add equipped
-          </button>
-          <button type="button" style={SMALL_BUTTON_STYLE} disabled={itemId === ''} onClick={() => add(false)}>
-            Add carried
-          </button>
-        </div>
+        {props.equipment ? (
+          <div style={ROW_STYLE}>
+            <select aria-label="Choose equipment" style={SELECT_STYLE} value={itemId} onChange={(event) => setItemId(event.target.value)}>
+              <option value="">— choose equipment —</option>
+              {props.equipment.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {equipmentOptionLabel(option)}
+                </option>
+              ))}
+            </select>
+            <button type="button" style={SMALL_BUTTON_STYLE} disabled={itemId === ''} onClick={() => add(true)}>
+              Add equipped
+            </button>
+            <button type="button" style={SMALL_BUTTON_STYLE} disabled={itemId === ''} onClick={() => add(false)}>
+              Add carried
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {totals === '' ? null : (

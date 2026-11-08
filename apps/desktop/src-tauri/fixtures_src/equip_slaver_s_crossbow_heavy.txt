@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: mc_equip_arms_armor.lst, KEY: Slaver's Crossbow (Heavy)
+Slaver's Crossbow, Heavy					KEY:Slaver's Crossbow (Heavy)	PROFICIENCY:WEAPON|Slaver's Crossbow (Heavy)	TYPE:Weapon.Resizable.Exotic.Ranged.Standard.Bludgeoning.Container.Projectile.Crossbow	CONTAINS:UNLIM|BolaBolt	COST:400	WT:12					CRITMULT:x2	CRITRANGE:2	DAMAGE:1d8	EQMOD:Material ~ Wood.Special Quality ~ Nonlethal.Special Quality ~ Trip													WIELD:TwoHandsOnly					RANGE:80	SIZE:M	SOURCEPAGE:p.45	SPROP:Entangles target on a successful critical.

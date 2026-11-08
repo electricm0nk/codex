@@ -3,17 +3,14 @@ import {
   allocationFromPersisted,
   classSkillLookup,
   DEFAULT_PICK_MARKER,
-  featSkillBonusFor,
   isClassSkill,
   persistedFromAllocation,
   skillIdFor,
-  skillModifier,
   SKILLS,
-  traitSkillModifierFor,
+  sheetSkillTotal,
   skillPointsSpent,
   totalSkillPointsAvailable,
 } from './skillsModel';
-import { featSkillBonusWire } from '../testSupport/featSkillBonusWire';
 import { LOADING_CLASS_FACTS, failedClassFacts, loadedClassFacts, type ClassFactsState } from './classFactsModel';
 import { classFactsWire } from '../testSupport/classFactsWire';
 import { installClassRoster } from './classRoster';
@@ -132,28 +129,6 @@ function verifiesTotalSkillPointsAvailableReadsTheRoster() {
   installClassRoster(classRosterWire());
 }
 
-/**
- * SD-36 F6b: Alertness (CRB p.117) on the census fixture (Human Fighter 1, Wis 12 = +1) adds +2 to
- * Perception and Sense Motive, off the engine's served fold. Perception with 0 ranks:
- * +1 Wis + 0 ranks + 2 Alertness = +3; Sense Motive the same. No other skill moves.
- */
-function verifiesAlertnessAddsTwoToPerceptionAndSenseMotive() {
-  const served = featSkillBonusWire();
-  assertEqual(featSkillBonusFor(served, 'Perception'), 2, 'Alertness +2 Perception, off the served fold');
-  assertEqual(featSkillBonusFor(served, 'Sense Motive'), 2, 'Alertness +2 Sense Motive');
-  assertEqual(skillModifier(1, 0, false, featSkillBonusFor(served, 'Perception')), 3, 'Perception total: Wis +1, 0 ranks, Alertness +2');
-  const moved = SKILLS.filter((skill) => featSkillBonusFor(served, skill.name) !== 0).map((skill) => skill.name);
-  assertEqual(moved.join(','), 'Perception,Sense Motive', 'exactly the two skills Alertness names');
-}
-
-/** A family bonus (`SkillGroup`) reaches every member of the family, and only them. */
-function verifiesAFamilyBonusReachesEveryMember() {
-  const bonuses = { skills: { knowledge_local: 1 }, groups: { knowledge: 2 }, contributions: [], situational: [], unknown: [] };
-  assertEqual(featSkillBonusFor(bonuses, 'Knowledge (Local)'), 3, 'family +2 and the exact +1 add');
-  assertEqual(featSkillBonusFor(bonuses, 'Knowledge (Arcana)'), 2, 'family only');
-  assertEqual(featSkillBonusFor(bonuses, 'Linguistics'), 0, 'not a member');
-}
-
 /** The served wizard facts re-keyed to `level` (the wizard's class-skill list does not move with level). */
 function wizardFactsAt(level: number): ClassFactsState {
   const wizard = classFactsWire().classes.find((entry) => entry.classId === 'class:wizard' && entry.level === 1);
@@ -170,7 +145,6 @@ function wizardFactsAt(level: number): ClassFactsState {
  * Persisted: the create path's Climb, Intimidate, Swim at 1 (the GE-06 posture; cross-class, one
  * point each) + Spellcraft, Fly and Knowledge (Arcana, Dungeoneering, Planes, Religion) at 5 (max
  * ranks = character level 5) + Linguistics 2 = 3 + 30 + 2 = 35 -> 0 unallocated.
- * Spellcraft: 5 ranks + 3 class skill + 4 Int = +12.
  */
 function verifiesElowenPersistedAllocationLeavesNothingUnallocated() {
   installClassRoster(classRosterWire());
@@ -201,7 +175,6 @@ function verifiesElowenPersistedAllocationLeavesNothingUnallocated() {
   const earned = totalSkillPointsAvailable(held, 4, true);
   assertEqual(earned, 35, '(2 + 4 + 1) x 5');
   assertEqual((earned ?? 0) - skillPointsSpent(allocation), 0, 'Elowen loads with 0 unallocated');
-  assertEqual(skillModifier(4, allocation['Spellcraft'] ?? 0, isClassSkill(lookup, 'Spellcraft')), 12, 'Spellcraft 5 + 3 + 4');
 }
 
 /**
@@ -267,18 +240,20 @@ function verifiesSkillPointsStatusSaysWhatIsLeft() {
   assert(skillPointsStatus(null, 0).text.includes('Unknown'), 'and says so');
 }
 
-// Brief 1 F3b: the engine's per-skill trait/drawback modifier (`skill.trait_modifier.<id>` rows on
-// the sheet's explanations) is what each row adds: Acrobat's +1, Meticulous's untrained -2.
-function verifiesTheTraitModifierRowIsAddedToTheSkill() {
+/**
+ * E8.7: a row's total is the load response's `skill.total.<id>` row, computed in Rust (ranks, the key
+ * ability, a class skill's +3, folded feats, the trait/drawback/worn-item row); the panel and the
+ * print both read it. A skill with no row is Unknown, never summed here.
+ */
+function verifiesTheSkillTotalIsTheLoadResponsesRow() {
   const explanations = [
-    { id: 'skill.trait_modifier.acrobatics', value: -1, detail: '+1 Acrobat, -2 Meticulous' },
-    { id: 'skill.trait_modifier.sense_motive', value: 1, detail: 'Bastard' },
-    { id: 'skill.selected_modifier.climb', value: 5, detail: 'not a trait row' },
+    { id: 'skill.total.knowledge_arcana', value: 12, detail: '5 ranks; Intelligence +4; class skill +3 (class:wizard)' },
+    { id: 'skill.total.sense_motive', value: -1, detail: '0 ranks; Wisdom -1' },
+    { id: 'skill.selected_modifier.climb', value: 5, detail: 'not the total row' },
   ];
-  assertEqual(traitSkillModifierFor(explanations, 'Acrobatics'), -1, 'Acrobatics row');
-  assertEqual(traitSkillModifierFor(explanations, 'Sense Motive'), 1, 'two-word skill');
-  assertEqual(traitSkillModifierFor(explanations, 'Climb'), 0, 'no trait row, nothing added');
-  assertEqual(skillModifier(2, 0, true, 0) + traitSkillModifierFor(explanations, 'Acrobatics'), 1, 'Dex +2, untrained, Acrobat + Meticulous');
+  assertEqual(sheetSkillTotal(explanations, 'Knowledge (Arcana)'), 12, 'a parenthetical row reads its id');
+  assertEqual(sheetSkillTotal(explanations, 'Sense Motive'), -1, 'a two-word row');
+  assertEqual(sheetSkillTotal(explanations, 'Climb'), null, 'no total row: Unknown');
 }
 
 async function main() {
@@ -289,11 +264,9 @@ async function main() {
   verifiesAGrantedFamilyCoversItsMembers();
   verifiesNewlyOfferedClassesHaveTheirClassSkills();
   verifiesEveryRosterClassIsAnsweredOrNamed();
-  verifiesTheTraitModifierRowIsAddedToTheSkill();
+  verifiesTheSkillTotalIsTheLoadResponsesRow();
   verifiesLoadingAndFailureNameEveryClass();
   verifiesTotalSkillPointsAvailableReadsTheRoster();
-  verifiesAlertnessAddsTwoToPerceptionAndSenseMotive();
-  verifiesAFamilyBonusReachesEveryMember();
   verifiesElowenPersistedAllocationLeavesNothingUnallocated();
   verifiesACrossClassRankCostsOnePoint();
   verifiesAnUnlistedIdRoundTrips();

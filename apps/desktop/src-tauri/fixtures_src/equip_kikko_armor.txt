@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Kikko Armor
+Kikko Armor			PROFICIENCY:ARMOR|Kikko Armor			TYPE:Armor.Medium.ArmorProfMedium.Suit.Standard	COST:250	WT:25		ACCHECK:-3		EQMOD:Material ~ Steel				MAXDEX:4		SPELLFAILURE:20		BONUS:COMBAT|AC|5|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

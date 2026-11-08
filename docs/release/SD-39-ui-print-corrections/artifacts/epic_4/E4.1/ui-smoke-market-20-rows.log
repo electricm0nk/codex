@@ -1,0 +1,33 @@
+
+> codex@0.19.0 ui-smoke
+> node scripts/ui-smoke/run.mjs --only sheet-market-open-weapons,sheet-market-open-defense,sheet-market-filter-armor,sheet-market-buy-refused,sheet-market-buy,sheet-market-sell,sheet-market-buy-weapon-worn,sheet-market-cashless,sheet-market-enhancement-ac,sheet-market-starfinder-open,sheet-market-starfinder-buy,sheet-market-starfinder-sell,sheet-market-starfinder-cashless,sheet-market-starfinder-refused,sheet-market-cyberpunk-open,sheet-market-cyberpunk-buy,sheet-market-cyberpunk-sell,sheet-market-cyberpunk-refused,sheet-market-cyberpunk-cashless,sheet-market-restore-pathfinder --out /home/ubuntu/cargo-target/sd39-main-seeds-e4.1/ui/r4.json
+
+App data root: /tmp/codex-ui-smoke-sd39-e4_1-Zp5EXk/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd39-e4.1'...
+PASS  sheet-market-open-weapons
+PASS  sheet-market-open-defense
+PASS  sheet-market-filter-armor
+PASS  sheet-market-buy-refused
+PASS  sheet-market-buy
+PASS  sheet-market-sell
+PASS  sheet-market-buy-weapon-worn
+PASS  sheet-market-cashless
+PASS  sheet-market-enhancement-ac
+PASS  sheet-market-starfinder-open
+PASS  sheet-market-starfinder-buy
+PASS  sheet-market-starfinder-sell
+PASS  sheet-market-starfinder-cashless
+PASS  sheet-market-starfinder-refused
+PASS  sheet-market-cyberpunk-open
+PASS  sheet-market-cyberpunk-buy
+PASS  sheet-market-cyberpunk-sell
+PASS  sheet-market-cyberpunk-refused
+PASS  sheet-market-cyberpunk-cashless
+PASS  sheet-market-restore-pathfinder
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+20/20 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 20 rows)
+Cleanup: 5 character(s) created across 20 row(s) with a cleanup record, 5 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd39-e4_1-Zp5EXk/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006
+Evidence: /home/ubuntu/cargo-target/sd39-main-seeds-e4.1/ui/r4.json
+Removed isolated app-data root /tmp/codex-ui-smoke-sd39-e4_1-Zp5EXk (it held 6 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006).

@@ -15,6 +15,7 @@
 //! `"item:longsword"`-style fixture namespace, which predates
 //! corpus-linkage and was never the corpus's own exact name.
 
+use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::source_content::SourceContentPayload;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_catalog::crb::equipment_tables::equipment_tables;
@@ -414,6 +415,64 @@ pub fn hand_authored_equipment_rows() -> &'static [EquipmentCatalogRow] {
 /// not something this function creates or is able to fix from here.
 pub fn equipment_catalog_row_by_key(key: &str) -> Option<&'static EquipmentCatalogRow> {
     equipment_catalog_rows().iter().find(|row| row.key == key)
+}
+
+/// True when `input` is definitively not proficient with this weapon, armor or shield. An item that
+/// is none of those, or a verdict the engine cannot reach, is false: an unknown never refuses. A
+/// weapon reads the one verdict the sheet's attack rows read.
+pub fn character_lacks_proficiency_with(input: &CharacterInput, item_id: &str) -> ItemProficiencyGap {
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::armor_proficiency_in;
+    use crate::rules_core::pilot_compute::{character_is_proficient_with, compute_pilot_base_chassis};
+    use crate::rules_core::sheet_rule::{slug, CharacterFacts, HeldSeed};
+
+    let package = crate::rules_core::corpus_loader::live_sheet_rules();
+    let record = package.and_then(|package| {
+        let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
+        Some((package, package.rule(package.find("equipment", &slug(needle))?)?))
+    });
+    if let Some((package, rule)) = record {
+        let computation = compute_pilot_base_chassis(input);
+        let mut seed = HeldSeed::from_character(input, &computation);
+        seed.race_traits = crate::rules_core::race_resolver::applied_race_trait_keys(
+            &input.chosen.race_id,
+            &crate::rules_core::pilot_compute::selected_alternate_trait_keys(input),
+        );
+        let facts = CharacterFacts::from_character(input, &computation).with_linked_picks(package, &seed);
+        if let Some(proficient) = armor_proficiency_in(package, &seed, &facts, &rule.label, &rule.tags) {
+            return if proficient { ItemProficiencyGap::None } else { ItemProficiencyGap::Armor };
+        }
+    }
+    let Some(weapon) = weapon_of_item(item_id) else {
+        // A weapon the table does not hold reads its type tags, as its attack row does.
+        let tagged = crate::rules_core::pilot_compute_corpus::tagged_weapon_entry(item_id);
+        return match tagged.and_then(|weapon| crate::rules_core::pilot_compute_corpus::tagged_weapon_proficiency(input, &weapon)) {
+            Some(false) => ItemProficiencyGap::Weapon,
+            _ => ItemProficiencyGap::None,
+        };
+    };
+    // A chair is nobody's weapon: anyone may pick one up, at the penalty the sheet already states.
+    if weapon.proficiency_name == Some("Improvised Weapon") || character_is_proficient_with(input, weapon) != Some(false) {
+        return ItemProficiencyGap::None;
+    }
+    ItemProficiencyGap::Weapon
+}
+
+/// The weapon a held item is, by any name it is held under: a named or material row
+/// (`Longsword (Cold Iron/Masterwork)`, `Flame Tongue`) names its base on its catalog row. `None` for
+/// an item that is not one the weapon table has.
+fn weapon_of_item(item_id: &str) -> Option<&'static crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    use crate::rules_core::pilot_compute::equipped_weapon_stat_block;
+    let key = item_id.strip_prefix("item:").unwrap_or(item_id);
+    equipped_weapon_stat_block(key).or_else(|| equipment_catalog_row_by_key(key).and_then(|row| equipped_weapon_stat_block(row.name)))
+}
+
+/// Which override, if any, a character needs to wear or wield an item.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ItemProficiencyGap {
+    None,
+    Weapon,
+    /// Armor or a shield.
+    Armor,
 }
 
 /// v0.6 alpha swarm (money-purchase coupling, risks-and-open-questions.md

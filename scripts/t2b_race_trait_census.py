@@ -11,7 +11,7 @@ import re
 import sys
 from collections import Counter
 
-RACE_CATALOG = "apps/desktop/src-tauri/src/race_catalog.rs"
+RACE_CATALOG = "src/rules_core/race_resolver.rs"
 WORK_INVENTORY = "docs/work-inventory.json"
 
 

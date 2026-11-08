@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tailblade (Ratfolk)",
+    "name": "Tailblade (Ratfolk)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Tailblade (Ratfolk)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Light.Melee.Slashing.RatfolkTailblade.Finesseable"
+      },
+      {
+        "key": "COST",
+        "value": "11"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.154"
+      },
+      {
+        "key": "SPROP",
+        "value": "A tailblade is a small, sharp knife designed to be strapped to the tip of a wielder's tail. A ratfolk wielding a tailblade can make a tail attack, adding its Strength modifier to the tailblade's damage. Ratfolk are considered proficient with such attacks and can apply feats or effects appropriate to natural attacks to tail attacks made with a tailblade. If used as part of a full attack action, attacks with a tailblade are considered secondary attacks.|PRERULE:1,DisplayWeaponDetails"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_tailblade_ratfolk.txt",
+    "record_key": "Tailblade (Ratfolk)"
+  }
+}

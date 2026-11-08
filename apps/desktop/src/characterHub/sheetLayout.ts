@@ -7,9 +7,6 @@ import type { CSSProperties } from 'react';
  * in, `order` its position in that stack, `boxStyle` the style its own content takes. Moving a
  * box is an edit to its entry here, not a JSX move. No drag-and-drop (operator: "easy in code").
  *
- * Only the stat block of the sheet's middle column is registered so far (Brief 2 L1). The left
- * progression rail and the right Details/Skills column are still laid out in
- * `CharacterSheet.tsx` directly.
  */
 export interface LayoutBox<Id extends string, Column extends string> {
   id: Id;
@@ -18,35 +15,51 @@ export interface LayoutBox<Id extends string, Column extends string> {
   boxStyle: CSSProperties;
 }
 
-/** Sheet boxes rendered from `SHEET_LAYOUT` (see `CharacterSheet.tsx`, middle column). */
-export type SheetBoxId = 'abilities' | 'armorClass' | 'attack' | 'speed' | 'saves';
+/** Sheet boxes rendered from `SHEET_LAYOUT` (see `renderSheetBox` in `CharacterSheet.tsx`). */
+export type SheetBoxId =
+  | 'portrait'
+  | 'levelXp'
+  | 'classPanel'
+  | 'characterDetails'
+  | 'showProgression'
+  | 'squareBlock'
+  | 'combatStrip'
+  | 'armorClass'
+  | 'attack'
+  | 'speed'
+  | 'saves'
+  | 'abilities'
+  | 'skills';
 
-/** The sheet's middle stat block: Abilities as one column, the combat boxes stacked beside it. */
-export type SheetColumn = 'abilities' | 'combat';
+/** The sheet's regions, left to right. The tabs sit below `combatRow` and are not a box. */
+export type SheetRegion = 'leftRail' | 'combatRow' | 'rightColumn';
 
-/** The registered columns, left to right. */
-export const SHEET_COLUMNS: readonly SheetColumn[] = ['abilities', 'combat'];
+/** A stack that boxes can sit in: a region, or the strip nested in `combatRow`. */
+export type SheetStack = SheetRegion | 'combatStrip';
+
+export const SHEET_REGIONS: readonly SheetRegion[] = ['leftRail', 'combatRow', 'rightColumn'];
 
 const STACK: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '0.6rem', minWidth: 0 };
 
-/** Style of each registered sheet column (a vertical stack). */
-export const SHEET_COLUMN_STYLES: Readonly<Record<SheetColumn, CSSProperties>> = {
-  abilities: { ...STACK, flex: '0 0 auto' },
-  combat: { ...STACK, flex: 1 },
+/** The combat row's wrap: the 1x4 drops under the 2x2 when the row is narrower than both claim. */
+export const COMBAT_ROW_WRAP: NonNullable<CSSProperties['flexWrap']> = 'wrap';
+
+/** Style of each stack. `CharacterSheet.tsx` puts the rail's own width and rule on its wrapper, which collapses. */
+export const SHEET_REGION_STYLES: Readonly<Record<SheetStack, CSSProperties>> = {
+  leftRail: { ...STACK, gap: '0.5rem' },
+  // One row: the 2x2 beside the 1x4. The two children's flex-basis is the breakpoint: the 1x4 wraps
+  // under when the row is narrower than 360px + the gap + 320px. Retune it on `combatStrip`.
+  combatRow: { alignItems: 'flex-start', display: 'flex', flexDirection: 'row', flexWrap: COMBAT_ROW_WRAP, gap: '0.6rem', minWidth: 0 },
+  rightColumn: { ...STACK, flex: '0 0 300px' },
+  // The 1x4. Holds four boxes of up to four tiles; grows to fill its line, alone or beside the 2x2.
+  combatStrip: { ...STACK, flex: '1 1 320px' },
 };
 
 /** Abilities: six rows, STR to CHA, top to bottom. */
 const ABILITY_ROWS: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '0.3rem' };
 /** A combat box: its tiles side by side. */
 const TILE_ROW: CSSProperties = { display: 'flex', gap: '0.5rem' };
-
-export const SHEET_LAYOUT: readonly LayoutBox<SheetBoxId, SheetColumn>[] = [
-  { id: 'abilities', column: 'abilities', order: 0, boxStyle: ABILITY_ROWS },
-  { id: 'armorClass', column: 'combat', order: 0, boxStyle: TILE_ROW },
-  { id: 'attack', column: 'combat', order: 1, boxStyle: TILE_ROW },
-  { id: 'speed', column: 'combat', order: 2, boxStyle: TILE_ROW },
-  { id: 'saves', column: 'combat', order: 3, boxStyle: TILE_ROW },
-];
+const RAIL_BOX: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: 0 };
 
 /**
  * The 2x2 square block (Hit Points, Initiative, Encumbrance, Conditions) under the name: two equal
@@ -62,6 +75,25 @@ export const SQUARE_BLOCK_STYLE: CSSProperties = {
   maxWidth: '360px',
   width: '100%',
 };
+
+export const SHEET_LAYOUT: readonly LayoutBox<SheetBoxId, SheetStack>[] = [
+  { id: 'portrait', column: 'leftRail', order: 0, boxStyle: { marginBottom: '0.25rem' } },
+  // Level and Caster Level, and the sheet's mutation and status messages under them.
+  { id: 'levelXp', column: 'leftRail', order: 1, boxStyle: RAIL_BOX },
+  // Race, any alternate racial traits, Class.
+  { id: 'classPanel', column: 'leftRail', order: 2, boxStyle: RAIL_BOX },
+  { id: 'characterDetails', column: 'leftRail', order: 3, boxStyle: { minWidth: 0 } },
+  { id: 'showProgression', column: 'leftRail', order: 4, boxStyle: RAIL_BOX },
+  { id: 'squareBlock', column: 'combatRow', order: 0, boxStyle: { flex: `0 1 ${SQUARE_BLOCK_STYLE.maxWidth}`, minWidth: 0 } },
+  { id: 'combatStrip', column: 'combatRow', order: 1, boxStyle: SHEET_REGION_STYLES.combatStrip },
+  { id: 'armorClass', column: 'combatStrip', order: 0, boxStyle: TILE_ROW },
+  { id: 'attack', column: 'combatStrip', order: 1, boxStyle: TILE_ROW },
+  { id: 'speed', column: 'combatStrip', order: 2, boxStyle: TILE_ROW },
+  { id: 'saves', column: 'combatStrip', order: 3, boxStyle: TILE_ROW },
+  { id: 'abilities', column: 'rightColumn', order: 0, boxStyle: ABILITY_ROWS },
+  { id: 'skills', column: 'rightColumn', order: 1, boxStyle: { minWidth: 0 } },
+];
+
 export const SQUARE_BOX_STYLE: CSSProperties = { aspectRatio: '1' };
 
 /** The four boxes of the 2x2 block, read left to right, top to bottom. */

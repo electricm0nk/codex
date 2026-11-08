@@ -1,0 +1,33 @@
+App data root: /tmp/codex-ui-smoke-sd39-e4_3-rvtWEU/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd39-e4.3'...
+PASS  sheet-market-open-weapons
+PASS  sheet-market-open-defense
+PASS  sheet-market-filter-armor
+PASS  sheet-market-buy-refused
+PASS  sheet-market-buy
+FAIL  sheet-market-sell  -- marker not found on screen: 'Sold +1 Chain Shirt for 625 gp.'
+PASS  sheet-market-buy-weapon-worn
+PASS  sheet-market-cashless
+PASS  sheet-market-enhancement-ac
+PASS  sheet-market-starfinder-open
+PASS  sheet-market-starfinder-buy
+PASS  sheet-market-starfinder-sell
+PASS  sheet-market-starfinder-cashless
+PASS  sheet-market-starfinder-refused
+PASS  sheet-market-cyberpunk-open
+PASS  sheet-market-cyberpunk-buy
+PASS  sheet-market-cyberpunk-sell
+PASS  sheet-market-cyberpunk-refused
+PASS  sheet-market-cyberpunk-cashless
+PASS  sheet-market-restore-pathfinder
+PASS  sheet-equipment-lists
+PASS  sheet-equipment-conflict
+FAIL  sheet-equipment-unequip  -- forbidden string present: 'Head: Hat of Disguise'
+PASS  sheet-equipment-equip
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+
+22/24 green, 2 red, 0 blocked, 0 manual, 0 not-run (M = 24 rows)
+Cleanup: 5 character(s) created across 24 row(s) with a cleanup record, 5 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd39-e4_3-rvtWEU/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006
+Evidence: /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/scripts/ui-smoke/.out/sd39-e4.3
+Removed isolated app-data root /tmp/codex-ui-smoke-sd39-e4_3-rvtWEU (it held 6 character(s) at the end: 00000000-0000-0000-0000-000000000001, 00000000-0000-0000-0000-000000000002, 00000000-0000-0000-0000-000000000003, 00000000-0000-0000-0000-000000000004, 00000000-0000-0000-0000-000000000005, 00000000-0000-0000-0000-000000000006).

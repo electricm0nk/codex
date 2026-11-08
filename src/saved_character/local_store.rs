@@ -11,7 +11,7 @@ use std::fs;
 use std::path::Path;
 
 use crate::rules_core::character_input::{
-    AcquisitionMode, ActiveState, CharacterInput, RULE_CHOICE_SEPARATOR,
+    AcquisitionMode, ActiveState, CharacterInput, RULE_CHOICE_SEPARATOR, SelectedChoice,
     load_character_input_fixture,
 };
 
@@ -42,6 +42,28 @@ fn atomic_write_prepare(path: &Path, contents: &[u8]) -> std::io::Result<std::pa
     let tmp_path = path.with_file_name(tmp_name);
     fs::write(&tmp_path, contents)?;
     Ok(tmp_path)
+}
+
+const PATHFINDER_GAME_SYSTEM: &str = "pf1";
+
+/// The deity is the player's words in the `bio.json` sidecar, and the engine reads only the
+/// character input. So every load writes the input's one deity row from the bio, whatever was
+/// saved: a save from before the row existed, a bio edited since, a deity cleared. An unreadable
+/// bio states no deity, as its own loader's "no bio yet" does.
+fn keep_deity_row_equal_to_the_bio(root: &Path, input: &mut CharacterInput) {
+    use crate::rules_core::pilot_compute::CHARACTER_DEITY_CHOICE_ID;
+    input.chosen.selected_choices.retain(|choice| choice.choice_set_id != CHARACTER_DEITY_CHOICE_ID);
+    let deity = fs::read_to_string(root.join("bio.json"))
+        .ok()
+        .and_then(|text| serde_json::from_str::<serde_json::Value>(&text).ok())
+        .and_then(|bio| bio.get("deity")?.as_str().map(crate::rules_core::sheet_rule::slug))
+        .filter(|deity| !deity.is_empty());
+    if let Some(deity) = deity {
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: CHARACTER_DEITY_CHOICE_ID.to_owned(),
+            selection_id: format!("deity:{deity}"),
+        });
+    }
 }
 
 pub struct SavedCharacterStore;
@@ -132,7 +154,10 @@ impl SavedCharacterStore {
             })?;
 
         let metadata = parse_envelope(&envelope_text)?;
-        let character_input = parse_character_input(&character_input_text)?;
+        let mut character_input = parse_character_input(&character_input_text)?;
+        if metadata.game_system == PATHFINDER_GAME_SYSTEM {
+            keep_deity_row_equal_to_the_bio(root, &mut character_input);
+        }
 
         Ok(SavedCharacterEnvelope {
             character_id: metadata.character_id,
@@ -992,6 +1017,39 @@ mod tests {
 
         assert!(reloaded.character_input.chosen.selected_traits.is_empty());
 
+        fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn race_weapon_proficiency_the_deity_row_follows_the_bio_on_every_load() {
+        use crate::rules_core::pilot_compute::CHARACTER_DEITY_CHOICE_ID;
+        let row = |root: &Path| -> Vec<String> {
+            let input = SavedCharacterStore::load(root).unwrap().character_input;
+            input.chosen.selected_choices.iter().filter(|c| c.choice_set_id == CHARACTER_DEITY_CHOICE_ID).map(|c| c.selection_id.clone()).collect()
+        };
+        let root = tempdir("deity-row");
+        let mut envelope = envelope_with(Vec::new());
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        assert!(row(&root).is_empty(), "no bio");
+
+        fs::write(root.join("bio.json"), r#"{"deity":"Cayden Cailean"}"#).unwrap();
+        assert_eq!(row(&root), ["deity:cayden_cailean"]);
+
+        // Saved with the row and loaded again, there is still one.
+        SavedCharacterStore::save(&SavedCharacterStore::load(&root).unwrap(), &root).unwrap();
+        assert_eq!(row(&root), ["deity:cayden_cailean"]);
+
+        fs::write(root.join("bio.json"), "{\"deity\":\"Iomedae\\nof the\\nLast Light\"}").unwrap();
+        assert_eq!(row(&root), ["deity:iomedae_of_the_last_light"], "a saved file holds one line per row");
+        SavedCharacterStore::save(&SavedCharacterStore::load(&root).unwrap(), &root).unwrap();
+
+        fs::write(root.join("bio.json"), r#"{"deity":""}"#).unwrap();
+        assert!(row(&root).is_empty(), "cleared, the saved row goes");
+
+        envelope.game_system = "sf1".to_owned();
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        fs::write(root.join("bio.json"), r#"{"deity":"Iomedae"}"#).unwrap();
+        assert!(row(&root).is_empty(), "another system's input stays as it was saved");
         fs::remove_dir_all(&root).ok();
     }
 }

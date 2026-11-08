@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Special Ability ~ +3 ~ Shield",
+    "name": "+3 (Enhancement to Shield)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_special_ability_3_shield.txt",
+    "record_key": "Special Ability ~ +3 ~ Shield"
+  }
+}

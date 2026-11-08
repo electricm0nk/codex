@@ -157,38 +157,15 @@ export function isClassSkill(lookup: ClassSkillLookup, skillName: string): boole
 }
 
 /**
- * PF1: a skill's total modifier is ability mod + ranks + (a +3 class-skill bonus once at least 1
- * rank is invested) + the feat bonus the engine folded for it ({@link featSkillBonusFor}).
+ * E8.7: the total the engine states for `skillName` (a `SKILLS` display name), its load response's
+ * `skill.total.<id>` row: ranks, the key ability's modifier, a class skill's +3 once it has a rank,
+ * the folded feat bonus and the trait, drawback and worn-item row, computed in Rust
+ * (`character_hub.rs` `push_skill_total_rows`). The printed Skills block reads the same row.
+ * `null` when the response carries none. Nothing is computed here.
  */
-export function skillModifier(abilityModifier: number, ranks: number, classSkill: boolean, featBonus = 0): number {
-  return abilityModifier + ranks + (classSkill && ranks > 0 ? 3 : 0) + featBonus;
-}
-
-/**
- * SD-36 F6b: the feat bonus the engine folded for `skillName` (a `SKILLS` display name): the
- * served per-skill total for its package id (`skillIdFor` without `skill:`), plus every served
- * family total the skill belongs to (`knowledge` for `Knowledge (Local)`) -- the same membership
- * rule as {@link classSkillFactsGrant}. Nothing is computed here; the engine folded by bonus type.
- */
-export function featSkillBonusFor(bonuses: FeatSkillBonusesDto, skillName: string): number {
-  const id = skillIdFor(skillName).slice('skill:'.length);
-  let total = bonuses.skills[id] ?? 0;
-  for (const [family, value] of Object.entries(bonuses.groups)) {
-    if (id === family || id.startsWith(`${family}_`)) {
-      total += value;
-    }
-  }
-  return total;
-}
-
-/**
- * Brief 1 F3b: the trait and drawback modifier the engine reports for `skillName` (a `SKILLS`
- * display name) as its `skill.trait_modifier.<id>` explanation row -- Acrobat's +1, Meticulous's
- * untrained -2. `0` when the engine reports none. Nothing is computed here.
- */
-export function traitSkillModifierFor(explanations: readonly ExplanationDto[], skillName: string): number {
-  const id = `skill.trait_modifier.${skillIdFor(skillName).slice('skill:'.length)}`;
-  return explanations.find((row) => row.id === id)?.value ?? 0;
+export function sheetSkillTotal(explanations: readonly ExplanationDto[], skillName: string): number | null {
+  const id = `skill.total.${skillIdFor(skillName).slice('skill:'.length)}`;
+  return explanations.find((row) => row.id === id)?.value ?? null;
 }
 
 /**

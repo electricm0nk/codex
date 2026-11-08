@@ -1,10 +1,13 @@
 import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { saveCyberpunkCriticals } from '../boundary/cprSheet';
 import { loadCyberpunkCatalog, type CyberpunkRecord } from '../boundary/loadCyberpunkCatalog';
-import type { LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
+import { loadSystemMarketState, type MarketShellStateDto } from '../boundary/systemMarket';
 import { RulesAndFeaturesSection } from './CharacterSheet';
 import { CyberpunkImproveDialog } from './CyberpunkImproveDialog';
 import { boxesInColumn } from './sheetLayout';
+import { CYBERPUNK_MARKET_CATEGORIES, SystemMarketDialog } from './SystemMarketDialog';
+import { PrintDialog } from './PrintDialog';
 import { CYBERPUNK_SHEET_COLUMNS, CYBERPUNK_SHEET_COLUMN_STYLES, CYBERPUNK_SHEET_LAYOUT } from './cyberpunkSheetLayout';
 import {
   buildCyberpunkSheet,
@@ -28,7 +31,8 @@ import {
  * `save_cyberpunk_criticals` and the sheet re-renders from the engine's answer (its Base Death
  * Save Penalty row moved by the engine). "Improve" opens `CyberpunkImproveDialog` (E5.1), which spends
  * Improvement Points through `apply_cyberpunk_improvement`; the sheet re-renders from its reloaded
- * answer. The engine's rule lines no box places (`cpr_sheet_print.rs`:
+ * answer. "Market" buys and sells gear in eddies (`SystemMarketDialog`) and the sheet re-reads the
+ * character. The engine's rule lines no box places (`cpr_sheet_print.rs`:
  * the Role Ability, cyberware effects, Humanity Loss, weapon specials, brain damage) render
  * verbatim under "Rules and features", as on the Starfinder sheet.
  */
@@ -54,6 +58,9 @@ export function CyberpunkCharacterSheet(props: {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [improving, setImproving] = useState(false);
+  const [market, setMarket] = useState<MarketShellStateDto | null>(null);
+  const [marketError, setMarketError] = useState<string | null>(null);
+  const [printOpen, setPrintOpen] = useState(false);
   const mounted = useRef(true);
   useEffect(
     () => () => {
@@ -125,6 +132,27 @@ export function CyberpunkCharacterSheet(props: {
         }
       });
   };
+  const characterId = detail.summary.characterId;
+  const openMarket = () => {
+    setMarketError(null);
+    loadSystemMarketState('cyberpunk', characterId)
+      .then(setMarket)
+      .catch((cause: unknown) => setMarketError(cause instanceof Error ? cause.message : String(cause)));
+  };
+  // A buy or sale was saved: the sheet shows the engine's answer, as after a checklist save.
+  const rereadAfterMarket = () => {
+    loadSavedCharacterDetail({ characterId })
+      .then((reloaded) => {
+        if (mounted.current) {
+          setDetail(reloaded);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (mounted.current) {
+          setMarketError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+  };
   const boxById = new Map(sheet.boxes.map((box) => [box.id, box]));
   return (
     <section data-testid="cpr-character-sheet" style={{ marginTop: '1.5rem' }}>
@@ -137,6 +165,12 @@ export function CyberpunkCharacterSheet(props: {
           <button type="button" data-testid="cpr-sheet-improve" onClick={() => setImproving(true)} disabled={improving} style={buttonStyle}>
             Improve
           </button>
+          <button type="button" data-testid="cpr-sheet-market" onClick={openMarket} style={buttonStyle}>
+            Market
+          </button>
+          <button type="button" data-testid="cpr-sheet-print" onClick={() => setPrintOpen(true)} style={buttonStyle}>
+            Print
+          </button>
           <button type="button" data-testid="cpr-sheet-open" onClick={props.onOpen} style={buttonStyle}>
             Open
           </button>
@@ -145,6 +179,8 @@ export function CyberpunkCharacterSheet(props: {
           </button>
         </div>
       </div>
+
+      {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} onClose={() => setPrintOpen(false)} /> : null}
 
       {improving ? (
         <CyberpunkImproveDialog
@@ -156,6 +192,23 @@ export function CyberpunkCharacterSheet(props: {
           onClose={() => setImproving(false)}
         />
       ) : null}
+
+      {market ? (
+        <SystemMarketDialog
+          system="cyberpunk"
+          categories={CYBERPUNK_MARKET_CATEGORIES}
+          characterId={characterId}
+          initial={market}
+          onChanged={rereadAfterMarket}
+          onClose={() => setMarket(null)}
+        />
+      ) : null}
+
+      {marketError === null ? null : (
+        <p data-testid="cpr-sheet-market-error" role="alert" style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.8rem', margin: '0 0 0.75rem' }}>
+          {marketError}
+        </p>
+      )}
 
       {sheet.blocking.length === 0 ? null : (
         <div data-testid="cpr-sheet-blocking" style={{ border: '1px solid var(--color-danger, #c0392b)', borderRadius: 8, marginBottom: '1rem', padding: '0.75rem' }}>

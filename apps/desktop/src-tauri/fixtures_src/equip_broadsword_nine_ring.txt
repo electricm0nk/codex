@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Broadsword (Nine Ring)
+Broadsword (Nine Ring)											OUTPUTNAME:Nine-Ring Broadsword		PROFICIENCY:WEAPON|Broadsword (Nine Ring)						TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.OneHanded.Martial.Slashing.Monk.Sword																															COST:15	WT:4										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d8					EQMOD:Material ~ Steel																																									WIELD:OneHanded							SIZE:M	SOURCEPAGE:p.33

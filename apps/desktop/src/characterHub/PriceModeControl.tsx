@@ -2,9 +2,10 @@ import { PRICE_MODE_OPTIONS, type PriceMode } from './priceMode';
 
 /**
  * The pricing choice shown on the equipment screens: cashless, buy 100% / sell 50%, or character
- * build. Session state in the sheet; nothing here is saved on the character.
+ * build. Session state in the sheet; nothing here is saved on the character. `groupName` keeps two
+ * controls showing at once (a sheet tab and the Market above it) out of one browser radio group.
  */
-export function PriceModeControl(props: { value: PriceMode; onChange: (mode: PriceMode) => void }) {
+export function PriceModeControl(props: { value: PriceMode; onChange: (mode: PriceMode) => void; groupName?: string }) {
   const selected = PRICE_MODE_OPTIONS.find((option) => option.value === props.value);
   return (
     <fieldset
@@ -18,7 +19,8 @@ export function PriceModeControl(props: { value: PriceMode; onChange: (mode: Pri
           <label key={option.value} style={{ alignItems: 'center', cursor: 'pointer', display: 'flex', fontSize: '0.85rem', gap: '0.35rem' }}>
             <input
               type="radio"
-              name="equipment-price-mode"
+              aria-label={option.label}
+              name={props.groupName ?? 'equipment-price-mode'}
               value={option.value}
               checked={props.value === option.value}
               onChange={() => props.onChange(option.value)}

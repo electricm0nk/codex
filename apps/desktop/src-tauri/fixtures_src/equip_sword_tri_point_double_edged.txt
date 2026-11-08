@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Sword (Tri-Point Double-Edged)
+Sword (Tri-Point Double-Edged)									OUTPUTNAME:Tri-Point Double-Edged Sword	PROFICIENCY:WEAPON|Sword (Tri-Point Double-Edged)				TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.TwoHanded.Martial.Piercing.Monk.Sword																															COST:12	WT:14										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d10					EQMOD:Material ~ Steel																																									WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.39

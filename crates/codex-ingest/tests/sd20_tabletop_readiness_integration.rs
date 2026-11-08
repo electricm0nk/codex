@@ -1253,19 +1253,12 @@ fn tabletop_readiness_selected_skill_posture_deviation_no_longer_blocks_skill_ce
     let corpus_receipt = compute_pilot_with_corpus(&input, &corpus);
     let receipt = to_pilot_receipt(&corpus_receipt, &input, &corpus);
 
-    // The old chassis-level diagnostic still fires (unrelated trunk
-    // behavior, unchanged by this cycle) -- confirming this test still
-    // exercises the exact same deviation as before.
+    // The chassis reads the character's own rank since E7.3, so 2 ranks are no refusal.
     assert!(
-        receipt
-            .diagnostics
-            .iter()
-            .any(|d| d.id == "skill.selected_modifier.unsupported" && d.claim_blocking),
-        "2 ranks in Climb must still trip skill.selected_modifier.unsupported \
-         (claim_blocking: true) at the chassis level: {:?}",
+        !receipt.diagnostics.iter().any(|d| d.id == "skill.selected_modifier.unsupported"),
+        "2 ranks in Climb are not a refusal: {:?}",
         receipt.diagnostics
     );
-    assert_eq!(receipt.chassis.selected_skill_modifiers.climb, 0);
 
     // Epic 4's allocate_skill_ranks has no notion of that chassis posture
     // and computes climb/intimidate/swim from their own ranks (each skill is computed

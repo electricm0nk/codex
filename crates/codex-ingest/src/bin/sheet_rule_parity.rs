@@ -82,12 +82,12 @@ fn form_of(v: &SheetLineValue) -> &'static str {
 /// live app resolve racial traits over the same books (the same read
 /// `race_resolver`'s own pin test performs).
 fn race_corpus_books(repo: &Path) -> Vec<String> {
-    let src = std::fs::read_to_string(repo.join("apps/desktop/src-tauri/src/race_catalog.rs"))
-        .expect("apps/desktop/src-tauri/src/race_catalog.rs is readable");
+    let src = std::fs::read_to_string(repo.join("src/rules_core/race_resolver.rs"))
+        .expect("src/rules_core/race_resolver.rs is readable");
     let decl = src
-        .split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =")
+        .split("pub const RACE_CORPUS_BOOKS: &[&str] =")
         .nth(1)
-        .expect("RACE_CORPUS_BOOKS is declared in race_catalog.rs");
+        .expect("RACE_CORPUS_BOOKS is declared in race_resolver.rs");
     let list = decl.split(';').next().expect("the declaration terminates");
     list.split('"').skip(1).step_by(2).map(str::to_owned).collect()
 }

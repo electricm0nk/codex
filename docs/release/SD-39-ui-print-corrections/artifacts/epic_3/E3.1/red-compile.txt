@@ -1,0 +1,9 @@
+     26 error[E0433]: cannot find type `MarketCategory` in this scope
+      4 error[E0425]: cannot find type `MarketEntryDto` in this scope
+      3 error[E0425]: cannot find function `market_from_catalog` in this scope
+      3 error[E0422]: cannot find struct, variant or union type `MarketFilter` in this scope
+      2 error[E0425]: cannot find type `MarketCategory` in this scope
+      2 error[E0425]: cannot find function `equipment_catalog_row_by_key` in this scope
+      1 error[E0425]: cannot find type `MarketFilter` in this scope
+      1 error[E0425]: cannot find function `hidden_from_market` in this scope
+      1 error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 42 previous errors

@@ -110,6 +110,16 @@ function verifiesAcBySourceListsOnlyItemsThatActuallyContributeAc() {
   assertEqual(rows[0].armorClassBonus, 4, 'the real corpus AC bonus');
 }
 
+function verifiesAWornPlusNHasItsOwnEnhancementRow() {
+  const rows = buildAcBySourceRows([{ ...EFFECTS[0], armorClassEnhancement: 2 }, EFFECTS[1]]);
+  assertEqual(rows.length, 2, 'the armor, then its enhancement');
+  assertEqual(rows[0].armorClassBonus, 4, "the armor's own value stays its own");
+  assertEqual(rows[1].label, 'Chain Shirt enhancement', 'the row says what it is and whose');
+  assertEqual(rows[1].armorClassBonus, 2, 'the bonus the engine sent, not one worked out here');
+  assertEqual(rows[1].itemId === rows[0].itemId, false, 'the two rows have their own keys');
+  assertEqual(rows[1].maxDex, undefined, 'an enhancement row repeats none of the armor\'s other figures');
+}
+
 function verifiesAcBySourceIsEmptyRatherThanFabricatedWhenNothingIsEquipped() {
   assertEqual(buildAcBySourceRows([]).length, 0, 'nothing equipped yields no rows, not a placeholder row');
 }
@@ -131,6 +141,7 @@ function main() {
   verifiesUnresolvedCarriedItemsAreReportedRatherThanHidden();
   verifiesAcBySourceListsOnlyItemsThatActuallyContributeAc();
   verifiesAcBySourceIsEmptyRatherThanFabricatedWhenNothingIsEquipped();
+  verifiesAWornPlusNHasItsOwnEnhancementRow();
   verifiesEffectiveMaxDexTakesTheTighterOfArmorAndLoad();
   console.log('encumbranceTabModel.test.ts: all assertions passed');
 }

@@ -1,0 +1,5 @@
+error[E0425]: cannot find function `list_held_equipment_at_root` in this scope
+error[E0063]: missing field `equipped_or_active` in initializer of `codex::rules_core::character_input::EquipmentSelection`
+error[E0063]: missing field `equipped_or_active` in initializer of `codex::rules_core::character_input::EquipmentSelection`
+error[E0425]: cannot find function `list_held_equipment_at_root` in this scope
+error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 4 previous errors

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, useEffect, useReducer, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import type { CharacterHubListRowSurface } from './buildCharacterHubListSurface';
 import {
   loadSavedCharacterDetail,
@@ -40,12 +40,11 @@ import { buildAcBySourceRows, describeEncumbrance, effectiveMaxDexCap } from './
 import { levelUpCharacter } from '../boundary/levelUpCharacter';
 import { purchaseEquipment } from '../boundary/purchaseEquipment';
 import { PriceModeControl } from './PriceModeControl';
-import { loadCharacterHitPoints } from '../boundary/characterHitPoints';
-import type { HitPointLevelDto } from '../boundary/loadCreateCharacter';
-import { buildPrintCss, printableTabs } from './printLayout';
+import { PrintDialog } from './PrintDialog';
+import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
-import { EMPTY_CUSTOM, customIsEmpty, withCustomHitPoints, withCustomSkillPoints, type CharacterCustom } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -69,11 +68,18 @@ import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
 import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { resolveSpellRouting } from './spellRoutingModel';
+import { getHideUnmetFeats, setHideUnmetFeats } from '../settings/featPickerPreference';
 import {
+  HIDE_UNMET_FEATS_LABEL,
   describeFeatCatalogCoverage,
+  formatMarketPrice,
   mapEquipmentCatalogEntries,
   mapFeatCatalogEntries,
+  mapMarketEntries,
   mapSpellCatalogEntries,
+  marketPlacementWords,
+  marketMoneyMoved,
+  type MarketRow,
 } from './itemPickerFilter';
 import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
 import {
@@ -95,8 +101,13 @@ import type { BaseSavesDto, PilotSnapshotDto } from '../boundary/loadCreateChara
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
+import { MarketDialog } from './MarketDialog';
+import { EquipmentPanel } from './EquipmentPanel';
+import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
+import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
+import { listMarket, type MarketCategory } from '../boundary/listMarket';
 import { listWeaponTargets } from '../boundary/listWeaponTargets';
-import type { ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
+import type { AdmittedRecordDto, ChosenFeatTargetsDto } from '../boundary/loadSavedCharacterDetail';
 import {
   featTargetPickerTitle,
   skillTargetOptions,
@@ -108,11 +119,13 @@ import {
   buildNextEntries,
   formatHeldClasses,
   levelGrantsFeat,
-  maxHitPointsWithSavedLevels,
   parseHeldClasses,
   previewLevelUp,
+  readFeatBudget,
+  withBudgetOverride,
   totalCharacterLevel,
   totalSkillPoints,
+  type FeatBudgetView,
   type HeldClass,
   type LevelEntry,
 } from './characterProgression';
@@ -138,13 +151,11 @@ import {
   SKILLS,
   allocationFromPersisted,
   classSkillLookup,
-  featSkillBonusFor,
   featSkillBonusesWithoutARow,
-  traitSkillModifierFor,
   isClassSkill,
+  sheetSkillTotal,
   type ClassSkillLookup,
   persistedFromAllocation,
-  skillModifier,
   skillPointsSpent,
   totalSkillPointsAvailable,
 } from './skillsModel';
@@ -152,11 +163,12 @@ import { AbilitiesPanel } from './panels/AbilitiesPanel';
 import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './panels/CombatPanels';
 import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
 import { SquareBlock, initiativeRow } from './panels/SquareBlock';
-import { SHEET_COLUMNS, SHEET_COLUMN_STYLES, SHEET_LAYOUT, boxesInColumn, type SheetBoxId } from './sheetLayout';
+import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type SheetStack } from './sheetLayout';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
-import { adjustCharacterMoney, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
+import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
+import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
 import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
 
 /**
@@ -193,7 +205,7 @@ const ZERO_ABILITIES: AbilityScoresDto = {
   charisma: 0,
 };
 
-/** Shared style for the tab-content "Add …" affordances (Add Weapon / Add Armor / Add Spell / Print). */
+/** Shared style for the tab-content affordances (Market / Add Spell / Print). */
 const addItemButtonStyle: CSSProperties = {
   backgroundColor: 'var(--color-surface)',
   border: '1px solid var(--color-border)',
@@ -221,23 +233,9 @@ const removeItemButtonStyle: CSSProperties = {
   padding: '0.15rem 0.55rem',
 };
 
-/**
- * `EquipmentCategory` has no separate weapon-vs-armor variant (see
- * `equipment_catalog.rs`'s `EquipmentCategory` enum) — "ArmsArmor" is
- * one combined category covering both. Judgment call: both the Add Weapon
- * and Add Armor pickers narrow to this same category server-side and let
- * the user disambiguate by name in the search box, rather than blocking on
- * a category taxonomy the corpus doesn't expose yet.
- */
-const WEAPONS_AND_ARMOR_CATEGORY = 'ArmsArmor';
 const EQUIPMODS_CATEGORY = 'Equipmods';
-/**
- * v0.8 F-6: everything purchasable that is not arms & armor. The engine's
- * `EquipmentCategory` (each book's `rules_tables/<book>/equipment_tables.rs`)
- * has exactly four variants — `General`, `ArmsArmor`, `MagicItems`,
- * `Equipmods` — and `Equipmods` is the modifier picker's, not a purchase.
- */
-const GEAR_CATEGORIES = ['General', 'MagicItems'] as const;
+/** Pathfinder's money; Starfinder and Cyberpunk serve their own sheets. */
+const MARKET_CURRENCY = 'gp';
 
 /** The class id `list_class_creation_roster` serves for Wizard (`class:wizard`). */
 const WIZARD_CLASS_ID = 'class:wizard';
@@ -247,55 +245,35 @@ export interface ItemPickerConfig {
   searchPlaceholder: string;
   loadEntries: () => Promise<ItemPickerEntry[]>;
   onSelect: (entry: ItemPickerEntry) => void;
-  /** Category the picker opens on; absent opens on All. Only meaningful for catalogs with categories. */
-  initialGroup?: string;
+  /** The picker shows the "Hide feats I don't qualify for" checkbox. */
+  offersHideUnavailable?: true;
 }
 
 /**
- * Pure dispatch table backing the Add Weapon / Add Armor / Add Spell /
- * Add Feat / Attach Modifier onClick affordances (criterion 7.4): which
- * title to show, which real corpus query to run (`listEquipment` narrowed
- * to `ArmsArmor` or `Equipmods`, the unfiltered `listSpells`, or the
- * unfiltered `listFeats`), and which real mutation handler
- * (`addEquipmentSelection`-backed, `addSpellSelection`-backed,
- * `addFeatSelection`-backed, or `attachEquipmentModifier`-backed) the
- * user's pick gets routed to. Extracted from the render body so it is
+ * Pure dispatch table backing the Add Spell / Add Feat / Attach Modifier
+ * onClick affordances (criterion 7.4): which title to show, which real
+ * corpus query to run (`listEquipment` narrowed to `Equipmods`, the
+ * unfiltered `listSpells`, or the unfiltered `listFeats`), and which real
+ * mutation handler (`addSpellSelection`-backed, `addFeatSelection`-backed,
+ * or `attachEquipmentModifier`-backed) the user's pick gets routed to.
+ * Buying equipment is the Market's (`MarketDialog.tsx`). Extracted from the render body so it is
  * unit-testable without a DOM — this repo has no jsdom/testing-library —
  * per the same split already used for `itemPickerFilter.ts` and
  * `characterSheetRefresh.ts`.
  */
 export function buildItemPickerConfig(
-  kind: 'weapon' | 'armor' | 'gear' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null,
+  kind: 'spell' | 'feat' | 'featTarget' | 'modifier' | null,
   deps: {
     loadEquipment: (category: string) => Promise<ItemPickerEntry[]>;
     loadSpells: () => Promise<ItemPickerEntry[]>;
     loadFeats: () => Promise<ItemPickerEntry[]>;
     loadFeatTargets: () => Promise<ItemPickerEntry[]>;
-    onSelectEquipment: (entry: ItemPickerEntry) => void;
     onSelectSpell: (entry: ItemPickerEntry) => void;
     onSelectFeat: (entry: ItemPickerEntry) => void;
     onSelectFeatTarget: (entry: ItemPickerEntry) => void;
     onSelectModifier: (entry: ItemPickerEntry) => void;
   }
 ): ItemPickerConfig | null {
-  if (kind === 'weapon' || kind === 'armor') {
-    return {
-      title: kind === 'weapon' ? 'Add Weapon' : 'Add Armor',
-      searchPlaceholder: 'Search arms & armor…',
-      loadEntries: () => deps.loadEquipment(WEAPONS_AND_ARMOR_CATEGORY),
-      onSelect: deps.onSelectEquipment,
-      initialGroup: kind === 'weapon' ? 'Weapons' : 'Armor',
-    };
-  }
-  if (kind === 'gear') {
-    return {
-      title: 'Add Gear',
-      searchPlaceholder: 'Search gear & magic items…',
-      loadEntries: () =>
-        Promise.all(GEAR_CATEGORIES.map((category) => deps.loadEquipment(category))).then((lists) => lists.flat()),
-      onSelect: deps.onSelectEquipment,
-    };
-  }
   if (kind === 'spell') {
     return {
       title: 'Add Spell',
@@ -310,6 +288,7 @@ export function buildItemPickerConfig(
       searchPlaceholder: 'Search feats…',
       loadEntries: deps.loadFeats,
       onSelect: deps.onSelectFeat,
+      offersHideUnavailable: true,
     };
   }
   // Second step of the two-step chooser-feat flow: the feat is picked
@@ -453,30 +432,22 @@ function SkillsPanel(props: {
   /** `list_class_facts` has not answered yet: a loading line shows instead of the Unknown note. */
   classFactsLoading: boolean;
   allocation: Record<string, number>;
-  realModifiers?: { climb: number; intimidate: number; swim: number };
   /**
-   * SD-36 F6b: the engine's feat skill-bonus fold (`featSkillBonuses` on the sheet response). Added
-   * to every row the panel totals itself; a row the engine totals (`realModifiers`) prints the
-   * engine's own figure.
+   * SD-36 F6b: the engine's feat skill-bonus fold (`featSkillBonuses` on the sheet response). The
+   * totals already hold what it folds; the panel prints what no row adds.
    */
   featSkillBonuses: FeatSkillBonusesDto;
   /**
-   * Brief 1 F3b: the sheet response's explanations. Each row adds the engine's
-   * `skill.trait_modifier.<skill>` value (trait bonuses, Meticulous's untrained -2), which neither
-   * the panel's own sum nor `realModifiers` carries.
+   * The sheet response's explanations. Each row prints its `skill.total.<skill>` row (E8.7), the one
+   * total the printed sheet reads too.
    */
   explanations: readonly ExplanationDto[];
   onOpenDialog: () => void;
   custom: CharacterCustom;
 }) {
-  const REAL_MODIFIER_BY_SKILL: Record<string, number | undefined> = {
-    Climb: props.realModifiers?.climb,
-    Intimidate: props.realModifiers?.intimidate,
-    Swim: props.realModifiers?.swim,
-  };
-
   const spent = skillPointsSpent(props.allocation);
-  const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman), props.custom);
+  const budgetIntelligence = savedIntelligenceModifier(props.abilities.intelligence, props.explanations);
+  const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, budgetIntelligence, props.isHuman), props.custom);
   const remaining = available === null ? null : available - spent;
   // SD-36 F6a: a held class the engine's class-skill reader cannot answer is named with its
   // reason, not silently scored as all-cross-class.
@@ -526,14 +497,10 @@ function SkillsPanel(props: {
         {SKILLS.map((skill) => {
           const classSkill = isClassSkill(props.classSkills, skill.name);
           const ranks = props.allocation[skill.name] ?? 0;
-          const abilityMod = props.abilities[skill.ability];
-          const real = REAL_MODIFIER_BY_SKILL[skill.name];
-          const total =
-            (real ?? skillModifier(abilityMod, ranks, classSkill, featSkillBonusFor(props.featSkillBonuses, skill.name))) +
-            traitSkillModifierFor(props.explanations, skill.name);
+          const total = sheetSkillTotal(props.explanations, skill.name);
           return (
             <div key={skill.name} style={{ alignItems: 'center', display: 'flex', fontSize: '0.85rem', gap: '0.4rem' }}>
-              <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{fmt(total)}</span>
+              <span style={{ color: 'var(--color-text-secondary)', width: 34 }}>{total === null ? '—' : fmt(total)}</span>
               <span style={{ color: classSkill ? 'var(--color-text)' : 'var(--color-text-secondary)' }}>{skill.name}</span>
               {ranks > 0 ? <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem' }}>({ranks})</span> : null}
               {classSkill && props.classSkills.isDefaultPick(skill.name) ? (
@@ -559,7 +526,7 @@ function SkillsPanel(props: {
         Languages
       </p>
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', margin: 0 }}>
-        {spokenLanguages(props.abilities.intelligence).join(', ')}
+        {spokenLanguages(budgetIntelligence).join(', ')}
       </p>
     </StatBox>
   );
@@ -646,7 +613,7 @@ function CalculatedBioField(props: { label: string; value: string }) {
 }
 
 /**
- * Character bio / physical details panel across the top of the right column.
+ * Character bio / physical details panel in the left rail, under Class.
  * Alignment/Deity/Sex/Age/Height/Weight/Hair/Eyes are the character's own
  * choices, so they're editable here; Vision and Size are derived from race
  * and rendered read-only. Edits persist to the real `bio.json` sidecar via
@@ -679,7 +646,7 @@ function DetailsPanel(props: {
           </select>
         </BioField>
         <BioField label="Deity">
-          <input style={bioFieldInputStyle} value={bio.deity} onChange={(event) => onBioChange({ deity: event.target.value })} onBlur={onBioBlur} />
+          <input aria-label="Deity" style={bioFieldInputStyle} value={bio.deity} onChange={(event) => onBioChange({ deity: event.target.value })} onBlur={onBioBlur} />
         </BioField>
         <BioField label="Sex">
           <select style={bioFieldInputStyle} value={bio.sex} onChange={(event) => onBioChange({ sex: event.target.value })} onBlur={onBioBlur}>
@@ -753,16 +720,13 @@ function WeaponsTab(props: {
   factsLoading: boolean;
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
-  onAddWeapon: () => void;
+  onOpenMarket: () => void;
   onPrint: () => void;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   /**
-   * Drops one carried copy of the item, with any equipmods attached to it.
-   * Does **not** refund the purchase — see
-   * `apply_remove_equipment_selection` in `character_hub.rs` for why
-   * sell-back is not modelled; the caption below states it so the player
-   * does not discover it by losing gold.
+   * Drops one carried copy of the item, with any equipmods attached to it, and sells it back
+   * under the current price mode; the caption below states it.
    */
   onRemoveWeapon: (itemId: string) => void;
 }) {
@@ -824,8 +788,8 @@ function WeaponsTab(props: {
 
       <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onAddWeapon} style={addItemButtonStyle}>
-          Add Weapon
+        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
+          Market
         </button>
         <button type="button" onClick={props.onPrint} style={addItemButtonStyle}>
           Print
@@ -893,9 +857,7 @@ function WeaponsTab(props: {
         ))
       )}
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0', textAlign: 'center' }}>
-        Dropping an item removes it from the loadout but does not refund what it cost — selling
-        equipment back is a real Pathfinder rule (usually half price) that this build does not model,
-        and crediting a made-up amount would be worse than crediting none.
+        Dropping an item sells it back under the pricing chosen above.
       </p>
 
       {/*
@@ -966,6 +928,8 @@ function UnresolvedNotice(props: { ids: string[]; kind: 'spell' | 'item' }) {
  */
 function SpellsTab(props: {
   spellsSelected: SpellSelectionDto[];
+  /** What the character holds under an override; a spell saved under the override's source shows its flag. */
+  admitted: AdmittedRecordDto[];
   corpusDerived: CorpusDerivedDto | undefined;
   /** Drives the spells-per-day block — see `spellsPerDayModel.ts`. */
   explanations: readonly ExplanationDto[];
@@ -983,6 +947,8 @@ function SpellsTab(props: {
    * whether "Add Spell" is offered at all — see `addSpellAffordanceModel.ts`.
    */
   routedClass: { classId: string; classLabel: string } | null;
+  /** The spell override is on: a class that does not cast can still be offered "Add Spell". */
+  admitsAnySpell: boolean;
   onAddSpell: () => void;
   /**
    * Forgets the spell for that row's own source class, in every
@@ -1051,7 +1017,7 @@ function SpellsTab(props: {
   }, [sourceClassKey]);
 
   const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? [], classSpellLevels);
-  const addSpell = resolveAddSpellAffordance(props.routedClass, classSpellLevels);
+  const addSpell = resolveAddSpellAffordance(props.routedClass, classSpellLevels, props.admitsAnySpell);
   const schools = props.corpusDerived?.schoolCoverage ?? [];
   const spellbook = props.snapshot?.spellbook;
   // Real `class_spell.*.<total|base>_<spells|extracts>_per_day.*` records,
@@ -1169,6 +1135,9 @@ function SpellsTab(props: {
                     {describeSpellSchoolAndLevel(row)}
                   </span>
                 )}
+                {row.sourceClassId.startsWith('override:')
+                  ? flagsOf(props.admitted, 'spell', row.raw).map((flag) => <OverrideTag key={flag} flag={flag} />)
+                  : null}
               </span>
               <button
                 type="button"
@@ -1426,9 +1395,15 @@ function DefenseTab(props: {
   durabilityBusy: boolean;
   durabilityError: string | null;
   onAdjustHp: (deltaHp: number) => void;
+  onOpenMarket: () => void;
 }) {
   return (
     <div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
+        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
+          Market
+        </button>
+      </div>
       <DurabilityPanel
         durability={props.durability}
         busy={props.durabilityBusy}
@@ -1631,16 +1606,17 @@ function EncumbrancePanel(props: { encumbrance: EncumbranceDto | undefined }) {
  */
 function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
-  onAddArmor: () => void;
-  /** v0.8 F-6: opens the `gear` picker (General + MagicItems). */
-  onAddGear: () => void;
+  onOpenMarket: () => void;
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
-  /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
+  /** See `WeaponsTab.onRemoveWeapon` — the same command. */
   onRemoveItem: (itemId: string) => void;
-  /** SD-36 Epic E desktop-P2-01: stow (SelectedInactive) or re-equip (EquippedActive) a carried item. */
-  onSetActiveState: (itemId: string, activeState: 'EquippedActive' | 'SelectedInactive') => void;
+  loadHeldEquipment: () => Promise<PlacedEquipmentCopyDto[]>;
+  /** A new value re-reads the Equipment control: any saved change arrives as a new detail. */
+  detail: unknown;
+  /** Moves one copy between worn, carried and left behind; resolves to the refusal, word for word, or null when it saved. */
+  onSetActiveState: (copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto) => Promise<string | null>;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -1662,21 +1638,19 @@ function GearTab(props: {
       </p>
       <PriceModeControl value={props.priceMode} onChange={props.onPriceModeChange} />
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onAddArmor} style={addItemButtonStyle}>
-          Add Armor
-        </button>
-        <button type="button" onClick={props.onAddGear} style={addItemButtonStyle}>
-          Add Gear
+        <button type="button" onClick={props.onOpenMarket} style={addItemButtonStyle}>
+          Market
         </button>
       </div>
+      <EquipmentPanel load={props.loadHeldEquipment} refreshKey={props.detail} onSetState={props.onSetActiveState} />
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
       {items.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
           No corpus-reachable equipment selected yet.
         </p>
       ) : (
-        items.map((item) => (
-          <div key={item.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+        items.map((item, index) => (
+          <div key={`${item.itemId}::${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
             <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
               <div>
                 <span style={{ fontWeight: 700 }}>{item.equipmentRecordName}</span>
@@ -1705,22 +1679,6 @@ function GearTab(props: {
                   style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
                 >
                   Attach Modifier
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Stow ${item.equipmentRecordName}`}
-                  onClick={() => props.onSetActiveState(item.itemId, 'SelectedInactive')}
-                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
-                >
-                  Stow
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Re-equip ${item.equipmentRecordName}`}
-                  onClick={() => props.onSetActiveState(item.itemId, 'EquippedActive')}
-                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
-                >
-                  Re-equip
                 </button>
                 <button
                   type="button"
@@ -2455,6 +2413,10 @@ function FeatsTab(props: {
   chosenFeatTargets: ChosenFeatTargetsDto[];
   /** Persisted `chosen.selected_traits` ids, rendered in the Traits section below the feats. */
   selectedTraits: string[];
+  /** The engine's `feats.budget.*` rows, read: the badge and the Add control follow them. */
+  featBudget: FeatBudgetView;
+  /** What the character holds under an override; a feat's row shows its flags. */
+  admitted: AdmittedRecordDto[];
   onAddFeat: () => void;
   /**
    * Removes one held copy of the feat, optionally taking the one recorded
@@ -2505,11 +2467,32 @@ function FeatsTab(props: {
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
         {catalogCoverage ?? 'Add feats from the real feat catalog.'}
       </p>
+      {props.featBudget.overBy > 0 ? (
+        <p role="status" style={{ color: 'var(--color-error)', fontSize: '0.82rem', fontWeight: 800, margin: '0 0 0.4rem', textAlign: 'center' }}>
+          over budget by {props.featBudget.overBy}
+        </p>
+      ) : null}
+      {props.featBudget.pools.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0 0 0.75rem', textAlign: 'center' }}>
+          {props.featBudget.pools.map((pool) => `${pool.label}: ${pool.spent} of ${pool.granted}`).join(' · ')}
+        </p>
+      ) : null}
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
-        <button type="button" onClick={props.onAddFeat} style={addItemButtonStyle}>
+        <button
+          type="button"
+          onClick={props.onAddFeat}
+          disabled={!props.featBudget.canAdd}
+          title={props.featBudget.addBlockedReason ?? undefined}
+          style={{ ...addItemButtonStyle, ...(props.featBudget.canAdd ? {} : { cursor: 'default', opacity: 0.5 }) }}
+        >
           Add Feat
         </button>
       </div>
+      {props.featBudget.addBlockedReason !== null ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '-0.75rem 0 1rem', textAlign: 'center' }}>
+          {props.featBudget.addBlockedReason}
+        </p>
+      ) : null}
       {resolvedFeats.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
           No feats selected yet.
@@ -2518,7 +2501,12 @@ function FeatsTab(props: {
         resolvedFeats.map((row, index) => (
           <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
             <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
-              <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+              <span>
+                <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+                {flagsOf(props.admitted, 'feat', row.raw).map((flag) => (
+                  <OverrideTag key={flag} flag={flag} />
+                ))}
+              </span>
               {/*
                 A chooser feat's targets are removed one at a time (below,
                 beside each target), because one row can stand for two
@@ -2830,42 +2818,31 @@ export function CharacterSheet(props: {
     };
   }, [props.row.classSummary]);
   const [leftCollapsed, setLeftCollapsed] = useState(false);
-  // Print mode: expands the progression rail and renders every tab after page 1 (see printLayout.ts).
-  const [printing, setPrinting] = useState(false);
-  const railCollapsed = leftCollapsed && !printing;
-  function handlePrint() {
-    setPrinting(true);
-  }
+  // Show Progression: the level history in a drawer, closed until asked for.
+  const [progressionDrawer, dispatchProgressionDrawer] = useReducer(progressionDrawerReducer, PROGRESSION_DRAWER_CLOSED);
+  const progressionButtonRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    if (!printing) {
-      return undefined;
+    if (progressionDrawer.returnFocus) {
+      progressionButtonRef.current?.focus();
     }
-    const done = () => setPrinting(false);
-    window.addEventListener('afterprint', done);
-    // Not every webview fires `afterprint`; the print media query turning off is the second signal.
-    const printQuery = window.matchMedia('print');
-    const onQueryChange = (event: MediaQueryListEvent) => {
-      if (!event.matches) {
-        done();
-      }
-    };
-    printQuery.addEventListener('change', onQueryChange);
-    // Let the print-mode render commit and paint before the system print dialog takes over.
-    const frame = window.requestAnimationFrame(() => window.requestAnimationFrame(() => window.print()));
-    return () => {
-      window.removeEventListener('afterprint', done);
-      printQuery.removeEventListener('change', onQueryChange);
-      window.cancelAnimationFrame(frame);
-    };
-  }, [printing]);
+  }, [progressionDrawer]);
+  // Print (SD-39 E8.4): the Print dialog renders the sheet with the Rust print pipeline (R1).
+  const [printOpen, setPrintOpen] = useState(false);
+  const railCollapsed = leftCollapsed;
+  function handlePrint() {
+    setPrintOpen(true);
+  }
   const [levelUpOpen, setLevelUpOpen] = useState(false);
   // Covers every saved-character mutation this sheet can trigger (level-up,
   // add-equipment, add-spell) — one error slot, not three near-duplicates,
   // since only one mutation can be in flight from this sheet at a time.
   const [mutationError, setMutationError] = useState<string | null>(null);
   const [itemPickerOpen, setItemPickerOpen] = useState<
-    'weapon' | 'armor' | 'gear' | 'spell' | 'feat' | 'featTarget' | 'modifier' | null
+    'spell' | 'feat' | 'featTarget' | 'modifier' | null
   >(null);
+  // The category the Market is open on; null while it is closed.
+  const [marketCategory, setMarketCategory] = useState<MarketCategory | null>(null);
+  const [hideUnmetFeats, setHideUnmetFeatsState] = useState(() => getHideUnmetFeats());
   // Set between the two steps of adding a chooser feat: the feat has been
   // picked, and the picker has reopened for the thing it names.
   const [pendingFeatTarget, setPendingFeatTarget] = useState<{
@@ -2885,6 +2862,7 @@ export function CharacterSheet(props: {
   // weapon" step). items-1-and-27-scoping.md sub-task 6.
   const [pendingModifierAttachment, setPendingModifierAttachment] = useState<ResolvedEquipmentDto | null>(null);
   const [bio, setBio] = useState<BioFields>({ ...BLANK_BIO_FIELDS });
+  const sheetDeity = useRef('');
   // Loads the real persisted bio (or the all-empty default for a character
   // that has never saved one) whenever the sheet opens on a different
   // character. A load failure just leaves the blank default up rather than
@@ -2922,33 +2900,13 @@ export function CharacterSheet(props: {
     loadCharacterBio(props.row.characterId)
       .then((loaded) => {
         if (!cancelled) {
+          sheetDeity.current = loaded.deity;
           setBio(loaded);
         }
       })
       .catch(() => {
         if (!cancelled) {
           setBio({ ...BLANK_BIO_FIELDS });
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [props.row.characterId]);
-
-  // The hit point results saved at creation (one die result per level); empty when none were saved.
-  const [savedHitPoints, setSavedHitPoints] = useState<HitPointLevelDto[]>([]);
-  useEffect(() => {
-    let cancelled = false;
-    loadCharacterHitPoints(props.row.characterId)
-      .then((loaded) => {
-        if (!cancelled) {
-          setSavedHitPoints(loaded.levels);
-        }
-      })
-      .catch(() => {
-        // Unreadable file: fall back to the default rule rather than a broken sheet.
-        if (!cancelled) {
-          setSavedHitPoints([]);
         }
       });
     return () => {
@@ -3040,6 +2998,8 @@ export function CharacterSheet(props: {
     abilityScores: AbilityScoresDto | null;
     /** SD-36 F7a: the persisted skill allocation; `null` until a read carries it. */
     skillAllocations: SkillAllocationEntryDto[] | null;
+    /** What the character holds under an override; a mutation's response does not carry it. */
+    admittedUnderOverride: AdmittedRecordDto[];
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3049,6 +3009,7 @@ export function CharacterSheet(props: {
     featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
+    admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
   });
   useEffect(() => {
     let cancelled = false;
@@ -3061,6 +3022,7 @@ export function CharacterSheet(props: {
     featSkillBonuses: props.detail?.featSkillBonuses ?? NO_FEAT_SKILL_BONUSES,
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
+    admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3074,6 +3036,7 @@ export function CharacterSheet(props: {
       featSkillBonuses: loaded.featSkillBonuses,
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
+      admittedUnderOverride: loaded.admittedUnderOverride ?? [],
           });
         }
       })
@@ -3129,6 +3092,10 @@ export function CharacterSheet(props: {
   // stays byte-for-byte the pre-existing `snapshot`-derived values until
   // then (PF1 behavior unchanged, per `cycles/3_5.md`'s GREEN text).
   const [recomputed, setRecomputed] = useState<RecomputedCharacterSnapshotDto | null>(null);
+  // A saved change makes what Recompute read stale, and these tiles prefer it over the load.
+  useEffect(() => {
+    setRecomputed(null);
+  }, [props.detail]);
   const [recomputing, setRecomputing] = useState(false);
   const [cloning, setCloning] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -3281,30 +3248,32 @@ export function CharacterSheet(props: {
   /**
    * Routes through `purchase_equipment` (v0.6 alpha swarm, risks-and-
    * open-questions.md item 9), not the plain `addEquipmentSelection` —
-   * the Add Weapon/Add Armor pickers only ever offer real catalog items
-   * with a real gold cost, so every pick here should atomically charge
-   * that cost against the persisted money balance rather than being a
-   * free grant. A `Blocked` purchase (insufficient funds, or an item with
-   * no known `cost_gp`) leaves both the equipment and the money balance
-   * untouched, same honest-Blocked invariant as every other mutation.
+   * the Market only ever offers real catalog items with a real gold cost,
+   * so every buy here should atomically charge that cost against the
+   * persisted money balance rather than being a free grant. A `Blocked`
+   * purchase (insufficient funds, or an item with no known `cost_gp`) leaves
+   * both the equipment and the money balance untouched, same honest-Blocked
+   * invariant as every other mutation. Resolves to the new balance, or null
+   * when nothing was bought and `mutationError` says why.
    */
-  async function handleAddEquipment(entry: ItemPickerEntry) {
+  async function handleAddEquipment(
+    itemId: string,
+    bonus: number,
+  ): Promise<{ money: CharacterMoneyDto; activeState: ActiveStateDto; carriedReason: string | null } | null> {
     setMutationError(null);
     try {
-      // The user picking an item from the catalog to add to their loadout
-      // is, by construction, actively equipping it — `EquippedActive` is
-      // the only choice that matches that action without asking the user
-      // to make an extra decision the picker's scope doesn't cover.
       const outcome = await purchaseEquipment({
         characterId: props.row.characterId,
-        itemId: entry.key,
+        itemId,
+        // Worn if its slot is free. The backend decides, and says where the copy went.
         activeState: 'EquippedActive',
         savedAt: new Date().toISOString(),
         priceMode,
+        ...(bonus > 0 ? { bonus } : {}),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
-        return;
+        return null;
       }
       props.onDetailRefreshed({
         summary: outcome.summary,
@@ -3333,9 +3302,11 @@ export function CharacterSheet(props: {
       });
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
-      await refreshEngineRecords();
+      await refreshAfterPurchase();
+      return { money: outcome.money, activeState: outcome.activeState, carriedReason: outcome.carriedReason };
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
+      return null;
     }
   }
 
@@ -3365,6 +3336,7 @@ export function CharacterSheet(props: {
         itemId: target.itemId,
         modifierItemId: entry.key,
         savedAt: new Date().toISOString(),
+        priceMode,
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
@@ -3396,7 +3368,7 @@ export function CharacterSheet(props: {
       });
       setMoney(outcome.money);
       // Attaching a +1 enhancement changes that weapon's Enh. columns.
-      await refreshEngineRecords();
+      await refreshAfterPurchase();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -3428,6 +3400,9 @@ export function CharacterSheet(props: {
       WIZARD_CLASS_ID
     );
     const catalog = await listSpells({ nameContains: null, school: null });
+    if (customOverrides(custom).spellsOutsideClassList) {
+      return mapSpellCatalogEntries(catalog.entries);
+    }
     if (!routing) {
       // No held class to attribute a pick to. `handleAddSpell` refuses the
       // pick anyway with its own message; narrowing against a class that
@@ -3502,7 +3477,11 @@ export function CharacterSheet(props: {
         setMutationError(refresh.message);
         return;
       }
-      props.onDetailRefreshed(refresh.detail);
+      // Under the override the backend may save the spell under its own source, which `newSpells`
+      // above cannot know, so the saved character is read back.
+      props.onDetailRefreshed(
+        customOverrides(custom).spellsOutsideClassList ? await loadSavedCharacterDetail({ characterId: props.row.characterId }) : refresh.detail
+      );
       // A spell add changes the caster's own `class_spell.*` records.
       await refreshEngineRecords();
     } catch (cause: unknown) {
@@ -3626,6 +3605,18 @@ export function CharacterSheet(props: {
    * and it is the same read a reload of the app would do — which is exactly
    * the property a removal has to survive.
    */
+  /**
+   * A purchase's response carries the engine's snapshot with no worn custom item on it, so with one
+   * worn the tiles must come from the load, or a buy would take its bonus off them.
+   */
+  async function refreshAfterPurchase() {
+    if (custom.equipment.some((record) => record.worn)) {
+      await republishFromDisk();
+    } else {
+      await refreshEngineRecords();
+    }
+  }
+
   async function republishFromDisk() {
     const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
     props.onDetailRefreshed(loaded);
@@ -3641,6 +3632,7 @@ export function CharacterSheet(props: {
       featSkillBonuses: loaded.featSkillBonuses,
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
+      admittedUnderOverride: loaded.admittedUnderOverride ?? [],
     });
     await refreshDurability();
   }
@@ -3725,28 +3717,32 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * SD-36 Epic E desktop-P2-01: stows, re-equips, or marks absent a carried item. Unlike
-   * `handleRemoveEquipment` this does not drop the item or its modifiers -- it flips
-   * `activeState` on the first carried copy, the same case-insensitive first-match rule
-   * `apply_remove_equipment_selection` uses.
+   * Moves one owned copy between worn, carried and left behind. Unlike `handleRemoveEquipment` this does not drop the item or
+   * its modifiers. Resolves to the refusal for the Equipment control to show, word for word, or null
+   * when the change saved.
    */
-  async function handleSetEquipmentActiveState(itemId: string, activeState: 'EquippedActive' | 'Absent' | 'SelectedInactive') {
-    setMutationError(null);
+  async function handleSetEquipmentActiveState(copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto): Promise<string | null> {
     try {
       const outcome = await setEquipmentActiveState({
         characterId: props.row.characterId,
-        itemId,
+        itemId: copy.itemId,
+        bonus: copy.bonus,
+        fromState: copy.activeState,
         activeState,
         savedAt: new Date().toISOString(),
       });
       if (outcome.kind === 'Blocked') {
-        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
-        return;
+        return blockedMessageFromDiagnostics(outcome.diagnostics);
       }
       await republishFromDisk();
       await refreshEngineRecords();
+      // The Custom tab and dialog read the record's `worn`; a stale one would save it back.
+      if (copy.itemId.startsWith('custom:')) {
+        setCustom(await loadCharacterCustom(props.row.characterId));
+      }
+      return null;
     } catch (cause: unknown) {
-      setMutationError(cause instanceof Error ? cause.message : String(cause));
+      return cause instanceof Error ? cause.message : String(cause);
     }
   }
 
@@ -3774,9 +3770,10 @@ export function CharacterSheet(props: {
   /**
    * Drops one carried copy of an item, with its equipmods, and sells it back under the current
    * price mode (50% by default, 100% in character-build mode, nothing when cashless). The balance
-   * is reloaded afterwards because a sale can change it.
+   * is reloaded afterwards because a sale can change it. `bonus` names the copy when there are
+   * several. Resolves to the new balance, or null when nothing was sold and `mutationError` says why.
    */
-  async function handleRemoveEquipment(itemId: string) {
+  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto): Promise<CharacterMoneyDto | null> {
     setMutationError(null);
     try {
       const outcome = await removeEquipmentSelection({
@@ -3784,18 +3781,47 @@ export function CharacterSheet(props: {
         itemId,
         savedAt: new Date().toISOString(),
         priceMode,
+        ...(bonus === undefined ? {} : { bonus }),
+        ...(fromState === undefined ? {} : { fromState }),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
-        return;
+        return null;
       }
       await republishFromDisk();
       await refreshEngineRecords();
       // Selling an item back can return money (50% or 100% by price mode), so show the new balance.
-      setMoney(await loadCharacterMoney(props.row.characterId));
+      const balance = await loadCharacterMoney(props.row.characterId);
+      setMoney(balance);
+      return balance;
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
+      return null;
     }
+  }
+
+  /** A Market buy, and what to tell the player about it. */
+  async function handleMarketBuy(row: MarketRow, bonus: number): Promise<string | null> {
+    const before = money.totalCopper;
+    const bought = await handleAddEquipment(row.key, bonus);
+    if (!bought) {
+      return null;
+    }
+    const name = bonus > 0 ? (row.variants.find((variant) => variant.bonus === bonus)?.name ?? row.name) : row.name;
+    const paid = marketMoneyMoved(before, bought.money.totalCopper);
+    const where = marketPlacementWords(bought.activeState, bought.carriedReason);
+    return paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (${where}).` : `Added ${name}; no money moved (${where}).`;
+  }
+
+  /** A Market sale, and what to tell the player about it. */
+  async function handleMarketSell(copy: HeldEquipmentCopyDto): Promise<string | null> {
+    const before = money.totalCopper;
+    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState);
+    if (!after) {
+      return null;
+    }
+    const returned = marketMoneyMoved(before, after.totalCopper);
+    return returned > 0 ? `Sold ${copy.name} for ${formatMarketPrice(returned, MARKET_CURRENCY)}.` : `Removed ${copy.name}; no money moved.`;
   }
 
   /**
@@ -3878,6 +3904,11 @@ export function CharacterSheet(props: {
   async function handleBioBlur() {
     try {
       await updateCharacterBio(props.row.characterId, bio);
+      // The one bio field the rules read: a Cleric's deity decides a favored weapon's attack row.
+      if (bio.deity !== sheetDeity.current) {
+        sheetDeity.current = bio.deity;
+        props.onDetailRefreshed(await loadSavedCharacterDetail({ characterId: props.row.characterId }));
+      }
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : 'Could not save the bio fields.');
     }
@@ -3953,6 +3984,7 @@ export function CharacterSheet(props: {
       featSkillBonuses: loaded.featSkillBonuses,
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
+      admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       });
     } catch {
       // Intentionally keeps the current records.
@@ -3982,11 +4014,10 @@ export function CharacterSheet(props: {
    * Persists the dialog's full draft allocation via `set_skill_allocations`
    * (a wholesale replace, not a delta — see `setSkillAllocations`'s doc
    * comment). On `Blocked` the on-disk character (and this panel's
-   * `skillAllocation` state) is left exactly as it was — the compute
-   * engine still holds Climb/Intimidate/Swim at the GE-06 rank-1 posture
-   * (chain shirt equipped), so moving any of those three off rank 1 comes
-   * back blocked with real diagnostics; ranks in every other skill are
-   * accepted (SD-36 F7a).
+   * `skillAllocation` state) is left exactly as it was. A rank is never the
+   * reason: the engine reads each skill at its own rank, and one with no rank
+   * untrained. A build the engine refuses for something else comes back blocked
+   * with its real diagnostics.
    */
   /**
    * Saves the Custom dialog. An ability grant changes the saved ability score (a new revision), so
@@ -4009,6 +4040,17 @@ export function CharacterSheet(props: {
       setCustomSaveError(cause instanceof Error ? cause.message : String(cause));
     } finally {
       setCustomSaving(false);
+    }
+  }
+
+  /** One Overrides checkbox: saved at once, and every number follows, as a dialog save does. */
+  async function handleOverrideChange(key: keyof CustomOverrides, on: boolean) {
+    setCustomError(null);
+    try {
+      setCustom(await saveCharacterCustom(props.row.characterId, withOverride(custom, key, on), new Date().toISOString()));
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setCustomError(`The override was not saved: ${cause instanceof Error ? cause.message : String(cause)}`);
     }
   }
 
@@ -4073,7 +4115,8 @@ export function CharacterSheet(props: {
   const casterLevelSummary = summarizeCasterLevel(heldClasses, classFacts);
   const classSkills = classSkillLookup(heldClasses, classFacts);
   const isHuman = props.row.raceLabel.toLowerCase() === 'human';
-  const skillPointsFor = (benefit: LevelEntry) => totalSkillPoints(benefit.skillPointsBase, abilities.intelligence, isHuman);
+  const budgetIntelligence = savedIntelligenceModifier(abilities.intelligence, engineRecords.explanations);
+  const skillPointsFor = (benefit: LevelEntry) => totalSkillPoints(benefit.skillPointsBase, budgetIntelligence, isHuman);
 
   // Every character level already taken (numbered by character level), then the
   // next level available for each held class.
@@ -4084,7 +4127,7 @@ export function CharacterSheet(props: {
   // rather than the old `?? 'Medium'` / `?? 'Normal'` defaults — the panel
   // captions these as calculated from race, so a guess reads as a rules
   // fact. See `deriveRaceTraits`.
-  const { size, vision: standardVision, landSpeed } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
+  const { size, vision: standardVision } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
   // SD-27: `deriveRaceTraits` reads the race *roster*, which describes the
   // unmodified race and knows nothing about a chosen alternate racial trait. A
   // Dwarf who took ARG's Minesight has 90 ft darkvision, and this cell used to
@@ -4107,7 +4150,9 @@ export function CharacterSheet(props: {
     const held = heldClasses.find((candidate) => candidate.classId === spellRoutedClassId);
     return held ? { classId: held.classId, classLabel: held.classLabel } : null;
   })();
-  const hp = withCustomHitPoints(maxHitPointsWithSavedLevels(heldClasses, abilities.constitution, savedHitPoints), custom);
+  // E8.6: the engine's `hit_points.max` and `speed.land` rows, computed in Rust from the saved rolls,
+  // the GM's grants and worn items; the printed sheet carries the same two values.
+  const hp = sheetHitPoints(engineRecords.explanations);
   // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
   // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
   // by both compute paths). They were `baseAttackBonus + abilities.strength`
@@ -4179,7 +4224,7 @@ export function CharacterSheet(props: {
     { label: 'Print', onSelect: handlePrint },
   ];
 
-  // One generic `ItemPickerModal` backs all four "Add …" affordances — see
+  // One generic `ItemPickerModal` backs the "Add …" and modifier affordances — see
   // `buildItemPickerConfig`'s doc comment for the dispatch shape (title /
   // corpus query / mutate-handler per `itemPickerOpen` kind). When a
   // feat-gaining level-up is waiting on a pick (`pendingFeatLevelUp`), the
@@ -4192,13 +4237,13 @@ export function CharacterSheet(props: {
       ),
     loadSpells: loadSpellPickerEntries,
     // SD-27: the Add Feat picker reads the catalog *for this character*, so
-    // every row carries its real prerequisite verdict and the ones this
-    // build cannot take render greyed with the reason. All 690 records are
-    // still returned -- an unavailable feat is shown and explained, never
-    // hidden and never offered-then-refused.
+    // every row carries its real prerequisite verdict. All 690 records are
+    // still returned: the picker's "Hide feats I don't qualify for" box leaves
+    // the unavailable ones out, and unticked they render greyed with the
+    // reason, never offered-then-refused.
     loadFeats: () =>
       listFeatsForCharacter(props.row.characterId, { nameContains: null, category: null }).then((response) =>
-        mapFeatCatalogEntries(response.entries)
+        mapFeatCatalogEntries(response.entries, customOverrides(custom).featsWithoutPrerequisites)
       ),
     loadFeatTargets: () => {
       const kind = pendingFeatTarget?.targetKind ?? null;
@@ -4213,7 +4258,6 @@ export function CharacterSheet(props: {
       }
       return Promise.resolve([]);
     },
-    onSelectEquipment: handleAddEquipment,
     onSelectSpell: handleAddSpell,
     onSelectFeat: pendingFeatLevelUp ? (entry) => void handleLevelUpFeatPick(entry) : handleAddFeat,
     onSelectFeatTarget: handleFeatTargetPicked,
@@ -4228,9 +4272,220 @@ export function CharacterSheet(props: {
       : itemPickerConfig?.title ?? '';
 
   /** The content of one sheet tab; used by the on-screen tab panel and by every printed tab section. */
-  /** One registered stat box (`SHEET_LAYOUT`), drawn with the shared panels in `./panels`. */
+  /** One registered sheet box (`SHEET_LAYOUT`). Moving a box is an edit to its entry there. */
   function renderSheetBox(id: SheetBoxId, boxStyle: CSSProperties): ReactNode {
     switch (id) {
+      case 'portrait':
+        return (
+          <div style={boxStyle}>
+            <PortraitUpload characterId={props.row.characterId} />
+          </div>
+        );
+      case 'levelXp':
+        return (
+          <div style={boxStyle}>
+            {/* Level / XP */}
+            <div style={{ ...panel, display: 'flex', gap: '0.5rem', padding: '0.4rem' }}>
+              <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', position: 'relative', textAlign: 'center' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Level</p>
+                <p style={{ fontWeight: 800, margin: 0 }}>{level}</p>
+                <button
+                  type="button"
+                  onClick={() => setLevelUpOpen(true)}
+                  title="Level up"
+                  aria-label="Level up"
+                  style={{
+                    alignItems: 'center',
+                    background: 'var(--color-accent)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    color: 'var(--color-on-accent)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    fontSize: '0.7rem',
+                    fontWeight: 800,
+                    height: 16,
+                    justifyContent: 'center',
+                    lineHeight: 1,
+                    padding: 0,
+                    position: 'absolute',
+                    right: 4,
+                    top: 4,
+                    width: 16,
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Caster Level</p>
+                <p style={{ fontWeight: 800, margin: 0 }} title={casterLevelSummary.unknown.join('; ') || undefined}>
+                  {casterLevelSummary.display}
+                </p>
+              </div>
+            </div>
+
+            {mutationError ? (
+              <p
+                role="alert"
+                style={{
+                  backgroundColor: 'var(--color-surface-2)',
+                  border: '1px solid var(--color-danger, #c0392b)',
+                  borderRadius: 6,
+                  color: 'var(--color-danger, #c0392b)',
+                  fontSize: '0.75rem',
+                  margin: 0,
+                  padding: '0.4rem 0.55rem',
+                }}
+              >
+                {mutationError}
+              </p>
+            ) : null}
+
+            {statusMessage ? (
+              <p
+                role="status"
+                style={{
+                  backgroundColor: 'var(--color-surface-2)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 6,
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.75rem',
+                  margin: 0,
+                  padding: '0.4rem 0.55rem',
+                }}
+              >
+                {statusMessage}
+              </p>
+            ) : null}
+
+            <LevelUpDialog
+              open={levelUpOpen}
+              onClose={() => setLevelUpOpen(false)}
+              characterId={props.row.characterId}
+              heldClasses={heldClasses}
+              intelligenceModifier={budgetIntelligence}
+              isHuman={isHuman}
+              onAccept={handleLevelUpAccept}
+            />
+          </div>
+        );
+      case 'classPanel':
+        return (
+          <div style={boxStyle}>
+            <NavCard label="Race" value={props.row.raceLabel} />
+            {/* SD-27: the ARG alternate racial traits this character
+                actually holds — now with the prose the engine rendered for
+                *this* character, not the bare name the key happens to
+                contain.
+
+                The card used to read "Adaptable Luck" and stop there, so
+                the sentence stating the number (already computed, already
+                carrying this character's feats) reached no screen at all.
+                Everything else about the section is unchanged: nothing at
+                all when no alternate was taken, because an empty
+                "Alternate Racial Traits" heading would imply the race has
+                none to offer, which is a different claim.
+
+                The full racial-trait list, standard rows included, is in
+                the Actions tab; this column stays the chosen-swaps digest
+                the left rail has always been. */}
+            {alternateTraitCards.map((row) => (
+              <RacialTraitCard key={row.key} row={row} />
+            ))}
+            {/* A chosen key whose resolution has not arrived (or could not
+                be produced) still names the choice, rather than vanishing
+                and leaving the player's own selection invisible. */}
+            {unresolvedAlternateTraitKeys.map((traitKey) => (
+              <NavCard
+                key={traitKey}
+                label="Alternate Racial Trait"
+                value={traitKey.split(' ~ ').slice(1).join(' ~ ') || traitKey}
+              />
+            ))}
+            <NavCard label="Class" value={classLabel} />
+          </div>
+        );
+      case 'characterDetails':
+        return (
+          <div className="print-details" style={boxStyle}>
+            <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
+          </div>
+        );
+      case 'showProgression': {
+        const progressionNext = (
+          <>
+            {/* Next — the next level available for each held class */}
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', margin: '1rem 0 0.6rem' }}>
+              <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                Next
+              </span>
+              <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {nextBenefits.map((benefit) => (
+                <LevelBenefitCard
+                  key={`next-${benefit.classId}-${benefit.characterLevel}`}
+                  benefit={benefit}
+                  skillPoints={skillPointsFor(benefit)}
+                  variant="next"
+                />
+              ))}
+            </div>
+          </>
+        );
+        return (
+          <div style={boxStyle}>
+            <button
+              ref={progressionButtonRef}
+              type="button"
+              aria-haspopup="dialog"
+              aria-expanded={progressionDrawer.open}
+              onClick={() => dispatchProgressionDrawer({ type: 'open' })}
+              style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text-secondary)', cursor: 'pointer', fontWeight: 600, padding: '0.4rem 0.6rem' }}
+            >
+              Show Progression
+            </button>
+            {progressionDrawer.open ? (
+              <ProgressionDrawer onAction={dispatchProgressionDrawer}>
+                <ProgressionLedger characterId={props.row.characterId} heldClasses={heldClasses} />
+                {progressionNext}
+              </ProgressionDrawer>
+            ) : null}
+          </div>
+        );
+      }
+      case 'squareBlock':
+        return (
+          <div style={boxStyle}>
+            <SquareBlock
+              hp={hp}
+              initiative={initiativeRow(engineRecords.explanations)}
+              encumbrance={props.detail?.corpusDerived?.encumbrance}
+              conditions={custom.conditions}
+            />
+          </div>
+        );
+      case 'combatStrip':
+        return <div style={boxStyle}>{renderSheetRegion('combatStrip')}</div>;
+      case 'skills':
+        return (
+          <div className="print-skills" style={boxStyle}>
+            <SkillsPanel
+              abilities={abilities}
+              heldClasses={heldClasses}
+              classSkills={classSkills}
+              classFactsLoading={classFacts.kind === 'loading'}
+              isHuman={isHuman}
+              allocation={skillAllocation}
+              featSkillBonuses={engineRecords.featSkillBonuses}
+              explanations={engineRecords.explanations}
+              onOpenDialog={() => setSkillDialogOpen(true)}
+              custom={custom}
+            />
+          </div>
+        );
       case 'abilities':
         return <AbilitiesPanel scores={engineRecords.abilityScores} abilities={abilities} boxStyle={boxStyle} />;
       case 'armorClass':
@@ -4238,10 +4493,15 @@ export function CharacterSheet(props: {
       case 'attack':
         return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
       case 'speed':
-        return <SpeedPanel land={landSpeed} boxStyle={boxStyle} />;
+        return <SpeedPanel land={sheetLandSpeed(engineRecords.explanations)} boxStyle={boxStyle} />;
       case 'saves':
         return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
     }
+  }
+
+  /** The boxes of one stack, in registry order, as fragments. */
+  function renderSheetRegion(stack: SheetStack): ReactNode {
+    return boxesInColumn(SHEET_LAYOUT, stack).map((box) => <Fragment key={box.id}>{renderSheetBox(box.id, box.boxStyle)}</Fragment>);
   }
 
   function renderTabContent(name: Tab): ReactNode {
@@ -4253,7 +4513,7 @@ export function CharacterSheet(props: {
                     factsLoading={classFacts.kind === 'loading'}
                     weaponDamage={engineRecords.weaponDamage}
                     corpusDerived={props.detail?.corpusDerived ?? null}
-                    onAddWeapon={() => setItemPickerOpen('weapon')}
+                    onOpenMarket={() => setMarketCategory('weapon')}
                     onPrint={handlePrint}
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
@@ -4270,10 +4530,13 @@ export function CharacterSheet(props: {
                     durabilityBusy={durabilityBusy}
                     durabilityError={durabilityError}
                     onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
+                    onOpenMarket={() => setMarketCategory('armor')}
                   />
                 ) : name === 'Spells' ? (
                   <SpellsTab
                     spellsSelected={props.detail?.spellsSelected ?? []}
+                    admitted={engineRecords.admittedUnderOverride}
+                    admitsAnySpell={customOverrides(custom).spellsOutsideClassList}
                     corpusDerived={props.detail?.corpusDerived}
                     snapshot={props.detail?.snapshot}
                     explanations={engineRecords.explanations}
@@ -4286,13 +4549,14 @@ export function CharacterSheet(props: {
                 ) : name === 'Gear' ? (
                   <GearTab
                     corpusDerived={props.detail?.corpusDerived}
-                    onAddArmor={() => setItemPickerOpen('armor')}
-                    onAddGear={() => setItemPickerOpen('gear')}
+                    onOpenMarket={() => setMarketCategory('gear')}
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
                     onAttachModifier={handleAttachModifier}
                     onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
-                    onSetActiveState={(itemId, activeState) => void handleSetEquipmentActiveState(itemId, activeState)}
+                    loadHeldEquipment={() => listHeldEquipment(props.row.characterId)}
+                    detail={props.detail}
+                    onSetActiveState={handleSetEquipmentActiveState}
                     money={money}
                     moneyBusy={moneyBusy}
                     moneyError={moneyError}
@@ -4303,6 +4567,8 @@ export function CharacterSheet(props: {
               selectedFeats={props.detail?.selectedFeats ?? []}
               selectedTraits={props.detail?.selectedTraits ?? []}
               chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
+              featBudget={withBudgetOverride(readFeatBudget(engineRecords.explanations), customOverrides(custom).ignoreFeatBudget)}
+              admitted={engineRecords.admittedUnderOverride}
               onAddFeat={() => setItemPickerOpen('feat')}
               onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
               onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
@@ -4311,7 +4577,7 @@ export function CharacterSheet(props: {
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
                 ) : name === 'Custom' ? (
-                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} />
+                  <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} onOverrideChange={(key, on) => void handleOverrideChange(key, on)} admittedLevels={classLevelsAdmitted(engineRecords.admittedUnderOverride, heldClasses)} />
                 ) : (
                   <ActionsTab
                     levelEntries={currentBenefits}
@@ -4406,23 +4672,10 @@ export function CharacterSheet(props: {
         </span>
       </div>
 
-      <style>{buildPrintCss()}</style>
-      {printing ? (
-        <div
-          className="no-print"
-          role="status"
-          style={{ alignItems: 'center', backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 8, display: 'flex', gap: '0.75rem', margin: '0.5rem 1.5rem', padding: '0.5rem 0.9rem' }}
-        >
-          <span style={{ flex: 1 }}>Print layout is showing. Finish or cancel the print dialog; this returns to the sheet afterwards.</span>
-          <button type="button" onClick={() => setPrinting(false)}>
-            Back to the sheet
-          </button>
-        </div>
-      ) : null}
 
-      {/* Body: collapsible progression | stats + weapons | details + skills */}
+      {/* Body: collapsible left rail | identity + combat + tabs | abilities + skills */}
       <div className="sheet-cols" style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>
-        {/* LEFT: collapsible level progression, separated by a vertical line */}
+        {/* LEFT: collapsible rail, separated by a vertical line */}
         <div
           className="sheet-left"
           style={{
@@ -4434,204 +4687,29 @@ export function CharacterSheet(props: {
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: railCollapsed ? 'center' : 'space-between', marginBottom: '0.6rem' }}>
             {!railCollapsed ? (
               <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                Progression
+                Character Details
               </span>
             ) : null}
             <button
               type="button"
               onClick={() => setLeftCollapsed((collapsed) => !collapsed)}
-              title={railCollapsed ? 'Expand progression' : 'Collapse progression'}
+              title={railCollapsed ? 'Expand character details' : 'Collapse character details'}
               style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text-secondary)', cursor: 'pointer', padding: '0.1rem 0.4rem' }}
             >
               {railCollapsed ? '»' : '«'}
             </button>
           </div>
 
-          {!railCollapsed ? (
-            <>
-              <div style={{ marginBottom: '0.75rem' }}>
-                <PortraitUpload characterId={props.row.characterId} />
-              </div>
-
-              {/* Level / XP */}
-              <div style={{ ...panel, display: 'flex', gap: '0.5rem', marginBottom: '0.5rem', padding: '0.4rem' }}>
-                <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', position: 'relative', textAlign: 'center' }}>
-                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Level</p>
-                  <p style={{ fontWeight: 800, margin: 0 }}>{level}</p>
-                  <button
-                    type="button"
-                    onClick={() => setLevelUpOpen(true)}
-                    title="Level up"
-                    aria-label="Level up"
-                    style={{
-                      alignItems: 'center',
-                      background: 'var(--color-accent)',
-                      border: 'none',
-                      borderRadius: '50%',
-                      color: 'var(--color-on-accent)',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      fontSize: '0.7rem',
-                      fontWeight: 800,
-                      height: 16,
-                      justifyContent: 'center',
-                      lineHeight: 1,
-                      padding: 0,
-                      position: 'absolute',
-                      right: 4,
-                      top: 4,
-                      width: 16,
-                    }}
-                  >
-                    +
-                  </button>
-                </div>
-                <div style={{ ...panel, backgroundColor: 'var(--color-surface-2)', flex: 1, padding: '0.3rem 0.5rem', textAlign: 'center' }}>
-                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Caster Level</p>
-                  <p style={{ fontWeight: 800, margin: 0 }} title={casterLevelSummary.unknown.join('; ') || undefined}>
-                    {casterLevelSummary.display}
-                  </p>
-                </div>
-              </div>
-
-              {mutationError ? (
-                <p
-                  role="alert"
-                  style={{
-                    backgroundColor: 'var(--color-surface-2)',
-                    border: '1px solid var(--color-danger, #c0392b)',
-                    borderRadius: 6,
-                    color: 'var(--color-danger, #c0392b)',
-                    fontSize: '0.75rem',
-                    margin: '0 0 0.5rem',
-                    padding: '0.4rem 0.55rem',
-                  }}
-                >
-                  {mutationError}
-                </p>
-              ) : null}
-
-              {statusMessage ? (
-                <p
-                  role="status"
-                  style={{
-                    backgroundColor: 'var(--color-surface-2)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 6,
-                    color: 'var(--color-text-secondary)',
-                    fontSize: '0.75rem',
-                    margin: '0 0 0.5rem',
-                    padding: '0.4rem 0.55rem',
-                  }}
-                >
-                  {statusMessage}
-                </p>
-              ) : null}
-
-              <LevelUpDialog
-                open={levelUpOpen}
-                onClose={() => setLevelUpOpen(false)}
-                characterId={props.row.characterId}
-                heldClasses={heldClasses}
-                intelligenceModifier={abilities.intelligence}
-                isHuman={isHuman}
-                onAccept={handleLevelUpAccept}
-              />
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <NavCard label="Race" value={props.row.raceLabel} />
-                {/* SD-27: the ARG alternate racial traits this character
-                    actually holds — now with the prose the engine rendered for
-                    *this* character, not the bare name the key happens to
-                    contain.
-
-                    The card used to read "Adaptable Luck" and stop there, so
-                    the sentence stating the number (already computed, already
-                    carrying this character's feats) reached no screen at all.
-                    Everything else about the section is unchanged: nothing at
-                    all when no alternate was taken, because an empty
-                    "Alternate Racial Traits" heading would imply the race has
-                    none to offer, which is a different claim.
-
-                    The full racial-trait list, standard rows included, is in
-                    the Actions tab; this column stays the chosen-swaps digest
-                    the left rail has always been. */}
-                {alternateTraitCards.map((row) => (
-                  <RacialTraitCard key={row.key} row={row} />
-                ))}
-                {/* A chosen key whose resolution has not arrived (or could not
-                    be produced) still names the choice, rather than vanishing
-                    and leaving the player's own selection invisible. */}
-                {unresolvedAlternateTraitKeys.map((traitKey) => (
-                  <NavCard
-                    key={traitKey}
-                    label="Alternate Racial Trait"
-                    value={traitKey.split(' ~ ').slice(1).join(' ~ ') || traitKey}
-                  />
-                ))}
-                <NavCard label="Class" value={classLabel} />
-              </div>
-
-              {/* Current levels — each level taken and what it granted */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1rem' }}>
-                {currentBenefits.map((benefit) => (
-                  <LevelBenefitCard
-                    key={`${benefit.classId}-${benefit.characterLevel}`}
-                    benefit={benefit}
-                    skillPoints={skillPointsFor(benefit)}
-                    variant="current"
-                  />
-                ))}
-              </div>
-
-              {/* Next — the next level available for each held class */}
-              <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', margin: '1rem 0 0.6rem' }}>
-                <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
-                <span style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                  Next
-                </span>
-                <span style={{ borderTop: '1px solid var(--color-border)', flex: 1 }} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {nextBenefits.map((benefit) => (
-                  <LevelBenefitCard
-                    key={`next-${benefit.classId}-${benefit.characterLevel}`}
-                    benefit={benefit}
-                    skillPoints={skillPointsFor(benefit)}
-                    variant="next"
-                  />
-                ))}
-              </div>
-            </>
-          ) : null}
+          {!railCollapsed ? <div style={SHEET_REGION_STYLES.leftRail}>{renderSheetRegion('leftRail')}</div> : null}
         </div>
 
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
           <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
-          {/* The 2x2 block under the name (SQUARE_BLOCK_LAYOUT): Initiative is the engine's
-              `initiative.total` row, Conditions the custom record's list (Normal when empty). */}
-          <SquareBlock
-            hp={hp}
-            initiative={initiativeRow(engineRecords.explanations)}
-            encumbrance={props.detail?.corpusDerived?.encumbrance}
-            conditions={custom.conditions}
-          />
+          {/* Under the name, one row: the 2x2 beside the 1x4, which wraps under it when narrow. Placed by SHEET_LAYOUT. */}
+          <div style={SHEET_REGION_STYLES.combatRow}>{renderSheetRegion('combatRow')}</div>
 
-          {/* Stat block, placed by SHEET_LAYOUT (sheetLayout.ts): Abilities as one vertical
-              column, AC / Attack / Speed / Saves stacked as their own boxes beside it. */}
-          <div style={{ display: 'flex', gap: '0.6rem' }}>
-            {SHEET_COLUMNS.map((column) => (
-              <div key={column} style={SHEET_COLUMN_STYLES[column]}>
-                {boxesInColumn(SHEET_LAYOUT, column).map((box) => (
-                  <Fragment key={box.id}>{renderSheetBox(box.id, box.boxStyle)}</Fragment>
-                ))}
-              </div>
-            ))}
-          </div>
-
-          {/* Weapons / Defense / Gear — bottom, spanning the middle. Printing renders every tab after page 1 instead. */}
-          {printing ? null : (
+          {/* Weapons / Defense / Gear — bottom, spanning the middle. */}
           <div style={{ marginTop: '0.4rem' }}>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>
               {SHEET_TABS.map((name) => {
@@ -4662,40 +4740,17 @@ export function CharacterSheet(props: {
               {renderTabContent(tab)}
             </div>
           </div>
-          )}
         </div>
 
-        {/* RIGHT: character details, then skills beneath */}
-        <div className="sheet-right" style={{ flex: '0 0 300px', minWidth: 0 }}>
-          <div className="print-details">
-            <DetailsPanel vision={vision} size={size} bio={bio} onBioChange={updateBio} onBioBlur={() => void handleBioBlur()} />
-          </div>
-          <div className="print-skills">
-          <SkillsPanel
-            abilities={abilities}
-            heldClasses={heldClasses}
-            classSkills={classSkills}
-            classFactsLoading={classFacts.kind === 'loading'}
-            isHuman={isHuman}
-            allocation={skillAllocation}
-            realModifiers={snapshot?.selectedSkillModifiers}
-            featSkillBonuses={engineRecords.featSkillBonuses}
-            explanations={engineRecords.explanations}
-            onOpenDialog={() => setSkillDialogOpen(true)}
-            custom={custom}
-          />
-          </div>
+        {/* RIGHT: Abilities, then Skills */}
+        <div className="sheet-right" style={SHEET_REGION_STYLES.rightColumn}>
+          {renderSheetRegion('rightColumn')}
         </div>
       </div>
 
-      {printing
-        ? printableTabs({ hasPets: buildPetsTabView(snapshot).kind === 'Companion', hasCustom: !customIsEmpty(custom) }).map((name, index) => (
-            <section key={name} className={index === 0 ? 'print-tab print-tab-first' : 'print-tab'}>
-              <h2>{name}</h2>
-              {renderTabContent(name)}
-            </section>
-          ))
-        : null}
+      {printOpen ? (
+        <PrintDialog characterId={props.row.characterId} displayLabel={props.row.displayLabel} onClose={() => setPrintOpen(false)} />
+      ) : null}
 
       <CustomDialog
         open={customDialogOpen}
@@ -4714,19 +4769,51 @@ export function CharacterSheet(props: {
         heldClasses={heldClasses}
         classSkills={classSkills}
         characterLevel={level}
-        abilities={abilities}
-        totalPoints={withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, abilities.intelligence, isHuman), custom)}
+        totalPoints={withCustomSkillPoints(totalSkillPointsAvailable(heldClasses, budgetIntelligence, isHuman), custom)}
         allocation={skillAllocation}
-        featSkillBonuses={engineRecords.featSkillBonuses}
+        explanations={engineRecords.explanations}
         onAccept={(draft) => void handleSkillAllocationAccept(draft)}
       />
 
+      {marketCategory ? (
+        <MarketDialog
+          initialCategory={marketCategory}
+          loadRows={(category) =>
+            listMarket({ category }).then((response) => {
+              if (response.typesError) {
+                throw new Error(`Categories unavailable: ${response.typesError}`);
+              }
+              return mapMarketEntries(response.entries);
+            })
+          }
+          currency={MARKET_CURRENCY}
+          balance={copperToGp(money.totalCopper)}
+          loadInventory={() => listHeldEquipment(props.row.characterId).then(sellableCopies)}
+          onBuy={handleMarketBuy}
+          onSell={handleMarketSell}
+          priceMode={priceMode}
+          onPriceModeChange={setPriceMode}
+          error={mutationError}
+          onClose={() => setMarketCategory(null)}
+        />
+      ) : null}
       <ItemPickerModal
         open={itemPickerConfig !== null}
         title={itemPickerTitle}
         searchPlaceholder={itemPickerConfig?.searchPlaceholder ?? ''}
         loadEntries={itemPickerConfig?.loadEntries ?? (() => Promise.resolve([]))}
-        initialGroup={itemPickerConfig?.initialGroup}
+        hideUnavailable={
+          itemPickerConfig?.offersHideUnavailable
+            ? {
+                label: HIDE_UNMET_FEATS_LABEL,
+                checked: hideUnmetFeats,
+                onChange: (checked) => {
+                  setHideUnmetFeats(checked);
+                  setHideUnmetFeatsState(checked);
+                },
+              }
+            : undefined
+        }
         onClose={() => {
           setItemPickerOpen(null);
           setPendingFeatLevelUp(null);

@@ -1,4 +1,5 @@
-//! Writes `data/equipment_types.json`: PCGen `TYPE:` tags per equipment record identity.
+//! Writes `data/equipment_types.json`: PCGen `TYPE:` tags per equipment record identity, and the
+//! body-slot table from the game mode's `equipmentslots.lst`.
 //!
 //! The equipment catalog's own four-way category cannot split thousands of items into browsable
 //! kinds; PCGen's `TYPE:` taxonomy can. This reads every `*equip*.lst` under the pinned oracle's
@@ -15,7 +16,7 @@
 
 use std::path::{Path, PathBuf};
 
-use codex_ingest::pcgen_import::equipment_types::{merge_equipment_types, parse_equipment_types};
+use codex_ingest::pcgen_import::equipment_types::{merge_equipment_types, parse_equipment_types, parse_slot_table};
 
 fn corpus_root() -> PathBuf {
     match std::env::var("PCGEN_CORPUS_ROOT") {
@@ -65,11 +66,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     let merged = merge_equipment_types(records);
 
+    let slot_list = root.join("../system/gameModes/Pathfinder/equipmentslots.lst");
+    let slots = parse_slot_table(&String::from_utf8_lossy(&std::fs::read(&slot_list)?));
+    if slots.is_empty() {
+        return Err(format!("no slot rows in {}", slot_list.display()).into());
+    }
+
     let document = serde_json::json!({
         "oracle_sha": pinned_oracle_sha(&repo_root),
         "source": "PCGen equipment .lst TYPE: tokens under data/pathfinder",
         "files_read": files.len(),
         "identity_conflicts_first_wins": merged.conflicts,
+        "slots": slots,
         "types": merged.types,
     });
     let output = repo_root.join("data/equipment_types.json");

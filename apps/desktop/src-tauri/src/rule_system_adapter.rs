@@ -385,6 +385,7 @@ pub(crate) mod tests {
                             equipment_record_key: effect.equipment_record_key.clone(),
                             category: format!("{:?}", effect.category),
                             armor_class_bonus: effect.armor_class_bonus,
+                            armor_class_enhancement: effect.armor_class_enhancement,
                             max_dex: effect.max_dex,
                             spell_failure: effect.spell_failure,
                             armor_check_penalty: effect.armor_check_penalty,
@@ -422,6 +423,7 @@ pub(crate) mod tests {
                 crate::character_hub::sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
             Ok(LoadSavedCharacterResponse {
+                admitted_under_override: Vec::new(),
                 summary,
                 snapshot,
                 diagnostics,

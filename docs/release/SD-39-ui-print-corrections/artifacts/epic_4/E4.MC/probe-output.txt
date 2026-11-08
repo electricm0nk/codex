@@ -1,0 +1,151 @@
+10016 | ...format!("blocked: {}", diagnostics[0].message), other => format!("{other:?}") };
+10016 | ... { CreateCharacterResponse::Saved { .. } => "saved".to_owned(), CreateCharacterResponse::Blocked { diagnostics } => format!("blocked: {}", diagnostics[0].message), other =>...
+helm w/ custom hat: blocked: head slot is taken by Custom Hat
+Ring of Protection +1: saved
+Ring of Protection +2: blocked: ring slot is taken by Ring of Protection +1 and Custom Ring
+Dagger (Base): saved
+Dagger (Base): blocked: main hand slot is taken by Longsword
+Heavy Steel Shield (Base): blocked: off hand slot is taken by Dagger
+Greatsword (Base): blocked: main hand slot is taken by Longsword
+Robe of Bones: saved
+Bracers of Armor +1: saved
+Boots of Elvenkind: saved
+Amulet of Natural Armor +1: saved
+Mithral Shirt: blocked: armor slot is taken by Chain Shirt
+Longsword (Base): blocked: main hand slot is taken by Longsword
+held HeldEquipmentCopyDto { item_id: "item:longsword", name: "Longsword", bonus: 0, active_state: EquippedActive, slot: WieldMain }
+held HeldEquipmentCopyDto { item_id: "item:chain_shirt", name: "Chain Shirt", bonus: 0, active_state: EquippedActive, slot: Armor }
+held HeldEquipmentCopyDto { item_id: "Ring of Protection +1", name: "Ring of Protection +1", bonus: 0, active_state: EquippedActive, slot: Ring }
+held HeldEquipmentCopyDto { item_id: "Ring of Protection +2", name: "Ring of Protection +2", bonus: 0, active_state: SelectedInactive, slot: Ring }
+held HeldEquipmentCopyDto { item_id: "Ring of Protection +3", name: "Ring of Protection +3", bonus: 0, active_state: SelectedInactive, slot: Ring }
+held HeldEquipmentCopyDto { item_id: "Dagger (Base)", name: "Dagger", bonus: 0, active_state: EquippedActive, slot: WieldOff }
+held HeldEquipmentCopyDto { item_id: "Heavy Steel Shield (Base)", name: "Heavy Steel Shield", bonus: 0, active_state: SelectedInactive, slot: Shield }
+held HeldEquipmentCopyDto { item_id: "Greatsword (Base)", name: "Greatsword", bonus: 0, active_state: SelectedInactive, slot: WieldTwoHanded }
+held HeldEquipmentCopyDto { item_id: "Robe of Bones", name: "Robe of Bones", bonus: 0, active_state: EquippedActive, slot: Body }
+held HeldEquipmentCopyDto { item_id: "Bracers of Armor +1", name: "Bracers of Armor +1", bonus: 0, active_state: EquippedActive, slot: Wrist }
+held HeldEquipmentCopyDto { item_id: "Helm of Brilliance", name: "Helm of Brilliance", bonus: 0, active_state: SelectedInactive, slot: Head }
+held HeldEquipmentCopyDto { item_id: "Boots of Elvenkind", name: "Boots of Elvenkind", bonus: 0, active_state: EquippedActive, slot: Feet }
+held HeldEquipmentCopyDto { item_id: "Amulet of Natural Armor +1", name: "Amulet of Natural Armor +1", bonus: 0, active_state: EquippedActive, slot: Neck }
+held HeldEquipmentCopyDto { item_id: "Mithral Shirt", name: "Mithral Shirt", bonus: 0, active_state: SelectedInactive, slot: Armor }
+held HeldEquipmentCopyDto { item_id: "Longsword (Base)", name: "Longsword", bonus: 0, active_state: SelectedInactive, slot: WieldMain }
+held HeldEquipmentCopyDto { item_id: "Dagger (Base)", name: "Dagger", bonus: 0, active_state: SelectedInactive, slot: WieldMain }
+held HeldEquipmentCopyDto { item_id: "custom:r", name: "Custom Ring", bonus: 0, active_state: EquippedActive, slot: Ring }
+held HeldEquipmentCopyDto { item_id: "custom:h", name: "Custom Hat", bonus: 0, active_state: EquippedActive, slot: Head }
+held HeldEquipmentCopyDto { item_id: "item:longsword", name: "Longsword", bonus: 0, active_state: EquippedActive, slot: WieldMain }
+held HeldEquipmentCopyDto { item_id: "item:chain_shirt", name: "Chain Shirt", bonus: 0, active_state: EquippedActive, slot: Armor }
+=== 00000000-0000-0000-0000-000000000001 carried Ring of Protection +1
+  /corpusDerived/encumbrance/unresolvedItemIds/1: None -> "Ring of Protection +1"
+=== 00000000-0000-0000-0000-000000000001 worn Ring of Protection +1
+  /explanations/defense.flat_footed_armor_class/value: Some("14") -> 15
+  /explanations/defense.touch_armor_class/value: Some("12") -> 13
+  /snapshot/baselineArmorClass: Some("16") -> 17
+=== 00000000-0000-0000-0000-000000000001 carried Ioun Stone (Dusty rose Prism)
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 5115.0
+=== 00000000-0000-0000-0000-000000000001 worn Ioun Stone (Dusty rose Prism)
+  /explanations/defense.flat_footed_armor_class/value: Some("14") -> 15
+  /explanations/defense.touch_armor_class/value: Some("12") -> 13
+  /snapshot/baselineArmorClass: Some("16") -> 17
+=== 00000000-0000-0000-0000-000000000001 carried Belt of Giant Strength +2
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 4115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 30.0
+=== 00000000-0000-0000-0000-000000000001 worn Belt of Giant Strength +2
+  /abilityScores/strength: Some("19") -> 21
+  /corpusDerived/encumbrance/heavyMaxLbs: Some("350.0") -> 460.0
+  /corpusDerived/encumbrance/lightMaxLbs: Some("116.0") -> 153.0
+  /corpusDerived/encumbrance/mediumMaxLbs: Some("233.0") -> 306.0
+  /explanations/ability_modifier.strength/value: Some("4") -> 5
+  /explanations/combat.baseline_melee_attack_bonus/value: Some("8") -> 9
+  /explanations/combat.combat_maneuver_bonus/value: Some("7") -> 8
+  /explanations/combat.weapon_attack_bonus.longsword/value: Some("8") -> 9
+  /explanations/defense.combat_maneuver_defense/value: Some("18") -> 19
+  /explanations/race.human.ability_bonus_applied/value: Some("19") -> 21
+  /explanations/race.human.ability_bonus_target/value: Some("4") -> 5
+  /explanations/skill.selected_modifier.climb/value: Some("7") -> 8
+  /explanations/skill.selected_modifier.swim/value: Some("7") -> 8
+  /snapshot/abilityModifiers/strength: Some("4") -> 5
+  /snapshot/baselineMeleeAttackBonus: Some("8") -> 9
+  /snapshot/selectedSkillModifiers/climb: Some("7") -> 8
+  /snapshot/selectedSkillModifiers/swim: Some("7") -> 8
+=== 00000000-0000-0000-0000-000000000001 carried Belt of Incredible Dexterity +2
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 4115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 30.0
+=== 00000000-0000-0000-0000-000000000001 worn Belt of Incredible Dexterity +2
+  /abilityScores/dexterity: Some("13") -> 15
+  /explanations/ability_modifier.dexterity/value: Some("1") -> 2
+  /explanations/defense.baseline_armor_class/value: Some("16") -> 17
+  /explanations/defense.combat_maneuver_defense/value: Some("18") -> 19
+  /explanations/defense.total_save.reflex/value: Some("2") -> 3
+  /explanations/defense.touch_armor_class/value: Some("12") -> 13
+  /explanations/initiative.total/value: Some("1") -> 2
+  /snapshot/abilityModifiers/dexterity: Some("1") -> 2
+  /snapshot/baselineArmorClass: Some("16") -> 17
+  /snapshot/totalSaves/reflex: Some("2") -> 3
+=== 00000000-0000-0000-0000-000000000001 carried Belt of Mighty Constitution +2
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 4115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 30.0
+=== 00000000-0000-0000-0000-000000000001 worn Belt of Mighty Constitution +2
+  /abilityScores/constitution: Some("14") -> 16
+  /explanations/ability_modifier.constitution/value: Some("2") -> 3
+  /explanations/defense.total_save.fortitude/value: Some("5") -> 6
+  /snapshot/abilityModifiers/constitution: Some("2") -> 3
+  /snapshot/totalSaves/fortitude: Some("5") -> 6
+=== 00000000-0000-0000-0000-000000000001 carried Headband of Vast Intelligence +2
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 4115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 30.0
+=== 00000000-0000-0000-0000-000000000001 worn Headband of Vast Intelligence +2
+  /abilityScores/intelligence: Some("14") -> 16
+  /explanations/ability_modifier.intelligence/value: Some("2") -> 3
+  /explanations/class_chassis.skill_points/value: Some("12") -> 15
+  /snapshot/abilityModifiers/intelligence: Some("2") -> 3
+=== 00000000-0000-0000-0000-000000000001 carried Stone of Good Luck (Luckstone)
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 20115.0
+=== 00000000-0000-0000-0000-000000000001 worn Stone of Good Luck (Luckstone)
+  /explanations/custom_item.initiative/id: None -> "custom_item.initiative"
+  /explanations/custom_item.initiative/value: None -> 1
+  /explanations/defense.total_save.fortitude/value: Some("5") -> 6
+  /explanations/defense.total_save.reflex/value: Some("2") -> 3
+  /explanations/defense.total_save.will/value: Some("2") -> 3
+  /explanations/initiative.total/value: Some("1") -> 2
+  /snapshot/totalSaves/fortitude: Some("5") -> 6
+  /snapshot/totalSaves/reflex: Some("2") -> 3
+  /snapshot/totalSaves/will: Some("2") -> 3
+=== 00000000-0000-0000-0000-000000000001 carried Boots of Striding And Springing
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 5615.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 30.0
+=== 00000000-0000-0000-0000-000000000001 worn Boots of Striding And Springing
+  /explanations/custom_item.speed/id: None -> "custom_item.speed"
+  /explanations/custom_item.speed/value: None -> 10
+=== 00000000-0000-0000-0000-000000000001 carried Heavyload Belt
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 2115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 32.0
+=== 00000000-0000-0000-0000-000000000001 worn Heavyload Belt
+=== 00000000-0000-0000-0000-000000000001 carried Muleback Cords
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 1115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 29.25
+=== 00000000-0000-0000-0000-000000000001 worn Muleback Cords
+=== 00000000-0000-0000-0000-000000000002 carried Headband of Vast Intelligence +2
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 4115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 30.0
+=== 00000000-0000-0000-0000-000000000002 worn Headband of Vast Intelligence +2
+  /abilityScores/intelligence: Some("18") -> 20
+  /explanations/ability_modifier.intelligence/value: Some("4") -> 5
+  /explanations/class_chassis.skill_points/value: Some("30") -> 35
+  /explanations/class_chassis.wizard.force_missile_uses_per_day/value: Some("7") -> 8
+  /explanations/class_chassis.wizard.spell_save_dc.spell_level_1/value: Some("15") -> 16
+  /explanations/class_chassis.wizard.spell_save_dc.spell_level_2/value: Some("16") -> 17
+  /explanations/class_chassis.wizard.spell_save_dc.spell_level_3/value: Some("17") -> 18
+  /explanations/class_spell.wizard.intelligence_bonus_spells_per_day.spell_level_1/value: Some("1") -> 2
+  /explanations/class_spell.wizard.spellbook_size.spell_level_1_and_higher/value: Some("15") -> 16
+  /explanations/class_spell.wizard.total_spells_per_day.spell_level_1/value: Some("5") -> 6
+  /explanations/race.human.ability_bonus_applied/value: Some("18") -> 20
+  /explanations/race.human.ability_bonus_target/value: Some("4") -> 5
+  /snapshot/abilityModifiers/intelligence: Some("4") -> 5
+=== 00000000-0000-0000-0000-000000000002 carried Belt of Mighty Constitution +2
+  /corpusDerived/encumbrance/totalCarriedCostGp: Some("115.0") -> 4115.0
+  /corpusDerived/encumbrance/totalCarriedWeightLbs: Some("29.0") -> 30.0
+=== 00000000-0000-0000-0000-000000000002 worn Belt of Mighty Constitution +2
+  /abilityScores/constitution: Some("13") -> 15
+  /explanations/ability_modifier.constitution/value: Some("1") -> 2
+  /explanations/defense.total_save.fortitude/value: Some("2") -> 3
+  /snapshot/abilityModifiers/constitution: Some("1") -> 2
+  /snapshot/totalSaves/fortitude: Some("2") -> 3

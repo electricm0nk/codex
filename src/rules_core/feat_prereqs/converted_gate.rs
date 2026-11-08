@@ -160,6 +160,33 @@ fn is_plain_fact_leaf(e: &Expr) -> bool {
     )
 }
 
+/// The first top-level term of `gate` that names an alignment and fails for `alignment` (`"LG"`), in
+/// the rule's own words. The record carries no alignment, so [`verdicts`] never decides one: this is
+/// the separate question for a caller that has the character's stated alignment in hand.
+pub fn alignment_unmet(
+    package: &SheetRulePackage,
+    held: &HeldSet,
+    facts: &CharacterFacts,
+    gate: &Applies,
+    alignment: &str,
+) -> Option<String> {
+    let facts = CharacterFacts { alignment: Some(alignment.to_owned()), ..facts.clone() };
+    top_level_terms(gate)
+        .into_iter()
+        .filter(|term| names_an_alignment(term))
+        .find(|term| matches!(evaluate_applies(term, held, package, &facts, EvalContext::default()), Gate::Exclude))
+        .map(|term| describe_gate(package, term))
+}
+
+fn names_an_alignment(term: &Applies) -> bool {
+    match term {
+        Applies::All(terms) | Applies::AtLeast { of: terms, .. } => terms.iter().any(names_an_alignment),
+        Applies::Not(inner) => names_an_alignment(inner),
+        Applies::Holds { what: Holdable::Alignment(_), .. } => true,
+        _ => false,
+    }
+}
+
 /// The fact this term needs and the character record does not carry, or `None` when every
 /// leaf it reads is one the engine genuinely holds.
 ///
@@ -288,6 +315,30 @@ fn expr_unverifiable_reason(package: &SheetRulePackage, e: &Expr) -> Option<&'st
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn lawful_only() -> Applies {
+        Applies::All(vec![
+            Applies::Compare { lhs: Expr::BaseAttack, op: crate::rules_core::sheet_rule::Cmp::Gte, rhs: Expr::Const(99) },
+            Applies::Holds { what: Holdable::Alignment(vec!["LG".to_owned(), "LN".to_owned(), "LE".to_owned()]), count: 1 },
+        ])
+    }
+
+    #[test]
+    fn alignment_unmet_names_only_the_alignment_term_and_leaves_the_rest_to_the_prerequisite_check() {
+        let package = SheetRulePackage::new();
+        let (held, facts) = (HeldSet::default(), CharacterFacts::default());
+        assert!(alignment_unmet(&package, &held, &facts, &lawful_only(), "CE").is_some());
+        assert_eq!(alignment_unmet(&package, &held, &facts, &lawful_only(), "LN"), None, "the failing base attack term is not an alignment");
+    }
+
+    #[test]
+    fn alignment_unmet_reads_a_negated_alignment_the_way_a_barbarian_states_one() {
+        let package = SheetRulePackage::new();
+        let (held, facts) = (HeldSet::default(), CharacterFacts::default());
+        let not_lawful = Applies::Not(Box::new(Applies::Holds { what: Holdable::Alignment(vec!["LG".to_owned()]), count: 1 }));
+        assert!(alignment_unmet(&package, &held, &facts, &not_lawful, "LG").is_some());
+        assert_eq!(alignment_unmet(&package, &held, &facts, &not_lawful, "CG"), None);
+    }
 
     /// SD-37 E2.1: the character record carries no key ability yet, so a prerequisite on its
     /// modifier is reported unverified rather than decided against a 0.

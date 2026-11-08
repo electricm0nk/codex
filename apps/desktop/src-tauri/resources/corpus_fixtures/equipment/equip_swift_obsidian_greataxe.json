@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Swift Obsidian Greataxe",
+    "name": "Swift Obsidian Greataxe"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_swift_obsidian_greataxe.txt",
+    "record_key": "Swift Obsidian Greataxe"
+  }
+}

@@ -1,0 +1,35 @@
+Aldric Ironhand
+Identity
+
+Name                                                Aldric Ironhand
+Race                                                         Human
+Class                                                      Fighter 3
+
+Combat
+
+Armor Class                                                       16
+Touch                                                             12
+Flat-Footed                                                       14
+Base Attack Bonus                                                 +3
+Melee                                                             +8
+CMB                                                               +7
+CMD                                                               18
+Initiative                                                        +1
+Fortitude                                                         +5
+Reflex                                                            +2
+Will                                                              +2
+
+Abilities
+
+Strength                                                     19   +4
+Dexterity                                                    13   +1
+Constitution                                                 14   +2
+Intelligence                                                 14   +2
+Wisdom                                                       12   +1
+Charisma                                                      8   -1
+
+
+
+
+                    Aldric Ironhand · page 1 of 1
+

@@ -1,0 +1,22 @@
+test character_hub::tests::mcq_p2_market_row_vs_refusal ... MCP p2 market weapons 480
+MCP p2 (Base) 77
+MCP p2 race:half-elf  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p2 race:half-orc  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p2 race:halfling  wizard: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p2 race:human Iomedae cleric: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []
+MCP p2 race:human  cleric: same 71 mismatch 0 norow 6 blocked 0
+  mismatch []
+  norow ["Arrow (Base)", "Bolt (Base)", "Repeating Bolt (Base)", "Sling Bullet (Base)", "Blowgun Dart (Base)", "Net (Base)"]
+  blocked []

@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Agile Half-Plate",
+    "name": "Agile Half-Plate",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "8",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=When Jumping",
+          "min(-ARMORACCHECK,3)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Climb",
+          "min(-ARMORACCHECK,3)"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Agile Half-Plate"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit.Standard"
+      },
+      {
+        "key": "COST",
+        "value": "850"
+      },
+      {
+        "key": "WT",
+        "value": "55"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-7"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "40"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_agile_half_plate.txt",
+    "record_key": "Agile Half-Plate"
+  }
+}

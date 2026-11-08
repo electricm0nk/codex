@@ -37,7 +37,7 @@
       "baseline_melee_attack_bonus": 0,
       "baseline_armor_class": 0,
       "total_saves": { "fortitude": 3, "reflex": 1, "will": 0 },
-      "selected_skill_modifiers": { "climb": 0, "intimidate": 0, "swim": 0 }
+      "selected_skill_modifiers": { "climb": 2, "intimidate": -1, "swim": 2 }
     },
     "corpus_derived": {
       "school_coverage": {},
@@ -65,7 +65,6 @@
     ]
   },
   "expected_diagnostics": [
-    { "id": "combat.baseline_unsupported", "claim_blocking": true },
-    { "id": "skill.selected_modifier.unsupported", "claim_blocking": true }
+    { "id": "combat.baseline_unsupported", "claim_blocking": true }
   ]
 }

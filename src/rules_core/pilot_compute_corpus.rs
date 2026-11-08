@@ -25,10 +25,11 @@
 use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
+use crate::rules_core::damage_total::resolve_base_damage_dice;
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::contract::encumbrance_size_for_race;
-use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
-use crate::rules_core::equipment_resolver::equipment_id_resolve;
+use crate::rules_core::equipment_effects::{compute_equipment_effects, stand_in_record, EquipmentEffects};
+use crate::rules_core::equipment_resolver::{equipment_converted_resolve, equipment_id_resolve};
 use crate::rules_core::feat_identity;
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::pilot_compute::{
@@ -36,15 +37,17 @@ use crate::rules_core::pilot_compute::{
     combat_maneuver_bonus, combat_maneuver_defense, compute_pilot_base_chassis,
     equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
     fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
-    fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
-    require_selected_skill_rank, selected_skill_climb_is_class_skill,
+    attack_ability_modifier_for, has_supported_class_chassis, melee_attack_ability_modifier, normalize_weapon_identity, require_active_state,
+    ComputationExplanation,
+    weapon_focus_bonus_for, weapon_training_bonus_for,
+    selected_skill_climb_is_class_skill, selected_skill_ranks,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
     selected_skill_class_skill_unknowns,
     supported_fighter_level, PilotBaseChassisComputation, ARMOR_CLASS_BASE, CLASS_SKILL_BONUS,
     CLIMB_SKILL_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
-    INTIMIDATE_SKILL_ID, LONGSWORD_ITEM_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
-    POWER_ATTACK_ITEM_ID, SELECTED_SKILL_RANK, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
-    WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS,
+    INTIMIDATE_SKILL_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
+    POWER_ATTACK_ITEM_ID, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
+    WEAPON_FOCUS_LONGSWORD_SELECTION,
     WEAPON_NONPROFICIENCY_ATTACK_PENALTY, WIZARD_CLASS_ID,
 };
 use crate::rules_core::rules_catalog::crb::spell_list::Pf1SchoolId;
@@ -383,6 +386,93 @@ pub struct CorpusAwareCombatBaseline {
     pub combat_maneuver_defense: i16,
 }
 
+/// A weapon the CRB table does not hold, read from its record's type tags (`data/equipment_types.json`):
+/// `Net (Base)` is `Ranged`, `Thrown`, `Exotic`. `None` unless the tags name a `Weapon` that is not
+/// `Ammunition`. The tags give the tier, the group and whether it is swung; a weapon with no
+/// tier tag has no proficiency answer, and owes no penalty. Its damage fields are empty: this
+/// entry answers the attack roll only, and the Weapons row reads the record's own damage.
+pub fn tagged_weapon_entry(identity: &str) -> Option<crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    use crate::rules_core::rules_catalog::crb::weapon_tables::{WeaponProficiency, WeaponTableEntry};
+    let identity = identity.strip_prefix("item:").unwrap_or(identity);
+    let (key, tags) = crate::rules_core::equipment_types::equipment_types().as_ref().ok()?.get_key_value(identity)?;
+    let has = |word: &str| tags.iter().any(|tag| tag == word);
+    if !has("Weapon") || has("Ammunition") {
+        return None;
+    }
+    let key: &'static str = key.as_str();
+    Some(WeaponTableEntry {
+        key,
+        damage_die: "",
+        critical_threat_range_width: 1,
+        critical_multiplier: 2,
+        proficiency_name: Some(key.strip_suffix(" (Base)").unwrap_or(key)),
+        proficiency: if has("Simple") {
+            Some(WeaponProficiency::Simple)
+        } else if has("Martial") {
+            Some(WeaponProficiency::Martial)
+        } else if has("Exotic") {
+            Some(WeaponProficiency::Exotic)
+        } else {
+            None
+        },
+        weapon_group: tags.iter().find_map(|tag| tag.strip_prefix("Weapon Group ")),
+        is_melee: has("Melee"),
+        is_ranged: has("Ranged"),
+    })
+}
+
+/// Whether `input` is proficient with a weapon read from its tags: the one verdict a table weapon
+/// reads, and `None`, owing no penalty, for a weapon whose tags name no tier (a Tanglefoot Bag).
+/// The Market's refusal reads this too.
+pub fn tagged_weapon_proficiency(
+    input: &CharacterInput,
+    weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
+) -> Option<bool> {
+    weapon.proficiency?;
+    character_is_proficient_with(input, weapon)
+}
+
+/// Whether `input` is proficient with the weapon a record in hand is: the table's verdict, or the
+/// tags' when the table does not hold it.
+fn held_weapon_proficiency(
+    input: &CharacterInput,
+    record_key: &str,
+    weapon: &crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry,
+    corpus: &SourcePackageContent,
+) -> Option<bool> {
+    if weapon_table_row_of(record_key, corpus).is_some() {
+        character_is_proficient_with(input, weapon)
+    } else {
+        tagged_weapon_proficiency(input, weapon)
+    }
+}
+
+/// The weapon a record in hand is: its table row, else what its type tags say, its own or its base
+/// item's.
+fn weapon_entry_of(
+    record_key: &str,
+    corpus: &SourcePackageContent,
+) -> Option<crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    weapon_table_row_of(record_key, corpus).copied().or_else(|| {
+        tagged_weapon_entry(record_key).or_else(|| {
+            let record = equipment_converted_resolve(record_key, corpus)?;
+            tagged_weapon_entry(&record.identity).or_else(|| tagged_weapon_entry(record.base_item.as_deref()?))
+        })
+    })
+}
+
+/// The weapon-table row of a record in hand: its own, or the base item's when it is a variant
+/// (`Dagger (Adamantine)` is a Dagger). `None` for a weapon from another book.
+fn weapon_table_row_of(
+    record_key: &str,
+    corpus: &SourcePackageContent,
+) -> Option<&'static crate::rules_core::rules_catalog::crb::weapon_tables::WeaponTableEntry> {
+    equipped_weapon_stat_block(record_key).or_else(|| {
+        let record = equipment_converted_resolve(record_key, corpus)?;
+        equipped_weapon_stat_block(record.base_item.as_deref()?)
+    })
+}
+
 pub fn compute_combat_baseline_from_corpus(
     base: &PilotBaseChassisComputation,
     input: &CharacterInput,
@@ -398,7 +488,6 @@ pub fn compute_combat_baseline_from_corpus(
         ));
     }
 
-    require_active_state(input, LONGSWORD_ITEM_ID, ActiveState::EquippedActive, &mut unmet);
     require_active_state(input, POWER_ATTACK_ITEM_ID, ActiveState::SelectedInactive, &mut unmet);
 
     // v0.6 alpha swarm (creation-seed honesty fix): Dodge is deliberately NOT
@@ -434,11 +523,7 @@ pub fn compute_combat_baseline_from_corpus(
     // cared about. `compute_equipment_effects` already tolerates an
     // unresolvable selection gracefully (skips it, contributes nothing to
     // any total) -- this function trusts that same tolerance rather than
-    // re-imposing a stricter, blocking requirement on top of it. The one
-    // real requirement equipment resolution DOES need to enforce is below:
-    // genuine 2-real-weapon ambiguity, which `attack_bonus_delta` already
-    // detects on its own (an unresolvable item is never counted as a
-    // weapon, so it can't manufacture a false ambiguity here either).
+    // re-imposing a stricter, blocking requirement on top of it.
     let equipped: Vec<EquipmentSelection> = chosen
         .equipment_selections
         .iter()
@@ -447,18 +532,27 @@ pub fn compute_combat_baseline_from_corpus(
         .collect();
     let effects = compute_equipment_effects(&equipped, corpus);
 
-    // Longsword is required above, so `None` here specifically means a
-    // second real (successfully resolved) weapon is also equipped --
-    // genuinely ambiguous, same honest-absence reasoning `attack_bonus_delta`
-    // itself already uses.
-    let Some(attack_bonus_delta) = effects.attack_bonus_delta else {
-        unmet.push(
-            "more than one real weapon is equipped alongside the required Longsword; the \
-             resulting attack bonus is ambiguous"
-                .to_owned(),
-        );
-        return Err(unmet);
-    };
+    // The number is the first melee weapon in hand's. Another weapon in hand has its own row
+    // (`damage_total::resolve_weapon_damage_breakdown`) and does not change it; with two copies of
+    // that weapon in hand the better one is the one swung. With none in hand it is base attack, the
+    // governing ability and size.
+    let main_hand = effects.per_item.iter().find(|item| {
+        is_weapon_in_hand(&item.equipment_record_key, corpus)
+            // A bow in hand is not swung. The table or the tags say; a weapon neither holds counts as swung.
+            && weapon_entry_of(&item.equipment_record_key, corpus).is_none_or(|weapon| weapon.is_melee)
+    });
+    let attack_bonus_delta = main_hand.map_or(0, |main| {
+        effects
+            .per_item
+            .iter()
+            .filter(|item| item.equipment_record_key == main.equipment_record_key)
+            .filter_map(|item| item.to_hit_bonus)
+            .max()
+            .unwrap_or(0)
+    });
+    let weapon = main_hand.and_then(|main| weapon_entry_of(&main.equipment_record_key, corpus));
+    // Only the table's answer can refuse; a weapon read from its tags owes the penalty it is known to.
+    let on_table = main_hand.is_some_and(|main| weapon_table_row_of(&main.equipment_record_key, corpus).is_some());
 
     // v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29): the
     // nonproficiency penalty must be applied HERE TOO, not only in
@@ -468,23 +562,28 @@ pub fn compute_combat_baseline_from_corpus(
     // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
     // exists to catch, and it caught it: applying the penalty on only one
     // of the two paths made Wizard level 1 read 4 here and 0 there. Both
-    // paths swing the same required Longsword against the same character,
+    // paths swing the same weapon against the same character,
     // so any proficiency rule that applies to one applies identically to
     // the other -- and this corpus-aware path is the intended eventual
     // replacement for the hardcoded one, so shipping it without the
     // penalty would just re-introduce the same silent overstatement later.
-    let nonproficiency_penalty = match equipped_weapon_stat_block(LONGSWORD_ITEM_ID)
-        .and_then(|weapon| character_is_proficient_with(input, weapon))
+    //
+    // A weapon the CRB table does not hold has no answer here and owes no penalty; it has its own row.
+    let nonproficiency_penalty = match main_hand
+        .zip(weapon.as_ref())
+        .map(|(main, weapon)| (weapon, held_weapon_proficiency(input, &main.equipment_record_key, weapon, corpus)))
     {
-        Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
-        Some(true) => 0,
-        None => {
+        Some((_, Some(false))) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
+        Some((_, Some(true))) | None => 0,
+        Some((_, None)) if !on_table => 0,
+        Some((weapon, None)) => {
             // Unknown, never assumed. Same contract as the hardcoded path:
             // refuse to produce a number rather than guess a penalty.
             unmet.push(format!(
-                "this character's proficiency with {LONGSWORD_ITEM_ID} is unknown (a class in \
+                "this character's proficiency with {} is unknown (a class in \
                  the mix has no ingested weapon-proficiency record), so the nonproficiency \
-                 penalty cannot be resolved"
+                 penalty cannot be resolved",
+                weapon.key
             ));
             0
         }
@@ -511,7 +610,13 @@ pub fn compute_combat_baseline_from_corpus(
 
     let level = supported_fighter_level(input).unwrap_or(1);
     let strength_modifier = base.ability_modifiers.strength;
-    let weapon_training_bonus = fighter_weapon_training_attack_bonus(input, level);
+    let weapon_training_bonus = weapon.as_ref().map_or(0, |weapon| weapon_training_bonus_for(input, weapon, level));
+    let attack_ability_modifier = weapon
+        .as_ref()
+        .map_or(strength_modifier, |weapon| melee_attack_ability_modifier(input, weapon, &base.ability_modifiers));
+    let focus_bonus = main_hand.map_or(0, |main| {
+        weapon_focus_bonus_for(input, weapon.as_ref().map_or(main.equipment_record_key.as_str(), |weapon| weapon.key))
+    });
     // The size modifier is applied HERE TOO, not only in
     // `pilot_compute::compute_combat_baseline`, for exactly the reason the
     // nonproficiency penalty above states: this is the path
@@ -521,8 +626,8 @@ pub fn compute_combat_baseline_from_corpus(
     // pins the two paths equal. One-sided application would both leave the
     // shipped sheet wrong and break that parity test.
     let melee_attack_bonus = base.base_attack_bonus
-        + strength_modifier
-        + WEAPON_FOCUS_TO_HIT_BONUS
+        + attack_ability_modifier
+        + focus_bonus
         + size_armor_class_modifier
         + weapon_training_bonus
         + attack_bonus_delta
@@ -584,8 +689,8 @@ pub fn compute_combat_baseline_from_corpus(
     //
     // Touch AC is derived by SUBTRACTION from `armor_class` above -- see
     // `pilot_compute::touch_armor_class` for why that shape rather than a
-    // parallel formula. The excluded set is `effects.armor_class_delta`
-    // (`compute_equipment_effects`' summed armor + shield bonus) plus the
+    // parallel formula. The excluded set is what `effects` holds of a type a touch attack ignores
+    // (armor, shield, natural armor: a deflection bonus stays) plus the
     // feat-derived NATURAL armor the shared seam resolved -- taken from that
     // seam's own accessor, not by re-listing its fields, so a future natural-armor
     // feat leaves touch AC on both twins at once. The Dexterity contribution,
@@ -593,7 +698,7 @@ pub fn compute_combat_baseline_from_corpus(
     // correct for a touch attack.
     let touch = touch_armor_class(
         armor_class,
-        effects.armor_class_delta + feat_contributions.excluded_from_touch_armor_class(),
+        effects.armor_class_not_against_touch() + feat_contributions.excluded_from_touch_armor_class(),
     );
     // SD-27, decisions.md §28 (flat-footed defect, 2026-07-31): flat-footed AC
     // on the path the shipped sheet reads. It was the LAST of the four defense
@@ -615,13 +720,12 @@ pub fn compute_combat_baseline_from_corpus(
     //     `pilot_compute::flat_footed_armor_class` on why a Dexterity penalty
     //     is kept) and the shared seam's dodge-typed feat total, taken from its
     //     own accessor rather than by re-listing its fields.
-    //   KEPT -- `effects.armor_class_delta` (the resolved armor + shield
-    //     bonus), `size_armor_class_modifier`, and the seam's natural-armor
+    //   KEPT -- `effects.armor_class_delta` less any dodge-typed item, `size_armor_class_modifier`, and the seam's natural-armor
     //     half. None of the three is a dodge bonus or a Dexterity bonus.
     let flat_footed = flat_footed_armor_class(
         armor_class,
         dexterity_contribution,
-        feat_contributions.denied_to_flat_footed_armor_class(),
+        effects.armor_class_lost_flat_footed() + feat_contributions.denied_to_flat_footed_armor_class(),
     );
     // Shared formulas, deliberately not re-derived: `pilot_compute` owns both,
     // so the two engine paths cannot drift into two different CMB/CMD rules the
@@ -653,16 +757,77 @@ pub fn compute_combat_baseline_from_corpus(
     })
 }
 
+/// A weapon: it has damage dice, its own or its base item's, the signal the Weapons row reads; or its
+/// type tags name a weapon that is not ammunition (`Net (Base)`, a Tanglefoot Bag). A shield's bash
+/// is not a weapon in hand to this engine, and a catalog row whose base is a shield
+/// (`Shield (Light/Steel)`, `Lion's Shield`) is a shield.
+fn is_weapon_in_hand(record_key: &str, corpus: &SourcePackageContent) -> bool {
+    (resolve_base_damage_dice(record_key, corpus).is_some() || weapon_entry_of(record_key, corpus).is_some())
+        && !equipment_converted_resolve(record_key, corpus).is_some_and(|record| {
+            record.is_shield || stand_in_record(record, corpus).is_some_and(|base| base.is_shield)
+        })
+}
+
+/// The attack row of a weapon in hand the CRB table does not hold by its own name, which the headless
+/// path cannot ground (`ground_per_weapon_combat_totals`): a variant such as `Dagger (Adamantine)`,
+/// or another book's weapon. The same terms: base attack, the governing ability, the Focus feats, the
+/// penalty when the table's answer is known, size. Its `+N` is on its Weapons row, as a table weapon's is.
+pub fn corpus_weapon_attack_rows(
+    base: &PilotBaseChassisComputation,
+    input: &CharacterInput,
+    corpus: &SourcePackageContent,
+) -> Vec<ComputationExplanation> {
+    let equipped: Vec<EquipmentSelection> = input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .cloned()
+        .collect();
+    let size = race_size_for_race_token(&input.chosen.race_id).map_or(0, |size| size.armor_class_size_modifier());
+    let mut rows: Vec<ComputationExplanation> = Vec::new();
+    for item in compute_equipment_effects(&equipped, corpus).per_item {
+        let key = item.equipment_record_key.as_str();
+        let id = format!("combat.weapon_attack_bonus.{}", normalize_weapon_identity(key));
+        if !is_weapon_in_hand(key, corpus)
+            || equipped_weapon_stat_block(key).is_some()
+            || rows.iter().any(|row| row.id == id)
+        {
+            continue;
+        }
+        let weapon = weapon_entry_of(key, corpus);
+        let ability = weapon.as_ref().map_or(base.ability_modifiers.strength, |weapon| {
+            attack_ability_modifier_for(input, weapon, &base.ability_modifiers)
+        });
+        let focus = weapon_focus_bonus_for(input, weapon.as_ref().map_or(key, |weapon| weapon.key));
+        let (penalty, proficiency_detail) = match weapon.as_ref().and_then(|weapon| held_weapon_proficiency(input, key, weapon, corpus)) {
+            Some(false) => (WEAPON_NONPROFICIENCY_ATTACK_PENALTY, ""),
+            Some(true) => (0, ""),
+            None => (0, " Whether this character is proficient with it is not known, so no penalty is applied."),
+        };
+        let value = base.base_attack_bonus + ability + focus + penalty + size;
+        rows.push(ComputationExplanation {
+            id,
+            value,
+            detail: format!(
+                "Attack bonus with the equipped {key}: base attack bonus ({:+}) + governing ability \
+                 modifier ({ability:+}) + weapon feats ({focus:+}) + nonproficiency penalty ({penalty}) \
+                 + size modifier ({size:+}) = {value}.{proficiency_detail}",
+                base.base_attack_bonus
+            ),
+        });
+    }
+    rows
+}
+
 /// v0.6 alpha swarm items 1+27 sub-task 4: real, corpus-resolved
 /// Climb/Intimidate/Swim selected-skill modifiers, replacing
 /// `pilot_compute::compute_selected_skill_modifiers`'s hardcoded Chain
 /// Shirt armor-check penalty. Widens the exact "Chain Shirt equipped"
 /// requirement to any resolvable armor loadout (or none), using real
 /// `armor_check_penalty_total` (`equipment_effects::compute_equipment_effects`)
-/// in place of the old Chain-Shirt-specific constant -- the skill-allocation
-/// posture itself (exactly Climb/Intimidate/Swim at rank 1; since SD-36 F7a, ranks in other
-/// skills no longer refuse it) is unchanged, same as `compute_combat_baseline_from_corpus`
-/// leaves the weapon/feat requirements unchanged.
+/// in place of the old Chain-Shirt-specific constant. A rank is never a condition: each total
+/// reads the character's own, and no rank reads untrained.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct CorpusAwareSelectedSkillModifiers {
     pub climb: i16,
@@ -675,7 +840,6 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     input: &CharacterInput,
     corpus: &SourcePackageContent,
 ) -> Result<CorpusAwareSelectedSkillModifiers, Vec<String>> {
-    let allocations = &input.chosen.skill_allocations;
     let mut unmet = Vec::new();
 
     if !has_supported_class_chassis(input) {
@@ -684,13 +848,6 @@ pub fn compute_selected_skill_modifiers_from_corpus(
              {WIZARD_CLASS_ID} levels 1-{MAX_SUPPORTED_WIZARD_LEVEL} chassis"
         ));
     }
-
-    let expected = [CLIMB_SKILL_ID, INTIMIDATE_SKILL_ID, SWIM_SKILL_ID];
-    for skill_id in expected {
-        require_selected_skill_rank(allocations, skill_id, &mut unmet);
-    }
-    // SD-36 F7a (F7-8): ranks in any other skill feed none of the three totals; not refused
-    // (the headless twin's `unmet_selected_skill_posture_conditions` says the same).
 
     // v0.6 alpha swarm sub-task 4: deliberately does not require every
     // EquippedActive selection to resolve against corpus -- see
@@ -720,18 +877,21 @@ pub fn compute_selected_skill_modifiers_from_corpus(
         (effects.armor_check_penalty_total + fighter_armor_training(level).armor_check_reduction)
             .min(0);
 
-    let rank = i16::from(SELECTED_SKILL_RANK);
+    let climb_rank = selected_skill_ranks(input, CLIMB_SKILL_ID);
+    let intimidate_rank = selected_skill_ranks(input, INTIMIDATE_SKILL_ID);
+    let swim_rank = selected_skill_ranks(input, SWIM_SKILL_ID);
     // v0.6 alpha swarm, Investigator full-build closure: three independent
     // per-skill checks, not one shared scalar -- see
     // `selected_skill_climb_is_class_skill`'s own doc comment in
     // `pilot_compute.rs` for why (Investigator's own real class-skill list
-    // is a genuine partial match, Climb/Intimidate yes, Swim no).
+    // is a genuine partial match, Climb/Intimidate yes, Swim no). The +3 also needs a rank in the
+    // skill (CRB Chapter 4).
     let climb_class_skill_bonus =
-        if selected_skill_climb_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+        if climb_rank > 0 && selected_skill_climb_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
     let intimidate_class_skill_bonus =
-        if selected_skill_intimidate_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+        if intimidate_rank > 0 && selected_skill_intimidate_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
     let swim_class_skill_bonus =
-        if selected_skill_swim_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
+        if swim_rank > 0 && selected_skill_swim_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
 
     // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): the same shared
     // seam `pilot_compute::compute_selected_skill_modifiers` reads. Before it,
@@ -743,16 +903,16 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     let feat_contributions =
         feat_derived_pillar_contributions(input, base.ability_modifiers.strength);
 
-    let climb = rank
+    let climb = climb_rank
         + base.ability_modifiers.strength
         + climb_class_skill_bonus
         + armor_check_penalty
         + feat_contributions.climb_skill_bonus();
-    let intimidate = rank
+    let intimidate = intimidate_rank
         + base.ability_modifiers.charisma
         + intimidate_class_skill_bonus
         + feat_contributions.intimidate_skill_bonus();
-    let swim = rank
+    let swim = swim_rank
         + base.ability_modifiers.strength
         + swim_class_skill_bonus
         + armor_check_penalty

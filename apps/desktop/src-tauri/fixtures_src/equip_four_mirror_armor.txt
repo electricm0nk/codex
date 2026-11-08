@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Four-mirror Armor
+Four-mirror Armor		PROFICIENCY:ARMOR|Four-mirror Armor		TYPE:Armor.Medium.ArmorProfMedium.Suit.Standard	COST:125	WT:45		ACCHECK:-5		EQMOD:Material ~ Steel				MAXDEX:2		SPELLFAILURE:30		BONUS:COMBAT|AC|6|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

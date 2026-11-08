@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Do-maru
+Do-maru			PROFICIENCY:ARMOR|Do-maru			TYPE:Armor.Medium.ArmorProfMedium.Suit.Standard	COST:200	WT:30		ACCHECK:-4		EQMOD:Material ~ Leather.Material ~ Steel	MAXDEX:4		SPELLFAILURE:25		BONUS:COMBAT|AC|5|TYPE=Armor|PREVAREQ:DisableArmorBonus,0

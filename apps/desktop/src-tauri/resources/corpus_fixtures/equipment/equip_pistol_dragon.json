@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Pistol (Dragon)",
+    "name": "Pistol (Dragon)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_pistol_dragon.txt",
+    "record_key": "Pistol (Dragon)"
+  }
+}

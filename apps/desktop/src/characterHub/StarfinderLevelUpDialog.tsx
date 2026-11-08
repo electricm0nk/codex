@@ -5,7 +5,6 @@ import {
   type SfLevelUpPreviewDto,
 } from '../boundary/starfinderLevelUp';
 import type { DiagnosticDto } from '../boundary/loadCreateCharacter';
-import { listStarfinderEquipmentOptions, type SfEquipmentOptionDto } from '../boundary/starfinderChoices';
 import { StarfinderChoicesPanel } from './StarfinderChoicesPanel';
 import { picksForSlot, reconcilePicks, samePicks, setSlotPick } from './starfinderCreationModel';
 import { SlotPicker } from './StarfinderCreateForm';
@@ -64,13 +63,6 @@ export function StarfinderLevelUpDialog(props: {
   const [refused, setRefused] = useState<DiagnosticDto[]>([]);
   const [saving, setSaving] = useState(false);
   const round = useRef(0);
-  const [equipment, setEquipment] = useState<SfEquipmentOptionDto[]>([]);
-
-  useEffect(() => {
-    listStarfinderEquipmentOptions()
-      .then(setEquipment)
-      .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : String(cause)));
-  }, []);
 
   const requestKey = JSON.stringify(buildStarfinderLevelUpRequest(props.characterId, draft, () => ''));
   useEffect(() => {
@@ -238,7 +230,6 @@ export function StarfinderLevelUpDialog(props: {
           <StarfinderChoicesPanel
             preview={preview.choices}
             choices={draft.choices ?? preview.choices.chosen}
-            equipment={equipment}
             onChange={(choices) => setDraft({ ...draft, choices })}
           />
         </div>

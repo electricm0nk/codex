@@ -109,7 +109,7 @@ jobs:
       # moved to 0.16.0 in the same commit, keeping this stamp in lockstep.
       #
       # tranche/18: 0.17 -> 0.18 for the SD-38 bundle cut; the repo version
-      # files moved to 0.18.0 at the cut.
+      # files moved to 0.19.0 at the cut.
       #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
@@ -118,7 +118,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.18.${GITHUB_RUN_NUMBER}"
+          VERSION="0.19.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];
@@ -155,11 +155,20 @@ jobs:
       # 69 min (core) + 14 min (desktop) on job 123177169190. Local builds
       # are unchanged: this is a CI env var, not a Cargo.toml profile.
       CARGO_PROFILE_TEST_OPT_LEVEL: "1"
+      # Drop debuginfo: the ubuntu-latest runner disk filled during desktop shell
+      # tests (ld Bus error / No space left on device).
+      CARGO_PROFILE_TEST_DEBUG: "0"
+      CARGO_PROFILE_DEV_DEBUG: "0"
 
     # TWIN: .github/workflows/pr-tests.yml runs this same lane on every PR
     # into develop, so a broken suite is caught before merge instead of only
     # here, after. If you change a step in this job, change it there too.
     steps:
+      - name: Free runner disk
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost "$AGENT_TOOLSDIRECTORY/CodeQL" || true
+          df -h /
+
       - uses: actions/checkout@v7
 
       - name: Install Linux build dependencies
@@ -313,9 +322,15 @@ jobs:
       # in the linux publish job now — the consumed `version` output is
       # ${{ needs.stamp.outputs.version }}.
 
+      - name: Build the PCGen import sidecar
+        run: |
+          cargo build --release --locked -p codex-ingest --bin pcg_import
+          mkdir -p apps/desktop/src-tauri/binaries
+          cp target/release/pcg_import apps/desktop/src-tauri/binaries/pcg_import-x86_64-unknown-linux-gnu
+
       - name: Build Linux artifact set
         working-directory: apps/desktop
-        run: npx tauri build --bundles deb,appimage --ci
+        run: npx tauri build --config src-tauri/tauri.sidecar.json --bundles deb,appimage --ci
 
       - name: Stage release artifacts
         id: stage
@@ -546,9 +561,15 @@ jobs:
       #   .app  — auto-derived from the binary when 'app' is in targets
       #   .dmg — installer bundle, controlled by bundle.macOS.dmg in
       #          tauri.conf.json
+      - name: Build the PCGen import sidecar
+        run: |
+          cargo build --release --locked -p codex-ingest --bin pcg_import --target aarch64-apple-darwin
+          mkdir -p apps/desktop/src-tauri/binaries
+          cp target/aarch64-apple-darwin/release/pcg_import apps/desktop/src-tauri/binaries/pcg_import-aarch64-apple-darwin
+
       - name: Build macOS artifact set
         working-directory: apps/desktop
-        run: npx tauri build --target aarch64-apple-darwin --bundles app,dmg --ci
+        run: npx tauri build --config src-tauri/tauri.sidecar.json --target aarch64-apple-darwin --bundles app,dmg --ci
 
       - name: Stage macOS release artifacts
         id: stage_macos
@@ -626,9 +647,16 @@ jobs:
       # on the ~107k-file data/corpus + data/sheet_rules resource bundle
       # (run 36595679219). Code-signing is intentionally deferred to a
       # follow-up — testers can click through SmartScreen.
+      - name: Build the PCGen import sidecar
+        shell: bash
+        run: |
+          cargo build --release --locked -p codex-ingest --bin pcg_import --target x86_64-pc-windows-msvc
+          mkdir -p apps/desktop/src-tauri/binaries
+          cp target/x86_64-pc-windows-msvc/release/pcg_import.exe apps/desktop/src-tauri/binaries/pcg_import-x86_64-pc-windows-msvc.exe
+
       - name: Build Windows artifact set
         working-directory: apps/desktop
-        run: npx tauri build --target x86_64-pc-windows-msvc --bundles nsis --ci
+        run: npx tauri build --config src-tauri/tauri.sidecar.json --target x86_64-pc-windows-msvc --bundles nsis --ci
 
       - name: Stage Windows release artifacts
         id: stage_windows

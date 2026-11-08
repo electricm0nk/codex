@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless rules-computation spine for Pathfinder 1e, Starfinder 1e and Cyberpunk RED — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
+> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for `body_slots.rs` and `feat_budget.rs`. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
 > engine), the `GameSystem` description and the module-map note. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §3e (the Starfinder 1e
 > generic chassis: the `sf_*` readers, `game_system.rs`, the engine master link) and for every reference to the
 > Pathfinder rules tables, now a data package read through `src/rules_core/rules_catalog/` (the compiled `rules_tables`
@@ -226,7 +226,7 @@ src/rules_core/pilot_compute/` is.**
 **Entry points** (`src/rules_core/pilot_compute/class_shared_core.rs`, `mod.rs`'s re-export makes
 both reachable as `pilot_compute::<name>` from outside this directory exactly as before the split):
 
-- `compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisComputation` — the core computation. Produces ability modifiers, base attack bonus, base saves, the deterministic combat baseline (melee attack bonus / armor class for a fixed Longsword + Chain Shirt + Dodge posture), total saves, selected skill modifiers, and a long tail of per-race and per-class explanation/diagnostic records, all accumulated into one `PilotBaseChassisComputation`.
+- `compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisComputation` — the core computation. Produces ability modifiers, base attack bonus, base saves, the combat baseline (melee attack bonus for the first melee weapon in hand, or none; armor class for a worn Chain Shirt, or no armor), total saves, selected skill modifiers, and a long tail of per-race and per-class explanation/diagnostic records, all accumulated into one `PilotBaseChassisComputation`.
 - `build_pilot_headless_receipt(input: &CharacterInput) -> PilotHeadlessReceipt` — a thin wrapper that runs `compute_pilot_base_chassis` and derives one `HeadlessReceiptStatus` (`Computed` or `Blocked`) from whether any diagnostic in the result is claim-blocking. This is the receipt shape `src/rules_core/pilot_view_model.rs` and `src/rules_core/pilot_failure.rs` consume (see below); it predates and is narrower than the SD-20 boundary contract's `PilotReceipt` (§5).
 - `has_supported_class_chassis(input: &CharacterInput) -> bool` (`class_shared_core.rs`) — the single shared gate every other per-domain pillar (`compute_total_saves`, `compute_combat_baseline`, `compute_selected_skill_modifiers`) checks independently of `compute_class_chassis`. It is a long `||` chain of per-class-family `is_supported_<x>_single_class`/`supported_<x>_level` predicates — the module's own comments record more than one wave where a class's chassis dispatched correctly through `compute_class_chassis` but its receipt still never reached `Computed`, because this shared gate had no matching arm. **Adding chassis dispatch for a class and not adding it here is the single most common way a "done" class stays claim-blocked.**
 
@@ -291,9 +291,9 @@ the split — this is the orchestrator's own call sequence, not a file boundary)
 |---|---|---|
 | Ability modifiers | `compute_ability_modifiers` (`class_shared_core.rs`) | `floor(score/2) - 5` per ability |
 | Class chassis dispatch | `compute_class_chassis`, `compute_multiclass_base_chassis`, `is_supported_multiclass_mix` (`class_occult_and_psionic.rs`); `has_supported_class_chassis` (`class_shared_core.rs`) | Base attack bonus + base saves for the classes/levels the dispatch table recognizes; unsupported input pushes `class_chassis.unsupported` |
-| Combat baseline | `compute_combat_baseline`, `unmet_combat_posture_conditions` (`combat.rs`) | Baseline melee attack bonus / armor class for the exact deterministic Longsword/Chain Shirt/Dodge/no-shield posture |
+| Combat baseline | `compute_combat_baseline`, `unmet_combat_posture_conditions` (`combat.rs`) | Baseline melee attack bonus / armor class. No item is required: Melee is the first melee weapon in hand's, or base attack, Strength and size with none. This path has no corpus, so it refuses a worn item it holds no number for; the corpus twin the sheet reads resolves that item |
 | Total saves | `compute_total_saves` (`feat_pillar_and_pool_aggregation.rs`) | Base save + relevant ability modifier, gated on `has_supported_class_chassis` |
-| Selected skill modifiers | `compute_selected_skill_modifiers` (`feat_pillar_and_pool_aggregation.rs`), `unmet_selected_skill_posture_conditions` | Climb/Intimidate/Swim only, gated on an exact rank-1 + Chain Shirt posture |
+| Selected skill modifiers | `compute_selected_skill_modifiers` (`feat_pillar_and_pool_aggregation.rs`), `unmet_selected_skill_posture_conditions` | Climb/Intimidate/Swim only, each at the character's own rank (no rank reads untrained), with a worn armor's check penalty |
 | Per-class feature/spell explainers | `explain_fighter_class_features` (`class_fighter.rs`), `explain_hybrid_level1_chassis`/`explain_paladin_level1_chassis_and_spell_burden_separation`/`explain_ranger_level1_chassis_and_class_feature_separation` (`class_paladin_ranger.rs`), `explain_barbarian_level1_chassis` (`class_barbarian.rs`), `explain_monk_level1_chassis` (`class_monk.rs`), `explain_rogue_level1_chassis` (`class_rogue.rs`), `explain_sorcerer_level1_spell_baseline` (`class_sorcerer_wizard.rs`), `explain_wizard_level1_prepared_spell_baseline` (`class_wizard_prepared_spellbook.rs`), `explain_cleric_level1_spell_baseline` (`class_cleric.rs`), `explain_druid_level1_spell_baseline` (`class_druid_shaman.rs`), `explain_bard_level1_spell_baseline` (`class_bard_skald.rs`) | Per-class, per-level named feature and spell-baseline explanation/diagnostic records — one function family per one of the 11 core classes, now spread across the per-class-family submodules above |
 | Per-race seams | `explain_human_pilot_race_seam`, `explain_human_trait_bundle`, `explain_dwarf_race_seam`, `explain_elf_race_seam`, `explain_gnome_race_seam`, `explain_half_elf_race_seam`, `explain_half_orc_race_seam`, `explain_halfling_race_seam` (all `race_seams.rs`) | Per-race trait recognition and (where grounded) numeric contribution — one function family per one of the 7 core races (Human's is split across two functions) |
 | Cross-cutting validation | `validate_fighter_feat_choice_legality` | Input-legality checks that produce diagnostics without computing a value |
@@ -647,6 +647,18 @@ static rows at level 1; of the 95 classes it walks, 92 are Known at every level 
 stay Unknown by named mechanism (`every_census_class_has_a_known_proficiency_answer`,
 `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md`). The weapon union over a mix is
 decidable by any one granting class.
+
+**One verdict past the class lists.** `character_weapon_proficiency` is what every attack row, the Melee
+total and the wear and buy refusal (`character_lacks_proficiency_with`) read. A weapon no class list covers
+goes to `held_weapon_grant`, which seeds what the record holds, with the race's traits off
+`race_resolver::applied_race_trait_keys`, and reads the grants held. It reads no computation, since the
+computation calls it. Two facts the converter declares on the record, never grants, finish it:
+`DeityFavoredWeapon` on a deity (read when a held class rule grants `ProfRef::DeityFavoredWeapon`, for the
+deity on the `character.deity` row `SavedCharacterStore::load` writes from `bio.json`), and
+`WeaponTreatedAsMartial` on a race's familiarity (the class lists decide that weapon again as Martial).
+No deity recorded, or none the rules hold, grants nothing: the -4 stands and the row prints why.
+A table shield names no weapon proficiency, so its bash is read by `held_shield_proficiency`, the reader the
+refusal uses. An attack row reads Dexterity for a weapon that cannot be swung (`attack_ability_modifier_for`).
 
 **Class skills, sub-classes, bloodlines, picks.** Class skills are read from the converted record
 (`class_skill_sheet_rules`); a sub-class choice (`SUBCLASS:`), an ability-category pick (a bloodline), a
@@ -1059,6 +1071,10 @@ per-book corpus-gap rows — not just CRB/APG/ACG) — see
 Ingesting those records does **not** ground their
 mechanical effects: `src/rules_core/feat_effects.rs` still grounds computed effects for a small
 subset of CRB feats only.
+
+**`src/rules_core/body_slots.rs`** — which body slot an equipment record occupies, whether the worn set conflicts, and whether the record takes a `+N` enhancement (`slot_of`, `worn_slot`, `slot_conflict`, `enhanceable`). The record's `Slot:` line wins, then barding and ammunition (no slot), then a slot tag, then the tag-to-slot table in `data/equipment_types.json` under `slots` (written by `gen_equipment_types` from the pinned oracle's slot list), so a table change is one data row.
+
+**`src/rules_core/feat_budget.rs`** — how many feats a Pathfinder 1e character may hold, pool by pool, and which pool each held feat is charged to (`feat_budget`, `FeatBudget::pools`, `over_by`, `refusal`, `explanation_rows`; `level_grants_feat` and `levels_granting_a_feat` for the odd-level `level` pool). The pools come from the rules the character holds, never a per-class table: every held rule whose `target` is `Pool(<feat pool>)` adds its evaluated value, and a class feature with no `Pool` target whose offer hands out feats is a pool sized by its offer's count (a Swashbuckler's `swashbuckler_bonus_feats`, E1.6); a line the converter repeats counts once.
 
 **`src/rules_core/equipment_effects.rs`** (Epic 5) + submodules + `src/rules_core/equipment_resolver.rs` + `src/rules_core/spell_resolver.rs` —
 `compute_equipment_effects(equipped: &[EquipmentSelection], corpus) -> EquipmentEffects` dispatches

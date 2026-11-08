@@ -1,0 +1,6 @@
+      1 error: could not compile `codex-desktop` (bin "codex-desktop" test) due to 7 previous errors
+      1 error[E0425]: cannot find function `next_mutation_revision_id` in this scope
+      1 error[E0425]: cannot find function `purchase_equipment_offer_at_root` in this scope
+      1 error[E0425]: cannot find function `sell_equipment_copy_at_root` in this scope
+      2 error[E0609]: no field `bonus` on type `character_hub::PurchaseEquipmentRequest`
+      2 error[E0609]: no field `bonus` on type `character_hub::RemoveEquipmentSelectionRequest`

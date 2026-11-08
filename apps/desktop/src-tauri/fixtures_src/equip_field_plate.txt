@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: iswg_equip_arms_armor.lst, KEY: Field Plate
+Field Plate																			PROFICIENCY:ARMOR|Full Plate							TYPE:Armor.Heavy.ArmorProfHeavy.Suit.Standard																COST:1200	WT:50				ACCHECK:-5														EQMOD:Material ~ Steel																									MAXDEX:1									SOURCEPAGE:p.291	SPELLFAILURE:35																							BONUS:COMBAT|AC|7|TYPE=Armor

@@ -1,0 +1,3 @@
+# cargo test --locked -p codex-ingest -j 8 pcg_import_fixtures -- --test-threads=8 on 91537a6951, before the card
+suites 176 tests run: 0
+

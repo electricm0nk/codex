@@ -31,6 +31,8 @@ export interface PurchaseEquipmentRequest {
   savedAt: string;
   /** `cashless` adds the item without charging; otherwise it is bought at 100%. Absent means `standard`. */
   priceMode?: PriceMode;
+  /** The `+N` to buy, one the Market row offers: charged at that offer's price, with its eqmod on the new copy. Absent buys the plain item. */
+  bonus?: number;
 }
 
 export type PurchaseEquipmentOutcome =
@@ -40,6 +42,10 @@ export type PurchaseEquipmentOutcome =
       snapshot: PilotSnapshotDto;
       corpusDerived: CorpusDerivedDto;
       money: CharacterMoneyDto;
+      /** Where the new copy went. Asked to be worn, it is worn if its slot is free. */
+      activeState: ActiveStateDto;
+      /** The slot refusal, when a copy asked to be worn is carried instead. Null when worn, and for an item with no slot. */
+      carriedReason: string | null;
     }
   | { kind: 'Blocked'; diagnostics: DiagnosticDto[] };
 

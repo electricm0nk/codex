@@ -1,0 +1,1 @@
+rows 5880 done 5880 secs 27

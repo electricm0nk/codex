@@ -573,7 +573,7 @@ mod intelligent_item_and_natural_attack_scope_tests {
 
     /// `SD31-W18-INTEGRATE-001` (adversarial review, `OPEN-ISSUES.md` row
     /// 309 re-opened): `damage_total::resolve_weapon_enhancement_modifier`
-    /// was scope-guarded in wave 18, but `resolve_weapon_to_hit_bonus` --
+    /// was scope-guarded in wave 18, but `attached_weapon_enhancement` --
     /// the function `compute_equipment_effects` actually calls for
     /// `to_hit_bonus`/`attack_bonus_delta` via `selection.applied_modifiers`,
     /// the SAME attachment shape the shipped desktop app's
@@ -583,7 +583,7 @@ mod intelligent_item_and_natural_attack_scope_tests {
     /// `attack_bonus_delta = Some(1)`, leaking the natural-attack-only
     /// bonus onto a non-natural weapon. Mutation-provable: removing the
     /// `bonus.natural_attack_only && !weapon_is_natural_attack` skip in
-    /// `resolve_weapon_to_hit_bonus` reproduces `Some(1)` here.
+    /// `attached_weapon_enhancement` reproduces `Some(1)` here.
     #[test]
     fn amulet_of_mighty_fists_attached_as_a_modifier_does_not_leak_onto_an_ordinary_longsword() {
         let corpus = corpus_with_fixture();

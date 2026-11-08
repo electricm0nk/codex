@@ -530,6 +530,77 @@ pub struct ResolvedRace {
     pub inert_flags: Vec<String>,
 }
 
+/// The corpus books that carry race content today. A book with no `race/`
+/// or `race_trait/` directory contributes nothing and is not an error, so
+/// this list is safe to extend as further books are ingested.
+/// Public so the desktop's `corpus_ingest_diagnostic` reports a per-book race count
+/// over exactly the books its race catalog actually searches — including a book
+/// that is searched and contributes nothing (ARG), which is a measured zero
+/// rather than an omission.
+pub const RACE_CORPUS_BOOKS: &[&str] = &[
+    "core_rulebook",
+    "beastiary",
+    "advanced_race_guide",
+    "advanced_players_guide",
+    "monster_codex",
+    "inner_sea_races",
+    "horror_adventures",
+    // Bestiary 2, SD-31 Epic 1-F2 (2026-08-15): the chassis + standard
+    // traits for 6 newly-modelled races (`ingest_races::IN_SCOPE_RACES`),
+    // filed under `bestiary_2` per `advanced_race_guide.pcc`'s own
+    // `# B2 races` section, exactly the way core_rulebook/beastiary already
+    // are.
+    "bestiary_2",
+    // Bestiary 5, SD-31 Epic 1 follow-on batch (2026-08-15): Skinwalker's
+    // chassis + 9 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
+    // Skinwalker's HERITAGE rows are not ingested by this batch (see
+    // `ingest_races.rs`'s `skinwalker` entry doc comment) -- this book
+    // loads the chassis + default-tier trait set only, same shape as the
+    // other flat, non-heritage race books above.
+    "bestiary_5",
+    // Bestiary 6, SD-31 wave-24 integration cycle (2026-08-20): Rougarou's
+    // chassis + 8 standard-tier traits (`ingest_races::IN_SCOPE_RACES`).
+    // Confirmed a flat, non-heritage shape (no `*_subrace.lst` file, no
+    // `Rougarou_Replace*` flag ever set to `True` anywhere in the pinned
+    // oracle) -- same shape as Bestiary 2/5 above, not the Dhampir-style
+    // heritage gap an earlier note wrongly grouped it with.
+    "bestiary_6",
+    // Bestiary 3, SD-32 `decisions.md §25` cycle 2: 5 Adopted-Race selector
+    // records (`ingest_race_traits.rs`'s new `selector_only` `BookSource`).
+    // Loaded, unlike Bestiary 2/5/6, purely for its 5 selector rows -- this
+    // book contributes zero chassis and zero standard-tier traits of its own
+    // (its 5 target races' chassis are ARG-native, already loaded under
+    // `advanced_race_guide`), so it never appears in `RACE_CATALOG_BOOKS`
+    // below, the same way ARG/APG/MC/ISR/HA are loaded here without
+    // contributing catalog rows.
+    "bestiary_3",
+];
+
+/// The race corpus of the running install's Pathfinder books, loaded once per process.
+pub fn live_race_corpus() -> &'static RaceCorpus {
+    use crate::rules_core::game_system::{runtime_repo_root, GameSystem};
+    static CORPUS: std::sync::OnceLock<RaceCorpus> = std::sync::OnceLock::new();
+    CORPUS.get_or_init(|| {
+        let corpus_root = runtime_repo_root().join(GameSystem::Pathfinder1e.corpus_relative());
+        let dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
+        let roots: Vec<BookCorpusRoot<'_>> =
+            RACE_CORPUS_BOOKS.iter().zip(&dirs).map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() }).collect();
+        load_race_corpus(&roots)
+    })
+}
+
+/// The keys of the racial traits a character of `race_id` holds with these alternates chosen: the
+/// same [`RaceCorpus::resolve`] the sheet's trait list reads, with a race the corpus does not hold
+/// holding none.
+pub fn applied_race_trait_keys(race_id: &str, selected_alternate_keys: &[String]) -> Vec<String> {
+    let corpus = live_race_corpus();
+    let selection: Vec<&str> = selected_alternate_keys.iter().map(String::as_str).collect();
+    corpus
+        .resolve_key(race_id)
+        .and_then(|key| corpus.resolve(key, &selection))
+        .map_or_else(Vec::new, |race| race.traits.into_iter().map(|t| t.key).collect())
+}
+
 /// Loads every race chassis and racial trait from every given book's corpus
 /// directory. A book with no `race/` or `race_trait/` subdirectory contributes
 /// nothing and is not an error — books are wired in incrementally.
@@ -2084,12 +2155,12 @@ mod tests {
     /// `progress.md`); this instance survived because nothing pointed the
     /// same question at this module.
     fn app_loaded_books() -> Vec<String> {
-        let src = std::fs::read_to_string("apps/desktop/src-tauri/src/race_catalog.rs")
-            .expect("the desktop race catalog source is readable from the repo root");
+        let src = std::fs::read_to_string("src/rules_core/race_resolver.rs")
+            .expect("the race resolver source is readable from the repo root");
         let decl = src
-            .split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =")
+            .split("pub const RACE_CORPUS_BOOKS: &[&str] =")
             .nth(1)
-            .expect("RACE_CORPUS_BOOKS is declared in race_catalog.rs");
+            .expect("RACE_CORPUS_BOOKS is declared in race_resolver.rs");
         let list = decl.split(';').next().expect("the declaration terminates");
         list.split('"').skip(1).step_by(2).map(str::to_owned).collect()
     }

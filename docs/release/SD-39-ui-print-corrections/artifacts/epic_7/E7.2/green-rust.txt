@@ -1,0 +1,16 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 41.80s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-b51aea73009681a5)
+
+running 8 tests
+test character_hub::tests::pcg_sidecar_is_found_beside_the_app_under_its_bare_name ... ok
+test character_hub::tests::pcg_sidecar_missing_gives_a_named_error ... ok
+test character_hub::tests::pcg_sidecar_ships_from_all_three_publish_jobs_and_never_from_the_base_config ... ok
+test character_hub::tests::pcg_sidecar_a_file_the_converter_refuses_returns_its_reason ... ok
+test character_hub::tests::pcg_sidecar_a_file_the_engine_refuses_saves_nothing_and_still_reports ... ok
+test character_hub::tests::pcg_sidecar_a_failed_file_write_leaves_no_half_imported_character ... ok
+test character_hub::tests::pcg_sidecar_a_character_with_no_money_writes_no_money_file ... ok
+test character_hub::tests::pcg_sidecar_a_built_binary_saves_a_character_that_loads_with_its_bio_money_and_custom_records ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 1142 filtered out; finished in 28.58s
+

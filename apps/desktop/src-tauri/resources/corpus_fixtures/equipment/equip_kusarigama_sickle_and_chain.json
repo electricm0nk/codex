@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Kusarigama (Sickle and Chain)",
+    "name": "Kusarigama (Sickle and Chain)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_kusarigama_sickle_and_chain.txt",
+    "record_key": "Kusarigama (Sickle and Chain)"
+  }
+}

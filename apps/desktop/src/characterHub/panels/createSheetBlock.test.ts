@@ -28,7 +28,7 @@ const render = (state: DraftPreviewState, hp: number | null = 12, conditions: st
   renderToStaticMarkup(createElement(SquareBlock, squareBlockForDraft(state, hp, conditions)));
 
 function verifiesAReadyPreviewRendersTheEngineValues() {
-  const html = render({ kind: 'ready', preview: { initiative: INITIATIVE, encumbrance: LOAD } });
+  const html = render({ kind: 'ready', preview: { initiative: INITIATIVE, encumbrance: LOAD, featBudget: [] } });
   assert(html.includes('+6'), 'the engine initiative value');
   assert(html.includes(INITIATIVE.detail), 'the engine initiative detail, verbatim');
   assert(html.includes('Light Load') && html.includes('29 lb'), 'the engine encumbrance via describeEncumbrance');

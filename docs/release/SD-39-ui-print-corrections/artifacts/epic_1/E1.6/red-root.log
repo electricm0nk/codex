@@ -1,0 +1,36 @@
+test rules_core::feat_budget::tests::feat_budget_a_grant_held_only_as_prose_invents_no_number ... ok
+test rules_core::feat_budget::tests::feat_budget_a_restricted_pool_only_takes_what_its_offer_lists ... ok
+test rules_core::feat_budget::tests::feat_budget_a_repeated_line_counts_once ... FAILED
+test rules_core::feat_budget::tests::feat_budget_an_offers_tag_list_is_any_of ... FAILED
+test rules_core::feat_budget::tests::feat_budget_an_archetypes_offer_is_read_by_the_same_rule ... FAILED
+test rules_core::feat_budget::tests::feat_budget_only_counts_pools_named_for_the_characters_feats ... ok
+test rules_core::feat_budget::tests::feat_budget_assignment_moves_an_earlier_feat_when_a_later_one_needs_its_pool ... ok
+test rules_core::feat_budget::tests::feat_budget_an_offered_pool_only_takes_what_the_book_lists ... FAILED
+test rules_core::feat_budget::tests::feat_budget_does_not_charge_a_non_fighter_for_the_baseline_weapon_focus_token ... ok
+test rules_core::feat_budget::tests::feat_budget_recognises_both_id_shapes_and_a_target_in_parentheses ... ok
+test rules_core::feat_budget::tests::feat_budget_a_class_that_grants_by_an_offer_has_a_pool ... FAILED
+test rules_core::feat_budget::tests::feat_budget_of_a_human_fighter_3_is_two_level_one_racial_two_fighter ... ok
+test rules_core::feat_budget::tests::feat_budget_over_budget_is_a_negative_remaining_and_the_rows_say_so ... ok
+test rules_core::feat_budget::tests::ledger_migration_a_feat_moves_to_a_later_slot_when_that_lets_a_later_feat_fit ... ok
+test rules_core::feat_budget::tests::feat_budget_refusal_names_the_pool_and_a_room_left_answer_is_none ... ok
+test rules_core::feat_budget::tests::feat_budget_a_feats_own_chooser_is_not_a_pool ... ok
+test rules_core::feat_budget::tests::feat_budget_level_pool_is_a_feat_at_every_odd_character_level ... ok
+test rules_core::feat_budget::tests::ledger_migration_slots_open_at_their_grant_levels_and_the_rest_have_no_level ... ok
+test rules_core::feat_budget::tests::feat_budget_reads_each_class_pool_from_the_rules_the_class_holds ... ok
+thread 'rules_core::feat_budget::tests::feat_budget_a_repeated_line_counts_once' (1604419) panicked at src/rules_core/feat_budget.rs:624:13:
+assertion `left == right` failed: hunter 3
+  left: Some(2)
+thread 'rules_core::feat_budget::tests::feat_budget_an_offers_tag_list_is_any_of' (1604423) panicked at src/rules_core/feat_budget.rs:615:13:
+assertion `left == right` failed: feat:power_attack: [FeatPool { id: "level", granted: 1, spent: 2, admits: None, sources: ["a feat at every odd character level"] }, FeatPool { id: "psychic_warrior_feat", granted: 1, spent: 0, admits: Some([["Psionic", "Combat"]]), sources: ["Psychic Warrior (psychi
+  left: 1
+thread 'rules_core::feat_budget::tests::feat_budget_an_archetypes_offer_is_read_by_the_same_rule' (1604421) panicked at src/rules_core/feat_budget.rs:645:13:
+assertion `left == right` failed: [FeatPool { id: "level", granted: 2, spent: 0, admits: None, sources: ["a feat at every odd character level"] }]
+  left: None
+thread 'rules_core::feat_budget::tests::feat_budget_an_offered_pool_only_takes_what_the_book_lists' (1604422) panicked at src/rules_core/feat_budget.rs:595:9:
+assertion `left == right` failed
+  left: 1
+thread 'rules_core::feat_budget::tests::feat_budget_a_class_that_grants_by_an_offer_has_a_pool' (1604416) panicked at src/rules_core/feat_budget.rs:586:17:
+assertion `left == right` failed: swashbuckler 4
+  left: None
+test result: FAILED. 14 passed; 5 failed; 0 ignored; 0 measured; 3044 filtered out; finished in 33.55s
+error: test failed, to rerun pass `--lib`

@@ -1,0 +1,192 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd39-e5.1": 3,
+      "sd39-e5.2": 3,
+      "sd39-e5.3": 3,
+      "sd39-e5.4": 1,
+      "sd39-e5.mc": 2
+    },
+    "by_subject": {
+      "E4.MC receipt: worn tests off a staged packaged layout": 1,
+      "E5.1 receipt, FILES YOU OWN closure check": 1,
+      "E5.2 dispatch prompt: re-count the 51 constant": 1,
+      "E5.2 receipt and E5.4 card": 1,
+      "SD-39 decisions.md \u00a711": 1,
+      "SD-39 epic-breakdown E5.1 FILES YOU OWN": 1,
+      "SD-39 technical-design.md \u00a75 and workflow-instruction.md \u00a73 E5 row": 1,
+      "decisions.md \u00a711 and R8: spells fill spells-known slots per class level": 1,
+      "epic-breakdown.md E5.2 FILES YOU OWN": 1,
+      "epic-breakdown.md E5.3 row": 1,
+      "sd39-e5.3": 1,
+      "technical-design.md \u00a75": 1
+    },
+    "by_verification_method": {
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-39-ui-print-corrections/kanban.md | awk 'END{print NR}'": 1,
+      "cargo test --locked -j 8 ledger_migration in apps/desktop/src-tauri: the wizard row test failed with Light at 5 before input_at_level swapped the spells": 1,
+      "find apps/desktop/src-tauri/resources/corpus_bundle -maxdepth 3 -type d -name class_feature | wc -l -> 0; ui-smoke screenshot of sheet-progression-drawer-open": 1,
+      "grep -n 'HP (if recorded)' docs/release/SD-39-ui-print-corrections/decisions.md; grep -n 'load_character_hit_points_at_root' apps/desktop/src-tauri/src/character_hub.rs": 1,
+      "grep -n 'SavedCharacterStore::save(' apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs": 1,
+      "grep -n 'SavedCharacterStore::save(' apps/desktop/src-tauri/src/pf1_adapter.rs; grep -n 'mutate_saved_character_at_root' apps/desktop/src-tauri/src/*.rs": 1,
+      "grep -n 'ability_scores' apps/desktop/src-tauri/src/character_custom.rs apps/desktop/src-tauri/src/character_hub.rs apps/desktop/src-tauri/src/pf1_adapter.rs": 1,
+      "grep -n 'buildLevelEntries\\|describeLevelGains\\|previewLevelUp' apps/desktop/src/characterHub/*.tsx: callers remain outside the drawer": 1,
+      "grep -n 'fn load_saved_character_at_root' apps/desktop/src-tauri/src/character_hub.rs; grep -n 'pub(super) fn .*spells_known' src/rules_core/pilot_compute/*.rs": 1,
+      "grep -rn 'set_data_root' src apps/desktop/src-tauri/src --include=*.rs": 1,
+      "ls apps/desktop/src-tauri/src/character_ledger.rs; awk '/E5 uses a .ledger.json/' docs/release/SD-39-ui-print-corrections/decisions.md": 1,
+      "python3 itertools.product count; ROLLED detail 'under Maximum Humanity 76'; seed 38 rolls 21 and the old sweep ends Some(11)": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd39-e5.1",
+        "id": "1793767559854-sd39-e5.1-7c672d",
+        "summary": "SD-39 technical-design.md \u00a75 and workflow-instruction.md \u00a73 E5 row claimed schema bump and src/saved_character/migrate_ledger; actual ledger.json in character_ledger.rs, no schema change (decisions.md \u00a725)",
+        "ts": "2026-11-04T04:45:59Z"
+      },
+      {
+        "actor": "sd39-e5.2",
+        "id": "1793770698647-sd39-e5.2-9d95a5",
+        "summary": "epic-breakdown.md E5.2 FILES YOU OWN claimed character_ledger.rs alone holds the first-load migration; actual the load hook is in character_hub.rs load_saved_character_at_root, the pool slots need feat_budget.rs internals (admits, assign), and the known tables are private to pilot_compute",
+        "ts": "2026-11-04T05:38:18Z"
+      },
+      {
+        "actor": "sd39-e5.2",
+        "id": "1793770698782-sd39-e5.2-350061",
+        "summary": "decisions.md \u00a711 and R8: spells fill spells-known slots per class level claimed every caster has spells-known slots to fill; actual only 7 classes have a known table and the book casters a spellbook_size row; a list caster has no limit, and the engine states no casting rows on an input holding a spell above its level, so slots are read with each class's canonical spells",
+        "ts": "2026-11-04T05:38:18Z"
+      },
+      {
+        "actor": "sd39-e5.2",
+        "id": "1793774043215-sd39-e5.2-4f769f",
+        "summary": "E5.2 dispatch prompt: re-count the 51 constant claimed the card-count constant is 51; actual 58 before E5.4, 59 after",
+        "ts": "2026-11-04T06:34:03Z"
+      },
+      {
+        "actor": "sd39-e5.3",
+        "id": "1793784772634-sd39-e5.3-1ebb55",
+        "summary": "technical-design.md \u00a75 claimed list_progression_ledger returns Vec<LevelEntry>, and the characterProgression.ts logic moves server-side; actual returns {levels, withoutLevel} of its own rows, since a row with no level must not be lost; characterProgression.ts stays for Create, the level-up preview and print",
+        "ts": "2026-11-04T09:32:52Z"
+      },
+      {
+        "actor": "sd39-e5.3",
+        "id": "1793784772782-sd39-e5.3-3c911e",
+        "summary": "epic-breakdown.md E5.3 row claimed the level row needs no hit points; actual decisions.md \u00a711 lists HP (if recorded), and hit_points.json records a die result per class level, so the row carries it",
+        "ts": "2026-11-04T09:32:52Z"
+      },
+      {
+        "actor": "sd39-e5.3",
+        "id": "1793784772916-sd39-e5.3-dcf430",
+        "summary": "sd39-e5.3 claimed the engine's class_feature.* rows at each level are the drawer's class features: 10 of 10 progression_ledger tests green on them; actual the app listed only Weapon And Armor Proficiency for a Wizard: most of those rows come from data/corpus/*/class_feature, and the bundle the app reads holds none, so the tests proved a shape only a checkout has; moved to the sheet's own class_feature lines",
+        "ts": "2026-11-04T09:32:52Z"
+      },
+      {
+        "actor": "sd39-e5.4",
+        "id": "1793786574597-sd39-e5.4-ee6cc7",
+        "summary": "E5.2 receipt and E5.4 card claimed 4d6 of 19 or more (126 of 1296), cap 74, about one run in ten; actual 4d6 of 21 or more (35 of 1296), cap 76 (EMP 8x10 less 4)",
+        "ts": "2026-11-04T10:02:54Z"
+      },
+      {
+        "actor": "sd39-e5.mc",
+        "id": "1793792745901-sd39-e5.mc-107e34",
+        "summary": "E5.1 receipt, FILES YOU OWN closure check claimed re_save reaches mutate_saved_character_at_root; actual re_save_character_at_root saves on its own (reSaveCharacter.rs:129); it changes nothing the ledger records, so no row is lost",
+        "ts": "2026-11-04T11:45:45Z"
+      },
+      {
+        "actor": "sd39-e5.mc",
+        "id": "1793792746026-sd39-e5.mc-d44ee0",
+        "summary": "E4.MC receipt: worn tests off a staged packaged layout claimed CODEX_DESKTOP_RESOURCE_DIR on a test binary reads as a packaged app; actual the data root is installed only by set_data_root, called in main.rs setup, so that run still read sheet rules from the checkout; the ledger's staged run here calls set_data_root itself",
+        "ts": "2026-11-04T11:45:46Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 12,
+    "with_blast_radius": 0
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd39-e5.1": 4,
+      "sd39-e5.2": 5,
+      "sd39-e5.3": 4,
+      "sd39-e5.4": 1,
+      "sd39-e5.mc": 2,
+      "sd39-main": 2
+    },
+    "by_origin": {
+      "agent": 13,
+      "derived": 5
+    },
+    "by_type": {
+      "correction": 12,
+      "incident": 1,
+      "verification": 5
+    },
+    "total": 18
+  },
+  "generated_at": "2026-11-04T11:45:46Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 12,
+    "events_per_commit": 1.5,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        12
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "clock-seeded-test": 1
+    },
+    "recent": [
+      {
+        "actor": "sd39-e5.2",
+        "id": "1793774055620-sd39-e5.2-87a8fa",
+        "summary": "a_blank_regain test is clock seeded and flaky",
+        "ts": "2026-11-04T06:34:15Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 1
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/docs/retro/events",
+    "problems": [],
+    "shards": 6
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {},
+    "recent": [],
+    "total": 0
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": 0.0,
+    "failed_runs": 0,
+    "runs": 5
+  },
+  "window": {
+    "since": "2026-11-03T23:02:19-05:00",
+    "spec": "2026-11-03T23:02:19-05:00",
+    "until": null
+  }
+}

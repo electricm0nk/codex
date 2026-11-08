@@ -1,10 +1,13 @@
+import type { ProgressionChoicesDto, ProgressionLevelDto } from '../boundary/listProgressionLedger';
 import { knownClass } from './classCatalog';
+import { SKILLS, skillIdFor } from './skillsModel';
 
 /**
  * Pathfinder 1e level progression: per-class skill points and class features,
- * plus the universal PF1 benefits (a feat at every odd level, an ability score
- * increase every 4th level). Used by the character sheet to list what each
- * current level granted and what the next level of each held class offers.
+ * plus the universal PF1 benefits (a feat at the levels the engine names, an
+ * ability score increase every 4th level). Used by the character sheet to list
+ * what each current level granted and what the next level of each held class offers.
+ * The sheet's feat counts are the engine's `feats.budget.*` rows, read by `readFeatBudget`.
  */
 
 /*
@@ -40,9 +43,9 @@ import { knownClass } from './classCatalog';
  * level-up engine.
  *
  * What remains in this module is deliberately not class-table data: skill
- * points per class (read off the served roster), the universal PF1 benefits (a feat at every odd
- * character level, an ability score increase every 4th), class-summary
- * parsing, and hit points.
+ * points per class (read off the served roster), the ability score increase every 4th level,
+ * class-summary parsing, and hit points. Which levels grant a feat is the engine's
+ * (`list_feat_levels`, installed with the roster).
  */
 
 /*
@@ -69,9 +72,9 @@ export interface LevelEntry {
   /** Base skill ranks for this class before the Intelligence modifier; `null` when not stated. */
   skillPointsBase: number | null;
   /**
-   * The universal PF1 benefits this *character* level grants — a feat at
-   * every odd level, an ability score increase every 4th. Both are general
-   * rules keyed to total character level, not entries from any class table.
+   * The universal PF1 benefits this *character* level grants — a feat at the
+   * levels the engine names, an ability score increase every 4th. Both are
+   * general rules keyed to total character level, not entries from any class table.
    *
    * Class features are deliberately not here: they come from the engine's
    * own `class_feature.*` / `class_chassis.*` records (see
@@ -86,13 +89,20 @@ export function classSkillPointsBase(classId: string): number | null {
   return knownClass(classId)?.skillRanksPerLevel ?? null;
 }
 
+let featLevels: ReadonlySet<number> = new Set();
+
+/** The character levels that grant a feat, as `list_feat_levels` serves them. Empty until installed. */
+export function installFeatLevels(levels: readonly number[]): void {
+  featLevels = new Set(levels);
+}
+
 /**
- * PF1 grants a feat at every odd character level and an ability score increase
- * every 4th character level (both keyed to total level, not class level).
+ * A feat at the levels the engine names, and an ability score increase every 4th character level
+ * (both keyed to total level, not class level).
  */
 function generalBenefits(characterLevel: number): string[] {
   const benefits: string[] = [];
-  if (characterLevel % 2 === 1) {
+  if (featLevels.has(characterLevel)) {
     benefits.push('Feat');
   }
   if (characterLevel % 4 === 0) {
@@ -168,8 +178,8 @@ export function previewLevelUp(heldClasses: HeldClass[], classId: string): Level
  *
  * Two independent sources, OR'd:
  *
- *   - `features` — the universal odd-character-level feat from
- *     `generalBenefits`. A PF1 general rule, not class-table data.
+ *   - `features` — the character-level feat from `generalBenefits`. A
+ *     PF1 general rule the engine serves, not class-table data.
  *   - `engineGrantNames` — the grant names Epic 7's real per-class
  *     level-up engine reports for this transition (`previewLevelUp`).
  *
@@ -191,6 +201,141 @@ export function levelGrantsFeat(features: string[], engineGrantNames: readonly s
   // which a plain substring match would wrongly treat as a feat grant.
   const grantsFeat = (text: string) => /\bfeat\b/i.test(text);
   return features.some(grantsFeat) || engineGrantNames.some(grantsFeat);
+}
+
+/** One feat pool off the engine's `feats.budget.<pool>.{granted,spent,remaining}` rows. */
+export interface FeatBudgetPool {
+  pool: string;
+  label: string;
+  granted: number;
+  spent: number;
+  remaining: number;
+}
+
+export interface FeatBudgetView {
+  pools: FeatBudgetPool[];
+  /** How many held feats the pools cannot fit: the rows' negative `remaining`. */
+  overBy: number;
+  /** False when the save is over budget or no pool has room. True when the engine served no rows: the add path decides. */
+  canAdd: boolean;
+  /** Why Add is disabled, or `null` when it is not. */
+  addBlockedReason: string | null;
+}
+
+const FEAT_BUDGET_ROW = /^feats\.budget\.(.+)\.(granted|spent|remaining)$/;
+
+/** Reads the budget rows, in served order. Decides nothing the rows do not say. */
+export function readFeatBudget(rows: ReadonlyArray<{ id: string; value: number }>): FeatBudgetView {
+  const pools = new Map<string, FeatBudgetPool>();
+  for (const row of rows) {
+    const match = FEAT_BUDGET_ROW.exec(row.id);
+    if (!match) {
+      continue;
+    }
+    const pool = pools.get(match[1]) ?? { pool: match[1], label: match[1].replace(/_/g, ' '), granted: 0, spent: 0, remaining: 0 };
+    pool[match[2] as 'granted' | 'spent' | 'remaining'] = row.value;
+    pools.set(match[1], pool);
+  }
+  const list = [...pools.values()];
+  const overBy = list.reduce((sum, pool) => sum + Math.max(0, -pool.remaining), 0);
+  const hasRoom = list.some((pool) => pool.remaining > 0);
+  const addBlockedReason =
+    overBy > 0
+      ? `Over budget by ${overBy}: remove a feat before adding another.`
+      : list.length > 0 && !hasRoom
+        ? 'No feat pool has room.'
+        : null;
+  return { pools: list, overBy, canAdd: addBlockedReason === null, addBlockedReason };
+}
+
+/** Under the feat budget override the Add button stays live; the badge and the pool lines still say what is spent. */
+export function withBudgetOverride(budget: FeatBudgetView, ignored: boolean): FeatBudgetView {
+  return ignored ? { ...budget, canAdd: true, addBlockedReason: null } : budget;
+}
+
+/** The pools any feat can fill: what Create lets the player pick. Class bonus feats are chosen on the sheet. */
+const OPEN_FEAT_POOLS: ReadonlySet<string> = new Set(['level', 'racial', 'bonus']);
+
+/** How many feats Create lets a draft pick, off its budget rows. */
+export function openFeatSlots(rows: ReadonlyArray<{ id: string; value: number }>): number {
+  return readFeatBudget(rows)
+    .pools.filter((pool) => OPEN_FEAT_POOLS.has(pool.pool))
+    .reduce((sum, pool) => sum + pool.granted, 0);
+}
+
+/** A word's id segments as a player reads them: `skill:basket_weaving` -> `Basket Weaving`. */
+function titleFromId(id: string): string {
+  const words = id.split(':').pop() ?? id;
+  return words
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function skillName(skillId: string): string {
+  return SKILLS.find((skill) => skillIdFor(skill.name) === skillId.toLowerCase())?.name ?? titleFromId(skillId);
+}
+
+function abilityIncreaseLine(choices: ProgressionChoicesDto): string | null {
+  return choices.abilityIncreases.length === 0
+    ? null
+    : `Ability increase: ${choices.abilityIncreases.map((row) => `${titleFromId(row.ability)} +${row.points}`).join(', ')}`;
+}
+
+function choiceLines(choices: ProgressionChoicesDto): string[] {
+  const lines: string[] = [];
+  if (choices.feats.length > 0) {
+    lines.push(`Feats: ${choices.feats.map((feat) => (feat.target ? `${feat.name} (${feat.target})` : feat.name)).join(', ')}`);
+  }
+  if (choices.spells.length > 0) {
+    lines.push(`Spells learned: ${choices.spells.map((spell) => spell.id).join(', ')}`);
+  }
+  if (choices.ranks.length > 0) {
+    const spent = choices.ranks.reduce((sum, row) => sum + row.ranks, 0);
+    lines.push(`Ranks spent: ${spent} (${choices.ranks.map((row) => `${skillName(row.skillId)} ${row.ranks}`).join(', ')})`);
+  }
+  return lines;
+}
+
+/** What holds no level, in the same words as a level's lines. */
+export function describeProgressionChoices(choices: ProgressionChoicesDto): string[] {
+  const increase = abilityIncreaseLine(choices);
+  return increase === null ? choiceLines(choices) : [...choiceLines(choices), increase];
+}
+
+function counted(count: number, singular: string): string[] {
+  return count > 0 ? [`${count} ${singular}${count === 1 ? '' : 's'}`] : [];
+}
+
+/**
+ * One row of `list_progression_ledger` as the drawer prints it. It reads the row and decides nothing:
+ * a line appears when the row states something, and an ability increase the level grants with nothing
+ * recording it says so rather than counting as unspent, since the sheet has no pick to spend it on.
+ */
+export function describeProgressionLevel(
+  level: ProgressionLevelDto,
+  heldClasses: readonly HeldClass[]
+): { heading: string; classLevel: string; lines: string[] } {
+  const classLabel = heldClasses.find((held) => held.classId === level.classId)?.classLabel ?? knownClass(level.classId)?.label ?? level.classId;
+  const lines: string[] = [];
+  if (level.hitDieResult !== null) {
+    lines.push(`Hit die result: ${level.hitDieResult}`);
+  }
+  if (level.classFeatures.length > 0) {
+    lines.push(`Class features: ${level.classFeatures.map((row) => (row.raised ? `${row.label} ${row.value}` : row.label)).join(', ')}`);
+  }
+  lines.push(...choiceLines(level));
+  const increase = abilityIncreaseLine(level);
+  if (increase !== null) {
+    lines.push(increase);
+  } else if (level.abilityIncreaseDue) {
+    lines.push('Ability increase: none recorded');
+  }
+  const unspent = [...counted(level.unspent.feats, 'feat'), ...counted(level.unspent.spells, 'spell'), ...counted(level.unspent.ranks, 'skill rank')];
+  if (unspent.length > 0) {
+    lines.push(`Unspent: ${unspent.join(', ')}`);
+  }
+  return { heading: `Level ${level.characterLevel}`, classLevel: `${classLabel} ${level.classLevel}`, lines };
 }
 
 function parseOneClass(segment: string): HeldClass {
@@ -263,42 +408,6 @@ export function maxHitPoints(heldClasses: HeldClass[], constitutionModifier: num
     }
   }
   return Math.max(1, hitPoints);
-}
-
-/**
- * Max HP when the character carries saved hit point results (the Create screen's Levels list saves
- * the die result for every level). Each saved result counts as it was saved, plus the Constitution
- * modifier, at least 1 per level. A level the character holds beyond its saved results (gained at
- * level-up) takes the class die's average, and the order the classes were added in does not matter:
- * only how many saved results each class has. Results beyond the levels held are ignored.
- *
- * With no saved results this is exactly `maxHitPoints`. `null` when an unsaved level belongs to a
- * class whose hit die is not known (never a guessed die).
- */
-export function maxHitPointsWithSavedLevels(
-  heldClasses: HeldClass[],
-  constitutionModifier: number,
-  saved: ReadonlyArray<{ classId: string; value: number }>
-): number | null {
-  if (saved.length === 0) {
-    return maxHitPoints(heldClasses, constitutionModifier);
-  }
-  let total = 0;
-  for (const held of heldClasses) {
-    const results = saved.filter((entry) => entry.classId === held.classId).slice(0, held.level);
-    for (const result of results) {
-      total += Math.max(1, result.value + constitutionModifier);
-    }
-    const unsaved = held.level - results.length;
-    if (unsaved > 0) {
-      const hitDie = classHitDie(held.classId);
-      if (hitDie === null) {
-        return null;
-      }
-      total += unsaved * Math.max(1, Math.floor(hitDie / 2) + 1 + constitutionModifier);
-    }
-  }
-  return total;
 }
 
 /**

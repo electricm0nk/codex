@@ -1,0 +1,601 @@
+     Running unittests src/lib.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex-ce0bccb9212d3fe1)
+test result: ok. 3044 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 364.91s
+     Running unittests src/bin/class_census.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/class_census-202889d5c53277fa)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 596.66s
+     Running unittests src/bin/pi_sweep_rules_tables.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/pi_sweep_rules_tables-dd36
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/rules_tables_package.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/rules_tables_package-e4d98c
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/v06_class_state_dump.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_class_state_dump-f07614
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src/bin/v06_content_state_dump.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_content_state_dump-bc
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/character_hub_list_saved_characters.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/character_hub_list_saved
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/character_input_record.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/character_input_record-58948dbd2a8a86
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/cpr_corpus_manifest.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/cpr_corpus_manifest-3843173eb024d13a)
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/derived_evaluator_fixture_check_class_feature.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/derived_evalua
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.95s
+     Running tests/derived_evaluator_fixture_check_class_feature_consumer_quantity.rs (/home/ubuntu/cargo-target/sd39-main/debug/d
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 27.24s
+     Running tests/derived_evaluator_fixture_check_companion.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/derived_evaluator_
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+     Running tests/derived_evaluator_fixture_check_companion_save_dc.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/derived_ev
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+     Running tests/derived_evaluator_fixture_check_monster.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/derived_evaluator_fi
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+     Running tests/derived_evaluator_fixture_check_monster_sla.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/derived_evaluato
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.50s
+     Running tests/derived_evaluator_fixture_check_spell_range.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/derived_evaluato
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.69s
+     Running tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+     Running tests/equipment_gap_tables.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/equipment_gap_tables-902cfb3b58fe5e09)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.67s
+     Running tests/ge06_failure_classifier.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_failure_classifier-95510ffae7ab
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.27s
+     Running tests/ge06_pilot_base_computation.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_pilot_base_computation-98c2
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.40s
+     Running tests/ge06_pilot_combat_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_pilot_combat_baseline-07a968
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.82s
+     Running tests/ge06_pilot_headless_receipt.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_pilot_headless_receipt-99fb
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.16s
+     Running tests/ge06_pilot_input_contract.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_pilot_input_contract-cba8d76f
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ge06_pilot_selected_skill_modifiers.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_pilot_selected_skil
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.04s
+     Running tests/ge06_pilot_total_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_pilot_total_saves-99a503b9f908fe
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.81s
+     Running tests/ge06_pilot_view_model.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge06_pilot_view_model-0c514db9c6b3aad4
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.18s
+     Running tests/ge08_package_file_lifecycle.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge08_package_file_lifecycle-3857
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ge08_preview_bridge.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge08_preview_bridge-41c132594f0c7659)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/ge08_validation_and_diagnostics.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/ge08_validation_and_diagnost
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/generator_name_key_screening_static_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/generator_name_key
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/hybrid_diagnostic_grounded_contradiction.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/hybrid_diagnostic_g
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.15s
+     Running tests/no_baked_manifest_dir_in_production.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/no_baked_manifest_dir_in
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+     Running tests/no_foreign_home_paths.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/no_foreign_home_paths-85522cbce7e35d16
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+     Running tests/package_store_atomic_write.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/package_store_atomic_write-a1c989
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/pi_blacklist_terms_rust_python_agree.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/pi_blacklist_terms_rust
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+     Running tests/pi_screening_regeneration_round_trip.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/pi_screening_regenerati
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+     Running tests/pi_table_sweep.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/pi_table_sweep-eabe37a70a77e9c2)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.04s
+     Running tests/rules_catalog_feature_facts_read_the_package.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/rules_catalog_f
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+     Running tests/rules_catalog_reads_the_package.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/rules_catalog_reads_the_pack
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+     Running tests/rules_tables_citation_burn_down.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/rules_tables_citation_burn_d
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+     Running tests/saved_character_store_delete.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/saved_character_store_delete-ba
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd13_barbarian_level1_chassis_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_barbarian_level1
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.66s
+     Running tests/sd13_barbarian_rage_power_slots.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_barbarian_rage_power_sl
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.62s
+     Running tests/sd13_bard_base_attack_and_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_base_attack_and_sa
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.22s
+     Running tests/sd13_bard_bonus_spells.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_bonus_spells-714c1bdb198073
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.45s
+     Running tests/sd13_bard_fascinate_dc.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_fascinate_dc-33652fd0072e58
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.10s
+     Running tests/sd13_bard_level1_spell_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_level1_spell_basel
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.87s
+     Running tests/sd13_bard_spell_level_thresholds.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_spell_level_thres
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.39s
+     Running tests/sd13_bard_spell_save_dcs.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_spell_save_dcs-c8c028617a
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.49s
+     Running tests/sd13_bard_spells_known_counts.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_spells_known_counts-
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.63s
+     Running tests/sd13_bard_spells_per_day_counts.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_spells_per_day_cou
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.67s
+     Running tests/sd13_bard_total_spells_per_day.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_total_spells_per_da
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.39s
+     Running tests/sd13_bard_versatile_performance_slots.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_bard_versatile_pe
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.42s
+     Running tests/sd13_cleric_base_attack_and_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_cleric_base_attack_an
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.49s
+     Running tests/sd13_cleric_domain_powers.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_cleric_domain_powers-04510f19
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.00s
+     Running tests/sd13_cleric_level1_spell_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_cleric_level1_spell_b
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.81s
+     Running tests/sd13_druid_base_attack_and_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_druid_base_attack_and_
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.58s
+     Running tests/sd13_druid_level1_spell_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_druid_level1_spell_bas
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.53s
+     Running tests/sd13_dwarf_bounded_race_semantics.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_dwarf_bounded_race_se
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.79s
+     Running tests/sd13_elf_race_semantics_recognition.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_elf_race_semantics_
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.67s
+     Running tests/sd13_fighter_bravery.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_fighter_bravery-f08b988ef9f6ffc5)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.70s
+     Running tests/sd13_fighter_favored_class_bonus_choice.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_fighter_favored
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.25s
+     Running tests/sd13_fighter_level1_hit_point_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_fighter_level1_h
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.27s
+     Running tests/sd13_fighter_level1_mandatory_milestone_classification.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.60s
+     Running tests/sd13_fighter_prerequisite_invalid_choice_blocking.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_fight
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.03s
+     Running tests/sd13_gnome_race_semantics_recognition.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_gnome_race_semant
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.68s
+     Running tests/sd13_half_elf_race_semantics_recognition.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_half_elf_race_
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.85s
+     Running tests/sd13_half_orc_bounded_race_semantics.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_half_orc_bounded_r
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.50s
+     Running tests/sd13_half_orc_race_semantics_recognition.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_half_orc_race_
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.23s
+     Running tests/sd13_halfling_race_semantics_recognition.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_halfling_race_
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.60s
+     Running tests/sd13_human_full_trait_bundle.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_human_full_trait_bundle-16
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.08s
+     Running tests/sd13_hybrid_level1_chassis_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_hybrid_level1_chass
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.28s
+     Running tests/sd13_monk_bonus_feat_choice.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_monk_bonus_feat_choice-9925
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.43s
+     Running tests/sd13_monk_bonus_feats_three_and_four.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_monk_bonus_feats_t
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.48s
+     Running tests/sd13_monk_level1_chassis_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_monk_level1_chassis_b
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.59s
+     Running tests/sd13_monk_second_bonus_feat.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_monk_second_bonus_feat-8375
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.39s
+     Running tests/sd13_paladin_base_attack_and_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_base_attack_
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.63s
+     Running tests/sd13_paladin_bonus_spells.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_bonus_spells-2d53daf1
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.66s
+     Running tests/sd13_paladin_level1_chassis_and_spell_burden_separation.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.36s
+     Running tests/sd13_paladin_level2_lay_on_hands_divine_grace.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_l
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.21s
+     Running tests/sd13_paladin_level3_mercy.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_level3_mercy-19703419
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.48s
+     Running tests/sd13_paladin_mercies_two_and_three.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_mercies_two_
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.60s
+     Running tests/sd13_paladin_partial_caster_effective_caster_level.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_pala
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.88s
+     Running tests/sd13_paladin_spell_level_thresholds.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_spell_level
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.48s
+     Running tests/sd13_paladin_spell_save_dcs.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_spell_save_dcs-db6c
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.44s
+     Running tests/sd13_paladin_spells_per_day_counts.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_spells_per_d
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.79s
+     Running tests/sd13_paladin_total_spells_per_day.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_paladin_total_spells_
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.58s
+     Running tests/sd13_progression/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_progression-5fef85ad638d174a)
+test result: ok. 1136 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.88s
+     Running tests/sd13_race_gnome_bounded_semantics.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_race_gnome_bounded_se
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.34s
+     Running tests/sd13_ranger_base_attack_and_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_base_attack_an
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.18s
+     Running tests/sd13_ranger_bonus_spells.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_bonus_spells-d392385ca3
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.54s
+     Running tests/sd13_ranger_combat_style_level_gate.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_combat_style
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.23s
+     Running tests/sd13_ranger_favored_terrain_choice.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_favored_terra
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.52s
+     Running tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.29s
+     Running tests/sd13_ranger_second_favored_terrain.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_second_favore
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.55s
+     Running tests/sd13_ranger_spell_burden_classification.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_spell_bu
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.85s
+     Running tests/sd13_ranger_spell_level_thresholds.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_spell_level_t
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.49s
+     Running tests/sd13_ranger_spell_save_dcs.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_spell_save_dcs-83976f
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.42s
+     Running tests/sd13_ranger_spells_per_day_counts.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_spells_per_day
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.71s
+     Running tests/sd13_ranger_third_favored_enemy.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_third_favored_en
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.75s
+     Running tests/sd13_ranger_total_spells_per_day.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_ranger_total_spells_pe
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.73s
+     Running tests/sd13_rogue_level1_chassis_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_rogue_level1_chassis
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.56s
+     Running tests/sd13_rogue_second_talent.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_rogue_second_talent-7cff4002a4
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.65s
+     Running tests/sd13_rogue_talent_choice.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_rogue_talent_choice-20fdc4975f
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.63s
+     Running tests/sd13_rogue_talents_three_through_five.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_rogue_talents_thr
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.84s
+     Running tests/sd13_sorcerer_base_attack_and_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_base_attac
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.62s
+     Running tests/sd13_sorcerer_bloodline_class_skill_choice.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_blo
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.55s
+     Running tests/sd13_sorcerer_bonus_spells.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_bonus_spells-ad142d
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.74s
+     Running tests/sd13_sorcerer_level1_spell_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_level1_spe
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.30s
+     Running tests/sd13_sorcerer_spell_level_thresholds.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_spell_lev
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.53s
+     Running tests/sd13_sorcerer_spell_save_dcs.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_spell_save_dcs-58
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.00s
+     Running tests/sd13_sorcerer_spells_known_counts.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_spells_known
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.21s
+     Running tests/sd13_sorcerer_spells_per_day_counts.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_spells_per
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.28s
+     Running tests/sd13_sorcerer_total_spells_per_day.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_sorcerer_total_spell
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.62s
+     Running tests/sd13_wizard_base_attack_and_saves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_wizard_base_attack_an
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.38s
+     Running tests/sd13_wizard_evocation_school_powers.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_wizard_evocation_sc
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.27s
+     Running tests/sd13_wizard_level1_prepared_spell_baseline.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_wizard_level
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.58s
+     Running tests/sd13_wizard_spell_save_dcs.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd13_wizard_spell_save_dcs-f39257
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.84s
+     Running tests/sd14_saved_character_envelope.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd14_saved_character_envelope-
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd18_barbarian_level11_greater_rage.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_barbarian_level11_g
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.42s
+     Running tests/sd18_dwarf_defensive_training.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_dwarf_defensive_training-
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.73s
+     Running tests/sd18_dwarf_greed.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_dwarf_greed-ad2b829c04e02690)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.88s
+     Running tests/sd18_dwarf_hardy.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_dwarf_hardy-8645e50112a8516e)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.77s
+     Running tests/sd18_dwarf_stability.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_dwarf_stability-e4b943eeb7284e7a)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.91s
+     Running tests/sd18_dwarf_stonecunning.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_dwarf_stonecunning-fb0563800006
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.80s
+     Running tests/sd18_elf_elven_immunities.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_elf_elven_immunities-11a3dbc0
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.94s
+     Running tests/sd18_elf_elven_magic.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_elf_elven_magic-f852649f35465613)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.02s
+     Running tests/sd18_elf_keen_senses.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_elf_keen_senses-0d6c417b924a54d7)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.88s
+     Running tests/sd18_fighter_level11_armor_training3.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_fighter_level11_ar
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.93s
+     Running tests/sd18_gnome_defensive_training.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_gnome_defensive_training-
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.81s
+     Running tests/sd18_gnome_hatred.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_gnome_hatred-500d0f8e93279579)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.84s
+     Running tests/sd18_gnome_illusion_resistance.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_gnome_illusion_resistanc
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.94s
+     Running tests/sd18_gnome_keen_senses.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_gnome_keen_senses-bf865563fee53f
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.83s
+     Running tests/sd18_half_elf_elven_immunities.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_half_elf_elven_immunitie
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.78s
+     Running tests/sd18_half_elf_keen_senses.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_half_elf_keen_senses-a15cac4a
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.83s
+     Running tests/sd18_half_orc_intimidating.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_half_orc_intimidating-71c24e
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.53s
+     Running tests/sd18_halfling_fearless.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_halfling_fearless-437756a3f064f1
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.89s
+     Running tests/sd18_halfling_keen_senses.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_halfling_keen_senses-58057b74
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.01s
+     Running tests/sd18_halfling_luck.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_halfling_luck-fca3c1a663cb520e)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.91s
+     Running tests/sd18_halfling_sure_footed.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_halfling_sure_footed-f0371656
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.78s
+     Running tests/sd18_monk_level11_diamond_body.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_monk_level11_diamond_bod
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.77s
+     Running tests/sd18_paladin_level11_aura_of_justice.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_paladin_level11_au
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.78s
+     Running tests/sd18_ranger_level11_quarry.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_ranger_level11_quarry-811a55
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.67s
+     Running tests/sd18_ranger_level16_improved_evasion.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_ranger_level16_imp
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.69s
+     Running tests/sd18_ranger_level17_hide_in_plain_sight.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_ranger_level17_
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.55s
+     Running tests/sd18_rogue_level11_sneak_attack.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_rogue_level11_sneak_att
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.50s
+     Running tests/sd18_widening/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd18_widening-358544bb46232031)
+test result: ok. 891 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.87s
+     Running tests/sd19_feat_catalog.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd19_feat_catalog-f0776b74e3361c44)
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd19_table_store_foundation.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd19_table_store_foundation-fc4e
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd20_contract_boundary_parity.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_boundary_parity-
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.27s
+     Running tests/sd20_contract_cell_map.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_cell_map-8a858b279eabe8
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.18s
+     Running tests/sd20_contract_character_input.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_character_input-
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd20_contract_feat_wiring.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_feat_wiring-a26f9d38
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.25s
+     Running tests/sd20_contract_level_up_preview.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_level_up_previe
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.07s
+     Running tests/sd20_contract_pilot_receipt.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_pilot_receipt-218c
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+     Running tests/sd20_contract_receipt_signature_threading.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_rece
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running tests/sd20_contract_skill_wiring.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_contract_skill_wiring-e3925f
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.30s
+     Running tests/sd20_damage_feat_effect.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_damage_feat_effect-7a2590de18a6
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_combat.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_feat_combat-7dc4b03163fe6b66)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_general.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_feat_general-fb69f7f4060e7788)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_item_creation.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_feat_item_creation-8282ecc9405e
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_metamagic.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_feat_metamagic-e82f0c565a7d724f)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_feat_prereqs_parity.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_feat_prereqs_parity-8205be1d55
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd20_level_up_parity.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_level_up_parity-9c413780f09b71d9)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.07s
+     Running tests/sd20_levelup_barbarian.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_barbarian-e162944a9a6255
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.15s
+     Running tests/sd20_levelup_bard.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_bard-c3750e93052c341a)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.43s
+     Running tests/sd20_levelup_cleric.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_cleric-c44b6fd947411c8e)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.11s
+     Running tests/sd20_levelup_druid.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_druid-e40b8f7cf833cf9f)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.13s
+     Running tests/sd20_levelup_fighter.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_fighter-8adadaedbec26de5)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.11s
+     Running tests/sd20_levelup_monk.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_monk-5f4bf1401d583c91)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.76s
+     Running tests/sd20_levelup_paladin.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_paladin-91df86ad682464cc)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.95s
+     Running tests/sd20_levelup_ranger.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_ranger-2860f1c3ef39ad17)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.06s
+     Running tests/sd20_levelup_rogue.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_rogue-aa62773d13458268)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.17s
+     Running tests/sd20_levelup_sorcerer.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_sorcerer-4ce675be92534ce5
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.21s
+     Running tests/sd20_levelup_wizard.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_levelup_wizard-c32c7eaa5df360e2)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.43s
+     Running tests/sd20_skill_allocation_class_skill.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_skill_allocation_clas
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.67s
+     Running tests/sd20_skill_allocation_cross_class.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_skill_allocation_cros
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.50s
+     Running tests/sd20_skill_allocation_max_rank_cap.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_skill_allocation_max
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.41s
+     Running tests/sd20_skill_allocation_parity.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_skill_allocation_parity-e7
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.63s
+     Running tests/sd20_skill_allocation_untrained.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd20_skill_allocation_untrai
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.09s
+     Running tests/sd21_epic6b_full_completion_reproducer.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd21_epic6b_full_comp
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.48s
+     Running tests/sd21_multiclass_fighter_wizard_chassis_computes.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd21_multicl
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.57s
+     Running tests/sd21_wizard_chassis_computes.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd21_wizard_chassis_computes-f5
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.31s
+     Running tests/sd21_wizard_prepared_spellbook.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd21_wizard_prepared_spellboo
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.57s
+     Running tests/sd22_acg_class_arcanist_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_arcanist_res
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_bloodrager_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_bloodrager
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_brawler_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_brawler_resol
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_hunter_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_hunter_resolve
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_investigator_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_investig
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_shaman_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_shaman_resolve
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_skald_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_skald_resolves-
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_slayer_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_slayer_resolve
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_swashbuckler_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_swashbuc
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_class_warpriest_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_class_warpriest_r
+test result: ok. 6 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_acg_equipment_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_equipment_resolves-fab8
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_acg_spell_list_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_acg_spell_list_resolves-52
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_alchemist_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_class_alchemist_r
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_cavalier_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_class_cavalier_res
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_inquisitor_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_class_inquisitor
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_oracle_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_class_oracle_resolve
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_summoner_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_class_summoner_res
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_class_witch_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_class_witch_resolves-
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_apg_equipment_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_equipment_resolves-f948
+test result: ok. 5 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_apg_spell_list_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_apg_spell_list_resolves-28
+test result: ok. 6 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd22_beastiary1_subset_01_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_01
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_02_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_02
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_03_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_03
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_04_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_04
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_05_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_05
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_06_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_06
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_07_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_07
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_beastiary1_subset_08_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_beastiary1_subset_08
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_dm_toolkit_deterministic.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_dm_toolkit_deterministic-
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd22_dm_toolkit_happy_path_integration.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd22_dm_toolkit_happy
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd24_acg_class_coverage_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_acg_class_coverage_audit-
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.08s
+     Running tests/sd24_acg_equipment_field_completion.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_acg_equipment_field
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd24_apg_class_coverage_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_apg_class_coverage_audit-
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.77s
+     Running tests/sd24_equipment_coverage_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_equipment_coverage_audit-
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests/sd24_equipment_field_completion.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_equipment_field_complet
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd24_identifier_discipline_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_identifier_discipline_
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+     Running tests/sd24_multiclass_deterministic.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_multiclass_deterministic-
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.68s
+     Running tests/sd24_multiclass_dispatch_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_multiclass_dispatch_audi
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd24_multiclass_fighter_lv10.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_multiclass_fighter_lv10-29
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.18s
+     Running tests/sd24_multiclass_fighter_wizard_split.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_multiclass_fighter
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.93s
+     Running tests/sd24_multiclass_integration.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_multiclass_integration-861c
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.21s
+     Running tests/sd24_multiclass_wizard_lv10.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_multiclass_wizard_lv10-796f
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.48s
+     Running tests/sd24_release_notes_structure.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_release_notes_structure-91
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sd24_wired_integration_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_wired_integration_audit-f7
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+     Running tests/sd24_wizard_level_up_spell_coverage.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd24_wizard_level_up_spe
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.60s
+     Running tests/sd25_barbarian_level_up_explanation_filter_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_barbar
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.22s
+     Running tests/sd25_bard_level_up_explanation_coverage.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_bard_level_up_e
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.03s
+     Running tests/sd25_cleric_level_up_explanation_coverage.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_cleric_level_
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.69s
+     Running tests/sd25_druid_level_up_explanation_filter_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_druid_leve
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.03s
+     Running tests/sd25_monk_level_up_explanation_filter_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_monk_level_
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.93s
+     Running tests/sd25_paladin_level_up_explanation_coverage.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_paladin_leve
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.21s
+     Running tests/sd25_ranger_level_up_explanation_coverage.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_ranger_level_
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.14s
+     Running tests/sd25_rogue_level_up_explanation_filter_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_rogue_leve
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.00s
+     Running tests/sd25_sorcerer_level_up_explanation_coverage.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd25_sorcerer_le
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.91s
+     Running tests/sd26_cache_core_rulebook.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd26_cache_core_rulebook-6d38f01d00
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s
+     Running tests/sd26_identifier_discipline_audit.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd26_identifier_discipline_
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.62s
+     Running tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+     Running tests/sd27_ability_automatic_granted_race_traits.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_ability_auto
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+     Running tests/sd27_advanced_race_guide_cache_shape.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_advanced_race_guid
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+     Running tests/sd27_alternate_racial_trait_reachability.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_alternate_raci
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 130.65s
+     Running tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_ap
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+     Running tests/sd27_apostrophes_do_not_split_id_slugs.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_apostrophes_do_n
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.33s
+     Running tests/sd27_arg_and_pu_feat_effects.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_arg_and_pu_feat_effects-3f
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.72s
+     Running tests/sd27_book_license_record_counts.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_book_license_record_cou
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.45s
+     Running tests/sd27_crb_race_corpus_pin.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_crb_race_corpus_pin-d73868f027
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/sd27_equipment_modifier_price_matches_corpus_cost_token.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+     Running tests/sd27_feat_effects_reach_both_compute_paths.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_feat_effects
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd27_flat_footed_armor_class.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_flat_footed_armor_class-44
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.65s
+     Running tests/sd27_known_spells_must_be_on_the_class_spell_list.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_known
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.45s
+     Running tests/sd27_license_stripping_shape_v1.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_license_stripping_shape
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.70s
+     Running tests/sd27_non_crb_spell_level_gate.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_non_crb_spell_level_gate-
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.41s
+     Running tests/sd27_pathfinder_unchained_cache_shape.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_pathfinder_unchai
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd27_pu_class_features_reach_by_corpus_key.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_pu_class_fea
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.51s
+     Running tests/sd27_pu_class_wiring_pin.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_pu_class_wiring_pin-994b17fa57
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 48.74s
+     Running tests/sd27_pu_deferred_features_reach_the_character_sheet.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_pu_
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.31s
+     Running tests/sd27_pu_prose_derived_class_features_reach_the_sheet.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_pu
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.35s
+     Running tests/sd27_race_size_resolution.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_race_size_resolution-e6c92107
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+     Running tests/sd27_size_modifiers_to_armor_class.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_size_modifiers_to_ar
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.00s
+     Running tests/sd27_size_modifiers_to_touch_cmb_cmd_and_attack.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_size_mo
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.92s
+     Running tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd27_un
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.64s
+     Running tests/sd28_beastiary1_subset_09_resolves.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd28_beastiary1_subset_09
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/sd29_declared_product_identity_in_shipped_race_traits.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd29_d
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+     Running tests/sd30_declared_product_identity_in_shipped_class_features.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd3
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.32s
+     Running tests/sd31_class_feature_corpus_key_uniqueness.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd31_class_feature_
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.51s
+     Running tests/sd31_crb_variant_spell_rows_resolve_against_their_base.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd31_
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/sd31_lst_provenance_repair_is_durable.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd31_lst_provenance_re
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.29s
+     Running tests/sd34_wave51_racial_sla_catalog_matches_the_corpus.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd34_wave5
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests/sd35_class_feature_catalogs_read_converted_prose.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd35_class_
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.78s
+     Running tests/sd35_live_side_names_no_ingest_qualifier.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd35_live_side_name
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests/sd35_rendered_prose_carries_no_ingest_vocabulary.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd35_render
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+     Running tests/sd36_bloodline_pick_option.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd36_bloodline_pick_option-c30d1b
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.19s
+     Running tests/sd36_class_skill_from_record.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd36_class_skill_from_record-dc
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 80.32s
+     Running tests/sd36_f3_polish.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd36_f3_polish-e15476c7b633983d)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 148.63s
+     Running tests/sd36_f4_link_pick_namespace.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd36_f4_link_pick_namespace-291c
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 191.26s
+     Running tests/sd36_f4pre_pool_choices.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd36_f4pre_pool_choices-1dc7a4cec356
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.00s
+     Running tests/sd36_multiclass_any_class.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd36_multiclass_any_class-c3c61f2a
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 77.34s
+     Running tests/sd36_sorcerer_bloodline_record.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd36_sorcerer_bloodline_recor
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 41.45s
+     Running tests/sd49_monk_level20_capstone.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd49_monk_level20_capstone-d58d31
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.62s
+     Running tests/sd_governance_stub_registry_divergence.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sd_governance_stub_re
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/sheet_rule_book_collision_census.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sheet_rule_book_collision_c
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.31s
+     Running tests/sorcerer_draconic_bloodline_dragon_resistances.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/sorcerer_drac
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.91s
+     Running tests/v06_beastiary1_natural_attack_grounding.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_beastiary1_natur
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/v06_caster_level_every_casting_class.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_caster_level_every_
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 105.88s
+     Running tests/v06_companion_reaches_the_pilot_view_model.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_companion_rea
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.73s
+     Running tests/v06_druid_level16_to_20_widening.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_druid_level16_to_20_wid
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.41s
+     Running tests/v06_durability.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_durability-a56ca93ee225feba)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/v06_equipment_cost_resolution.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_equipment_cost_resolution-
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s
+     Running tests/v06_hybrid_level1_no_spellcasting_is_computed.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_hybrid_lev
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 29.23s
+     Running tests/v06_money_conversion.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_money_conversion-f153133bd89fb711)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests/v06_pilot_snapshot_damage_reduction.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_pilot_snapshot_damag
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.18s
+     Running tests/v06_rogue_ui_reachability.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_rogue_ui_reachability-26781822
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.98s
+     Running tests/v06_selected_skill_class_skill_bonus.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_selected_skill_clas
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.88s
+     Running tests/v06_stale_total_engine_deferral_resweep.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_stale_total_engi
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.92s
+     Running tests/v06_wizard_rogue_skill_allocation_grounding.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/v06_wizard_rogue
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.97s
+     Running tests/wizard_abjuration_school_powers.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/wizard_abjuration_school_pow
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.45s
+     Running tests/worn_vs_carried.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/worn_vs_carried-bc122f39841fb71e)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.87s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

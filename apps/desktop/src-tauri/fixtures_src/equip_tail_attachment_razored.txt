@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: arg_equip_arms_armor.lst, KEY: Tail Attachment (Razored)
+Tail Attachment (Razored)	OUTPUTNAME:Tail Attachment, Razored		PROFICIENCY:WEAPON|Kobold Tail Attachment		TYPE:Weapon.Resizable.Melee.Light.KoboldTailAttachment.Slashing.Finesseable									COST:3	WT:2						CRITMULT:x2	CRITRANGE:2	DAMAGE:1d8	EQMOD:Material ~ Steel												WIELD:Light																														SPROP:This metal wedge has a prickly edge on one of its sides.|PRERULE:1,DisplayWeaponDetails

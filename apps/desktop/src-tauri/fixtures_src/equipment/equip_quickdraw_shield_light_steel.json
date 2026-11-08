@@ -1,0 +1,84 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Quickdraw Shield (Light/Steel)",
+    "name": "Quickdraw Shield (Light/Steel)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Quickdraw Shield, Light Steel"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Quickdraw Shield (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Light.Standard.Close"
+      },
+      {
+        "key": "COST",
+        "value": "59"
+      },
+      {
+        "key": "WT",
+        "value": "7"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d3"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "Light"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.180"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_quickdraw_shield_light_steel.txt",
+    "record_key": "Quickdraw Shield (Light/Steel)"
+  }
+}

@@ -22,7 +22,8 @@
 // SKILL.md / verify-on-screen.sh for the concurrency rules this runner
 // inherits (RUN_DESKTOP_AGENT must be unique per concurrently-dispatched
 // agent; never 'default').
-import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -272,10 +273,10 @@ class TargetNotFoundError extends Error {
  * a late-acknowledged `click Load` had already opened the sheet, and every
  * re-send then failed on the vanished button).
  */
-function clickByNameChannel(name) {
+function clickByNameChannel(name, index) {
   // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
   // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
-  const result = sendUntilOk(cmdPath, probePath, { op: 'click', target: name }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
+  const result = sendUntilOk(cmdPath, probePath, { op: 'click', target: name, index }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new TargetNotFoundError(`${name}${result.error ? ` (${result.error})` : ''}`);
   }
@@ -323,8 +324,8 @@ function clickByNameXdotool(name) {
   }
 }
 
-function clickByName(name) {
-  return USE_XDOTOOL ? clickByNameXdotool(name) : clickByNameChannel(name);
+function clickByName(name, index) {
+  return USE_XDOTOOL ? clickByNameXdotool(name) : clickByNameChannel(name, index);
 }
 
 /**
@@ -411,10 +412,65 @@ function pressKey(key) {
   }
 }
 
+// A native file dialog is an X window of its own, so this one step is OS-level input: the command
+// channel only reaches the webview. `relativePath` is from the repo root (an absolute path is kept
+// as given). GTK's chooser takes a typed path after ctrl+L. An open dialog's title starts "Open"; a
+// save dialog's starts "Save", and its target is removed first so GTK asks no overwrite question.
+function chooseInNativeFileDialog(relativePath) {
+  const env = { ...process.env, DISPLAY: `:${driver.displayNum()}` };
+  const xdotool = (...args) => spawnSync('xdotool', args, { encoding: 'utf8', env });
+  const deadline = Date.now() + 10000;
+  let dialog = '';
+  while (!dialog && Date.now() < deadline) {
+    dialog = xdotool('search', '--onlyvisible', '--name', '^(Open|Save)').stdout.trim().split(/\s+/)[0] ?? '';
+    if (!dialog) {
+      sleepMs(250);
+    }
+  }
+  if (!dialog) {
+    throw new Error('no native file dialog appeared');
+  }
+  const target = resolve(driver.APP_ROOT, '..', '..', relativePath);
+  const saving = xdotool('getwindowname', dialog).stdout.startsWith('Save');
+  if (saving) {
+    rmSync(target, { force: true });
+  }
+  xdotool('windowfocus', '--sync', dialog);
+  xdotool('key', '--window', dialog, 'ctrl+l');
+  sleepMs(300);
+  if (saving) {
+    // A save dialog selects the offered name up to its extension; select all of it, so the typed
+    // path replaces "name.pdf" whole rather than becoming "path.pdf.pdf".
+    xdotool('key', '--window', dialog, 'ctrl+a');
+    sleepMs(200);
+  }
+  xdotool('type', '--delay', '30', '--', target);
+  sleepMs(300);
+  xdotool('key', 'Return');
+}
+
+// A row with `sidecar: true` runs the app's `pcg_import`: built into the target directory the app
+// runs from, which is where a dev build looks for it. A failure stops the run, naming the build.
+function buildSidecar() {
+  const targetDir = process.env.CARGO_TARGET_DIR ?? join(driver.APP_ROOT, 'src-tauri', 'target');
+  console.log(`Building pcg_import into ${targetDir}...`);
+  const result = spawnSync('cargo', ['build', '--locked', '-p', 'codex-ingest', '--bin', 'pcg_import'], {
+    cwd: resolve(driver.APP_ROOT, '..', '..'),
+    env: { ...process.env, CARGO_TARGET_DIR: targetDir },
+    stdio: 'inherit',
+  });
+  if (result.status !== 0) {
+    throw new Error('cargo build of pcg_import failed');
+  }
+}
+
 function runStep(step) {
   switch (step.op) {
+    case 'nativeFile':
+      chooseInNativeFileDialog(step.text);
+      break;
     case 'click':
-      clickByName(step.target);
+      clickByName(step.target, step.index);
       break;
     case 'type':
       typeText(step.text);
@@ -774,6 +830,9 @@ function main() {
 
   const spec = loadSpec();
   const selected = selectRows(spec, args);
+  if (selected.some((row) => row.sidecar)) {
+    buildSidecar();
+  }
 
   // Denominator discipline: `results` always holds exactly one entry per
   // SELECTED row, from this very first write, before any row has actually

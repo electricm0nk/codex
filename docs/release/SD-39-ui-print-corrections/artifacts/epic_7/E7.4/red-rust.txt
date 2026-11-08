@@ -1,0 +1,16 @@
+test character_hub::tests::no_required_gear_creation_still_gives_the_starting_items ... ok
+test cpr_adapter::tests::no_required_gear_cyberpunk_solo_loads_with_nothing_held ... ok
+test sf_adapter::tests::no_required_gear_starfinder_soldier_computes_with_nothing_worn ... FAILED
+test character_hub::tests::no_required_gear_armor_the_headless_twin_cannot_read_is_not_read_as_none ... FAILED
+test character_hub::tests::no_required_gear_both_twins_read_the_same_loadout ... FAILED
+test character_hub::tests::no_required_gear_every_item_stowed_saves_and_computes ... FAILED
+test character_hub::tests::no_required_gear_no_items_at_all_saves_and_computes ... FAILED
+test character_hub::tests::no_required_gear_a_bought_greatsword_goes_in_hand_once_the_longsword_is_stowed has been running for over 60 seconds
+test character_hub::tests::no_required_gear_a_bought_greatsword_goes_in_hand_once_the_longsword_is_stowed ... FAILED
+thread 'sf_adapter::tests::no_required_gear_starfinder_soldier_computes_with_nothing_worn' (1933079) panicked at src/sf_adapter.rs:1515:9:
+thread 'character_hub::tests::no_required_gear_armor_the_headless_twin_cannot_read_is_not_read_as_none' (1933073) panicked at src/character_hub.rs:12190:9:
+thread 'character_hub::tests::no_required_gear_both_twins_read_the_same_loadout' (1933074) panicked at src/character_hub.rs:12157:37:
+thread 'character_hub::tests::no_required_gear_every_item_stowed_saves_and_computes' (1933076) panicked at src/character_hub.rs:10253:9:
+thread 'character_hub::tests::no_required_gear_no_items_at_all_saves_and_computes' (1933077) panicked at src/character_hub.rs:12080:13:
+thread 'character_hub::tests::no_required_gear_a_bought_greatsword_goes_in_hand_once_the_longsword_is_stowed' (1933072) panicked at src/character_hub.rs:10253:9:
+test result: FAILED. 2 passed; 6 failed; 0 ignored; 0 measured; 1151 filtered out; finished in 65.71s

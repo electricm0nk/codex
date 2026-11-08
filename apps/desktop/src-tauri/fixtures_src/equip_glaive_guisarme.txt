@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Glaive-Guisarme
+Glaive-Guisarme															PROFICIENCY:WEAPON|Glaive-Guisarme		TYPE:Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Slashing.Polearm											COST:12	WT:10		CRITMULT:x3	CRITRANGE:1	DAMAGE:1d10				EQMOD:Special Quality ~ Brace.Material ~ Wood									WIELD:TwoHanded			REACHMULT:2		SIZE:M	SOURCEPAGE:p.177

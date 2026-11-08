@@ -1,8 +1,8 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**: Cyberpunk RED rows added (Posture, Real today,
-> Known gaps); the Tauri command count is 103; the Cyberpunk corpus, licence and ui-smoke figures are release-notes `R-n` figures (R-4 to R-7), re-derived by
+> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)**: the Tauri command count is 118 and the Real today table gains the printed-PDF, Market and `.pcg` import rows (`apps/desktop/src-tauri/src/print/`, `main.rs` `generate_handler!`). Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**: Cyberpunk RED rows added (Posture, Real today,
+> Known gaps); the Tauri command count was 103; the Cyberpunk corpus, licence and ui-smoke figures are release-notes `R-n` figures (R-4 to R-7), re-derived by
 > `python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_7/E7.8_check.py --plant` (run on this tree, see the SD-38 `receipts.md`), and the starter row counts are the SD-38 E7.1 receipt's.
 > Claims critic (SD-38 E7.9 part 2, 2026-10-15): the command-count arithmetic and the Starfinder ui-smoke figure below were corrected. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**: Starfinder 1e rows added
 > (Posture, Real today, Known gaps); the Pathfinder rules tables are a data package, so the table evidence cells
@@ -367,8 +367,7 @@ same test-pinned standard as the rows above).
   `Recompute`, `Clone`, `Export`, `Print` are all wired to real handlers.
 - **`StubScreen.tsx` is unreferenced dead code**, not a live placeholder for
   any current screen.
-- **The Tauri command count is 103** (86 at the prior pass, on pre-merge `tranche/17`; 92 after `develop`'s six (PR #396) were merged in, 96 after tranche-17-ui's four, and 103 after
-  SD-38's seven Cyberpunk RED commands: 86 + 6 + 4 + 7 = 103; all listed in
+- **The Tauri command count is 118** (103 on `origin/develop` @ `2b14020bc7`, plus SD-39's fifteen: Market x9, held equipment, progression ledger, feat levels, `.pcg` import and the two print sinks; all listed in
   [desktop-app.md](./desktop-app.md)), re-derived directly from
   `generate_handler![...]` (see [desktop-app.md](./desktop-app.md)); a saved
   character's on-disk bundle can now hold up to six files, not two (four new
@@ -429,6 +428,9 @@ Anyone who needs it can read the superseded commits under `docs/release/SD-29-*`
 
 | Area | What works | Where |
 |---|---|---|
+| Printed sheet (PDF) | Save PDF and Print on the Pathfinder, Starfinder and Cyberpunk RED sheets: the sheet's own `LoadSavedCharacterResponse` goes through `print/layout/` into Typst, typeset with the bundled Liberation Sans faces, A4 or US Letter, with spellbook, show-the-math and bio/notes boxes; no number is computed on the print path | [desktop-app.md](./desktop-app.md) |
+| Market and held equipment | Buy and sell on the Pathfinder, Starfinder and Cyberpunk RED sheets (`list_market`, `*_market` commands). Body slots are Pathfinder only (`body_slots.rs`; R15 gives Starfinder and Cyberpunk RED a Market shell): the Pathfinder sheet lists one row per owned copy, worn by slot, carried or left behind | [desktop-app.md](./desktop-app.md) |
+| `.pcg` import | A PCGen 6 character converted by the `pcg_import` sidecar and read by `import_pcg`; the app parses no `.pcg` | [pcg-import.md](./pcg-import.md) |
 | Corpus-ingest pipeline | `.pcc`/`.lst` parsing through canonical `SourcePackageContent` projection, now behind the `crates/codex-ingest` crate boundary (dev-dependency only from the desktop shell) | [corpus-ingest.md](./corpus-ingest.md) |
 | Pilot compute + boundary contract | `compute_pilot_base_chassis` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`, fail-honest throughout; `pilot_compute/` is now split into per-class submodule files | [rules-engine.md](./rules-engine.md) |
 | Per-domain engines | Spellbook, skill allocation, feat prerequisites, equipment effects, damage total, level-up | [rules-engine.md](./rules-engine.md) |

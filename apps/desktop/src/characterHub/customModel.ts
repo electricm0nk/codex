@@ -4,10 +4,16 @@
  * Grants change numbers: an ability grant is baked into the saved ability score by the backend (so
  * every derived number follows from the engine), while `hit_points` and `skill_points` grants are
  * added by the sheet to the hit point total and the skill point pool. Records (custom feats,
- * equipment, spells and magic devices) are a name, a description and free-form stat lines; the
- * engine does not compute from them, they are listed and printed. The backend validates all of it;
- * `customProblems` is the same check run before sending so the dialog can say what to fix.
+ * equipment, spells and magic devices) are a name, a description and free-form stat lines, listed
+ * and printed. Custom equipment may also state typed bonuses and a body slot; worn, the backend
+ * applies them, so no total is added up here (`character_custom.rs`). The backend validates all of
+ * it; `customProblems` is the same check run before sending so the dialog can say what to fix.
  */
+
+import type { BodySlotDto } from '../boundary/listHeldEquipment';
+import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import { SKILLS, skillIdFor } from './skillsModel';
+import { UNKNOWN_RACE_TRAIT } from './characterHubModel';
 
 export interface CustomGrant {
   id: string;
@@ -23,11 +29,24 @@ export interface CustomStat {
   value: string;
 }
 
+/** One number a custom item states, applied while it is worn. */
+export interface CustomBonus {
+  target: string;
+  bonusType: string;
+  value: number;
+}
+
 export interface CustomRecord {
   id: string;
   name: string;
   description: string;
   stats: CustomStat[];
+  /** Custom equipment only, as are `slot` and `worn`; the backend leaves all three off a text record. */
+  bonuses?: CustomBonus[];
+  slot?: BodySlotDto | null;
+  worn?: boolean;
+  /** Owned and not on the character; never with `worn`. */
+  leftBehind?: boolean;
 }
 
 export type CustomRecordKind = 'feats' | 'equipment' | 'spells' | 'devices';
@@ -40,6 +59,52 @@ export interface CharacterCustom {
   devices: CustomRecord[];
   /** Conditions the character is under (`'Shaken'`); empty means the sheet shows `Normal`. */
   conditions: string[];
+  /** What the GM lets this character do without qualifying; the backend sends all eight. */
+  overrides?: CustomOverrides;
+}
+
+/** The backend's `Overrides`: each flag is read by the command enforcing that rule. */
+export interface CustomOverrides {
+  featsWithoutPrerequisites: boolean;
+  weaponsWithoutProficiency: boolean;
+  spellsOutsideClassList: boolean;
+  armorWithoutProficiency: boolean;
+  ignoreSlotLimits: boolean;
+  ignoreFeatBudget: boolean;
+  ignoreAlignmentRestrictions: boolean;
+  ignoreEncumbrance: boolean;
+}
+
+export const NO_OVERRIDES: CustomOverrides = {
+  featsWithoutPrerequisites: false,
+  weaponsWithoutProficiency: false,
+  spellsOutsideClassList: false,
+  armorWithoutProficiency: false,
+  ignoreSlotLimits: false,
+  ignoreFeatBudget: false,
+  ignoreAlignmentRestrictions: false,
+  ignoreEncumbrance: false,
+};
+
+/** The Custom tab's Overrides group, one checkbox each. */
+export const OVERRIDE_TOGGLES: ReadonlyArray<{ key: keyof CustomOverrides; label: string }> = [
+  { key: 'featsWithoutPrerequisites', label: 'Feats without prerequisites' },
+  { key: 'weaponsWithoutProficiency', label: 'Weapons without proficiency' },
+  { key: 'spellsOutsideClassList', label: 'Spells outside the class list or level' },
+  { key: 'armorWithoutProficiency', label: 'Armor and shields without proficiency' },
+  { key: 'ignoreSlotLimits', label: 'Ignore body slot limits' },
+  { key: 'ignoreFeatBudget', label: 'Ignore the feat budget' },
+  { key: 'ignoreAlignmentRestrictions', label: 'Ignore alignment restrictions' },
+  { key: 'ignoreEncumbrance', label: 'Ignore encumbrance' },
+];
+
+/** The character's flags, all off for data saved before they existed. */
+export function customOverrides(custom: CharacterCustom): CustomOverrides {
+  return { ...NO_OVERRIDES, ...custom.overrides };
+}
+
+export function withOverride(custom: CharacterCustom, key: keyof CustomOverrides, on: boolean): CharacterCustom {
+  return { ...custom, overrides: { ...customOverrides(custom), [key]: on } };
 }
 
 export const EMPTY_CUSTOM: CharacterCustom = { grants: [], feats: [], equipment: [], spells: [], devices: [], conditions: [] };
@@ -65,6 +130,85 @@ export const GRANT_TARGETS: ReadonlyArray<{ value: string; label: string }> = [
   { value: 'hit_points', label: 'Hit points' },
   { value: 'skill_points', label: 'Skill points' },
 ];
+
+/** The backend's `bonus_target_is_known`, as the form offers it. */
+export const BONUS_TARGETS: ReadonlyArray<{ value: string; label: string }> = [
+  { value: 'ac', label: 'AC' },
+  { value: 'attack', label: 'Attack' },
+  { value: 'damage', label: 'Damage' },
+  { value: 'save:fortitude', label: 'Fortitude save' },
+  { value: 'save:reflex', label: 'Reflex save' },
+  { value: 'save:will', label: 'Will save' },
+  { value: 'initiative', label: 'Initiative' },
+  { value: 'speed', label: 'Speed' },
+  { value: 'hit_points', label: 'Hit points' },
+  { value: 'cmb', label: 'CMB' },
+  { value: 'cmd', label: 'CMD' },
+  ...ABILITY_NAMES.map((name) => ({ value: `ability:${name}`, label: `${titleCase(name)} score` })),
+  ...SKILLS.map((skill) => ({ value: skillIdFor(skill.name), label: skill.name })),
+];
+
+/** The backend's `BONUS_TYPES`, the sheet engine's words for a bonus's type. */
+export const BONUS_TYPES: readonly string[] = [
+  'Untyped', 'Alchemical', 'Armor', 'Circumstance', 'Competence', 'Deflection', 'Dodge', 'Enhancement', 'Insight', 'Luck',
+  'Morale', 'NaturalArmor', 'Profane', 'Racial', 'Resistance', 'Sacred', 'Shield', 'Size',
+];
+
+const MAX_BONUS_VALUE = 100;
+
+export function newBonus(): CustomBonus {
+  return { target: 'ac', bonusType: 'Untyped', value: 1 };
+}
+
+/** `NaturalArmor` as a player says it. */
+export function bonusTypeLabel(bonusType: string): string {
+  return bonusType === 'NaturalArmor' ? 'natural armor' : bonusType.toLowerCase();
+}
+
+/** `+1 deflection to AC`; an untyped bonus says no type. */
+export function bonusLine(bonus: CustomBonus): string {
+  const type = bonus.bonusType === 'Untyped' ? '' : `${bonusTypeLabel(bonus.bonusType)} `;
+  const target = BONUS_TARGETS.find((option) => option.value === bonus.target)?.label ?? bonus.target;
+  return `${bonus.value >= 0 ? '+' : ''}${bonus.value} ${type}to ${target}`;
+}
+
+/** Where a custom item is, or `null` for a text-only record, which is on no one's body. */
+export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | 'left_behind' | null {
+  if (!record.slot && (record.bonuses ?? []).length === 0) {
+    return null;
+  }
+  return record.worn ? 'worn' : record.leftBehind ? 'left_behind' : 'carried';
+}
+
+const engineRowValue = (explanations: readonly ExplanationDto[], id: string): number | null =>
+  explanations.find((row) => row.id === id)?.value ?? null;
+
+/**
+ * The land speed the Speed tile shows: the engine's `speed.land` row (the race's base speed with what
+ * worn items add, computed in Rust, the value the printed sheet carries too), or `Unknown` when the
+ * engine states none (a race with no creation chassis; the browser preview).
+ */
+export function sheetLandSpeed(explanations: readonly ExplanationDto[]): string {
+  const feet = engineRowValue(explanations, 'speed.land');
+  return feet === null ? UNKNOWN_RACE_TRAIT : `${feet} ft.`;
+}
+
+/**
+ * The Intelligence modifier the skill point budget and languages read: the saved score's, the engine's
+ * `ability_modifier.intelligence.saved` row, when a worn item raises the sheet's.
+ */
+export function savedIntelligenceModifier(sheetModifier: number, explanations: readonly ExplanationDto[]): number {
+  return explanations.find((row) => row.id === 'ability_modifier.intelligence.saved')?.value ?? sheetModifier;
+}
+
+/**
+ * The maximum hit points the Hit Points tile shows: the engine's `hit_points.max` row (the class
+ * levels, saved rolls, Constitution, the GM's grants and worn items, computed in Rust, the value the
+ * printed sheet carries too), or `null` (Unknown) when the engine states none.
+ */
+export function sheetHitPoints(explanations: readonly ExplanationDto[]): number | null {
+  return engineRowValue(explanations, 'hit_points.max');
+}
 
 export function grantTargetLabel(target: string): string {
   return GRANT_TARGETS.find((option) => option.value === target)?.label ?? target;
@@ -148,6 +292,11 @@ export function customProblems(custom: CharacterCustom): string[] {
       }
       if (record.stats.some((stat) => stat.label.trim() === '' || stat.value.trim() === '')) {
         problems.push(`"${record.name || 'A custom ' + singular}" has a stat line with no label or no value.`);
+      }
+      for (const bonus of record.bonuses ?? []) {
+        if (!Number.isInteger(bonus.value) || bonus.value === 0 || Math.abs(bonus.value) > MAX_BONUS_VALUE) {
+          problems.push(`A bonus on "${record.name}" must be a whole number from -${MAX_BONUS_VALUE} to ${MAX_BONUS_VALUE}, and not 0.`);
+        }
       }
     }
   }

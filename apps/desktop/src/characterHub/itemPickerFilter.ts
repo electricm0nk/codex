@@ -1,6 +1,9 @@
 import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { FeatCatalogEntryDto } from '../boundary/listFeats';
+import type { MarketCategory, MarketEntryDto, MarketVariantDto } from '../boundary/listMarket';
+import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
+import { copperToGp } from '../boundary/characterMoney';
 import { EQUIPMENT_CATEGORY_ORDER, equipmentCategoryFor } from './equipmentCategories';
 
 /**
@@ -31,11 +34,11 @@ export interface ItemPickerEntry {
    * True when this row must be shown but not selectable — a feat whose real
    * corpus prerequisites this character does not meet.
    *
-   * Deliberately "greyed out and explained" rather than "filtered away":
-   * hiding the row would tell a player nothing about why their build cannot
-   * take Improved Two-Weapon Fighting, and offering it and then refusing the
-   * mutation is the offered-then-refused shape the no-stub doctrine calls a
-   * dead affordance.
+   * When listed it is greyed and explained: a player can see why their build
+   * cannot take Improved Two-Weapon Fighting, and offering it and then refusing
+   * the mutation is the offered-then-refused shape the no-stub doctrine calls a
+   * dead affordance. The Add Feat picker leaves these rows out while its "Hide
+   * feats I don't qualify for" box is ticked (`visibleItemPickerEntries`).
    */
   disabled?: boolean;
   /**
@@ -194,7 +197,7 @@ const FEAT_SOURCE_LABELS: Record<string, string> = {
   Pu: 'PU',
 };
 
-export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPickerEntry[] {
+export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[], admitUnmet = false): ItemPickerEntry[] {
   return entries.map((entry) => ({
     key: entry.key,
     name: entry.name,
@@ -214,12 +217,15 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
     // `eligibility` is absent on the character-less `listFeats` response,
     // which leaves every row selectable — the previous behaviour, unchanged,
     // for the browse surfaces that have no character to check against.
-    disabled: entry.eligibility ? !entry.eligibility.eligible : undefined,
+    // Under the prerequisites override an unmet feat can be added, and still says what it lacks.
+    disabled: entry.eligibility ? !entry.eligibility.eligible && !admitUnmet : undefined,
     disabledReason: entry.eligibility?.unavailableReason ?? undefined,
     unverifiedNote:
-      entry.eligibility && entry.eligibility.eligible && entry.eligibility.unverified.length > 0
-        ? entry.eligibility.unverified.join('; ')
-        : undefined,
+      entry.eligibility && !entry.eligibility.eligible && admitUnmet
+        ? `Allowed by override: ${entry.eligibility.unavailableReason ?? 'prerequisites not met'}`
+        : entry.eligibility && entry.eligibility.eligible && entry.eligibility.unverified.length > 0
+          ? entry.eligibility.unverified.join('; ')
+          : undefined,
   }));
 }
 
@@ -270,6 +276,22 @@ export function filterItemPickerEntries(entries: ItemPickerEntry[], searchTerm: 
   );
 }
 
+/** The Add Feat picker's checkbox. */
+export const HIDE_UNMET_FEATS_LABEL = "Hide feats I don't qualify for";
+
+/** The rows the picker lists: with `hideUnavailable`, none of the disabled ones. */
+export function visibleItemPickerEntries(entries: ItemPickerEntry[], hideUnavailable: boolean): ItemPickerEntry[] {
+  return hideUnavailable ? entries.filter((entry) => !entry.disabled) : entries;
+}
+
+/**
+ * What Add would add: the listed row with this key, unless it is disabled. Add is disabled when
+ * this is null, so a stale key left by a re-filter or by ticking the box cannot add anything.
+ */
+export function selectableItemPickerEntry(rows: ItemPickerEntry[], selectedKey: string | null): ItemPickerEntry | null {
+  return rows.find((entry) => entry.key === selectedKey && !entry.disabled) ?? null;
+}
+
 /** Label a row is filed under in the category list; rows with no group are `Uncategorized`. */
 function groupOf(entry: ItemPickerEntry): string {
   return entry.group ?? 'Uncategorized';
@@ -307,4 +329,51 @@ export function itemPickerGroupCounts(
   return [...counts.entries()]
     .map(([group, count]) => ({ group, count }))
     .sort((a, b) => rank(a.group) - rank(b.group) || a.group.localeCompare(b.group));
+}
+
+/** A `list_market` row in the picker's row shape, plus what Market buys it at. */
+export interface MarketRow extends ItemPickerEntry {
+  /** The plain item's catalog price; `null` when the record has none. */
+  priceGp: number | null;
+  /** Empty when the row takes no `+N`. */
+  variants: MarketVariantDto[];
+}
+
+export function mapMarketEntries(entries: MarketEntryDto[]): MarketRow[] {
+  const picked = mapEquipmentCatalogEntries(entries);
+  return entries
+    .map((entry, index) => ({ ...picked[index], priceGp: entry.costGp, variants: entry.variants }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** The whole price of `row` at `bonus` (0 plain), as the backend listed it; `null` when it lists none. */
+export function marketPriceGp(row: MarketRow, bonus: number): number | null {
+  return bonus === 0 ? row.priceGp : row.variants.find((variant) => variant.bonus === bonus)?.priceGp ?? null;
+}
+
+export function formatMarketPrice(amount: number | null, currency: string): string {
+  return amount === null ? 'No listed price' : `${amount.toLocaleString('en-US', { maximumFractionDigits: 2 })} ${currency}`;
+}
+
+/**
+ * How many rows the Market renders at once. The Magic items list holds thousands, and search reaches
+ * the rest; the dialog says so when this bites.
+ */
+export const MARKET_ROW_LIMIT = 200;
+
+export function marketShownRows(rows: MarketRow[]): MarketRow[] {
+  return rows.slice(0, MARKET_ROW_LIMIT);
+}
+
+/** Where a Market purchase went, in the words after its price: worn, carried with the slot refusal, or carried. */
+export function marketPlacementWords(activeState: ActiveStateDto, carriedReason: string | null): string {
+  if (activeState === 'EquippedActive') {
+    return 'worn';
+  }
+  return carriedReason ? `carried: ${carriedReason}` : 'carried';
+}
+
+/** What a buy or sale moved, in gp, off the two balances the backend reported. */
+export function marketMoneyMoved(beforeCopper: number, afterCopper: number): number {
+  return copperToGp(Math.abs(afterCopper - beforeCopper));
 }

@@ -165,6 +165,11 @@ function verifiesResolutionToleratesCaseAndPunctuationDriftInTheStoredId() {
   assertEqual(row.level, 9, 'the fold-matched record carries its real level');
 }
 
+function verifiesASpellTheOverrideLetInReadsAsThat() {
+  const entry = { acquisitionMode: 'Known', sourceClassId: 'override:spells_outside_class_list' } as Parameters<typeof describeSpellAcquisition>[0];
+  assertEqual(describeSpellAcquisition(entry), 'Known · Allowed by override', 'the row says how the spell got here');
+}
+
 function verifiesTheRawStoredIdIsAlwaysPreservedForProvenance() {
   const [row] = resolveSelectedSpellEntries([selection('mages disjunction')], CATALOG);
   assertEqual(row.raw, 'mages disjunction', 'the raw persisted id is preserved verbatim on every row');
@@ -410,6 +415,7 @@ async function main() {
   verifiesEverySelectionProducesExactlyOneRowInInputOrder();
   verifiesResolutionToleratesCaseAndPunctuationDriftInTheStoredId();
   verifiesTheRawStoredIdIsAlwaysPreservedForProvenance();
+  verifiesASpellTheOverrideLetInReadsAsThat();
   verifiesAcquisitionAndSourceClassReachTheRow();
   verifiesAcquisitionDescriptionReadsForAPlayer();
   verifiesAnEmptyCatalogStillRendersEverySelectionAsRawIds();

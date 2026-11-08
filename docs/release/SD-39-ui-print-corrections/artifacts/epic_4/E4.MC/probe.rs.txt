@@ -1,0 +1,91 @@
+    // ---- E4.MC probes ----
+    fn probe_flat(v: &serde_json::Value, path: String, out: &mut std::collections::BTreeMap<String, String>) {
+        match v {
+            serde_json::Value::Object(m) => { for (k, x) in m { probe_flat(x, format!("{path}/{k}"), out); } }
+            serde_json::Value::Array(a) => {
+                for (i, x) in a.iter().enumerate() {
+                    let key = x.get("id").or_else(|| x.get("itemId")).and_then(|k| k.as_str()).map(str::to_owned).unwrap_or_else(|| i.to_string());
+                    probe_flat(x, format!("{path}/{key}"), out);
+                }
+            }
+            other => { out.insert(path, other.to_string()); }
+        }
+    }
+    fn probe_read(root: &Path) -> std::collections::BTreeMap<String, String> {
+        let mut out = Default::default();
+        probe_flat(&serde_json::to_value(load_saved_character_at_root(root).unwrap()).unwrap(), String::new(), &mut out);
+        out
+    }
+    fn probe_diff(label: &str, a: &std::collections::BTreeMap<String, String>, b: &std::collections::BTreeMap<String, String>) {
+        eprintln!("=== {label}");
+        for (k, v) in b {
+            if k.contains("/detail") || k.contains("/summary/") { continue; }
+            if a.get(k) != Some(v) { eprintln!("  {k}: {:?} -> {v}", a.get(k)); }
+        }
+        for k in a.keys() { if !b.contains_key(k) && !k.contains("/detail") { eprintln!("  {k}: gone"); } }
+    }
+    #[test]
+    fn e4mc_probe_twins() {
+        for (seed, items) in [
+            (DEFAULT_CHARACTER_ID, vec!["Ring of Protection +1", "Ioun Stone (Dusty rose Prism)", "Belt of Giant Strength +2", "Belt of Incredible Dexterity +2", "Belt of Mighty Constitution +2", "Headband of Vast Intelligence +2", "Stone of Good Luck (Luckstone)", "Boots of Striding And Springing", "Heavyload Belt", "Muleback Cords"]),
+            (SECOND_SEED_CHARACTER_ID, vec!["Headband of Vast Intelligence +2", "Belt of Mighty Constitution +2"]),
+        ] {
+            for item in items {
+                let dir = tempdir("e4mc");
+                seed_default_characters_at(&dir, "0.0.0-test").unwrap();
+                let root = characters_root_from_app_data_dir(&dir).join(seed);
+                let a = probe_read(&root);
+                worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+                let carried = probe_read(&root);
+                probe_diff(&format!("{seed} carried {item}"), &a, &carried);
+                let r = set_equipment_active_state_at_root(&root, item, ActiveState::EquippedActive, "2026-11-03T00:01:00Z").unwrap();
+                if !matches!(r, CreateCharacterResponse::Saved { .. }) { eprintln!("{item}: refused {r:?}"); }
+                let b = probe_read(&root);
+                probe_diff(&format!("{seed} worn {item}"), &carried, &b);
+                std::fs::remove_dir_all(&dir).ok();
+            }
+        }
+    }
+    #[test]
+    fn e4mc_probe_recompute_parity_and_writers() {
+        let (dir, root) = enhancement_rows_aldric("e4mc-par");
+        for item in ["Ring of Protection +1", "Belt of Giant Strength +2", "Cloak of Resistance +1"] { worn_vs_carried_hold(&root, item, ActiveState::EquippedActive); }
+        custom_items_saved(&root, vec![custom_item("c", "Charm", None, vec![custom_bonus("ac", "Deflection", 3), custom_bonus("ability:dexterity", "Enhancement", 2), custom_bonus("attack", "Luck", 1)])]);
+        custom_item_wear(&root, "c");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let snap = loaded.snapshot.clone().unwrap();
+        let rec = crate::characterHub::recomputeCharacter::recompute_character_at_root(&root, DEFAULT_CHARACTER_ID).character.unwrap();
+        eprintln!("load AC {} melee {} saves {:?}; recompute AC {} melee {} saves {:?}", snap.baseline_armor_class, snap.baseline_melee_attack_bonus, (snap.total_saves.fortitude, snap.total_saves.reflex, snap.total_saves.will), rec.baseline_armor_class, rec.baseline_melee_attack_bonus, (rec.total_saves.fortitude, rec.total_saves.reflex, rec.total_saves.will));
+        // writers: stowed armor and a worn ring through export + import
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let json = export_character_to_json(&root).unwrap();
+        eprintln!("export mentions custom? {}", json.contains("Charm"));
+        let v: serde_json::Value = serde_json::from_str(&json).unwrap();
+        eprintln!("export states {}", v.pointer("/characterInput/chosen/equipmentSelections").map(|x| x.to_string()).unwrap_or_else(|| "no selections at that path".into()));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+    #[test]
+    fn e4mc_probe_slots() {
+        let wear = |root: &Path, id: &str| match slot_conflict_wear(root, id) { CreateCharacterResponse::Saved { .. } => "saved".to_owned(), CreateCharacterResponse::Blocked { diagnostics } => format!("blocked: {}", diagnostics[0].message), other => format!("{other:?}") };
+        let root = slot_conflict_character("e4mc-s1", &["Ring of Protection +1", "Ring of Protection +2", "Ring of Protection +3", "Dagger (Base)", "Heavy Steel Shield (Base)", "Greatsword (Base)", "Robe of Bones", "Bracers of Armor +1", "Helm of Brilliance", "Boots of Elvenkind", "Amulet of Natural Armor +1", "Mithral Shirt", "Longsword (Base)", "Dagger (Base)"]);
+        custom_items_saved(&root, vec![custom_item("r", "Custom Ring", Some(BodySlot::Ring), vec![]), custom_item("h", "Custom Hat", Some(BodySlot::Head), vec![]), custom_item("n", "No Slot", None, vec![])]);
+        eprintln!("custom hat {:?}", matches!(custom_item_set(&root, "h", ActiveState::EquippedActive), CreateCharacterResponse::Saved { .. }));
+        eprintln!("helm w/ custom hat: {}", wear(&root, "Helm of Brilliance"));
+        eprintln!("custom ring: {:?}", matches!(custom_item_set(&root, "r", ActiveState::EquippedActive), CreateCharacterResponse::Saved { .. }));
+        for id in ["Ring of Protection +1", "Ring of Protection +2", "Dagger (Base)", "Dagger (Base)", "Heavy Steel Shield (Base)", "Greatsword (Base)", "Robe of Bones", "Bracers of Armor +1", "Boots of Elvenkind", "Amulet of Natural Armor +1", "Mithral Shirt", "Longsword (Base)"] {
+            eprintln!("{id}: {}", wear(&root, id));
+        }
+        let held = list_held_equipment_at_root(&root).unwrap();
+        for h in &held { eprintln!("held {:?}", h); }
+        std::fs::remove_dir_all(&root).ok();
+    }
+    #[test]
+    fn e4mc_probe_market_then_sell_copies() {
+        let (dir, root) = enhancement_rows_aldric("e4mc-m");
+        let buy = |id: &str| purchase_equipment_offer_at_root(&root, id, ActiveState::EquippedActive, "2026-11-02T00:00:00Z", PriceMode::Standard, None).unwrap();
+        eprintln!("buy helm1 {:?}", buy("Helm of Brilliance"));
+        eprintln!("buy helm2 {:?}", buy("Helm of Brilliance"));
+        for h in list_held_equipment_at_root(&root).unwrap() { eprintln!("held {:?}", h); }
+        std::fs::remove_dir_all(&dir).ok();
+    }
+

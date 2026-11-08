@@ -51,6 +51,7 @@ use codex::rules_core::character_input::{
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
 use codex::rules_core::class_seeds::canonical_seeds_for;
+use codex::rules_core::equipment_effects::{worn_item_stated_bonuses, WornItemStatedBonuses};
 use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
@@ -62,7 +63,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
 use codex::rules_core::pilot_compute_corpus::{
     compute_combat_baseline_from_corpus, compute_pilot_with_corpus,
-    compute_selected_skill_modifiers_from_corpus, CorpusAwareCombatBaseline, CorpusPilotReceipt,
+    compute_selected_skill_modifiers_from_corpus, corpus_weapon_attack_rows, CorpusAwareCombatBaseline, CorpusPilotReceipt,
 };
 use codex::rules_core::pilot_view_model::{
     PilotCombatViewModel, PilotCompanionViewModel, PilotDefenseViewModel, PilotSkillViewModel,
@@ -72,11 +73,13 @@ use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
 
+use crate::character_custom::custom_or_empty;
 use crate::character_hub::{
-    map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto, map_summary_dto,
-    summarize_envelope, CreateCharacterRequest, CreateCharacterResponse,
+    class_alignment_gate_at_root, load_gate_at_root, map_corpus_derived_dto, map_diagnostics_dto, map_snapshot_dto,
+    map_summary_dto, summarize_envelope, CreateCharacterRequest, CreateCharacterResponse, DiagnosticDto,
     ListSavedCharactersResponse, LoadSavedCharacterResponse, HUMAN_RACE_ID, SOURCE_PACKAGE_ID,
 };
+use crate::character_ledger::{ledger_after_change_at_root, write_character_ledger_at_root, AdmittedRecordDto};
 use crate::characterHub::appendToCharacter::{
     append_to_character_at_root, AppendToCharacterResponse, ItemToAppendDto,
 };
@@ -515,16 +518,11 @@ impl RuleSystemAdapter for Pf1Adapter {
 /// reach `Computed`.
 ///
 /// **That fixed loadout is the GE-06 deterministic pilot fixture**
-/// (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`),
-/// not a product decision about starting gear: the Longsword, Chain Shirt,
-/// absent shield, inactive Power Attack toggle and rank-1
-/// Climb/Intimidate/Swim allocations are exactly the posture the engine's
-/// bounded combat/skill slice was built and validated against. Every
-/// character created in the app is handed it because the engine computes
-/// no combat numbers for anything else, and `create_character` refuses to
-/// persist a build that is not `Computed`. Widening it is real, scoped
-/// engine work (a general armor/weapon-to-training-group model), not an
-/// adapter change.
+/// (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`):
+/// the Longsword, Chain Shirt, absent shield, inactive Power Attack toggle and
+/// rank-1 Climb/Intimidate/Swim allocations. Every character starts with it,
+/// and none of its items is required afterward: the engine computes with
+/// nothing worn or wielded (the Power Attack row is a feat's switch, not gear).
 ///
 /// `feat:dodge` used to be part of that fixed claim and no longer is: see
 /// the `selected_feats` construction below for why a *feat* claim is
@@ -801,6 +799,11 @@ pub(crate) fn resolve_unified_pilot_snapshot(
     character_input: &CharacterInput,
     corpus: &SourcePackageContent,
 ) -> Result<(PilotSnapshot, CorpusPilotReceipt), Vec<ComputationDiagnostic>> {
+    // What a worn item states on a score goes in at the score, on this copy, so what the score
+    // drives follows from the engine; what it states on a save or on attack goes on that total.
+    let worn_items = worn_item_stated_bonuses(&character_input.chosen.equipment_selections, corpus);
+    let raised_input = worn_items.raised(character_input);
+    let character_input = &raised_input;
     let receipt = build_pilot_headless_receipt(character_input);
     let mut corpus_receipt = compute_pilot_with_corpus(character_input, corpus);
 
@@ -825,11 +828,11 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 base_attack_bonus: receipt.computation.base_attack_bonus,
                 base_saves: receipt.computation.base_saves,
                 combat: PilotCombatViewModel {
-                    baseline_melee_attack_bonus: combat.melee_attack_bonus,
+                    baseline_melee_attack_bonus: combat.melee_attack_bonus + worn_items.attack(),
                 },
                 defense: PilotDefenseViewModel {
                     baseline_armor_class: combat.armor_class,
-                    total_save: receipt.computation.total_saves,
+                    total_save: worn_item_saves(receipt.computation.total_saves, &worn_items),
                     damage_reduction: receipt
                         .computation
                         .explanations
@@ -889,6 +892,25 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             // the widened path is what keeps a real equipped shield from
             // silently blanking three cells.
             upsert_corpus_aware_combat_explanations(&mut corpus_receipt, &combat);
+            let weapon_rows = corpus_weapon_attack_rows(&corpus_receipt.base, character_input, corpus);
+            corpus_receipt.base.explanations.extend(weapon_rows);
+            for (id, save) in [
+                ("defense.total_save.fortitude", "fortitude"),
+                ("defense.total_save.reflex", "reflex"),
+                ("defense.total_save.will", "will"),
+            ] {
+                if let Some(row) = corpus_receipt.base.explanations.iter_mut().find(|row| row.id == id) {
+                    row.value += worn_items.save(save);
+                }
+            }
+            let attack_sources = worn_items.attack_sources();
+            if !attack_sources.is_empty() {
+                if let Some(row) = corpus_receipt.base.explanations.iter_mut().find(|row| row.id == "combat.baseline_melee_attack_bonus") {
+                    row.value += worn_items.attack();
+                    row.detail = format!("{}; worn items: {attack_sources}", row.detail);
+                }
+            }
+            corpus_receipt.base.total_saves = snapshot.defense.total_save;
             Ok((snapshot, corpus_receipt))
         }
         (combat_result, skills_result) => {
@@ -906,10 +928,9 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 diagnostics.push(ComputationDiagnostic {
                     id: "combat.baseline_unsupported".to_owned(),
                     message: format!(
-                        "baseline combat totals require every equipped item to resolve \
-                         against the corpus with known math (armor/shield loadout is \
-                         widened; the Longsword and Dodge/Weapon Focus requirements are \
-                         unchanged); unmet conditions: {}",
+                        "baseline combat totals need a supported chassis, the Power Attack \
+                         row and Weapon Focus, and no item is required to be worn; unmet \
+                         conditions: {}",
                         unmet.join("; ")
                     ),
                     claim_blocking: true,
@@ -928,6 +949,17 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             }
             Err(diagnostics)
         }
+    }
+}
+
+fn worn_item_saves(
+    saves: codex::rules_core::pilot_compute::BaseSaves,
+    worn_items: &WornItemStatedBonuses,
+) -> codex::rules_core::pilot_compute::BaseSaves {
+    codex::rules_core::pilot_compute::BaseSaves {
+        fortitude: saves.fortitude + worn_items.save("fortitude"),
+        reflex: saves.reflex + worn_items.save("reflex"),
+        will: saves.will + worn_items.save("will"),
     }
 }
 
@@ -999,6 +1031,26 @@ fn upsert_corpus_aware_combat_explanations(
                 ),
             });
     }
+
+    // Melee and Armor Class keep the row the fixed-posture path wrote, whose prose names its terms.
+    // That path refuses armor it holds no numbers for, and the sheet reads this one, so the row is
+    // written here then.
+    for (id, value) in [
+        ("combat.baseline_melee_attack_bonus", combat.melee_attack_bonus),
+        ("defense.baseline_armor_class", combat.armor_class),
+    ] {
+        if !corpus_receipt.base.explanations.iter().any(|explanation| explanation.id == id) {
+            corpus_receipt.base.explanations.push(ComputationExplanation {
+                id: id.to_owned(),
+                value,
+                detail: format!(
+                    "{id} = {value}, computed by the corpus-aware combat baseline \
+                     (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this \
+                     character's actual resolved equipment loadout"
+                ),
+            });
+        }
+    }
 }
 
 /// Shared load -> recompute -> re-save -> return-envelope tail for every
@@ -1033,7 +1085,31 @@ pub(crate) fn mutate_saved_character_at_root(
     saved_at: &str,
     mutate: impl FnOnce(&mut CharacterInput),
 ) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_admitting_at_root(root, saved_at, Vec::new(), mutate)
+}
+
+/// [`mutate_saved_character_at_root`] for a change a command has already found the rules refuse:
+/// `admitted` is saved beside it, in the same breath.
+pub(crate) fn mutate_saved_character_admitting_at_root(
+    root: &Path,
+    saved_at: &str,
+    admitted: Vec<AdmittedRecordDto>,
+    mutate: impl FnOnce(&mut CharacterInput),
+) -> Result<CreateCharacterResponse, String> {
+    mutate_saved_character_gated_at_root(root, saved_at, mutate, |_| Ok(admitted))
+}
+
+/// [`mutate_saved_character_at_root`], with one more check over the state the change would leave:
+/// `gate` reads the same computation the save would rest on. Its `Err` is a refusal and nothing is
+/// written; its `Ok` is what the change lets in under an override.
+pub(crate) fn mutate_saved_character_gated_at_root(
+    root: &Path,
+    saved_at: &str,
+    mutate: impl FnOnce(&mut CharacterInput),
+    gate: impl FnOnce(&CorpusPilotReceipt) -> Result<Vec<AdmittedRecordDto>, DiagnosticDto>,
+) -> Result<CreateCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let before = envelope.character_input.clone();
 
     mutate(&mut envelope.character_input);
 
@@ -1046,6 +1122,10 @@ pub(crate) fn mutate_saved_character_at_root(
                 });
             }
         };
+    let admitted = match gate(&corpus_receipt) {
+        Ok(admitted) => admitted,
+        Err(diagnostic) => return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] }),
+    };
 
     let next_revision_id =
         next_mutation_revision_id(&envelope.character_id, &envelope.revision_id);
@@ -1053,7 +1133,11 @@ pub(crate) fn mutate_saved_character_at_root(
     envelope.latest_authoritative_revision_ref = next_revision_id;
     envelope.saved_at = saved_at.to_owned();
 
+    let ledger = ledger_after_change_at_root(root, &before, &envelope.character_input, admitted)?;
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if let Some(ledger) = ledger {
+        write_character_ledger_at_root(root, &ledger)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
@@ -1159,7 +1243,11 @@ pub(crate) fn level_up_character_at_root(
     skill_allocations: Option<Vec<SkillAllocation>>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
+    let admitted = match class_alignment_gate_at_root(root, class_id) {
+        Ok(admitted) => admitted,
+        Err(diagnostic) => return Ok(CreateCharacterResponse::Blocked { diagnostics: vec![diagnostic] }),
+    };
+    mutate_saved_character_admitting_at_root(root, saved_at, admitted, |character_input| {
         apply_level_up_choices(character_input, class_id, additional_choices, skill_allocations);
     })
 }
@@ -1191,9 +1279,13 @@ pub(crate) fn add_equipment_selection_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_equipment_selection(character_input, item_id, active_state);
-    })
+    let gate = load_gate_at_root(root, item_id, 0, Vec::new());
+    mutate_saved_character_gated_at_root(
+        root,
+        saved_at,
+        |character_input| apply_add_equipment_selection(character_input, item_id, active_state),
+        gate,
+    )
 }
 
 /// v0.6 alpha swarm items 1+27 sub-task 6: appends `modifier_item_id` onto
@@ -1211,16 +1303,21 @@ pub fn apply_attach_equipment_modifier(
     item_id: &str,
     modifier_item_id: &str,
 ) -> bool {
-    let Some(selection) = character_input
-        .chosen
-        .equipment_selections
-        .iter_mut()
-        .find(|selection| selection.item_id == item_id)
-    else {
+    let selections = &mut character_input.chosen.equipment_selections;
+    let Some(index) = first_copy_in_hand(selections, |selection| selection.item_id == item_id) else {
         return false;
     };
-    selection.applied_modifiers.push(modifier_item_id.to_owned());
+    selections[index].applied_modifiers.push(modifier_item_id.to_owned());
     true
+}
+
+/// The first selection `names_it` accepts, one the character has with them before one left behind.
+/// For a caller that names an item and not a copy, whose copies the player can see only by state.
+pub(crate) fn first_copy_in_hand(selections: &[EquipmentSelection], names_it: impl Fn(&EquipmentSelection) -> bool) -> Option<usize> {
+    selections
+        .iter()
+        .position(|selection| names_it(selection) && selection.active_state != ActiveState::Absent)
+        .or_else(|| selections.iter().position(names_it))
 }
 
 /// Appends one entry to `chosen.spells_selected`. Every other field is
@@ -1306,12 +1403,23 @@ pub(crate) fn add_feat_selection_at_root(
     target: Option<&str>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    add_feat_selection_admitting_at_root(root, feat_id, target, saved_at, Vec::new())
+}
+
+/// [`add_feat_selection_at_root`] for a feat the rules refuse and an override let in.
+pub(crate) fn add_feat_selection_admitting_at_root(
+    root: &Path,
+    feat_id: &str,
+    target: Option<&str>,
+    saved_at: &str,
+    admitted: Vec<AdmittedRecordDto>,
+) -> Result<CreateCharacterResponse, String> {
     // Resolve before mutating: `mutate_saved_character_at_root` takes an
     // infallible closure, so a rejected target must surface as an error here
     // rather than as a silently feat-only save.
     let target_choice = resolve_feat_target_choice(feat_id, target)?;
 
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
+    mutate_saved_character_admitting_at_root(root, saved_at, admitted, |character_input| {
         apply_add_feat_selection_with_target(character_input, feat_id, target_choice.clone());
     })
 }
@@ -1326,9 +1434,53 @@ pub(crate) fn add_spell_selection_at_root(
     acquisition_mode: AcquisitionMode,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_add_spell_selection(character_input, spell_id, source_class_id, acquisition_mode);
+    add_spell_under_overrides_at_root(root, spell_id, source_class_id, |source| {
+        mutate_saved_character_at_root(root, saved_at, |character_input| {
+            apply_add_spell_selection(character_input, spell_id, source, acquisition_mode);
+        })
     })
+}
+
+/// The `source_class_id` of a spell the `spells_outside_class_list` override let in. It belongs to no
+/// class's list, slots or known count, so the engine's per-class rules do not read it, and the record
+/// itself says how the spell got here.
+pub(crate) const OVERRIDE_SPELL_SOURCE: &str = "override:spells_outside_class_list";
+
+/// Why `class_id` cannot hold this spell at all, whatever its level: off its list, or a class that
+/// does not cast. A class whose list was never ingested has nothing to refuse from.
+fn spell_outside_class_list(class_id: &str, spell_id: &str) -> Option<String> {
+    use crate::class_spell_levels::{build_class_spell_levels, SpellcastingStatus};
+    let answer = build_class_spell_levels(&[class_id.to_owned()]).classes.pop()?;
+    if answer.spellcasting == SpellcastingStatus::NonCaster {
+        let class_name = class_id.strip_prefix("class:").unwrap_or(class_id);
+        return Some(format!("a {class_name} does not cast spells, so no {class_name} can learn '{spell_id}'"));
+    }
+    codex::rules_core::pilot_compute::class_spell_membership_refusal(class_id, spell_id)
+}
+
+/// The spell add path's gate. Flag off, a spell outside the class's list is refused here for every
+/// class, where the engine only checks the classes with a known-spell rule. Flag on, the same spell,
+/// or one the engine's rules for that class refuse (a level the class has no slot for), is saved
+/// under [`OVERRIDE_SPELL_SOURCE`]; `add` does the save for a given source class.
+fn add_spell_under_overrides_at_root(
+    root: &Path,
+    spell_id: &str,
+    source_class_id: &str,
+    add: impl Fn(&str) -> Result<CreateCharacterResponse, String>,
+) -> Result<CreateCharacterResponse, String> {
+    let admitted = custom_or_empty(root).overrides.spells_outside_class_list;
+    let outside = spell_outside_class_list(source_class_id, spell_id);
+    match (admitted, outside) {
+        (false, Some(message)) => Ok(CreateCharacterResponse::Blocked {
+            diagnostics: vec![DiagnosticDto { id: "spell.outside_class_list".to_owned(), message, claim_blocking: true }],
+        }),
+        (false, None) => add(source_class_id),
+        (true, Some(_)) => add(OVERRIDE_SPELL_SOURCE),
+        (true, None) => match add(source_class_id)? {
+            CreateCharacterResponse::Blocked { .. } => add(OVERRIDE_SPELL_SOURCE),
+            saved => Ok(saved),
+        },
+    }
 }
 
 /// Appends BOTH a `Known` and a `Prepared` entry for the same spell, in one
@@ -1372,8 +1524,10 @@ pub(crate) fn record_and_prepare_spell_selection_at_root(
     source_class_id: &str,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_record_and_prepare_spell_selection(character_input, spell_id, source_class_id);
+    add_spell_under_overrides_at_root(root, spell_id, source_class_id, |source| {
+        mutate_saved_character_at_root(root, saved_at, |character_input| {
+            apply_record_and_prepare_spell_selection(character_input, spell_id, source);
+        })
     })
 }
 

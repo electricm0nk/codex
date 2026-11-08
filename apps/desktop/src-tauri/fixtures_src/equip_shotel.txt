@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Shotel
+Shotel																				PROFICIENCY:WEAPON|Shotel								TYPE:Weapon.Resizable.Melee.OneHanded.Exotic.Piercing.BladeLight																																			COST:30	WT:3										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d8					EQMOD:Material ~ Steel																																									WIELD:OneHanded							SIZE:M	SOURCEPAGE:p.36

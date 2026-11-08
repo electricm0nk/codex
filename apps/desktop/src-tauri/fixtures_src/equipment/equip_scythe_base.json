@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Scythe (Base)",
+    "name": "Scythe",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scythe (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Scythe"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.Martial.TwoHanded.Piercing.Slashing.Scythe.BladeHeavy.Weapon Group Blades Heavy"
+      },
+      {
+        "key": "COST",
+        "value": "18"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x4"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Quality ~ Trip"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.143"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_scythe_base.txt",
+    "record_key": "Scythe (Base)"
+  }
+}

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Lucerne Hammer
+Lucerne Hammer															PROFICIENCY:WEAPON|Lucerne Hammer		TYPE:Weapon.Resizable.Melee.TwoHanded.Martial.Reach.Standard.Bludgeoning.Piercing.Polearm									COST:15	WT:12		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d12				EQMOD:Special Quality ~ Brace.Material ~ Wood									WIELD:TwoHanded			REACHMULT:2		SIZE:M	SOURCEPAGE:p.177

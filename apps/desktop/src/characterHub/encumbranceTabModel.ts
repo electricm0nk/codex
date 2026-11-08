@@ -112,19 +112,34 @@ function displayLabel(equipmentRecordKey: string): string {
  * The rows behind an "AC breakdown by source" view: only items that
  * genuinely contribute an armor bonus. An equipped longsword has no
  * `armorClassBonus` at all, and must be omitted rather than shown as a
- * fabricated `0` row.
+ * fabricated `0` row. A worn `+N` adds a row of its own, so the rows sum to the
+ * panel's total.
  */
 export function buildAcBySourceRows(perItem: ResolvedEquipmentEffectDto[]): AcSourceRow[] {
   return perItem
     .filter((effect) => effect.armorClassBonus !== undefined)
-    .map((effect) => ({
-      itemId: effect.itemId,
-      label: displayLabel(effect.equipmentRecordKey),
-      armorClassBonus: effect.armorClassBonus as number,
-      maxDex: effect.maxDex,
-      armorCheckPenalty: effect.armorCheckPenalty,
-      spellFailure: effect.spellFailure,
-    }));
+    .flatMap((effect) => {
+      const label = displayLabel(effect.equipmentRecordKey);
+      const item: AcSourceRow = {
+        itemId: effect.itemId,
+        label,
+        armorClassBonus: effect.armorClassBonus as number,
+        maxDex: effect.maxDex,
+        armorCheckPenalty: effect.armorCheckPenalty,
+        spellFailure: effect.spellFailure,
+      };
+      if (effect.armorClassEnhancement === undefined) {
+        return [item];
+      }
+      return [
+        item,
+        {
+          itemId: `${effect.itemId}:enhancement`,
+          label: `${label} enhancement`,
+          armorClassBonus: effect.armorClassEnhancement,
+        },
+      ];
+    });
 }
 
 /**

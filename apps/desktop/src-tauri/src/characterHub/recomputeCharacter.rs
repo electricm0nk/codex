@@ -29,6 +29,7 @@ use serde::{Deserialize, Serialize};
 
 use codex::saved_character::local_store::SavedCharacterStore;
 
+use crate::character_custom::WornItemBonuses;
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use crate::pf1_adapter::resolve_unified_pilot_snapshot;
 use crate::rule_system_adapter::resolve_rule_system_adapter;
@@ -97,7 +98,7 @@ pub struct RecomputeCharacterResponse {
 /// `SavedCharacterStore` fixture without an `AppHandle`, mirroring
 /// `character_hub.rs`'s own `level_up_character_at_root` split.
 pub fn recompute_character_at_root(root: &Path, character_id: &str) -> RecomputeCharacterResponse {
-    let envelope = match SavedCharacterStore::load(root) {
+    let mut envelope = match SavedCharacterStore::load(root) {
         Ok(envelope) => envelope,
         Err(_err) => {
             return RecomputeCharacterResponse {
@@ -108,7 +109,10 @@ pub fn recompute_character_at_root(root: &Path, character_id: &str) -> Recompute
         }
     };
 
-    let snapshot = match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
+    // As `load_saved_character_at_root` reads it, or Recompute would take a worn custom item off the tiles.
+    let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
+    worn_custom_items.raise_abilities(&mut envelope.character_input);
+    let mut snapshot = match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
         Ok((snapshot, _corpus_receipt)) => snapshot,
         Err(diagnostics) => {
             let blocking_messages: Vec<String> = diagnostics
@@ -126,6 +130,8 @@ pub fn recompute_character_at_root(root: &Path, character_id: &str) -> Recompute
             };
         }
     };
+
+    worn_custom_items.apply_to_snapshot(&mut snapshot);
 
     RecomputeCharacterResponse {
         success: true,

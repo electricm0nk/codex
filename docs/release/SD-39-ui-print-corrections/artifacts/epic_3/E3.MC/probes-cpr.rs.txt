@@ -1,0 +1,48 @@
+    #[test]
+    fn e3mcprobe_cpr_rows_and_starters() {
+        use crate::equipment_catalog::MarketCategory;
+        let mut lines = Vec::new();
+        let starters: Vec<String> = starter_requests("t").into_iter().map(|(_, r)| r.display_label.clone()).collect();
+        lines.push(format!("starters {starters:?}"));
+        let snap = |root: &Path| { let c = CprCharacterStore::load_choices(root).unwrap(); format!("{:?} {:?} {:?} {:?}", c.weapons, c.armor, c.shield, c.ammunition) };
+        let mut dump = serde_json::Map::new();
+        let first = &starters[0];
+        for (n, category) in [("weapon", MarketCategory::Weapon), ("armor", MarketCategory::Armor), ("shield", MarketCategory::Shield), ("gear", MarketCategory::Gear)] {
+            let rows = crate::cpr_catalog::list_cyberpunk_market(category).unwrap();
+            dump.insert(n.to_owned(), serde_json::to_value(rows.iter().map(|r| (r.key.clone(), r.name.clone(), r.price, r.detail.clone())).collect::<Vec<_>>()).unwrap());
+            let root = market_root(&format!("probe-cpr-{n}"), first);
+            let start = snap(&root); let bal = market_state_at_root(&root).unwrap().balance;
+            for r in &rows {
+                match market_buy_at_root(&root, &market_request(&r.key, PriceMode::Cashless)) {
+                    Ok(MarketShellOutcome::Saved { .. }) => {
+                        let st = market_state_at_root(&root).unwrap();
+                        let key = st.held.iter().rev().find(|h| h.name.starts_with(r.name.split(" x").next().unwrap())).map(|h| h.key.clone());
+                        let Some(key) = key else { lines.push(format!("NOTHELD {n} {} held {:?}", r.key, st.held.iter().map(|h| h.name.clone()).collect::<Vec<_>>())); continue };
+                        let line = market_sell_at_root(&root, &market_request(&key, PriceMode::Cashless));
+                        if !matches!(line, Ok(MarketShellOutcome::Saved { .. })) { lines.push(format!("SELL {n} {}: {line:?}", r.key)); }
+                        if snap(&root) != start { lines.push(format!("ROUNDTRIP {n} {} -> {}", r.key, snap(&root))); }
+                        if market_state_at_root(&root).unwrap().balance != bal { lines.push(format!("BAL {n} {}", r.key)); }
+                    }
+                    Ok(MarketShellOutcome::Blocked { diagnostics }) => lines.push(format!("BLOCKED {n} {} : {:?}", r.key, diagnostics.iter().map(|d| d.message.clone()).collect::<Vec<_>>())),
+                    Err(e) => lines.push(format!("ERR {n} {}: {e}", r.key)),
+                }
+            }
+            lines.push(format!("{n}: {} rows", rows.len()));
+            std::fs::remove_dir_all(&root).ok();
+        }
+        for s in &starters {
+            let root0 = market_root(&format!("probe-cpr-held0"), s);
+            let held = market_state_at_root(&root0).unwrap().held;
+            let before_kit = CprCharacterStore::load_kit(&root0).unwrap().items.len();
+            lines.push(format!("{s}: {} held, kit {before_kit}, {}", held.len(), snap(&root0)));
+            for h in &held {
+                let root = market_root(&format!("probe-cpr-held"), s);
+                let a = snap(&root);
+                let m = market_sell_at_root(&root, &market_request(&h.key, PriceMode::Standard));
+                let b = snap(&root);
+                lines.push(format!("  sell {} -> {:?} sheetchanged={}", h.name, m.map(|o| match o { MarketShellOutcome::Saved { moved } => moved.to_string(), MarketShellOutcome::Blocked { diagnostics } => format!("{:?}", diagnostics.iter().map(|d| d.message.clone()).collect::<Vec<_>>()) }), a != b));
+            }
+        }
+        std::fs::write("/home/ubuntu/cargo-target/e3mc-logs/probe/cpr_market.json", serde_json::to_string(&dump).unwrap()).unwrap();
+        std::fs::write("/home/ubuntu/cargo-target/e3mc-logs/probe/cpr_every.txt", lines.join("\n")).unwrap();
+    }

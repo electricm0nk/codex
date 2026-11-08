@@ -5,13 +5,15 @@ import type { ExplanationDto } from './loadSavedCharacterDetail';
 
 /**
  * The sheet numbers the Create screen previews for a character that is not saved yet
- * (`draft_sheet_preview`): the engine's `initiative.total` row and the draft's carried load, from
+ * (`draft_sheet_preview`): the engine's `initiative.total` row, its feat budget and the draft's carried load, from
  * the same engine run the sheet reads once the character is saved. Mirrors `DraftSheetPreviewDto`
  * in `character_hub.rs`.
  */
 export interface DraftSheetPreviewDto {
   initiative: ExplanationDto;
   encumbrance: EncumbranceDto;
+  /** The draft's `feats.budget.<pool>.{granted,spent,remaining}` rows. */
+  featBudget: ExplanationDto[];
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -38,6 +40,7 @@ export function readDraftSheetPreview(raw: unknown): DraftSheetPreviewDto {
   if (!isRecord(encumbrance)) {
     throw new Error('draft sheet preview: encumbrance is missing');
   }
+  requireField(raw, 'preview', 'featBudget', 'array');
   requireField(initiative, 'initiative', 'id', 'string');
   requireField(initiative, 'initiative', 'value', 'number');
   requireField(initiative, 'initiative', 'detail', 'string');

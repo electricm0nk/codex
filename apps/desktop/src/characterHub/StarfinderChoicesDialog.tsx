@@ -1,27 +1,20 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { appendToCharacter } from '../boundary/appendToCharacter';
 import {
-  listStarfinderEquipmentOptions,
   previewStarfinderChoices,
   saveStarfinderChoices,
   type SfChoicesDto,
   type SfChoicesPreviewDto,
-  type SfEquipmentOptionDto,
 } from '../boundary/starfinderChoices';
 import type { DiagnosticDto } from '../boundary/loadCreateCharacter';
 import { StarfinderChoicesPanel } from './StarfinderChoicesPanel';
-import { addGear, blockingChoiceProblems, choicesTotalsLine } from './starfinderChoicesModel';
-
-/** The Starfinder rule-system id `append_to_character` routes to `StarfinderAdapter`. */
-const STARFINDER_RULE_SYSTEM_ID = 'starfinder-1e';
+import { blockingChoiceProblems, choicesTotalsLine } from './starfinderChoicesModel';
 
 /**
  * The Starfinder sheet's "Feats, spells and gear" dialog (SD-37 E6.5a). It opens on the saved
  * character's own choices (`preview_starfinder_choices` with none sent) and re-asks the engine on
- * every edit. An item is added through the Starfinder adapter's own append
- * (`append_to_character`, saved at once, refused when it puts the loadout over the character's
- * credits); every other edit is saved by "Save choices" (`save_starfinder_choices`), which
- * recomputes the character and refuses, saving nothing, what the rules do not allow.
+ * every edit. A new item comes from the Market; every edit here is saved by "Save choices"
+ * (`save_starfinder_choices`), which recomputes the character and refuses, saving nothing, what the
+ * rules do not allow.
  */
 export function StarfinderChoicesDialog(props: {
   characterId: string;
@@ -31,17 +24,10 @@ export function StarfinderChoicesDialog(props: {
 }) {
   const [choices, setChoices] = useState<SfChoicesDto | null>(null);
   const [preview, setPreview] = useState<SfChoicesPreviewDto | null>(null);
-  const [equipment, setEquipment] = useState<SfEquipmentOptionDto[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [refused, setRefused] = useState<DiagnosticDto[]>([]);
   const [saving, setSaving] = useState(false);
   const round = useRef(0);
-
-  useEffect(() => {
-    listStarfinderEquipmentOptions()
-      .then(setEquipment)
-      .catch((cause: unknown) => setError(cause instanceof Error ? cause.message : String(cause)));
-  }, []);
 
   const requestKey = JSON.stringify(choices);
   useEffect(() => {
@@ -63,28 +49,6 @@ export function StarfinderChoicesDialog(props: {
         }
       });
   }, [requestKey]);
-
-  async function appendItem(itemId: string, equipped: boolean) {
-    if (choices === null) {
-      return;
-    }
-    setRefused([]);
-    try {
-      const result = await appendToCharacter({
-        characterId: props.characterId,
-        itemsToAppend: [{ itemId, activeState: equipped ? 'EquippedActive' : 'SelectedInactive' }],
-        savedAt: new Date().toISOString(),
-        ruleSystemId: STARFINDER_RULE_SYSTEM_ID,
-      });
-      if (result.success) {
-        setChoices(addGear(choices, itemId, equipped));
-      } else {
-        setRefused([{ id: 'append_to_character', message: result.error ?? 'the item was not added', claimBlocking: true }]);
-      }
-    } catch (cause: unknown) {
-      setError(cause instanceof Error ? cause.message : String(cause));
-    }
-  }
 
   async function save() {
     if (choices === null) {
@@ -113,7 +77,7 @@ export function StarfinderChoicesDialog(props: {
     <section role="dialog" aria-label="Feats, spells and gear" data-testid="sf-choices-dialog" style={DIALOG_STYLE}>
       <h3 style={{ margin: '0 0 0.75rem' }}>Feats, spells and gear</h3>
       {preview && choices ? (
-        <StarfinderChoicesPanel preview={preview} choices={choices} equipment={equipment} onChange={setChoices} onAddGear={(id, equipped) => void appendItem(id, equipped)} />
+        <StarfinderChoicesPanel preview={preview} choices={choices} onChange={setChoices} />
       ) : (
         <p style={{ color: 'var(--color-text-muted)' }}>Reading the character…</p>
       )}

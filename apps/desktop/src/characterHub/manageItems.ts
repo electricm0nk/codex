@@ -164,14 +164,3 @@ export function featItems(entries: FeatCatalogEntryDto[]): TransferItem[] {
   }
   return items;
 }
-
-/**
- * How many feats a new character picks: one at every odd character level (1st, 3rd, ...), plus a
- * human's bonus feat. Class bonus feats (a Fighter's, say) are class features chosen on the sheet.
- */
-export function creationFeatSlots(characterLevel: number, raceId: string): number {
-  if (characterLevel <= 0) {
-    return 0;
-  }
-  return Math.ceil(characterLevel / 2) + (raceId === 'race:human' ? 1 : 0);
-}

@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Lamellar (Stone)",
+    "name": "Lamellar (Stone)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_lamellar_stone.txt",
+    "record_key": "Lamellar (Stone)"
+  }
+}

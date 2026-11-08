@@ -2,25 +2,166 @@ import {
   buildLevelEntries,
   buildNextEntries,
   classHitDie,
+  describeProgressionChoices,
+  describeProgressionLevel,
   classSkillPointsBase,
   formatHeldClasses,
+  installFeatLevels,
   levelGrantsFeat,
   maxHitPoints,
-  maxHitPointsWithSavedLevels,
+  openFeatSlots,
   parseHeldClasses,
   previewLevelUp,
+  readFeatBudget,
+  withBudgetOverride,
   totalCharacterLevel,
   totalSkillPoints,
   type HeldClass,
 } from './characterProgression';
+import type { ProgressionLevelDto } from '../boundary/listProgressionLedger';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { installClassRoster } from './classRoster';
 import { LOADING_CLASS_CATALOG, setClassCatalog } from './classCatalog';
 import { classRosterWire } from '../testSupport/classRosterWire';
 
+const budgetRows = (pool: string, granted: number, spent: number) => [
+  { id: `feats.budget.${pool}.granted`, value: granted },
+  { id: `feats.budget.${pool}.spent`, value: spent },
+  { id: `feats.budget.${pool}.remaining`, value: granted - spent },
+];
+
+const BLANK_LEVEL: ProgressionLevelDto = {
+  characterLevel: 4,
+  classId: 'class:fighter',
+  classLevel: 4,
+  hitDieResult: null,
+  feats: [],
+  spells: [],
+  ranks: [],
+  abilityIncreases: [],
+  classFeatures: [],
+  abilityIncreaseDue: false,
+  unspent: { feats: 0, spells: 0, ranks: 0 },
+  assignedOnUpgrade: false,
+};
+const FIGHTER_HELD: HeldClass[] = [{ classId: 'class:fighter', classLabel: 'Fighter', level: 4 }];
+
+function verifiesALevelReadsAsItsChoicesAndGains() {
+  const level: ProgressionLevelDto = {
+    ...BLANK_LEVEL,
+    hitDieResult: 7,
+    feats: [
+      { id: 'feat:weapon_focus', name: 'Weapon Focus', target: 'Longsword' },
+      { id: 'feat:dodge', name: 'Dodge', target: null },
+    ],
+    spells: [{ id: 'Magic Missile', classId: 'class:wizard' }],
+    ranks: [
+      { skillId: 'skill:knowledge_arcana', ranks: 3 },
+      { skillId: 'skill:climb', ranks: 1 },
+      { skillId: 'skill:basket_weaving', ranks: 1 },
+    ],
+    abilityIncreases: [{ ability: 'wisdom', points: 2 }],
+    classFeatures: [
+      { id: 'rule:armor_training', label: 'Armor Training', value: '', raised: false },
+      { id: 'rule:bonus_feats', label: 'Bonus Feats', value: '+2', raised: true },
+    ],
+    abilityIncreaseDue: true,
+    unspent: { feats: 1, spells: 0, ranks: 2 },
+  };
+  const entry = describeProgressionLevel(level, FIGHTER_HELD);
+  assertEqual(entry.heading, 'Level 4', 'the character level heads it');
+  assertEqual(entry.classLevel, 'Fighter 4', 'with the class level taken');
+  assertEqual(
+    JSON.stringify(entry.lines),
+    JSON.stringify([
+      'Hit die result: 7',
+      'Class features: Armor Training, Bonus Feats +2',
+      'Feats: Weapon Focus (Longsword), Dodge',
+      'Spells learned: Magic Missile',
+      'Ranks spent: 5 (Knowledge (Arcana) 3, Climb 1, Basket Weaving 1)',
+      'Ability increase: Wisdom +2',
+      'Unspent: 1 feat, 2 skill ranks',
+    ]),
+    'each line reads what the rows say, and nothing a row does not state is printed',
+  );
+}
+
+function verifiesAnIncreaseDueWithNoRowSaysSoWithoutCallingItASlot() {
+  const entry = describeProgressionLevel({ ...BLANK_LEVEL, abilityIncreaseDue: true }, FIGHTER_HELD);
+  assertEqual(JSON.stringify(entry.lines), JSON.stringify(['Ability increase: none recorded']), 'the level grants one and nothing records it');
+  assertEqual(JSON.stringify(describeProgressionLevel(BLANK_LEVEL, FIGHTER_HELD).lines), '[]', 'an empty level prints no empty lines');
+}
+
+function verifiesUnspentSpellsAndAClassNoRosterNames() {
+  const entry = describeProgressionLevel({ ...BLANK_LEVEL, classId: 'class:nobody', unspent: { feats: 0, spells: 1, ranks: 1 } }, []);
+  assertEqual(entry.classLevel, 'class:nobody 4', 'a class nothing names prints its id, not a guess');
+  assertEqual(JSON.stringify(entry.lines), JSON.stringify(['Unspent: 1 spell, 1 skill rank']), 'singulars read as singulars');
+}
+
+function verifiesTheChoicesOfNoLevelReadTheSameWay() {
+  const lines = describeProgressionChoices({ feats: [{ id: 'feat:toughness', name: 'Toughness', target: null }], spells: [], ranks: [], abilityIncreases: [] });
+  assertEqual(JSON.stringify(lines), JSON.stringify(['Feats: Toughness']), 'a feat with no level');
+}
+
+function verifiesTheBudgetOverrideFreesTheAddButtonAndKeepsTheBadge() {
+  const spent = readFeatBudget(budgetRows('level', 1, 3));
+  assertEqual(spent.canAdd, false, 'over budget, no add');
+  assertEqual(withBudgetOverride(spent, false), spent, 'flag off changes nothing');
+  const admitted = withBudgetOverride(spent, true);
+  assertEqual(admitted.canAdd, true, 'flag on, the button is live');
+  assertEqual(admitted.addBlockedReason, null, 'and says nothing blocks it');
+  assertEqual(admitted.overBy, spent.overBy, 'the badge still counts what is over');
+}
+
+function verifiesFeatBudgetReadsTheRowsAndDecidesNothingElse() {
+  const noise = [{ id: 'initiative.total', value: 3 }];
+  const room = readFeatBudget([...noise, ...budgetRows('level', 2, 1), ...budgetRows('fighter_bonus_feat', 2, 2)]);
+  assertEqual(room.pools.length, 2, 'two pools, the other row ignored');
+  assertEqual(room.pools[1].label, 'fighter bonus feat', 'the pool reads in words');
+  assertEqual(room.overBy, 0, 'nothing is over');
+  assert(room.canAdd, 'the level pool has room');
+  assertEqual(room.addBlockedReason, null, 'no reason when Add is open');
+
+  const full = readFeatBudget([...budgetRows('level', 1, 1), ...budgetRows('racial', 1, 1)]);
+  assertEqual(full.overBy, 0, 'exactly full is not over');
+  assert(!full.canAdd, 'exactly full takes no new feat');
+
+  const over = readFeatBudget(budgetRows('level', 1, 3));
+  assertEqual(over.overBy, 2, 'the over-budget count is the negative remaining');
+  assert(!over.canAdd, 'an over-budget save blocks adds');
+  assert(over.addBlockedReason?.includes('Over budget by 2') === true, 'the reason states it');
+
+  const none = readFeatBudget(noise);
+  assert(none.canAdd, 'no rows: the sheet claims nothing and the add path decides');
+  assertEqual(none.overBy, 0, 'no rows, no badge');
+}
+
+function verifiesOpenFeatSlotsCountOnlyThePoolsAnyFeatCanFill() {
+  const rows = [...budgetRows('level', 2, 0), ...budgetRows('racial', 1, 0), ...budgetRows('fighter_bonus_feat', 2, 0), ...budgetRows('bonus', 1, 0)];
+  assertEqual(openFeatSlots(rows), 4, 'level + racial + open bonus; the class pool is chosen on the sheet');
+  assertEqual(openFeatSlots([]), 0, 'no rows, no picks');
+}
+
+function verifiesAFeatLevelComesFromTheEngineList() {
+  installFeatLevels([2]);
+  const entries = buildLevelEntries([{ classId: 'class:fighter', classLabel: 'Fighter', level: 2 }]);
+  assert(!entries[0].features.includes('Feat'), 'level 1 is not on this list');
+  assert(entries[1].features.includes('Feat'), 'level 2 is');
+  installFeatLevels([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
+}
+
 async function main() {
+  verifiesALevelReadsAsItsChoicesAndGains();
+  verifiesAnIncreaseDueWithNoRowSaysSoWithoutCallingItASlot();
+  verifiesUnspentSpellsAndAClassNoRosterNames();
+  verifiesTheChoicesOfNoLevelReadTheSameWay();
   // SD-36 F4c: every class lookup reads the roster the engine serves (the real wire rows).
   installClassRoster(classRosterWire());
+  installFeatLevels([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
+  verifiesFeatBudgetReadsTheRowsAndDecidesNothingElse();
+verifiesTheBudgetOverrideFreesTheAddButtonAndKeepsTheBadge();
+  verifiesOpenFeatSlotsCountOnlyThePoolsAnyFeatCanFill();
+  verifiesAFeatLevelComesFromTheEngineList();
   verifiesParseHeldClassesSingleClass();
   verifiesParseHeldClassesRealMulticlassSummary();
   verifiesParseHeldClassesFallsBackToDerivedLabelForAnUnknownClass();
@@ -28,7 +169,6 @@ async function main() {
   verifiesTotalCharacterLevelSumsAcrossClasses();
   verifiesClassSkillPointsBaseReadsTheRoster();
   verifiesClassHitDieReadsTheRoster();
-  verifiesSavedHitPointResultsDriveTheTotal();
   verifiesMaxHitPointsSingleClass();
   verifiesMaxHitPointsMulticlassOnlyMaximizesTheVeryFirstLevel();
   verifiesTotalSkillPointsFlooredAndHumanBonus();
@@ -299,68 +439,6 @@ function verifiesFighterEvenLevelBonusFeatIsNoLongerClaimedLocally() {
     !levelGrantsFeat(fighterLevel2.features),
     'with no engine grants, Fighter class level 2 no longer claims a bonus combat feat locally'
   );
-}
-
-// The Create screen's Levels list saves the die result for every level. The sheet's HP follows those
-// results; levels gained afterwards (level-up) fall back to the average.
-function verifiesSavedHitPointResultsDriveTheTotal() {
-  const fighter3: HeldClass[] = [{ classId: 'class:fighter', classLabel: 'Fighter', level: 3 }];
-  const fighterWizard: HeldClass[] = [
-    { classId: 'class:fighter', classLabel: 'Fighter', level: 1 },
-    { classId: 'class:wizard', classLabel: 'Wizard', level: 1 },
-  ];
-  assertEqual(maxHitPointsWithSavedLevels(fighter3, 2, []), maxHitPoints(fighter3, 2), 'no saved results is the default rule');
-  assertEqual(
-    maxHitPointsWithSavedLevels(fighter3, 2, [
-      { classId: 'class:fighter', value: 10 },
-      { classId: 'class:fighter', value: 7 },
-      { classId: 'class:fighter', value: 3 },
-    ]),
-    12 + 9 + 5,
-    'every saved result plus Constitution: (10+2) + (7+2) + (3+2)'
-  );
-  assertEqual(
-    maxHitPointsWithSavedLevels(fighter3, 2, [
-      { classId: 'class:fighter', value: 10 },
-      { classId: 'class:fighter', value: 7 },
-    ]),
-    12 + 9 + (6 + 2),
-    'a level gained after creation has no saved result and takes the average (d10 -> 6)'
-  );
-  assertEqual(
-    maxHitPointsWithSavedLevels(fighterWizard, 0, [
-      { classId: 'class:wizard', value: 5 },
-      { classId: 'class:fighter', value: 10 },
-    ]),
-    15,
-    'the total does not depend on the order the classes were added in'
-  );
-  assertEqual(
-    maxHitPointsWithSavedLevels(fighter3, -5, [
-      { classId: 'class:fighter', value: 10 },
-      { classId: 'class:fighter', value: 1 },
-      { classId: 'class:fighter', value: 2 },
-    ]),
-    5 + 1 + 1,
-    'each level is worth at least 1 hp, not the sum floored once'
-  );
-  assertEqual(
-    maxHitPointsWithSavedLevels(fighter3, 0, [
-      { classId: 'class:fighter', value: 10 },
-      { classId: 'class:fighter', value: 6 },
-      { classId: 'class:fighter', value: 6 },
-      { classId: 'class:fighter', value: 6 },
-    ]),
-    22,
-    'results beyond the levels the character holds are ignored'
-  );
-  setClassCatalog(LOADING_CLASS_CATALOG);
-  assertEqual(
-    maxHitPointsWithSavedLevels(fighter3, 0, [{ classId: 'class:fighter', value: 10 }]),
-    null,
-    'an unsaved level of a class with no known die is Unknown, not guessed'
-  );
-  installClassRoster(classRosterWire());
 }
 
 main().catch((error: unknown) => {

@@ -1,0 +1,60 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Madu (Steel)",
+    "name": "Madu (Steel)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "1",
+          "TYPE=Shield",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "SHIELD|Shield (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield.Light.Standard.Close"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-2"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.13"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "5"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_madu_steel.txt",
+    "record_key": "Madu (Steel)"
+  }
+}

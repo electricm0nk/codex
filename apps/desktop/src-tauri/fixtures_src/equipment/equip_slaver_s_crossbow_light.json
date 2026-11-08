@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Slaver's Crossbow (Light)",
+    "name": "Slaver's Crossbow, Light",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Slaver's Crossbow (Light)"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Slaver's Crossbow (Light)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Exotic.Ranged.Standard.Bludgeoning.Container.Projectile.Crossbow"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "UNLIM|BolaBolt"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "6"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d4"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Wood.Special Quality ~ Nonlethal.Special Quality ~ Trip"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHandsOnly"
+      },
+      {
+        "key": "RANGE",
+        "value": "40"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.45"
+      },
+      {
+        "key": "SPROP",
+        "value": "Entangles target on a successful critical."
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_slaver_s_crossbow_light.txt",
+    "record_key": "Slaver's Crossbow (Light)"
+  }
+}

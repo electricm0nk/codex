@@ -381,7 +381,7 @@ incremental repair passes. See [getting-started.md](./getting-started.md).
 
 ## Version stamp
 
-The `<major>.<tranche>.<build>` version minted by the publish workflow's `stamp` job (`0.16.${GITHUB_RUN_NUMBER}`) and written into `apps/desktop/package.json` and `src-tauri/tauri.conf.json` before every build. The committed files stay at `0.<tranche>.0`. `Cargo.toml` is not stamped, so display code uses Tauri's `package_info().version`, never `CARGO_PKG_VERSION`. See [release-pipeline.md](./release-pipeline.md) §Stamp delivery.
+The `<major>.<tranche>.<build>` version minted by the publish workflow's `stamp` job (`0.19.${GITHUB_RUN_NUMBER}`) and written into `apps/desktop/package.json` and `src-tauri/tauri.conf.json` before every build. The committed files stay at `0.<tranche>.0`. `Cargo.toml` is not stamped, so display code uses Tauri's `package_info().version`, never `CARGO_PKG_VERSION`. See [release-pipeline.md](./release-pipeline.md) §Stamp delivery.
 
 ## Wiring class
 
@@ -400,8 +400,9 @@ strict lattice, highest-bar-wins), or `Ambiguous` — determined once, corpus-wi
 
 The GM's grants and house-rule records for one character, saved as `custom.json` beside it. An
 ability grant is applied to the saved ability score; hit point and skill point grants are added by
-the sheet; custom feats, equipment, spells and magic devices are listed and printed but not computed
-from. See [desktop-app.md](./desktop-app.md).
+the sheet; custom feats, spells and magic devices are listed and printed but not computed from.
+Custom equipment may state bonuses and a slot, and a worn one's bonuses reach the sheet's numbers;
+the file also holds the Overrides flags. See [desktop-app.md](./desktop-app.md).
 
 ## Manage dialog
 

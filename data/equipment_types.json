@@ -2,6 +2,253 @@
   "files_read": 383,
   "identity_conflicts_first_wins": 410,
   "oracle_sha": "7f818006e371188e5717fd18d74d18a420747fc6",
+  "slots": [
+    {
+      "body_slot": "armor",
+      "capacity": 1,
+      "name": "Armor",
+      "tags": [
+        "Armor"
+      ]
+    },
+    {
+      "body_slot": "belt",
+      "capacity": 1,
+      "name": "Belt",
+      "tags": [
+        "Belt",
+        "Girdle"
+      ]
+    },
+    {
+      "body_slot": "body",
+      "capacity": 1,
+      "name": "Body",
+      "tags": [
+        "Bodywear",
+        "Robe",
+        "Body",
+        "Vestments"
+      ]
+    },
+    {
+      "body_slot": "chest",
+      "capacity": 1,
+      "name": "Chest",
+      "tags": [
+        "Shirt",
+        "Chest",
+        "Mantle",
+        "Vest"
+      ]
+    },
+    {
+      "body_slot": "eyes",
+      "capacity": 1,
+      "name": "Eyes",
+      "tags": [
+        "Facewear",
+        "Eyegear",
+        "Eyes",
+        "Glasses",
+        "Goggles"
+      ]
+    },
+    {
+      "body_slot": "feet",
+      "capacity": 1,
+      "name": "Feet",
+      "tags": [
+        "Footwear",
+        "Boot",
+        "Feet",
+        "Shoes",
+        "Slippers"
+      ]
+    },
+    {
+      "body_slot": "hands",
+      "capacity": 1,
+      "name": "Hands",
+      "tags": [
+        "Handwear",
+        "Glove",
+        "Hands",
+        "Gauntlet"
+      ]
+    },
+    {
+      "body_slot": "head",
+      "capacity": 1,
+      "name": "Head",
+      "tags": [
+        "Headgear",
+        "Head",
+        "Circlet",
+        "Crown",
+        "Hat",
+        "Helm",
+        "Mask"
+      ]
+    },
+    {
+      "body_slot": "headband",
+      "capacity": 1,
+      "name": "Headband",
+      "tags": [
+        "Headband",
+        "Phylactery"
+      ]
+    },
+    {
+      "body_slot": "neck",
+      "capacity": 1,
+      "name": "Neck",
+      "tags": [
+        "Neckwear",
+        "Amulet",
+        "Neck",
+        "Brooch",
+        "Medallion",
+        "Necklace",
+        "Periapt",
+        "Scarab"
+      ]
+    },
+    {
+      "body_slot": "ring",
+      "capacity": 2,
+      "name": "Ring",
+      "tags": [
+        "Ring"
+      ]
+    },
+    {
+      "body_slot": "shield",
+      "capacity": 1,
+      "name": "Shield",
+      "tags": [
+        "Shield"
+      ]
+    },
+    {
+      "body_slot": "shoulders",
+      "capacity": 1,
+      "name": "Shoulders",
+      "tags": [
+        "Cape",
+        "Shoulders",
+        "Cloak"
+      ]
+    },
+    {
+      "body_slot": "wrist",
+      "capacity": 1,
+      "name": "Wrist",
+      "tags": [
+        "Armwear",
+        "Bracer",
+        "Wrist",
+        "Bracelet"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Torso",
+      "tags": [
+        "Clothing"
+      ]
+    },
+    {
+      "body_slot": "wield_main",
+      "capacity": 1,
+      "name": "Weapon",
+      "tags": [
+        "Weapon"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Head",
+      "tags": [
+        "Tattoo Head"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Shoulders",
+      "tags": [
+        "Tattoo Shoulders"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Neck",
+      "tags": [
+        "Tattoo Neck"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Chest",
+      "tags": [
+        "Tattoo Chest"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Body",
+      "tags": [
+        "Tattoo Body"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Belt",
+      "tags": [
+        "Tattoo Belt"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Wrist",
+      "tags": [
+        "Tattoo Wrist"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Hands",
+      "tags": [
+        "Tattoo Hands"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 2,
+      "name": "Tattoo Ring",
+      "tags": [
+        "Tattoo Ring"
+      ]
+    },
+    {
+      "body_slot": "none",
+      "capacity": 1,
+      "name": "Tattoo Feet",
+      "tags": [
+        "Tattoo Feet"
+      ]
+    }
+  ],
   "source": "PCGen equipment .lst TYPE: tokens under data/pathfinder",
   "types": {
     "A Grand Tour of Absalom": [

@@ -14,6 +14,8 @@ async function testNoRuntimeThrowsDescriptiveError() {
       itemId: 'item:longsword',
       activeState: 'EquippedActive',
       savedAt: '2026-07-24T00:00:00Z',
+      priceMode: 'standard',
+      bonus: 2,
     });
   } catch (cause) {
     thrown = cause;

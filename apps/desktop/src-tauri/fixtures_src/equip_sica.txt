@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Sica
+Sica																					PROFICIENCY:WEAPON|Sica									TYPE:Weapon.Resizable.Melee.Light.Finesseable.Exotic.Slashing.BladeLight																																	COST:10	WT:2										CRITMULT:x2	CRITRANGE:1							DAMAGE:1d6					EQMOD:Material ~ Steel																																									WIELD:Light								SIZE:M	SOURCEPAGE:p.37

@@ -120,7 +120,7 @@
 //! `every_live_corpus_equipment_record_carries_the_same_weapon_values_the_token_reads_produced`.
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput};
-use crate::rules_core::equipment_effects::{is_natural_attack_weapon, EquipmentEffects};
+use crate::rules_core::equipment_effects::{attached_weapon_enhancement, is_natural_attack_weapon, EquipmentEffects};
 use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::equipment_resolver::{
     equipment_converted_resolve, equipment_id_resolve,
@@ -833,7 +833,19 @@ pub fn resolve_weapon_damage_breakdown(
                     weapon_item_id,
                     corpus,
                     equipment_effects,
-                ),
+                )
+                .map(|mut enhancement| {
+                    // This selection's own `+N`, which no other weapon in the loadout shares. One
+                    // bonus type, so the higher stands, not the sum.
+                    let attached = equipment_converted_resolve(weapon_item_id, corpus).map(|record| {
+                        attached_weapon_enhancement(record, &selection.applied_modifiers, corpus)
+                    });
+                    if let Some(attached) = attached {
+                        enhancement.attack_bonus = enhancement.attack_bonus.max(attached.tohit);
+                        enhancement.damage_bonus = enhancement.damage_bonus.max(attached.damage);
+                    }
+                    enhancement
+                }),
                 critical_threat_range: resolve_critical_threat_range(weapon_item_id, corpus),
                 critical_multiplier: resolve_critical_multiplier(weapon_item_id, corpus),
                 feat_effects: feat_effects.clone(),

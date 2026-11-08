@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: iswg_equip_arms_armor.lst, KEY: Leaf Armor
+Leaf Armor																			PROFICIENCY:ARMOR|Leaf Armor							TYPE:Armor.Light.ArmorProfLight.Suit.Standard.Nonmetal														COST:350	WT:20				ACCHECK:0														EQMOD:Material ~ Leaf	EQMOD:Special Quality ~ Masterwork ~ Armor																	MAXDEX:5									SOURCEPAGE:p.291	SPELLFAILURE:15																							BONUS:COMBAT|AC|3|TYPE=Armor

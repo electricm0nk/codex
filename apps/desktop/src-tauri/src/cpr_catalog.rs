@@ -18,7 +18,11 @@ use serde_json::Value;
 use codex::rules_core::cpr::netrunning::{
     compute_deck, net_actions_row, CprDeckExtras, CprDeckItem, CprDeckQuality,
 };
+use codex::rules_core::cpr::kit::{CprKitCatalog, CprKitItem, CprKitPurchase};
 use codex::rules_core::game_system::{runtime_repo_root, GameSystem};
+
+use crate::equipment_catalog::MarketCategory;
+use crate::sf_catalog::MarketShellRowDto;
 
 /// One MANIFEST kind's file and its pinned record count.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -195,6 +199,59 @@ pub fn compute_cyberpunk_deck(
     deck_at(&corpus_root(), &deck, &programs, &hardware, &extras, interface_rank)
 }
 
+/// The shop kinds on the Market. Cyberware is the Improve dialog's (its mount and Humanity Loss), and
+/// a deck's programs and hardware install on a deck: neither is a flat inventory row.
+const MARKET_KINDS: [&str; 7] = ["weapon", "armor", "gear", "attachment", "ammo", "fashion", "drug"];
+/// p345: "All other ammunition is purchased in increments of 10."
+const AMMO_ROUNDS: u32 = 10;
+
+/// One Market row and what it buys.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct CprMarketRow {
+    pub category: MarketCategory,
+    pub row: MarketShellRowDto,
+    /// As the kits print the item, priced at [`CprMarketRow::unit`] of it.
+    pub item: CprKitItem,
+    /// How many one buy adds, and one sale takes: ten rounds of ammunition, else one.
+    pub unit: u32,
+}
+
+/// Every row: each priced shop record of [`MARKET_KINDS`], one per variant (armour's location,
+/// ammunition's caliber, a fashion piece), at the engine's own price for that purchase.
+pub(crate) fn market_rows(catalog: &CprKitCatalog) -> Result<Vec<CprMarketRow>, String> {
+    let mut rows = Vec::new();
+    // A deck is filed under `gear` too, and takes programs and hardware the Market does not keep.
+    for shop in catalog.shop().iter().filter(|s| MARKET_KINDS.contains(&s.kind.as_str()) && !s.name.starts_with("Cyberdeck (")) {
+        let variants: Vec<Option<String>> =
+            if shop.variants.is_empty() { vec![None] } else { shop.variants.iter().map(|v| Some(v.name.clone())).collect() };
+        for variant in variants {
+            let singly = matches!(variant.as_deref(), Some("Grenade" | "Rocket"));
+            let unit = if shop.kind == "ammo" && !singly { AMMO_ROUNDS } else { 1 };
+            let category = match (shop.kind.as_str(), &variant) {
+                ("weapon", _) => MarketCategory::Weapon,
+                ("armor", Some(_)) => MarketCategory::Armor,
+                ("armor", None) => MarketCategory::Shield,
+                _ => MarketCategory::Gear,
+            };
+            let key = format!("{}|{}|{}", shop.kind, shop.name, variant.as_deref().unwrap_or(""));
+            let item = catalog.price(&CprKitPurchase { kind: shop.kind.clone(), name: shop.name.clone(), variant, quantity: unit })?;
+            let name = if unit > 1 { format!("{} x{unit}", item.name) } else { item.name.clone() };
+            let detail = format!("{} ({})", shop.kind, shop.source_page);
+            rows.push(CprMarketRow { category, row: MarketShellRowDto { key, name, detail, price: Some(i64::from(item.cost_eb)) }, item, unit });
+        }
+    }
+    Ok(rows)
+}
+
+/// One tab of the Cyberpunk RED Market.
+#[tauri::command]
+pub fn list_cyberpunk_market(category: MarketCategory) -> Result<Vec<MarketShellRowDto>, String> {
+    let catalog = CprKitCatalog::load(&corpus_root())?;
+    let mut rows: Vec<MarketShellRowDto> = market_rows(&catalog)?.into_iter().filter(|r| r.category == category).map(|r| r.row).collect();
+    rows.sort_by(|a, b| a.name.cmp(&b.name).then(a.key.cmp(&b.key)));
+    Ok(rows)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -303,5 +360,23 @@ mod tests {
             let record = decks.records.iter().find(|r| r["name"] == quality.name()).expect("deck record");
             assert_eq!(record["slots"], u64::from(quality.base_slots()));
         }
+    }
+
+    /// The tabs hold their own kinds, never cyberware or a deck, and every row has a price.
+    #[test]
+    fn market_shell_lists_hold_their_own_kinds_at_a_price() {
+        let catalog = CprKitCatalog::load(&root()).unwrap();
+        let rows = market_rows(&catalog).unwrap();
+        assert!(rows.iter().all(|r| r.row.price.is_some_and(|p| p > 0)), "{:?}", rows.iter().find(|r| r.row.price.is_none_or(|p| p <= 0)).map(|r| &r.row));
+        let of = |category: MarketCategory| rows.iter().filter(|r| r.category == category).collect::<Vec<_>>();
+        let records = |file: &str| -> Vec<Value> { serde_json::from_str(&std::fs::read_to_string(root().join(file)).unwrap()).unwrap() };
+        assert_eq!(of(MarketCategory::Weapon).len(), records("weapon.json").len());
+        // Eight worn armours, each at two locations; the one shield.
+        assert_eq!(of(MarketCategory::Armor).len(), 8 * 2);
+        let shields = of(MarketCategory::Shield);
+        assert_eq!(shields.iter().map(|r| r.item.name.as_str()).collect::<Vec<_>>(), ["Bulletproof Shield"]);
+        assert!(of(MarketCategory::MagicItem).is_empty());
+        assert!(rows.iter().all(|r| !["cyberware", "cyberdeck", "net_hardware", "program"].contains(&r.item.kind.as_str())));
+        assert!(of(MarketCategory::Gear).iter().all(|r| ["gear", "attachment", "ammo", "fashion", "drug"].contains(&r.item.kind.as_str())));
     }
 }

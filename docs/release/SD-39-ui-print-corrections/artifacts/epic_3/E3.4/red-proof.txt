@@ -1,0 +1,23 @@
+thread 'character_hub::tests::enhancement_rows_two_bonuses_on_one_copy_take_the_higher' (3655979) panicked at src/character_hub.rs:9283:9:
+  left: 8
+ right: 11
+test character_hub::tests::enhancement_rows_two_bonuses_on_one_copy_take_the_higher ... FAILED
+test character_hub::tests::enhancement_rows_a_bonus_of_the_wrong_family_adds_nothing ... ok
+thread 'character_hub::tests::enhancement_rows_a_wielded_plus_one_adds_to_attack_and_damage' (3655976) panicked at src/character_hub.rs:9201:9:
+  left: 8
+ right: 9
+test character_hub::tests::enhancement_rows_a_wielded_plus_one_adds_to_attack_and_damage ... FAILED
+thread 'character_hub::tests::enhancement_rows_a_worn_armor_adds_its_bonus_to_ac' (3655977) panicked at src/character_hub.rs:9240:9:
+  left: 16
+ right: 18
+test character_hub::tests::enhancement_rows_a_worn_armor_adds_its_bonus_to_ac ... FAILED
+armor and shield rows with an offer: 51; not reaching the sheet: 51
+thread 'character_hub::tests::enhancement_rows_every_armor_and_shield_offer_reaches_the_sheet_corpus' (3655978) panicked at src/character_hub.rs:9332:9:
+test character_hub::tests::enhancement_rows_every_armor_and_shield_offer_reaches_the_sheet_corpus ... FAILED
+test character_hub::tests::enhancement_rows_a_stowed_plus_one_adds_nothing ... ok
+test character_hub::tests::enhancement_rows_a_shield_counts_only_while_worn has been running for over 60 seconds
+thread 'character_hub::tests::enhancement_rows_a_shield_counts_only_while_worn' (3655974) panicked at src/character_hub.rs:9266:9:
+  left: 16
+ right: 21
+test character_hub::tests::enhancement_rows_a_shield_counts_only_while_worn ... FAILED
+test result: FAILED. 2 passed; 5 failed; 0 ignored; 0 measured; 948 filtered out; finished in 61.97s

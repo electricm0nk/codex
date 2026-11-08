@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Mattock
+Mattock																				PROFICIENCY:WEAPON|Mattock								TYPE:Weapon.Resizable.Melee.TwoHanded.Martial.Piercing																																				COST:12	WT:12										CRITMULT:x4	CRITRANGE:1							DAMAGE:2d4					EQMOD:Special Quality ~ Fragile.Material ~ Steel																																				WIELD:TwoHanded							SIZE:M	SOURCEPAGE:p.32

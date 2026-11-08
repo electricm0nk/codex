@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Throwing Shield
+Throwing Shield																			PROFICIENCY:WEAPON|Throwing Shield							TYPE:Weapon.Resizable.Melee.Ranged.Thrown.Exotic.Bludgeoning.Performance.Trip																																	COST:50											CRITMULT:x2	CRITRANGE:1							DAMAGE:1d6					EQMOD:Special Quality ~ Performance.Special Quality ~ Trip																																			WIELD:TwoHanded		RANGE:20				SIZE:M	SOURCEPAGE:p.39

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Terbutje (Great)
+Terbutje (Great)												OUTPUTNAME:Great Terbutje			PROFICIENCY:WEAPON|Terbutje (Great)							TYPE:Weapon.Resizable.Melee.OneHanded.Martial.Exotic.Slashing.Sword																																		COST:12	WT:4										CRITMULT:x2	CRITRANGE:2							DAMAGE:1d10					EQMOD:Special Quality ~ Fragile.Material ~ Wood																																					WIELD:OneHanded							SIZE:M	SOURCEPAGE:p.28

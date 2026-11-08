@@ -21,6 +21,10 @@ use serde::{Deserialize, Serialize};
 use tauri::Manager;
 use uuid::Uuid;
 
+use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
+use crate::character_ledger::{admitted_records_at_root, AdmittedKind, AdmittedRecordDto, OverrideFlag, build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, list_progression_ledger_at_root, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto, ProgressionLedgerDto};
+use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
+use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
@@ -357,6 +361,10 @@ pub struct ResolvedEquipmentEffectDto {
     pub category: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub armor_class_bonus: Option<i16>,
+    /// The enhancement bonus this worn item's own `+N` adds on top of `armor_class_bonus`, its own
+    /// row in the AC breakdown. Absent when the item holds none.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub armor_class_enhancement: Option<i16>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_dex: Option<i16>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -561,6 +569,10 @@ pub struct LoadSavedCharacterRequest {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LoadSavedCharacterResponse {
+    /// What the character holds that the rules would have refused, and the flag that let each in:
+    /// the tags on the sheet and in print. Left out when there is none.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub admitted_under_override: Vec<AdmittedRecordDto>,
     pub summary: CharacterSummaryDto,
     pub snapshot: Option<PilotSnapshotDto>,
     pub diagnostics: Vec<DiagnosticDto>,
@@ -810,6 +822,86 @@ pub(crate) fn sheet_lines_for(
         }
         Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default()),
     }
+}
+
+/// The character's feat pools, read through the same package and racial traits as its sheet lines.
+pub(crate) fn feat_budget_for(
+    input: &CharacterInput,
+    base: &PilotBaseChassisComputation,
+) -> Result<codex::rules_core::feat_budget::FeatBudget, String> {
+    let package = sheet_rule_package().as_ref().map_err(Clone::clone)?;
+    let race_traits: Vec<String> =
+        resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
+    Ok(codex::rules_core::feat_budget::feat_budget(package, input, base, &race_traits))
+}
+
+/// Whether a feat's record lets it be taken again (PCGen `MULT:YES`, proved in `body_slots.rs`). A
+/// name printed in several books is repeatable when any printing is. A feat with no record is not.
+fn feat_is_repeatable(package: &codex::rules_core::sheet_rule::SheetRulePackage, feat_id: &str) -> bool {
+    // A compound token names the feat in its first segment and the weapon in its last.
+    let name = feat_id.strip_prefix("feat:").and_then(|rest| rest.split(':').next()).unwrap_or(feat_id);
+    package
+        .find_all(FEAT_POOL, &codex::rules_core::sheet_rule::id_slug(name))
+        .iter()
+        .filter_map(|id| package.rule(id))
+        .any(|rule| rule.repeatable)
+}
+
+/// The refusal for a feat the character already holds, or `None` when it may be taken.
+///
+/// Not repeatable: one copy is the limit, whatever target is named. Repeatable with no target to
+/// name (Fleet): every copy counts. Repeatable with a target (Weapon Focus): a new target is a new
+/// feat, the same target is not, and a pick naming no target meets only a copy that named none.
+fn duplicate_feat_refusal(
+    package: &codex::rules_core::sheet_rule::SheetRulePackage,
+    input: &CharacterInput,
+    feat_id: &str,
+    target: Option<&str>,
+) -> Option<String> {
+    use codex::rules_core::feat_identity;
+
+    let chosen = &input.chosen;
+    let copies = feat_identity::count(&chosen.selected_feats, feat_id);
+    if copies == 0 {
+        return None;
+    }
+    if !feat_is_repeatable(package, feat_id) {
+        return Some(format!("This character already holds '{feat_id}', and it cannot be taken twice."));
+    }
+    feat_effects::chooser_contract_for_feat(feat_id)?;
+    let recorded = feat_effects::chosen_feat_targets(&chosen.selected_feats, &chosen.selected_choices)
+        .into_iter()
+        .find(|entry| feat_identity::same(&entry.feat_id, feat_id))
+        .map_or_else(Vec::new, |entry| entry.targets);
+    match target {
+        Some(named) => {
+            let wanted = comparable_target(named);
+            recorded
+                .iter()
+                .any(|held| comparable_target(held) == wanted)
+                .then(|| format!("This character already holds '{feat_id}' for {}.", named.trim()))
+        }
+        None => (copies > recorded.len())
+            .then(|| format!("This character already holds '{feat_id}' with no target named: name a target for that one first.")),
+    }
+}
+
+/// A target's letters and digits, lowercased: creation seeds `longsword`, the picker sends `Longsword`.
+fn comparable_target(target: &str) -> String {
+    target.chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect()
+}
+
+/// `feats.budget.*` rows for the sheet. An unreadable package serves none: the sheet says so through
+/// `sheet_rules_unavailable_reason`, and the add path refuses with the same reason.
+fn feat_budget_rows(input: &CharacterInput, base: &PilotBaseChassisComputation) -> Vec<ExplanationDto> {
+    feat_budget_for(input, base).map_or_else(|_| Vec::new(), |budget| map_explanations_dto(&budget.explanation_rows()))
+}
+
+/// The character levels that grant a feat, for the level lists (the sheet's Progression, Create's
+/// per-level lines, the Level Up dialog's question of whether to ask for a feat).
+#[tauri::command]
+pub fn list_feat_levels() -> Vec<u8> {
+    codex::rules_core::feat_budget::levels_granting_a_feat(CHARACTER_LEVEL_CAP)
 }
 
 /// The per-character choice filter for the feat pool (SD-35 AT-35-E5-004; SD-34
@@ -1238,6 +1330,7 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
                     equipment_record_key: effect.equipment_record_key.clone(),
                     category: format!("{:?}", effect.category),
                     armor_class_bonus: effect.armor_class_bonus,
+                    armor_class_enhancement: effect.armor_class_enhancement,
                     max_dex: effect.max_dex,
                     spell_failure: effect.spell_failure,
                     armor_check_penalty: effect.armor_check_penalty,
@@ -1443,7 +1536,9 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
         name: "add_feat_selection",
         description: "Appends an entry to chosen.selected_feats, then \
             recomputes and re-saves. SD-27: refuses first when the \
-            character does not meet the feat's real corpus prerequisites, \
+            character already holds the feat (a repeatable feat may be taken \
+            again, on a new target when it takes one), has no feat budget \
+            left, or does not meet the feat's real corpus prerequisites, \
             naming the unmet ones -- see \
             add_feat_selection_enforcing_prerequisites_at_root.",
         wired: true,
@@ -1661,7 +1756,7 @@ pub struct CreateEquipmentDto {
 /// Whether picking feats into a draft checks each one's prerequisites.
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum FeatPolicy {
-    /// Creating: a feat the build does not qualify for refuses the creation.
+    /// Creating: a feat the build does not qualify for, or already holds, refuses the creation.
     Enforce,
     /// Listing what a draft qualifies for: pending picks count toward each other's prerequisites.
     Trust,
@@ -1735,10 +1830,23 @@ fn build_create_input(
         crate::pf1_adapter::apply_add_equipment_selection(&mut character_input, &item.item_id, ActiveState::EquippedActive);
     }
 
+    let mut unclaimed_seeds = DISPLACEABLE_SEEDED_FEATS.to_vec();
     for feat in &request.selected_feats {
         let target_choice = crate::pf1_adapter::resolve_feat_target_choice(&feat.feat_id, feat.target.as_deref())
             .map_err(|message| vec![create_diagnostic("create.feat_target", message)])?;
+        // A pick naming a seeded default takes its place: the screen does not show the seed, so this
+        // is no duplicate to the player, and the later picks must not displace what the player chose.
+        if let Some(index) = unclaimed_seeds.iter().position(|(seeded, _)| codex::rules_core::feat_identity::same(seeded, &feat.feat_id)) {
+            let (seeded, slot) = unclaimed_seeds.remove(index);
+            remove_seeded_feat(&mut character_input, seeded, slot);
+        }
         if feat_policy == FeatPolicy::Enforce {
+            let package = sheet_rule_package()
+                .as_ref()
+                .map_err(|message| vec![create_diagnostic("create.feat_prereqs_unavailable", message.clone())])?;
+            if let Some(message) = duplicate_feat_refusal(package, &character_input, &feat.feat_id, feat.target.as_deref()) {
+                return Err(vec![create_diagnostic("create.feat_duplicate", message)]);
+            }
             let receipt = compute_pilot_with_corpus(&character_input, corpus_fixture_bundle());
             let facts = prereq_facts_for(&character_input, &receipt.base)
                 .map_err(|message| vec![create_diagnostic("create.feat_prereqs_unavailable", message)])?;
@@ -1753,7 +1861,55 @@ fn build_create_input(
         }
         crate::pf1_adapter::apply_add_feat_selection_with_target(&mut character_input, &feat.feat_id, target_choice);
     }
+    if !request.selected_feats.is_empty() {
+        seat_picked_feats(&mut character_input, feat_policy)?;
+    }
     Ok((character_input, equipment_cost_copper))
+}
+
+/// The defaults creation seeds for a player who picks nothing, in the order a pick displaces them,
+/// each with its choice slot. Weapon Focus is not here: the combat baseline requires it of every class.
+/// Dodge is last because a Monk's bonus-feat slot reads it.
+const DISPLACEABLE_SEEDED_FEATS: [(&str, &str); 2] =
+    [("feat:power_attack", "choice:level_1_character_feat"), ("feat:dodge", "choice:human_bonus_feat")];
+
+/// A feat the player picked takes the place of a seeded default while the character is over budget,
+/// so the sheet never shows a default the player's own choices left no room for. The default's slot
+/// goes with it: the engine reads a slot only when it is present, and refuses one that names anything
+/// but the default. Picks that still do not fit refuse the creation under `Enforce`.
+fn seat_picked_feats(input: &mut CharacterInput, feat_policy: FeatPolicy) -> Result<(), Vec<DiagnosticDto>> {
+    let unavailable = |message: String| vec![create_diagnostic("create.feat_prereqs_unavailable", message)];
+    let base = compute_pilot_base_chassis(input);
+    let mut budget = feat_budget_for(input, &base).map_err(unavailable)?;
+    for (seeded, slot) in DISPLACEABLE_SEEDED_FEATS {
+        if budget.over_by() == 0 {
+            break;
+        }
+        if remove_seeded_feat(input, seeded, slot) {
+            budget = feat_budget_for(input, &base).map_err(unavailable)?;
+        }
+    }
+    if feat_policy == FeatPolicy::Enforce && budget.over_by() > 0 {
+        let over: Vec<String> = budget
+            .pools()
+            .iter()
+            .filter(|pool| pool.remaining() < 0)
+            .map(|pool| format!("the {} pool has {} of {} spent", pool.display_name(), pool.spent, pool.granted))
+            .collect();
+        return Err(vec![create_diagnostic(
+            "create.feat_budget",
+            format!("Too many feats are chosen by {}: {}.", budget.over_by(), over.join(", ")),
+        )]);
+    }
+    Ok(())
+}
+
+/// Takes a seeded default and its slot off the character. `false` when it does not hold the seed.
+fn remove_seeded_feat(input: &mut CharacterInput, seeded: &str, slot: &str) -> bool {
+    let Some(position) = input.chosen.selected_feats.iter().position(|feat| feat == seeded) else { return false };
+    input.chosen.selected_feats.remove(position);
+    input.chosen.selected_choices.retain(|c| !(c.choice_set_id == slot && c.selection_id == seeded));
+    true
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -1873,6 +2029,8 @@ pub struct DraftSheetPreviewDto {
     pub initiative: ExplanationDto,
     /// The draft's carried load, as the sheet's `corpusDerived.encumbrance`.
     pub encumbrance: EncumbranceDto,
+    /// The draft's `feats.budget.<pool>.{granted,spent,remaining}` rows, as the saved sheet's.
+    pub feat_budget: Vec<ExplanationDto>,
 }
 
 fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftSheetPreviewDto, String> {
@@ -1883,7 +2041,11 @@ fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftShe
         .into_iter()
         .find(|row| row.id == codex::rules_core::pilot_compute::INITIATIVE_TOTAL_ID)
         .ok_or_else(|| "the engine computed no initiative total for this draft".to_owned())?;
-    Ok(DraftSheetPreviewDto { initiative, encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance) })
+    Ok(DraftSheetPreviewDto {
+        initiative,
+        encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance),
+        feat_budget: feat_budget_rows(&input, &receipt.base),
+    })
 }
 
 #[tauri::command]
@@ -1968,7 +2130,11 @@ pub(crate) fn create_character_at_root(
         character_input,
     };
 
+    let ledger = ledger_of_a_new_character(root, &envelope.character_input)?;
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if let Some(ledger) = ledger {
+        write_character_ledger_at_root(root, &ledger)?;
+    }
     if !request.hit_point_levels.is_empty() {
         save_character_hit_points_at_root(root, &request.hit_point_levels)?;
     }
@@ -2020,7 +2186,18 @@ pub fn clone_character(
     request: CloneCharacterRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let source_root = resolve_character_root(&app, &request.character_id)?;
-    let source_envelope = SavedCharacterStore::load(&source_root).map_err(|err| err.message)?;
+    let new_root = resolve_character_root(&app, &request.new_character_id)?;
+    clone_character_at_roots(&source_root, &new_root, &request, &app.package_info().version.to_string())
+}
+
+/// `clone_character` between two character folders, without an `AppHandle`.
+fn clone_character_at_roots(
+    source_root: &Path,
+    new_root: &Path,
+    request: &CloneCharacterRequest,
+    app_version: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let source_envelope = SavedCharacterStore::load(source_root).map_err(|err| err.message)?;
 
     let mut character_input = source_envelope.character_input.clone();
     character_input.case_id = Some(request.new_character_id.clone());
@@ -2041,7 +2218,7 @@ pub fn clone_character(
         revision_kind: SavedCharacterRevisionKind::Authoritative,
         saved_at: request.saved_at.clone(),
         schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
-        app_or_runtime_version: app.package_info().version.to_string(),
+        app_or_runtime_version: app_version.to_owned(),
         content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
         game_system: GAME_SYSTEM_ID.to_owned(),
         latest_authoritative_revision_ref: format!("{}.rev.1", request.new_character_id),
@@ -2049,8 +2226,13 @@ pub fn clone_character(
         character_input,
     };
 
-    let new_root = resolve_character_root(&app, &request.new_character_id)?;
-    SavedCharacterStore::save(&envelope, &new_root).map_err(|err| err.message)?;
+    SavedCharacterStore::save(&envelope, new_root).map_err(|err| err.message)?;
+
+    copy_character_custom(source_root, new_root)?;
+    copy_character_ledger(source_root, new_root)?;
+    copy_character_hit_points(source_root, new_root)?;
+    copy_character_bio(source_root, new_root)?;
+    copy_character_money(source_root, new_root)?;
 
     // Best-effort: carry the portrait over too, if the source has one.
     let source_portrait = source_root.join(PORTRAIT_FILE_NAME);
@@ -2606,15 +2788,24 @@ fn sheet_skill_trait_modifier_rows(input: &CharacterInput) -> Vec<ExplanationDto
 pub(crate) fn load_saved_character_at_root(
     root: &Path,
 ) -> Result<LoadSavedCharacterResponse, String> {
-    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    build_character_ledger_on_first_load(root, &envelope.character_input);
+    let saved_input = envelope.character_input.clone();
+    // This copy is what the sheet computes from, and is never saved.
+    let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
+    worn_custom_items.raise_abilities(&mut envelope.character_input);
+    // `resolve_unified_pilot_snapshot` raises its own copy by what is worn; so does what reads the
+    // scores beside it. So must this one, for the rows the load builds from them.
+    let sheet_input = worn_item_stated_bonuses(&envelope.character_input.chosen.equipment_selections, corpus_fixture_bundle())
+        .raised(&envelope.character_input);
 
-    let (snapshot, diagnostics, corpus_receipt) =
+    let (mut snapshot, diagnostics, corpus_receipt) =
         match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
             Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
             Err(diagnostics) => (
                 None,
                 diagnostics,
-                compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle()),
+                compute_pilot_with_corpus(&sheet_input, corpus_fixture_bundle()),
             ),
         };
 
@@ -2624,17 +2815,26 @@ pub(crate) fn load_saved_character_at_root(
     // `EquippedActive` effect set. Reused rather than recomputed, matching
     // `contract::to_pilot_receipt`'s own reasoning for the identical pair.
     let mut explanations = map_explanations_dto(&corpus_receipt.base.explanations);
-    explanations.extend(sheet_skill_trait_modifier_rows(&envelope.character_input));
+    explanations.extend(sheet_skill_trait_modifier_rows(&sheet_input));
+    explanations.extend(feat_budget_rows(&sheet_input, &corpus_receipt.base));
+    budget_from_the_saved_intelligence(&mut explanations, &saved_input, &sheet_input);
     let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
-        &envelope.character_input,
+        &sheet_input,
         corpus_fixture_bundle(),
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
-        sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
+        sheet_lines_for(&sheet_input, &corpus_receipt.base);
+    if let Some(snapshot) = snapshot.as_mut() {
+        worn_custom_items.apply_to_snapshot(snapshot);
+    }
+    let constitution_modifier = snapshot
+        .as_ref()
+        .map_or(corpus_receipt.base.ability_modifiers.constitution, |snapshot| snapshot.ability_modifiers.constitution);
 
-    Ok(LoadSavedCharacterResponse {
+    let mut sheet = LoadSavedCharacterResponse {
+        admitted_under_override: admitted_records_at_root(root, &envelope.character_input),
         summary: summarize_envelope(&envelope),
         snapshot: snapshot.as_ref().map(map_snapshot_dto),
         diagnostics: map_diagnostics_dto(&diagnostics),
@@ -2647,13 +2847,242 @@ pub(crate) fn load_saved_character_at_root(
         selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
         selected_traits: envelope.character_input.chosen.selected_traits.clone(),
         resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
-        ability_scores: effective_ability_scores_dto(&envelope.character_input),
+        ability_scores: effective_ability_scores_dto(&sheet_input),
         skill_allocations: map_skill_allocations_dto(&envelope.character_input),
         equipment_selections: map_equipment_selections_dto(&envelope.character_input),
         sheet_lines,
         sheet_rules_unavailable_reason,
         feat_skill_bonuses,
-    })
+    };
+    worn_custom_items.apply_to_sheet(&mut sheet);
+    push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
+    let ability_modifiers = snapshot.as_ref().map_or(corpus_receipt.base.ability_modifiers, |snapshot| snapshot.ability_modifiers);
+    let selected_skill_modifiers = snapshot.as_ref().map(|snapshot| snapshot.skill.selected_modifier);
+    push_skill_total_rows(&envelope.character_input, ability_modifiers, selected_skill_modifiers, &mut sheet);
+    Ok(sheet)
+}
+
+/// The Skills panel's rows, as `skill:<name>` (`skillsModel.ts`'s `SKILLS`): the book's skills, each
+/// Knowledge on its own row, Craft, Perform and Profession one row each.
+fn sheet_skill_row_ids() -> Vec<String> {
+    codex::rules_core::equipment_effects::skill_set_rows("all")
+}
+
+/// The ability that governs a Skills panel row, by the engine's own key-ability sets
+/// (`equipment_effects::skill_set_rows`, held to the book's skill records by `tests/worn_vs_carried.rs`).
+fn sheet_skill_ability(skill_id: &str, modifiers: codex::rules_core::pilot_compute::AbilityModifiers) -> Option<(&'static str, i16)> {
+    use codex::rules_core::equipment_effects::skill_set_rows;
+    [
+        ("Strength", modifiers.strength),
+        ("Dexterity", modifiers.dexterity),
+        ("Intelligence", modifiers.intelligence),
+        ("Wisdom", modifiers.wisdom),
+        ("Charisma", modifiers.charisma),
+    ]
+    .into_iter()
+    .find(|(word, _)| skill_set_rows(&word.to_ascii_lowercase()).iter().any(|row| row == skill_id))
+}
+
+/// What a skill's total is made of, before the trait, drawback and worn-item row.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct SkillTotalTerms {
+    ability_modifier: i16,
+    ranks: i16,
+    class_skill: bool,
+    feat_bonus: i16,
+}
+
+/// PF1 (CRB Chapter 4): ranks, the key ability's modifier, +3 for a class skill once it has a
+/// rank, and the feat bonus the engine folded for it.
+fn skill_total(terms: SkillTotalTerms) -> i16 {
+    terms.ability_modifier + terms.ranks + if terms.class_skill && terms.ranks > 0 { 3 } else { 0 } + terms.feat_bonus
+}
+
+/// The feat bonus the engine folded for a skill (`knowledge_local`): its own total plus every family
+/// total it belongs to (`knowledge`), the class-skill family rule (`ClassSkillView::contains`).
+fn folded_feat_skill_bonus(bonuses: &codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses, skill: &str) -> i16 {
+    let own = bonuses.skills.get(skill).copied().unwrap_or(0);
+    let families: i32 = bonuses
+        .groups
+        .iter()
+        .filter(|(family, _)| skill == family.as_str() || skill.strip_prefix(family.as_str()).is_some_and(|rest| rest.starts_with('_')))
+        .map(|(_, value)| *value)
+        .sum();
+    i16::try_from(own + families).unwrap_or(0)
+}
+
+/// One `skill.total.<skill>` row per Skills panel row: the one total the panel and the printed
+/// Skills block both read. Climb, Intimidate and Swim take the engine's own total
+/// (`skill.selected_modifier`) when the character computes; every other row adds ranks, the key
+/// ability's modifier, a class skill's +3 (any held class's converted class skills, the same
+/// reader `list_class_facts` serves) and the folded feat bonus. Each then adds its
+/// `skill.trait_modifier` row (traits, drawbacks, worn items), which must already be on the sheet.
+fn push_skill_total_rows(
+    input: &CharacterInput,
+    abilities: codex::rules_core::pilot_compute::AbilityModifiers,
+    selected: Option<codex::rules_core::pilot_compute::SelectedSkillModifiers>,
+    sheet: &mut LoadSavedCharacterResponse,
+) {
+    use codex::rules_core::pilot_compute::class_skill_sheet_rules::{class_skill_view, ClassSkillAnswer};
+    let class_views: Vec<(String, ClassSkillAnswer)> = input
+        .chosen
+        .class_levels
+        .iter()
+        .map(|held| (held.class_id.clone(), class_skill_view(&codex::rules_core::sheet_rule::id_slug(&held.class_id), held.level)))
+        .collect();
+    let mut rows = Vec::new();
+    for skill_id in sheet_skill_row_ids() {
+        let Some((ability, ability_modifier)) = sheet_skill_ability(&skill_id, abilities) else { continue };
+        let skill = skill_id.trim_start_matches("skill:");
+        let ranks: i16 = input.chosen.skill_allocations.iter().filter(|allocation| allocation.skill_id == skill_id).map(|allocation| i16::from(allocation.ranks)).sum();
+        let granted_by: Vec<&str> = class_views
+            .iter()
+            .filter(|(_, answer)| matches!(answer, ClassSkillAnswer::Known(view) if view.contains(skill)))
+            .map(|(class_id, _)| class_id.as_str())
+            .collect();
+        let terms = SkillTotalTerms { ability_modifier, ranks, class_skill: !granted_by.is_empty(), feat_bonus: folded_feat_skill_bonus(&sheet.feat_skill_bonuses, skill) };
+        let engine_total = selected.and_then(|modifiers| match skill {
+            "climb" => Some(modifiers.climb),
+            "intimidate" => Some(modifiers.intimidate),
+            "swim" => Some(modifiers.swim),
+            _ => None,
+        });
+        let trait_row = format!("skill.trait_modifier.{skill}");
+        let trait_modifier = sheet.explanations.iter().find(|row| row.id == trait_row).map_or(0, |row| row.value);
+        let mut detail = match engine_total {
+            Some(total) => format!("{total:+} the engine's total (skill.selected_modifier.{skill})"),
+            None => {
+                let mut words = format!("{ranks} ranks; {ability} {ability_modifier:+}");
+                if terms.class_skill && ranks > 0 {
+                    words.push_str(&format!("; class skill +3 ({})", granted_by.join(", ")));
+                }
+                if terms.feat_bonus != 0 {
+                    words.push_str(&format!("; feats {:+}", terms.feat_bonus));
+                }
+                words
+            }
+        };
+        if trait_modifier != 0 {
+            detail.push_str(&format!("; {trait_row} {trait_modifier:+}"));
+        }
+        let value = engine_total.unwrap_or_else(|| skill_total(terms)) + trait_modifier;
+        rows.push(ExplanationDto { id: format!("skill.total.{skill}"), value, detail });
+    }
+    sheet.explanations.extend(rows);
+}
+
+/// The sheet's maximum hit points (`hit_points.max`) and land speed (`speed.land`): the one value
+/// the Character Sheet's Hit Points and Speed tiles and the printed Combat block all read. Pushed
+/// after the worn items' `custom_item.hit_points`, `custom_item.speed` and `custom_item.speed_percent`
+/// rows, which each adds. A total the engine cannot state (an unsaved level of a class with no known
+/// hit die; a race with no creation chassis) gets no row, and the sheet prints it as unknown.
+fn push_hit_points_and_speed_rows(root: &Path, input: &CharacterInput, constitution_modifier: i16, explanations: &mut Vec<ExplanationDto>) {
+    let item_row = |id: &str| explanations.iter().find(|row| row.id == id).map(|row| row.value);
+    let hit_points = max_hit_points_row(root, input, constitution_modifier, item_row("custom_item.hit_points"));
+    let speed = land_speed_row(&input.chosen.race_id, item_row("custom_item.speed"), item_row("custom_item.speed_percent"));
+    explanations.extend(hit_points);
+    explanations.extend(speed);
+}
+
+/// Every held class level's hit points, plus the GM's `hit_points` grants and what worn items add.
+/// A level with a saved result (`hit_points.json`) counts as saved, plus the Constitution modifier,
+/// at least 1; the class's results past the levels it holds are ignored, and the order classes were
+/// added in does not matter. With no saved result at all, the character's first level takes the
+/// full die and every other the die's average (`hit_die_source::hit_points_from_die`). A level
+/// past the saved ones takes the average.
+fn max_hit_points_row(root: &Path, input: &CharacterInput, constitution_modifier: i16, worn_items: Option<i16>) -> Option<ExplanationDto> {
+    // An unreadable file reads as none saved, as the sheet always has.
+    let saved = load_character_hit_points_at_root(root).map(|file| file.levels).unwrap_or_default();
+    let (total, terms) = class_hit_points_total(&input.chosen.class_levels, &saved, constitution_modifier)?;
+    let grants: i16 = custom_or_empty(root)
+        .grants
+        .iter()
+        .filter(|grant| grant.target == "hit_points")
+        .map(|grant| i16::try_from(grant.value).unwrap_or(0))
+        .sum();
+    let worn = worn_items.unwrap_or(0);
+    let mut detail = format!(
+        "{} (the full die at the first level, the die's average after it, a saved roll as saved; Constitution {constitution_modifier:+} per level, at least 1)",
+        terms.join("; ")
+    );
+    if grants != 0 {
+        detail.push_str(&format!("; GM grants {grants:+}"));
+    }
+    if worn != 0 {
+        detail.push_str(&format!("; worn items {worn:+}"));
+    }
+    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + grants + worn, detail })
+}
+
+/// The held classes' hit points and one term per class for the row's detail; `None` with no class
+/// held, or when a level with no saved result belongs to a class with no known hit die.
+fn class_hit_points_total(class_levels: &[CharacterClassLevel], saved: &[HitPointLevelDto], constitution_modifier: i16) -> Option<(i16, Vec<String>)> {
+    use codex::rules_core::pilot_compute::hit_die_source::{hit_die_source, hit_points_from_die};
+    if class_levels.is_empty() {
+        return None;
+    }
+    let mut total: i16 = 0;
+    let mut terms: Vec<String> = Vec::new();
+    for (index, held) in class_levels.iter().enumerate() {
+        let results: Vec<u8> = saved.iter().filter(|level| level.class_id == held.class_id).map(|level| level.value).take(usize::from(held.level)).collect();
+        let unsaved = held.level.saturating_sub(u8::try_from(results.len()).unwrap_or(u8::MAX));
+        let mut term: i16 = results.iter().map(|value| (i16::from(*value) + constitution_modifier).max(1)).sum();
+        if unsaved > 0 {
+            let source = hit_die_source(&held.class_id)?;
+            term += hit_points_from_die(source.die, unsaved, saved.is_empty() && index == 0, constitution_modifier);
+        }
+        let rolls = if results.is_empty() { String::new() } else { format!(", {} saved roll(s)", results.len()) };
+        terms.push(format!("{} {}: {term}{rolls}", held.class_id, held.level));
+        total += term;
+    }
+    Some((total, terms))
+}
+
+/// Land speed in feet: `base` plus what worn items add, then their percent, whole feet rounded
+/// down, never below 0.
+fn land_speed_feet(base: i32, worn_feet: Option<i16>, worn_percent: Option<i16>) -> i32 {
+    ((base + i32::from(worn_feet.unwrap_or(0))) * i32::from(worn_percent.unwrap_or(100))).div_euclid(100).max(0)
+}
+
+/// The race's base land speed (its creation chassis, as the race roster states it) plus what worn
+/// items add (`custom_item.speed`), then their `custom_item.speed_percent` in whole feet rounded
+/// down, never below 0.
+fn land_speed_row(race_id: &str, worn_feet: Option<i16>, worn_percent: Option<i16>) -> Option<ExplanationDto> {
+    let corpus = crate::race_catalog::race_corpus().as_ref().ok()?;
+    let race_key = corpus.resolve_key(race_id)?;
+    let base = race_creation_chassis(&corpus.resolve(race_key, &[])?).ok()?.base_speed_ft;
+    let value = i16::try_from(land_speed_feet(base, worn_feet, worn_percent)).ok()?;
+    let mut detail = format!("{race_key} base land speed {base} ft.");
+    if let Some(moved) = worn_feet {
+        detail.push_str(&format!("; worn items {moved:+} ft."));
+    }
+    if let Some(percent) = worn_percent {
+        detail.push_str(&format!("; worn items {percent}% of it, whole feet rounded down"));
+    }
+    Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
+}
+
+/// A worn item's Intelligence is a bonus that comes off with the item, and a headband grants its
+/// ranks in named skills (CRB p.502), so what is spent once and kept stays on the saved score: the
+/// skill point budget and a spellbook's size. `ability_modifier.intelligence.saved` tells the sheet
+/// which modifier its own budget and languages read. A sheet no item raises holds no such row.
+fn budget_from_the_saved_intelligence(explanations: &mut Vec<ExplanationDto>, saved_input: &CharacterInput, sheet_input: &CharacterInput) {
+    let saved_score = effective_ability_scores_dto(saved_input).intelligence;
+    if saved_score == effective_ability_scores_dto(sheet_input).intelligence {
+        return;
+    }
+    let saved_rows = map_explanations_dto(&compute_pilot_with_corpus(saved_input, corpus_fixture_bundle()).base.explanations);
+    for row in explanations.iter_mut().filter(|row| row.id == "class_chassis.skill_points" || row.id.contains(".spellbook_size.") || row.id.contains(".formula_book_size.")) {
+        if let Some(saved) = saved_rows.iter().find(|saved| saved.id == row.id) {
+            row.value = saved.value;
+            row.detail = saved.detail.clone();
+        }
+    }
+    explanations.push(ExplanationDto {
+        id: "ability_modifier.intelligence.saved".to_owned(),
+        value: (saved_score - 10).div_euclid(2),
+        detail: "Intelligence modifier before worn items: the skill point budget and languages read it".to_owned(),
+    });
 }
 
 /// `chosen.equipment_selections` as its wire DTO, order preserved.
@@ -2667,6 +3096,7 @@ pub(crate) fn map_equipment_selections_dto(
         .map(|selection| EquipmentSelectionImportDto {
             item_id: selection.item_id.clone(),
             active_state: selection.active_state.into(),
+            applied_modifiers: selection.applied_modifiers.clone(),
         })
         .collect()
 }
@@ -2983,7 +3413,7 @@ pub(crate) fn preview_level_up_at_root(
 /// request. A separate DTO (rather than deriving `Deserialize` on
 /// `ActiveState` itself) because the `codex` crate has zero dependencies —
 /// see this module's own top-of-file note.
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ActiveStateDto {
     EquippedActive,
     Absent,
@@ -3067,10 +3497,33 @@ pub enum PurchaseEquipmentResponse {
         #[serde(rename = "corpusDerived")]
         corpus_derived: Box<CorpusDerivedDto>,
         money: CharacterMoneyDto,
+        /// Where the new copy went: `EquippedActive` when it was asked for and its slot was free.
+        #[serde(rename = "activeState")]
+        active_state: ActiveStateDto,
+        /// Why a copy asked to be worn is carried: the slot refusal's words. `None` for one worn, and
+        /// for one with no slot, which is carried with nothing refused (R18).
+        #[serde(rename = "carriedReason")]
+        carried_reason: Option<String>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
     },
+}
+
+/// Where a bought copy goes (R18). Asked to be worn, it is worn if its slot is free, and otherwise
+/// carried with the reason; an item with no slot is carried. A buy asking for carried stays carried.
+fn bought_copy_placement(root: &Path, item_id: &str, requested: ActiveState) -> Result<(ActiveState, Option<String>, Vec<OverrideFlag>), String> {
+    if requested != ActiveState::EquippedActive {
+        return Ok((requested, None, Vec::new()));
+    }
+    if body_slot_of_item(item_id)? == BodySlot::None {
+        return Ok((ActiveState::SelectedInactive, None, Vec::new()));
+    }
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    Ok(match wear_check(root, &envelope.character_input, item_id)? {
+        Err((_, reason)) => (ActiveState::SelectedInactive, Some(reason), Vec::new()),
+        Ok(flags) => (ActiveState::EquippedActive, None, flags),
+    })
 }
 
 /// `purchase_equipment`'s real implementation: real correctness fix for
@@ -3144,6 +3597,126 @@ fn catalog_cost_gp(item_id: &str) -> Option<f64> {
     )
 }
 
+/// The `+N` offers Market shows on the row `item_id` names; empty when it shows none (no such row,
+/// or a row that takes no bonus). Read from `list_market` itself, so the price shown is the price
+/// charged and a row Market hides cannot be bought as a `+N`.
+///
+/// Read once: the catalog behind `list_market` never changes in a run, and walking it for every
+/// copy of every held-list read cost seconds in a debug build, long enough to swallow a click on the
+/// Market's next button.
+fn market_offers(item_id: &str) -> Vec<crate::equipment_catalog::MarketVariantDto> {
+    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter, MarketVariantDto};
+    static OFFERS: std::sync::OnceLock<BTreeMap<String, Vec<MarketVariantDto>>> = std::sync::OnceLock::new();
+    OFFERS
+        .get_or_init(|| {
+            let mut offers = BTreeMap::new();
+            for category in [
+                MarketCategory::Weapon,
+                MarketCategory::Armor,
+                MarketCategory::Shield,
+                MarketCategory::Gear,
+                MarketCategory::MagicItem,
+            ] {
+                for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                    offers.entry(row.entry.key.to_ascii_lowercase()).or_insert(row.variants);
+                }
+            }
+            offers
+        })
+        .get(&item_id.to_ascii_lowercase())
+        .cloned()
+        .unwrap_or_default()
+}
+
+/// [`market_offers`] for a held copy, whose id can be a legacy one: creation gives every character
+/// `item:longsword`, and that is the Market's `Longsword (Base)` by the record both resolve to.
+fn copy_offers(item_id: &str) -> Vec<crate::equipment_catalog::MarketVariantDto> {
+    let offers = market_offers(item_id);
+    if !offers.is_empty() || !item_id.starts_with("item:") {
+        return offers;
+    }
+    codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus_fixture_bundle())
+        .map_or_else(Vec::new, |record| market_offers(&record.identity))
+}
+
+/// The `+N` a held copy is, by the offers of its row: the highest bonus among its equipmods, 0 for
+/// a plain copy.
+fn copy_bonus(selection: &EquipmentSelection, offers: &[crate::equipment_catalog::MarketVariantDto]) -> u8 {
+    offers
+        .iter()
+        .filter(|offer| selection.applied_modifiers.contains(&offer.modifier_key))
+        .map(|offer| offer.bonus)
+        .max()
+        .unwrap_or(0)
+}
+
+/// What a copy of `item_id` holding `bonus` costs: its Market offer, else the catalog price, which
+/// is also what a plain copy costs. `None` when the record has no price.
+fn copy_price_gp(item_id: &str, bonus: u8, offers: &[crate::equipment_catalog::MarketVariantDto]) -> Option<f64> {
+    offers
+        .iter()
+        .find(|offer| offer.bonus == bonus)
+        .map(|offer| offer.price_gp)
+        .or_else(|| catalog_cost_gp(item_id))
+}
+
+/// Saves one new copy of `item_id`, holding `modifier_key` when it is a `+N`, in one save. The
+/// bonus goes on the new copy: `apply_attach_equipment_modifier` takes the first copy of an id,
+/// which would make an older plain item the one that was paid for.
+fn add_purchased_copy_at_root(
+    root: &Path,
+    (item_id, bonus): (&str, u8),
+    modifier_key: Option<&str>,
+    active_state: ActiveState,
+    wear_flags: Vec<OverrideFlag>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let gate = load_gate_at_root(root, item_id, bonus, wear_flags);
+    crate::pf1_adapter::mutate_saved_character_gated_at_root(
+        root,
+        saved_at,
+        |character_input| {
+            crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
+            if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
+                copy.applied_modifiers.push(key.to_owned());
+            }
+        },
+        gate,
+    )
+}
+
+/// The check on one more copy of `item_id` in the pack: what would take the character past the most
+/// they can carry (`OverHeavyCapacity`) is refused, unless `ignore_encumbrance` is on, and then it is
+/// let in under that flag beside `wear_flags`. An item of no known weight adds nothing to refuse over.
+pub(crate) fn load_gate_at_root(
+    root: &Path,
+    item_id: &str,
+    bonus: u8,
+    wear_flags: Vec<OverrideFlag>,
+) -> impl FnOnce(&codex::rules_core::pilot_compute_corpus::CorpusPilotReceipt) -> Result<Vec<AdmittedRecordDto>, DiagnosticDto> {
+    let admitted = custom_or_empty(root).overrides.ignore_encumbrance;
+    let item_id = item_id.to_owned();
+    move |receipt| {
+        let load = &receipt.corpus_derived.encumbrance;
+        let adds_weight = load.per_item.iter().rev().find(|item| item.item_id == item_id).is_some_and(|item| item.weight_lbs > 0.0);
+        let mut flags = wear_flags;
+        if adds_weight && load.level == codex::rules_core::encumbrance::EncumbranceLevel::OverHeavyCapacity {
+            if !admitted {
+                return Err(DiagnosticDto {
+                    id: "equipment.over_capacity".to_owned(),
+                    message: format!(
+                        "{item_id} would take the load to {} lb, past the {} lb this character can carry",
+                        load.total_carried_weight_lbs, load.thresholds.heavy_max_lbs
+                    ),
+                    claim_blocking: true,
+                });
+            }
+            flags.push(OverrideFlag::IgnoreEncumbrance);
+        }
+        Ok(flags.into_iter().map(|flag| AdmittedRecordDto::copy(&item_id, bonus, flag)).collect())
+    }
+}
+
 /// [`purchase_equipment_at_root`] under an explicit [`PriceMode`]. `Cashless` skips the price and
 /// affordability checks entirely and charges nothing; the other two buy at 100%.
 pub(crate) fn purchase_equipment_priced_at_root(
@@ -3153,12 +3726,49 @@ pub(crate) fn purchase_equipment_priced_at_root(
     saved_at: &str,
     mode: PriceMode,
 ) -> Result<PurchaseEquipmentResponse, String> {
+    purchase_equipment_offer_at_root(root, item_id, active_state, saved_at, mode, None)
+}
+
+/// [`purchase_equipment_priced_at_root`], optionally as a `+N`: the whole offer price replaces the
+/// catalog price, and the copy holds the offer's eqmod from the save that adds it. A bonus the row
+/// does not offer is refused in every mode, before anything is read from the balance.
+pub(crate) fn purchase_equipment_offer_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+    mode: PriceMode,
+    bonus: Option<u8>,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let offer = match bonus {
+        None => None,
+        Some(bonus) => {
+            let Some(offer) = market_offers(item_id).into_iter().find(|offer| offer.bonus == bonus) else {
+                return Ok(PurchaseEquipmentResponse::Blocked {
+                    diagnostics: vec![DiagnosticDto {
+                        id: "money.equipment_purchase.no_such_offer".to_owned(),
+                        message: format!(
+                            "'{item_id}' is not on offer at +{bonus}. The purchase was not applied \
+                             and no funds were charged."
+                        ),
+                        claim_blocking: true,
+                    }],
+                });
+            };
+            Some(offer)
+        }
+    };
+    let modifier_key = offer.as_ref().map(|offer| offer.modifier_key.as_str());
+    let (active_state, carried_reason, wear_flags) = bought_copy_placement(root, item_id, active_state)?;
+    let copy_bonus = offer.as_ref().map_or(0, |offer| offer.bonus);
+    let placed = ActiveStateDto::from(active_state);
+
     if mode == PriceMode::Cashless {
-        return match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+        return match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
             CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
             CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
                 let money = load_character_money_at_root(root)?;
-                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
             }
         };
     }
@@ -3170,7 +3780,7 @@ pub(crate) fn purchase_equipment_priced_at_root(
     // resolver remains the fallback for ids that are not catalog keys at
     // all, notably the legacy `"item:longsword"` fixture namespace that
     // seeded characters still carry.
-    let Some(cost_gp) = catalog_cost_gp(item_id) else {
+    let Some(cost_gp) = offer.as_ref().map(|offer| offer.price_gp).or_else(|| catalog_cost_gp(item_id)) else {
         return Ok(PurchaseEquipmentResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "money.equipment_purchase.unknown_cost".to_owned(),
@@ -3201,7 +3811,7 @@ pub(crate) fn purchase_equipment_priced_at_root(
         });
     }
 
-    match add_equipment_selection_at_root(root, item_id, active_state, saved_at)? {
+    match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
         CreateCharacterResponse::Blocked { diagnostics } => {
             Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
         }
@@ -3209,7 +3819,7 @@ pub(crate) fn purchase_equipment_priced_at_root(
             let cost_signed = i64::try_from(cost_copper)
                 .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
             let money = adjust_character_money_at_root(root, -cost_signed)?;
-            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money })
+            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
         }
     }
 }
@@ -3243,7 +3853,7 @@ pub enum AttachEquipmentModifierResponse {
 /// `attach_equipment_modifier`'s real implementation (v0.6 alpha swarm
 /// items 1+27 sub-task 6, frontend-proposed shape). Mirrors
 /// `purchase_equipment_at_root`'s atomic resolve-cost -> check-affordability
-/// -> mutate -> charge sequencing, with two deliberate differences:
+/// -> mutate -> charge sequencing, with three deliberate differences:
 ///
 /// 1. **Validates `modifier_item_id` against the real equipment catalog
 ///    first**, before any cost or target-selection check -- a typo'd or
@@ -3279,14 +3889,22 @@ pub enum AttachEquipmentModifierResponse {
 ///    "unknown cost = blocked, same as unaffordable" rule. Checked against
 ///    the real static table before choosing this: the actual magical
 ///    weapon/armor enhancement records (`"Special Ability ~ +1 ~
-///    Weapon"` through `~ +10 ~`) all resolve `cost_gp: None` (real PF1
+///    Weapon"` up; `~ +6 ~ Weapon` is no catalog key) all resolve `cost_gp: None` (real PF1
 ///    enhancement pricing is a bonus-squared formula, not a flat catalog
 ///    price) -- mirroring `purchase_equipment`'s block-on-unknown-cost
 ///    behavior here would block exactly the headline use case this
-///    command exists for. Only a modifier with a real, known `cost_gp`
-///    (e.g. Masterwork, `Some(0.0)` in the current table -- itself a
-///    known pre-existing pricing gap, not introduced here) is ever
-///    actually charged.
+///    command exists for. A modifier with a real, known `cost_gp` is
+///    charged that.
+///
+///    **Except a `+N` the copy's Market row offers:** it is charged the
+///    offer's price less what the copy already holds, its catalog price or
+///    its held `+M` offer, so buying plain and attaching costs what buying
+///    the `+N` costs and a sale cannot pay for a bonus nobody paid for. A
+///    bonus at or below the one held costs nothing and returns nothing. A
+///    legacy `item:*` id pays by the row its record is on ([`copy_offers`]).
+///    A row with no such offer keeps the free attach above.
+/// 3. **`Cashless` moves no money** for any modifier, so it needs no funds
+///    (see [`PriceMode`]). The other two modes charge the same.
 ///
 /// The target `item_id` must already exist in `equipment_selections` --
 /// checked via a read before any charge, so a not-found target is a
@@ -3297,6 +3915,17 @@ pub(crate) fn attach_equipment_modifier_at_root(
     item_id: &str,
     modifier_item_id: &str,
     saved_at: &str,
+) -> Result<AttachEquipmentModifierResponse, String> {
+    attach_equipment_modifier_priced_at_root(root, item_id, modifier_item_id, saved_at, PriceMode::Standard)
+}
+
+/// [`attach_equipment_modifier_at_root`] under an explicit [`PriceMode`].
+pub(crate) fn attach_equipment_modifier_priced_at_root(
+    root: &Path,
+    item_id: &str,
+    modifier_item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
 ) -> Result<AttachEquipmentModifierResponse, String> {
     let Some(modifier_row) =
         codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(modifier_item_id)
@@ -3315,13 +3944,10 @@ pub(crate) fn attach_equipment_modifier_at_root(
 
     let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
         .map_err(|err| err.message)?;
-    let target_exists = envelope
-        .character_input
-        .chosen
-        .equipment_selections
-        .iter()
-        .any(|selection| selection.item_id == item_id);
-    if !target_exists {
+    // The copy `apply_attach_equipment_modifier` takes.
+    let selections = &envelope.character_input.chosen.equipment_selections;
+    let target = crate::pf1_adapter::first_copy_in_hand(selections, |selection| selection.item_id == item_id).map(|index| &selections[index]);
+    let Some(target) = target else {
         return Ok(AttachEquipmentModifierResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "equipment.attach_modifier.target_not_found".to_owned(),
@@ -3332,13 +3958,18 @@ pub(crate) fn attach_equipment_modifier_at_root(
                 claim_blocking: true,
             }],
         });
-    }
+    };
 
-    // Same row that satisfied recognition above -- see this function's doc
-    // comment for why price must not come from a second, independent lookup.
-    let cost_copper = match modifier_row.cost_gp {
-        Some(cost_gp) => money::gp_to_copper(cost_gp),
-        None => 0,
+    let offers = copy_offers(item_id);
+    let cost_copper = if mode == PriceMode::Cashless {
+        0
+    } else if let Some(offer) = offers.iter().find(|offer| offer.modifier_key == modifier_item_id) {
+        let held_gp = copy_price_gp(item_id, copy_bonus(target, &offers), &offers);
+        money::gp_to_copper(offer.price_gp).saturating_sub(held_gp.map_or(0, money::gp_to_copper))
+    } else {
+        // Same row that satisfied recognition above -- see this function's doc
+        // comment for why price must not come from a second, independent lookup.
+        modifier_row.cost_gp.map_or(0, money::gp_to_copper)
     };
 
     if cost_copper > 0 {
@@ -3384,22 +4015,26 @@ pub struct AttachEquipmentModifierRequest {
     pub item_id: String,
     pub modifier_item_id: String,
     pub saved_at: String,
+    /// Absent means `Standard`, as on a purchase.
+    #[serde(default)]
+    pub price_mode: PriceMode,
 }
 
 /// See `attach_equipment_modifier_at_root` for the full transaction-shape
-/// reasoning (free-attach on unknown cost, target/modifier validation
-/// before any charge).
+/// reasoning (the `+N` charge, free-attach on unknown cost, target/modifier
+/// validation before any charge).
 #[tauri::command]
 pub fn attach_equipment_modifier(
     app: tauri::AppHandle,
     request: AttachEquipmentModifierRequest,
 ) -> Result<AttachEquipmentModifierResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    attach_equipment_modifier_at_root(
+    attach_equipment_modifier_priced_at_root(
         &root,
         &request.item_id,
         &request.modifier_item_id,
         &request.saved_at,
+        request.price_mode,
     )
 }
 
@@ -3413,6 +4048,9 @@ pub struct PurchaseEquipmentRequest {
     /// Absent means `Standard` (buy at 100%).
     #[serde(default)]
     pub price_mode: PriceMode,
+    /// The `+N` to buy, one the Market row offers. Absent buys the plain item.
+    #[serde(default)]
+    pub bonus: Option<u8>,
 }
 
 /// Atomically resolves `item_id`'s real catalog cost, verifies the
@@ -3426,12 +4064,13 @@ pub fn purchase_equipment(
     request: PurchaseEquipmentRequest,
 ) -> Result<PurchaseEquipmentResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    purchase_equipment_priced_at_root(
+    purchase_equipment_offer_at_root(
         &root,
         &request.item_id,
         request.active_state.into(),
         &request.saved_at,
         request.price_mode,
+        request.bonus,
     )
 }
 
@@ -3694,24 +4333,84 @@ pub(crate) fn list_feats_for_character_at_root(
 ///   miss rather than over a rule.
 /// * **The error names the reason.** A refusal a player cannot act on is
 ///   as bad as no refusal at all.
+///
+/// A feat already held is refused first, since making room would not let it in. The feat budget
+/// comes next: a character with no room is told about the room, whichever new feat it asked for.
 pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
     root: &Path,
     feat_id: &str,
     target: Option<&str>,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    let (_, facts) = character_prereq_facts_at_root(root)?;
-    if let Some(report) =
-        codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts)
-    {
+    let (envelope, facts) = character_prereq_facts_at_root(root)?;
+    let package = sheet_rule_package().as_ref().map_err(Clone::clone)?;
+    if let Some(refusal) = duplicate_feat_refusal(package, &envelope.character_input, feat_id, target) {
+        return Err(refusal);
+    }
+    let overrides = custom_or_empty(root).overrides;
+    let base = compute_pilot_base_chassis(&envelope.character_input);
+    let mut admitted = Vec::new();
+    let mut admit = |flag| admitted.push(AdmittedRecordDto::new(AdmittedKind::Feat, feat_id, flag));
+    if let Some(refusal) = feat_budget_for(&envelope.character_input, &base)?.refusal(package, feat_id) {
+        if !overrides.ignore_feat_budget {
+            return Err(refusal);
+        }
+        admit(OverrideFlag::IgnoreFeatBudget);
+    }
+    if let Some(report) = codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts) {
         if let Some(reason) = report.unavailable_reason() {
-            return Err(format!(
-                "'{}' cannot be taken by this character: {reason}",
-                report.feat_key
-            ));
+            if !overrides.feats_without_prerequisites {
+                return Err(format!("'{}' cannot be taken by this character: {reason}", report.feat_key));
+            }
+            admit(OverrideFlag::FeatsWithoutPrerequisites);
         }
     }
-    add_feat_selection_at_root(root, feat_id, target, saved_at)
+    if let Some(alignment) = stated_alignment_at_root(root) {
+        if let Some(reason) = facts.feat_alignment_unmet(feat_id, alignment) {
+            if !overrides.ignore_alignment_restrictions {
+                return Err(format!("'{feat_id}' cannot be taken by this character: {reason}"));
+            }
+            admit(OverrideFlag::IgnoreAlignmentRestrictions);
+        }
+    }
+    crate::pf1_adapter::add_feat_selection_admitting_at_root(root, feat_id, target, saved_at, admitted)
+}
+
+/// The alignment the character's bio states, in the rules' two letters, or `None` when it states none
+/// the rules can read: the record carries no alignment, so an unstated one never refuses.
+fn stated_alignment_at_root(root: &Path) -> Option<&'static str> {
+    let bio = load_character_bio_at_root(root).ok()?;
+    Some(match bio.alignment.trim().to_ascii_lowercase().as_str() {
+        "lawful good" | "lg" => "LG",
+        "neutral good" | "ng" => "NG",
+        "chaotic good" | "cg" => "CG",
+        "lawful neutral" | "ln" => "LN",
+        "true neutral" | "neutral" | "tn" | "n" => "TN",
+        "chaotic neutral" | "cn" => "CN",
+        "lawful evil" | "le" => "LE",
+        "neutral evil" | "ne" => "NE",
+        "chaotic evil" | "ce" => "CE",
+        _ => return None,
+    })
+}
+
+/// The check on a level of `class_id` against this character's stated alignment: what it rules out is
+/// refused, unless `ignore_alignment_restrictions` is on, and then the level is let in under that flag.
+pub(crate) fn class_alignment_gate_at_root(root: &Path, class_id: &str) -> Result<Vec<AdmittedRecordDto>, DiagnosticDto> {
+    let Some(alignment) = stated_alignment_at_root(root) else {
+        return Ok(Vec::new());
+    };
+    let Ok((_, facts)) = character_prereq_facts_at_root(root) else {
+        return Ok(Vec::new());
+    };
+    let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
+    let Some(reason) = facts.class_alignment_unmet(slug, alignment) else {
+        return Ok(Vec::new());
+    };
+    if custom_or_empty(root).overrides.ignore_alignment_restrictions {
+        return Ok(vec![AdmittedRecordDto::new(AdmittedKind::ClassLevel, class_id, OverrideFlag::IgnoreAlignmentRestrictions)]);
+    }
+    Err(DiagnosticDto { id: "class.alignment".to_owned(), message: format!("a {alignment} character cannot take a level of {slug}: {reason}"), claim_blocking: true })
 }
 
 // ---------------------------------------------------------------------------
@@ -3906,8 +4605,10 @@ pub(crate) fn remove_feat_selection_at_root(
         ));
     }
 
-    if let Some(dependency) = feat_removal_dependency_refusal(&before, &after) {
-        return Err(format!("'{feat_id}' cannot be removed: {dependency}"));
+    if !custom_or_empty(root).overrides.feats_without_prerequisites {
+        if let Some(dependency) = feat_removal_dependency_refusal(&before, &after) {
+            return Err(format!("'{feat_id}' cannot be removed: {dependency}"));
+        }
     }
 
     mutate_saved_character_at_root(root, saved_at, |character_input| {
@@ -3992,12 +4693,8 @@ pub(crate) fn apply_remove_equipment_selection(
     character_input: &mut CharacterInput,
     item_id: &str,
 ) -> bool {
-    let Some(index) = character_input
-        .chosen
-        .equipment_selections
-        .iter()
-        .position(|selection| selection.item_id.eq_ignore_ascii_case(item_id))
-    else {
+    let selections = &character_input.chosen.equipment_selections;
+    let Some(index) = crate::pf1_adapter::first_copy_in_hand(selections, |selection| selection.item_id.eq_ignore_ascii_case(item_id)) else {
         return false;
     };
     character_input.chosen.equipment_selections.remove(index);
@@ -4025,26 +4722,233 @@ pub(crate) fn remove_equipment_selection_at_root(
     })
 }
 
-/// [`remove_equipment_selection_at_root`] that also sells the item back under `mode`: `Standard`
-/// returns 50% of its catalog price, `CharacterBuild` 100%, `Cashless` nothing. An item with no
-/// catalog price has nothing to refund and is removed all the same. The refund is applied only
-/// after the removal saved.
+/// [`remove_equipment_selection_at_root`] that also sells the item back under `mode`, taking the
+/// first copy; see [`sell_equipment_copy_at_root`].
 pub(crate) fn remove_equipment_selection_priced_at_root(
     root: &Path,
     item_id: &str,
     saved_at: &str,
     mode: PriceMode,
 ) -> Result<CreateCharacterResponse, String> {
-    let cost_copper = catalog_cost_gp(item_id).map(money::gp_to_copper);
-    let response = remove_equipment_selection_at_root(root, item_id, saved_at)?;
-    if let (CreateCharacterResponse::Saved { .. }, Some(cost_copper)) = (&response, cost_copper) {
-        let refund = refund_copper(cost_copper, mode);
+    sell_equipment_copy_at_root(root, item_id, saved_at, mode, None)
+}
+
+/// Which of a character's copies of an item a row means: its `+N`, and the state it shows it in.
+/// Either left out leaves the choice to the command's own first-copy rule.
+#[derive(Debug, Clone, Copy, Default)]
+pub(crate) struct CopyNamed {
+    pub(crate) bonus: Option<u8>,
+    pub(crate) from_state: Option<ActiveState>,
+}
+
+/// Removes one held copy of `item_id` and sells it back under `mode`: `Standard` returns 50% of
+/// what that copy costs, `CharacterBuild` 100%, `Cashless` nothing. A `+N` copy is priced at its
+/// Market offer; an item with no catalog price has nothing to refund and is removed all the same.
+/// The refund is applied only after the removal saved.
+///
+/// `bonus` names the copy when the character holds several: `0` a plain one, `N` a `+N`. Absent
+/// takes the first copy, the rule the sheet's Remove control has always had.
+pub(crate) fn sell_equipment_copy_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
+    bonus: Option<u8>,
+) -> Result<CreateCharacterResponse, String> {
+    sell_held_copy_at_root(root, item_id, saved_at, mode, CopyNamed { bonus, from_state: None })
+}
+
+/// [`sell_equipment_copy_at_root`] of the copy a row names. Named by no state, a copy the character
+/// has with them goes before one left behind.
+pub(crate) fn sell_held_copy_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
+    CopyNamed { bonus, from_state }: CopyNamed,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let held = &envelope.character_input.chosen.equipment_selections;
+    let is_this_item = |selection: &EquipmentSelection| selection.item_id.eq_ignore_ascii_case(item_id);
+    // Only a copy with an equipmod can be a `+N`, and the sheet removes plain items far more often.
+    let offers = if held.iter().any(|selection| is_this_item(selection) && !selection.applied_modifiers.is_empty()) {
+        copy_offers(item_id)
+    } else {
+        Vec::new()
+    };
+    let Some(index) = crate::pf1_adapter::first_copy_in_hand(held, |selection| {
+        is_this_item(selection) && bonus.is_none_or(|bonus| copy_bonus(selection, &offers) == bonus) && from_state.is_none_or(|state| selection.active_state == state)
+    }) else {
+        return Err(match bonus {
+            Some(bonus) if bonus > 0 => format!("'{item_id}' cannot be removed: this character does not carry a +{bonus} one"),
+            Some(_) => format!("'{item_id}' cannot be removed: this character does not carry a plain one"),
+            None => format!("'{item_id}' cannot be removed: this character does not carry it"),
+        });
+    };
+    let sold_bonus = copy_bonus(&held[index], &offers);
+    let cost_gp = copy_price_gp(item_id, sold_bonus, &offers);
+
+    let response = mutate_saved_character_at_root(root, saved_at, |character_input| {
+        character_input.chosen.equipment_selections.remove(index);
+    })?;
+    if let (CreateCharacterResponse::Saved { .. }, Some(cost_gp)) = (&response, cost_gp) {
+        let refund = refund_copper(money::gp_to_copper(cost_gp), mode);
         if refund > 0 {
             let refund_signed = i64::try_from(refund).map_err(|_| "refund overflows a signed 64-bit total".to_owned())?;
             adjust_character_money_at_root(root, refund_signed)?;
         }
     }
     Ok(response)
+}
+
+/// One held copy, as the Market's Sell list and the Gear tab's Equipment control show it. `bonus` is
+/// the copy's `+N`, 0 when plain, and names that copy to `remove_equipment_selection` and
+/// `set_equipment_active_state`. `slot` is where a worn copy sits, and what a carried one would take.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HeldEquipmentCopyDto {
+    pub item_id: String,
+    pub name: String,
+    pub bonus: u8,
+    pub active_state: ActiveStateDto,
+    pub slot: BodySlot,
+    /// The override that let this copy in, when one did.
+    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
+    pub override_flag: Option<OverrideFlag>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListHeldEquipmentRequest {
+    pub character_id: String,
+}
+
+/// The selection creation seeds for Power Attack (`pf1_adapter.rs`): a feat toggle the engine
+/// requires carried, with no item behind it.
+const FEAT_TOGGLE_ITEM_ID: &str = "power_attack";
+
+/// The fixed loadout's row (`pf1_adapter.rs`): `Absent` from creation, with no record behind it, in
+/// every save and seed. `Absent` on anything else is an item left behind.
+const LOADOUT_NO_SHIELD_ITEM_ID: &str = "item:shield";
+
+/// Whether a selection is an item the character owns, in any of the three states.
+fn is_owned_copy(selection: &EquipmentSelection) -> bool {
+    selection.item_id != FEAT_TOGGLE_ITEM_ID && !(selection.item_id == LOADOUT_NO_SHIELD_ITEM_ID && selection.active_state == ActiveState::Absent)
+}
+
+/// Every copy the character owns, worn, carried or left behind, read off the saved selections. Not `corpus_derived`'s
+/// `equipped_items`, which resolves against the bundled demo corpus and so leaves out most of what a
+/// character can buy, and every enhancement eqmod.
+pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let held: Vec<&EquipmentSelection> = envelope
+        .character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| is_owned_copy(selection))
+        .collect();
+    let slots = held.iter().map(|selection| body_slot_of_item(&selection.item_id)).collect::<Result<Vec<_>, String>>()?;
+    let is_worn = |index: &usize| held[*index].active_state == ActiveState::EquippedActive;
+    let worn: Vec<usize> = (0..held.len()).filter(is_worn).collect();
+    // A text-only custom record is a note on the Custom tab, not something held on the body.
+    let custom = custom_or_empty(root);
+    let custom_items: Vec<_> = custom.equipment.iter().filter(|record| record.slot.is_some() || !record.bonuses.is_empty()).collect();
+    let custom_slot = |index: usize| custom_items[index].slot.unwrap_or(BodySlot::None);
+    let worn_slots: Vec<BodySlot> = worn
+        .iter()
+        .map(|index| slots[*index])
+        .chain((0..custom_items.len()).filter(|index| custom_items[*index].worn).map(custom_slot))
+        .collect();
+    let mut places = worn_places(&worn_slots).into_iter();
+    let mut rows: Vec<HeldEquipmentCopyDto> = held
+        .iter()
+        .enumerate()
+        .map(|(index, selection)| {
+            let (name, bonus) = copy_name_and_bonus(selection);
+            let slot = if is_worn(&index) { places.next().unwrap_or(slots[index]) } else { slots[index] };
+            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus, active_state: selection.active_state.into(), slot, override_flag: None }
+        })
+        .collect();
+    rows.extend(custom_items.iter().enumerate().map(|(index, record)| {
+        let (active_state, slot) = if record.worn {
+            (ActiveState::EquippedActive, places.next().unwrap_or(custom_slot(index)))
+        } else if record.left_behind {
+            (ActiveState::Absent, custom_slot(index))
+        } else {
+            (ActiveState::SelectedInactive, custom_slot(index))
+        };
+        HeldEquipmentCopyDto {
+            item_id: format!("{CUSTOM_ITEM_PREFIX}{}", record.id),
+            name: record.name.clone(),
+            bonus: 0,
+            active_state: active_state.into(),
+            slot,
+            override_flag: None,
+        }
+    }));
+    tag_admitted_copies(&mut rows, &admitted_records_at_root(root, &envelope.character_input));
+    Ok(rows)
+}
+
+/// Puts each equipment row's flag on a copy it can name: one worn, for a flag about wearing, and of
+/// its own `+N` when one is left, since a modifier attached later moves that. A copy shows one flag;
+/// `admitted_under_override` on the load has all of them.
+fn tag_admitted_copies(copies: &mut [HeldEquipmentCopyDto], admitted: &[AdmittedRecordDto]) {
+    for row in admitted.iter().filter(|row| row.kind == AdmittedKind::Equipment) {
+        let wearing = row.override_flag.is_about_wearing();
+        let open = |copy: &HeldEquipmentCopyDto| {
+            copy.override_flag.is_none() && copy.item_id.eq_ignore_ascii_case(&row.id) && (!wearing || copy.active_state == ActiveStateDto::EquippedActive)
+        };
+        let found = copies.iter().position(|copy| open(copy) && copy.bonus == row.bonus).or_else(|| copies.iter().position(open));
+        if let Some(index) = found {
+            copies[index].override_flag = Some(row.override_flag);
+        }
+    }
+}
+
+/// What the sheet calls one selection, and its `+N`.
+fn copy_name_and_bonus(selection: &EquipmentSelection) -> (String, u8) {
+    let offers = if selection.applied_modifiers.is_empty() { Vec::new() } else { copy_offers(&selection.item_id) };
+    let bonus = copy_bonus(selection, &offers);
+    let plain_name = || {
+        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&selection.item_id)
+            // A derived row's catalog name is its base's; say what the Market row says.
+            .map(|row| if row.name.ends_with(" (Base)") { row.key.to_owned() } else { row.name.to_owned() })
+            .or_else(|| {
+                codex::rules_core::equipment_resolver::equipment_id_resolve(
+                    &selection.item_id,
+                    codex::rules_core::rules_catalog::RuleSetId::Crb,
+                    corpus_fixture_bundle(),
+                )
+                .map(|(record, _)| record.name.clone())
+            })
+            .unwrap_or_else(|| selection.item_id.strip_prefix("item:").unwrap_or(&selection.item_id).to_owned())
+    };
+    let name = offers.iter().find(|offer| offer.bonus == bonus).map_or_else(plain_name, |offer| offer.name.clone());
+    (name, bonus)
+}
+
+/// What the character holds, for the Market's Sell list and the Equipment control; see
+/// [`list_held_equipment_at_root`].
+#[tauri::command]
+pub fn list_held_equipment(app: tauri::AppHandle, request: ListHeldEquipmentRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    list_held_equipment_at_root(&root)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListProgressionLedgerRequest {
+    pub character_id: String,
+}
+
+/// The Show Progression drawer's rows; see [`list_progression_ledger_at_root`]. Runs one engine
+/// compute a level, so it stays off the main thread.
+#[tauri::command(async)]
+pub fn list_progression_ledger(app: tauri::AppHandle, request: ListProgressionLedgerRequest) -> Result<ProgressionLedgerDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    list_progression_ledger_at_root(&root)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -4096,6 +5000,14 @@ pub fn remove_feat_selection(
 pub struct SetEquipmentActiveStateRequest {
     pub character_id: String,
     pub item_id: String,
+    /// Which copy, when the character holds several: `0` a plain one, `N` a `+N`. Absent takes the
+    /// first copy not already in that state.
+    #[serde(default)]
+    pub bonus: Option<u8>,
+    /// The state the row asking for this shows its copy in. With two copies of one `+N`, one worn
+    /// and one left behind, it is the only thing that says which one moves.
+    #[serde(default)]
+    pub from_state: Option<ActiveStateDto>,
     pub active_state: ActiveStateDto,
     pub saved_at: String,
 }
@@ -4110,57 +5022,208 @@ pub fn set_equipment_active_state(
     request: SetEquipmentActiveStateRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    set_equipment_active_state_at_root(
+    set_held_copy_state_at_root(
         &root,
         &request.item_id,
+        CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) },
         request.active_state.into(),
         &request.saved_at,
     )
 }
 
-/// Sets `active_state` on the first carried copy of `item_id` (the same
-/// case-insensitive first-match rule `apply_remove_equipment_selection`
-/// uses), keeping the derived `equipped_or_active` flag in step with it
-/// exactly as `EquipmentSelection`'s own doc comment requires. Returns
-/// `false` without mutating when the item is not carried.
+/// Which copy of `item_id` a state change moves: of the copies `copy` names (all of them when it
+/// names none), the first not already in that state, else the first (case-insensitive, as
+/// `apply_remove_equipment_selection` matches). Without the first rule, asking to wear a carried
+/// second copy would "succeed" on the copy already worn.
+fn state_change_target(selections: &[EquipmentSelection], item_id: &str, CopyNamed { bonus, from_state }: CopyNamed, active_state: ActiveState) -> Option<usize> {
+    let is_this_item = |selection: &EquipmentSelection| selection.item_id.eq_ignore_ascii_case(item_id);
+    // Only a copy with an equipmod can be a `+N`, as `sell_equipment_copy_at_root` reads it.
+    let offers = if bonus.is_some() && selections.iter().any(|selection| is_this_item(selection) && !selection.applied_modifiers.is_empty()) {
+        copy_offers(item_id)
+    } else {
+        Vec::new()
+    };
+    let copies = || {
+        selections
+            .iter()
+            .enumerate()
+            .filter(|(_, selection)| is_this_item(selection) && bonus.is_none_or(|bonus| copy_bonus(selection, &offers) == bonus))
+            .filter(|(_, selection)| from_state.is_none_or(|state| selection.active_state == state))
+    };
+    copies().find(|(_, selection)| selection.active_state != active_state).or_else(|| copies().next()).map(|(index, _)| index)
+}
+
+/// Sets `active_state` on the copy [`state_change_target`] names, keeping the derived
+/// `equipped_or_active` flag in step with it exactly as `EquipmentSelection`'s own doc comment
+/// requires. Returns `false` without mutating when the item is not carried.
 pub(crate) fn apply_set_equipment_active_state(
     character_input: &mut CharacterInput,
     item_id: &str,
+    copy: CopyNamed,
     active_state: ActiveState,
 ) -> bool {
-    let Some(selection) = character_input
-        .chosen
-        .equipment_selections
-        .iter_mut()
-        .find(|selection| selection.item_id.eq_ignore_ascii_case(item_id))
-    else {
+    let selections = &mut character_input.chosen.equipment_selections;
+    let Some(index) = state_change_target(selections, item_id, copy, active_state) else {
         return false;
     };
-    selection.active_state = active_state;
-    selection.equipped_or_active = active_state == ActiveState::EquippedActive;
+    selections[index].active_state = active_state;
+    selections[index].equipped_or_active = active_state == ActiveState::EquippedActive;
     true
 }
 
-/// Refuses (as `Err`, leaving the saved character untouched) an item the
-/// character does not carry; past that, `mutate_saved_character_at_root`
-/// supplies the recompute-before-persist gate.
+/// The body slot `item_id` fills, read off its converted record. `None` when no record holds the
+/// id, which has no slot for the check to enforce. `Err` when the data itself cannot be read: that
+/// must not read as "this item has no slot" (`body_slots::slot_of`).
+fn body_slot_of_item(item_id: &str) -> Result<BodySlot, String> {
+    let package = codex::rules_core::corpus_loader::live_sheet_rules()
+        .ok_or_else(|| "the equipment records could not be read, so the body slots cannot be checked".to_owned())?;
+    let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
+    let Some(record) = package
+        .find("equipment", &codex::rules_core::sheet_rule::slug(needle))
+        .and_then(|id| package.rule(id))
+    else {
+        return Ok(BodySlot::None);
+    };
+    let types = codex::rules_core::equipment_types::equipment_types()
+        .as_ref()
+        .map_err(Clone::clone)?
+        .get(needle)
+        .map_or(&[][..], Vec::as_slice);
+    worn_slot(record, types, settled_wield_category(item_id))
+}
+
+/// A weapon's settled wield category, off its own record or the record it names as its stand-in
+/// (`Battleaxe` states none, and names `Battleaxe (Base)`). Off `full_corpus_bundle`, where a name
+/// answers by its own book's record and not by the fixture's.
+fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_total::WieldCategory> {
+    use codex::rules_core::equipment_resolver::equipment_converted_resolve;
+    let corpus = crate::corpus_full::full_corpus_bundle();
+    let record = equipment_converted_resolve(item_id, corpus)?;
+    record.wield_category.or_else(|| {
+        let base = record.base_item.as_deref()?;
+        equipment_converted_resolve(base, corpus)?.wield_category
+    })
+}
+
+/// Every worn selection on `character_input`, as `(name, slot)` in saved order.
+pub(crate) fn worn_stock_slots(character_input: &CharacterInput) -> Result<Vec<(String, BodySlot)>, String> {
+    character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .map(|selection| Ok((copy_name_and_bonus(selection).0, body_slot_of_item(&selection.item_id)?)))
+        .collect()
+}
+
+/// What stops one more copy of `item_id` being worn over what `character_input` and the custom items
+/// beside it at `root` already wear, worded for the sheet.
+fn item_slot_conflict(character_input: &CharacterInput, item_id: &str, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
+    let slot = body_slot_of_item(item_id)?;
+    let mut worn = worn_stock_slots(character_input)?;
+    worn.extend(worn_custom_slots(custom));
+    let worn: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
+    slot_conflict(&worn, slot)
+}
+
+/// A diagnostic id and the sheet's words.
+type WearRefusal = (&'static str, String);
+
+/// Whether this character can put one more copy of `item_id` on: the flags it goes on under, none if
+/// the rules allow it, or a diagnostic id and the sheet's words for what stops it. The slot, then the
+/// proficiency. Each one yields to its override.
+fn wear_check(root: &Path, character_input: &CharacterInput, item_id: &str) -> Result<Result<Vec<OverrideFlag>, WearRefusal>, String> {
+    use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
+    let custom = custom_or_empty(root);
+    let mut admitted = Vec::new();
+    if let Some(message) = item_slot_conflict(character_input, item_id, &custom)? {
+        if !custom.overrides.ignore_slot_limits {
+            return Ok(Err(("equipment.slot_taken", message)));
+        }
+        admitted.push(OverrideFlag::IgnoreSlotLimits);
+    }
+    let gap = match character_lacks_proficiency_with(character_input, item_id) {
+        ItemProficiencyGap::None => None,
+        ItemProficiencyGap::Weapon => Some((custom.overrides.weapons_without_proficiency, OverrideFlag::WeaponsWithoutProficiency)),
+        ItemProficiencyGap::Armor => Some((custom.overrides.armor_without_proficiency, OverrideFlag::ArmorWithoutProficiency)),
+    };
+    match gap {
+        None => {}
+        Some((true, flag)) => admitted.push(flag),
+        Some((false, _)) => {
+            return Ok(Err(("equipment.not_proficient", format!("this character is not proficient with {}", item_id.strip_prefix("item:").unwrap_or(item_id).trim_end_matches(" (Base)")))));
+        }
+    }
+    Ok(Ok(admitted))
+}
+
+/// [`set_equipment_copy_state_at_root`] with no copy named.
+#[cfg(test)]
 pub(crate) fn set_equipment_active_state_at_root(
     root: &Path,
     item_id: &str,
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    let mut probe = envelope.character_input.clone();
-    if !apply_set_equipment_active_state(&mut probe, item_id, active_state) {
-        return Err(format!(
-            "'{item_id}' cannot change state: this character does not carry it"
-        ));
-    }
+    set_equipment_copy_state_at_root(root, item_id, None, active_state, saved_at)
+}
 
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
-        apply_set_equipment_active_state(character_input, item_id, active_state);
-    })
+/// Refuses (as `Err`, leaving the saved character untouched) an item the
+/// character does not carry, and (as `Blocked`, the sheet's mutation message) a wear whose slot is
+/// held; past that, `mutate_saved_character_at_root` supplies the
+/// recompute-before-persist gate.
+pub(crate) fn set_equipment_copy_state_at_root(
+    root: &Path,
+    item_id: &str,
+    bonus: Option<u8>,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    set_held_copy_state_at_root(root, item_id, CopyNamed { bonus, from_state: None }, active_state, saved_at)
+}
+
+/// [`set_equipment_copy_state_at_root`] of the copy a row names. A copy coming back from being left
+/// behind is one more thing to carry, so it meets the check a purchase does.
+pub(crate) fn set_held_copy_state_at_root(
+    root: &Path,
+    item_id: &str,
+    copy: CopyNamed,
+    active_state: ActiveState,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    if let Some(id) = item_id.strip_prefix(CUSTOM_ITEM_PREFIX) {
+        return set_custom_item_state_at_root(root, id, active_state, saved_at);
+    }
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let selections = &envelope.character_input.chosen.equipment_selections;
+    let Some(target) = state_change_target(selections, item_id, copy, active_state).map(|index| &selections[index]) else {
+        return Err(match copy.bonus {
+            Some(bonus) if bonus > 0 => format!("'{item_id}' cannot change state: this character does not carry a +{bonus} one"),
+            Some(_) => format!("'{item_id}' cannot change state: this character does not carry a plain one"),
+            None => format!("'{item_id}' cannot change state: this character does not carry it"),
+        });
+    };
+    let copy_bonus = copy_name_and_bonus(target).1;
+    let mut wear_flags = Vec::new();
+    if active_state == ActiveState::EquippedActive && target.active_state != active_state {
+        match wear_check(root, &envelope.character_input, item_id)? {
+            Err((id, message)) => {
+                return Ok(CreateCharacterResponse::Blocked {
+                    diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
+                });
+            }
+            Ok(flags) => wear_flags = flags,
+        }
+    }
+    let mutate = |character_input: &mut CharacterInput| {
+        apply_set_equipment_active_state(character_input, item_id, copy, active_state);
+    };
+    if target.active_state == ActiveState::Absent && active_state != ActiveState::Absent {
+        let gate = load_gate_at_root(root, item_id, copy_bonus, wear_flags);
+        return crate::pf1_adapter::mutate_saved_character_gated_at_root(root, saved_at, mutate, gate);
+    }
+    let admitted = wear_flags.into_iter().map(|flag| AdmittedRecordDto::copy(item_id, copy_bonus, flag)).collect();
+    crate::pf1_adapter::mutate_saved_character_admitting_at_root(root, saved_at, admitted, mutate)
 }
 
 // ----- v0.8 B-4: `add_trait_selection` / `remove_trait_selection` -----
@@ -4395,20 +5458,26 @@ pub struct RemoveEquipmentSelectionRequest {
     /// `Cashless` returns nothing. Absent means `Standard`.
     #[serde(default)]
     pub price_mode: PriceMode,
+    /// Which held copy: `0` a plain one, `N` a `+N`. Absent takes the first copy.
+    #[serde(default)]
+    pub bonus: Option<u8>,
+    /// The state the row selling this shows its copy in, as on `set_equipment_active_state`.
+    #[serde(default)]
+    pub from_state: Option<ActiveStateDto>,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
 /// (with its applied equipmods), recomputes via the real engine, and
 /// re-saves — the inverse of `add_equipment_selection` / `purchase_equipment`.
 /// Sells the item back under the request's price mode (`Standard` 50%, `CharacterBuild` 100%,
-/// `Cashless` nothing); see `remove_equipment_selection_priced_at_root`.
+/// `Cashless` nothing); see `sell_equipment_copy_at_root`.
 #[tauri::command]
 pub fn remove_equipment_selection(
     app: tauri::AppHandle,
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    remove_equipment_selection_priced_at_root(&root, &request.item_id, &request.saved_at, request.price_mode)
+    sell_held_copy_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) })
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -4683,6 +5752,16 @@ fn validate_hit_point_levels(request: &CreateCharacterRequest) -> Option<CreateC
     None
 }
 
+/// Copies the saved results beside one character to beside another; no file, nothing to copy. The
+/// sheet's hit points and the drawer's hit die read this file, so a clone keeps both.
+pub(crate) fn copy_character_hit_points(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(HIT_POINTS_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(HIT_POINTS_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
 fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -> Result<(), String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let path = root.join(HIT_POINTS_FILE_NAME);
@@ -4693,7 +5772,7 @@ fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -
 
 /// The saved hit point results, or an empty list when the character has none (created before the
 /// Levels list, or without rolls). Never an error for the ordinary "no file" case.
-fn load_character_hit_points_at_root(root: &Path) -> Result<CharacterHitPointsDto, String> {
+pub(crate) fn load_character_hit_points_at_root(root: &Path) -> Result<CharacterHitPointsDto, String> {
     let path = root.join(HIT_POINTS_FILE_NAME);
     if !path.exists() {
         return Ok(CharacterHitPointsDto::default());
@@ -4759,6 +5838,24 @@ pub struct CharacterBioDto {
 /// first write to a character directory either. Split from the
 /// `#[tauri::command]` wrapper below so it is unit-testable without an
 /// `AppHandle`.
+/// A clone keeps its source's bio: the deity on it moves a sheet number. No file is no copy.
+fn copy_character_bio(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(BIO_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(BIO_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
+/// A clone holds what its source holds. No file is no copy.
+fn copy_character_money(from: &Path, to: &Path) -> Result<(), String> {
+    let source = from.join(MONEY_FILE_NAME);
+    if !source.exists() {
+        return Ok(());
+    }
+    std::fs::copy(&source, to.join(MONEY_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
+}
+
 fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let path = root.join(BIO_FILE_NAME);
@@ -4773,7 +5870,7 @@ fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), 
 /// `load_character_portrait`'s own `Ok(None)`-for-absent shape (bio's
 /// equivalent "absent" value is the default-empty DTO, since every field is
 /// already optional-shaped as an empty string rather than an `Option`).
-fn load_character_bio_at_root(root: &Path) -> Result<CharacterBioDto, String> {
+pub(crate) fn load_character_bio_at_root(root: &Path) -> Result<CharacterBioDto, String> {
     let path = root.join(BIO_FILE_NAME);
     if !path.exists() {
         return Ok(CharacterBioDto::default());
@@ -4841,7 +5938,7 @@ const MONEY_FILE_NAME: &str = "money.json";
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-struct StoredMoney {
+pub struct StoredMoney {
     #[serde(default)]
     total_copper: u64,
 }
@@ -4874,7 +5971,7 @@ fn money_dto_from_total(total_copper: u64) -> CharacterMoneyDto {
 /// no `money.json` has ever been saved for this character -- mirrors
 /// `load_character_bio_at_root`'s own "no error for the common absent
 /// case" shape.
-fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String> {
+pub(crate) fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String> {
     let path = root.join(MONEY_FILE_NAME);
     if !path.exists() {
         return Ok(money_dto_from_total(0));
@@ -4892,7 +5989,7 @@ fn load_character_money_at_root(root: &Path) -> Result<CharacterMoneyDto, String
 /// Fails honestly with an insufficient-funds error rather than silently
 /// allowing a negative balance -- PF1 characters cannot carry negative
 /// money.
-fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> Result<CharacterMoneyDto, String> {
+pub(crate) fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> Result<CharacterMoneyDto, String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
     let current_total_copper = load_character_money_at_root(root)?.total_copper;
@@ -5217,6 +6314,10 @@ pub struct SkillAllocationDto {
 pub struct EquipmentSelectionImportDto {
     pub item_id: String,
     pub active_state: ActiveStateDto,
+    /// This copy's equipmods, so a `+N` that was paid for survives an export. Absent on a file
+    /// written before the field existed, and left out when the copy holds none.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub applied_modifiers: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -5280,6 +6381,22 @@ pub struct CharacterInputDto {
 pub struct ImportedCharacterFileDto {
     pub display_label: String,
     pub character_input: CharacterInputDto,
+    /// `custom.json`, when the character has one. A file with none is the file it always was.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub custom: Option<CharacterCustomDto>,
+    /// `ledger.json`, when the character has one. An old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ledger: Option<CharacterLedgerDto>,
+    /// `hit_points.json`, when the character saved any results. An old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hit_points: Option<CharacterHitPointsDto>,
+    /// `bio.json`, when the character has one: its deity decides a favored weapon's attack row. An
+    /// old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub bio: Option<CharacterBioDto>,
+    /// `money.json`, when the character holds any. An old file imports with none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub money: Option<StoredMoney>,
 }
 
 fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) -> CharacterInput {
@@ -5326,7 +6443,7 @@ fn character_input_from_dto(dto: CharacterInputDto, fresh_character_id: &str) ->
                         ActiveStateDto::EquippedActive
                     ),
                     active_state: equipment.active_state.into(),
-                    applied_modifiers: Vec::new(),
+                    applied_modifiers: equipment.applied_modifiers,
                 })
                 .collect(),
             selected_choices: dto
@@ -5405,6 +6522,7 @@ fn character_input_to_dto(input: &CharacterInput) -> CharacterInputDto {
                 .map(|equipment| EquipmentSelectionImportDto {
                     item_id: equipment.item_id.clone(),
                     active_state: equipment.active_state.into(),
+                    applied_modifiers: equipment.applied_modifiers.clone(),
                 })
                 .collect(),
             selected_choices: input
@@ -5483,6 +6601,23 @@ fn import_character_from_json(
     };
 
     SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    if let Some(bio) = &parsed.bio {
+        save_character_bio_at_root(root, bio)?;
+    }
+    if let Some(custom) = &parsed.custom {
+        restore_character_custom_at_root(root, custom)?;
+    }
+    if let Some(ledger) = &parsed.ledger {
+        restore_character_ledger_at_root(root, ledger, &envelope.character_input)?;
+    }
+    if let Some(hit_points) = &parsed.hit_points {
+        save_character_hit_points_at_root(root, &hit_points.levels)?;
+    }
+    if let Some(money) = parsed.money.as_ref().filter(|money| money.total_copper > 0) {
+        let total = i64::try_from(money.total_copper)
+            .map_err(|_| format!("the file's money, {} cp, is more than a character can hold", money.total_copper))?;
+        adjust_character_money_at_root(root, total)?;
+    }
 
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
@@ -5530,6 +6665,137 @@ pub fn import_character(
     )
 }
 
+// ----- `import_pcg`: a PCGen file, through the `pcg_import` sidecar -----
+//
+// The app never parses a `.pcg` (`decisions.md` R13). The sidecar turns one into the JSON
+// `import_character_from_json` reads, and this path writes what that function has no field for.
+
+/// One line of the import report: what became of one line of the file, or one row the engine needed.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PcgReportLineDto {
+    pub key: String,
+    pub from: String,
+    /// `mapped`, `custom`, `derived`, `setting` or `added`.
+    pub outcome: String,
+    pub to: String,
+}
+
+/// The report `pcg_import` writes, passed through to the player as it stands.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PcgImportReportDto {
+    pub source_file: String,
+    pub game_mode: String,
+    pub unknown_keys: Vec<String>,
+    pub unmapped_classes: Vec<String>,
+    pub unmapped_race: Option<String>,
+    pub warnings: Vec<String>,
+    pub lines: Vec<PcgReportLineDto>,
+}
+
+/// The sidecar file's fields `ImportedCharacterFileDto` does not read. Its `custom` that DTO does.
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct PcgSidecarExtras {
+    bio: CharacterBioDto,
+    report: PcgImportReportDto,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportPcgResponse {
+    pub outcome: CreateCharacterResponse,
+    pub report: PcgImportReportDto,
+}
+
+/// The bundler installs an `externalBin` beside the app under its bare name
+/// (`tauri.sidecar.json`), and a dev build finds it there when the root workspace built it into the
+/// same target directory.
+fn pcg_sidecar_beside(app_exe: &Path) -> Result<PathBuf, String> {
+    let directory = app_exe.parent().ok_or_else(|| format!("{} has no parent directory", app_exe.display()))?;
+    let sidecar = directory.join(format!("pcg_import{}", std::env::consts::EXE_SUFFIX));
+    if sidecar.is_file() {
+        Ok(sidecar)
+    } else {
+        Err(format!("The PCGen import tool (pcg_import) is missing from this install: {} does not exist.", sidecar.display()))
+    }
+}
+
+/// Runs the sidecar. A non-zero exit is the converter's own refusal, returned in its words.
+fn run_pcg_sidecar(sidecar: &Path, pcg_file: &Path, data_root: &Path, out: &Path) -> Result<(), String> {
+    let mut command = std::process::Command::new(sidecar);
+    command.arg(pcg_file).arg("--out").arg(out).arg("--data-root").arg(data_root);
+    // A console program started from a windowed app would otherwise flash a console window.
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+        command.creation_flags(CREATE_NO_WINDOW);
+    }
+    let output = command.output().map_err(|err| format!("The PCGen import tool (pcg_import) did not start: {}: {err}", sidecar.display()))?;
+    if output.status.success() {
+        Ok(())
+    } else {
+        Err(format!("The PCGen import tool (pcg_import) refused the file: {}", String::from_utf8_lossy(&output.stderr).trim()))
+    }
+}
+
+/// Reads the sidecar's JSON through `import_character_from_json`, then writes `bio.json` and
+/// `money.json`, which it ignores. `root` is a fresh character's: anything short of a whole saved
+/// character removes it, so a refused or failed import leaves nothing to list.
+fn import_pcg_json(
+    contents: &str,
+    root: &Path,
+    fresh_character_id: &str,
+    saved_at: &str,
+    app_version: &str,
+) -> Result<ImportPcgResponse, String> {
+    let extras: PcgSidecarExtras =
+        serde_json::from_str(contents).map_err(|err| format!("invalid PCGen import JSON: {err}"))?;
+    let written = import_character_from_json(contents, root, fresh_character_id, saved_at, app_version).and_then(|outcome| {
+        if matches!(outcome, CreateCharacterResponse::Saved { .. }) {
+            save_character_bio_at_root(root, &extras.bio)?;
+        }
+        Ok(outcome)
+    });
+    if !matches!(written, Ok(CreateCharacterResponse::Saved { .. })) && root.exists() {
+        std::fs::remove_dir_all(root).map_err(|err| format!("{}: {err}", root.display()))?;
+    }
+    Ok(ImportPcgResponse { outcome: written?, report: extras.report })
+}
+
+/// The whole path of a PCGen file: sidecar, then [`import_pcg_json`]. The JSON is a temporary file.
+fn import_pcg_with_sidecar(
+    sidecar: &Path,
+    pcg_file: &Path,
+    data_root: &Path,
+    root: &Path,
+    fresh_character_id: &str,
+    saved_at: &str,
+    app_version: &str,
+) -> Result<ImportPcgResponse, String> {
+    let out = std::env::temp_dir().join(format!("codex-pcg-import-{}.json", Uuid::new_v4()));
+    let result = run_pcg_sidecar(sidecar, pcg_file, data_root, &out).and_then(|()| {
+        let contents = std::fs::read_to_string(&out).map_err(|err| format!("{}: {err}", out.display()))?;
+        import_pcg_json(&contents, root, fresh_character_id, saved_at, app_version)
+    });
+    let _ = std::fs::remove_file(&out);
+    result
+}
+
+/// Off the main thread (`async`): a conversion takes seconds and would freeze the window.
+#[tauri::command(async)]
+pub fn import_pcg(app: tauri::AppHandle, request: ImportCharacterRequest) -> Result<ImportPcgResponse, String> {
+    let app_exe = std::env::current_exe().map_err(|err| format!("cannot locate the app binary: {err}"))?;
+    let sidecar = pcg_sidecar_beside(&app_exe)?;
+    let data_root = crate::authoring_workbench::codex_repo_root()?;
+    let fresh_character_id = Uuid::new_v4().to_string();
+    let root = resolve_character_root(&app, &fresh_character_id)?;
+    let app_version = app.package_info().version.to_string();
+    import_pcg_with_sidecar(&sidecar, Path::new(&request.file_path), &data_root, &root, &fresh_character_id, &request.saved_at, &app_version)
+}
+
 // ----- `export_character` (Storage Tier Minimal Fix, Criterion 24) -----
 
 /// Loads the saved character at `root` and serializes it into the exact
@@ -5546,9 +6812,18 @@ pub fn import_character(
 fn export_character_to_json(root: &Path) -> Result<String, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
 
+    let custom = load_character_custom_at_root(root)?;
+    let hit_points = load_character_hit_points_at_root(root)?;
+    let bio = load_character_bio_at_root(root)?;
+    let total_copper = load_character_money_at_root(root)?.total_copper;
     let dto = ImportedCharacterFileDto {
         display_label: envelope.display_label,
         character_input: character_input_to_dto(&envelope.character_input),
+        custom: (custom != CharacterCustomDto::default()).then_some(custom),
+        ledger: load_character_ledger_at_root(root)?,
+        hit_points: (hit_points != CharacterHitPointsDto::default()).then_some(hit_points),
+        bio: (bio != CharacterBioDto::default()).then_some(bio),
+        money: (total_copper > 0).then_some(StoredMoney { total_copper }),
     };
 
     serde_json::to_string_pretty(&dto).map_err(|err| format!("failed to serialize character for export: {err}"))
@@ -7836,7 +9111,7 @@ mod tests {
 
         let response = add_equipment_selection_at_root(
             &root,
-            "Wand of Cure Light Wounds",
+            "Otyugh Hide",
             ActiveState::EquippedActive,
             "2026-07-24T00:00:00Z",
         )
@@ -7853,8 +9128,8 @@ mod tests {
                 assert!(
                     corpus_derived
                         .unresolved_equipment_item_ids
-                        .contains(&"Wand of Cure Light Wounds".to_string()),
-                    "an item outside the bundled demo corpus must be traceable, not silently \
+                        .contains(&"Otyugh Hide".to_string()),
+                    "an item with no corpus record must be traceable, not silently \
                      dropped: {:?}",
                     corpus_derived.unresolved_equipment_item_ids
                 );
@@ -8149,10 +9424,8 @@ mod tests {
 
     // ---- Custom: GM grants and house-rule records (custom.json) -------------------------------------
 
-    use crate::character_custom::{
-        load_character_custom_at_root, save_character_custom_at_root, CharacterCustomDto, CustomGrantDto, CustomRecordDto,
-        CustomStatDto,
-    };
+    use crate::character_custom::{save_character_custom_at_root, CustomBonusDto, CustomGrantDto, CustomRecordDto, CustomStatDto};
+    use crate::character_ledger::{LedgerEntryDto, LedgerKind, ProgressionLevelDto};
 
     fn grant(id: &str, target: &str, value: i32) -> CustomGrantDto {
         CustomGrantDto { id: id.to_owned(), label: format!("grant {id}"), target: target.to_owned(), value, reason: "a god's boon".to_owned() }
@@ -8164,6 +9437,7 @@ mod tests {
             name: name.to_owned(),
             description: "A thing the GM allowed.".to_owned(),
             stats: vec![CustomStatDto { label: "Damage".to_owned(), value: "1d8".to_owned() }],
+            ..Default::default()
         }
     }
 
@@ -8219,6 +9493,7 @@ mod tests {
             spells: vec![record("s1", "Ember Step")],
             devices: vec![record("d1", "Rod of Small Mercies")],
             conditions: Vec::new(),
+            overrides: Default::default(),
         };
         save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect("save");
         assert_eq!(saved_scores(&root), before, "no ability grant, so no score change");
@@ -8255,6 +9530,349 @@ mod tests {
         let err = save_character_custom_at_root(&root, &custom, "2026-07-21T01:00:00Z").expect_err("a score of 0 is not playable");
         assert!(err.contains("wisdom"), "{err}");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // --- A custom item's stated numbers (`decisions.md §13`). ---
+
+    fn custom_bonus(target: &str, bonus_type: &str, value: i32) -> CustomBonusDto {
+        CustomBonusDto { target: target.to_owned(), bonus_type: bonus_type.to_owned(), value }
+    }
+
+    /// A carried custom item stating `bonuses`, in `slot`.
+    fn custom_item(id: &str, name: &str, slot: Option<BodySlot>, bonuses: Vec<CustomBonusDto>) -> CustomRecordDto {
+        CustomRecordDto { id: id.to_owned(), name: name.to_owned(), bonuses, slot, ..Default::default() }
+    }
+
+    fn custom_items_saved(root: &Path, items: Vec<CustomRecordDto>) {
+        let custom = CharacterCustomDto { equipment: items, ..Default::default() };
+        save_character_custom_at_root(root, &custom, "2026-11-03T00:00:00Z").expect("save");
+    }
+
+    fn custom_item_set(root: &Path, id: &str, state: ActiveState) -> CreateCharacterResponse {
+        set_equipment_active_state_at_root(root, &format!("custom:{id}"), state, "2026-11-03T00:00:01Z").expect("state call")
+    }
+
+    fn custom_item_wear(root: &Path, id: &str) {
+        let response = custom_item_set(root, id, ActiveState::EquippedActive);
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    fn sheet_json(root: &Path) -> serde_json::Value {
+        serde_json::to_value(load_saved_character_at_root(root).unwrap()).unwrap()
+    }
+
+    #[test]
+    fn custom_item_bonuses_worn_ac_plus_one_deflection_raises_ac_by_one_and_carried_adds_zero() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-ac");
+        let none = enhancement_read(&root);
+        let sheet_none = sheet_json(&root);
+        custom_items_saved(&root, vec![custom_item("r1", "Ring of Hats", Some(BodySlot::Ring), vec![custom_bonus("ac", "Deflection", 1)])]);
+        let carried = enhancement_read(&root);
+        let sheet_carried = sheet_json(&root);
+
+        custom_item_wear(&root, "r1");
+        let worn = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let on_disk = load_character_custom_at_root(&root).unwrap();
+
+        let stowed = custom_item_set(&root, "r1", ActiveState::SelectedInactive);
+        assert!(matches!(stowed, CreateCharacterResponse::Saved { .. }), "{stowed:?}");
+        let back = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "a carried custom item adds 0");
+        assert_eq!(sheet_carried, sheet_none, "and moves nothing else on the sheet");
+        assert_eq!(worn.armor_class, none.armor_class + 1, "the tile");
+        assert_eq!(worn.touch, none.touch + 1, "a deflection bonus holds against touch");
+        assert_eq!(worn.flat_footed, none.flat_footed + 1, "and when flat-footed");
+        assert_eq!(worn.melee, none.melee);
+        assert!(on_disk.equipment[0].worn, "the record says it is worn");
+        let effects = &loaded.corpus_derived.equipment_effects;
+        let row = effects.per_item.iter().find(|e| e.item_id == "custom:r1").expect("AC by Source has its row");
+        assert_eq!((row.equipment_record_key.as_str(), row.armor_class_bonus), ("Ring of Hats", Some(1)));
+        assert_eq!(effects.armor_class_delta, effects.per_item.iter().filter_map(|e| e.armor_class_bonus).sum::<i16>(), "the rows sum to the panel");
+        assert_eq!(back, none, "stowed, it adds 0 again");
+    }
+
+    #[test]
+    fn custom_item_bonuses_a_text_only_item_is_unchanged() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-text");
+        let sheet_none = sheet_json(&root);
+        custom_items_saved(&root, vec![record("t1", "Grandfather's Pipe")]);
+        let sheet = sheet_json(&root);
+        let raw = std::fs::read_to_string(root.join("custom.json")).unwrap();
+        let held = list_held_equipment_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(sheet, sheet_none, "no number moves");
+        for key in ["bonuses", "slot", "worn"] {
+            assert!(!raw.contains(&format!("\"{key}\"")), "{key} is not written for a text record: {raw}");
+        }
+        assert!(held.iter().all(|copy| !copy.item_id.starts_with("custom:")), "a text record is listed on the Custom tab only: {held:?}");
+    }
+
+    #[test]
+    fn custom_item_bonuses_the_file_speaks_camel_case_and_an_old_file_loads() {
+        let root = created_character("custom-bonus-wire");
+        std::fs::write(
+            root.join("custom.json"),
+            r#"{"equipment":[{"id":"a","name":"Old"},{"id":"b","name":"New","worn":true,"slot":"wield_off","bonuses":[{"target":"ac","bonusType":"Shield","value":2}]}]}"#,
+        )
+        .unwrap();
+        let loaded = load_character_custom_at_root(&root).expect("both shapes load");
+        std::fs::remove_dir_all(&root).ok();
+        assert_eq!(loaded.equipment[0], CustomRecordDto { id: "a".to_owned(), name: "Old".to_owned(), ..Default::default() });
+        assert_eq!(loaded.equipment[1].slot, Some(BodySlot::WieldOff));
+        assert_eq!(loaded.equipment[1].bonuses, vec![custom_bonus("ac", "Shield", 2)]);
+    }
+
+    /// Every target in `decisions.md §13` reaches the number the sheet reads for it.
+    #[test]
+    fn custom_item_bonuses_every_target_reaches_the_number_the_sheet_reads() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-targets");
+        let row = |sheet: &LoadSavedCharacterResponse, id: &str| sheet.explanations.iter().find(|e| e.id == id).map_or(0, |e| e.value);
+        let before = load_saved_character_at_root(&root).unwrap();
+        custom_items_saved(
+            &root,
+            vec![custom_item(
+                "g1",
+                "Gauntlet of Everything",
+                None,
+                vec![
+                    custom_bonus("attack", "Luck", 2),
+                    custom_bonus("damage", "Luck", 3),
+                    custom_bonus("save:fortitude", "Resistance", 1),
+                    custom_bonus("save:reflex", "Resistance", 2),
+                    custom_bonus("save:will", "Resistance", 3),
+                    custom_bonus("skill:perception", "Competence", 5),
+                    custom_bonus("skill:climb", "Competence", 4),
+                    custom_bonus("skill:craft", "Competence", 2),
+                    custom_bonus("speed", "Enhancement", 10),
+                    custom_bonus("initiative", "Insight", 2),
+                    custom_bonus("hit_points", "Untyped", 7),
+                    custom_bonus("cmb", "Morale", 1),
+                    custom_bonus("cmd", "Morale", 2),
+                ],
+            )],
+        );
+        custom_item_wear(&root, "g1");
+        let after = load_saved_character_at_root(&root).unwrap();
+        let recomputed = crate::characterHub::recomputeCharacter::recompute_character_at_root(&root, "g").character.expect("recompute");
+        let (b, a) = (before.snapshot.as_ref().unwrap(), after.snapshot.as_ref().unwrap());
+
+        assert_eq!(a.baseline_melee_attack_bonus, b.baseline_melee_attack_bonus + 2, "attack");
+        let sword = |sheet: &LoadSavedCharacterResponse| sheet.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longsword (Base)")).unwrap().feat_effects.clone();
+        let damage: Vec<(String, i16)> = sword(&after).iter().filter(|e| !sword(&before).iter().any(|f| f.feat_key == e.feat_key)).map(|e| (e.feat_key.clone(), e.damage_bonus)).collect();
+        assert_eq!(damage, vec![("Gauntlet of Everything".to_owned(), 3)], "damage is a row on every weapon");
+        assert_eq!(a.total_saves.fortitude, b.total_saves.fortitude + 1);
+        assert_eq!(a.total_saves.reflex, b.total_saves.reflex + 2);
+        assert_eq!(a.total_saves.will, b.total_saves.will + 3);
+        assert_eq!(a.base_saves.fortitude, b.base_saves.fortitude, "the base save is the class's");
+        for (id, moved) in [
+            ("skill.trait_modifier.perception", 5),
+            ("skill.trait_modifier.climb", 4),
+            ("skill.trait_modifier.craft", 2),
+            ("initiative.total", 2),
+            ("combat.combat_maneuver_bonus", 1),
+            ("defense.combat_maneuver_defense", 2),
+            ("custom_item.speed", 10),
+            ("custom_item.hit_points", 7),
+        ] {
+            assert_eq!(row(&after, id), row(&before, id) + moved, "{id}");
+        }
+        assert_eq!(recomputed.baseline_melee_attack_bonus, a.baseline_melee_attack_bonus, "Recompute reads the same melee");
+        assert_eq!(recomputed.total_saves.will, a.total_saves.will, "and the same saves");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// An ability bonus goes in at the score, so what the score drives follows from the engine. The
+    /// saved score stays the character's own.
+    #[test]
+    fn custom_item_bonuses_an_ability_bonus_moves_what_the_score_drives_and_not_the_save_file() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-ability");
+        let before = load_saved_character_at_root(&root).unwrap();
+        let saved_before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores;
+        custom_items_saved(&root, vec![custom_item("b1", "Belt of Oxen", Some(BodySlot::Belt), vec![custom_bonus("ability:strength", "Enhancement", 2), custom_bonus("ability:dexterity", "Enhancement", 2)])]);
+        custom_item_wear(&root, "b1");
+        let after = load_saved_character_at_root(&root).unwrap();
+        let recomputed = crate::characterHub::recomputeCharacter::recompute_character_at_root(&root, "b").character.expect("recompute");
+        let saved_after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(after.ability_scores.strength, before.ability_scores.strength + 2, "the score the panel prints");
+        let (b, a) = (before.snapshot.as_ref().unwrap(), after.snapshot.as_ref().unwrap());
+        assert_eq!(a.ability_modifiers.strength, b.ability_modifiers.strength + 1);
+        assert_eq!(a.baseline_melee_attack_bonus, b.baseline_melee_attack_bonus + 1, "Strength drives melee");
+        assert_eq!(a.baseline_armor_class, b.baseline_armor_class + 1, "Dexterity drives AC, under the Chain Shirt's max Dex");
+        assert_eq!(a.total_saves.reflex, b.total_saves.reflex + 1, "and Reflex");
+        assert_eq!(recomputed.baseline_armor_class, a.baseline_armor_class, "Recompute reads the same AC");
+        assert_eq!(saved_after, saved_before, "the saved score is not rewritten");
+    }
+
+    #[test]
+    fn custom_item_bonuses_stack_by_the_engines_rule() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-stack");
+        let none = enhancement_read(&root);
+        let snapshot_none = load_saved_character_at_root(&root).unwrap().snapshot.unwrap();
+        custom_items_saved(
+            &root,
+            vec![
+                custom_item("a", "Greater Deflector", None, vec![custom_bonus("ac", "Deflection", 3), custom_bonus("save:will", "Resistance", 2)]),
+                custom_item("b", "Lesser Deflector", None, vec![custom_bonus("ac", "Deflection", 1), custom_bonus("save:will", "Resistance", 1)]),
+                custom_item("c", "Dodgy Boots", None, vec![custom_bonus("ac", "Dodge", 1)]),
+                custom_item("d", "Dodgier Boots", None, vec![custom_bonus("ac", "Dodge", 2)]),
+                custom_item("e", "Plate Patch", None, vec![custom_bonus("ac", "Armor", 5)]),
+                custom_item("f", "Bark", None, vec![custom_bonus("ac", "NaturalArmor", 2)]),
+                custom_item("g", "Curse", None, vec![custom_bonus("ac", "Deflection", -1), custom_bonus("save:will", "Untyped", 1)]),
+                custom_item("h", "Curse Two", None, vec![custom_bonus("ac", "Deflection", -1), custom_bonus("save:will", "Untyped", 1)]),
+            ],
+        );
+        for id in ["a", "b", "c", "d", "e", "f", "g", "h"] {
+            custom_item_wear(&root, id);
+        }
+        let worn = enhancement_read(&root);
+        let snapshot = load_saved_character_at_root(&root).unwrap().snapshot.unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        // Deflection the higher (3), dodge stacks (1 + 2), armor 5 over the Chain Shirt's 4 is +1,
+        // natural 2, two penalties stack (-2).
+        assert_eq!(worn.armor_class, none.armor_class + 3 + 3 + 1 + 2 - 2, "AC");
+        assert_eq!(worn.touch, none.touch + 3 + 3 - 2, "armor and natural armor do not hold against touch");
+        assert_eq!(worn.flat_footed, none.flat_footed + 3 + 1 + 2 - 2, "dodge does not hold when flat-footed");
+        assert_eq!(snapshot.total_saves.will, snapshot_none.total_saves.will + 2 + 1 + 1, "resistance the higher, untyped stacks");
+    }
+
+    #[test]
+    fn custom_item_bonuses_a_slot_is_a_slot_for_stock_and_custom_items_alike() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-slot");
+        let blocked = |response: CreateCharacterResponse| match response {
+            CreateCharacterResponse::Blocked { diagnostics } => diagnostics.into_iter().map(|d| d.message).collect::<Vec<_>>().join("; "),
+            other => panic!("should be refused: {other:?}"),
+        };
+        // The Chain Shirt holds the armor slot.
+        custom_items_saved(
+            &root,
+            vec![
+                custom_item("v", "Vest of Hats", Some(BodySlot::Armor), vec![]),
+                custom_item("h", "Hat of Hats", Some(BodySlot::Head), vec![]),
+                custom_item("i", "Second Hat", Some(BodySlot::Head), vec![]),
+                custom_item("r1", "Ring One", Some(BodySlot::Ring), vec![]),
+                custom_item("r2", "Ring Two", Some(BodySlot::Ring), vec![]),
+                custom_item("r3", "Ring Three", Some(BodySlot::Ring), vec![]),
+            ],
+        );
+        let vest = blocked(custom_item_set(&root, "v", ActiveState::EquippedActive));
+        assert!(vest.contains("armor slot is taken by Chain Shirt"), "{vest}");
+
+        custom_item_wear(&root, "h");
+        let hat = blocked(custom_item_set(&root, "i", ActiveState::EquippedActive));
+        assert!(hat.contains("head slot is taken by Hat of Hats"), "{hat}");
+
+        custom_item_wear(&root, "r1");
+        custom_item_wear(&root, "r2");
+        let ring = blocked(custom_item_set(&root, "r3", ActiveState::EquippedActive));
+        assert!(ring.contains("ring slot is taken by Ring One and Ring Two"), "{ring}");
+
+        // A stock item meets the worn custom hat, stowing or buying.
+        worn_vs_carried_hold(&root, "Hat of Disguise", ActiveState::SelectedInactive);
+        let stock = blocked(set_equipment_active_state_at_root(&root, "Hat of Disguise", ActiveState::EquippedActive, "2026-11-03T00:00:02Z").unwrap());
+        assert!(stock.contains("head slot is taken by Hat of Hats"), "{stock}");
+
+        // The Custom dialog cannot save around the check, and writes nothing when it refuses.
+        let on_disk = load_character_custom_at_root(&root).unwrap();
+        let mut edited = on_disk.clone();
+        edited.equipment[2].worn = true;
+        let err = save_character_custom_at_root(&root, &edited, "2026-11-03T00:00:03Z").expect_err("a second hat");
+        assert!(err.contains("head slot is taken by Hat of Hats"), "{err}");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), on_disk);
+
+        // Stowed, the slot is free again.
+        assert!(matches!(custom_item_set(&root, "h", ActiveState::SelectedInactive), CreateCharacterResponse::Saved { .. }));
+        custom_item_wear(&root, "i");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn custom_item_bonuses_a_bought_item_is_carried_with_the_reason_when_a_custom_item_holds_its_slot() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-buy");
+        custom_items_saved(&root, vec![custom_item("h", "Hat of Hats", Some(BodySlot::Head), vec![])]);
+        custom_item_wear(&root, "h");
+        let response = purchase_equipment_offer_at_root(&root, "Hat of Disguise", ActiveState::EquippedActive, "2026-11-03T00:00:02Z", PriceMode::Cashless, None)
+            .expect("purchase call should not error");
+        std::fs::remove_dir_all(&dir).ok();
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = response else { panic!("{response:?}") };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive), "{active_state:?}");
+        assert_eq!(carried_reason.as_deref(), Some("head slot is taken by Hat of Hats"));
+    }
+
+    #[test]
+    fn custom_item_bonuses_the_equipment_control_lists_an_item_that_states_a_slot_or_a_bonus() {
+        let (dir, root) = enhancement_rows_aldric("custom-bonus-held");
+        custom_items_saved(
+            &root,
+            vec![
+                custom_item("h", "Hat of Hats", Some(BodySlot::Head), vec![]),
+                custom_item("c", "Lucky Coin", None, vec![custom_bonus("initiative", "Luck", 1)]),
+                custom_item("o", "Offhand Sprig", Some(BodySlot::WieldOff), vec![]),
+            ],
+        );
+        custom_item_wear(&root, "h");
+        custom_item_wear(&root, "o");
+        let held = list_held_equipment_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        let row = |id: &str| held.iter().find(|copy| copy.item_id == id).unwrap_or_else(|| panic!("no {id} in {held:?}"));
+        assert_eq!((row("custom:h").name.as_str(), row("custom:h").slot), ("Hat of Hats", BodySlot::Head));
+        assert!(matches!(row("custom:h").active_state, ActiveStateDto::EquippedActive));
+        assert!(matches!(row("custom:c").active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(row("custom:c").slot, BodySlot::None);
+        assert_eq!(row("custom:o").slot, BodySlot::WieldOff, "the Longsword holds the main hand");
+    }
+
+    #[test]
+    fn custom_item_bonuses_what_cannot_be_applied_is_refused_whole() {
+        let root = created_character("custom-bonus-invalid");
+        let item = |bonus: CustomBonusDto| custom_item("x", "Thing", None, vec![bonus]);
+        let on_equipment = |bonus: CustomBonusDto| CharacterCustomDto { equipment: vec![item(bonus)], ..Default::default() };
+        let cases = [
+            (on_equipment(custom_bonus("luck", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("skill:basket_weaving", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("save:luck", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("ability:luck", "Luck", 1)), "unknown target"),
+            (on_equipment(custom_bonus("ac", "Fortune", 1)), "unknown bonus type"),
+            (on_equipment(custom_bonus("ac", "Luck", 0)), "value"),
+            (on_equipment(custom_bonus("ac", "Luck", 101)), "value"),
+            (CharacterCustomDto { feats: vec![item(custom_bonus("ac", "Luck", 1))], ..Default::default() }, "only custom equipment"),
+            (CharacterCustomDto { spells: vec![CustomRecordDto { slot: Some(BodySlot::Head), ..record("s", "Thing") }], ..Default::default() }, "only custom equipment"),
+            (CharacterCustomDto { devices: vec![CustomRecordDto { worn: true, ..record("d", "Thing") }], ..Default::default() }, "only custom equipment"),
+        ];
+        for (custom, needle) in cases {
+            let err = save_character_custom_at_root(&root, &custom, "2026-11-03T00:00:00Z").expect_err("must be refused");
+            assert!(err.contains(needle), "{needle:?} in {err:?}");
+        }
+        assert!(!root.join("custom.json").exists(), "and writes nothing");
+
+        // A worn item cannot take a score out of the range a grant cannot leave either.
+        let cursed = custom_item("c", "Cursed Belt", None, vec![custom_bonus("ability:strength", "Untyped", -60)]);
+        custom_items_saved(&root, vec![cursed]);
+        let refused = custom_item_set(&root, "c", ActiveState::EquippedActive);
+        assert!(matches!(&refused, CreateCharacterResponse::Blocked { diagnostics } if diagnostics[0].message.contains("outside 1..=60")), "{refused:?}");
+        assert!(!load_character_custom_at_root(&root).unwrap().equipment[0].worn);
+        let unknown = set_equipment_active_state_at_root(&root, "custom:nope", ActiveState::EquippedActive, "2026-11-03T00:00:00Z");
+        assert!(unknown.is_err_and(|err| err.contains("does not carry it")));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The form's skill list is the sheet's (`skillsModel.ts`); each row must be a target the save
+    /// accepts, or a pick the form offers would be refused.
+    #[test]
+    fn custom_item_bonuses_every_skill_the_sheet_lists_is_a_target() {
+        let source = include_str!("../../src/characterHub/skillsModel.ts");
+        let names: Vec<&str> = source.split("{ name: '").skip(1).map(|rest| rest.split('\'').next().unwrap()).take(35).collect();
+        assert_eq!((names.first().copied(), names.last().copied(), names.len()), (Some("Acrobatics"), Some("Use Magic Device"), 35));
+        for name in names {
+            let slug: String = name.to_lowercase().replace(['(', ')'], "").trim().split(|c: char| !c.is_ascii_alphanumeric()).filter(|part| !part.is_empty()).collect::<Vec<_>>().join("_");
+            assert!(crate::character_custom::bonus_target_is_known(&format!("skill:{slug}")), "{name} -> {slug}");
+        }
     }
 
     // ---- Brief 2 E2: conditions on the custom record ------------------------------------------------
@@ -8324,7 +9942,7 @@ mod tests {
         let preview = draft_sheet_preview_impl(&request_for_class("race:human", "class:fighter", 1)).expect("preview");
         let wire = serde_json::to_value(&preview).unwrap();
         let keys: BTreeSet<&str> = wire.as_object().unwrap().keys().map(String::as_str).collect();
-        assert_eq!(keys, BTreeSet::from(["initiative", "encumbrance"]));
+        assert_eq!(keys, BTreeSet::from(["initiative", "encumbrance", "featBudget"]));
         for key in ["id", "value", "detail"] {
             assert!(wire["initiative"].get(key).is_some(), "initiative.{key}: {wire}");
         }
@@ -8621,6 +10239,68 @@ mod tests {
         }
     }
 
+    /// The sheet's `hit_points.max` (E8.6): the saved results drive the total; levels gained after
+    /// creation take the average. Ported from the screen's retired `maxHitPointsWithSavedLevels`.
+    #[test]
+    fn class_hit_points_total_follows_the_saved_results() {
+        let held = |levels: &[(&str, u8)]| -> Vec<CharacterClassLevel> {
+            levels.iter().map(|(class_id, level)| CharacterClassLevel { class_id: (*class_id).to_owned(), level: *level }).collect()
+        };
+        let rolls = |values: &[(&str, u8)]| -> Vec<HitPointLevelDto> {
+            values.iter().map(|(class_id, value)| HitPointLevelDto { class_id: (*class_id).to_owned(), value: *value }).collect()
+        };
+        let total = |levels: &[CharacterClassLevel], saved: &[HitPointLevelDto], con: i16| class_hit_points_total(levels, saved, con).map(|(value, _)| value);
+        let fighter3 = held(&[("class:fighter", 3)]);
+        assert_eq!(total(&fighter3, &[], 2), Some(10 + 2 + 2 * (6 + 2)), "no saved results: the full d10, then its average 6, Con every level");
+        let f = "class:fighter";
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 7), (f, 3)]), 2), Some(12 + 9 + 5), "every saved result plus Constitution");
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 7)]), 2), Some(12 + 9 + 8), "a level gained after creation takes the average");
+        let fighter_wizard = held(&[("class:fighter", 1), ("class:wizard", 1)]);
+        assert_eq!(total(&fighter_wizard, &rolls(&[("class:wizard", 5), (f, 10)]), 0), Some(15), "the order the classes were added in does not matter");
+        assert_eq!(total(&held(&[(f, 6), ("class:arcane_archer", 1)]), &[], 0), Some(10 + 5 * 6 + 6), "only the first character level takes the full die");
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 1), (f, 2)]), -5), Some(5 + 1 + 1), "each level is worth at least 1 hp");
+        assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 6), (f, 6), (f, 6)]), 0), Some(22), "results beyond the levels held are ignored");
+        assert_eq!(total(&held(&[("class:some_future_class", 1)]), &[], 0), None, "a class with no known die is unknown, never guessed");
+        assert_eq!(total(&[], &[], 0), None, "no class held, no total");
+    }
+
+    /// The sheet's `skill.total.<skill>` sum (E8.7), ported from the Skills panel's retired
+    /// `skillModifier` and `featSkillBonusFor` tests.
+    #[test]
+    fn skill_total_adds_ranks_ability_class_skill_and_feats() {
+        let terms = |ability_modifier: i16, ranks: i16, class_skill: bool, feat_bonus: i16| SkillTotalTerms { ability_modifier, ranks, class_skill, feat_bonus };
+        assert_eq!(skill_total(terms(4, 5, true, 0)), 12, "Spellcraft: 5 ranks + Int +4 + class skill 3");
+        assert_eq!(skill_total(terms(4, 0, true, 0)), 4, "a class skill with no rank takes no +3");
+        assert_eq!(skill_total(terms(-1, 2, false, 0)), 1, "a cross-class skill adds no +3");
+        assert_eq!(skill_total(terms(1, 0, false, 2)), 3, "Perception: Wis +1, 0 ranks, Alertness +2");
+        let bonuses = codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses {
+            skills: [("knowledge_local".to_owned(), 1)].into_iter().collect(),
+            groups: [("knowledge".to_owned(), 2)].into_iter().collect(),
+            ..Default::default()
+        };
+        assert_eq!(folded_feat_skill_bonus(&bonuses, "knowledge_local"), 3, "the family +2 and the exact +1 add");
+        assert_eq!(folded_feat_skill_bonus(&bonuses, "knowledge_arcana"), 2, "the family only");
+        assert_eq!(folded_feat_skill_bonus(&bonuses, "linguistics"), 0, "not a member");
+        assert_eq!(sheet_skill_row_ids().len(), 35, "the Skills panel's 35 rows");
+        let modifiers = codex::rules_core::pilot_compute::AbilityModifiers { strength: 1, dexterity: 2, constitution: 3, intelligence: 4, wisdom: 5, charisma: 6 };
+        for (skill, value) in [("skill:climb", 1), ("skill:fly", 2), ("skill:craft", 4), ("skill:knowledge_planes", 4), ("skill:profession", 5), ("skill:perform", 6)] {
+            assert_eq!(sheet_skill_ability(skill, modifiers).map(|(_, modifier)| modifier), Some(value), "{skill}");
+        }
+        assert!(sheet_skill_row_ids().iter().all(|skill| sheet_skill_ability(skill, modifiers).is_some()), "every row has a key ability");
+    }
+
+    /// The sheet's `speed.land` (E8.6): what worn items add, then their percent, whole feet rounded
+    /// down, never below 0. Ported from the screen's retired `withItemSpeed`.
+    #[test]
+    fn land_speed_feet_adds_then_scales_worn_items() {
+        assert_eq!(land_speed_feet(30, Some(10), None), 40, "the row moves it");
+        assert_eq!(land_speed_feet(30, None, None), 30, "no row, no change");
+        assert_eq!(land_speed_feet(5, Some(-10), None), 0, "never below 0");
+        assert_eq!(land_speed_feet(30, None, Some(50)), 15, "a Loadstone halves the land speed");
+        assert_eq!(land_speed_feet(30, Some(10), Some(50)), 20, "and what an item adds to it");
+        assert_eq!(land_speed_feet(25, None, Some(50)), 12, "whole feet, rounded down");
+    }
+
     #[test]
     fn hit_points_load_with_the_camel_case_wire_shape() {
         let root = tempdir("hp-wire-shape");
@@ -8778,6 +10458,2357 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- a +N reaches the numbers the sheet reads, only while worn or wielded -----
+
+    /// A starter Aldric (Fighter 3, Longsword wielded, Chain Shirt worn) with money in hand, and
+    /// the directory to clean up.
+    fn enhancement_rows_aldric(label: &str) -> (PathBuf, PathBuf) {
+        let app_data_dir = tempdir(label);
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let root = characters_root_from_app_data_dir(&app_data_dir).join(DEFAULT_CHARACTER_ID);
+        adjust_character_money_at_root(&root, 10_000_000).expect("funding should succeed");
+        (app_data_dir, root)
+    }
+
+    /// The numbers a player reads: the two tiles, touch and flat-footed, and the Longsword's row.
+    #[derive(Debug, PartialEq, Clone, Copy)]
+    struct EnhancementRead {
+        melee: i16,
+        armor_class: i16,
+        touch: i16,
+        flat_footed: i16,
+        sword_attack: Option<i16>,
+        sword_damage: Option<i16>,
+    }
+
+    fn enhancement_read(root: &Path) -> EnhancementRead {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        let row = |id: &str| {
+            loaded.explanations.iter().find(|e| e.id == id).unwrap_or_else(|| panic!("no {id} row")).value
+        };
+        let sword = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longsword (Base)"));
+        EnhancementRead {
+            melee: snapshot.baseline_melee_attack_bonus,
+            armor_class: snapshot.baseline_armor_class,
+            touch: row("defense.touch_armor_class"),
+            flat_footed: row("defense.flat_footed_armor_class"),
+            sword_attack: sword.and_then(|w| w.enhancement_attack_bonus),
+            sword_damage: sword.and_then(|w| w.enhancement_damage_bonus),
+        }
+    }
+
+    fn enhancement_attach(root: &Path, item: &str, modifier: &str) {
+        let response = attach_equipment_modifier_at_root(root, item, modifier, "2026-11-02T00:00:00Z")
+            .expect("attach call should not error");
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+    }
+
+    fn enhancement_buy(root: &Path, item: &str, state: ActiveState, bonus: u8) {
+        let response = purchase_equipment_offer_at_root(root, item, state, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(bonus))
+            .expect("purchase call should not error");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+    }
+
+    /// The card's own case: Aldric with a `+1` on the sword he wields.
+    #[test]
+    fn enhancement_rows_a_wielded_plus_one_adds_to_attack_and_damage() {
+        let (dir, root) = enhancement_rows_aldric("enh-wielded");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +1 ~ Weapon");
+        let after = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(before.sword_attack, Some(0));
+        assert_eq!(before.sword_damage, Some(0));
+        assert_eq!(after.melee, before.melee + 1, "the Melee tile");
+        assert_eq!(after.sword_attack, Some(1), "the Weapons tab's attack column");
+        assert_eq!(after.sword_damage, Some(1), "the Weapons tab's damage column");
+        assert_eq!(after.armor_class, before.armor_class, "a weapon's +1 is not armor");
+    }
+
+    /// The same sword stowed: nothing it holds reaches a number.
+    #[test]
+    fn enhancement_rows_a_stowed_plus_one_adds_nothing() {
+        let (dir, root) = enhancement_rows_aldric("enh-stowed");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, MARKET_SWORD, ActiveState::SelectedInactive, 1);
+        let carried = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(carried, before, "a +1 sword in the pack beside the plain one in hand");
+
+        let mut input = compose_character_input(&request_for("race:human", 3));
+        let sword = input.chosen.equipment_selections.iter_mut().find(|s| s.item_id == "item:longsword").unwrap();
+        sword.applied_modifiers.push("Special Ability ~ +1 ~ Weapon".to_owned());
+        sword.active_state = ActiveState::SelectedInactive;
+        let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
+        assert_eq!(receipt.corpus_derived.equipment_effects.attack_bonus_delta, None, "no weapon in hand");
+        assert!(
+            resolve_weapon_damage_breakdown(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3).is_empty(),
+            "a stowed sword has no damage row"
+        );
+    }
+
+    /// A worn `+N` armor adds to Armor Class and to flat-footed, and not to touch, which ignores armor.
+    #[test]
+    fn enhancement_rows_a_worn_armor_adds_its_bonus_to_ac() {
+        let (dir, root) = enhancement_rows_aldric("enh-armor");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +2 ~ Armor");
+        let after = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(after.armor_class, before.armor_class + 2);
+        assert_eq!(after.flat_footed, before.flat_footed + 2);
+        assert_eq!(after.touch, before.touch);
+        assert_eq!(after.melee, before.melee);
+        let shirt = loaded.corpus_derived.equipment_effects.per_item.iter().find(|e| e.item_id == "item:chain_shirt").unwrap();
+        assert_eq!(shirt.armor_class_bonus, Some(4), "the item's own row keeps the armor's own value");
+        assert_eq!(shirt.armor_class_enhancement, Some(2), "the enhancement is its own row");
+        assert_eq!(loaded.corpus_derived.equipment_effects.armor_class_delta, 6, "the panel's total is the rows' sum");
+    }
+
+    // --- Worn adds its numbers, carried adds weight only (`decisions.md §9`). ---
+
+    /// One seed Aldric's sheet, as the wire carries it, less what a held item is allowed to move:
+    /// the lists of what is held, the load, and the item's own printed lines. Whatever is left is
+    /// every other number the sheet can read.
+    fn worn_vs_carried_sheet_less_the_pack(root: &Path, item: &str) -> serde_json::Value {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        let mut value = serde_json::to_value(&loaded).expect("the response serialises");
+        let object = value.as_object_mut().unwrap();
+        for held in ["summary", "equipmentSelections"] {
+            object.remove(held);
+        }
+        let derived = object.get_mut("corpusDerived").and_then(|d| d.as_object_mut()).unwrap();
+        for held in ["equippedItems", "unresolvedEquipmentItemIds", "encumbrance"] {
+            derived.remove(held);
+        }
+        let own_rule = format!(":equipment:{}", codex::rules_core::sheet_rule::slug(item));
+        object.get_mut("sheetLines").and_then(|l| l.as_array_mut()).unwrap().retain(|line| {
+            !line["id"].as_str().unwrap_or_default().contains(&own_rule)
+        });
+        value
+    }
+
+    fn worn_vs_carried_hold(root: &Path, item: &str, state: ActiveState) {
+        let response = add_equipment_selection_at_root(root, item, state, "2026-11-03T00:00:00Z")
+            .expect("holding the item should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{item}: {response:?}");
+    }
+
+    fn worn_vs_carried_set(root: &Path, item: &str, state: ActiveState) {
+        let response = set_equipment_active_state_at_root(root, item, state, "2026-11-03T00:01:00Z")
+            .expect("the request should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{item}: {response:?}");
+    }
+
+    fn worn_vs_carried_weight(root: &Path) -> f64 {
+        load_saved_character_at_root(root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs
+    }
+
+    /// Aldric's Armor Class with his Chain Shirt stowed is his Armor Class with no armor at all:
+    /// the armor's bonus, its check penalty and its Dexterity cap all leave together, and the
+    /// weight stays.
+    #[test]
+    fn worn_vs_carried_aldric_with_armor_stowed_reads_as_aldric_with_no_armor() {
+        let (worn_dir, worn_root) = enhancement_rows_aldric("wvc-armor-worn");
+        let worn = enhancement_read(&worn_root);
+        let worn_weight = worn_vs_carried_weight(&worn_root);
+        let worn_loaded = load_saved_character_at_root(&worn_root).unwrap();
+
+        let (stowed_dir, stowed_root) = enhancement_rows_aldric("wvc-armor-stowed");
+        worn_vs_carried_set(&stowed_root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let stowed = enhancement_read(&stowed_root);
+        let stowed_weight = worn_vs_carried_weight(&stowed_root);
+        let stowed_loaded = load_saved_character_at_root(&stowed_root).unwrap();
+
+        let (none_dir, none_root) = enhancement_rows_aldric("wvc-armor-none");
+        let mut envelope = SavedCharacterStore::load(&none_root).unwrap();
+        envelope.character_input.chosen.equipment_selections.retain(|s| s.item_id != "item:chain_shirt");
+        SavedCharacterStore::save(&envelope, &none_root).unwrap();
+        let none = enhancement_read(&none_root);
+        let none_weight = worn_vs_carried_weight(&none_root);
+        let none_loaded = load_saved_character_at_root(&none_root).unwrap();
+        let stowed_rest = worn_vs_carried_sheet_less_the_pack(&stowed_root, "chain shirt");
+        let none_rest = worn_vs_carried_sheet_less_the_pack(&none_root, "chain shirt");
+
+        for dir in [worn_dir, stowed_dir, none_dir] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+
+        assert_eq!(stowed, none, "the stowed read is the no-armor read");
+        assert_eq!(worn.armor_class, stowed.armor_class + 4, "a Chain Shirt's own +4 is what left");
+        assert_eq!(worn.touch, stowed.touch, "touch never held the armor");
+        assert_eq!(stowed_loaded.corpus_derived.equipment_effects.armor_class_delta, 0);
+        assert_eq!(stowed_loaded.corpus_derived.equipment_effects.max_dex_cap, None);
+        assert_eq!(stowed_loaded.corpus_derived.equipment_effects.armor_check_penalty_total, 0);
+        assert_eq!(worn_loaded.corpus_derived.equipment_effects.armor_class_delta, 4);
+        assert_eq!(stowed_rest, none_rest, "no other number on the sheet tells stowed from none");
+        assert_eq!(stowed_weight, worn_weight, "stowing moves no weight");
+        assert_eq!(none_weight + 25.0, stowed_weight, "the pack carries the shirt's own 25 lb");
+        assert_eq!(none_loaded.corpus_derived.equipment_effects.armor_class_delta, 0);
+    }
+
+    /// CRB p.481, Ring of Protection +1: "a deflection bonus". In the pack it adds nothing to
+    /// Armor Class; on a finger it adds 1. The numbers are the tile's, off the sheet's own load.
+    #[test]
+    fn worn_vs_carried_a_stowed_ring_of_protection_adds_nothing_and_worn_adds_one() {
+        let ring = "Ring of Protection +1";
+        let (dir, root) = enhancement_rows_aldric("wvc-ring");
+        let none = enhancement_read(&root);
+
+        worn_vs_carried_hold(&root, ring, ActiveState::SelectedInactive);
+        let stowed = enhancement_read(&root);
+        worn_vs_carried_set(&root, ring, ActiveState::EquippedActive);
+        let worn = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(stowed, none, "a stowed ring");
+        assert_eq!(worn.armor_class, none.armor_class + 1, "a worn ring's +1: {:?}", loaded.corpus_derived.equipment_effects);
+        assert_eq!(worn.flat_footed, none.flat_footed + 1, "a deflection bonus holds when flat-footed");
+    }
+
+    // --- What the merge check of the worn-item cards found. ---
+
+    /// CRB p.199: "any circumstance, deflection, dodge, insight, luck, morale, profane, and sacred
+    /// bonuses to AC" count on CMD, and "any penalties to a creature's AC also apply".
+    #[test]
+    fn worn_item_applies_cmd_takes_the_armor_class_bonuses_the_book_names() {
+        let cmd = |root: &Path| worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap();
+        let (dir, root) = enhancement_rows_aldric("worn-cmd-ring");
+        let none = cmd(&root);
+        worn_vs_carried_hold(&root, "Ring of Protection +2", ActiveState::SelectedInactive);
+        let carried = cmd(&root);
+        worn_vs_carried_set(&root, "Ring of Protection +2", ActiveState::EquippedActive);
+        let ring = cmd(&root);
+        let detail = load_saved_character_at_root(&root).unwrap().explanations.into_iter().find(|row| row.id == "defense.combat_maneuver_defense").unwrap().detail;
+        worn_vs_carried_hold(&root, "Ioun Stone (Dusty rose Prism)", ActiveState::EquippedActive);
+        let stone = cmd(&root);
+        worn_vs_carried_hold(&root, "Amulet of Natural Armor +1", ActiveState::EquippedActive);
+        let amulet = cmd(&root);
+        custom_items_saved(&root, vec![
+            custom_item("high", "High Ward", None, vec![custom_bonus("ac", "Deflection", 3)]),
+            custom_item("armor", "Thick Coat", None, vec![custom_bonus("ac", "Armor", 9)]),
+            custom_item("luck", "Charm", None, vec![custom_bonus("ac", "Luck", 1), custom_bonus("cmd", "Luck", 2)]),
+        ]);
+        custom_item_wear(&root, "high");
+        let high = cmd(&root);
+        custom_item_wear(&root, "armor");
+        let armor = cmd(&root);
+        custom_item_wear(&root, "luck");
+        let luck = cmd(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(ring, none + 2, "a deflection bonus counts");
+        assert!(detail.contains("Ring of Protection +2"), "the row says what moved it: {detail}");
+        assert_eq!(stone, ring + 1, "an insight bonus counts");
+        assert_eq!(amulet, stone, "a natural armor bonus does not");
+        assert_eq!(high, amulet + 1, "a custom +3 over the ring's +2 is +3 in all");
+        assert_eq!(armor, high, "an armor bonus does not");
+        assert_eq!(luck, armor + 2, "a luck +1 on AC and a luck +2 on CMD take the higher");
+    }
+
+    /// An Armor Class penalty counts on CMD, once when the item also states CMD itself.
+    #[test]
+    fn worn_item_applies_cmd_takes_an_armor_class_penalty_once() {
+        let cmd = |root: &Path| worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap();
+        let (dir, root) = enhancement_rows_aldric("worn-cmd-penalty");
+        let none = cmd(&root);
+        worn_vs_carried_hold(&root, "Goggles of Far Sight", ActiveState::EquippedActive);
+        let goggles = cmd(&root);
+        worn_vs_carried_set(&root, "Goggles of Far Sight", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Unlucky Figurine", ActiveState::EquippedActive);
+        let figurine = cmd(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(goggles, none - 1);
+        assert_eq!(figurine, none - 2, "its -2 on AC and its -2 on CMD are one penalty");
+    }
+
+    /// CRB p.502: a headband is a temporary bonus and grants ranks in named skills, not skill points
+    /// per level. What it moves it moves, and the budget stays on the saved score.
+    #[test]
+    fn worn_item_applies_intelligence_moves_the_spell_numbers_and_not_the_skill_budget() {
+        let item = "Headband of Vast Intelligence +2";
+        let dir = tempdir("worn-int");
+        seed_default_characters_at(&dir, "0.0.0-test").expect("seeding succeeds");
+        let root = characters_root_from_app_data_dir(&dir).join(SECOND_SEED_CHARACTER_ID);
+        let saved = "ability_modifier.intelligence.saved";
+        let book = "class_spell.wizard.spellbook_size.spell_level_1_and_higher";
+        let none = load_saved_character_at_root(&root).unwrap();
+        let read = |sheet: &LoadSavedCharacterResponse, id: &str| sheet.explanations.iter().find(|row| row.id == id).map(|row| row.value);
+        worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+        let carried = load_saved_character_at_root(&root).unwrap();
+        worn_vs_carried_set(&root, item, ActiveState::EquippedActive);
+        let worn = load_saved_character_at_root(&root).unwrap();
+        custom_items_saved(&root, vec![custom_item("c", "Wit Charm", None, vec![custom_bonus("ability:intelligence", "Insight", 2)])]);
+        custom_item_wear(&root, "c");
+        let with_custom = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(read(&none, saved), None, "no row on a sheet the item does not move");
+        assert_eq!(read(&carried, saved), None);
+        assert_eq!(worn.snapshot.as_ref().unwrap().ability_modifiers.intelligence, 5);
+        assert_eq!(read(&worn, "class_chassis.wizard.spell_save_dc.spell_level_1"), Some(16), "a spell's DC moves");
+        assert_eq!(read(&worn, saved), Some(4), "what the sheet budgets skill points from");
+        assert_eq!(read(&worn, "class_chassis.skill_points"), read(&none, "class_chassis.skill_points"));
+        assert_eq!(read(&worn, book), read(&none, book), "a spellbook's size is the saved score's");
+        assert_eq!(read(&with_custom, saved), Some(4), "a custom item's score is the same");
+        assert_eq!(read(&with_custom, "class_chassis.skill_points"), read(&none, "class_chassis.skill_points"));
+    }
+
+    /// APG p.308 `VAR|LOADSCORE|8`: Strength for carrying capacity only. UE p.212 `LOADMULT|TYPE=SIZE|3`:
+    /// the pinned oracle adds it to the size's multiplier (`LoadFacet.getLoadMultForSize`).
+    #[test]
+    fn worn_item_applies_load_numbers_move_the_load_limits() {
+        let limits = |root: &Path| {
+            let loaded = load_saved_character_at_root(root).unwrap();
+            let load = &loaded.corpus_derived.encumbrance;
+            (load.light_max_lbs, load.medium_max_lbs, load.heavy_max_lbs, loaded.ability_scores.strength)
+        };
+        let (dir, root) = enhancement_rows_aldric("worn-load");
+        let none = limits(&root);
+        worn_vs_carried_hold(&root, "Muleback Cords", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Heavyload Belt", ActiveState::SelectedInactive);
+        let carried = limits(&root);
+        worn_vs_carried_set(&root, "Muleback Cords", ActiveState::EquippedActive);
+        let cords = limits(&root);
+        worn_vs_carried_set(&root, "Muleback Cords", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "Heavyload Belt", ActiveState::EquippedActive);
+        let belt = limits(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!((none.0, none.1, none.2, none.3), (116.0, 233.0, 350.0, 19), "Aldric's Strength 19");
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(cords, (346.0, 693.0, 1040.0, 19), "Strength 27's row, and the score does not move");
+        assert_eq!(belt, (466.0, 933.0, 1400.0, 19), "four times Medium's heavy load, and its tiers");
+    }
+
+    // ----- the level ledger follows every add and remove -----
+
+    fn ledger_stamp_rows(root: &Path) -> Vec<LedgerEntryDto> {
+        load_character_ledger_at_root(root).expect("the ledger reads").expect("a ledger file").entries
+    }
+
+    /// The levels of the rows for one thing, in file order.
+    fn ledger_stamp_levels(root: &Path, kind: LedgerKind, id: &str) -> Vec<Option<u8>> {
+        ledger_stamp_rows(root).iter().filter(|row| row.kind == kind && row.id == id).map(|row| row.taken_at_level).collect()
+    }
+
+    fn ledger_stamp_saved(response: CreateCharacterResponse) {
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    /// A Human Fighter 1 made the way a player makes one.
+    fn ledger_stamp_new_fighter(label: &str) -> PathBuf {
+        let root = tempdir(label);
+        ledger_stamp_saved(create_character_at_root(&root, &request_for("race:human", 1), "0.0.0-test".to_owned()).expect("creates"));
+        root
+    }
+
+    const LEDGER_AT: &str = "2026-11-03T00:00:00Z";
+
+    /// The three ranks the pilot's skill slice requires, and `acrobatics` ranks of a fourth.
+    fn ledger_stamp_ranks(acrobatics: u8) -> Vec<SkillAllocation> {
+        [("skill:climb", 1), ("skill:swim", 1), ("skill:intimidate", 1), ("skill:acrobatics", acrobatics)]
+            .into_iter()
+            .map(|(skill, ranks)| SkillAllocation { skill_id: skill.to_owned(), ranks })
+            .collect()
+    }
+
+    #[test]
+    fn ledger_stamp_a_new_character_holds_a_row_for_all_it_took_at_its_level() {
+        let root = ledger_stamp_new_fighter("ledger-new");
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        let rows = ledger_stamp_rows(&root);
+        let feats = rows.iter().filter(|row| row.kind == LedgerKind::Feat).count();
+        assert_eq!(feats, input.chosen.selected_feats.len(), "{rows:?}");
+        assert!(feats > 0, "a Fighter 1 is seeded with feats");
+        assert!(rows.iter().all(|row| row.taken_at_level == Some(1) && !row.assigned_on_upgrade), "{rows:?}");
+        std::fs::remove_dir_all(&root).ok();
+
+        let root = tempdir("ledger-new-levels");
+        let mut request = request_for("race:human", 1);
+        request.additional_levels = vec![FIGHTER_CLASS_ID.to_owned()];
+        ledger_stamp_saved(create_character_at_root(&root, &request, "0.0.0-test".to_owned()).expect("creates"));
+        assert!(ledger_stamp_rows(&root).iter().all(|row| row.taken_at_level == Some(2)), "made at 2, taken at 2");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_every_add_path_stamps_the_level_the_character_is_now() {
+        let root = ledger_stamp_new_fighter("ledger-adds");
+
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), [Some(1)]);
+
+        // A level-up and then its feat, as the sheet does it: two calls, and the feat is the new level's.
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:endurance", None, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:endurance"), [Some(2)]);
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), [Some(1)], "an earlier row keeps its level");
+
+        ledger_stamp_saved(add_spell_selection_at_root(&root, "Mage Armor", "class:wizard", AcquisitionMode::Known, LEDGER_AT).unwrap());
+        ledger_stamp_saved(record_and_prepare_spell_selection_at_root(&root, "Shield", "class:wizard", LEDGER_AT).unwrap());
+        // Preparing a spell already learned learns nothing.
+        ledger_stamp_saved(add_spell_selection_at_root(&root, "Mage Armor", "class:wizard", AcquisitionMode::Prepared, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Spell, "Mage Armor"), [Some(2)]);
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Spell, "Shield"), [Some(2)], "known and prepared is one spell learned");
+        let shield = ledger_stamp_rows(&root).into_iter().find(|row| row.id == "Shield").unwrap();
+        assert_eq!(shield.target.as_deref(), Some("class:wizard"));
+
+        // Skill ranks arrive wholesale: only the ranks that are new are this level's.
+        ledger_stamp_saved(set_skill_allocations_at_root(&root, ledger_stamp_ranks(1), LEDGER_AT).unwrap());
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), Some(ledger_stamp_ranks(2)), LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::SkillRank, "skill:acrobatics"), [Some(2), Some(3)]);
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::SkillRank, "skill:swim"), [Some(1)], "a rank already held keeps its level");
+
+        // An ability increase is written on the Custom tab, the sheet's one way to raise a score.
+        let custom = CharacterCustomDto { grants: vec![grant("level-4", "ability:wisdom", 1)], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), [Some(3)]);
+
+        // Any other caller of the one mutation path, the appending adapter among them.
+        ledger_stamp_saved(mutate_saved_character_at_root(&root, LEDGER_AT, |input| input.chosen.selected_feats.push("feat:alertness".to_owned())).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:alertness"), [Some(3)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_a_chooser_feat_records_each_copys_target() {
+        let root = ledger_stamp_new_fighter("ledger-targets");
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:skill_focus", Some("Stealth"), LEDGER_AT).unwrap());
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:skill_focus", Some("Climb"), LEDGER_AT).unwrap());
+        let focus = |root: &Path| {
+            ledger_stamp_rows(root).into_iter().filter(|row| row.id == "feat:skill_focus").map(|row| (row.target, row.taken_at_level)).collect::<Vec<_>>()
+        };
+        assert_eq!(focus(&root), [(Some("Stealth".to_owned()), Some(1)), (Some("Climb".to_owned()), Some(2))]);
+
+        // Taking back the first leaves the second's row and level.
+        ledger_stamp_saved(remove_feat_selection_at_root(&root, "feat:skill_focus", Some("Stealth"), LEDGER_AT).unwrap());
+        assert_eq!(focus(&root), [(Some("Climb".to_owned()), Some(2))]);
+
+        // A feat whose target changes is the same feat: the level it was taken at stands.
+        ledger_stamp_saved(mutate_saved_character_at_root(&root, LEDGER_AT, |input| {
+            input.chosen.selected_choices.retain(|choice| !choice.selection_id.contains("Climb"));
+        }).unwrap());
+        assert_eq!(focus(&root), [(None, Some(2))]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_every_remove_path_takes_its_row_and_only_its_row() {
+        let root = ledger_stamp_new_fighter("ledger-removes");
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_spell_selection_at_root(&root, "Mage Armor", "class:wizard", AcquisitionMode::Known, LEDGER_AT).unwrap());
+        ledger_stamp_saved(set_skill_allocations_at_root(&root, ledger_stamp_ranks(1), LEDGER_AT).unwrap());
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), Some(ledger_stamp_ranks(2)), LEDGER_AT).unwrap());
+        let two_grants = CharacterCustomDto { grants: vec![grant("boon", "ability:wisdom", 2), grant("curse", "ability:strength", -2)], ..Default::default() };
+        save_character_custom_at_root(&root, &two_grants, LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), [Some(2), Some(2)], "one row a point");
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:strength"), [], "a penalty is no increase");
+        let others = ledger_stamp_rows(&root).into_iter().filter(|row| row.kind == LedgerKind::Feat && row.id != "feat:toughness").collect::<Vec<_>>();
+        assert!(!others.is_empty());
+
+        ledger_stamp_saved(remove_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), []);
+        ledger_stamp_saved(remove_spell_selection_at_root(&root, "Mage Armor", "class:wizard", LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Spell, "Mage Armor"), []);
+        ledger_stamp_saved(set_skill_allocations_at_root(&root, ledger_stamp_ranks(1), LEDGER_AT).unwrap());
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::SkillRank, "skill:acrobatics"), [Some(1)], "the later rank goes first");
+
+        let one_point = CharacterCustomDto { grants: vec![grant("boon", "ability:wisdom", 1)], ..Default::default() };
+        save_character_custom_at_root(&root, &one_point, LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), [Some(2)]);
+        // Lifting the curse raises the score and is no increase either.
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:strength"), []);
+        save_character_custom_at_root(&root, &CharacterCustomDto::default(), LEDGER_AT).unwrap();
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::AbilityIncrease, "ability:wisdom"), []);
+
+        let kept = ledger_stamp_rows(&root).into_iter().filter(|row| row.kind == LedgerKind::Feat).collect::<Vec<_>>();
+        assert_eq!(kept, others, "the other feats' rows did not move");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_a_change_the_character_refuses_stamps_nothing() {
+        let root = ledger_stamp_new_fighter("ledger-refused");
+        let before = std::fs::read(root.join("ledger.json")).unwrap();
+        let response = mutate_saved_character_at_root(&root, LEDGER_AT, |input| {
+            input.chosen.selected_feats.push("feat:toughness".to_owned());
+            input.chosen.class_levels[0].level = 0;
+        })
+        .unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Blocked { .. }), "{response:?}");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), before);
+
+        // A ledger that cannot be read refuses the change: the character does not move without it.
+        std::fs::write(root.join("ledger.json"), "not json").unwrap();
+        let saved_before = SavedCharacterStore::load(&root).unwrap().revision_id;
+        let refused = add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap_err();
+        assert!(refused.contains("invalid ledger JSON"), "{refused}");
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().revision_id, saved_before);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn ledger_stamp_a_clone_and_a_round_trip_carry_it() {
+        let root = ledger_stamp_new_fighter("ledger-carry");
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        let rows = ledger_stamp_rows(&root);
+
+        let clone_root = tempdir("ledger-carry-clone");
+        copy_character_ledger(&root, &clone_root).expect("copies");
+        assert_eq!(ledger_stamp_rows(&clone_root), rows);
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("ledger-carry-import");
+        ledger_stamp_saved(import_character_from_json(&file, &import_root, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert_eq!(ledger_stamp_rows(&import_root), rows, "levels survive the file, not stamped afresh at the import");
+
+        // A file edited by hand is held to the character it describes.
+        let mut parsed: serde_json::Value = serde_json::from_str(&file).unwrap();
+        let entries = parsed["ledger"]["entries"].as_array_mut().unwrap();
+        let toughness = entries.iter().position(|row| row["id"] == "feat:toughness").unwrap();
+        entries.remove(toughness);
+        entries.push(serde_json::json!({"kind": "feat", "id": "feat:never_held", "taken_at_level": 1, "assigned_on_upgrade": false}));
+        let edited_root = tempdir("ledger-carry-edited");
+        ledger_stamp_saved(import_character_from_json(&parsed.to_string(), &edited_root, "edited", LEDGER_AT, "0.0.0-test").unwrap());
+        assert_eq!(ledger_stamp_levels(&edited_root, LedgerKind::Feat, "feat:never_held"), []);
+        assert_eq!(ledger_stamp_levels(&edited_root, LedgerKind::Feat, "feat:toughness"), [Some(2)]);
+
+        for dir in [&root, &clone_root, &import_root, &edited_root] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    // ----- the drawer's rows: each level the character has, read off the ledger and the engine -----
+
+    fn progression_ledger_feat_names(level: &ProgressionLevelDto) -> Vec<&str> {
+        level.taken.feats.iter().map(|feat| feat.name.as_str()).collect()
+    }
+
+    fn progression_ledger_features(level: &ProgressionLevelDto) -> Vec<(&str, &str, bool)> {
+        level.class_features.iter().map(|feature| (feature.label.as_str(), feature.value.as_str(), feature.raised)).collect()
+    }
+
+    fn progression_ledger_rank_total(ledger: &ProgressionLedgerDto) -> u32 {
+        ledger.levels.iter().flat_map(|level| &level.taken.ranks).map(|row| row.ranks).sum()
+    }
+
+    /// What the sheet's badge reads: the room left in every pool. The drawer must agree with it.
+    fn progression_ledger_budget_room(root: &Path) -> i64 {
+        let input = SavedCharacterStore::load(root).unwrap().character_input;
+        let budget = feat_budget_for(&input, &compute_pilot_base_chassis(&input)).unwrap();
+        budget.pools().iter().map(|pool| pool.remaining().max(0)).sum()
+    }
+
+    #[test]
+    fn progression_ledger_aldric_each_level_states_what_it_took_gained_and_left() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-aldric", DEFAULT_CHARACTER_ID);
+        load_saved_character_at_root(&root).expect("loads");
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let at: Vec<(u8, &str, u8)> = ledger.levels.iter().map(|level| (level.character_level, level.class_id.as_str(), level.class_level)).collect();
+        assert_eq!(at, [(1, "class:fighter", 1), (2, "class:fighter", 2), (3, "class:fighter", 3)]);
+
+        // A level feat, the human's and the Fighter's at 1. The Fighter's at 2 and the level feat at 3 are open.
+        assert_eq!(progression_ledger_feat_names(&ledger.levels[0]), ["Power Attack", "Dodge", "Weapon Focus"]);
+        assert!(ledger.levels[1].taken.feats.is_empty() && ledger.levels[2].taken.feats.is_empty());
+        let unspent_feats: Vec<i64> = ledger.levels.iter().map(|level| level.unspent.feats).collect();
+        assert_eq!(unspent_feats, [0, 1, 1]);
+        assert_eq!(unspent_feats.iter().sum::<i64>(), progression_ledger_budget_room(&root), "the drawer and the sheet's badge read one budget");
+
+        // The sheet's own lines, which a packaged app holds, unlike the corpus-backed explanations.
+        assert!(progression_ledger_features(&ledger.levels[0]).contains(&("Bonus Feats", "+1", false)), "{:?}", ledger.levels[0].class_features);
+        assert_eq!(progression_ledger_features(&ledger.levels[1]), [("Bonus Feats", "+2", true), ("Bravery", "", false)]);
+        assert_eq!(progression_ledger_features(&ledger.levels[2]), [("Armor Training", "", false)], "named once, with no count of picks");
+
+        let held_ranks: u32 = SavedCharacterStore::load(&root).unwrap().character_input.chosen.skill_allocations.iter().map(|skill| u32::from(skill.ranks)).sum();
+        assert_eq!(progression_ledger_rank_total(&ledger) + ledger.without_level.ranks.iter().map(|row| row.ranks).sum::<u32>(), held_ranks, "every rank held is listed once");
+        assert!(ledger.levels.iter().all(|level| level.assigned_on_upgrade), "the seed's rows were worked out: {ledger:?}");
+        assert!(ledger.levels.iter().all(|level| !level.ability_increase_due), "nothing below 4");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_elowen_places_her_spells_and_ranks_and_says_when_an_increase_is_due() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-elowen", SECOND_SEED_CHARACTER_ID);
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let spells_at = |level: usize| ledger.levels[level].taken.spells.iter().map(|spell| spell.id.as_str()).collect::<Vec<_>>();
+        assert_eq!(spells_at(0), ["Light"]);
+        assert_eq!(spells_at(4), ["Fireball"]);
+        assert_eq!(ledger.levels[0].taken.spells[0].class_id.as_deref(), Some("class:wizard"));
+        assert_eq!(progression_ledger_rank_total(&ledger), 35, "(2 + 4 + 1) x 5, as the seed's own comment says");
+        assert!(ledger.levels.iter().all(|level| level.unspent.ranks == 0), "all 35 are spent");
+        let per_level_ranks = |level: &ProgressionLevelDto| level.taken.ranks.iter().map(|row| row.ranks).sum::<u32>();
+        assert!(ledger.levels.iter().all(|level| per_level_ranks(level) == 7), "seven a level: {ledger:?}");
+
+        let due: Vec<u8> = ledger.levels.iter().filter(|level| level.ability_increase_due).map(|level| level.character_level).collect();
+        assert_eq!(due, [4]);
+        let first: Vec<&str> = progression_ledger_features(&ledger.levels[0]).iter().map(|(label, _, _)| *label).collect();
+        assert!(first.contains(&"Arcane Bond") && first.contains(&"Cantrips"), "a caster's features at 1: {first:?}");
+        assert!(ledger.levels[1..].iter().all(|level| level.class_features.is_empty()), "nothing a Wizard's sheet lines add after 1: {ledger:?}");
+        let unspent_feats: Vec<i64> = ledger.levels.iter().map(|level| level.unspent.feats).collect();
+        assert_eq!(unspent_feats.iter().sum::<i64>(), progression_ledger_budget_room(&root));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_multiclass_character_names_each_class_level_in_saved_order() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-tomas", THIRD_SEED_CHARACTER_ID);
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let at: Vec<(&str, u8)> = ledger.levels.iter().map(|level| (level.class_id.as_str(), level.class_level)).collect();
+        assert_eq!(at, [("class:cleric", 1), ("class:cleric", 2), ("class:cleric", 3), ("class:fighter", 1), ("class:fighter", 2)]);
+        assert_eq!(ledger.levels[0].taken.spells[0].id, "Cure Light Wounds");
+        assert_eq!(ledger.levels[2].taken.spells[0].id, "Spiritual Weapon");
+        // A second class's features arrive at its own first level.
+        let names = |level: usize| progression_ledger_features(&ledger.levels[level]).iter().map(|(label, _, _)| label.to_string()).collect::<Vec<_>>();
+        assert!(names(3).contains(&"Bonus Feats".to_owned()), "Fighter 1 at character level 4: {:?}", names(3));
+        assert!(names(4).contains(&"Bravery".to_owned()), "Fighter 2 at character level 5: {:?}", names(4));
+        assert!(names(2).iter().all(|name| name != "Bravery"), "not a Cleric's");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_choice_made_at_a_level_is_listed_there_with_its_target_and_no_upgrade_mark() {
+        let root = ledger_stamp_new_fighter("progression-ledger-stamped");
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:skill_focus", Some("Stealth"), LEDGER_AT).unwrap());
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let focus = ledger.levels[1].taken.feats.iter().find(|feat| feat.id == "feat:skill_focus").expect("taken at 2");
+        assert_eq!((focus.name.as_str(), focus.target.as_deref()), ("Skill Focus", Some("Stealth")));
+        assert!(ledger.levels.iter().all(|level| !level.assigned_on_upgrade), "recorded when made: {ledger:?}");
+
+        // A feat the picker pushes by its catalog key has the same name as the token shape.
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "Toughness", None, LEDGER_AT).unwrap());
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        assert!(progression_ledger_feat_names(&ledger.levels[1]).contains(&"Toughness"), "{ledger:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_saved_hit_die_is_listed_at_its_class_level_and_an_unsaved_one_is_not_made_up() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-hp", THIRD_SEED_CHARACTER_ID);
+        let saved = |class_id: &str, value: u8| HitPointLevelDto { class_id: class_id.to_owned(), value };
+        // Held in the order saved for each class, whatever the order between classes.
+        save_character_hit_points_at_root(&root, &[saved("class:fighter", 9), saved("class:cleric", 8), saved("class:cleric", 5)]).expect("saves");
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let results: Vec<Option<u8>> = ledger.levels.iter().map(|level| level.hit_die_result).collect();
+        assert_eq!(results, [Some(8), Some(5), None, Some(9), None]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_positive_grant_is_an_increase_at_the_level_it_was_made() {
+        let root = ledger_stamp_new_fighter("progression-ledger-grant");
+        let mut custom = crate::character_custom::CharacterCustomDto::default();
+        custom.grants.push(crate::character_custom::CustomGrantDto { id: "boon".to_owned(), label: "Boon".to_owned(), target: "ability:wisdom".to_owned(), value: 2, reason: String::new() });
+        crate::character_custom::save_character_custom_at_root(&root, &custom, LEDGER_AT).expect("saves");
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let increases = &ledger.levels[0].taken.ability_increases;
+        assert_eq!(increases.len(), 1, "two points of one ability is one line");
+        assert_eq!((increases[0].ability.as_str(), increases[0].points), ("wisdom", 2));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_row_with_no_level_or_above_the_character_is_listed_apart_and_never_lost() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-over", SECOND_SEED_CHARACTER_ID);
+        let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:iron_will", "feat:great_fortitude"];
+        ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        let apart: Vec<&str> = ledger.without_level.feats.iter().map(|feat| feat.name.as_str()).collect();
+        assert_eq!(apart, ["Great Fortitude"]);
+        assert!(ledger.levels.iter().all(|level| level.unspent.feats == 0), "an over-budget character has no open slot: {ledger:?}");
+        let listed = ledger.levels.iter().map(|level| level.taken.feats.len()).sum::<usize>() + apart.len();
+        assert_eq!(listed, saved.len(), "every feat is kept (R9)");
+
+        // A row above the character (nothing writes one today; a hand-edited file could).
+        let mut rows: CharacterLedgerDto = load_character_ledger_at_root(&root).unwrap().unwrap_or_else(|| {
+            load_saved_character_at_root(&root).expect("loads");
+            load_character_ledger_at_root(&root).unwrap().expect("built")
+        });
+        rows.entries.iter_mut().find(|row| row.id == "feat:toughness").unwrap().taken_at_level = Some(9);
+        write_character_ledger_at_root(&root, &rows).unwrap();
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        assert_eq!(ledger.levels.len(), 5);
+        assert!(ledger.without_level.feats.iter().any(|feat| feat.name == "Toughness"), "{:?}", ledger.without_level);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_character_with_no_file_reads_what_its_load_will_write_and_writes_nothing() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-first", SECOND_SEED_CHARACTER_ID);
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none());
+        let before = ledger_migration_digests(&root);
+        let listed = list_progression_ledger_at_root(&root).expect("lists");
+        assert_eq!(ledger_migration_digests(&root), before, "listing writes nothing");
+        assert!(listed.levels[0].taken.feats.len() == 3);
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(list_progression_ledger_at_root(&root).expect("lists"), listed, "the rows the load wrote");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_an_unreadable_file_is_an_error_and_not_an_empty_history() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-bad", SECOND_SEED_CHARACTER_ID);
+        std::fs::write(root.join("ledger.json"), "{ not json").unwrap();
+        let reason = list_progression_ledger_at_root(&root).expect_err("refuses");
+        assert!(reason.contains("invalid ledger JSON"), "{reason}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_saved_hit_die_survives_a_clone_and_a_round_trip() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-hp-carry", DEFAULT_CHARACTER_ID);
+        let saved = |value: u8| HitPointLevelDto { class_id: FIGHTER_CLASS_ID.to_owned(), value };
+        save_character_hit_points_at_root(&root, &[saved(10), saved(3), saved(7)]).expect("saves");
+        let dice = |root: &Path| list_progression_ledger_at_root(root).expect("lists").levels.iter().map(|level| level.hit_die_result).collect::<Vec<_>>();
+        assert_eq!(dice(&root), [Some(10), Some(3), Some(7)]);
+
+        let clone_root = tempdir("progression-ledger-hp-clone");
+        copy_character_hit_points(&root, &clone_root).expect("copies");
+        assert_eq!(load_character_hit_points_at_root(&clone_root).unwrap(), load_character_hit_points_at_root(&root).unwrap());
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("progression-ledger-hp-import");
+        ledger_stamp_saved(import_character_from_json(&file, &import_root, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert_eq!(dice(&import_root), [Some(10), Some(3), Some(7)], "the sheet's hit points read this file too");
+
+        // A character with none stays one with none, and an old file imports with none.
+        let (bare_dir, bare_root) = ledger_migration_seed("progression-ledger-hp-bare", DEFAULT_CHARACTER_ID);
+        let bare_file = export_character_to_json(&bare_root).unwrap();
+        assert!(serde_json::from_str::<serde_json::Value>(&bare_file).unwrap().get("hitPoints").is_none());
+        let bare_import = tempdir("progression-ledger-hp-bare-import");
+        ledger_stamp_saved(import_character_from_json(&bare_file, &bare_import, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert!(!bare_import.join("hit_points.json").exists());
+        for each in [dir, clone_root, import_root, bare_dir, bare_import] {
+            std::fs::remove_dir_all(each).ok();
+        }
+    }
+
+    #[test]
+    fn ledger_stamp_a_write_that_cannot_finish_leaves_the_file_whole() {
+        // A half-written ledger refuses every later change, so a write replaces the file or leaves it.
+        let root = ledger_stamp_new_fighter("ledger-whole");
+        let before = std::fs::read(root.join("ledger.json")).unwrap();
+        std::fs::create_dir(root.join("ledger.json.tmp")).unwrap();
+        let ledger = load_character_ledger_at_root(&root).unwrap().unwrap();
+        assert!(write_character_ledger_at_root(&root, &CharacterLedgerDto::default()).is_err(), "the temporary path is taken");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), before);
+        std::fs::remove_dir(root.join("ledger.json.tmp")).unwrap();
+        write_character_ledger_at_root(&root, &ledger).unwrap();
+        assert_eq!(std::fs::read_dir(&root).unwrap().filter(|entry| entry.as_ref().unwrap().file_name() == "ledger.json.tmp").count(), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn progression_ledger_a_known_table_opens_spell_slots_and_a_book_does_not() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-known", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&root, |input| {
+            input.chosen.class_levels[0].class_id = "class:sorcerer".to_owned();
+            input.chosen.class_levels[0].level = 1;
+            ledger_migration_spells(input, "class:sorcerer", &["Light", "Magic Missile"]);
+        });
+        let ledger = list_progression_ledger_at_root(&root).expect("lists");
+        // A Sorcerer 1 knows four cantrips and two 1st-level spells (CRB table 3-15); one of each held.
+        assert_eq!(ledger.levels[0].unspent.spells, 4, "{ledger:?}");
+
+        // Elowen's book has room and states no slot she owes.
+        let (other, wizard) = ledger_migration_seed("progression-ledger-book", SECOND_SEED_CHARACTER_ID);
+        let book = list_progression_ledger_at_root(&wizard).expect("lists");
+        assert!(book.levels.iter().all(|level| level.unspent.spells == 0), "{book:?}");
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&other).ok();
+    }
+
+    #[test]
+    fn progression_ledger_the_wire_is_camel_case_with_the_choices_on_the_level() {
+        let (dir, root) = ledger_migration_seed("progression-ledger-wire", DEFAULT_CHARACTER_ID);
+        let wire = serde_json::to_value(list_progression_ledger_at_root(&root).expect("lists")).unwrap();
+        let level = &wire["levels"][0];
+        assert!(level.get("hitDieResult").is_some(), "stated, null when nothing was saved: {level}");
+        for field in ["characterLevel", "classId", "classLevel", "feats", "spells", "ranks", "abilityIncreases", "classFeatures", "abilityIncreaseDue", "unspent", "assignedOnUpgrade"] {
+            assert!(!level[field].is_null(), "{field} is on the wire: {level}");
+        }
+        assert_eq!(level["feats"][0]["name"], "Power Attack");
+        assert!(wire["withoutLevel"]["feats"].is_array());
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    // ----- a character saved before there was a ledger gets one on its first load, by slot order -----
+
+    fn ledger_migration_seed(label: &str, id: &str) -> (PathBuf, PathBuf) {
+        let dir = tempdir(label);
+        seed_default_characters_at(&dir, "0.0.0-test").expect("seeding succeeds");
+        let root = characters_root_from_app_data_dir(&dir).join(id);
+        (dir, root)
+    }
+
+    /// Saves a legacy shape directly: no change path runs, so no ledger is written.
+    fn ledger_migration_edit(root: &Path, edit: impl FnOnce(&mut CharacterInput)) {
+        let mut envelope = SavedCharacterStore::load(root).unwrap();
+        edit(&mut envelope.character_input);
+        SavedCharacterStore::save(&envelope, root).unwrap();
+        assert!(load_character_ledger_at_root(root).unwrap().is_none());
+    }
+
+    fn ledger_migration_rows(root: &Path) -> Vec<LedgerEntryDto> {
+        load_saved_character_at_root(root).expect("loads");
+        ledger_stamp_rows(root)
+    }
+
+    fn ledger_migration_levels(rows: &[LedgerEntryDto], kind: LedgerKind) -> Vec<(String, Option<u8>)> {
+        rows.iter().filter(|row| row.kind == kind).map(|row| (row.id.clone(), row.taken_at_level)).collect()
+    }
+
+    fn ledger_migration_named(rows: &[(&str, Option<u8>)]) -> Vec<(String, Option<u8>)> {
+        rows.iter().map(|(id, level)| ((*id).to_owned(), *level)).collect()
+    }
+
+    fn ledger_migration_spells(input: &mut CharacterInput, class_id: &str, spells: &[&str]) {
+        input.chosen.spells_selected = spells
+            .iter()
+            .map(|spell| SpellSelection { spell_id: (*spell).to_owned(), source_class_id: class_id.to_owned(), acquisition_mode: AcquisitionMode::Known })
+            .collect();
+    }
+
+    /// Every file beside the character, by name, with its digest.
+    fn ledger_migration_digests(root: &Path) -> BTreeMap<String, String> {
+        std::fs::read_dir(root)
+            .unwrap()
+            .map(|entry| {
+                let path = entry.unwrap().path();
+                let digest: String = <sha2::Sha256 as sha2::Digest>::digest(std::fs::read(&path).unwrap()).iter().map(|byte| format!("{byte:02x}")).collect();
+                (path.file_name().unwrap().to_string_lossy().into_owned(), digest)
+            })
+            .collect()
+    }
+
+    #[test]
+    fn ledger_migration_elowen_runs_twice_to_the_same_file_and_reads_her_files_without_writing_them() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-elowen", SECOND_SEED_CHARACTER_ID);
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none(), "a starter is a character saved with no ledger");
+        let before = ledger_migration_digests(&root);
+
+        let rows = ledger_migration_rows(&root);
+        let mut after = ledger_migration_digests(&root);
+        let first = std::fs::read(root.join("ledger.json")).expect("the first load wrote it");
+        assert!(after.remove("ledger.json").is_some());
+        assert_eq!(after, before, "every file the character already had is byte for byte what it was");
+
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), first, "a second load leaves it alone");
+        std::fs::remove_file(root.join("ledger.json")).unwrap();
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), first, "built again from nothing, the same bytes");
+
+        assert!(rows.iter().all(|row| row.assigned_on_upgrade), "{rows:?}");
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Feat),
+            ledger_migration_named(&[("feat:power_attack", Some(1)), ("feat:dodge", Some(1)), ("feat:weapon_focus", Some(1))]),
+        );
+        // Light is a cantrip; Fireball is a 3rd-level spell, which a Wizard reaches at 5th.
+        assert_eq!(ledger_migration_levels(&rows, LedgerKind::Spell), ledger_migration_named(&[("Light", Some(1)), ("Fireball", Some(5))]));
+
+        // (2 wizard + 4 Int + 1 human) a level: 35 ranks, 7 at each of 5 levels, all placed.
+        let ranks = ledger_migration_levels(&rows, LedgerKind::SkillRank);
+        assert_eq!(ranks.len(), 35);
+        for level in 1..=5u8 {
+            assert_eq!(ranks.iter().filter(|(_, at)| *at == Some(level)).count(), 7, "level {level}: {ranks:?}");
+        }
+        // Ranks never pass the character's level at the time (CRB p.87).
+        let spellcraft: Vec<_> = ranks.iter().filter(|(id, _)| id == "skill:spellcraft").map(|(_, at)| at.unwrap()).collect();
+        assert_eq!(spellcraft, [1, 2, 3, 4, 5]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_multiclass_character_takes_its_classes_in_saved_order() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-tomas", THIRD_SEED_CHARACTER_ID);
+        let rows = ledger_migration_rows(&root);
+        // A level feat and the human's at 1, the next level feat at 3. The Fighter's pool is level 4's.
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Feat),
+            ledger_migration_named(&[("feat:power_attack", Some(1)), ("feat:dodge", Some(1)), ("feat:weapon_focus", Some(3))]),
+        );
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Spell),
+            ledger_migration_named(&[("Cure Light Wounds", Some(1)), ("Spiritual Weapon", Some(3))]),
+        );
+        let ranks = ledger_migration_levels(&rows, LedgerKind::SkillRank);
+        assert_eq!(ranks.len(), 15);
+        assert!(ranks.iter().all(|(_, at)| at.is_some()), "(2 + 0 + 1) a level across both classes: {ranks:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_feats_past_the_budget_get_no_level_and_feed_the_badge() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-over", SECOND_SEED_CHARACTER_ID);
+        let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:iron_will", "feat:great_fortitude"];
+        ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+        let rows = ledger_migration_rows(&root);
+        // Wizard 5, human: two at 1, one at 3, one at 5, and the Wizard's bonus feat at 5, whose record
+        // states no restriction (E1.1's receipt). Weapon Focus takes no slot (it is the posture's).
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Feat),
+            ledger_migration_named(&[
+                ("feat:power_attack", Some(1)),
+                ("feat:dodge", Some(1)),
+                ("feat:weapon_focus", Some(1)),
+                ("feat:toughness", Some(3)),
+                ("feat:endurance", Some(5)),
+                ("feat:iron_will", Some(5)),
+                ("feat:great_fortitude", None),
+            ]),
+        );
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        let budget = feat_budget_for(&input, &compute_pilot_base_chassis(&input)).unwrap();
+        assert_eq!(budget.over_by(), 1, "the row with no level is the feat the badge counts");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_class_pool_slot_opens_at_its_grant_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-pool", SECOND_SEED_CHARACTER_ID);
+        let saved = ["feat:power_attack", "feat:dodge", "feat:weapon_focus", "feat:toughness", "feat:endurance", "feat:empower_spell"];
+        ledger_migration_edit(&root, |input| input.chosen.selected_feats = saved.iter().map(|feat| (*feat).to_owned()).collect());
+        let rows = ledger_migration_rows(&root);
+        // Level 5 grants one level feat; the second place at 5 is the Wizard's bonus feat.
+        let at_five: Vec<_> = ledger_migration_levels(&rows, LedgerKind::Feat).into_iter().filter(|(_, at)| *at == Some(5)).map(|(id, _)| id).collect();
+        assert_eq!(at_five, ["feat:endurance", "feat:empower_spell"]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_ranks_past_the_budget_get_no_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-ranks", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&root, |input| input.chosen.skill_allocations.push(SkillAllocation { skill_id: "skill:perception".to_owned(), ranks: 5 }));
+        let ranks = ledger_migration_levels(&ledger_migration_rows(&root), LedgerKind::SkillRank);
+        let unplaced: Vec<_> = ranks.iter().filter(|(_, at)| at.is_none()).map(|(id, _)| id.as_str()).collect();
+        assert_eq!(unplaced, ["skill:perception"; 5], "35 fit, in saved order; the last 5 do not");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// CRB p.72 Table 3-15: a Sorcerer knows 2 first-level spells at 1, 3 at 3, 4 at 5; 1 second-level at 4, 2 at 5.
+    #[test]
+    fn ledger_migration_a_spontaneous_caster_fills_its_known_table() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-known", SECOND_SEED_CHARACTER_ID);
+        let sorcerer = "class:sorcerer";
+        ledger_migration_edit(&root, |input| {
+            input.chosen.class_levels[0].class_id = sorcerer.to_owned();
+            ledger_migration_spells(input, sorcerer, &["Light", "Mage Armor", "Shield", "Grease", "Sleep", "Color Spray", "Invisibility", "Web", "Knock"]);
+        });
+        let rows = ledger_migration_rows(&root);
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Spell),
+            ledger_migration_named(&[
+                ("Light", Some(1)),
+                ("Mage Armor", Some(1)),
+                ("Shield", Some(1)),
+                ("Grease", Some(3)),
+                ("Sleep", Some(5)),
+                ("Color Spray", None),
+                ("Invisibility", Some(4)),
+                ("Web", Some(5)),
+                ("Knock", None),
+            ]),
+        );
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A spellbook's rows bound "this level and higher"; a spell above what the class casts has no slot.
+    #[test]
+    fn ledger_migration_a_wizard_fills_her_spellbook_and_a_spell_she_cannot_cast_has_no_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-book", SECOND_SEED_CHARACTER_ID);
+        let wizard = "class:wizard";
+        ledger_migration_edit(&root, |input| ledger_migration_spells(input, wizard, &["Fireball", "Fly", "Haste", "Mage Armor", "Unbound Cantrip Nobody Printed"]));
+        let rows = ledger_migration_rows(&root);
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::Spell),
+            ledger_migration_named(&[
+                ("Fireball", Some(5)),
+                ("Fly", Some(5)),
+                ("Haste", None),
+                ("Mage Armor", Some(1)),
+                ("Unbound Cantrip Nobody Printed", None),
+            ]),
+            "two 3rd-level pages at Wizard 5, Int 18 (spellbook_size.spell_level_3_and_higher)",
+        );
+
+        let (young_dir, young) = ledger_migration_seed("ledger-migration-young", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&young, |input| {
+            input.chosen.class_levels[0].level = 1;
+            ledger_migration_spells(input, wizard, &["Fireball"]);
+        });
+        assert_eq!(ledger_migration_levels(&ledger_migration_rows(&young), LedgerKind::Spell), ledger_migration_named(&[("Fireball", None)]));
+        for dir in [&dir, &young_dir] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn ledger_migration_ability_increases_fall_at_every_fourth_level() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-ability", SECOND_SEED_CHARACTER_ID);
+        ledger_migration_edit(&root, |input| input.chosen.class_levels[0].level = 9);
+        let custom = CharacterCustomDto { grants: vec![grant("boon", "ability:strength", 3), grant("curse", "ability:dexterity", -2)], ..CharacterCustomDto::default() };
+        std::fs::write(root.join("custom.json"), serde_json::to_string(&custom).unwrap()).unwrap();
+        let rows = ledger_migration_rows(&root);
+        assert_eq!(
+            ledger_migration_levels(&rows, LedgerKind::AbilityIncrease),
+            ledger_migration_named(&[("ability:strength", Some(4)), ("ability:strength", Some(8)), ("ability:strength", None)]),
+        );
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_ledger_the_character_has_is_not_rebuilt_and_a_broken_one_does_not_stop_the_sheet() {
+        let root = ledger_stamp_new_fighter("ledger-migration-kept");
+        ledger_stamp_saved(level_up_character_at_root(&root, FIGHTER_CLASS_ID, Vec::new(), None, LEDGER_AT).unwrap());
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:endurance", None, LEDGER_AT).unwrap());
+        let stamped = std::fs::read(root.join("ledger.json")).unwrap();
+        load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), stamped, "stamped rows are never reassigned");
+
+        std::fs::write(root.join("ledger.json"), "not json").unwrap();
+        load_saved_character_at_root(&root).expect("no number on the sheet reads the ledger");
+        assert_eq!(std::fs::read(root.join("ledger.json")).unwrap(), b"not json", "a load does not overwrite what it cannot read");
+
+        // A custom file it cannot read would lose the ability rows, so nothing is built until it can be.
+        std::fs::remove_file(root.join("ledger.json")).unwrap();
+        std::fs::write(root.join("custom.json"), "not json").unwrap();
+        load_saved_character_at_root(&root).expect("the sheet already reads such a file as empty");
+        assert!(!root.join("ledger.json").exists());
+        std::fs::remove_file(root.join("custom.json")).unwrap();
+        load_saved_character_at_root(&root).expect("loads");
+        assert!(root.join("ledger.json").exists(), "the next load builds it");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The command's own path, and only Pathfinder: the ledger is PF only.
+    #[test]
+    fn ledger_migration_runs_on_the_adapter_load_of_a_pathfinder_character_and_no_other() {
+        let dir = tempdir("ledger-migration-adapter");
+        seed_default_characters_at(&dir, "0.0.0-test").expect("seeding succeeds");
+        let (mut pathfinder, mut other) = (0, 0);
+        for entry in std::fs::read_dir(characters_root_from_app_data_dir(&dir)).unwrap() {
+            let root = entry.unwrap().path();
+            if !root.is_dir() {
+                continue;
+            }
+            crate::rule_system_adapter::load_saved_character_via_envelope(&root).expect("loads");
+            if codex::saved_character::local_store::peek_game_system(&root).unwrap() == codex::rules_core::game_system::GameSystem::CyberpunkRed.id() {
+                other += 1;
+                assert!(!root.join("ledger.json").exists(), "{root:?}");
+            } else {
+                pathfinder += 1;
+                assert!(!ledger_stamp_rows(&root).is_empty(), "{root:?}");
+            }
+        }
+        assert_eq!((pathfinder, other), (3, 3), "the three PF starters and the three CPR starters");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn ledger_migration_a_change_before_any_load_builds_the_same_rows_and_stamps_itself() {
+        let (dir, root) = ledger_migration_seed("ledger-migration-change", SECOND_SEED_CHARACTER_ID);
+        let (load_dir, loaded) = ledger_migration_seed("ledger-migration-change-load", SECOND_SEED_CHARACTER_ID);
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        let changed = ledger_stamp_rows(&root);
+        let toughness = changed.iter().find(|row| row.id == "feat:toughness").unwrap();
+        assert_eq!((toughness.taken_at_level, toughness.assigned_on_upgrade), (Some(5), false), "made now, at the level she is");
+        let built = ledger_migration_rows(&loaded);
+        let without: Vec<_> = changed.iter().filter(|row| row.id != "feat:toughness").cloned().collect();
+        assert_eq!(without, built, "a change and a load agree on what nothing recorded");
+        for dir in [&dir, &load_dir] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn ledger_stamp_a_character_with_no_ledger_file_still_loads_and_no_schema_moves() {
+        let (dir, root) = enhancement_rows_aldric("ledger-legacy");
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none(), "a starter is a character saved with no ledger");
+        let plain = export_character_to_json(&root).unwrap();
+        assert!(!plain.contains("\"ledger\""), "a character with no ledger writes the file it always wrote");
+
+        // A change to something the ledger does not record writes none.
+        ledger_stamp_saved(mutate_saved_character_at_root(&root, LEDGER_AT, |_| {}).unwrap());
+        worn_vs_carried_hold(&root, "Helm of Brilliance", ActiveState::SelectedInactive);
+        assert!(load_character_ledger_at_root(&root).unwrap().is_none());
+
+        // An import of that file carries none either, and copying nothing is no error.
+        let import_root = tempdir("ledger-legacy-import");
+        ledger_stamp_saved(import_character_from_json(&plain, &import_root, "imported", LEDGER_AT, "0.0.0-test").unwrap());
+        assert!(load_character_ledger_at_root(&import_root).unwrap().is_none());
+        let clone_root = tempdir("ledger-legacy-clone");
+        copy_character_ledger(&root, &clone_root).expect("no file is no copy");
+        assert!(load_character_ledger_at_root(&clone_root).unwrap().is_none());
+
+        // The first new choice builds what was already held by slot order, and stamps itself.
+        let held_before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats.len();
+        ledger_stamp_saved(add_feat_selection_at_root(&root, "feat:toughness", None, LEDGER_AT).unwrap());
+        let rows = ledger_stamp_rows(&root);
+        let legacy: Vec<_> = rows.iter().filter(|row| row.kind == LedgerKind::Feat && row.id != "feat:toughness").collect();
+        assert_eq!(legacy.len(), held_before, "{rows:?}");
+        assert!(legacy.iter().all(|row| row.taken_at_level.is_some() && row.assigned_on_upgrade), "{legacy:?}");
+        assert_eq!(ledger_stamp_levels(&root, LedgerKind::Feat, "feat:toughness"), [Some(3)], "Aldric is a Fighter 3");
+
+        // Engine input and saved character are as they were: the saved files do not know the ledger.
+        let envelope = SavedCharacterStore::load(&root).unwrap();
+        assert_eq!(envelope.schema_version, CURRENT_SAVED_CHARACTER_SCHEMA_VERSION);
+        assert_eq!(envelope.character_input.chosen.selected_feats.last().map(String::as_str), Some("feat:toughness"));
+        for file in std::fs::read_dir(&root).unwrap() {
+            let path = file.unwrap().path();
+            if path.file_name().is_some_and(|name| name != "ledger.json") && path.is_file() {
+                let text = String::from_utf8_lossy(&std::fs::read(&path).unwrap()).into_owned();
+                assert!(!text.contains("taken_at_level"), "{}", path.display());
+            }
+        }
+        for path in [&dir, &import_root, &clone_root] {
+            std::fs::remove_dir_all(path).ok();
+        }
+    }
+
+    /// A clone is the same character, Custom tab and all.
+    #[test]
+    fn worn_item_applies_custom_items_come_along_on_a_clone_and_a_round_trip() {
+        let (dir, root) = enhancement_rows_aldric("worn-custom-copies");
+        let plain = export_character_to_json(&root).unwrap();
+        custom_items_saved(&root, vec![custom_item("c", "Lucky Hat", Some(BodySlot::Head), vec![custom_bonus("ac", "Deflection", 2)])]);
+        custom_item_wear(&root, "c");
+        let worn = enhancement_read(&root);
+
+        let clone_root = tempdir("worn-custom-clone");
+        copy_character_custom(&root, &clone_root).expect("copies");
+        let cloned = load_character_custom_at_root(&clone_root).unwrap();
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("worn-custom-import");
+        let response = import_character_from_json(&file, &import_root, "imported", "2026-11-03T00:00:00Z", "0.0.0-test").unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let imported = enhancement_read(&import_root);
+        let refused = slot_conflict_wear_helm(&import_root);
+        let empty_root = tempdir("worn-custom-empty");
+        copy_character_custom(&empty_root, &clone_root).expect("no file is no copy");
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&clone_root).ok();
+        std::fs::remove_dir_all(&import_root).ok();
+        std::fs::remove_dir_all(&empty_root).ok();
+
+        assert_eq!(cloned.equipment.len(), 1);
+        assert!(cloned.equipment[0].worn, "still worn");
+        assert!(!plain.contains("\"custom\""), "a character with no custom data writes the file it always wrote");
+        assert_eq!(imported, worn, "the file's worn item applies");
+        assert!(refused.contains("head slot is taken by Lucky Hat"), "and holds its slot: {refused}");
+    }
+
+    fn slot_conflict_wear_helm(root: &Path) -> String {
+        worn_vs_carried_hold(root, "Helm of Brilliance", ActiveState::SelectedInactive);
+        match set_equipment_active_state_at_root(root, "Helm of Brilliance", ActiveState::EquippedActive, "2026-11-03T00:02:00Z").unwrap() {
+            CreateCharacterResponse::Blocked { diagnostics } => diagnostics[0].message.clone(),
+            other => format!("{other:?}"),
+        }
+    }
+
+    // --- A worn item's stated numbers reach the totals (`decisions.md §9`, DoD 5). ---
+
+    fn worn_item_applies_saves(root: &Path) -> (i16, i16, i16) {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        (snapshot.total_saves.fortitude, snapshot.total_saves.reflex, snapshot.total_saves.will)
+    }
+
+    fn worn_item_applies_row(root: &Path, id: &str) -> Option<i16> {
+        load_saved_character_at_root(root).unwrap().explanations.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    /// CRB p.507: a resistance bonus on all three saves. Worn, every save moves, on the load and on
+    /// Recompute; carried, none does.
+    #[test]
+    fn worn_item_applies_a_cloak_of_resistance_to_every_save() {
+        let cloak = "Cloak of Resistance +1";
+        let (dir, root) = enhancement_rows_aldric("worn-item-cloak");
+        let none = worn_item_applies_saves(&root);
+        worn_vs_carried_hold(&root, cloak, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_saves(&root);
+        worn_vs_carried_set(&root, cloak, ActiveState::EquippedActive);
+        let worn = worn_item_applies_saves(&root);
+        let recomputed = crate::characterHub::recomputeCharacter::recompute_character_at_root(&root, DEFAULT_CHARACTER_ID);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(none, (5, 2, 2), "Aldric, as E4.2 measured him");
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, (6, 3, 3), "worn adds its +1 to each");
+        let character = recomputed.character.expect("recompute succeeds");
+        assert_eq!((character.total_saves.fortitude, character.total_saves.reflex, character.total_saves.will), (6, 3, 3), "Recompute reads the same");
+    }
+
+    /// CRB p.502: an enhancement bonus to Strength. The score moves, what it drives follows from the
+    /// engine, and the saved character does not change.
+    #[test]
+    fn worn_item_applies_a_belt_to_the_score_and_what_it_drives_and_not_the_save_file() {
+        let belt = "Belt of Giant Strength +2";
+        let (dir, root) = enhancement_rows_aldric("worn-item-belt");
+        let none = enhancement_read(&root);
+        let score = |root: &Path| load_saved_character_at_root(root).unwrap().ability_scores.strength;
+        let score_none = score(&root);
+        let saved_none = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores.strength;
+        worn_vs_carried_hold(&root, belt, ActiveState::SelectedInactive);
+        let carried = (score(&root), enhancement_read(&root));
+        worn_vs_carried_set(&root, belt, ActiveState::EquippedActive);
+        let worn = (score(&root), enhancement_read(&root));
+        let saved_worn = SavedCharacterStore::load(&root).unwrap().character_input.chosen.ability_scores.strength;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(score_none, 19, "Aldric, as E4.2 measured him");
+        assert_eq!(carried, (19, none), "carried adds 0");
+        assert_eq!(worn.0, 21, "worn adds its +2");
+        assert_eq!(worn.1.melee, none.melee + 1, "19 to 21 is one more on the Strength modifier");
+        assert_eq!(saved_worn, saved_none, "the saved score does not change");
+    }
+
+    /// CRB p.504: a competence bonus on one skill, on the row every skill total reads.
+    #[test]
+    fn worn_item_applies_boots_of_elvenkind_to_the_one_skill() {
+        let boots = "Boots of Elvenkind";
+        let id = "skill.trait_modifier.acrobatics";
+        let (dir, root) = enhancement_rows_aldric("worn-item-boots");
+        let none = worn_item_applies_row(&root, id).unwrap_or(0);
+        worn_vs_carried_hold(&root, boots, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_row(&root, id).unwrap_or(0);
+        worn_vs_carried_set(&root, boots, ActiveState::EquippedActive);
+        let worn = worn_item_applies_row(&root, id).unwrap_or(0);
+        let climb = worn_item_applies_row(&root, "skill.trait_modifier.climb").unwrap_or(0);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, none + 5, "worn adds its +5");
+        assert_eq!(climb, 0, "and to no other skill");
+    }
+
+    /// A deflection bonus holds against touch and flat-footed; a natural armor bonus holds flat-footed
+    /// and not against touch.
+    #[test]
+    fn worn_item_applies_each_armor_class_type_to_its_own_touch_and_flat_footed() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-touch");
+        let none = enhancement_read(&root);
+        worn_vs_carried_hold(&root, "Ring of Protection +1", ActiveState::EquippedActive);
+        let ring = enhancement_read(&root);
+        worn_vs_carried_hold(&root, "Amulet of Natural Armor +1", ActiveState::EquippedActive);
+        let amulet = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!((none.armor_class, none.touch, none.flat_footed), (16, 12, 14), "Aldric, as E4.2 measured him");
+        assert_eq!((ring.armor_class, ring.touch, ring.flat_footed), (17, 13, 15), "deflection counts on all three");
+        assert_eq!((amulet.armor_class, amulet.touch, amulet.flat_footed), (18, 13, 16), "natural armor does not count against touch");
+    }
+
+    /// Two bonuses of one type take the higher, and AC by Source still sums to the panel.
+    #[test]
+    fn worn_item_applies_the_higher_of_two_bonuses_of_one_type() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-stack");
+        let none = enhancement_read(&root);
+        worn_vs_carried_hold(&root, "Ring of Protection +1", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Ring of Protection +2", ActiveState::EquippedActive);
+        let rings = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        worn_vs_carried_hold(&root, "Bracers of Armor +3", ActiveState::EquippedActive);
+        let low_bracers = enhancement_read(&root);
+        worn_vs_carried_set(&root, "Bracers of Armor +3", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Bracers of Armor +6", ActiveState::EquippedActive);
+        let high_bracers = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(rings.armor_class, none.armor_class + 2, "the +2, not +1 and +2");
+        assert_eq!(rings.touch, none.touch + 2);
+        let effects = &loaded.corpus_derived.equipment_effects;
+        assert_eq!(effects.armor_class_delta, effects.per_item.iter().filter_map(|e| e.armor_class_bonus).sum::<i16>(), "the rows sum to the panel");
+        assert_eq!(low_bracers, rings, "Bracers +3 under a Chain Shirt's +4 add nothing");
+        assert_eq!(high_bracers.armor_class, rings.armor_class + 2, "Bracers +6 over the shirt's +4");
+        assert_eq!(high_bracers.touch, rings.touch, "an armor bonus never counts against touch");
+    }
+
+    /// A derived record stating no number of its own reads the record it is made from.
+    #[test]
+    fn worn_item_applies_a_derived_armor_reads_its_base() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-derived");
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let bare = enhancement_read(&root);
+        let bare_weight = worn_vs_carried_weight(&root);
+        worn_vs_carried_hold(&root, "Mithral Shirt", ActiveState::EquippedActive);
+        let mithral = enhancement_read(&root);
+        let mithral_weight = worn_vs_carried_weight(&root);
+        worn_vs_carried_set(&root, "Mithral Shirt", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Celestial Armor", ActiveState::EquippedActive);
+        let celestial = enhancement_read(&root);
+        let celestial_weight = worn_vs_carried_weight(&root);
+        worn_vs_carried_hold(&root, "Flame Tongue", ActiveState::SelectedInactive);
+        let tongue_weight = worn_vs_carried_weight(&root);
+        let unresolved = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.unresolved_item_ids;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(bare.armor_class, 12, "the shirt stowed");
+        assert_eq!(mithral.armor_class, bare.armor_class + 4, "Mithral Shirt reads Chain Shirt's +4");
+        assert_eq!(mithral.touch, bare.touch, "and it is armor");
+        assert_eq!(mithral_weight, bare_weight + 20.0, "its own stated weight stands");
+        assert_eq!(celestial.armor_class, bare.armor_class + 6, "Celestial Armor reads Chainmail's +6; its own +3 is DEF-1");
+        assert_eq!(celestial_weight, mithral_weight + 40.0, "and Chainmail's 40 lb");
+        assert_eq!(tongue_weight, celestial_weight + 4.0, "Flame Tongue reads Longsword's 4 lb");
+        for item in ["Mithral Shirt", "Celestial Armor", "Flame Tongue"] {
+            assert!(!unresolved.iter().any(|id| id == item), "{item} in {unresolved:?}");
+        }
+    }
+
+    /// A stock item's settled type folds with a worn custom item's bonus of that type, on the number
+    /// the sheet reads, whichever is the higher.
+    #[test]
+    fn worn_item_applies_a_stock_type_folds_with_a_worn_custom_bonus() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-fold");
+        let none = enhancement_read(&root);
+        let saves_none = worn_item_applies_saves(&root);
+        let score_none = load_saved_character_at_root(&root).unwrap().ability_scores.strength;
+        worn_vs_carried_hold(&root, "Ring of Protection +2", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Cloak of Resistance +1", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Belt of Giant Strength +2", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Boots of Elvenkind", ActiveState::EquippedActive);
+        let stock = enhancement_read(&root);
+        custom_items_saved(&root, vec![
+            custom_item("low", "Low Ward", None, vec![custom_bonus("ac", "Deflection", 1), custom_bonus("ability:strength", "Enhancement", 1)]),
+            custom_item("high", "High Ward", None, vec![
+                custom_bonus("ac", "Deflection", 3),
+                custom_bonus("save:will", "Resistance", 3),
+                custom_bonus("ability:strength", "Enhancement", 4),
+                custom_bonus("skill:acrobatics", "Competence", 6),
+            ]),
+            custom_item("other", "Other Ward", None, vec![custom_bonus("ac", "Insight", 1)]),
+        ]);
+        custom_item_wear(&root, "low");
+        let low = (enhancement_read(&root), load_saved_character_at_root(&root).unwrap().ability_scores.strength);
+        custom_item_wear(&root, "high");
+        let high = enhancement_read(&root);
+        let high_saves = worn_item_applies_saves(&root);
+        let high_loaded = load_saved_character_at_root(&root).unwrap();
+        custom_item_wear(&root, "other");
+        let other = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(stock.armor_class, none.armor_class + 2);
+        assert_eq!(low, (stock, score_none + 2), "a lower custom bonus of the type adds nothing");
+        assert_eq!(high.armor_class, none.armor_class + 3, "the custom +3 over the ring's +2 is +3 in all");
+        assert_eq!(high.touch, none.touch + 3);
+        assert_eq!(high_saves, (saves_none.0 + 1, saves_none.1 + 1, saves_none.2 + 3), "the cloak's +1, and the custom +3 over it on Will");
+        assert_eq!(high_loaded.ability_scores.strength, score_none + 4, "the custom +4 over the belt's +2");
+        let acrobatics = high_loaded.explanations.iter().find(|row| row.id == "skill.trait_modifier.acrobatics").unwrap().value;
+        assert_eq!(acrobatics, 6, "the custom +6 over the boots' +5");
+        let effects = &high_loaded.corpus_derived.equipment_effects;
+        assert_eq!(effects.armor_class_delta, effects.per_item.iter().filter_map(|e| e.armor_class_bonus).sum::<i16>(), "the rows sum to the panel");
+        assert_eq!(other.armor_class, high.armor_class + 1, "another type adds");
+    }
+
+    /// The Melee tile, its `combat.baseline_melee_attack_bonus` row and Recompute, read off one tree.
+    fn worn_item_applies_attack_reads(root: &Path) -> (i16, i16, i16) {
+        let loaded = load_saved_character_at_root(root).unwrap();
+        let melee = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics)).baseline_melee_attack_bonus;
+        let row = loaded.explanations.iter().find(|row| row.id == "combat.baseline_melee_attack_bonus").expect("the row").value;
+        let recomputed = crate::characterHub::recomputeCharacter::recompute_character_at_root(root, DEFAULT_CHARACTER_ID);
+        (melee, row, recomputed.character.expect("recompute succeeds").baseline_melee_attack_bonus)
+    }
+
+    /// `BONUS:COMBAT|TOHIT|1|TYPE=Competence`. The tile, the row the math prints, Recompute, and the
+    /// snapshot a Market response publishes without a load; carried, none of them.
+    #[test]
+    fn worn_item_applies_attack_a_pale_green_prism_moves_melee_everywhere_it_is_read() {
+        let stone = "Ioun Stone (Pale green Prism)";
+        let (dir, root) = enhancement_rows_aldric("worn-item-attack");
+        let none = worn_item_applies_attack_reads(&root);
+        worn_vs_carried_hold(&root, stone, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_attack_reads(&root);
+        worn_vs_carried_set(&root, stone, ActiveState::EquippedActive);
+        let worn = worn_item_applies_attack_reads(&root);
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        let (response, _) = resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle()).expect("computes");
+        let detail = load_saved_character_at_root(&root).unwrap().explanations.into_iter().find(|row| row.id == "combat.baseline_melee_attack_bonus").unwrap().detail;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(none.0, none.1, "the tile and its row agree");
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, (none.0 + 1, none.0 + 1, none.0 + 1), "tile, row, Recompute");
+        assert_eq!(response.combat.baseline_melee_attack_bonus, none.0 + 1, "a response that publishes its own snapshot");
+        assert!(detail.contains(stone), "the row says what moved it: {detail}");
+    }
+
+    /// `COMBAT|INITIATIVE|-5` and `COMBAT|TOHIT|-2`: a penalty adds whatever else is held.
+    #[test]
+    fn worn_item_applies_attack_a_robe_of_vermin_takes_attack_and_initiative_down() {
+        let robe = "Robe of Vermin";
+        let (dir, root) = enhancement_rows_aldric("worn-item-robe");
+        let none = (enhancement_read(&root).melee, worn_item_applies_row(&root, "initiative.total").unwrap());
+        worn_vs_carried_hold(&root, robe, ActiveState::SelectedInactive);
+        let carried = (enhancement_read(&root).melee, worn_item_applies_row(&root, "initiative.total").unwrap());
+        worn_vs_carried_set(&root, robe, ActiveState::EquippedActive);
+        let worn = (enhancement_read(&root).melee, worn_item_applies_row(&root, "initiative.total").unwrap());
+        worn_vs_carried_hold(&root, "Ioun Stone (Pale green Prism)", ActiveState::EquippedActive);
+        let with_stone = enhancement_read(&root).melee;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, (none.0 - 2, none.1 - 5));
+        assert_eq!(with_stone, none.0 - 1, "the -2 and the +1 both count");
+    }
+
+    /// `COMBAT|INITIATIVE|1+Global_LuckBonus|TYPE=Luck`, on the row the Initiative tile reads.
+    #[test]
+    fn worn_item_applies_attack_a_luckstone_moves_initiative() {
+        let stone = "Stone of Good Luck (Luckstone)";
+        let (dir, root) = enhancement_rows_aldric("worn-item-luck");
+        let none = worn_item_applies_row(&root, "initiative.total").unwrap();
+        worn_vs_carried_hold(&root, stone, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_row(&root, "initiative.total").unwrap();
+        worn_vs_carried_set(&root, stone, ActiveState::EquippedActive);
+        let worn = worn_item_applies_row(&root, "initiative.total").unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, none + 1);
+    }
+
+    /// `POSTMOVEADD|TYPE=Walk|10` and `MOVEADD|TYPE.All|-10`, on the row the Speed tile adds; a row an
+    /// item leaves alone says nothing about worn items.
+    #[test]
+    fn worn_item_applies_attack_boots_of_striding_move_speed() {
+        let boots = "Boots of Striding And Springing";
+        let (dir, root) = enhancement_rows_aldric("worn-item-speed");
+        worn_vs_carried_hold(&root, boots, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_row(&root, "custom_item.speed");
+        worn_vs_carried_set(&root, boots, ActiveState::EquippedActive);
+        let worn = worn_item_applies_row(&root, "custom_item.speed");
+        let touch = load_saved_character_at_root(&root).unwrap().explanations.into_iter().find(|row| row.id == "defense.touch_armor_class").unwrap().detail;
+        worn_vs_carried_hold(&root, "Pauldrons of the Jackass", ActiveState::EquippedActive);
+        let with_penalty = worn_item_applies_row(&root, "custom_item.speed");
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, None, "carried adds 0");
+        assert_eq!(worn, Some(10));
+        assert!(!touch.contains("worn items"), "{touch}");
+        assert_eq!(with_penalty, Some(0), "the +10 and the -10");
+    }
+
+    /// One type takes the higher across a stock and a custom item, on all three.
+    #[test]
+    fn worn_item_applies_attack_a_stock_type_folds_with_a_worn_custom_bonus() {
+        let (dir, root) = enhancement_rows_aldric("worn-item-attack-fold");
+        let none = (enhancement_read(&root).melee, worn_item_applies_row(&root, "initiative.total").unwrap());
+        worn_vs_carried_hold(&root, "Ioun Stone (Pale green Prism)", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Stone of Good Luck (Luckstone)", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Boots of Striding And Springing", ActiveState::EquippedActive);
+        let read = |root: &Path| (enhancement_read(root).melee, worn_item_applies_row(root, "initiative.total").unwrap(), worn_item_applies_row(root, "custom_item.speed"));
+        let stock = read(&root);
+        custom_items_saved(&root, vec![
+            custom_item("low", "Low Charm", None, vec![custom_bonus("attack", "Competence", 1), custom_bonus("initiative", "Luck", 1), custom_bonus("speed", "Enhancement", 5)]),
+            custom_item("high", "High Charm", None, vec![custom_bonus("attack", "Competence", 3), custom_bonus("initiative", "Luck", 2), custom_bonus("speed", "Enhancement", 15)]),
+            custom_item("other", "Other Charm", None, vec![custom_bonus("attack", "Insight", 1)]),
+        ]);
+        custom_item_wear(&root, "low");
+        let low = read(&root);
+        custom_item_wear(&root, "high");
+        let high = read(&root);
+        let high_row = worn_item_applies_attack_reads(&root);
+        custom_item_wear(&root, "other");
+        let other = read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(stock, (none.0 + 1, none.1 + 1, Some(10)));
+        assert_eq!(low, stock, "a lower or equal custom bonus of the type adds nothing");
+        assert_eq!(high, (none.0 + 3, none.1 + 2, Some(15)), "the custom bonus over the stock one, not on top of it");
+        assert_eq!(high_row, (none.0 + 3, none.0 + 3, none.0 + 3), "tile, row, Recompute");
+        assert_eq!(other.0, high.0 + 1, "another type adds");
+    }
+
+    /// The Skills panel has one Perform row. A bonus on one Perform is on no other, so it prints under
+    /// the panel, number and subtype, and the row does not move.
+    #[test]
+    fn worn_item_applies_attack_a_subtype_bonus_prints_with_its_subtype_and_moves_no_row() {
+        let staff = "Musical Staff";
+        let notes = |root: &Path| {
+            let loaded = load_saved_character_at_root(root).unwrap();
+            let family = loaded.explanations.iter().find(|row| row.id == "skill.trait_modifier.perform").map(|row| row.value);
+            (loaded.feat_skill_bonuses.situational, family)
+        };
+        let (dir, root) = enhancement_rows_aldric("worn-item-subtype");
+        worn_vs_carried_hold(&root, staff, ActiveState::SelectedInactive);
+        let (carried, _) = notes(&root);
+        worn_vs_carried_set(&root, staff, ActiveState::EquippedActive);
+        let (worn, family) = notes(&root);
+        let trait_row = worn_item_applies_row(&root, "skill.trait_modifier.perform_string_instruments");
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert!(carried.iter().all(|note| note.skill != "perform_string_instruments"), "carried prints nothing: {carried:?}");
+        let note = worn.iter().find(|note| note.skill == "perform_string_instruments").unwrap_or_else(|| panic!("no note: {worn:?}"));
+        assert_eq!(note.label, "Musical Staff: +5 Competence on Perform (String Instruments)");
+        assert_eq!(family, None, "the family row does not move");
+        assert_eq!(trait_row, None, "no row nothing reads");
+    }
+
+    /// What the Skills panel adds to each of its rows: the sheet's skills and the three families.
+    fn worn_item_every_skill_rows(root: &Path) -> std::collections::BTreeMap<String, i16> {
+        let loaded = load_saved_character_at_root(root).unwrap();
+        let families = ["skill:craft", "skill:perform", "skill:profession"];
+        let ids = codex::rules_core::skill_allocation::SHEET_SKILL_IDS.iter().chain(families.iter());
+        ids.map(|id| {
+            let skill = id.strip_prefix("skill:").unwrap();
+            let row = loaded.explanations.iter().find(|row| row.id == format!("skill.trait_modifier.{skill}"));
+            (skill.to_owned(), row.map_or(0, |row| row.value))
+        })
+        .collect()
+    }
+
+    fn worn_item_every_skill_moved(before: &std::collections::BTreeMap<String, i16>, after: &std::collections::BTreeMap<String, i16>) -> std::collections::BTreeMap<String, i16> {
+        after.iter().map(|(skill, value)| (skill.clone(), value - before[skill])).filter(|(_, moved)| *moved != 0).collect()
+    }
+
+    /// `SKILL|TYPE.Base|1|TYPE=Competence`: every row of the panel, the three families among them,
+    /// and the row of no one subtype. Carried, none.
+    #[test]
+    fn worn_item_applies_every_skill_a_pale_green_prism_moves_every_row() {
+        let stone = "Ioun Stone (Pale green Prism)";
+        let (dir, root) = enhancement_rows_aldric("every-skill-prism");
+        let none = worn_item_every_skill_rows(&root);
+        worn_vs_carried_hold(&root, stone, ActiveState::SelectedInactive);
+        let carried = worn_item_every_skill_rows(&root);
+        worn_vs_carried_set(&root, stone, ActiveState::EquippedActive);
+        let worn = worn_item_every_skill_rows(&root);
+        let subtype = worn_item_applies_row(&root, "skill.trait_modifier.perform_oratory");
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(none.len(), 35, "the panel's 32 and its 3 families");
+        assert_eq!(carried, none, "carried adds 0");
+        assert!(none.iter().all(|(skill, value)| worn[skill] == value + 1), "{worn:?}");
+        assert_eq!(subtype, None, "a set names the family row, not a subtype's");
+    }
+
+    /// Two sets that overlap on a row take the higher of their one type, on that row alone. A Mask's
+    /// `TYPE=Knowledge` and a set of one family both reach only what they name.
+    #[test]
+    fn worn_item_applies_every_skill_a_set_moves_its_rows_and_folds_on_each() {
+        let (dir, root) = enhancement_rows_aldric("every-skill-sets");
+        let none = worn_item_every_skill_rows(&root);
+        worn_vs_carried_hold(&root, "Bracers of the Glib Entertainer", ActiveState::EquippedActive);
+        let bracers = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        worn_vs_carried_hold(&root, "Ioun Stone (Pale green Prism)", ActiveState::EquippedActive);
+        let with_prism = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        worn_vs_carried_set(&root, "Ioun Stone (Pale green Prism)", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "Bracers of the Glib Entertainer", ActiveState::SelectedInactive);
+        worn_vs_carried_hold(&root, "Mask of a Thousand Tomes", ActiveState::EquippedActive);
+        let mask = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(bracers, [("perform".to_owned(), 5)].into_iter().collect(), "the family's row, and no other");
+        assert_eq!(with_prism["perform"], 5, "the higher of one type");
+        assert_eq!(with_prism["bluff"], 1);
+        assert_eq!(mask.len(), 10, "every Knowledge row: {mask:?}");
+        assert!(mask.iter().all(|(skill, value)| skill.starts_with("knowledge_") && *value == 10), "{mask:?}");
+    }
+
+    /// `COMBAT|ATTACK,AC|-2`, `SKILL|ALL|-2`, `VAR|CMD|-2`: a penalty on all of them, Armor Class and
+    /// its touch and flat-footed rows among them. Carried, none.
+    #[test]
+    fn worn_item_applies_every_skill_an_unlucky_figurine_takes_all_of_it_down() {
+        let figurine = "Unlucky Figurine";
+        let read = |root: &Path| (enhancement_read(root), worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap(), worn_item_every_skill_rows(root));
+        let (dir, root) = enhancement_rows_aldric("every-skill-figurine");
+        let none = read(&root);
+        worn_vs_carried_hold(&root, figurine, ActiveState::SelectedInactive);
+        let carried = read(&root);
+        worn_vs_carried_set(&root, figurine, ActiveState::EquippedActive);
+        let worn = read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn.0.melee, none.0.melee - 2);
+        assert_eq!(worn.0.armor_class, none.0.armor_class - 2, "the Armor Class half");
+        assert_eq!(worn.0.touch, none.0.touch - 2);
+        assert_eq!(worn.0.flat_footed, none.0.flat_footed - 2);
+        assert_eq!(worn.1, none.1 - 2);
+        assert!(none.2.iter().all(|(skill, value)| worn.2[skill] == value - 2), "{:?}", worn.2);
+    }
+
+    /// `VAR|CMB|5` and `VAR|CMD|4`, on the rows the tiles read, saying what moved them. An untyped
+    /// stock bonus adds to a custom one. Carried, none.
+    #[test]
+    fn worn_item_applies_every_skill_bare_cmb_and_cmd_move_their_rows() {
+        let read = |root: &Path| (worn_item_applies_row(root, "combat.combat_maneuver_bonus").unwrap(), worn_item_applies_row(root, "defense.combat_maneuver_defense").unwrap());
+        let (dir, root) = enhancement_rows_aldric("every-skill-cmb");
+        let none = read(&root);
+        for item in ["Boneless Leather", "Juggernaut's Pauldrons"] {
+            worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+        }
+        let carried = read(&root);
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "Boneless Leather", ActiveState::EquippedActive);
+        worn_vs_carried_set(&root, "Juggernaut's Pauldrons", ActiveState::EquippedActive);
+        let worn = read(&root);
+        let detail = load_saved_character_at_root(&root).unwrap().explanations.into_iter().find(|row| row.id == "defense.combat_maneuver_defense").unwrap().detail;
+        custom_items_saved(&root, vec![custom_item("c", "Charm", None, vec![custom_bonus("cmb", "Untyped", 1), custom_bonus("cmd", "Luck", 2)])]);
+        custom_item_wear(&root, "c");
+        let with_custom = read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, none, "carried adds 0");
+        assert_eq!(worn, (none.0 + 5, none.1 + 4));
+        assert!(detail.contains("Juggernaut's Pauldrons"), "{detail}");
+        assert_eq!(with_custom, (worn.0 + 1, worn.1 + 2), "they fold in one list");
+    }
+
+    /// `MOVEMULT|TYPE.All|0.5`: a row the Speed tile multiplies by, beside the row it adds. Carried,
+    /// none; a second stone halves nothing more.
+    #[test]
+    fn worn_item_applies_every_skill_a_loadstone_states_its_multiplier() {
+        let stone = "Stone of Weight (Loadstone)";
+        let (dir, root) = enhancement_rows_aldric("every-skill-loadstone");
+        worn_vs_carried_hold(&root, stone, ActiveState::SelectedInactive);
+        let carried = worn_item_applies_row(&root, "custom_item.speed_percent");
+        worn_vs_carried_set(&root, stone, ActiveState::EquippedActive);
+        let worn = worn_item_applies_row(&root, "custom_item.speed_percent");
+        worn_vs_carried_hold(&root, stone, ActiveState::EquippedActive);
+        let two = worn_item_applies_row(&root, "custom_item.speed_percent");
+        worn_vs_carried_hold(&root, "Boots of Striding And Springing", ActiveState::EquippedActive);
+        let speed = worn_item_applies_row(&root, "custom_item.speed");
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(carried, None, "carried adds 0");
+        assert_eq!(worn, Some(50));
+        assert_eq!(two, Some(50));
+        assert_eq!(speed, Some(10), "the row it adds does not move");
+    }
+
+    /// A set's bonus and a custom bonus of its type take the higher on one row; another type adds.
+    #[test]
+    fn worn_item_applies_every_skill_a_set_folds_with_a_worn_custom_bonus() {
+        let (dir, root) = enhancement_rows_aldric("every-skill-fold");
+        let none = worn_item_every_skill_rows(&root);
+        worn_vs_carried_hold(&root, "Bracers of the Glib Entertainer", ActiveState::EquippedActive);
+        worn_vs_carried_hold(&root, "Ioun Stone (Pale green Prism)", ActiveState::EquippedActive);
+        custom_items_saved(&root, vec![
+            custom_item("low", "Low Charm", None, vec![custom_bonus("skill:perform", "Competence", 3)]),
+            custom_item("high", "High Charm", None, vec![custom_bonus("skill:perform", "Competence", 7), custom_bonus("skill:bluff", "Competence", 2)]),
+            custom_item("other", "Other Charm", None, vec![custom_bonus("skill:perform", "Insight", 1)]),
+        ]);
+        custom_item_wear(&root, "low");
+        let low = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        custom_item_wear(&root, "high");
+        let high = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        custom_item_wear(&root, "other");
+        let other = worn_item_every_skill_moved(&none, &worn_item_every_skill_rows(&root));
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!((low["perform"], low["bluff"]), (5, 1), "a lower custom bonus adds nothing");
+        assert_eq!((high["perform"], high["bluff"], high["heal"]), (7, 2, 1), "the higher, row by row");
+        assert_eq!(other["perform"], 8, "another type adds");
+    }
+
+    /// A held item in the pack moves no number on the sheet, whatever the number is: Armor Class,
+    /// attack, a save, an ability score or a skill. Each item here is one the book gives a number
+    /// to, one of each kind the engine's records state.
+    #[test]
+    fn worn_vs_carried_a_carried_item_moves_no_number_on_the_sheet() {
+        for item in [
+            "Ring of Protection +1",        // AC, deflection
+            "Amulet of Natural Armor +1",   // AC, natural
+            "Bracers of Armor +1",          // AC, armor
+            "Cloak of Resistance +1",       // saves
+            "Belt of Giant Strength +2",    // an ability score
+            "Boots of Elvenkind",           // a skill
+            "Breastplate (Base)",           // armor, check penalty, Dexterity cap
+            "Heavy Wooden Shield (Base)",   // a shield
+            "Dagger",                       // a second weapon
+        ] {
+            let (dir, root) = enhancement_rows_aldric("wvc-carried");
+            let before = worn_vs_carried_sheet_less_the_pack(&root, item);
+            worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+            let after = worn_vs_carried_sheet_less_the_pack(&root, item);
+            std::fs::remove_dir_all(&dir).ok();
+            assert_eq!(after, before, "{item} in the pack moved a number");
+        }
+    }
+
+    /// Weight counts both states. An item that states a weight adds it on being held, and stowing
+    /// or wearing it moves nothing, for armor, a magic item and plain gear alike.
+    #[test]
+    fn worn_vs_carried_weight_is_the_same_worn_and_carried_and_is_counted() {
+        for (item, pounds) in [
+            ("Cloak of Resistance +1", 1.0),
+            ("Belt of Giant Strength +2", 1.0),
+            ("Breastplate (Base)", 30.0),
+            ("Backpack", 2.0),
+            ("Rope (Hemp/50 ft)", 10.0),
+        ] {
+            let (dir, root) = enhancement_rows_aldric("wvc-weight");
+            let none = worn_vs_carried_weight(&root);
+            worn_vs_carried_hold(&root, item, ActiveState::SelectedInactive);
+            let carried = worn_vs_carried_weight(&root);
+            let mut envelope = SavedCharacterStore::load(&root).unwrap();
+            let held = envelope.character_input.chosen.equipment_selections.last_mut().unwrap();
+            held.active_state = ActiveState::EquippedActive;
+            held.equipped_or_active = true;
+            SavedCharacterStore::save(&envelope, &root).unwrap();
+            let worn = worn_vs_carried_weight(&root);
+            let unresolved = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.unresolved_item_ids;
+            std::fs::remove_dir_all(&dir).ok();
+            assert_eq!(carried, none + pounds, "{item} carried; unresolved: {unresolved:?}");
+            assert_eq!(worn, carried, "{item} worn");
+        }
+    }
+
+    /// The sheet's printed lines say the same as its numbers: a stowed item's line keeps its words
+    /// and gives no bonus, so no printed "+4" sits beside an Armor Class that does not hold it.
+    #[test]
+    fn worn_vs_carried_a_stowed_item_prints_its_words_and_no_bonus() {
+        let lines_of = |root: &Path, slug: &str| -> Vec<(String, String)> {
+            load_saved_character_at_root(root)
+                .unwrap()
+                .sheet_lines
+                .into_iter()
+                .filter(|line| line.id.contains(slug))
+                .map(|line| (line.label, line.value))
+                .collect()
+        };
+        let (dir, root) = enhancement_rows_aldric("wvc-lines");
+        let shirt = ":equipment:chain_shirt";
+        assert_eq!(
+            lines_of(&root, shirt),
+            [("Chain Shirt".to_owned(), String::new()), ("Chain Shirt (AC)".to_owned(), "+4".to_owned())],
+            "worn"
+        );
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        assert_eq!(lines_of(&root, shirt), [("Chain Shirt".to_owned(), String::new())], "stowed");
+
+        let ring = ":equipment:ring_of_protection_1";
+        worn_vs_carried_hold(&root, "Ring of Protection +1", ActiveState::SelectedInactive);
+        assert_eq!(lines_of(&root, ring), [("Ring of Protection +1".to_owned(), String::new())], "stowed");
+        worn_vs_carried_set(&root, "Ring of Protection +1", ActiveState::EquippedActive);
+        assert_eq!(lines_of(&root, ring), [("Ring of Protection +1".to_owned(), "+1".to_owned())], "worn");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Every Market row the sheet can be asked about has a record it can read, so buying it can
+    /// move a number and a weight. The rows that have none are named here, with why.
+    #[test]
+    fn worn_vs_carried_every_market_row_resolves_on_the_sheet_corpus() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        use codex::rules_core::equipment_resolver::equipment_converted_resolve;
+        use codex::rules_core::source_content::{SourceContentKind, SourceContentPayload};
+        let corpus = corpus_fixture_bundle();
+        // The resolver scans every record for each name; asking it only for the rows no identity
+        // answers keeps this a test of the shelf, not of its patience.
+        let identities: std::collections::HashSet<&str> = corpus
+            .records_by_kind(SourceContentKind::Equipment)
+            .into_iter()
+            .filter_map(|record| match record.payload {
+                SourceContentPayload::Equipment(item) => Some(item.identity.as_str()),
+                _ => None,
+            })
+            .collect();
+        let mut rows = 0;
+        let mut no_record = Vec::new();
+        for category in [
+            MarketCategory::Weapon,
+            MarketCategory::Armor,
+            MarketCategory::Shield,
+            MarketCategory::Gear,
+            MarketCategory::MagicItem,
+        ] {
+            for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                rows += 1;
+                if !identities.contains(row.entry.key.as_str())
+                    && equipment_converted_resolve(&row.entry.key, corpus).is_none()
+                {
+                    no_record.push(row.entry.key);
+                }
+            }
+        }
+        no_record.sort();
+        assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
+        // Every row that reads as unresolved when held, by why. The `.FORGET` pair are PCGen
+        // removal rows; the two `Shield (...)` are the Quickdraw Shield rows' twins, which would
+        // answer the seeds' `item:shield`; the Ranged Cannon's identity has the shape of a modifier,
+        // which stays out; the rest have a sheet rule and no corpus record.
+        assert_eq!(
+            no_record,
+            [
+                "Apprentice Chapbook of Rul Thaven",
+                "Dust Knuckles.FORGET",
+                "False Face.FORGET",
+                "Insights of Far-Seeing Taernis",
+                "Journeyman Book of Rul Thaven",
+                "Lab Journal of Constance Inflix",
+                "Library of the Dancer of Skins",
+                "Manuscript of Jack Were-Son",
+                "Master Books of Rul Thaven",
+                "Otyugh Hide",
+                "Ranged Cannon ~ Clockwork Goliath",
+                "Shield (Light/Steel/Quickdraw)",
+                "Shield (Light/Wooden/Quickdraw)",
+                "The Formulae of Master Gebr",
+            ],
+            "of {rows} rows"
+        );
+    }
+
+    /// A load rewrites nothing, and a stowed item is stowed when it comes back.
+    #[test]
+    fn worn_vs_carried_a_saved_item_keeps_its_saved_state() {
+        let (dir, root) = enhancement_rows_aldric("wvc-saved");
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let before = SavedCharacterStore::load(&root).unwrap();
+        let shirt = |envelope: &codex::saved_character::SavedCharacterEnvelope| {
+            envelope.character_input.chosen.equipment_selections.iter().find(|s| s.item_id == "item:chain_shirt").unwrap().active_state
+        };
+        assert_eq!(shirt(&before), ActiveState::SelectedInactive);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let after = SavedCharacterStore::load(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after.saved_at, before.saved_at, "a load saves nothing");
+        assert_eq!(shirt(&after), ActiveState::SelectedInactive);
+        let row = loaded.equipment_selections.iter().find(|s| s.item_id == "item:chain_shirt").unwrap();
+        assert!(matches!(row.active_state, ActiveStateDto::SelectedInactive), "{row:?}");
+    }
+
+    /// FSR-C3: Create's draft reads "29 lb carried" with no equipment chosen. The 29 is the kit
+    /// `compose_character_input` gives every character, Chain Shirt 25 and Longsword 4, and the
+    /// saved sheet from the same request reads the same, so draft and sheet are not twins apart.
+    #[test]
+    fn worn_vs_carried_the_29_lb_draft_is_the_required_kit_and_the_saved_sheet_agrees() {
+        let request = request_for("race:human", 1);
+        let draft = draft_sheet_preview_impl(&request).expect("the draft previews");
+        let root = tempdir("wvc-29-lb");
+        saved_or_panic(create_character_at_root(&root, &request, "test-version".to_owned()).unwrap());
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&root).ok();
+        let pounds = |id: &str| draft.encumbrance.per_item.iter().find(|i| i.item_id == id).unwrap().weight_lbs;
+
+        assert_eq!(draft.encumbrance.total_carried_weight_lbs, 29.0);
+        assert_eq!(pounds("item:chain_shirt"), 25.0);
+        assert_eq!(pounds("item:longsword"), 4.0);
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, 29.0, "the saved sheet");
+    }
+
+    /// A carried `+N` armor or shield adds nothing; worn, a shield adds its own value and its `+N`.
+    #[test]
+    fn enhancement_rows_a_shield_counts_only_while_worn() {
+        let shield = "Heavy Wooden Shield (Base)";
+        let (dir, root) = enhancement_rows_aldric("enh-shield-carried");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, shield, ActiveState::SelectedInactive, 3);
+        enhancement_buy(&root, "Breastplate (Base)", ActiveState::SelectedInactive, 2);
+        assert_eq!(enhancement_read(&root), before, "carried");
+        std::fs::remove_dir_all(&dir).ok();
+
+        let (dir, root) = enhancement_rows_aldric("enh-shield-worn");
+        enhancement_buy(&root, shield, ActiveState::EquippedActive, 3);
+        let worn = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(worn.armor_class, before.armor_class + 2 + 3, "Heavy Wooden Shield's +2, and its +3");
+        assert_eq!(worn.touch, before.touch, "touch ignores a shield");
+        let row = loaded.corpus_derived.equipment_effects.per_item.iter().find(|e| e.item_id == shield).unwrap();
+        assert_eq!((row.armor_class_bonus, row.armor_class_enhancement), (Some(2), Some(3)));
+    }
+
+    /// Bonuses of one type do not stack with themselves. Two different `+N` on one copy: the higher.
+    #[test]
+    fn enhancement_rows_two_bonuses_on_one_copy_take_the_higher() {
+        let (dir, root) = enhancement_rows_aldric("enh-no-stack");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +1 ~ Weapon");
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +3 ~ Weapon");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +2 ~ Armor");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +1 ~ Armor");
+        let after = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after.melee, before.melee + 3);
+        assert_eq!(after.sword_damage, Some(3));
+        assert_eq!(after.armor_class, before.armor_class + 2);
+    }
+
+    /// A bonus of the wrong family, which Attach Modifier allows, moves nothing: each record's own
+    /// rule says what it applies to.
+    #[test]
+    fn enhancement_rows_a_bonus_of_the_wrong_family_adds_nothing() {
+        let (dir, root) = enhancement_rows_aldric("enh-wrong-kind");
+        let before = enhancement_read(&root);
+        enhancement_attach(&root, "item:longsword", "Special Ability ~ +1 ~ Armor");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +1 ~ Weapon");
+        enhancement_attach(&root, "item:chain_shirt", "Special Ability ~ +1 ~ Shield");
+        let after = enhancement_read(&root);
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after, before);
+    }
+
+    /// A `+1` Longsword off the Market is a weapon the character can hold: both in hand, then the
+    /// plain one stowed. The last one stows too: no weapon is required.
+    #[test]
+    fn enhancement_rows_a_bought_sword_goes_in_hand_and_counts_there() {
+        let (dir, root) = enhancement_rows_aldric("enh-bought-sword");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, MARKET_SWORD, ActiveState::SelectedInactive, 1);
+        let at = "2026-11-02T00:00:00Z";
+        let wield = set_equipment_active_state_at_root(&root, MARKET_SWORD, ActiveState::EquippedActive, at).unwrap();
+        assert!(matches!(wield, CreateCharacterResponse::Saved { .. }), "{wield:?}");
+        assert_eq!(enhancement_read(&root).melee, before.melee + 1, "both in hand: the better one is swung");
+        let stow = set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, at).unwrap();
+        assert!(matches!(stow, CreateCharacterResponse::Saved { .. }), "{stow:?}");
+        let after = enhancement_read(&root);
+        assert_eq!(after.melee, before.melee + 1);
+        assert_eq!((after.sword_attack, after.sword_damage), (Some(1), Some(1)));
+
+        let last = set_equipment_active_state_at_root(&root, MARKET_SWORD, ActiveState::SelectedInactive, at).unwrap();
+        assert!(matches!(last, CreateCharacterResponse::Saved { .. }), "{last:?}");
+        assert_eq!(enhancement_read(&root).melee, before.melee - 1, "the sword's Weapon Focus goes with it");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    // ----- no gear is required: a character computes with nothing worn or wielded -----
+
+    fn no_required_gear_row(loaded: &LoadSavedCharacterResponse, id: &str) -> Option<i16> {
+        loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    fn no_required_gear_attack_rows(loaded: &LoadSavedCharacterResponse) -> Vec<String> {
+        loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_attack_bonus.")).map(|row| row.id.clone()).collect()
+    }
+
+    /// Hand-derived from Aldric's sheet (Str +4, Dex +1, Con +2, Wis +1, Cha -1, base attack +3, Dodge,
+    /// 1 rank in each selected skill, each a class skill): nothing about him but the gear moves.
+    #[test]
+    fn no_required_gear_every_item_stowed_saves_and_computes() {
+        let (dir, root) = enhancement_rows_aldric("nrg-stowed");
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        assert_eq!(snapshot.base_attack_bonus, 3);
+        assert_eq!(snapshot.baseline_melee_attack_bonus, 7, "base attack and Strength: no Weapon Focus without its weapon");
+        assert_eq!(snapshot.baseline_armor_class, 12, "10, Dex +1, Dodge +1");
+        assert_eq!(no_required_gear_row(&loaded, "defense.touch_armor_class"), Some(12));
+        assert_eq!(no_required_gear_row(&loaded, "defense.flat_footed_armor_class"), Some(10));
+        assert_eq!(no_required_gear_row(&loaded, "combat.combat_maneuver_bonus"), Some(7));
+        assert_eq!(no_required_gear_row(&loaded, "defense.combat_maneuver_defense"), Some(18), "10, base attack, Str, Dex");
+        assert_eq!(
+            (snapshot.total_saves.fortitude, snapshot.total_saves.reflex, snapshot.total_saves.will),
+            (5, 2, 2)
+        );
+        let skills = &snapshot.selected_skill_modifiers;
+        assert_eq!((skills.climb, skills.intimidate, skills.swim), (8, 3, 8), "no armor, no check penalty");
+
+        assert!(loaded.weapon_damage.is_empty(), "{:?}", loaded.weapon_damage);
+        assert_eq!(no_required_gear_attack_rows(&loaded), Vec::<String>::new());
+        let melee = loaded.explanations.iter().find(|row| row.id == "combat.baseline_melee_attack_bonus").expect("the row");
+        assert_eq!(melee.value, 7);
+        assert!(melee.detail.contains("no weapon in hand") && !melee.detail.contains("Longsword"), "{}", melee.detail);
+        let armor = loaded.explanations.iter().find(|row| row.id == "defense.baseline_armor_class").expect("the row");
+        assert_eq!(armor.value, 12);
+        assert!(!armor.detail.contains("Chain Shirt"), "{}", armor.detail);
+        let climb = loaded.explanations.iter().find(|row| row.id == "skill.selected_modifier.climb").expect("the row");
+        assert_eq!(climb.value, 8);
+        assert!(!climb.detail.contains("Chain Shirt"), "{}", climb.detail);
+    }
+
+    /// A bow is aimed, not swung: its row reads Dexterity on both paths, a table weapon's and a variant's.
+    /// Aldric: base attack +3, Strength +4, Dexterity +1. A thrown Javelin is the same, a Dagger is melee.
+    #[test]
+    fn no_required_gear_a_ranged_weapon_reads_dexterity() {
+        let (dir, root) = enhancement_rows_aldric("nrg-ranged");
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        for (item, id, value) in [
+            ("Longbow (Base)", "combat.weapon_attack_bonus.longbow", 4),
+            ("Javelin (Base)", "combat.weapon_attack_bonus.javelin", 4),
+            ("Dagger (Base)", "combat.weapon_attack_bonus.dagger", 7),
+        ] {
+            purchase_equipment_priced_at_root(&root, item, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+            let loaded = load_saved_character_at_root(&root).unwrap();
+            let row = loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{item}: no row"));
+            assert_eq!(row.value, value, "{item}: {}", row.detail);
+            assert_eq!(loaded.snapshot.as_ref().unwrap().baseline_melee_attack_bonus, 7, "the bow does not move Melee");
+            set_equipment_active_state_at_root(&root, item, ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        }
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A shield is not the Melee number, by any name it is held under: the table's, or a catalog row
+    /// whose base is a shield (`Shield (Light/Steel)`, what a `.pcg` holds; `Lion's Shield`). Worn first,
+    /// such a row read as the first melee weapon in hand, at its -4 for anyone.
+    #[test]
+    fn no_required_gear_a_shield_is_not_the_melee_number() {
+        let (dir, root) = enhancement_rows_aldric("nrg-shield");
+        let base = SavedCharacterStore::load(&root).unwrap();
+        for shield in ["Heavy Steel Shield (Base)", "Shield (Light/Steel)", "Lion's Shield", "Darkwood Shield"] {
+            SavedCharacterStore::save(&base, &root).unwrap();
+            let mut envelope = base.clone();
+            envelope.character_input.chosen.equipment_selections.insert(
+                0,
+                EquipmentSelection {
+                    item_id: shield.to_owned(),
+                    active_state: ActiveState::EquippedActive,
+                    equipped_or_active: true,
+                    applied_modifiers: Vec::new(),
+                },
+            );
+            SavedCharacterStore::save(&envelope, &root).unwrap();
+            let loaded = load_saved_character_at_root(&root).unwrap();
+            assert_eq!(loaded.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(8), "{shield}: the Longsword's, with its Weapon Focus");
+        }
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Selling what he starts with saves too, and a character who holds no item at all computes
+    /// the same numbers. The `power_attack` row is a feat's switch, not an item.
+    #[test]
+    fn no_required_gear_no_items_at_all_saves_and_computes() {
+        let (dir, root) = enhancement_rows_aldric("nrg-sold");
+        for item in ["item:longsword", "item:chain_shirt"] {
+            let sold = sell_equipment_copy_at_root(&root, item, "2026-11-04T00:00:00Z", PriceMode::Cashless, None).unwrap();
+            assert!(matches!(sold, CreateCharacterResponse::Saved { .. }), "{item}: {sold:?}");
+        }
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.equipment_selections.retain(|selection| selection.item_id == "power_attack");
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        assert_eq!((snapshot.baseline_melee_attack_bonus, snapshot.baseline_armor_class), (7, 12));
+        assert!(loaded.weapon_damage.is_empty());
+        assert_eq!(build_pilot_headless_receipt(&envelope.character_input).status, HeadlessReceiptStatus::Computed);
+    }
+
+    /// The operator's case: the Longsword stowed, a bought Greatsword taken in hand. The row is the
+    /// Greatsword's, Weapon Focus (Longsword) stays with the Longsword, and a `+1` counts.
+    #[test]
+    fn no_required_gear_a_bought_greatsword_goes_in_hand_once_the_longsword_is_stowed() {
+        let greatsword = "Greatsword (Base)";
+        let (dir, root) = enhancement_rows_aldric("nrg-greatsword");
+        let carried = market_buy(&root, greatsword, Some(1), PriceMode::Cashless);
+        assert!(matches!(carried, PurchaseEquipmentResponse::Purchased { .. }), "{carried:?}");
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, greatsword, ActiveState::EquippedActive);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+
+        let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
+        assert_eq!(snapshot.baseline_melee_attack_bonus, 8, "base attack +3, Strength +4, its +1");
+        assert_eq!(no_required_gear_attack_rows(&loaded), ["combat.weapon_attack_bonus.greatsword"]);
+        assert_eq!(no_required_gear_row(&loaded, "combat.weapon_attack_bonus.greatsword"), Some(7));
+        assert_eq!(loaded.weapon_damage.len(), 1, "{:?}", loaded.weapon_damage);
+        assert_eq!(loaded.weapon_damage[0].weapon_record_key.as_deref(), Some(greatsword));
+        assert_eq!(loaded.weapon_damage[0].enhancement_attack_bonus, Some(1));
+    }
+
+    /// Each loadout through both twins: the corpus path the sheet reads and the headless one. They
+    /// read the same weapon and the same armor, with no item required by either.
+    #[test]
+    fn no_required_gear_both_twins_read_the_same_loadout() {
+        let corpus = corpus_fixture_bundle();
+        let dressed = |class: &str, level: u8, worn: &[&str]| {
+            let mut input = compose_character_input(&request_for_class("race:human", class, level));
+            input.chosen.equipment_selections.retain(|selection| selection.item_id == "power_attack");
+            input.chosen.selected_choices.retain(|choice| choice.choice_set_id != "choice:fighter_weapon_training_group");
+            if class == FIGHTER_CLASS_ID_FOR_SEED && level >= 5 {
+                input.chosen.selected_choices.push(SelectedChoice {
+                    choice_set_id: "choice:fighter_weapon_training_group".to_owned(),
+                    selection_id: "group:heavy_blades".to_owned(),
+                });
+            }
+            for item in worn {
+                input.chosen.equipment_selections.push(EquipmentSelection {
+                    item_id: (*item).to_owned(),
+                    equipped_or_active: true,
+                    active_state: ActiveState::EquippedActive,
+                    applied_modifiers: Vec::new(),
+                });
+            }
+            input
+        };
+        // (class, level, worn, melee, armor class). The request's Human has Strength +4 and Dexterity +2;
+        // each holds Dodge; a Fighter has base attack equal to its level, a Wizard 3 has +1.
+        for (class, level, worn, melee, armor_class) in [
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &[][..], 7, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["item:longsword"][..], 8, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["item:chain_shirt"][..], 7, 17),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["item:longsword", "item:chain_shirt"][..], 8, 17),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["Greatsword (Base)"][..], 7, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["Dagger (Base)", "item:longsword"][..], 7, 13),
+            // A bow is not swung: the number is the one with nothing in hand.
+            (FIGHTER_CLASS_ID_FOR_SEED, 3, &["Longbow (Base)"][..], 7, 13),
+            // Weapon Training is Heavy Blades: a Greatsword has it and a Dagger does not.
+            (FIGHTER_CLASS_ID_FOR_SEED, 5, &["item:longsword"][..], 11, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 5, &["Greatsword (Base)"][..], 10, 13),
+            (FIGHTER_CLASS_ID_FOR_SEED, 5, &["Dagger (Base)"][..], 9, 13),
+            // A Wizard's Longsword keeps the seed's number; the Dagger is theirs and a Greatsword owes -4.
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &[][..], 5, 13),
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &["item:longsword"][..], 2, 13),
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &["Dagger (Base)"][..], 5, 13),
+            (WIZARD_CLASS_ID_FOR_SEED, 3, &["Greatsword (Base)"][..], 1, 13),
+        ] {
+            let input = dressed(class, level, worn);
+            let (snapshot, _) = resolve_unified_pilot_snapshot(&input, corpus)
+                .unwrap_or_else(|d| panic!("{class} {level} {worn:?}: {d:?}"));
+            assert_eq!(
+                (snapshot.combat.baseline_melee_attack_bonus, snapshot.defense.baseline_armor_class),
+                (melee, armor_class),
+                "the sheet's twin: {class} {level} {worn:?}"
+            );
+            let headless = build_pilot_headless_receipt(&input);
+            assert_eq!(headless.status, HeadlessReceiptStatus::Computed, "{class} {level} {worn:?}: {:?}", headless.computation.diagnostics);
+            assert_eq!(
+                (headless.computation.baseline_melee_attack_bonus, headless.computation.baseline_armor_class),
+                (melee, armor_class),
+                "the headless twin: {class} {level} {worn:?}"
+            );
+            let skills = &headless.computation.selected_skill_modifiers;
+            let sheet = &snapshot.skill.selected_modifier;
+            assert_eq!((skills.climb, skills.intimidate, skills.swim), (sheet.climb, sheet.intimidate, sheet.swim), "{class} {level} {worn:?}");
+        }
+    }
+
+    /// Aldric with the Market rows `keys` in hand alone, his Longsword stowed.
+    fn no_required_gear_hold_alone(root: &Path, keys: &[&str]) -> LoadSavedCharacterResponse {
+        let mut envelope = SavedCharacterStore::load(root).unwrap();
+        for selection in &mut envelope.character_input.chosen.equipment_selections {
+            if selection.active_state == ActiveState::EquippedActive && selection.item_id != FEAT_TOGGLE_ITEM_ID {
+                selection.active_state = ActiveState::SelectedInactive;
+            }
+        }
+        for key in keys {
+            envelope.character_input.chosen.equipment_selections.push(EquipmentSelection {
+                item_id: (*key).to_owned(),
+                active_state: ActiveState::EquippedActive,
+                equipped_or_active: true,
+                applied_modifiers: Vec::new(),
+            });
+        }
+        SavedCharacterStore::save(&envelope, root).unwrap();
+        load_saved_character_at_root(root).unwrap()
+    }
+
+    /// A weapon whose record states no damage dice is still a weapon in hand: its type tags say so,
+    /// and decide its ability and proficiency. Aldric (base attack +3, Str +4, Dex +1, a Fighter: not
+    /// proficient with an Exotic weapon). A thrown Net is aimed, so it reads Dexterity and leaves
+    /// Melee where it was; a Crimson Bluff is swung, and with nothing else in hand it is the Melee
+    /// number. The Market's refusal reads the same answer.
+    #[test]
+    fn no_required_gear_a_weapon_stating_no_damage_has_its_own_attack_row() {
+        let (dir, root) = enhancement_rows_aldric("nrg-no-damage");
+        let net = no_required_gear_hold_alone(&root, &["Net (Base)"]);
+        let swung = no_required_gear_hold_alone(&root, &["Crimson Bluff"]);
+        let beside = no_required_gear_hold_alone(&root, &["item:longsword", "Net (Base)"]);
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(no_required_gear_attack_rows(&net), ["combat.weapon_attack_bonus.net"], "{:?}", net.diagnostics);
+        let row = net.explanations.iter().find(|row| row.id == "combat.weapon_attack_bonus.net").unwrap();
+        assert_eq!(row.value, 0, "+3, Dex +1, -4: {}", row.detail);
+        assert!(row.detail.contains("nonproficiency penalty (-4)"), "{}", row.detail);
+        assert_eq!(net.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(7), "a Net is not swung");
+        assert!(net.weapon_damage.is_empty(), "a Net deals no damage: {:?}", net.weapon_damage);
+
+        assert_eq!(no_required_gear_row(&swung, "combat.weapon_attack_bonus.crimsonbluff"), Some(3), "+3, Str +4, -4");
+        assert_eq!(swung.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(3), "{:?}", swung.diagnostics);
+
+        assert_eq!(beside.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(8), "the Longsword's, with its Weapon Focus");
+        assert_eq!(no_required_gear_row(&beside, "combat.weapon_attack_bonus.net"), Some(0));
+
+        use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
+        assert_eq!(character_lacks_proficiency_with(&input, "Net (Base)"), ItemProficiencyGap::Weapon);
+    }
+
+    /// The whole Weapons shelf, held at once: every row whose type tags name a weapon has its attack
+    /// row, and the 64 that do not (ammunition, and packs of it) have none. 480 rows: 416 and 64. The
+    /// one weapon with no row is the Ranged Cannon, which has no record on the sheet's corpus
+    /// (`worn_vs_carried_every_market_row_resolves_on_the_sheet_corpus` names it and why).
+    #[test]
+    fn no_required_gear_every_market_weapon_has_an_attack_row_and_ammunition_none() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let rows = list_market(MarketFilter { category: MarketCategory::Weapon, name_contains: None, book: None }).entries;
+        let slug = |key: &str| -> String {
+            let key = key.strip_suffix(" (Base)").unwrap_or(key);
+            key.chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect()
+        };
+        let (weapons, others): (Vec<_>, Vec<_>) = rows.iter().partition(|row| row.entry.types.iter().any(|t| t == "Weapon"));
+        assert_eq!((rows.len(), weapons.len(), others.len()), (480, 416, 64));
+        let (dir, root) = enhancement_rows_aldric("nrg-shelf");
+        let keys: Vec<&str> = rows.iter().map(|row| row.entry.key.as_str()).collect();
+        let loaded = no_required_gear_hold_alone(&root, &keys);
+        std::fs::remove_dir_all(&dir).ok();
+        assert!(loaded.snapshot.is_some(), "{:?}", loaded.diagnostics);
+        let ids: std::collections::BTreeSet<String> = no_required_gear_attack_rows(&loaded).into_iter().collect();
+        let missing: Vec<&str> = weapons
+            .iter()
+            .map(|row| row.entry.key.as_str())
+            .filter(|key| !ids.contains(&format!("combat.weapon_attack_bonus.{}", slug(key))))
+            .collect();
+        assert_eq!(missing, ["Ranged Cannon ~ Clockwork Goliath"]);
+        let ammunition: Vec<&str> = others
+            .iter()
+            .map(|row| row.entry.key.as_str())
+            .filter(|key| ids.contains(&format!("combat.weapon_attack_bonus.{}", slug(key))))
+            .collect();
+        assert_eq!(ammunition, Vec::<&str>::new());
+    }
+
+    /// A weapon the CRB table holds by no name of its own has its attack row too, on the twin the sheet
+    /// reads, with the base weapon's answers: a Dagger variant, and an other-book weapon. Neither row
+    /// is the Longsword's. Aldric: base attack +3, Strength +4.
+    #[test]
+    fn no_required_gear_a_weapon_off_the_table_has_its_own_attack_row() {
+        for (weapon, row, value) in [("Dagger (Adamantine)", "combat.weapon_attack_bonus.daggeradamantine", 7), ("Blackaxe", "combat.weapon_attack_bonus.blackaxe", 7)] {
+            let (dir, root) = enhancement_rows_aldric("nrg-off-table");
+            worn_vs_carried_hold(&root, weapon, ActiveState::SelectedInactive);
+            worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+            worn_vs_carried_set(&root, weapon, ActiveState::EquippedActive);
+            let loaded = load_saved_character_at_root(&root).unwrap();
+            std::fs::remove_dir_all(&dir).ok();
+            assert_eq!(no_required_gear_attack_rows(&loaded), [row], "{weapon}");
+            assert_eq!(no_required_gear_row(&loaded, row), Some(value), "{weapon}");
+            assert_eq!(loaded.weapon_damage.len(), 1, "{weapon}: {:?}", loaded.weapon_damage);
+        }
+    }
+
+    /// Armor the headless twin holds no number for is refused by it and read by the sheet's twin,
+    /// never computed as no armor at all. A shield the same.
+    #[test]
+    fn no_required_gear_armor_the_headless_twin_cannot_read_is_not_read_as_none() {
+        let mut input = compose_character_input(&request_for("race:human", 3));
+        input.chosen.equipment_selections.retain(|selection| selection.item_id == "power_attack");
+        input.chosen.equipment_selections.push(EquipmentSelection {
+            item_id: "Full Plate (Base)".to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        });
+        let headless = build_pilot_headless_receipt(&input);
+        assert_eq!(headless.status, HeadlessReceiptStatus::Blocked);
+        assert!(headless.computation.diagnostics.iter().any(|d| d.id == "combat.baseline_unsupported" && d.message.contains("Full Plate")), "{:?}", headless.computation.diagnostics);
+        let (snapshot, _) = resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle()).expect("the sheet's twin reads it");
+        assert!(snapshot.defense.baseline_armor_class > 13, "{}", snapshot.defense.baseline_armor_class);
+    }
+
+    /// The default character keeps what creation gives it: only the requirement went.
+    #[test]
+    fn no_required_gear_creation_still_gives_the_starting_items() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let held: Vec<(&str, ActiveState)> =
+            input.chosen.equipment_selections.iter().map(|selection| (selection.item_id.as_str(), selection.active_state)).collect();
+        assert_eq!(
+            held,
+            [
+                ("item:longsword", ActiveState::EquippedActive),
+                ("item:chain_shirt", ActiveState::EquippedActive),
+                ("item:shield", ActiveState::Absent),
+                ("power_attack", ActiveState::SelectedInactive),
+            ]
+        );
+    }
+
+    /// A `+2` Dagger in the other hand has its own row, and the Longsword's number stays its own.
+    #[test]
+    fn enhancement_rows_a_second_weapon_has_its_own_row() {
+        let (dir, root) = enhancement_rows_aldric("enh-second-weapon");
+        let before = enhancement_read(&root);
+        enhancement_buy(&root, "Dagger (Base)", ActiveState::EquippedActive, 2);
+        let after = enhancement_read(&root);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        assert_eq!(after, before);
+        let dagger = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Dagger (Base)")).unwrap();
+        assert_eq!((dagger.enhancement_attack_bonus, dagger.enhancement_damage_bonus), (Some(2), Some(2)));
+    }
+
+    /// Every weapon the Market sells a `+N` of, in hand at its highest offer, has a row holding that
+    /// bonus. The Market offers none on what has no row to hold it: no damage die to add to.
+    #[test]
+    fn enhancement_rows_every_weapon_offer_reaches_its_row() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        const NO_ROW: [&str; 6] =
+            ["Net (Base)", "Snag Net", "Wrist Launcher", "Lasso", "Poisoned Sand Tube", "Mantis Blade"];
+        let corpus = corpus_fixture_bundle();
+        let market = list_market(MarketFilter { category: MarketCategory::Weapon, name_contains: None, book: None });
+        assert_eq!(market.types_error, None);
+        for key in NO_ROW {
+            let row = market.entries.iter().find(|row| row.entry.key == key).unwrap_or_else(|| panic!("no {key} row"));
+            assert!(row.variants.is_empty(), "{key} has offers");
+        }
+        let mut checked = 0;
+        let mut missing = Vec::new();
+        for row in market.entries.iter().filter(|row| !row.variants.is_empty()) {
+            let key = row.entry.key.as_str();
+            checked += 1;
+            let top = row.variants.iter().max_by_key(|v| v.bonus).unwrap();
+            let mut input = compose_character_input(&request_for("race:human", 3));
+            input.chosen.equipment_selections.push(EquipmentSelection {
+                item_id: key.to_owned(),
+                equipped_or_active: true,
+                active_state: ActiveState::EquippedActive,
+                applied_modifiers: vec![top.modifier_key.clone()],
+            });
+            let effects = compute_pilot_with_corpus(&input, corpus).corpus_derived.equipment_effects;
+            let rows = resolve_weapon_damage_breakdown(&input, corpus, &effects, 3);
+            let bonus = rows.last().filter(|r| r.weapon_item_id == key).and_then(|r| r.weapon_enhancement.as_ref());
+            let want = i16::from(top.bonus);
+            if bonus.map(|b| (b.attack_bonus, b.damage_bonus)) != Some((want, want)) {
+                missing.push(key.to_owned());
+            }
+        }
+        println!("weapon rows with an offer: {checked}; not reaching a row: {}", missing.len());
+        assert!(checked > 0);
+        assert!(missing.is_empty(), "{}: {missing:#?}", missing.len());
+    }
+
+    /// Every armor and shield the Market sells a `+N` of, and every bonus it offers, resolves with
+    /// a number on the sheet's corpus. A row missing here would charge for a bonus that never
+    /// arrives, on an armor that adds no AC at all.
+    #[test]
+    fn enhancement_rows_every_armor_and_shield_offer_reaches_the_sheet_corpus() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let corpus = corpus_fixture_bundle();
+        let mut checked = 0;
+        let mut missing = Vec::new();
+        for category in [MarketCategory::Armor, MarketCategory::Shield] {
+            let market = list_market(MarketFilter { category, name_contains: None, book: None });
+            assert_eq!(market.types_error, None);
+            for row in market.entries.iter().filter(|row| !row.variants.is_empty()) {
+                checked += 1;
+                let selection = EquipmentSelection {
+                    item_id: row.entry.key.clone(),
+                    equipped_or_active: true,
+                    active_state: ActiveState::EquippedActive,
+                    applied_modifiers: row.variants.iter().map(|v| v.modifier_key.clone()).collect(),
+                };
+                let effects = codex::rules_core::equipment_effects::compute_equipment_effects(&[selection], corpus);
+                let found = effects.per_item.first();
+                let top = row.variants.iter().map(|v| i16::from(v.bonus)).max();
+                if found.and_then(|e| e.armor_class_enhancement) != top {
+                    missing.push(row.entry.key.clone());
+                }
+            }
+        }
+        println!("armor and shield rows with an offer: {checked}; not reaching the sheet: {}", missing.len());
+        assert!(
+            codex::rules_core::equipment_resolver::equipment_converted_resolve("item:shield", corpus).is_none(),
+            "the seeds carry an Absent `item:shield`; a record answering it would list a shield they do not hold"
+        );
+        assert!(checked > 0);
+        assert!(missing.is_empty(), "{}: {missing:#?}", missing.len());
+    }
+
     // ----- price modes: cashless / buy 100% sell 50% / character build (100% both ways) -----
 
     fn fund_and_seed(label: &str, copper: i64) -> std::path::PathBuf {
@@ -8873,6 +12904,968 @@ mod tests {
         assert_eq!(after, before - 1, "the item is removed");
         assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 500, "an unpriced item has nothing to refund");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Market buying and selling: `+N` on the existing purchase and removal commands -----
+
+    /// The Market row these tests buy, at the +1 price `enhancement_price_table` pins: 15 gp +
+    /// 300 gp masterwork + 2,000 gp.
+    const MARKET_SWORD: &str = "Longsword (Base)";
+    const PLUS_ONE_SWORD_CP: i64 = 231_500;
+
+    /// Buys carried: the seed's hands are full of its Longsword or not, this does not ask.
+    fn market_buy(root: &Path, item_id: &str, bonus: Option<u8>, mode: PriceMode) -> PurchaseEquipmentResponse {
+        purchase_equipment_offer_at_root(root, item_id, ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", mode, bonus)
+            .expect("purchase call should not error")
+    }
+
+    fn market_sell(root: &Path, item_id: &str, bonus: Option<u8>, mode: PriceMode) -> Result<CreateCharacterResponse, String> {
+        sell_equipment_copy_at_root(root, item_id, "2026-11-02T00:00:01Z", mode, bonus)
+    }
+
+    fn held_selections(root: &Path) -> Vec<EquipmentSelection> {
+        SavedCharacterStore::load(root).unwrap().character_input.chosen.equipment_selections
+    }
+
+    fn balance(root: &Path) -> u64 {
+        load_character_money_at_root(root).unwrap().total_copper
+    }
+
+    /// A bought `+1` is one new selection holding the eqmod, charged the whole offer, in one save.
+    fn assert_market_buy_ok(label: &str, mode: PriceMode, funded: i64, left: u64) {
+        let root = fund_and_seed(label, funded);
+        let before = held_selections(&root);
+
+        let response = market_buy(&root, MARKET_SWORD, Some(1), mode);
+        let PurchaseEquipmentResponse::Purchased { money, .. } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(money.total_copper, left, "{label}: the response carries the balance");
+        assert_eq!(balance(&root), left, "{label}: the saved balance");
+
+        let after = SavedCharacterStore::load(&root).unwrap();
+        let held = &after.character_input.chosen.equipment_selections;
+        assert_eq!(held.len(), before.len() + 1, "{label}: one new selection");
+        let bought = held.last().unwrap();
+        assert_eq!(bought.item_id, MARKET_SWORD);
+        assert_eq!(bought.applied_modifiers, vec!["Special Ability ~ +1 ~ Weapon".to_owned()], "{label}");
+        assert_eq!(bought.active_state, ActiveState::SelectedInactive);
+        // A plain add is known to be one save; the same start must reach the same revision.
+        let one_save = fund_and_seed(&format!("{label}-one-save"), 0);
+        add_equipment_selection_at_root(&one_save, MARKET_SWORD, ActiveState::SelectedInactive, "2026-11-02T00:00:00Z")
+            .expect("plain add");
+        assert_eq!(
+            after.revision_id,
+            SavedCharacterStore::load(&one_save).unwrap().revision_id,
+            "{label}: the item and its eqmod are one save, one revision"
+        );
+        std::fs::remove_dir_all(&one_save).ok();
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A refused buy changes nothing: not the items, not the balance, not the revision.
+    fn assert_market_buy_refused(label: &str, item_id: &str, bonus: Option<u8>, mode: PriceMode, funded: i64, id: &str) {
+        let root = fund_and_seed(label, funded);
+        let before = SavedCharacterStore::load(&root).unwrap();
+
+        let response = market_buy(&root, item_id, bonus, mode);
+        let PurchaseEquipmentResponse::Blocked { diagnostics } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(diagnostics.iter().map(|d| d.id.as_str()).collect::<Vec<_>>(), vec![id], "{label}");
+        assert!(diagnostics.iter().all(|d| d.claim_blocking), "{label}");
+
+        let after = SavedCharacterStore::load(&root).unwrap();
+        assert_eq!(after.revision_id, before.revision_id, "{label}: nothing saved");
+        assert_eq!(
+            after.character_input.chosen.equipment_selections.len(),
+            before.character_input.chosen.equipment_selections.len(),
+            "{label}"
+        );
+        assert_eq!(balance(&root), funded as u64, "{label}: no money moved");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Selling a `+1` returns the mode's share of what a `+1` costs, not of the plain sword.
+    fn assert_market_sell(label: &str, mode: PriceMode, funded: i64, left_after_buy: u64, left_after_sale: u64) {
+        let root = fund_and_seed(label, funded);
+        let before = held_selections(&root).len();
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), mode), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(balance(&root), left_after_buy, "{label}: after the buy");
+
+        let response = market_sell(&root, MARKET_SWORD, Some(1), mode).expect("the sale");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{label}: {response:?}");
+        assert_eq!(balance(&root), left_after_sale, "{label}: after the sale");
+        assert_eq!(held_selections(&root).len(), before, "{label}: the copy is gone");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn market_buy_sell_standard_buy_ok() {
+        assert_market_buy_ok("market-standard-buy", PriceMode::Standard, 300_000, 68_500);
+    }
+
+    #[test]
+    fn market_buy_sell_standard_buy_refused_one_copper_short() {
+        assert_market_buy_refused(
+            "market-standard-refused",
+            MARKET_SWORD,
+            Some(1),
+            PriceMode::Standard,
+            PLUS_ONE_SWORD_CP - 1,
+            "money.equipment_purchase.insufficient_funds",
+        );
+    }
+
+    #[test]
+    fn market_buy_sell_standard_sell_returns_half_the_plus_one_price() {
+        assert_market_sell("market-standard-sell", PriceMode::Standard, 300_000, 68_500, 68_500 + 115_750);
+    }
+
+    #[test]
+    fn market_buy_sell_character_build_buy_ok() {
+        assert_market_buy_ok("market-build-buy", PriceMode::CharacterBuild, PLUS_ONE_SWORD_CP, 0);
+    }
+
+    #[test]
+    fn market_buy_sell_character_build_buy_refused_one_copper_short() {
+        assert_market_buy_refused(
+            "market-build-refused",
+            MARKET_SWORD,
+            Some(1),
+            PriceMode::CharacterBuild,
+            PLUS_ONE_SWORD_CP - 1,
+            "money.equipment_purchase.insufficient_funds",
+        );
+    }
+
+    #[test]
+    fn market_buy_sell_character_build_sell_nets_to_zero() {
+        assert_market_sell("market-build-sell", PriceMode::CharacterBuild, 300_000, 68_500, 300_000);
+    }
+
+    #[test]
+    fn market_buy_sell_cashless_buy_ok_with_no_money() {
+        assert_market_buy_ok("market-cashless-buy", PriceMode::Cashless, 0, 0);
+    }
+
+    /// Money cannot refuse a cashless buy, so the refusal this mode has is the one that is not about
+    /// money: a bonus Market does not offer.
+    #[test]
+    fn market_buy_sell_cashless_buy_refused_when_the_bonus_is_not_on_offer() {
+        assert_market_buy_refused(
+            "market-cashless-refused",
+            MARKET_SWORD,
+            Some(6),
+            PriceMode::Cashless,
+            500,
+            "money.equipment_purchase.no_such_offer",
+        );
+    }
+
+    #[test]
+    fn market_buy_sell_cashless_sell_moves_no_money() {
+        assert_market_sell("market-cashless-sell", PriceMode::Cashless, 500, 500, 500);
+    }
+
+    /// What is charged is what `list_market` shows, for every bonus of each kind.
+    #[test]
+    fn market_buy_sell_charges_the_price_the_market_row_shows() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let rows = [
+            (MarketCategory::Weapon, MARKET_SWORD, "Weapon"),
+            (MarketCategory::Armor, "Chain Shirt (Base)", "Armor"),
+            (MarketCategory::Shield, "Heavy Wooden Shield (Base)", "Shield"),
+        ];
+        for (category, key, family) in rows {
+            let listed = list_market(MarketFilter { category, name_contains: None, book: None });
+            let row = listed.entries.iter().find(|row| row.entry.key == key).expect("on sale");
+            assert_eq!(row.variants.len(), 5, "{key}");
+            for variant in &row.variants {
+                let funded = 6_000_000;
+                let root = fund_and_seed(&format!("market-price-{family}-{}", variant.bonus), funded);
+                // Armor and a shield are worn, which the seed leaves room for; the sword is carried.
+                let state = if family == "Weapon" { ActiveState::SelectedInactive } else { ActiveState::EquippedActive };
+                let response =
+                    purchase_equipment_offer_at_root(&root, key, state, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(variant.bonus))
+                        .expect("purchase call should not error");
+                assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{key}: {response:?}");
+                let charged = funded as u64 - balance(&root);
+                assert_eq!(charged, money::gp_to_copper(variant.price_gp), "{key} +{}", variant.bonus);
+                assert_eq!(
+                    held_selections(&root).last().unwrap().applied_modifiers,
+                    vec![format!("Special Ability ~ +{} ~ {family}", variant.bonus)],
+                );
+                std::fs::remove_dir_all(&root).ok();
+            }
+        }
+    }
+
+    #[test]
+    fn market_buy_sell_a_plain_buy_is_the_base_price_with_no_eqmod() {
+        let root = fund_and_seed("market-plain", 2_000);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(balance(&root), 500, "15 gp");
+        assert!(held_selections(&root).last().unwrap().applied_modifiers.is_empty());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A bonus Market does not offer is refused in every mode, money or none: a row with no offers,
+    /// a legacy id, and a bonus of 0.
+    #[test]
+    fn market_buy_sell_refuses_a_bonus_the_row_does_not_offer() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let gear = list_market(MarketFilter { category: MarketCategory::Gear, name_contains: None, book: None });
+        let plain_row = gear
+            .entries
+            .iter()
+            .find(|row| row.variants.is_empty() && row.entry.cost_gp.is_some_and(|gp| gp > 0.0))
+            .expect("a priced Gear row with no offers");
+        for (label, item, bonus) in [
+            ("market-no-offer-gear", plain_row.entry.key.as_str(), Some(1)),
+            ("market-no-offer-legacy", "item:longsword", Some(1)),
+            ("market-no-offer-zero", MARKET_SWORD, Some(0)),
+        ] {
+            for (name, mode) in [("std", PriceMode::Standard), ("build", PriceMode::CharacterBuild), ("cash", PriceMode::Cashless)] {
+                assert_market_buy_refused(
+                    &format!("{label}-{name}"),
+                    item,
+                    bonus,
+                    mode,
+                    6_000_000,
+                    "money.equipment_purchase.no_such_offer",
+                );
+            }
+        }
+    }
+
+    /// The engine's own refusal comes before any money: a build it cannot compute does not save, so
+    /// nothing is charged and no copy holds the eqmod.
+    #[test]
+    fn market_buy_sell_a_buy_the_engine_refuses_charges_nothing() {
+        let root = fund_and_seed("market-engine-refused", 300_000);
+        // Weapon Focus gone: the sheet cannot compute, whatever the save adds.
+        let mut unsupported = SavedCharacterStore::load(&root).unwrap();
+        unsupported.character_input.chosen.selected_feats.retain(|feat| feat != "feat:weapon_focus");
+        SavedCharacterStore::save(&unsupported, &root).unwrap();
+        let before = SavedCharacterStore::load(&root).unwrap();
+        let response = purchase_equipment_offer_at_root(
+            &root, "Chain Shirt (Base)", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(1),
+        )
+        .expect("purchase call should not error");
+        let PurchaseEquipmentResponse::Blocked { diagnostics } = response else {
+            panic!("{response:?}");
+        };
+        assert!(diagnostics.iter().any(|d| d.id == "combat.baseline_unsupported"), "{diagnostics:?}");
+        assert_eq!(balance(&root), 300_000);
+        let after = SavedCharacterStore::load(&root).unwrap();
+        assert_eq!(after.revision_id, before.revision_id);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The bonus goes on the copy just bought. `apply_attach_equipment_modifier` finds the first copy
+    /// of an id, so reusing it here would turn an older plain item into the `+1` and charge for it.
+    /// The two copies differ in state so the assertion can tell them apart.
+    #[test]
+    fn market_buy_sell_attaches_to_the_new_copy_not_an_older_plain_one() {
+        let root = fund_and_seed("market-new-copy", 300_000);
+        let shirt = "Chain Shirt (Base)";
+        let buy = |bonus, state| {
+            purchase_equipment_offer_at_root(&root, shirt, state, "2026-11-02T00:00:00Z", PriceMode::Standard, bonus)
+                .expect("purchase call should not error")
+        };
+        assert!(matches!(buy(None, ActiveState::SelectedInactive), PurchaseEquipmentResponse::Purchased { .. }));
+        assert!(matches!(buy(Some(1), ActiveState::EquippedActive), PurchaseEquipmentResponse::Purchased { .. }));
+        let held = held_selections(&root);
+        let copies: Vec<&EquipmentSelection> = held.iter().filter(|s| s.item_id == shirt).collect();
+        assert_eq!(copies.len(), 2);
+        assert!(copies[0].applied_modifiers.is_empty(), "{:?}", copies[0]);
+        assert_eq!(copies[1].applied_modifiers, ["Special Ability ~ +1 ~ Armor"]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Holding a plain sword and a `+1`, a sale names which one goes and is paid for that one; `+2`,
+    /// which the character does not hold, is an error and moves nothing.
+    #[test]
+    fn market_buy_sell_sells_the_named_copy_for_its_own_price() {
+        let root = fund_and_seed("market-named-copy", 300_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        let left = 300_000 - 1_500 - 231_500;
+        assert_eq!(balance(&root), left);
+
+        let refused = market_sell(&root, MARKET_SWORD, Some(2), PriceMode::Standard);
+        assert!(refused.is_err(), "{refused:?}");
+        assert_eq!(balance(&root), left, "a refused sale moves no money");
+
+        market_sell(&root, MARKET_SWORD, Some(1), PriceMode::Standard).expect("sell the +1");
+        assert_eq!(balance(&root), left + 115_750, "half of 2,315 gp");
+        let copies: Vec<usize> = held_selections(&root)
+            .iter()
+            .filter(|s| s.item_id == MARKET_SWORD)
+            .map(|s| s.applied_modifiers.len())
+            .collect();
+        assert_eq!(copies, vec![0], "the plain one is still held");
+
+        market_sell(&root, MARKET_SWORD, Some(0), PriceMode::Standard).expect("sell the plain one");
+        assert_eq!(balance(&root), left + 115_750 + 750, "half of 15 gp");
+        assert!(held_selections(&root).iter().all(|s| s.item_id != MARKET_SWORD));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The Sell list is every copy held, whatever the bundled demo corpus resolves: the sheet's
+    /// `equipped_items` leaves out a Dagger and the `+1` on a Longsword. Each row's bonus sells it.
+    #[test]
+    fn market_held_lists_every_copy_and_each_row_sells_itself() {
+        let root = fund_and_seed("market-held", 300_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        assert!(matches!(
+            purchase_equipment_offer_at_root(&root, "Dagger (Base)", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z", PriceMode::Standard, None).unwrap(),
+            PurchaseEquipmentResponse::Purchased { .. }
+        ));
+
+        let held = list_held_equipment_at_root(&root).unwrap();
+        // The fixed loadout's Absent `item:shield` and the feat toggle are the two rows that are not copies.
+        let copies = held_selections(&root).iter().filter(|s| s.item_id != FEAT_TOGGLE_ITEM_ID && s.item_id != "item:shield").count();
+        assert_eq!(held.len(), copies, "one row per copy");
+        let of = |id: &str| held.iter().filter(|row| row.item_id == id).map(|row| (row.name.as_str(), row.bonus)).collect::<Vec<_>>();
+        assert_eq!(of(MARKET_SWORD), vec![("Longsword", 0), ("+1 Longsword", 1)]);
+        assert_eq!(of("Dagger (Base)"), vec![("Dagger", 0)], "a record the demo corpus does not hold");
+
+        let plus_one = held.iter().find(|row| row.bonus == 1).unwrap();
+        let before = balance(&root);
+        market_sell(&root, &plus_one.item_id, Some(plus_one.bonus), PriceMode::Standard).expect("the row's bonus names its copy");
+        assert_eq!(balance(&root), before + 115_750, "half of 2,315 gp, so the +1 went");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- R21: owned but not carried -----
+
+    fn left_behind_set(root: &Path, item_id: &str, copy: CopyNamed, state: ActiveState) -> CreateCharacterResponse {
+        set_held_copy_state_at_root(root, item_id, copy, state, "2026-11-05T00:00:00Z").expect("state call")
+    }
+
+    fn left_behind_rows(root: &Path, item_id: &str) -> Vec<(String, u8, ActiveStateDto)> {
+        list_held_equipment_at_root(root).unwrap().into_iter().filter(|row| row.item_id == item_id).map(|row| (row.name, row.bonus, row.active_state)).collect()
+    }
+
+    fn left_behind_load_lbs(root: &Path) -> f64 {
+        load_saved_character_at_root(root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs
+    }
+
+    const LEFT_BEHIND: CopyNamed = CopyNamed { bonus: None, from_state: Some(ActiveState::Absent) };
+    const CARRIED: CopyNamed = CopyNamed { bonus: None, from_state: Some(ActiveState::SelectedInactive) };
+    const IN_HAND: CopyNamed = CopyNamed { bonus: None, from_state: Some(ActiveState::EquippedActive) };
+
+    /// Left behind weighs nothing and gives nothing, and the sheet reads as it does stowed but for the
+    /// load. The row stays, in its own state, and picking it up gives the weight back.
+    #[test]
+    fn left_behind_adds_no_weight_and_no_bonus_and_the_item_stays_owned() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-weight");
+        let full_load = left_behind_load_lbs(&root);
+        worn_vs_carried_set(&root, "item:longsword", ActiveState::SelectedInactive);
+        worn_vs_carried_set(&root, "item:chain_shirt", ActiveState::SelectedInactive);
+        let stowed = enhancement_read(&root);
+        assert_eq!(left_behind_load_lbs(&root), full_load, "stowed still weighs");
+
+        assert_worn(&left_behind_set(&root, "item:chain_shirt", CARRIED, ActiveState::Absent));
+        assert_worn(&left_behind_set(&root, "item:longsword", CARRIED, ActiveState::Absent));
+        assert_eq!(left_behind_load_lbs(&root), full_load - 29.0, "the Chain Shirt's 25 lb and the Longsword's 4 lb");
+        assert_eq!(enhancement_read(&root), stowed, "no bonus of any kind");
+        assert_eq!(enhancement_read(&root).armor_class, 12);
+        assert_eq!(left_behind_rows(&root, "item:chain_shirt"), [("Chain Shirt".to_owned(), 0, ActiveStateDto::Absent)]);
+        assert_eq!(left_behind_rows(&root, "item:longsword"), [("Longsword".to_owned(), 0, ActiveStateDto::Absent)]);
+        let saved = held_selections(&root);
+        assert!(saved.iter().filter(|s| s.item_id == "item:longsword").all(|s| !s.equipped_or_active), "{saved:?}");
+
+        assert_worn(&left_behind_set(&root, "item:chain_shirt", LEFT_BEHIND, ActiveState::SelectedInactive));
+        assert_eq!(left_behind_load_lbs(&root), full_load - 4.0, "picked up, it weighs again");
+        assert_eq!(left_behind_rows(&root, "item:chain_shirt"), [("Chain Shirt".to_owned(), 0, ActiveStateDto::SelectedInactive)]);
+        assert_worn(&left_behind_set(&root, "item:chain_shirt", CARRIED, ActiveState::EquippedActive));
+        assert_eq!(enhancement_read(&root).armor_class, 16, "and worn, it counts");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The fixed loadout's `item:shield` is Absent and was never owned: told apart, not rewritten, so a
+    /// save made before this reads the same and no seed moves.
+    #[test]
+    fn left_behind_the_loadout_shield_was_never_owned() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-shield");
+        assert!(held_selections(&root).iter().any(|s| s.item_id == "item:shield" && s.active_state == ActiveState::Absent), "the row is still in the save");
+        let held = list_held_equipment_at_root(&root).unwrap();
+        assert!(!held.iter().any(|row| row.item_id == "item:shield"), "{held:?}");
+        assert!(!held.iter().any(|row| row.active_state == ActiveStateDto::Absent), "a seed has nothing left behind: {held:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Two plain copies: the row asked names its own. Without that, "first not already in that state"
+    /// moves a worn Dagger when the carried one is left behind, and the left-behind one when the worn
+    /// one is stowed.
+    #[test]
+    fn left_behind_each_row_moves_its_own_copy() {
+        let root = slot_conflict_character("left-behind-own-copy", &["Dagger (Base)", "Dagger (Base)"]);
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CARRIED, ActiveState::EquippedActive));
+        let states = |root: &Path| left_behind_rows(root, "Dagger (Base)").into_iter().map(|row| row.2).collect::<Vec<_>>();
+        assert_eq!(states(&root), [ActiveStateDto::EquippedActive, ActiveStateDto::SelectedInactive]);
+
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CARRIED, ActiveState::Absent));
+        assert_eq!(states(&root), [ActiveStateDto::EquippedActive, ActiveStateDto::Absent], "the carried one went");
+
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", IN_HAND, ActiveState::SelectedInactive));
+        assert_eq!(states(&root), [ActiveStateDto::SelectedInactive, ActiveStateDto::Absent], "the worn one was stowed");
+
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", LEFT_BEHIND, ActiveState::SelectedInactive));
+        assert_eq!(states(&root), [ActiveStateDto::SelectedInactive, ActiveStateDto::SelectedInactive]);
+
+        let error = set_held_copy_state_at_root(&root, "Dagger (Base)", LEFT_BEHIND, ActiveState::SelectedInactive, "2026-11-05T00:00:00Z").unwrap_err();
+        assert!(error.contains("does not carry"), "no copy is in the state the row showed: {error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The Market's row sells the copy it shows, and a row that names no state, like the sheet's Drop,
+    /// takes a copy the character has with them.
+    #[test]
+    fn left_behind_can_be_sold_and_the_sale_takes_the_copy_named() {
+        let root = fund_and_seed("left-behind-sell", 300_000);
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CopyNamed::default(), ActiveState::Absent));
+        let states = |root: &Path| left_behind_rows(root, "Dagger (Base)").into_iter().map(|row| row.2).collect::<Vec<_>>();
+        assert_eq!(states(&root), [ActiveStateDto::Absent, ActiveStateDto::SelectedInactive]);
+        let before = balance(&root);
+
+        sell_held_copy_at_root(&root, "Dagger (Base)", "2026-11-05T00:00:00Z", PriceMode::Standard, CopyNamed { bonus: Some(0), from_state: Some(ActiveState::SelectedInactive) }).unwrap();
+        assert_eq!(states(&root), [ActiveStateDto::Absent], "the carried one went");
+        assert_eq!(balance(&root), before + 100, "half of 2 gp, as any sale");
+
+        sell_held_copy_at_root(&root, "Dagger (Base)", "2026-11-05T00:00:00Z", PriceMode::Standard, LEFT_BEHIND).unwrap();
+        assert_eq!(states(&root), [], "a copy left behind can be sold");
+        assert_eq!(balance(&root), before + 200);
+
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        market_buy(&root, "Dagger (Base)", None, PriceMode::Standard);
+        assert_worn(&left_behind_set(&root, "Dagger (Base)", CopyNamed::default(), ActiveState::Absent));
+        market_sell(&root, "Dagger (Base)", None, PriceMode::Standard).unwrap();
+        assert_eq!(states(&root), [ActiveStateDto::Absent], "naming no state takes the copy in hand, not the one at the inn");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A left-behind copy keeps its `+N` through a load and through Export then Import, and adds it
+    /// to nothing until it is back in hand.
+    #[test]
+    fn left_behind_keeps_a_plus_n_through_export_and_import() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-plus");
+        assert_worn(&left_behind_set(&root, "item:longsword", IN_HAND, ActiveState::SelectedInactive));
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        let none_in_hand = enhancement_read(&root);
+        assert_worn(&left_behind_set(&root, MARKET_SWORD, CARRIED, ActiveState::Absent));
+        assert_eq!(enhancement_read(&root), none_in_hand);
+        let row = ("+1 Longsword".to_owned(), 1, ActiveStateDto::Absent);
+        assert_eq!(left_behind_rows(&root, MARKET_SWORD), std::slice::from_ref(&row));
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("left-behind-import");
+        let response = import_character_from_json(&file, &import_root, "imported", "2026-11-05T00:00:00Z", "0.0.0-test").unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        assert_eq!(left_behind_rows(&import_root, MARKET_SWORD), [row], "and off the reloaded file");
+        assert_eq!(enhancement_read(&import_root), none_in_hand);
+
+        assert_worn(&left_behind_set(&import_root, MARKET_SWORD, CopyNamed { bonus: Some(1), from_state: Some(ActiveState::Absent) }, ActiveState::SelectedInactive));
+        assert_eq!(left_behind_rows(&import_root, MARKET_SWORD), [("+1 Longsword".to_owned(), 1, ActiveStateDto::SelectedInactive)]);
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&import_root).ok();
+    }
+
+    /// Picking up is one more thing to carry, so it meets the check a purchase does: otherwise leaving
+    /// one thing behind, buying another and fetching the first walks past the most they can carry.
+    /// An override's row goes when the copy stops counting, and comes back with it.
+    #[test]
+    fn left_behind_picking_up_meets_the_load_check() {
+        let root = overrides_weak_fighter("left-behind-load");
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [Some(OverrideFlag::IgnoreEncumbrance)]);
+
+        assert_worn(&left_behind_set(&root, "Full Plate", CARRIED, ActiveState::Absent));
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [None], "left behind, it is not what the load is over");
+
+        overrides_set(&root, |flags| flags.ignore_encumbrance = false);
+        let refused = left_behind_set(&root, "Full Plate", LEFT_BEHIND, ActiveState::SelectedInactive);
+        overrides_refused(&refused, "equipment.over_capacity");
+        assert_eq!(left_behind_rows(&root, "Full Plate")[0].2, ActiveStateDto::Absent, "nothing moved");
+
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&left_behind_set(&root, "Full Plate", LEFT_BEHIND, ActiveState::SelectedInactive));
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [Some(OverrideFlag::IgnoreEncumbrance)], "fetched under the flag, it says so");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Straight from left behind onto the body meets the wear check too.
+    #[test]
+    fn left_behind_wearing_it_meets_the_slot_check() {
+        let root = slot_conflict_character("left-behind-slot", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&left_behind_set(&root, "Hat of Disguise", CARRIED, ActiveState::Absent));
+        assert_slot_refused(&left_behind_set(&root, "Hat of Disguise", LEFT_BEHIND, ActiveState::EquippedActive), "head slot is taken by Helm of Brilliance");
+        assert_eq!(left_behind_rows(&root, "Hat of Disguise")[0].2, ActiveStateDto::Absent);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The sheet's Attach Modifier names only the id: it goes on a copy in hand, not on one at the inn.
+    #[test]
+    fn left_behind_attach_takes_the_copy_in_hand() {
+        let root = fund_and_seed("left-behind-attach", 3_000_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        assert_worn(&left_behind_set(&root, MARKET_SWORD, CopyNamed::default(), ActiveState::Absent));
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        let rows = left_behind_rows(&root, MARKET_SWORD);
+        assert_eq!(rows, [("Longsword".to_owned(), 0, ActiveStateDto::Absent), ("+1 Longsword".to_owned(), 1, ActiveStateDto::SelectedInactive)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A custom item has all three states too, off `custom.json`, and the same round trip.
+    #[test]
+    fn left_behind_a_custom_item_has_the_third_state() {
+        let (dir, root) = enhancement_rows_aldric("left-behind-custom");
+        let plain = enhancement_read(&root);
+        custom_items_saved(&root, vec![custom_item("c", "Lucky Hat", Some(BodySlot::Head), vec![custom_bonus("ac", "Deflection", 2)])]);
+        custom_item_wear(&root, "c");
+        assert_eq!(enhancement_read(&root).armor_class, plain.armor_class + 2);
+
+        assert!(matches!(custom_item_set(&root, "c", ActiveState::Absent), CreateCharacterResponse::Saved { .. }));
+        let state = |root: &Path| left_behind_rows(root, "custom:c")[0].2;
+        assert_eq!(state(&root), ActiveStateDto::Absent);
+        assert_eq!(enhancement_read(&root), plain, "no bonus");
+        let record = load_character_custom_at_root(&root).unwrap().equipment.remove(0);
+        assert!(record.left_behind && !record.worn, "{record:?}");
+
+        let file = export_character_to_json(&root).unwrap();
+        assert!(file.contains("\"leftBehind\": true"), "on the wire as the frontend reads it");
+        let import_root = tempdir("left-behind-custom-import");
+        import_character_from_json(&file, &import_root, "imported", "2026-11-05T00:00:00Z", "0.0.0-test").unwrap();
+        assert_eq!(state(&import_root), ActiveStateDto::Absent, "through Export then Import");
+
+        assert!(matches!(custom_item_set(&root, "c", ActiveState::SelectedInactive), CreateCharacterResponse::Saved { .. }));
+        assert_eq!(state(&root), ActiveStateDto::SelectedInactive);
+        assert!(!load_character_custom_at_root(&root).unwrap().equipment[0].left_behind);
+
+        custom_item_wear(&root, "c");
+        assert!(!load_character_custom_at_root(&root).unwrap().equipment[0].left_behind);
+        assert_eq!(state(&root), ActiveStateDto::EquippedActive);
+
+        let mut both = custom_item("d", "Both", Some(BodySlot::Head), Vec::new());
+        both.worn = true;
+        both.left_behind = true;
+        let custom = CharacterCustomDto { equipment: vec![both], ..Default::default() };
+        let error = save_character_custom_at_root(&root, &custom, "2026-11-05T00:00:00Z").unwrap_err();
+        assert!(error.contains("worn and left behind"), "{error}");
+        std::fs::remove_dir_all(&dir).ok();
+        std::fs::remove_dir_all(&import_root).ok();
+    }
+
+    #[test]
+    fn left_behind_the_requests_name_the_state_on_the_wire() {
+        let set: SetEquipmentActiveStateRequest = serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": "i", "fromState": "Absent", "activeState": "SelectedInactive", "savedAt": "t"})).unwrap();
+        assert!(matches!(set.from_state, Some(ActiveStateDto::Absent)));
+        let sell: RemoveEquipmentSelectionRequest = serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": "i", "savedAt": "t", "fromState": "Absent"})).unwrap();
+        assert!(matches!(sell.from_state, Some(ActiveStateDto::Absent)));
+        let old: RemoveEquipmentSelectionRequest = serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": "i", "savedAt": "t"})).unwrap();
+        assert!(old.from_state.is_none());
+    }
+
+    /// A seeded legacy id still reads as an item, and a selection marked Absent is owned: it is listed
+    /// as what it is (R21).
+    #[test]
+    fn market_held_names_a_legacy_id_and_lists_an_absent_selection_as_left_behind() {
+        let root = fund_and_seed("market-held-legacy", 0);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        let selections = &mut envelope.character_input.chosen.equipment_selections;
+        selections.clear();
+        selections.push(EquipmentSelection { item_id: "item:longsword".to_owned(), equipped_or_active: true, active_state: ActiveState::EquippedActive, applied_modifiers: Vec::new() });
+        selections.push(EquipmentSelection { item_id: "Dagger".to_owned(), equipped_or_active: false, active_state: ActiveState::Absent, applied_modifiers: Vec::new() });
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+
+        let held = list_held_equipment_at_root(&root).unwrap();
+        assert_eq!(held.len(), 2, "{held:?}");
+        assert_eq!((held[0].item_id.as_str(), held[0].name.as_str(), held[0].bonus), ("item:longsword", "Longsword", 0));
+        assert_eq!((held[1].item_id.as_str(), held[1].active_state), ("Dagger", ActiveStateDto::Absent));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Bonus 0 names the plain copy even when the `+1` comes first, and no bonus keeps the old
+    /// first-copy rule, paid for what that copy really is.
+    #[test]
+    fn market_buy_sell_the_plain_copy_is_named_by_zero_and_no_bonus_takes_the_first() {
+        let root = fund_and_seed("market-zero", 300_000);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        let left = 300_000 - 231_500 - 1_500;
+        market_sell(&root, MARKET_SWORD, Some(0), PriceMode::Standard).expect("sell the plain one");
+        assert_eq!(balance(&root), left + 750, "half of 15 gp");
+
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_sell(&root, MARKET_SWORD, None, PriceMode::Standard).expect("sell the first copy");
+        assert_eq!(balance(&root), left + 750 - 1_500 + 115_750, "the first copy is the +1");
+        let copies: Vec<usize> = held_selections(&root)
+            .iter()
+            .filter(|s| s.item_id == MARKET_SWORD)
+            .map(|s| s.applied_modifiers.len())
+            .collect();
+        assert_eq!(copies, vec![0]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn market_buy_sell_requests_carry_the_bonus_on_the_wire() {
+        let buy: PurchaseEquipmentRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "activeState": "EquippedActive", "savedAt": "t",
+            "priceMode": "cashless", "bonus": 3,
+        }))
+        .unwrap();
+        assert_eq!(buy.bonus, Some(3));
+        let plain: PurchaseEquipmentRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "activeState": "EquippedActive", "savedAt": "t",
+        }))
+        .unwrap();
+        assert_eq!(plain.bonus, None, "an old caller sends no bonus");
+        let sell: RemoveEquipmentSelectionRequest =
+            serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": MARKET_SWORD, "savedAt": "t", "bonus": 0})).unwrap();
+        assert_eq!(sell.bonus, Some(0));
+        let old: RemoveEquipmentSelectionRequest =
+            serde_json::from_value(serde_json::json!({"characterId": "c", "itemId": MARKET_SWORD, "savedAt": "t"})).unwrap();
+        assert_eq!(old.bonus, None);
+    }
+
+    const PLUS_ONE_KEY: &str = "Special Ability ~ +1 ~ Weapon";
+    const PLAIN_SWORD_CP: i64 = 1_500;
+    /// `+3`: 15 gp + 300 gp masterwork + 18,000 gp.
+    const PLUS_THREE_SWORD_CP: i64 = 1_831_500;
+
+    fn market_attach(root: &Path, item_id: &str, modifier: &str, mode: PriceMode) -> AttachEquipmentModifierResponse {
+        attach_equipment_modifier_priced_at_root(root, item_id, modifier, "2026-11-02T00:00:02Z", mode)
+            .expect("attach call should not error")
+    }
+
+    fn market_sword_modifiers(root: &Path) -> Vec<String> {
+        held_selections(root)
+            .into_iter()
+            .find(|selection| selection.item_id == MARKET_SWORD)
+            .expect("the sword is held")
+            .applied_modifiers
+    }
+
+    /// A plain sword bought and then given a `+1` pays what a bought `+1` pays: the offer, less the
+    /// catalog price already paid.
+    fn assert_market_attach_charged(label: &str, mode: PriceMode) {
+        let root = fund_and_seed(label, 300_000);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(balance(&root), 300_000 - PLAIN_SWORD_CP as u64, "{label}: after the plain buy");
+
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode);
+        let AttachEquipmentModifierResponse::Attached { money, .. } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(money.total_copper, 68_500, "{label}: the response carries the balance");
+        assert_eq!(balance(&root), 68_500, "{label}: a bought +1 leaves the same 68,500 cp");
+        assert_eq!(market_sword_modifiers(&root), vec![PLUS_ONE_KEY.to_owned()], "{label}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// One copper short of the charge changes nothing: not the copy, not the balance, not the revision.
+    fn assert_market_attach_refused(label: &str, mode: PriceMode) {
+        let funded = PLUS_ONE_SWORD_CP - 1;
+        let root = fund_and_seed(label, funded);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+        let before = SavedCharacterStore::load(&root).unwrap();
+
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode);
+        let AttachEquipmentModifierResponse::Blocked { diagnostics } = response else {
+            panic!("{label}: {response:?}");
+        };
+        assert_eq!(
+            diagnostics.iter().map(|d| d.id.as_str()).collect::<Vec<_>>(),
+            vec!["money.equipment_attach_modifier.insufficient_funds"],
+            "{label}"
+        );
+        assert!(diagnostics.iter().all(|d| d.claim_blocking), "{label}");
+        assert_eq!(SavedCharacterStore::load(&root).unwrap().revision_id, before.revision_id, "{label}: nothing saved");
+        assert!(market_sword_modifiers(&root).is_empty(), "{label}");
+        assert_eq!(balance(&root), (funded - PLAIN_SWORD_CP) as u64, "{label}: no money moved");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Buy plain, attach `+1`, sell the `+1`, all in one mode: the balance E3.2's mint proof ends on.
+    fn market_attach_round_trip(label: &str, funded: i64, mode: PriceMode) -> u64 {
+        let root = fund_and_seed(label, funded);
+        let before = held_selections(&root).len();
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+        assert!(matches!(market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode), AttachEquipmentModifierResponse::Attached { .. }));
+        let sale = market_sell(&root, MARKET_SWORD, Some(1), mode).expect("the sale");
+        assert!(matches!(sale, CreateCharacterResponse::Saved { .. }), "{label}: {sale:?}");
+        assert_eq!(held_selections(&root).len(), before, "{label}: the copy is gone");
+        let left = balance(&root);
+        std::fs::remove_dir_all(&root).ok();
+        left
+    }
+
+    #[test]
+    fn market_attach_price_standard_charged() {
+        assert_market_attach_charged("attach-standard-charged", PriceMode::Standard);
+    }
+
+    #[test]
+    fn market_attach_price_character_build_charged() {
+        assert_market_attach_charged("attach-build-charged", PriceMode::CharacterBuild);
+    }
+
+    /// Cashless holds the bonus at no charge, on a character with no money at all.
+    #[test]
+    fn market_attach_price_cashless_charged_nothing() {
+        let root = fund_and_seed("attach-cashless-charged", 0);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Cashless), PurchaseEquipmentResponse::Purchased { .. }));
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Cashless);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(balance(&root), 0);
+        assert_eq!(market_sword_modifiers(&root), vec![PLUS_ONE_KEY.to_owned()]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn market_attach_price_standard_refused_one_copper_short() {
+        assert_market_attach_refused("attach-standard-refused", PriceMode::Standard);
+    }
+
+    #[test]
+    fn market_attach_price_character_build_refused_one_copper_short() {
+        assert_market_attach_refused("attach-build-refused", PriceMode::CharacterBuild);
+    }
+
+    /// Cashless cannot refuse for money; a copy the character does not hold it refuses in every mode.
+    #[test]
+    fn market_attach_price_cashless_refused_when_no_copy_is_held() {
+        let root = fund_and_seed("attach-cashless-refused", 500);
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Cashless);
+        let AttachEquipmentModifierResponse::Blocked { diagnostics } = response else {
+            panic!("{response:?}");
+        };
+        assert_eq!(diagnostics[0].id, "equipment.attach_modifier.target_not_found");
+        assert_eq!(balance(&root), 500);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The exact charge, not one copper more: the balance that just covers it is enough.
+    #[test]
+    fn market_attach_price_standard_charges_the_whole_balance_when_it_just_covers() {
+        let root = fund_and_seed("attach-exact", PLUS_ONE_SWORD_CP);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(balance(&root), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Paid in full, sold at half: never a gain.
+    #[test]
+    fn market_attach_price_standard_sold_back_loses_half() {
+        assert_eq!(market_attach_round_trip("attach-standard-sold", 300_000, PriceMode::Standard), 300_000 - 231_500 + 115_750);
+    }
+
+    #[test]
+    fn market_attach_price_character_build_sold_back_nets_zero() {
+        assert_eq!(market_attach_round_trip("attach-build-sold", 300_000, PriceMode::CharacterBuild), 300_000);
+    }
+
+    #[test]
+    fn market_attach_price_cashless_sold_back_moves_no_money() {
+        assert_eq!(market_attach_round_trip("attach-cashless-sold", 500, PriceMode::Cashless), 500);
+    }
+
+    /// E3.2's mint: 2,000 cp, buy plain, attach `+1`, sell. It read 116,250 cp at Standard. The attach
+    /// is now refused, so all that is left to sell is the plain sword.
+    #[test]
+    fn market_attach_price_the_mint_shape_never_gains() {
+        for (label, mode, after_sale) in [
+            ("attach-mint-standard", PriceMode::Standard, 500 + 750),
+            ("attach-mint-build", PriceMode::CharacterBuild, 2_000),
+        ] {
+            let root = fund_and_seed(label, 2_000);
+            assert!(matches!(market_buy(&root, MARKET_SWORD, None, mode), PurchaseEquipmentResponse::Purchased { .. }));
+            let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, mode);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Blocked { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), 500, "{label}");
+            market_sell(&root, MARKET_SWORD, None, mode).expect("the sale");
+            assert_eq!(balance(&root), after_sale, "{label}");
+            assert!(balance(&root) <= 2_000, "{label}: never gains");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// A held `+1` going to `+3` pays the difference between the offers, so the sale at CharacterBuild
+    /// still nets to zero.
+    #[test]
+    fn market_attach_price_a_held_offer_is_credited() {
+        let funded = 2_000_000;
+        let root = fund_and_seed("attach-upgrade", funded);
+        let mode = PriceMode::CharacterBuild;
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), mode), PurchaseEquipmentResponse::Purchased { .. }));
+        let response = market_attach(&root, MARKET_SWORD, "Special Ability ~ +3 ~ Weapon", mode);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(balance(&root), (funded - PLUS_THREE_SWORD_CP) as u64, "16,000 gp more, the whole of a +3 in total");
+        market_sell(&root, MARKET_SWORD, Some(3), mode).expect("sold as the +3 it is");
+        assert_eq!(balance(&root), funded as u64);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Nothing is due for a bonus at or below the one held, and nothing comes back: the copy stays
+    /// what it was, so no later sale can pay for a `+1` as anything else.
+    #[test]
+    fn market_attach_price_a_lower_or_equal_bonus_costs_nothing() {
+        for (label, bonus) in [("attach-lower", 1), ("attach-equal", 3)] {
+            let root = fund_and_seed(label, 2_000_000);
+            assert!(matches!(market_buy(&root, MARKET_SWORD, Some(3), PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+            let left = balance(&root);
+            let response = market_attach(&root, MARKET_SWORD, &format!("Special Ability ~ +{bonus} ~ Weapon"), PriceMode::Standard);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}");
+            market_sell(&root, MARKET_SWORD, Some(3), PriceMode::Standard).expect("still a +3");
+            assert_eq!(balance(&root), left + (PLUS_THREE_SWORD_CP as u64) / 2, "{label}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The attach takes the first copy of an id, so the first copy is the one credited, whatever a
+    /// later copy holds.
+    #[test]
+    fn market_attach_price_credits_the_copy_it_attaches_to() {
+        let funded = 1_000_000;
+        let root = fund_and_seed("attach-first-copy", funded);
+        assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        assert!(matches!(market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+        let left = balance(&root);
+        let response = market_attach(&root, MARKET_SWORD, PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
+        assert_eq!(left - balance(&root), (PLUS_ONE_SWORD_CP - PLAIN_SWORD_CP) as u64, "the plain copy pays, not the +1 beside it");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// No such offer attaches as it did: a legacy id, a key of another kind, a row that offers none.
+    #[test]
+    fn market_attach_price_a_row_with_no_such_offer_attaches_free() {
+        for (label, item_id, buy, modifier) in [
+            ("attach-other-kind", MARKET_SWORD, true, "Special Ability ~ +1 ~ Armor"),
+            ("attach-no-offers", "Net (Base)", true, PLUS_ONE_KEY),
+        ] {
+            let root = fund_and_seed(label, 2_000);
+            if buy {
+                assert!(matches!(market_buy(&root, item_id, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+            }
+            let left = balance(&root);
+            let response = market_attach(&root, item_id, modifier, PriceMode::Standard);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The gear every Pathfinder character starts with holds a legacy id, and a `+N` on it moves the
+    /// same numbers as one on the Market's copy, so it costs the same: `item:longsword` is the
+    /// Market's `Longsword (Base)`. Selling it back pays for what it is.
+    #[test]
+    fn market_attach_price_a_legacy_id_pays_for_its_market_row() {
+        for (label, mode, funded, left, after_sale) in [
+            ("attach-legacy-standard", PriceMode::Standard, 230_000, 0, 115_750),
+            ("attach-legacy-build", PriceMode::CharacterBuild, 230_000, 0, 231_500),
+            ("attach-legacy-cashless", PriceMode::Cashless, 500, 500, 500),
+        ] {
+            let root = fund_and_seed(label, funded);
+            assert!(matches!(market_buy(&root, MARKET_SWORD, None, PriceMode::Cashless), PurchaseEquipmentResponse::Purchased { .. }));
+            let response = market_attach(&root, "item:longsword", PLUS_ONE_KEY, mode);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}: the attach");
+            let held = list_held_equipment_at_root(&root).unwrap();
+            assert!(held.iter().any(|copy| copy.item_id == "item:longsword" && copy.bonus == 1 && copy.name == "+1 Longsword"), "{label}: {held:?}");
+            set_equipment_active_state_at_root(&root, MARKET_SWORD, ActiveState::EquippedActive, "2026-11-02T00:00:00Z").expect("the other copy goes in hand");
+            let sold = market_sell(&root, "item:longsword", Some(1), mode).expect("the sale");
+            assert!(matches!(sold, CreateCharacterResponse::Saved { .. }), "{label}: {sold:?}");
+            assert_eq!(balance(&root), after_sale, "{label}: the sale");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// One that cannot afford it is refused, and nothing is attached.
+    #[test]
+    fn market_attach_price_a_legacy_id_is_refused_what_it_cannot_afford() {
+        let root = fund_and_seed("attach-legacy-refused", 229_999);
+        let response = market_attach(&root, "item:longsword", PLUS_ONE_KEY, PriceMode::Standard);
+        assert!(matches!(response, AttachEquipmentModifierResponse::Blocked { .. }), "{response:?}");
+        assert_eq!(balance(&root), 229_999);
+        assert!(held_selections(&root).iter().all(|copy| copy.applied_modifiers.is_empty()));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A modifier with a flat price is charged as it was, except that Cashless moves no money.
+    #[test]
+    fn market_attach_price_a_flat_priced_modifier_keeps_its_price_and_cashless_skips_it() {
+        const WHIPWOOD_CP: u64 = 50_000;
+        for (label, mode, funded, left) in [
+            ("attach-flat-standard", PriceMode::Standard, 60_000, 10_000),
+            ("attach-flat-build", PriceMode::CharacterBuild, WHIPWOOD_CP as i64, 0),
+            ("attach-flat-cashless", PriceMode::Cashless, 100, 100),
+        ] {
+            let root = fund_and_seed(label, funded);
+            let response = market_attach(&root, "item:longsword", "Material ~ Whipwood", mode);
+            assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{label}: {response:?}");
+            assert_eq!(balance(&root), left, "{label}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The charge is off `list_market`, for every bonus of each kind, so it cannot part from the
+    /// price the Market row shows.
+    #[test]
+    fn market_attach_price_is_the_market_row_less_the_catalog_price() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let rows = [
+            (MarketCategory::Weapon, MARKET_SWORD),
+            (MarketCategory::Armor, "Chain Shirt (Base)"),
+            (MarketCategory::Shield, "Heavy Wooden Shield (Base)"),
+        ];
+        for (category, key) in rows {
+            let listed = list_market(MarketFilter { category, name_contains: None, book: None });
+            let row = listed.entries.iter().find(|row| row.entry.key == key).expect("on sale");
+            assert_eq!(row.variants.len(), 5, "{key}");
+            for variant in &row.variants {
+                let root = fund_and_seed(&format!("attach-price-{}", variant.bonus), 6_000_000);
+                assert!(matches!(market_buy(&root, key, None, PriceMode::Standard), PurchaseEquipmentResponse::Purchased { .. }));
+                let left = balance(&root);
+                let response = market_attach(&root, key, &variant.modifier_key, PriceMode::Standard);
+                assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{key}: {response:?}");
+                assert_eq!(
+                    left - balance(&root),
+                    money::gp_to_copper(variant.price_gp) - money::gp_to_copper(catalog_cost_gp(key).expect("priced")),
+                    "{key} +{}",
+                    variant.bonus
+                );
+                std::fs::remove_dir_all(&root).ok();
+            }
+        }
+    }
+
+    #[test]
+    fn market_attach_price_request_carries_the_mode_on_the_wire() {
+        let sent: AttachEquipmentModifierRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "modifierItemId": PLUS_ONE_KEY, "savedAt": "t", "priceMode": "cashless",
+        }))
+        .unwrap();
+        assert_eq!(sent.price_mode, PriceMode::Cashless);
+        let old: AttachEquipmentModifierRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "c", "itemId": MARKET_SWORD, "modifierItemId": PLUS_ONE_KEY, "savedAt": "t",
+        }))
+        .unwrap();
+        assert_eq!(old.price_mode, PriceMode::Standard, "absent means Standard, as a purchase's does");
     }
 
     /// An unaffordable item must be honestly rejected -- no equipment
@@ -8977,11 +13970,13 @@ mod tests {
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
         // Balance starts at 0 cp -- if this were charged at all, it would
         // be Blocked as unaffordable, proving the free-attach path for
-        // real.
+        // real. A Net has no `+N` offer; a row with one is charged it.
+        add_equipment_selection_at_root(&root, "Net (Base)", ActiveState::SelectedInactive, "2026-07-23T00:00:00Z")
+            .expect("adding the net should not error");
 
         let response = attach_equipment_modifier_at_root(
             &root,
-            "item:longsword",
+            "Net (Base)",
             "Special Ability ~ +1 ~ Weapon",
             "2026-07-23T00:00:00Z",
         )
@@ -8997,15 +13992,15 @@ mod tests {
         }
 
         let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
-        let longsword = reloaded
+        let net = reloaded
             .character_input
             .chosen
             .equipment_selections
             .iter()
-            .find(|selection| selection.item_id == "item:longsword")
-            .expect("item:longsword must still be present");
+            .find(|selection| selection.item_id == "Net (Base)")
+            .expect("the net must still be present");
         assert_eq!(
-            longsword.applied_modifiers,
+            net.applied_modifiers,
             vec!["Special Ability ~ +1 ~ Weapon".to_string()],
             "the modifier must attach to the target selection's applied_modifiers, not a new top-level entry"
         );
@@ -9167,7 +14162,7 @@ mod tests {
     }
 
     /// End-to-end proof that an attached-but-corpus-unresolvable modifier
-    /// (the desktop app's bundled demo corpus has zero equipmods records)
+    /// (the desktop app's bundled demo corpus holds only the `+N` equipmods)
     /// surfaces honestly through the real `corpusDerived` response rather
     /// than silently vanishing -- closes the loop this sub-task's
     /// `unresolved_equipment_item_ids` extension exists for.
@@ -9180,7 +14175,7 @@ mod tests {
         let response = attach_equipment_modifier_at_root(
             &root,
             "item:longsword",
-            "Special Ability ~ +1 ~ Weapon",
+            "Special Ability ~ Anarchic ~ Weapon",
             "2026-07-23T00:00:00Z",
         )
         .expect("attach call should not error");
@@ -9190,8 +14185,8 @@ mod tests {
                 assert!(
                     corpus_derived
                         .unresolved_equipment_item_ids
-                        .contains(&"Special Ability ~ +1 ~ Weapon".to_string()),
-                    "the bundled demo corpus has no equipmods records, so the attached modifier \
+                        .contains(&"Special Ability ~ Anarchic ~ Weapon".to_string()),
+                    "the bundled demo corpus has no Anarchic record, so the attached modifier \
                      must be traceable as unresolved rather than silently inert: {corpus_derived:?}"
                 );
             }
@@ -9701,7 +14696,486 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- The duplicate feat guard at the mutation boundary -----
+
+    fn add_feat_guarded(root: &Path, feat: &str, target: Option<&str>) -> Result<CreateCharacterResponse, String> {
+        add_feat_selection_enforcing_prerequisites_at_root(root, feat, target, "2026-11-01T00:00:00Z")
+    }
+
+    fn duplicate_refused(root: &Path, feat: &str, target: Option<&str>) {
+        let before = SavedCharacterStore::load(root).unwrap().character_input.chosen;
+        let error = add_feat_guarded(root, feat, target).expect_err(&format!("{feat} {target:?} is already held"));
+        assert!(error.contains("already holds"), "{feat} {target:?}: {error}");
+        let after = SavedCharacterStore::load(root).unwrap().character_input.chosen;
+        assert_eq!(after.selected_feats, before.selected_feats, "a refused add writes no feat");
+        assert_eq!(after.selected_choices, before.selected_choices, "a refused add writes no target");
+    }
+
+    fn duplicate_allowed(root: &Path, feat: &str, target: Option<&str>) {
+        let outcome = add_feat_guarded(root, feat, target).unwrap_or_else(|error| panic!("{feat} {target:?}: {error}"));
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{feat} {target:?}: {outcome:?}");
+    }
+
+    #[test]
+    fn feat_duplicate_toughness_twice_is_refused_in_every_id_shape() {
+        let root = tempdir("feat-duplicate-toughness");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Toughness", None);
+        duplicate_refused(&root, "Toughness", None);
+        duplicate_refused(&root, "feat:toughness", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The seed's Power Attack is `feat:power_attack`; the picker sends `Power Attack`.
+    #[test]
+    fn feat_duplicate_a_seeded_feat_is_held_whichever_shape_the_picker_sends() {
+        let root = tempdir("feat-duplicate-seeded");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_refused(&root, "Power Attack", None);
+        duplicate_refused(&root, "Dodge", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Every creation seeds Weapon Focus (longsword), so a dagger is the second weapon of the pair.
+    #[test]
+    fn feat_duplicate_weapon_focus_longsword_and_dagger_are_two_feats_and_neither_comes_twice() {
+        let root = tempdir("feat-duplicate-weapon-focus");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_refused(&root, "Weapon Focus", Some("longsword"));
+        duplicate_refused(&root, "Weapon Focus", Some("Longsword"));
+        duplicate_allowed(&root, "Weapon Focus", Some("Dagger"));
+        duplicate_refused(&root, "Weapon Focus", Some("dagger"));
+        duplicate_refused(&root, "feat:weapon_focus", Some(" Dagger "));
+
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        let held = loaded.selected_feats.iter().filter(|feat| codex::rules_core::feat_identity::same(feat, "Weapon Focus")).count();
+        assert_eq!(held, 2, "{:?}", loaded.selected_feats);
+        let targets = &loaded.chosen_feat_targets.iter().find(|entry| entry.feat_id == "feat:weapon_focus").expect("the feat's targets").targets;
+        assert_eq!(targets.len(), 2, "{targets:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The same pair on a chooser feat no seed holds, recorded only through its own choice set.
+    #[test]
+    fn feat_duplicate_skill_focus_targets_are_compared_within_the_feat() {
+        let root = tempdir("feat-duplicate-skill-focus");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Skill Focus", Some("Perception"));
+        duplicate_allowed(&root, "Skill Focus", Some("Stealth"));
+        duplicate_refused(&root, "Skill Focus", Some("perception"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A chooser feat with no target named: one such copy is a state the sheet shows, a second is the
+    /// same id with the same (absent) target.
+    #[test]
+    fn feat_duplicate_an_untargeted_chooser_feat_is_refused_only_against_an_untargeted_copy() {
+        let root = tempdir("feat-duplicate-untargeted");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Skill Focus", Some("Perception"));
+        duplicate_allowed(&root, "Skill Focus", None);
+        duplicate_refused(&root, "Skill Focus", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Fleet's record is `repeatable` and takes no target: every copy counts.
+    #[test]
+    fn feat_duplicate_a_repeatable_feat_with_no_target_may_be_taken_again() {
+        let root = tempdir("feat-duplicate-repeatable");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 5), &root).expect("save");
+
+        duplicate_allowed(&root, "Fleet", None);
+        duplicate_allowed(&root, "feat:fleet", None);
+        let held = saved_feats(&root);
+        assert_eq!(codex::rules_core::feat_identity::count(&held, "Fleet"), 2, "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A feat with no record has no `MULT` to read: not stackable (`decisions.md` SD-n).
+    #[test]
+    fn feat_duplicate_a_feat_with_no_record_is_not_stackable() {
+        let root = tempdir("feat-duplicate-unknown");
+        let mut envelope = level_up_test_envelope("race:human", 5);
+        envelope.character_input.chosen.selected_feats.push("Homebrew Grit".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+
+        duplicate_refused(&root, "Homebrew Grit", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The more useful answer wins: making room would not let a held feat in.
+    #[test]
+    fn feat_duplicate_is_named_before_the_budget_on_a_full_character() {
+        let root = tempdir("feat-duplicate-full");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 1), &root).expect("save");
+
+        duplicate_refused(&root, "Power Attack", None);
+        let error = add_feat_guarded(&root, "Toughness", None).expect_err("a new feat still meets the budget");
+        assert!(error.contains("pool"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// R9's shape: a save already holding a feat twice keeps both, and one removal leaves one held.
+    #[test]
+    fn feat_duplicate_a_save_already_holding_two_copies_keeps_them() {
+        let root = tempdir("feat-duplicate-legacy");
+        let mut envelope = level_up_test_envelope("race:human", 5);
+        envelope.character_input.chosen.selected_feats.extend(["Toughness".to_owned(), "feat:toughness".to_owned()]);
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let held = saved_feats(&root);
+
+        assert_eq!(load_saved_character_at_root(&root).expect("it loads").selected_feats, held);
+        duplicate_refused(&root, "Toughness", None);
+        remove_feat_selection_at_root(&root, "Toughness", None, "2026-11-01T00:00:00Z").expect("remove");
+        assert_eq!(codex::rules_core::feat_identity::count(&saved_feats(&root), "Toughness"), 1);
+        duplicate_refused(&root, "Toughness", None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn create_picks(picks: &[(&str, Option<&str>)]) -> CreateCharacterRequest {
+        let mut request = request_for("race:human", 5);
+        request.selected_feats = picks
+            .iter()
+            .map(|(id, target)| CreateFeatDto { feat_id: (*id).to_owned(), target: target.map(str::to_owned) })
+            .collect();
+        request
+    }
+
+    #[test]
+    fn feat_duplicate_create_refuses_the_same_pick_twice_and_a_seeded_target_again() {
+        for (name, picks) in [
+            ("same pick", vec![("Toughness", None), ("Toughness", None)]),
+            ("both shapes", vec![("Toughness", None), ("feat:toughness", None)]),
+            ("seeded target", vec![("Weapon Focus", Some("longsword"))]),
+            ("same target", vec![("Skill Focus", Some("Stealth")), ("Skill Focus", Some("Stealth"))]),
+        ] {
+            let root = tempdir("feat-duplicate-create");
+            let response = create_character_at_root(&root, &create_picks(&picks), "test-version".to_owned()).expect("create");
+            let CreateCharacterResponse::Blocked { diagnostics } = response else { panic!("{name}: {response:?}") };
+            assert_eq!(diagnostics[0].id, "create.feat_duplicate", "{name}: {diagnostics:?}");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    #[test]
+    fn feat_duplicate_create_allows_what_may_be_taken_again() {
+        let root = tempdir("feat-duplicate-create-allowed");
+        let request = create_picks(&[("Weapon Focus", Some("Dagger")), ("Skill Focus", Some("Stealth")), ("Skill Focus", Some("Perception")), ("Fleet", None)]);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A pick naming a seeded default takes the default's place, so the player holds it once and the
+    /// picks that follow cannot displace what the player chose. The seed is invisible on Create, so
+    /// refusing here would refuse a choice the screen offers.
+    #[test]
+    fn feat_duplicate_create_a_pick_of_a_seeded_default_replaces_it() {
+        let root = tempdir("feat-duplicate-create-seeded");
+        let response = create_character_at_root(&root, &create_picks(&[("Power Attack", None), ("Dodge", None)]), "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        for feat in ["Power Attack", "Dodge"] {
+            assert_eq!(codex::rules_core::feat_identity::count(&loaded.selected_feats, feat), 1, "{feat}: {:?}", loaded.selected_feats);
+            assert!(loaded.selected_feats.iter().any(|held| held == feat), "the player's own pick is what stays: {:?}", loaded.selected_feats);
+        }
+        std::fs::remove_dir_all(&root).ok();
+
+        // Human Fighter 1 has 3 slots and must keep Weapon Focus: Power Attack plus one more pick fit
+        // only by displacing Dodge, never the Power Attack the player asked for.
+        let root = tempdir("feat-duplicate-create-seeded-full");
+        let mut request = request_for("race:human", 1);
+        request.selected_feats = ["Power Attack", "Cleave"].iter().map(|id| CreateFeatDto { feat_id: (*id).to_owned(), target: None }).collect();
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let held = saved_feats(&root);
+        assert_eq!(codex::rules_core::feat_identity::count(&held, "Power Attack"), 1, "{held:?}");
+        assert_eq!(codex::rules_core::feat_identity::count(&held, "Dodge"), 0, "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A draft is still being edited: its listings compute whatever it holds, and only the save refuses.
+    #[test]
+    fn feat_duplicate_a_draft_with_a_duplicate_pick_still_lists_feats() {
+        let request = create_picks(&[("Toughness", None), ("Toughness", None)]);
+        list_feats_for_draft_impl(&request, &crate::feat_catalog::FeatCatalogFilter::default()).expect("the draft still computes");
+    }
+
+    /// Where the flag comes from, over the whole catalog the picker offers. A key with no record is
+    /// not stackable by rule (SD-n), so a repeatable feat lost to a spelling difference would be
+    /// refused its second copy: every catalog key is looked up, and the misses are listed.
+    #[test]
+    fn feat_duplicate_every_chooser_feat_is_repeatable_and_catalog_keys_reach_their_records() {
+        let package = sheet_rule_package().as_ref().expect("package");
+        for contract in feat_effects::CHOOSER_FEAT_CONTRACTS {
+            assert!(feat_is_repeatable(package, contract.feat_key), "{} takes a target but is not repeatable", contract.feat_key);
+        }
+        assert!(!feat_is_repeatable(package, "Toughness"));
+        assert!(feat_is_repeatable(package, "feat:weapon_focus:weapon:longsword"));
+
+        let (mut found, mut repeatable, mut missing) = (0, 0, Vec::new());
+        for table in codex::rules_core::rules_catalog::feats_all::all_feat_tables() {
+            for entry in table.entries {
+                let slug = codex::rules_core::sheet_rule::id_slug(entry.key);
+                if package.find_all(FEAT_POOL, &slug).is_empty() {
+                    missing.push(entry.key);
+                } else {
+                    found += 1;
+                    repeatable += usize::from(feat_is_repeatable(package, entry.key));
+                }
+            }
+        }
+        println!("catalog feats with a record: {found}, repeatable {repeatable}; with none: {} {missing:?}", missing.len());
+        assert!(found > 600, "the lookup must reach the catalog, reached {found}");
+    }
+
     // ----- SD-27: feat prerequisite enforcement -----
+
+    // ----- The feat budget at the mutation boundary -----
+
+    fn budget_row(loaded: &LoadSavedCharacterResponse, id: &str) -> Option<i16> {
+        loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value)
+    }
+
+    fn pool_numbers(loaded: &LoadSavedCharacterResponse, pool: &str) -> (Option<i16>, Option<i16>, Option<i16>) {
+        (
+            budget_row(loaded, &format!("feats.budget.{pool}.granted")),
+            budget_row(loaded, &format!("feats.budget.{pool}.spent")),
+            budget_row(loaded, &format!("feats.budget.{pool}.remaining")),
+        )
+    }
+
+    fn saved_feats(root: &Path) -> Vec<String> {
+        SavedCharacterStore::load(root).unwrap().character_input.chosen.selected_feats
+    }
+
+    #[test]
+    fn feat_budget_refuses_a_feat_past_the_budget_and_names_the_pool() {
+        // Human Fighter 1: level 1 + racial 1 + Fighter 1, all spent by the three seeded feats.
+        let root = tempdir("feat-budget-refused");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 1), &root).expect("save");
+        let before = saved_feats(&root);
+
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, "2026-11-01T00:00:00Z")
+            .expect_err("one feat past the budget is refused");
+
+        assert!(error.contains("pool"), "{error}");
+        assert!(error.contains("level pool has 0 of 1 left"), "{error}");
+        assert_eq!(saved_feats(&root), before, "a refused add writes nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// ACG p.56: level 2 + one combat bonus feat at 4th. E1.MC's character, refused before this.
+    #[test]
+    fn feat_budget_an_elf_swashbuckler_4_takes_its_bonus_feat_and_a_third_noncombat_feat_is_refused() {
+        let root = tempdir("feat-budget-swash");
+        let mut envelope = level_up_test_envelope("race:elf", 1);
+        envelope.character_input = compose_character_input(&request_for_class("race:elf", "class:swashbuckler", 4));
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let row = |root: &std::path::Path, id: &str| {
+            load_saved_character_at_root(root).expect("load").explanations.iter().find(|r| r.id == id).map(|r| r.value)
+        };
+        assert_eq!(row(&root, "feats.budget.swashbuckler_bonus_feats.granted"), Some(1));
+
+        for feat in ["Toughness", "Improved Initiative"] {
+            add_feat_selection_enforcing_prerequisites_at_root(&root, feat, None, "2026-11-01T00:00:00Z").unwrap_or_else(|e| panic!("{feat}: {e}"));
+        }
+        assert_eq!(row(&root, "feats.budget.swashbuckler_bonus_feats.remaining"), Some(0));
+        assert_eq!(row(&root, "feats.budget.level.remaining"), Some(0));
+
+        let before = saved_feats(&root);
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Alertness", None, "2026-11-01T00:00:00Z")
+            .expect_err("a third non-combat feat has no pool");
+        assert!(error.contains("level pool has 0 of 2 left"), "{error}");
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Blind-Fight", None, "2026-11-01T00:00:00Z")
+            .expect_err("a combat feat past both pools has none either");
+        assert!(error.contains("swashbuckler bonus feats pool has 0 of 1 left"), "{error}");
+        assert_eq!(saved_feats(&root), before, "a refused add writes nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn feat_budget_rows_read_the_book_for_the_classes_e1_mc_refuted() {
+        let granted = |class: &str, level: u8, pool: &str| {
+            let input = compose_character_input(&request_for_class("race:elf", class, level));
+            let base = compute_pilot_base_chassis(&input);
+            feat_budget_for(&input, &base).expect("budget").pool(pool).map(|p| p.granted)
+        };
+        assert_eq!(granted("class:swashbuckler", 3, "swashbuckler_bonus_feats"), None);
+        assert_eq!(granted("class:swashbuckler", 20, "swashbuckler_bonus_feats"), Some(5));
+        assert_eq!(granted("class:gunslinger", 4, "gunslinger_bonus_feats"), Some(1));
+        assert_eq!(granted("class:gunslinger", 20, "gunslinger_bonus_feats"), Some(5));
+        assert_eq!(granted("class:hunter", 3, "hunter_teamwork_feats"), Some(1));
+        assert_eq!(granted("class:hunter", 18, "hunter_teamwork_feats"), Some(6));
+    }
+
+    #[test]
+    fn feat_budget_admits_a_feat_while_a_pool_has_room_and_after_a_level_grants_one() {
+        // Human Fighter 3 has two to spare; the third add is refused.
+        let root = tempdir("feat-budget-room");
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 3), &root).expect("save");
+        for feat in ["Toughness", "Alertness"] {
+            let outcome = add_feat_selection_enforcing_prerequisites_at_root(&root, feat, None, "2026-11-01T00:00:00Z").expect(feat);
+            assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        }
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Endurance", None, "2026-11-01T00:00:00Z")
+            .expect_err("the budget is spent");
+        assert!(error.contains("pool"), "{error}");
+
+        // Level 4 is an even level: one more Fighter bonus feat. Weapon Focus moves into it, which
+        // frees an open slot, so a non-combat feat fits; the next add does not.
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        crate::pf1_adapter::apply_level_up(&mut envelope.character_input, FIGHTER_CLASS_ID);
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let outcome = add_feat_selection_enforcing_prerequisites_at_root(&root, "Endurance", None, "2026-11-01T00:00:00Z").expect("Endurance");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Cleave", None, "2026-11-01T00:00:00Z")
+            .expect_err("the budget is spent again");
+        assert!(error.contains("pool"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// R9: an over-budget save keeps every feat, loads, reads over budget on the rows, and refuses
+    /// adds until a removal brings it back.
+    #[test]
+    fn feat_budget_over_budget_save_keeps_every_feat_and_blocks_adds_until_a_removal() {
+        let root = tempdir("feat-budget-legacy");
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        for feat in ["Toughness", "Alertness"] {
+            envelope.character_input.chosen.selected_feats.push(feat.to_owned());
+        }
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        let held = saved_feats(&root);
+
+        let loaded = load_saved_character_at_root(&root).expect("an over-budget save still loads");
+        assert_eq!(loaded.selected_feats, held, "nothing is deleted");
+        let shortfall: i16 = loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining") && r.value < 0).map(|r| -r.value).sum();
+        assert_eq!(shortfall, 2, "{:?}", loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.")).collect::<Vec<_>>());
+
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Cleave", None, "2026-11-01T00:00:00Z")
+            .expect_err("an over-budget save takes no new feat");
+        assert!(error.contains("over its feat budget by 2") && error.contains("pool"), "{error}");
+        assert_eq!(saved_feats(&root), held);
+
+        remove_feat_selection_at_root(&root, "Toughness", None, "2026-11-01T00:00:00Z").expect("remove");
+        remove_feat_selection_at_root(&root, "Alertness", None, "2026-11-01T00:00:00Z").expect("remove");
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Cleave", None, "2026-11-01T00:00:00Z")
+            .expect_err("back to exactly full");
+        assert!(!error.contains("over its feat budget"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn feat_budget_an_alternate_racial_trait_that_replaces_the_bonus_feat_takes_the_pool_away() {
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        let root = tempdir("feat-budget-alternate");
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        assert_eq!(pool_numbers(&load_saved_character_at_root(&root).unwrap(), "racial").0, Some(1));
+
+        envelope.character_input.chosen.selected_choices.extend(
+            resolve_alternate_trait_choices("race:human", &["Human ~ Dual Talent".to_owned()]).expect("a real alternate trait"),
+        );
+        SavedCharacterStore::save(&envelope, &root).expect("save");
+        assert_eq!(pool_numbers(&load_saved_character_at_root(&root).unwrap(), "racial").0, None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A character made on Create holds the player's picks in place of the seeded defaults, so a new
+    /// character is never over budget on the sheet by the feats its own form allowed.
+    #[test]
+    fn feat_budget_create_form_picks_take_the_place_of_the_seeded_defaults() {
+        let picks = |ids: &[&str]| ids.iter().map(|id| CreateFeatDto { feat_id: (*id).to_owned(), target: None }).collect::<Vec<_>>();
+        let root = tempdir("feat-budget-create");
+        let mut request = request_for_class("race:human", FIGHTER_CLASS_ID, 1);
+        request.selected_feats = picks(&["Toughness", "Alertness"]);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        assert!(loaded.selected_feats.iter().any(|f| f == "Toughness") && loaded.selected_feats.iter().any(|f| f == "Alertness"), "{:?}", loaded.selected_feats);
+        assert_eq!(loaded.selected_feats.len(), 3, "the Fighter's seeded Weapon Focus stays in its own pool: {:?}", loaded.selected_feats);
+        assert_eq!(
+            loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining")).map(|r| r.value).sum::<i16>(),
+            0
+        );
+        assert!(loaded.snapshot.is_some(), "the character still computes: {:?}", loaded.diagnostics);
+        std::fs::remove_dir_all(&root).ok();
+
+        // Every class keeps computing with the picks a level allows (Human Monk, whose Dodge the chassis reads).
+        for (race, class) in [("race:human", "class:monk"), ("race:elf", "class:wizard"), ("race:human", "class:wizard"), ("race:dwarf", "class:rogue")] {
+            let root = tempdir("feat-budget-create-class");
+            let mut request = request_for_class(race, class, 1);
+            request.selected_feats = if race == "race:human" { picks(&["Toughness", "Alertness"]) } else { picks(&["Toughness"]) };
+            let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+            assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{race} {class}: {response:?}");
+            let loaded = load_saved_character_at_root(&root).expect("load");
+            let shortfall = loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining") && r.value < 0).count();
+            assert_eq!(shortfall, 0, "{race} {class}: {:?}", loaded.selected_feats);
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    #[test]
+    fn feat_budget_create_refuses_more_picks_than_the_character_has() {
+        let root = tempdir("feat-budget-create-over");
+        let mut request = request_for_class("race:elf", "class:rogue", 1);
+        request.selected_feats = ["Toughness", "Alertness"].iter().map(|id| CreateFeatDto { feat_id: (*id).to_owned(), target: None }).collect();
+        let response = create_character_at_root(&root, &request, "test-version".to_owned()).expect("create");
+        let CreateCharacterResponse::Blocked { diagnostics } = response else { panic!("two picks on one slot must refuse: {response:?}") };
+        assert_eq!(diagnostics[0].id, "create.feat_budget");
+        assert!(diagnostics[0].message.contains("pool"), "{:?}", diagnostics[0]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// With no picks an Elf Wizard 1 holds the seeded Power Attack in its one slot and the combat
+    /// baseline's Weapon Focus for free: not over budget at birth.
+    #[test]
+    fn feat_budget_a_new_character_with_no_picks_is_not_over_budget() {
+        for (race, class) in [("race:elf", "class:wizard"), ("race:human", "class:wizard"), ("race:dwarf", "class:rogue"), ("race:human", "class:monk"), ("race:elf", "class:monk")] {
+            let root = tempdir("feat-budget-new");
+            let response = create_character_at_root(&root, &request_for_class(race, class, 1), "test-version".to_owned()).expect("create");
+            assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{race} {class}: {response:?}");
+            let loaded = load_saved_character_at_root(&root).expect("load");
+            let over: Vec<_> = loaded.explanations.iter().filter(|r| r.id.starts_with("feats.budget.") && r.id.ends_with(".remaining") && r.value < 0).collect();
+            assert!(over.is_empty(), "{race} {class}: {over:?} {:?}", loaded.selected_feats);
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// The whole census at 1st level, with what creation seeds and nothing picked: no class starts
+    /// over budget. Covers the seeds alone; picks are covered by the tests above for five shapes.
+    #[test]
+    fn feat_budget_no_census_class_is_over_budget_at_birth() {
+        let mut checked = 0;
+        for class_id in codex::rules_core::class_census::census().keys() {
+            for race in ["race:human", "race:elf"] {
+                let input = compose_character_input(&request_for_class(race, class_id, 1));
+                let base = compute_pilot_base_chassis(&input);
+                let budget = feat_budget_for(&input, &base).expect("budget");
+                assert_eq!(budget.over_by(), 0, "{race} {class_id}: {:?} {:?}", input.chosen.selected_feats, budget.pools());
+                checked += 1;
+            }
+        }
+        assert!(checked > 200, "the sweep ran over the census: {checked}");
+    }
+
+    #[test]
+    fn feat_budget_rows_reach_the_create_screen_for_a_draft() {
+        let preview = draft_sheet_preview_impl(&request_for_class("race:human", FIGHTER_CLASS_ID, 3)).expect("preview");
+        let granted = |pool: &str| preview.feat_budget.iter().find(|r| r.id == format!("feats.budget.{pool}.granted")).map(|r| r.value);
+        assert_eq!(granted("level"), Some(2));
+        assert_eq!(granted("racial"), Some(1));
+        assert_eq!(granted("fighter_bonus_feat"), Some(2));
+    }
+
+    #[test]
+    fn feat_budget_level_list_is_the_engines_cadence_up_to_the_cap() {
+        assert_eq!(list_feat_levels(), vec![1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
+    }
 
     /// The operator's exact reported defect, at the mutation boundary:
     /// **a Fighter 1 was allowed to take Improved Two-Weapon Fighting.**
@@ -9710,7 +15184,9 @@ mod tests {
     #[test]
     fn a_fighter_1_is_refused_improved_two_weapon_fighting_with_the_reasons() {
         let root = tempdir("add-feat-prereq-refused");
-        let envelope = level_up_test_envelope("race:human", 1);
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        // A slot left open, so the refusal under test is the prerequisite's, not the budget's.
+        envelope.character_input.chosen.selected_feats.retain(|feat| feat != "feat:dodge");
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
         let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
 
@@ -9776,7 +15252,7 @@ mod tests {
     #[test]
     fn a_feat_with_no_prerequisites_is_still_added_through_the_guard() {
         let root = tempdir("add-feat-prereq-free");
-        let envelope = level_up_test_envelope("race:human", 1);
+        let envelope = level_up_test_envelope("race:human", 3);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
         add_feat_selection_enforcing_prerequisites_at_root(
@@ -10414,13 +15890,46 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    /// A rank in Climb, Intimidate or Swim is the character's own (E7.3): off rank 1 saves, the sheet
+    /// reads it, and a skill left out reads untrained instead of refusing the build.
+    #[test]
+    fn set_skill_allocations_at_root_persists_a_real_rank_and_the_sheet_reads_it() {
+        let root = tempdir("set-skill-allocations-real-rank");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        let read = |root: &std::path::Path| {
+            let skills = load_saved_character_at_root(root).expect("loads").snapshot.expect("computes").selected_skill_modifiers;
+            (skills.climb, skills.intimidate, skills.swim)
+        };
+        let (climb, intimidate, swim) = read(&root);
+
+        let response = set_skill_allocations_at_root(
+            &root,
+            vec![
+                SkillAllocation { skill_id: "skill:climb".to_owned(), ranks: 13 },
+                SkillAllocation { skill_id: "skill:intimidate".to_owned(), ranks: 1 },
+            ],
+            "2026-07-21T00:00:00Z",
+        )
+        .expect("set skill allocations call should not error");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(reloaded.character_input.chosen.skill_allocations.len(), 2);
+        // Climb rises by the 12 ranks; Swim loses its rank and its +3 class-skill bonus.
+        assert_eq!(read(&root), (climb + 12, intimidate, swim - 4));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// Mirrors `level_up_character_at_root`'s own "never persist an unproven
-    /// build" proof: an out-of-posture skill allocation must leave the
-    /// on-disk envelope exactly as it was, not silently apply.
+    /// build" proof: a mutation of a build the engine refuses for another reason
+    /// must leave the on-disk envelope exactly as it was, not silently apply.
     #[test]
     fn set_skill_allocations_at_root_does_not_persist_when_resulting_build_is_blocked() {
         let root = tempdir("set-skill-allocations-blocked");
-        let envelope = level_up_test_envelope("race:human", 1);
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        envelope.character_input.chosen.class_levels[0].class_id = "class:no_such_class".to_owned();
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
         let response = set_skill_allocations_at_root(
@@ -10433,7 +15942,7 @@ mod tests {
         match response {
             CreateCharacterResponse::Blocked { .. } => {}
             CreateCharacterResponse::Saved { .. } => {
-                panic!("rank 2 Climb alone is outside the supported posture and must not reach Computed")
+                panic!("a class the engine holds no record of must not reach Computed")
             }
         }
 
@@ -10880,6 +16389,1351 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    const OVERRIDES_AT: &str = "2026-11-04T00:00:00Z";
+
+    fn overrides_set(root: &Path, flip: impl FnOnce(&mut crate::character_custom::Overrides)) {
+        let mut custom = load_character_custom_at_root(root).unwrap();
+        flip(&mut custom.overrides);
+        save_character_custom_at_root(root, &custom, OVERRIDES_AT).expect("saving the flag");
+    }
+
+    /// Human Fighter `level`: Str 16 and the seeded Longsword and Chain Shirt.
+    fn overrides_fighter(label: &str, level: u8) -> PathBuf {
+        let root = tempdir(label);
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", level), &root).expect("save");
+        root
+    }
+
+    /// Elowen, Wizard 5, `carried` in the pack and nothing on the body but the Longsword the combat
+    /// baseline requires, which leaves her off hand free.
+    fn overrides_wizard(label: &str, carried: &str) -> (PathBuf, PathBuf) {
+        let (dir, root) = ledger_migration_seed(label, SECOND_SEED_CHARACTER_ID);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        for selection in &mut envelope.character_input.chosen.equipment_selections {
+            if selection.item_id != "item:longsword" {
+                selection.active_state = ActiveState::SelectedInactive;
+                selection.equipped_or_active = false;
+            }
+        }
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        let response = add_equipment_selection_at_root(&root, carried, ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        (dir, root)
+    }
+
+    #[track_caller]
+    fn overrides_refused(response: &CreateCharacterResponse, id: &str) {
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("expected the refusal {id}, got {response:?}");
+        };
+        assert_eq!(diagnostics.iter().map(|d| d.id.as_str()).collect::<Vec<_>>(), vec![id], "{diagnostics:?}");
+        assert!(diagnostics[0].claim_blocking, "the sheet shows only claim-blocking diagnostics");
+    }
+
+    fn overrides_prereq_add(root: &Path) -> Result<CreateCharacterResponse, String> {
+        add_feat_selection_enforcing_prerequisites_at_root(root, "Improved Two-Weapon Fighting", None, OVERRIDES_AT)
+    }
+
+    #[test]
+    fn overrides_feats_without_prerequisites_off_refuses() {
+        let root = overrides_fighter("overrides-prereq-off", 3);
+        let error = overrides_prereq_add(&root).expect_err("an unmet prerequisite refuses");
+        assert!(error.contains("cannot be taken by this character"), "{error}");
+        assert!(!saved_feats(&root).contains(&"Improved Two-Weapon Fighting".to_owned()));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_feats_without_prerequisites_on_admits() {
+        let root = overrides_fighter("overrides-prereq-on", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&overrides_prereq_add(&root).expect("admitted"));
+        assert!(saved_feats(&root).contains(&"Improved Two-Weapon Fighting".to_owned()));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_weapons_without_proficiency_off_refuses() {
+        let (dir, root) = overrides_wizard("overrides-weapon-off", "Rapier");
+        overrides_refused(&slot_conflict_wear(&root, "Rapier"), "equipment.not_proficient");
+        assert_eq!(slot_conflict_worn_count(&root, "Rapier"), 0);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_weapons_without_proficiency_on_admits() {
+        let (dir, root) = overrides_wizard("overrides-weapon-on", "Rapier");
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Rapier"));
+        assert_eq!(slot_conflict_worn_count(&root, "Rapier"), 1);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_spells_outside_class_list_off_refuses() {
+        let (dir, root) = ledger_migration_seed("overrides-spell-off", SECOND_SEED_CHARACTER_ID);
+        let response = add_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "spell.outside_class_list");
+        let spells = SavedCharacterStore::load(&root).unwrap().character_input.chosen.spells_selected;
+        assert!(!spells.iter().any(|spell| spell.spell_id == "Cure Light Wounds"), "{spells:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_spells_outside_class_list_on_admits() {
+        let (dir, root) = ledger_migration_seed("overrides-spell-on", SECOND_SEED_CHARACTER_ID);
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        let response = add_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap();
+        assert_worn(&response);
+        let spells = SavedCharacterStore::load(&root).unwrap().character_input.chosen.spells_selected;
+        assert!(spells.iter().any(|spell| spell.spell_id == "Cure Light Wounds"), "{spells:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_armor_without_proficiency_off_refuses() {
+        let (dir, root) = overrides_wizard("overrides-armor-off", "Chain Shirt");
+        overrides_refused(&slot_conflict_wear(&root, "Chain Shirt"), "equipment.not_proficient");
+        assert_eq!(slot_conflict_worn_count(&root, "Chain Shirt"), 0);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_armor_without_proficiency_on_admits() {
+        let (dir, root) = overrides_wizard("overrides-armor-on", "Chain Shirt");
+        overrides_set(&root, |flags| flags.armor_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Chain Shirt"));
+        assert_eq!(slot_conflict_worn_count(&root, "Chain Shirt"), 1);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_slot_limits_off_refuses() {
+        let root = slot_conflict_character("overrides-slot-off", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Hat of Disguise"), "head slot is taken by Helm of Brilliance");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_slot_limits_on_admits() {
+        let root = slot_conflict_character("overrides-slot-on", &["Helm of Brilliance", "Hat of Disguise"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_feat_budget_off_refuses() {
+        let root = overrides_fighter("overrides-budget-off", 1);
+        let error = add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT).expect_err("the budget is spent");
+        assert!(error.contains("pool"), "{error}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_feat_budget_on_admits() {
+        let root = overrides_fighter("overrides-budget-on", 1);
+        overrides_set(&root, |flags| flags.ignore_feat_budget = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT).expect("admitted"));
+        assert!(saved_feats(&root).contains(&"Toughness".to_owned()));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn overrides_chaotic_fighter(label: &str) -> PathBuf {
+        let root = overrides_fighter(label, 1);
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Chaotic Evil".to_owned(), ..Default::default() }).expect("bio");
+        root
+    }
+
+    #[test]
+    fn overrides_ignore_alignment_restrictions_off_refuses() {
+        let root = overrides_chaotic_fighter("overrides-alignment-off");
+        let response = crate::pf1_adapter::level_up_character_at_root(&root, "class:paladin", Vec::new(), None, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "class.alignment");
+        let classes = SavedCharacterStore::load(&root).unwrap().character_input.chosen.class_levels;
+        assert_eq!(classes.len(), 1, "{classes:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_alignment_restrictions_on_admits() {
+        let root = overrides_chaotic_fighter("overrides-alignment-on");
+        overrides_set(&root, |flags| flags.ignore_alignment_restrictions = true);
+        assert_worn(&crate::pf1_adapter::level_up_character_at_root(&root, "class:paladin", Vec::new(), None, OVERRIDES_AT).unwrap());
+        let classes = SavedCharacterStore::load(&root).unwrap().character_input.chosen.class_levels;
+        assert!(classes.iter().any(|class| class.class_id == "class:paladin"), "{classes:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Str 3 holds at most 30 lb; the seeded Longsword and Chain Shirt are 29.
+    fn overrides_weak_fighter(label: &str) -> PathBuf {
+        let root = overrides_fighter(label, 1);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.ability_scores.strength = 3;
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        root
+    }
+
+    #[test]
+    fn overrides_ignore_encumbrance_off_refuses() {
+        let root = overrides_weak_fighter("overrides-load-off");
+        let response = add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "equipment.over_capacity");
+        let held = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections;
+        assert!(!held.iter().any(|selection| selection.item_id == "Full Plate"), "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn overrides_ignore_encumbrance_on_admits() {
+        let root = overrides_weak_fighter("overrides-load-on");
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        let held = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections;
+        assert!(held.iter().any(|selection| selection.item_id == "Full Plate"), "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_flags_are_saved_on_the_character_and_a_file_from_before_them_reads_all_off() {
+        let root = overrides_fighter("override-saved", 1);
+        std::fs::write(root.join("custom.json"), r#"{"grants":[]}"#).unwrap();
+        assert_eq!(load_character_custom_at_root(&root).unwrap().overrides, Default::default());
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        let saved = std::fs::read_to_string(root.join("custom.json")).unwrap();
+        assert!(saved.contains(r#""ignoreEncumbrance": true"#), "{saved}");
+        assert!(load_character_custom_at_root(&root).unwrap().overrides.ignore_encumbrance);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- What an override let in says so (`decisions.md §10`) -----
+
+    fn admitted_tag_rows(root: &Path) -> Vec<(AdmittedKind, String, OverrideFlag)> {
+        load_saved_character_at_root(root)
+            .expect("the sheet loads")
+            .admitted_under_override
+            .into_iter()
+            .map(|row| (row.kind, row.id, row.override_flag))
+            .collect()
+    }
+
+    fn admitted_tag_on_copy(root: &Path, item_id: &str) -> Vec<Option<OverrideFlag>> {
+        list_held_equipment_at_root(root).unwrap().into_iter().filter(|copy| copy.item_id == item_id).map(|copy| copy.override_flag).collect()
+    }
+
+    #[test]
+    fn admitted_tag_a_feat_past_its_prerequisites_says_so_and_a_feat_that_qualifies_does_not() {
+        let root = overrides_fighter("admitted-tag-prereq", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Toughness", None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [], "the flag was on, and this feat did not need it");
+        assert_worn(&overrides_prereq_add(&root).unwrap());
+        let held = saved_feats(&root).into_iter().find(|feat| feat.contains("Improved Two-Weapon")).unwrap();
+        assert_eq!(admitted_tag_rows(&root), [(AdmittedKind::Feat, held, OverrideFlag::FeatsWithoutPrerequisites)]);
+
+        let wire = serde_json::to_value(load_saved_character_at_root(&root).unwrap()).unwrap();
+        assert_eq!(wire["admittedUnderOverride"][0]["override"], "featsWithoutPrerequisites", "{wire}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_character_that_used_no_override_sends_no_field() {
+        let root = overrides_fighter("admitted-tag-none", 3);
+        let wire = serde_json::to_value(load_saved_character_at_root(&root).unwrap()).unwrap();
+        assert!(wire.get("admittedUnderOverride").is_none(), "the seeds' renders must not move");
+        let held = serde_json::to_value(list_held_equipment_at_root(&root).unwrap()).unwrap();
+        assert!(held.as_array().unwrap().iter().all(|copy| copy.get("override").is_none()), "{held}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_feat_two_rules_refused_has_both_and_goes_when_the_feat_does() {
+        let root = overrides_fighter("admitted-tag-two", 1);
+        overrides_set(&root, |flags| {
+            flags.feats_without_prerequisites = true;
+            flags.ignore_feat_budget = true;
+        });
+        assert_worn(&overrides_prereq_add(&root).unwrap());
+        let held = saved_feats(&root).into_iter().find(|feat| feat.contains("Improved Two-Weapon")).unwrap();
+        assert_eq!(
+            admitted_tag_rows(&root),
+            [
+                (AdmittedKind::Feat, held.clone(), OverrideFlag::IgnoreFeatBudget),
+                (AdmittedKind::Feat, held.clone(), OverrideFlag::FeatsWithoutPrerequisites),
+            ]
+        );
+        assert_worn(&remove_feat_selection_at_root(&root, &held, None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [], "a row nothing holds goes");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_feat_against_the_alignment_says_so() {
+        let root = overrides_fighter("admitted-tag-alignment-feat", 3);
+        overrides_set(&root, |flags| {
+            flags.feats_without_prerequisites = true;
+            flags.ignore_alignment_restrictions = true;
+        });
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Lawful Good".to_owned(), ..Default::default() }).unwrap();
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Free Spirit", None, OVERRIDES_AT).unwrap());
+        assert!(admitted_tag_rows(&root).iter().any(|row| row.0 == AdmittedKind::Feat && row.2 == OverrideFlag::IgnoreAlignmentRestrictions));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_level_against_the_alignment_says_so() {
+        let root = overrides_chaotic_fighter("admitted-tag-alignment-class");
+        overrides_set(&root, |flags| flags.ignore_alignment_restrictions = true);
+        assert_worn(&crate::pf1_adapter::level_up_character_at_root(&root, "class:fighter", Vec::new(), None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [], "a Fighter has no alignment to break");
+        assert_worn(&crate::pf1_adapter::level_up_character_at_root(&root, "class:paladin", Vec::new(), None, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [(AdmittedKind::ClassLevel, "class:paladin".to_owned(), OverrideFlag::IgnoreAlignmentRestrictions)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_spell_saved_under_the_override_says_so_once_and_one_on_the_list_does_not() {
+        let (dir, root) = ledger_migration_seed("admitted-tag-spell", SECOND_SEED_CHARACTER_ID);
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Haste", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), []);
+        assert_worn(&record_and_prepare_spell_selection_at_root(&root, "Bless", "class:wizard", OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_rows(&root), [(AdmittedKind::Spell, "Bless".to_owned(), OverrideFlag::SpellsOutsideClassList)], "known and prepared are one spell");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_copy_worn_past_its_slot_says_so_and_the_flag_going_off_takes_nothing_back() {
+        let root = slot_conflict_character("admitted-tag-slot", &["Helm of Brilliance", "Hat of Disguise"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_eq!(admitted_tag_on_copy(&root, "Helm of Brilliance"), [None], "the slot was free");
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        assert_eq!(admitted_tag_on_copy(&root, "Hat of Disguise"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+        assert_eq!(admitted_tag_on_copy(&root, "Helm of Brilliance"), [None]);
+        let wire = serde_json::to_value(list_held_equipment_at_root(&root).unwrap()).unwrap();
+        assert!(wire.as_array().unwrap().iter().any(|copy| copy["override"] == "ignoreSlotLimits"), "{wire}");
+
+        overrides_set(&root, |flags| flags.ignore_slot_limits = false);
+        assert_eq!(admitted_tag_on_copy(&root, "Hat of Disguise"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+
+        let stow = set_equipment_active_state_at_root(&root, "Hat of Disguise", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        assert_worn(&stow);
+        assert_eq!(admitted_tag_on_copy(&root, "Hat of Disguise"), [None], "carried, it breaks no slot");
+        assert_eq!(admitted_tag_rows(&root), []);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_copy_worn_without_proficiency_says_which() {
+        let (dir, root) = overrides_wizard("admitted-tag-weapon", "Rapier");
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Rapier"));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [Some(OverrideFlag::WeaponsWithoutProficiency)]);
+        std::fs::remove_dir_all(&dir).ok();
+
+        let (dir, root) = overrides_wizard("admitted-tag-armor", "Chain Shirt");
+        overrides_set(&root, |flags| flags.armor_without_proficiency = true);
+        assert_worn(&slot_conflict_wear(&root, "Chain Shirt"));
+        assert_eq!(admitted_tag_on_copy(&root, "Chain Shirt"), [Some(OverrideFlag::ArmorWithoutProficiency)]);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_buy_says_so_when_it_goes_on_under_the_flag_and_not_when_it_stays_carried() {
+        let (dir, root) = overrides_wizard("admitted-tag-buy", "Rope (Hemp/50 ft.)");
+        let buy = |root: &Path| purchase_equipment_priced_at_root(root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert!(matches!(buy(&root), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None], "refused, carried with the reason");
+
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        assert!(matches!(buy(&root), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None, Some(OverrideFlag::WeaponsWithoutProficiency)], "the worn copy, not the one in the pack");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_load_past_capacity_says_so_and_stays_while_the_copy_is_carried() {
+        let root = overrides_weak_fighter("admitted-tag-load");
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        assert_worn(&add_equipment_selection_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "Full Plate"), [Some(OverrideFlag::IgnoreEncumbrance)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_custom_item_past_its_slot_says_so_at_the_wear_and_at_the_save() {
+        let root = slot_conflict_character("admitted-tag-custom", &["Helm of Brilliance"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let custom = CharacterCustomDto { equipment: vec![override_helmet()], overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &custom, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [None], "carried");
+
+        assert_worn(&set_custom_item_state_at_root(&root, "c1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+        assert_worn(&set_custom_item_state_at_root(&root, "c1", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [None], "stowed");
+
+        let worn = CharacterCustomDto { equipment: vec![CustomRecordDto { worn: true, ..override_helmet() }], overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &worn, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_on_copy(&root, "custom:c1"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+
+        let gone = CharacterCustomDto { overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &gone, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_rows(&root), [], "deleted, it holds no slot");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_custom_item_is_not_tagged_for_another_one_overflowing() {
+        let root = slot_conflict_character("admitted-tag-custom-other", &["Helm of Brilliance", "Hat of Disguise"]);
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let ring = CustomRecordDto { id: "r1".to_owned(), name: "GM Ring".to_owned(), slot: Some(BodySlot::Ring), ..Default::default() };
+        save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![ring], overrides, ..Default::default() }, OVERRIDES_AT).unwrap();
+        assert_worn(&set_custom_item_state_at_root(&root, "r1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+        assert_eq!(admitted_tag_on_copy(&root, "custom:r1"), [None]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn admitted_tag_a_clone_and_a_round_trip_carry_it_and_a_hand_edit_is_held_to_the_character() {
+        let root = overrides_fighter("admitted-tag-carry", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&overrides_prereq_add(&root).unwrap());
+        let rows = admitted_tag_rows(&root);
+        assert_eq!(rows.len(), 1);
+
+        let clone_root = tempdir("admitted-tag-carry-clone");
+        copy_character_ledger(&root, &clone_root).expect("copies");
+        assert_eq!(load_character_ledger_at_root(&clone_root).unwrap().unwrap().admitted.len(), 1);
+
+        let file = export_character_to_json(&root).unwrap();
+        let import_root = tempdir("admitted-tag-carry-import");
+        assert_worn(&import_character_from_json(&file, &import_root, "imported", OVERRIDES_AT, "0.0.0-test").unwrap());
+        assert_eq!(admitted_tag_rows(&import_root), rows);
+
+        let mut parsed: serde_json::Value = serde_json::from_str(&file).unwrap();
+        parsed["ledger"]["admitted"][0]["id"] = serde_json::json!("feat:never_held");
+        let edited_root = tempdir("admitted-tag-carry-edited");
+        assert_worn(&import_character_from_json(&parsed.to_string(), &edited_root, "edited", OVERRIDES_AT, "0.0.0-test").unwrap());
+        assert_eq!(admitted_tag_rows(&edited_root), []);
+        for dir in [&root, &clone_root, &import_root, &edited_root] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    /// What the Market actually sells: `Longsword (Base)`, not `Longsword`. Against the book's list.
+    #[test]
+    fn override_a_market_row_is_read_under_the_key_the_market_sells_it_by() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{None as Known, Weapon};
+        let wizard = compose_character_input(&request_for_class("race:human", "class:wizard", 1));
+        let fighter = compose_character_input(&request_for_class("race:human", "class:fighter", 1));
+        let elf = compose_character_input(&request_for_class("race:elf", "class:rogue", 1));
+        for (input, item, gap) in [
+            (&wizard, "Longsword (Base)", Weapon),
+            (&wizard, "Greatsword (Base)", Weapon),
+            (&wizard, "Sword (Bastard)", Weapon),
+            (&wizard, "Longsword (Cold Iron/Masterwork)", Weapon),
+            (&wizard, "Crossbow (Light)", Known),
+            (&wizard, "Light Crossbow (Base)", Known),
+            (&wizard, "Quarterstaff (Base)", Known),
+            (&wizard, "Dagger (Base)", Known),
+            (&wizard, "Arrows (20)", Known),
+            (&wizard, "Improvised Weapon (1d4)", Known),
+            (&fighter, "Greatsword (Base)", Known),
+            (&fighter, "Improvised Weapon (1d4)", Known),
+            (&fighter, "Spiked Chain (Base)", Weapon),
+            (&elf, "Longsword (Base)", Known),
+            (&elf, "Greatsword (Base)", Weapon),
+        ] {
+            assert_eq!(override_gap(input, item), gap, "{:?} {item}", input.chosen.class_levels[0].class_id);
+        }
+    }
+
+    /// A weapon bought from the Market is held as `Rapier (Base)`. Its attack row and the penalty a
+    /// Wizard owes are the ones a `Rapier` gets: the flag let it on, and the sheet still says -4.
+    #[test]
+    fn override_a_market_weapon_worn_under_the_flag_has_its_attack_row_and_owes_the_penalty() {
+        let (dir, root) = overrides_wizard("override-market-attack", "Rope (Hemp/50 ft.)");
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        let bought = purchase_equipment_priced_at_root(&root, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        let PurchaseEquipmentResponse::Purchased { active_state, .. } = bought else { panic!("the buy goes through") };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier (Base)"), [Some(OverrideFlag::WeaponsWithoutProficiency)]);
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        let row = loaded.explanations.iter().find(|row| row.id == "combat.weapon_attack_bonus.rapier").expect("the attack row");
+        assert_eq!(row.value, -3, "{}", row.detail);
+        assert!(row.detail.contains("nonproficiency penalty (-4)"), "{}", row.detail);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn override_a_market_rapier_stays_carried_and_the_reason_names_it_plainly() {
+        let (dir, root) = overrides_wizard("override-market-key", "Rope (Hemp/50 ft.)");
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&root, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason.as_deref(), Some("this character is not proficient with Rapier"));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A shield or a suit whose tags state no kind cannot be named by any grant: an unknown, for a
+    /// Fighter as for a Wizard. The stated ones keep their answer.
+    #[test]
+    fn override_armor_that_states_no_kind_is_not_refused() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{Armor, None as Known};
+        let fighter = compose_character_input(&request_for_class("race:human", "class:fighter", 1));
+        let wizard = compose_character_input(&request_for_class("race:human", "class:wizard", 1));
+        assert_eq!(override_gap(&fighter, "Mind Shield"), Known);
+        assert_eq!(override_gap(&wizard, "Mind Shield"), Known);
+        assert_eq!(override_gap(&fighter, "Heavy Wooden Shield (Base)"), Known);
+        assert_eq!(override_gap(&wizard, "Heavy Wooden Shield (Base)"), Armor);
+        assert_eq!(override_gap(&wizard, "Chain Shirt (Base)"), Armor);
+    }
+
+    /// The proficiency half of [`wear_check`], for an item whose slot is also taken.
+    fn override_gap(input: &CharacterInput, item: &str) -> codex::rules_core::equipment_resolver::ItemProficiencyGap {
+        codex::rules_core::equipment_resolver::character_lacks_proficiency_with(input, item)
+    }
+
+    /// Human Wizard 5 (Elowen) as `race_id`, with `carried` in the pack.
+    fn override_wizard_of_race(label: &str, race_id: &str, carried: &str) -> (PathBuf, PathBuf) {
+        let (dir, root) = overrides_wizard(label, carried);
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.race_id = race_id.to_owned();
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        (dir, root)
+    }
+
+    /// The book gives an elf the longsword and a dwarf the battleaxe, whatever the class: nothing to
+    /// refuse, so no flag and no tag. A weapon the race does not know still refuses.
+    #[test]
+    fn override_a_weapon_the_race_grants_needs_no_flag_and_one_it_does_not_still_refuses() {
+        for (race, known, unknown) in [
+            ("race:elf", "Longsword", "Greatsword"),
+            ("race:elf", "Rapier", "Greatsword"),
+            ("race:elf", "Longbow", "Greatsword"),
+            ("race:dwarf", "Battleaxe", "Greatsword"),
+            ("race:dwarf", "Heavy Pick", "Greatsword"),
+            ("race:half-orc", "Falchion", "Greatsword"),
+            ("race:halfling", "Sling", "Greatsword"),
+        ] {
+            let (dir, root) = override_wizard_of_race("override-race-weapon", race, known);
+            let input = SavedCharacterStore::load(&root).unwrap().character_input;
+            assert_eq!(override_gap(&input, known), codex::rules_core::equipment_resolver::ItemProficiencyGap::None, "{race} {known}");
+            assert_eq!(override_gap(&input, unknown), codex::rules_core::equipment_resolver::ItemProficiencyGap::Weapon, "{race} {unknown}");
+            std::fs::remove_dir_all(&dir).ok();
+        }
+        let (dir, root) = override_wizard_of_race("override-race-wear", "race:elf", "Rapier");
+        assert_worn(&slot_conflict_wear(&root, "Rapier"));
+        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None], "the rules allow it, so no flag let it in");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A Human Cleric 1, created through the real command, holding the starting Longsword.
+    fn race_weapon_proficiency_cleric(label: &str) -> PathBuf {
+        let root = tempdir(label);
+        let response = create_character_at_root(&root, &request_for_class("race:human", "class:cleric", 1), "test-version".to_owned()).unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        root
+    }
+
+    fn race_weapon_proficiency_deity(root: &Path, deity: &str) {
+        save_character_bio_at_root(root, &CharacterBioDto { deity: deity.to_owned(), ..Default::default() }).unwrap();
+    }
+
+    /// The sheet's attack row for the Longsword, off the real load.
+    fn race_weapon_proficiency_row(root: &Path) -> String {
+        let loaded = load_saved_character_at_root(root).expect("load should succeed");
+        loaded.explanations.iter().find(|e| e.id == "combat.weapon_attack_bonus.longsword").expect("a Longsword row").detail.clone()
+    }
+
+    fn race_weapon_proficiency_gap(root: &Path, item: &str) -> codex::rules_core::equipment_resolver::ItemProficiencyGap {
+        override_gap(&SavedCharacterStore::load(root).unwrap().character_input, item)
+    }
+
+    /// One answer: the row and the refusal move together, for a race.
+    #[test]
+    fn race_weapon_proficiency_an_elfs_longsword_reads_no_penalty_and_is_not_refused() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{None as Known, Weapon};
+        let (human_dir, human) = override_wizard_of_race("race-prof-human", "race:human", "Rapier");
+        assert!(race_weapon_proficiency_row(&human).contains("-4 nonproficiency penalty: nothing this character holds grants"));
+        assert_eq!(race_weapon_proficiency_gap(&human, "Longsword (Base)"), Weapon);
+
+        let (elf_dir, elf) = override_wizard_of_race("race-prof-elf", "race:elf", "Rapier");
+        let row = race_weapon_proficiency_row(&elf);
+        assert!(!row.contains("nonproficiency penalty:") && !row.contains("nothing this character holds grants"), "{row}");
+        assert!(row.contains("(Weapon Familiarity)"), "{row}");
+        for item in ["Longsword (Base)", "Longbow (Base)", "Shortbow (Base)", "Rapier (Base)"] {
+            assert_eq!(race_weapon_proficiency_gap(&elf, item), Known, "{item}");
+        }
+        assert_eq!(race_weapon_proficiency_gap(&elf, "Greatsword (Base)"), Weapon, "nothing grants it");
+        std::fs::remove_dir_all(&human_dir).ok();
+        std::fs::remove_dir_all(&elf_dir).ok();
+    }
+
+    /// The deity is the bio's words: writing it moves the row and the refusal, clearing it moves them
+    /// back, and another deity's weapon stays refused. A name no rule holds says so on the row.
+    #[test]
+    fn race_weapon_proficiency_a_clerics_deity_comes_from_the_bio() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{None as Known, Weapon};
+        let root = race_weapon_proficiency_cleric("race-prof-cleric");
+        let row = race_weapon_proficiency_row(&root);
+        assert!(row.contains("-4 nonproficiency penalty") && row.contains("no deity is recorded"), "{row}");
+        assert_eq!(race_weapon_proficiency_gap(&root, "Longsword (Base)"), Weapon);
+
+        race_weapon_proficiency_deity(&root, "Iomedae");
+        let row = race_weapon_proficiency_row(&root);
+        assert!(!row.contains("nonproficiency penalty:") && row.contains("favored weapon"), "{row}");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert!(loaded.snapshot.is_some(), "the row blocks nothing: {:?}", loaded.diagnostics);
+        assert_eq!(race_weapon_proficiency_gap(&root, "Longsword (Base)"), Known);
+        assert_eq!(race_weapon_proficiency_gap(&root, "Greatsword (Base)"), Weapon, "Gorum's, not hers");
+
+        race_weapon_proficiency_deity(&root, "Cayden Cailean");
+        assert_eq!(race_weapon_proficiency_gap(&root, "Rapier (Base)"), Known, "a two-word name");
+        assert_eq!(race_weapon_proficiency_gap(&root, "Longsword (Base)"), Weapon, "the old deity's weapon goes");
+
+        race_weapon_proficiency_deity(&root, "The Light of Morning");
+        let row = race_weapon_proficiency_row(&root);
+        assert!(row.contains("no deity the rules hold is named the_light_of_morning"), "{row}");
+
+        race_weapon_proficiency_deity(&root, "");
+        assert!(race_weapon_proficiency_row(&root).contains("no deity is recorded"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The deity moves a number now, so it travels with the file: Export then Import reads the same row.
+    #[test]
+    fn race_weapon_proficiency_a_deity_survives_export_then_import() {
+        let root = race_weapon_proficiency_cleric("race-prof-export");
+        race_weapon_proficiency_deity(&root, "Iomedae");
+        let before = race_weapon_proficiency_row(&root);
+        let file = export_character_to_json(&root).unwrap();
+
+        let imported = tempdir("race-prof-import");
+        let outcome = import_character_from_json(&file, &imported, "char-imported", OVERRIDES_AT, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_bio_at_root(&imported).unwrap().deity, "Iomedae");
+        assert_eq!(race_weapon_proficiency_row(&imported), before);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+    }
+
+    /// A copy holds what its source holds. Clone and Export carry the other sidecars; money stayed behind.
+    #[test]
+    fn character_money_survives_a_clone() {
+        let source = race_weapon_proficiency_cleric("money-clone-source");
+        let held = adjust_character_money_at_root(&source, 12_345).unwrap().total_copper;
+        let clone = tempdir("money-clone");
+        let request = CloneCharacterRequest {
+            character_id: "source".to_owned(),
+            new_character_id: "char-clone".to_owned(),
+            new_display_label: "The clone".to_owned(),
+            saved_at: OVERRIDES_AT.to_owned(),
+        };
+        let outcome = clone_character_at_roots(&source, &clone, &request, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_money_at_root(&clone).unwrap().total_copper, held);
+        std::fs::remove_dir_all(&source).ok();
+        std::fs::remove_dir_all(&clone).ok();
+    }
+
+    #[test]
+    fn character_money_survives_export_then_import() {
+        let root = race_weapon_proficiency_cleric("money-export");
+        let held = adjust_character_money_at_root(&root, 12_345).unwrap().total_copper;
+        let file = export_character_to_json(&root).unwrap();
+        let imported = tempdir("money-import");
+        let outcome = import_character_from_json(&file, &imported, "char-imported", OVERRIDES_AT, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_money_at_root(&imported).unwrap().total_copper, held);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+    }
+
+    /// A file written before money travelled imports as it always did: no money file, a zero balance.
+    #[test]
+    fn character_money_an_old_export_imports_with_none() {
+        let root = race_weapon_proficiency_cleric("money-old-export");
+        std::fs::remove_file(root.join(MONEY_FILE_NAME)).unwrap();
+        let file = export_character_to_json(&root).unwrap();
+        assert!(!file.contains("\"money\""), "a character with no money writes no field");
+        let imported = tempdir("money-old-import");
+        import_character_from_json(&file, &imported, "char-imported", OVERRIDES_AT, "test-version").unwrap();
+        assert_eq!(load_character_money_at_root(&imported).unwrap().total_copper, 0);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+    }
+
+    /// The Market's buy reads the same answer: worn, where a human Wizard's goes carried.
+    #[test]
+    fn race_weapon_proficiency_the_market_buys_it_worn() {
+        let (dir, elf) = override_wizard_of_race("race-prof-market", "race:elf", "Dagger");
+        set_equipment_active_state_at_root(&elf, "item:longsword", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&elf, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive), "{carried_reason:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The deity moves a number, so a clone keeps it as Export then Import does. The store rewrites the
+    /// row from `bio.json` on every load, so a clone with no bio read -4 on its source's own weapon.
+    #[test]
+    fn race_weapon_proficiency_a_deity_survives_a_clone() {
+        let source = race_weapon_proficiency_cleric("race-prof-clone-source");
+        race_weapon_proficiency_deity(&source, "Iomedae");
+        let before = race_weapon_proficiency_row(&source);
+        assert!(!before.contains("nonproficiency penalty:"), "{before}");
+
+        let clone = tempdir("race-prof-clone");
+        let request = CloneCharacterRequest {
+            character_id: "source".to_owned(),
+            new_character_id: "char-clone".to_owned(),
+            new_display_label: "The clone".to_owned(),
+            saved_at: OVERRIDES_AT.to_owned(),
+        };
+        let outcome = clone_character_at_roots(&source, &clone, &request, "test-version").unwrap();
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(load_character_bio_at_root(&clone).unwrap().deity, "Iomedae");
+        assert_eq!(race_weapon_proficiency_row(&clone), before);
+        std::fs::remove_dir_all(&source).ok();
+        std::fs::remove_dir_all(&clone).ok();
+    }
+
+    /// A shield's bash has no weapon proficiency of its own: it is read by the shield proficiency the
+    /// Market's refusal reads, so a Fighter owes no -4 and a Wizard does, and the row says which.
+    #[test]
+    fn race_weapon_proficiency_a_shield_bash_reads_what_the_refusal_reads() {
+        use codex::rules_core::equipment_resolver::ItemProficiencyGap::{Armor, None as Known};
+        const SHIELD: &str = "Heavy Steel Shield (Base)";
+        let row = |root: &Path| {
+            let loaded = load_saved_character_at_root(root).unwrap();
+            loaded.explanations.iter().find(|e| e.id == "combat.weapon_attack_bonus.heavysteelshield").expect("a shield row").clone()
+        };
+
+        let (dir, fighter) = enhancement_rows_aldric("race-prof-shield-fighter");
+        worn_vs_carried_set(&fighter, "item:longsword", ActiveState::SelectedInactive);
+        purchase_equipment_priced_at_root(&fighter, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert_eq!(race_weapon_proficiency_gap(&fighter, SHIELD), Known);
+        let bash = row(&fighter);
+        assert_eq!(bash.value, 7, "base attack +3, Strength +4: {}", bash.detail);
+        assert!(!bash.detail.contains("nonproficiency penalty:"), "{}", bash.detail);
+        std::fs::remove_dir_all(&dir).ok();
+
+        let (dir, wizard) = overrides_wizard("race-prof-shield-wizard", "Dagger");
+        overrides_set(&wizard, |flags| flags.armor_without_proficiency = true);
+        purchase_equipment_priced_at_root(&wizard, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert_eq!(race_weapon_proficiency_gap(&wizard, SHIELD), Armor);
+        let bash = row(&wizard);
+        assert!(bash.detail.contains("nonproficiency penalty:"), "{}", bash.detail);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A seed writes no deity, so its saved input and every render stay as they were.
+    #[test]
+    fn race_weapon_proficiency_the_seeds_hold_no_deity_row() {
+        let (dir, root) = ledger_migration_seed("race-prof-seed", SECOND_SEED_CHARACTER_ID);
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(!input.chosen.selected_choices.iter().any(|c| c.choice_set_id == codex::rules_core::pilot_compute::CHARACTER_DEITY_CHOICE_ID));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Martial Weapon Proficiency names one weapon. It lets that one in and leaves the rest refused,
+    /// so a pick recorded on another weapon is not an unknown.
+    #[test]
+    fn override_martial_weapon_proficiency_lets_in_its_own_target_only() {
+        let (dir, root) = overrides_wizard("override-mwp", "Rapier");
+        overrides_set(&root, |flags| flags.ignore_feat_budget = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Martial Weapon Proficiency", Some("Rapier"), OVERRIDES_AT).unwrap());
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(matches!(wear_check(&root, &input, "Rapier").unwrap(), Ok(flags) if flags.is_empty()));
+        assert_eq!(override_gap(&input, "Greatsword"), codex::rules_core::equipment_resolver::ItemProficiencyGap::Weapon);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// The book's armor feats are read as a class grant is.
+    #[test]
+    fn override_an_armor_feat_lets_its_armor_in_and_no_heavier() {
+        let (dir, root) = overrides_wizard("override-armor-feat", "Chain Shirt");
+        add_equipment_selection_at_root(&root, "Chainmail", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        overrides_set(&root, |flags| flags.ignore_feat_budget = true);
+        assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, "Armor Proficiency (Light)", None, OVERRIDES_AT).unwrap());
+        let input = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(matches!(wear_check(&root, &input, "Chain Shirt").unwrap(), Ok(flags) if flags.is_empty()));
+        assert_eq!(wear_check(&root, &input, "Chainmail").unwrap().map_err(|(id, _)| id), Err("equipment.not_proficient"));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    fn override_ring(id: &str) -> CustomRecordDto {
+        CustomRecordDto { id: id.to_owned(), name: format!("GM {id}"), slot: Some(BodySlot::Ring), worn: true, ..Default::default() }
+    }
+
+    /// A worn record moved onto a taken slot goes there under the flag as surely as one newly put on.
+    #[test]
+    fn override_a_worn_custom_item_moved_onto_a_taken_slot_says_so() {
+        let root = slot_conflict_character("override-custom-moved", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let on_a_finger = CharacterCustomDto { equipment: vec![override_ring("r1")], ..Default::default() };
+        save_character_custom_at_root(&root, &on_a_finger, OVERRIDES_AT).unwrap();
+        let moved = CustomRecordDto { slot: Some(BodySlot::Head), ..override_ring("r1") };
+        let refused = save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![moved.clone()], ..Default::default() }, OVERRIDES_AT);
+        assert_eq!(refused.expect_err("flag off"), "head slot is taken by Helm of Brilliance");
+
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![moved], overrides, ..Default::default() }, OVERRIDES_AT).unwrap();
+        assert_eq!(admitted_tag_on_copy(&root, "custom:r1"), [Some(OverrideFlag::IgnoreSlotLimits)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// What the flag let on stays when it goes off. It must not then refuse a change to something else:
+    /// a ring taken off, a ring put on. A second thing on the head is still refused.
+    #[test]
+    fn override_off_what_the_slot_flag_let_on_does_not_refuse_a_change_to_another_item() {
+        let root = slot_conflict_character("override-custom-others", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        let overrides = load_character_custom_at_root(&root).unwrap().overrides;
+        let helm = CustomRecordDto { worn: true, ..override_helmet() };
+        let both = CharacterCustomDto { equipment: vec![helm.clone(), override_ring("r1")], overrides, ..Default::default() };
+        save_character_custom_at_root(&root, &both, OVERRIDES_AT).unwrap();
+        overrides_set(&root, |flags| flags.ignore_slot_limits = false);
+
+        let without_the_ring = CharacterCustomDto { equipment: vec![helm.clone()], ..Default::default() };
+        save_character_custom_at_root(&root, &without_the_ring, OVERRIDES_AT).expect("taking a ring off is not about the head");
+        let another_ring = CharacterCustomDto { equipment: vec![helm.clone(), override_ring("r2")], ..Default::default() };
+        save_character_custom_at_root(&root, &another_ring, OVERRIDES_AT).expect("a ring is not about the head");
+        assert_worn(&set_custom_item_state_at_root(&root, "r2", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+        assert_worn(&set_custom_item_state_at_root(&root, "r2", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+
+        let second_helm = CustomRecordDto { id: "c2".to_owned(), ..helm.clone() };
+        let refused = save_character_custom_at_root(&root, &CharacterCustomDto { equipment: vec![helm, override_ring("r2"), second_helm], ..Default::default() }, OVERRIDES_AT);
+        assert!(refused.expect_err("the head is full").contains("head slot is taken"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn override_helmet() -> CustomRecordDto {
+        CustomRecordDto { id: "c1".to_owned(), name: "GM Helm".to_owned(), slot: Some(BodySlot::Head), ..Default::default() }
+    }
+
+    /// `decisions.md §25`: the slot override reaches a custom item at both of its callers.
+    #[test]
+    fn override_slot_limits_reach_a_custom_item_at_the_wear_and_at_the_save() {
+        let root = slot_conflict_character("override-custom-slot", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let custom = CharacterCustomDto { equipment: vec![override_helmet()], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, OVERRIDES_AT).unwrap();
+
+        let refused = set_custom_item_state_at_root(&root, "c1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap();
+        assert_slot_refused(&refused, "head slot is taken by Helm of Brilliance");
+        let worn = CharacterCustomDto { equipment: vec![CustomRecordDto { worn: true, ..override_helmet() }], ..Default::default() };
+        let error = save_character_custom_at_root(&root, &worn, OVERRIDES_AT).expect_err("the save refuses it too");
+        assert_eq!(error, "head slot is taken by Helm of Brilliance");
+
+        overrides_set(&root, |flags| flags.ignore_slot_limits = true);
+        assert_worn(&set_custom_item_state_at_root(&root, "c1", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
+        assert!(load_character_custom_at_root(&root).unwrap().equipment[0].worn);
+        let on_the_save = CharacterCustomDto { overrides: load_character_custom_at_root(&root).unwrap().overrides, ..worn };
+        save_character_custom_at_root(&root, &on_the_save, OVERRIDES_AT).expect("flag on, the save admits it");
+
+        // Off again: what is on stays (a flag cannot be stuck on), and nothing new goes on.
+        overrides_set(&root, |flags| flags.ignore_slot_limits = false);
+        assert!(load_character_custom_at_root(&root).unwrap().equipment[0].worn, "the flag going off takes nothing off");
+        let stowed = set_equipment_active_state_at_root(&root, "Helm of Brilliance", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
+        assert_worn(&stowed);
+        assert_slot_refused(&slot_conflict_wear(&root, "Helm of Brilliance"), "head slot is taken by GM Helm");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_a_bought_weapon_stays_carried_with_the_reason_until_the_flag_is_on() {
+        let (dir, root) = overrides_wizard("override-buy-weapon", "Rope (Hemp/50 ft.)");
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason.as_deref(), Some("this character is not proficient with Rapier"));
+        assert_eq!(slot_conflict_worn_count(&root, "Rapier"), 0);
+
+        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
+            purchase_equipment_priced_at_root(&root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
+        else {
+            panic!("the buy goes through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
+        assert_eq!(carried_reason, None);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn override_encumbrance_refuses_a_buy_and_charges_nothing() {
+        let root = overrides_weak_fighter("override-buy-load");
+        let money = load_character_money_at_root(&root).unwrap();
+        let refused = purchase_equipment_priced_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        let PurchaseEquipmentResponse::Blocked { diagnostics } = refused else { panic!("the load refuses the buy") };
+        assert_eq!(diagnostics[0].id, "equipment.over_capacity");
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, money.total_copper);
+        overrides_set(&root, |flags| flags.ignore_encumbrance = true);
+        let admitted = purchase_equipment_priced_at_root(&root, "Full Plate", ActiveState::SelectedInactive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert!(matches!(admitted, PurchaseEquipmentResponse::Purchased { .. }));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Lawful Good, against a feat whose converted gate wants a chaotic alignment. The prerequisites
+    /// flag is on throughout so its Charisma term is not what refuses.
+    #[test]
+    fn override_alignment_reaches_a_feat_and_an_unstated_alignment_never_refuses() {
+        let root = overrides_fighter("override-alignment-feat", 3);
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        let add = |root: &Path| add_feat_selection_enforcing_prerequisites_at_root(root, "Free Spirit", None, OVERRIDES_AT);
+
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Lawful Good".to_owned(), ..Default::default() }).unwrap();
+        let error = add(&root).expect_err("the stated alignment refuses");
+        assert!(error.contains("cannot be taken by this character"), "{error}");
+        assert!(error.contains("CG") || error.contains("alignment"), "{error}");
+
+        overrides_set(&root, |flags| flags.ignore_alignment_restrictions = true);
+        assert_worn(&add(&root).expect("the flag admits it"));
+
+        let unstated = overrides_fighter("override-alignment-unstated", 3);
+        overrides_set(&unstated, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&add(&unstated).expect("no alignment stated, nothing to refuse over"));
+        for dir in [&root, &unstated] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn override_every_alignment_word_the_sheet_offers_reads_as_two_letters() {
+        let root = overrides_fighter("override-alignment-words", 1);
+        for (words, code) in [
+            ("Lawful Good", "LG"), ("Neutral Good", "NG"), ("Chaotic Good", "CG"), ("Lawful Neutral", "LN"), ("True Neutral", "TN"),
+            ("Chaotic Neutral", "CN"), ("Lawful Evil", "LE"), ("Neutral Evil", "NE"), ("Chaotic Evil", "CE"),
+        ] {
+            save_character_bio_at_root(&root, &CharacterBioDto { alignment: words.to_owned(), ..Default::default() }).unwrap();
+            assert_eq!(stated_alignment_at_root(&root), Some(code), "{words}");
+        }
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Mostly harmless".to_owned(), ..Default::default() }).unwrap();
+        assert_eq!(stated_alignment_at_root(&root), None);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_prerequisites_let_a_feat_go_that_another_held_feat_rests_on() {
+        let root = overrides_fighter("override-removal", 6);
+        for feat in ["Cleave", "Great Cleave"] {
+            assert_worn(&add_feat_selection_enforcing_prerequisites_at_root(&root, feat, None, OVERRIDES_AT).expect(feat));
+        }
+        let error = remove_feat_selection_at_root(&root, "Cleave", None, OVERRIDES_AT).expect_err("Great Cleave rests on it");
+        assert!(error.contains("cannot be removed"), "{error}");
+        overrides_set(&root, |flags| flags.feats_without_prerequisites = true);
+        assert_worn(&remove_feat_selection_at_root(&root, "Cleave", None, OVERRIDES_AT).expect("the flag lets it go"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn override_a_spell_off_the_list_saves_under_its_own_source_and_the_character_still_computes() {
+        let (dir, root) = ledger_migration_seed("override-spell-source", SECOND_SEED_CHARACTER_ID);
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Cure Light Wounds", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap());
+        assert_worn(&record_and_prepare_spell_selection_at_root(&root, "Bless", "class:wizard", OVERRIDES_AT).unwrap());
+        let envelope = SavedCharacterStore::load(&root).unwrap();
+        let source_of = |id: &str| envelope.character_input.chosen.spells_selected.iter().filter(|s| s.spell_id == id).map(|s| s.source_class_id.clone()).collect::<Vec<_>>();
+        assert_eq!(source_of("Cure Light Wounds"), vec![crate::pf1_adapter::OVERRIDE_SPELL_SOURCE.to_owned()]);
+        assert_eq!(source_of("Bless"), vec![crate::pf1_adapter::OVERRIDE_SPELL_SOURCE.to_owned(); 2]);
+
+        // A later save of the same character still reaches Computed, flag on or off: the record holds.
+        overrides_set(&root, |flags| flags.spells_outside_class_list = false);
+        assert_worn(&add_equipment_selection_at_root(&root, "Rope (Hemp/50 ft.)", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap());
+
+        // A spell on her list stays hers under the flag; the override source is only for what needs it.
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Haste", "class:wizard", AcquisitionMode::Known, OVERRIDES_AT).unwrap());
+        let spells = SavedCharacterStore::load(&root).unwrap().character_input.chosen.spells_selected;
+        assert!(spells.iter().any(|s| s.spell_id == "Haste" && s.source_class_id == "class:wizard"), "{spells:?}");
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn override_a_fighter_is_refused_a_spell_and_a_class_with_no_ingested_list_is_not() {
+        let root = overrides_fighter("override-spell-fighter", 1);
+        let response = add_spell_selection_at_root(&root, "Fireball", FIGHTER_CLASS_ID, AcquisitionMode::Known, OVERRIDES_AT).unwrap();
+        overrides_refused(&response, "spell.outside_class_list");
+        overrides_set(&root, |flags| flags.spells_outside_class_list = true);
+        assert_worn(&add_spell_selection_at_root(&root, "Fireball", FIGHTER_CLASS_ID, AcquisitionMode::Known, OVERRIDES_AT).unwrap());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A saved character with a Longsword in hand and a Chain Shirt on, as creation gives it, and
+    /// each named item held in the pack.
+    fn slot_conflict_character(label: &str, carried: &[&str]) -> PathBuf {
+        let root = tempdir(label);
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        for item in carried {
+            let response = add_equipment_selection_at_root(&root, item, ActiveState::SelectedInactive, LEVEL_UP_TEST_SAVED_AT)
+                .expect("holding the item should not error");
+            assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{item}: {response:?}");
+        }
+        root
+    }
+
+    fn slot_conflict_wear(root: &Path, item_id: &str) -> CreateCharacterResponse {
+        set_equipment_active_state_at_root(root, item_id, ActiveState::EquippedActive, "2026-11-02T00:00:00Z")
+            .expect("the request should not error")
+    }
+
+    fn slot_conflict_worn_count(root: &Path, item_id: &str) -> usize {
+        SavedCharacterStore::load(root)
+            .expect("reload should succeed")
+            .character_input
+            .chosen
+            .equipment_selections
+            .iter()
+            .filter(|selection| selection.item_id == item_id && selection.active_state == ActiveState::EquippedActive)
+            .count()
+    }
+
+    #[track_caller]
+    fn assert_slot_refused(response: &CreateCharacterResponse, message: &str) {
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!("expected the slot refusal `{message}`, got {response:?}");
+        };
+        assert_eq!(diagnostics.len(), 1, "{diagnostics:?}");
+        assert_eq!(diagnostics[0].id, "equipment.slot_taken");
+        assert_eq!(diagnostics[0].message, message);
+        assert!(diagnostics[0].claim_blocking, "the sheet shows only claim-blocking diagnostics");
+    }
+
+    #[track_caller]
+    fn assert_worn(response: &CreateCharacterResponse) {
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    #[test]
+    fn slot_conflict_a_second_helmet_is_refused_and_named() {
+        let root = slot_conflict_character("slot-conflict-helmets", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Hat of Disguise"), "head slot is taken by Helm of Brilliance");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0, "the refused item stays carried");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The target is the carried copy, not the first of the id: the first copy is the one on the
+    /// head, and setting that one again would report success on a helmet that never moved.
+    #[test]
+    fn slot_conflict_a_second_copy_of_the_same_helmet_is_refused() {
+        let root = slot_conflict_character("slot-conflict-same-helmet", &["Hat of Disguise", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Hat of Disguise"), "head slot is taken by Hat of Disguise");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_two_rings_are_allowed_and_a_third_refused() {
+        let root = slot_conflict_character(
+            "slot-conflict-rings",
+            &["Ring of Protection +1", "Ring of Feather Falling", "Ring of Protection +2"],
+        );
+        assert_worn(&slot_conflict_wear(&root, "Ring of Protection +1"));
+        assert_worn(&slot_conflict_wear(&root, "Ring of Feather Falling"));
+        assert_slot_refused(
+            &slot_conflict_wear(&root, "Ring of Protection +2"),
+            "ring slot is taken by Ring of Protection +1 and Ring of Feather Falling",
+        );
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    fn equipment_panel_row(root: &Path, name: &str) -> HeldEquipmentCopyDto {
+        let held = list_held_equipment_at_root(root).unwrap();
+        held.iter().find(|row| row.name == name).unwrap_or_else(|| panic!("{name} not in {held:?}")).clone()
+    }
+
+    /// Each row says where its copy is: worn by slot, the second one-handed weapon in the off hand,
+    /// and a carried copy with the slot it would take.
+    #[test]
+    fn equipment_panel_every_held_copy_says_where_it_is() {
+        let root = slot_conflict_character("equipment-panel-places", &["Helm of Brilliance", "Hat of Disguise", "Dagger (Base)"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
+
+        let place = |name: &str| {
+            let row = equipment_panel_row(&root, name);
+            (row.active_state, row.slot)
+        };
+        assert_eq!(place("Helm of Brilliance"), (ActiveStateDto::EquippedActive, BodySlot::Head));
+        assert_eq!(place("Hat of Disguise"), (ActiveStateDto::SelectedInactive, BodySlot::Head));
+        assert_eq!(place("Longsword"), (ActiveStateDto::EquippedActive, BodySlot::WieldMain));
+        assert_eq!(place("Dagger"), (ActiveStateDto::EquippedActive, BodySlot::WieldOff));
+
+        set_equipment_active_state_at_root(&root, "Dagger (Base)", ActiveState::SelectedInactive, "2026-11-03T00:00:00Z").unwrap();
+        assert_eq!(place("Dagger").0, ActiveStateDto::SelectedInactive);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Creation's `power_attack` selection is a feat toggle the engine requires carried, not an item:
+    /// offering Equip on it, or Sell on the Market, would offer to break the character.
+    #[test]
+    fn equipment_panel_the_feat_toggle_is_not_a_held_item() {
+        let root = slot_conflict_character("equipment-panel-toggle", &[]);
+        assert!(held_selections(&root).iter().any(|selection| selection.item_id == "power_attack"), "the seed holds it");
+        let held = list_held_equipment_at_root(&root).unwrap();
+        assert!(held.iter().all(|row| row.item_id != "power_attack"), "{held:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The panel lists copies, so its action names the one clicked: with a plain Dagger first, Equip
+    /// on the `+1` moves the `+1`.
+    #[test]
+    fn equipment_panel_a_state_change_moves_the_copy_it_names() {
+        let root = fund_and_seed("equipment-panel-copy", 300_000);
+        let at = "2026-11-03T00:00:00Z";
+        for bonus in [None, Some(1)] {
+            let bought = purchase_equipment_offer_at_root(&root, "Dagger (Base)", ActiveState::SelectedInactive, at, PriceMode::Cashless, bonus).unwrap();
+            assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "{bought:?}");
+        }
+        let state = |name: &str| equipment_panel_row(&root, name).active_state;
+
+        let worn = set_equipment_copy_state_at_root(&root, "Dagger (Base)", Some(1), ActiveState::EquippedActive, at).unwrap();
+        assert_worn(&worn);
+        assert_eq!(state("+1 Dagger"), ActiveStateDto::EquippedActive);
+        assert_eq!(state("Dagger"), ActiveStateDto::SelectedInactive);
+
+        set_equipment_copy_state_at_root(&root, "Dagger (Base)", Some(1), ActiveState::SelectedInactive, at).unwrap();
+        assert_eq!(state("+1 Dagger"), ActiveStateDto::SelectedInactive);
+        assert_eq!(state("Dagger"), ActiveStateDto::SelectedInactive);
+
+        let missing = set_equipment_copy_state_at_root(&root, "Dagger (Base)", Some(3), ActiveState::EquippedActive, at);
+        assert_eq!(missing.unwrap_err(), "'Dagger (Base)' cannot change state: this character does not carry a +3 one");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A named copy meets the same slot check: the refusal is the word-for-word message, and
+    /// nothing moves.
+    #[test]
+    fn equipment_panel_a_named_copy_meets_the_slot_refusal() {
+        let root = slot_conflict_character("equipment-panel-refused", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let refused = set_equipment_copy_state_at_root(&root, "Hat of Disguise", Some(0), ActiveState::EquippedActive, "2026-11-03T00:00:00Z").unwrap();
+        assert_slot_refused(&refused, "head slot is taken by Helm of Brilliance");
+        assert_eq!(equipment_panel_row(&root, "Hat of Disguise").active_state, ActiveStateDto::SelectedInactive);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_stowing_frees_the_slot() {
+        let root = slot_conflict_character("slot-conflict-stow", &["Helm of Brilliance", "Hat of Disguise"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        set_equipment_active_state_at_root(&root, "Helm of Brilliance", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z")
+            .expect("stowing should not error");
+        assert_worn(&slot_conflict_wear(&root, "Hat of Disguise"));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A shield fills the shield slot and the off hand, so it meets a second shield and an off-hand
+    /// weapon; a one-handed weapon takes the main hand, then the off hand.
+    #[test]
+    fn slot_conflict_shields_take_the_shield_slot_and_the_off_hand() {
+        let root = slot_conflict_character(
+            "slot-conflict-shields",
+            &["Shield (Heavy/Steel)", "Shield (Light/Steel)", "Dagger (Base)"],
+        );
+        assert_worn(&slot_conflict_wear(&root, "Shield (Heavy/Steel)"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Shield (Light/Steel)"), "shield slot is taken by Shield (Heavy/Steel)");
+        assert_slot_refused(&slot_conflict_wear(&root, "Dagger (Base)"), "main hand slot is taken by Longsword");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_a_shield_is_refused_when_a_weapon_holds_the_off_hand() {
+        let root = slot_conflict_character("slot-conflict-off-hand", &["Dagger (Base)", "Shield (Heavy/Steel)"]);
+        assert_worn(&slot_conflict_wear(&root, "Dagger (Base)"));
+        assert_slot_refused(&slot_conflict_wear(&root, "Shield (Heavy/Steel)"), "off hand slot is taken by Dagger");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Longsword in the main hand refuses them until it is stowed
+    /// (`no_required_gear_a_bought_greatsword_goes_in_hand_once_the_longsword_is_stowed`);
+    /// `slot_conflict_the_check_over_slots_alone` holds the rest.
+    #[test]
+    fn slot_conflict_a_two_handed_weapon_is_refused_beside_the_longsword() {
+        for weapon in ["Greatsword (Base)", "Longbow (Base)", "Blackaxe"] {
+            let root = slot_conflict_character("slot-conflict-two-handed", &[weapon]);
+            assert_slot_refused(&slot_conflict_wear(&root, weapon), "main hand slot is taken by Longsword");
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
+    /// Each way a row reaches its hands: stated, by a stand-in, by a tag, by the kind of weapon, by
+    /// the catalog's tags on a derived row with none of its own. And a book line of none.
+    #[test]
+    fn slot_conflict_each_shape_of_item_reaches_its_slot() {
+        for (item, want) in [
+            ("item:longsword", BodySlot::WieldMain),
+            ("Dagger (Base)", BodySlot::WieldMain),
+            ("Battleaxe", BodySlot::WieldMain),
+            ("Greatsword (Base)", BodySlot::WieldTwoHanded),
+            ("Blackaxe", BodySlot::WieldTwoHanded),
+            ("Flail (Heavy)", BodySlot::WieldTwoHanded),
+            ("Falchion", BodySlot::WieldTwoHanded),
+            ("Longbow (Base)", BodySlot::WieldTwoHanded),
+            ("Crossbow (Light)", BodySlot::WieldTwoHanded),
+            ("Hand Crossbow (Base)", BodySlot::WieldMain),
+            ("Dagger (Adamantine)", BodySlot::WieldMain),
+            ("Mithral Shirt", BodySlot::Armor),
+            ("item:chain_shirt", BodySlot::Armor),
+            ("Darkwood Shield", BodySlot::Shield),
+            ("Quickdraw Shield (Light/Steel)", BodySlot::Shield),
+            ("Madu (Leather)", BodySlot::Shield),
+            ("Hat of Disguise", BodySlot::Head),
+            ("Rod (Python)", BodySlot::None),
+            ("Arrow (Base)", BodySlot::None),
+            ("Rope (Hemp/50 ft.)", BodySlot::None),
+            ("no such item", BodySlot::None),
+        ] {
+            assert_eq!(body_slot_of_item(item).unwrap(), want, "{item}");
+        }
+    }
+
+    /// A rod tagged `Weapon` whose book line says `Slot: none` fills no hand, however many are held.
+    #[test]
+    fn slot_conflict_a_slot_none_weapon_rod_is_never_refused() {
+        let root = slot_conflict_character("slot-conflict-rod", &["Rod (Python)", "Rod (Python)", "Rod (Python)"]);
+        for _ in 0..3 {
+            assert_worn(&slot_conflict_wear(&root, "Rod (Python)"));
+        }
+        assert_eq!(slot_conflict_worn_count(&root, "Rod (Python)"), 3);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A save that already holds what the check would refuse stays as saved: nothing is moved on
+    /// load, and the over-full slot can still be emptied.
+    #[test]
+    fn slot_conflict_a_saved_over_full_slot_stays_and_can_be_stowed() {
+        let root = slot_conflict_character("slot-conflict-legacy", &[]);
+        for item in ["Helm of Brilliance", "Hat of Disguise"] {
+            add_equipment_selection_at_root(&root, item, ActiveState::EquippedActive, LEVEL_UP_TEST_SAVED_AT).unwrap();
+        }
+        assert_eq!(slot_conflict_worn_count(&root, "Helm of Brilliance"), 1);
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        set_equipment_active_state_at_root(&root, "Hat of Disguise", ActiveState::SelectedInactive, "2026-11-02T00:00:00Z")
+            .expect("stowing should not error");
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The whole shelf, not the named items: a row whose id finds no record reads as no slot and
+    /// would be carried forever. Every armor and shield has a slot, and a weapon row has none only
+    /// as ammunition or by the book's own line.
+    #[test]
+    fn slot_conflict_every_market_row_finds_its_record() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let started = std::time::Instant::now();
+        crate::corpus_full::full_corpus_bundle();
+        eprintln!("whole-corpus first load: {:?}", started.elapsed());
+        let package = codex::rules_core::corpus_loader::live_sheet_rules().expect("the package loads");
+        let mut no_record = Vec::new();
+        let mut rows = 0;
+        for category in [
+            MarketCategory::Weapon,
+            MarketCategory::Armor,
+            MarketCategory::Shield,
+            MarketCategory::Gear,
+            MarketCategory::MagicItem,
+        ] {
+            for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                rows += 1;
+                let id = package.find("equipment", &codex::rules_core::sheet_rule::slug(&row.entry.key));
+                let Some(id) = id else {
+                    no_record.push(row.entry.key);
+                    continue;
+                };
+                // Only the arms lists need the hands, which is what takes the time.
+                if !matches!(category, MarketCategory::Weapon | MarketCategory::Armor | MarketCategory::Shield) {
+                    continue;
+                }
+                let slot = body_slot_of_item(&row.entry.key).unwrap();
+                if slot != BodySlot::None {
+                    continue;
+                }
+                let tagged_ammunition =
+                    row.entry.types.iter().any(|tag| matches!(tag.as_str(), "Ammunition" | "Ammo" | "Stack"));
+                let book_says_none = package.rule(id).expect("found by id").prose.iter().any(|segment| {
+                    segment.pieces.iter().any(|piece| {
+                        matches!(piece, codex::rules_core::sheet_rule::ProsePiece::Text(text) if text.starts_with("Slot:"))
+                    })
+                });
+                assert!(matches!(category, MarketCategory::Weapon), "{category:?} {} has no slot", row.entry.key);
+                assert!(tagged_ammunition || book_says_none, "{} has no slot and no reason", row.entry.key);
+            }
+        }
+        eprintln!("market rows: {rows}; no record: {no_record:?}");
+        assert_eq!(no_record, ["Dust Knuckles.FORGET", "False Face.FORGET"], "the two rows a later book retires");
+    }
+
+    fn slot_conflict_buy(root: &Path, item_id: &str) -> PurchaseEquipmentResponse {
+        purchase_equipment_offer_at_root(root, item_id, ActiveState::EquippedActive, "2026-11-02T00:00:00Z", PriceMode::Cashless, None)
+            .expect("the purchase should not error")
+    }
+
+    #[test]
+    fn slot_conflict_a_bought_helmet_is_worn_when_the_head_is_free() {
+        let root = slot_conflict_character("slot-conflict-buy-free", &[]);
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Hat of Disguise") else {
+            panic!("the buy should go through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
+        assert_eq!(carried_reason, None);
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    #[test]
+    fn slot_conflict_a_bought_helmet_stays_carried_when_the_head_is_held() {
+        let root = slot_conflict_character("slot-conflict-buy-held", &["Helm of Brilliance"]);
+        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Hat of Disguise") else {
+            panic!("the buy should go through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason.as_deref(), Some("head slot is taken by Helm of Brilliance"));
+        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0, "bought, and carried");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// R18: an item with no slot is carried, even when the buy asks for worn.
+    #[test]
+    fn slot_conflict_a_bought_item_with_no_slot_is_carried() {
+        let root = slot_conflict_character("slot-conflict-buy-none", &[]);
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Rope (Hemp/50 ft.)") else {
+            panic!("the buy should go through");
+        };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
+        assert_eq!(carried_reason, None, "nothing refused it");
+        assert_eq!(slot_conflict_worn_count(&root, "Rope (Hemp/50 ft.)"), 0);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// `Absent` too: the derived flag is false for every state but
     /// `EquippedActive`, matching the engine's own parse-time derivation
     /// (`character_input.rs`, `matches!(active_state, EquippedActive)`).
@@ -11200,7 +18054,8 @@ mod tests {
             .explanations
             .iter()
             .map(|e| e.id.as_str())
-            .filter(|id| id.contains("talent") || id.contains("ledge"))
+            // `skill.total.knowledge_*` (E8.7) holds "ledge" too, and is no talent's record.
+            .filter(|id| !id.starts_with("skill.total.") && (id.contains("talent") || id.contains("ledge")))
             .collect();
         assert_eq!(talent_records, vec!["class_chassis.rogue.talent_choice"], "recognition only, value 0");
         assert_eq!(
@@ -11651,6 +18506,7 @@ mod tests {
                 equipment_record_key: "Special Ability ~ Spell Resistance / 13 ~ Armor".to_owned(),
                 category: "Equipmods".to_owned(),
                 armor_class_bonus: None,
+                armor_class_enhancement: None,
                 max_dex: None,
                 spell_failure: None,
                 armor_check_penalty: None,
@@ -11809,6 +18665,8 @@ mod tests {
                 unresolved_equipment_item_ids: Vec::new(),
             }),
             money: money_dto_from_total(0),
+            active_state: ActiveStateDto::SelectedInactive,
+            carried_reason: Some("head slot is taken by Hat of Disguise".to_owned()),
         };
 
         let value = serde_json::to_value(&response).expect("response should serialize");
@@ -11817,9 +18675,172 @@ mod tests {
         assert_eq!(object.get("kind").and_then(|v| v.as_str()), Some("Purchased"));
         assert!(object.contains_key("corpusDerived"), "{object:?}");
         assert!(!object.contains_key("corpus_derived"), "{object:?}");
+        assert_eq!(object.get("activeState").and_then(|v| v.as_str()), Some("SelectedInactive"));
+        assert_eq!(object.get("carriedReason").and_then(|v| v.as_str()), Some("head slot is taken by Hat of Disguise"));
     }
 
     // ----- `level_up_character` (Criterion 17) -----
+
+    // ----- `.pcg` import: a built `pcg_import` through the import path -----
+
+    fn pcg_repo_root() -> PathBuf {
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..")
+    }
+
+    /// The real binary, built by the root workspace, and the path Cargo reports for it. Once a run.
+    fn pcg_built_sidecar() -> PathBuf {
+        static BUILT: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+        BUILT
+            .get_or_init(|| {
+                let cargo = std::env::var("CARGO").unwrap_or_else(|_| "cargo".to_owned());
+                // This test binary's own target directory, so the libraries both workspaces share build once.
+                let exe = std::env::current_exe().unwrap();
+                let target_dir = exe.ancestors().nth(3).expect("<target>/debug/deps/<test binary>");
+                let output = std::process::Command::new(cargo)
+                    .current_dir(pcg_repo_root())
+                    .env("CARGO_TARGET_DIR", target_dir)
+                    .args(["build", "--locked", "-p", "codex-ingest", "--bin", "pcg_import", "--message-format=json-render-diagnostics"])
+                    .output()
+                    .expect("cargo runs");
+                assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
+                String::from_utf8_lossy(&output.stdout)
+                    .lines()
+                    .filter_map(|line| serde_json::from_str::<serde_json::Value>(line).ok())
+                    .filter(|message| message["target"]["name"] == "pcg_import")
+                    .find_map(|message| message["executable"].as_str().map(PathBuf::from))
+                    .expect("cargo names the binary it built")
+            })
+            .clone()
+    }
+
+    /// `scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg`: a real PCGen save that holds three
+    /// items Codex has no record of, with the money and the bio lines it does not hold rewritten in.
+    fn pcg_fixture_file(label: &str, rewrite: impl Fn(&str) -> String) -> PathBuf {
+        let text = std::fs::read_to_string(pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg")).unwrap();
+        let path = tempdir(label).join("fixture.pcg");
+        std::fs::write(&path, rewrite(&text)).unwrap();
+        path
+    }
+
+    fn pcg_import_via_sidecar(pcg_file: &Path, root: &Path) -> Result<ImportPcgResponse, String> {
+        import_pcg_with_sidecar(&pcg_built_sidecar(), pcg_file, &pcg_repo_root(), root, "imported", "2026-11-04T00:00:00Z", "0.0.0-test")
+    }
+
+    #[test]
+    fn pcg_sidecar_a_built_binary_saves_a_character_that_loads_with_its_bio_money_and_custom_records() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-file", |text| {
+            text.replace("MONEY:0", "MONEY:125.5").replace("PLAYERNAME:sd-33-r6-eqm", "PLAYERNAME:Todd\nGENDER:Female\nAGE:31")
+        });
+        let characters = tempdir("pcg-sidecar-root");
+        let root = characters.join("imported");
+
+        let response = pcg_import_via_sidecar(&pcg_file, &root).expect("the import runs");
+        let CreateCharacterResponse::Saved { summary, .. } = &response.outcome else {
+            panic!("the fixture computes: {:?}", response.outcome);
+        };
+        assert_eq!(summary.display_label, "E5R6 eqm combo");
+
+        // What `import_character` ignores reached the character's own files.
+        let bio = load_character_bio_at_root(&root).unwrap();
+        assert_eq!((bio.player_name.as_str(), bio.alignment.as_str(), bio.sex.as_str(), bio.age.as_str()), ("Todd", "Lawful Neutral", "Female", "31"));
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 12_550);
+        let custom = load_character_custom_at_root(&root).unwrap();
+        let items: Vec<&str> = custom.equipment.iter().map(|item| item.name.as_str()).collect();
+        assert_eq!(items, ["SD33R6 ~ Leather Dragonhide", "SD33R6 ~ Shield Spiked", "SD33R6 ~ Outfit Darkleaf"]);
+        assert!(custom.feats.iter().any(|feat| feat.name == "Biography"), "{:?}", custom.feats);
+
+        // It loads, and the Custom tab can save what the importer wrote.
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(loaded.summary.display_label, "E5R6 eqm combo");
+        assert!(loaded.snapshot.is_some(), "the sheet computes");
+        save_character_custom_at_root(&root, &custom, "2026-11-04T00:00:01Z").expect("the Custom tab saves an imported set");
+
+        // The report reaches the caller, every line of it named.
+        assert_eq!(response.report.source_file, "fixture.pcg");
+        assert_eq!(response.report.game_mode, "Pathfinder_RPG");
+        assert!(response.report.lines.iter().any(|line| line.key == "MONEY" && line.outcome == "mapped"), "{:?}", response.report.lines);
+        assert!(response.report.lines.iter().any(|line| line.outcome == "added"), "the Longsword row is reported");
+    }
+
+    #[test]
+    fn pcg_sidecar_a_character_with_no_money_writes_no_money_file() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-no-money", |text| text.to_owned());
+        let root = tempdir("pcg-sidecar-no-money-root").join("imported");
+        pcg_import_via_sidecar(&pcg_file, &root).expect("the import runs");
+        assert!(root.join("bio.json").exists());
+        assert!(!root.join(MONEY_FILE_NAME).exists());
+    }
+
+    #[test]
+    fn pcg_sidecar_a_file_the_engine_refuses_saves_nothing_and_still_reports() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-refused", |text| text.replace("CLASS:Fighter|LEVEL:1", "CLASS:Test Nothing|LEVEL:1"));
+        let root = tempdir("pcg-sidecar-refused-root").join("imported");
+        let response = pcg_import_via_sidecar(&pcg_file, &root).expect("the import runs");
+        assert!(matches!(response.outcome, CreateCharacterResponse::Blocked { .. }), "{:?}", response.outcome);
+        assert_eq!(response.report.unmapped_classes, ["Test Nothing 1"]);
+        assert!(!root.exists(), "nothing is left of a refused import");
+    }
+
+    #[test]
+    fn pcg_sidecar_a_file_the_converter_refuses_returns_its_reason() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-old", |_| "An old file\nwith no version line\n".to_owned());
+        let root = tempdir("pcg-sidecar-old-root").join("imported");
+        let error = pcg_import_via_sidecar(&pcg_file, &root).expect_err("no version line");
+        assert!(error.contains("fixture.pcg"), "{error}");
+        assert!(!root.exists());
+    }
+
+    #[test]
+    fn pcg_sidecar_missing_gives_a_named_error() {
+        let install = tempdir("pcg-sidecar-missing");
+        let error = pcg_sidecar_beside(&install.join("codex-desktop")).expect_err("no sidecar there");
+        assert!(error.contains("pcg_import"), "{error}");
+        assert!(error.contains("PCGen import tool"), "{error}");
+        assert!(error.contains(install.to_str().unwrap()), "{error}");
+    }
+
+    #[test]
+    fn pcg_sidecar_is_found_beside_the_app_under_its_bare_name() {
+        let install = tempdir("pcg-sidecar-found");
+        let sidecar = install.join(format!("pcg_import{}", std::env::consts::EXE_SUFFIX));
+        std::fs::write(&sidecar, b"").unwrap();
+        assert_eq!(pcg_sidecar_beside(&install.join("codex-desktop")).unwrap(), sidecar);
+    }
+
+    #[test]
+    fn pcg_sidecar_a_failed_file_write_leaves_no_half_imported_character() {
+        let pcg_file = pcg_fixture_file("pcg-sidecar-half", |text| text.to_owned());
+        let out = tempdir("pcg-sidecar-half-json").join("out.json");
+        run_pcg_sidecar(&pcg_built_sidecar(), &pcg_file, &pcg_repo_root(), &out).unwrap();
+        let mut file: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(&out).unwrap()).unwrap();
+        file["money"]["totalCopper"] = serde_json::json!(u64::MAX);
+        let root = tempdir("pcg-sidecar-half-root").join("imported");
+        let result = import_pcg_json(&file.to_string(), &root, "imported", "2026-11-04T00:00:00Z", "0.0.0-test");
+        assert!(result.is_err(), "a balance past what the file can hold is an error");
+        assert!(!root.exists(), "nothing is left of a failed import");
+    }
+
+    /// The bundler reads `externalBin` only under `--config`, so a plain `cargo test` never needs the
+    /// binary; every publish job builds it first and bundles with that config.
+    #[test]
+    fn pcg_sidecar_ships_from_all_three_publish_jobs_and_never_from_the_base_config() {
+        let conf = std::fs::read_to_string(pcg_repo_root().join("apps/desktop/src-tauri/tauri.conf.json")).unwrap();
+        assert!(!conf.contains("externalBin"), "tauri-build fails when an externalBin is absent");
+        let sidecar_conf = std::fs::read_to_string(pcg_repo_root().join("apps/desktop/src-tauri/tauri.sidecar.json")).unwrap();
+        let sidecar_conf: serde_json::Value = serde_json::from_str(&sidecar_conf).unwrap();
+        assert_eq!(sidecar_conf["bundle"]["externalBin"], serde_json::json!(["binaries/pcg_import"]));
+        let workflow = std::fs::read_to_string(pcg_repo_root().join(".github/workflows/publish-tester-release.yml")).unwrap();
+        let builds: Vec<&str> = workflow.lines().filter(|line| line.contains("run: npx tauri build")).collect();
+        assert_eq!(builds.len(), 3, "{builds:?}");
+        for build in &builds {
+            assert!(build.contains("--config src-tauri/tauri.sidecar.json"), "{build}");
+        }
+        for triple in ["x86_64-unknown-linux-gnu", "aarch64-apple-darwin", "x86_64-pc-windows-msvc"] {
+            assert!(workflow.contains(&format!("pcg_import-{triple}")), "{triple}");
+        }
+        let bin_builds = workflow.lines().filter(|line| line.contains("--bin pcg_import")).count();
+        assert_eq!(bin_builds, 3);
+    }
 
     fn tempdir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now()
@@ -12106,6 +19127,40 @@ mod tests {
         }
         let committed = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
         assert!(committed == live, "{} drifted from the live fold; rerun with CODEX_WRITE_F6B_WIRE=1", path.display());
+    }
+
+    /// E8.7: Alertness (CRB p.117) on the census Human Fighter 1 reaches the load response's
+    /// Perception and Sense Motive totals (+2 each, 0 ranks), and no other skill's. Ported from the
+    /// Skills panel's retired Alertness test, now end to end through the load.
+    #[test]
+    fn skill_totals_carry_alertness_on_perception_and_sense_motive_only() {
+        let fixture = codex::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let plain = codex::rules_core::class_seeds::input_for(&fixture, "fighter", 1);
+        let mut alert = plain.clone();
+        alert.chosen.selected_feats.retain(|f| f != "feat:power_attack");
+        alert.chosen.selected_feats.push("feat:alertness".to_owned());
+        for choice in alert.chosen.selected_choices.iter_mut() {
+            if choice.choice_set_id == "choice:level_1_character_feat" {
+                choice.selection_id = "feat:alertness".to_owned();
+            }
+        }
+        let totals = |tag: &str, input: CharacterInput| -> BTreeMap<String, i16> {
+            let loaded = load_saved_character_at_root(&saved_root_for(tag, input)).expect("loads");
+            loaded.explanations.iter().filter_map(|row| row.id.strip_prefix("skill.total.").map(|skill| (skill.to_owned(), row.value))).collect()
+        };
+        let before = totals("skill-totals-plain", plain);
+        let after = totals("skill-totals-alertness", alert);
+        assert_eq!(before.len(), 35, "one total per Skills panel row");
+        // A level-1 pick other than the seeded default leaves this build without a snapshot
+        // (`feat_choice.non_canonical`), so its Climb, Intimidate and Swim are the sum, not the
+        // engine's own total (which also takes the armor check penalty): those three are set apart.
+        let engine_totalled = ["climb", "intimidate", "swim"];
+        let moved: Vec<(&String, i16)> = after
+            .iter()
+            .filter(|(skill, value)| !engine_totalled.contains(&skill.as_str()) && before.get(*skill) != Some(*value))
+            .map(|(skill, value)| (skill, value - before[skill]))
+            .collect();
+        assert_eq!(moved, vec![(&"perception".to_owned(), 2), (&"sense_motive".to_owned(), 2)], "exactly the two skills Alertness names, +2 each");
     }
 
     #[test]
@@ -12992,12 +20047,25 @@ mod tests {
         let response = load_saved_character_at_root(&root).expect("saved rogue should load");
         let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
 
+        // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6) and one
+        // total per Skills panel row (E8.7), which are not the chassis's records.
+        let sheet_totals = ["hit_points.max", "speed.land"];
+        let (appended, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| {
+            row.id.starts_with("feats.budget.") || row.id.starts_with("skill.total.") || sheet_totals.contains(&row.id.as_str())
+        });
+        let budget: Vec<_> = appended.iter().filter(|row| row.id.starts_with("feats.budget.")).collect();
+        assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
+        let skill_totals = appended.iter().filter(|row| row.id.starts_with("skill.total.")).count();
+        assert_eq!(skill_totals, 35, "one total per Skills panel row");
+        for id in sheet_totals {
+            assert_eq!(appended.iter().filter(|row| row.id == id).count(), 1, "one {id} row");
+        }
         assert_eq!(
-            response.explanations.len(),
+            chassis.len(),
             engine.base.explanations.len(),
             "no explanation record may be dropped at the boundary"
         );
-        for (wire, engine_record) in response.explanations.iter().zip(&engine.base.explanations) {
+        for (wire, engine_record) in chassis.into_iter().zip(&engine.base.explanations) {
             assert_eq!(wire.id, engine_record.id);
             assert_eq!(wire.value, engine_record.value);
             assert_eq!(
@@ -13374,6 +20442,33 @@ mod tests {
         request.selected_alternate_trait_keys = vec!["Not A Real Trait".to_owned()];
         assert!(draft_level_up_preview_impl(&request, FIGHTER_CLASS_ID, 1).is_err(), "an unbuildable draft is an error");
     }
+
+    /// What was paid for leaves the machine with the character: an exported file holds each copy's
+    /// equipmods, on that copy, and a file written before the field existed still imports.
+    #[test]
+    fn market_buy_sell_an_export_and_import_keeps_what_each_copy_holds() {
+        let root = fund_and_seed("market-export", 1_000_000);
+        market_buy(&root, MARKET_SWORD, None, PriceMode::Standard);
+        market_buy(&root, MARKET_SWORD, Some(1), PriceMode::Standard);
+        let held_before = held_selections(&root);
+
+        let exported = export_character_to_json(&root).expect("export");
+        let imported = tempdir("market-import");
+        let response = import_character_from_json(&exported, &imported, "market-import-id", "2026-11-02T00:00:00Z", "test").expect("import");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+
+        let copies = |held: &[EquipmentSelection]| -> Vec<(String, Vec<String>)> {
+            held.iter().map(|s| (s.item_id.clone(), s.applied_modifiers.clone())).collect()
+        };
+        assert_eq!(copies(&held_selections(&imported)), copies(&held_before));
+
+        let plain = fund_and_seed("market-export-plain", 0);
+        let plain_file = export_character_to_json(&plain).expect("export");
+        assert!(!plain_file.contains("appliedModifiers"), "a character with no equipmod writes the file it always wrote");
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&imported).ok();
+        std::fs::remove_dir_all(&plain).ok();
+    }
 }
 
 
@@ -13579,6 +20674,42 @@ mod starter_seed_tests {
             .expect("Spellcraft allocated");
         let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
         assert_eq!(spellcraft + 3 + int_mod, 12, "Spellcraft 5 + 3 + 4");
+    }
+
+    /// Aldric Ironhand, Human Fighter 3: 2 level feats (1st, 3rd; CRB p.112), the human's 1 (p.21) and
+    /// the Fighter's 2 (1st, 2nd; p.55) hold his 3 seeded combat feats with 2 to spare.
+    #[test]
+    fn feat_budget_rows_of_aldric_reach_the_sheet() {
+        let app_data_dir = temp_app_data_dir("feat-budget-aldric");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let aldric = load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID)).expect("load");
+        let elowen = load_saved_character_at_root(&character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID)).expect("load");
+        let tomas = load_saved_character_at_root(&character_root(&app_data_dir, THIRD_SEED_CHARACTER_ID)).expect("load");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+
+        let pool_numbers = |loaded: &LoadSavedCharacterResponse, pool: &str| {
+            let row = |field: &str| loaded.explanations.iter().find(|row| row.id == format!("feats.budget.{pool}.{field}")).map(|row| row.value);
+            (row("granted"), row("spent"), row("remaining"))
+        };
+        assert_eq!(pool_numbers(&aldric, "level").0, Some(2));
+        assert_eq!(pool_numbers(&aldric, "racial").0, Some(1));
+        assert_eq!(pool_numbers(&aldric, "fighter_bonus_feat"), (Some(2), Some(2), Some(0)));
+        let remaining_total: i16 = ["level", "racial", "fighter_bonus_feat"].iter().filter_map(|p| pool_numbers(&aldric, p).2).sum();
+        assert_eq!(remaining_total, 2);
+
+        // Elowen, Human Wizard 5: 3 level, 1 racial, 1 wizard; her Weapon Focus is the baseline's.
+        assert_eq!(pool_numbers(&elowen, "level").0, Some(3));
+        assert_eq!(pool_numbers(&elowen, "racial").0, Some(1));
+        assert_eq!(pool_numbers(&elowen, "wizard_bonus_feat").0, Some(1));
+
+        // Tomas, Human Cleric 3 / Fighter 2: 3 level, 1 racial, 2 Fighter.
+        assert_eq!(pool_numbers(&tomas, "level").0, Some(3));
+        assert_eq!(pool_numbers(&tomas, "fighter_bonus_feat").0, Some(2));
+
+        for seed in [&aldric, &elowen, &tomas] {
+            let over: Vec<_> = seed.explanations.iter().filter(|r| r.id.ends_with(".remaining") && r.id.starts_with("feats.budget.") && r.value < 0).collect();
+            assert!(over.is_empty(), "no starter is over budget: {over:?}");
+        }
     }
 
     /// SD-36 F7a (F7-8): Aldric Ironhand, Human Fighter 3, Int 14 (+2).

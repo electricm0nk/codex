@@ -255,3 +255,81 @@ fn the_cyberpunk_corpus_and_a_starter_sheet_load_from_the_packaged_root(corpus: 
         assert_eq!(value(id), expected, "Nyx Calder's {id} under the packaged root");
     }
 }
+
+/// What a packaged app carries outside `bundle.resources`: the `.pcg` import sidecar and the
+/// print assets (`decisions.md §25`). The sidecar is an `externalBin` named only in
+/// `tauri.sidecar.json`, passed at bundling, because `tauri-build` refuses a missing `externalBin`
+/// and a plain `cargo build` has none. The four Liberation Sans faces and the two Typst templates are
+/// compiled into the binary (`print/typst.rs`), so no installer needs them as resources; a face or
+/// template left out of the `include_*!` list would print without it.
+#[test]
+fn the_sidecar_and_the_print_assets_reach_every_installer() {
+    let read = |relative: &str| {
+        fs::read_to_string(src_tauri().join(relative)).unwrap_or_else(|e| panic!("cannot read {relative}: {e}"))
+    };
+
+    // The sidecar config names exactly the import binary, and only it carries an `externalBin`.
+    let sidecar: serde_json::Value =
+        serde_json::from_str(&read("tauri.sidecar.json")).expect("tauri.sidecar.json parses");
+    assert_eq!(
+        sidecar["bundle"]["externalBin"],
+        serde_json::json!(["binaries/pcg_import"]),
+        "tauri.sidecar.json does not bundle the pcg_import sidecar"
+    );
+    let conf: serde_json::Value = serde_json::from_str(&read("tauri.conf.json")).expect("tauri.conf.json parses");
+    assert!(
+        conf["bundle"].get("externalBin").is_none(),
+        "tauri.conf.json names an externalBin: every plain cargo build would fail on the missing binary"
+    );
+
+    // The bundled name is a binary the ingest crate builds and the name the app looks up beside itself.
+    assert!(
+        src_tauri().join("../../../crates/codex-ingest/src/bin/pcg_import.rs").is_file(),
+        "codex-ingest builds no pcg_import binary for the sidecar"
+    );
+    assert!(
+        read("src/character_hub.rs").contains(r#"format!("pcg_import{}", std::env::consts::EXE_SUFFIX)"#),
+        "the app does not look up the sidecar under the name tauri.sidecar.json installs"
+    );
+
+    // Every release job builds the binary under its target-triple name and bundles with the config.
+    let workflow = read("../../../.github/workflows/publish-tester-release.yml");
+    let builds: Vec<&str> = workflow.lines().filter(|l| l.contains("npx tauri build")).collect();
+    assert_eq!(builds.len(), 3, "publish-tester-release.yml has {} tauri build jobs, not Linux, macOS and Windows", builds.len());
+    for line in &builds {
+        assert!(
+            line.contains("--config src-tauri/tauri.sidecar.json"),
+            "a release job bundles without the sidecar config: {}",
+            line.trim()
+        );
+    }
+    let copies = workflow
+        .lines()
+        .filter(|l| l.trim_start().starts_with("cp ") && l.contains("apps/desktop/src-tauri/binaries/pcg_import-"))
+        .count();
+    assert_eq!(copies, builds.len(), "a release job bundles without placing the pcg_import-<triple> binary");
+
+    // Every font face and template on disk is compiled in, and every compiled-in path exists.
+    let typst = read("src/print/typst.rs");
+    let compiled: Vec<String> = typst
+        .split("include_")
+        .skip(1)
+        .filter_map(|rest| rest.split('"').nth(1))
+        .filter_map(|path| path.strip_prefix("../../"))
+        .map(str::to_owned)
+        .collect();
+    let mut on_disk: Vec<String> = Vec::new();
+    for (dir, extension) in [("resources/fonts", "ttf"), ("resources/print", "typ")] {
+        for entry in fs::read_dir(src_tauri().join(dir)).unwrap_or_else(|e| panic!("cannot list {dir}: {e}")) {
+            let path = entry.expect("entry").path();
+            if path.extension().and_then(|e| e.to_str()) == Some(extension) {
+                on_disk.push(format!("{dir}/{}", path.file_name().unwrap().to_str().unwrap()));
+            }
+        }
+    }
+    on_disk.sort();
+    let mut compiled_sorted = compiled.clone();
+    compiled_sorted.sort();
+    assert_eq!(compiled_sorted, on_disk, "print/typst.rs does not compile in exactly the fonts and templates on disk");
+    assert_eq!(on_disk.len(), 6, "four Liberation Sans faces and two templates");
+}

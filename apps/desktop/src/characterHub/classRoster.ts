@@ -25,6 +25,7 @@
 import { useSyncExternalStore } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from '../boundary/runtime';
+import { installFeatLevels } from './characterProgression';
 import { CLASS_OPTIONS_FALLBACK, type ClassOption } from './characterHubModel';
 import {
   getClassCatalog,
@@ -234,11 +235,16 @@ export async function loadClassCreationRoster(): Promise<ClassCreationRosterResp
   }
 }
 
+/** Invokes `list_feat_levels`. No desktop runtime, no list: the roster's own failure says why. */
+async function loadFeatLevels(): Promise<number[]> {
+  return hasTauriRuntime() ? invoke<number[]>('list_feat_levels') : [];
+}
+
 let inflight: Promise<void> | null = null;
 
 /**
- * Loads the roster once per session and installs the outcome: the roster, or the fallback with
- * the failure as its notice. Later calls return the same promise; `reload` asks again.
+ * Loads the roster and the engine's feat levels once per session and installs the outcome: both, or
+ * the fallback with the failure as its notice. Later calls return the same promise; `reload` asks again.
  */
 export function ensureClassRosterLoaded(
   loader: () => Promise<ClassCreationRosterResponse> = loadClassCreationRoster,
@@ -247,8 +253,11 @@ export function ensureClassRosterLoaded(
   if (inflight && !options.reload) {
     return inflight;
   }
-  inflight = loader().then(
-    (response) => installClassRoster(response),
+  inflight = Promise.all([loader(), loadFeatLevels()]).then(
+    ([response, levels]) => {
+      installFeatLevels(levels);
+      installClassRoster(response);
+    },
     (cause: unknown) => installClassRosterFailure(formatError(cause))
   );
   return inflight;

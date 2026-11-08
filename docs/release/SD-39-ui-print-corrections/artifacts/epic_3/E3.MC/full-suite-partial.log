@@ -1,0 +1,49 @@
+
+> codex@0.19.0 ui-smoke
+> node scripts/ui-smoke/run.mjs
+
+App data root: /tmp/codex-ui-smoke-sd39-e3_mc-JXEidm/data/io.electricm0nk.codex (isolated; the real store /home/ubuntu/.local/share/io.electricm0nk.codex is never opened)
+Real store before: 15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf
+Launching app for agent 'sd39-e3.mc'...
+PASS  landing-render
+PASS  landing-ruleset-chips
+PASS  settings-tab-google-drive-disconnect
+PASS  landing-campaign-gate
+PASS  settings-open
+PASS  settings-tab-appearance
+PASS  settings-theme-select-and-manage-themes-modal
+PASS  settings-tab-google-drive
+PASS  settings-tab-update
+PASS  settings-tab-bug
+PASS  settings-tab-enhancement
+PASS  settings-tab-developer
+PASS  settings-close-esc
+PASS  settings-tab-google-drive-save
+PASS  equipment-catalog-open-and-search
+FAIL  equipment-catalog-chip-filter-and-back  -- target not found: 'Magic Items (no element named 'Magic Items')' at row step 2/3 (click "Magic Items")
+PASS  spell-catalog-open-and-search
+PASS  spell-catalog-chip-filter-and-back
+PASS  class-catalog-open-and-search
+PASS  class-catalog-back
+PASS  race-catalog-open-and-search
+PASS  race-catalog-alternate-traits-tab
+PASS  race-catalog-back
+PASS  monster-catalog-open-and-search
+PASS  monster-catalog-back
+PASS  companion-catalog-open-and-search
+PASS  companion-catalog-back
+PASS  intelligent-item-catalog-open-and-search
+PASS  intelligent-item-catalog-back
+PASS  corpus-ingest-diagnostic
+FAIL  create-character-render  -- select not found: 'character-class'
+PASS  create-character-fill-and-submit
+PASS  create-character-back
+FAIL  create-character-samurai  -- target not found: 'F4 Smoke Alpha (no element named 'F4 Smoke Alpha')' at row step 13/14 (click "F4 Smoke Alpha")
+run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app (auto-relaunch 1/3) and retrying 'create-character-magus'.
+FAIL  create-character-magus  -- target not found: 'F4 Smoke Bravo (no element named 'F4 Smoke Bravo')' at row step 13/14 (click "F4 Smoke Bravo")
+run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app (auto-relaunch 2/3) and retrying 'create-character-warrior'.
+FAIL  create-character-warrior  -- target not found: 'F4 Smoke Charlie (no element named 'F4 Smoke Charlie')' at row step 13/14 (click "F4 Smoke Charlie")
+run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app (auto-relaunch 3/3) and retrying 'sheet-f6a-samurai-weapons'.
+FAIL  sheet-f6a-samurai-weapons  -- target not found: 'F4 Smoke Alpha (no element named 'F4 Smoke Alpha')' at setup create-character-samurai step 13/14 (click "F4 Smoke Alpha")
+FAIL  sheet-f6a-warrior-weapons  -- target not found: 'F4 Smoke Charlie (no element named 'F4 Smoke Charlie')' at setup create-character-warrior step 13/14 (click "F4 Smoke Charlie")
+FAIL  sheet-f6a-magus-caster-level  -- target not found: 'F4 Smoke Bravo (no element named 'F4 Smoke Bravo')' at setup create-character-magus step 13/14 (click "F4 Smoke Bravo")

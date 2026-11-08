@@ -1,0 +1,2 @@
+# pcg_import --data-root over the 63 converted fixtures of 65: a tree shaped as tauri.conf.json maps the resources (resources/corpus_bundle as data/corpus) against the checkout
+same 63 diff 0; 2 refused in both (none_PdfBuster, none_derth)

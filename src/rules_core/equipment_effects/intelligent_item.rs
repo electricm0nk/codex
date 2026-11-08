@@ -8,7 +8,7 @@
 //! PCGen's corpus these are represented as a chain of `equipmods`-category
 //! records the item's own catalog entry customizes with
 //! (`CUSTOMIZATION:EQMOD=`, the same `applied_modifiers` attachment
-//! `equipmods.rs`'s `resolve_weapon_to_hit_bonus` already reads --
+//! `equipmods.rs`'s `attached_weapon_enhancement` already reads --
 //! `character_input::EquipmentSelection::applied_modifiers`'s own doc
 //! comment), gated behind a mandatory `Intelligent Item ~ Base` prerequisite
 //! (`PRETYPE:1,EQMOD=Intelligent Item ~ Base` on every other record in this

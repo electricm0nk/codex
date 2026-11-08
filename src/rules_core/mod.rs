@@ -1,6 +1,7 @@
 //! Headless rules-core surfaces.
 
 pub mod archetype_resolver;
+pub mod body_slots;
 pub mod character_input;
 pub mod class_census;
 pub mod class_feature_pool_catalog;
@@ -30,6 +31,7 @@ pub mod equipment_effects;
 pub mod equipment_record;
 pub mod equipment_resolver;
 pub mod equipment_types;
+pub mod feat_budget;
 pub mod feat_effects;
 pub mod feat_identity;
 pub mod feat_prereqs;

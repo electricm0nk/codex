@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ui_equip_arms_armor.lst, KEY: Wrist Launcher
+Wrist Launcher			KEY:Wrist Launcher		PROFICIENCY:WEAPON|Crossbow (Hand)												TYPE:Weapon.Resizable.Exotic.Ranged.Standard.Piercing.Container.Projectile.Blowgun									CONTAINS:UNLIM|Dart=1	COST:200	WT:1														EQMOD:Material ~ Steel.Material ~ Leather																	WIELD:Light										RANGE:20	SIZE:M	SOURCEPAGE:p.232																							SPROP:Full-round action to reloaded, Sleight of Hand check to keep concealed after firing.

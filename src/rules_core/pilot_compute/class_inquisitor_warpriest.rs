@@ -1537,8 +1537,8 @@ mod inquisitor_dispatch_widening_safety_tests {
         // (`apg_abilities_globalvar.lst:340`) is the Simple tier plus
         // `AUTO:WEAPONPROF|Crossbow (Hand)|Longbow|Crossbow (Repeating
         // Heavy)|Crossbow (Repeating Light)|Shortbow` and
-        // `AUTO:WEAPONPROF|DEITYWEAPONS` -- no Longsword, and no deity is
-        // modelled, so this baseline's Longsword owes the -4. The
+        // `AUTO:WEAPONPROF|DEITYWEAPONS` -- no Longsword, and this fixture
+        // records no deity, so this baseline's Longsword owes the -4. The
         // Judgment bonus itself is unaffected, which is exactly what this
         // test still guards.
         assert_eq!(

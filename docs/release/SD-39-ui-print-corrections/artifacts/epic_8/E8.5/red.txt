@@ -1,0 +1,453 @@
+$ cargo test --locked -j 8 print_golden -- --test-threads=8   (golden fixture empty: {})
+    --> src/character_hub.rs:1179:38
+     |
+1179 |     add_equipment_selection_at_root, add_feat_selection_at_root, add_spell_selection_at_root,
+     |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+  --> src/characterHub/recomputeCharacter.rs:26:23
+   |
+26 | use std::path::{Path, PathBuf};
+   |                       ^^^^^^^
+    --> src/character_hub.rs:1469:10
+     |
+1469 | pub enum SavedCharacterMutationOp {
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+    --> src/character_hub.rs:1480:12
+     |
+1480 | pub struct SavedCharacterMutationOpDescriptor {
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:1504:11
+     |
+1504 | pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescriptor; 6] = [
+     |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:2543:15
+     |
+2543 | pub(crate) fn seed_default_characters_at(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:3349:15
+     |
+3349 | pub(crate) fn purchase_equipment_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:3515:15
+     |
+3515 | pub(crate) fn purchase_equipment_priced_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:3706:15
+     |
+3706 | pub(crate) fn attach_equipment_modifier_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:4485:15
+     |
+4485 | pub(crate) fn apply_remove_equipment_selection(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:4500:15
+     |
+4500 | pub(crate) fn remove_equipment_selection_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:4520:15
+     |
+4520 | pub(crate) fn remove_equipment_selection_priced_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:4544:15
+     |
+4544 | pub(crate) fn sell_equipment_copy_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    --> src/character_hub.rs:4968:15
+     |
+4968 | pub(crate) fn set_equipment_copy_state_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   --> src/class_catalog_generic.rs:131:9
+    |
+120 | pub struct GenericClassRecord {
+    |            ------------------ fields in this struct
+...
+131 |     pub slug: String,
+    |         ^^^^
+132 |     pub max_level: u8,
+    |         ^^^^^^^^^
+   --> src/corpus_ingest_diagnostic.rs:723:4
+    |
+723 | fn live_on_disk_record_count(book_corpus_dir: &Path) -> u32 {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  --> src/equipment_catalog.rs:96:8
+   |
+96 | pub fn equipment_catalog_books() -> Vec<&'static str> {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^
+   --> src/feat_catalog.rs:291:8
+    |
+291 | pub fn feat_description_by_exact_name(name: &str) -> Option<String> {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   --> src/intelligent_item_catalog.rs:378:4
+    |
+378 | fn load_record_rows(repo_root: &Path) -> Vec<RecordRow> {
+    |    ^^^^^^^^^^^^^^^^
+    --> src/pf1_adapter.rs:1400:15
+     |
+1400 | pub(crate) fn add_feat_selection_at_root(
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+   --> src/reference_library_catalog.rs:130:4
+    |
+130 | fn repo_root() -> PathBuf {
+    |    ^^^^^^^^^
+  --> src/rule_system_adapter.rs:64:12
+   |
+64 | pub struct ClassLevelDelta {
+   |            ^^^^^^^^^^^^^^^
+  --> src/rule_system_adapter.rs:77:8
+   |
+72 | pub trait RuleSystemAdapter {
+   |           ----------------- methods in this trait
+...
+77 |     fn rule_system_id(&self) -> &'static str;
+   |        ^^^^^^^^^^^^^^
+...
+83 |     fn chassis_resolve(&self, input: &CharacterInput) -> PilotBaseChassisComputation;
+   |        ^^^^^^^^^^^^^^^
+...
+88 |     fn level_up(&self, character: &CharacterInput, deltas: &[ClassLevelDelta]) -> LevelUpPlan;
+   |        ^^^^^^^^
+  --> src/sf_catalog.rs:49:15
+   |
+48 | impl SfCatalogKind {
+   | ------------------ associated constant in this implementation
+49 |     pub const ALL: [SfCatalogKind; 6] = [
+   |               ^^^
+  --> src/spell_catalog.rs:92:7
+   |
+92 | const BOOK_CRB: &str = "CRB";
+   |       ^^^^^^^^
+  --> src/spell_catalog.rs:93:7
+   |
+93 | const BOOK_APG: &str = "APG";
+   |       ^^^^^^^^
+  --> src/spell_catalog.rs:94:7
+   |
+94 | const BOOK_ACG: &str = "ACG";
+   |       ^^^^^^^^
+  --> src/spell_catalog.rs:95:7
+   |
+95 | const BOOK_ARG: &str = "ARG";
+   |       ^^^^^^^^
+  --> src/spell_catalog.rs:96:7
+   |
+96 | const BOOK_UI: &str = "UI";
+   |       ^^^^^^^
+  --> src/spell_catalog.rs:97:7
+   |
+97 | const BOOK_UM: &str = "UM";
+   |       ^^^^^^^
+  --> src/spell_catalog.rs:98:7
+   |
+98 | const BOOK_OA: &str = "OA";
+   |       ^^^^^^^
+  --> src/spell_catalog.rs:99:7
+   |
+99 | const BOOK_UC: &str = "UC";
+   |       ^^^^^^^
+   --> src/spell_catalog.rs:100:7
+    |
+100 | const BOOK_ISG: &str = "ISG";
+    |       ^^^^^^^^
+   --> src/spell_catalog.rs:101:7
+    |
+101 | const BOOK_UW: &str = "UW";
+    |       ^^^^^^^
+   --> src/spell_catalog.rs:104:7
+    |
+104 | const BOOK_AG: &str = "AG";
+    |       ^^^^^^^
+   --> src/spell_catalog.rs:108:7
+    |
+108 | const BOOK_ISF: &str = "ISF";
+    |       ^^^^^^^^
+   --> src/spell_catalog.rs:112:7
+    |
+112 | const BOOK_ISM: &str = "ISM";
+    |       ^^^^^^^^
+   --> src/spell_catalog.rs:116:7
+    |
+116 | const BOOK_ISTEM: &str = "ISTEM";
+    |       ^^^^^^^^^^
+   --> src/spell_catalog.rs:120:7
+    |
+120 | const BOOK_HA: &str = "HA";
+    |       ^^^^^^^
+   --> src/spell_catalog.rs:124:7
+    |
+124 | const BOOK_B1: &str = "B1";
+    |       ^^^^^^^
+   --> src/spell_catalog.rs:125:7
+    |
+125 | const BOOK_B4: &str = "B4";
+    |       ^^^^^^^
+   --> src/spell_catalog.rs:126:7
+    |
+126 | const BOOK_BOTD1: &str = "BOTD1";
+    |       ^^^^^^^^^^
+   --> src/spell_catalog.rs:127:7
+    |
+127 | const BOOK_BOTD2: &str = "BOTD2";
+    |       ^^^^^^^^^^
+   --> src/spell_catalog.rs:128:7
+    |
+128 | const BOOK_ISI: &str = "ISI";
+    |       ^^^^^^^^
+   --> src/spell_catalog.rs:129:7
+    |
+129 | const BOOK_ISR: &str = "ISR";
+    |       ^^^^^^^^
+   --> src/spell_catalog.rs:130:7
+    |
+130 | const BOOK_ISWG: &str = "ISWG";
+    |       ^^^^^^^^^
+   --> src/spell_catalog.rs:131:7
+    |
+131 | const BOOK_MC: &str = "MC";
+    |       ^^^^^^^
+   --> src/spell_catalog.rs:132:7
+    |
+132 | const BOOK_MYTHIC: &str = "MYTHIC";
+    |       ^^^^^^^^^^^
+   --> src/spell_catalog.rs:133:7
+    |
+133 | const BOOK_UE: &str = "UE";
+    |       ^^^^^^^
+   --> src/spell_catalog.rs:134:7
+    |
+134 | const BOOK_UMWP: &str = "UMWP";
+    |       ^^^^^^^^^
+   --> src/spell_catalog.rs:302:4
+    |
+302 | fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:314:4
+    |
+314 | fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:326:4
+    |
+326 | fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:342:4
+    |
+342 | fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:364:4
+    |
+364 | fn map_um_entry(entry: &ultimate_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:376:4
+    |
+376 | fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:392:4
+    |
+392 | fn map_oa_entry(entry: &occult_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:408:4
+    |
+408 | fn map_uc_entry(entry: &ultimate_combat::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:425:4
+    |
+425 | fn map_isg_entry(entry: &inner_sea_gods::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:443:4
+    |
+443 | fn map_uw_entry(entry: &ultimate_wilderness::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:459:4
+    |
+459 | fn map_ag_entry(entry: &adventurers_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:477:4
+    |
+477 | fn map_isf_entry(entry: &inner_sea_faiths::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:492:4
+    |
+492 | fn map_ism_entry(entry: &inner_sea_magic::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:507:4
+    |
+507 | fn map_istem_entry(entry: &inner_sea_temples::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:523:4
+    |
+523 | fn map_ha_entry(entry: &horror_adventures::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:538:4
+    |
+538 | fn map_b1_entry(entry: &bestiary::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:549:4
+    |
+549 | fn map_b4_entry(entry: &bestiary_4::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:560:4
+    |
+560 | fn map_botd1_entry(
+    |    ^^^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:573:4
+    |
+573 | fn map_botd2_entry(
+    |    ^^^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:586:4
+    |
+586 | fn map_isi_entry(entry: &inner_sea_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:597:4
+    |
+597 | fn map_isr_entry(entry: &inner_sea_races::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:608:4
+    |
+608 | fn map_iswg_entry(
+    |    ^^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:621:4
+    |
+621 | fn map_mc_entry(entry: &monster_codex::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:632:4
+    |
+632 | fn map_mythic_entry(
+    |    ^^^^^^^^^^^^^^^^
+   --> src/spell_catalog.rs:645:4
+    |
+645 | fn map_ue_entry(entry: &ultimate_equipment::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    |    ^^^^^^^^^^^^
+   --> src/spell_catalog.rs:656:4
+    |
+656 | fn map_umwp_entry(
+    |    ^^^^^^^^^^^^^^
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 30s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/codex_desktop-346f4bf97ce644fa)
+running 24 tests
+test print::print_golden::cpr_letter_none ... FAILED
+test print::print_golden::cpr_a4_spellbook ... FAILED
+test print::print_golden::cpr_a4_none ... FAILED
+test print::print_golden::cpr_letter_spellbook ... FAILED
+test print::print_golden::cpr_letter_all ... FAILED
+test print::print_golden::cpr_letter_math ... FAILED
+test print::print_golden::cpr_a4_all ... FAILED
+test print::print_golden::cpr_a4_math ... FAILED
+test print::print_golden::pf1e_a4_none ... FAILED
+test print::print_golden::pf1e_letter_none ... FAILED
+test print::print_golden::pf1e_a4_spellbook ... FAILED
+test print::print_golden::pf1e_letter_spellbook ... FAILED
+test print::print_golden::pf1e_a4_all ... FAILED
+test print::print_golden::pf1e_letter_all ... FAILED
+test print::print_golden::pf1e_a4_math ... FAILED
+test print::print_golden::pf1e_letter_math ... FAILED
+test print::print_golden::sf1e_a4_none ... FAILED
+test print::print_golden::sf1e_a4_spellbook ... FAILED
+test print::print_golden::sf1e_letter_none ... FAILED
+test print::print_golden::sf1e_letter_all ... FAILED
+test print::print_golden::sf1e_a4_all ... FAILED
+test print::print_golden::sf1e_letter_spellbook ... FAILED
+test print::print_golden::sf1e_a4_math ... FAILED
+test print::print_golden::sf1e_letter_math ... FAILED
+failures:
+---- print::print_golden::cpr_letter_none stdout ----
+thread 'print::print_golden::cpr_letter_none' (2812759) panicked at src/print/print_golden.rs:188:49:
+cpr-letter-none: no golden entry in golden/print_golden.json
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+---- print::print_golden::cpr_a4_spellbook stdout ----
+thread 'print::print_golden::cpr_a4_spellbook' (2812756) panicked at src/print/print_golden.rs:188:49:
+cpr-a4-spellbook: no golden entry in golden/print_golden.json
+---- print::print_golden::cpr_a4_none stdout ----
+thread 'print::print_golden::cpr_a4_none' (2812755) panicked at src/print/print_golden.rs:188:49:
+cpr-a4-none: no golden entry in golden/print_golden.json
+---- print::print_golden::cpr_letter_spellbook stdout ----
+thread 'print::print_golden::cpr_letter_spellbook' (2812760) panicked at src/print/print_golden.rs:188:49:
+cpr-letter-spellbook: no golden entry in golden/print_golden.json
+---- print::print_golden::cpr_letter_all stdout ----
+thread 'print::print_golden::cpr_letter_all' (2812757) panicked at src/print/print_golden.rs:188:49:
+cpr-letter-all: no golden entry in golden/print_golden.json
+---- print::print_golden::cpr_letter_math stdout ----
+thread 'print::print_golden::cpr_letter_math' (2812758) panicked at src/print/print_golden.rs:188:49:
+cpr-letter-math: no golden entry in golden/print_golden.json
+---- print::print_golden::cpr_a4_all stdout ----
+thread 'print::print_golden::cpr_a4_all' (2812753) panicked at src/print/print_golden.rs:188:49:
+cpr-a4-all: no golden entry in golden/print_golden.json
+---- print::print_golden::cpr_a4_math stdout ----
+thread 'print::print_golden::cpr_a4_math' (2812754) panicked at src/print/print_golden.rs:188:49:
+cpr-a4-math: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_a4_none stdout ----
+thread 'print::print_golden::pf1e_a4_none' (2812821) panicked at src/print/print_golden.rs:188:49:
+pf1e-a4-none: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_letter_none stdout ----
+thread 'print::print_golden::pf1e_letter_none' (2812833) panicked at src/print/print_golden.rs:188:49:
+pf1e-letter-none: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_a4_spellbook stdout ----
+thread 'print::print_golden::pf1e_a4_spellbook' (2812822) panicked at src/print/print_golden.rs:188:49:
+pf1e-a4-spellbook: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_letter_spellbook stdout ----
+thread 'print::print_golden::pf1e_letter_spellbook' (2812834) panicked at src/print/print_golden.rs:188:49:
+pf1e-letter-spellbook: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_a4_all stdout ----
+thread 'print::print_golden::pf1e_a4_all' (2812819) panicked at src/print/print_golden.rs:188:49:
+pf1e-a4-all: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_letter_all stdout ----
+thread 'print::print_golden::pf1e_letter_all' (2812831) panicked at src/print/print_golden.rs:188:49:
+pf1e-letter-all: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_a4_math stdout ----
+thread 'print::print_golden::pf1e_a4_math' (2812820) panicked at src/print/print_golden.rs:188:49:
+pf1e-a4-math: no golden entry in golden/print_golden.json
+---- print::print_golden::pf1e_letter_math stdout ----
+thread 'print::print_golden::pf1e_letter_math' (2812832) panicked at src/print/print_golden.rs:188:49:
+pf1e-letter-math: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_a4_none stdout ----
+thread 'print::print_golden::sf1e_a4_none' (2813049) panicked at src/print/print_golden.rs:188:49:
+sf1e-a4-none: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_a4_spellbook stdout ----
+thread 'print::print_golden::sf1e_a4_spellbook' (2813050) panicked at src/print/print_golden.rs:188:49:
+sf1e-a4-spellbook: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_letter_none stdout ----
+thread 'print::print_golden::sf1e_letter_none' (2813061) panicked at src/print/print_golden.rs:188:49:
+sf1e-letter-none: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_letter_all stdout ----
+thread 'print::print_golden::sf1e_letter_all' (2813059) panicked at src/print/print_golden.rs:188:49:
+sf1e-letter-all: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_a4_all stdout ----
+thread 'print::print_golden::sf1e_a4_all' (2813039) panicked at src/print/print_golden.rs:188:49:
+sf1e-a4-all: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_letter_spellbook stdout ----
+thread 'print::print_golden::sf1e_letter_spellbook' (2813062) panicked at src/print/print_golden.rs:188:49:
+sf1e-letter-spellbook: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_a4_math stdout ----
+thread 'print::print_golden::sf1e_a4_math' (2813048) panicked at src/print/print_golden.rs:188:49:
+sf1e-a4-math: no golden entry in golden/print_golden.json
+---- print::print_golden::sf1e_letter_math stdout ----
+thread 'print::print_golden::sf1e_letter_math' (2813060) panicked at src/print/print_golden.rs:188:49:
+sf1e-letter-math: no golden entry in golden/print_golden.json
+failures:
+    print::print_golden::cpr_a4_all
+    print::print_golden::cpr_a4_math
+    print::print_golden::cpr_a4_none
+    print::print_golden::cpr_a4_spellbook
+    print::print_golden::cpr_letter_all
+    print::print_golden::cpr_letter_math
+    print::print_golden::cpr_letter_none
+    print::print_golden::cpr_letter_spellbook
+    print::print_golden::pf1e_a4_all
+    print::print_golden::pf1e_a4_math
+    print::print_golden::pf1e_a4_none
+    print::print_golden::pf1e_a4_spellbook
+    print::print_golden::pf1e_letter_all
+    print::print_golden::pf1e_letter_math
+    print::print_golden::pf1e_letter_none
+    print::print_golden::pf1e_letter_spellbook
+    print::print_golden::sf1e_a4_all
+    print::print_golden::sf1e_a4_math
+    print::print_golden::sf1e_a4_none
+    print::print_golden::sf1e_a4_spellbook
+    print::print_golden::sf1e_letter_all
+    print::print_golden::sf1e_letter_math
+    print::print_golden::sf1e_letter_none
+    print::print_golden::sf1e_letter_spellbook
+test result: FAILED. 0 passed; 24 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 52.88s
+error: test failed, to rerun pass `--bin codex-desktop`

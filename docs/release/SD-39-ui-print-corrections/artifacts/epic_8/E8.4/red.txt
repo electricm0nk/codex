@@ -1,0 +1,6 @@
+== src/settings/printPaper.test.ts
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/settings/printPaper' imported from /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/settings/printPaper.test.ts
+== src/boundary/saveSheetPdf.test.ts
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/boundary/saveSheetPdf' imported from /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/boundary/saveSheetPdf.test.ts
+== src/characterHub/PrintDialog.test.ts
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/characterHub/PrintDialog' imported from /home/ubuntu/workspace/repos/codex/.worktrees/sd39-main/apps/desktop/src/characterHub/PrintDialog.test.ts

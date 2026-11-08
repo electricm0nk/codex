@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Hunga Munga",
+    "name": "Hunga Munga",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Hunga Munga"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Ranged.Thrown.Martial.Piercing.BladeLight"
+      },
+      {
+        "key": "COST",
+        "value": "4"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "RANGE",
+        "value": "15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.30"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_hunga_munga.txt",
+    "record_key": "Hunga Munga"
+  }
+}

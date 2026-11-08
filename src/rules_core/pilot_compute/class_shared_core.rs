@@ -49,10 +49,53 @@ impl PilotBaseChassisComputation {
         // SD-36 F3c4: the character's Path-A picks linked to the converted options they name.
         let facts = CharacterFacts::from_character(input, &self).with_linked_picks(package, &seed);
         self.sheet_lines = render_sheet(package, &seed, &facts);
+        drop_the_bonus_of_an_item_not_worn(&mut self.sheet_lines, input, package);
         // SD-36 F6b: a class line's hit die is the one its hit points are computed from.
         super::hit_die_source::print_hit_die_lines(&mut self.sheet_lines);
         self
     }
+}
+
+/// A stowed item's line keeps its words and gives no bonus, so the printed sheet agrees with its own
+/// totals: only `EquippedActive` feeds them. A held rule that targets a stat stops being a number; a
+/// `#` sibling that is only that bonus goes. A copy worn beside a copy stowed keeps the bonus.
+fn drop_the_bonus_of_an_item_not_worn(
+    lines: &mut Vec<crate::rules_core::sheet_rule::SheetLine>,
+    input: &CharacterInput,
+    package: &crate::rules_core::sheet_rule::SheetRulePackage,
+) {
+    use crate::rules_core::sheet_rule::{id_slug, SheetLineValue};
+    let rule_of = |item_id: &str| package.find("equipment", &id_slug(item_id));
+    let selections = &input.chosen.equipment_selections;
+    let worn: Vec<_> = selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .filter_map(|selection| rule_of(&selection.item_id))
+        .collect();
+    let stowed: Vec<_> = selections
+        .iter()
+        .filter(|selection| selection.active_state != ActiveState::EquippedActive)
+        .filter_map(|selection| rule_of(&selection.item_id))
+        .filter(|rule| !worn.contains(rule))
+        .collect();
+    if stowed.is_empty() {
+        return;
+    }
+    lines.retain_mut(|line| {
+        let (principal, sibling) = line.id.split_once('#').map_or((line.id.as_str(), false), |(head, _)| (head, true));
+        if !stowed.iter().any(|rule| rule.as_str() == principal) {
+            return true;
+        }
+        if package.rule(&line.id).is_none_or(|rule| rule.target.is_none()) {
+            return true;
+        }
+        if sibling {
+            return false;
+        }
+        line.value = SheetLineValue::Words;
+        line.printed = String::new();
+        true
+    });
 }
 
 /// Ability modifiers derived from chosen ability scores via `floor(score/2) - 5`.
@@ -1538,8 +1581,6 @@ pub(crate) const INTIMIDATE_SKILL_ID: &str = "skill:intimidate";
 
 pub(crate) const SWIM_SKILL_ID: &str = "skill:swim";
 
-pub(crate) const SELECTED_SKILL_RANK: u8 = 1;
-
 pub(crate) const CLASS_SKILL_BONUS: i16 = 3;
 
 pub(super) const CHAIN_SHIRT_ARMOR_CHECK_PENALTY: i16 = -2;
@@ -1563,6 +1604,9 @@ pub(super) const STAGGERING_CRITICAL_FEAT_SELECTION: &str = "feat:staggering_cri
 pub(super) const CRITICAL_MASTERY_FEAT_SELECTION: &str = "feat:critical_mastery";
 
 pub(super) const HEAVY_BLADES_GROUP_SELECTION: &str = "group:heavy_blades";
+
+/// The weapon table's own word for the group `HEAVY_BLADES_GROUP_SELECTION` chooses.
+pub(super) const HEAVY_BLADES_WEAPON_GROUP: &str = "Blades Heavy";
 
 pub(super) const BOWS_GROUP_SELECTION: &str = "group:bows";
 
@@ -3089,6 +3133,11 @@ pub(super) fn explain_human_trait_bundle(
 /// readers must scan every matching entry rather than use `choice_selection`,
 /// which returns only the first.
 pub const RACE_ALTERNATE_TRAIT_CHOICE_ID: &str = "choice:race_alternate_trait";
+
+/// The row carrying the character's written-down deity as the rules name it (`deity:iomedae`), for
+/// the one reader that needs it: a class's grant of its deity's favored weapon. The bio is what the
+/// player types; `SavedCharacterStore::load` keeps this row equal to it.
+pub const CHARACTER_DEITY_CHOICE_ID: &str = "character.deity";
 
 /// The choice-set id under which a real character-creation-time companion/
 /// mount species pick is persisted on `ChosenCharacterState::selected_

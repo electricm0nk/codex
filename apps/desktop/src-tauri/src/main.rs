@@ -4,6 +4,7 @@ mod browser_handoff;
 mod campaign_drive;
 mod character_custom;
 mod character_hub;
+mod character_ledger;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
@@ -40,6 +41,7 @@ mod companion_pool_catalog;
 mod intelligent_item_catalog;
 mod monster_catalog;
 mod pf1_adapter;
+mod print;
 mod race_catalog;
 mod race_trait_picker;
 mod reference_library_catalog;
@@ -68,12 +70,12 @@ use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_hp,
     adjust_character_money, attach_equipment_modifier, clone_character, create_character,
     delete_character, delete_character_portrait, export_character, export_character_json,
-    import_character, level_up_character, list_feats_for_character, list_saved_characters,
+    import_character, import_pcg, level_up_character, list_feats_for_character, list_saved_characters,
     load_character_bio,
     load_character_hit_points,
     load_character_durability, load_character_money, load_character_portrait,
-    list_class_creation_roster, draft_level_up_preview, draft_sheet_preview, draft_spell_options, list_feats_for_draft, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
-    record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
+    list_class_creation_roster, draft_level_up_preview, draft_sheet_preview, draft_spell_options, list_feats_for_draft, list_feat_levels, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    list_held_equipment, list_progression_ledger, record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
@@ -90,7 +92,7 @@ use dm_console_export::export_dm_console;
 use encounter_rating::rate_encounter;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
-use equipment_catalog::{list_equipment, list_equipment_catalog};
+use equipment_catalog::{list_equipment, list_equipment_catalog, list_market};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
 use companion_catalog::list_companion_catalog;
 use reference_library_catalog::list_reference_library_catalog;
@@ -257,8 +259,16 @@ fn main() {
             sf_level_up::preview_starfinder_level_up,
             sf_level_up::level_up_starfinder_character,
             sf_catalog::list_starfinder_catalog,
+            sf_catalog::list_starfinder_market,
+            sf_adapter::starfinder_market_state,
+            sf_adapter::buy_starfinder_market,
+            sf_adapter::sell_starfinder_market,
             cpr_catalog::list_cyberpunk_catalog,
             cpr_catalog::compute_cyberpunk_deck,
+            cpr_catalog::list_cyberpunk_market,
+            cpr_adapter::cyberpunk_market_state,
+            cpr_adapter::buy_cyberpunk_market,
+            cpr_adapter::sell_cyberpunk_market,
             cpr_creation::preview_cyberpunk_character,
             cpr_creation::create_cyberpunk_character,
             cpr_adapter::save_cyberpunk_criticals,
@@ -282,6 +292,8 @@ fn main() {
             set_equipment_active_state,
             remove_spell_selection,
             remove_equipment_selection,
+            list_held_equipment,
+            list_progression_ledger,
             set_skill_allocations,
             append_to_character,
             re_save_character,
@@ -302,8 +314,11 @@ fn main() {
             adjust_character_hp,
             delete_character,
             export_character_json,
+            print::save_sheet_pdf,
+            print::print_sheet_pdf,
             export_character,
             import_character,
+            import_pcg,
             write_campaign_drive_artifacts,
             drive_list_campaigns,
             drive_load_campaign,
@@ -349,6 +364,7 @@ fn main() {
             export_dm_console,
             rate_encounter,
             list_equipment,
+            list_market,
             list_spells,
             list_feats,
             // SD-27: the same catalog with each record's real prerequisite
@@ -356,6 +372,7 @@ fn main() {
             // out what that character cannot take and say why.
             list_feats_for_character,
             list_feats_for_draft,
+            list_feat_levels,
             draft_spell_options,
             draft_sheet_preview,
             draft_level_up_preview,

@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Harpoon
+Harpoon																				PROFICIENCY:WEAPON|Harpoon								TYPE:Weapon.Resizable.Melee.TwoHanded.Ranged.Thrown.Exotic.Piercing.Spear																																	COST:5	WT:16										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d8					EQMOD:Material ~ Steel																																													RANGE:10						SOURCEPAGE:p.29

@@ -1,0 +1,20 @@
+---------------------------------------------------------------
+==> ingest-full — cargo test --locked --no-fail-fast -p codex-ingest -j 8  (repo root)
+    PASS  ingest-full  (1857 passed across 177 suites, all 126 tests/*.rs suites executed)
+---------------------------------------------------------------
+SUMMARY
+  passed:  5  pcgen-residue-gate crate-wall figure-provenance clippy ingest-full
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_INGEST_FULL_TESTS baseline is stale: 1841 recorded, 1857 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-ingest/scripts/verify-baselines.env.
+  - BASELINE_INGEST_TEST_BINARIES baseline is stale: 176 recorded, 177 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd39-ingest/scripts/verify-baselines.env.
+
+RESULT: PASS
+logs in /tmp/codex-verify-dzpvUe
+DONE
+    PASS  pcgen-residue-gate  (live_files=0 live_hits=0 verdict=PASS)
+    PASS  crate-wall  (0 codex-ingest in normal+build graph, dep direction codex-ingest->codex confirmed, manifest + residue gate clean)
+    PASS  figure-provenance  (files_checked=297 figures_examined=631 violations=0)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+    PASS  ingest-full  (1857 passed across 177 suites, all 126 tests/*.rs suites executed)
+

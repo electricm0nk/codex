@@ -44,10 +44,9 @@
 //! plainly: the level-2..10 Ranger input this file constructs (by
 //! text-substituting the class level in `RANGER_LEVEL1_FIXTURE`) stays
 //! `Blocked` at every level 2..10 for a *different* reason than originally
-//! documented -- `combat.baseline_unsupported` /
-//! `skill.selected_modifier.unsupported` (the same exact-posture gates that
-//! block any class whose selected feats/equipment/skills don't match the
-//! deterministic GE-06 combat/skill posture), not
+//! documented -- `combat.baseline_unsupported` (the same exact-posture gate
+//! that blocks any class whose selected feats/equipment don't match the
+//! deterministic GE-06 combat posture), not
 //! `class_spell.ranger.partial_caster.unsupported`, which correctly never
 //! fires here since this fixture carries no `spells_selected` at all (an
 //! honestly valid, empty posture). `ranger_levels_2_through_10_stay_blocked_on_the_bounded_fixture`
@@ -199,9 +198,8 @@ fn ranger_levels_2_through_10_stay_blocked_on_the_bounded_fixture() {
     // `class_spell.ranger.partial_caster.unsupported` correctly never fires
     // (an empty posture is honestly valid). The real reason it stays blocked
     // is the same deterministic-posture gate that blocks any class whose
-    // selected feats/equipment/skills don't match the exact GE-06 combat/skill
-    // posture -- `combat.baseline_unsupported` and
-    // `skill.selected_modifier.unsupported` -- which this Ranger-specific
+    // selected feats/equipment don't match the exact GE-06 combat posture --
+    // `combat.baseline_unsupported` -- which this Ranger-specific
     // fixture was never built to satisfy. Ranger's own spell-posture gate is
     // exercised directly (with a fixture that DOES satisfy that unrelated
     // posture) by the two tests immediately below.
@@ -240,14 +238,13 @@ fn ranger_levels_2_through_10_stay_blocked_on_the_bounded_fixture() {
             "level-{level} Ranger must not emit a computed snapshot"
         );
 
-        // The real reason: the unrelated combat/skill exact-posture gates, not
-        // Ranger's own (correctly silent, since the posture is empty and
-        // therefore valid) spell-posture diagnostic.
+        // The real reason: the unrelated combat exact-posture gate, not Ranger's
+        // own (correctly silent, since the posture is empty and therefore valid)
+        // spell-posture diagnostic. A skill's rank is not a gate.
         assert!(
-            has_diagnostic(&computation, "combat.baseline_unsupported")
-                && has_diagnostic(&computation, "skill.selected_modifier.unsupported"),
+            has_diagnostic(&computation, "combat.baseline_unsupported"),
             "level-{level} Ranger on this bounded fixture must be blocked by the unrelated \
-             combat/skill exact-posture gates: {:?}",
+             combat exact-posture gate: {:?}",
             computation.diagnostics
         );
         assert!(

@@ -195,14 +195,25 @@ const INTIMIDATING_PROWESS_FEAT_KEY: &str = "Intimidating Prowess";
 /// `["SKILL","Climb","if(skillinfo(\"TOTALRANK\",\"Climb\")>=10,4,2)"]` (and
 /// the same on Swim), Persuasive the same shape on Diplomacy/Intimidate. The
 /// corpus's `if(TOTALRANK>=10,4,2)` conditional grants +4 only at 10+ ranks in
-/// that skill; the deterministic selected-skill posture pins skill rank at 1
-/// (`pilot_compute::SELECTED_SKILL_RANK`, and ranks never exceed character
-/// level), so `TOTALRANK>=10` is provably false for every character this crate
-/// reaches `Computed` for -- the value is +2, not a fabricated simplification,
-/// exactly the way `TOUGHNESS_HP_BONUS`'s own `max(3,TL)` resolves to a flat 3
-/// at supported levels. The +4 tier is deferred until the engine computes a
-/// character with 10+ ranks (well beyond current coverage).
+/// that skill; [`skill_bonuses_from_feats`] reads it on the three computed
+/// skills.
 const TWO_SKILL_FEAT_BONUS: i16 = 2;
+
+/// The +4 tier of the same conditional, and the rank that reaches it.
+const TWO_SKILL_FEAT_BONUS_AT_TEN_RANKS: i16 = 4;
+const TWO_SKILL_FEAT_HIGHER_TIER_RANKS: i16 = 10;
+
+/// The character's own ranks in the three skills the engine computes a total for.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct SelectedSkillRanks {
+    pub climb: i16,
+    pub intimidate: i16,
+    pub swim: i16,
+}
+
+fn two_skill_feat_bonus(ranks: i16) -> i16 {
+    if ranks >= TWO_SKILL_FEAT_HIGHER_TIER_RANKS { TWO_SKILL_FEAT_BONUS_AT_TEN_RANKS } else { TWO_SKILL_FEAT_BONUS }
+}
 
 /// One character's feat-derived bonus to each of the three skills the engine
 /// computes today (`pilot_compute::SelectedSkillModifiers`'s own
@@ -238,18 +249,19 @@ pub struct SkillBonusesFromFeats {
 pub fn skill_bonuses_from_feats(
     selected_feats: &[String],
     strength_modifier: i16,
+    ranks: SelectedSkillRanks,
 ) -> SkillBonusesFromFeats {
     let has = |key: &str| feat_identity::holds(selected_feats, key);
 
     let athletic = has(ATHLETIC_FEAT_KEY);
-    let persuasive_intimidate = if has(PERSUASIVE_FEAT_KEY) { TWO_SKILL_FEAT_BONUS } else { 0 };
+    let persuasive_intimidate = if has(PERSUASIVE_FEAT_KEY) { two_skill_feat_bonus(ranks.intimidate) } else { 0 };
     let intimidating_prowess_intimidate =
         if has(INTIMIDATING_PROWESS_FEAT_KEY) { strength_modifier } else { 0 };
 
     SkillBonusesFromFeats {
-        climb: if athletic { TWO_SKILL_FEAT_BONUS } else { 0 },
+        climb: if athletic { two_skill_feat_bonus(ranks.climb) } else { 0 },
         intimidate: persuasive_intimidate + intimidating_prowess_intimidate,
-        swim: if athletic { TWO_SKILL_FEAT_BONUS } else { 0 },
+        swim: if athletic { two_skill_feat_bonus(ranks.swim) } else { 0 },
     }
 }
 
@@ -275,10 +287,9 @@ pub struct StandaloneSkillFeatFact {
     pub skill_name: &'static str,
     /// The flat bonus magnitude. `TWO_SKILL_FEAT_BONUS` (+2) for every fact
     /// here: each source feat's corpus token is
-    /// `if(skillinfo("TOTALRANK",<skill>)>=10,4,2)`, whose +4 tier requires 10+
-    /// ranks in the skill -- unreachable for any character this engine
-    /// represents, exactly the provable-floor reasoning `TWO_SKILL_FEAT_BONUS`
-    /// already documents. The +4 tier is deferred, not fabricated here.
+    /// `if(skillinfo("TOTALRANK",<skill>)>=10,4,2)`. This fact names the +2 only; the
+    /// number a player reads on those skills is `feat_skill_bonus_sheet_rules`', off
+    /// the converted record, which takes the +4 tier at the character's own rank.
     pub bonus: i16,
 }
 
@@ -1118,11 +1129,7 @@ pub struct MasterCraftsmanFact {
 ///    the chosen skill) is not enforced here. Prerequisite validation is
 ///    `feat_prereqs`' job, the same split already documented for Acrobatic
 ///    Steps, and the `+2` magnitude is unambiguous regardless -- so reporting it
-///    asserts nothing uncertain. Worth knowing that the deterministic skill
-///    posture pins ranks at 1 (`pilot_compute::SELECTED_SKILL_RANK`), so no
-///    character this engine currently composes could legally hold this feat;
-///    that is a gap in what the engine can represent, not a reason to withhold a
-///    verified number.
+///    asserts nothing uncertain.
 pub fn master_craftsman_facts_from_choices(
     selected_feats: &[String],
     selected_choices: &[SelectedChoice],
@@ -2806,21 +2813,21 @@ mod skill_bonuses_from_feats_tests {
     fn grants_no_bonus_when_no_skill_feat_is_selected() {
         let selected_feats = vec!["Toughness".to_owned(), "Great Fortitude".to_owned()];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            skill_bonuses_from_feats(&selected_feats, STR_MOD, SelectedSkillRanks::default()),
             SkillBonusesFromFeats::default()
         );
     }
 
     #[test]
     fn grants_no_bonus_for_an_empty_feat_list() {
-        assert_eq!(skill_bonuses_from_feats(&[], STR_MOD), SkillBonusesFromFeats::default());
+        assert_eq!(skill_bonuses_from_feats(&[], STR_MOD, SelectedSkillRanks::default()), SkillBonusesFromFeats::default());
     }
 
     #[test]
     fn athletic_grants_the_real_flat_plus_two_to_climb_and_swim_only() {
         let selected_feats = vec!["Athletic".to_owned()];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            skill_bonuses_from_feats(&selected_feats, STR_MOD, SelectedSkillRanks::default()),
             SkillBonusesFromFeats { climb: 2, intimidate: 0, swim: 2 }
         );
     }
@@ -2833,7 +2840,7 @@ mod skill_bonuses_from_feats_tests {
         // consumer. The Diplomacy half is deferred, not fabricated.
         let selected_feats = vec!["Persuasive".to_owned()];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            skill_bonuses_from_feats(&selected_feats, STR_MOD, SelectedSkillRanks::default()),
             SkillBonusesFromFeats { climb: 0, intimidate: 2, swim: 0 }
         );
     }
@@ -2847,7 +2854,7 @@ mod skill_bonuses_from_feats_tests {
         // argument at all.
         let selected_feats = vec!["Intimidating Prowess".to_owned()];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            skill_bonuses_from_feats(&selected_feats, STR_MOD, SelectedSkillRanks::default()),
             SkillBonusesFromFeats { climb: 0, intimidate: STR_MOD, swim: 0 }
         );
     }
@@ -2858,7 +2865,7 @@ mod skill_bonuses_from_feats_tests {
         // Prowess's Strength-modifier add), so PF1 stacks them on Intimidate.
         let selected_feats = vec!["Persuasive".to_owned(), "Intimidating Prowess".to_owned()];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            skill_bonuses_from_feats(&selected_feats, STR_MOD, SelectedSkillRanks::default()),
             SkillBonusesFromFeats { climb: 0, intimidate: 2 + STR_MOD, swim: 0 }
         );
     }
@@ -2871,7 +2878,7 @@ mod skill_bonuses_from_feats_tests {
             "Intimidating Prowess".to_owned(),
         ];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            skill_bonuses_from_feats(&selected_feats, STR_MOD, SelectedSkillRanks::default()),
             SkillBonusesFromFeats { climb: 2, intimidate: 2 + STR_MOD, swim: 2 }
         );
     }
@@ -2885,7 +2892,7 @@ mod skill_bonuses_from_feats_tests {
         // would fabricate a value the corpus does not specify).
         let selected_feats = vec!["Intimidating Prowess".to_owned()];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, -1),
+            skill_bonuses_from_feats(&selected_feats, -1, SelectedSkillRanks::default()),
             SkillBonusesFromFeats { climb: 0, intimidate: -1, swim: 0 }
         );
     }
@@ -2898,7 +2905,7 @@ mod skill_bonuses_from_feats_tests {
         // distinct CRB feat this engine does not ground) must not either.
         let selected_feats = vec!["Athletic Steps".to_owned(), "Acrobatic".to_owned()];
         assert_eq!(
-            skill_bonuses_from_feats(&selected_feats, STR_MOD),
+            skill_bonuses_from_feats(&selected_feats, STR_MOD, SelectedSkillRanks::default()),
             SkillBonusesFromFeats::default()
         );
     }

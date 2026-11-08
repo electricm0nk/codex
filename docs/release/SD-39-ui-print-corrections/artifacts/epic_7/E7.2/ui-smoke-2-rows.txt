@@ -1,0 +1,5 @@
+PASS  load-character-import-pcgen
+PASS  load-character-import-pcgen-opens
+Real store after:  15379 entries, sha256 ddfc4461e3f278447373d61e1eff268905da65d3894566b68ab1bc2cbdf9b8bf -- UNTOUCHED (count and sha256 equal)
+2/2 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 2 rows)
+Cleanup: 2 character(s) created across 2 row(s) with a cleanup record, 2 deleted, 0 leftover; store /tmp/codex-ui-smoke-sd39-e7_2-ZtGgQ6/data/io.electricm0nk.codex now holds: 00000000-0000-0000-0000-0

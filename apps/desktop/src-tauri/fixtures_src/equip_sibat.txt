@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Sibat
+Sibat																					PROFICIENCY:WEAPON|Sibat								TYPE:Weapon.Resizable.EasternWeapon.Eastern.Melee.OneHanded.Ranged.Thrown.Martial.Piercing.Slashing.Spear																												COST:2	WT:2										CRITMULT:x3	CRITRANGE:1							DAMAGE:1d6					EQMOD:Material ~ Steel																																													RANGE:10						SOURCEPAGE:p.37

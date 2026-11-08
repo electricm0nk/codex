@@ -1,0 +1,9 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.22s
+     Running tests/no_baked_manifest_dir_in_production.rs (/home/ubuntu/cargo-target/sd39-main/debug/deps/no_baked_manifest_dir_in_production-7b3b0e82a274aca5)
+
+running 1 test
+test production_code_reads_data_through_repo_root_not_the_baked_manifest_dir ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+exit 0

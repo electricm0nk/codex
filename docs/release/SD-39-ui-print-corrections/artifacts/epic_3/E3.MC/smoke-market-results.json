@@ -1,0 +1,102 @@
+[
+{
+"id": "sheet-market-open-weapons",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-open-defense",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-filter-armor",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-buy-refused",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-buy",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-sell",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-buy-weapon-carried",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cashless",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-enhancement-ac",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-open",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-buy",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-sell",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-cashless",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-starfinder-refused",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-open",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-buy",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-sell",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-refused",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-cyberpunk-cashless",
+"status": "green",
+"reason": null
+},
+{
+"id": "sheet-market-restore-pathfinder",
+"status": "green",
+"reason": null
+}
+]

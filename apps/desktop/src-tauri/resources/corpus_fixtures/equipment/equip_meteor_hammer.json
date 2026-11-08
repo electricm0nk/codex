@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Meteor Hammer",
+    "name": "Meteor Hammer"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_meteor_hammer.txt",
+    "record_key": "Meteor Hammer"
+  }
+}

@@ -1,0 +1,7 @@
+$ uvx --with jsonschema --with pyyaml pytest tools/release -q -p no:cacheprovider  (system python3 has no pytest module; same suite CI runs as python3 -m pytest tools/release -q)
+Downloading pygments (1.2MiB)
+ Downloaded pygments
+Installed 12 packages in 23ms
+......................................................                 [100%]
+54 passed, 2 subtests passed in 10.07s
+exit 0

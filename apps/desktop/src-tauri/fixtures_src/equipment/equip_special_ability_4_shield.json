@@ -1,0 +1,96 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Special Ability ~ +4 ~ Shield",
+    "name": "+4 (Enhancement to Shield)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "4",
+          "TYPE=ShieldEnhancement",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "1",
+          "TYPE=Enhancement",
+          "!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.SHIELD",
+          "1000*PLUSTOTAL*PLUSTOTAL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.SHIELD",
+          "150",
+          "!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ +4 ~ Shield"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "FRONT"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=+4"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "PLUS",
+        "value": "4"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Masterwork.ShieldEnhancement.Magic.Plus4"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Special Ability ~ +1 ~ Shield,Special Ability ~ +2 ~ Shield,Special Ability ~ +3 ~ Shield,Special Ability ~ +5 ~ Shield,Special Quality ~ Masterwork ~ Armor"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.340"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Shield"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_special_ability_4_shield.txt",
+    "record_key": "Special Ability ~ +4 ~ Shield"
+  }
+}

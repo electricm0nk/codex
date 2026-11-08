@@ -1,0 +1,15 @@
+{
+  "completeness": "full",
+  "data": {
+    "key": "Tekko-Kagi (Iron Claw)",
+    "name": "Tekko-Kagi (Iron Claw)"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_tekko_kagi_iron_claw.txt",
+    "record_key": "Tekko-Kagi (Iron Claw)"
+  }
+}

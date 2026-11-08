@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: apg_equip_arms_armor.lst, KEY: Pilum
+Pilum																	PROFICIENCY:WEAPON|Pilum			TYPE:Weapon.Resizable.Martial.Ranged.Thrown.Standard.Piercing.Pilum.Javelin.Spear										COST:5	WT:4		CRITMULT:x2	CRITRANGE:1	DAMAGE:1d8				EQMOD:Material ~ Wood																RANGE:20				SIZE:M	SOURCEPAGE:p.177

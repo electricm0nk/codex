@@ -1,0 +1,3 @@
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+RESULT: PASS
+exit=0

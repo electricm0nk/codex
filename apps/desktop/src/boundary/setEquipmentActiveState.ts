@@ -7,8 +7,10 @@ import type { CreateCharacterOutcome } from './loadCreateCharacter';
  * carried equipment item.
  *
  * Invokes the `set_equipment_active_state` Tauri command, which loads the
- * saved character, sets the named carried item's active state on the first
- * matching copy, recomputes via the real rules-core engine, and re-saves.
+ * saved character, sets the active state on the first copy of the item not
+ * already in that state (of the copies `bonus` names, when given), recomputes via the real rules-core engine, and
+ * re-saves. Wearing an item whose slot is held comes back `Blocked`, with a
+ * diagnostic reading "head slot is taken by <item>"; nothing is saved.
  */
 
 export type ActiveStateDto = 'EquippedActive' | 'Absent' | 'SelectedInactive';
@@ -16,6 +18,10 @@ export type ActiveStateDto = 'EquippedActive' | 'Absent' | 'SelectedInactive';
 export interface SetEquipmentActiveStateRequest {
   characterId: string;
   itemId: string;
+  /** Which copy, when the character holds several: `0` a plain one, `N` a `+N`. Omit for the first. */
+  bonus?: number;
+  /** The state the row shows this copy in, which says which of two alike moves. Omit for the first not already in `activeState`. */
+  fromState?: ActiveStateDto;
   activeState: ActiveStateDto;
   savedAt: string;
 }

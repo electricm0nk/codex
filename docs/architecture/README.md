@@ -2,7 +2,7 @@
 
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set,
 > plus reading paths into it by intent.
-> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**. Index rows for
+> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)**: `pcg-import.md` added to the index. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**. Index rows for
 > `rules-engine.md`, `rules-data-tables.md`, `corpus-ingest.md` and `desktop-app.md` name the Starfinder 1e, Cyberpunk RED and
 > data-package paths (`src/rules_core/rules_catalog/`, `src/rules_core/cpr/`, `data/rules_tables/`, `data/starfinder-1e/`,
 > `data/cyberpunk-red/`); the
@@ -55,6 +55,7 @@ doc's coverage shifts.
 | [homebrew-and-oracle.md](./homebrew-and-oracle.md) | Homebrew package authoring; oracle-parity fixture schema | `src/homebrew_authoring/`, `crates/codex-ingest/src/oracle_validation/` |
 | [desktop-app.md](./desktop-app.md) | Tauri shell build, command inventory, boundary layer, frontend map, rule-system adapter seam (Pathfinder, Starfinder and Cyberpunk adapters) | `apps/desktop/` |
 | [update-and-feedback.md](./update-and-feedback.md) | Self-update chain and feedback/defect-report submission chain | `apps/desktop/src/feedback/`, `apps/desktop/src/update/`, `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src/testerWorkbench/update/`, `apps/desktop/src-tauri/src/update/`, `apps/desktop/src-tauri/src/browser_handoff.rs`, `schemas/update/` |
+| [pcg-import.md](./pcg-import.md) | The `pcg_import` sidecar that converts a PCGen 6 `.pcg` character to the JSON the app's `import_character` reads, and how it ships | `crates/codex-ingest/src/pcg_import/`, `crates/codex-ingest/src/bin/pcg_import.rs`, `apps/desktop/src-tauri/tauri.sidecar.json` |
 | [release-pipeline.md](./release-pipeline.md) | Publish workflow, manifest generation, branch-promotion gates | `.github/workflows/`, `scripts/release/`, `tools/release/`, `scripts/tranche/` |
 | [testing.md](./testing.md) | Full verification command set, fixture grammar, corpus-gated tests | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/testSupport/` |
 | README.md (this file) | Doc-set index, provenance note, maintenance contract | `docs/architecture/` |

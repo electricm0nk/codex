@@ -1,0 +1,75 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-e4mc-probe/apps/desktop/src-tauri)
+warning: unused variable: `from`
+   --> src/character_custom.rs:563:37
+    |
+563 | pub(crate) fn copy_character_custom(from: &Path, to: &Path) -> Result<(), String> {
+    |                                     ^^^^ help: if this is intentional, prefix it with an underscore: `_from`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `to`
+   --> src/character_custom.rs:563:50
+    |
+563 | pub(crate) fn copy_character_custom(from: &Path, to: &Path) -> Result<(), String> {
+    |                                                  ^^ help: if this is intentional, prefix it with an underscore: `_to`
+
+warning: `codex-desktop` (bin "codex-desktop" test) generated 2 warnings (run `cargo fix --bin "codex-desktop" -p codex-desktop --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 42.64s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-e4mc-probe/debug/deps/codex_desktop-8bdc2f259bfae928)
+
+running 5 tests
+test character_hub::tests::worn_item_applies_custom_items_come_along_on_a_clone_and_a_round_trip ... FAILED
+test character_hub::tests::worn_item_applies_cmd_takes_an_armor_class_penalty_once ... FAILED
+test character_hub::tests::worn_item_applies_load_numbers_move_the_load_limits ... FAILED
+test character_hub::tests::worn_item_applies_intelligence_moves_the_spell_numbers_and_not_the_skill_budget ... FAILED
+test character_hub::tests::worn_item_applies_cmd_takes_the_armor_class_bonuses_the_book_names ... FAILED
+
+failures:
+
+---- character_hub::tests::worn_item_applies_custom_items_come_along_on_a_clone_and_a_round_trip stdout ----
+
+thread 'character_hub::tests::worn_item_applies_custom_items_come_along_on_a_clone_and_a_round_trip' (859075) panicked at src/character_hub.rs:10091:9:
+assertion `left == right` failed
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- character_hub::tests::worn_item_applies_cmd_takes_an_armor_class_penalty_once stdout ----
+
+thread 'character_hub::tests::worn_item_applies_cmd_takes_an_armor_class_penalty_once' (859073) panicked at src/character_hub.rs:10002:9:
+assertion `left == right` failed
+  left: 18
+ right: 17
+
+---- character_hub::tests::worn_item_applies_load_numbers_move_the_load_limits stdout ----
+
+thread 'character_hub::tests::worn_item_applies_load_numbers_move_the_load_limits' (859077) panicked at src/character_hub.rs:10061:9:
+assertion `left == right` failed: Strength 27's row, and the score does not move
+  left: (116.0, 233.0, 350.0, 19)
+ right: (266.0, 533.0, 800.0, 19)
+
+---- character_hub::tests::worn_item_applies_intelligence_moves_the_spell_numbers_and_not_the_skill_budget stdout ----
+
+thread 'character_hub::tests::worn_item_applies_intelligence_moves_the_spell_numbers_and_not_the_skill_budget' (859076) panicked at src/character_hub.rs:10031:9:
+assertion `left == right` failed: what the sheet budgets skill points from
+  left: None
+ right: Some(4)
+
+---- character_hub::tests::worn_item_applies_cmd_takes_the_armor_class_bonuses_the_book_names stdout ----
+
+thread 'character_hub::tests::worn_item_applies_cmd_takes_the_armor_class_bonuses_the_book_names' (859074) panicked at src/character_hub.rs:9980:9:
+assertion `left == right` failed: a deflection bonus counts
+  left: 18
+ right: 20
+
+
+failures:
+    character_hub::tests::worn_item_applies_cmd_takes_an_armor_class_penalty_once
+    character_hub::tests::worn_item_applies_cmd_takes_the_armor_class_bonuses_the_book_names
+    character_hub::tests::worn_item_applies_custom_items_come_along_on_a_clone_and_a_round_trip
+    character_hub::tests::worn_item_applies_intelligence_moves_the_spell_numbers_and_not_the_skill_budget
+    character_hub::tests::worn_item_applies_load_numbers_move_the_load_limits
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 1055 filtered out; finished in 42.26s
+
+error: test failed, to rerun pass `--bin codex-desktop`

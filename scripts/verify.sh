@@ -1491,7 +1491,7 @@ PYEOF
 # ---------------------------------------------------------------------------
 
 run_tauri_resources_tracked() {
-    stage_start "tauri-resources-tracked — every bundle.resources path has >=1 git-tracked file"
+    stage_start "tauri-resources-tracked — every bundle.resources path, the sidecar source and the compiled-in print assets are git-tracked"
     local log="$LOG_DIR/tauri-resources-tracked.log"
     local conf="$TAURI_DIR/tauri.conf.json"
 
@@ -1557,6 +1557,51 @@ for root in system_roots:
 if missing:
     problems.append("game-system sheet-rule roots not bundled at their own path: " + ", ".join(missing))
 
+def tracked(rel):
+    out = subprocess.run(["git", "-C", repo_root, "ls-files", "--error-unmatch", "--", rel],
+                         capture_output=True, text=True, check=False)
+    return out.returncode == 0
+
+# SD-39 E9.1 (`decisions.md §25`): the `.pcg` import sidecar is an `externalBin` named only in
+# `tauri.sidecar.json` (passed at bundling), and each name is a binary codex-ingest builds from a
+# tracked source. A clean clone without the config or the source ships no importer.
+sidecar_path = os.path.join(tauri_dir, "tauri.sidecar.json")
+sidecar_rel = os.path.relpath(sidecar_path, repo_root)
+if not tracked(sidecar_rel):
+    problems.append(f"{sidecar_rel} (sidecar config not git-tracked)")
+    external_bins = []
+else:
+    with open(sidecar_path, encoding="utf-8") as fh:
+        external_bins = json.load(fh).get("bundle", {}).get("externalBin", [])
+    if not external_bins:
+        problems.append(f"{sidecar_rel} names no externalBin")
+if conf.get("bundle", {}).get("externalBin"):
+    problems.append("tauri.conf.json names an externalBin (tauri-build fails on every plain build)")
+for entry in external_bins:
+    name = os.path.basename(entry)
+    src = f"crates/codex-ingest/src/bin/{name}.rs"
+    ok = tracked(src)
+    print(f"sidecar {entry} -> {src}: tracked={ok}")
+    if not ok:
+        problems.append(f"sidecar {entry} has no tracked binary source {src}")
+print(f"sidecar_external_bins={len(external_bins)}")
+
+# SD-39 E9.1 (`decisions.md §25`): the print fonts and templates are compiled in with
+# include_bytes!/include_str! (`print/typst.rs`), not bundled as resources, so a clean clone
+# compiles only when each named file is tracked.
+typst_rs = os.path.join(tauri_dir, "src/print/typst.rs")
+with open(typst_rs, encoding="utf-8") as fh:
+    includes = re.findall(r'include_(?:bytes|str)!\(\s*"([^"]+)"\s*\)', fh.read())
+assets = [os.path.relpath(os.path.normpath(os.path.join(os.path.dirname(typst_rs), p)), repo_root) for p in includes]
+untracked_assets = [a for a in assets if not tracked(a)]
+for a in assets:
+    print(f"print asset {a}: tracked={a not in untracked_assets}")
+if not assets:
+    problems.append(f"no include_bytes!/include_str! read from {typst_rs} -- cannot check print assets")
+if untracked_assets:
+    problems.append("print assets compiled in but not git-tracked: " + ", ".join(untracked_assets))
+print(f"print_assets_tracked={len(assets) - len(untracked_assets)} of {len(assets)}")
+
 if problems:
     print("UNTRACKED_RESOURCE_PATHS:")
     for p in problems:
@@ -1569,7 +1614,7 @@ PYEOF
     local status=$?
 
     if (( status != 0 )); then
-        stage_fail tauri-resources-tracked "one or more bundle.resources paths have 0 git-tracked files (a clean clone cannot build) — $log"
+        stage_fail tauri-resources-tracked "a bundle.resources path, the sidecar source or a compiled-in print asset is not git-tracked (a clean clone cannot build) — $log"
         return
     fi
 

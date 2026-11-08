@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { chipStyle, selectedChipKey } from './customChip';
+import { WORN_SLOTS } from './EquipmentPanel';
 import {
+  BONUS_TARGETS,
+  BONUS_TYPES,
   CUSTOM_RECORD_KINDS,
   GRANT_TARGETS,
+  bonusTypeLabel,
   customProblems,
+  newBonus,
   newGrant,
   newRecord,
   type CharacterCustom,
+  type CustomBonus,
   type CustomGrant,
   type CustomRecord,
   type CustomRecordKind,
@@ -32,6 +39,7 @@ export function CustomDialog(props: {
   const [draft, setDraft] = useState<CharacterCustom>(props.value);
   const [section, setSection] = useState<Section>('grants');
   const [showProblems, setShowProblems] = useState(false);
+  const [focusedChip, setFocusedChip] = useState<string | null>(null);
 
   useEffect(() => {
     if (!props.open) {
@@ -65,6 +73,11 @@ export function CustomDialog(props: {
     setDraft({ ...draft, [kind]: draft[kind].map((record, position) => (position === index ? { ...record, ...patch } : record)) });
   }
 
+  function setBonus(index: number, bonusIndex: number, patch: Partial<CustomBonus>) {
+    const bonuses = draft.equipment[index]?.bonuses ?? [];
+    setRecord('equipment', index, { bonuses: bonuses.map((bonus, position) => (position === bonusIndex ? { ...bonus, ...patch } : bonus)) });
+  }
+
   const kind = CUSTOM_RECORD_KINDS.find((entry) => entry.kind === section);
 
   return createPortal(
@@ -93,8 +106,8 @@ export function CustomDialog(props: {
         <h2 style={{ fontSize: '1.1rem', margin: 0 }}>Custom</h2>
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>
           GM grants and house rules. An ability grant changes the saved score, so AC, saves, attacks, skills and hit points follow. Hit point
-          and skill point grants are added to those totals. Custom feats, equipment, spells and devices are listed and printed on the sheet;
-          the rules engine does not compute from them.
+          and skill point grants are added to those totals. Custom feats, equipment, spells and devices are listed and printed on the sheet.
+          Custom equipment may also state bonuses and a slot: worn from the Gear tab's Equipment control, its bonuses apply; carried, they add nothing.
         </p>
         <div role="tablist" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
           {([{ key: 'grants' as Section, label: 'Grants' }, ...CUSTOM_RECORD_KINDS.map((entry) => ({ key: entry.kind as Section, label: entry.plural }))]).map((tab) => (
@@ -102,9 +115,11 @@ export function CustomDialog(props: {
               key={tab.key}
               type="button"
               role="tab"
-              aria-selected={section === tab.key}
+              aria-selected={selectedChipKey(section, tab.key)}
               onClick={() => setSection(tab.key)}
-              style={{ ...buttonStyle, ...(section === tab.key ? { backgroundColor: 'var(--color-accent)', color: 'var(--color-on-accent)' } : {}) }}
+              onFocus={(event) => setFocusedChip(event.currentTarget.matches(':focus-visible') ? tab.key : null)}
+              onBlur={() => setFocusedChip(null)}
+              style={chipStyle({ selected: selectedChipKey(section, tab.key), focused: focusedChip === tab.key })}
             >
               {tab.label} ({countFor(tab.key)})
             </button>
@@ -151,6 +166,37 @@ export function CustomDialog(props: {
                       <button type="button" aria-label="Remove stat" onClick={() => setRecord(kind.kind, index, { stats: record.stats.filter((_, position) => position !== statIndex) })} style={buttonStyle}>×</button>
                     </div>
                   ))}
+                  {kind.kind === 'equipment' ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: '0.4rem' }}>
+                      <label style={{ alignItems: 'center', display: 'flex', fontSize: '0.8rem', gap: '0.4rem' }}>
+                        Slot
+                        <select aria-label="Custom equipment slot" value={record.slot ?? 'none'} onChange={(event) => setRecord('equipment', index, { slot: event.target.value === 'none' ? null : (event.target.value as CustomRecord['slot']) })} style={inputStyle}>
+                          {WORN_SLOTS.map((option) => (
+                            <option key={option.slot} value={option.slot}>{option.label}</option>
+                          ))}
+                        </select>
+                      </label>
+                      {(record.bonuses ?? []).map((bonus, bonusIndex) => (
+                        <div key={bonusIndex} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                          <input aria-label="Bonus value" type="number" value={bonus.value} onChange={(event) => setBonus(index, bonusIndex, { value: Number.parseInt(event.target.value, 10) || 0 })} style={{ ...inputStyle, width: '4.5rem' }} />
+                          <select aria-label="Bonus type" value={bonus.bonusType} onChange={(event) => setBonus(index, bonusIndex, { bonusType: event.target.value })} style={inputStyle}>
+                            {BONUS_TYPES.map((type) => (
+                              <option key={type} value={type}>{bonusTypeLabel(type)}</option>
+                            ))}
+                          </select>
+                          <select aria-label="Bonus target" value={bonus.target} onChange={(event) => setBonus(index, bonusIndex, { target: event.target.value })} style={inputStyle}>
+                            {BONUS_TARGETS.map((option) => (
+                              <option key={option.value} value={option.value}>{option.label}</option>
+                            ))}
+                          </select>
+                          <button type="button" aria-label="Remove bonus" onClick={() => setRecord('equipment', index, { bonuses: (record.bonuses ?? []).filter((_, position) => position !== bonusIndex) })} style={buttonStyle}>×</button>
+                        </div>
+                      ))}
+                      <div>
+                        <button type="button" onClick={() => setRecord('equipment', index, { bonuses: [...(record.bonuses ?? []), newBonus()] })} style={buttonStyle}>Add bonus</button>
+                      </div>
+                    </div>
+                  ) : null}
                   <button type="button" onClick={() => setRecord(kind.kind, index, { stats: [...record.stats, { label: '', value: '' }] })} style={{ ...buttonStyle, marginTop: '0.4rem' }}>Add stat</button>
                 </div>
               ))}

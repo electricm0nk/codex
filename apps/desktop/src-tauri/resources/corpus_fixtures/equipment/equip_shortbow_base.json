@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "A shortbow is made up of one piece of wood, about 3 feet in length. You need two hands to use a bow, regardless of its size. You can use a shortbow while mounted. If you have a penalty for low Strength, apply it to damage rolls when you use a shortbow. If you have a bonus for high Strength, you can apply it to damage rolls when you use a composite shortbow, but not a regular shortbow.",
+    "key": "Shortbow (Base)",
+    "name": "Shortbow"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_shortbow_base.txt",
+    "record_key": "Shortbow (Base)"
+  }
+}

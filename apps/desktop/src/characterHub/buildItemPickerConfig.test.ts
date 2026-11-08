@@ -2,7 +2,6 @@ import { buildItemPickerConfig } from './CharacterSheet';
 import type { ItemPickerEntry } from './itemPickerFilter';
 import { assert, assertEqual } from '../testSupport/asserts';
 
-const WEAPON_ENTRY: ItemPickerEntry = { key: 'equipment:longsword', name: 'Longsword', detail: 'Arms & Armor' };
 const SPELL_ENTRY: ItemPickerEntry = { key: 'spell:fireball', name: 'spell:fireball', detail: 'Evocation · Level 3' };
 const FEAT_ENTRY: ItemPickerEntry = { key: 'feat:dodge', name: 'Dodge', detail: 'Combat · +1 dodge bonus to AC' };
 const FEAT_TARGET_ENTRY: ItemPickerEntry = { key: 'Longsword', name: 'Longsword', detail: '1d8 · threat 19-20/x2' };
@@ -13,36 +12,29 @@ const MODIFIER_ENTRY: ItemPickerEntry = {
 };
 
 /**
- * Locks in the Add Weapon / Add Armor / Add Spell onClick wiring
+ * Locks in the Add Spell / Add Feat / Attach Modifier onClick wiring
  * (criterion 7.4). Before this cycle the dispatch table
  * (`itemPickerOpen` -> title / category / loader / mutate-handler) lived
  * inline inside `CharacterSheet`'s render body, so nothing could prove —
  * short of driving the actual DOM, which this repo's test runner cannot do
- * (no jsdom) — that clicking "Add Weapon" really narrows the real
- * `listEquipment` corpus query to `ArmsArmor` and really wires the
- * selection back to the real `addEquipmentSelection` mutation handler,
- * rather than a no-op. `buildItemPickerConfig` extracts that dispatch as a
+ * (no jsdom) — that clicking "Attach Modifier" really narrows the real
+ * `listEquipment` corpus query to `Equipmods` and really wires the
+ * selection back to the real mutation handler, rather than a no-op. `buildItemPickerConfig` extracts that dispatch as a
  * pure, unit-testable function so this cycle's tests exercise the exact
  * wiring the rendered picker uses.
  */
 
 async function main() {
-  verifiesWeaponKindNarrowsEquipmentToArmsAndArmorAndWiresEquipmentHandler();
-  verifiesArmorKindNarrowsEquipmentToArmsAndArmorAndWiresEquipmentHandler();
   verifiesSpellKindLoadsSpellCatalogAndWiresSpellHandler();
   verifiesFeatKindLoadsFeatCatalogAndWiresFeatHandler();
   verifiesNullKindProducesNoPickerConfig();
-  verifiesWeaponAndArmorHaveDistinctTitles();
   verifiesModifierKindNarrowsEquipmentToEquipmodsAndWiresModifierHandler();
-  verifiesGearKindLoadsGeneralAndMagicItemsAndWiresEquipmentHandler();
-  verifiesEquipmentPickersOpenOnTheCategoryTheUserAskedFor();
 }
 
 function makeDeps() {
   const loadEquipmentCalls: string[] = [];
   const loadSpellsCalls: number[] = [];
   const loadFeatsCalls: number[] = [];
-  const equipmentSelections: ItemPickerEntry[] = [];
   const spellSelections: ItemPickerEntry[] = [];
   const featSelections: ItemPickerEntry[] = [];
   const modifierSelections: ItemPickerEntry[] = [];
@@ -52,7 +44,7 @@ function makeDeps() {
   const deps = {
     loadEquipment: (category: string) => {
       loadEquipmentCalls.push(category);
-      return Promise.resolve(category === 'Equipmods' ? [MODIFIER_ENTRY] : [WEAPON_ENTRY]);
+      return Promise.resolve(category === 'Equipmods' ? [MODIFIER_ENTRY] : []);
     },
     loadSpells: () => {
       loadSpellsCalls.push(1);
@@ -67,7 +59,6 @@ function makeDeps() {
       loadFeatsCalls.push(1);
       return Promise.resolve([FEAT_ENTRY]);
     },
-    onSelectEquipment: (entry: ItemPickerEntry) => equipmentSelections.push(entry),
     onSelectSpell: (entry: ItemPickerEntry) => spellSelections.push(entry),
     onSelectFeat: (entry: ItemPickerEntry) => featSelections.push(entry),
     onSelectModifier: (entry: ItemPickerEntry) => modifierSelections.push(entry),
@@ -80,37 +71,10 @@ function makeDeps() {
     loadEquipmentCalls,
     loadSpellsCalls,
     loadFeatsCalls,
-    equipmentSelections,
     spellSelections,
     featSelections,
     modifierSelections,
   };
-}
-
-function verifiesWeaponKindNarrowsEquipmentToArmsAndArmorAndWiresEquipmentHandler() {
-  const { deps, loadEquipmentCalls, equipmentSelections } = makeDeps();
-  const config = buildItemPickerConfig('weapon', deps);
-  assert(config !== null, 'weapon kind produces a picker config');
-  if (!config) return;
-  assertEqual(config.title, 'Add Weapon', 'weapon picker title');
-  config.onSelect(WEAPON_ENTRY);
-  assertEqual(equipmentSelections.length, 1, 'weapon selection is routed to the equipment handler, not dropped');
-  assertEqual(equipmentSelections[0].key, WEAPON_ENTRY.key, 'the exact selected entry reaches the equipment handler');
-  return config.loadEntries().then((entries) => {
-    assertEqual(loadEquipmentCalls[0], 'ArmsArmor', 'the weapon picker queries the real equipment corpus narrowed to ArmsArmor');
-    assertEqual(entries.length, 1, 'loadEntries resolves the entries the corpus loader returned');
-  });
-}
-
-function verifiesArmorKindNarrowsEquipmentToArmsAndArmorAndWiresEquipmentHandler() {
-  const { deps, loadEquipmentCalls } = makeDeps();
-  const config = buildItemPickerConfig('armor', deps);
-  assert(config !== null, 'armor kind produces a picker config');
-  if (!config) return;
-  assertEqual(config.title, 'Add Armor', 'armor picker title');
-  return config.loadEntries().then(() => {
-    assertEqual(loadEquipmentCalls[0], 'ArmsArmor', 'the armor picker also queries the real equipment corpus narrowed to ArmsArmor');
-  });
 }
 
 function verifiesSpellKindLoadsSpellCatalogAndWiresSpellHandler() {
@@ -147,24 +111,13 @@ function verifiesNullKindProducesNoPickerConfig() {
   assertEqual(config, null, 'no picker kind means no config, and no catalog call happens');
 }
 
-function verifiesWeaponAndArmorHaveDistinctTitles() {
-  const { deps } = makeDeps();
-  const weaponConfig = buildItemPickerConfig('weapon', deps);
-  const armorConfig = buildItemPickerConfig('armor', deps);
-  assert(weaponConfig !== null && armorConfig !== null, 'both kinds produce a config');
-  if (!weaponConfig || !armorConfig) return;
-  assert(weaponConfig.title !== armorConfig.title, 'Add Weapon and Add Armor render distinct titles even though both narrow the same corpus category');
-}
-
 /**
  * items-1-and-27-scoping.md sub-task 6: locks in the Attach Modifier
  * dispatch the same way every other picker kind is already locked in —
- * proves it narrows to the real `Equipmods` category (not `ArmsArmor`,
- * which the weapon/armor pickers already own) and routes to a distinct
- * handler from `onSelectEquipment`, not accidentally reused.
+ * proves it narrows to the real `Equipmods` category and routes to its own handler.
  */
 function verifiesModifierKindNarrowsEquipmentToEquipmodsAndWiresModifierHandler() {
-  const { deps, loadEquipmentCalls, modifierSelections, equipmentSelections } = makeDeps();
+  const { deps, loadEquipmentCalls, modifierSelections } = makeDeps();
   const config = buildItemPickerConfig('modifier', deps);
   assert(config !== null, 'modifier kind produces a picker config');
   if (!config) return;
@@ -172,9 +125,8 @@ function verifiesModifierKindNarrowsEquipmentToEquipmodsAndWiresModifierHandler(
   config.onSelect(MODIFIER_ENTRY);
   assertEqual(modifierSelections.length, 1, 'modifier selection is routed to the modifier handler, not dropped');
   assertEqual(modifierSelections[0].key, MODIFIER_ENTRY.key, 'the exact selected entry reaches the modifier handler');
-  assertEqual(equipmentSelections.length, 0, 'the modifier pick never reaches the plain equipment handler');
   return config.loadEntries().then((entries) => {
-    assertEqual(loadEquipmentCalls[0], 'Equipmods', 'the modifier picker queries the real equipment corpus narrowed to Equipmods, not ArmsArmor');
+    assertEqual(loadEquipmentCalls[0], 'Equipmods', 'the modifier picker queries the real equipment corpus narrowed to Equipmods');
     assertEqual(entries[0].key, MODIFIER_ENTRY.key, 'loadEntries resolves the Equipmods catalog loader output');
   });
 }
@@ -184,34 +136,3 @@ main().catch((error: unknown) => {
   throw error;
 });
 
-/**
- * v0.8 F-6 (scout audit item 36): both equipment pickers hard-coded
- * `ArmsArmor`, so rope, rations and a holy symbol were unreachable. The
- * `gear` kind queries the other purchasable categories the catalog serves
- * (`General`, `MagicItems` — the engine's `EquipmentCategory` has no
- * others besides `ArmsArmor` and the modifier-only `Equipmods`) and routes
- * the pick through the same real purchase handler as armor.
- */
-function verifiesGearKindLoadsGeneralAndMagicItemsAndWiresEquipmentHandler() {
-  const { deps, loadEquipmentCalls, equipmentSelections } = makeDeps();
-  const config = buildItemPickerConfig('gear', deps);
-  assert(config !== null, 'gear kind produces a picker config');
-  if (!config) return;
-  assertEqual(config.title, 'Add Gear', 'gear picker title');
-  config.onSelect(WEAPON_ENTRY);
-  assertEqual(equipmentSelections.length, 1, 'a gear pick is routed to the equipment purchase handler');
-  return config.loadEntries().then((entries) => {
-    assertEqual([...loadEquipmentCalls].sort().join(','), 'General,MagicItems', 'gear queries General and MagicItems, never ArmsArmor');
-    assertEqual(entries.length, 2, 'entries from every queried category are offered together');
-  });
-}
-
-// "Add Weapon" lists arms & armor; it should open on Weapons, not make the user find them in the
-// whole catalog. Every other picker opens on All.
-function verifiesEquipmentPickersOpenOnTheCategoryTheUserAskedFor() {
-  const { deps } = makeDeps();
-  assertEqual(buildItemPickerConfig('weapon', deps)?.initialGroup, 'Weapons', 'Add Weapon opens on Weapons');
-  assertEqual(buildItemPickerConfig('armor', deps)?.initialGroup, 'Armor', 'Add Armor opens on Armor');
-  assertEqual(buildItemPickerConfig('gear', deps)?.initialGroup, undefined, 'Add Gear opens on All');
-  assertEqual(buildItemPickerConfig('spell', deps)?.initialGroup, undefined, 'Add Spell has no categories');
-}

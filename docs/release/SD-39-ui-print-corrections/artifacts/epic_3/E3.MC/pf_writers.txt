@@ -1,0 +1,10 @@
+start [("Chain Shirt (Base)", "EquippedActive", ["Special Ability ~ +2 ~ Armor"]), ("Longsword (Base)", "SelectedInactive", []), ("Longsword (Base)", "SelectedInactive", ["Special Ability ~ +3 ~ Weapon"])]
+read EnhancementRead { melee: 8, armor_class: 22, touch: 12, flat_footed: 20, sword_attack: Some(0), sword_damage: Some(0) }
+feat ok=true
+add feat: same 
+level ok=true
+level up: same 
+resave ok=true
+re-save: same 
+import saved=true
+export+import: CHANGED [("Chain Shirt (Base)", "EquippedActive", []), ("Longsword (Base)", "SelectedInactive", []), ("Longsword (Base)", "SelectedInactive", [])]

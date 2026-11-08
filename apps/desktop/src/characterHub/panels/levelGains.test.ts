@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { assert, assertEqual } from '../../testSupport/asserts';
 import { classRosterWire } from '../../testSupport/classRosterWire';
 import { installClassRoster } from '../classRoster';
-import { buildLevelEntries, describeLevelGains, type HeldClass } from '../characterProgression';
+import { buildLevelEntries, describeLevelGains, installFeatLevels, type HeldClass } from '../characterProgression';
 import { LEVEL_FEATURES_LOADING, LevelGainsPanel, loadLevelFeatures } from './LevelGains';
 
 // Brief 2 L4: the read-only per-level summary under the Create screen's HP roller,
@@ -11,6 +11,7 @@ import { LEVEL_FEATURES_LOADING, LevelGainsPanel, loadLevelFeatures } from './Le
 // buildLevelEntries (the universal PF1 benefits + the roster's skill ranks per level).
 
 installClassRoster(classRosterWire());
+installFeatLevels([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]);
 
 const MONK_2_FIGHTER_2: HeldClass[] = [
   { classId: 'class:monk', classLabel: 'Monk', level: 2 },

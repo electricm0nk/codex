@@ -1,0 +1,2 @@
+# Fixture for desktop Market +N (AC and attack rows), source: ue_equip_arms_armor.lst, KEY: Mithral Heavy Shield
+Mithral Heavy Shield													PROFICIENCY:SHIELD|Shield (Heavy)	TYPE:Shield.Magic.Specific.LesserMinor.Heavy							COST:20	WT:5		ACCHECK:0								EQMOD:Material ~ Mithril ~ Shield																												SOURCEPAGE:p.132	SPELLFAILURE:5																																	BONUS:COMBAT|AC|2|TYPE=Shield|PREVAREQ:DisableShieldBonus,0

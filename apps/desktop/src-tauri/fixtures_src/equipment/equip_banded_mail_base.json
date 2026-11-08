@@ -1,0 +1,102 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "Banded mail is made up of overlapping strips of metal, fastened to a leather backing. The suit includes gauntlets.",
+    "key": "Banded Mail (Base)",
+    "name": "Banded Mail",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "7",
+          "TYPE=Armor",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "-3",
+          "TYPE=Armor",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ArmorCheckPenalty",
+          "6",
+          "TYPE=BaseArmor"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "-6",
+          "PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Banded Mail (Base)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "zzBase"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "ARMOR|Banded Mail"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Heavy.ArmorProfHeavy.Suit"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "35"
+      },
+      {
+        "key": "ACCHECK",
+        "value": "-6"
+      },
+      {
+        "key": "MAXDEX",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.150"
+      },
+      {
+        "key": "SPELLFAILURE",
+        "value": "35"
+      },
+      {
+        "key": "DESC",
+        "value": "Banded mail is made up of overlapping strips of metal, fastened to a leather backing. The suit includes gauntlets."
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ]
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_banded_mail_base.txt",
+    "record_key": "Banded Mail (Base)"
+  }
+}

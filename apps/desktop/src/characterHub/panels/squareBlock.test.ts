@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { assert, assertEqual } from '../../testSupport/asserts';
 import type { EncumbranceDto } from '../../boundary/loadCreateCharacter';
 import type { ExplanationDto } from '../../boundary/loadSavedCharacterDetail';
-import { SQUARE_BLOCK_LAYOUT, boxesInColumn } from '../sheetLayout';
+import { SHEET_LAYOUT, SQUARE_BLOCK_LAYOUT, boxesInColumn } from '../sheetLayout';
 import { INITIATIVE_TOTAL_ID, SquareBlock, conditionsLabel, initiativeRow } from './SquareBlock';
 
 // Brief 2 L2: the 2x2 square block under the name on the sheet (Hit Points, Initiative,
@@ -94,9 +94,10 @@ function verifiesTheSheetRendersTheBlockFromTheEngineRow() {
   assert(source.includes('initiativeRow(engineRecords.explanations)'), 'initiative comes from the engine explanations');
   assert(source.includes('conditions={custom.conditions}'), 'conditions come from the custom record');
   const name = source.indexOf('<IdentityPanel');
-  const block = source.indexOf('<SquareBlock');
-  const stats = source.indexOf('SHEET_COLUMNS.map');
-  assert(name >= 0 && name < block && block < stats, 'the block sits under the name, above the stat block');
+  const row = source.indexOf("renderSheetRegion('combatRow')", name);
+  assert(name >= 0 && row > name, 'the combat row sits under the name');
+  const combatRow = boxesInColumn(SHEET_LAYOUT, 'combatRow').map((box) => box.id).join('|');
+  assertEqual(combatRow, 'squareBlock|combatStrip', 'the block comes first in the combat row, then the stat strip');
 }
 
 verifiesTheBlockIsRegisteredTwoByTwoInReadingOrder();

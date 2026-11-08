@@ -1,0 +1,20 @@
+test equipment_catalog::tests::market_category_filter_refuses_to_guess_without_type_data ... ok
+Weapon: 480 rows
+armor list cross-type records: 0 of 63; old list: 805 of 1097
+test equipment_catalog::tests::market_category_filter_armor_holds_no_ammunition_weapon_or_rod_record ... ok
+test equipment_catalog::tests::market_category_filter_narrows_by_name_and_book_and_shows_a_readable_name ... ok
+Armor: 63 rows
+Shield: 31 rows
+Gear: 1626 rows
+test equipment_catalog::tests::market_category_filter_files_the_named_records ... ok
+MagicItem: 3680 rows
+distinct item keys 6010; listed 5880; hidden by a named rule 130
+test equipment_catalog::tests::market_category_filter_files_every_row_once_and_loses_only_the_named_hides ... ok
+test equipment_catalog::tests::market_category_filter_shows_the_price_a_purchase_charges ... ok
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 923 filtered out; finished in 47.58s
+test equipment_catalog::tests::enhancement_price_table_reaches_the_wire_in_camel_case ... ok
+test equipment_catalog::tests::enhancement_price_table_prices_all_five_bonuses_for_each_kind ... ok
+1340 offers map to a catalog eqmod
+test equipment_catalog::tests::enhancement_price_table_maps_each_offer_to_a_real_uncharged_eqmod ... ok
+test equipment_catalog::tests::enhancement_price_table_offers_nothing_on_what_cannot_take_a_bonus ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 925 filtered out; finished in 47.25s

@@ -1,0 +1,31 @@
+   Compiling codex-desktop v0.19.0 (/home/ubuntu/workspace/repos/codex/.worktrees/sd39-e3mc-probe/apps/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 40.01s
+     Running unittests src/main.rs (/home/ubuntu/cargo-target/sd39-e3mc-probe/debug/deps/codex_desktop-e0a7a15da36d94bf)
+
+running 2 tests
+test character_hub::tests::market_attach_price_a_legacy_id_is_refused_what_it_cannot_afford ... FAILED
+test character_hub::tests::market_attach_price_a_legacy_id_pays_for_its_market_row ... FAILED
+
+failures:
+
+---- character_hub::tests::market_attach_price_a_legacy_id_is_refused_what_it_cannot_afford stdout ----
+
+thread 'character_hub::tests::market_attach_price_a_legacy_id_is_refused_what_it_cannot_afford' (4046319) panicked at src/character_hub.rs:10217:9:
+Attached { summary: CharacterSummaryDto { character_id: "char-level-up-test", display_label: "Level Up Test Character", game_system: "pf1", schema_version: 2, saved_at: "2026-11-02T00:00:02Z", race_id: "race:human", class_summary: "class:fighter:1" }, snapshot: PilotSnapshotDto { ability_modifiers: AbilityModifiersDto { strength: 4, dexterity: 2, constitution: 2, intelligence: 0, wisdom: 1, charisma: -1 }, base_attack_bonus: 1, base_saves: BaseSavesDto { fortitude: 2, reflex: 0, will: 0 }, baseline_melee_attack_bonus: 7, baseline_armor_class: 17, total_saves: BaseSavesDto { fortitude: 4, reflex: 2, will: 1 }, selected_skill_modifiers: SelectedSkillModifiersDto { climb: 6, intimidate: 3, swim: 6 }, damage_reduction: None, companion: None, spellbook: None }, corpus_derived: CorpusDerivedDto { school_coverage: [], equipped_items: [ResolvedEquipmentDto { item_id: "item:longsword", equipment_record_name: "Longsword", equipment_record_key: "Longsword (Base)", grounded: true, applied_modifiers: [ResolvedEquipmentDto { item_id: "Special Ability ~ +1 ~ Weapon", equipment_record_name: "+1 (Enhancement to Weapon)", equipment_record_key: "Special Ability ~ +1 ~ Weapon", grounded: true, applied_modifiers: [] }] }, ResolvedEquipmentDto { item_id: "item:chain_shirt", equipment_record_name: "Chain Shirt", equipment_record_key: "Chain Shirt (Base)", grounded: true, applied_modifiers: [] }], equipment_effects: EquipmentEffectsDto { per_item: [ResolvedEquipmentEffectDto { item_id: "item:longsword", equipment_record_key: "Longsword (Base)", category: "ArmsArmor", armor_class_bonus: None, armor_class_enhancement: None, max_dex: None, spell_failure: None, armor_check_penalty: None, spell_resistance_bonus: None }, ResolvedEquipmentEffectDto { item_id: "item:chain_shirt", equipment_record_key: "Chain Shirt (Base)", category: "ArmsArmor", armor_class_bonus: Some(4), armor_class_enhancement: None, max_dex: Some(4), spell_failure: Some(20.0), armor_check_penalty: Some(-2), spell_resistance_bonus: None }], armor_class_delta: 4, armor_check_penalty_total: -2, max_dex_cap: Some(4), spell_failure_chance: Some(20.0), attack_bonus_delta: Some(1), spell_resistance_total: None }, encumbrance: EncumbranceDto { total_carried_weight_lbs: 29.0, total_carried_cost_gp: 115.0, light_max_lbs: 100.0, medium_max_lbs: 200.0, heavy_max_lbs: 300.0, level: "Light", load_max_dex_cap: None, load_armor_check_penalty: 0, per_item: [CarriedItemDto { item_id: "item:longsword", weight_lbs: 4.0, cost_gp: Some(15.0) }, CarriedItemDto { item_id: "item:chain_shirt", weight_lbs: 25.0, cost_gp: Some(100.0) }], unresolved_item_ids: ["power_attack"] }, unresolved_spell_ids: [], unresolved_equipment_item_ids: ["item:shield", "power_attack"] }, money: CharacterMoneyDto { total_copper: 229999, platinum: 229, gold: 9, silver: 9, copper: 9 } }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- character_hub::tests::market_attach_price_a_legacy_id_pays_for_its_market_row stdout ----
+
+thread 'character_hub::tests::market_attach_price_a_legacy_id_pays_for_its_market_row' (4046320) panicked at src/character_hub.rs:10201:13:
+assertion `left == right` failed: attach-legacy-standard: the attach
+  left: 230000
+ right: 0
+
+
+failures:
+    character_hub::tests::market_attach_price_a_legacy_id_is_refused_what_it_cannot_afford
+    character_hub::tests::market_attach_price_a_legacy_id_pays_for_its_market_row
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 1004 filtered out; finished in 49.09s
+
+error: test failed, to rerun pass `--bin codex-desktop`
