@@ -854,26 +854,44 @@ fn print_pf_blocks_weapons_print_as_one_table() {
     }
 }
 
-/// Page 1 (operator ruling R5, SD-40 `technical-design.md §4`): on Letter and on A4, the first
-/// page holds the character's details and every step-1 block (abilities, hit points, initiative,
-/// armor class, attack, saves, speed, skills, weapons), each found by its heading and its first
-/// printed words in the PDF's text before page 1's footer; with three weapons in hand too.
-#[test]
-fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
+/// Page 1 is whole (operator ruling R5, SD-40 `technical-design.md §4`): the PDF's text before
+/// page 1's footer holds the character's details and every step-1 block, each found by its heading
+/// and its first printed words; and the text after that footer starts with the block page 2 opens
+/// with (`defense`), so no page-1 block ran over onto page 2 (E2.MC: an anchor alone passes a
+/// block whose tail spilled).
+fn assert_page_one_whole(tag: &str, document: &crate::print::model::SheetDocument, pdf: &[u8]) {
     use crate::print::print_golden::{block_anchor, page_one, PAGE_ONE_BLOCKS};
     let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    let text = pdf_text(pdf);
+    let pages = page_count(pdf);
+    let one = page_one(&text, &document.title, pages).unwrap_or_else(|| panic!("{tag}: page 1's footer prints: {text}"));
+    let first = unspaced(one);
+    for block_id in PAGE_ONE_BLOCKS {
+        let block = document.blocks.iter().find(|block| block.id == block_id).unwrap_or_else(|| panic!("{tag}: the {block_id} block"));
+        assert!(first.contains(&block_anchor(block)), "{tag}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
+    }
+    let (_, after) = text[one.len()..].split_once(&format!("page 1 of {pages}")).unwrap_or_else(|| panic!("{tag}: page 1's footer"));
+    let defense = document.blocks.iter().find(|block| block.id == "defense").expect("the Armor block");
+    assert!(
+        unspaced(after).starts_with(&block_anchor(defense)),
+        "{tag}: page 2 starts with {:?}, nothing of page 1 ran over; page 2 reads: {}",
+        defense.heading,
+        &after[..after.len().min(400)]
+    );
+}
+
+/// Page 1 (operator ruling R5, SD-40 `technical-design.md §4`): on Letter and on A4, the first
+/// page holds the character's details and every step-1 block (abilities, hit points, initiative,
+/// armor class, attack, saves, speed, skills, weapons), whole (`assert_page_one_whole`); with three
+/// weapons in hand too.
+#[test]
+fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
     for (tag, id) in [("page-one-aldric", ALDRIC_ID), ("page-one-elowen", ELOWEN_ID), ("page-one-tomas", TOMAS_ID)] {
         let root = seeded(tag, id);
         for paper in [Paper::Letter, Paper::A4] {
             let printed = PrintRequest { paper, ..request(false, false, false) };
             let document = sheet_document_at_root(&root, &printed).expect("the document builds");
-            let pdf = render(&root, &printed);
-            let text = pdf_text(&pdf);
-            let first = unspaced(page_one(&text, &document.title, page_count(&pdf)).unwrap_or_else(|| panic!("{tag} {paper:?}: page 1's footer prints: {text}")));
-            for block_id in PAGE_ONE_BLOCKS {
-                let block = document.blocks.iter().find(|block| block.id == block_id).unwrap_or_else(|| panic!("{tag}: the {block_id} block"));
-                assert!(first.contains(&block_anchor(block)), "{tag} {paper:?}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
-            }
+            assert_page_one_whole(&format!("{tag} {paper:?}"), &document, &render(&root, &printed));
         }
     }
     // A character with three weapons in hand (the seed's longsword line three times over: the
@@ -884,12 +902,58 @@ fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
         let weapons = document.blocks.iter_mut().find(|block| block.id == "weapons").expect("the Weapons block");
         let line = weapons.rows[1].clone();
         weapons.rows.splice(2..2, [line.clone(), line]);
-        let pdf = crate::print::typst::typeset(&document).expect("three weapons typeset").pdf;
-        let text = pdf_text(&pdf);
-        let first = unspaced(page_one(&text, &document.title, page_count(&pdf)).expect("page 1's footer prints"));
-        for block_id in PAGE_ONE_BLOCKS {
-            let block = document.blocks.iter().find(|block| block.id == block_id).expect("the block");
-            assert!(first.contains(&block_anchor(block)), "three weapons {paper:?}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
+        let typeset = crate::print::typst::typeset(&document).expect("three weapons typeset");
+        assert!(typeset.warnings.is_empty(), "three weapons {paper:?}: Typst reports no diagnostics: {:?}", typeset.warnings);
+        assert_page_one_whole(&format!("three weapons {paper:?}"), &document, &typeset.pdf);
+    }
+}
+
+/// E2.MC's population probe (SD-40 `epic-breakdown.md` E2.MC): page 1 stays whole, with Typst
+/// diagnostics 0, on Letter and A4, for shapes the seeds do not hold: Aldric with a dagger and a
+/// Ring of Protection +1 bought at the Market (standard price) and worn, so a second weapon line
+/// and a deflection bonus print; Aldric with every skill rank taken away; and Elowen.
+#[test]
+fn print_pf_blocks_page_one_stays_whole_with_a_bought_weapon_and_ring_with_no_ranks_and_for_elowen() {
+    use crate::character_hub::{adjust_character_money_at_root, purchase_equipment_priced_at_root, PriceMode, PurchaseEquipmentResponse};
+    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+    use codex::saved_character::local_store::SavedCharacterStore;
+
+    let bought = seeded("page-one-bought", ALDRIC_ID);
+    let before = load_saved_character_at_root(&bought).expect("the seed loads");
+    adjust_character_money_at_root(&bought, 1_000_000).expect("funds for the Market");
+    for (category, name) in [(MarketCategory::Weapon, "Dagger"), (MarketCategory::MagicItem, "Ring of Protection +1")] {
+        // The key the Market's row hands the purchase, as the equipment screen does.
+        let shelf = list_market(MarketFilter { category, name_contains: Some(name.to_owned()), book: None }).entries;
+        let row = shelf.iter().find(|row| row.entry.name == name && row.entry.cost_gp.is_some()).unwrap_or_else(|| panic!("the Market sells {name}"));
+        let response = purchase_equipment_priced_at_root(&bought, &row.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{name} is bought: {response:?}");
+    }
+    let after = load_saved_character_at_root(&bought).expect("the bought character loads");
+    assert_eq!(after.weapon_damage.len(), before.weapon_damage.len() + 1, "the dagger is a second weapon in hand");
+    assert_eq!(
+        after.corpus_derived.equipment_effects.armor_class_delta,
+        before.corpus_derived.equipment_effects.armor_class_delta + 1,
+        "the worn ring adds its +1"
+    );
+
+    let unranked = seeded("page-one-no-ranks", ALDRIC_ID);
+    let mut envelope = SavedCharacterStore::load(&unranked).expect("the seed's envelope loads");
+    assert!(envelope.character_input.chosen.skill_allocations.iter().any(|allocation| allocation.ranks > 0), "the seed holds ranks to take away");
+    envelope.character_input.chosen.skill_allocations.clear();
+    SavedCharacterStore::save(&envelope, &unranked).expect("the unranked character saves");
+    let loaded = load_saved_character_at_root(&unranked).expect("the unranked character loads");
+    assert!(loaded.skill_allocations.iter().all(|allocation| allocation.ranks == 0), "no skill holds a rank");
+
+    let elowen = seeded("page-one-population-elowen", ELOWEN_ID);
+    for (tag, root) in [("bought dagger and ring", &bought), ("no ranks", &unranked), ("elowen", &elowen)] {
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(root, &printed).expect("the document builds");
+            let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+            if tag == "bought dagger and ring" {
+                assert!(weapons.rows.iter().any(|line| line.label.contains("Dagger")), "{tag}: the dagger prints a weapon line: {:?}", weapons.rows);
+            }
+            assert_page_one_whole(&format!("{tag} {paper:?}"), &document, &render(root, &printed));
         }
     }
 }
