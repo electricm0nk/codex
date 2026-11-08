@@ -29,7 +29,16 @@ const BLOCKS_TYP: &str = include_str!("../../resources/print/blocks.typ");
 
 /// The block looks (SD-40 `decisions.md §4`): one Typst template per `Look`, by the name the
 /// sheet's JSON gives it, served at `/looks/<name>.typ`; `blocks.typ` dispatches on that name.
-pub(crate) const LOOKS: &[(&str, &str)] = &[("table", include_str!("../../resources/print/looks/table.typ"))];
+pub(crate) const LOOKS: &[(&str, &str)] = &[
+    ("table", include_str!("../../resources/print/looks/table.typ")),
+    ("abilities", include_str!("../../resources/print/looks/abilities.typ")),
+    ("hit-points", include_str!("../../resources/print/looks/hit-points.typ")),
+    ("initiative", include_str!("../../resources/print/looks/initiative.typ")),
+    ("armor-class", include_str!("../../resources/print/looks/armor-class.typ")),
+    ("attack", include_str!("../../resources/print/looks/attack.typ")),
+    ("saves", include_str!("../../resources/print/looks/saves.typ")),
+    ("speed", include_str!("../../resources/print/looks/speed.typ")),
+];
 
 /// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).
 const FONT_FILES: [&[u8]; 4] = [

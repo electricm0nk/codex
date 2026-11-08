@@ -1,7 +1,8 @@
 //! The shared blocks (SD-39 E8.2, `technical-design.md §1`, operator ruling R2): one builder per
-//! block type -- Identity, Abilities, Combat, Skills, Weapons, Armor, Inventory, Feats,
-//! ClassFeatures, Spells (list or spellbook), Custom, Pets, Actions, Math, BioNotes. A layout file
-//! picks which blocks a system prints, in which order.
+//! block type -- Identity, Abilities, Hit Points, Armor Class, Initiative, Saving Throws, Attack,
+//! Speed (the Combat block's parts, SD-40 `decisions.md §8`), Skills, Weapons, Armor, Inventory,
+//! Feats, ClassFeatures, Spells (list or spellbook), Custom, Pets, Actions, Math, BioNotes. A layout
+//! file picks which blocks a system prints, in which order.
 //!
 //! Every block reads what the screen reads: the `LoadSavedCharacterResponse`, the owned copies
 //! (`list_held_equipment_at_root`, not `equipment_selections`, which also holds the loadout's
@@ -19,7 +20,7 @@ mod skills;
 mod spells;
 
 pub use bio_notes::bio_notes;
-pub use core::{abilities, character_details, combat};
+pub use core::{abilities, armor_class, attack, character_details, hit_points, initiative, saves, speed};
 pub use extras::{custom, pets};
 pub use feats::{actions, class_features, feats};
 pub(crate) use feats::line_row;

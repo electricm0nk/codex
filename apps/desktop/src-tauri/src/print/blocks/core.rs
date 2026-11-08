@@ -1,10 +1,13 @@
-//! Identity (the screen's Character Details), Combat and Abilities (E8.1's three blocks, moved here from the layout file by E8.2).
-//! Each value is the field the screen's tile reads (`CharacterSheet.tsx`'s `ac`, `touch`,
-//! `flatFooted`, `cmb`, `cmd`, `saves`, `initiativeRow`, `AbilitiesPanel`).
+//! Identity (the screen's Character Details), Abilities and the boxes the one Combat block printed
+//! until SD-40 split it along the screen's ids (`decisions.md §8`): Hit Points, Armor Class,
+//! Initiative, Saving Throws, Attack and Speed. Each value is the field the screen's tile reads
+//! (`CharacterSheet.tsx`'s `ac`, `touch`, `flatFooted`, `cmb`, `cmd`, `saves`, `initiativeRow`,
+//! `AbilitiesPanel`, the Hit Points and Speed tiles). A write-in cell is an empty string: the
+//! player's pencil fills it at the table, never a number made up here (NR-2, `decisions.md §11`).
 
 use super::SheetSources;
 use crate::print::layout::{signed, NO_VALUE};
-use crate::print::model::{SheetBlock, SheetRow};
+use crate::print::model::{Look, SheetBlock, SheetRow};
 
 /// The screen's Character Details (`characterDetails`, SD-40 `decisions.md §5`), printed under
 /// the heading Identity: name, race, class, size, vision.
@@ -38,40 +41,128 @@ fn size_and_vision(sources: &SheetSources) -> (String, String) {
     (size, vision)
 }
 
-pub fn combat(sources: &SheetSources) -> SheetBlock {
-    let snapshot = sources.loaded.snapshot.as_ref();
-    let row = |id: &str| sources.explanation(id).map(|row| row.value);
-    let plain = |value: Option<i16>| value.map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string());
-    let with_sign = |value: Option<i16>| value.map_or_else(|| NO_VALUE.to_owned(), signed);
-    let line = |label: &str, value: String, source: &str| SheetRow::new(label, [value]).derived(sources.derivation_of(source));
-    let mut block = SheetBlock::new(
-        "Combat",
-        vec![
-            line("Armor Class", plain(snapshot.map(|s| s.baseline_armor_class)), "defense.baseline_armor_class"),
-            line("Touch", plain(row("defense.touch_armor_class")), "defense.touch_armor_class"),
-            line("Flat-Footed", plain(row("defense.flat_footed_armor_class")), "defense.flat_footed_armor_class"),
-            line("Base Attack Bonus", with_sign(snapshot.map(|s| s.base_attack_bonus)), "class_chassis.base_attack_bonus"),
-            line("Melee", with_sign(snapshot.map(|s| s.baseline_melee_attack_bonus)), "combat.baseline_melee_attack_bonus"),
-            line("CMB", with_sign(row("combat.combat_maneuver_bonus")), "combat.combat_maneuver_bonus"),
-            line("CMD", plain(row("defense.combat_maneuver_defense")), "defense.combat_maneuver_defense"),
-            line("Initiative", with_sign(row("initiative.total")), "initiative.total"),
-            line("Fortitude", with_sign(snapshot.map(|s| s.total_saves.fortitude)), "defense.total_save.fortitude"),
-            line("Reflex", with_sign(snapshot.map(|s| s.total_saves.reflex)), "defense.total_save.reflex"),
-            line("Will", with_sign(snapshot.map(|s| s.total_saves.will)), "defense.total_save.will"),
-        ],
-    );
-    // The Defense tab's `Damage Reduction: <n>/—`, printed whenever the screen shows one.
-    if let Some(reduction) = snapshot.and_then(|s| s.damage_reduction) {
-        block.rows.push(line("Damage Reduction", format!("{reduction}/—"), "class_feature.barbarian.damage_reduction"));
-    }
-    block
+/// A cell the player fills in at the table: printed as an empty ruled box.
+fn write_in() -> String {
+    String::new()
 }
 
+/// `value` with its sign, or the dash for a value the engine does not hold.
+fn with_sign(value: Option<i16>) -> String {
+    value.map_or_else(|| NO_VALUE.to_owned(), signed)
+}
+
+/// `value` as it is, or the dash.
+fn plain(value: Option<i16>) -> String {
+    value.map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string())
+}
+
+/// The engine's `explanations` row `id`'s value.
+fn row_value(sources: &SheetSources, id: &str) -> Option<i16> {
+    sources.explanation(id).map(|row| row.value)
+}
+
+/// One line printing `cells`, with the engine row `source` behind its number (Show the math).
+fn line(sources: &SheetSources, label: &str, cells: Vec<String>, source: &str) -> SheetRow {
+    SheetRow::new(label, cells).derived(sources.derivation_of(source))
+}
+
+/// The screen's Hit Points tile (`hitPoints`): the load response's `hit_points.max`, then the current
+/// and nonlethal damage write-ins, and the Defense tab's `Damage Reduction: <n>/—` whenever the
+/// screen shows one.
+pub fn hit_points(sources: &SheetSources) -> SheetBlock {
+    let total = row_value(sources, "hit_points.max").map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string());
+    let mut rows = vec![
+        line(sources, "Total", vec![total], "hit_points.max"),
+        SheetRow::new("Current", [write_in()]),
+        SheetRow::new("Nonlethal", [write_in()]),
+    ];
+    if let Some(reduction) = sources.loaded.snapshot.as_ref().and_then(|s| s.damage_reduction) {
+        rows.push(line(sources, "Damage Reduction", vec![format!("{reduction}/—")], "class_feature.barbarian.damage_reduction"));
+    }
+    SheetBlock::new("Hit Points", rows).in_look(Look::HitPoints)
+}
+
+/// The screen's Armor Class box (`armorClass`): AC, Touch and Flat-Footed, then the AC's component
+/// cells. The engine states the AC's parts only in its words (`defense.baseline_armor_class`'s
+/// detail), never as rows, so each component prints as a write-in (SD-n).
+pub fn armor_class(sources: &SheetSources) -> SheetBlock {
+    let snapshot = sources.loaded.snapshot.as_ref();
+    let mut rows = vec![
+        line(sources, "Armor Class", vec![plain(snapshot.map(|s| s.baseline_armor_class))], "defense.baseline_armor_class"),
+        line(sources, "Touch", vec![plain(row_value(sources, "defense.touch_armor_class"))], "defense.touch_armor_class"),
+        line(sources, "Flat-Footed", vec![plain(row_value(sources, "defense.flat_footed_armor_class"))], "defense.flat_footed_armor_class"),
+    ];
+    rows.extend(["Armor", "Shield", "Dex", "Size", "Natural", "Deflection", "Misc"].map(|part| SheetRow::new(part, [write_in()])));
+    SheetBlock::new("Armor Class", rows).in_look(Look::ArmorClass)
+}
+
+/// The screen's Initiative tile (`initiative`): the engine's total, the Dexterity modifier and the
+/// misc write-in.
+pub fn initiative(sources: &SheetSources) -> SheetBlock {
+    let dexterity = sources.loaded.snapshot.as_ref().map(|s| s.ability_modifiers.dexterity);
+    SheetBlock::new(
+        "Initiative",
+        vec![line(sources, "Modifier", vec![with_sign(row_value(sources, "initiative.total")), with_sign(dexterity), write_in()], "initiative.total")],
+    )
+    .in_look(Look::Initiative)
+}
+
+/// The screen's Saving Throws box (`saves`): each save's total, its class base save, its ability's
+/// modifier (Constitution, Dexterity, Wisdom), and the misc write-in.
+pub fn saves(sources: &SheetSources) -> SheetBlock {
+    let snapshot = sources.loaded.snapshot.as_ref();
+    let save = |label: &str, key: &str, pick: fn(&crate::character_hub::BaseSavesDto) -> i16, ability: fn(&crate::character_hub::AbilityModifiersDto) -> i16| {
+        line(
+            sources,
+            label,
+            vec![
+                with_sign(snapshot.map(|s| pick(&s.total_saves))),
+                with_sign(snapshot.map(|s| pick(&s.base_saves))),
+                with_sign(snapshot.map(|s| ability(&s.ability_modifiers))),
+                write_in(),
+            ],
+            &format!("defense.total_save.{key}"),
+        )
+    };
+    SheetBlock::new(
+        "Saving Throws",
+        vec![
+            save("Fortitude", "fortitude", |s| s.fortitude, |m| m.constitution),
+            save("Reflex", "reflex", |s| s.reflex, |m| m.dexterity),
+            save("Will", "will", |s| s.will, |m| m.wisdom),
+        ],
+    )
+    .in_look(Look::Saves)
+}
+
+/// The screen's Attack box (`attack`): Base Attack Bonus, Melee, CMB and CMD.
+pub fn attack(sources: &SheetSources) -> SheetBlock {
+    let snapshot = sources.loaded.snapshot.as_ref();
+    SheetBlock::new(
+        "Attack",
+        vec![
+            line(sources, "Base Attack Bonus", vec![with_sign(snapshot.map(|s| s.base_attack_bonus))], "class_chassis.base_attack_bonus"),
+            line(sources, "Melee", vec![with_sign(snapshot.map(|s| s.baseline_melee_attack_bonus))], "combat.baseline_melee_attack_bonus"),
+            line(sources, "CMB", vec![with_sign(row_value(sources, "combat.combat_maneuver_bonus"))], "combat.combat_maneuver_bonus"),
+            line(sources, "CMD", vec![plain(row_value(sources, "defense.combat_maneuver_defense"))], "defense.combat_maneuver_defense"),
+        ],
+    )
+    .in_look(Look::Attack)
+}
+
+/// The screen's Speed box (`speed`): the load response's `speed.land`, the one value its Land tile shows.
+pub fn speed(sources: &SheetSources) -> SheetBlock {
+    let land = row_value(sources, "speed.land").map_or_else(|| NO_VALUE.to_owned(), |v| format!("{v} ft."));
+    SheetBlock::new("Speed", vec![line(sources, "Land", vec![land], "speed.land")]).in_look(Look::Speed)
+}
+
+/// The screen's Abilities panel: each score and the engine's modifier, then the temp score and temp
+/// modifier write-ins.
 pub fn abilities(sources: &SheetSources) -> SheetBlock {
     let scores = &sources.loaded.ability_scores;
     let modifiers = sources.loaded.snapshot.as_ref().map(|s| &s.ability_modifiers);
     let ability = |label: &str, key: &str, score: i16, modifier: Option<i16>| {
-        SheetRow::new(label, [score.to_string(), modifier.map_or_else(|| NO_VALUE.to_owned(), signed)])
+        SheetRow::new(label, [score.to_string(), with_sign(modifier), write_in(), write_in()])
             .derived(sources.derivation_of(&format!("ability_modifier.{key}")))
     };
     SheetBlock::new(
@@ -85,6 +176,7 @@ pub fn abilities(sources: &SheetSources) -> SheetBlock {
             ability("Charisma", "charisma", scores.charisma, modifiers.map(|m| m.charisma)),
         ],
     )
+    .in_look(Look::Abilities)
 }
 
 /// `race:half-orc` reads `Half-orc`: the Load screen's own label rule (`formatRaceLabel`).

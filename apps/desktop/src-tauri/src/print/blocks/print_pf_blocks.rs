@@ -22,11 +22,17 @@ const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
 const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
-/// The 13 blocks every Pathfinder sheet prints, in the layout file's order.
-const BASE_HEADINGS: [&str; 13] = [
+/// The 18 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
+/// along the screen's boxes (SD-40 `decisions.md §8`).
+const BASE_HEADINGS: [&str; 18] = [
     "Identity",
-    "Combat",
     "Abilities",
+    "Hit Points",
+    "Armor Class",
+    "Initiative",
+    "Saving Throws",
+    "Attack",
+    "Speed",
     "Skills",
     "Weapons",
     "Armor",
@@ -92,7 +98,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
         expected.extend([SPELLBOOK, MATH, BIO]);
-        assert_eq!(headings, expected, "{tag}: the 15 block types (Spells twice: its list, then the Spellbook), in the layout file's order");
+        assert_eq!(headings, expected, "{tag}: the 20 block types (Spells twice: its list, then the Spellbook), in the layout file's order");
         let full = render(&root, &all);
         assert_in_order(&pdf_text(&full), &expected);
         // For a reader's own look (`pdftotext`, a viewer): the full sheet, when asked for.
@@ -244,7 +250,7 @@ fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let roster = crate::character_hub::list_race_creation_roster();
     let race = roster.races.iter().find(|race| race.race_id == loaded.summary.race_id).expect("the seed's race is on the roster");
     let text = pdf_text(&render(&root, &request(false, false, false)));
-    let identity = &text[text.find("Identity").expect("Identity")..text.find("Combat").expect("Combat")];
+    let identity = &text[text.find("Identity").expect("Identity")..text.find("Abilities").expect("Abilities")];
     assert!(identity.contains(&format!("Size {}", race.size)), "Size {}: {identity}", race.size);
     assert!(identity.contains(&format!("Vision {}", race.vision)), "Vision {}: {identity}", race.vision);
     let inventory = &text[text.find("Inventory").expect("Inventory")..text.find("Feats").expect("Feats")];
@@ -438,8 +444,8 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
 
     loaded.snapshot.as_mut().expect("Aldric computes a snapshot").damage_reduction = Some(3);
     let text = typeset_text(&loaded);
-    let combat = &text[text.find("Combat").expect("Combat")..text.find("Abilities").expect("Abilities")];
-    assert!(combat.contains("Damage Reduction 3/—"), "the Combat block prints `Damage Reduction 3/—`: {combat}");
+    let hit_points = &text[text.find("Hit Points").expect("Hit Points")..text.find("Armor Class").expect("Armor Class")];
+    assert!(hit_points.contains("Damage Reduction 3/—"), "the Hit Points block prints `Damage Reduction 3/—`: {hit_points}");
 }
 
 /// The screen's and the paper's one vocabulary (SD-40 `decisions.md §5`): every block the
@@ -509,15 +515,15 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     let mut document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
     assert_eq!(document.columns(), GRID_COLUMNS, "the Pathfinder sheet prints on the page grid");
     let place = |id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{id} prints")).place;
-    assert_eq!(place("combatStrip"), Place { x: 0, span: 6 }, "the Combat block takes the row's left half");
-    assert_eq!(place("abilities"), Place { x: 6, span: 6 }, "the Abilities sit beside it, on the right half");
-    let combat = document.blocks.iter().position(|block| block.id == "combatStrip").expect("the Combat block");
-    assert_eq!(document.blocks[combat + 1].id, "abilities", "one row: Combat, then Abilities beside it");
+    assert_eq!(place("abilities"), Place { x: 0, span: 6 }, "the Abilities take the row's left half");
+    assert_eq!(place("hitPoints"), Place { x: 6, span: 6 }, "the Hit Points sit beside them, on the right half");
+    let abilities = document.blocks.iter().position(|block| block.id == "abilities").expect("the Abilities block");
+    assert_eq!(document.blocks[abilities + 1].id, "hitPoints", "one row: Abilities, then Hit Points beside them");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
 
-    document.blocks[combat + 1].place = Place { x: 8, span: 6 };
+    document.blocks[abilities + 1].place = Place { x: 8, span: 6 };
     let refused = crate::print::typst::typeset(&document).expect_err("a block past column 12 is refused");
-    assert!(refused.contains("print.layout") && refused.contains("abilities") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
+    assert!(refused.contains("print.layout") && refused.contains("hitPoints") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
 }
 
 /// The page grid's other refusals (`SheetDocument::check_places`, SD-40 `decisions.md §21`): a block
@@ -546,4 +552,112 @@ fn print_pf_blocks_a_row_left_open_or_out_of_order_is_refused() {
 
     let empty = sheet(vec![block("empty", 0, 0)]).check_places().expect_err("a block of no width");
     assert!(empty.contains("`empty`") && empty.contains("past the 12-column grid"), "{empty}");
+}
+
+/// (block id, heading, look, row label, the row's cells, the engine row behind its number)
+type SplitLine<'a> = (&'a str, &'a str, &'a str, &'a str, Vec<String>, Option<&'a str>);
+
+/// The Combat block split along the screen's boxes (SD-40 `decisions.md §8`, E2.1): `hitPoints`,
+/// `armorClass`, `initiative`, `saves`, `attack` and `speed` each print in a look of their own, and
+/// together they print the same 13 numbers the one Combat block printed, each with the same engine
+/// row behind it (Show the math). The write-in cells print empty: no number is invented for them.
+#[test]
+fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
+    use crate::print::model::Derivation;
+    for (tag, id) in [("split-aldric", ALDRIC_ID), ("split-elowen", ELOWEN_ID), ("split-tomas", TOMAS_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let snapshot = loaded.snapshot.as_ref().expect("the seed computes");
+        let modifiers = &snapshot.ability_modifiers;
+        let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{tag}: the {id} row"));
+        let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+        let behind = |id: &str| vec![Derivation { source: format!("{id} = {}", row(id).value), detail: row(id).detail.clone() }];
+        let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+        assert!(document.blocks.iter().all(|block| block.id != "combatStrip" && block.heading != "Combat"), "{tag}: no Combat block is left");
+        let block = |id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{tag}: the {id} block prints"));
+
+        let w = String::new;
+        let expected: Vec<SplitLine> = vec![
+            ("hitPoints", "Hit Points", "hit-points", "Total", vec![row("hit_points.max").value.to_string()], Some("hit_points.max")),
+            ("hitPoints", "Hit Points", "hit-points", "Current", vec![w()], None),
+            ("hitPoints", "Hit Points", "hit-points", "Nonlethal", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Armor Class", vec![snapshot.baseline_armor_class.to_string()], Some("defense.baseline_armor_class")),
+            ("armorClass", "Armor Class", "armor-class", "Touch", vec![row("defense.touch_armor_class").value.to_string()], Some("defense.touch_armor_class")),
+            ("armorClass", "Armor Class", "armor-class", "Flat-Footed", vec![row("defense.flat_footed_armor_class").value.to_string()], Some("defense.flat_footed_armor_class")),
+            ("armorClass", "Armor Class", "armor-class", "Armor", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Shield", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Dex", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Size", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Natural", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Deflection", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Misc", vec![w()], None),
+            ("initiative", "Initiative", "initiative", "Modifier", vec![signed(row("initiative.total").value), signed(modifiers.dexterity), w()], Some("initiative.total")),
+            ("saves", "Saving Throws", "saves", "Fortitude", vec![signed(snapshot.total_saves.fortitude), signed(snapshot.base_saves.fortitude), signed(modifiers.constitution), w()], Some("defense.total_save.fortitude")),
+            ("saves", "Saving Throws", "saves", "Reflex", vec![signed(snapshot.total_saves.reflex), signed(snapshot.base_saves.reflex), signed(modifiers.dexterity), w()], Some("defense.total_save.reflex")),
+            ("saves", "Saving Throws", "saves", "Will", vec![signed(snapshot.total_saves.will), signed(snapshot.base_saves.will), signed(modifiers.wisdom), w()], Some("defense.total_save.will")),
+            ("attack", "Attack", "attack", "Base Attack Bonus", vec![signed(snapshot.base_attack_bonus)], Some("class_chassis.base_attack_bonus")),
+            ("attack", "Attack", "attack", "Melee", vec![signed(snapshot.baseline_melee_attack_bonus)], Some("combat.baseline_melee_attack_bonus")),
+            ("attack", "Attack", "attack", "CMB", vec![signed(row("combat.combat_maneuver_bonus").value)], Some("combat.combat_maneuver_bonus")),
+            ("attack", "Attack", "attack", "CMD", vec![row("defense.combat_maneuver_defense").value.to_string()], Some("defense.combat_maneuver_defense")),
+            ("speed", "Speed", "speed", "Land", vec![format!("{} ft.", row("speed.land").value)], Some("speed.land")),
+        ];
+        let mut numbers = 0;
+        for (id, heading, look, label, cells, source) in &expected {
+            let printed = block(id);
+            assert_eq!((printed.heading.as_str(), printed.look.name()), (*heading, *look), "{tag}: {id}'s heading and look");
+            let line = printed.rows.iter().find(|line| line.label == *label).unwrap_or_else(|| panic!("{tag}: {id} prints `{label}`"));
+            assert_eq!(&line.values, cells, "{tag}: {id} `{label}` prints the engine's value, write-in cells empty");
+            assert_eq!(line.derivation, source.map(behind), "{tag}: {id} `{label}` has the same engine row behind it");
+            numbers += usize::from(source.is_some());
+        }
+        assert_eq!(numbers, 13, "{tag}: the 13 numbers the Combat block printed");
+        for id in ["hitPoints", "armorClass", "initiative", "saves", "attack", "speed"] {
+            let rows = expected.iter().filter(|line| line.0 == id).count();
+            assert_eq!(block(id).rows.len(), rows, "{tag}: {id} prints exactly its rows (no Damage Reduction on a seed)");
+        }
+
+        let text = pdf_text(&render(&root, &request(false, false, false)));
+        assert_in_order(&text, &["Hit Points", "Armor Class", "Initiative", "Saving Throws", "Attack", "Speed", "Skills"]);
+        for line in [
+            format!("Total {}", row("hit_points.max").value),
+            format!("Touch {}", row("defense.touch_armor_class").value),
+            format!("CMD {}", row("defense.combat_maneuver_defense").value),
+            format!("Land {} ft.", row("speed.land").value),
+        ] {
+            assert!(text.contains(&line), "{tag}: the PDF prints `{line}`: {text}");
+        }
+    }
+}
+
+/// The Abilities look (SD-40 E2.1, `decisions.md §11`): six boxes, each the score and the modifier
+/// the engine holds and two ruled write-in cells (temp score, temp modifier) for the table.
+#[test]
+fn print_pf_blocks_abilities_print_six_boxes_with_write_in_cells() {
+    let root = seeded("abilities-boxes", ALDRIC_ID);
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let scores = &loaded.ability_scores;
+    let modifiers = &loaded.snapshot.as_ref().expect("Aldric computes").ability_modifiers;
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let abilities = document.blocks.iter().find(|block| block.id == "abilities").expect("the Abilities block");
+    assert_eq!(abilities.look.name(), "abilities", "the Abilities print in their own look");
+    let expected = [
+        ("Strength", scores.strength, modifiers.strength),
+        ("Dexterity", scores.dexterity, modifiers.dexterity),
+        ("Constitution", scores.constitution, modifiers.constitution),
+        ("Intelligence", scores.intelligence, modifiers.intelligence),
+        ("Wisdom", scores.wisdom, modifiers.wisdom),
+        ("Charisma", scores.charisma, modifiers.charisma),
+    ];
+    assert_eq!(abilities.rows.len(), 6, "six ability boxes");
+    for ((label, score, modifier), row) in expected.iter().zip(&abilities.rows) {
+        assert_eq!(row.label, *label);
+        assert_eq!(row.values, vec![score.to_string(), signed(*modifier), String::new(), String::new()], "{label}: score, modifier, temp score and temp modifier write-ins");
+        assert!(row.derivation.is_some(), "{label}: the modifier keeps its engine row");
+    }
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    assert!(text.contains(&format!("Strength {} {}", scores.strength, signed(modifiers.strength))), "the PDF prints Strength's score and modifier: {text}");
+    for caption in ["Temp score", "Temp modifier"] {
+        assert!(text.contains(caption), "the write-in columns are captioned `{caption}`: {text}");
+    }
 }

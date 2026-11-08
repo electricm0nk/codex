@@ -4,9 +4,23 @@
 // its own.
 
 #import "/looks/table.typ": look as table-look
+#import "/looks/abilities.typ": look as abilities-look
+#import "/looks/hit-points.typ": look as hit-points-look
+#import "/looks/initiative.typ": look as initiative-look
+#import "/looks/armor-class.typ": look as armor-class-look
+#import "/looks/attack.typ": look as attack-look
+#import "/looks/saves.typ": look as saves-look
+#import "/looks/speed.typ": look as speed-look
 
 #let looks = (
   table: table-look,
+  abilities: abilities-look,
+  "hit-points": hit-points-look,
+  initiative: initiative-look,
+  "armor-class": armor-class-look,
+  attack: attack-look,
+  saves: saves-look,
+  speed: speed-look,
 )
 
 // One block in its own look, without the page break: what a grid cell holds.

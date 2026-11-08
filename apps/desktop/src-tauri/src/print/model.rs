@@ -90,22 +90,44 @@ impl SheetDocument {
 /// Which Typst template prints a block (SD-40 `decisions.md §4`): each variant names one
 /// `resources/print/looks/<name>.typ`, held in `typst.rs`'s `LOOKS` and dispatched by `blocks.typ`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "kebab-case")]
 pub enum Look {
     /// The generic table every block printed in before SD-40: a heading and labelled rows.
     #[default]
     Table,
+    /// The six ability boxes: score, modifier, and the temp score and temp modifier write-ins.
+    Abilities,
+    /// The hit point boxes: the total, and the current and nonlethal write-ins.
+    HitPoints,
+    /// The initiative box: the total, the Dexterity modifier and the misc write-in.
+    Initiative,
+    /// Armor Class, Touch and Flat-Footed boxes over a strip of the AC's component cells.
+    ArmorClass,
+    /// The Base Attack Bonus, Melee, CMB and CMD boxes.
+    Attack,
+    /// The three saves: total, base, ability and the misc write-in.
+    Saves,
+    /// The land speed box.
+    Speed,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 1] = [Look::Table];
+    pub const ALL: [Look; 8] =
+        [Look::Table, Look::Abilities, Look::HitPoints, Look::Initiative, Look::ArmorClass, Look::Attack, Look::Saves, Look::Speed];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
     pub fn name(self) -> &'static str {
         match self {
             Look::Table => "table",
+            Look::Abilities => "abilities",
+            Look::HitPoints => "hit-points",
+            Look::Initiative => "initiative",
+            Look::ArmorClass => "armor-class",
+            Look::Attack => "attack",
+            Look::Saves => "saves",
+            Look::Speed => "speed",
         }
     }
 }
@@ -128,7 +150,7 @@ impl Default for Place {
     }
 }
 
-/// One block of the sheet (Identity, Combat, Abilities ...), printed under its heading.
+/// One block of the sheet (Identity, Abilities, Hit Points ...), printed under its heading.
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct SheetBlock {
     /// The block's name in the screen's and the paper's one vocabulary (`golden/block_vocabulary.json`,
@@ -161,6 +183,11 @@ impl SheetBlock {
     /// The same block, under its vocabulary id.
     pub fn with_id(self, id: &'static str) -> Self {
         Self { id, ..self }
+    }
+
+    /// The same block, printed in `look`.
+    pub fn in_look(self, look: Look) -> Self {
+        Self { look, ..self }
     }
 
     /// The same block, at `place` on the page grid.

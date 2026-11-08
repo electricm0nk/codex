@@ -1,19 +1,26 @@
 //! The Pathfinder 1e layout file (operator ruling R2; SD-40 `decisions.md §4`): which blocks the
 //! sheet prints, in which order, and where on the 12-column page grid. Page 1 holds identity, the
-//! Combat block beside the Abilities, and skills; gear, feats, features, spells, custom records,
-//! pets and actions follow; then the option blocks, each on pages of its own: Spellbook, Show the
-//! math, Bio and campaign notes (R4). The blocks themselves (`print/blocks/`) read what the
-//! Character Sheet reads; nothing here computes a number (NR-2).
+//! Abilities beside the Hit Points, the Armor Class beside the Initiative, the Saving Throws beside
+//! the Attack and the Speed (the Combat block split along the screen's boxes, `decisions.md §8`),
+//! and skills; gear, feats, features, spells, custom records, pets and actions follow; then the
+//! option blocks, each on pages of its own: Spellbook, Show the math, Bio and campaign notes (R4).
+//! The blocks themselves (`print/blocks/`) read what the Character Sheet reads; nothing here
+//! computes a number (NR-2).
 
 use crate::print::blocks::{self, SheetSources};
-use crate::print::layout::{Placed, NO_VALUE};
-use crate::print::model::{SheetBlock, SheetDocument, SheetRow};
+use crate::print::layout::Placed;
+use crate::print::model::{SheetBlock, SheetDocument};
 
 /// The sheet's blocks, in print order, each under its vocabulary id (`golden/block_vocabulary.json`).
 const SHEET: &[Placed] = &[
     Placed::full("characterDetails", blocks::character_details),
-    Placed::at("combatStrip", combat, 0, 6),
-    Placed::at("abilities", blocks::abilities, 6, 6),
+    Placed::at("abilities", blocks::abilities, 0, 6),
+    Placed::at("hitPoints", blocks::hit_points, 6, 6),
+    Placed::at("armorClass", blocks::armor_class, 0, 8),
+    Placed::at("initiative", blocks::initiative, 8, 4),
+    Placed::at("saves", blocks::saves, 0, 6),
+    Placed::at("attack", blocks::attack, 6, 4),
+    Placed::at("speed", blocks::speed, 10, 2),
     Placed::full("skills", blocks::skills),
     Placed::full("weapons", blocks::weapons),
     Placed::full("defense", blocks::armor),
@@ -41,17 +48,4 @@ pub fn layout(sources: &SheetSources) -> SheetDocument {
         sheet.push(blocks::bio_notes(sources).with_id("bioNotes"));
     }
     SheetDocument { title: sources.loaded.summary.display_label.clone(), paper: request.paper.typst_name(), blocks: sheet }
-}
-
-/// The Combat block, with the load response's `hit_points.max` first and its `speed.land` last: the
-/// one value each that the sheet's Hit Points and Speed tiles show. No row prints a dash.
-fn combat(sources: &SheetSources) -> SheetBlock {
-    let mut block = blocks::combat(sources);
-    let line = |label: &str, id: &str, unit: &str| {
-        let value = sources.explanation(id).map_or_else(|| NO_VALUE.to_owned(), |row| format!("{}{unit}", row.value));
-        SheetRow::new(label, [value]).derived(sources.derivation_of(id))
-    };
-    block.rows.insert(0, line("Hit Points", "hit_points.max", ""));
-    block.rows.push(line("Speed", "speed.land", " ft."));
-    block
 }
