@@ -1,0 +1,198 @@
+[
+  {
+    "id": "equipment-catalog-chip-filter-and-back",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/equipment-catalog-chip-filter-and-back.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Magic Items (no element named 'Magic Items')' at row step 2/3 (click \"Magic Items\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-render",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/create-character-render.FAILED.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nLevels\nLevel 0 · HP 0\n\nAdd level\nNo levels yet. Pick a class and Add level; a character needs at least one.\n\nThe first level takes the full hit die. Each later level takes the average (half the die, plus 1); the dice button rolls it instead. The Constitution modifier applies to every level.\nCharacter name\n\nPlayer name\n\nRace\n\nHIT POINTS\nAdd a level first: the engine comput",
+    "reason": "select not found: 'character-class'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-samurai",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/create-character-samurai.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Alpha (no element named 'F4 Smoke Alpha')' at row step 13/14 (click \"F4 Smoke Alpha\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-magus",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/create-character-magus.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Bravo (no element named 'F4 Smoke Bravo')' at row step 13/14 (click \"F4 Smoke Bravo\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-warrior",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/create-character-warrior.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Charlie (no element named 'F4 Smoke Charlie')' at row step 13/14 (click \"F4 Smoke Charlie\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-samurai-weapons",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/sheet-f6a-samurai-weapons.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Alpha (no element named 'F4 Smoke Alpha')' at setup create-character-samurai step 13/14 (click \"F4 Smoke Alpha\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-warrior-weapons",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/sheet-f6a-warrior-weapons.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Charlie (no element named 'F4 Smoke Charlie')' at setup create-character-warrior step 13/14 (click \"F4 Smoke Charlie\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-magus-caster-level",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/sheet-f6a-magus-caster-level.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Bravo (no element named 'F4 Smoke Bravo')' at setup create-character-magus step 13/14 (click \"F4 Smoke Bravo\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6c-shaman-no-domain-line",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/sheet-f6c-shaman-no-domain-line.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F6 Smoke India (no element named 'F6 Smoke India')' at row step 13/15 (click \"F6 Smoke India\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-kineticist",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/create-character-kineticist.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Delta (no element named 'F4 Smoke Delta')' at row step 13/14 (click \"F4 Smoke Delta\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-inquisitor-generic",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/create-character-inquisitor-generic.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'F4 Smoke Echo (no element named 'F4 Smoke Echo')' at row step 13/14 (click \"F4 Smoke Echo\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/level-up-fighter6-into-arcane-archer.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: '12345678910 (no <select> named '12345678910')' at row step 7/17 (select \"12345678910\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer-accept",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/level-up-fighter6-into-arcane-archer-accept.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: '12345678910 (no <select> named '12345678910')' at row step 7/25 (select \"12345678910\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-blockers-and-labels",
+    "status": "red",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/red/level-up-fighter6-blockers-and-labels.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: '12345678910 (no <select> named '12345678910')' at row step 7/17 (select \"12345678910\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-UrATfN/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

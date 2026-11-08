@@ -1,0 +1,246 @@
+[
+  {
+    "id": "equipment-catalog-chip-filter-and-back",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/equipment-catalog-chip-filter-and-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catal",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-render",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/create-character-render.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nLevels\nLevel 0 · HP 0\n\nAdd level\nNo levels yet. Pick a class and Add level; a character needs at least one.\n\nThe first level takes the full hit die. Each later level takes the average (half the die, plus 1); the dice button rolls it instead. The Constitution modifier applies to every level.\nCharacter name\n\nPlayer name\n\nRace\n\nHIT POINTS\nAdd a level first: the engine comput",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-samurai",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/create-character-samurai.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when yo",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "0fd543ff-5252-47b8-8deb-88b4ba29a640"
+      ],
+      "deleted": [
+        "0fd543ff-5252-47b8-8deb-88b4ba29a640"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-magus",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/create-character-magus.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nMagus 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you le",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "068e0377-50b2-4bc3-bbd5-e3c6d994fb7b"
+      ],
+      "deleted": [
+        "068e0377-50b2-4bc3-bbd5-e3c6d994fb7b"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-warrior",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/create-character-warrior.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "88816ef0-6597-4155-8d9c-b96c728b9e99"
+      ],
+      "deleted": [
+        "88816ef0-6597-4155-8d9c-b96c728b9e99"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-samurai-weapons",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/sheet-f6a-samurai-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when yo",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "ca50148a-dd10-45ad-a7d5-b930bd027f68"
+      ],
+      "deleted": [
+        "ca50148a-dd10-45ad-a7d5-b930bd027f68"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-warrior-weapons",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/sheet-f6a-warrior-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "e3c0d017-d18d-4a22-bb41-ebe272d1b75d"
+      ],
+      "deleted": [
+        "e3c0d017-d18d-4a22-bb41-ebe272d1b75d"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6a-magus-caster-level",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/sheet-f6a-magus-caster-level.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nMagus 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you le",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "2fecbef6-1872-4b61-8978-7b7c1f459acf"
+      ],
+      "deleted": [
+        "2fecbef6-1872-4b61-8978-7b7c1f459acf"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-f6c-shaman-no-domain-line",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/sheet-f6c-shaman-no-domain-line.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF6 Smoke India — Shaman 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nShaman 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "b3c022dc-8194-4fe3-96a5-fe81de913b73"
+      ],
+      "deleted": [
+        "b3c022dc-8194-4fe3-96a5-fe81de913b73"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-kineticist",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/create-character-kineticist.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Delta — Kineticist 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nKineticist 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically w",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "d9c5c847-a4eb-4492-8007-4e58ca1ea261"
+      ],
+      "deleted": [
+        "d9c5c847-a4eb-4492-8007-4e58ca1ea261"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "create-character-inquisitor-generic",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/create-character-inquisitor-generic.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Echo — Inquisitor 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nHuman\nCLASS\nInquisitor 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically wh",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "66b23a25-0449-4122-9ed4-61f2cf4a9098"
+      ],
+      "deleted": [
+        "66b23a25-0449-4122-9ed4-61f2cf4a9098"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/level-up-fighter6-into-arcane-archer.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Foxtrot — Fighter 6\nCHARACTER DETAILS\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when ",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "64b3a840-5ae3-4f6a-b0bd-f2395eb486da"
+      ],
+      "deleted": [
+        "64b3a840-5ae3-4f6a-b0bd-f2395eb486da"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer-accept",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/level-up-fighter6-into-arcane-archer-accept.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Golf — Fighter 6 / Arcane Archer 1\nCHARACTER DETAILS\n«\n\nLevel\n7\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6 / Arcane Archer 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The othe",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "60a5d83c-5817-4a04-aa9d-790db24c15aa"
+      ],
+      "deleted": [
+        "60a5d83c-5817-4a04-aa9d-790db24c15aa"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "level-up-fighter6-blockers-and-labels",
+    "status": "green",
+    "screenshot": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/a7402d70-3d8d-427c-820e-a54d598e3dda/scratchpad/green2/level-up-fighter6-blockers-and-labels.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF6 Smoke Hotel — Fighter 6\nCHARACTER DETAILS\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when yo",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e0_2-quzP6P/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "f6f5f191-15c8-46b0-aca0-280bc5948815"
+      ],
+      "deleted": [
+        "f6f5f191-15c8-46b0-aca0-280bc5948815"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]
