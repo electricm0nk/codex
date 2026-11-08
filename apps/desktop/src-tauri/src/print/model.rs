@@ -109,13 +109,25 @@ pub enum Look {
     Saves,
     /// The land speed box.
     Speed,
+    /// The skills in two narrow columns: the class-skill box, the name with its armor-check mark,
+    /// the total, the key ability, the ranks and the misc write-in.
+    Skills,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 8] =
-        [Look::Table, Look::Abilities, Look::HitPoints, Look::Initiative, Look::ArmorClass, Look::Attack, Look::Saves, Look::Speed];
+    pub const ALL: [Look; 9] = [
+        Look::Table,
+        Look::Abilities,
+        Look::HitPoints,
+        Look::Initiative,
+        Look::ArmorClass,
+        Look::Attack,
+        Look::Saves,
+        Look::Speed,
+        Look::Skills,
+    ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
     pub fn name(self) -> &'static str {
@@ -128,6 +140,7 @@ impl Look {
             Look::Attack => "attack",
             Look::Saves => "saves",
             Look::Speed => "speed",
+            Look::Skills => "skills",
         }
     }
 }

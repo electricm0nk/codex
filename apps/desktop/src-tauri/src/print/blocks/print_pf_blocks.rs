@@ -141,11 +141,12 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
     let loaded = load_saved_character_at_root(&root).expect("Elowen loads");
     let explained = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{id}")).value;
     let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    let modifiers = &loaded.snapshot.as_ref().expect("Elowen computes").ability_modifiers;
     let text = pdf_text(&render(&root, &request(false, false, false)));
     let expected = [
-        // Skills: ranks, and the load response's total.
-        format!("Spellcraft 5 {}", signed(explained("skill.total.spellcraft"))),
-        format!("Climb 1 {}", signed(explained("skill.total.climb"))),
+        // Skills: the load response's total, the key ability's modifier, the ranks.
+        format!("Spellcraft {} Int {} 5", signed(explained("skill.total.spellcraft")), signed(modifiers.intelligence)),
+        format!("Climb* {} Str {} 1", signed(explained("skill.total.climb")), signed(modifiers.strength)),
         // Weapons: the dice stay literal; each facet its own cell.
         "Longsword 1d8".to_owned(),
         "19-20/x2".to_owned(),
@@ -166,6 +167,19 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
     for line in expected {
         assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
     }
+}
+
+/// A Skills line in the PDF's text (SD-40 E2.2): the name (its armor-check mark after it), then the
+/// total, the key ability and its modifier, and the ranks.
+fn assert_skill_line(tag: &str, skills: &str, name: &str, total: &str, ranks: u32) {
+    let at = skills
+        .match_indices(name)
+        .map(|(at, _)| at)
+        .find(|at| *at == 0 || skills[..*at].ends_with(' '))
+        .unwrap_or_else(|| panic!("{tag}: the Skills block prints `{name}`: {skills}"));
+    let after: Vec<&str> = skills[at + name.len()..].trim_start_matches('*').split_whitespace().take(4).collect();
+    let ranks = ranks.to_string();
+    assert_eq!((after.first().copied(), after.get(3).copied()), (Some(total), Some(ranks.as_str())), "{tag}: `{name}` prints its total {total} and its {ranks} ranks: {after:?}");
 }
 
 /// E8.7: every skill a seed holds ranks in prints its ranks and the load response's own total
@@ -201,8 +215,7 @@ fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
                 .find(|row| row.id == format!("skill.total.{slug}"))
                 .unwrap_or_else(|| panic!("{tag}: the load response has the skill.total.{slug} row"))
                 .value;
-            let line = format!("{} {} {}", super::skills::skill_name(slug), allocation.ranks, signed(total));
-            assert!(skills.contains(&line), "{tag}: the Skills block prints `{line}`: {skills}");
+            assert_skill_line(tag, skills, &super::skills::skill_name(slug), &signed(total), u32::from(allocation.ranks));
         }
         for (_, slug, value) in book.iter().filter(|(seed, _, _)| *seed == id) {
             let row = loaded.explanations.iter().find(|row| row.id == format!("skill.total.{slug}")).expect("the row");
@@ -232,8 +245,7 @@ fn print_pf_blocks_every_skills_panel_total_prints_ranked_or_not() {
                 .filter(|allocation| allocation.skill_id.strip_prefix("skill:") == Some(slug))
                 .map(|allocation| u32::from(allocation.ranks))
                 .sum();
-            let line = format!("{} {} {}", super::skills::skill_name(slug), ranks, signed(row.value));
-            assert!(skills.contains(&line), "{tag}: the Skills block prints `{line}`: {skills}");
+            assert_skill_line(tag, skills, &super::skills::skill_name(slug), &signed(row.value), ranks);
         }
     }
 }
@@ -659,5 +671,107 @@ fn print_pf_blocks_abilities_print_six_boxes_with_write_in_cells() {
     assert!(text.contains(&format!("Strength {} {}", scores.strength, signed(modifiers.strength))), "the PDF prints Strength's score and modifier: {text}");
     for caption in ["Temp score", "Temp modifier"] {
         assert!(text.contains(caption), "the write-in columns are captioned `{caption}`: {text}");
+    }
+}
+
+/// The Skills look (SD-40 E2.2): the 35 Skills-panel rows (`skill.total.<skill>`) in two narrow
+/// columns, each the class-skill box (marked where the load response states the class skill's +3,
+/// else empty for the player, SD-n), the name with the armor-check-penalty mark the converted skill
+/// record holds (`ACHECK`), the total, the key ability and its modifier (the number the Abilities
+/// block prints), the ranks and an empty misc write-in. The block spans 7 of the 12 columns with the
+/// Weapons beside it; on Letter it prints whole on one page, beside the Weapons.
+#[test]
+fn print_pf_blocks_skills_print_every_panel_row_in_two_columns() {
+    use crate::print::model::Place;
+    // The Core Rulebook's key ability per Skills-panel row (Table 4-1), held apart from the engine's sets.
+    let key = |slug: &str| -> &str {
+        if slug.starts_with("knowledge_") {
+            return "Int";
+        }
+        match slug {
+            "climb" | "swim" => "Str",
+            "acrobatics" | "disable_device" | "escape_artist" | "fly" | "ride" | "sleight_of_hand" | "stealth" => "Dex",
+            "appraise" | "craft" | "linguistics" | "spellcraft" => "Int",
+            "heal" | "perception" | "profession" | "sense_motive" | "survival" => "Wis",
+            "bluff" | "diplomacy" | "disguise" | "handle_animal" | "intimidate" | "perform" | "use_magic_device" => "Cha",
+            other => panic!("`{other}` is no Skills-panel row"),
+        }
+    };
+    // Table 4-1's armor check penalty column: exactly these nine.
+    let armor_check = ["acrobatics", "climb", "disable_device", "escape_artist", "fly", "ride", "sleight_of_hand", "stealth", "swim"];
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    for (tag, id) in [("skills-look-aldric", ALDRIC_ID), ("skills-look-elowen", ELOWEN_ID), ("skills-look-tomas", TOMAS_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let modifiers = &loaded.snapshot.as_ref().expect("the seed computes").ability_modifiers;
+        let modifier = |abbr: &str| match abbr {
+            "Str" => modifiers.strength,
+            "Dex" => modifiers.dexterity,
+            "Int" => modifiers.intelligence,
+            "Wis" => modifiers.wisdom,
+            _ => modifiers.charisma,
+        };
+        let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+        let skills = document.blocks.iter().find(|block| block.id == "skills").expect("the Skills block");
+        assert_eq!(skills.look.name(), "skills", "{tag}: the Skills print in their own look");
+        assert_eq!(skills.place, Place { x: 0, span: 7 }, "{tag}: the Skills span 7 of the 12 columns");
+        let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+        assert_eq!(weapons.place, Place { x: 7, span: 5 }, "{tag}: the Weapons print beside the Skills");
+
+        let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")).collect();
+        assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
+        let panel_rows: Vec<_> = skills.rows.iter().filter(|row| row.derivation.is_some()).collect();
+        assert_eq!(panel_rows.len(), 35, "{tag}: the block prints the 35 panel rows: {:?}", skills.rows);
+        let mut marked = 0;
+        let mut lines = Vec::new();
+        for total in &totals {
+            let slug = total.id.strip_prefix("skill.total.").expect("a skill total");
+            let name = super::skills::skill_name(slug);
+            let row = panel_rows.iter().find(|row| row.label == name).unwrap_or_else(|| panic!("{tag}: the `{name}` row"));
+            let ranks: u32 = loaded
+                .skill_allocations
+                .iter()
+                .filter(|allocation| allocation.skill_id.strip_prefix("skill:") == Some(slug))
+                .map(|allocation| u32::from(allocation.ranks))
+                .sum();
+            let class_skill = total.detail.contains("class skill +3");
+            marked += usize::from(class_skill);
+            let abbr = key(slug);
+            let ability = format!("{abbr} {}", signed(modifier(abbr)));
+            let acp = armor_check.contains(&slug);
+            let mark = |on: bool, text: &str| if on { text.to_owned() } else { String::new() };
+            assert_eq!(
+                row.values,
+                vec![mark(class_skill, "X"), signed(total.value), ability.clone(), ranks.to_string(), String::new(), mark(acp, "*")],
+                "{tag}: `{name}` prints its class-skill mark, total, ability, ranks, the misc write-in and its armor-check mark"
+            );
+            assert_eq!(row.derivation.as_deref(), Some(&[crate::print::model::Derivation { source: format!("{} = {}", total.id, total.value), detail: total.detail.clone() }][..]));
+            lines.push(format!("{}{}{} {} {} {}", mark(class_skill, "X "), name, mark(acp, "*"), signed(total.value), ability, ranks));
+        }
+        let ranked_class_skills = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.") && row.detail.contains("class skill +3")).count();
+        assert_eq!(marked, ranked_class_skills, "{tag}: every class skill the load response states is marked");
+        assert!(marked >= 3, "{tag}: the seed has at least three ranked class skills stated ({marked})");
+
+        // On Letter the Skills print whole on one page, the Weapons beside them: every panel line
+        // is on the page that holds the block's first line.
+        let letter = PrintRequest { paper: Paper::Letter, ..request(false, false, false) };
+        let pdf = render(&root, &letter);
+        let parsed = lopdf::Document::load_mem(&pdf).expect("the PDF parses");
+        let pages: Vec<String> = (1..=parsed.get_pages().len() as u32)
+            .map(|page| parsed.extract_text(&[page]).expect("the page's text").split_whitespace().collect::<Vec<_>>().join(" "))
+            .collect();
+        let first = super::skills::skill_name(totals.first().expect("a total").id.strip_prefix("skill.total.").expect("a skill total"));
+        let page = pages.iter().find(|text| text.contains(&first)).unwrap_or_else(|| panic!("{tag}: `{first}` prints on a Letter page"));
+        assert!(page.contains("Weapons"), "{tag}: the Weapons print on the Skills' Letter page: {page}");
+        let text = pdf_text(&pdf);
+        let block = &text[text.find("Skills").expect("Skills")..text.find("Weapons").expect("Weapons")];
+        for line in &lines {
+            assert!(block.contains(line.as_str()), "{tag}: the Skills block prints `{line}`: {block}");
+            let name = line.trim_start_matches("X ").split(['*', '+', '-']).next().unwrap_or_default().trim().to_owned();
+            assert!(page.contains(&name), "{tag}: `{name}` prints on the Skills' Letter page: {page}");
+        }
+        for caption in ["Tot.", "Abil.", "Rk.", "Misc", "key ability modifier", "ranks", "class skill", "armor check penalty"] {
+            assert!(block.contains(caption), "{tag}: the columns are captioned `{caption}`: {block}");
+        }
     }
 }

@@ -2,10 +2,11 @@
 //! sheet prints, in which order, and where on the 12-column page grid. Page 1 holds identity, the
 //! Abilities beside the Hit Points, the Armor Class beside the Initiative, the Saving Throws beside
 //! the Attack and the Speed (the Combat block split along the screen's boxes, `decisions.md §8`),
-//! and skills; gear, feats, features, spells, custom records, pets and actions follow; then the
-//! option blocks, each on pages of its own: Spellbook, Show the math, Bio and campaign notes (R4).
-//! The blocks themselves (`print/blocks/`) read what the Character Sheet reads; nothing here
-//! computes a number (NR-2).
+//! and the Skills in two narrow columns beside the Weapons (7 and 5 of the 12 columns); gear,
+//! feats, features, spells, custom records, pets and actions follow; then the option blocks, each
+//! on pages of its own: Spellbook, Show the math, Bio and campaign notes (R4). The blocks
+//! themselves (`print/blocks/`) read what the Character Sheet reads; nothing here computes a
+//! number (NR-2).
 
 use crate::print::blocks::{self, SheetSources};
 use crate::print::layout::Placed;
@@ -21,8 +22,8 @@ const SHEET: &[Placed] = &[
     Placed::at("saves", blocks::saves, 0, 6),
     Placed::at("attack", blocks::attack, 6, 4),
     Placed::at("speed", blocks::speed, 10, 2),
-    Placed::full("skills", blocks::skills),
-    Placed::full("weapons", blocks::weapons),
+    Placed::at("skills", blocks::skills, 0, 7),
+    Placed::at("weapons", blocks::weapons, 7, 5),
     Placed::full("defense", blocks::armor),
     Placed::full("gear", blocks::inventory),
     Placed::full("feats", blocks::feats),
