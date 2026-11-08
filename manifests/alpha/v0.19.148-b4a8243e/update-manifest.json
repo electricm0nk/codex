@@ -1,0 +1,54 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "deb_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "any",
+    "windows_install": true
+  },
+  "linux_appimage": {
+    "name": "Codex_0.19.148_amd64.AppImage",
+    "sha256": "68ef61d70baf46632dd3e87de5fe12400ca4de1bd841f0383057dc4f5b79b0d0",
+    "size_bytes": 121719288,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.19.148-b4a8243e/Codex_0.19.148_amd64.AppImage"
+  },
+  "linux_deb": {
+    "name": "Codex_0.19.148_amd64.deb",
+    "sha256": "14daf226d1c8f66c5f5ccdc74653453fc39dacf4b5bbf67efc442c9b1d89733e",
+    "size_bytes": 50836940,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.19.148-b4a8243e/Codex_0.19.148_amd64.deb"
+  },
+  "macos_dmg": {
+    "name": "Codex_0.19.148_aarch64.dmg",
+    "sha256": "8589d1eac09f766d5dd8f4ac1edce26f68b49d2406a5b069b44bb852510ba8b9",
+    "size_bytes": 49192027,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.19.148-b4a8243e/Codex_0.19.148_aarch64.dmg"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-11-08T03:03:52Z",
+    "source_branch": "develop",
+    "source_commit": "b4a8243ec76b72b8819e37cd7a4f0ae06d28ae5c"
+  },
+  "release_notes_hash": "ac0b9156999e77986d47dbcec6ca6ed2c5cfa3b308845907d5a44bf4ead31f75",
+  "release_notes_path": "docs/release/SD-39-ui-print-corrections/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/b4a8243ec76b72b8819e37cd7a4f0ae06d28ae5c/docs/release/SD-39-ui-print-corrections/release-notes.md",
+  "schema_version": "1.3.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "b4a8243ec76b72b8819e37cd7a4f0ae06d28ae5c",
+  "tag": "alpha/v0.19.148-b4a8243e",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.19.148",
+  "windows_nsis": {
+    "name": "Codex_0.19.148_x64-setup.exe",
+    "sha256": "907cb09f3da0cdde8a01278e6f3140913ae9febd726525aad2709db60767667f",
+    "size_bytes": 28874793,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.19.148-b4a8243e/Codex_0.19.148_x64-setup.exe"
+  },
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "42436738654",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
