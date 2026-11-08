@@ -44,11 +44,11 @@ later (`decisions.md §3`).
 | Slug | `pf-sheet-design` |
 | Canonical branch | `tranche-20`, cut 2026-11-07 from `tranche-19` @ `d4489b3557` (`git merge-base HEAD origin/tranche-19`); catches up to `develop` after SD-39 merges (`decisions.md` SD-o) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E0–E5 / **24 cards**, one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 24) |
+| Epics / cards | C, E0–E5 / **25 cards** (24 + E2.4, discovered by E2.MC), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 25) |
 | Target version | `0.20.0`, stamped by C1's single commit on 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run (`decisions.md §13.2`); ends cleanly at each gate |
 | Cadence | N/A |
-| Closure gate | 24 cards `complete` (E2.G and E5.2 need the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 25 cards `complete` (E2.G and E5.2 need the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's brief (`artifacts/cycle_0/operator-brief-2026-11-07.md`); PCGen pinned oracle for the reference picture only (`scripts/pcgen-oracle-pin.env`) |
 
 ## 2. Files in this folder

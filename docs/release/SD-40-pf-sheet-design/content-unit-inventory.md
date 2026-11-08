@@ -21,7 +21,7 @@ back here in its commit.
 |---|---|---|---|
 | F-1 | Version surfaces C1 bumps to `0.20.` (the files SD-39's C1 bumped, less the pointer) | **14** | `git show --name-only --format= 49d598c13a \| awk 'NF' \| grep -vc current-release.json` |
 | F-2 | C1 commit file count (F-1 + `current-release.json`) | **15** | `git show --name-only --format= <sha> \| awk 'NF' \| wc -l` |
-| F-3 | Cards in this bundle | **24** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'` |
+| F-3 | Cards in this bundle | **25** (24 + E2.4, discovered by E2.MC) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'` |
 | F-4 | Chassis files present | **16** (13 required + `technical-design.md`, `technical-requirements.md`, `kanban.md`) | `find docs/release/SD-40-pf-sheet-design -maxdepth 2 -name '*.md' \| awk 'END{print NR}'` |
 
 ## §2 The print module today (the before state)

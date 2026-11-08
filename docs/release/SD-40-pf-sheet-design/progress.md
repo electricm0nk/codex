@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 8 of 24 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 11 of 25 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -69,6 +69,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E2.1 | E2.1 | complete | 9b3edac157 + receipt commit | artifacts/epic_2/E2.1_cycle_receipt.md |
 | E2.2 | E2.2 | complete | 972b033a81 + receipt commit | artifacts/epic_2/E2.2_cycle_receipt.md |
 | E2.3 | E2.3 | complete | 0d8465c13f + 7d8983278b + receipt commit | artifacts/epic_2/E2.3_cycle_receipt.md |
+| E2.MC | E2.MC | complete | f5e4c781b2 + receipt commit | artifacts/epic_2/E2.MC_cycle_receipt.md |
 
 ## Epic reports
 
@@ -88,6 +89,21 @@ deltas, what was looked at, retro summary, worktrees swept)
 - **Retro summary:** `python3 scripts/retro.py summary --since 2026-11-07 --actor sd40-e1.1 --actor sd40-e1.2 --actor sd40-e1.mc` → 4 events, all `correction`; subjects: E1.1 FILES YOU OWN (packaged_resources.rs), decisions §4 `columns` field, the rasterize path in §6 step 8/E1.2, the E1.MC fixture path. No recurrence key fired more than once (none set). The category recurs: 4 of 4 E1 corrections (and E0's 2) are this package's own wording, caught before implementation; no new control (R-W threshold is a key firing more than twice).
 - **Open blockers:** none.
 - **Worktrees swept:** `.worktrees/sd40-e1mc-base` (E1.MC's scratch base/probe tree) and `/home/ubuntu/cargo-target/sd40-e1mc-base`; `/home/ubuntu/cargo-target/sd40-proof` and `empty-dir` (E1.2's proof dirs). No other `sd40-*` side worktree existed (`git worktree list`). `sd40-main` kept.
+
+### Epic report — E2 (page-1 looks), by E2.MC, 2026-11-08
+
+- **Cards done:** E2.1, E2.2, E2.3, E2.MC — 4 of 4 planned (`awk -F'|' '$2 ~ /^ E2\.(1|2|3|MC) / && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 4). E2.G (operator gate) waits for the operator; **E2.4** (discovered here) waiting. Bundle: 11 of 25 complete (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'`).
+- **Re-derived on origin/tranche-20 `35fede0bd9`:** `cd apps/desktop/src-tauri && cargo test --locked -j 8 print_ -- --test-threads=8` → 69 + 1 passed, 0 failed (`awk '/^test .* \.\.\. ok$/{n++} END{print n}'` and `grep -c ' \.\.\. ok$'` → 70, 70). After E2.MC's test (`f5e4c781b2`): desktop full `--no-fail-fast` → 1250 + 2 passed, 0 `FAILED`; print_pf_blocks 23 / print_golden 24 / print_smoke 9 (`awk` over `desktop_full.log`); looks 10 (`ls …/looks/*.typ | awk 'END{print NR}'`); vocabulary 30 ids; TS vocabulary test exit 0; clippy 0 warnings; `verify.sh --only clippy` PASS; sd24 audit 5 passed.
+- **G-1:** C1 `3ceeb63b66` built in its own tree (`.worktrees/sd40-e2mc-base`) and target dir; `diff base/seeds/sha256.txt head/seeds/sha256.txt` → empty (3 PF seeds).
+- **G-2:** SF1e ×8 + CPR ×8 vs C1: text and page loop → no output; `sha256sum` → 16 of 16 byte-identical; `sf1e.rs`/`cpr.rs` diff since C1 → 0 lines; SF/CPR lines in `print_golden.json` since C1 → 0.
+- **G-4:** `print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers` ok (now also: nothing of page 1 runs over onto page 2). E2.G's PDFs and `usable: yes` are the gate's.
+- **Page counts per golden case (C1 → E2 head, `pdfinfo <pdf> | awk '/Pages/{print $2}'`):** PF (Elowen) a4-none 5 → 4, a4-spellbook 6 → 5, a4-math 12 → 11, a4-all 14 → 13, letter-none 5 → 5, letter-spellbook 6 → 6, letter-math 12 → 12, letter-all 14 → 14. SF1e a4/letter: none 8, spellbook 12, math 12, all 17 (unchanged). CPR a4/letter: none 4, spellbook 5, math 10, all 12 (unchanged). Proof harness: Aldric A4 4/5/8/10, Letter 4/5/9/11; Elowen A4 4/5/11/13, Letter 5/6/12/14 (none/spellbook/math/all).
+- **Population probe:** 3 PF seeds × 2 papers (page-1 test) + 3-weapon variant × 2 + `print_pf_blocks_page_one_stays_whole_with_a_bought_weapon_and_ring_with_no_ranks_and_for_elowen` (Aldric + Market Dagger + worn Ring of Protection +1; Aldric with no ranks; Elowen) × 2 papers: page 1 whole, Typst diagnostics 0. A fourth weapon line fails on Letter (Speed leaves page 1) → E2.4.
+- **Refuted claims and fixes:** (1) E2.3's page-1 test passed a block split over pages 1–2 (mutation-proved) and its 3-weapon variant ignored Typst warnings → `assert_page_one_whole` + warnings assert; (2) NR-2's Typst grep could not match `calc.` → `technical-requirements.md` corrected (2 layout-only hits read: `weapons.typ` `calc.min`, `skills.typ` `int(`); (3) E3.1–E3.3 FILES YOU OWN lacked `resources/print/blocks.typ`, the omission that fired at E2.1, E2.2, E2.3 → rows fixed; (4) progress Summary "8 of 24" → 11 of 25; (5) 4+ weapon lines → discovered E2.4. No claim about E2's shipped values was refuted.
+- **Looked at:** `artifacts/epic_2/E2.MC/{aldric,elowen}-{letter,a4}-none-1.png` beside `artifacts/epic_0/E0.1/aldric-pcgen-std-1.png`: ten blocks on page 1, clean; differences named in the receipt (AC part cells write-in: no engine rows, SD-n; Skills left vs PCGen right; Identity still the generic table, E3.3; Knowledge labels wrap at 8 pt on Letter, for the operator's eye).
+- **Retro summary:** `python3 scripts/retro.py summary --since 2026-11-07 --actor sd40-e2.1 --actor sd40-e2.2 --actor sd40-e2.3 --actor sd40-e2.mc --json` → 15 events (correction 7, note 4, rework 1, verification 3 — the third is this card's `verify.sh --only clippy` run; 0 incidents, 0 deferrals, 0 recurrence keys). Category recurring: FILES YOU OWN not closed under `blocks.typ` (E2.1, E2.2, E2.3: > 2, R-W) → control: the E3 rows now name it, and `print_pf_blocks_every_look_has_its_template` already exits non-zero on a look the dispatcher lacks.
+- **Open blockers:** none. Open card: E2.4 (discovered, `waiting` on E2.MC → ready).
+- **Worktrees swept:** `.worktrees/sd40-e2mc-base` (E2.MC's C1 base tree) and `/home/ubuntu/cargo-target/sd40-e2mc-base`; no other `sd40-*` side worktree existed (`git worktree list`: the main checkout and `sd40-main`). `sd40-main` kept.
 
 ## Lead's dispatch log
 

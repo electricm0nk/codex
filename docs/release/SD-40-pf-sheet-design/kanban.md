@@ -29,7 +29,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E5
 cd docs/release/SD-40-pf-sheet-design
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 24
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 25 (24 + E2.4, discovered by E2.MC)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -44,8 +44,9 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 24
 | E2.1 | Number-box looks: abilities, hitPoints, initiative, armorClass, attack, saves, speed; Combat split | opus | complete | E1.MC | code `9b3edac157`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; print_pf_blocks 19, print_smoke 9, print_golden 24; G-1 empty; G-2 16/16 byte-identical; PF golden pages unchanged |
 | E2.2 | Skills look (two narrow columns) | opus | complete | E2.1 | code `972b033a81`; receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; print_pf_blocks 20, print_golden 24, print_smoke 9; G-1 empty; G-2 16/16 byte-identical; PF golden pages unchanged; Skills + Weapons row now prints whole on page 2 (page 1 is E2.3) |
 | E2.3 | Weapons look + page 1 assembled on the grid | opus | complete | E2.2 | code `0d8465c13f` + `7d8983278b`; receipt `artifacts/epic_2/E2.3_cycle_receipt.md`; print_pf_blocks 22, print_golden 24, print_smoke 9; G-1 empty; G-2 16/16 byte-identical; PF golden pages A4 5/6/12/14 → 4/5/11/13, Letter unchanged; ten step-1 blocks on page 1 on Letter and A4 (3 seeds + a 3-weapon variant); `Place.under` stacked cells; fence exits layout/mod.rs, frame.typ, 4 looks, print_smoke.rs |
-| E2.MC | E2 merge check + Epic report | opus | waiting | E2.3 | |
+| E2.MC | E2 merge check + Epic report | opus | complete | E2.3 | test `f5e4c781b2`; receipt `artifacts/epic_2/E2.MC_cycle_receipt.md`; print_pf_blocks 23, print_golden 24, print_smoke 9, desktop 1250 + 2 passed; G-1 empty; G-2 16/16 byte-identical vs C1; page 1 whole (no run-over) + population probe (bought dagger + ring, no ranks, Elowen); discovered E2.4 |
 | E2.G | OPERATOR GATE: Aldric page 1 printed, `usable: yes` | sonnet | waiting | E2.MC | the run ends here until the operator signs |
+| E2.4 | Page 1 with four or more weapon lines (discovered by E2.MC) | opus | waiting | E2.MC | Speed leaves page 1 at 4 weapon lines on Letter; SD-b |
 | E3.1 | Feats, class features, actions looks | opus | waiting | E2.G | |
 | E3.2 | Defense, gear (worn / carried / left behind), money looks | opus | waiting | E3.1 | |
 | E3.3 | Spells, spellbook, bio, math, custom, pets, character details looks | opus | waiting | E3.2 | |
