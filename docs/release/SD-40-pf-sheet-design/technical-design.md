@@ -125,7 +125,12 @@ row 2  saves (x3 span4: Fort / Ref / Will, base + ability + misc write-in)   att
 row 3  skills (x0 span7: two narrow columns, class-skill mark, ranks, total, write-in)   weapons (x7 span5: table + ammo write-in)
 ```
 
-E2.3 may move cells to fit Letter; the receipt shows the PNG. Everything after page 1 flows as today
+E2.3 may move cells to fit Letter; the receipt shows the PNG. **As built (E2.3):** the composition above does not fit Letter with
+the E2.1 looks (measured in the E2.3 receipt), so `Place` gained `under` (a block stacked in the cell
+of the block before it, same columns) and page 1 reads: row 0 characterDetails (x0 span3) · hitPoints
+(x3 span5) · initiative (x8 span4); row 1 abilities (x0 span6) · armorClass with attack under it
+(x6 span6); row 2 skills (x0 span7) · weapons with saves and speed under it (x7 span5). Page 2 starts
+with `defense` (`new_page`). Everything after page 1 flows as today
 until E3 gives it looks and E4 the presets.
 
 ## §5 Presets and the dialog (E4; `decisions.md §9`)
