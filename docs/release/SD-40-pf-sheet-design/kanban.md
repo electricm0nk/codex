@@ -42,7 +42,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 24
 | E1.2 | Proof harness: print_proof + rasterize.sh | sonnet | complete | E1.1 | receipt `artifacts/epic_1/E1.2_cycle_receipt.md`; 16 PDFs, 130 PNGs |
 | E1.MC | E1 merge check + Epic report | opus | complete | E1.2, E0.1 | tests `a537c27737`; receipt `artifacts/epic_1/E1.MC_cycle_receipt.md`; print_ 65 passed; G-1 empty; G-2 16/16 byte-identical; PF seeds 3/3 + `.pcg` imports 37 saved of 65 files, 296 renders, 0 diagnostics |
 | E2.1 | Number-box looks: abilities, hitPoints, initiative, armorClass, attack, saves, speed; Combat split | opus | complete | E1.MC | code `9b3edac157`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; print_pf_blocks 19, print_smoke 9, print_golden 24; G-1 empty; G-2 16/16 byte-identical; PF golden pages unchanged |
-| E2.2 | Skills look (two narrow columns) | opus | waiting | E2.1 | |
+| E2.2 | Skills look (two narrow columns) | opus | complete | E2.1 | code `972b033a81`; receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; print_pf_blocks 20, print_golden 24, print_smoke 9; G-1 empty; G-2 16/16 byte-identical; PF golden pages unchanged; Skills + Weapons row now prints whole on page 2 (page 1 is E2.3) |
 | E2.3 | Weapons look + page 1 assembled on the grid | opus | waiting | E2.2 | |
 | E2.MC | E2 merge check + Epic report | opus | waiting | E2.3 | |
 | E2.G | OPERATOR GATE: Aldric page 1 printed, `usable: yes` | sonnet | waiting | E2.MC | the run ends here until the operator signs |
