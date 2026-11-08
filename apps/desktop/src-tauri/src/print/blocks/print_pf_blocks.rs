@@ -519,3 +519,31 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     let refused = crate::print::typst::typeset(&document).expect_err("a block past column 12 is refused");
     assert!(refused.contains("print.layout") && refused.contains("abilities") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
 }
+
+/// The page grid's other refusals (`SheetDocument::check_places`, SD-40 `decisions.md §21`): a block
+/// that starts past its row's next free column (a gap Typst's auto-placement would fill out of
+/// order), a row left open before a page break or the sheet's end, and a block of no width.
+#[test]
+fn print_pf_blocks_a_row_left_open_or_out_of_order_is_refused() {
+    use crate::print::model::{Place, SheetBlock, SheetDocument, SheetRow};
+    let block = |id: &'static str, x: u8, span: u8| {
+        SheetBlock::new(id, vec![SheetRow::new("Probe", ["1".to_owned()])]).with_id(id).at(Place { x, span })
+    };
+    let sheet = |blocks: Vec<SheetBlock>| SheetDocument { title: "Grid probe".to_owned(), paper: "a4", blocks };
+
+    sheet(vec![block("left", 0, 6), block("right", 6, 6), block("under", 0, 12), block("next", 0, 4).on_new_page(), block("rest", 4, 8)])
+        .check_places()
+        .expect("full rows, a page break after a full row: printable");
+
+    let gap = sheet(vec![block("left", 0, 4), block("right", 6, 6)]).check_places().expect_err("a gap before `right`");
+    assert!(gap.contains("`right`") && gap.contains("starts at column 6") && gap.contains("next free column is 4"), "{gap}");
+
+    let open_end = sheet(vec![block("under", 0, 12), block("left", 0, 6)]).check_places().expect_err("the last row is half full");
+    assert!(open_end.contains("the sheet's end") && open_end.contains("ends at column 6"), "{open_end}");
+
+    let open_break = sheet(vec![block("left", 0, 6), block("next", 0, 12).on_new_page()]).check_places().expect_err("a page break mid-row");
+    assert!(open_break.contains("`next`'s page break") && open_break.contains("ends at column 6"), "{open_break}");
+
+    let empty = sheet(vec![block("empty", 0, 0)]).check_places().expect_err("a block of no width");
+    assert!(empty.contains("`empty`") && empty.contains("past the 12-column grid"), "{empty}");
+}

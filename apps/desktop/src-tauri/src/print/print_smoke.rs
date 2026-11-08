@@ -252,3 +252,40 @@ fn print_smoke_hit_points_and_speed_carry_a_gm_grant_and_a_worn_speed_item() {
         assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
     }
 }
+
+/// Every Pathfinder starter seed the app writes (`seed_default_characters_at`; counted, not listed)
+/// prints through the page grid on both papers with each option set, and Typst reports no
+/// diagnostic for any of them (SD-40 E1.MC population probe; NR-4).
+#[test]
+fn print_smoke_every_pf_seed_renders_through_the_grid_with_no_diagnostics() {
+    let dir = std::env::temp_dir().join(format!("codex-print-smoke-{}-every-seed", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).expect("temp app-data dir is creatable");
+    seed_default_characters_at(&dir, "0.0.0-test").expect("starter seeding succeeds");
+    let mut roots: Vec<PathBuf> = std::fs::read_dir(dir.join("characters"))
+        .expect("the seeds' characters directory")
+        .map(|entry| entry.expect("a directory entry").path())
+        .filter(|root| {
+            crate::rule_system_adapter::load_saved_character_via_envelope(root).is_ok_and(|loaded| loaded.summary.game_system == "pf1")
+        })
+        .collect();
+    roots.sort();
+    assert_eq!(roots.len(), 3, "the Pathfinder starter seeds: Aldric, Elowen, Tomas: {roots:?}");
+    let mut rendered = 0;
+    for root in &roots {
+        for paper in [Paper::A4, Paper::Letter] {
+            for (spellbook, math, bio) in [(false, false, false), (true, false, false), (false, true, false), (true, true, true)] {
+                let request = PrintRequest { paper, spellbook, math, bio, ..PrintRequest::default() };
+                let case = format!("{} {paper:?} spellbook={spellbook} math={math} bio={bio}", root.display());
+                let document = super::sheet_document_at_root(root, &request).unwrap_or_else(|err| panic!("{case}: builds: {err}"));
+                assert_eq!(document.columns(), crate::print::model::GRID_COLUMNS, "{case}: prints on the page grid");
+                let sheet = super::typst::typeset(&document).unwrap_or_else(|err| panic!("{case}: typesets: {err}"));
+                assert!(sheet.warnings.is_empty(), "{case}: Typst reports no diagnostics: {:?}", sheet.warnings);
+                assert!(sheet.pdf.starts_with(b"%PDF-"), "{case}: the bytes are a PDF");
+                rendered += 1;
+            }
+        }
+    }
+    let _ = std::fs::remove_dir_all(&dir);
+    assert_eq!(rendered, 24, "3 seeds x 2 papers x 4 option sets");
+}
