@@ -68,7 +68,8 @@ fn critical(weapon: &WeaponDamageDto) -> String {
 pub fn weapons(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![SheetRow::new(
         "Weapon",
-        ["Attack", "Damage", "Str", "Enh.", "Dmg", "Threat", "Critical", "Wield"].map(str::to_owned),
+        // Short captions: six boxes share five of the page's twelve columns.
+        ["Atk.", "Dice", "Str", "Enh.", "Dmg", "Thr.", "Critical", "Wield"].map(str::to_owned),
     )];
     let mut placed: Vec<&str> = Vec::new();
     for weapon in &sources.loaded.weapon_damage {

@@ -148,7 +148,7 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
         format!("Spellcraft {} Int {} 5", signed(explained("skill.total.spellcraft")), signed(modifiers.intelligence)),
         format!("Climb* {} Str {} 1", signed(explained("skill.total.climb")), signed(modifiers.strength)),
         // Weapons: the dice stay literal; each facet its own cell, the engine's attack bonus one of them.
-        format!("Longsword 19-20/x2 · One Handed {} 1d8", signed(explained("combat.weapon_attack_bonus.longsword"))),
+        format!("Longsword 19-20/x2 One Handed {} 1d8", signed(explained("combat.weapon_attack_bonus.longsword"))),
         // Armor: the worn armor's own numbers.
         "Chain Shirt +4".to_owned(),
         // Inventory: the encumbrance the engine computed.
@@ -848,7 +848,7 @@ fn print_pf_blocks_weapons_print_as_one_table() {
         }
         let text = pdf_text(&render(&root, &request(false, false, false)));
         let block = &text[text.find("Weapons").expect("Weapons")..];
-        for caption in ["Attack", "Damage", "Str", "Enh.", "Dmg", "Threat", "Critical", "Ammunition"] {
+        for caption in ["Atk.", "Dice", "Str", "Enh.", "Dmg", "Thr.", "Critical", "Wield", "Ammunition"] {
             assert!(block.contains(caption), "{tag}: the Weapons look prints `{caption}`: {block}");
         }
     }
@@ -857,7 +857,7 @@ fn print_pf_blocks_weapons_print_as_one_table() {
 /// Page 1 (operator ruling R5, SD-40 `technical-design.md §4`): on Letter and on A4, the first
 /// page holds the character's details and every step-1 block (abilities, hit points, initiative,
 /// armor class, attack, saves, speed, skills, weapons), each found by its heading and its first
-/// printed words in the PDF's text before page 1's footer.
+/// printed words in the PDF's text before page 1's footer; with three weapons in hand too.
 #[test]
 fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
     use crate::print::print_golden::{block_anchor, page_one, PAGE_ONE_BLOCKS};
@@ -874,6 +874,22 @@ fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
                 let block = document.blocks.iter().find(|block| block.id == block_id).unwrap_or_else(|| panic!("{tag}: the {block_id} block"));
                 assert!(first.contains(&block_anchor(block)), "{tag} {paper:?}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
             }
+        }
+    }
+    // A character with three weapons in hand (the seed's longsword line three times over: the
+    // seeds hold one each) still prints the ten blocks on page 1, on Letter and on A4.
+    let root = seeded("page-one-three-weapons", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let mut document = sheet_document_at_root(&root, &PrintRequest { paper, ..request(false, false, false) }).expect("the document builds");
+        let weapons = document.blocks.iter_mut().find(|block| block.id == "weapons").expect("the Weapons block");
+        let line = weapons.rows[1].clone();
+        weapons.rows.splice(2..2, [line.clone(), line]);
+        let pdf = crate::print::typst::typeset(&document).expect("three weapons typeset").pdf;
+        let text = pdf_text(&pdf);
+        let first = unspaced(page_one(&text, &document.title, page_count(&pdf)).expect("page 1's footer prints"));
+        for block_id in PAGE_ONE_BLOCKS {
+            let block = document.blocks.iter().find(|block| block.id == block_id).expect("the block");
+            assert!(first.contains(&block_anchor(block)), "three weapons {paper:?}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
         }
     }
 }

@@ -1,7 +1,8 @@
 // The `weapons` look (SD-40 E2.3): one table of the weapons in hand. The first row names the
-// columns; each weapon prints its name with its critical and wield on one line, then a row of boxes
-// (attack, damage dice, Str, enhancement, damage bonus, threat), then its feat notes. Two blank
-// weapons follow for the pencil, then the ammunition write-in. Any other row (a per-weapon engine
+// columns; each weapon prints its name with its critical on one line, then its wield and a row of
+// boxes (attack, damage dice, Str, enhancement, damage bonus, threat), then its feat notes. Two
+// blank lines follow for the pencil (a rule for the name, the six boxes), then the ammunition
+// write-in. Any other row (a per-weapon engine
 // row no weapon in hand matches, "No weapon is wielded.") prints its label and values under the
 // table. It formats strings it is given; it adds nothing up (NR-2).
 //
@@ -28,16 +29,14 @@
 
 #let boxes = 6
 
-#let name-line(name, critical, wield) = grid(
-  columns: (1fr, auto),
-  column-gutter: 0.2cm,
-  align(left + bottom, text(size: 9pt, weight: "bold", name)),
-  align(right + bottom, text(size: 8pt, critical + " · " + wield)),
-)
+// The columns every line shares: the wield (or, on a blank line, the name the player writes), then
+// the six boxes.
+#let columns = (2.2cm,) + (1fr,) * boxes
 
-#let box-row(values) = grid(
-  columns: (1fr,) * boxes,
+#let box-row(first, values) = grid(
+  columns: columns,
   column-gutter: 0.1cm,
+  first,
   ..values.map(value-box),
 )
 
@@ -47,30 +46,37 @@
   let rest = if b.rows.len() > 1 { b.rows.slice(1) } else { () }
   let weapons = rest.filter(is-weapon)
   let others = rest.filter(r => not is-weapon(r))
+  let shown = calc.min(boxes, header.values.len())
   block(breakable: false, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
     #stack(
       spacing: 0.12cm,
+      // The captions, laid out as each weapon is: the weapon and its critical, then the wield and
+      // the boxes' columns.
       grid(
         columns: (1fr, auto),
         caption(header.label),
-        caption(if header.values.len() > boxes { header.values.slice(boxes).join(" · ") } else { "" }),
+        caption(header.values.at(6, default: "")),
       ),
       grid(
-        columns: (1fr,) * boxes,
+        columns: columns,
         column-gutter: 0.1cm,
-        ..header.values.slice(0, calc.min(boxes, header.values.len())).map(c => align(center, caption(c))),
+        align(left + bottom, caption(header.values.at(7, default: ""))),
+        ..header.values.slice(0, shown).map(c => align(center + bottom, caption(c))),
       ),
-      ..weapons.map(r => {
-        stack(
-          spacing: 0.08cm,
-          name-line(r.label, r.values.at(6), r.values.at(7)),
-          box-row(r.values.slice(0, boxes)),
-          ..r.notes.map(n => text(size: 8pt, fill: luma(40), n)),
-        )
-      }),
-      // Two blank weapons, for what the character picks up at the table.
-      ..range(2).map(_ => stack(spacing: 0.08cm, write-line, box-row(("",) * boxes))),
+      ..weapons.map(r => stack(
+        spacing: 0.06cm,
+        grid(
+          columns: (1fr, auto),
+          column-gutter: 0.2cm,
+          align(left + bottom, text(size: 9pt, weight: "bold", r.label)),
+          align(right + bottom, text(size: 8pt, r.values.at(6))),
+        ),
+        box-row(align(left + horizon, text(size: 8pt, r.values.at(7))), r.values.slice(0, boxes)),
+        ..r.notes.map(n => text(size: 8pt, fill: luma(40), n)),
+      )),
+      // Two blank weapons, for what the character picks up at the table: the name on the rule.
+      ..range(2).map(_ => box-row(write-line, ("",) * boxes)),
       v(0.05cm),
       grid(
         columns: (auto, 1fr),
