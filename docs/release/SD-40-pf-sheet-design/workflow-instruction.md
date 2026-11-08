@@ -268,7 +268,7 @@ on `origin/tranche-20` and merge nothing.
    counts `diff` empty (E4.1: the named renaming only); PF golden page counts listed before → after.
 8. **Look at your own output** (R7; every look or layout card, and every merge check): from
    `apps/desktop/src-tauri`, `mkdir -p "$CARGO_TARGET_DIR/proof" && PRINT_PROOF_OUT="$CARGO_TARGET_DIR/proof" cargo test --locked -j 8 print_proof -- --test-threads=8`, then
-   `bash scripts/print/rasterize.sh "$CARGO_TARGET_DIR/proof" "$CARGO_TARGET_DIR/proof/png"`; **Read** every
+   `bash ../../../scripts/print/rasterize.sh "$CARGO_TARGET_DIR/proof" "$CARGO_TARGET_DIR/proof/png"`; **Read** every
    PNG your card changed and the reference PNGs under `artifacts/epic_0/E0.1/`; write what you saw
    (alignment, crowding, blank space, wrong cell, clipped text, missing write-in space) and fix it; up to
    three passes; copy the final PNGs (and the PDFs for a gate card) to

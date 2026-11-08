@@ -188,3 +188,6 @@ mod print_smoke;
 
 #[cfg(test)]
 mod print_golden;
+
+#[cfg(test)]
+mod print_proof;

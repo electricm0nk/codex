@@ -39,7 +39,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 24
 | E0.1 | PCGen reference render + block map + density figures | opus | complete | C0 | side lane `ref`; no cargo; artifacts/epic_0/E0.1_cycle_receipt.md; std 3 pp, simple 3 pp |
 | E0.2 | Repair the 14 stale ui-smoke rows | opus | waiting | C1 | side lane `smoke` beside E1; lands before E4.2 (both write `spec.json`); operator answer "1: B", decisions.md §22 |
 | E1.1 | Layout model: id, look, place, columns; dispatcher; grid; vocabulary fixture | opus | complete | C1 | code `ad412a4a88`; receipt `artifacts/epic_1/E1.1_cycle_receipt.md`; SF/CPR 16/16 byte-identical; PF pages unchanged |
-| E1.2 | Proof harness: print_proof + rasterize.sh | sonnet | waiting | E1.1 | |
+| E1.2 | Proof harness: print_proof + rasterize.sh | sonnet | complete | E1.1 | receipt `artifacts/epic_1/E1.2_cycle_receipt.md`; 16 PDFs, 130 PNGs |
 | E1.MC | E1 merge check + Epic report | opus | waiting | E1.2, E0.1 | |
 | E2.1 | Number-box looks: abilities, hitPoints, initiative, armorClass, attack, saves, speed; Combat split | opus | waiting | E1.MC | |
 | E2.2 | Skills look (two narrow columns) | opus | waiting | E2.1 | |
