@@ -20,7 +20,7 @@ mod skills;
 mod spells;
 
 pub use bio_notes::bio_notes;
-pub use core::{abilities, armor_class, attack, character_details, hit_points, initiative, saves, speed};
+pub use core::{abilities, armor_class, attack, character_details, hit_points, initiative, name_campaign, portrait, saves, speed};
 pub use extras::{custom, pets};
 pub use feats::{actions, class_features, feats};
 pub(crate) use feats::line_row;
@@ -32,7 +32,7 @@ pub use spells::{spellbook, spells};
 use crate::character_custom::CharacterCustomDto;
 use crate::character_hub::{CharacterBioDto, CharacterMoneyDto, ExplanationDto, HeldEquipmentCopyDto, LoadSavedCharacterResponse};
 use crate::character_ledger::{AdmittedKind, OverrideFlag};
-use crate::print::model::Derivation;
+use crate::print::model::{Derivation, SheetImage};
 use crate::print::PrintRequest;
 
 /// What a sheet is printed from.
@@ -44,6 +44,9 @@ pub struct SheetSources<'a> {
     pub bio: CharacterBioDto,
     /// The Gear tab's money (`load_character_money`): Pathfinder only, `None` on the other sheets.
     pub money: Option<CharacterMoneyDto>,
+    /// The character's saved portrait (`portrait.png`, as `load_character_portrait` reads it):
+    /// Pathfinder only, `None` when there is none or on the other sheets.
+    pub portrait: Option<SheetImage>,
     pub request: &'a PrintRequest,
 }
 

@@ -148,7 +148,8 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
     // The blocks, in the PF layout file's order: the Combat block split along the screen's boxes
     // (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3): each row's cells left to right.
     let at = |heading: &str| text.find(heading).unwrap_or_else(|| panic!("heading {heading} printed: {text}"));
-    assert!(at("Identity") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Identity, Hit Points, Abilities in order: {text}");
+    assert!(at("Portrait") < at("Character Name") && at("Character Name") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Portrait, Character Name, Hit Points, Abilities in order: {text}");
+    assert!(at("Speed") < at("Identity"), "the Identity block opens page 2, after page 1's Speed: {text}");
     assert!(at("Abilities") < at("Armor Class") && at("Armor Class") < at("Attack") && at("Attack") < at("Saving Throws"), "Abilities, Armor Class, Attack, Saving Throws in order: {text}");
 }
 

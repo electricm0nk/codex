@@ -5641,14 +5641,26 @@ pub fn load_character_portrait(
     request: LoadCharacterPortraitRequest,
 ) -> Result<Option<String>, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    let path = root.join(PORTRAIT_FILE_NAME);
+    let Some(bytes) = load_character_portrait_bytes_at_root(&root)? else {
+        return Ok(None);
+    };
+    let encoded = base64::engine::general_purpose::STANDARD.encode(bytes);
+    Ok(Some(format!("data:image/png;base64,{encoded}")))
+}
+
+/// The path a character saved at `root` keeps its portrait at (`save_character_portrait` writes it).
+pub(crate) fn character_portrait_path_at_root(root: &Path) -> PathBuf {
+    root.join(PORTRAIT_FILE_NAME)
+}
+
+/// The saved portrait's bytes, as `load_character_portrait` reads them, or `None` when the
+/// character has none; a file that exists but does not read is refused, naming the path.
+pub(crate) fn load_character_portrait_bytes_at_root(root: &Path) -> Result<Option<Vec<u8>>, String> {
+    let path = character_portrait_path_at_root(root);
     if !path.exists() {
         return Ok(None);
     }
-
-    let bytes = std::fs::read(&path).map_err(|err| format!("{}: {err}", path.display()))?;
-    let encoded = base64::engine::general_purpose::STANDARD.encode(bytes);
-    Ok(Some(format!("data:image/png;base64,{encoded}")))
+    std::fs::read(&path).map(Some).map_err(|err| format!("{}: {err}", path.display()))
 }
 
 #[derive(Debug, Clone, Deserialize)]

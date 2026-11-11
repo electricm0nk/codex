@@ -28,5 +28,6 @@
   "money": {"ui": null, "printOnly": "the screen's Money panel is not a registry box or a tab; the sheet gives it a block of its own (E3.2)"},
   "spellbook": {"ui": null, "printOnly": "the full text of every held spell, an option the screen has no box for"},
   "math": {"ui": null, "printOnly": "Show the math: the engine rows behind each printed number, an option the screen has no box for"},
+  "nameCampaign": {"ui": null, "printOnly": "the screen's IdentityPanel (Character Name, Campaign) is not a registry box or a tab; page 1 prints it beside the portrait (E2.5)"},
   "bioNotes": {"ui": null, "printOnly": "Bio and campaign notes, an option page the screen has no box for"}
 }

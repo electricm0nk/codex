@@ -9,6 +9,24 @@ use super::SheetSources;
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{Look, SheetBlock, SheetRow};
 
+/// The portrait box (`portrait`, SD-40 E2.5): the saved portrait when the character has one (the
+/// frame scales it to fit), else the empty box; its caption is the heading.
+pub fn portrait(sources: &SheetSources) -> SheetBlock {
+    SheetBlock::new("Portrait", Vec::new()).in_look(Look::Portrait).with_image(sources.portrait.clone())
+}
+
+/// The screen's IdentityPanel (`nameCampaign`, SD-40 E2.5): "Character Name" (the heading) over
+/// the name the screen shows, and "Campaign" over the names of the campaigns the request carries,
+/// joined by ", "; with none, a write-in cell (a blank line, never a dash).
+pub fn name_campaign(sources: &SheetSources) -> SheetBlock {
+    let campaigns = sources.request.campaigns.iter().map(|campaign| campaign.name.as_str()).collect::<Vec<_>>().join(", ");
+    SheetBlock::new(
+        "Character Name",
+        vec![SheetRow::new("", [sources.loaded.summary.display_label.clone()]), SheetRow::new("Campaign", [campaigns])],
+    )
+    .in_look(Look::NameCampaign)
+}
+
 /// The screen's Character Details (`characterDetails`, SD-40 `decisions.md §5`), printed under
 /// the heading Identity: name, race, class, size, vision.
 pub fn character_details(sources: &SheetSources) -> SheetBlock {

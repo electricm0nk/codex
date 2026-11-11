@@ -222,10 +222,10 @@ pub(crate) fn page_one<'a>(text: &'a str, title: &str, pages: usize) -> Option<&
     text.find(&format!("{} · page 1 of {pages}", folded(title))).map(|end| &text[..end])
 }
 
-/// The blocks page 1 holds (operator ruling R5, SD-40 `technical-design.md §4`): the character's
-/// details and the step-1 blocks, by vocabulary id.
-pub(crate) const PAGE_ONE_BLOCKS: [&str; 10] =
-    ["characterDetails", "abilities", "hitPoints", "initiative", "armorClass", "attack", "saves", "speed", "skills", "weapons"];
+/// The blocks page 1 holds (operator ruling R5, SD-40 `technical-design.md §4`, `decisions.md §23.3`):
+/// the portrait and the Character Name and Campaign fields, and the step-1 blocks, by vocabulary id.
+pub(crate) const PAGE_ONE_BLOCKS: [&str; 11] =
+    ["portrait", "nameCampaign", "abilities", "hitPoints", "initiative", "armorClass", "attack", "saves", "speed", "skills", "weapons"];
 
 /// A block's heading together with its first printed words, without whitespace: how the block is
 /// found in the PDF's text, so a heading's word inside another block ("Attack" in a weapon's

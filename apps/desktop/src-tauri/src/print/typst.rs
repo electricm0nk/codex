@@ -3,7 +3,7 @@
 //! The Typst world here is closed: its only files are the shared frame and blocks templates and
 //! the block looks (`resources/print/*.typ`, `resources/print/looks/*.typ`, compiled into the
 //! binary), the sheet's own JSON and the generated main
-//! file; its only fonts are the bundled OFL Liberation Sans faces (`resources/fonts/`, compiled
+//! file, and the images the sheet's blocks carry (the saved portrait, read by the caller); its only fonts are the bundled OFL Liberation Sans faces (`resources/fonts/`, compiled
 //! in). It never searches the system's fonts, never reads the disk and never asks for the date,
 //! so one sheet prints the same bytes on every machine (NR-3).
 
@@ -40,6 +40,8 @@ pub(crate) const LOOKS: &[(&str, &str)] = &[
     ("speed", include_str!("../../resources/print/looks/speed.typ")),
     ("skills", include_str!("../../resources/print/looks/skills.typ")),
     ("weapons", include_str!("../../resources/print/looks/weapons.typ")),
+    ("portrait", include_str!("../../resources/print/looks/portrait.typ")),
+    ("name-campaign", include_str!("../../resources/print/looks/name-campaign.typ")),
 ];
 
 /// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).
@@ -81,16 +83,18 @@ struct SheetWorld {
     /// The frame, the dispatcher and every look.
     templates: Vec<Source>,
     sheet_json: Bytes,
+    /// The images the blocks print, each at its virtual path.
+    images: Vec<(FileId, Bytes)>,
 }
 
 impl SheetWorld {
-    fn new(sheet_json: Vec<u8>) -> Self {
+    fn new(sheet_json: Vec<u8>, images: Vec<(FileId, Bytes)>) -> Self {
         let mut templates = vec![
             Source::new(file_id("/frame.typ"), FRAME_TYP.to_owned()),
             Source::new(file_id("/blocks.typ"), BLOCKS_TYP.to_owned()),
         ];
         templates.extend(LOOKS.iter().map(|(name, text)| Source::new(file_id(&format!("/looks/{name}.typ")), (*text).to_owned())));
-        Self { main: Source::new(file_id("/main.typ"), MAIN_TYP.to_owned()), templates, sheet_json: Bytes::new(sheet_json) }
+        Self { main: Source::new(file_id("/main.typ"), MAIN_TYP.to_owned()), templates, sheet_json: Bytes::new(sheet_json), images }
     }
 }
 
@@ -118,6 +122,9 @@ impl World for SheetWorld {
     fn file(&self, id: FileId) -> FileResult<Bytes> {
         if id == file_id("/sheet.json") {
             return Ok(self.sheet_json.clone());
+        }
+        if let Some((_, bytes)) = self.images.iter().find(|(image, _)| *image == id) {
+            return Ok(bytes.clone());
         }
         self.source(id).map(|source| Bytes::from_string(source.text().to_owned()))
     }
@@ -163,14 +170,40 @@ struct SheetJson<'a> {
 
 /// Typesets `document` through the shared frame into PDF bytes. A layout the page grid cannot
 /// print as listed is refused by name (`SheetDocument::check_places`); another error is Typst's own words.
+/// An image Typst cannot print (a portrait file that does not read or decode) never fails the
+/// sheet: it is typeset again without its images, and a warning names each file left out.
 pub fn typeset(document: &SheetDocument) -> Result<TypesetSheet, String> {
+    match typeset_as_given(document) {
+        Err(error) if document.blocks.iter().any(|block| block.image.is_some()) => {
+            let mut without = document.clone();
+            let mut warnings = Vec::new();
+            for block in &mut without.blocks {
+                if let Some(image) = block.image.take() {
+                    warnings.push(format!("print.image: {} could not be printed ({error}); the empty box printed", image.source));
+                }
+            }
+            let mut typeset = typeset_as_given(&without)?;
+            warnings.append(&mut typeset.warnings);
+            Ok(TypesetSheet { pdf: typeset.pdf, warnings })
+        }
+        result => result,
+    }
+}
+
+fn typeset_as_given(document: &SheetDocument) -> Result<TypesetSheet, String> {
     document.check_places()?;
     if let Some(block) = document.blocks.iter().find(|block| !LOOKS.iter().any(|(name, _)| *name == block.look.name())) {
         return Err(format!("print.look: block `{}` ({}) names the look `{}`, which has no template", block.id, block.heading, block.look.name()));
     }
     let sheet = SheetJson { document, columns: document.columns() };
     let sheet_json = serde_json::to_vec(&sheet).map_err(|err| format!("the sheet does not serialise: {err}"))?;
-    let world = SheetWorld::new(sheet_json);
+    let images = document
+        .blocks
+        .iter()
+        .filter_map(|block| block.image.as_ref())
+        .map(|image| (file_id(&image.path), Bytes::new(image.bytes.clone())))
+        .collect();
+    let world = SheetWorld::new(sheet_json, images);
     let warned = typst::compile::<PagedDocument>(&world);
     let warnings = describe(&warned.warnings);
     let paged = warned

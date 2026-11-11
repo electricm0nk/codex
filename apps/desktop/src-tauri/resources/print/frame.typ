@@ -1,5 +1,5 @@
 // The shared page frame (SD-39 operator ruling R2). Every system's sheet prints through it: the
-// paper, the one bundled font family, the title, the page footer, then the layout file's blocks
+// paper, the one bundled font family, the title (unless page 1 holds the Character Name field), the page footer, then the layout file's blocks
 // in order. The frame names no inch for any block; Typst flows them onto pages.
 //
 // `doc` is the `SheetDocument` the Rust layout file built (`src/print/model.rs`), passed as JSON.
@@ -49,8 +49,12 @@
   set text(font: "Liberation Sans", size: 10pt, lang: "en")
   set par(justify: false)
 
-  align(left, text(size: 18pt, weight: "bold", doc.title))
-  v(0.4em)
+  // A sheet whose page 1 opens with the Character Name field (Pathfinder, SD-40 E2.5) prints the
+  // name there, once; every other sheet opens with the name as its title.
+  if not doc.blocks.any(b => b.id == "nameCampaign") {
+    align(left, text(size: 18pt, weight: "bold", doc.title))
+    v(0.4em)
+  }
   if doc.columns == 1 {
     for b in doc.blocks {
       sheet-block(b)

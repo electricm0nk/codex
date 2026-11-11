@@ -134,12 +134,18 @@ pub enum Look {
     /// The weapons table: a line per weapon in hand (attack, damage dice, Str, enhancement, damage
     /// bonus, threat, critical, wield), two blank lines and the ammunition write-in.
     Weapons,
+    /// The portrait box (SD-40 E2.5): the saved portrait scaled into a frame, or the empty frame,
+    /// with its small "Portrait" caption.
+    Portrait,
+    /// The Character Name and Campaign fields (the screen's IdentityPanel): each label over its
+    /// value, a write-in line where there is none.
+    NameCampaign,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 10] = [
+    pub const ALL: [Look; 12] = [
         Look::Table,
         Look::Abilities,
         Look::HitPoints,
@@ -150,6 +156,8 @@ impl Look {
         Look::Speed,
         Look::Skills,
         Look::Weapons,
+        Look::Portrait,
+        Look::NameCampaign,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -165,6 +173,8 @@ impl Look {
             Look::Speed => "speed",
             Look::Skills => "skills",
             Look::Weapons => "weapons",
+            Look::Portrait => "portrait",
+            Look::NameCampaign => "name-campaign",
         }
     }
 }
@@ -218,6 +228,20 @@ pub struct SheetBlock {
     /// campaign notes) print after the sheet, never wedged into it.
     pub new_page: bool,
     pub rows: Vec<SheetRow>,
+    /// An image the block prints (the portrait box's saved portrait), when it has one.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub image: Option<SheetImage>,
+}
+
+/// An image file a block prints: the Typst world serves `bytes` at `path`; `source` is the file
+/// it was read from, named in the render's warnings when it cannot be printed.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct SheetImage {
+    pub path: String,
+    #[serde(skip)]
+    pub source: String,
+    #[serde(skip)]
+    pub bytes: Vec<u8>,
 }
 
 impl SheetBlock {
@@ -227,7 +251,7 @@ impl SheetBlock {
         for row in &mut rows {
             row.values.resize(value_columns, String::new());
         }
-        Self { id: "", look: Look::default(), place: Place::default(), heading: heading.into(), value_columns, new_page: false, rows }
+        Self { id: "", look: Look::default(), place: Place::default(), heading: heading.into(), value_columns, new_page: false, rows, image: None }
     }
 
     /// The same block, under its vocabulary id.
@@ -243,6 +267,11 @@ impl SheetBlock {
     /// The same block, at `place` on the page grid.
     pub fn at(self, place: Place) -> Self {
         Self { place, ..self }
+    }
+
+    /// The same block, printing `image`.
+    pub fn with_image(self, image: Option<SheetImage>) -> Self {
+        Self { image, ..self }
     }
 
     /// The same block, starting on a new page.

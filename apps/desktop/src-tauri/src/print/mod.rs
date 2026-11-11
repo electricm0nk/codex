@@ -19,7 +19,10 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 
 use crate::character_custom::{custom_or_empty, CharacterCustomDto};
-use crate::character_hub::{list_held_equipment_at_root, load_character_bio_at_root, resolve_character_root};
+use crate::character_hub::{
+    character_portrait_path_at_root, list_held_equipment_at_root, load_character_bio_at_root, load_character_portrait_bytes_at_root,
+    resolve_character_root,
+};
 use crate::rule_system_adapter::load_saved_character_via_envelope;
 use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
 pub use model::Paper;
@@ -91,8 +94,22 @@ pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<mod
     let (held, custom) =
         if system == "pf1" { (list_held_equipment_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
     let money = if system == "pf1" { Some(crate::character_hub::load_character_money_at_root(root)?) } else { None };
-    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, request };
+    let portrait = if system == "pf1" { saved_portrait(root) } else { None };
+    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, request };
     Ok(layout(&sources))
+}
+
+/// The character's saved portrait for the portrait box. A file that does not read is still handed
+/// on, with no bytes: Typst cannot print it, so `typst::typeset` prints the empty box and warns,
+/// naming the file; a portrait never fails the print.
+fn saved_portrait(root: &Path) -> Option<model::SheetImage> {
+    let source = character_portrait_path_at_root(root).display().to_string();
+    let bytes = match load_character_portrait_bytes_at_root(root) {
+        Ok(None) => return None,
+        Ok(Some(bytes)) => bytes,
+        Err(_) => Vec::new(),
+    };
+    Some(model::SheetImage { path: "/images/portrait.png".to_owned(), source, bytes })
 }
 
 /// The `game_system` a Cyberpunk RED save carries.

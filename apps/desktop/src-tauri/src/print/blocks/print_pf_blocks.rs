@@ -22,12 +22,14 @@ const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
 const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
-/// The 18 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
-/// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3).
-const BASE_HEADINGS: [&str; 18] = [
-    "Identity",
-    "Hit Points",
+/// The 20 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
+/// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3) under the
+/// portrait and the Character Name field, the Identity block opening page 2 (E2.5).
+const BASE_HEADINGS: [&str; 20] = [
+    "Portrait",
+    "Character Name",
     "Initiative",
+    "Hit Points",
     "Abilities",
     "Armor Class",
     "Attack",
@@ -35,6 +37,7 @@ const BASE_HEADINGS: [&str; 18] = [
     "Weapons",
     "Saving Throws",
     "Speed",
+    "Identity",
     "Armor",
     "Inventory",
     "Feats",
@@ -98,7 +101,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
         expected.extend([SPELLBOOK, MATH, BIO]);
-        assert_eq!(headings, expected, "{tag}: the 20 block types (Spells twice: its list, then the Spellbook), in the layout file's order");
+        assert_eq!(headings, expected, "{tag}: the 23 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
         let full = render(&root, &all);
         assert_in_order(&pdf_text(&full), &expected);
         // For a reader's own look (`pdftotext`, a viewer): the full sheet, when asked for.
@@ -260,7 +263,8 @@ fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let roster = crate::character_hub::list_race_creation_roster();
     let race = roster.races.iter().find(|race| race.race_id == loaded.summary.race_id).expect("the seed's race is on the roster");
     let text = pdf_text(&render(&root, &request(false, false, false)));
-    let identity = &text[text.find("Identity").expect("Identity")..text.find("Abilities").expect("Abilities")];
+    let identity = &text[text.find("Identity").expect("Identity")..];
+    let identity = &identity[..identity.find("Armor").expect("the Armor block follows the Identity block")];
     assert!(identity.contains(&format!("Size {}", race.size)), "Size {}: {identity}", race.size);
     assert!(identity.contains(&format!("Vision {}", race.vision)), "Vision {}: {identity}", race.vision);
     let inventory = &text[text.find("Inventory").expect("Inventory")..text.find("Feats").expect("Feats")];
@@ -441,6 +445,7 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
             custom: load_character_custom_at_root(&root).unwrap_or_default(),
             bio: crate::character_hub::load_character_bio_at_root(&root).expect("bio loads"),
             money: Some(crate::character_hub::load_character_money_at_root(&root).expect("money loads")),
+            portrait: None,
             request: &basic,
         };
         let document = crate::print::layout::pf1e::layout(&sources);
@@ -640,7 +645,7 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
         }
 
         let text = pdf_text(&render(&root, &request(false, false, false)));
-        assert_in_order(&text, &["Hit Points", "Initiative", "Armor Class", "Attack", "Skills", "Saving Throws", "Speed"]);
+        assert_in_order(&text, &["Initiative", "Hit Points", "Armor Class", "Attack", "Skills", "Saving Throws", "Speed"]);
         for line in [
             format!("Total {}", row("hit_points.max").value),
             format!("Touch {}", row("defense.touch_armor_class").value),
@@ -857,7 +862,7 @@ fn print_pf_blocks_weapons_print_as_one_table() {
 /// Page 1 is whole (operator ruling R5, SD-40 `technical-design.md §4`): the PDF's text before
 /// page 1's footer holds the character's details and every step-1 block, each found by its heading
 /// and its first printed words; and the text after that footer starts with the block page 2 opens
-/// with (`defense`), so no page-1 block ran over onto page 2 (E2.MC: an anchor alone passes a
+/// with (`characterDetails`, E2.5; `defense` before it), so no page-1 block ran over onto page 2 (E2.MC: an anchor alone passes a
 /// block whose tail spilled).
 fn assert_page_one_whole(tag: &str, document: &crate::print::model::SheetDocument, pdf: &[u8]) {
     use crate::print::print_golden::{block_anchor, page_one, PAGE_ONE_BLOCKS};
@@ -871,11 +876,11 @@ fn assert_page_one_whole(tag: &str, document: &crate::print::model::SheetDocumen
         assert!(first.contains(&block_anchor(block)), "{tag}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
     }
     let (_, after) = text[one.len()..].split_once(&format!("page 1 of {pages}")).unwrap_or_else(|| panic!("{tag}: page 1's footer"));
-    let defense = document.blocks.iter().find(|block| block.id == "defense").expect("the Armor block");
+    let second = document.blocks.iter().find(|block| block.id == "characterDetails").expect("the Identity block");
     assert!(
-        unspaced(after).starts_with(&block_anchor(defense)),
+        unspaced(after).starts_with(&block_anchor(second)),
         "{tag}: page 2 starts with {:?}, nothing of page 1 ran over; page 2 reads: {}",
-        defense.heading,
+        second.heading,
         &after[..after.len().min(400)]
     );
 }
@@ -956,4 +961,107 @@ fn print_pf_blocks_page_one_stays_whole_with_a_bought_weapon_and_ring_with_no_ra
             assert_page_one_whole(&format!("{tag} {paper:?}"), &document, &render(root, &printed));
         }
     }
+}
+
+/// A 2 x 1 RGB PNG: the smallest real portrait a test can save (`save_character_portrait` writes
+/// the PNG bytes it is sent to `portrait.png` in the character's directory).
+const TEST_PORTRAIT_PNG: [u8; 70] = [
+    0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00,
+    0x01, 0x08, 0x02, 0x00, 0x00, 0x00, 0x7b, 0x40, 0xe8, 0xdd, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9c, 0x63, 0x68, 0x70,
+    0x50, 0x00, 0x22, 0x00, 0x06, 0xe7, 0x01, 0xc1, 0x53, 0x8c, 0x54, 0x83, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60,
+    0x82,
+];
+
+/// How many image objects the PDF holds (each stream whose `/Subtype` is `/Image`).
+fn image_objects(pdf: &[u8]) -> usize {
+    let document = lopdf::Document::load_mem(pdf).expect("the PDF parses");
+    document
+        .objects
+        .values()
+        .filter(|object| match object {
+            lopdf::Object::Stream(stream) => matches!(stream.dict.get(b"Subtype"), Ok(lopdf::Object::Name(name)) if name == b"Image"),
+            _ => false,
+        })
+        .count()
+}
+
+/// Page 1's text (everything before its footer) for `root` printed on `paper` with `campaigns`.
+fn page_one_text(root: &Path, paper: Paper, campaigns: Vec<CampaignNote>) -> (crate::print::model::SheetDocument, String, Vec<u8>) {
+    let printed = PrintRequest { paper, campaigns, ..request(false, false, false) };
+    let document = sheet_document_at_root(root, &printed).expect("the document builds");
+    let pdf = render(root, &printed);
+    let text = pdf_text(&pdf);
+    let one = crate::print::print_golden::page_one(&text, &document.title, page_count(&pdf))
+        .unwrap_or_else(|| panic!("page 1's footer prints: {text}"))
+        .to_owned();
+    (document, one, pdf)
+}
+
+/// E2.5 (`decisions.md §23.1` items 1, 2): page 1 opens with the portrait box and the Character
+/// Name and Campaign fields, with no title above them; the name prints once on page 1 (the footer
+/// keeps it, §23.6 Q4); the Identity block has left page 1 and opens page 2. Letter and A4.
+#[test]
+fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
+    let root = seeded("header-no-portrait", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let (document, one, pdf) = page_one_text(&root, paper, Vec::new());
+        let name = document.title.clone();
+        assert!(one.starts_with("Portrait"), "{paper:?}: page 1 starts with the portrait box: {one}");
+        assert_in_order(&one, &["Portrait", "Character Name", &name, "Campaign"]);
+        assert_eq!(one.matches(name.as_str()).count(), 1, "{paper:?}: the name prints once on page 1: {one}");
+        assert!(!one.contains("Identity"), "{paper:?}: page 1 holds no Identity block: {one}");
+        assert_eq!(image_objects(&pdf), 0, "{paper:?}: no portrait saved, no image printed");
+        let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+        assert_eq!(&ids[..2], ["portrait", "nameCampaign"], "{paper:?}: the top band's two blocks lead the sheet");
+        let identity = document.blocks.iter().find(|block| block.id == "characterDetails").expect("the Identity block still prints");
+        assert!(identity.new_page, "{paper:?}: the Identity block opens page 2");
+    }
+}
+
+/// E2.5 (`decisions.md §23.1` item 1): a saved `portrait.png` prints inside page 1's portrait box
+/// (one image object in the PDF); an unreadable one never fails the print: the empty box prints
+/// and the render's warnings name the file.
+#[test]
+fn print_pf_blocks_a_saved_portrait_prints_on_page_one() {
+    let root = seeded("header-portrait", ALDRIC_ID);
+    std::fs::write(root.join("portrait.png"), TEST_PORTRAIT_PNG).expect("the portrait saves");
+    for paper in [Paper::Letter, Paper::A4] {
+        let (_, one, pdf) = page_one_text(&root, paper, Vec::new());
+        assert_eq!(image_objects(&pdf), 1, "{paper:?}: the saved portrait prints as one image");
+        assert!(one.starts_with("Portrait"), "{paper:?}: the box keeps its caption: {one}");
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("aldric-portrait-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+        }
+    }
+    std::fs::write(root.join("portrait.png"), b"not a png").expect("the broken portrait writes");
+    let rendered = render_sheet_pdf_at_root(&root, &request(false, false, false)).expect("an unreadable portrait never fails the print");
+    assert_eq!(image_objects(&rendered.pdf), 0, "the unreadable portrait prints the empty box");
+    assert!(
+        rendered.warnings.iter().any(|warning| warning.contains("portrait.png")),
+        "the warnings name the unreadable file: {:?}",
+        rendered.warnings
+    );
+}
+
+/// E2.5 (`decisions.md §23.1` item 2): the Campaign field prints the names of the campaigns the
+/// request carries, joined by ", "; with none, a blank write-in line under the label, never a dash.
+#[test]
+fn print_pf_blocks_campaign_prints_names_or_a_blank_line() {
+    let root = seeded("header-campaigns", ALDRIC_ID);
+    let campaigns = vec![
+        CampaignNote { name: "Rise of the Runelords".to_owned(), description: "Sandpoint.".to_owned() },
+        CampaignNote { name: "Kingmaker".to_owned(), description: String::new() },
+    ];
+    let (document, one, _) = page_one_text(&root, Paper::Letter, campaigns);
+    assert!(one.contains("Campaign Rise of the Runelords, Kingmaker"), "the campaigns' names, joined: {one}");
+    assert!(!one.contains("Sandpoint"), "a campaign's description is not page 1's: {one}");
+    let header = document.blocks.iter().find(|block| block.id == "nameCampaign").expect("the nameCampaign block");
+    assert_eq!(header.rows.last().map(|row| row.values.clone()), Some(vec!["Rise of the Runelords, Kingmaker".to_owned()]));
+
+    let (document, one, _) = page_one_text(&root, Paper::Letter, Vec::new());
+    let header = document.blocks.iter().find(|block| block.id == "nameCampaign").expect("the nameCampaign block");
+    assert_eq!(header.rows.last().map(|row| (row.label.clone(), row.values.clone())), Some(("Campaign".to_owned(), vec![String::new()])), "no campaign: a write-in cell");
+    let campaign = &one[one.find("Campaign").expect("the Campaign label prints")..];
+    assert!(!campaign.starts_with("Campaign —") && !campaign.starts_with("Campaign -"), "no campaign prints no dash: {campaign}");
 }
