@@ -1,9 +1,9 @@
 export const meta = {
   name: 'sd40-pf-sheet-design',
-  description: 'SD-40 — reference picture, layout model + grid, page-1 looks (operator gate), remaining looks, presets, closure (final look)',
+  description: 'SD-40 — reference picture, layout model + grid, page-1 looks (operator gate), remaining looks, print sections, closure (final look)',
   phases: [
     { title: 'C — package + cut' }, { title: 'E0 — reference' }, { title: 'E1 — model + grid' },
-    { title: 'E2 — page-1 looks + gate' }, { title: 'E3 — remaining looks' }, { title: 'E4 — presets' },
+    { title: 'E2 — page-1 looks + gate' }, { title: 'E3 — remaining looks' }, { title: 'E4 — print sections' },
     { title: 'E5 — closure + final look' },
   ],
 }
@@ -48,7 +48,7 @@ const MC_EXTRA = `This is a merge check, so be adversarial: re-derive the claims
 
 const GATE_EXTRA = (n) => `Operator gate. Render the PDFs and PNGs your criterion names. Write the receipt with one line per sheet: "usable: " for the operator to fill (${n} lines). If those lines already all read "usable: yes", return complete. If any reads something else, turn each named defect into a discovered card in this epic and return partial naming them. Otherwise leave the row partial, push, and return partial with the absolute file paths. Never sign for the operator.`
 
-const ORDER = ['C1','E0.1','E0.2','E1.1','E1.2','E1.MC','E2.1','E2.2','E2.3','E2.MC','E2.G','E3.1','E3.2','E3.3','E3.MC','E4.1','E4.2','E4.MC','E5.1','E5.2','E5.3','E5.4','E5.5']
+const ORDER = ['C1','E0.1','E0.2','E1.1','E1.2','E1.MC','E2.1','E2.2','E2.3','E2.MC','E2.5','E2.6','E2.7','E2.8','E2.14','E2.9','E2.10','E2.11','E2.12','E2.13','E2.4','E2.MC2','E2.G','E3.1','E3.2','E3.3','E3.6','E3.4','E3.5','E3.MC','E4.1','E4.2','E4.MC','E5.1','E5.2','E5.3','E5.4','E5.5']
 const startAt = ORDER.indexOf((args && args.start) || 'C1')
 const skip = (id) => ORDER.indexOf(id) >= 0 && ORDER.indexOf(id) < startAt
 
@@ -77,7 +77,7 @@ async function go(id, tier, phaseName, lane = 'main', extra = '') {
 const BOARD = { type: 'object', properties: { rows: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, tier: { type: 'string', enum: ['opus', 'sonnet', 'haiku'] } }, required: ['id', 'tier'] } } }, required: ['rows'] }
 async function drainBoard(prefix, phaseName) {
   for (let pass = 0; pass < 10; pass++) {
-    const b = await agent(`Run: git -C ${MAIN} fetch origin tranche-20 && git -C ${MAIN} show FETCH_HEAD:${PKG}/kanban.md. Change nothing. Return, in dependency order, every row whose ID starts with "${prefix}." and is not the ${prefix}.MC row and not an operator-gate row (${prefix}.G, E5.2), whose status is ready, waiting, in-progress or partial, and whose "Depends on" IDs are all complete. Use its Tier value: opus, sonnet or haiku. A tier naming two models counts as opus. Return an empty list if there are none.`, { label: `board ${prefix}`, phase: phaseName, model: 'haiku', schema: BOARD })
+    const b = await agent(`Run: git -C ${MAIN} fetch origin tranche-20 && git -C ${MAIN} show FETCH_HEAD:${PKG}/kanban.md. Change nothing. Return, in dependency order, every row whose ID starts with "${prefix}." and is not a merge-check row (its ID contains ".MC") and not an operator-gate row (${prefix}.G, E5.2), whose status is ready, waiting, in-progress or partial, and whose "Depends on" IDs are all complete. Use its Tier value: opus, sonnet or haiku. A tier naming two models counts as opus. Return an empty list if there are none.`, { label: `board ${prefix}`, phase: phaseName, model: 'haiku', schema: BOARD })
     if (!b) throw new Stop(prefix, { status: 'partial', remainder: 'board reader died' })
     if (!b.rows.length) return
     for (const r of b.rows) await go(r.id, r.tier, phaseName)
@@ -101,9 +101,9 @@ async function catchUp(phaseName) {
   log(`catch-up: ${r}`)
 }
 
-async function gate(id, n, phaseName) {
+async function gate(id, n, phaseName, more = '') {
   if (skip(id)) return null
-  const r = await agent(prompt(id, 'main', GATE_EXTRA(n)), { label: id, phase: phaseName, model: 'sonnet', schema: RESULT })
+  const r = await agent(prompt(id, 'main', GATE_EXTRA(n) + more), { label: id, phase: phaseName, model: 'sonnet', schema: RESULT })
   results[id] = r ? { status: r.status, sha: r.sha, receipt: r.receipt } : { status: 'died' }
   if (r && r.status === 'complete') return null
   return { outcome: `WAITING_FOR_OPERATOR_AT_${id}`, resume: `new run with args {"start":"${id}"} after the operator signs (or after defects are carded)`, gate: r, results }
@@ -127,15 +127,40 @@ try {
 
   phase('E2 — page-1 looks + gate')
   await epic('E2 — page-1 looks + gate', [['E2.1','opus'],['E2.2','opus'],['E2.3','opus'],['E2.MC','opus']])
-  const g1 = await gate('E2.G', 1, 'E2 — page-1 looks + gate'); if (g1) return g1
+
+  // Round 2 (decisions.md §23): engine cards run in side lane "engine", one after another, beside the main-lane page cards.
+  const P2 = 'E2 — page-1 looks + gate'
+  const ENGINE_EXTRA = (last) => last
+    ? 'You are the last engine-lane card: when your work is on tranche-20, remove the sd40-engine worktree, its local branch and its CARGO_TARGET_DIR.'
+    : 'Engine lane, more engine cards follow you: if .worktrees/sd40-engine already exists, reuse it (sync it to origin/tranche-20 first); when your work is pushed to tranche-20, KEEP the worktree and its CARGO_TARGET_DIR for the next engine card.'
+  const wrap = (p) => p.then(r => ({ r }), e => ({ e }))
+  const need = async (w) => { const x = await w; if (x.e) throw x.e; return x.r }
+  const p6 = go('E2.6', 'opus', P2, 'engine', ENGINE_EXTRA(false))
+  const p7 = p6.then(() => go('E2.7', 'opus', P2, 'engine', ENGINE_EXTRA(false)))
+  const p8 = p7.then(() => go('E2.8', 'opus', P2, 'engine', ENGINE_EXTRA(false)))
+  const p14 = p8.then(() => go('E2.14', 'opus', P2, 'engine', ENGINE_EXTRA(true)))
+  const w6 = wrap(p6), w7 = wrap(p7), w8 = wrap(p8), w14 = wrap(p14)
+  await go('E2.5', 'opus', P2)
+  await need(w6); await need(w8)
+  await go('E2.9', 'opus', P2)
+  await need(w14)
+  await go('E2.10', 'opus', P2)
+  await go('E2.11', 'opus', P2)
+  await need(w7)
+  await go('E2.12', 'opus', P2)
+  await go('E2.13', 'opus', P2)
+  await go('E2.4', 'opus', P2)
+  if (!skip('E2.MC2')) await drainBoard('E2', P2)
+  await go('E2.MC2', 'opus', P2, 'main', MC_EXTRA)
+  const g1 = await gate('E2.G', 2, P2, ' This is round 2 (decisions.md §23). Only the round-2 "usable:" lines count; the round-1 verdict above them is already carded, never card it again.'); if (g1) return g1
 
   phase('E3 — remaining looks')
   await catchUp('E3 — remaining looks')
   await drainEarlier(['E0','E1','E2'], 'E3 — remaining looks')
-  await epic('E3 — remaining looks', [['E3.1','opus'],['E3.2','opus'],['E3.3','opus'],['E3.MC','opus']])
+  await epic('E3 — remaining looks', [['E3.1','opus'],['E3.2','opus'],['E3.3','opus'],['E3.6','opus'],['E3.4','opus'],['E3.5','opus'],['E3.MC','opus']])
 
-  phase('E4 — presets')
-  await epic('E4 — presets', [['E4.1','opus'],['E4.2','opus'],['E4.MC','opus']])
+  phase('E4 — print sections')
+  await epic('E4 — print sections', [['E4.1','opus'],['E4.2','opus'],['E4.MC','opus']])
 
   phase('E5 — closure + final look')
   await catchUp('E5 — closure + final look')
