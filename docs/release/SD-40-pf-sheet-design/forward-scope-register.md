@@ -49,7 +49,7 @@ E9.4 receipt hands the design and density of the sheets to SD-40 verbatim: "desi
 | FSR-C1 | The 14 stale red ui-smoke rows (SD-39 FSR-C2, condition met) get an owner | `docs/retro/sd39-retrospective.md` change 5: "Give the stale ui-smoke rows (FSR-C2) an owner in SD-40's scope" | **No longer a candidate: moved to Committed (COM-9) by the operator's answer "1: B" (2026-11-07, `decisions.md §22`); owned by card E0.2** | none: E5.3 checks E0.2 is `complete` |
 | FSR-C2 | SF1e and CPR adopt the grid and looks | R2 | PF only in SD-40 | a scope draft after SD-40's launch names it: `git log --since=2026-11-07 --diff-filter=AM --name-only --format= -- 'docs/release/SD-*/scope-draft.md' \| sort -u \| grep -v SD-40 \| xargs -r grep -lis 'starfinder.*look\|cyberpunk.*look' \| awk 'END{print NR}'` ≥ 1 |
 | FSR-C3 | A serif heading face (a second bundled OFL family) | `decisions.md §11` | determinism and bundle size; not needed for the reference picture | the operator asks after E5.2 |
-| FSR-C4 | Portrait image on the printed sheet | `PortraitUpload.tsx` exists; no print block reads it | not in the brief | the operator asks |
+| FSR-C4 | Portrait image on the printed sheet | asked by the operator at E2.G 2026-11-11 | — | **committed: card E2.5** (`decisions.md §23`) |
 | FSR-C5 | PCGen's companion, notes and condensed sheets as presets | R3 (picture list) | the four named presets are the DoD | the operator asks |
 | FSR-C6 | Full `npm run ui-smoke` as a gate | SD-39 R17 | unchanged from SD-39; E0.2 repairs only the 14 named rows | the operator asks |
 

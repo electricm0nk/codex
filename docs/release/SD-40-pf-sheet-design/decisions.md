@@ -304,3 +304,18 @@ The operator answered the package's three open questions (`README.md §6` rows 9
 
 **Enforced by:** `kanban.md` (E0.2 row; E4.2 depends on E0.2); E0.2's acceptance and G-9; G-6 and NR-10
 as rewritten. **Revisit:** the operator.
+
+## §23 — Operator at E2.G, round 1 (2026-11-11): portrait box on page 1
+
+The operator looked at Aldric's page 1 (`artifacts/epic_2/E2.G/aldric-{a4,letter}-none.pdf`) and said:
+**"We need to include a spot for the portrait on the top left corner."**
+
+Effect: FSR-C4 ("Portrait image on the printed sheet", revisit "the operator asks") is asked, so it
+moves into scope as discovered card **E2.5** (`kanban.md`, `epic-breakdown.md`). The box prints the
+character's saved portrait when there is one and an empty framed box otherwise (the lead's reading of
+"a spot for the portrait": it serves both a player with an uploaded image and one who draws). E2.5
+runs after E2.4 (both move page-1 blocks), then E2.MC re-runs and E2.G re-renders for a round-2 look.
+`scope-draft.md`'s "portrait" non-goal is superseded for page 1 only. Cards 25 → 26
+(`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'` → 26).
+
+**Enforced by:** E2.5's acceptance. **Revisit:** the operator at the E2.G re-run.

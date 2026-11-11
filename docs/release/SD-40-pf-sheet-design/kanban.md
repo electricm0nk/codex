@@ -29,7 +29,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E5
 cd docs/release/SD-40-pf-sheet-design
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 25 (24 + E2.4, discovered by E2.MC)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 26 (24 + E2.4, discovered by E2.MC; + E2.5, operator at E2.G)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -47,6 +47,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 25 (24 + E
 | E2.MC | E2 merge check + Epic report | opus | complete | E2.3 | test `f5e4c781b2`; receipt `artifacts/epic_2/E2.MC_cycle_receipt.md`; print_pf_blocks 23, print_golden 24, print_smoke 9, desktop 1250 + 2 passed; G-1 empty; G-2 16/16 byte-identical vs C1; page 1 whole (no run-over) + population probe (bought dagger + ring, no ranks, Elowen); discovered E2.4 |
 | E2.G | OPERATOR GATE: Aldric page 1 printed, `usable: yes` | sonnet | partial | E2.MC | PDFs + PNGs rendered to artifacts/epic_2/E2.G/; receipt holds the sign-off lines; waits for the operator's `usable: yes` |
 | E2.4 | Page 1 with four or more weapon lines (discovered by E2.MC) | opus | waiting | E2.MC | Speed leaves page 1 at 4 weapon lines on Letter; SD-b |
+| E2.5 | Portrait box, top-left of page 1 (operator at E2.G, `decisions.md §23`) | opus | waiting | E2.4 | FSR-C4 → committed; prints `portrait.png` when saved, else an empty framed box |
 | E3.1 | Feats, class features, actions looks | opus | waiting | E2.G | |
 | E3.2 | Defense, gear (worn / carried / left behind), money looks | opus | waiting | E3.1 | |
 | E3.3 | Spells, spellbook, bio, math, custom, pets, character details looks | opus | waiting | E3.2 | |
