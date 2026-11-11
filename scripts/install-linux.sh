@@ -6,7 +6,8 @@
 #
 # It downloads the newest release's AppImage, checks its sha256, and saves it under a FIXED name
 # (no version in it), because the in-app updater rewrites that same file on every update. It also
-# adds a `codex` command and an app-menu entry. After this, updates happen inside the app.
+# adds a `codex` command, an app-menu entry and the app icon. After this, updates happen inside
+# the app. `install-linux.sh --uninstall` removes all of that again (your characters stay).
 set -euo pipefail
 
 REPO="electricm0nk/codex"
@@ -14,10 +15,27 @@ DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
 APP_DIR="$DATA_DIR/codex"
 APPIMAGE="$APP_DIR/Codex.AppImage"
 BIN_LINK="$HOME/.local/bin/codex"
-DESKTOP_FILE="$DATA_DIR/applications/codex.desktop"
-ICON="$APP_DIR/codex.png"
+# Name, icon and window class match the AppImage's own Codex.desktop (StartupWMClass=codex-desktop),
+# so the taskbar groups the running window under this menu entry.
+DESKTOP_FILE="$DATA_DIR/applications/codex-desktop.desktop"
+ICON_DIR="$DATA_DIR/icons/hicolor"
+ICON_NAME="codex-desktop"
 
 die() { echo "error: $*" >&2; exit 1; }
+
+refresh_menus() {
+  command -v update-desktop-database >/dev/null && update-desktop-database -q "$DATA_DIR/applications" || true
+  command -v gtk-update-icon-cache >/dev/null && gtk-update-icon-cache -q -t -f "$ICON_DIR" 2>/dev/null || true
+}
+
+if [ "${1:-}" = "--uninstall" ]; then
+  rm -f "$APPIMAGE" "$BIN_LINK" "$DESKTOP_FILE"
+  rm -f "$ICON_DIR"/*/apps/"$ICON_NAME".png
+  rmdir "$APP_DIR" 2>/dev/null || true
+  refresh_menus
+  echo "Codex removed. Your characters and settings were not touched."
+  exit 0
+fi
 
 [ "$(uname -m)" = "x86_64" ] || die "only x86-64 Linux builds exist (this machine is $(uname -m))."
 for tool in curl sha256sum; do command -v "$tool" >/dev/null || die "'$tool' is required."; done
@@ -48,18 +66,30 @@ echo "Checksum OK."
 mkdir -p "$APP_DIR" "$(dirname "$BIN_LINK")" "$(dirname "$DESKTOP_FILE")"
 install -m 755 "$tmp/$appimage_name" "$APPIMAGE"
 ln -sfn "$APPIMAGE" "$BIN_LINK"
-curl -fsSL -o "$ICON" "https://raw.githubusercontent.com/$REPO/develop/apps/desktop/src-tauri/icons/128x128.png" \
-  || echo "warning: could not download the icon; the menu entry will have none." >&2
+
+# Take the icons from the AppImage itself (extracting needs no FUSE).
+( cd "$tmp" && "$APPIMAGE" --appimage-extract 'usr/share/icons/*' >/dev/null 2>&1 ) || true
+found_icon=0
+for icon in "$tmp"/squashfs-root/usr/share/icons/hicolor/*/apps/"$ICON_NAME".png; do
+  [ -f "$icon" ] || continue
+  size_dir=$(basename "$(dirname "$(dirname "$icon")")")
+  install -D -m 644 "$icon" "$ICON_DIR/$size_dir/apps/$ICON_NAME.png"
+  found_icon=1
+done
+[ "$found_icon" = 1 ] || echo "warning: no icon found in the AppImage; the menu entry will use a generic icon." >&2
 cat > "$DESKTOP_FILE" <<DESKTOP
 [Desktop Entry]
 Type=Application
 Name=Codex
 Comment=Tabletop RPG character builder and sheet printer
 Exec=$APPIMAGE
-Icon=$ICON
-Categories=Game;Utility;
+TryExec=$APPIMAGE
+Icon=$ICON_NAME
+StartupWMClass=codex-desktop
+Categories=Game;RolePlaying;
 Terminal=false
 DESKTOP
+refresh_menus
 
 echo
 echo "Installed $appimage_name as $APPIMAGE"

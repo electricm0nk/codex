@@ -48,10 +48,11 @@ curl -fsSL https://raw.githubusercontent.com/electricm0nk/codex/develop/scripts/
 ```
 
 It downloads the newest AppImage, checks its sha256, and saves it as
-`~/.local/share/codex/Codex.AppImage`. It also adds a `codex` command in `~/.local/bin` and an
-app-menu entry. The file name has no version in it on purpose: the in-app updater writes each
+`~/.local/share/codex/Codex.AppImage`. It also adds a `codex` command in `~/.local/bin`, an
+app-menu entry and the app icon. The file name has no version in it on purpose: the in-app updater writes each
 new version over that same file. Run the script once only. After that, update from inside the
-app.
+app. To remove it, run the same command with `bash -s -- --uninstall` in place of `bash`.
+Your characters are kept.
 
 To do it by hand instead, rename the file **before** the first launch, for the same reason:
 
