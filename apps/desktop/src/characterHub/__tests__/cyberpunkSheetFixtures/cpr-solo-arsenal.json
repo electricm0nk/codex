@@ -2339,5 +2339,13 @@
     "contributions": [],
     "situational": [],
     "unknown": []
+  },
+  "conditionalNotes": {
+    "hitPoints": [],
+    "initiative": [],
+    "fortitude": [],
+    "reflex": [],
+    "will": [],
+    "armorClass": []
   }
 }
