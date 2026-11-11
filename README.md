@@ -25,7 +25,7 @@ Each release has one file per platform:
 | Platform | File | Notes |
 |---|---|---|
 | Linux (Debian/Ubuntu, x86-64) | `Codex_<version>_amd64.deb` | Recommended for Linux. |
-| Linux (any distro, x86-64) | `Codex_<version>_amd64.AppImage` | Use the installer script below. |
+| Linux (any distro, x86-64) | `Codex_<version>_amd64.AppImage` | Rename it before first launch (see below). |
 | macOS (Apple Silicon only) | `Codex_<version>_aarch64.dmg` | Not signed. There is no Intel Mac build. |
 | Windows (x64) | `Codex_<version>_x64-setup.exe` | Not signed. |
 
@@ -41,30 +41,20 @@ Then open **Codex** from your app menu.
 
 ### Linux (AppImage, any distro: Arch, Fedora, ...)
 
-Run the installer script:
+Rename the file **before** the first launch. The in-app updater writes each new version over the
+same file, so a version number in the name would soon be wrong.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/electricm0nk/codex/develop/scripts/install-linux.sh | bash
-```
-
-It downloads the newest AppImage, checks its sha256, and saves it as
-`~/.local/share/codex/Codex.AppImage`. It also adds a `codex` command in `~/.local/bin`, an
-app-menu entry and the app icon. The file name has no version in it on purpose: the in-app updater writes each
-new version over that same file. Run the script once only. After that, update from inside the
-app. To remove it, run the same command with `bash -s -- --uninstall` in place of `bash`.
-Your characters are kept.
-
-To do it by hand instead, rename the file **before** the first launch, for the same reason:
-
-```bash
-mv Codex_<version>_amd64.AppImage Codex.AppImage
-chmod +x Codex.AppImage
-./Codex.AppImage
+mkdir -p ~/Codex
+mv Codex_<version>_amd64.AppImage ~/Codex/Codex.AppImage
+chmod +x ~/Codex/Codex.AppImage
+~/Codex/Codex.AppImage
 ```
 
 If it fails with a FUSE error, install FUSE 2: `sudo pacman -S fuse2` (Arch),
 `sudo apt install libfuse2t64` (Ubuntu 24.04+) or `sudo dnf install fuse-libs` (Fedora).
-If the window opens blank, start it with `WEBKIT_DISABLE_DMABUF_RENDERER=1 codex`.
+If the window opens blank, start it with
+`WEBKIT_DISABLE_DMABUF_RENDERER=1 ~/Codex/Codex.AppImage`.
 
 ### macOS
 
