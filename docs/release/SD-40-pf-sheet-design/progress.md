@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 11 of 25 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 11 of 38 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 11; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 38) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -54,6 +54,28 @@ run before commit; the list is pasted in `artifacts/cycle_0/C0_cycle_receipt.md`
 (Spellbook prints spell pages only; Full prints everything), "3: No hard limits" (no page-count
 ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2). Cards 23 → 24
 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`).
+
+## 2026-11-11 E2.G round 1 replan (planning lane, Opus 5.5; docs only, no code)
+
+- **Input:** the operator's round-1 list (items 1–6, item 6 answer "commas are fine"), quoted verbatim in
+  `decisions.md §23.1`. Round-1 verdict in `artifacts/epic_2/E2.G_cycle_receipt.md` unchanged; round-2
+  `usable:` lines blank.
+- **Rulings recorded:** page 1 totals only (AC parts the exception, filled from engine rows); one square block
+  (HP, initiative, encumbrance, conditions) with engine-gathered conditional notes; one-column skills;
+  languages; portrait + Character Name + Campaign, no title, no identity block; six print-section checkboxes
+  replace the four presets (`decisions.md §9` superseded), remembered per character, first time 1+2+3.
+- **Repo facts found (each with its command in `decisions.md §23` / `epic-breakdown.md`):** the engine
+  states no AC part rows (parts exist only as terms of `combat.rs`'s sum); no damage total (deliberate,
+  `contract.rs:215-226`); remaining lb and languages exist only in TypeScript (`encumbranceTabModel.ts:75`,
+  `CharacterSheet.tsx:418`); conditional HP / initiative / save / AC lines exist in the converted package
+  (census F-28, F-29: `python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r1/census.py`);
+  no carrying-capacity bonus target; no bio/backstory text field.
+- **Cards:** 26 → 38. Rewritten: E2.4 (page 1's overflow rule, `decisions.md §23.5`), E2.5 (header), E3.1,
+  E3.2, E3.3, E4.1, E4.2, E4.MC, E5.2. New: E2.6, E2.7, E2.8, E2.14 (side lane `engine`), E2.9–E2.13,
+  E2.MC2, E3.4, E3.5. E2.G now depends on E2.MC2. `SAME_IDS` check passes.
+- **Open operator questions with defaults taken:** `decisions.md §23.6` Q1–Q5.
+- **Parked branch:** `sd40/e2.4-parked` (`8f75f60b3e`) kept until E2.4 is `complete`; then the lead deletes it
+  locally and on origin (G-8 checks).
 
 ## Cycle log
 
@@ -103,7 +125,7 @@ deltas, what was looked at, retro summary, worktrees swept)
 - **Refuted claims and fixes:** (1) E2.3's page-1 test passed a block split over pages 1–2 (mutation-proved) and its 3-weapon variant ignored Typst warnings → `assert_page_one_whole` + warnings assert; (2) NR-2's Typst grep could not match `calc.` → `technical-requirements.md` corrected (2 layout-only hits read: `weapons.typ` `calc.min`, `skills.typ` `int(`); (3) E3.1–E3.3 FILES YOU OWN lacked `resources/print/blocks.typ`, the omission that fired at E2.1, E2.2, E2.3 → rows fixed; (4) progress Summary "8 of 24" → 11 of 25; (5) 4+ weapon lines → discovered E2.4. No claim about E2's shipped values was refuted.
 - **Looked at:** `artifacts/epic_2/E2.MC/{aldric,elowen}-{letter,a4}-none-1.png` beside `artifacts/epic_0/E0.1/aldric-pcgen-std-1.png`: ten blocks on page 1, clean; differences named in the receipt (AC part cells write-in: no engine rows, SD-n; Skills left vs PCGen right; Identity still the generic table, E3.3; Knowledge labels wrap at 8 pt on Letter, for the operator's eye).
 - **Retro summary:** `python3 scripts/retro.py summary --since 2026-11-07 --actor sd40-e2.1 --actor sd40-e2.2 --actor sd40-e2.3 --actor sd40-e2.mc --json` → 15 events (correction 7, note 4, rework 1, verification 3 — the third is this card's `verify.sh --only clippy` run; 0 incidents, 0 deferrals, 0 recurrence keys). Category recurring: FILES YOU OWN not closed under `blocks.typ` (E2.1, E2.2, E2.3: > 2, R-W) → control: the E3 rows now name it, and `print_pf_blocks_every_look_has_its_template` already exits non-zero on a look the dispatcher lacks.
-- **Open blockers:** none. Open cards: E2.4 (discovered, `waiting` on E2.MC → ready); E2.5 (portrait box, operator at E2.G round 1, 2026-11-11, `decisions.md §23`).
+- **Open blockers:** none. Open cards: E2.4 (discovered, `waiting` on E2.MC → ready); E2.5 (portrait box, operator at E2.G round 1, 2026-11-11, `decisions.md §23`). (Both rewritten by the 2026-11-11 replan above.)
 - **2026-11-11 E2.G round 1:** operator: "We need to include a spot for the portrait on the top left corner." → E2.5 carded by the lead; run restarts at E2.MC (drains E2.4, E2.5, re-runs E2.MC, re-renders E2.G).
 - **Worktrees swept:** `.worktrees/sd40-e2mc-base` (E2.MC's C1 base tree) and `/home/ubuntu/cargo-target/sd40-e2mc-base`; no other `sd40-*` side worktree existed (`git worktree list`: the main checkout and `sd40-main`). `sd40-main` kept.
 

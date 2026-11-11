@@ -21,7 +21,7 @@ back here in its commit.
 |---|---|---|---|
 | F-1 | Version surfaces C1 bumps to `0.20.` (the files SD-39's C1 bumped, less the pointer) | **14** | `git show --name-only --format= 49d598c13a \| awk 'NF' \| grep -vc current-release.json` |
 | F-2 | C1 commit file count (F-1 + `current-release.json`) | **15** | `git show --name-only --format= <sha> \| awk 'NF' \| wc -l` |
-| F-3 | Cards in this bundle | **25** (24 + E2.4, discovered by E2.MC) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'` |
+| F-3 | Cards in this bundle | **38** (24 + E2.4 by E2.MC + E2.5 at E2.G round 1 + 12 by the round-1 replan, `decisions.md §23`) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'` |
 | F-4 | Chassis files present | **16** (13 required + `technical-design.md`, `technical-requirements.md`, `kanban.md`) | `find docs/release/SD-40-pf-sheet-design -maxdepth 2 -name '*.md' \| awk 'END{print NR}'` |
 
 ## §2 The print module today (the before state)
@@ -70,4 +70,6 @@ back here in its commit.
 | F-24 | Aldric Basic pages, A4 and Letter | **(recorded per receipt; no ceiling)** | `pdfinfo <dir>/aldric-<paper>-basic.pdf \| awk '/Pages/{print $2}'` after `PRINT_PROOF_OUT=<dir> cargo test print_proof` |
 | F-25 | Elowen Basic pages (the golden PF character) | **(recorded per receipt; no ceiling)** | `python3 -c "import json;d=json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'));print(d['pf1e-a4-basic']['pages'],d['pf1e-letter-basic']['pages'])"` |
 | F-26 | Looks at closure | **≥ 23** files (table + 7 E2.1 + skills + weapons + 4 E3.1 + 3 E3.2 + 7 E3.3) | `ls apps/desktop/src-tauri/resources/print/looks/*.typ \| awk 'END{print NR}'` |
-| F-27 | Presets | **4** | `grep -c 'PrintPreset::' apps/desktop/src-tauri/src/print/layout/pf1e.rs` (≥ 4) |
+| F-27 | Print sections (replace the 4 presets, `decisions.md §23.4`) | **6** (4 shown on SF1e/CPR) | after E4.1: `grep -c 'Section::' apps/desktop/src-tauri/src/print/layout/pf1e.rs` (≥ 6); 0 on `451333ee3e` |
+| F-28 | Converted rules with a situational gate, by target (the E2.6 population) | Hp 15, Initiative 10, Fortitude 52, Reflex 58, Will 78, Ac 178 (of 73,363 rules in 49,768 files) | `python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r1/census.py` (output kept beside it, `census.txt`) |
+| F-29 | Aspect prose entries E2.6 reads | SaveBonus 407, AllSaveBonus 3, Save Bonus 2, WillSaveBonus 3, RefSaveBonus 2, ModifyAC 6; CombatBonus 314 (not read, FSR-C8) | same command |

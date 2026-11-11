@@ -25,7 +25,7 @@ status: planning-ready
 | P-6 | Disk ≥ 24 G free before any full sweep | `df -h /` | every cargo card |
 | P-7 | `pdftoppm`, `pdftotext`, `pdfinfo` present (poppler) | `which pdftoppm pdftotext pdfinfo` → three paths | E1.2 |
 | P-8 | Release-notes pointer resolves after C1 | `python3 tools/release/resolve_release_notes.py --repo-root .` exit 0 | C1 |
-| P-9 | The print golden suite is green on the base | `cd apps/desktop/src-tauri && cargo test --locked -j 8 print_golden -- --test-threads=8` → 24 passed | E1.1 (baseline) |
+| P-9 | The print golden suite is green on the base | `cd apps/desktop/src-tauri && cargo test --locked -j 8 print_golden -- --test-threads=8` → 24 passed (30 after E4.1) | E1.1 (baseline) |
 
 ## 2. Normative requirements
 
@@ -38,15 +38,17 @@ status: planning-ready
 | NR-5 | SF1e and CPR golden text and page counts equal C1's for Basic, Spellbook-equivalent and Full | G-2 |
 | NR-6 | Every PF print block id is in `block_vocabulary.json`; every `ui`-sourced id exists in the registry or tab list | `print_pf_blocks` + `sheetLayout.test.ts` (G-3) |
 | NR-7 | Every look has a template file and every template a variant | `print_pf_blocks_every_look_has_its_template` |
-| NR-8 | Page 1 of Aldric Basic holds the five step-1 blocks on one page, both papers | G-4 |
-| NR-9 | Presets are data: adding one is a list in `layout/pf1e.rs`; the dialog offers exactly the four | G-5 |
+| NR-8 | Page 1 of Aldric holds the eleven page-1 blocks of `decisions.md §23.3` whole on one page, both papers; a page-1 list too long for its cell continues on page 2, no block leaves page 1 | G-4 |
+| NR-9 | Sections are data: each is a list in `layout/pf1e.rs`; the dialog offers exactly the six (four on SF1e/CPR), remembered per character, first time 1 + 2 + 3 (`decisions.md §23.4`) | G-5 |
 | NR-10 | Page counts are recorded, not capped: every look card's receipt lists each PF case's page count before → after on both papers; no test asserts a page-count ceiling (`decisions.md §10`, §22) | receipts' "Golden deltas" rows; G-6 |
 | NR-11 | Every look/layout card's receipt has a "Looked at" row naming its PNGs and the reference compared | `grep -L 'Looked at' artifacts/epic_[1-4]/*_cycle_receipt.md` prints only the non-look cards named in G-8 |
 | NR-12 | Write-in space exists where `decisions.md §11` lists it | E2.MC, E3.MC, E5.2 |
-| NR-13 | PF seed renders unchanged (no DTO, no engine value moves) | G-1 |
+| NR-13 | PF seed renders: no existing field or explanations row changes value; only E2.6–E2.8 and E2.14's named fields and rows are added (`decisions.md §23.2`) | G-1 (rewritten) |
 | NR-14 | The 14 stale ui-smoke rows (F-21) pass by name under `npm run ui-smoke`; none deleted, skipped or marked manual | E0.2; G-9 |
+| NR-15 | Page 1 prints totals only; every breakdown it dropped prints on the Show-the-math pages; the AC prints all seven parts from engine rows (`decisions.md §23.1` item 4) | E2.10–E2.12, E3.5 tests; E2.MC2, E3.MC |
+| NR-16 | The new engine values (conditional notes, AC parts, remaining lb, languages, weapon damage total) are computed in Rust once; the screen's TypeScript copies of remaining lb and languages are removed (AGENTS.md twin rule) | E2.6–E2.8, E2.14 tests and greps |
 
 ## 3. Out of scope
 
-DEF-1…DEF-4 and FSR-C2…C6 (`forward-scope-register.md`; FSR-C1 is Committed as COM-9, card E0.2); any engine or converter change; any book
+DEF-1…DEF-4 and FSR-C2, C3, C5, C6, C7 (`forward-scope-register.md`; FSR-C1 is Committed as COM-9, card E0.2; FSR-C4 as COM-10); any converter change; any engine change beyond E2.6–E2.8 and E2.14's named rows and fields; any book
 content; SF1e and CPR looks; the Hermes kanban (retired).

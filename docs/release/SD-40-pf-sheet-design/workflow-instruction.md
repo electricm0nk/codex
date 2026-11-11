@@ -172,10 +172,10 @@ Load the `workflow-authoring` skill first. Plain JavaScript:
 ```javascript
 export const meta = {
   name: 'sd40-pf-sheet-design',
-  description: 'SD-40 — reference picture, layout model + grid, page-1 looks (operator gate), remaining looks, presets, closure (final look)',
+  description: 'SD-40 — reference picture, layout model + grid, page-1 looks (operator gate), remaining looks, sections + checkbox dialog, closure (final look)',
   phases: [
     { title: 'C — package + cut' }, { title: 'E0 — reference' }, { title: 'E1 — model + grid' },
-    { title: 'E2 — page-1 looks + gate' }, { title: 'E3 — remaining looks' }, { title: 'E4 — presets' },
+    { title: 'E2 — page-1 looks + gate' }, { title: 'E3 — remaining looks' }, { title: 'E4 — sections + dialog' },
     { title: 'E5 — closure + final look' },
   ],
 }
@@ -188,9 +188,14 @@ phase('C — package + cut');          const ref = go(E0_1)                 // s
                                       const smoke = go(E0_2)               // side lane smoke, beside E1–E4.1
 phase('E1 — model + grid');          await go(E1_1); await go(E1_2); await ref; await go(E1_MC)
 phase('E2 — page-1 looks + gate');   for (const c of [E2_1, E2_2, E2_3, E2_MC]) await go(c)
+                                      // round 2 (decisions.md §23): side lane engine beside the main lane
+                                      const engine = (async () => { for (const c of [E2_6, E2_7, E2_8, E2_14]) await go(c) })()
+                                      await go(E2_5)                       // needs only E2.MC
+                                      await engine                         // E2.9 needs E2.6 + E2.8; E2.10 needs E2.14; E2.12 needs E2.7
+                                      for (const c of [E2_9, E2_10, E2_11, E2_12, E2_13, E2_4, E2_MC2]) await go(c)
                                       { const r = await go(E2_G); if (r.status !== 'complete') return resumeReceipt('E2.G') }
-phase('E3 — remaining looks');       for (const c of [E3_1, E3_2, E3_3, E3_MC]) await go(c)
-phase('E4 — presets');               await go(E4_1); await smoke; await go(E4_2); await go(E4_MC)   // E0.2 → E4.2 (spec.json)
+phase('E3 — remaining looks');       for (const c of [E3_1, E3_2, E3_3, E3_4, E3_5, E3_MC]) await go(c)
+phase('E4 — sections + dialog');     await go(E4_1); await smoke; await go(E4_2); await go(E4_MC)   // E0.2 → E4.2 (spec.json)
 phase('E5 — closure + final look');  await go(E5_1)
                                       { const r = await go(E5_2); if (r.status !== 'complete') return resumeReceipt('E5.2') }
                                       for (const c of [E5_3, E5_4a, E5_4b, E5_5]) await go(c)
@@ -209,9 +214,9 @@ Phase titles above match these rows. Shared-file writer order: `epic-breakdown.m
 | C — package + cut | C0, C1 | no | this package; the 14 F-1 surfaces + `current-release.json` | — |
 | E0 — reference | E0.1, E0.2 | **yes** (`ref` beside C1 and E1.1; `smoke` beside E1.1–E4.1) | E0.1: `artifacts/epic_0/E0.1/**`, its F-12–F-14 and `decisions.md §10` figure rows; E0.2: `apps/desktop/scripts/ui-smoke/spec.json` (the 14 rows), `docs/testing/ui-smoke-inventory.md`, `artifacts/epic_0/E0.2/**` and the harness or `data-testid` files its FILES YOU OWN allows; each its own `kanban.md`/`progress.md` rows | C0 (E0.1); C1 (E0.2); **E4.2 waits on E0.2** |
 | E1 — model + grid | E1.1, E1.2, E1.MC | no | `print/{model,typst,mod}.rs`, `print/blocks/{mod,core}.rs`, `print/layout/{mod,pf1e}.rs`, `resources/print/*.typ`, `looks/table.typ` *(new)*, `print/golden/*.json`, the print test modules, `sheetLayout.test.ts`, `print/print_proof.rs` *(new)*, `scripts/print/rasterize.sh` *(new)* | C1 (E1.1); E0.1 (E1.MC) |
-| E2 — page-1 looks + gate | E2.1–E2.3, E2.MC, E2.G | no | `print/blocks/{core,skills,gear}.rs`, `print/layout/pf1e.rs`, `print/model.rs`, `print/typst.rs`, `looks/*.typ` *(new)*, `print/golden/*.json`, the print test modules, `artifacts/epic_2/**` | E1.MC |
-| E3 — remaining looks | E3.1–E3.3, E3.MC | no | `print/blocks/{feats,gear,spells,bio_notes,math,extras,core}.rs`, `print/layout/pf1e.rs`, `print/model.rs`, `print/typst.rs`, `looks/*.typ`, `print/golden/*.json`, the print test modules, `artifacts/epic_3/**` | E2.G |
-| E4 — presets | E4.1, E4.2, E4.MC | no | `print/mod.rs`, `print/layout/{mod,pf1e}.rs`, `print/print_golden.rs`, `print/golden/print_golden.json`, `print/print_proof.rs`, `PrintDialog.tsx` + test, `boundary/saveSheetPdf.ts` + test, `spec.json`, `docs/testing/ui-smoke-inventory.md` | E3.MC; E0.2 (before E4.2) |
+| E2 — page-1 looks + gate | E2.1–E2.3, E2.MC; round 2 (`decisions.md §23`): E2.5, E2.9–E2.13, E2.4, E2.MC2 main lane; E2.6, E2.7, E2.8, E2.14 side lane `engine`; E2.G | `engine` ∥ main (E2.5 onward) | main: `print/**`, `resources/print/**`, `print/golden/*.json`, the print test modules, `artifacts/epic_2/**`; `engine`: `src/rules_core/**` (named files), the load-response DTO in `character_hub.rs` and the adapters, `boundary/*.ts` types, `encumbranceTabModel.ts`, `CharacterSheet.tsx` (Languages line) | E1.MC; main-lane readers wait on the engine card they read |
+| E3 — remaining looks | E3.1–E3.5, E3.MC | no | `print/blocks/{feats,gear,spells,bio_notes,math,extras,core}.rs`, `print/layout/pf1e.rs`, `print/model.rs`, `print/typst.rs`, `looks/*.typ`, `print/golden/*.json`, the print test modules, `artifacts/epic_3/**` | E2.G |
+| E4 — sections + dialog | E4.1, E4.2, E4.MC | no | `print/mod.rs`, `print/layout/{mod,pf1e}.rs`, `print/print_golden.rs`, `print/golden/print_golden.json`, `print/print_proof.rs`, `PrintDialog.tsx` + test, `settings/printSections.ts` + test *(new)*, `boundary/saveSheetPdf.ts` + test, `spec.json`, `docs/testing/ui-smoke-inventory.md` | E3.MC; E0.2 (before E4.2) |
 | E5 — closure + final look | E5.1–E5.5 | no | `tests/packaged_resources.rs`, `scripts/verify-baselines.env`, `docs/retro/sd40-retrospective.md`, `docs/architecture/**`, graph outputs, this folder, `artifacts/epic_5/**` | E4.MC |
 
 **Fences.** A lane that needs a file outside its row returns `declined` with `ownedBy:<card>` unless
@@ -335,7 +340,7 @@ grep -rn '<[a-z_-]*>' docs/release/SD-40-pf-sheet-design/*.md
 Every match must be (a) a schema placeholder inside a fenced template or a command argument the running
 card binds (`<sha>`, `<base>`, `<head>`, `<dir>`, `<lane>`, `<card>`, `<card-id>`, `<n>`, `<epic>`,
 `<list>`, `<text>`, `<output>`, `<violations>`, `<result>`, `<value>`, `<cmd>`, `<log>`, `<pidfile>`,
-`<script>`, `<type>`, `<look>`, `<preset>`, `<pdf>`, `<pdf-dir>`, `<png-dir>`, `<pcg>`, `<sheet>`,
+`<script>`, `<type>`, `<look>`, `<preset>`, `<sections>`, `<heading>`, `<the four new ids>`, `<save>`, `<part>`, `<weapon>`, `<key>`, `<attack>`, `<critical>`, `<name>`, `<pdf>`, `<pdf-dir>`, `<png-dir>`, `<pcg>`, `<sheet>`,
 `<out>`, `<settings>`, `<binary>`, `<clean-worktree>`, `<system>`, `<paper>`, `<seed>`, `<the two new ids>`,
 `<epic-start>`, `<date>`, `<filter>`, `<description>`, `<run>`), (b) a deferred value with a named resolution point (`0.20.<run>` → first tester
 publish after the operator merges; `(E0.1)` figures → that card; the run id → launch), or (c) a bug to fix

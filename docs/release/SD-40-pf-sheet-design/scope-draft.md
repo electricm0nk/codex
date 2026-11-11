@@ -44,15 +44,22 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
 2. **Shared vocabulary.** Every PF print block carries an id that is a `SheetBoxId` or a `SHEET_TABS`
    entry of `sheetLayout.ts` / `CharacterSheet.tsx`, or one of the print-only ids a shared fixture
    allow-lists; a Rust test and a TS test both read that fixture. (`technical-design.md §2`.)
-3. **Step 1, the operator gate (E2.G).** Aldric's page 1 holds abilities, hit points / initiative /
-   armor class / attack (BAB, melee, CMB/CMD) / speed, saves, skills (two narrow columns) and weapons
-   on the grid with their own looks and write-in space; the operator prints it and writes `usable: yes`.
-4. **The rest of the PF blocks have looks:** feats, class features and special abilities (actions),
-   armor, gear (worn | carried | left behind), money, spells and the spellbook, bio and campaign notes,
-   show-the-math, custom records and pets.
-5. **Presets.** The print dialog offers **Basic, Basic + Bio, Full with the math, Spellbook**; each is a
-   layout list in `layout/pf1e.rs`; the three option checkboxes are gone; SF1e and CPR print the same
-   presets through their flow layouts (`decisions.md §9`).
+3. **Step 1, the operator gate (E2.G, round 2; redesigned at round 1, `decisions.md §23`).** Aldric's page 1
+   prints **totals only** on the grid with write-in space: portrait + Character Name + Campaign (no title, no
+   identity block); one block of Hit Points (max, big current area, Nonlethal), Initiative, Encumbrance
+   (limits, carried, remaining, gear value) and Conditions, with the engine's conditional notes for HP and
+   initiative; abilities (score + modifier); Armor Class with every part filled from engine rows; attack
+   (BAB, melee, CMB/CMD); speed; saves with their conditional notes; weapons (attack, damage as `1d8+4`,
+   critical, range); skills in one column (name + total); languages. Every breakdown moves to the
+   Show-the-math pages. The operator prints it and writes `usable: yes` per paper.
+4. **The rest of the PF blocks have looks, on their own pages:** feats, class features and special
+   abilities (actions), daily spells, custom records, pets (section 2); armor, gear (worn | carried | left
+   behind), money (section 3, Inventory); the spellbook (section 4); bio details, campaign notes and ruled
+   lines (section 5); show-the-math with every page-1 breakdown (section 6).
+5. **Section checkboxes** (replace the presets, operator at E2.G round 1, `decisions.md §23.4`). The print
+   dialog offers six boxes: Main sheet, Feats / class features / actions, Inventory, Spellbook, Bio, Show the
+   math; paper stays separate; the ticks are remembered per character, first time 1 + 2 + 3; each section is a
+   layout list in `layout/pf1e.rs`; SF1e and CPR show boxes 1, 4, 5, 6 and print through their flow layouts.
 6. **Density.** On A4 **and** US Letter, designed Letter-first, with **no page-count ceiling** (operator
    answer "3: No hard limits", `decisions.md §22`): every look card's receipt records each PF case's page
    count before → after, E0.1 records PCGen's counts as the reference figure, and the operator judges
@@ -60,12 +67,12 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
 7. **Looked at.** Every look or layout card rasterized its own output (`pdftoppm -r 60 -png`), read the
    PNGs, compared them to the reference pictures, and kept the PNGs under `artifacts/` with a "Looked at"
    row in its receipt (`workflow-instruction.md §6` step 8).
-8. **SF1e and CPR unchanged.** Their golden text and page counts are identical to C1's for Basic,
-   Spellbook and Full (= the old none, spellbook, all); a PDF byte delta exists only through the shared
-   frame and is named in the receipt; the new Basic + Bio preset is the one named addition
-   (`decisions.md §9`, G-2).
-9. **Final look (E5.2).** The operator prints the full set (Aldric × 4 presets × 2 papers; Elowen
-   Spellbook and Full) and signs `usable: yes` per preset.
+8. **SF1e and CPR unchanged.** Their golden text and page counts are identical to C1's for the
+   four old option sets (none, spellbook, math, all, read through the section mapping); a PDF byte delta exists only through the shared
+   frame and is named in the receipt; "Spellbook alone" is the one named addition
+   (`decisions.md §23.4`, G-2).
+9. **Final look (E5.2).** The operator prints the full set (Aldric × 4 section sets × 2 papers; Elowen
+   Spellbook alone and all six) and signs `usable: yes` per set.
 10. **Closure.** All cards `complete` → final-acceptance scan → retrospective written and cited → sweep →
     release notes → architecture truth-up + claims critic → **graphify LAST** → **PR last**
     (`decisions.md §15`). The operator merges.
@@ -75,15 +82,17 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
 
 ## 3. Not in the Definition of Done (planned deferrals, `forward-scope-register.md §4`)
 
-SF1e and CPR looks and grids (they adopt the architecture later); a new font family; colour; portrait
-image on the sheet; pixel-snapshot tests; a custom layout editor in the app; PCGen's companion / notes /
-condensed sheets as presets.
+SF1e and CPR looks and grids (they adopt the architecture later); a new font family; colour; a portrait
+on pages 2+ (page 1's portrait box is in scope since `decisions.md §23`); a Backstory text field (FSR-C7);
+pixel-snapshot tests; a custom layout editor in the app; PCGen's companion / notes /
+condensed sheets as print sections.
 
 ## 4. Epic order
 
 C → E0 (reference render + block map, side lane `ref`; the 14 stale ui-smoke rows, side lane `smoke`, landing
 before E4.2) → E1 (layout model + grid + harness) → E2 (step-1 looks)
-→ **E2.G operator gate** → E3 (remaining looks) → E4 (presets + dialog) → E5 (closure,
+→ **E2.G operator gate** (round 1 → replan `decisions.md §23` → engine lane E2.6–E2.8, E2.14 beside the
+new page-1 cards → round 2) → E3 (remaining looks) → E4 (sections + checkbox dialog) → E5 (closure,
 with the **E5.2 final look**). The main lane is serial: every look card edits `resources/print/*.typ`,
 `print/typst.rs`'s look table and `print/golden/print_golden.json` (`epic-breakdown.md §0`).
 
