@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 11 of 38 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 11; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 38) |
+| Cards complete | 11 of 39 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 11; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -76,6 +76,9 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 - **Open operator questions with defaults taken:** `decisions.md §23.6` Q1–Q5.
 - **Parked branch:** `sd40/e2.4-parked` (`8f75f60b3e`) kept until E2.4 is `complete`; then the lead deletes it
   locally and on origin (G-8 checks).
+- **Operator answers, same day (`decisions.md §23.7`):** Q5 "One total" (E2.14 kept); Q1 "Known + one blank
+  line" (E2.8 drops the slot count, E2.13 prints exactly one blank line); Q2 "Add a Backstory field now" (new
+  card E3.6, before E3.4; FSR-C7 withdrawn); Q3 as proposed; Q4 keep; smaller defaults accepted. Cards 38 → 39.
 
 ## Cycle log
 

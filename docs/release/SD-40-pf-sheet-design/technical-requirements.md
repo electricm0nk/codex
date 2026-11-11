@@ -50,5 +50,5 @@ status: planning-ready
 
 ## 3. Out of scope
 
-DEF-1…DEF-4 and FSR-C2, C3, C5, C6, C7 (`forward-scope-register.md`; FSR-C1 is Committed as COM-9, card E0.2; FSR-C4 as COM-10); any converter change; any engine change beyond E2.6–E2.8 and E2.14's named rows and fields; any book
+DEF-1…DEF-4 and FSR-C2, C3, C5, C6, C8 (`forward-scope-register.md`; FSR-C1 is Committed as COM-9, card E0.2; FSR-C4 as COM-10); any converter change; any engine change beyond E2.6–E2.8 and E2.14's named rows and fields; any book
 content; SF1e and CPR looks; the Hermes kanban (retired).

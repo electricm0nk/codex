@@ -54,8 +54,8 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
    Show-the-math pages. The operator prints it and writes `usable: yes` per paper.
 4. **The rest of the PF blocks have looks, on their own pages:** feats, class features and special
    abilities (actions), daily spells, custom records, pets (section 2); armor, gear (worn | carried | left
-   behind), money (section 3, Inventory); the spellbook (section 4); bio details, campaign notes and ruled
-   lines (section 5); show-the-math with every page-1 breakdown (section 6).
+   behind), money (section 3, Inventory); the spellbook (section 4); bio details, the Backstory (a new
+   app field, E3.6), campaign notes and ruled lines (section 5); show-the-math with every page-1 breakdown (section 6).
 5. **Section checkboxes** (replace the presets, operator at E2.G round 1, `decisions.md §23.4`). The print
    dialog offers six boxes: Main sheet, Feats / class features / actions, Inventory, Spellbook, Bio, Show the
    math; paper stays separate; the ticks are remembered per character, first time 1 + 2 + 3; each section is a
@@ -83,8 +83,7 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
 ## 3. Not in the Definition of Done (planned deferrals, `forward-scope-register.md §4`)
 
 SF1e and CPR looks and grids (they adopt the architecture later); a new font family; colour; a portrait
-on pages 2+ (page 1's portrait box is in scope since `decisions.md §23`); a Backstory text field (FSR-C7);
-pixel-snapshot tests; a custom layout editor in the app; PCGen's companion / notes /
+on pages 2+ (page 1's portrait box is in scope since `decisions.md §23`); pixel-snapshot tests; a custom layout editor in the app; PCGen's companion / notes /
 condensed sheets as print sections.
 
 ## 4. Epic order

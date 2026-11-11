@@ -32,21 +32,21 @@ status: planning-ready
 | R-16 | An engine-lane value re-derives a rules number outside the summing function (a twin) or moves an existing value | medium | high | each part / note / total is emitted where the engine already sums or renders it (E2.6, E2.7, E2.14 criteria); the AC invariant `10 + Σ parts = AC` over seeds, probes and the `.pcg` population; G-1 rewritten: everything except the named new keys and rows must stay byte-equal | yes |
 | R-17 | The rewritten G-1 hides a moved value under a new key's name | low | high | `NEW_KEYS` / `NEW_ROWS` are listed in the gate itself and grow only with a receipt line naming the key and its card | yes |
 | R-18 | The engine side lane and the main lane write one file | low | medium | `engine` writes `src/rules_core/**`, the DTO files and the TS types/models it names, never `print/**` or `resources/print/**`; main-lane readers wait on the engine card in `kanban.md`; §5's rebase protocol for `kanban.md` / `progress.md` | yes |
-| R-19 | The operator answers §23.6 Q1–Q5 differently from the DEFAULT after the cards ran | medium | low | each DEFAULT is one card's criterion (E2.8, E3.4, E3.1–E3.3, E2.14); a different answer is a discovered card in that epic (§14); E2.14 is dropped whole on Q5 "no" | yes |
+| R-19 | An operator answer to §23.6 (all five answered 2026-11-11, §23.7) changes again after the cards ran | low | low | each DEFAULT is one card's criterion (E2.8, E3.4, E3.1–E3.3, E2.14); a different answer is a discovered card in that epic (§14); E2.14 is dropped whole on Q5 "no" | yes |
 | R-14 | E0.2 and E4.2 both write `spec.json`; or a stale row is "repaired" by deleting or skipping it | medium | medium | serial edge E0.2 → E4.2 in `kanban.md` (R24); E0.2's acceptance runs the 14 ids by name, requires all 14 green and all 14 still in `spec.json` with the row count unchanged (G-9) | yes |
 
 ## 2. Open questions → defaults taken
 
 The operator answered the first three on 2026-11-07 (`decisions.md §22`). The E2.G round-1 replan
-(2026-11-11) leaves five open, each with a DEFAULT the run takes until answered (`decisions.md §23.6`):
+(2026-11-11) raised five (`decisions.md §23.6`); the operator answered them the same day (`§23.7`):
 
-| # | Question | DEFAULT | Card |
+| # | Question | Operator's answer (§23.7) | Card |
 |---|---|---|---|
-| Q1 | What "known languages" prints (the engine holds none) | the screen's list (`Common`) from one backend source + one write-in line per bonus slot | E2.8, E2.13 |
-| Q2 | Bio text (the app has no backstory field) | details, campaign notes, ruled lines; FSR-C7 for a field | E3.4 |
-| Q3 | Where daily spells, custom, pets, the armor table print | spells / custom / pets in box 2; armor table in box 3 | E3.1–E3.3, E4.1 |
-| Q4 | The footer prints the name on every page | keep it | — |
-| Q5 | Weapon damage as one total (`1d8+4`): the engine refuses one today | E2.14 adds an engine total row (primary-hand assumption named) | E2.14, E2.10 |
+| Q1 | What "known languages" prints (the engine holds none) | "Known + one blank line": the known list from one backend source, then exactly one blank line | E2.8, E2.13 |
+| Q2 | Bio text (the app has no backstory field) | "Add a Backstory field now": card E3.6; the Bio page prints details, Backstory, campaign notes, ruled lines | E3.6, E3.4 |
+| Q3 | Where daily spells, custom, pets, the armor table print | as proposed: spells / custom / pets in box 2; armor table in box 3 | E3.1–E3.3, E4.1 |
+| Q4 | The footer prints the name on every page | keep | — |
+| Q5 | Weapon damage as one total (`1d8+4`): the engine refuses one today | "One total": E2.14 adds an engine total row (primary-hand assumption named) | E2.14, E2.10 |
 
 | Question | Default | Where |
 |---|---|---|

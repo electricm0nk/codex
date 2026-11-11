@@ -29,7 +29,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E5
 cd docs/release/SD-40-pf-sheet-design
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 38 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan, decisions.md §23)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 39 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan; + E3.6 by the operator's answers, decisions.md §23.7)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -48,20 +48,21 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 38 (24 + E
 | E2.5 | Page-1 header: portrait + Character Name + Campaign; no title, no identity block (rewritten, `decisions.md §23`) | opus | ready | E2.MC | absorbs the portrait box (FSR-C4 committed) |
 | E2.6 | Engine: conditional notes for HP, initiative, saves, AC (`decisions.md §23`) | opus | ready | E2.MC | side lane `engine` (`.worktrees/sd40-engine`); no `print/**` |
 | E2.7 | Engine: AC parts as explanations rows; 10 + Σ parts = AC | opus | waiting | E2.6 | side lane `engine` |
-| E2.8 | Engine: remaining lb + languages on the load response; the screen reads them | opus | waiting | E2.7 | side lane `engine`; §23.6 Q1 DEFAULT |
-| E2.14 | Engine: per-weapon damage total + range | opus | waiting | E2.8 | side lane `engine`; §23.6 Q5 DEFAULT (dropped if the operator says no) |
+| E2.8 | Engine: remaining lb + known languages on the load response; the screen reads them | opus | waiting | E2.7 | side lane `engine`; operator Q1 "Known + one blank line" |
+| E2.14 | Engine: per-weapon damage total + range | opus | waiting | E2.8 | side lane `engine`; operator Q5 "One total" |
 | E2.9 | Square block: HP + Initiative + Encumbrance + Conditions, with notes | opus | waiting | E2.5, E2.6, E2.8 | |
 | E2.10 | Totals only: abilities, saves + notes, attack, speed, weapons | opus | waiting | E2.9, E2.14 | |
 | E2.11 | Skills: one column, name + total, no wraps; not-added lines under the column | opus | waiting | E2.10 | |
 | E2.12 | AC breakdown filled from the engine's part rows | opus | waiting | E2.11, E2.7 | |
-| E2.13 | Languages on page 1: comma list + write-in lines | opus | waiting | E2.12, E2.8 | |
+| E2.13 | Languages on page 1: comma list + exactly one write-in line | opus | waiting | E2.12, E2.8 | |
 | E2.4 | Page 1 assembled + overflow rule (rewritten, `decisions.md §23.5`) | opus | waiting | E2.13 | was "4+ weapon lines"; parked `8f75f60b3e` on `sd40/e2.4-parked` is a starting point only; the lead deletes the branch when this is complete |
 | E2.MC2 | E2 merge check, round 2 + Epic report | opus | waiting | E2.4 | |
 | E2.G | OPERATOR GATE: Aldric page 1 printed, `usable: yes` (round 2) | sonnet | partial | E2.MC2 | PDFs + PNGs rendered to artifacts/epic_2/E2.G/; receipt holds the sign-off lines; round 1 (2026-11-11) recorded → `decisions.md §23`; round 2 re-renders after E2.MC2 and waits for the operator's `usable: yes` |
 | E3.1 | Feats, class features, actions looks (section 2) | opus | waiting | E2.G | rewritten: no `feats-full` |
 | E3.2 | Inventory pages: defense, gear (worn / carried / left behind), money (section 3) | opus | waiting | E3.1 | rewritten |
 | E3.3 | Daily spells, spellbook, custom, pets looks (sections 2, 4) | opus | waiting | E3.2 | rewritten: bio, math, details moved to E3.4, E3.5 |
-| E3.4 | Bio pages: details, campaign notes, ruled lines (section 5) | opus | waiting | E3.3 | §23.6 Q2 DEFAULT |
+| E3.6 | Backstory field in the app (Bio UI + `bio.json`), ui-smoke row | opus | waiting | E3.3, E0.2 | operator answer Q2, `decisions.md §23.7`; before E3.4; writes `spec.json` after E0.2 |
+| E3.4 | Bio pages: details, Backstory, campaign notes, ruled lines (section 5) | opus | waiting | E3.6 | |
 | E3.5 | Show-the-math pages: every page-1 breakdown + derivations (section 6) | opus | waiting | E3.4 | |
 | E3.MC | E3 merge check + Epic report | opus | waiting | E3.5 | |
 | E4.1 | Sections as lists; `PrintSections`; golden 24 + 6 | opus | waiting | E3.MC | rewritten (was presets; `decisions.md §9` superseded by §23.4) |

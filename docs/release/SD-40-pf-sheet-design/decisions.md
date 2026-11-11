@@ -403,7 +403,7 @@ and two blank lines), `abilities` (score + modifier, white space), `armorClass` 
 and the seven parts, every one a real value), `attack` (BAB, Melee, CMB, CMD totals), `speed`, `saves`
 (three totals, the save notes, two blank lines), `weapons` (name, attack total, damage as `1d8+4` from
 E2.14's engine row, critical, range; blank lines; ammunition write-in), `skills` (one column, name + total, every Skills
-panel row, then "Not added to a total" under the column) and `languages` (comma list + one blank line).
+panel row, then "Not added to a total" under the column) and `languages` (the known list as a comma list + exactly one blank line).
 Every page-1 number is a **total** the engine states; the AC parts are the exception the operator made.
 
 ### §23.4 The print dialog and the request (item 5)
@@ -416,10 +416,10 @@ Every page-1 number is a **total** the engine states; the AC parts are the excep
   starting on a new page: (1) Main = page 1 (§23.3); (2) Feats, class features & actions = `feats`,
   `classFeatures`, `actions`, `spells` (the per-day list with used boxes), `custom`, `pets`; (3) Inventory
   = `defense`, `gear`, `money`; (4) Spellbook = `spellbook` alone (spells only, §22 "2: A"); (5) Bio =
-  `characterDetails` + bio text + ruled lines (§23.6 Q2); (6) Show the math = every breakdown removed
+  `characterDetails`, then the Backstory text, then campaign notes, then ruled lines (§23.7 Q2); (6) Show the math = every breakdown removed
   from page 1, then the derivation lines (`blocks/math.rs`), built from the page-1 blocks whether or not
-  (1) is ticked. The placement of `spells`, `custom`, `pets` and `defense` is the author's DEFAULT
-  (§23.6 Q3).
+  (1) is ticked. The placement of `spells`, `custom`, `pets` and `defense` was the author's DEFAULT
+  (§23.6 Q3), accepted by the operator (§23.7).
 - **SF1e and CPR** keep their flow layouts (R2). Their dialog shows four boxes: Main sheet, Spellbook,
   Bio, Show the math (their sheet has no separate feats or inventory section; boxes 2 and 3 are not
   shown). `layout/mod.rs with_options` maps `sections` → today's `(spellbook, math, bio)` and prints
@@ -434,8 +434,8 @@ Every page-1 number is a **total** the engine states; the AC parts are the excep
   → 24 today).
 - **Remembered per character, first time 1+2+3:** the dialog reads and writes
   `codex.print.sections.<characterId>` in `localStorage`, the way `settings/printPaper.ts` keeps
-  `codex.print.paper` (author's DEFAULT: per machine, not saved with the character; a clone starts at the
-  default). A stored value that does not parse is the default. Nothing ticked disables Save PDF and Print.
+  `codex.print.paper` (author's DEFAULT, accepted by the operator §23.7: per machine, not saved with the character; a clone
+  starts at the default). A stored value that does not parse is the default. Nothing ticked disables Save PDF and Print.
 
 ### §23.5 E2.4's fate: rewritten as page 1's overflow rule, rebased on the new page 1
 
@@ -453,7 +453,7 @@ point (named in its receipt) and re-does RED → GREEN from scratch; nothing fro
 unverified. The lead deletes `sd40/e2.4-parked` (local and origin) once E2.4 is `complete`; E5.3's sweep
 checks it is gone.
 
-### §23.6 Questions only the operator can settle (each has a DEFAULT the run takes until answered)
+### §23.6 Questions only the operator could settle (answered the same day: §23.7)
 
 | # | Question | Facts | DEFAULT taken (and why) |
 |---|---|---|---|
@@ -464,6 +464,18 @@ checks it is gone.
 | Q5 | Weapon damage as one total ("1d8+4", item 4) | The engine refuses a damage total on purpose: `src/rules_core/contract.rs:215-226` ("No summed \"damage roll total\" formula … exists anywhere in this codebase … A future, separate cycle owns turning this structured data into a summed display number, if that is ever wanted"); `combat.weapon_damage_bonus.<weapon>` is the feat part alone (`feat_pillar_and_pool_aggregation.rs:3056`); the Strength part assumes the primary hand (`WeaponDamageDto.str_damage_modifier`); no weapon range reaches the load response | E2.14 adds `combat.weapon_damage_total.<weapon>` in Rust (dice literal + Strength + enhancement + feat parts, the primary-hand / `WIELD` assumption named in its detail) and the record's range increment; page 1 prints `1d8+4`. If the operator says no: page 1 prints the dice and each bonus as the engine states them, unsummed (`1d8 +4 Str +1 Enh`), and E2.14 is dropped |
 
 **Enforced by:** E2.4–E2.14, E2.MC2, E2.G round 2, E3.2–E3.5, E4.1, E4.2, E4.MC, E5.2 (`kanban.md`,
-`epic-breakdown.md`). Cards 26 → 38 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`
-→ 38). **Revisit:** the operator, at E2.G round 2 (page 1) and E5.2 (the rest); an answer to Q1–Q5
-that differs from the DEFAULT is a discovered card in the owning epic (§14).
+`epic-breakdown.md`). Cards 26 → 38 at the replan, 39 after §23.7 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`
+→ 39). **Revisit:** the operator, at E2.G round 2 (page 1) and E5.2 (the rest).
+
+### §23.7 Operator answers to §23.6 (2026-11-11, relayed by the lead)
+
+| # | Operator's answer | Effect |
+|---|---|---|
+| Q5 | **"One total"** | E2.14 stays as proposed: the engine emits `combat.weapon_damage_total.<weapon>`; page 1 prints `1d8+4` |
+| Q1 | **"Known + one blank line"** | Paper prints the known languages as a comma list, then **exactly one** blank line, always (not one per bonus slot); the bonus-slot count is not printed on page 1. E2.8 still moves the known list into Rust (`languages.known`), so the print never re-derives it; E2.8 no longer adds a slot count. E2.8 and E2.13 rewritten |
+| Q2 | **"Add a Backstory field now"** | New card **E3.6** (main lane, opus, before E3.4): a Backstory free-text field in the sheet's Bio UI beside the existing bio fields, stored in `bio.json` with them (`CharacterBioDto`, `update_character_bio` / `load_character_bio`, `boundary/characterBio.ts`), round-tripping save, load and clone, with a ui-smoke row. E3.4's Bio page prints details, then Backstory, then campaign notes (if any), then ruled lines. No FSR-C7 (the candidate row is withdrawn) |
+| Q3 | **as proposed** | Daily spells, custom, pets in box 2; armor table in box 3; Spellbook = spell entries |
+| Q4 | **keep** | The footer keeps the name |
+| smaller defaults | **accepted** | localStorage per machine; SF1e/CPR show 4 boxes; "Not added to a total" under the skills column |
+
+**Enforced by:** E2.8, E2.13, E2.14, E3.6, E3.4 (`epic-breakdown.md`). Cards 38 → 39.

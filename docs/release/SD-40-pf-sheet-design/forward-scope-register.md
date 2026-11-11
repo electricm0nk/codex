@@ -29,6 +29,7 @@ E9.4 receipt hands the design and density of the sheets to SD-40 verbatim: "desi
 | COM-7 | Look-at-your-own-output in the per-cycle procedure; PNGs kept; page counts recorded in the goldens and every receipt | R7 | E1.2 (harness), every look card, E4.1 |
 | COM-8 | Final operator look at the full set; closure in the standing order | R4, §15 | E5.1–E5.5 |
 | COM-10 | Portrait box top-left of page 1 (was FSR-C4) | `decisions.md §23.1` item 1 | E2.5 |
+| COM-12 | A Backstory free-text field in the app's Bio UI, stored in `bio.json`, printed on the Bio page | operator answer Q2, `decisions.md §23.7` | E3.6, E3.4 |
 | COM-11 | Engine values page 1 needs and the engine lacked: conditional notes (HP, initiative, saves, AC), AC parts, remaining lb, languages, weapon damage total + range; the screen's TS copies removed | `decisions.md §23.1` items 3a, 4, 6; §23.6 Q1, Q5 | E2.6, E2.7, E2.8, E2.14 |
 | COM-9 | The 14 stale red ui-smoke rows (SD-39 FSR-C2) pass by name under `npm run ui-smoke`, each repaired to the current UI or rewritten to match it, never deleted (was FSR-C1; moved here by the operator's answer "1: B", 2026-11-07) | `decisions.md §22` | E0.2 |
 
@@ -52,7 +53,6 @@ E9.4 receipt hands the design and density of the sheets to SD-40 verbatim: "desi
 | FSR-C2 | SF1e and CPR adopt the grid and looks | R2 | PF only in SD-40 | a scope draft after SD-40's launch names it: `git log --since=2026-11-07 --diff-filter=AM --name-only --format= -- 'docs/release/SD-*/scope-draft.md' \| sort -u \| grep -v SD-40 \| xargs -r grep -lis 'starfinder.*look\|cyberpunk.*look' \| awk 'END{print NR}'` ≥ 1 |
 | FSR-C3 | A serif heading face (a second bundled OFL family) | `decisions.md §11` | determinism and bundle size; not needed for the reference picture | the operator asks after E5.2 |
 | FSR-C4 | Portrait image on the printed sheet | asked by the operator at E2.G 2026-11-11 | — | **Committed as COM-10, card E2.5** (`decisions.md §23.1` item 1); none: E5.3 checks E2.5 is `complete` |
-| FSR-C7 | A Backstory / bio text field in the app, printed on the Bio page | `decisions.md §23.6` Q2 (the operator asked for "the bio/backstory text from the app"; the app holds none) | new UI and storage; the Bio page prints the campaign notes the app holds | the operator asks (answers §23.6 Q2 with "add it") |
 | FSR-C8 | Aspect `CombatBonus` notes (attack / AC against a named foe, e.g. Defensive Training) and encumbrance notes on page 1 | E2.6's "does not cover" (census: CombatBonus 314 prose entries; no carrying-capacity `BonusTarget`) | the operator named HP, initiative, encumbrance and saves; encumbrance has no converted target | the operator asks at E2.G round 2 or E5.2 |
 | FSR-C5 | PCGen's companion, notes and condensed sheets as print sections | R3 (picture list) | the six named sections are the DoD | the operator asks |
 | FSR-C6 | Full `npm run ui-smoke` as a gate | SD-39 R17 | unchanged from SD-39; E0.2 repairs only the 14 named rows | the operator asks |

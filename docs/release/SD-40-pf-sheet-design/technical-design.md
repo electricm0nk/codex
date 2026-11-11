@@ -132,7 +132,7 @@ row 2  abilities (x0 span3: score + modifier, white space)   armorClass (x3 span
        attack (x8 span4: BAB, Melee, CMB, CMD) with speed under it
 row 3  skills (x0 span4: one column, name + total; "Not added to a total" under it)
        saves (x4 span8: three totals + notes)  with weapons (name, attack, 1d8+4, crit, range; ammo) and
-       languages (comma list + write-in lines) under it
+       languages (comma list + one write-in line) under it
 ```
 
 Data sources (all engine values; nothing computed in Rust print code or Typst, NR-2):
@@ -149,7 +149,7 @@ Data sources (all engine values; nothing computed in Rust print code or Typst, N
 | AC parts | `defense.armor_class.<part>` rows (new; today the parts exist only as terms in `combat.rs`'s sum and its detail words) | E2.7 → E2.12 |
 | Weapon attack total | `combat.weapon_attack_bonus.<weapon>` | E2.10 |
 | Weapon damage `1d8+4`, range | `combat.weapon_damage_total.<weapon>` and the range field (new; the engine refuses a damage total today, `contract.rs:215-226`) | E2.14 → E2.10 |
-| Languages | `languages { known, bonusSlots }` (new; today TS-only, `spokenLanguages`) | E2.8 → E2.13 |
+| Languages | `languages { known }` (new; today TS-only, `spokenLanguages`); paper prints the list + exactly one blank line (`decisions.md §23.7`) | E2.8 → E2.13 |
 
 Overflow (new SD-b, E2.4): a page-1 list that does not fit its cell shrinks to 8 pt, then continues at the top
 of page 2 under "<heading> (continued)"; no page-1 block leaves page 1.
@@ -162,7 +162,7 @@ of page 2 under "<heading> (continued)"; no page-1 block leaves page 1.
   `print.no_sections`.
 - `layout/pf1e.rs`: `pub const SECTIONS: [(Section, &[Placed]); 6]`; `layout(sources)` concatenates the ticked
   lists in box order, each from a new page: (1) page 1; (2) `feats`, `classFeatures`, `actions`, `spells`,
-  `custom`, `pets`; (3) `defense`, `gear`, `money`; (4) `spellbook`; (5) `characterDetails` + campaign notes +
+  `custom`, `pets`; (3) `defense`, `gear`, `money`; (4) `spellbook`; (5) `characterDetails`, Backstory (E3.6), campaign notes,
   ruled lines; (6) breakdown tables + derivations, built from the page-1 blocks even when (1) is unticked.
 - `layout/mod.rs with_options(sheet, spellbook, sources)` maps `sections` → SF1e/CPR's `(spellbook, math, bio)`
   and drops their sheet when Main is unticked, so `sf1e.rs` and `cpr.rs` do not change.
