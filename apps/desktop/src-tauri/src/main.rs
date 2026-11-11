@@ -192,6 +192,11 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
+            // A Linux AppImage started from anywhere but ~/Codex/Codex.AppImage offers to install
+            // itself there (once per file); an installed one refreshes its menu entry and icon.
+            // Runs before the installed-state seed below. Not an AppImage: does nothing.
+            update::self_install::run_at_startup(app.handle(), &app.package_info().version.to_string());
+
             // SD-36: hand the Tauri-resolved resource directory to
             // `codex_repo_root()` before anything else runs, so every corpus
             // loader (race/equipment/spell catalogs, character creation,
