@@ -715,6 +715,12 @@ pub struct LoadSavedCharacterResponse {
     /// -- the Skills panel adds `skills[<id>]` (and `groups[<family>]` to every family member) to
     /// each skill's total. Empty when the package is unavailable.
     pub feat_skill_bonuses: codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
+    /// SD-40 E2.6: the conditional bonuses on Hit Points, Initiative, the three saves and Armor
+    /// Class -- every bonus a held record states for one of those totals that is not added to it,
+    /// with its condition in the engine's words (`conditional_notes::conditional_notes`, off the
+    /// same rendered lines). The print's square block and saves block list them; nothing is
+    /// summed. Empty when the package is unavailable.
+    pub conditional_notes: codex::rules_core::pilot_compute::conditional_notes::ConditionalNotes,
 }
 
 /// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
@@ -801,8 +807,9 @@ pub(crate) fn sheet_rule_package_for(
 
 /// The "Rules and features" lines for a character: the chassis computation's held set --
 /// the character's own selections, the class-feature records the chassis grounded, and the
-/// racial traits the race resolver applied -- rendered through the live evaluator; and (SD-36
-/// F6b) the feat skill bonuses folded off those same lines.
+/// racial traits the race resolver applied -- rendered through the live evaluator; (SD-36
+/// F6b) the feat skill bonuses folded off those same lines; and (SD-40 E2.6) the conditional
+/// notes for HP, initiative, saves and AC read off them.
 pub(crate) fn sheet_lines_for(
     input: &CharacterInput,
     base: &PilotBaseChassisComputation,
@@ -810,7 +817,9 @@ pub(crate) fn sheet_lines_for(
     Vec<SheetLineDto>,
     Option<String>,
     codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
+    codex::rules_core::pilot_compute::conditional_notes::ConditionalNotes,
 ) {
+    use codex::rules_core::pilot_compute::conditional_notes::{conditional_notes, ConditionalNotes};
     use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::{feat_skill_bonuses, FeatSkillBonuses};
     match sheet_rule_package() {
         Ok(package) => {
@@ -818,9 +827,10 @@ pub(crate) fn sheet_lines_for(
                 resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
             let computed = base.clone().with_sheet_rules(input, package, &race_traits);
             let bonuses = feat_skill_bonuses(package, &computed.sheet_lines);
-            (map_sheet_lines_dto(&computed.sheet_lines), None, bonuses)
+            let notes = conditional_notes(package, &computed.sheet_lines);
+            (map_sheet_lines_dto(&computed.sheet_lines), None, bonuses, notes)
         }
-        Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default()),
+        Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default(), ConditionalNotes::default()),
     }
 }
 
@@ -2824,7 +2834,7 @@ pub(crate) fn load_saved_character_at_root(
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
-    let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
+    let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
         sheet_lines_for(&sheet_input, &corpus_receipt.base);
     if let Some(snapshot) = snapshot.as_mut() {
         worn_custom_items.apply_to_snapshot(snapshot);
@@ -2853,6 +2863,7 @@ pub(crate) fn load_saved_character_at_root(
         sheet_lines,
         sheet_rules_unavailable_reason,
         feat_skill_bonuses,
+        conditional_notes,
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
@@ -19124,7 +19135,7 @@ mod tests {
             }
         }
         let base = compute_pilot_base_chassis(&input);
-        let (lines, unavailable, bonuses) = sheet_lines_for(&input, &base);
+        let (lines, unavailable, bonuses, _) = sheet_lines_for(&input, &base);
         assert_eq!(unavailable, None);
         assert!(lines.iter().any(|l| l.id == "core_rulebook:feat:alertness"), "Alertness line printed");
         assert_eq!(bonuses.skills.get("perception"), Some(&2));
@@ -20686,6 +20697,48 @@ mod starter_seed_tests {
             .expect("Spellcraft allocated");
         let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
         assert_eq!(spellcraft + 3 + int_mod, 12, "Spellcraft 5 + 3 + 4");
+    }
+
+    /// SD-40 E2.6: the load response carries `conditionalNotes`, six lists. Aldric (Human
+    /// Fighter 3) holds one: CRB p.55 Bravery, "+1 Will vs. fear", under `will` alone; Elowen and
+    /// Tomas carry the field too.
+    #[test]
+    fn conditional_notes_reach_the_load_response_of_the_seeds() {
+        let app_data_dir = temp_app_data_dir("conditional-notes-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded: Vec<LoadSavedCharacterResponse> = [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID]
+            .iter()
+            .map(|id| load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load"))
+            .collect();
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        for sheet in &loaded {
+            let wire = serde_json::to_value(sheet).expect("json");
+            let notes = wire["conditionalNotes"].as_object().expect("conditionalNotes on the wire");
+            let keys: Vec<&str> = notes.keys().map(String::as_str).collect();
+            assert_eq!(keys, ["armorClass", "fortitude", "hitPoints", "initiative", "reflex", "will"]);
+        }
+        let aldric = &loaded[0].conditional_notes;
+        let wills: Vec<(&str, &str, &str)> =
+            aldric.will.iter().map(|n| (n.label.as_str(), n.value.as_str(), n.condition.as_str())).collect();
+        assert_eq!(wills, [("Bravery", "", "+1 Will vs. fear")], "{aldric:#?}");
+        let others = [&aldric.hit_points, &aldric.initiative, &aldric.fortitude, &aldric.reflex, &aldric.armor_class];
+        assert!(others.iter().all(|l| l.is_empty()), "{aldric:#?}");
+    }
+
+    /// SD-40 E2.6: a Dwarf's racial traits come from the race resolver (no trait passed by
+    /// hand), and Hardy's words (CRB p.21) reach the response under each save.
+    #[test]
+    fn conditional_notes_carry_dwarf_hardy_through_the_race_resolver() {
+        let fixture = codex::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let mut input = codex::rules_core::class_seeds::input_for(&fixture, "fighter", 1);
+        input.chosen.race_id = "race:dwarf".to_owned();
+        let base = codex::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let (_, unavailable, _, notes) = sheet_lines_for(&input, &base);
+        assert_eq!(unavailable, None);
+        let hardy = "+2 racial bonus on saving throws against poison, spells, and spell-like abilities.";
+        for list in [&notes.fortitude, &notes.reflex, &notes.will] {
+            assert!(list.iter().any(|n| n.label == "Hardy" && n.condition == hardy), "{notes:#?}");
+        }
     }
 
     /// Aldric Ironhand, Human Fighter 3: 2 level feats (1st, 3rd; CRB p.112), the human's 1 (p.21) and

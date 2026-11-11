@@ -866,6 +866,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
             sheet_lines: crate::character_hub::map_sheet_lines_dto(&chassis.sheet_lines),
             sheet_rules_unavailable_reason: None,
             feat_skill_bonuses: Default::default(),
+            conditional_notes: Default::default(),
         })
     }
 }

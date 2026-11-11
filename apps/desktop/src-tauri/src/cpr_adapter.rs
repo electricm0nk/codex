@@ -645,6 +645,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             sheet_lines,
             sheet_rules_unavailable_reason,
             feat_skill_bonuses: Default::default(),
+            conditional_notes: Default::default(),
         })
     }
 }

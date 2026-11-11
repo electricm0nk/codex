@@ -152,6 +152,13 @@ export interface LoadSavedCharacterResponse {
    */
   featSkillBonuses: FeatSkillBonusesDto;
   /**
+   * SD-40 E2.6: the conditional bonuses on Hit Points, Initiative, the three saves and Armor Class
+   * that the engine prints with their condition and never adds to the total
+   * (`conditional_notes::conditional_notes`). The print lists them; the screen does not read them
+   * yet. Absent on a mutation refresh (`toCharacterMutationRefresh`) until the sheet re-reads.
+   */
+  conditionalNotes?: ConditionalNotesDto;
+  /**
    * SD-36 F7a: the engine's effective ability scores (`effective_ability_scores_dto`: the stored
    * score with the Human +2 applied) -- what the Abilities panel prints. Absent on a mutation
    * refresh (`toCharacterMutationRefresh`) until the sheet re-reads the character.
@@ -190,6 +197,27 @@ export interface FeatSkillBonusesDto {
   contributions: FeatSkillContributionDto[];
   situational: FeatSkillNotFoldedDto[];
   unknown: FeatSkillNotFoldedDto[];
+}
+
+/** Mirrors `ConditionalNote` (engine): one bonus a record states for a total but does not add. */
+export interface ConditionalNoteDto {
+  /** The record's line label (`Hardy`). */
+  label: string;
+  /** The line's printed value (`+2`), or `""` when the words carry it. */
+  value: string;
+  /** When it applies, in the engine's words. */
+  condition: string;
+  ruleId: string;
+}
+
+/** Mirrors `ConditionalNotes` (engine): the notes per total, in sheet-line order. */
+export interface ConditionalNotesDto {
+  hitPoints: ConditionalNoteDto[];
+  initiative: ConditionalNoteDto[];
+  fortitude: ConditionalNoteDto[];
+  reflex: ConditionalNoteDto[];
+  will: ConditionalNoteDto[];
+  armorClass: ConditionalNoteDto[];
 }
 
 /** No feat skill bonus: the value a response carries before the engine has answered. */
