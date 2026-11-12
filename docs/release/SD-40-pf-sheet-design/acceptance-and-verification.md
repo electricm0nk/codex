@@ -118,7 +118,7 @@ grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ | awk 'END{print 
 ```bash
 cd docs/release/SD-40-pf-sheet-design
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 55) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 56) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[3-5] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- Aldric .* — usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md        # 2 (anchored, decisions.md §24.5)
 grep -c 'usable: yes' artifacts/epic_5/E5.2_cycle_receipt.md        # 5 (E5.2 must anchor this as G-4 now is: its receipt's own instructions must not match, decisions.md §24.5)
@@ -131,13 +131,13 @@ git branch -a --list '*e2.4-parked*' | awk 'END{print NR}'            # 0 (decis
 Plus the template §6 step 1a items: `cargo test --test packaged_resources` (desktop),
 `cargo test --test no_baked_manifest_dir_in_production` (root), `python3 -m pytest tools/release -q`.
 
-## G-9 The 14 stale ui-smoke rows (DoD 11) — E0.2, E2.27, E2.24–E2.26, E3.6, E4.2; re-read at E2.MC3, E4.MC
+## G-9 The 14 stale ui-smoke rows (DoD 11) — E0.2, E2.27, E2.24–E2.26, E2.29, E3.6, E4.2; re-read at E2.MC3, E4.MC
 
 ```bash
 cd docs/release/SD-40-pf-sheet-design
 test -s artifacts/epic_0/E0.2/stale-ids.txt || { echo NO_IDS; exit 2; }
 awk 'END{print NR}' artifacts/epic_0/E0.2/stale-ids.txt                                       # 14
-python3 -c "import json,sys;rows=json.load(open('../../../apps/desktop/scripts/ui-smoke/spec.json'))['rows'];s={r['id'] for r in rows};ids=open(sys.argv[1]).read().split();print(len(rows),sum(i in s for i in ids))" artifacts/epic_0/E0.2/stale-ids.txt   # 173 14 at E0.2 (none deleted); 177 14 after E2.27 + E2.24–E2.26 (four rows, decisions.md §24.6, §24.7); 178 14 after E3.6 (Backstory row); 182 14 after E4.2 (four dialog rows, decisions.md §23.4, §23.7)
+python3 -c "import json,sys;rows=json.load(open('../../../apps/desktop/scripts/ui-smoke/spec.json'))['rows'];s={r['id'] for r in rows};ids=open(sys.argv[1]).read().split();print(len(rows),sum(i in s for i in ids))" artifacts/epic_0/E0.2/stale-ids.txt   # 173 14 at E0.2 (none deleted); 177 14 after E2.27 + E2.24–E2.26 (four rows, decisions.md §24.6, §24.7); 176 14 after E2.29 (sheet-action-hp-adjust retired, §24.8); 177 14 after E3.6 (Backstory row); 181 14 after E4.2 (four dialog rows, decisions.md §23.4, §23.7)
 python3 -c "import json,sys;r={x['id']:x['status'] for x in json.load(open(sys.argv[1]))};ids=open(sys.argv[2]).read().split();print(sum(r.get(i)=='green' for i in ids),[i for i in ids if r.get(i)!='green'])" artifacts/epic_0/E0.2/results.json artifacts/epic_0/E0.2/stale-ids.txt   # 14 []
 ```
 

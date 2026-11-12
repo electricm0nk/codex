@@ -643,10 +643,10 @@ count works (G-8 note).
 | Q2 | Should real characters record their languages? | `known_languages()` is the constant `["Common"]` (`character_hub.rs:743`); the app has no language store or picker; 7 languages exist only in the print proof | No store in SD-40; the seven-language Aldric is a print-proof fixture. A languages field (free text, saved with the bio, printed on page 1) would be one new main-lane card before E2.MC3 if the operator wants it | **"Yes, add a field"** → new card **E2.27** (before E2.16): a Languages field saved with the character, the source of `languages.known` (nothing stored → `["Common"]`); Aldric's seven are stored by the print proof (§24.3.3) |
 | Q3 | Fly maneuverability on paper | The fly record states it in words ("average") | Printed beside the Fly box value: `60 ft. (average)` | **"60 ft. (average)"** → as proposed (E2.18 print, E2.24 screen) |
 
-**Enforced by:** E2.16–E2.27, E2.MC3, E2.G round 3, E3.7, E3.MC, E4.1, E4.2, E4.MC (`kanban.md`,
-`epic-breakdown.md`). Cards 40 → 54: 50 at the replan, + E2.24–E2.26 for the operator's UI addition (§24.7), + E2.27 for the
-answer to Q2 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'` → 54). ui-smoke rows 173 → 174 (E2.27) → 177
-(E2.24–E2.26) → 178 (E3.6) → 182 (E4.2), G-9.
+**Enforced by:** E2.16–E2.29, E2.MC3, E2.G round 3, E3.7, E3.MC, E4.1, E4.2, E4.MC (`kanban.md`,
+`epic-breakdown.md`). Cards 40 → 56: 50 at the replan, + E2.24–E2.26 for the operator's UI addition (§24.7), + E2.27 for the
+answer to Q2, + E2.28 discovered by E2.19, + E2.29 for no HP tracking (§24.8) (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'` → 56).
+ui-smoke rows 173 → 174 (E2.27) → 177 (E2.24–E2.26) → 176 (E2.29 retires one) → 177 (E3.6) → 181 (E4.2), G-9.
 **Revisit:** the operator, at E2.G round 3 (page 1) and E5.2 (the sections).
 
 ### §24.7 Operator addition, 2026-11-12: the desktop UI shows the new fields too
@@ -660,3 +660,39 @@ it), **E2.25** the Conditional Bonuses list under the Saving Throws totals, CMB 
 **E2.26** the Resistances panel in the Defense tab beside AC/defense, where the Damage Reduction line is (after
 E2.21). Each renders the engine rows and fields the print reads (no TypeScript re-derivation: the twin rule),
 names a RED check that fails on the base tree, adds one ui-smoke row and regenerates `docs/testing/ui-smoke-inventory.md`.
+
+### §24.8 Operator, 2026-11-12: no hit-point tracking in the app
+
+**OPERATOR (verbatim, relayed by the lead):** "Hit points in the UI shows (for Brother Tomas Vane) 40/40.  I also notice on defence that "HP tracking isn't available for this build yet — only single-class Fighter, Wizard, or Rogue." is shown.  We are not tracking hit points and I don't believe we ever will."
+
+Answers (verbatim): Q "how much of the old HP tracker goes?" → "The defense subpanel is ok to keep.  I like showing all the things the are impacting the AC and their related effects.  WE just need to remove the bits about trying to track hit points." Q "What should the Hit Points box show?" → "Max HP only: 40".
+
+**What the repo holds** (base `c12cee333a`; read-only greps, each reproducible):
+- The sheet's Hit Points box prints `${props.hp} / ${props.hp}` (`apps/desktop/src/characterHub/panels/SquareBlock.tsx:73`).
+- `DurabilityPanel` (`CharacterSheet.tsx:1287`; the "HP tracking isn't available …" line `:1300`) renders inside `DefenseTab`
+  (`:1428`), fed by state and loaders at `:3078-3099`, `refreshDurability` `:3989` (called at `:3267`, `:3610`, `:3664`)
+  and the adjust handler `:4041-4049`; props passed at `:4571-4573`; boundary `boundary/characterDurability.ts` (+ `.test.ts`).
+- Backend: `load_character_durability` / `adjust_character_hp` (`character_hub.rs:6364`, `:6385`), their `_at_root` bodies
+  (`:6277`, `:6336`), `CharacterDurabilityDto` `:6259`, `durability_status_label` `:6246`, the `hp.json` sidecar
+  (`HP_FILE_NAME` `:6233`, `StoredHp`; read and written only at `:6308`, `:6346`), the request DTO `:6359`, and 8 tests
+  (`:18448-18584`); registered in `main.rs:70`, `:76`, `:313-314`.
+  `git grep -n 'current_hp\|hp_tracking\|HpTracking\|load_character_durability\|adjust_character_hp\|characterDurability\|DurabilityPanel\|HP tracking' -- apps/desktop/src-tauri/src apps/desktop/src src | awk -F: '{print $1}' | sort | uniq -c`
+  → character_hub.rs 53, main.rs 4, characterDurability.ts 4, its test 1, CharacterSheet.tsx 6, `src/rules_core/durability.rs` 14,
+  two class files 1 each.
+- `src/rules_core/durability.rs` also holds `compute_max_hp`, used by the engine and the parity crates
+  (`class_dispatch.rs:175`, `:835`, `crates/codex-ingest/src/oracle_validation/selected_parity_dimensions.rs:21`): **stays**.
+  `classify_durability` / `DurabilityStatus` are used only by `character_hub.rs` (10) and `tests/v06_durability.rs` (14)
+  (`git grep -n 'classify_durability\|DurabilityStatus' -- src apps crates tests | awk -F: '{print $1}' | sort | uniq -c`).
+- ui-smoke: `sheet-action-hp-adjust` (`spec.json:1038`) drives Damage / Heal and expects `HIT POINTS`, `NONLETHAL`;
+  `sheet-tab-defense` (`:702`) uses `HIT POINTS` as its marker and expect; neither is one of E0.2's 14 stale ids
+  (`grep -c 'hp-adjust\|sheet-tab-defense' artifacts/epic_0/E0.2/stale-ids.txt` → 0). Rows expecting `HIT POINTS\n<n>`
+  (`:1415`, `:1536`, `:4907`) read the sheet's Hit Points box and still match a bare max.
+
+**Ruling** (card **E2.29**, main lane, after E2.26, before E2.MC3): the Hit Points box shows the max only (`40`); the
+`DurabilityPanel` and every hit-point tracking path go (UI, boundary, Tauri commands and their registration, the
+`hp.json` read/write, `classify_durability` / `DurabilityStatus` if no other consumer remains, with the tests that pin
+them); the `sheet-action-hp-adjust` ui-smoke row is retired and `sheet-tab-defense` re-pinned to Defense-tab content
+that stays (`EQUIPMENT EFFECTS`, `SAVING THROWS`). An old save holding `hp.json` still loads: the file is never read
+again and is left on disk untouched. **Stays:** the rest of the Defense tab (equipment effects, AC by source, the
+Resistances panel, saves), the engine's `hit_points.max` row and `compute_max_hp`, and the printed Hit Points block
+(max + the pencil write-in for current HP and nonlethal: paper is where a player tracks HP). ui-smoke rows −1 (G-9).
