@@ -5,6 +5,7 @@ import {
   NO_FEAT_SKILL_BONUSES,
   type ExplanationDto,
   type ConditionalNotesDto,
+  type ResistancesDto,
   type FeatSkillBonusesDto,
   type LoadSavedCharacterResponse,
   type SheetLineDto,
@@ -162,6 +163,7 @@ import {
 } from './skillsModel';
 import { AbilitiesPanel } from './panels/AbilitiesPanel';
 import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './panels/CombatPanels';
+import { ResistancesPanel } from './panels/ResistancesPanel';
 import { conditionalBonusLines } from './conditionalBonusesModel';
 import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
 import { SquareBlock, initiativeRow } from './panels/SquareBlock';
@@ -1394,24 +1396,18 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
 
 /**
  * Real, bounded: HP/durability tracking and equipment effects (above) are
- * real for whatever this build actually has equipped. The only other
- * Defense stat with a backend computation to show is the flat Damage
- * Reduction magnitude (`PilotSnapshotDto.damageReduction`,
- * `character_hub.rs`) — currently only ever grounded for Barbarian, which
- * isn't a chassis-supported class through this UI yet, so `undefined` here
- * is the expected, honest state for every character reachable today, not a
- * bug. Saving throws render base (class progression) beside total, both
+ * real for whatever this build actually has equipped. Resistances (energy,
+ * Damage Reduction, Spell Resistance, Immunities) render the load
+ * response's `resistances` as the printed Resistances block does (SD-40
+ * E2.26). Saving throws render base (class progression) beside total, both
  * verbatim from the engine (`baseSaves` / `totalSaves`); a per-source
  * breakdown of what sits between them has no backend computation yet, so
- * none is fabricated here. Note: the "Recompute" menu action doesn't currently
- * refresh `damageReduction` (`RecomputedCharacterSnapshotDto` doesn't carry
- * it), so it always reflects the originally loaded snapshot — a real,
- * narrow, pre-existing gap, not something this change papers over.
+ * none is fabricated here.
  */
 function DefenseTab(props: {
   baseSaves: BaseSavesDto | undefined;
   totalSaves: BaseSavesDto | undefined;
-  damageReduction: number | undefined;
+  resistances: ResistancesDto | undefined;
   equipmentEffects: EquipmentEffectsDto | undefined;
   encumbrance: EncumbranceDto | undefined;
   durability: CharacterDurabilityDto | null;
@@ -1435,11 +1431,7 @@ function DefenseTab(props: {
       />
       <EquipmentEffectsPanel effects={props.equipmentEffects} />
       <AcBySourcePanel effects={props.equipmentEffects} encumbrance={props.encumbrance} />
-      {props.damageReduction !== undefined ? (
-        <p style={{ margin: '0 0 1rem', textAlign: 'center' }}>
-          <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
-        </p>
-      ) : null}
+      <ResistancesPanel resistances={props.resistances} />
       <SavesPanel baseSaves={props.baseSaves} totalSaves={props.totalSaves} />
     </div>
   );
@@ -3029,6 +3021,8 @@ export function CharacterSheet(props: {
     flyManeuverability: string | null;
     /** SD-40 E2.25: the engine's `conditionalNotes` (the Saving Throws box lists them); `undefined` until a read carries them. */
     conditionalNotes: ConditionalNotesDto | undefined;
+    /** SD-40 E2.26: the engine's `resistances` (the Defense tab's Resistances panel); `undefined` until a read carries them. */
+    resistances: ResistancesDto | undefined;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3042,6 +3036,7 @@ export function CharacterSheet(props: {
     knownLanguages: props.detail?.languages?.known ?? [],
     flyManeuverability: props.detail?.flyManeuverability ?? null,
     conditionalNotes: props.detail?.conditionalNotes,
+    resistances: props.detail?.resistances,
   });
   useEffect(() => {
     let cancelled = false;
@@ -3058,6 +3053,7 @@ export function CharacterSheet(props: {
     knownLanguages: props.detail?.languages?.known ?? [],
     flyManeuverability: props.detail?.flyManeuverability ?? null,
     conditionalNotes: props.detail?.conditionalNotes,
+    resistances: props.detail?.resistances,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3075,6 +3071,7 @@ export function CharacterSheet(props: {
       knownLanguages: loaded.languages?.known ?? [],
       flyManeuverability: loaded.flyManeuverability ?? null,
       conditionalNotes: loaded.conditionalNotes,
+      resistances: loaded.resistances,
           });
         }
       })
@@ -3674,6 +3671,7 @@ export function CharacterSheet(props: {
       knownLanguages: loaded.languages?.known ?? [],
       flyManeuverability: loaded.flyManeuverability ?? null,
       conditionalNotes: loaded.conditionalNotes,
+      resistances: loaded.resistances,
     });
     await refreshDurability();
   }
@@ -4041,6 +4039,7 @@ export function CharacterSheet(props: {
       knownLanguages: loaded.languages?.known ?? [],
       flyManeuverability: loaded.flyManeuverability ?? null,
       conditionalNotes: loaded.conditionalNotes,
+      resistances: loaded.resistances,
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4588,7 +4587,7 @@ export function CharacterSheet(props: {
                   <DefenseTab
                     baseSaves={recomputed?.baseSaves ?? snapshot?.baseSaves}
                     totalSaves={recomputed?.totalSaves ?? snapshot?.totalSaves}
-                    damageReduction={snapshot?.damageReduction}
+                    resistances={engineRecords.resistances}
                     equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
                     encumbrance={props.detail?.corpusDerived?.encumbrance}
                     durability={durability}
