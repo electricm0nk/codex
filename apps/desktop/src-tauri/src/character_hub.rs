@@ -5949,7 +5949,7 @@ fn copy_character_money(from: &Path, to: &Path) -> Result<(), String> {
     std::fs::copy(&source, to.join(MONEY_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
 }
 
-fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
+pub(crate) fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let path = root.join(BIO_FILE_NAME);
     let json = serde_json::to_string_pretty(bio)

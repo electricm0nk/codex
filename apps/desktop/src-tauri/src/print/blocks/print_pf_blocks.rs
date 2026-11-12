@@ -10,7 +10,7 @@
 
 use crate::character_custom::{load_character_custom_at_root, save_character_custom_at_root};
 use crate::character_hub::{
-    add_feat_selection_enforcing_prerequisites_at_root, list_held_equipment_at_root, load_saved_character_at_root,
+    add_feat_selection_enforcing_prerequisites_at_root, load_character_bio_at_root, save_character_bio_at_root, CharacterBioDto, list_held_equipment_at_root, load_saved_character_at_root,
     seed_default_characters_at, set_equipment_active_state_at_root, ActiveStateDto,
 };
 use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, CampaignNote, Paper, PrintRequest};
@@ -1502,8 +1502,8 @@ fn print_pf_blocks_armor_class_prints_every_part_from_the_engine() {
 
 /// E2.13 (`decisions.md §23.1` item 6, §23.7 Q1 "Known + one blank line"): page 1's `languages`
 /// block (the Skills panel's Languages line) prints the load response's `languages.known` as one
-/// comma list, then exactly one blank write-in line, always: no bonus-slot count, whatever the
-/// character's Intelligence (Aldric the fighter, Elowen the wizard). Letter and A4.
+/// comma list with no write-in line (re-pinned by E2.16, `decisions.md §24.3.3`): no bonus-slot
+/// count, whatever the character's Intelligence (Aldric the fighter, Elowen the wizard). Letter and A4.
 #[test]
 fn print_pf_blocks_languages_print_a_comma_list_and_write_in_lines() {
     for (tag, id) in [("languages-aldric", ALDRIC_ID), ("languages-elowen", ELOWEN_ID)] {
@@ -1516,10 +1516,30 @@ fn print_pf_blocks_languages_print_a_comma_list_and_write_in_lines() {
             let block = document.blocks.iter().find(|block| block.id == "languages").unwrap_or_else(|| panic!("{tag} {paper:?}: a languages block prints"));
             assert_eq!(block.heading, "Languages", "{tag} {paper:?}: the heading is the Skills panel's word");
             let values: Vec<&String> = block.rows.iter().flat_map(|row| &row.values).collect();
-            assert_eq!(values, [&known, &String::new()], "{tag} {paper:?}: the comma list, then exactly one write-in line");
+            assert_eq!(values, [&known], "{tag} {paper:?}: the comma list and no write-in line (E2.16, decisions.md §24.3.3)");
             let at = one.find("Languages").unwrap_or_else(|| panic!("{tag} {paper:?}: page 1 holds `Languages`: {one}"));
             assert!(one[at..].starts_with(&format!("Languages {known}")), "{tag} {paper:?}: the list prints under its heading on page 1: {}", &one[at..]);
             assert!(!one.contains("bonus language"), "{tag} {paper:?}: no bonus-slot count prints: {one}");
         }
+    }
+}
+
+/// E2.16 (`decisions.md §24.3.3`): Aldric with seven languages stored through the bio save path
+/// (E2.27) prints every name on page 1 after `Languages`, whole, on Letter and A4: one comma list,
+/// no write-in row, no Typst warning (`render` asserts it).
+#[test]
+fn print_pf_blocks_seven_languages_print_whole_under_the_portrait() {
+    let root = seeded("languages-seven", ALDRIC_ID);
+    let seven = crate::print::print_proof::ALDRIC_SEVEN_LANGUAGES;
+    let bio = CharacterBioDto { languages: seven.map(str::to_owned).to_vec(), ..load_character_bio_at_root(&root).expect("the bio loads") };
+    save_character_bio_at_root(&root, &bio).expect("the seven languages save");
+    assert_eq!(load_saved_character_at_root(&root).expect("Aldric loads").languages.known, seven, "the load response reads the stored list");
+    for paper in [Paper::Letter, Paper::A4] {
+        let (document, one, _) = page_one_text(&root, paper, Vec::new());
+        let block = document.blocks.iter().find(|block| block.id == "languages").unwrap_or_else(|| panic!("{paper:?}: a languages block prints"));
+        let values: Vec<&String> = block.rows.iter().flat_map(|row| &row.values).collect();
+        assert_eq!(values, [&seven.join(", ")], "{paper:?}: one comma list and no write-in row");
+        let at = one.find("Languages").unwrap_or_else(|| panic!("{paper:?}: page 1 holds `Languages`: {one}"));
+        assert_in_order(&one[at..], &seven);
     }
 }

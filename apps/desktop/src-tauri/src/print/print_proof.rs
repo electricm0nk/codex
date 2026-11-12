@@ -2,6 +2,8 @@
 //! set, the two Pathfinder starter seeds (Aldric, Elowen) print through the real print path on
 //! both papers with each of the four option sets (none, Spellbook, Show the math, all three) and
 //! each PDF is written to `<dir>/<seed>-<paper>-<options>.pdf`; every path is printed. 2 x 2 x 4 = 16.
+//! Then Aldric, with seven languages stored through the bio save path (E2.16), prints with no option
+//! on both papers as `aldric-languages7-<paper>-none.pdf`: 16 + 2 = 18.
 //! With the variable unset the test writes nothing and passes.
 //!
 //! Run (from `apps/desktop/src-tauri`):
@@ -14,7 +16,11 @@
 use std::path::PathBuf;
 
 use super::{render_sheet_pdf_at_root, CampaignNote, Paper, PrintRequest};
-use crate::character_hub::seed_default_characters_at;
+use crate::character_hub::{load_character_bio_at_root, save_character_bio_at_root, seed_default_characters_at, CharacterBioDto};
+
+/// Aldric's seven languages (`decisions.md §24.3.3`): stored in the proof's temp copy of Aldric to
+/// show the Languages cell holds seven names; the shipped seed stores none.
+pub(crate) const ALDRIC_SEVEN_LANGUAGES: [&str; 7] = ["Common", "Dwarven", "Elven", "Giant", "Gnome", "Goblin", "Orc"];
 
 const SEEDS: [(&str, &str); 2] = [("aldric", "00000000-0000-0000-0000-000000000001"), ("elowen", "00000000-0000-0000-0000-000000000002")];
 
@@ -52,6 +58,21 @@ fn print_proof() {
             }
         }
     }
+    let aldric = dir.join("characters").join(SEEDS[0].1);
+    let bio = CharacterBioDto {
+        languages: ALDRIC_SEVEN_LANGUAGES.map(str::to_owned).to_vec(),
+        ..load_character_bio_at_root(&aldric).expect("Aldric's bio loads")
+    };
+    save_character_bio_at_root(&aldric, &bio).expect("the seven languages save");
+    for (paper, paper_name) in [(Paper::A4, "a4"), (Paper::Letter, "letter")] {
+        let request = PrintRequest { paper, spellbook: false, math: false, bio: false, campaigns: Vec::new() };
+        let case = format!("aldric-languages7-{paper_name}-none");
+        let rendered = render_sheet_pdf_at_root(&aldric, &request).unwrap_or_else(|err| panic!("{case}: renders: {err}"));
+        let path = out.join(format!("{case}.pdf"));
+        std::fs::write(&path, &rendered.pdf).unwrap_or_else(|err| panic!("{case}: writes {}: {err}", path.display()));
+        println!("{}", path.display());
+        written += 1;
+    }
     let _ = std::fs::remove_dir_all(&dir);
-    assert_eq!(written, 16, "2 seeds x 2 papers x 4 option sets");
+    assert_eq!(written, 18, "2 seeds x 2 papers x 4 option sets, then seven-language Aldric x 2 papers");
 }

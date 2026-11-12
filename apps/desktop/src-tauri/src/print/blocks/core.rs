@@ -209,15 +209,11 @@ pub fn speed(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Speed", vec![line(sources, "Land", vec![land], "speed.land")]).in_look(Look::Speed)
 }
 
-/// The Skills panel's Languages line (`languages`, SD-40 E2.13, `decisions.md §23.7` Q1): the load
-/// response's `languages.known` as one comma list, then exactly one write-in line for a language
-/// learned at the table; no bonus-slot count prints.
+/// The Skills panel's Languages line (`languages`, SD-40 E2.13; E2.16, `decisions.md §24.3.3`): the
+/// load response's `languages.known` (the stored list, else `Common`) as one comma list, with no
+/// write-in line and no bonus-slot count.
 pub fn languages(sources: &SheetSources) -> SheetBlock {
-    SheetBlock::new(
-        "Languages",
-        vec![SheetRow::new("", [sources.loaded.languages.known.join(", ")]), SheetRow::new("", [write_in()])],
-    )
-    .in_look(Look::Languages)
+    SheetBlock::new("Languages", vec![SheetRow::new("", [sources.loaded.languages.known.join(", ")])]).in_look(Look::Languages)
 }
 
 /// The screen's Abilities panel (SD-40 E2.10, `decisions.md §23.1` item 3b): each score and the
