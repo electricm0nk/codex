@@ -1323,5 +1323,11 @@
   },
   "languages": {
     "known": []
+  },
+  "resistances": {
+    "energy": [],
+    "damageReduction": [],
+    "spellResistance": [],
+    "immunities": []
   }
 }

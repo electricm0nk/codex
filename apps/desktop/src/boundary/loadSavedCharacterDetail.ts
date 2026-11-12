@@ -169,6 +169,12 @@ export interface LoadSavedCharacterResponse {
    */
   flyManeuverability?: string;
   /**
+   * SD-40 E2.21: energy resistances, damage reduction, spell resistance and immunities the
+   * character holds (`resistances::resistances`); four empty lists when none. The print's
+   * Resistances block and the Defense tab read it. Absent on a mutation refresh until the re-read.
+   */
+  resistances?: ResistancesDto;
+  /**
    * SD-36 F7a: the engine's effective ability scores (`effective_ability_scores_dto`: the stored
    * score with the Human +2 applied) -- what the Abilities panel prints. Absent on a mutation
    * refresh (`toCharacterMutationRefresh`) until the sheet re-reads the character.
@@ -236,6 +242,16 @@ export interface ConditionalNotesDto {
   /** SD-40 E2.19: CMB and CMD notes (combat maneuver words; "against" a maneuver is CMD). */
   combatManeuverBonus: ConditionalNoteDto[];
   combatManeuverDefense: ConditionalNoteDto[];
+}
+
+/** Mirrors `Resistances` (engine `pilot_compute::resistances`). */
+export interface ResistancesDto {
+  /** One per energy (`Acid`, `Cold`, `Electricity`, `Fire`, `Sonic`): the highest, every source named (`; `). */
+  energy: { energy: string; amount: number; source: string }[];
+  /** `amount`/`bypass` (`—` when nothing overcomes it), or the record's `words` and no number. */
+  damageReduction: { amount: number | null; bypass: string; words: string | null; source: string }[];
+  spellResistance: { value: number | null; words: string | null; source: string }[];
+  immunities: { name: string; source: string }[];
 }
 
 /** No feat skill bonus: the value a response carries before the engine has answered. */

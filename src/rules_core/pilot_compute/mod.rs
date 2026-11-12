@@ -237,6 +237,8 @@ pub mod hit_die_source;
 pub mod feat_skill_bonus_sheet_rules;
 /// SD-40 E2.6: the conditional notes for HP, initiative, saves and AC, read off the rendered lines.
 pub mod conditional_notes;
+/// SD-40 E2.21: energy resistances, damage reduction, spell resistance and immunities held.
+pub mod resistances;
 mod generic_class_chassis;
 mod multiclass_fold;
 /// SD-36 F6c: the level-up mix gate, read before a level is taken (the desktop's Level Up options).

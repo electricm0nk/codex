@@ -458,6 +458,7 @@ pub(crate) mod tests {
                 conditional_notes,
                 languages: crate::character_hub::known_languages(),
                 fly_maneuverability: None,
+                resistances: Default::default(),
             })
         }
     }

@@ -649,6 +649,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             conditional_notes: Default::default(),
             languages: Default::default(),
             fly_maneuverability: None,
+            resistances: Default::default(),
         })
     }
 }

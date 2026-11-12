@@ -732,6 +732,12 @@ pub struct LoadSavedCharacterResponse {
     /// Left out when the character has no fly speed or its trait states no maneuverability.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub fly_maneuverability: Option<String>,
+    /// SD-40 E2.21: energy resistances, damage reduction, spell resistance and immunities from what
+    /// the character holds (`resistances::resistances`, plus the engine's existing rows: the ARG
+    /// energy-resistance feats, the snapshot's class DR, worn items' SR); the print's Resistances
+    /// block and the Defense tab read this one field. Four empty lists when none.
+    #[serde(default)]
+    pub resistances: codex::rules_core::pilot_compute::resistances::Resistances,
 }
 
 /// The languages a character knows, as the sheet lists them.
@@ -2908,11 +2914,13 @@ pub(crate) fn load_saved_character_at_root(
         conditional_notes,
         languages: stored_known_languages(&load_character_bio_at_root(root)?.languages),
         fly_maneuverability: None,
+        resistances: Default::default(),
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_weapon_damage_total_rows(&mut sheet);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
     sheet.fly_maneuverability = push_swim_and_fly_rows(&envelope.character_input, &mut sheet.explanations);
+    sheet.resistances = resistances_for(&envelope.character_input, &sheet);
     let ability_modifiers = snapshot.as_ref().map_or(corpus_receipt.base.ability_modifiers, |snapshot| snapshot.ability_modifiers);
     let selected_skill_modifiers = snapshot.as_ref().map(|snapshot| snapshot.skill.selected_modifier);
     push_skill_total_rows(&envelope.character_input, ability_modifiers, selected_skill_modifiers, &mut sheet);
@@ -3183,6 +3191,34 @@ fn push_swim_and_fly_rows(input: &CharacterInput, explanations: &mut Vec<Explana
     }
     explanations.extend(rows);
     maneuverability
+}
+
+/// SD-40 E2.21: the character's resistances (`decisions.md §24.3.6`): its held racial traits' energy
+/// chains (the alternates it chose applied, as the land speed's are) and its sheet lines' `DR` / `SR`
+/// entries and immunities (`resistances::resistances`), then the response's own rows: each ARG
+/// energy-resistance feat (`feat.arg_energy_resistance.<feat>.<energy>`), the snapshot's class DR
+/// (no bypass: CRB p.32) and worn items' spell resistance total.
+fn resistances_for(input: &CharacterInput, sheet: &LoadSavedCharacterResponse) -> codex::rules_core::pilot_compute::resistances::Resistances {
+    use codex::rules_core::pilot_compute::resistances::resistances;
+    let alternates = read_alternate_trait_keys(input);
+    let race = crate::race_catalog::race_corpus().as_ref().ok().and_then(|corpus| {
+        corpus.resolve(corpus.resolve_key(&input.chosen.race_id)?, &alternates.iter().map(String::as_str).collect::<Vec<_>>())
+    });
+    let traits = race.iter().flat_map(|race| &race.traits).map(|t| (t.key.as_str(), t.declared_bonuses.var_contributions.as_slice()));
+    let lines = sheet.sheet_lines.iter().map(|line| (line.id.as_str(), line.label.as_str(), line.prose.as_str()));
+    let mut out = resistances(lines, traits);
+    for row in &sheet.explanations {
+        if let Some((feat, energy)) = row.id.strip_prefix("feat.arg_energy_resistance.").and_then(|rest| rest.rsplit_once('.')) {
+            out.add_energy(energy, row.value, feat);
+        }
+    }
+    if let Some(amount) = sheet.snapshot.as_ref().and_then(|snapshot| snapshot.damage_reduction) {
+        out.add_damage_reduction(amount, "—", "class_feature.barbarian.damage_reduction");
+    }
+    if let Some(total) = sheet.corpus_derived.equipment_effects.spell_resistance_total {
+        out.add_spell_resistance(total, "worn items");
+    }
+    out
 }
 
 /// A worn item's Intelligence is a bonus that comes off with the item, and a headband grants its
@@ -20971,6 +21007,57 @@ mod starter_seed_tests {
             let wire = serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json");
             assert_eq!((row(&wire, "speed.swim"), row(&wire, "speed.fly")), (None, None), "{id}");
             assert!(wire.get("flyManeuverability").is_none(), "{id}");
+        }
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-40 E2.21: the load response carries `resistances` (energy, damage reduction, spell
+    /// resistance, immunities) from what the character holds. Bestiary 2: an Ifrit has fire
+    /// resistance 5, an Undine cold resistance 5; an Ifrit who takes ARG's Wildfire Heart gives
+    /// it up. CRB p.32: a 7th-level Barbarian has DR 1/—. The seeds hold none.
+    #[test]
+    fn resistances_reach_the_load_response() {
+        let load = |label: &str, race: &str, class: &str, level: u8, alternates: &[&str]| {
+            let mut input = compose_character_input(&super::tests::request_for_class(race, class, level));
+            let alternates: Vec<String> = alternates.iter().map(|key| (*key).to_owned()).collect();
+            input.chosen.selected_choices.extend(resolve_alternate_trait_choices(race, &alternates).expect("a real alternate"));
+            serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for(label, input)).expect("load")).expect("json")
+        };
+        let ifrit = load("resistances-ifrit", "race:ifrit", "class:fighter", 1, &[]);
+        assert_eq!(
+            ifrit["resistances"]["energy"],
+            serde_json::json!([{ "energy": "Fire", "amount": 5, "source": "Ifrit ~ Energy Resistance" }]),
+            "{}",
+            ifrit["resistances"]
+        );
+        let undine = load("resistances-undine", "race:undine", "class:fighter", 1, &[]);
+        assert_eq!(
+            undine["resistances"]["energy"],
+            serde_json::json!([{ "energy": "Cold", "amount": 5, "source": "Undine ~ Energy Resistance" }]),
+            "{}",
+            undine["resistances"]
+        );
+        let wildfire = load("resistances-wildfire", "race:ifrit", "class:fighter", 1, &["Ifrit ~ Wildfire Heart"]);
+        let energies = wildfire["resistances"]["energy"].as_array().expect("energy list");
+        assert!(energies.iter().all(|entry| entry["energy"] != "Fire"), "{}", wildfire["resistances"]);
+        let barbarian = load("resistances-barbarian", "race:human", "class:barbarian", 7, &[]);
+        eprintln!("barbarian 7: {}", barbarian["resistances"]);
+        let reductions = barbarian["resistances"]["damageReduction"].as_array().expect("damageReduction list");
+        assert!(
+            reductions.iter().any(|dr| dr["amount"] == 1 && dr["bypass"] == "—"),
+            "{}",
+            barbarian["resistances"]
+        );
+
+        let app_data_dir = temp_app_data_dir("resistances-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        for id in [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID] {
+            let wire = serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json");
+            assert_eq!(
+                wire["resistances"],
+                serde_json::json!({ "energy": [], "damageReduction": [], "spellResistance": [], "immunities": [] }),
+                "{id}"
+            );
         }
         std::fs::remove_dir_all(&app_data_dir).ok();
     }
