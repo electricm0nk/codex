@@ -4,7 +4,7 @@
 //! title above them, `decisions.md §23.3`), the Speed under those fields and the Armor Class beside
 //! them; then the square block (Hit Points, Initiative, Encumbrance, Conditions and their notes,
 //! E2.9) beside the Abilities; the Skills in one column (name + total, E2.11) beside the Weapons, with the Attack
-//! and the Saving Throws under them (the Combat block split along
+//! and the Saving Throws under them, the Languages under the portrait (E2.13) (the Combat block split along
 //! the screen's boxes, `decisions.md §8`). Page 2 starts with the Identity block, then the armor; gear, feats, features,
 //! spells, custom records, pets and actions follow; then the option blocks, each on pages of its
 //! own: Spellbook, Show the math, Bio and campaign notes (R4). The blocks
@@ -18,6 +18,10 @@ use crate::print::model::{SheetBlock, SheetDocument};
 /// The sheet's blocks, in print order, each under its vocabulary id (`golden/block_vocabulary.json`).
 const SHEET: &[Placed] = &[
     Placed::at("portrait", blocks::portrait, 0, 3),
+    // The Skills panel's Languages line (E2.13), one line under the portrait box: the top band's
+    // tallest cell is the name column beside it, so the line costs page 1 no height. Every lower
+    // cell is full on Letter (the skills column reaches page 1's foot; the Weapons grow per weapon).
+    Placed::under("languages", blocks::languages, 0, 3),
     Placed::at("nameCampaign", blocks::name_campaign, 3, 4),
     Placed::under("speed", blocks::speed, 3, 4),
     Placed::at("armorClass", blocks::armor_class, 7, 5),

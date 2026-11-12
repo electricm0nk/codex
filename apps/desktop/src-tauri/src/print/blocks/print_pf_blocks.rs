@@ -22,12 +22,13 @@ const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
 const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
-/// The 19 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
+/// The 20 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
 /// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3) under the
 /// portrait and the Character Name field, the Hit Points and Initiative one square block (E2.9),
-/// the Identity block opening page 2 (E2.5).
-const BASE_HEADINGS: [&str; 19] = [
+/// the Identity block opening page 2 (E2.5), the Languages under the portrait (E2.13).
+const BASE_HEADINGS: [&str; 20] = [
     "Portrait",
+    "Languages",
     "Character Name",
     "Speed",
     "Armor Class",
@@ -101,7 +102,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
         expected.extend([SPELLBOOK, MATH, BIO]);
-        assert_eq!(headings, expected, "{tag}: the 22 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
+        assert_eq!(headings, expected, "{tag}: the 23 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
         let full = render(&root, &all);
         assert_in_order(&pdf_text(&full), &expected);
         // For a reader's own look (`pdftotext`, a viewer): the full sheet, when asked for.
@@ -964,7 +965,7 @@ fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
         assert!(!one.contains("Identity"), "{paper:?}: page 1 holds no Identity block: {one}");
         assert_eq!(image_objects(&pdf), 0, "{paper:?}: no portrait saved, no image printed");
         let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
-        assert_eq!(&ids[..2], ["portrait", "nameCampaign"], "{paper:?}: the top band's two blocks lead the sheet");
+        assert_eq!(&ids[..3], ["portrait", "languages", "nameCampaign"], "{paper:?}: the top band's blocks lead the sheet (the Languages line under the portrait, E2.13)");
         let identity = document.blocks.iter().find(|block| block.id == "characterDetails").expect("the Identity block still prints");
         assert!(identity.new_page, "{paper:?}: the Identity block opens page 2");
     }
@@ -1372,4 +1373,28 @@ fn print_pf_blocks_armor_class_prints_every_part_from_the_engine() {
         }
     }
     assert_eq!(printed_acs[2], printed_acs[0] + 1, "the worn ring prints one more AC, in Deflection");
+}
+
+/// E2.13 (`decisions.md §23.1` item 6, §23.7 Q1 "Known + one blank line"): page 1's `languages`
+/// block (the Skills panel's Languages line) prints the load response's `languages.known` as one
+/// comma list, then exactly one blank write-in line, always: no bonus-slot count, whatever the
+/// character's Intelligence (Aldric the fighter, Elowen the wizard). Letter and A4.
+#[test]
+fn print_pf_blocks_languages_print_a_comma_list_and_write_in_lines() {
+    for (tag, id) in [("languages-aldric", ALDRIC_ID), ("languages-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let known = loaded.languages.known.join(", ");
+        assert!(known.contains("Common"), "{tag}: the engine's known list holds Common: {known}");
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, one, _) = page_one_text(&root, paper, Vec::new());
+            let block = document.blocks.iter().find(|block| block.id == "languages").unwrap_or_else(|| panic!("{tag} {paper:?}: a languages block prints"));
+            assert_eq!(block.heading, "Languages", "{tag} {paper:?}: the heading is the Skills panel's word");
+            let values: Vec<&String> = block.rows.iter().flat_map(|row| &row.values).collect();
+            assert_eq!(values, [&known, &String::new()], "{tag} {paper:?}: the comma list, then exactly one write-in line");
+            let at = one.find("Languages").unwrap_or_else(|| panic!("{tag} {paper:?}: page 1 holds `Languages`: {one}"));
+            assert!(one[at..].starts_with(&format!("Languages {known}")), "{tag} {paper:?}: the list prints under its heading on page 1: {}", &one[at..]);
+            assert!(!one.contains("bonus language"), "{tag} {paper:?}: no bonus-slot count prints: {one}");
+        }
+    }
 }

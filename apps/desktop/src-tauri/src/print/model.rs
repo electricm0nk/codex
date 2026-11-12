@@ -139,12 +139,14 @@ pub enum Look {
     /// The Character Name and Campaign fields (the screen's IdentityPanel): each label over its
     /// value, a write-in line where there is none.
     NameCampaign,
+    /// The languages (SD-40 E2.13): the known list as one comma list, then one blank write-in line.
+    Languages,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 11] = [
+    pub const ALL: [Look; 12] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -156,6 +158,7 @@ impl Look {
         Look::Weapons,
         Look::Portrait,
         Look::NameCampaign,
+        Look::Languages,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -172,6 +175,7 @@ impl Look {
             Look::Weapons => "weapons",
             Look::Portrait => "portrait",
             Look::NameCampaign => "name-campaign",
+            Look::Languages => "languages",
         }
     }
 }

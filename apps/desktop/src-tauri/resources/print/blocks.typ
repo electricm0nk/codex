@@ -14,6 +14,7 @@
 #import "/looks/weapons.typ": look as weapons-look
 #import "/looks/portrait.typ": look as portrait-look
 #import "/looks/name-campaign.typ": look as name-campaign-look
+#import "/looks/languages.typ": look as languages-look
 
 #let looks = (
   table: table-look,
@@ -27,6 +28,7 @@
   weapons: weapons-look,
   portrait: portrait-look,
   "name-campaign": name-campaign-look,
+  languages: languages-look,
 )
 
 // One block in its own look, without the page break: what a grid cell holds.
