@@ -104,6 +104,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E2.14 | E2.14 | complete | 11902abf50 + 7903fc761d + fab4af8a19 + acdbbea41d + receipt commit | artifacts/epic_2/E2.14_cycle_receipt.md |
 | E2.10 | E2.10 | complete | ee6661cb82 + receipt commit | artifacts/epic_2/E2.10_cycle_receipt.md |
 | E2.11 | E2.11 | complete | 7769943981 + receipt commit | artifacts/epic_2/E2.11_cycle_receipt.md |
+| E2.15 | E2.15 | complete | 5af77cd78d + receipt commit | artifacts/epic_2/E2.15_cycle_receipt.md |
 
 ## Epic reports
 
