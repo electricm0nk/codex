@@ -8,7 +8,8 @@
 // Layouts (SD-40 decisions.md §4): a sheet of `columns: 1` flows its blocks one under the other,
 // as every sheet did before SD-40 (Starfinder and Cyberpunk RED still do). A sheet of more columns
 // lays each run of blocks between page breaks on a page grid, each block in its cell at its
-// `place` (first column `x`, `span` columns wide); the layout file fills each row in order.
+// `place` (first column `x`, `span` columns wide, `row_span` rows tall); the layout file fills each
+// row in order.
 
 #import "/blocks.typ": sheet-block, block-look, lists
 
@@ -32,6 +33,8 @@
     ..cells.map(cell => grid.cell(
       x: cell.first().place.x,
       colspan: cell.first().place.span,
+      // A cell more than one row tall (page 1's portrait beside the name row and the AC row, E2.18).
+      rowspan: cell.first().place.at("row_span", default: 1),
       if cell.len() == 1 { block-look(cell.first()) } else { stack(spacing: 1em, ..cell.map(block-look)) },
     )),
   )

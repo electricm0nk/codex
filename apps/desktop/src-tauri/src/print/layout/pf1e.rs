@@ -1,12 +1,13 @@
 //! The Pathfinder 1e layout file (operator ruling R2; SD-40 `decisions.md §4`): which blocks the
 //! sheet prints, in which order, and where on the 12-column page grid. Page 1 (`technical-design.md
-//! §4`, Letter first) opens with the portrait box beside the Character Name and Campaign fields (no
-//! title above them, `decisions.md §23.3`), the Speed under those fields and the Armor Class beside
-//! them; then the square block (Hit Points, Initiative, Encumbrance, Conditions and their notes,
-//! E2.9) beside the Abilities; the Skills in one column (name + total, E2.11) beside the Weapons, with the Attack
-//! and the Saving Throws under them, the Languages under the portrait (E2.13) (the Combat block split along
-//! the screen's boxes, `decisions.md §8`). Page 2 starts with the Identity block, then the armor; gear, feats, features,
-//! spells, custom records, pets and actions follow; then the option blocks, each on pages of its
+//! §4`, Letter first) is the operator's round-2 grid (`decisions.md §24.3.1`, E2.18): the portrait box,
+//! two rows tall with the Languages under it, beside the Character Name and Campaign fields (one
+//! row, no title above them), then the Armor Class boxes (no heading) and the Speed (Land, Swim, Fly)
+//! beside it; then a left column of the square block (Hit Points, Initiative, Encumbrance,
+//! Conditions, E2.9), the Weapons, the Attack and the Saving Throws, and a right column of one width
+//! holding the Abilities over the Skills (one column, name + total, E2.11). Page 2 starts with the
+//! Identity block, then the armor; gear, feats, features, spells, custom records, pets and actions
+//! follow; then the option blocks, each on pages of its
 //! own: Spellbook, Show the math, Bio and campaign notes (R4). The blocks
 //! themselves (`print/blocks/`) read what the Character Sheet reads; nothing here computes a
 //! number (NR-2).
@@ -17,21 +18,21 @@ use crate::print::model::{SheetBlock, SheetDocument};
 
 /// The sheet's blocks, in print order, each under its vocabulary id (`golden/block_vocabulary.json`).
 const SHEET: &[Placed] = &[
-    Placed::at("portrait", blocks::portrait, 0, 3),
-    // The Skills panel's Languages line (E2.13), one line under the portrait box: the top band's
-    // tallest cell is the name column beside it, so the line costs page 1 no height. Every lower
-    // cell is full on Letter (the skills column reaches page 1's foot; the Weapons grow per weapon).
+    // Row 1 and row 2 (`decisions.md §24.3.1`): the portrait's cell is two rows tall, so the name
+    // row and the AC row sit beside it; the Languages line is stacked in its cell under the box.
+    Placed::at("portrait", blocks::portrait, 0, 3).spanning_rows(2),
     Placed::under("languages", blocks::languages, 0, 3),
-    Placed::at("nameCampaign", blocks::name_campaign, 3, 4),
-    Placed::under("speed", blocks::speed, 3, 4),
-    Placed::at("armorClass", blocks::armor_class, 7, 5),
+    Placed::at("nameCampaign", blocks::name_campaign, 3, 9),
+    Placed::at("armorClass", blocks::armor_class, 3, 6),
+    Placed::at("speed", blocks::speed, 9, 3),
+    // The body: the left column (0–6) and the right column (7–11, one width for the Abilities and
+    // the one-column Skills, which need 5 of 12, E2.11). The 7 / 5 split is §24.3.1's default.
     Placed::at("squareBlock", blocks::square_block, 0, 7),
+    Placed::under("weapons", blocks::weapons, 0, 7),
+    Placed::under("attack", blocks::attack, 0, 7),
+    Placed::under("saves", blocks::saves, 0, 7),
     Placed::at("abilities", blocks::abilities, 7, 5),
-    // One column of name + total (E2.11) needs 5 columns; the Weapons take the other 7.
-    Placed::at("skills", blocks::skills, 0, 5),
-    Placed::at("weapons", blocks::weapons, 5, 7),
-    Placed::under("attack", blocks::attack, 5, 7),
-    Placed::under("saves", blocks::saves, 5, 7),
+    Placed::under("skills", blocks::skills, 7, 5),
     // Page 2 opens with the Identity block until the Bio pages take it (E3.4).
     Placed::full("characterDetails", blocks::character_details),
     Placed::full("defense", blocks::armor),

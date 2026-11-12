@@ -159,7 +159,8 @@ pub fn armor_class(sources: &SheetSources) -> SheetBlock {
         let value = row_value(sources, part.id()).map_or_else(write_in, |v| if v == 0 { v.to_string() } else { signed(v) });
         line(sources, label, vec![value], part.id())
     }));
-    SheetBlock::new("Armor Class", rows).in_look(Look::ArmorClass)
+    // No "Armor Class" heading over the boxes (`decisions.md §24.3.1`): the AC box's label names it.
+    SheetBlock::new("", rows).in_look(Look::ArmorClass)
 }
 
 /// The screen's Saving Throws box (`saves`, SD-40 E2.10, `decisions.md §23.1` item 4): each save's
@@ -203,10 +204,17 @@ pub fn attack(sources: &SheetSources) -> SheetBlock {
     .in_look(Look::Attack)
 }
 
-/// The screen's Speed box (`speed`): the load response's `speed.land`, the one value its Land tile shows.
+/// The Speed box (`speed`, E2.18, `decisions.md §24.3.2`): Land, Swim and Fly, each `<n> ft.` from the
+/// engine's `speed.land` / `speed.swim` / `speed.fly` row, the fly value followed by the load
+/// response's `flyManeuverability` words (§24.6 Q3); a mode the engine states no row for is an empty
+/// box for the pencil (never a dash, never 0) with no row behind it.
 pub fn speed(sources: &SheetSources) -> SheetBlock {
-    let land = row_value(sources, "speed.land").map_or_else(|| NO_VALUE.to_owned(), |v| format!("{v} ft."));
-    SheetBlock::new("Speed", vec![line(sources, "Land", vec![land], "speed.land")]).in_look(Look::Speed)
+    let mode = |label: &str, id: &str, words: Option<&str>| match row_value(sources, id) {
+        Some(feet) => line(sources, label, vec![words.map_or_else(|| format!("{feet} ft."), |words| format!("{feet} ft. ({words})"))], id),
+        None => SheetRow::new(label, [write_in()]),
+    };
+    let fly = sources.loaded.fly_maneuverability.as_deref();
+    SheetBlock::new("Speed", vec![mode("Land", "speed.land", None), mode("Swim", "speed.swim", None), mode("Fly", "speed.fly", fly)]).in_look(Look::Speed)
 }
 
 /// The Skills panel's Languages line (`languages`, SD-40 E2.13; E2.16, `decisions.md §24.3.3`): the

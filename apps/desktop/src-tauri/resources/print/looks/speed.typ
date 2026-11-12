@@ -1,4 +1,6 @@
-// The `speed` look (SD-40 E2.1): the land speed box, as the engine states it ("30 ft.").
+// The `speed` look (SD-40 E2.1; E2.18, decisions.md §24.3.2): one line per mode (Land, Swim, Fly),
+// its label beside a box holding what the engine states ("30 ft.", "60 ft. (average)"), or an empty
+// box for the pencil. It formats; it computes nothing (NR-2).
 
 #let heading-of(b) = {
   text(size: 12pt, weight: "bold", b.heading)
@@ -24,15 +26,14 @@
   }
 }
 
-// One labelled box: the label above (so it reads before its value), the box under it.
-#let labelled(r, height: 0.75cm, size: 11pt) = stack(
-  spacing: 0.12cm,
-  text(size: 8pt, weight: "bold", r.label),
-  ..r.values.map(v => value-box(v, height: height, size: size)),
-)
-
 #let look(b) = block(breakable: false, width: 100%, above: 1em, below: 0.6em)[
   #heading-of(b)
-  #stack(spacing: 0.25cm, ..b.rows.map(r => labelled(r, height: 0.9cm, size: 12pt)))
+  #grid(
+    columns: (auto, 1fr),
+    column-gutter: 0.15cm,
+    row-gutter: 0.12cm,
+    align: (left + horizon, left),
+    ..b.rows.map(r => (text(size: 8pt, weight: "bold", r.label), ..r.values.map(v => value-box(v, height: 0.7cm, size: 10pt)))).flatten(),
+  )
   #notes-of(b)
 ]

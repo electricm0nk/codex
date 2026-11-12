@@ -242,6 +242,33 @@ pub(crate) fn block_anchor(block: &crate::print::model::SheetBlock) -> String {
     format!("{}{first}", unspaced(&block.heading))
 }
 
+/// The order the blocks' words come in the PDF's text: the layout file's, except that a cell more
+/// than one grid row tall (page 1's portrait, with the Languages stacked in it, SD-40 E2.18) prints
+/// after the other cells of the row it starts in: Typst lays a row-spanning cell out once that row
+/// is done. On a one-column sheet (Starfinder, Cyberpunk RED) it is the layout file's order.
+pub(crate) fn print_order(document: &SheetDocument) -> Vec<&crate::print::model::SheetBlock> {
+    let mut order = Vec::with_capacity(document.blocks.len());
+    let mut deferred = Vec::new();
+    let mut deferring = false;
+    for block in &document.blocks {
+        if block.place.under {
+            if deferring { deferred.push(block) } else { order.push(block) }
+            continue;
+        }
+        deferring = block.place.row_span > 1;
+        if deferring {
+            deferred.push(block);
+            continue;
+        }
+        order.push(block);
+        if block.place.x + block.place.span == crate::print::model::GRID_COLUMNS {
+            order.append(&mut deferred);
+        }
+    }
+    order.append(&mut deferred);
+    order
+}
+
 /// Every label, value and note of each block must be in the PDF's text between the block's heading
 /// and the next block's heading; the headings must come in the layout file's order. A heading is
 /// found together with its block's first printed words, so a heading's word inside an earlier
@@ -257,9 +284,10 @@ fn assert_blocks_print_in_order(document: &SheetDocument, text: &str, case: &str
             .filter(|piece| !piece.is_empty())
             .collect()
     };
-    let mut starts = Vec::with_capacity(document.blocks.len());
+    let blocks = print_order(document);
+    let mut starts = Vec::with_capacity(blocks.len());
     let mut from = 0;
-    for block in &document.blocks {
+    for block in &blocks {
         let anchor = block_anchor(block);
         let at = text[from..]
             .find(&anchor)
@@ -267,7 +295,7 @@ fn assert_blocks_print_in_order(document: &SheetDocument, text: &str, case: &str
         starts.push(from + at);
         from += at + unspaced(&block.heading).len();
     }
-    for (index, block) in document.blocks.iter().enumerate() {
+    for (index, block) in blocks.iter().enumerate() {
         let end = starts.get(index + 1).copied().unwrap_or(text.len());
         let segment = &text[starts[index]..end];
         for piece in pieces(block) {

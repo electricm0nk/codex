@@ -10,6 +10,8 @@ pub const NO_DERIVATION: &str = "(no derivation recorded)";
 pub fn math(printed: &[SheetBlock]) -> SheetBlock {
     let mut rows: Vec<SheetRow> = Vec::new();
     for block in printed {
+        // A block printed with no heading (the AC boxes, SD-40 E2.18) goes by its first row's label.
+        let name = if block.heading.is_empty() { block.rows.first().map_or("", |row| row.label.as_str()) } else { block.heading.as_str() };
         for row in &block.rows {
             let Some(derivation) = &row.derivation else { continue };
             let value = row.values.iter().filter(|value| !value.is_empty()).cloned().collect::<Vec<_>>().join(" ");
@@ -18,7 +20,7 @@ pub fn math(printed: &[SheetBlock]) -> SheetBlock {
             } else {
                 derivation.iter().map(|step| format!("{}: {}", step.source, step.detail)).collect()
             };
-            rows.push(SheetRow::new(format!("{} · {}", block.heading, row.label), [value]).with_notes(notes));
+            rows.push(SheetRow::new(format!("{} · {}", name, row.label), [value]).with_notes(notes));
         }
     }
     if rows.is_empty() {

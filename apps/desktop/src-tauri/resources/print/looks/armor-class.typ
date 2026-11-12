@@ -1,6 +1,7 @@
 // The `armor-class` look (SD-40 E2.1): Armor Class, Touch and Flat-Footed as three boxes, then
 // a strip of the AC's component cells (armor, shield, Dex, size, natural, deflection, misc). A
 // component the engine gives no row for is a ruled write-in. It formats; it adds nothing up (NR-2).
+// Page 1 sends it with no heading (E2.18, decisions.md §24.3.1): then no title line prints.
 
 #let heading-of(b) = {
   text(size: 12pt, weight: "bold", b.heading)
@@ -39,7 +40,7 @@
   let totals = b.rows.slice(0, cut)
   let parts = b.rows.slice(cut)
   block(breakable: false, width: 100%, above: 1em, below: 0.6em)[
-    #heading-of(b)
+    #if b.heading != "" { heading-of(b) }
     #grid(
       columns: (1fr,) * (if totals.len() > 0 { totals.len() } else { 1 }),
       column-gutter: 0.25cm,

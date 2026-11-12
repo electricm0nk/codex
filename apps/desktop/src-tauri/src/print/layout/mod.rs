@@ -42,6 +42,11 @@ impl Placed {
         Self { id, build, place: Place::under(x, span) }
     }
 
+    /// The same entry, its cell `rows` grid rows tall (page 1's portrait beside two rows, E2.18).
+    pub const fn spanning_rows(self, rows: u8) -> Self {
+        Self { place: self.place.spanning_rows(rows), ..self }
+    }
+
     /// The block, built over `sources`, under its id at its place (its look the builder's).
     pub fn block(&self, sources: &SheetSources) -> SheetBlock {
         (self.build)(sources).with_id(self.id).at(self.place)

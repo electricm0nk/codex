@@ -52,6 +52,13 @@ impl SheetDocument {
     /// or the sheet's end comes after a full row.
     pub fn check_places(&self) -> Result<(), String> {
         let columns = u16::from(GRID_COLUMNS);
+        let width = usize::from(GRID_COLUMNS);
+        // A cell `row_span` rows tall holds its columns in the rows under its own: `below[c]` is how
+        // many rows under the current one column `c` is still held, `taken[c]` whether the current
+        // row may not use it. A row's blocks fill its free columns left to right.
+        let mut below = vec![0u8; width];
+        let mut taken = vec![false; width];
+        let free_from = |taken: &[bool], from: u16| (from..columns).find(|&c| !taken[usize::from(c)]).unwrap_or(columns);
         let mut cursor: u16 = 0;
         let row_open = |cursor: u16, before: &str| {
             Err(format!("print.layout: the row before {before} ends at column {cursor} of the {columns}-column grid; a row is filled before it ends"))
@@ -85,10 +92,14 @@ impl SheetDocument {
                     None => return Err(format!("print.layout: block `{}` ({}) is stacked under no block", block.id, block.heading)),
                 }
             }
-            if cursor == columns {
-                cursor = 0;
+            while cursor == columns {
+                for c in 0..width {
+                    taken[c] = below[c] > 0;
+                    below[c] = below[c].saturating_sub(1);
+                }
+                cursor = free_from(&taken, 0);
             }
-            if block.new_page && cursor != 0 {
+            if block.new_page && (taken.contains(&true) || below.iter().any(|&rows| rows > 0)) {
                 return row_open(cursor, &format!("block `{}`'s page break", block.id));
             }
             if x != cursor {
@@ -97,9 +108,13 @@ impl SheetDocument {
                     block.id, block.heading
                 ));
             }
-            cursor = x + span;
+            for c in x..x + span {
+                taken[usize::from(c)] = true;
+                below[usize::from(c)] = block.place.row_span.saturating_sub(1);
+            }
+            cursor = free_from(&taken, x + span);
         }
-        if cursor != 0 && cursor != columns {
+        if (cursor != columns && taken.contains(&true)) || below.iter().any(|&rows| rows > 0) {
             return row_open(cursor, "the sheet's end");
         }
         Ok(())
@@ -182,12 +197,14 @@ impl Look {
 
 /// Where a block sits on the page grid: its first column `x` (from 0) and how many columns it spans;
 /// `under`: in the cell of the block before it, stacked under that block (the same columns), so a
-/// column of short blocks sits beside a tall one.
+/// column of short blocks sits beside a tall one; `row_span`: how many grid rows its cell is tall
+/// (1; page 1's portrait takes 2, beside the name row and the AC row, SD-40 E2.18).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 pub struct Place {
     pub x: u8,
     pub span: u8,
     pub under: bool,
+    pub row_span: u8,
 }
 
 impl Place {
@@ -196,12 +213,17 @@ impl Place {
 
     /// From column `x`, `span` columns wide, in a cell of its own.
     pub const fn at(x: u8, span: u8) -> Self {
-        Place { x, span, under: false }
+        Place { x, span, under: false, row_span: 1 }
     }
 
     /// From column `x`, `span` columns wide, stacked under the block before it in that block's cell.
     pub const fn under(x: u8, span: u8) -> Self {
-        Place { x, span, under: true }
+        Place { x, span, under: true, row_span: 1 }
+    }
+
+    /// The same place, its cell `rows` grid rows tall.
+    pub const fn spanning_rows(self, rows: u8) -> Self {
+        Place { row_span: rows, ..self }
     }
 }
 
