@@ -1,0 +1,369 @@
+---
+canonical: true
+owner: operator
+bundle_id: SD-41
+slug: gear-and-equipment-sets
+canonical_branch: tranche-21
+target_version: 0.21.0
+date: 2026-11-12
+status: planning-ready
+---
+
+# SD-41 Decisions
+
+Each section is marked **OPERATOR** (a ruling on record), **DEFAULT** (the author's call; revisit named) or
+**STANDING** (carried from earlier bundles). `§20` (pre-launch corrections) wins over older text here.
+
+## §1 — Package location
+
+**DEFAULT.** `docs/release/SD-41-gear-and-equipment-sets/`, as every sibling (SD-38, SD-39, SD-40 recorded
+the same deviation from the overlay's `docs/stc/`). **Enforced by:** C0. **Revisit:** the operator says
+"move to docs/stc"; one `git mv` before C1.
+
+## §2 — Branch, board, version
+
+**OPERATOR ("New package after SD-40") + DEFAULT.** Branch `tranche-21`, cut from `origin/tranche-20` @
+`f7f85f3d24` on 2026-11-12 (`git merge-base HEAD origin/tranche-20`), while SD-40 is live in
+`.worktrees/sd40-main`. Board: `./kanban.md` + `./progress.md`. Version `0.21.0` stamped by C1's **single
+commit** on the 14 surfaces SD-40's C1 bumped (`git show --name-only --format= 3ceeb63b66 | awk 'NF' |
+grep -vc current-release.json` → 14; F-1) plus `docs/release/current-release.json` → `{"tranche": 21,
+"notes_path": "docs/release/SD-41-gear-and-equipment-sets/release-notes.md"}`. `release-notes.md` ships an
+interim body with the sentinel `SD-41 INTERIM NOTES`; E5.3 replaces it; E5.4 refuses the PR while the
+sentinel is present. **Enforced by:** C1's receipt; `python3 tools/release/resolve_release_notes.py
+--repo-root .` exit 0. **Revisit:** the tranche digit moves only at a new bare cut.
+
+## §3 — Operator answers on record (2026-11-12, verbatim as relayed by the lead)
+
+| # | Question | Operator's answer |
+|---|---|---|
+| A1 | Slots | "Full Pathfinder list" — right panel = the app's existing `WORN_SLOTS` (`apps/desktop/src/characterHub/EquipmentPanel.tsx:7`: Main hand, Off hand, Both hands, Shield, Armor, Head, Headband, Eyes, Shoulders, Neck, Chest, Body, Belt, Wrist, Hands, Ring ×2, Feet), then Equipped (no slot), Carried, Not Carried |
+| A2 | Sets | "Where each item is" — all sets share one item list; a set stores only each item's location (slot / equipped / carried / not carried / inside container X); one active set drives sheet, AC, encumbrance and print |
+| A3 | Containers | "Weight counts, capacity shown" — contents count toward weight only when the container is carried or equipped; capacity shown (e.g. backpack 60 lb) with a warning when over, never a block; nesting allowed; a custom-named item (e.g. "Food", "Camping") works as a container when its base item is one; hooks into the existing Custom tab / custom item naming |
+| A4 | Moving | "Drag plus a 'Move to' menu" (keyboard + testable) |
+| A5 | Weapons block (screen + print) | "In hand first, then carried"; Not Carried weapons left off |
+| A6 | Old saves | "Make a 'Default' set" — on first load, slotted items keep their slot, everything else Carried; AC and weight unchanged from today |
+| A7 | Print inventory page | "Active set, by location" — slots in use, then Carried with each container's contents nested under it, then a short Not Carried list (no weight); totals match encumbrance |
+| A8 | Market purchases | default to Carried (the operator's words in the request) |
+| A9 | Package placement | "New package after SD-40" |
+
+The request itself is quoted in full in `scope-draft.md §1` and `artifacts/cycle_0/operator-brief-2026-11-12.md`.
+
+## §4 — Phasing against SD-40 (DEFAULT; the partition is derived, not assumed)
+
+SD-40 is live on `tranche-20` (32 of 56 cards complete, `artifacts/epic_0/census.txt §7`). Its open cards
+own `character_hub.rs` (E2.28, E2.29, E3.6), `CharacterSheet.tsx` (E2.24–E2.26, E2.29, E3.6), `main.rs`
+(E2.29), `spec.json` (E2.24–E2.26, E2.29, E3.6, E4.2, E4.MC), `print/blocks/gear.rs` (E3.2, E3.5),
+`print/layout/pf1e.rs`, `print/{model,typst}.rs`, `blocks.typ` (E2.23, E3.x, E4.1), `print_golden.json`
+(E3.1, E3.3, E4.1), `packaged_resources.rs` (E3.x, E5.1), `loadSavedCharacterDetail.ts` (E2.24–E2.26).
+None of SD-40's open cards owns `equipment_record.rs`, `encumbrance.rs`, `equipment_effects.rs`,
+`damage_total.rs`, `body_slots.rs`, `src/saved_character/**`, `character_custom.rs`, `EquipmentPanel.tsx`,
+`MarketDialog.tsx`, `CustomDialog.tsx` (the census §7 command, one line per file).
+
+- **Phase 1, now:** C0, C1 and Epic E1 (root crate + new files only: `src/rules_core/{equipment_record,
+  containers,damage_total}.rs`, `src/saved_character/equipment_sets.rs` *(new)*, their tests). One cargo
+  lane, in `.worktrees/sd41-main`, and only while SD-40 holds ≤ 2 (`pgrep -f '[c]argo'` lanes < 3; R-Q2).
+- **Phase 2, after SD-40's PR merges:** the lead rebases `tranche-21` onto `develop` (SD-m, at most once,
+  logged in `progress.md`), re-runs E1's tests, then dispatches E2 → E3 → E4 → E5. E2's first card
+  (E2.1) is the first write to `character_hub.rs`.
+- If SD-40 stalls past E1.MC, the lead does **not** start E2 on `tranche-20`'s moving base: an SD-41 card
+  that writes an SD-40-owned file before the merge is a two-writers incident (R19). The only exception the
+  operator may grant is a named region rule as SD-40 used between its own lanes (`../SD-40-pf-sheet-design/epic-breakdown.md §0`, E2.17 ∥ E2.27).
+
+**Enforced by:** `epic-breakdown.md §0`'s Phase column; `kanban.md` E2.1 `Depends on` includes `SD-40 merged`
+(the lead flips it to a SHA); the prefix's wrong-base control. **Revisit:** the operator rules otherwise.
+
+## §5 — The location model and the sidecar file (DEFAULT on the shapes; OPERATOR on the vocabulary, A1, A2)
+
+### §5.1 Locations
+
+```
+Location = Slot(BodySlot)      -- one of the 17 real slots (BodySlot less `None`); Ring holds 2, the rest 1 (data/equipment_types.json `slots[].capacity`)
+         | Equipped            -- worn, takes no slot (BodySlot::None today; e.g. a slotless wondrous item)
+         | Carried             -- with the character, not worn
+         | NotCarried          -- owned, left behind (today's `Absent`)
+         | Inside(CopyKey)     -- in a container copy; nesting allowed; the container's own location decides carried-ness
+```
+
+The 18 rows of `WORN_SLOTS` are A1's list (`Main hand, Off hand, Both hands, Shield, Armor, Head, Headband,
+Eyes, Shoulders, Neck, Chest, Body, Belt, Wrist, Hands, Ring, Feet, No slot`); the screen shows Ring once
+with two places. `No slot` worn = `Equipped`.
+
+### §5.2 Copy identity
+
+A location names a copy by `CopyKey { item_id, bonus, ordinal }`: the `ordinal`-th copy (0-based) of
+that `item_id` and `bonus` in the saved input's order. Custom items are `custom:<id>`, bonus 0, ordinal 0.
+This is the identity `set_equipment_active_state` already approximates with `bonus` + `fromState`
+(`setEquipmentActiveState.ts`), made stable. Removing a copy (sell) shifts later ordinals: `remove_equipment_selection`
+rewrites every set's entries for that `item_id`/`bonus` (E2.2 owns the second call site).
+
+### §5.3 The file
+
+`<character root>/equipment_sets.json` beside `envelope.txt` and `custom.json` (`local_store.rs:23–24`;
+`custom.json` is the precedent for a sidecar the desktop crate owns):
+
+```json
+{ "schema": 1, "active": "Default",
+  "sets": [ { "name": "Default", "locations": [ { "copy": { "itemId": "item:chain_shirt", "bonus": 0, "ordinal": 0 }, "location": { "kind": "slot", "slot": "armor" } },
+                                                { "copy": { "itemId": "item:shield", "bonus": 0, "ordinal": 0 }, "location": { "kind": "notCarried" } },
+                                                { "copy": { "itemId": "item:rations", "bonus": 0, "ordinal": 0 }, "location": { "kind": "inside", "container": { "itemId": "custom:food", "bonus": 0, "ordinal": 0 } } } ] } ] }
+```
+
+**A copy a set does not name is Carried in that set.** So a purchase writes nothing to the file (§10), a
+new set starts as "everything Carried" unless created as a copy of the active one (E3.1 offers both), and
+the file holds only what differs from Carried. Set names are unique, trimmed, 1–40 characters; the last set
+cannot be deleted; deleting the active set activates `Default` or the first remaining.
+
+The model, the file read/write and the projection (§6) live in the **root crate**,
+`src/saved_character/equipment_sets.rs` *(new)*, beside the store that owns the character root — so E1.2
+runs now (§4) and the desktop crate (E2.1) only calls it. The saved input's `equipment=` lines and the
+`EquipmentSelection` shape are **not** changed (97 producers, F-5).
+
+**Enforced by:** E1.2's tests (round trip, unnamed = Carried, name rules, last-set rule). **Revisit:** a
+second game system wants sets (the file is system-neutral by construction).
+
+## §6 — Projection: the active set becomes today's `active_state` (DEFAULT; the twin rule)
+
+The engine keeps computing from `active_state` (AC: `EquippedActive` only, `equipment_effects.rs:207`;
+weight: all but `Absent`, `encumbrance.rs:408`; weapons rows: `EquippedActive`, `damage_total.rs:820`).
+SD-41 adds **one** function, `project(set, copies) -> Vec<ActiveState>`:
+
+| Location | Projected `active_state` |
+|---|---|
+| `Slot(_)`, `Equipped` | `EquippedActive` |
+| `Carried` (named or unnamed) | `SelectedInactive` |
+| `NotCarried` | `Absent` |
+| `Inside(c)` | `SelectedInactive` when `c` projects to `EquippedActive` or `SelectedInactive`; `Absent` when `c` projects to `Absent`; a cycle (refused at move time, §7) projects to `SelectedInactive` and is logged, never a panic |
+
+Every write that changes a location (E2.2) projects the active set, stores the result in the saved input's
+`active_state`s through the existing recompute-and-save path, and re-saves. Switching the active set is a
+projection too. Reading never projects: the saved input is already the active set's picture, which is why
+a `.pcg` import, a seed, the print and every existing test keep working. **This is the control for A6's
+"AC and weight unchanged":** the Default set (§8) projects to exactly today's `active_state`s, and a test
+asserts it over the population (G-1).
+
+**Enforced by:** E1.2 `projection_round_trips_every_saved_state`; E2.1 G-1. **Revisit:** none while the
+engine keys on `ActiveState`.
+
+## §7 — Containers and capacity (OPERATOR A3; DEFAULT on the data source)
+
+- **Is a container:** the record's tags hold `Container` (`data/sheet_rules/**/equipment/*.json` `tags`;
+  232 records). E1.1 adds `is_container()` to the record the engine already reads for weight
+  (`CorpusEquipmentRecord`, `equipment_record.rs`, 224 lines) or, if that read path has no tags, to the
+  sheet-rule lookup the catalog uses; E1.1 names the path it chose in its receipt.
+- **Capacity:** the `CONTAINS` token's first field in the corpus record's `raw_tokens` (138 records:
+  `<lb>|…` 70, `UNLIM|…` 43, `*<n>|…` weight-reduction kinds 25). `ContainerCapacity = Pounds(f64) |
+  Unlimited | Unstated` (the `*` kinds are `Unstated`: contents weigh in full, DEF-1). `data/sheet_rules`
+  holds no `CONTAINS` (`grep -rl CONTAINS data/sheet_rules … | awk` → 1 file, not an equipment record), so
+  capacity is read from the corpus record, the same bytes weight comes from.
+- **Container loads** (E1.3, `src/rules_core/containers.rs` *(new)*): for every container copy in the
+  active set, `ContainerLoad { copy, contents_lbs, capacity, over: bool }`, contents summed recursively
+  (a pouch inside a backpack adds to both), weights from the same `weight_and_cost()` read encumbrance uses.
+  The load response carries them as `containerLoads` (E2.1); the screen shows "12 of 60 lb" and a warning
+  row when `over`; the print shows the same figure. **Never a block:** a move into a full container succeeds.
+- **Cycle:** a move whose target container is the moved copy or is inside it (transitively) is refused by
+  `move_equipment_copy` with a diagnostic (E2.2); a non-container target is refused the same way.
+- Custom containers: §11.
+
+**Enforced by:** E1.1, E1.3 tests with the counts above; E2.2's refusals; E3.1 `gearScreenModel.test.ts`.
+**Revisit:** a converter emits capacity into sheet rules (then the read path moves, the figures do not).
+
+## §8 — The Default set for old saves (OPERATOR A6)
+
+On first load of a character root with no `equipment_sets.json`, E2.1 writes one with a single `Default`
+set built by `default_from(copies)` (E1.2): `EquippedActive` with a real slot → `Slot(slot)` (the slot the
+list derives today, `worn_places`); `EquippedActive` with `BodySlot::None` → `Equipped`; `Absent` →
+`NotCarried`; `SelectedInactive` → unnamed (Carried). Custom items follow `worn` / `left_behind`. By §6,
+`project(default_from(x), x) == x` for every copy, so **AC and weight are unchanged**, proved by:
+
+- E1.2: the round-trip theorem over the seeds' inputs and every `.pcg` import fixture
+  (`crates/codex-ingest/src/pcg_import/fixtures_tests.rs::fixtures()`, the population SD-40's E1.MC
+  counted: 37 saved of 65 files);
+- E2.1: G-1's seed render hashes `SAME_EXCEPT_NAMED` (only the new keys) and a desktop test that loads a
+  pre-SD-41 root, asserts the file now exists, and asserts `armor_class` and `total_carried_weight_lbs`
+  equal the pre-load values.
+
+No schema bump of `envelope.txt` (`CURRENT_SAVED_CHARACTER_SCHEMA_VERSION` stays 2): the sidecar is
+additive and absent-means-Default. **Revisit:** none.
+
+## §9 — Weapons: in hand first, then carried (OPERATOR A5, A7)
+
+`damage_total.rs` builds weapon rows for `EquippedActive` weapons only (line 820). E1.4 widens the input
+to `SelectedInactive` weapons with `in_hand: false` on the breakdown; `EquippedActive` rows keep their
+values byte-for-byte (G-1 over the seeds: no existing row moves; new rows only for carried weapons, which no
+seed holds today — E1.4 names the population it adds). E2.4 passes `inHand` through `WeaponDamageDto`
+and orders the Weapons tab in-hand first; E4.1 orders the printed Weapons block the same way and marks
+carried rows "(carried)". `Absent` weapons stay off both. The attack total of a carried weapon is the
+engine's row as if wielded in the main hand (the same primary-hand assumption SD-40's E2.14 named).
+
+The printed Inventory page (A7): the `gear` block lists the active set by location — each slot in use with
+its copy; then **Carried**, each container's contents nested (indented) under it with the container's
+"x of y lb"; then **Not Carried** as a short list without weight; then the totals and limits exactly as
+the encumbrance rows print today (no new sum: `total_carried_weight_lbs` is the engine's).
+
+**Revisit:** the operator wants carried weapons without attack rows (`§21` Q2).
+
+## §10 — Market purchases default to Carried (OPERATOR A8)
+
+`CharacterSheet.tsx:3295` requests `'EquippedActive'`; E2.2 changes it to `'SelectedInactive'`, so
+`purchase_equipment` appends a `SelectedInactive` selection and writes no set entry (unnamed = Carried in
+every set, §5.3). `bought_copy_placement`'s wear-if-free branch becomes unreachable from the app and is
+removed with its test in the same card (no dead shipping code). The smoke row `sheet-market-buy-weapon-worn`
+is rewritten as `sheet-market-buy-carried` (E3.3). **Revisit:** none.
+
+## §11 — Custom items as containers (OPERATOR A3; DEFAULT on the mechanism)
+
+`CustomRecordDto` (equipment kind) gains `base_item_id: Option<String>` (an equipment id the catalog
+knows). When set: the item's weight is the base's, it is a container iff the base is, and its capacity is
+the base's. When unset (every existing custom item): unchanged — weightless, not a container. The Custom
+dialog gets a base-item picker (search over the catalog, the same list the Market filters). "Food" and
+"Camping" are custom items based on `Pouch, belt` / `Backpack` with contents inside them. **Enforced by:**
+E2.3's tests (a based custom item weighs; a rations copy inside "Food" counts toward weight when Food is
+carried and not when Not Carried). **Revisit:** `§21` Q3.
+
+## §12 — Run protocol (UNATTENDED after launch)
+
+The standing autonomous rules apply (memory: "operator away — autonomous mode", "run to 100% DoD
+without asking"):
+
+1. Clear a blocker first; if only an operator ruling can clear it, mark **only that card**
+   `blocked-escalated` with the exact ruling under `progress.md ## Open blockers`; continue every
+   independent card.
+2. Never open the PR while any card is open, partial or blocked-escalated.
+3. A choice inside scope with a safe default (§12.1): take it, log it, continue. No `AskUserQuestion`.
+4. **Report after each epic** (the merge-check card writes the Epic report block in `progress.md`).
+5. **One planned wait:** E4.G. The run proceeds past it only on the operator's two `usable: yes` lines.
+   Defects found there are discovered cards (§13 of SD-40's shape, here §19), not blockers to argue with.
+6. **Two phases** (§4): the Phase-1 run ends after E1.MC; the Phase-2 run starts with `START=E2.1` after
+   the catch-up rebase.
+
+### §12.1 Safe defaults (taste questions never stop a card)
+
+| # | Decision point | Safe default |
+|---|---|---|
+| SD-a | A copy whose record has no `Container` tag but a `CONTAINS` token (ammunition holders: Pistol, Powder Horn) | not a container on the screen (the tag rules); the token is ignored; logged once per card |
+| SD-b | A record's weight is unknown (`weight_and_cost()` → `None`) inside a container | contents weigh what the engine already says (nothing); the container's "x of y" counts only weighed copies; the same "weight could not be verified" posture `encumbrance.rs` has |
+| SD-c | The screen's left list order | saved order (the order the engine weighs in); the filter never re-sorts |
+| SD-d | A slot that is full when a move asks for it | refuse with the existing `slot_conflict` diagnostic ("head slot is taken by …"); the item stays where it was; the screen shows the refusal word for word (today's posture) |
+| SD-e | Ring ×2, Both hands vs Main + Off | `worn_places` as today: two ring places; `wield_two_handed` occupies both hand places (the existing `BodySlot` semantics, `body_slots.rs:329`) |
+| SD-f | A set name collision on create/rename | refuse with a diagnostic; never auto-suffix |
+| SD-g | The drag library | none; HTML5 `draggable` + `onDragStart`/`onDrop` on rows and location headers, calling the same boundary as "Move to"; no dependency added |
+| SD-h | A Typst or TS warning | fix it before claiming |
+| SD-i | Usage-limit stop | stop dispatching, write a resume receipt (§12.3) |
+| SD-j | No CI on `tranche-21` pushes | CI evidence = the closure PR's `pr-tests`, awaited by E5.4 |
+| SD-k | Rebase conflict | `kanban.md`: take upstream, re-apply only your own row, run the duplicate-ID check; `progress.md` append-only sections: keep both; any other file: abort, `blocked-escalated` |
+| SD-l | No display on this box for the gear screen | the `run-desktop` skill's screenshot path with an isolated `XDG_DATA_HOME` (R5); the PNGs under `artifacts/epic_4/E4.G/` are what the operator looks at first; the operator's own app is the judge |
+| SD-m | SD-40 merges to `develop` between phases | the lead rebases `tranche-21` onto `develop` once, re-runs E1's tests, logs it in `progress.md`; never mid-card |
+| SD-n | Screenshot and PDF artefacts grow large | PNG at the app's window size, ≤ 8 images per card, ≤ 2 MB per card directory (`du -sk`) |
+
+### §12.2 Watchdog — one long Workflow run per phase
+
+One run per phase with a recorded run id; recovery starts a **new** run with `START=<card>`; never resume
+a run with parallel lanes. No cron. The Phase-2 run ends cleanly at E4.G (resume receipt).
+
+### §12.3 Quota stop rule
+
+Stop dispatching when any `agent()` result matches `/usage limit|rate limit|quota|limit reached/i`, or
+the harness shows a weekly reading ≥ 85%. Lanes in flight finish; write a resume receipt. Never
+downgrade a model.
+
+### §12.4 Crash-resume recipe
+
+Keep every dirty worktree; read the run id from `progress.md` and `journal.jsonl`; start a new run with
+`START=` the first unrun card; the prefix must be byte-identical to `artifacts/cycle_0/sd41-workflow.js`;
+log a `retro.py incident`.
+
+## §13 — The gear screen (OPERATOR A1, A4; DEFAULT on placement)
+
+`GearScreen.tsx` *(new)* replaces `<EquipmentPanel …>` at `CharacterSheet.tsx:1666` inside the Gear tab
+(`SHEET_TABS` unchanged; the print/UI vocabulary fixture unchanged). Its pure model `gearScreenModel.ts`
+*(new)* derives from the load response and the held list: the left rows `{ copy, name, weightLabel,
+locationLabel, isContainer, capacityLabel }`, the filter `all | equipped | notEquipped` (Equipped = in a
+slot or Equipped), the right tree (18 slot rows with their places; Equipped; Carried with containers as
+subtrees, recursively; Not Carried), and the "Move to" targets for a row (every location but the row's own
+and anything inside it). No number is computed in TS: weight labels come from `encumbrance.per_item` and
+`containerLoads`; AC from the sheet's existing rows. `encumbranceTabModel.ts` keeps its job.
+
+The right panel's AC and weight headline reads the same engine rows the Defense tab and the square block
+read (`defense.armor_class`, `encumbrance.total_carried_weight_lbs`), so a move that changes AC is visible
+on the gear screen without a tab change. **Revisit:** `§21` Q5.
+
+## §14 — Moving: menu and drag (OPERATOR A4)
+
+Every left row and every right-panel row has a **Move to** button opening a menu of targets (the 17 slots
+with free places, Equipped, Carried, Not Carried, every container copy that is not the row or inside it);
+keyboard: Tab to the button, Enter/Space opens, arrows choose, Enter moves, Esc closes (a `<select>`-free
+menu with `role="menu"`). The menu calls `moveEquipmentCopy` *(new boundary)* → `move_equipment_copy`.
+Drag: rows are `draggable`; slot rows, Equipped, Carried, Not Carried and container rows are drop targets;
+a drop calls the same boundary with the same arguments; the drop handler is a pure function
+(`dropTarget(event, model) -> Location | null`) with a unit test. ui-smoke has no drag op
+(`census.txt §5`: ops are click/key/type/select/scroll/wait/nativeFile), so every smoke row uses Move to;
+E4.G's eye covers drag. The set picker (a `<select>` of set names + New / Rename / Delete) calls the
+`equipmentSets` boundary *(new)*.
+
+## §15 — ui-smoke rows (DEFAULT on names; R24 one writer)
+
+E3.3 adds ≥ 6 rows (`sheet-gear-filter-equipped`, `sheet-gear-move-to-slot-ac`, `sheet-gear-move-to-carried`,
+`sheet-gear-not-carried-weight`, `sheet-gear-set-create-activate`, `sheet-gear-container-nest`,
+`sheet-gear-container-over-capacity`) and rewrites the six rows the screen replaces
+(`sheet-equipment-lists`, `sheet-equipment-conflict`, `sheet-equipment-unequip`, `sheet-equipment-equip`,
+`sheet-equipment-left-behind`, `sheet-market-buy-weapon-worn` → `sheet-market-buy-carried`); `npm run
+ui-smoke:doc` regenerates the inventory in the same commit. The 31 equipment/market/custom rows today
+(`census.txt §5`) are the population; the receipt names which it ran. SD-40's E4.2 is the last SD-40
+writer of `spec.json`; SD-41 writes it only after SD-40 merges (§4), so R24 holds by phasing.
+
+## §16 — Engine-owned numbers (STANDING; AGENTS.md twin rule; `../SD-27-future-state-book-content-ingestion/decisions.md §29.1`)
+
+AC, carried weight, load, remaining pounds, container loads and the weapon rows are computed once in Rust
+and rendered by the screen and the print. The only new computation is `containers.rs` (contents sums and
+the capacity comparison, numbers that land on the screen and the sheet). No TS and no Typst sums a weight.
+**Enforced by:** NR-2's greps; E2.MC, E3.MC, E4.MC read the diffs.
+
+## §17 — PCGen is a functional reference only (STANDING, 2026-09-07; OPERATOR in the request)
+
+"It's not fine to include 1 line of java in our live code." The author read PCGen's documentation of its
+Equipping and Purchase sub-tabs (`$PCGEN_REPO_DIR/docs/tabpages/inventory/{inventoryequipping,inventorygear}.html`,
+resolved per `scripts/pcgen-oracle-pin.env`) and describes the behaviour in our words in
+`technical-design.md §1`: a split panel; equipment sets named by the player, printable separately; items
+marked Equipped / Carried / Not Carried; containers that hold items; carried weapons printed in the weapons
+section. No PCGen source, template or class structure enters `apps/`, `src/`, `crates/` or `data/`
+(`pcgen-residue-gate` in `scripts/verify.sh`; the residue check in every MC).
+
+## §18 — Closure order (STANDING, operator-pinned 2026-09-14)
+
+All cards `complete` → retrospective written and cited → full worktree/branch sweep → **release notes**
+→ **architecture truth-up + claims critic** → **graphify LAST** over a clean tree at `origin/tranche-21`
+→ **PR as the final action**. The operator merges.
+
+## §19 — Discovered cards and fence exits
+
+A defect found mid-run that is in the DoD becomes a card appended to `kanban.md` and `epic-breakdown.md`
+by the card that found it (with the row-count constant in G-8 and `kanban.md` re-counted in the same
+commit, R18), never a note. E4.G's defects are discovered cards in E2/E3/E4. A lane that needs a file
+outside its FILES YOU OWN returns `declined` with `ownedBy:<card>` unless that file's owning epic merge
+check is `complete`; then it edits under its own criterion and re-runs that epic's gate, naming both in
+the receipt.
+
+## §20 — Pre-launch corrections
+
+The lead re-reads this package against the repo before dispatch and records each corrected claim here
+(package said | code shows | effect). Rows the author already corrected while writing:
+
+| Brief said | Code shows | Effect |
+|---|---|---|
+| "CarriedItemDto ~:290" | `pub struct CarriedItemDto` at `character_hub.rs:298`; `EquipmentEffectsDto` at 262; `EncumbranceDto` at 319 | F-6 quotes the lines |
+| "equipment_catalog.rs slots" | slots live in `src/rules_core/body_slots.rs` (`BodySlot`, 18 variants; `slot_table()` reads `data/equipment_types.json`, 26 slot rows, Ring capacity 2); `equipment_catalog.rs` lists and filters the market | E1/E2 name `body_slots.rs`, not the catalog, for slot logic |
+| "which corpus items are containers and whether capacity data exists" | two sources: the `Container` tag in sheet rules (232) and the `CONTAINS` token in corpus records (138; 70 with a weight); the app reads no capacity today (0 hits) | §7 |
+| "how equip/carry state is stored on disk" | `equipment=item:<id>:<equipped\|selected_inactive\|absent>` lines in `authoritative_character_input.txt`; the slot is never stored | §5.3 chooses a sidecar; the input format is untouched |
+| "custom items … custom named pouch" | `CustomRecordDto` has `slot`, `worn`, `left_behind`, no weight, no base item | §11 adds `base_item_id` |
+
+## §21 — Questions only the operator can settle (defaults taken; the run does not wait)
+
+| # | Question | Default taken (one card's criterion) | Alternative |
+|---|---|---|---|
+| Q1 | Where is a bought copy in the **other** sets? | Carried everywhere (an unnamed copy is Carried, §5.3); no set entry written | Not Carried in every set but the active one (then a purchase writes one entry per set) |
+| Q2 | Does a carried (not in hand) weapon get attack rows on the sheet and the print? | yes, after the in-hand rows, marked "(carried)", main-hand assumption (§9) | name + damage dice only, no attack total |
+| Q3 | Must a custom container name a base item? | yes: `base_item_id`; without one a custom item is weightless and holds nothing (§11) | a free-form "is a container, capacity N lb" on the custom item |
+| Q4 | Weight-reduction containers (bag of holding kinds, 25 records) | "no stated capacity"; contents weigh in full (DEF-1) | model `*N` as a fixed weight (contents weigh nothing) in SD-41 |
+| Q5 | Where the gear screen lives | replaces the Equipment panel in the Gear tab (§13) | a new "Equipment" tab (changes `SHEET_TABS` and the print/UI vocabulary fixture) |
+
+The author's recommendation is the default in every row.

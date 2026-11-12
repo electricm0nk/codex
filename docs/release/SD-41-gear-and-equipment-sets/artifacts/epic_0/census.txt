@@ -1,0 +1,170 @@
+$ git rev-parse --short HEAD
+f7f85f3d24
+
+# SD-41 census — base f7f85f3d24
+## 1. Screen: EquipmentPanel, boundaries, market
+$ wc -l apps/desktop/src/characterHub/EquipmentPanel.tsx apps/desktop/src/characterHub/MarketDialog.tsx apps/desktop/src/characterHub/CustomDialog.tsx apps/desktop/src/characterHub/customModel.ts apps/desktop/src/characterHub/encumbranceTabModel.ts apps/desktop/src/boundary/listHeldEquipment.ts apps/desktop/src/boundary/setEquipmentActiveState.ts | tail -8
+194 apps/desktop/src/characterHub/EquipmentPanel.tsx
+  402 apps/desktop/src/characterHub/MarketDialog.tsx
+  263 apps/desktop/src/characterHub/CustomDialog.tsx
+  315 apps/desktop/src/characterHub/customModel.ts
+  162 apps/desktop/src/characterHub/encumbranceTabModel.ts
+   67 apps/desktop/src/boundary/listHeldEquipment.ts
+   39 apps/desktop/src/boundary/setEquipmentActiveState.ts
+ 1442 total
+
+$ awk '/^export const WORN_SLOTS/,/^\];/' apps/desktop/src/characterHub/EquipmentPanel.tsx | grep -c "slot: '"
+18
+
+$ grep -n "activeState: 'EquippedActive'" apps/desktop/src/characterHub/CharacterSheet.tsx
+3295:        activeState: 'EquippedActive',
+
+$ grep -c 'draggable\|onDrop\|onDragStart' apps/desktop/src/characterHub/EquipmentPanel.tsx
+0
+
+$ grep -n 'export const SHEET_TABS' apps/desktop/src/characterHub/CharacterSheet.tsx
+562:export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom'] as const;
+
+## 2. Rust: selections, states, storage
+$ grep -n 'pub enum ActiveState' -A6 src/rules_core/character_input.rs | grep -E 'EquippedActive|Absent|SelectedInactive' | awk 'END{print NR}'
+4
+
+$ grep -n 'const ENVELOPE_FILE\|const CHARACTER_INPUT_FILE' src/saved_character/local_store.rs
+23:const ENVELOPE_FILE: &str = "envelope.txt";
+24:const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
+
+$ grep -n 'equipment={}:{}' src/saved_character/local_store.rs
+458:        let _ = writeln!(out, "equipment={}:{}", eq.item_id, state);
+
+$ grep -n 'CURRENT_SAVED_CHARACTER_SCHEMA_VERSION' src/saved_character/mod.rs | head -1
+46:pub const CURRENT_SAVED_CHARACTER_SCHEMA_VERSION: u16 = 2;
+
+$ grep -rnF 'EquipmentSelection {' src apps/desktop/src-tauri/src crates --include=*.rs | grep -v 'struct EquipmentSelection' | awk 'END{print NR}'
+97
+
+$ grep -n 'pub enum BodySlot' -A19 src/rules_core/body_slots.rs | grep -cE '^[0-9]+-    [A-Z]'
+18
+
+$ python3 -I -c "import json;d=json.load(open('data/equipment_types.json'));print(len(d['slots']), [ (s['body_slot'],s['capacity']) for s in d['slots'] if s['capacity']!=1])"
+26 [('ring', 2), ('none', 2)]
+
+$ grep -nE '^pub (async )?fn (add_equipment_selection|attach_equipment_modifier|purchase_equipment|list_held_equipment|set_equipment_active_state|remove_equipment_selection)' apps/desktop/src-tauri/src/character_hub.rs
+3618:pub fn add_equipment_selection(
+4186:pub fn attach_equipment_modifier(
+4221:pub fn purchase_equipment(
+5094:pub fn list_held_equipment(app: tauri::AppHandle, request: ListHeldEquipmentRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+5179:pub fn set_equipment_active_state(
+5634:pub fn remove_equipment_selection(
+
+$ grep -n 'pub struct CarriedItemDto\|pub struct EquipmentEffectsDto\|pub struct EncumbranceDto\|pub struct HeldEquipmentCopyDto' apps/desktop/src-tauri/src/character_hub.rs
+262:pub struct EquipmentEffectsDto {
+298:pub struct CarriedItemDto {
+319:pub struct EncumbranceDto {
+4968:pub struct HeldEquipmentCopyDto {
+
+$ wc -l apps/desktop/src-tauri/src/character_hub.rs apps/desktop/src-tauri/src/character_custom.rs src/rules_core/equipment_effects.rs src/rules_core/encumbrance.rs src/rules_core/body_slots.rs src/rules_core/damage_total.rs src/rules_core/equipment_record.rs apps/desktop/src-tauri/src/print/blocks/gear.rs | tail -9
+21905 apps/desktop/src-tauri/src/character_hub.rs
+    837 apps/desktop/src-tauri/src/character_custom.rs
+    865 src/rules_core/equipment_effects.rs
+    687 src/rules_core/encumbrance.rs
+    906 src/rules_core/body_slots.rs
+   1259 src/rules_core/damage_total.rs
+    224 src/rules_core/equipment_record.rs
+    188 apps/desktop/src-tauri/src/print/blocks/gear.rs
+  26871 total
+
+## 3. Engine rules today
+$ grep -n 'ActiveState::EquippedActive' src/rules_core/equipment_effects.rs | head -3
+207:        selections.iter().filter(|selection| selection.active_state == ActiveState::EquippedActive).cloned().collect();
+
+$ grep -n 'ActiveState::Absent' src/rules_core/encumbrance.rs | head -2
+408:        if selection.active_state == ActiveState::Absent {
+
+$ grep -n 'ActiveState::EquippedActive' src/rules_core/damage_total.rs | head -2
+793:/// Only items whose `active_state` is `ActiveState::EquippedActive` are
+820:        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+
+$ grep -n 'weight\|base_item' apps/desktop/src-tauri/src/character_custom.rs | awk 'END{print NR}'
+0
+
+$ grep -n 'pub slot: Option<BodySlot>\|pub worn: bool\|pub left_behind: bool' apps/desktop/src-tauri/src/character_custom.rs
+108:    pub slot: Option<BodySlot>,
+110:    pub worn: bool,
+113:    pub left_behind: bool,
+
+## 4. Containers in the data
+$ python3 -I <this script> §4: data/corpus equipment files 3806; records with a CONTAINS token 138; by capacity kind {'weight_lb': 70, 'UNLIM': 43, 'reduction_or_other': 25}
+  examples: ['Pistol', 'Cannon', 'Wayfinder', 'Pepperbox', 'Powder Horn', 'Musket', 'Perilous Puzzle Box', 'Rat (Riding)', "Slaver's Crossbow, Heavy", "Slaver's Crossbow, Light", 'Rat (Riding/Combat Trained)', 'Backpack, Masterwork'] 
+
+$ grep -rl 'CONTAINS' data/corpus --include=*.json | grep '/equipment/' | awk 'END{print NR}'
+210
+
+$ grep -rl '"Container"' data/sheet_rules --include=*.json | grep '/equipment/' | awk 'END{print NR}'
+232
+
+$ grep -rl 'CONTAINS' data/sheet_rules --include=*.json | awk 'END{print NR}'
+1
+
+$ grep -rn 'CONTAINS\|is_container\|capacity_lbs' src/rules_core/equipment_record.rs src/rules_core/encumbrance.rs apps/desktop/src-tauri/src/character_hub.rs | awk 'END{print NR}'
+0
+
+## 5. Print and smoke
+$ grep -n 'pub fn inventory\|pub fn weapons\|pub fn armor' apps/desktop/src-tauri/src/print/blocks/gear.rs
+72:pub fn weapons(sources: &SheetSources) -> SheetBlock {
+108:pub fn armor(sources: &SheetSources) -> SheetBlock {
+139:pub fn inventory(sources: &SheetSources) -> SheetBlock {
+
+$ grep -c 'Left behind\|Carried\|Worn' apps/desktop/src-tauri/src/print/blocks/gear.rs
+6
+
+$ python3 -I -c "import json,collections;rows=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows'];print(len(rows), sum(1 for r in rows if any(k in r['id'] for k in ('equip','gear','market','inventory','custom-item'))), dict(collections.Counter(s['op'] for r in rows for s in r.get('steps',[]))))"
+174 31 {'click': 1359, 'key': 84, 'type': 156, 'select': 171, 'scroll': 37, 'wait': 826, 'nativeFile': 3}
+
+$ grep -rlE 'equip|carried|encumbr' apps/desktop/src-tauri/tests src/rules_core --include=*.rs | awk 'END{print NR}'
+153
+
+$ grep -c 'print_pf_blocks_' apps/desktop/src-tauri/src/print/blocks/print_pf_blocks.rs
+40
+
+## 6. PCGen (functional reference only; pinned oracle)
+$ grep PCGEN_ORACLE_SHA= scripts/pcgen-oracle-pin.env
+PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6
+
+$ set -a; . scripts/pcgen-oracle-pin.env; set +a; PD=${PCGEN_CORPUS_ROOT:-$HOME/workspace/repos/pcgen/data}; for f in cr_equip_general cr_equip_arms_armor cr_equip_magic_items; do printf '%s ' $f; grep -c 'CONTAINS:' "$PD/pathfinder/paizo/roleplaying_game/core_rulebook/$f.lst"; done
+cr_equip_general 39
+cr_equip_arms_armor 12
+cr_equip_magic_items 13
+
+$ set -a; . scripts/pcgen-oracle-pin.env; set +a; PD=${PCGEN_CORPUS_ROOT:-$HOME/workspace/repos/pcgen/data}; ls "$PD/../docs/tabpages/inventory"
+inventoryequipping.html
+inventorygear.html
+inventorysectionheading.html
+
+## 7. SD-40 overlap (files SD-40's open cards own)
+  character_hub.rs             E2.27 E2.28 E2.29 E3.6
+  CharacterSheet.tsx           E2.27 E2.24 E2.25 E2.26 E2.29 E3.6
+  main.rs                      E2.29
+  spec.json                    E2.27 E2.24 E2.25 E2.26 E2.29 E3.6 E4.2 E4.MC
+  gear.rs                      E3.2 E3.5
+  pf1e.rs                      E2.23 E3.1 E3.2 E3.3 E3.4 E3.5 E3.7 E4.1
+  model.rs                     E2.23 E3.1 E3.2 E3.3 E3.4 E3.5 E3.7
+  typst.rs                     E2.23 E3.1 E3.2 E3.3 E3.4 E3.5 E3.7
+  blocks.typ                   E2.23 E3.1 E3.2 E3.3 E3.4 E3.5 E3.7
+  print_golden.json            E3.1 E3.3 E4.1
+  packaged_resources.rs        E2.23 E3.1 E3.2 E3.3 E3.4 E3.5 E3.7 E5.1
+  loadSavedCharacterDetail.ts  E2.24 E2.25 E2.26
+  encumbrance.rs               (none)
+  equipment_effects.rs         (none)
+  damage_total.rs              (none)
+  character_custom.rs          (none)
+  EquipmentPanel.tsx           (none)
+  MarketDialog.tsx             (none)
+  CustomDialog.tsx             (none)
+  equipment_record.rs          (none)
+  local_store.rs               (none)
+  command: awk -F'|' -v f=<file> '$2 ~ /^ (E2\.2[3-9]|E2\.MC3|E2\.G|E3|E4|E5)[0-9A-Za-z.]* *$/ && $0 ~ f {print $2}' docs/release/SD-40-pf-sheet-design/epic-breakdown.md
+
+$ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' docs/release/SD-40-pf-sheet-design/kanban.md | awk 'END{print NR}'; awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md | awk 'END{print NR}'
+32
+56
+
