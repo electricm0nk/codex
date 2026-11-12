@@ -164,6 +164,11 @@ export interface LoadSavedCharacterResponse {
    */
   languages?: LanguagesDto;
   /**
+   * SD-40 E2.17: the fly maneuverability the character's flight trait states, in its words
+   * (`"average"`), beside the `speed.fly` explanations row; absent with no fly speed or no word.
+   */
+  flyManeuverability?: string;
+  /**
    * SD-36 F7a: the engine's effective ability scores (`effective_ability_scores_dto`: the stored
    * score with the Human +2 applied) -- what the Abilities panel prints. Absent on a mutation
    * refresh (`toCharacterMutationRefresh`) until the sheet re-reads the character.

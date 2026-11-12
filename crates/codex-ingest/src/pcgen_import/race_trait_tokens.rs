@@ -31,6 +31,7 @@
 //! KEPT for Starfinder, like the rest of `src/pcgen_import/`.
 
 use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData, RawToken};
+use codex::rules_core::race_record::DeclaredMoveModes;
 use codex::rules_core::size::SizeCategory;
 
 /// A record deserialized from a corpus file that still carries the `.lst` row
@@ -369,6 +370,22 @@ pub fn declared_walk_speed_ft<T: IngestTokens>(data: &T) -> Option<i32> {
         .find_map(|t| walk_speed_from_move(&t.value))
 }
 
+/// This record's `MOVE:` swim and fly speeds in feet, and the fly
+/// maneuverability its `DESC:` states in words (`"fly speed of 60 feet
+/// (average)"` → `"average"`): one of the five Core Rulebook words, or `None`.
+pub fn declared_move_modes<T: IngestTokens>(data: &T) -> DeclaredMoveModes {
+    let tokens = data.ingest_tokens();
+    let speed = |mode: &str| tokens.iter().filter(|t| t.key == "MOVE").find_map(|t| mode_speed_from_move(&t.value, mode));
+    let fly_ft = speed("Fly");
+    let fly_maneuverability = fly_ft.and_then(|_| {
+        tokens.iter().filter(|t| t.key == "DESC").find_map(|t| {
+            let lower = t.value.to_ascii_lowercase();
+            ["clumsy", "poor", "average", "good", "perfect"].into_iter().find(|word| lower.contains(&format!("({word})"))).map(str::to_owned)
+        })
+    });
+    DeclaredMoveModes { swim_ft: speed("Swim"), fly_ft, fly_maneuverability }
+}
+
 /// The creature size this record's `TEMPLATE:SIZE_<code>` assigns, if it
 /// carries one.
 ///
@@ -497,10 +514,15 @@ fn size_from_size_template(value: &str) -> Option<SizeCategory> {
 /// `Walk,20` / `Walk,15,Swim,30` -> `20` / `15`. `None` when the token names
 /// no walk movement at all.
 fn walk_speed_from_move(value: &str) -> Option<i32> {
+    mode_speed_from_move(value, "Walk")
+}
+
+/// `Walk,30,Swim,30` with `mode` `Swim` → `30`.
+fn mode_speed_from_move(value: &str, mode: &str) -> Option<i32> {
     let parts: Vec<&str> = value.split(',').collect();
     parts
         .windows(2)
-        .find(|pair| pair[0].trim().eq_ignore_ascii_case("Walk"))
+        .find(|pair| pair[0].trim().eq_ignore_ascii_case(mode))
         .and_then(|pair| pair[1].trim().parse::<i32>().ok())
 }
 
@@ -616,6 +638,24 @@ mod reader_tests {
         let neither = Row(vec![token("MOVE", "Swim,30"), token("TEMPLATE", "SIZE_C+")]);
         assert_eq!(declared_walk_speed_ft(&neither), None, "no walk movement is None, not 0");
         assert_eq!(declared_size(&neither), None, "an unmodelled size code is None, not a guess");
+    }
+
+    /// SD-40 E2.17: the swim and fly modes of a `MOVE:` token, and the fly maneuverability the
+    /// record's own `DESC:` states in words (`strix_flight.json`: "a fly speed of 60 feet
+    /// (average)"). Climb is not read.
+    #[test]
+    fn move_modes_read_swim_fly_and_the_stated_maneuverability() {
+        let undine = Row(vec![token("MOVE", "Walk,30,Swim,30")]);
+        assert_eq!(declared_move_modes(&undine), DeclaredMoveModes { swim_ft: Some(30), fly_ft: None, fly_maneuverability: None });
+        let strix = Row(vec![token("DESC", "Strix have a fly speed of 60 feet (average)."), token("MOVE", "Fly,60")]);
+        assert_eq!(
+            declared_move_modes(&strix),
+            DeclaredMoveModes { swim_ft: None, fly_ft: Some(60), fly_maneuverability: Some("average".to_owned()) }
+        );
+        let unstated = Row(vec![token("DESC", "It flies (badly)."), token("MOVE", "Fly,30")]);
+        assert_eq!(declared_move_modes(&unstated).fly_maneuverability, None, "a word that is no maneuverability is not one");
+        let climber = Row(vec![token("MOVE", "Walk,30,Climb,20")]);
+        assert_eq!(declared_move_modes(&climber), DeclaredMoveModes::default(), "climb and walk are not swim or fly");
     }
 
     #[test]

@@ -65,6 +65,16 @@ pub struct CorpusRaceRecord {
     pub hands: Option<i32>,
 }
 
+/// A racial trait's `MOVE:` swim and fly speeds in feet, and the fly
+/// maneuverability its description states in words (`"average"`), each `None`
+/// when the trait does not state it. Climb and burrow are not read.
+#[derive(Debug, Clone, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct DeclaredMoveModes {
+    pub swim_ft: Option<i32>,
+    pub fly_ft: Option<i32>,
+    pub fly_maneuverability: Option<String>,
+}
+
 /// One `data/corpus/<book>/race_trait/<race>/<slug>.json` record's `data`
 /// object, settled — the standard *or* the alternate end of PCGen's
 /// replace-flag protocol (`decisions.md §26`).
@@ -132,6 +142,10 @@ pub struct CorpusRaceTraitRecord {
     /// This trait's declared walking speed in feet, if it declares one. From
     /// `race_trait_tokens::declared_walk_speed_ft`.
     pub declared_walk_speed_ft: Option<i32>,
+    /// This trait's swim and fly speeds and the fly maneuverability its own
+    /// words state, if it declares them. From
+    /// `race_trait_tokens::declared_move_modes`.
+    pub declared_move_modes: DeclaredMoveModes,
     /// The creature size this trait assigns, if it declares one. From
     /// `race_trait_tokens::declared_size`.
     pub declared_size: Option<SizeCategory>,

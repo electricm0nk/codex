@@ -870,6 +870,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
             feat_skill_bonuses: Default::default(),
             conditional_notes: Default::default(),
             languages: Default::default(),
+            fly_maneuverability: None,
         })
     }
 }

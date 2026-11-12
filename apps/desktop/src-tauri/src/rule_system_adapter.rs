@@ -457,6 +457,7 @@ pub(crate) mod tests {
                 feat_skill_bonuses,
                 conditional_notes,
                 languages: crate::character_hub::known_languages(),
+                fly_maneuverability: None,
             })
         }
     }

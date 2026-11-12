@@ -727,6 +727,11 @@ pub struct LoadSavedCharacterResponse {
     /// SD-40 E2.8: the languages the character knows (`known_languages`), what the Skills panel's
     /// Languages line and the print list. No bonus-language slot count: page 1 prints none.
     pub languages: LanguagesDto,
+    /// SD-40 E2.17: the fly maneuverability the character's flight trait states, in its words
+    /// (`"average"`), beside the `speed.fly` row; the print and the screen read this one field.
+    /// Left out when the character has no fly speed or its trait states no maneuverability.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub fly_maneuverability: Option<String>,
 }
 
 /// The languages a character knows, as the sheet lists them.
@@ -2902,10 +2907,12 @@ pub(crate) fn load_saved_character_at_root(
         feat_skill_bonuses,
         conditional_notes,
         languages: stored_known_languages(&load_character_bio_at_root(root)?.languages),
+        fly_maneuverability: None,
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_weapon_damage_total_rows(&mut sheet);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
+    sheet.fly_maneuverability = push_swim_and_fly_rows(&envelope.character_input, &mut sheet.explanations);
     let ability_modifiers = snapshot.as_ref().map_or(corpus_receipt.base.ability_modifiers, |snapshot| snapshot.ability_modifiers);
     let selected_skill_modifiers = snapshot.as_ref().map(|snapshot| snapshot.skill.selected_modifier);
     push_skill_total_rows(&envelope.character_input, ability_modifiers, selected_skill_modifiers, &mut sheet);
@@ -3138,6 +3145,44 @@ fn land_speed_row(race_id: &str, worn_feet: Option<i16>, worn_percent: Option<i1
         detail.push_str(&format!("; worn items {percent}% of it, whole feet rounded down"));
     }
     Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
+}
+
+/// SD-40 E2.17: `speed.swim` and `speed.fly` (feet), each only when a racial trait the character
+/// holds states that mode (its `MOVE:` token; a selected alternate replaces it as it replaces the
+/// land speed's trait), plus the feat increase the engine already states for it
+/// (`feat.arg_standalone.aquatic_ancestry_swim_speed`, `…stretched_wings_fly_speed`). Returns the
+/// fly maneuverability the flight trait states in words; none when Stretched Wings is held, since
+/// it moves that tier and the engine holds no tier to move (the feat's own row says so).
+fn push_swim_and_fly_rows(input: &CharacterInput, explanations: &mut Vec<ExplanationDto>) -> Option<String> {
+    let corpus = crate::race_catalog::race_corpus().as_ref().ok()?;
+    let race_key = corpus.resolve_key(&input.chosen.race_id)?;
+    let alternates = read_alternate_trait_keys(input);
+    let race = corpus.resolve(race_key, &alternates.iter().map(String::as_str).collect::<Vec<_>>())?;
+    let feat_row = |id: &str| explanations.iter().find(|row| row.id == id).map(|row| (row.id.clone(), row.value));
+    let modes = [
+        ("swim", race.declared_mode_speed(|m| m.swim_ft), "feat.arg_standalone.aquatic_ancestry_swim_speed"),
+        ("fly", race.declared_mode_speed(|m| m.fly_ft), "feat.arg_standalone.stretched_wings_fly_speed"),
+    ];
+    let mut maneuverability = None;
+    let mut rows = Vec::new();
+    for (mode, declared, feat_id) in modes {
+        let Some((base, source)) = declared else { continue };
+        let feat = feat_row(feat_id);
+        let Ok(value) = i16::try_from(base + i32::from(feat.as_ref().map_or(0, |(_, v)| *v))) else { continue };
+        let mut detail = format!("{race_key} {mode} speed {base} ft. ({})", source.key);
+        if let Some((feat_id, feet)) = &feat {
+            detail.push_str(&format!("; {feat_id} {feet:+} ft."));
+        }
+        if mode == "fly" {
+            maneuverability = source.declared_move_modes.fly_maneuverability.clone().filter(|_| feat.is_none());
+            if let Some(word) = &maneuverability {
+                detail.push_str(&format!("; maneuverability {word}"));
+            }
+        }
+        rows.push(ExplanationDto { id: format!("speed.{mode}"), value, detail });
+    }
+    explanations.extend(rows);
+    maneuverability
 }
 
 /// A worn item's Intelligence is a bonus that comes off with the item, and a headband grants its
@@ -8369,7 +8414,7 @@ mod tests {
         request_for_class(race_id, FIGHTER_CLASS_ID, level)
     }
 
-    fn request_for_class(race_id: &str, class_id: &str, level: u8) -> CreateCharacterRequest {
+    pub(super) fn request_for_class(race_id: &str, class_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest {
             character_id: "char-test".to_owned(),
             display_label: "Test Character".to_owned(),
@@ -20124,7 +20169,7 @@ mod tests {
     /// Saves `input` under a fresh temp root and returns that root, so the
     /// `*_at_root` load/preview seams can be exercised without an
     /// `AppHandle`.
-    fn saved_root_for(label: &str, input: CharacterInput) -> PathBuf {
+    pub(super) fn saved_root_for(label: &str, input: CharacterInput) -> PathBuf {
         let root = tempdir(label).join("char-receipt-to-sheet");
         let envelope = SavedCharacterEnvelope {
             character_id: "char-receipt-to-sheet".to_owned(),
@@ -20876,6 +20921,45 @@ mod starter_seed_tests {
             .expect("write pre-field bio");
         assert!(load_character_bio_at_root(&elowen).expect("pre-field bio loads").languages.is_empty());
         assert_eq!(known(&elowen), ["Common"], "a pre-field bio.json knows Common");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-40 E2.17: the load response carries `speed.swim` / `speed.fly` (feet) when the race's
+    /// held traits state the mode (`MOVE:`), and `flyManeuverability` in the record's words; a
+    /// character with neither mode gets no row and no key. The Undine's `undine_speed` says
+    /// `MOVE:Walk,30,Swim,30`; the Strix's `strix_flight` `MOVE:Fly,60`, "(average)".
+    #[test]
+    fn speed_modes_reach_the_load_response() {
+        let load = |label: &str, race: &str| {
+            let input = compose_character_input(&super::tests::request_for_class(race, "class:fighter", 1));
+            serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for(label, input)).expect("load")).expect("json")
+        };
+        let row = |wire: &serde_json::Value, id: &str| {
+            wire["explanations"].as_array().expect("explanations").iter().find(|row| row["id"] == id).map(|row| row["value"].clone())
+        };
+        let undine = load("speed-modes-undine", "race:undine");
+        assert_eq!(row(&undine, "speed.swim"), Some(serde_json::json!(30)), "{}", undine["explanations"]);
+        assert_eq!(row(&undine, "speed.fly"), None);
+        assert!(undine.get("flyManeuverability").is_none());
+        let mut aquatic = compose_character_input(&super::tests::request_for_class("race:undine", "class:fighter", 1));
+        aquatic.chosen.selected_feats.push("Aquatic Ancestry".to_owned());
+        let aquatic = serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for("speed-modes-aquatic", aquatic)).expect("load")).expect("json");
+        assert_eq!(row(&aquatic, "feat.arg_standalone.aquatic_ancestry_swim_speed"), Some(serde_json::json!(10)), "the feat row the swim speed adds");
+        assert_eq!(row(&aquatic, "speed.swim"), Some(serde_json::json!(40)), "30 + Aquatic Ancestry 10");
+        let strix = load("speed-modes-strix", "race:strix");
+        assert_eq!(row(&strix, "speed.fly"), Some(serde_json::json!(60)));
+        assert_eq!(row(&strix, "speed.swim"), None);
+        assert_eq!(strix["flyManeuverability"], "average");
+        let fly_detail = strix["explanations"].as_array().unwrap().iter().find(|row| row["id"] == "speed.fly").unwrap()["detail"].clone();
+        assert!(fly_detail.as_str().unwrap().contains("average"), "{fly_detail}");
+
+        let app_data_dir = temp_app_data_dir("speed-modes-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        for id in [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID] {
+            let wire = serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json");
+            assert_eq!((row(&wire, "speed.swim"), row(&wire, "speed.fly")), (None, None), "{id}");
+            assert!(wire.get("flyManeuverability").is_none(), "{id}");
+        }
         std::fs::remove_dir_all(&app_data_dir).ok();
     }
 

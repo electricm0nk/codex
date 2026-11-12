@@ -14,6 +14,11 @@
         "target_bonuses": [],
         "var_contributions": []
       },
+      "declared_move_modes": {
+        "fly_ft": null,
+        "fly_maneuverability": null,
+        "swim_ft": null
+      },
       "declared_size": null,
       "declared_vision": [],
       "declared_walk_speed_ft": null,
@@ -47,6 +52,11 @@
         "only_internal_flags": false,
         "target_bonuses": [],
         "var_contributions": []
+      },
+      "declared_move_modes": {
+        "fly_ft": null,
+        "fly_maneuverability": null,
+        "swim_ft": null
       },
       "declared_size": null,
       "declared_vision": [],
@@ -82,6 +92,11 @@
         "target_bonuses": [],
         "var_contributions": []
       },
+      "declared_move_modes": {
+        "fly_ft": null,
+        "fly_maneuverability": null,
+        "swim_ft": null
+      },
       "declared_size": null,
       "declared_vision": [],
       "declared_walk_speed_ft": null,
@@ -116,6 +131,11 @@
         "target_bonuses": [],
         "var_contributions": []
       },
+      "declared_move_modes": {
+        "fly_ft": null,
+        "fly_maneuverability": null,
+        "swim_ft": null
+      },
       "declared_size": null,
       "declared_vision": [],
       "declared_walk_speed_ft": null,
@@ -149,6 +169,11 @@
         "only_internal_flags": false,
         "target_bonuses": [],
         "var_contributions": []
+      },
+      "declared_move_modes": {
+        "fly_ft": null,
+        "fly_maneuverability": null,
+        "swim_ft": null
       },
       "declared_size": null,
       "declared_vision": [],

@@ -103,7 +103,7 @@ use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
 // RenderedPcgenDesc}` here and render a racial trait's description from its `DESC:` tokens at
 // run time. It renders the converted rule's own prose instead, through our own schema.
 use crate::rules_core::pilot_compute::resolved_prose::{self, DisplayValues, RenderedProse};
-use crate::rules_core::race_record::{CorpusRaceRecord, CorpusRaceTraitRecord};
+use crate::rules_core::race_record::{CorpusRaceRecord, CorpusRaceTraitRecord, DeclaredMoveModes};
 use crate::rules_core::settled_corpus;
 use crate::rules_core::shape_b_v1::{validate_license, CorpusRecordV1, CorpusSource};
 use crate::rules_core::size::SizeCategory;
@@ -458,6 +458,8 @@ pub struct ResolvedTrait {
     /// This trait's `MOVE:Walk,N` in feet, if it declares one — read once at
     /// resolution time, so nothing downstream holds the ingest token array.
     pub declared_walk_speed_ft: Option<i32>,
+    /// This trait's `MOVE:` swim and fly speeds and stated fly maneuverability.
+    pub declared_move_modes: DeclaredMoveModes,
     /// The creature size this trait assigns, if it declares one. Read once at
     /// resolution time; see
     /// [`race_trait_tokens::declared_size`](crate::pcgen_import::race_trait_tokens::declared_size)
@@ -528,6 +530,17 @@ pub struct ResolvedRace {
     /// alternate whose swap target is missing from the loaded books. Empty
     /// when every selected alternate's counterpart is present.
     pub inert_flags: Vec<String>,
+}
+
+impl ResolvedRace {
+    /// The resolved trait that states this race's speed in one movement mode
+    /// (`|m| m.swim_ft`), and that speed in feet: the last trait in key order
+    /// that states one wins, exactly the rule [`walk_speed_ft`](Self::walk_speed_ft)
+    /// follows, so a selected alternate that replaces a speed trait replaces
+    /// its mode too. `None` when no held trait states the mode.
+    pub fn declared_mode_speed(&self, mode: impl Fn(&DeclaredMoveModes) -> Option<i32>) -> Option<(i32, &ResolvedTrait)> {
+        self.traits.iter().filter_map(|t| mode(&t.declared_move_modes).map(|ft| (ft, t))).last()
+    }
 }
 
 /// The corpus books that carry race content today. A book with no `race/`
@@ -1021,6 +1034,7 @@ impl RaceCorpus {
                 description: record.data.description.clone(),
                 source_page: record.data.source_page.clone(),
                 declared_walk_speed_ft: record.data.declared_walk_speed_ft,
+                declared_move_modes: record.data.declared_move_modes.clone(),
                 declared_size: record.data.declared_size,
                 declared_vision: record.data.declared_vision.clone(),
                 declared_bonuses: record.data.declared_bonuses.clone(),
@@ -2298,6 +2312,26 @@ mod tests {
         assert!(dwarf.fired_flags.is_empty());
         assert_eq!(dwarf.size, Some(SizeCategory::Medium));
         assert_eq!(dwarf.walk_speed_ft, Some(20));
+    }
+
+    /// SD-40 E2.17: swim and fly come off the held traits' `MOVE:` tokens, and
+    /// a selected alternate that replaces the flight trait replaces its fly
+    /// speed and maneuverability with its own.
+    #[test]
+    fn swim_and_fly_speeds_come_off_the_held_traits() {
+        let corpus = all_books();
+        let swim = |m: &DeclaredMoveModes| m.swim_ft;
+        let fly = |m: &DeclaredMoveModes| m.fly_ft;
+        let undine = corpus.resolve("Undine", &[]).expect("Undine resolves");
+        assert_eq!(undine.declared_mode_speed(swim).map(|(ft, t)| (ft, t.key.as_str())), Some((30, "Undine ~ Speed")));
+        assert!(undine.declared_mode_speed(fly).is_none());
+        let strix = corpus.resolve("Strix", &[]).expect("Strix resolves");
+        let (ft, flight) = strix.declared_mode_speed(fly).expect("Strix flies");
+        assert_eq!((ft, flight.declared_move_modes.fly_maneuverability.as_deref()), (60, Some("average")));
+        let clipped = corpus.resolve("Strix", &["Strix ~ Wing-Clipped"]).expect("resolves");
+        let (ft, flight) = clipped.declared_mode_speed(fly).expect("still flies");
+        assert_eq!((ft, flight.declared_move_modes.fly_maneuverability.as_deref()), (20, Some("poor")));
+        assert!(corpus.resolve("Dwarf", &[]).expect("Dwarf").declared_mode_speed(swim).is_none());
     }
 
     /// The protocol itself, end to end on one real swap: selecting ARG's

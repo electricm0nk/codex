@@ -104,6 +104,7 @@ fn race_trait_record_from_payload(payload: &RaceTraitCacheData) -> CorpusRaceTra
         skinwalker_change_shape_kin,
         positive_prefact_flag: race_trait_tokens::positive_prefact_flag(payload),
         declared_walk_speed_ft: race_trait_tokens::declared_walk_speed_ft(payload),
+        declared_move_modes: race_trait_tokens::declared_move_modes(payload),
         declared_size: race_trait_tokens::declared_size(payload),
         declared_vision: race_trait_tokens::declared_vision_segments(payload),
         declared_bonuses: bonus_chain_reader::declared_bonuses(payload),
@@ -258,6 +259,7 @@ mod tests {
                 race_trait_tokens::declared_walk_speed_ft(&payload),
                 "{at}"
             );
+            assert_eq!(settled.declared_move_modes, race_trait_tokens::declared_move_modes(&payload), "{at}");
             assert_eq!(settled.declared_size, race_trait_tokens::declared_size(&payload), "{at}");
             assert_eq!(
                 settled.declared_vision,

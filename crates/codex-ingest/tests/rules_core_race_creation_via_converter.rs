@@ -130,6 +130,7 @@ mod tests {
             description: None,
             source_page: None,
             declared_walk_speed_ft: None,
+            declared_move_modes: Default::default(),
             declared_size: None,
             declared_vision: Vec::new(),
             declared_bonuses: declared_bonuses_from_chains(
