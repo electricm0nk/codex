@@ -8,6 +8,7 @@
 use super::{pounds, trim_number, SheetSources};
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{Look, SheetBlock, SheetRow};
+use codex::rules_core::pilot_compute::ArmorClassPart;
 
 /// The portrait box (`portrait`, SD-40 E2.5): the saved portrait when the character has one (the
 /// frame scales it to fit), else the empty box; its caption is the heading.
@@ -142,9 +143,10 @@ fn load_name(level: &str) -> String {
     }
 }
 
-/// The screen's Armor Class box (`armorClass`): AC, Touch and Flat-Footed, then the AC's component
-/// cells. The engine states the AC's parts only in its words (`defense.baseline_armor_class`'s
-/// detail), never as rows, so each component prints as a write-in (SD-n).
+/// The screen's Armor Class box (`armorClass`): AC, Touch and Flat-Footed, then the AC's seven
+/// parts (SD-40 E2.12, `decisions.md §23.1` item 4), each the engine's `defense.armor_class.<part>`
+/// row (E2.7) with that row behind it: signed, `0` where the engine states 0, blank where it states
+/// no part (never worked out here, NR-2).
 pub fn armor_class(sources: &SheetSources) -> SheetBlock {
     let snapshot = sources.loaded.snapshot.as_ref();
     let mut rows = vec![
@@ -152,7 +154,11 @@ pub fn armor_class(sources: &SheetSources) -> SheetBlock {
         line(sources, "Touch", vec![plain(row_value(sources, "defense.touch_armor_class"))], "defense.touch_armor_class"),
         line(sources, "Flat-Footed", vec![plain(row_value(sources, "defense.flat_footed_armor_class"))], "defense.flat_footed_armor_class"),
     ];
-    rows.extend(["Armor", "Shield", "Dex", "Size", "Natural", "Deflection", "Misc"].map(|part| SheetRow::new(part, [write_in()])));
+    let labels = ["Armor", "Shield", "Dex", "Size", "Natural", "Deflection", "Misc"];
+    rows.extend(labels.into_iter().zip(ArmorClassPart::ALL).map(|(label, part)| {
+        let value = row_value(sources, part.id()).map_or_else(write_in, |v| if v == 0 { v.to_string() } else { signed(v) });
+        line(sources, label, vec![value], part.id())
+    }));
     SheetBlock::new("Armor Class", rows).in_look(Look::ArmorClass)
 }
 

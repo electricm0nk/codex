@@ -584,7 +584,8 @@ type SplitLine<'a> = (&'a str, &'a str, &'a str, &'a str, Vec<String>, Option<&'
 /// The Combat block split along the screen's boxes (SD-40 `decisions.md §8`, E2.1): `hitPoints`,
 /// `armorClass`, `initiative`, `saves`, `attack` and `speed` each print in a look of their own, and
 /// together they print the same 13 numbers the one Combat block printed, each with the same engine
-/// row behind it (Show the math). The write-in cells print empty: no number is invented for them.
+/// row behind it (Show the math), and the AC's seven parts from the engine's rows (E2.12). The
+/// write-in cells print empty: no number is invented for them.
 #[test]
 fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
     use crate::print::model::Derivation;
@@ -594,6 +595,8 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
         let snapshot = loaded.snapshot.as_ref().expect("the seed computes");
         let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{tag}: the {id} row"));
         let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+        // An AC part (E2.12): signed, `0` where the engine states 0.
+        let part = |id: &str| if row(id).value == 0 { "0".to_owned() } else { signed(row(id).value) };
         let behind = |id: &str| vec![Derivation { source: format!("{id} = {}", row(id).value), detail: row(id).detail.clone() }];
         let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
         assert!(document.blocks.iter().all(|block| block.id != "combatStrip" && block.heading != "Combat"), "{tag}: no Combat block is left");
@@ -608,13 +611,13 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             ("armorClass", "Armor Class", "armor-class", "Armor Class", vec![snapshot.baseline_armor_class.to_string()], Some("defense.baseline_armor_class")),
             ("armorClass", "Armor Class", "armor-class", "Touch", vec![row("defense.touch_armor_class").value.to_string()], Some("defense.touch_armor_class")),
             ("armorClass", "Armor Class", "armor-class", "Flat-Footed", vec![row("defense.flat_footed_armor_class").value.to_string()], Some("defense.flat_footed_armor_class")),
-            ("armorClass", "Armor Class", "armor-class", "Armor", vec![w()], None),
-            ("armorClass", "Armor Class", "armor-class", "Shield", vec![w()], None),
-            ("armorClass", "Armor Class", "armor-class", "Dex", vec![w()], None),
-            ("armorClass", "Armor Class", "armor-class", "Size", vec![w()], None),
-            ("armorClass", "Armor Class", "armor-class", "Natural", vec![w()], None),
-            ("armorClass", "Armor Class", "armor-class", "Deflection", vec![w()], None),
-            ("armorClass", "Armor Class", "armor-class", "Misc", vec![w()], None),
+            ("armorClass", "Armor Class", "armor-class", "Armor", vec![part("defense.armor_class.armor")], Some("defense.armor_class.armor")),
+            ("armorClass", "Armor Class", "armor-class", "Shield", vec![part("defense.armor_class.shield")], Some("defense.armor_class.shield")),
+            ("armorClass", "Armor Class", "armor-class", "Dex", vec![part("defense.armor_class.dexterity")], Some("defense.armor_class.dexterity")),
+            ("armorClass", "Armor Class", "armor-class", "Size", vec![part("defense.armor_class.size")], Some("defense.armor_class.size")),
+            ("armorClass", "Armor Class", "armor-class", "Natural", vec![part("defense.armor_class.natural")], Some("defense.armor_class.natural")),
+            ("armorClass", "Armor Class", "armor-class", "Deflection", vec![part("defense.armor_class.deflection")], Some("defense.armor_class.deflection")),
+            ("armorClass", "Armor Class", "armor-class", "Misc", vec![part("defense.armor_class.misc")], Some("defense.armor_class.misc")),
             ("saves", "Saving Throws", "saves", "Fortitude", vec![signed(snapshot.total_saves.fortitude)], Some("defense.total_save.fortitude")),
             ("saves", "Saving Throws", "saves", "Reflex", vec![signed(snapshot.total_saves.reflex)], Some("defense.total_save.reflex")),
             ("saves", "Saving Throws", "saves", "Will", vec![signed(snapshot.total_saves.will)], Some("defense.total_save.will")),
@@ -636,7 +639,7 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             assert_eq!(line.derivation, source.map(behind), "{tag}: {id} `{label}` has the same engine row behind it");
             numbers += usize::from(source.is_some());
         }
-        assert_eq!(numbers, 13, "{tag}: the 13 numbers the Combat block printed");
+        assert_eq!(numbers, 13 + 7, "{tag}: the 13 numbers the Combat block printed and the AC's seven parts (E2.12)");
         for id in ["armorClass", "saves", "attack", "speed"] {
             let rows = expected.iter().filter(|line| line.0 == id).count();
             assert_eq!(block(id).rows.len(), rows, "{tag}: {id} prints exactly its rows");
@@ -1304,4 +1307,69 @@ fn print_pf_blocks_skills_print_one_line_each_with_name_and_total() {
     assert!(lines.iter().any(|line| line.contains(&short)), "the narrow column shortens a Knowledge name that would wrap: `{short}`: {lines:#?}");
     let full = format!("Knowledge (Local) {}", total("knowledge_local"));
     assert!(lines.iter().any(|line| line.contains(&full)), "a Knowledge name that fits is never shortened: `{full}`: {lines:#?}");
+}
+
+/// E2.12 (`decisions.md §23.1` item 4, the AC exception): the Armor Class box prints its seven
+/// parts (Armor, Shield, Dex, Size, Natural, Deflection, Misc), each the value of E2.7's
+/// `defense.armor_class.<part>` row (signed, `0` where the engine states 0) with that row behind
+/// it (Show the math). For Aldric and Aldric wearing a Ring of Protection +1 bought at the Market,
+/// on Letter and A4, the parts printed on page 1 add up, with 10, to the AC printed beside them;
+/// the sum is made here, in the test, never in the print.
+#[test]
+fn print_pf_blocks_armor_class_prints_every_part_from_the_engine() {
+    use crate::character_hub::{adjust_character_money_at_root, purchase_equipment_priced_at_root, PriceMode, PurchaseEquipmentResponse};
+    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+    use crate::print::model::Derivation;
+
+    const PARTS: [(&str, &str); 7] = [
+        ("Armor", "armor"),
+        ("Shield", "shield"),
+        ("Dex", "dexterity"),
+        ("Size", "size"),
+        ("Natural", "natural"),
+        ("Deflection", "deflection"),
+        ("Misc", "misc"),
+    ];
+    let aldric = seeded("ac-parts-aldric", ALDRIC_ID);
+    let ringed = seeded("ac-parts-ringed", ALDRIC_ID);
+    adjust_character_money_at_root(&ringed, 1_000_000).expect("funds for the Market");
+    let shelf = list_market(MarketFilter { category: MarketCategory::MagicItem, name_contains: Some("Ring of Protection +1".to_owned()), book: None }).entries;
+    let ring = shelf.iter().find(|row| row.entry.name == "Ring of Protection +1" && row.entry.cost_gp.is_some()).expect("the Market sells the ring");
+    let bought = purchase_equipment_priced_at_root(&ringed, &ring.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
+    assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "the ring is bought: {bought:?}");
+
+    let mut printed_acs = Vec::new();
+    for (tag, root) in [("aldric", &aldric), ("aldric + ring", &ringed)] {
+        let loaded = load_saved_character_at_root(root).expect("the character loads");
+        let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{tag}: the {id} row"));
+        let shown = |n: i16| if n == 0 { "0".to_owned() } else if n > 0 { format!("+{n}") } else { n.to_string() };
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, one, _) = page_one_text(root, paper, Vec::new());
+            let block = document.blocks.iter().find(|block| block.id == "armorClass").expect("the Armor Class block");
+            let ac = block.rows.iter().find(|line| line.label == "Armor Class").expect("the AC line").values[0].clone();
+            let mut sum = 10;
+            let mut printed = Vec::new();
+            for (label, part) in PARTS {
+                let id = format!("defense.armor_class.{part}");
+                let line = block.rows.iter().find(|line| line.label == label).unwrap_or_else(|| panic!("{tag}: `{label}` prints"));
+                assert_eq!(line.values, vec![shown(row(&id).value)], "{tag} {paper:?}: `{label}` prints the {id} row");
+                assert_eq!(
+                    line.derivation,
+                    Some(vec![Derivation { source: format!("{id} = {}", row(&id).value), detail: row(&id).detail.clone() }]),
+                    "{tag} {paper:?}: `{label}` has its row behind it"
+                );
+                printed.push(format!("{label} {}", line.values[0]));
+                sum += line.values[0].parse::<i16>().expect("a printed part is a number");
+            }
+            let strip = printed.join(" ");
+            assert!(one.contains(&strip), "{tag} {paper:?}: page 1 prints `{strip}`: {one}");
+            // The AC's box prints just before the strip of its parts (pdf_extract's order).
+            let at = one.find(&strip).expect("the strip prints");
+            let before: Vec<&str> = one[..at].split_whitespace().rev().take(6).collect();
+            assert!(before.contains(&ac.as_str()), "{tag} {paper:?}: the AC {ac} prints in the box above `{strip}`: {before:?}");
+            assert_eq!(sum.to_string(), ac, "{tag} {paper:?}: 10 + the printed parts ({strip}) is the printed AC");
+            printed_acs.push(sum);
+        }
+    }
+    assert_eq!(printed_acs[2], printed_acs[0] + 1, "the worn ring prints one more AC, in Deflection");
 }
