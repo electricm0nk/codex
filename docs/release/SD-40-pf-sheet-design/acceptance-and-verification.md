@@ -29,7 +29,7 @@ PF_SEED_RENDER_OUT=<dir>/head cargo test --locked -j 8 --bins pf_seed_render_has
 diff <dir>/base/sha256.txt <dir>/head/sha256.txt      # before the engine lane: pass = no output
 python3 - <dir>/base <dir>/head <<'PY'                 # after it: pass = prints SAME_EXCEPT_NAMED for each seed
 import json, sys, pathlib
-NEW_KEYS = {'conditionalNotes', 'languages', 'remainingLbs', 'rangeIncrement', 'backstory', 'resistances', 'flyManeuverability'}   # E2.6, E2.8, E2.14, E3.6, E2.21, E2.17 (the card names any other)
+NEW_KEYS = {'conditionalNotes', 'languages', 'remainingLbs', 'rangeIncrement', 'biography', 'notes', 'resistances', 'flyManeuverability'}   # E2.6, E2.8, E2.14, E3.6, E2.21, E2.17 (the card names any other)
 NEW_ROWS = ('defense.armor_class.', 'combat.weapon_damage_total.', 'speed.swim', 'speed.fly')   # E2.7, E2.14, E2.17
 def strip(node):
     if isinstance(node, dict):
@@ -88,7 +88,7 @@ grep -c '^- Aldric .* — usable: yes' docs/release/SD-40-pf-sheet-design/artifa
 cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_each_section_is_a_list -- --test-threads=8    # 1 passed
 grep -c 'SECTIONS' apps/desktop/src-tauri/src/print/layout/pf1e.rs                               # >= 1
 grep -rn 'PRINT_OPTION_BOXES\|spellbook: bool\|math: bool' apps/desktop/src apps/desktop/src-tauri/src/print | awk 'END{print NR}'   # 0 after E4.2
-cd apps/desktop && npx tsx src/characterHub/PrintDialog.test.ts && grep -c 'print-section-' src/characterHub/PrintDialog.test.ts   # exit 0; >= 7 (seven sections, decisions.md §24.3.7)
+cd apps/desktop && npx tsx src/characterHub/PrintDialog.test.ts && grep -c 'print-section-' src/characterHub/PrintDialog.test.ts   # exit 0; >= 8 (eight sections, decisions.md §24.3.7, §24.9)
 npx tsx src/settings/printSections.test.ts                                                       # exit 0 (first time 1+2+3; remembered per character)
 ```
 
@@ -137,7 +137,7 @@ Plus the template §6 step 1a items: `cargo test --test packaged_resources` (des
 cd docs/release/SD-40-pf-sheet-design
 test -s artifacts/epic_0/E0.2/stale-ids.txt || { echo NO_IDS; exit 2; }
 awk 'END{print NR}' artifacts/epic_0/E0.2/stale-ids.txt                                       # 14
-python3 -c "import json,sys;rows=json.load(open('../../../apps/desktop/scripts/ui-smoke/spec.json'))['rows'];s={r['id'] for r in rows};ids=open(sys.argv[1]).read().split();print(len(rows),sum(i in s for i in ids))" artifacts/epic_0/E0.2/stale-ids.txt   # 173 14 at E0.2 (none deleted); 177 14 after E2.27 + E2.24–E2.26 (four rows, decisions.md §24.6, §24.7); 176 14 after E2.29 (sheet-action-hp-adjust retired, §24.8); 177 14 after E3.6 (Backstory row); 181 14 after E4.2 (four dialog rows, decisions.md §23.4, §23.7)
+python3 -c "import json,sys;rows=json.load(open('../../../apps/desktop/scripts/ui-smoke/spec.json'))['rows'];s={r['id'] for r in rows};ids=open(sys.argv[1]).read().split();print(len(rows),sum(i in s for i in ids))" artifacts/epic_0/E0.2/stale-ids.txt   # 173 14 at E0.2 (none deleted); 177 14 after E2.27 + E2.24–E2.26 (four rows, decisions.md §24.6, §24.7); 176 14 after E2.29 (sheet-action-hp-adjust retired, §24.8); 178 14 after E3.6 (Biography + Notes rows, decisions.md §24.9); 182 14 after E4.2 (four dialog rows, decisions.md §23.4, §23.7)
 python3 -c "import json,sys;r={x['id']:x['status'] for x in json.load(open(sys.argv[1]))};ids=open(sys.argv[2]).read().split();print(sum(r.get(i)=='green' for i in ids),[i for i in ids if r.get(i)!='green'])" artifacts/epic_0/E0.2/results.json artifacts/epic_0/E0.2/stale-ids.txt   # 14 []
 ```
 

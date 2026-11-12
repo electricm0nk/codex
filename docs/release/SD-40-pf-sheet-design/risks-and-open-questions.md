@@ -43,7 +43,7 @@ The operator answered the first three on 2026-11-07 (`decisions.md §22`). The E
 | # | Question | Operator's answer (§23.7) | Card |
 |---|---|---|---|
 | Q1 | What "known languages" prints (the engine holds none) | "Known + one blank line": the known list from one backend source, then exactly one blank line | E2.8, E2.13 |
-| Q2 | Bio text (the app has no backstory field) | "Add a Backstory field now": card E3.6; the Bio page prints details, Backstory, campaign notes, ruled lines | E3.6, E3.4 |
+| Q2 | Bio text (the app has no backstory field) | "Add a Backstory field now": card E3.6; the Bio page prints details, Backstory, campaign notes, ruled lines | E3.6, E3.4 (renamed Biography and widened with Notes by `decisions.md §24.9`) |
 | Q3 | Where daily spells, custom, pets, the armor table print | as proposed: spells / custom / pets in box 2; armor table in box 3 | E3.1–E3.3, E4.1 |
 | Q4 | The footer prints the name on every page | keep | — |
 | Q5 | Weapon damage as one total (`1d8+4`): the engine refuses one today | "One total": E2.14 adds an engine total row (primary-hand assumption named) | E2.14, E2.10 |

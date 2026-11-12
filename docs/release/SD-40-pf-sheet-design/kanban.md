@@ -77,13 +77,13 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 56 (24 + E
 | E3.1 | Feats, class features, actions looks (section 2) | opus | waiting | E2.G | rewritten: no `feats-full` |
 | E3.2 | Inventory pages: defense, gear (worn / carried / left behind), money (section 3) | opus | waiting | E3.1 | rewritten |
 | E3.3 | Daily spells, spellbook, custom, pets looks (sections 2, 4) | opus | waiting | E3.2 | rewritten: bio, math, details moved to E3.4, E3.5 |
-| E3.6 | Backstory field in the app (Bio UI + `bio.json`), ui-smoke row | opus | waiting | E3.3, E0.2 | operator answer Q2, `decisions.md §23.7`; before E3.4; writes `spec.json` after E0.2 |
-| E3.4 | Bio pages: details, Backstory, campaign notes, ruled lines (section 5) | opus | waiting | E3.6 | |
+| E3.6 | Biography and Notes tabs in the app (`bio.json`), two ui-smoke rows | opus | waiting | E3.3, E0.2 | rewritten 2026-11-12, `decisions.md §24.9` (was Backstory, §23.7); before E3.4; writes `spec.json` after E0.2 |
+| E3.4 | Bio pages: details, Biography, campaign notes, ruled lines (section 5) | opus | waiting | E3.6 | Backstory renamed Biography, `decisions.md §24.9` |
 | E3.5 | Show-the-math pages: every page-1 breakdown + derivations (section 7, Math) | opus | waiting | E3.4 | section renumbered by `decisions.md §24.3.7` |
 | E3.7 | Progression pages: the Show Progression drawer level by level (section 6) | opus | waiting | E3.5 | new, `decisions.md §24.3.7`; main lane |
 | E3.MC | E3 merge check + Epic report | opus | waiting | E3.7 | |
-| E4.1 | Sections as lists; `PrintSections`; golden 24 + 6 | opus | waiting | E3.MC | rewritten (was presets; `decisions.md §9` superseded by §23.4); seven sections, `decisions.md §24.3.7` |
-| E4.2 | Print dialog: seven checkboxes (`decisions.md §24.3.7`) remembered per character; booleans removed; ui-smoke rows | opus | waiting | E4.1, E0.2 | rewritten; serial edge E0.2 → E4.2 (`spec.json`) |
+| E4.1 | Sections as lists; `PrintSections`; golden 24 + 6 | opus | waiting | E3.MC | rewritten (was presets; `decisions.md §9` superseded by §23.4); eight sections incl. Notes (off by default), `decisions.md §24.3.7`, §24.9 |
+| E4.2 | Print dialog: eight checkboxes (`decisions.md §24.3.7`, §24.9) remembered per character; booleans removed; ui-smoke rows | opus | waiting | E4.1, E0.2 | rewritten; serial edge E0.2 → E4.2 (`spec.json`) |
 | E4.MC | E4 merge check + Epic report | opus | waiting | E4.2 | |
 | E5.1 | Widest verify + clean build + packaged resources | sonnet | waiting | E4.MC | |
 | E5.2 | OPERATOR GATE: the full set printed, `usable: yes` ×5 | sonnet | waiting | E5.1 | the run ends here until the operator signs |

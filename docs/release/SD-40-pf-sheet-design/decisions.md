@@ -473,7 +473,7 @@ checks it is gone.
 |---|---|---|
 | Q5 | **"One total"** | E2.14 stays as proposed: the engine emits `combat.weapon_damage_total.<weapon>`; page 1 prints `1d8+4` |
 | Q1 | **"Known + one blank line"** | Paper prints the known languages as a comma list, then **exactly one** blank line, always (not one per bonus slot); the bonus-slot count is not printed on page 1. E2.8 still moves the known list into Rust (`languages.known`), so the print never re-derives it; E2.8 no longer adds a slot count. E2.8 and E2.13 rewritten |
-| Q2 | **"Add a Backstory field now"** | New card **E3.6** (main lane, opus, before E3.4): a Backstory free-text field in the sheet's Bio UI beside the existing bio fields, stored in `bio.json` with them (`CharacterBioDto`, `update_character_bio` / `load_character_bio`, `boundary/characterBio.ts`), round-tripping save, load and clone, with a ui-smoke row. E3.4's Bio page prints details, then Backstory, then campaign notes (if any), then ruled lines. No FSR-C7 (the candidate row is withdrawn) |
+| Q2 | **"Add a Backstory field now"** (superseded where it differs by §24.9: the field is `biography` on its own Biography tab, plus a `notes` field and tab) | New card **E3.6** (main lane, opus, before E3.4): a Backstory free-text field in the sheet's Bio UI beside the existing bio fields, stored in `bio.json` with them (`CharacterBioDto`, `update_character_bio` / `load_character_bio`, `boundary/characterBio.ts`), round-tripping save, load and clone, with a ui-smoke row. E3.4's Bio page prints details, then Backstory, then campaign notes (if any), then ruled lines. No FSR-C7 (the candidate row is withdrawn) |
 | Q3 | **as proposed** | Daily spells, custom, pets in box 2; armor table in box 3; Spellbook = spell entries |
 | Q4 | **keep** | The footer keeps the name |
 | smaller defaults | **accepted** | localStorage per machine; SF1e/CPR show 4 boxes; "Not added to a total" under the skills column |
@@ -588,7 +588,8 @@ letter given), output committed as `census.txt`.
    after Primary starts on a new page under a **prominent title** (a section-title look, full width, larger and
    bolder than any block heading) and ends with a page break, so it prints alone. The dialog's checkbox labels are
    these seven names (E4.2); first-time ticks stay Primary + Abilities and Feats + Inventory; Progression is
-   Pathfinder only (SF1e/CPR show Primary, Spellbook, Bio, Math).
+   Pathfinder only (SF1e/CPR show Primary, Spellbook, Bio, Math). **Amended by §24.9:** an 8th section, **Notes**
+   (own checkbox, off by default, Pathfinder only), follows Math.
 8. **The desktop UI shows the same new fields** (operator, 2026-11-12, verbatim: "let's make adjustments to the ui to
    include these fields as well"; E2.24–E2.26). Each UI card renders the **same engine rows and fields the print
    reads** (no TypeScript re-derivation of a rules number: AGENTS.md "a magnitude is not wired until it moves on the
@@ -696,3 +697,37 @@ that stays (`EQUIPMENT EFFECTS`, `SAVING THROWS`). An old save holding `hp.json`
 again and is left on disk untouched. **Stays:** the rest of the Defense tab (equipment effects, AC by source, the
 Resistances panel, saves), the engine's `hit_points.max` row and `compute_max_hp`, and the printed Hit Points block
 (max + the pencil write-in for current HP and nonlethal: paper is where a player tracks HP). ui-smoke rows −1 (G-9).
+
+### §24.9 Operator, 2026-11-12: Biography and Notes tabs in the app; Notes is its own print section
+
+**OPERATOR (verbatim, relayed by the lead):** "I think we might have added this into SD40 already, but the UI needs another option in the panel with weapons, defese, gear, etc.  That option is Biography.  This should be a text entry field with the user can enter a detail description of their character and various life events.  This would be printed with the Bio.  Another option called Notes should also be available where a user can enter additional text.  Functionally both would work the same, but the purpose is different.  Biography is story telling.  Notes is metagaming - ie: note to self, remember to take whirlwind as the next feat. or the DM has ruled that you can recharge a wand of cure light wounds for 500gp and 1/2 a day of crafting."
+
+Answers (relayed by the lead): Notes print = **"Own print checkbox"** (Notes print on their own page(s) under a prominent
+"Notes" title only when the Notes box is ticked; off by default; Biography always prints with the Bio section).
+Package = **"Change SD-40 card E3.6"** (rewrite E3.6, not yet run, from "Backstory field" to "Biography and Notes tabs").
+
+**Facts:** the sheet's tab strip is `SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom']`
+(`apps/desktop/src/characterHub/CharacterSheet.tsx:562`; "every tab listed here has a real panel in the switch below",
+`:561`). No backstory field exists yet (`git grep -n -i backstory -- apps/desktop/src apps/desktop/src-tauri/src | awk 'END{print NR}'` → 0):
+E3.6 is `waiting`, so nothing built is undone.
+
+**Rulings:**
+1. **E3.6 rewritten: Biography and Notes tabs.** `SHEET_TABS` gains **Biography** and **Notes**, appended after Custom
+   (author's placement: the two free-text tabs sit together at the end, the rules tabs stay first). Each tab is one large
+   multi-line text area (`aria-label="Biography"`, `aria-label="Notes"`), saved on blur, stored in `bio.json` through
+   `CharacterBioDto` with `#[serde(default)]`: `biography: String` (the field §23.7 called `backstory`) and `notes: String`;
+   round-trip save, load and clone. One ui-smoke row per tab.
+2. **Biography prints with Bio** (E3.4): details, then **Biography** (paragraphs; empty → nothing), then campaign notes,
+   then ruled lines.
+3. **Notes is an 8th print section** (E4.1, E4.2): the `notes` block prints the Notes text as paragraphs on its own
+   page(s) under the title **Notes**, then ruled lines to the page end; only when the **Notes** box is ticked; **off by
+   default** (first-time ticks stay 1+2+3); Pathfinder only, like Progression. Box order: (1) Primary … (7) Math,
+   **(8) Notes**. The golden name `all` keeps its old meaning (sections 1–7: Notes was never one of the old options,
+   and adding it would move every `all` golden for an option off by default): author's call. An empty Notes field with
+   the box ticked prints the title and ruled lines (a page to write on).
+
+**Supersedes:** §23.7 Q2 "Add a Backstory field now" where it differs: the field is `biography`, it lives on its own
+**Biography** tab (not in the Bio panel beside Alignment … Eyes), and a second field `notes` with its own tab and print
+section is added. §24.3.7's seven sections become eight (Notes last); FSR COM-12 reads "Biography and Notes".
+Card count unchanged (56: E3.6, E3.4, E4.1, E4.2, E4.MC rewritten, no card added). ui-smoke rows: 173 → 174 (E2.27)
+→ 177 (E2.24–E2.26) → 176 (E2.29) → **178 (E3.6, two rows)** → **182 (E4.2)**; `print-section-` ≥ 8 (G-5).
