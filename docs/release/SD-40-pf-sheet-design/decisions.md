@@ -533,7 +533,7 @@ letter given), output committed as `census.txt`.
 | c | Conditional bonuses | Round-1 figures re-derived unchanged: situational Hp 15, Initiative 10, Fort 52, Ref 58, Will 78, Ac 178, Cmb **0**, Cmd **0**; Aspect SaveBonus 407, CombatBonus 314. Also situational Skill 216, SkillGroup 41, SkillSituation 19; of the 314 CombatBonus aspects **22** name CMB, CMD or "combat maneuver". The engine's `ConditionalNotes` holds **six** lists (hp, initiative, fortitude, reflex, will, armor_class; `conditional_notes.rs:55-60`) and gathers no CombatBonus aspect (`:111-114`): **no CMB/CMD list**. Skills' conditionals are `feat_skill_bonuses.situational`, printed under the Skills column as "Not added to a total:" (`print/blocks/skills.rs:67`). Page 1 prints notes on Max HP and Initiative (`core.rs:103`, `:110`) and under each save (`core.rs:186`); the **AC notes print nowhere** (0 matches). Elf "+2 vs enchantment": present — `core_rulebook:race_trait:elf_elven_immunities` carries an Aspect SaveBonus, which feeds all three saves (`conditional_notes.rs:133`) |
 | d | Print sections | `layout/pf1e.rs`: page 1 = 11 `Placed::at/under` rows (`:20-34`); page 2 opens at `characterDetails` (`:50`); then `defense`, `gear`, `feats`, `classFeatures`, `spells`, `custom`, `pets`, `actions` flow on (`:36-44`); Spellbook, Show the Math, Bio and Campaign Notes are option blocks that each start a new page (`spells.rs:107`, `math.rs:27`, `bio_notes.rs:35`), in that order (`pf1e.rs:67-74`). **No section titles** (0). **No progression block** in `print/` (0); the Show Progression drawer reads `list_progression_ledger_at_root` (`character_ledger.rs:705`, `ProgressionLedgerDto` `:613`) |
 | f | The desktop UI today (added after the operator's UI addition, §24.3.8) | Speed: the `speed` box shows **Land only** (`panels/CombatPanels.tsx:55-59`, called at `CharacterSheet.tsx:4506`), from the engine row through `sheetLandSpeed` (`customModel.ts:192`); swim / fly anywhere in the UI: **0**. AC and saves: `ArmorClassPanel` / `SavingThrowsPanel` (`CombatPanels.tsx:20`, `:32`; `CharacterSheet.tsx:4502`, `:4508`) and the Defense tab's `SavesPanel` (`CharacterSheet.tsx:1422`, `:1432`) show totals only. **No UI component reads `conditionalNotes`** (its 9 matches are SF/CPR test fixtures; the type is `loadSavedCharacterDetail.ts:160`, `:224`); the only conditional list shown is the Skills panel's "Not added to a total" (`CharacterSheet.tsx:523`). Damage Reduction: one line in the Defense tab (`CharacterSheet.tsx:1419`); Spell Resistance: an equipment-effects tile (`:1368`); energy resistance and immunities: **shown nowhere** (the one word match, `:1885`, is a catalog note). ui-smoke: 173 rows, 0 expecting Swim, Fly, Resistance, Immunity, Bravery or Conditional |
-| e | Aldric's languages | Seed `character_hub.rs:2473` (Human Fighter 3, Int 14; ranks `ALDRIC_SEED_SKILL_RANKS` `:2372`, no Linguistics). **Every PF character knows exactly `Common`**: `known_languages()` is a constant (`character_hub.rs:743`); no save field holds languages. Pins: `character_hub.rs:20853` (`{"known": ["Common"]}` for the seeds), `print_pf_blocks.rs:1513` (contains Common; values `[known, ""]`), `print_golden.rs:229` (`languages` page-1 anchor); `print_golden.json` pins headings and pages only. Giving Aldric 7 real languages needs a language store the app does not have, or Linguistics ranks the seed does not have (moves skill totals: G-1 `VALUE_MOVED`). Cleanest: a **print-proof fixture** through a seam in `print/mod.rs` (`sheet_document_at_root` loads and lays out in one function, `:85-86`) |
+| e | Aldric's languages | (Ruling: a stored Languages field, §24.3.3, §24.6 Q2.) Seed `character_hub.rs:2473` (Human Fighter 3, Int 14; ranks `ALDRIC_SEED_SKILL_RANKS` `:2372`, no Linguistics). **Every PF character knows exactly `Common`**: `known_languages()` is a constant (`character_hub.rs:743`); no save field holds languages. Pins: `character_hub.rs:20853` (`{"known": ["Common"]}` for the seeds), `print_pf_blocks.rs:1513` (contains Common; values `[known, ""]`), `print_golden.rs:229` (`languages` page-1 anchor); `print_golden.json` pins headings and pages only. Giving Aldric 7 real languages needs a language store the app does not have, or Linguistics ranks the seed does not have (moves skill totals: G-1 `VALUE_MOVED`). Cleanest: a **print-proof fixture** through a seam in `print/mod.rs` (`sheet_document_at_root` loads and lays out in one function, `:85-86`) |
 
 ### §24.3 Rulings (item 8 added the same day for the operator's UI addition)
 
@@ -550,12 +550,16 @@ letter given), output committed as `census.txt`.
    ("average", "poor"), and the load response gains `flyManeuverability` (the record's word, or absent) so the
    print and the screen read one field. No row when the character has none; the box then prints empty for the pencil (never a
    dash, never 0). Climb and burrow: not asked; not printed (they stay in the rules text).
-3. **Languages** (E2.16). Comma list, **no write-in line**; the cell holds seven names on Letter and A4. The test
-   character's seven languages are a **print-proof fixture**, not seed data: `print/mod.rs` splits
-   `sheet_document_at_root` into load + `sheet_document_from_loaded(root, &loaded, request)`, and `print_proof`
-   renders Aldric a second time with `languages.known` = `Common, Dwarven, Elven, Giant, Gnome, Goblin, Orc`
-   (`aldric-languages7-{a4,letter}-none.pdf`; 16 → 18 PDFs). The seed, the engine and every value stay as they
-   are (G-1). E2.G round 3 judges the seven-language sheets.
+3. **Languages** (E2.27, E2.16; rewritten by the operator's answer Q2 "Yes, add a field", §24.6). E2.27 adds a
+   **Languages field** in the app, saved with the character in `bio.json` (`CharacterBioDto.languages`, `#[serde(default)]`,
+   the E3.6 Backstory shape), edited on the Skills panel's Languages line; the load response's `languages.known` reads
+   it, and a character with nothing stored knows `["Common"]` (what prints today; `known_languages()`'s constant,
+   `character_hub.rs:743`, stops being the source). E2.16 prints the list as one comma list with **no write-in
+   line**; the cell holds seven names on Letter and A4. **Aldric's seven languages (author's call):** stored, not a
+   print-only fixture: `print_proof` saves `Common, Dwarven, Elven, Giant, Gnome, Goblin, Orc` into its own temp copy
+   of Aldric through `update_character_bio`'s root path and prints through the normal path
+   (`aldric-languages7-{a4,letter}-none.pdf`; 16 → 18 PDFs). No print seam is added; the shipped seed keeps nothing
+   stored (Common), so G-1 and every seed pin hold. E2.G round 3 judges the seven-language sheets.
 4. **Notes leave the blocks** (E2.20). The HP, Initiative and Encumbrance notes, their headings ("Hit point
    notes", …) and their blank lines go; the save notes no longer print under Saving Throws; "Not added to a total:"
    no longer prints under Skills (its lines move, "Ranks with no Skills panel total:" stays: it is not a
@@ -565,8 +569,8 @@ letter given), output committed as `census.txt`.
    Will (a note given to several saves prints once, as today), AC, CMB, CMD (new engine lists, E2.19: the Aspect
    CombatBonus entries whose words name CMB, CMD or combat maneuvers, and any Situational rule targeting `Cmb` /
    `Cmd`), and skills (`feat_skill_bonuses.situational`); each line `<what>: <label>: <value> <condition>` in the
-   engine's words; then ruled blank write-in lines to the box's foot. DEFAULT size: 14 body lines on Letter and
-   A4, of which **at least 4 are always blank** (§24.6 Q1). A list too long for the box follows the SD-b rule
+   engine's words; then ruled blank write-in lines to the box's foot. Size (operator Q1, §24.6): **10 lines** on Letter and
+   A4, of which **at least 4 are always blank**. A list too long for the box follows the SD-b rule
    (§23.2): shrink to the 8 pt floor, then continue at the top of page 2 under "Conditional Bonuses (continued)";
    the 4 blank lines stay on page 1.
 6. **Resistances block** (E2.21, E2.22). Heading "Resistances": five energy boxes (Acid, Cold, Electricity, Fire,
@@ -615,7 +619,7 @@ letter given), output committed as `census.txt`.
 | §23.3 "Damage Reduction when the screen shows one" in the Hit Points block | §24.3.6 | Damage Reduction prints in Resistances |
 | §23.1 item 4 AC exception: heading "Armor Class" | §24.3.1 | The parts stay; the heading goes |
 | §23.1 item 5 / §23.4: six sections, labels "Main sheet … Show the math", order 5 Bio → 6 Show the math | §24.3.7 | Seven sections, operator's names and order (Progression new, Math last), section titles; `PrintSections` gains `progression`; golden mapping all = 1–7, math = 1+2+3+7; dialog boxes 7 (4 on SF1e/CPR) |
-| §23.6 Q1 / E2.8 "every character knows Common" as the printed list | — | **Stands** for real characters (§24.6 Q2); the seven languages are a print-proof fixture |
+| §23.6 Q1 / E2.8 "every character knows Common" (`known_languages()`'s constant) as the known list | §24.6 Q2, §24.3.3 | A stored Languages field (E2.27) is the source; Common only when nothing is stored |
 
 SD-b (§23.2, the overflow rule E2.4 built) **stands**; its "a notes list" case is now the Conditional Bonuses box.
 §23.1 items 1, 2, 3a (one square block), 3b, 3c, the AC parts, §23.4's per-character memory, §23.5, §23.7 Q2–Q5
@@ -631,16 +635,28 @@ The G-4 check `grep -c 'usable: yes' …/E2.G_cycle_receipt.md` → 2 counted th
 card. E5.2's `grep -c 'usable: yes'` has the same shape; E5.2's card must write its sign-off lines so an anchored
 count works (G-8 note).
 
-### §24.6 Questions only the operator can settle (DEFAULT taken; work proceeds on it)
+### §24.6 Questions only the operator could settle (answered 2026-11-12, relayed by the lead)
 
-| # | Question | Facts | DEFAULT |
-|---|---|---|---|
-| Q1 | How big is the Conditional Bonuses box? | Aldric holds one conditional (Bravery, +1 Will vs. fear); the left column also carries 6 other blocks on Letter | 14 body lines, at least 4 always blank; overflow per SD-b |
-| Q2 | Should real characters record their languages? | `known_languages()` is the constant `["Common"]` (`character_hub.rs:743`); the app has no language store or picker; 7 languages exist only in the print proof | No store in SD-40; the seven-language Aldric is a print-proof fixture. A languages field (free text, saved with the bio, printed on page 1) would be one new main-lane card before E2.MC3 if the operator wants it |
-| Q3 | Fly maneuverability on paper | The fly record states it in words ("average") | Printed beside the Fly box value: `60 ft. (average)` |
+| # | Question | Facts | DEFAULT proposed | Operator's answer (verbatim) → effect |
+|---|---|---|---|---|
+| Q1 | How big is the Conditional Bonuses box? | Aldric holds one conditional (Bravery, +1 Will vs. fear); the left column also carries 6 other blocks on Letter | 14 body lines, at least 4 always blank; overflow per SD-b | **"10 lines, 4+ blank"** → 10 lines, at least 4 blank; overflow continues on page 2 per SD-b (E2.20) |
+| Q2 | Should real characters record their languages? | `known_languages()` is the constant `["Common"]` (`character_hub.rs:743`); the app has no language store or picker; 7 languages exist only in the print proof | No store in SD-40; the seven-language Aldric is a print-proof fixture. A languages field (free text, saved with the bio, printed on page 1) would be one new main-lane card before E2.MC3 if the operator wants it | **"Yes, add a field"** → new card **E2.27** (before E2.16): a Languages field saved with the character, the source of `languages.known` (nothing stored → `["Common"]`); Aldric's seven are stored by the print proof (§24.3.3) |
+| Q3 | Fly maneuverability on paper | The fly record states it in words ("average") | Printed beside the Fly box value: `60 ft. (average)` | **"60 ft. (average)"** → as proposed (E2.18 print, E2.24 screen) |
 
-**Enforced by:** E2.16–E2.26, E2.MC3, E2.G round 3, E3.7, E3.MC, E4.1, E4.2, E4.MC (`kanban.md`,
-`epic-breakdown.md`). Cards 40 → 53: 50 at the replan, + E2.24–E2.26 for the operator's UI addition, §24.3.8
-(`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'` → 53). ui-smoke rows 173 → 176 (E2.24–E2.26) → 177 (E3.6)
-→ 181 (E4.2), G-9.
+**Enforced by:** E2.16–E2.27, E2.MC3, E2.G round 3, E3.7, E3.MC, E4.1, E4.2, E4.MC (`kanban.md`,
+`epic-breakdown.md`). Cards 40 → 54: 50 at the replan, + E2.24–E2.26 for the operator's UI addition (§24.7), + E2.27 for the
+answer to Q2 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'` → 54). ui-smoke rows 173 → 174 (E2.27) → 177
+(E2.24–E2.26) → 178 (E3.6) → 182 (E4.2), G-9.
 **Revisit:** the operator, at E2.G round 3 (page 1) and E5.2 (the sections).
+
+### §24.7 Operator addition, 2026-11-12: the desktop UI shows the new fields too
+
+**OPERATOR (verbatim, relayed by the lead):** "let's make adjustments to the ui to include these fields as well"
+
+Census (f) (`census.txt`; command above) and the placements the author chose (closest existing neighbour, recorded
+as choices, not questions) are §24.2 row f and §24.3.8. Cards (main lane, serial, each before E2.MC3 so none overlaps
+E3.6's or E4.2's `spec.json` edits): **E2.24** Swim and Fly tiles beside Land (after E2.17, the engine card feeding
+it), **E2.25** the Conditional Bonuses list under the Saving Throws totals, CMB and CMD included (after E2.19),
+**E2.26** the Resistances panel in the Defense tab beside AC/defense, where the Damage Reduction line is (after
+E2.21). Each renders the engine rows and fields the print reads (no TypeScript re-derivation: the twin rule),
+names a RED check that fails on the base tree, adds one ui-smoke row and regenerates `docs/testing/ui-smoke-inventory.md`.

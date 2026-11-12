@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 24 of 53 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 53: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan + 3 UI cards, `decisions.md §24`) |
+| Cards complete | 24 of 54 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 54: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan + 3 UI cards + E2.27, `decisions.md §24`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -178,10 +178,13 @@ deltas, what was looked at, retro summary, worktrees swept)
   `d5cd0a3ea6`); anchored to `^- Aldric .* — usable: yes` (`decisions.md §24.5`).
 - **Operator addition (same day):** "let's make adjustments to the ui to include these fields as well" → UI cards
   E2.24 (Swim/Fly beside Land), E2.25 (Conditional Bonuses under Saving Throws), E2.26 (Resistances in the Defense
-  tab), placements chosen by the author (`decisions.md §24.3.8`); census (f) added. ui-smoke rows 173 → 176.
-- **Cards:** 40 → 53. New: E2.16, E2.18, E2.20, E2.22, E2.23, E2.24–E2.26 (main), E2.17, E2.19, E2.21 (side lane `engine`,
+  tab), placements chosen by the author (`decisions.md §24.3.8`, §24.7); census (f) added.
+- **Operator answers to §24.6 (same day):** Q1 "10 lines, 4+ blank" (E2.20); Q2 "Yes, add a field" → new card E2.27
+  (stored Languages field; Aldric's seven stored by the print proof, no print seam); Q3 "60 ft. (average)".
+  ui-smoke rows 173 → 177 before E2.MC3.
+- **Cards:** 40 → 54 (E2.27 added). New: E2.16, E2.18, E2.20, E2.22, E2.23, E2.24–E2.26 (main), E2.17, E2.19, E2.21 (side lane `engine`,
   reopened), E2.MC3, E3.7. Rewritten: E2.G (round 3), E3.5 (section 7), E3.MC, E4.1, E4.2, E4.MC, E5.2, E5.4
-  (seven sections). `SAME_IDS` check passes. Three operator questions open with DEFAULTs (`decisions.md §24.6`).
+  (seven sections). `SAME_IDS` check passes. The three §24.6 questions are answered (`decisions.md §24.6`).
 
 ## Lead's dispatch log
 
