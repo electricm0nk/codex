@@ -29,6 +29,7 @@ use crate::character_hub::{
 use codex::rules_core::body_slots::{slot_conflict, BodySlot};
 use codex::rules_core::character_input::{AbilityScores, ActiveState, CharacterInput};
 use codex::rules_core::pilot_view_model::PilotSnapshot;
+use codex::rules_core::pilot_compute::ArmorClassPart;
 use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillNotFolded;
 use codex::rules_core::equipment_effects::{bonus_always_counts, worn_item_stated_bonuses, WornItemStatedBonuses, NOT_AGAINST_TOUCH};
 use codex::rules_core::source_content::SourcePackageContent;
@@ -430,7 +431,7 @@ impl WornItemBonuses {
         snapshot.defense.total_save.will += self.total("save:will");
     }
 
-    /// Every other number the sheet reads off the load: the rows behind touch, flat-footed, CMB,
+    /// Every other number the sheet reads off the load: the rows behind the AC and its parts, touch, flat-footed, CMB,
     /// CMD, initiative and each skill, the Weapons tab's damage, `AC by Source`, and a
     /// `custom_item.<target>` row per target saying what moved it. The sheet adds `custom_item.speed`
     /// and `custom_item.hit_points` to the two totals it holds itself.
@@ -441,6 +442,7 @@ impl WornItemBonuses {
         let touch = self.sum("ac", |bonus| !NOT_AGAINST_TOUCH.contains(&bonus.bonus_type.as_str()));
         let flat_footed = self.sum("ac", |bonus| bonus.bonus_type != "Dodge");
         let rows = [
+            ("defense.baseline_armor_class", "ac", self.total("ac")),
             ("defense.touch_armor_class", "ac", touch),
             ("defense.flat_footed_armor_class", "ac", flat_footed),
             ("combat.combat_maneuver_bonus", "cmb", self.total("cmb")),
@@ -455,6 +457,14 @@ impl WornItemBonuses {
             if let Some(row) = sheet.explanations.iter_mut().find(|row| row.id == id) {
                 row.value += moved;
                 row.detail = format!("{}; worn items: {}", row.detail, self.sources(target));
+            }
+        }
+        // Each custom AC bonus also goes in the part its type names, so 10 + the parts is the AC row.
+        for bonus in self.0.iter().filter(|bonus| bonus.target == "ac") {
+            let id = ArmorClassPart::of_bonus_type(Some(&bonus.bonus_type)).id();
+            if let Some(row) = sheet.explanations.iter_mut().find(|row| row.id == id) {
+                row.value += bonus.value;
+                row.detail = format!("{}; worn item: {:+} {} ({})", row.detail, bonus.value, bonus.bonus_type, bonus.item_name);
             }
         }
 
@@ -759,4 +769,69 @@ pub fn save_character_custom(app: tauri::AppHandle, request: SaveCharacterCustom
     let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
     save_character_custom_at_root(&root, &request.custom, &request.saved_at)?;
     Ok(request.custom)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::character_hub::{load_saved_character_at_root, seed_default_characters_at};
+
+    /// The AC row, the printed AC and the seven parts, after asserting `10 + Σ parts` is both.
+    fn armor_class_parts_custom_hold(case: &str, sheet: &LoadSavedCharacterResponse) -> (i16, Vec<(String, i16)>) {
+        let row = sheet.explanations.iter().find(|row| row.id == "defense.baseline_armor_class").expect("the AC row").value;
+        let printed = sheet.snapshot.as_ref().expect("a snapshot").baseline_armor_class;
+        let parts: Vec<(String, i16)> =
+            sheet.explanations.iter().filter(|row| row.id.starts_with("defense.armor_class.")).map(|row| (row.id.clone(), row.value)).collect();
+        let total = 10 + parts.iter().map(|(_, value)| value).sum::<i16>();
+        assert_eq!((row, total), (printed, printed), "{case}: the AC row and 10 + {parts:?} are the printed AC");
+        (printed, parts)
+    }
+
+    fn part(sheet: &LoadSavedCharacterResponse, name: &str) -> (i16, String) {
+        let row = sheet.explanations.iter().find(|row| row.id == format!("defense.armor_class.{name}")).expect("the part");
+        (row.value, row.detail.clone())
+    }
+
+    fn worn(id: &str, name: &str, bonus_type: &str, value: i32) -> CustomRecordDto {
+        CustomRecordDto {
+            id: id.to_owned(),
+            name: name.to_owned(),
+            bonuses: vec![CustomBonusDto { target: "ac".to_owned(), bonus_type: bonus_type.to_owned(), value }],
+            worn: true,
+            ..Default::default()
+        }
+    }
+
+    /// Aldric wearing a custom `+1 Deflection` ring, then also a `-1` untyped curse: each lands in the
+    /// AC row and in the part its type names, so the parts still add up to the AC beside them.
+    #[test]
+    fn armor_class_parts_custom_items_land_in_the_row_and_their_part() {
+        let app_data = std::env::temp_dir().join(format!("codex-armor-class-parts-custom-{}", std::process::id()));
+        std::fs::create_dir_all(&app_data).expect("a temp dir");
+        seed_default_characters_at(&app_data, "0.0.0-test").expect("starter seeding succeeds");
+        let root = app_data.join("characters").join("00000000-0000-0000-0000-000000000001");
+        let before = load_saved_character_at_root(&root).expect("Aldric loads");
+        let (ac, _) = armor_class_parts_custom_hold("aldric", &before);
+
+        let ring = worn("r1", "Ring of Hats", "Deflection", 1);
+        let custom = CharacterCustomDto { equipment: vec![ring.clone()], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-11-12T00:00:00Z").expect("the ring saves");
+        let ringed = load_saved_character_at_root(&root).expect("loads");
+        let (ringed_ac, _) = armor_class_parts_custom_hold("aldric + ring", &ringed);
+        let deflection = part(&ringed, "deflection");
+        assert_eq!((ringed_ac, deflection.0), (ac + 1, part(&before, "deflection").0 + 1));
+        assert!(deflection.1.contains("Ring of Hats"), "the part names the item: {}", deflection.1);
+
+        let custom = CharacterCustomDto { equipment: vec![ring, worn("c1", "Curse", "Untyped", -1)], ..Default::default() };
+        save_character_custom_at_root(&root, &custom, "2026-11-12T00:00:01Z").expect("the curse saves");
+        let both = load_saved_character_at_root(&root).expect("loads");
+        std::fs::remove_dir_all(&app_data).ok();
+        let (both_ac, _) = armor_class_parts_custom_hold("aldric + ring + curse", &both);
+        let misc = part(&both, "misc");
+        assert_eq!(
+            (both_ac, part(&both, "deflection").0, misc.0),
+            (ac, part(&before, "deflection").0 + 1, part(&before, "misc").0 - 1)
+        );
+        assert!(misc.1.contains("Curse"), "the part names the item: {}", misc.1);
+    }
 }
