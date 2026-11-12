@@ -150,8 +150,12 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
         // Skills: the load response's total, the key ability's modifier, the ranks.
         format!("Spellcraft {} Int {} 5", signed(explained("skill.total.spellcraft")), signed(modifiers.intelligence)),
         format!("Climb* {} Str {} 1", signed(explained("skill.total.climb")), signed(modifiers.strength)),
-        // Weapons: the dice stay literal; each facet its own cell, the engine's attack bonus one of them.
-        format!("Longsword 19-20/x2 One Handed {} 1d8", signed(explained("combat.weapon_attack_bonus.longsword"))),
+        // Weapons (E2.10): the attack total, the engine's damage total (the dice literal), the critical.
+        format!(
+            "Longsword {} 1d8{} 19-20/x2",
+            signed(explained("combat.weapon_attack_bonus.longsword")),
+            signed(explained("combat.weapon_damage_total.longsword"))
+        ),
         // Armor: the worn armor's own numbers.
         "Chain Shirt +4".to_owned(),
         // Inventory: the encumbrance the engine computed.
@@ -596,7 +600,6 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
         let root = seeded(tag, id);
         let loaded = load_saved_character_at_root(&root).expect("the seed loads");
         let snapshot = loaded.snapshot.as_ref().expect("the seed computes");
-        let modifiers = &snapshot.ability_modifiers;
         let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{tag}: the {id} row"));
         let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
         let behind = |id: &str| vec![Derivation { source: format!("{id} = {}", row(id).value), detail: row(id).detail.clone() }];
@@ -620,9 +623,9 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             ("armorClass", "Armor Class", "armor-class", "Natural", vec![w()], None),
             ("armorClass", "Armor Class", "armor-class", "Deflection", vec![w()], None),
             ("armorClass", "Armor Class", "armor-class", "Misc", vec![w()], None),
-            ("saves", "Saving Throws", "saves", "Fortitude", vec![signed(snapshot.total_saves.fortitude), signed(snapshot.base_saves.fortitude), signed(modifiers.constitution), w()], Some("defense.total_save.fortitude")),
-            ("saves", "Saving Throws", "saves", "Reflex", vec![signed(snapshot.total_saves.reflex), signed(snapshot.base_saves.reflex), signed(modifiers.dexterity), w()], Some("defense.total_save.reflex")),
-            ("saves", "Saving Throws", "saves", "Will", vec![signed(snapshot.total_saves.will), signed(snapshot.base_saves.will), signed(modifiers.wisdom), w()], Some("defense.total_save.will")),
+            ("saves", "Saving Throws", "saves", "Fortitude", vec![signed(snapshot.total_saves.fortitude)], Some("defense.total_save.fortitude")),
+            ("saves", "Saving Throws", "saves", "Reflex", vec![signed(snapshot.total_saves.reflex)], Some("defense.total_save.reflex")),
+            ("saves", "Saving Throws", "saves", "Will", vec![signed(snapshot.total_saves.will)], Some("defense.total_save.will")),
             ("attack", "Attack", "attack", "Base Attack Bonus", vec![signed(snapshot.base_attack_bonus)], Some("class_chassis.base_attack_bonus")),
             ("attack", "Attack", "attack", "Melee", vec![signed(snapshot.baseline_melee_attack_bonus)], Some("combat.baseline_melee_attack_bonus")),
             ("attack", "Attack", "attack", "CMB", vec![signed(row("combat.combat_maneuver_bonus").value)], Some("combat.combat_maneuver_bonus")),
@@ -662,8 +665,8 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
     }
 }
 
-/// The Abilities look (SD-40 E2.1, `decisions.md §11`): six boxes, each the score and the modifier
-/// the engine holds and two ruled write-in cells (temp score, temp modifier) for the table.
+/// The Abilities look (SD-40 E2.1; E2.10, `decisions.md §23.1` item 3b): six lines, each the score
+/// and the modifier the engine holds, white space beside them (no temp boxes).
 #[test]
 fn print_pf_blocks_abilities_print_six_boxes_with_write_in_cells() {
     let root = seeded("abilities-boxes", ALDRIC_ID);
@@ -685,13 +688,13 @@ fn print_pf_blocks_abilities_print_six_boxes_with_write_in_cells() {
     assert_eq!(abilities.rows.len(), 6, "six ability boxes");
     for ((label, score, modifier), row) in expected.iter().zip(&abilities.rows) {
         assert_eq!(row.label, *label);
-        assert_eq!(row.values, vec![score.to_string(), signed(*modifier), String::new(), String::new()], "{label}: score, modifier, temp score and temp modifier write-ins");
+        assert_eq!(row.values, vec![score.to_string(), signed(*modifier)], "{label}: score and modifier only");
         assert!(row.derivation.is_some(), "{label}: the modifier keeps its engine row");
     }
     let text = pdf_text(&render(&root, &request(false, false, false)));
     assert!(text.contains(&format!("Strength {} {}", scores.strength, signed(modifiers.strength))), "the PDF prints Strength's score and modifier: {text}");
     for caption in ["Temp score", "Temp modifier"] {
-        assert!(text.contains(caption), "the write-in columns are captioned `{caption}`: {text}");
+        assert!(!text.contains(caption), "no temp column is captioned `{caption}`: {text}");
     }
 }
 
@@ -797,12 +800,11 @@ fn print_pf_blocks_skills_print_every_panel_row_in_two_columns() {
     }
 }
 
-/// The Weapons look (SD-40 E2.3): one table, a line per weapon in hand, each the engine's
-/// per-weapon rows (`combat.weapon_attack_bonus.<weapon>`, `combat.weapon_damage_bonus.<weapon>`,
-/// `combat.weapon_threat_range_low.<weapon>`) as cells of that weapon's line, never lines of their
-/// own, beside the damage facets the Weapons tab shows (dice literal, Str, enhancement, critical,
-/// wield); the feat notes under the line; then two blank lines and an ammunition write-in for the
-/// pencil.
+/// The Weapons look (SD-40 E2.3; E2.10 totals only): one table, a line per weapon in hand, its cells
+/// the attack total (`combat.weapon_attack_bonus.<weapon>`), the damage total
+/// (`combat.weapon_damage_total.<weapon>`, E2.14), the critical and the range; the engine's four
+/// per-weapon rows behind that line, never lines of their own; the feat notes under the line; then
+/// two blank lines and an ammunition write-in for the pencil.
 #[test]
 fn print_pf_blocks_weapons_print_as_one_table() {
     use crate::print::model::Derivation;
@@ -814,45 +816,38 @@ fn print_pf_blocks_weapons_print_as_one_table() {
         let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
         assert_eq!(weapons.look.name(), "weapons", "{tag}: the Weapons print in their own look");
         assert!(!loaded.weapon_damage.is_empty(), "{tag}: the seed holds a weapon in hand");
-        // The three rows this look prints; `combat.weapon_damage_total.` (SD-40 E2.14) is E2.10's.
-        let per_weapon: Vec<_> = loaded
-            .explanations
-            .iter()
-            .filter(|row| row.id.starts_with("combat.weapon_") && !row.id.starts_with("combat.weapon_damage_total."))
-            .collect();
-        assert_eq!(per_weapon.len(), 3 * loaded.weapon_damage.len(), "{tag}: three engine rows per weapon in hand");
+        // The four rows behind a weapon's line: attack, damage total (SD-40 E2.14), damage bonus, threat.
+        let per_weapon: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_")).collect();
+        assert_eq!(per_weapon.len(), 4 * loaded.weapon_damage.len(), "{tag}: four engine rows per weapon in hand");
         for weapon in &loaded.weapon_damage {
             // The engine keys a weapon's rows by its record's name, letters and digits only.
             let key = weapon.weapon_record_key.as_deref().expect("the seed's weapon resolves");
             let key = key.strip_prefix("item:").unwrap_or(key);
             let slug: String = key.strip_suffix(" (Base)").unwrap_or(key).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect();
             let row = |prefix: &str| per_weapon.iter().find(|row| row.id == format!("{prefix}{slug}")).unwrap_or_else(|| panic!("{tag}: {prefix}{slug}"));
-            let (attack, damage, threat) = (row("combat.weapon_attack_bonus."), row("combat.weapon_damage_bonus."), row("combat.weapon_threat_range_low."));
+            let (attack, total, damage, threat) =
+                (row("combat.weapon_attack_bonus."), row("combat.weapon_damage_total."), row("combat.weapon_damage_bonus."), row("combat.weapon_threat_range_low."));
             let dice = weapon.base_dice.as_ref().map(|dice| format!("{}d{}", dice.count, dice.die_size)).expect("the seed's weapon has dice");
             let [low, high] = weapon.critical_threat_range.expect("the seed's weapon has a threat range");
             let critical = format!("{}/x{}", if low == high { low.to_string() } else { format!("{low}-{high}") }, weapon.critical_multiplier.expect("a multiplier"));
             let line = weapons
                 .rows
                 .iter()
-                .find(|line| line.values.first() == Some(&signed(attack.value)) && line.values.get(1) == Some(&dice))
+                .find(|line| line.values.first() == Some(&signed(attack.value)) && line.values.get(1).is_some_and(|damage| damage.starts_with(&dice)))
                 .unwrap_or_else(|| panic!("{tag}: a line for {key}: {:?}", weapons.rows));
             assert_eq!(
                 line.values,
                 vec![
                     signed(attack.value),
-                    dice.clone(),
-                    weapon.str_damage_modifier.map_or_else(|| "—".to_owned(), signed),
-                    weapon.enhancement_damage_bonus.map_or_else(|| "—".to_owned(), signed),
-                    signed(damage.value),
-                    threat.value.to_string(),
+                    if total.value == 0 { dice.clone() } else { format!("{dice}{}", signed(total.value)) },
                     critical.clone(),
-                    weapon.wield_category.as_deref().map(|wield| if wield == "OneHanded" { "One Handed" } else { wield }.to_owned()).expect("a wield category"),
+                    weapon.range_increment.map_or_else(|| "—".to_owned(), |feet| format!("{feet} ft.")),
                 ],
-                "{tag}: {key}'s line: attack, damage dice, Str, enhancement, damage bonus, threat, critical, wield"
+                "{tag}: {key}'s line: attack total, damage total, critical, range"
             );
             let behind: Vec<Derivation> =
-                [attack, damage, threat].iter().map(|row| Derivation { source: format!("{} = {}", row.id, row.value), detail: row.detail.clone() }).collect();
-            assert_eq!(line.derivation.as_deref(), Some(&behind[..]), "{tag}: {key}'s line keeps the three engine rows behind it");
+                [attack, total, damage, threat].iter().map(|row| Derivation { source: format!("{} = {}", row.id, row.value), detail: row.detail.clone() }).collect();
+            assert_eq!(line.derivation.as_deref(), Some(&behind[..]), "{tag}: {key}'s line keeps the four engine rows behind it");
         }
         for line in &weapons.rows {
             assert!(
@@ -863,7 +858,7 @@ fn print_pf_blocks_weapons_print_as_one_table() {
         }
         let text = pdf_text(&render(&root, &request(false, false, false)));
         let block = &text[text.find("Weapons").expect("Weapons")..];
-        for caption in ["Atk.", "Dice", "Str", "Enh.", "Dmg", "Thr.", "Critical", "Wield", "Ammunition"] {
+        for caption in ["Weapon", "Attack", "Damage", "Critical", "Range", "Ammunition"] {
             assert!(block.contains(caption), "{tag}: the Weapons look prints `{caption}`: {block}");
         }
     }
@@ -1196,4 +1191,95 @@ fn print_pf_blocks_square_block_prints_the_engine_notes() {
     let printed = square_text(&text);
     let initiative_notes = &printed[printed.find("Initiative notes").expect("Initiative notes")..printed.find("Encumbrance notes").expect("Encumbrance notes")];
     assert!(initiative_notes.contains(&words), "`{words}` prints under Initiative notes: {printed}");
+}
+
+/// How often `token` prints as a word of its own in `text` (split on whitespace).
+fn word_count(text: &str, token: &str) -> usize {
+    text.split_whitespace().filter(|word| *word == token).count()
+}
+
+/// E2.10 (`decisions.md §23.1` items 3b, 4; §23.3): page 1 prints totals only. On Letter and A4,
+/// page 1's text holds none of the breakdown captions (`Temp`, `Base`, `Str`, `Enh.`, `Thr.`,
+/// `Wield`) beyond what the blocks E2.10 does not own print as their own words (the Attack box's
+/// `Base Attack Bonus`; the Skills' key abilities, E2.11's); the Abilities print score + modifier,
+/// the saves their totals, and each weapon line reads `<name> <attack> <damage total> <critical>`
+/// from the engine rows (`combat.weapon_attack_bonus.<weapon>`, `combat.weapon_damage_total.<weapon>`).
+#[test]
+fn print_pf_blocks_page_one_prints_totals_only() {
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    const CAPTIONS: [&str; 8] = ["Temp", "Base", "Str", "Enh.", "Thr.", "Wield", "Dice", "Dmg"];
+    for (tag, id) in [("totals-aldric", ALDRIC_ID), ("totals-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{tag}: the {id} row"));
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, one, _) = page_one_text(&root, paper, Vec::new());
+            // Each caption's words in the page-1 blocks E2.10 does not own, as the document holds them.
+            let elsewhere = |token: &str| {
+                use crate::print::print_golden::PAGE_ONE_BLOCKS;
+                document
+                    .blocks
+                    .iter()
+                    .filter(|block| PAGE_ONE_BLOCKS.contains(&block.id) && !["abilities", "saves", "weapons"].contains(&block.id))
+                    .flat_map(|block| std::iter::once(&block.heading).chain(block.rows.iter().flat_map(|r| std::iter::once(&r.label).chain(&r.values).chain(&r.notes))))
+                    .map(|piece| word_count(piece, token))
+                    .sum::<usize>()
+            };
+            for caption in CAPTIONS {
+                assert_eq!(word_count(&one, caption), elsewhere(caption), "{tag} {paper:?}: page 1 prints no `{caption}` caption: {one}");
+            }
+            let block = |id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{tag}: the {id} block")).clone();
+            assert!(block("abilities").rows.iter().all(|r| r.values.len() == 2), "{tag}: an ability prints score + modifier: {:?}", block("abilities").rows);
+            assert!(block("saves").rows.iter().all(|r| r.values.len() == 1), "{tag}: a save prints its total: {:?}", block("saves").rows);
+            for weapon in &loaded.weapon_damage {
+                let key = weapon.weapon_record_key.as_deref().expect("the seed's weapon resolves");
+                let slug: String = key.strip_suffix(" (Base)").unwrap_or(key).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect();
+                let dice = weapon.base_dice.as_ref().map(|dice| format!("{}d{}", dice.count, dice.die_size)).expect("the seed's weapon has dice");
+                let total = row(&format!("combat.weapon_damage_total.{slug}")).value;
+                let damage = if total == 0 { dice } else { format!("{dice}{}", signed(total)) };
+                let [low, high] = weapon.critical_threat_range.expect("a threat range");
+                let critical = format!("{}/x{}", if low == high { low.to_string() } else { format!("{low}-{high}") }, weapon.critical_multiplier.expect("a multiplier"));
+                let name = key.strip_suffix(" (Base)").unwrap_or(key);
+                let line = format!("{name} {} {damage} {critical}", signed(row(&format!("combat.weapon_attack_bonus.{slug}")).value));
+                assert!(one.contains(&line), "{tag} {paper:?}: the weapon line reads `{line}`: {one}");
+            }
+        }
+    }
+}
+
+/// E2.10 (`decisions.md §23.1` item 4): under the three save totals, each save's notes from E2.6
+/// (`label: value condition`), a note the rules give all three saves printed once, then two blank
+/// lines. A Dwarf (Aldric with his race saved as `race:dwarf`): Hardy's words (CRB p.21) print
+/// once under the saves; Bravery (CRB p.55, Will alone) prints too.
+#[test]
+fn print_pf_blocks_save_notes_print_under_the_saves() {
+    use codex::saved_character::local_store::SavedCharacterStore;
+    let root = seeded("save-notes-dwarf", ALDRIC_ID);
+    let mut envelope = SavedCharacterStore::load(&root).expect("the seed's envelope loads");
+    envelope.character_input.chosen.race_id = "race:dwarf".to_owned();
+    SavedCharacterStore::save(&envelope, &root).expect("the dwarf saves");
+    let loaded = load_saved_character_at_root(&root).expect("the dwarf loads");
+    let notes = &loaded.conditional_notes;
+    let hardy = notes.fortitude.iter().find(|note| note.label == "Hardy").unwrap_or_else(|| panic!("Hardy lands under Fortitude: {notes:?}"));
+    for list in [&notes.reflex, &notes.will] {
+        assert!(list.iter().any(|note| note.rule_id == hardy.rule_id), "Hardy lands under each save: {notes:?}");
+    }
+    let words = |note: &codex::rules_core::pilot_compute::conditional_notes::ConditionalNote| {
+        [note.value.as_str(), note.condition.as_str()].into_iter().filter(|part| !part.is_empty()).collect::<Vec<_>>().join(" ")
+    };
+    let hardy_words = format!("{}: {}", hardy.label, words(hardy));
+    let bravery = notes.will.iter().find(|note| note.label == "Bravery").expect("Bravery lands under Will");
+    let bravery_words = format!("{}: {}", bravery.label, words(bravery));
+
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let saves = document.blocks.iter().find(|block| block.id == "saves").expect("the saves block");
+    let printed: Vec<&String> = saves.rows.iter().flat_map(|row| &row.notes).collect();
+    assert_eq!(printed.iter().filter(|note| ***note == hardy_words).count(), 1, "Hardy prints once: {printed:?}");
+    assert!(printed.iter().any(|note| **note == bravery_words), "Bravery prints: {printed:?}");
+    for paper in [Paper::Letter, Paper::A4] {
+        let (_, one, _) = page_one_text(&root, paper, Vec::new());
+        let under = &one[one.find("Saving Throws").expect("the saves print")..];
+        assert_eq!(under.matches(&hardy_words).count(), 1, "{paper:?}: Hardy's words print once under the saves: {under}");
+        assert!(under.contains(&bravery_words), "{paper:?}: Bravery's words print under the saves: {under}");
+    }
 }

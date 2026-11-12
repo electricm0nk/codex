@@ -156,32 +156,30 @@ pub fn armor_class(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Armor Class", rows).in_look(Look::ArmorClass)
 }
 
-/// The screen's Saving Throws box (`saves`): each save's total, its class base save, its ability's
-/// modifier (Constitution, Dexterity, Wisdom), and the misc write-in.
+/// The screen's Saving Throws box (`saves`, SD-40 E2.10, `decisions.md §23.1` item 4): each save's
+/// total only (the breakdown is Show the math's), then the save's notes from the engine (E2.6), each
+/// `label: value condition`; a note the rules give more than one save (a Dwarf's Hardy) rides on the
+/// first and prints once. The look adds the two blank lines.
 pub fn saves(sources: &SheetSources) -> SheetBlock {
     let snapshot = sources.loaded.snapshot.as_ref();
-    let save = |label: &str, key: &str, pick: fn(&crate::character_hub::BaseSavesDto) -> i16, ability: fn(&crate::character_hub::AbilityModifiersDto) -> i16| {
-        line(
-            sources,
-            label,
-            vec![
-                with_sign(snapshot.map(|s| pick(&s.total_saves))),
-                with_sign(snapshot.map(|s| pick(&s.base_saves))),
-                with_sign(snapshot.map(|s| ability(&s.ability_modifiers))),
-                write_in(),
-            ],
-            &format!("defense.total_save.{key}"),
-        )
-    };
-    SheetBlock::new(
-        "Saving Throws",
-        vec![
-            save("Fortitude", "fortitude", |s| s.fortitude, |m| m.constitution),
-            save("Reflex", "reflex", |s| s.reflex, |m| m.dexterity),
-            save("Will", "will", |s| s.will, |m| m.wisdom),
-        ],
-    )
-    .in_look(Look::Saves)
+    let notes = &sources.loaded.conditional_notes;
+    let mut printed: Vec<&str> = Vec::new();
+    let mut rows = Vec::new();
+    for (label, key, total, list) in [
+        ("Fortitude", "fortitude", snapshot.map(|s| s.total_saves.fortitude), &notes.fortitude),
+        ("Reflex", "reflex", snapshot.map(|s| s.total_saves.reflex), &notes.reflex),
+        ("Will", "will", snapshot.map(|s| s.total_saves.will), &notes.will),
+    ] {
+        let mut own = Vec::new();
+        for note in list {
+            if !printed.contains(&note.rule_id.as_str()) {
+                printed.push(&note.rule_id);
+                own.push(note_words(note));
+            }
+        }
+        rows.push(line(sources, label, vec![with_sign(total)], &format!("defense.total_save.{key}")).with_notes(own));
+    }
+    SheetBlock::new("Saving Throws", rows).in_look(Look::Saves)
 }
 
 /// The screen's Attack box (`attack`): Base Attack Bonus, Melee, CMB and CMD.
@@ -205,13 +203,13 @@ pub fn speed(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Speed", vec![line(sources, "Land", vec![land], "speed.land")]).in_look(Look::Speed)
 }
 
-/// The screen's Abilities panel: each score and the engine's modifier, then the temp score and temp
-/// modifier write-ins.
+/// The screen's Abilities panel (SD-40 E2.10, `decisions.md §23.1` item 3b): each score and the
+/// engine's modifier only; the look leaves white space beside them for the pencil.
 pub fn abilities(sources: &SheetSources) -> SheetBlock {
     let scores = &sources.loaded.ability_scores;
     let modifiers = sources.loaded.snapshot.as_ref().map(|s| &s.ability_modifiers);
     let ability = |label: &str, key: &str, score: i16, modifier: Option<i16>| {
-        SheetRow::new(label, [score.to_string(), with_sign(modifier), write_in(), write_in()])
+        SheetRow::new(label, [score.to_string(), with_sign(modifier)])
             .derived(sources.derivation_of(&format!("ability_modifier.{key}")))
     };
     SheetBlock::new(

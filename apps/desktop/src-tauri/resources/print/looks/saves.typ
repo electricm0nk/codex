@@ -1,6 +1,6 @@
-// The `saves` look (SD-40 E2.1): Fortitude, Reflex, Will, each its total, then the class base
-// save, the ability modifier and the misc write-in, joined as the rule reads (total = base +
-// ability + misc). The signs are the words of the rule; the look adds nothing up (NR-2).
+// The `saves` look (SD-40 E2.1; E2.10 totals only, decisions.md §23.1 item 4): Fortitude, Reflex,
+// Will, each its total, then the save notes the engine states (each once), then two ruled lines
+// for the player. The look adds nothing up (NR-2).
 
 #let heading-of(b) = {
   text(size: 12pt, weight: "bold", b.heading)
@@ -17,19 +17,20 @@
 
 #let caption(t) = text(size: 8pt, fill: luma(60), t)
 
-// A row's notes (a rule's words, a condition), under the boxes.
+// A ruled line the player writes on.
+#let write-line = box(width: 100%, height: 0.4cm, stroke: (bottom: 0.5pt + luma(60)))
+
+// The rows' notes (a rule's words, a condition), under the boxes, then two ruled lines.
 #let notes-of(b) = {
   let notes = b.rows.map(r => r.notes).flatten()
-  if notes.len() > 0 {
-    v(0.2em)
-    stack(spacing: 0.45em, ..notes.map(n => text(size: 8.5pt, fill: luma(40), n)))
-  }
+  v(0.15em)
+  stack(spacing: 0.3em, ..notes.map(n => text(size: 8pt, fill: luma(40), n)), write-line, write-line)
 }
 
-#let captions = ("Total", "Base", "Ability", "Misc")
+#let captions = ("Total",)
 #let label-column = 1fr
-#let box-width = 0.85cm
-#let operators = true
+#let box-width = 1.1cm
+#let operators = false
 
 #let look(b) = {
   let n = b.value_columns
