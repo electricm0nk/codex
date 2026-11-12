@@ -456,6 +456,7 @@ pub(crate) mod tests {
                 sheet_rules_unavailable_reason,
                 feat_skill_bonuses,
                 conditional_notes,
+                languages: crate::character_hub::known_languages(),
             })
         }
     }

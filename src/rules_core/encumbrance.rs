@@ -366,6 +366,14 @@ pub struct EncumbranceComputation {
     pub load_armor_check_penalty: i16,
 }
 
+impl EncumbranceComputation {
+    /// Pounds the character can still carry before passing the heavy maximum: the heavy maximum
+    /// less the carried total, floored at 0 (an over-capacity load leaves nothing, not a negative).
+    pub fn remaining_lbs(&self) -> f64 {
+        (self.thresholds.heavy_max_lbs - self.total_carried_weight_lbs).max(0.0)
+    }
+}
+
 /// Carrying capacity is scaled by `size` per PF1's size rules; see
 /// `carrying_capacity_thresholds`.
 ///
@@ -631,6 +639,43 @@ mod tests {
             carrying_capacity_thresholds(30, SizeCategory::Medium),
             CarryingCapacityThresholds { light_max_lbs: 133.0 * 4.0, medium_max_lbs: 266.0 * 4.0, heavy_max_lbs: 400.0 * 4.0 }
         );
+    }
+
+    fn held(item_id: &str) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item_id.to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }
+    }
+
+    fn core_rulebook() -> SourcePackageContent<'static> {
+        use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+        use std::path::Path;
+        load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }])
+    }
+
+    /// SD-40 E2.8: what the sheet prints as "Remaining" is the heavy maximum less what is carried,
+    /// both from this computation. Strength 16 (heavy 230 lb, `load.lst` `LOAD:16|230`) carrying
+    /// the Core Rulebook's Chain Shirt (25 lb) and Longsword (4 lb): 230 − 29 = 201.
+    #[test]
+    fn remaining_lbs_is_the_heavy_maximum_less_the_carried_weight() {
+        let corpus = core_rulebook();
+        let load = compute_encumbrance(&[held("Chain Shirt (Base)"), held("Longsword (Base)")], &corpus, 16, SizeCategory::Medium);
+        assert_eq!((load.total_carried_weight_lbs, load.thresholds.heavy_max_lbs), (29.0, 230.0), "{load:#?}");
+        assert_eq!(load.remaining_lbs(), 201.0);
+        let empty = compute_encumbrance(&[], &corpus, 16, SizeCategory::Medium);
+        assert_eq!(empty.remaining_lbs(), 230.0, "nothing carried: the whole heavy maximum remains");
+    }
+
+    /// SD-40 E2.8: a load past the heavy maximum leaves 0 lb, never a negative figure. Strength 1
+    /// (heavy 10 lb) carrying the 25 lb Chain Shirt is over capacity.
+    #[test]
+    fn remaining_lbs_reads_zero_over_the_heavy_maximum() {
+        let load = compute_encumbrance(&[held("Chain Shirt (Base)")], &core_rulebook(), 1, SizeCategory::Medium);
+        assert_eq!((load.level, load.thresholds.heavy_max_lbs), (EncumbranceLevel::OverHeavyCapacity, 10.0), "{load:#?}");
+        assert_eq!(load.remaining_lbs(), 0.0);
     }
 
 

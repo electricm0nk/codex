@@ -138,6 +138,7 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
         lightMaxLbs: 76,
         mediumMaxLbs: 153,
         heavyMaxLbs: 230,
+        remainingLbs: 201,
         level: 'Light',
         loadArmorCheckPenalty: 0,
         perItem: [

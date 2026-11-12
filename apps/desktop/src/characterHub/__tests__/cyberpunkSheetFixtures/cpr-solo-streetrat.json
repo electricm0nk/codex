@@ -24,6 +24,7 @@
       "lightMaxLbs": 0.0,
       "mediumMaxLbs": 0.0,
       "heavyMaxLbs": 0.0,
+      "remainingLbs": 0.0,
       "level": "",
       "loadArmorCheckPenalty": 0,
       "perItem": [],
@@ -1005,5 +1006,8 @@
     "reflex": [],
     "will": [],
     "armorClass": []
+  },
+  "languages": {
+    "known": []
   }
 }

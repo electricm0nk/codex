@@ -324,6 +324,9 @@ pub struct EncumbranceDto {
     pub light_max_lbs: f64,
     pub medium_max_lbs: f64,
     pub heavy_max_lbs: f64,
+    /// SD-40 E2.8: pounds still carryable before the heavy maximum, floored at 0
+    /// (`EncumbranceComputation::remaining_lbs`). The screen and the print read it; neither subtracts.
+    pub remaining_lbs: f64,
     pub level: String,
     /// The max-Dex cap imposed by the *load tier alone*, absent under a
     /// light load. A consumer showing an effective cap must take the lower
@@ -721,6 +724,23 @@ pub struct LoadSavedCharacterResponse {
     /// same rendered lines). The print's square block and saves block list them; nothing is
     /// summed. Empty when the package is unavailable.
     pub conditional_notes: codex::rules_core::pilot_compute::conditional_notes::ConditionalNotes,
+    /// SD-40 E2.8: the languages the character knows (`known_languages`), what the Skills panel's
+    /// Languages line and the print list. No bonus-language slot count: page 1 prints none.
+    pub languages: LanguagesDto,
+}
+
+/// The languages a character knows, as the sheet lists them.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LanguagesDto {
+    pub known: Vec<String>,
+}
+
+/// A Pathfinder character's known languages. The saved character records no language choice and
+/// the app has no picker, so every character knows Common: each Core Rulebook race begins play
+/// speaking it, and it is the one language the sheet has always listed.
+pub(crate) fn known_languages() -> LanguagesDto {
+    LanguagesDto { known: vec!["Common".to_owned()] }
 }
 
 /// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
@@ -1372,6 +1392,7 @@ pub(crate) fn map_encumbrance_dto(
         light_max_lbs: encumbrance.thresholds.light_max_lbs,
         medium_max_lbs: encumbrance.thresholds.medium_max_lbs,
         heavy_max_lbs: encumbrance.thresholds.heavy_max_lbs,
+        remaining_lbs: encumbrance.remaining_lbs(),
         level: format!("{:?}", encumbrance.level),
         load_max_dex_cap: encumbrance.load_max_dex_cap,
         load_armor_check_penalty: encumbrance.load_armor_check_penalty,
@@ -2864,6 +2885,7 @@ pub(crate) fn load_saved_character_at_root(
         sheet_rules_unavailable_reason,
         feat_skill_bonuses,
         conditional_notes,
+        languages: known_languages(),
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
@@ -8258,6 +8280,7 @@ mod tests {
             light_max_lbs: 33.0,
             medium_max_lbs: 66.0,
             heavy_max_lbs: 100.0,
+            remaining_lbs: 100.0,
             level: "Light".to_owned(),
             load_max_dex_cap: None,
             load_armor_check_penalty: 0,
@@ -20723,6 +20746,32 @@ mod starter_seed_tests {
         assert_eq!(wills, [("Bravery", "", "+1 Will vs. fear")], "{aldric:#?}");
         let others = [&aldric.hit_points, &aldric.initiative, &aldric.fortitude, &aldric.reflex, &aldric.armor_class];
         assert!(others.iter().all(|l| l.is_empty()), "{aldric:#?}");
+    }
+
+    /// SD-40 E2.8: the load response states what the sheet prints as "Remaining" (the heavy
+    /// maximum less the carried total, floored at 0, computed in `rules_core::encumbrance`) and
+    /// the languages the character knows, so neither the screen nor the print re-derives them.
+    #[test]
+    fn remaining_lbs_and_known_languages_reach_the_load_response_of_the_seeds() {
+        let app_data_dir = temp_app_data_dir("remaining-lbs-languages-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded: Vec<serde_json::Value> = [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID]
+            .iter()
+            .map(|id| serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json"))
+            .collect();
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        for wire in &loaded {
+            let load = &wire["corpusDerived"]["encumbrance"];
+            let (heavy, carried) = (load["heavyMaxLbs"].as_f64().expect("heavy"), load["totalCarriedWeightLbs"].as_f64().expect("carried"));
+            let remaining = load["remainingLbs"].as_f64().expect("remainingLbs on the wire");
+            eprintln!("{}: heavy {heavy} carried {carried} remaining {remaining}", wire["summary"]["displayLabel"]);
+            assert_eq!(remaining, (heavy - carried).max(0.0), "{load}");
+            assert_eq!(wire["languages"], serde_json::json!({ "known": ["Common"] }), "{}", wire["languages"]);
+        }
+        let aldric = &loaded[0]["corpusDerived"]["encumbrance"];
+        // Aldric (Strength 19: heavy 350 lb; his kit weighs 29 lb): 350 - 29 = 321.
+        let numbers = ["heavyMaxLbs", "totalCarriedWeightLbs", "remainingLbs"].map(|key| aldric[key].as_f64());
+        assert_eq!(numbers, [Some(350.0), Some(29.0), Some(321.0)], "{aldric}");
     }
 
     /// SD-40 E2.6: a Dwarf's racial traits come from the race resolver (no trait passed by

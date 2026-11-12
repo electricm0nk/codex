@@ -414,9 +414,9 @@ function IdentityPanel(props: { name: string; campaign: string }) {
   );
 }
 
-/** Automatic PF1 languages: every character knows Common; a positive Int modifier grants that many bonus language slots. */
-function spokenLanguages(intelligenceModifier: number): string[] {
-  const languages = ['Common'];
+/** The engine's known languages (`languages.known`), then a positive Int modifier's bonus language slots. */
+function spokenLanguages(known: readonly string[], intelligenceModifier: number): string[] {
+  const languages = [...known];
   if (intelligenceModifier > 0) {
     languages.push(`+${intelligenceModifier} bonus language slot${intelligenceModifier > 1 ? 's' : ''} (not yet selectable)`);
   }
@@ -442,6 +442,8 @@ function SkillsPanel(props: {
    * total the printed sheet reads too.
    */
   explanations: readonly ExplanationDto[];
+  /** SD-40 E2.8: the sheet response's `languages.known`, printed on the Languages line. */
+  knownLanguages: readonly string[];
   onOpenDialog: () => void;
   custom: CharacterCustom;
 }) {
@@ -526,7 +528,7 @@ function SkillsPanel(props: {
         Languages
       </p>
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', margin: 0 }}>
-        {spokenLanguages(budgetIntelligence).join(', ')}
+        {spokenLanguages(props.knownLanguages, budgetIntelligence).join(', ')}
       </p>
     </StatBox>
   );
@@ -3000,6 +3002,8 @@ export function CharacterSheet(props: {
     skillAllocations: SkillAllocationEntryDto[] | null;
     /** What the character holds under an override; a mutation's response does not carry it. */
     admittedUnderOverride: AdmittedRecordDto[];
+    /** SD-40 E2.8: the engine's known languages (`languages.known`); empty until a read carries them. */
+    knownLanguages: string[];
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3010,6 +3014,7 @@ export function CharacterSheet(props: {
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
+    knownLanguages: props.detail?.languages?.known ?? [],
   });
   useEffect(() => {
     let cancelled = false;
@@ -3023,6 +3028,7 @@ export function CharacterSheet(props: {
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
+    knownLanguages: props.detail?.languages?.known ?? [],
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3037,6 +3043,7 @@ export function CharacterSheet(props: {
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
+      knownLanguages: loaded.languages?.known ?? [],
           });
         }
       })
@@ -3633,6 +3640,7 @@ export function CharacterSheet(props: {
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
+      knownLanguages: loaded.languages?.known ?? [],
     });
     await refreshDurability();
   }
@@ -3985,6 +3993,7 @@ export function CharacterSheet(props: {
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
+      knownLanguages: loaded.languages?.known ?? [],
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4481,6 +4490,7 @@ export function CharacterSheet(props: {
               allocation={skillAllocation}
               featSkillBonuses={engineRecords.featSkillBonuses}
               explanations={engineRecords.explanations}
+              knownLanguages={engineRecords.knownLanguages}
               onOpenDialog={() => setSkillDialogOpen(true)}
               custom={custom}
             />

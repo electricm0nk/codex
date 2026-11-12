@@ -159,6 +159,11 @@ export interface LoadSavedCharacterResponse {
    */
   conditionalNotes?: ConditionalNotesDto;
   /**
+   * SD-40 E2.8: the languages the character knows (`known_languages`), what the Skills panel's
+   * Languages line lists. Absent on a mutation refresh until the sheet re-reads.
+   */
+  languages?: LanguagesDto;
+  /**
    * SD-36 F7a: the engine's effective ability scores (`effective_ability_scores_dto`: the stored
    * score with the Human +2 applied) -- what the Abilities panel prints. Absent on a mutation
    * refresh (`toCharacterMutationRefresh`) until the sheet re-reads the character.
@@ -208,6 +213,11 @@ export interface ConditionalNoteDto {
   /** When it applies, in the engine's words. */
   condition: string;
   ruleId: string;
+}
+
+/** Mirrors `LanguagesDto` in `character_hub.rs`: the languages the character knows. */
+export interface LanguagesDto {
+  known: string[];
 }
 
 /** Mirrors `ConditionalNotes` (engine): the notes per total, in sheet-line order. */

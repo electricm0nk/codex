@@ -616,6 +616,7 @@ fn corpus_derived_dto(sheet: &SfSheet) -> CorpusDerivedDto {
             light_max_lbs: 0.0,
             medium_max_lbs: 0.0,
             heavy_max_lbs: 0.0,
+            remaining_lbs: 0.0,
             level: format!("{condition:?}").to_ascii_lowercase(),
             load_max_dex_cap: condition.max_dex_cap().map(to_i16),
             load_armor_check_penalty: to_i16(condition.check_penalty()),
@@ -811,6 +812,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
                         light_max_lbs: 0.0,
                         medium_max_lbs: 0.0,
                         heavy_max_lbs: 0.0,
+                        remaining_lbs: 0.0,
                         level: String::new(),
                         load_max_dex_cap: None,
                         load_armor_check_penalty: 0,
@@ -867,6 +869,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
             sheet_rules_unavailable_reason: None,
             feat_skill_bonuses: Default::default(),
             conditional_notes: Default::default(),
+            languages: Default::default(),
         })
     }
 }
