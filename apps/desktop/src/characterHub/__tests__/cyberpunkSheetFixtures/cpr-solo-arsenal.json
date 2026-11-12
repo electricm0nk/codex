@@ -2347,7 +2347,9 @@
     "fortitude": [],
     "reflex": [],
     "will": [],
-    "armorClass": []
+    "armorClass": [],
+    "combatManeuverBonus": [],
+    "combatManeuverDefense": []
   },
   "languages": {
     "known": []

@@ -20863,7 +20863,7 @@ mod starter_seed_tests {
         assert_eq!(spellcraft + 3 + int_mod, 12, "Spellcraft 5 + 3 + 4");
     }
 
-    /// SD-40 E2.6: the load response carries `conditionalNotes`, six lists. Aldric (Human
+    /// SD-40 E2.6: the load response carries `conditionalNotes`, six lists (eight since E2.19). Aldric (Human
     /// Fighter 3) holds one: CRB p.55 Bravery, "+1 Will vs. fear", under `will` alone; Elowen and
     /// Tomas carry the field too.
     #[test]
@@ -20879,13 +20879,25 @@ mod starter_seed_tests {
             let wire = serde_json::to_value(sheet).expect("json");
             let notes = wire["conditionalNotes"].as_object().expect("conditionalNotes on the wire");
             let keys: Vec<&str> = notes.keys().map(String::as_str).collect();
-            assert_eq!(keys, ["armorClass", "fortitude", "hitPoints", "initiative", "reflex", "will"]);
+            assert_eq!(
+                keys,
+                ["armorClass", "combatManeuverBonus", "combatManeuverDefense", "fortitude", "hitPoints", "initiative", "reflex", "will"]
+            );
         }
         let aldric = &loaded[0].conditional_notes;
         let wills: Vec<(&str, &str, &str)> =
             aldric.will.iter().map(|n| (n.label.as_str(), n.value.as_str(), n.condition.as_str())).collect();
         assert_eq!(wills, [("Bravery", "", "+1 Will vs. fear")], "{aldric:#?}");
-        let others = [&aldric.hit_points, &aldric.initiative, &aldric.fortitude, &aldric.reflex, &aldric.armor_class];
+        // E2.19: the CMB and CMD lists are on the wire and empty for Aldric.
+        let others = [
+            &aldric.hit_points,
+            &aldric.initiative,
+            &aldric.fortitude,
+            &aldric.reflex,
+            &aldric.armor_class,
+            &aldric.combat_maneuver_bonus,
+            &aldric.combat_maneuver_defense,
+        ];
         assert!(others.iter().all(|l| l.is_empty()), "{aldric:#?}");
     }
 

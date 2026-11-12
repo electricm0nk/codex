@@ -29,8 +29,14 @@
 //! made a note in a list under rule 1 adds no rule-2 note to that same list, and a list never
 //! holds the same `(label, value, condition)` twice.
 //!
-//! Not gathered (named remainder): Aspect `CombatBonus` entries (attack and AC against a named
-//! foe, e.g. Defensive Training); encumbrance (`BonusTarget` has no carrying-capacity target).
+//! 3. **Combat maneuvers** (SD-40 E2.19). Rule 1 on a `Cmb` / `Cmd` target, and rule 2 on an
+//!    Aspect `CombatBonus` entry whose words name CMB, CMD or combat maneuvers: words naming CMD,
+//!    or "against" a maneuver, -> combat maneuver defense; the rest -> combat maneuver bonus; a
+//!    note lands in one of the two, never both.
+//!
+//! Not gathered (named remainder): Aspect `CombatBonus` entries naming no combat maneuver (attack
+//! and AC against a named foe, e.g. Defensive Training); encumbrance (`BonusTarget` has no
+//! carrying-capacity target); a held rule with `print: false` (it renders no sheet line).
 
 use crate::rules_core::sheet_rule::{BonusTarget, ProseFamily, Save, SheetLine, SheetRulePackage};
 
@@ -58,9 +64,11 @@ pub struct ConditionalNotes {
     pub reflex: Vec<ConditionalNote>,
     pub will: Vec<ConditionalNote>,
     pub armor_class: Vec<ConditionalNote>,
+    pub combat_maneuver_bonus: Vec<ConditionalNote>,
+    pub combat_maneuver_defense: Vec<ConditionalNote>,
 }
 
-/// The six lists by name.
+/// The eight lists by name.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum List {
     HitPoints,
@@ -69,6 +77,8 @@ enum List {
     Reflex,
     Will,
     ArmorClass,
+    CombatManeuverBonus,
+    CombatManeuverDefense,
 }
 
 const ALL_SAVES: [List; 3] = [List::Fortitude, List::Reflex, List::Will];
@@ -82,6 +92,8 @@ impl ConditionalNotes {
             List::Reflex => &mut self.reflex,
             List::Will => &mut self.will,
             List::ArmorClass => &mut self.armor_class,
+            List::CombatManeuverBonus => &mut self.combat_maneuver_bonus,
+            List::CombatManeuverDefense => &mut self.combat_maneuver_defense,
         }
     }
 
@@ -94,7 +106,7 @@ impl ConditionalNotes {
     }
 }
 
-/// The list a bonus target feeds, if it is one of the six.
+/// The list a bonus target feeds, if it is one of the eight.
 fn target_list(target: Option<&BonusTarget>) -> Option<List> {
     match target? {
         BonusTarget::Hp => Some(List::HitPoints),
@@ -103,6 +115,8 @@ fn target_list(target: Option<&BonusTarget>) -> Option<List> {
         BonusTarget::Save(Save::Reflex) => Some(List::Reflex),
         BonusTarget::Save(Save::Will) => Some(List::Will),
         BonusTarget::Ac => Some(List::ArmorClass),
+        BonusTarget::Cmb => Some(List::CombatManeuverBonus),
+        BonusTarget::Cmd => Some(List::CombatManeuverDefense),
         _ => None,
     }
 }
@@ -112,6 +126,26 @@ const SAVE_ASPECTS: [&str; 3] = ["SaveBonus", "AllSaveBonus", "Save Bonus"];
 const REFLEX_ASPECT: &str = "RefSaveBonus";
 const WILL_ASPECT: &str = "WillSaveBonus";
 const AC_ASPECT: &str = "ModifyAC";
+const COMBAT_ASPECT: &str = "CombatBonus";
+
+/// The combat maneuvers (CRB pp.198-201, APG p.320-322) an "against" names.
+const MANEUVERS: [&str; 13] =
+    ["bull rush", "dirty trick", "disarm", "drag", "grapple", "overrun", "pull", "push", "reposition", "steal", "sunder", "trip", "combat maneuver"];
+
+/// The combat-maneuver list `words` feed (rule 3), or none when they name no combat maneuver.
+fn combat_maneuver_list(words: &str) -> Option<List> {
+    let lower = words.to_lowercase();
+    let names_cmd = names_word(&lower, "cmd") || lower.contains("combat maneuver defense");
+    if !(names_cmd || names_word(&lower, "cmb") || lower.contains("combat maneuver")) {
+        return None;
+    }
+    // "against" then a maneuver as whole words ("against dragons" is not "drag").
+    let against_maneuver = lower.match_indices("against ").any(|(at, word)| {
+        let rest = lower[at + word.len()..].trim_start_matches("a ").trim_start_matches("an ");
+        MANEUVERS.iter().any(|m| rest.starts_with(m) && !rest[m.len()..].starts_with(|c: char| c.is_ascii_alphanumeric()))
+    });
+    Some(if names_cmd || against_maneuver { List::CombatManeuverDefense } else { List::CombatManeuverBonus })
+}
 
 /// Whether `words` holds `name` as a whole word.
 fn names_word(words: &str, name: &str) -> bool {
@@ -124,6 +158,7 @@ fn aspect_lists(family: &str, words: &str) -> Vec<List> {
         AC_ASPECT => vec![List::ArmorClass],
         REFLEX_ASPECT => vec![List::Reflex],
         WILL_ASPECT => vec![List::Will],
+        COMBAT_ASPECT => combat_maneuver_list(words).into_iter().collect(),
         f if SAVE_ASPECTS.contains(&f) => {
             let named: Vec<List> = [(List::Fortitude, ["Fortitude", "Fort"]), (List::Reflex, ["Reflex", "Ref"]), (List::Will, ["Will", "Will"])]
                 .into_iter()
@@ -138,7 +173,7 @@ fn aspect_lists(family: &str, words: &str) -> Vec<List> {
 
 /// Whether `family` is one of the gathered Aspect families.
 fn gathered_aspect(family: &str) -> bool {
-    SAVE_ASPECTS.contains(&family) || [REFLEX_ASPECT, WILL_ASPECT, AC_ASPECT].contains(&family)
+    SAVE_ASPECTS.contains(&family) || [REFLEX_ASPECT, WILL_ASPECT, AC_ASPECT, COMBAT_ASPECT].contains(&family)
 }
 
 /// The conditional notes over a character's rendered `lines` (see the module doc).
@@ -146,7 +181,7 @@ pub fn conditional_notes(package: &SheetRulePackage, lines: &[SheetLine]) -> Con
     let mut out = ConditionalNotes::default();
     for line in lines {
         let Some(rule) = package.rule(&line.id) else { continue };
-        // Rule 1: a situational bonus line on one of the six totals.
+        // Rule 1: a situational bonus line on one of the eight totals.
         let situational_list = match (&line.condition, target_list(rule.target.as_ref())) {
             (Some(condition), Some(list)) => {
                 out.push(
@@ -201,6 +236,7 @@ mod tests {
     use super::*;
     use crate::rules_core::character_input::CharacterInput;
     use crate::rules_core::class_census::load_sweep_fixture;
+    use crate::rules_core::sheet_rule::ProsePiece;
     use crate::rules_core::sheet_rule_package;
 
     fn package() -> &'static SheetRulePackage {
@@ -279,6 +315,52 @@ mod tests {
         assert_eq!(notes, ConditionalNotes::default(), "{notes:#?}");
     }
 
+    /// SD-40 E2.19, the two combat-maneuver lists. CRB p.21, Dwarf Stability: "+4 bonus to their
+    /// Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the
+    /// ground" -> `combat_maneuver_defense`. ARG p.11, Relentless (replaces Stability): "+2 bonus
+    /// on Combat Maneuver checks made to bull rush or overrun an opponent" -> `combat_maneuver_bonus`.
+    /// Each lands once, in its one list. The routing over the words: naming CMD, or "against" a
+    /// maneuver, is CMD (ACG Verminous Hunter, Vermin Focus centipede: "+2 on CMD against pull,
+    /// push, reposition, and trip combat maneuvers"); the rest is CMB; words naming neither feed
+    /// no list.
+    #[test]
+    fn conditional_notes_gather_combat_maneuver_bonuses() {
+        let mut dwarf = census("fighter", 1);
+        dwarf.chosen.race_id = "race:dwarf".to_owned();
+        let stable = notes_for(&dwarf, &["Dwarf ~ Stability"]);
+        let stability = ConditionalNote {
+            label: "Stability".to_owned(),
+            value: String::new(),
+            condition: "+4 bonus to their Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground.".to_owned(),
+            rule_id: "core_rulebook:race_trait:dwarf_stability".to_owned(),
+        };
+        assert_eq!(stable.combat_maneuver_defense, vec![stability], "{stable:#?}");
+        assert!(stable.combat_maneuver_bonus.is_empty(), "{stable:#?}");
+
+        let relentless = notes_for(&dwarf, &["Dwarf ~ Relentless"]);
+        let cmb: Vec<(&str, &str)> =
+            relentless.combat_maneuver_bonus.iter().map(|n| (n.label.as_str(), n.condition.as_str())).collect();
+        assert_eq!(
+            cmb,
+            [("Relentless", "+2 bonus on Combat Maneuver checks made to bull rush or overrun an opponent. This bonus only applies while both the dwarf and his opponent are standing on the ground.")],
+            "{relentless:#?}"
+        );
+        assert!(relentless.combat_maneuver_defense.iter().all(|n| !n.rule_id.contains("relentless")), "{relentless:#?}");
+
+        assert_eq!(combat_maneuver_list("+2 on CMD against pull, push, reposition, and trip combat maneuvers"), Some(List::CombatManeuverDefense));
+        assert_eq!(combat_maneuver_list("+3 alchemical bonus on Strength checks and to CMB and CMD."), Some(List::CombatManeuverDefense), "once, in CMD");
+        assert_eq!(combat_maneuver_list("+4 racial bonus against bull rush or trip combat maneuvers"), Some(List::CombatManeuverDefense), "against a maneuver");
+        assert_eq!(
+            combat_maneuver_list("+2 dodge bonus to AC against monsters of the aberration type and a +2 racial bonus to their CMB on attempts made to grapple such creatures"),
+            Some(List::CombatManeuverBonus),
+            "'against monsters' is not against a maneuver"
+        );
+        assert_eq!(combat_maneuver_list("+2 racial bonus on combat maneuver checks to escape a grapple against any creature"), Some(List::CombatManeuverBonus));
+        assert_eq!(combat_maneuver_list("+1 on attack rolls against goblinoids"), None);
+        assert_eq!(combat_maneuver_list("+2 bonus against bull rush attempts"), None, "names no combat maneuver: not gathered");
+        assert_eq!(combat_maneuver_list("+1 on combat maneuver checks against dragons"), Some(List::CombatManeuverBonus), "'dragons' is not 'drag'");
+    }
+
     /// The save an Aspect entry's words name picks its list; no name means all three.
     #[test]
     fn conditional_notes_route_save_aspects_by_the_words() {
@@ -299,7 +381,8 @@ mod tests {
     /// (`python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r1/census.py`:
     /// Hp 15, Initiative 10, Fortitude 52, Reflex 58, Will 78, Ac 178; SaveBonus 407,
     /// AllSaveBonus 3, Save Bonus 2, WillSaveBonus 3, RefSaveBonus 2, ModifyAC 6). A converter
-    /// change that moves the population shows here.
+    /// change that moves the population shows here. SD-40 E2.19: + the 22 CombatBonus entries
+    /// naming a combat maneuver (`replan-r2/census.py` (c)).
     #[test]
     fn conditional_notes_census_matches_the_package() {
         let mut by_target = std::collections::BTreeMap::<&str, usize>::new();
@@ -313,11 +396,21 @@ mod tests {
                     List::Reflex => "Reflex",
                     List::Will => "Will",
                     List::ArmorClass => "Ac",
+                    List::CombatManeuverBonus => "Cmb",
+                    List::CombatManeuverDefense => "Cmd",
                 }).or_default() += 1;
             }
             for segment in &rule.prose {
-                if matches!(&segment.family, ProseFamily::Aspect(name) if gathered_aspect(name)) {
-                    *by_target.entry("aspect entries").or_default() += 1;
+                match &segment.family {
+                    ProseFamily::Aspect(name) if name == COMBAT_ASPECT => {
+                        let words: String =
+                            segment.pieces.iter().filter_map(|p| if let ProsePiece::Text(t) = p { Some(t.as_str()) } else { None }).collect();
+                        if combat_maneuver_list(&words).is_some() {
+                            *by_target.entry("combat maneuver entries").or_default() += 1;
+                        }
+                    }
+                    ProseFamily::Aspect(name) if gathered_aspect(name) => *by_target.entry("aspect entries").or_default() += 1,
+                    _ => {}
                 }
             }
         }
@@ -330,6 +423,9 @@ mod tests {
             ("Will", 78),
             ("Ac", 178),
             ("aspect entries", 407 + 3 + 2 + 3 + 2 + 6),
+            // replan-r2/census.py (c): "of the 314 CombatBonus aspects 22 name CMB, CMD or combat
+            // maneuver"; situational Cmb 0, Cmd 0 (no entry).
+            ("combat maneuver entries", 22),
         ]
         .into_iter()
         .collect();

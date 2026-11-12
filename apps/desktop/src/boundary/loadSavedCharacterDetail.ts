@@ -152,8 +152,8 @@ export interface LoadSavedCharacterResponse {
    */
   featSkillBonuses: FeatSkillBonusesDto;
   /**
-   * SD-40 E2.6: the conditional bonuses on Hit Points, Initiative, the three saves and Armor Class
-   * that the engine prints with their condition and never adds to the total
+   * SD-40 E2.6: the conditional bonuses on Hit Points, Initiative, the three saves, Armor Class
+   * and (E2.19) CMB and CMD that the engine prints with their condition and never adds to the total
    * (`conditional_notes::conditional_notes`). The print lists them; the screen does not read them
    * yet. Absent on a mutation refresh (`toCharacterMutationRefresh`) until the sheet re-reads.
    */
@@ -233,6 +233,9 @@ export interface ConditionalNotesDto {
   reflex: ConditionalNoteDto[];
   will: ConditionalNoteDto[];
   armorClass: ConditionalNoteDto[];
+  /** SD-40 E2.19: CMB and CMD notes (combat maneuver words; "against" a maneuver is CMD). */
+  combatManeuverBonus: ConditionalNoteDto[];
+  combatManeuverDefense: ConditionalNoteDto[];
 }
 
 /** No feat skill bonus: the value a response carries before the engine has answered. */
