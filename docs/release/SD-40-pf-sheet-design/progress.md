@@ -143,6 +143,7 @@ deltas, what was looked at, retro summary, worktrees swept)
 - **Retro summary:** `python3 scripts/retro.py summary --since 2026-11-07 --actor sd40-e2.1 --actor sd40-e2.2 --actor sd40-e2.3 --actor sd40-e2.mc --json` → 15 events (correction 7, note 4, rework 1, verification 3 — the third is this card's `verify.sh --only clippy` run; 0 incidents, 0 deferrals, 0 recurrence keys). Category recurring: FILES YOU OWN not closed under `blocks.typ` (E2.1, E2.2, E2.3: > 2, R-W) → control: the E3 rows now name it, and `print_pf_blocks_every_look_has_its_template` already exits non-zero on a look the dispatcher lacks.
 - **Open blockers:** none. Open cards: E2.4 (discovered, `waiting` on E2.MC → ready); E2.5 (portrait box, operator at E2.G round 1, 2026-11-11, `decisions.md §23`). (Both rewritten by the 2026-11-11 replan above.)
 - **2026-11-11 E2.G round 1:** operator: "We need to include a spot for the portrait on the top left corner." → E2.5 carded by the lead; run restarts at E2.MC (drains E2.4, E2.5, re-runs E2.MC, re-renders E2.G).
+- **2026-11-12 E2.G round 2:** PDFs + PNGs re-rendered from `7bb1b2c874` into `artifacts/epic_2/E2.G/` (2 PDFs, 8 PNGs); receipt holds two empty `usable:` lines; E2.G stays `partial` awaiting the operator.
 - **Worktrees swept:** `.worktrees/sd40-e2mc-base` (E2.MC's C1 base tree) and `/home/ubuntu/cargo-target/sd40-e2mc-base`; no other `sd40-*` side worktree existed (`git worktree list`: the main checkout and `sd40-main`). `sd40-main` kept.
 
 ### Epic report — E2 round 2 (page 1 redesigned), by E2.MC2, 2026-11-12
