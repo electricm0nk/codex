@@ -162,12 +162,15 @@ pub enum Look {
     /// The Resistances block (SD-40 E2.22): five energy boxes, Damage Reduction, Spell Resistance and
     /// Immunities, each empty when the character has none.
     Resistances,
+    /// A section's title (SD-40 E2.23, `decisions.md §24.3.7`): full width, larger and bolder than any
+    /// block heading, a rule under it; it opens each section after page 1.
+    SectionTitle,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 14] = [
+    pub const ALL: [Look; 15] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -182,6 +185,7 @@ impl Look {
         Look::Languages,
         Look::ConditionalBonuses,
         Look::Resistances,
+        Look::SectionTitle,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -201,6 +205,7 @@ impl Look {
             Look::Languages => "languages",
             Look::ConditionalBonuses => "conditional-bonuses",
             Look::Resistances => "resistances",
+            Look::SectionTitle => "section-title",
         }
     }
 }

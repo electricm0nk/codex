@@ -22,13 +22,14 @@ const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
 const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
-/// The 22 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
+/// The 25 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
 /// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the round-2 grid (E2.18,
 /// `decisions.md §24.3.1`: the AC boxes with no heading, then Speed; the left column, then the
-/// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Identity
-/// block opening page 2 (E2.5), the Languages under the portrait (E2.13), the Conditional Bonuses
-/// box under the Saving Throws (E2.20), the Resistances block under it (E2.22).
-const BASE_HEADINGS: [&str; 22] = [
+/// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Languages
+/// under the portrait (E2.13), the Conditional Bonuses box under the Saving Throws (E2.20), the
+/// Resistances block under it (E2.22); then the sections, each under its title (E2.23,
+/// `decisions.md §24.3.7`): Abilities and Feats, Inventory, Bio (the Identity block).
+const BASE_HEADINGS: [&str; 25] = [
     "Portrait",
     "Languages",
     "Character Name",
@@ -42,15 +43,18 @@ const BASE_HEADINGS: [&str; 22] = [
     "Resistances",
     "Abilities",
     "Skills",
-    "Identity",
-    "Armor",
-    "Inventory",
+    "Abilities and Feats",
     "Feats",
     "Class Features",
+    "Actions",
     "Spells",
     "Custom",
     "Pets",
-    "Actions",
+    "Inventory",
+    "Armor",
+    "Inventory",
+    "Bio",
+    "Identity",
 ];
 const SPELLBOOK: &str = "Spellbook";
 const MATH: &str = "Show the Math";
@@ -104,9 +108,10 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let all = request(true, true, true);
         let document = sheet_document_at_root(&root, &all).expect("the document builds");
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
-        let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
-        expected.extend([SPELLBOOK, MATH, BIO]);
-        assert_eq!(headings, expected, "{tag}: the 24 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
+        // Every option: the Spellbook section before Bio, the Bio notes in Bio, the Math section last.
+        let mut expected: Vec<&str> = BASE_HEADINGS[..BASE_HEADINGS.len() - 2].to_vec();
+        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Identity", BIO, "Math", MATH]);
+        assert_eq!(headings, expected, "{tag}: the 32 blocks and titles, in the layout file's order");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -136,12 +141,14 @@ fn print_pf_blocks_each_option_adds_pages() {
         let basic = page_count(&render(&root, &request(false, false, false)));
         let spellbook = page_count(&render(&root, &request(true, false, false)));
         let math = page_count(&render(&root, &request(false, true, false)));
-        let bio = page_count(&render(&root, &request(false, false, true)));
+        let bio_pdf = render(&root, &request(false, false, true));
+        let bio = page_count(&bio_pdf);
         let full = page_count(&render(&root, &request(true, true, true)));
         eprintln!("{tag}: pages basic {basic}, spellbook {spellbook}, math {math}, bio {bio}, full {full}");
         assert!(spellbook > basic, "{tag}: Spellbook on adds a page ({basic} -> {spellbook})");
         assert!(math > basic, "{tag}: Show the math on adds a page ({basic} -> {math})");
-        assert!(bio > basic, "{tag}: Bio and campaign notes on adds a page ({basic} -> {bio})");
+        // The Bio section prints on every sheet (E2.23); its notes join it, on its pages, when asked.
+        assert!(bio >= basic && pdf_text(&bio_pdf).contains(BIO), "{tag}: Bio and campaign notes on prints them in the Bio section ({basic} -> {bio})");
         assert!(full > spellbook && full > math && full > bio, "{tag}: full is longer than any one option ({full})");
     }
 }
@@ -268,11 +275,11 @@ fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let roster = crate::character_hub::list_race_creation_roster();
     let race = roster.races.iter().find(|race| race.race_id == loaded.summary.race_id).expect("the seed's race is on the roster");
     let text = pdf_text(&render(&root, &request(false, false, false)));
-    let identity = &text[text.find("Identity").expect("Identity")..];
-    let identity = &identity[..identity.find("Armor").expect("the Armor block follows the Identity block")];
+    // The Identity block is the Bio section's, the sheet's last on the basic sheet (E2.23).
+    let identity = &text[text.find("Bio Identity").expect("the Bio section opens with the Identity block")..];
     assert!(identity.contains(&format!("Size {}", race.size)), "Size {}: {identity}", race.size);
     assert!(identity.contains(&format!("Vision {}", race.vision)), "Vision {}: {identity}", race.vision);
-    let inventory = &text[text.find("Inventory").expect("Inventory")..text.find("Feats").expect("Feats")];
+    let inventory = gear_text(&text);
     for (label, value) in [("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)] {
         assert!(inventory.contains(&format!("{label} {value}")), "{label} {value}: {inventory}");
     }
@@ -358,6 +365,14 @@ fn print_pf_blocks_an_override_tag_prints_on_what_it_let_in() {
     assert!(text.contains("Override: Feats without prerequisites"), "the tag prints on the feat: {text}");
 }
 
+/// The Inventory block's text: in the Inventory section (its title, then the Armor block), up to the
+/// Bio section's title over the Identity block (E2.23).
+fn gear_text(text: &str) -> &str {
+    let section = &text[text.find("Inventory Armor").expect("the Inventory section opens with the Armor block") + "Inventory".len()..];
+    let gear = &section[section.find("Inventory").expect("the Inventory block")..];
+    &gear[..gear.find("Bio Identity").expect("the Bio section follows the Inventory")]
+}
+
 #[test]
 fn print_pf_blocks_a_left_behind_item_is_owned_with_no_weight() {
     let root = seeded("left-behind-aldric", ALDRIC_ID);
@@ -365,7 +380,7 @@ fn print_pf_blocks_a_left_behind_item_is_owned_with_no_weight() {
     let held = list_held_equipment_at_root(&root).expect("held");
     assert!(held.iter().any(|copy| copy.item_id == "item:chain_shirt" && copy.active_state == ActiveStateDto::Absent));
     let text = pdf_text(&render(&root, &request(false, false, false)));
-    let inventory = &text[text.find("Inventory").expect("Inventory")..text.find("Feats").expect("Feats")];
+    let inventory = gear_text(&text);
     assert!(inventory.contains("Chain Shirt Left behind"), "listed as owned: {inventory}");
     assert!(inventory.contains("Left behind no weight"), "with no weight: {inventory}");
     // The loadout's `item:shield` row and the Power Attack toggle are not things the character owns.
@@ -766,7 +781,7 @@ fn print_pf_blocks_skills_print_every_panel_row_in_one_column() {
         let page = pages.iter().find(|text| text.contains(&first)).unwrap_or_else(|| panic!("{tag}: `{first}` prints on a Letter page"));
         assert!(page.contains("Weapons"), "{tag}: the Weapons print on the Skills' Letter page: {page}");
         let text = pdf_text(&pdf);
-        let block = &text[text.find("Skills").expect("Skills")..text.find("Identity").expect("Identity")];
+        let block = &text[text.find("Skills").expect("Skills")..text.find("Abilities and Feats").expect("the next section's title")];
         for line in &lines {
             assert!(block.contains(line.as_str()), "{tag}: the Skills block prints `{line}`: {block}");
             let name = line.rsplit_once(' ').map(|(name, _)| name).unwrap_or_default();
@@ -845,7 +860,7 @@ fn print_pf_blocks_weapons_print_as_one_table() {
 /// Page 1 is whole (operator ruling R5, SD-40 `technical-design.md §4`): the PDF's text before
 /// page 1's footer holds the character's details and every step-1 block, each found by its heading
 /// and its first printed words; and the text after that footer starts with the block page 2 opens
-/// with (`characterDetails`, E2.5; `defense` before it), so no page-1 block ran over onto page 2 (E2.MC: an anchor alone passes a
+/// with (the Abilities and Feats section's title, E2.23), so no page-1 block ran over onto page 2 (E2.MC: an anchor alone passes a
 /// block whose tail spilled).
 fn assert_page_one_whole(tag: &str, document: &crate::print::model::SheetDocument, pdf: &[u8]) {
     use crate::print::print_golden::{block_anchor, page_one, PAGE_ONE_BLOCKS};
@@ -859,7 +874,7 @@ fn assert_page_one_whole(tag: &str, document: &crate::print::model::SheetDocumen
         assert!(first.contains(&block_anchor(block)), "{tag}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
     }
     let (_, after) = text[one.len()..].split_once(&format!("page 1 of {pages}")).unwrap_or_else(|| panic!("{tag}: page 1's footer"));
-    let second = document.blocks.iter().find(|block| block.id == "characterDetails").expect("the Identity block");
+    let second = document.blocks.iter().find(|block| block.id == "abilitiesAndFeatsTitle").expect("the Abilities and Feats title");
     assert!(
         unspaced(after).starts_with(&block_anchor(second)),
         "{tag}: page 2 starts with {:?}, nothing of page 1 ran over; page 2 reads: {}",
@@ -1053,9 +1068,8 @@ fn print_pf_blocks_page_one_lists_continue_on_page_two_and_no_block_leaves() {
                 assert!(second[at..].contains(&line), "{tag}: `{line}` prints under `{heading} (continued)`; page 2 reads: {second}");
                 continued += 1;
             }
-            let identity = document.blocks.iter().find(|block| block.id == "characterDetails").expect("the Identity block");
             if continued == 0 {
-                assert!(second.starts_with(&block_anchor(identity)), "{tag}: nothing continues, page 2 opens with the Identity; page 2 reads: {second}");
+                assert!(second.starts_with(&unspaced("Abilities and Feats")), "{tag}: nothing continues, page 2 opens the Abilities and Feats section; page 2 reads: {second}");
             } else {
                 let opens = document.blocks.iter().any(|block| second.starts_with(&unspaced(&format!("{} (continued)", block.heading))));
                 assert!(opens, "{tag}: page 2 opens with a continuation; page 2 reads: {second}");
@@ -1103,7 +1117,7 @@ fn page_one_text(root: &Path, paper: Paper, campaigns: Vec<CampaignNote>) -> (cr
 
 /// E2.5 (`decisions.md §23.1` items 1, 2): page 1 opens with the portrait box and the Character
 /// Name and Campaign fields, with no title above them; the name prints once on page 1 (the footer
-/// keeps it, §23.6 Q4); the Identity block has left page 1 and opens page 2. Letter and A4.
+/// keeps it, §23.6 Q4); the Identity block has left page 1 (for the Bio section, E2.23). Letter and A4.
 #[test]
 fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
     let root = seeded("header-no-portrait", ALDRIC_ID);
@@ -1118,8 +1132,9 @@ fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
         assert_eq!(image_objects(&pdf), 0, "{paper:?}: no portrait saved, no image printed");
         let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
         assert_eq!(&ids[..3], ["portrait", "languages", "nameCampaign"], "{paper:?}: the top band's blocks lead the sheet (the Languages line under the portrait, E2.13)");
-        let identity = document.blocks.iter().find(|block| block.id == "characterDetails").expect("the Identity block still prints");
-        assert!(identity.new_page, "{paper:?}: the Identity block opens page 2");
+        let next = document.blocks.iter().position(|block| block.new_page).expect("a block opens page 2");
+        let identity = document.blocks.iter().position(|block| block.id == "characterDetails").expect("the Identity block still prints");
+        assert!(identity > next, "{paper:?}: the Identity block prints after page 1, in the Bio section");
     }
 }
 
@@ -1926,6 +1941,103 @@ fn print_pf_blocks_resistances_print_boxes_and_values() {
                 std::fs::create_dir_all(&out).expect("the output dir is creatable");
                 std::fs::write(Path::new(&out).join(format!("resist-{}.pdf", tag.replace(' ', "-"))), &pdf).expect("the PDF writes");
             }
+        }
+    }
+}
+
+/// The section titles after Primary, in the operator's order (E2.23, `decisions.md §24.3.7`;
+/// Progression's arrives with E3.7).
+const SECTION_TITLES: [&str; 5] = ["Abilities and Feats", "Inventory", "Spellbook", "Bio", "Math"];
+
+/// The PDF's text page by page: each page's words before its footer (`<title> · page <n> of <pages>`).
+fn pages_text(text: &str, title: &str, pages: usize) -> Vec<String> {
+    let title = title.split_whitespace().collect::<Vec<_>>().join(" ");
+    let mut rest = text;
+    (1..=pages)
+        .map(|page| {
+            let footer = format!("{title} · page {page} of {pages}");
+            let (on_page, after) = rest.split_once(&footer).unwrap_or_else(|| panic!("page {page}'s footer prints: {rest}"));
+            rest = after;
+            on_page.trim().to_owned()
+        })
+        .collect()
+}
+
+/// E2.23 (`decisions.md §24.3.7`): each section after Primary starts a page under its prominent
+/// title and ends with a page break: the titles are each the first text of a page, in order, and
+/// each section's blocks are the operator's list, so no page holds blocks of two sections.
+/// Aldric with every option, Letter and A4.
+#[test]
+fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
+    let root = seeded("sections", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("aldric all {paper:?}");
+        let printed = PrintRequest { paper, ..request(true, true, true) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        // The sections as the document holds them: each title, then its blocks up to the next title.
+        let mut sections: Vec<(&str, Vec<&str>)> = Vec::new();
+        for block in &document.blocks {
+            if block.look.name() == "section-title" {
+                assert!(block.new_page, "{tag}: the {} title starts a page", block.heading);
+                sections.push((block.heading.as_str(), Vec::new()));
+            } else if let Some((_, ids)) = sections.last_mut() {
+                assert!(!block.new_page, "{tag}: {} breaks no page inside its section", block.heading);
+                ids.push(block.id);
+            }
+        }
+        let expected: Vec<(&str, Vec<&str>)> = vec![
+            ("Abilities and Feats", vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
+            ("Inventory", vec!["defense", "gear"]),
+            ("Spellbook", vec!["spellbook"]),
+            ("Bio", vec!["characterDetails", "bioNotes"]),
+            ("Math", vec!["math"]),
+        ];
+        assert_eq!(sections, expected, "{tag}: the sections, their titles and their blocks, in the operator's order");
+
+        let pdf = render(&root, &printed);
+        let pages = page_count(&pdf);
+        let text = pdf_text(&pdf);
+        let on_pages = pages_text(&text, &document.title, pages);
+        let mut last = 0;
+        for title in SECTION_TITLES {
+            let at = on_pages
+                .iter()
+                .position(|page| page.starts_with(title))
+                .unwrap_or_else(|| panic!("{tag}: `{title}` is the first text of a page; pages open: {:?}", on_pages.iter().map(|p| p.chars().take(40).collect::<String>()).collect::<Vec<_>>()));
+            assert!(at > last, "{tag}: `{title}` opens page {} after the section before it (page {})", at + 1, last + 1);
+            last = at;
+        }
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("sections-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+        }
+    }
+}
+
+/// E2.23 (`decisions.md §24.3.7`): Primary (page 1) carries no section title: the document holds a
+/// title per section asked for, none of them in page 1's run, and page 1's text prints none.
+/// Aldric with no option and with every option, Letter and A4.
+#[test]
+fn print_pf_blocks_page_one_carries_no_section_title() {
+    let root = seeded("page-one-untitled", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        for (options, all) in [("none", false), ("all", true)] {
+            let tag = format!("aldric {options} {paper:?}");
+            let printed = PrintRequest { paper, ..request(all, all, all) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let titles: Vec<&str> = document.blocks.iter().filter(|block| block.look.name() == "section-title").map(|block| block.heading.as_str()).collect();
+            let expected: Vec<&str> = if all { SECTION_TITLES.to_vec() } else { vec!["Abilities and Feats", "Inventory", "Bio"] };
+            assert_eq!(titles, expected, "{tag}: a title per section printed");
+            let page_one_run = document.blocks.iter().skip(1).position(|block| block.new_page).map_or(document.blocks.len(), |at| at + 1);
+            assert!(
+                document.blocks[..page_one_run].iter().all(|block| block.look.name() != "section-title"),
+                "{tag}: page 1's run holds no section title"
+            );
+            let pdf = render(&root, &printed);
+            let text = pdf_text(&pdf);
+            let one = &pages_text(&text, &document.title, page_count(&pdf))[0];
+            assert!(one.starts_with("Character Name"), "{tag}: page 1 opens with the Character Name field, untitled: {one}");
+            assert!(!one.contains("Abilities and Feats"), "{tag}: page 1 prints no section title: {one}");
         }
     }
 }

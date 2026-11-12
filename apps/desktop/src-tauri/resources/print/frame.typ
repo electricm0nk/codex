@@ -126,8 +126,10 @@
     }
   }
   grid-run(columns, cut(keep))
+  // Page 1's continuations take page 2 for themselves: the next run opens a section under its title
+  // (E2.23), and no page holds blocks of two sections.
   if continued.len() > 0 {
-    if rest.len() > 0 { rest.at(0) = continued + rest.at(0) } else { rest.push(continued) }
+    rest.insert(0, continued)
   }
   for run in rest {
     pagebreak(weak: true)

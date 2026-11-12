@@ -6,18 +6,18 @@
 //! beside it; then a left column of the square block (Hit Points, Initiative, Encumbrance,
 //! Conditions, E2.9), the Weapons, the Attack, the Saving Throws and the Conditional Bonuses box
 //! (E2.20), and a right column of one width
-//! holding the Abilities over the Skills (one column, name + total, E2.11). Page 2 starts with the
-//! Identity block, then the armor; gear, feats, features, spells, custom records, pets and actions
-//! follow; then the option blocks, each on pages of its
-//! own: Spellbook, Show the math, Bio and campaign notes (R4). The blocks
+//! holding the Abilities over the Skills (one column, name + total, E2.11). Then the sections
+//! (`decisions.md §24.3.7`, E2.23), each from a new page under its title: Abilities and Feats,
+//! Inventory, Spellbook (when asked), Bio (the Identity block, then the bio and campaign notes when
+//! asked), Math (when asked). The blocks
 //! themselves (`print/blocks/`) read what the Character Sheet reads; nothing here computes a
 //! number (NR-2).
 
 use crate::print::blocks::{self, SheetSources};
 use crate::print::layout::Placed;
-use crate::print::model::{SheetBlock, SheetDocument};
+use crate::print::model::{Look, SheetBlock, SheetDocument};
 
-/// The sheet's blocks, in print order, each under its vocabulary id (`golden/block_vocabulary.json`).
+/// Primary (page 1): its blocks, in print order, each under its vocabulary id (`golden/block_vocabulary.json`).
 const SHEET: &[Placed] = &[
     // Row 1 and row 2 (`decisions.md §24.3.1`): the portrait's cell is two rows tall, so the name
     // row and the AC row sit beside it; the Languages line is stacked in its cell under the box.
@@ -36,47 +36,47 @@ const SHEET: &[Placed] = &[
     Placed::under("resistances", blocks::resistances, 0, 7),
     Placed::at("abilities", blocks::abilities, 7, 5),
     Placed::under("skills", blocks::skills, 7, 5),
-    // Page 2 opens with the Identity block until the Bio pages take it (E3.4).
-    Placed::full("characterDetails", blocks::character_details),
-    Placed::full("defense", blocks::armor),
-    Placed::full("gear", blocks::inventory),
+];
+
+/// The sections after Primary (page 1), in the operator's order (`decisions.md §24.3.7`, E2.23): each
+/// opens a page under its title (vocabulary id, words) and ends with a page break, so it prints
+/// alone. Spellbook and Math print when asked; Bio's notes join its Identity block when asked.
+const ABILITIES_AND_FEATS: &[Placed] = &[
     Placed::full("feats", blocks::feats),
     Placed::full("classFeatures", blocks::class_features),
+    Placed::full("actions", blocks::actions),
     Placed::full("spells", blocks::spells),
     Placed::full("custom", blocks::custom),
     Placed::full("pets", blocks::pets),
-    Placed::full("actions", blocks::actions),
 ];
+const INVENTORY: &[Placed] = &[Placed::full("defense", blocks::armor), Placed::full("gear", blocks::inventory)];
+const BIO: &[Placed] = &[Placed::full("characterDetails", blocks::character_details)];
 
-/// The block page 2 starts with: page 1 holds the portrait, the Character Name and Campaign fields
-/// and the step-1 blocks only (`technical-design.md §4`, `decisions.md §23.3`), so no later
-/// block's heading is left at page 1's foot.
-const PAGE_TWO_STARTS_WITH: &str = "characterDetails";
+/// A section: its title block opens a page, its blocks follow it with no break of their own (the
+/// option blocks' builders break a page for Starfinder's and Cyberpunk RED's sheets).
+fn section(sheet: &mut Vec<SheetBlock>, id: &'static str, title: &str, blocks: Vec<SheetBlock>) {
+    sheet.push(SheetBlock::new(title, Vec::new()).in_look(Look::SectionTitle).with_id(id).on_new_page());
+    sheet.extend(blocks.into_iter().map(|block| SheetBlock { new_page: false, ..block }));
+}
 
-/// The sheet's blocks, in print order.
+/// The sheet's blocks, in print order: Primary, then each section on pages of its own.
 pub fn layout(sources: &SheetSources) -> SheetDocument {
-    let mut sheet: Vec<SheetBlock> = SHEET
-        .iter()
-        .map(|placed| {
-            let block = placed.block(sources);
-            // Page 1 is the step-1 sheet (operator ruling R5); the rest starts page 2.
-            if placed.id == PAGE_TWO_STARTS_WITH {
-                block.on_new_page()
-            } else {
-                block
-            }
-        })
-        .collect();
+    let placed = |list: &[Placed]| list.iter().map(|placed| placed.block(sources)).collect::<Vec<_>>();
     let request = sources.request;
+    let mut sheet = placed(SHEET);
+    section(&mut sheet, "abilitiesAndFeatsTitle", "Abilities and Feats", placed(ABILITIES_AND_FEATS));
+    section(&mut sheet, "inventoryTitle", "Inventory", placed(INVENTORY));
     if request.spellbook {
-        sheet.push(blocks::spellbook(sources).with_id("spellbook"));
+        section(&mut sheet, "spellbookTitle", "Spellbook", vec![blocks::spellbook(sources).with_id("spellbook")]);
     }
+    let mut bio = placed(BIO);
+    if request.bio {
+        bio.push(blocks::bio_notes(sources).with_id("bioNotes"));
+    }
+    section(&mut sheet, "bioTitle", "Bio", bio);
     if request.math {
         let math = blocks::math(&sheet).with_id("math");
-        sheet.push(math);
-    }
-    if request.bio {
-        sheet.push(blocks::bio_notes(sources).with_id("bioNotes"));
+        section(&mut sheet, "mathTitle", "Math", vec![math]);
     }
     SheetDocument { title: sources.loaded.summary.display_label.clone(), paper: request.paper.typst_name(), blocks: sheet }
 }

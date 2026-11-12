@@ -32,5 +32,10 @@
   "languages": {"ui": null, "printOnly": "the Skills panel's Languages line is not a registry box or a tab; page 1 prints it under the skills (E2.13)"},
   "conditionalBonuses": {"ui": null, "printOnly": "every conditional bonus the engine states, in an outlined box with write-in lines; the screen lists them under the Saving Throws totals (E2.25), not as a registry box or a tab (E2.20)"},
   "resistances": {"ui": null, "printOnly": "energy resistances, damage reduction, spell resistance and immunities in boxes for the pencil; the screen shows them in the Defense tab's Resistances panel (E2.26), not as a registry box or a tab (E2.22)"},
-  "bioNotes": {"ui": null, "printOnly": "Bio and campaign notes, an option page the screen has no box for"}
+  "bioNotes": {"ui": null, "printOnly": "Bio and campaign notes, an option page the screen has no box for"},
+  "abilitiesAndFeatsTitle": {"ui": null, "printOnly": "the \"Abilities and Feats\" section's title on paper, opening its pages (E2.23); the screen has no sections"},
+  "inventoryTitle": {"ui": null, "printOnly": "the \"Inventory\" section's title on paper, opening its pages (E2.23); the screen has no sections"},
+  "spellbookTitle": {"ui": null, "printOnly": "the \"Spellbook\" section's title on paper, opening its pages (E2.23); the screen has no sections"},
+  "bioTitle": {"ui": null, "printOnly": "the \"Bio\" section's title on paper, opening its pages (E2.23); the screen has no sections"},
+  "mathTitle": {"ui": null, "printOnly": "the \"Math\" section's title on paper, opening its pages (E2.23); the screen has no sections"}
 }
