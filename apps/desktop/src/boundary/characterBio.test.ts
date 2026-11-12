@@ -1,4 +1,4 @@
-import { BLANK_CHARACTER_BIO, loadCharacterBio, updateCharacterBio } from './characterBio';
+import { BLANK_CHARACTER_BIO, loadCharacterBio, parseLanguages, updateCharacterBio } from './characterBio';
 import { assertEqual } from '../testSupport/asserts';
 
 /**
@@ -36,7 +36,15 @@ async function testUpdateWithNoRuntimeThrowsDescriptiveError() {
   );
 }
 
+/** SD-40 E2.27: the Languages field is a comma list; blanks and stray spaces are not languages. */
+function testParseLanguagesSplitsACommaList() {
+  assertEqual(JSON.stringify(parseLanguages(' Common,  Elven ,,Dwarven ')), JSON.stringify(['Common', 'Elven', 'Dwarven']), 'comma list, trimmed, in order');
+  assertEqual(JSON.stringify(parseLanguages('  ')), '[]', 'an empty field stores nothing (the engine then reads Common)');
+  assertEqual(JSON.stringify(BLANK_CHARACTER_BIO.languages), '[]', 'a blank bio stores no languages');
+}
+
 async function main() {
+  testParseLanguagesSplitsACommaList();
   await testLoadWithNoRuntimeResolvesToBlankDefault();
   await testUpdateWithNoRuntimeThrowsDescriptiveError();
 }

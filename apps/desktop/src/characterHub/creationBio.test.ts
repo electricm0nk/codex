@@ -31,7 +31,8 @@ assertEqual(bio.eyes, 'grey', 'eyes verbatim');
 assertEqual(bio.hair, 'red', 'hair verbatim');
 assertEqual(bio.height, `4'2"`, 'height formatted the way the form displayed it');
 assertEqual(bio.weight, '140 lb', 'weight with unit');
-assertEqual(Object.keys(bio).length, 9, 'exactly the nine fields the DTO carries');
+assertEqual(JSON.stringify(bio.languages), '[]', 'the wizard records no languages (SD-40 E2.27: the engine reads Common)');
+assertEqual(Object.keys(bio).length, 10, 'exactly the ten fields the DTO carries');
 
 const noBody = composeCreationBio({ playerName: '', alignment: 'True Neutral', deity: '', sex: 'male', age: 'Adult', eyes: '', hair: '', heightInches: null, weightLb: null });
 assertEqual(noBody.height, '', 'no body profile → blank, not a placeholder string');

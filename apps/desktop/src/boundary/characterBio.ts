@@ -23,6 +23,8 @@ export interface CharacterBioDto {
   weight: string;
   hair: string;
   eyes: string;
+  /** SD-40 E2.27: the languages the player recorded, in order; the engine's `languages.known` reads it (none → Common). */
+  languages: string[];
 }
 
 export const BLANK_CHARACTER_BIO: CharacterBioDto = {
@@ -35,7 +37,13 @@ export const BLANK_CHARACTER_BIO: CharacterBioDto = {
   weight: '',
   hair: '',
   eyes: '',
+  languages: [],
 };
+
+/** The Languages field's comma list as the stored list: trimmed names, blanks dropped. */
+export function parseLanguages(text: string): string[] {
+  return text.split(',').map((name) => name.trim()).filter((name) => name !== '');
+}
 
 /** Never throws for the common "no bio saved yet" case — resolves to all-empty fields instead, matching the Rust command's own default-when-absent behavior. Outside a Tauri runtime (browser preview), also resolves to the blank default rather than erroring. */
 export async function loadCharacterBio(characterId: string): Promise<CharacterBioDto> {

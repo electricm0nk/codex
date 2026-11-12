@@ -166,7 +166,7 @@ import { SquareBlock, initiativeRow } from './panels/SquareBlock';
 import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type SheetStack } from './sheetLayout';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
-import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
+import { loadCharacterBio, parseLanguages, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
 import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
@@ -444,9 +444,14 @@ function SkillsPanel(props: {
   explanations: readonly ExplanationDto[];
   /** SD-40 E2.8: the sheet response's `languages.known`, printed on the Languages line. */
   knownLanguages: readonly string[];
+  /** SD-40 E2.27: saves the Languages field's list with the bio (on blur, only when it changed). */
+  onLanguagesCommit: (languages: string[]) => void;
   onOpenDialog: () => void;
   custom: CharacterCustom;
 }) {
+  const shownLanguages = props.knownLanguages.join(', ');
+  const [languagesDraft, setLanguagesDraft] = useState(shownLanguages);
+  useEffect(() => setLanguagesDraft(shownLanguages), [shownLanguages]);
   const spent = skillPointsSpent(props.allocation);
   const budgetIntelligence = savedIntelligenceModifier(props.abilities.intelligence, props.explanations);
   const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, budgetIntelligence, props.isHuman), props.custom);
@@ -530,6 +535,17 @@ function SkillsPanel(props: {
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', margin: 0 }}>
         {spokenLanguages(props.knownLanguages, budgetIntelligence).join(', ')}
       </p>
+      <input
+        aria-label="Languages"
+        style={{ ...bioFieldInputStyle, marginTop: '0.3rem' }}
+        value={languagesDraft}
+        onChange={(event) => setLanguagesDraft(event.target.value)}
+        onBlur={() => {
+          if (languagesDraft !== shownLanguages) {
+            props.onLanguagesCommit(parseLanguages(languagesDraft));
+          }
+        }}
+      />
     </StatBox>
   );
 }
@@ -561,6 +577,8 @@ export interface BioFields {
   weight: string;
   hair: string;
   eyes: string;
+  /** SD-40 E2.27: carried so a blur-save of another bio field keeps it; edited on the Skills panel. */
+  languages: string[];
 }
 
 export const BLANK_BIO_FIELDS: BioFields = {
@@ -573,6 +591,7 @@ export const BLANK_BIO_FIELDS: BioFields = {
   weight: '',
   hair: '',
   eyes: '',
+  languages: [],
 };
 
 const bioFieldLabelStyle: CSSProperties = {
@@ -3922,6 +3941,18 @@ export function CharacterSheet(props: {
     }
   }
 
+  /** SD-40 E2.27: stores the Languages field with the bio, then re-reads the sheet so `languages.known` shows it. */
+  async function handleLanguagesCommit(languages: string[]) {
+    const next = { ...bio, languages };
+    setBio(next);
+    try {
+      await updateCharacterBio(props.row.characterId, next);
+      props.onDetailRefreshed(await loadSavedCharacterDetail({ characterId: props.row.characterId }));
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : 'Could not save the languages.');
+    }
+  }
+
   /**
    * Applies a gp-denominated add/spend to the persisted money balance via
    * `adjust_character_money`. `gpAmount` is positive to add funds, negative
@@ -4491,6 +4522,7 @@ export function CharacterSheet(props: {
               featSkillBonuses={engineRecords.featSkillBonuses}
               explanations={engineRecords.explanations}
               knownLanguages={engineRecords.knownLanguages}
+              onLanguagesCommit={(languages) => void handleLanguagesCommit(languages)}
               onOpenDialog={() => setSkillDialogOpen(true)}
               custom={custom}
             />

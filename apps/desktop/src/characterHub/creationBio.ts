@@ -31,5 +31,6 @@ export function composeCreationBio(fields: CreationBioFields): CharacterBioDto {
     weight: fields.weightLb === null ? '' : `${fields.weightLb} lb`,
     hair: fields.hair,
     eyes: fields.eyes,
+    languages: [],
   };
 }

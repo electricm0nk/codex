@@ -736,11 +736,19 @@ pub struct LanguagesDto {
     pub known: Vec<String>,
 }
 
-/// A Pathfinder character's known languages. The saved character records no language choice and
-/// the app has no picker, so every character knows Common: each Core Rulebook race begins play
-/// speaking it, and it is the one language the sheet has always listed.
+/// What a Pathfinder character with no Languages stored knows: Common, which each Core Rulebook
+/// race begins play speaking.
 pub(crate) fn known_languages() -> LanguagesDto {
     LanguagesDto { known: vec!["Common".to_owned()] }
+}
+
+/// A Pathfinder character's known languages: the Languages field stored with its bio (SD-40 E2.27),
+/// in saved order, else `known_languages()`.
+fn stored_known_languages(stored: &[String]) -> LanguagesDto {
+    if stored.is_empty() {
+        return known_languages();
+    }
+    LanguagesDto { known: stored.to_vec() }
 }
 
 /// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
@@ -2893,7 +2901,7 @@ pub(crate) fn load_saved_character_at_root(
         sheet_rules_unavailable_reason,
         feat_skill_bonuses,
         conditional_notes,
-        languages: known_languages(),
+        languages: stored_known_languages(&load_character_bio_at_root(root)?.languages),
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_weapon_damage_total_rows(&mut sheet);
@@ -5907,6 +5915,9 @@ pub struct CharacterBioDto {
     pub hair: String,
     #[serde(default)]
     pub eyes: String,
+    /// SD-40 E2.27: the languages the player recorded, in their order; the source of `languages.known`.
+    #[serde(default)]
+    pub languages: Vec<String>,
 }
 
 /// Writes `bio` as `bio.json` in the character's root directory. Requires
@@ -16115,6 +16126,7 @@ mod tests {
             weight: "150 lbs".to_owned(),
             hair: "Auburn".to_owned(),
             eyes: "Green".to_owned(),
+            languages: vec!["Common".to_owned(), "Celestial".to_owned()],
         }
     }
 
@@ -20830,6 +20842,41 @@ mod starter_seed_tests {
         assert_eq!(wills, [("Bravery", "", "+1 Will vs. fear")], "{aldric:#?}");
         let others = [&aldric.hit_points, &aldric.initiative, &aldric.fortitude, &aldric.reflex, &aldric.armor_class];
         assert!(others.iter().all(|l| l.is_empty()), "{aldric:#?}");
+    }
+
+    /// SD-40 E2.27: the Languages field is stored with the bio and is the load response's
+    /// `languages.known`; a clone keeps it; a `bio.json` from before the field loads with none,
+    /// and a character with nothing stored knows Common.
+    #[test]
+    fn stored_languages_round_trip_and_feed_the_load_response() {
+        let app_data_dir = temp_app_data_dir("stored-languages");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let aldric = character_root(&app_data_dir, DEFAULT_CHARACTER_ID);
+        let known = |root: &Path| load_saved_character_at_root(root).expect("load").languages.known;
+        assert_eq!(known(&aldric), ["Common"], "nothing stored: Common");
+
+        let elven = vec!["Common".to_owned(), "Elven".to_owned()];
+        save_character_bio_at_root(&aldric, &CharacterBioDto { languages: elven.clone(), ..Default::default() }).expect("save");
+        assert_eq!(load_character_bio_at_root(&aldric).expect("bio").languages, elven);
+        assert_eq!(known(&aldric), elven, "the stored list, in saved order");
+
+        let clone = character_root(&app_data_dir, "char-languages-clone");
+        let request = CloneCharacterRequest {
+            character_id: DEFAULT_CHARACTER_ID.to_owned(),
+            new_character_id: "char-languages-clone".to_owned(),
+            new_display_label: "Aldric (Copy)".to_owned(),
+            saved_at: "2026-11-12T00:00:00Z".to_owned(),
+        };
+        let outcome = clone_character_at_roots(&aldric, &clone, &request, "test-version").expect("clone");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(known(&clone), elven, "a clone keeps the stored languages");
+
+        let elowen = character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID);
+        std::fs::write(elowen.join(BIO_FILE_NAME), r#"{"alignment":"Neutral Good","deity":"","sex":"","age":"","height":"","weight":"","hair":"","eyes":""}"#)
+            .expect("write pre-field bio");
+        assert!(load_character_bio_at_root(&elowen).expect("pre-field bio loads").languages.is_empty());
+        assert_eq!(known(&elowen), ["Common"], "a pre-field bio.json knows Common");
+        std::fs::remove_dir_all(&app_data_dir).ok();
     }
 
     /// SD-40 E2.8: the load response states what the sheet prints as "Remaining" (the heavy
