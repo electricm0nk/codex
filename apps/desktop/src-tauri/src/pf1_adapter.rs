@@ -1049,14 +1049,14 @@ fn upsert_corpus_aware_combat_explanations(
     }
 
     // SD-40 E2.7: the Armor Class row and its seven parts are the number the sheet prints
-    // (`PilotDefenseViewModel.baseline_armor_class = combat.armor_class`). The fixed path's row keeps
-    // its prose only when its sum is this one; a worn item it does not read (a Ring of Protection
-    // beside the Chain Shirt) makes its sum another number, and the row then says this path's. The
-    // parts are always this path's, so 10 + the parts is the Armor Class on the sheet.
+    // (`PilotDefenseViewModel.baseline_armor_class = combat.armor_class`). The fixed path's row and
+    // parts stay, verbatim, when its sum is this one. A worn item it does not read (a Ring of
+    // Protection beside the Chain Shirt) makes its sum another number: the row then says this path's
+    // value and the parts are this path's, so 10 + the parts is the Armor Class on the sheet.
     let id = "defense.baseline_armor_class";
     let explanations = &mut corpus_receipt.base.explanations;
     match explanations.iter_mut().find(|explanation| explanation.id == id) {
-        Some(row) if row.value == combat.armor_class => {}
+        Some(row) if row.value == combat.armor_class => return,
         Some(row) => {
             row.value = combat.armor_class;
             row.detail = corpus_detail(id, combat.armor_class);
