@@ -144,12 +144,11 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
     let loaded = load_saved_character_at_root(&root).expect("Elowen loads");
     let explained = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{id}")).value;
     let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
-    let modifiers = &loaded.snapshot.as_ref().expect("Elowen computes").ability_modifiers;
     let text = pdf_text(&render(&root, &request(false, false, false)));
     let expected = [
-        // Skills: the load response's total, the key ability's modifier, the ranks.
-        format!("Spellcraft {} Int {} 5", signed(explained("skill.total.spellcraft")), signed(modifiers.intelligence)),
-        format!("Climb* {} Str {} 1", signed(explained("skill.total.climb")), signed(modifiers.strength)),
+        // Skills (E2.11): the name and the load response's total, nothing else.
+        format!("Spellcraft {} Stealth", signed(explained("skill.total.spellcraft"))),
+        format!("Climb {} Craft", signed(explained("skill.total.climb"))),
         // Weapons (E2.10): the attack total, the engine's damage total (the dice literal), the critical.
         format!(
             "Longsword {} 1d8{} 19-20/x2",
@@ -174,17 +173,16 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
     }
 }
 
-/// A Skills line in the PDF's text (SD-40 E2.2): the name (its armor-check mark after it), then the
-/// total, the key ability and its modifier, and the ranks.
-fn assert_skill_line(tag: &str, skills: &str, name: &str, total: &str, ranks: u32) {
+/// A Skills line in the PDF's text (SD-40 E2.2; E2.11): the name, then the total.
+fn assert_skill_line(tag: &str, skills: &str, name: &str, total: &str) {
     let at = skills
         .match_indices(name)
         .map(|(at, _)| at)
         .find(|at| *at == 0 || skills[..*at].ends_with(' '))
         .unwrap_or_else(|| panic!("{tag}: the Skills block prints `{name}`: {skills}"));
-    let after: Vec<&str> = skills[at + name.len()..].trim_start_matches('*').split_whitespace().take(4).collect();
-    let ranks = ranks.to_string();
-    assert_eq!((after.first().copied(), after.get(3).copied()), (Some(total), Some(ranks.as_str())), "{tag}: `{name}` prints its total {total} and its {ranks} ranks: {after:?}");
+    // E2.11: the name, then its total, and nothing else on the line (no mark, ability or ranks).
+    let after = skills[at + name.len()..].split_whitespace().next();
+    assert_eq!(after, Some(total), "{tag}: `{name}` prints its total {total} right after its name: {}", &skills[at..]);
 }
 
 /// E8.7: every skill a seed holds ranks in prints its ranks and the load response's own total
@@ -220,7 +218,7 @@ fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
                 .find(|row| row.id == format!("skill.total.{slug}"))
                 .unwrap_or_else(|| panic!("{tag}: the load response has the skill.total.{slug} row"))
                 .value;
-            assert_skill_line(tag, skills, &super::skills::skill_name(slug), &signed(total), u32::from(allocation.ranks));
+            assert_skill_line(tag, skills, &super::skills::skill_name(slug), &signed(total));
         }
         for (_, slug, value) in book.iter().filter(|(seed, _, _)| *seed == id) {
             let row = loaded.explanations.iter().find(|row| row.id == format!("skill.total.{slug}")).expect("the row");
@@ -244,13 +242,7 @@ fn print_pf_blocks_every_skills_panel_total_prints_ranked_or_not() {
         assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
         for row in totals {
             let slug = row.id.strip_prefix("skill.total.").expect("a skill total");
-            let ranks: u32 = loaded
-                .skill_allocations
-                .iter()
-                .filter(|allocation| allocation.skill_id.strip_prefix("skill:") == Some(slug))
-                .map(|allocation| u32::from(allocation.ranks))
-                .sum();
-            assert_skill_line(tag, skills, &super::skills::skill_name(slug), &signed(row.value), ranks);
+            assert_skill_line(tag, skills, &super::skills::skill_name(slug), &signed(row.value));
         }
     }
 }
@@ -536,7 +528,7 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     let place = |id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{id} prints")).place;
     assert_eq!(place("squareBlock"), Place::at(0, 7), "the square block takes the row's left seven columns (E2.9)");
     assert_eq!(place("abilities"), Place::at(7, 5), "the Abilities sit beside it, on the right");
-    assert_eq!(place("attack"), Place::under(7, 5), "the Attack is stacked under the Weapons");
+    assert_eq!(place("attack"), Place::under(5, 7), "the Attack is stacked under the Weapons (E2.11: the 7 columns beside the Skills)");
     let square = document.blocks.iter().position(|block| block.id == "squareBlock").expect("the square block");
     assert_eq!(document.blocks[square + 1].id, "abilities", "one row: the square block, then the Abilities beside it");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
@@ -698,86 +690,38 @@ fn print_pf_blocks_abilities_print_six_boxes_with_write_in_cells() {
     }
 }
 
-/// The Skills look (SD-40 E2.2): the 35 Skills-panel rows (`skill.total.<skill>`) in two narrow
-/// columns, each the class-skill box (marked where the load response states the class skill's +3,
-/// else empty for the player, SD-n), the name with the armor-check-penalty mark the converted skill
-/// record holds (`ACHECK`), the total, the key ability and its modifier (the number the Abilities
-/// block prints), the ranks and an empty misc write-in. The block spans 7 of the 12 columns with the
-/// Weapons beside it; on Letter it prints whole on one page, beside the Weapons.
+/// The Skills look (SD-40 E2.2; E2.11 one column): the 35 Skills-panel rows (`skill.total.<skill>`),
+/// each the name and the load response's total, with the engine row behind it (Show the math). The
+/// block spans 5 of the 12 columns with the Weapons beside it; on Letter it prints whole on one
+/// page, beside the Weapons, and prints no breakdown captions.
 #[test]
-fn print_pf_blocks_skills_print_every_panel_row_in_two_columns() {
+fn print_pf_blocks_skills_print_every_panel_row_in_one_column() {
     use crate::print::model::Place;
-    // The Core Rulebook's key ability per Skills-panel row (Table 4-1), held apart from the engine's sets.
-    let key = |slug: &str| -> &str {
-        if slug.starts_with("knowledge_") {
-            return "Int";
-        }
-        match slug {
-            "climb" | "swim" => "Str",
-            "acrobatics" | "disable_device" | "escape_artist" | "fly" | "ride" | "sleight_of_hand" | "stealth" => "Dex",
-            "appraise" | "craft" | "linguistics" | "spellcraft" => "Int",
-            "heal" | "perception" | "profession" | "sense_motive" | "survival" => "Wis",
-            "bluff" | "diplomacy" | "disguise" | "handle_animal" | "intimidate" | "perform" | "use_magic_device" => "Cha",
-            other => panic!("`{other}` is no Skills-panel row"),
-        }
-    };
-    // Table 4-1's armor check penalty column: exactly these nine.
-    let armor_check = ["acrobatics", "climb", "disable_device", "escape_artist", "fly", "ride", "sleight_of_hand", "stealth", "swim"];
     let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
     for (tag, id) in [("skills-look-aldric", ALDRIC_ID), ("skills-look-elowen", ELOWEN_ID), ("skills-look-tomas", TOMAS_ID)] {
         let root = seeded(tag, id);
         let loaded = load_saved_character_at_root(&root).expect("the seed loads");
-        let modifiers = &loaded.snapshot.as_ref().expect("the seed computes").ability_modifiers;
-        let modifier = |abbr: &str| match abbr {
-            "Str" => modifiers.strength,
-            "Dex" => modifiers.dexterity,
-            "Int" => modifiers.intelligence,
-            "Wis" => modifiers.wisdom,
-            _ => modifiers.charisma,
-        };
         let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
         let skills = document.blocks.iter().find(|block| block.id == "skills").expect("the Skills block");
         assert_eq!(skills.look.name(), "skills", "{tag}: the Skills print in their own look");
-        assert_eq!(skills.place, Place::at(0, 7), "{tag}: the Skills span 7 of the 12 columns");
+        assert_eq!(skills.place, Place::at(0, 5), "{tag}: the Skills span 5 of the 12 columns");
         let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
-        assert_eq!(weapons.place, Place::at(7, 5), "{tag}: the Weapons print beside the Skills");
+        assert_eq!(weapons.place, Place::at(5, 7), "{tag}: the Weapons print beside the Skills");
 
         let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")).collect();
         assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
         let panel_rows: Vec<_> = skills.rows.iter().filter(|row| row.derivation.is_some()).collect();
         assert_eq!(panel_rows.len(), 35, "{tag}: the block prints the 35 panel rows: {:?}", skills.rows);
-        let mut marked = 0;
         let mut lines = Vec::new();
         for total in &totals {
-            let slug = total.id.strip_prefix("skill.total.").expect("a skill total");
-            let name = super::skills::skill_name(slug);
+            let name = super::skills::skill_name(total.id.strip_prefix("skill.total.").expect("a skill total"));
             let row = panel_rows.iter().find(|row| row.label == name).unwrap_or_else(|| panic!("{tag}: the `{name}` row"));
-            let ranks: u32 = loaded
-                .skill_allocations
-                .iter()
-                .filter(|allocation| allocation.skill_id.strip_prefix("skill:") == Some(slug))
-                .map(|allocation| u32::from(allocation.ranks))
-                .sum();
-            let class_skill = total.detail.contains("class skill +3");
-            marked += usize::from(class_skill);
-            let abbr = key(slug);
-            let ability = format!("{abbr} {}", signed(modifier(abbr)));
-            let acp = armor_check.contains(&slug);
-            let mark = |on: bool, text: &str| if on { text.to_owned() } else { String::new() };
-            assert_eq!(
-                row.values,
-                vec![mark(class_skill, "X"), signed(total.value), ability.clone(), ranks.to_string(), String::new(), mark(acp, "*")],
-                "{tag}: `{name}` prints its class-skill mark, total, ability, ranks, the misc write-in and its armor-check mark"
-            );
+            assert_eq!(row.values, vec![signed(total.value)], "{tag}: `{name}` prints its total only");
             assert_eq!(row.derivation.as_deref(), Some(&[crate::print::model::Derivation { source: format!("{} = {}", total.id, total.value), detail: total.detail.clone() }][..]));
-            lines.push(format!("{}{}{} {} {} {}", mark(class_skill, "X "), name, mark(acp, "*"), signed(total.value), ability, ranks));
+            lines.push(format!("{name} {}", signed(total.value)));
         }
-        let ranked_class_skills = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.") && row.detail.contains("class skill +3")).count();
-        assert_eq!(marked, ranked_class_skills, "{tag}: every class skill the load response states is marked");
-        assert!(marked >= 3, "{tag}: the seed has at least three ranked class skills stated ({marked})");
 
-        // On Letter the Skills print whole on one page, the Weapons beside them: every panel line
-        // is on the page that holds the block's first line.
+        // On Letter the Skills print whole on one page, the Weapons beside them.
         let letter = PrintRequest { paper: Paper::Letter, ..request(false, false, false) };
         let pdf = render(&root, &letter);
         let parsed = lopdf::Document::load_mem(&pdf).expect("the PDF parses");
@@ -791,11 +735,11 @@ fn print_pf_blocks_skills_print_every_panel_row_in_two_columns() {
         let block = &text[text.find("Skills").expect("Skills")..text.find("Weapons").expect("Weapons")];
         for line in &lines {
             assert!(block.contains(line.as_str()), "{tag}: the Skills block prints `{line}`: {block}");
-            let name = line.trim_start_matches("X ").split(['*', '+', '-']).next().unwrap_or_default().trim().to_owned();
-            assert!(page.contains(&name), "{tag}: `{name}` prints on the Skills' Letter page: {page}");
+            let name = line.rsplit_once(' ').map(|(name, _)| name).unwrap_or_default();
+            assert!(page.contains(name), "{tag}: `{name}` prints on the Skills' Letter page: {page}");
         }
-        for caption in ["Tot.", "Abil.", "Rk.", "Misc", "key ability modifier", "ranks", "class skill", "armor check penalty"] {
-            assert!(block.contains(caption), "{tag}: the columns are captioned `{caption}`: {block}");
+        for caption in ["Tot.", "Abil.", "Rk.", "key ability modifier", "class skill", "armor check penalty"] {
+            assert!(!block.contains(caption), "{tag}: no breakdown caption `{caption}`: {block}");
         }
     }
 }
@@ -1282,4 +1226,82 @@ fn print_pf_blocks_save_notes_print_under_the_saves() {
         assert_eq!(under.matches(&hardy_words).count(), 1, "{paper:?}: Hardy's words print once under the saves: {under}");
         assert!(under.contains(&bravery_words), "{paper:?}: Bravery's words print under the saves: {under}");
     }
+}
+
+/// Page 1's text lines as the PDF holds them (before the first footer), each line's whitespace
+/// folded: a name and a number on one line sit on one baseline. In-process, as `pdftotext -layout`
+/// would read them, so the check needs no poppler on the test machine.
+fn page_one_lines(pdf: &[u8]) -> Vec<String> {
+    let raw = pdf_extract::extract_text_from_mem(pdf).expect("the PDF's text extracts");
+    let one = &raw[..raw.find("page 1 of").unwrap_or_else(|| panic!("page 1's footer prints: {raw}"))];
+    one.lines().map(|line| line.split_whitespace().collect::<Vec<_>>().join(" ")).filter(|line| !line.is_empty()).collect()
+}
+
+/// E2.11 (`decisions.md §23.1` item 3c; §23.3): the Skills print in ONE column, every Skills panel
+/// row (`skill.total.<skill>`) on one line holding its name and signed total only: no class-skill
+/// box, no `*` mark, no key ability, no ranks, no misc cell, no column captions for them. On Letter
+/// and A4, for Aldric and Elowen, no name wraps at the page-1 width and none is shortened (each
+/// fits). A Knowledge name shortens to `Know. (<Subject>)` only when the full name would wrap in its
+/// cell (the look's `measure`): a probe narrows the column to 3 of the 12 and Knowledge
+/// (Dungeoneering) shortens while Knowledge (Local), which fits, does not.
+#[test]
+fn print_pf_blocks_skills_print_one_line_each_with_name_and_total() {
+    use crate::print::model::Place;
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    const ABILITIES: [&str; 6] = ["Str", "Dex", "Con", "Int", "Wis", "Cha"];
+    for (tag, id) in [("skill-lines-aldric", ALDRIC_ID), ("skill-lines-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")).collect();
+        assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
+        let names: Vec<String> = totals.iter().map(|row| super::skills::skill_name(row.id.strip_prefix("skill.total.").expect("a skill total"))).collect();
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, one, pdf) = page_one_text(&root, paper, Vec::new());
+            let skills = document.blocks.iter().find(|block| block.id == "skills").expect("the Skills block");
+            for (row, name) in totals.iter().zip(&names) {
+                let line = skills.rows.iter().find(|line| &line.label == name).unwrap_or_else(|| panic!("{tag}: the `{name}` row"));
+                assert_eq!(line.values, vec![signed(row.value)], "{tag}: `{name}` sends its signed total only");
+            }
+            let lines = page_one_lines(&pdf);
+            for (row, name) in totals.iter().zip(&names) {
+                let printed = format!("{name} {}", signed(row.value));
+                let (line, at) = lines
+                    .iter()
+                    .find_map(|line| line.match_indices(&printed).map(|(at, _)| at).find(|at| *at == 0 || line[..*at].ends_with(' ')).map(|at| (line, at)))
+                    .unwrap_or_else(|| panic!("{tag} {paper:?}: `{printed}` prints on one line of page 1: {lines:#?}"));
+                let after = line[at + printed.len()..].trim_start();
+                assert!(!ABILITIES.iter().any(|ability| after.starts_with(&format!("{ability} "))), "{tag} {paper:?}: no key-ability cell after `{printed}`: {line}");
+                assert!(!line[..at].ends_with("X "), "{tag} {paper:?}: no class-skill mark before `{name}`: {line}");
+                let others: Vec<&String> = names.iter().filter(|other| *other != name && line.contains(&**other)).collect();
+                assert!(others.is_empty(), "{tag} {paper:?}: one column: `{name}`'s line holds no other skill {others:?}: {line}");
+            }
+            for name in &names {
+                assert!(!one.contains(&format!("{name}*")), "{tag} {paper:?}: no armor-check mark after `{name}`: {one}");
+            }
+            for caption in ["Tot.", "Abil.", "Rk.", "key ability modifier", "class skill", "armor check penalty"] {
+                assert!(!one.contains(caption), "{tag} {paper:?}: page 1 prints no `{caption}` caption: {one}");
+            }
+        }
+    }
+
+    // The probe: the same Skills in a column 3 of the 12 wide.
+    let root = seeded("skill-lines-narrow", ALDRIC_ID);
+    let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+    let total = |slug: &str| signed(loaded.explanations.iter().find(|row| row.id == format!("skill.total.{slug}")).expect("the total").value);
+    let mut document = sheet_document_at_root(&root, &PrintRequest { paper: Paper::Letter, ..request(false, false, false) }).expect("the document builds");
+    for block in &mut document.blocks {
+        match block.id {
+            "skills" => block.place = Place::at(0, 3),
+            "weapons" => block.place = Place::at(3, 9),
+            "attack" | "saves" => block.place = Place::under(3, 9),
+            _ => {}
+        }
+    }
+    let typeset = crate::print::typst::typeset(&document).expect("the narrow probe typesets");
+    assert!(typeset.warnings.is_empty(), "Typst reports no diagnostics: {:?}", typeset.warnings);
+    let lines = page_one_lines(&typeset.pdf);
+    let short = format!("Know. (Dungeoneering) {}", total("knowledge_dungeoneering"));
+    assert!(lines.iter().any(|line| line.contains(&short)), "the narrow column shortens a Knowledge name that would wrap: `{short}`: {lines:#?}");
+    let full = format!("Knowledge (Local) {}", total("knowledge_local"));
+    assert!(lines.iter().any(|line| line.contains(&full)), "a Knowledge name that fits is never shortened: `{full}`: {lines:#?}");
 }

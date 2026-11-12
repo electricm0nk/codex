@@ -3,7 +3,7 @@
 //! §4`, Letter first) opens with the portrait box beside the Character Name and Campaign fields (no
 //! title above them, `decisions.md §23.3`), the Speed under those fields and the Armor Class beside
 //! them; then the square block (Hit Points, Initiative, Encumbrance, Conditions and their notes,
-//! E2.9) beside the Abilities; the Skills in two narrow columns beside the Weapons, with the Attack
+//! E2.9) beside the Abilities; the Skills in one column (name + total, E2.11) beside the Weapons, with the Attack
 //! and the Saving Throws under them (the Combat block split along
 //! the screen's boxes, `decisions.md §8`). Page 2 starts with the Identity block, then the armor; gear, feats, features,
 //! spells, custom records, pets and actions follow; then the option blocks, each on pages of its
@@ -23,10 +23,11 @@ const SHEET: &[Placed] = &[
     Placed::at("armorClass", blocks::armor_class, 7, 5),
     Placed::at("squareBlock", blocks::square_block, 0, 7),
     Placed::at("abilities", blocks::abilities, 7, 5),
-    Placed::at("skills", blocks::skills, 0, 7),
-    Placed::at("weapons", blocks::weapons, 7, 5),
-    Placed::under("attack", blocks::attack, 7, 5),
-    Placed::under("saves", blocks::saves, 7, 5),
+    // One column of name + total (E2.11) needs 5 columns; the Weapons take the other 7.
+    Placed::at("skills", blocks::skills, 0, 5),
+    Placed::at("weapons", blocks::weapons, 5, 7),
+    Placed::under("attack", blocks::attack, 5, 7),
+    Placed::under("saves", blocks::saves, 5, 7),
     // Page 2 opens with the Identity block until the Bio pages take it (E3.4).
     Placed::full("characterDetails", blocks::character_details),
     Placed::full("defense", blocks::armor),
