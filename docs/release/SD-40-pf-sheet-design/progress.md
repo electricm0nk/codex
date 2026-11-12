@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 23 of 40 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 23 at E2.4 (E2.15, E2.12, E2.13 and E2.4 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 40, E2.15 discovered by E2.7) |
+| Cards complete | 24 of 40 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 40, E2.15 discovered by E2.7) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -108,6 +108,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E2.12 | E2.12 | complete | b3fa6a3df6 + receipt commit | artifacts/epic_2/E2.12_cycle_receipt.md |
 | E2.13 | E2.13 | complete | b26684e4f1 + receipt commit | artifacts/epic_2/E2.13_cycle_receipt.md |
 | E2.4 | E2.4 | complete | 60a5f93776 + receipt commit | artifacts/epic_2/E2.4_cycle_receipt.md |
+| E2.MC2 | E2.MC2 | complete | (this commit, docs only) | artifacts/epic_2/E2.MC2_cycle_receipt.md |
 
 ## Epic reports
 
@@ -143,6 +144,20 @@ deltas, what was looked at, retro summary, worktrees swept)
 - **Open blockers:** none. Open cards: E2.4 (discovered, `waiting` on E2.MC → ready); E2.5 (portrait box, operator at E2.G round 1, 2026-11-11, `decisions.md §23`). (Both rewritten by the 2026-11-11 replan above.)
 - **2026-11-11 E2.G round 1:** operator: "We need to include a spot for the portrait on the top left corner." → E2.5 carded by the lead; run restarts at E2.MC (drains E2.4, E2.5, re-runs E2.MC, re-renders E2.G).
 - **Worktrees swept:** `.worktrees/sd40-e2mc-base` (E2.MC's C1 base tree) and `/home/ubuntu/cargo-target/sd40-e2mc-base`; no other `sd40-*` side worktree existed (`git worktree list`: the main checkout and `sd40-main`). `sd40-main` kept.
+
+### Epic report — E2 round 2 (page 1 redesigned), by E2.MC2, 2026-11-12
+
+- **Cards done:** E2.4, E2.5, E2.6, E2.7, E2.8, E2.9, E2.10, E2.11, E2.12, E2.13, E2.14, E2.15, E2.MC2 — 13 of 13 round-2 cards; all of E2 but the gate: 17 of 18 E2 rows complete (`awk -F'|' '$2 ~ /^ E2\./ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'` → 17; E2.G `partial`, the operator's gate). Bundle: 24 of 40 complete (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'`).
+- **Re-derived on origin/tranche-20 `9629b14bd3`:** `cd apps/desktop/src-tauri && cargo test --locked -j 8 print_ -- --test-threads=8` → 81 + 1 passed (`awk '/^test .* \.\.\. ok$/{n++} END{print n}'` and `grep -c ' \.\.\. ok$'` → 82, 82); print_pf_blocks / print_golden / print_smoke 34 / 24 / 9; desktop full `--no-fail-fast` → 1269 + 2 passed, 0 `FAILED`; root `cargo test --locked -j 8 --lib` → 3085 passed, 0 `FAILED`; `npm run typecheck && npm test` → 191/191; looks 12; vocabulary 32 ids; TS vocabulary test exit 0; `verify.sh --only pcgen-residue-gate` PASS; `grep -L 'Looked at'` over E2.4/5/9–13 receipts → nothing.
+- **G-1 (rewritten):** C1 `3ceeb63b66` in its own tree and target dir; the G-1 Python → SAME_EXCEPT_NAMED for aldric, elowen, tomas; the strip hides no pre-existing row (0 base rows under the two new prefixes; 0 ids lost).
+- **G-2:** SF1e ×8 + CPR ×8: text and page loop → no output; 16 of 16 byte-identical; `sf1e.rs`/`cpr.rs` diff since C1 → 0 lines.
+- **Page counts per golden case (C1 → E2 round-2 head, `pdfinfo <pdf> | awk '/Pages/{print $2}'`):** PF (Elowen) a4-none 5 → 5, a4-spellbook 6 → 6, a4-math 12 → 12, a4-all 14 → 14, letter-none 5 → 5, letter-spellbook 6 → 6, letter-math 12 → 12, letter-all 14 → 14. SF1e a4/letter: none 8, spellbook 12, math 12, all 17. CPR a4/letter: none 4, spellbook 5, math 10, all 12. Proof harness (none/spellbook/math/all): Aldric A4 and Letter 4/5/9/11; Elowen A4 and Letter 5/6/12/14.
+- **Population probe:** 3 seeds × 2 papers + E2.MC's probes + E2.4's 6 stresses × 2 papers (standing tests, ok) + the `.pcg` imports: 65 files → 37 saved (26 blocked, 2 refused) × 2 papers = 74 page 1s, 0 with a diagnostic or a lost line or a block off page 1 (`artifacts/epic_2/E2.MC2/pcg_probe.tsv`; awk and Python agree), 0 needing a continuation (max 2 weapon lines). Closes E2.MC's `.pcg` non-coverage.
+- **Refuted claims and fixes:** NR-2's Typst grep printed 2, not 0 (E2.5's and E2.4's layout-only `calc.min` in `looks/name-campaign.typ`, unnamed in their receipts) → `technical-requirements.md` NR-2 names both; retro correction. No claim about E2's shipped values was refuted.
+- **Looked at:** `artifacts/epic_2/E2.MC2/*.png` (Aldric and Elowen page 1 on both papers, Aldric Letter page 2) beside `artifacts/epic_0/E0.1/aldric-pcgen-std-1.png` and `decisions.md §23.3`: every §23.3 item present and filled; differences named in the receipt (Melee +8 vs PCGen +7 is the engine's first-weapon Melee, unchanged; 8 pt skills column for the operator's eye; Languages is the engine's `Common`).
+- **Retro summary:** `python3 scripts/retro.py summary --since 2026-11-11 --actor sd40-e2.4 … --actor sd40-e2.15 --actor sd40-e2.mc2 --json` (13 actors) → 21 events: correction 11, rework 3, verification 7; 0 incidents, 0 deferrals, 0 recurrence keys. Category: 10 of 11 corrections are this package's own criterion/acceptance/FILES-YOU-OWN wording (the 11th, `pf1_adapter.rs`'s AC row, was fixed in code by E2.7); "the PF seed check is desktop-side, not root `--lib`" fired twice (E2.8, E2.14), under R-W's > 2 threshold. The control that caught them is R21 (the lead runs each acceptance command before dispatch); no new control.
+- **Open blockers:** none. Open card: E2.G round 2 (operator gate, `partial`).
+- **Worktrees swept:** `.worktrees/sd40-e2mc2-base` (C1 base) and `.worktrees/sd40-e2mc2-probe` (scratch probe tree) with `/home/ubuntu/cargo-target/sd40-e2mc2-base` and `/home/ubuntu/cargo-target/sd40-e2mc2-probe`; no other `sd40-*` side worktree existed (`git worktree list`: main checkout, `appimage-self-install`, `readme`, `sd40-main`). `sd40-main` kept. Branch `sd40/e2.4-parked` (local and origin) still exists: the lead's to delete (`decisions.md §23.5`; E2.4 is complete).
 
 ## Lead's dispatch log
 
