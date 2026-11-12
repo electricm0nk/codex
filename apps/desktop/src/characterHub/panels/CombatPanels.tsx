@@ -48,18 +48,17 @@ export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: n
  * It used to be the literal string `"30 ft."` for every character, which was
  * already wrong for Dwarf, Gnome and Halfling (20 ft.) among the races that
  * shipped, and is wrong for Duergar and Svirfneblin (20 ft.) and Merfolk
- * (5 ft.) among the Bestiary 1 races creation now offers. The other three
- * movement modes stay `—`: no ingested race declares a fly, swim or climb
- * speed, and this panel will not invent one.
+ * (5 ft.) among the Bestiary 1 races creation now offers. SD-40 E2.24:
+ * `swim` / `fly` are the engine's `speed.swim` / `speed.fly` rows the printed
+ * Speed box reads (`—` when the character has none); climb is not shown.
  */
-export function SpeedPanel(props: { land: string; boxStyle?: CSSProperties }) {
+export function SpeedPanel(props: { land: string; swim: string; fly: string; boxStyle?: CSSProperties }) {
   return (
     <StatBox title="Speed">
       <div style={props.boxStyle ?? layoutBox(SHEET_LAYOUT, 'speed').boxStyle}>
         <StatTile label="Land" value={props.land} />
-        <StatTile label="Fly" value="—" />
-        <StatTile label="Swim" value="—" />
-        <StatTile label="Climb" value="—" />
+        <StatTile label="Swim" value={props.swim} />
+        <StatTile label="Fly" value={props.fly} />
       </div>
     </StatBox>
   );

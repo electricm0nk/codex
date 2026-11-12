@@ -58,9 +58,10 @@ function verifiesCombatPanelsAreOwnTitledBoxes() {
   const attack = AttackPanel({ baseAttackBonus: 1, melee: 4, cmb: 4, cmd: 15 }) as Element;
   assertEqual(attack.props.title, 'Attack', 'Attack box title');
 
-  const speed = SpeedPanel({ land: '30 ft.' }) as Element;
+  const speed = SpeedPanel({ land: '30 ft.', swim: '—', fly: '60 ft. (average)' }) as Element;
   assertEqual(speed.props.title, 'Speed', 'Speed box title');
-  assertEqual(tileLabels(speed).join('|'), 'Land|Fly|Swim|Climb', 'Speed tiles unchanged');
+  assertEqual(tileLabels(speed).join('|'), 'Land|Swim|Fly', 'Speed tiles: Land, Swim, Fly (SD-40 E2.24)');
+  assertEqual(childrenOf(childrenOf(speed)[0]).map((tile) => String(tile.props.value)).join('|'), '30 ft.|—|60 ft. (average)', 'each tile shows the value it is given');
 
   const saves = SavingThrowsPanel({ saves: { fortitude: 4, reflex: 1, will: -1 } }) as Element;
   assertEqual(saves.props.title, 'Saving Throws', 'Saves box title');

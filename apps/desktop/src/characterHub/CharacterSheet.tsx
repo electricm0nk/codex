@@ -44,7 +44,7 @@ import { PrintDialog } from './PrintDialog';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
-import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -3023,6 +3023,8 @@ export function CharacterSheet(props: {
     admittedUnderOverride: AdmittedRecordDto[];
     /** SD-40 E2.8: the engine's known languages (`languages.known`); empty until a read carries them. */
     knownLanguages: string[];
+    /** SD-40 E2.24: the engine's `flyManeuverability` words; `null` until a read carries them. */
+    flyManeuverability: string | null;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3034,6 +3036,7 @@ export function CharacterSheet(props: {
     skillAllocations: props.detail?.skillAllocations ?? null,
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
     knownLanguages: props.detail?.languages?.known ?? [],
+    flyManeuverability: props.detail?.flyManeuverability ?? null,
   });
   useEffect(() => {
     let cancelled = false;
@@ -3048,6 +3051,7 @@ export function CharacterSheet(props: {
     skillAllocations: props.detail?.skillAllocations ?? null,
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
     knownLanguages: props.detail?.languages?.known ?? [],
+    flyManeuverability: props.detail?.flyManeuverability ?? null,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3063,6 +3067,7 @@ export function CharacterSheet(props: {
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       knownLanguages: loaded.languages?.known ?? [],
+      flyManeuverability: loaded.flyManeuverability ?? null,
           });
         }
       })
@@ -3660,6 +3665,7 @@ export function CharacterSheet(props: {
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       knownLanguages: loaded.languages?.known ?? [],
+      flyManeuverability: loaded.flyManeuverability ?? null,
     });
     await refreshDurability();
   }
@@ -4025,6 +4031,7 @@ export function CharacterSheet(props: {
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       knownLanguages: loaded.languages?.known ?? [],
+      flyManeuverability: loaded.flyManeuverability ?? null,
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4535,7 +4542,14 @@ export function CharacterSheet(props: {
       case 'attack':
         return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
       case 'speed':
-        return <SpeedPanel land={sheetLandSpeed(engineRecords.explanations)} boxStyle={boxStyle} />;
+        return (
+          <SpeedPanel
+            land={sheetLandSpeed(engineRecords.explanations)}
+            swim={sheetSwimSpeed(engineRecords.explanations)}
+            fly={sheetFlySpeed(engineRecords.explanations, engineRecords.flyManeuverability)}
+            boxStyle={boxStyle}
+          />
+        );
       case 'saves':
         return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
     }

@@ -193,6 +193,24 @@ export function sheetLandSpeed(explanations: readonly ExplanationDto[]): string 
   return feet === null ? UNKNOWN_RACE_TRAIT : `${feet} ft.`;
 }
 
+/** The screen's no-value mark for a movement mode the engine states no row for (paper keeps an empty box). */
+const NO_SPEED = '—';
+
+/** The Swim tile (SD-40 E2.24): the engine's `speed.swim` row, the value the printed Speed box carries. */
+export function sheetSwimSpeed(explanations: readonly ExplanationDto[]): string {
+  const feet = engineRowValue(explanations, 'speed.swim');
+  return feet === null ? NO_SPEED : `${feet} ft.`;
+}
+
+/**
+ * The Fly tile (SD-40 E2.24): the engine's `speed.fly` row followed by the load response's
+ * `flyManeuverability` words, as the printed Speed box writes it (`60 ft. (average)`).
+ */
+export function sheetFlySpeed(explanations: readonly ExplanationDto[], maneuverability: string | null | undefined): string {
+  const feet = engineRowValue(explanations, 'speed.fly');
+  return feet === null ? NO_SPEED : maneuverability ? `${feet} ft. (${maneuverability})` : `${feet} ft.`;
+}
+
 /**
  * The Intelligence modifier the skill point budget and languages read: the saved score's, the engine's
  * `ability_modifier.intelligence.saved` row, when a worn item raises the sheet's.
