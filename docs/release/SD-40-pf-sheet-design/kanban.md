@@ -29,7 +29,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E5
 cd docs/release/SD-40-pf-sheet-design
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 39 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan; + E3.6 by the operator's answers, decisions.md §23.7)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 40 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan; + E3.6 by the operator's answers, decisions.md §23.7; + E2.15 by E2.7)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -47,13 +47,14 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 39 (24 + E
 | E2.MC | E2 merge check + Epic report | opus | complete | E2.3 | test `f5e4c781b2`; receipt `artifacts/epic_2/E2.MC_cycle_receipt.md`; print_pf_blocks 23, print_golden 24, print_smoke 9, desktop 1250 + 2 passed; G-1 empty; G-2 16/16 byte-identical vs C1; page 1 whole (no run-over) + population probe (bought dagger + ring, no ranks, Elowen); discovered E2.4 |
 | E2.5 | Page-1 header: portrait + Character Name + Campaign; no title, no identity block (rewritten, `decisions.md §23`) | opus | complete | E2.MC | code `f6bc0cd545`; receipt `artifacts/epic_2/E2.5_cycle_receipt.md`; print_pf_blocks 26 (23 + 3), print_golden 24, print_smoke 9, desktop 1253 + 2 passed; G-1 empty; G-2 16/16 byte-identical; PF A4 pages 4/5/11/13 → 5/6/12/14, Letter unchanged; Initiative + Hit Points share the top band for Letter room (E2.9 re-decides) |
 | E2.6 | Engine: conditional notes for HP, initiative, saves, AC (`decisions.md §23`) | opus | complete | E2.MC | side lane `engine` (`.worktrees/sd40-engine`); no `print/**`; `3cfa76522c` + `abb7effa16` + `0519db3cd5`; receipt `artifacts/epic_2/E2.6_cycle_receipt.md`; root conditional_notes 6 passed, desktop 2 passed; G-1 SAME_EXCEPT_NAMED ×3 (`conditionalNotes`); Aldric holds Bravery (acceptance corrected) |
-| E2.7 | Engine: AC parts as explanations rows; 10 + Σ parts = AC | opus | waiting | E2.6 | side lane `engine` |
+| E2.7 | Engine: AC parts as explanations rows; 10 + Σ parts = AC | opus | complete | E2.6 | side lane `engine`; code `a957b928e5` + `d945250ec1`; receipt `artifacts/epic_2/E2.7_cycle_receipt.md`; root armor_class_parts 5 passed, desktop 1 passed; `.pcg` probe 37 of 37 saved state parts, 37 sum; G-1 SAME_EXCEPT_NAMED ×3 (`defense.armor_class.*`); AC row re-pointed where the fixed path's sum differs (Aldric + ring 16 → 17); discovered E2.15 |
 | E2.8 | Engine: remaining lb + known languages on the load response; the screen reads them | opus | waiting | E2.7 | side lane `engine`; operator Q1 "Known + one blank line" |
 | E2.14 | Engine: per-weapon damage total + range | opus | waiting | E2.8 | side lane `engine`; operator Q5 "One total" |
+| E2.15 | Engine: a custom item's AC bonus in the AC row and its part | opus | waiting | E2.14 | side lane `engine`; discovered by E2.7 (`character_custom.rs:427` moves the printed AC, not the row or parts) |
 | E2.9 | Square block: HP + Initiative + Encumbrance + Conditions, with notes | opus | waiting | E2.5, E2.6, E2.8 | |
 | E2.10 | Totals only: abilities, saves + notes, attack, speed, weapons | opus | waiting | E2.9, E2.14 | |
 | E2.11 | Skills: one column, name + total, no wraps; not-added lines under the column | opus | waiting | E2.10 | |
-| E2.12 | AC breakdown filled from the engine's part rows | opus | waiting | E2.11, E2.7 | |
+| E2.12 | AC breakdown filled from the engine's part rows | opus | waiting | E2.11, E2.7, E2.15 | |
 | E2.13 | Languages on page 1: comma list + exactly one write-in line | opus | waiting | E2.12, E2.8 | |
 | E2.4 | Page 1 assembled + overflow rule (rewritten, `decisions.md §23.5`) | opus | waiting | E2.13 | was "4+ weapon lines"; parked `8f75f60b3e` on `sd40/e2.4-parked` is a starting point only; the lead deletes the branch when this is complete |
 | E2.MC2 | E2 merge check, round 2 + Epic report | opus | waiting | E2.4 | |

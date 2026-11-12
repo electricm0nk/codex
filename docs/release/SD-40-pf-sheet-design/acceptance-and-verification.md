@@ -118,13 +118,13 @@ grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ | awk 'END{print 
 ```bash
 cd docs/release/SD-40-pf-sheet-design
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 39) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 40) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[3-5] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c 'usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md        # 2
 grep -c 'usable: yes' artifacts/epic_5/E5.2_cycle_receipt.md        # 5
 grep -c 'SD-40 INTERIM NOTES' release-notes.md                        # 0 at E5.4+
 python3 ../../../tools/release/resolve_release_notes.py --repo-root ../../..
-grep -L 'Looked at' artifacts/epic_[1-4]/*_cycle_receipt.md | grep -v 'E1.1_\|E1.2_\|E2.6_\|E2.7_\|E2.8_\|E2.14_\|E2.G_\|E4.1_\|E4.2_'   # prints nothing (NR-11; E2.6–E2.8, E2.14 are engine cards)
+grep -L 'Looked at' artifacts/epic_[1-4]/*_cycle_receipt.md | grep -v 'E1.1_\|E1.2_\|E2.6_\|E2.7_\|E2.8_\|E2.14_\|E2.15_\|E2.G_\|E4.1_\|E4.2_'   # prints nothing (NR-11; E2.6–E2.8, E2.14, E2.15 are engine cards)
 git branch -a --list '*e2.4-parked*' | awk 'END{print NR}'            # 0 (decisions.md §23.5)
 ```
 

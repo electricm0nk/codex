@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 11 of 39 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 11; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39) |
+| Cards complete | 14 of 40 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 14 at E2.7 (the row had stayed at 11 since before E2.5); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 40, E2.15 discovered by E2.7) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -98,6 +98,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E2.G | E2.G | partial | (this commit) | artifacts/epic_2/E2.G_cycle_receipt.md |
 | E2.5 | E2.5 | complete | f6bc0cd545 + receipt commit | artifacts/epic_2/E2.5_cycle_receipt.md |
 | E2.6 | E2.6 | complete | 3cfa76522c + abb7effa16 + 0519db3cd5 + receipt commit | artifacts/epic_2/E2.6_cycle_receipt.md |
+| E2.7 | E2.7 | complete | a957b928e5 + d945250ec1 + receipt commit | artifacts/epic_2/E2.7_cycle_receipt.md |
 
 ## Epic reports
 
