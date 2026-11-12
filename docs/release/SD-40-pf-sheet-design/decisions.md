@@ -731,3 +731,29 @@ E3.6 is `waiting`, so nothing built is undone.
 section is added. §24.3.7's seven sections become eight (Notes last); FSR COM-12 reads "Biography and Notes".
 Card count unchanged (56: E3.6, E3.4, E4.1, E4.2, E4.MC rewritten, no card added). ui-smoke rows: 173 → 174 (E2.27)
 → 177 (E2.24–E2.26) → 176 (E2.29) → **178 (E3.6, two rows)** → **182 (E4.2)**; `print-section-` ≥ 8 (G-5).
+
+### §24.10 Operator, 2026-11-12: Options in a ☰ menu on every screen; the ⚙ button goes
+
+**OPERATOR (verbatim, relayed by the lead):** "in the ui, the gear button is on top of the bar.  Let's get rid of that and add Options as an entry in the hamburger menu"
+
+Answers (relayed by the lead): **"Add a ☰ menu there too"**: one ☰ menu in the top bar on every screen, each with an
+**Options** entry that opens the existing `SettingsModal`; the character-sheet and campaign-sheet menus keep their
+entries and gain Options; the ⚙ button is removed. Package: **"SD-40 now"**.
+
+**Census** (base `40961b5b96`, read-only):
+- The ⚙ button: `apps/desktop/src/App.tsx:847-872` (`aria-label="Open settings"` `:850`, `title="Settings"` `:851`,
+  fixed top-right, "on every screen"), opening `SettingsModal` (`:876-880`; state `settingsOpen` `:809`).
+- ☰ menus today: `CharacterSheet.tsx:4657` and `campaign/CampaignSheet.tsx:299` (`git grep -n '☰' -- apps/desktop/src`,
+  non-test: 2 menus + a comment in `characterExport.ts:6`). The other screens (landing, create, load, the catalogs,
+  DM toolkit, campaign list/create/edit, corpus diagnostic; ui-smoke `screen` values) have none.
+- ui-smoke rows that click ⚙: **4** (`settings-tab-google-drive-disconnect`, `settings-open`,
+  `settings-tab-google-drive-save`, `encounter-builder-add-monster-and-rating`); 1 row expects the words "⚙ Settings"
+  (`landing-campaign-gate`, the gate hint `campaign/campaignManagerAccessGate.ts:25`)
+  (`python3 -c "import json;r=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows'];d=lambda x: json.dumps(x,ensure_ascii=False);print([x['id'] for x in r if '⚙' in d(x.get('steps',[]))],[x['id'] for x in r if '⚙' in d(x.get('expect',[]))])"`).
+  Rows set up on `settings-open` inherit the change.
+
+**Ruling** (card **E2.30**, main lane, opus, after E2.29, before E2.MC3): every screen's top bar has a ☰ menu with an
+**Options** entry opening `SettingsModal` (the existing modal, unchanged); the sheet and campaign menus keep their
+entries and gain Options; the ⚙ button is removed from `App.tsx`; the gate hint reads "under ☰ → Options → Google
+Drive". The four ⚙-clicking rows are re-pointed to ☰ → Options and `landing-campaign-gate`'s expect follows the new
+hint. **ui-smoke row count unchanged** (rows re-pointed, none added or removed; G-9 chain untouched).
