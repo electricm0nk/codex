@@ -35,8 +35,8 @@
       colspan: cell.first().place.span,
       // A cell more than one row tall (page 1's portrait beside the name row and the AC row, E2.18).
       rowspan: cell.first().place.at("row_span", default: 1),
-      // Blocks stacked in one cell sit 0.7em apart: page 1's left column holds seven (E2.20).
-      if cell.len() == 1 { block-look(cell.first()) } else { stack(spacing: 0.7em, ..cell.map(block-look)) },
+      // Blocks stacked in one cell sit 0.4em apart: page 1's left column holds eight (E2.20, E2.22).
+      if cell.len() == 1 { block-look(cell.first()) } else { stack(spacing: 0.4em, ..cell.map(block-look)) },
     )),
   )
 }

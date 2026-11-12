@@ -1,13 +1,13 @@
 // The `square-block` look (SD-40 E2.9, decisions.md §23.1 item 3a, §23.3, SD-m): the screen's
 // square group. Hit Points: the big current-HP area for the pencil (3 cm tall, at least 3 cm wide
-// on Letter), the max the engine holds and the small nonlethal box, Damage Reduction when the
-// screen shows one; Initiative: the total; Conditions: a write-in box holding the saved
+// on Letter), the max the engine holds and the small nonlethal box (Damage Reduction prints in
+// the Resistances block, E2.22); Initiative: the total; Conditions: a write-in box holding the saved
 // conditions; Encumbrance: the limits, carried, remaining, gear value and the load's name. The
 // hit point and initiative notes print in the Conditional Bonuses box (E2.20, decisions.md
 // §24.3.4). It formats strings it is given; it computes nothing (NR-2).
 //
 // The rows, as `print/blocks/core.rs` `square_block` sends them, by label: Max, Current,
-// Nonlethal, Damage Reduction (when there is one), Initiative, Encumbrance (light, medium, heavy,
+// Nonlethal, Initiative, Encumbrance (light, medium, heavy,
 // carried, remaining, gear value, load), Conditions.
 
 #let title(t) = {
@@ -30,9 +30,8 @@
   let row(label) = b.rows.find(r => r.label == label)
   let value(label) = { let r = row(label); if r == none { "" } else { r.values.at(0) } }
   let load = { let r = row("Encumbrance"); if r == none { ("",) * 7 } else { r.values } }
-  let reduction = row("Damage Reduction")
   // A row this look has no place for prints its label and values under the block.
-  let known = ("Max", "Current", "Nonlethal", "Damage Reduction", "Initiative", "Encumbrance", "Conditions")
+  let known = ("Max", "Current", "Nonlethal", "Initiative", "Encumbrance", "Conditions")
   let others = b.rows.filter(r => r.label not in known)
   // Three columns: Hit Points (the current-HP area, 3 cm square, SD-m, with the max and nonlethal
   // boxes beside it), Initiative over Conditions, Encumbrance.
@@ -54,7 +53,6 @@
             labelled("Nonlethal", value-box(value("Nonlethal"))),
           ),
         ),
-        ..if reduction != none { (text(size: 8.5pt)[*Damage Reduction* #reduction.values.at(0)],) },
       ),
       stack(
         spacing: 0.1cm,

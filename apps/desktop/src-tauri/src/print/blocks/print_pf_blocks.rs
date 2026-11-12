@@ -22,13 +22,13 @@ const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
 const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
-/// The 21 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
+/// The 22 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
 /// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the round-2 grid (E2.18,
 /// `decisions.md §24.3.1`: the AC boxes with no heading, then Speed; the left column, then the
 /// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Identity
 /// block opening page 2 (E2.5), the Languages under the portrait (E2.13), the Conditional Bonuses
-/// box under the Saving Throws (E2.20).
-const BASE_HEADINGS: [&str; 21] = [
+/// box under the Saving Throws (E2.20), the Resistances block under it (E2.22).
+const BASE_HEADINGS: [&str; 22] = [
     "Portrait",
     "Languages",
     "Character Name",
@@ -39,6 +39,7 @@ const BASE_HEADINGS: [&str; 21] = [
     "Attack",
     "Saving Throws",
     "Conditional Bonuses",
+    "Resistances",
     "Abilities",
     "Skills",
     "Identity",
@@ -458,13 +459,18 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
         pdf_text(&typeset.pdf)
     };
     assert_eq!(loaded.snapshot.as_ref().and_then(|snapshot| snapshot.damage_reduction), None, "the seed holds no Damage Reduction");
-    let none = typeset_text(&loaded);
-    assert!(!none.contains("Damage Reduction"), "no Damage Reduction prints when the screen shows none: {none}");
+    assert!(loaded.resistances.damage_reduction.is_empty(), "nor does its resistances field");
 
+    // A barbarian's class DR, as the load response carries it (E2.21): the snapshot's and the
+    // resistances field's. It prints in the Resistances block (E2.22, `decisions.md §24.3.6`), not
+    // under Hit Points.
     loaded.snapshot.as_mut().expect("Aldric computes a snapshot").damage_reduction = Some(3);
+    loaded.resistances.add_damage_reduction(3, "—", "class_feature.barbarian.damage_reduction");
     let text = typeset_text(&loaded);
-    let hit_points = &text[text.find("Hit Points").expect("Hit Points")..text.find("Abilities").expect("Abilities")];
-    assert!(hit_points.contains("Damage Reduction 3/—"), "the square block's Hit Points print `Damage Reduction 3/—`: {hit_points}");
+    let hit_points = &text[text.find("Hit Points").expect("Hit Points")..text.find("Weapons").expect("Weapons")];
+    assert!(!hit_points.contains("Damage Reduction"), "the Hit Points print no Damage Reduction: {hit_points}");
+    let resistances = &text[text.find("Resistances").expect("the Resistances block prints")..];
+    assert!(resistances.contains("Damage Reduction 3/—"), "the Resistances block prints `Damage Reduction 3/—`: {resistances}");
 }
 
 /// The screen's and the paper's one vocabulary (SD-40 `decisions.md §5`): every block the
@@ -538,7 +544,7 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     assert_eq!(place("abilities"), Place::at(7, 5), "the Abilities sit beside it, on the right");
     assert_eq!(place("attack"), Place::under(0, 7), "the Attack is stacked in the left column, under the Weapons (E2.18)");
     let abilities = document.blocks.iter().position(|block| block.id == "abilities").expect("the Abilities");
-    assert_eq!(document.blocks[abilities - 1].id, "conditionalBonuses", "one row: the left column's cell, then the Abilities beside it");
+    assert_eq!(document.blocks[abilities - 1].id, "resistances", "one row: the left column's cell, then the Abilities beside it");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
 
     document.blocks[abilities].place = Place::at(8, 5);
@@ -1442,7 +1448,7 @@ fn print_pf_blocks_skills_print_one_line_each_with_name_and_total() {
     for block in &mut document.blocks {
         match block.id {
             "squareBlock" => block.place = Place::at(0, 9),
-            "weapons" | "attack" | "saves" | "conditionalBonuses" => block.place = Place::under(0, 9),
+            "weapons" | "attack" | "saves" | "conditionalBonuses" | "resistances" => block.place = Place::under(0, 9),
             "abilities" => block.place = Place::at(9, 3),
             "skills" => block.place = Place::under(9, 3),
             _ => {}
@@ -1586,6 +1592,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
         ("attack", place(0, 7, true, 1)),
         ("saves", place(0, 7, true, 1)),
         ("conditionalBonuses", place(0, 7, true, 1)),
+        ("resistances", place(0, 7, true, 1)),
         ("abilities", place(7, 5, false, 1)),
         ("skills", place(7, 5, true, 1)),
     ];
@@ -1601,7 +1608,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
             assert_eq!(one.matches("Armor Class").count(), 1, "{tag} {paper:?}: `Armor Class` prints once, as the AC box's label: {one}");
             assert_in_order(
                 &one,
-                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Conditional Bonuses", "Abilities", "Skills"],
+                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Conditional Bonuses", "Resistances", "Abilities", "Skills"],
             );
         }
     }
@@ -1848,5 +1855,77 @@ fn print_pf_blocks_conditional_bonuses_overflow_continues_on_page_two() {
             continued += on_two;
         }
         assert!(continued > 0 && continued < notes.len(), "{tag}: some notes fill the box, the rest continue: {continued} of 30 on page 2");
+    }
+}
+
+/// E2.22 (`decisions.md §24.3.6`): the Resistances block, under the Conditional Bonuses box in the
+/// left column, prints the five energy boxes (Acid, Cold, Electricity, Fire, Sonic), Damage
+/// Reduction, Spell Resistance and Immunities from the load response's `resistances` (E2.21), each
+/// box empty when the character has none; the Hit Points print no Damage Reduction; page 1 stays
+/// whole. Letter and A4: Aldric (none), Aldric's root holding an Ifrit (Fire 5), an Undine (Cold
+/// 5) and a Human Barbarian 7 (DR 1/—), each built through the creation path's input.
+#[test]
+fn print_pf_blocks_resistances_print_boxes_and_values() {
+    use codex::saved_character::local_store::SavedCharacterStore;
+    const LABELS: [&str; 8] = ["Acid", "Cold", "Electricity", "Fire", "Sonic", "Damage Reduction", "Spell Resistance", "Immunities"];
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    // Aldric's saved root holding a character built as `race`, `class`, `level`.
+    let built = |tag: &str, race: &str, class: &str, level: u8| {
+        let root = seeded(tag, ALDRIC_ID);
+        let request: crate::character_hub::CreateCharacterRequest = serde_json::from_value(serde_json::json!({
+            "characterId": "char-test", "displayLabel": "Test Character", "raceId": race, "classId": class, "level": level,
+            "abilityScores": { "strength": 16, "dexterity": 14, "constitution": 14, "intelligence": 10, "wisdom": 12, "charisma": 8 },
+            "abilityBonusTarget": "strength", "savedAt": AT,
+        }))
+        .expect("a creation request");
+        let mut envelope = SavedCharacterStore::load(&root).expect("the seed's envelope loads");
+        envelope.character_input = crate::pf1_adapter::compose_character_input(&request);
+        SavedCharacterStore::save(&envelope, &root).expect("the character saves");
+        root
+    };
+    type Filled = &'static [(&'static str, &'static str)];
+    let cases: [(&str, PathBuf, Filled); 4] = [
+        ("aldric", seeded("resist-aldric", ALDRIC_ID), &[]),
+        ("ifrit", built("resist-ifrit", "race:ifrit", "class:fighter", 1), &[("Fire", "5")]),
+        ("undine", built("resist-undine", "race:undine", "class:fighter", 1), &[("Cold", "5")]),
+        ("barbarian", built("resist-barbarian", "race:human", "class:barbarian", 7), &[("Damage Reduction", "1/—")]),
+    ];
+    for (tag, root, filled) in &cases {
+        for paper in [Paper::Letter, Paper::A4] {
+            let tag = format!("{tag} {paper:?}");
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(root, &printed).expect("the document builds");
+            let at = document.blocks.iter().position(|block| block.id == "resistances").unwrap_or_else(|| panic!("{tag}: the resistances block: {:?}", document.blocks.iter().map(|b| b.id).collect::<Vec<_>>()));
+            let block = &document.blocks[at];
+            assert_eq!((block.heading.as_str(), block.look.name()), ("Resistances", "resistances"), "{tag}: heading and look");
+            assert_eq!(document.blocks[at - 1].id, "conditionalBonuses", "{tag}: under the Conditional Bonuses box");
+            assert_eq!((block.place.x, block.place.span, block.place.under), (0, 7, true), "{tag}: in the left column");
+            let rows: Vec<(&str, &str)> = block.rows.iter().map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
+            let want: Vec<(&str, &str)> = LABELS.iter().map(|label| (*label, filled.iter().find(|(l, _)| l == label).map_or("", |(_, v)| *v))).collect();
+            assert_eq!(rows, want, "{tag}: every box, filled from `resistances` or empty");
+
+            let pdf = render(root, &printed);
+            let text = pdf_text(&pdf);
+            let one = crate::print::print_golden::page_one(&text, &document.title, page_count(&pdf)).unwrap_or_else(|| panic!("{tag}: page 1's footer: {text}"));
+            let hit_points = &one[one.find("Hit Points").expect("Hit Points")..one.find("Weapons").expect("Weapons")];
+            assert!(!hit_points.contains("Damage Reduction"), "{tag}: no Damage Reduction under Hit Points: {hit_points}");
+            let flat = unspaced(one);
+            let section = &flat[flat.find("ResistancesAcid").unwrap_or_else(|| panic!("{tag}: the Resistances block prints on page 1: {one}"))..];
+            for label in LABELS {
+                assert!(section.contains(&unspaced(label)), "{tag}: `{label}` prints: {section}");
+            }
+            for (label, value) in filled.iter() {
+                assert!(section.contains(&unspaced(&format!("{label}{value}"))), "{tag}: `{label} {value}` prints: {section}");
+            }
+            // The Barbarian's rage conditionals fill the Conditional Bonuses box and continue on page 2
+            // (SD-b); every other case leaves nothing of page 1 to page 2.
+            if !tag.starts_with("barbarian") {
+                assert_page_one_whole(&tag, &document, &pdf);
+            }
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("resist-{}.pdf", tag.replace(' ', "-"))), &pdf).expect("the PDF writes");
+            }
+        }
     }
 }

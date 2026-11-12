@@ -1,8 +1,9 @@
 // The `weapons` look (SD-40 E2.3; E2.10 totals only, decisions.md §23.1 item 4): one table of the
 // weapons in hand. The first row names the columns; each weapon prints on one line its name, its
-// attack total, its damage total (`1d8+4`), its critical and its range, then its feat notes. Two
-// blank lines follow for the pencil (a rule for the name, the four boxes), then the ammunition
-// write-in. Any other row (a per-weapon engine row no weapon in hand matches, "No weapon is
+// attack total, its damage total (`1d8+4`), its critical and its range, then its feat notes. Blank
+// lines follow for the pencil (a rule for the name, the four boxes) until the table holds three
+// lines (E2.22: so one to three weapons take one height and Letter's page 1 holds the Resistances),
+// then the ammunition write-in. Any other row (a per-weapon engine row no weapon in hand matches, "No weapon is
 // wielded.") prints its label and values under the table. It formats strings it is given; it adds
 // nothing up (NR-2).
 //
@@ -75,10 +76,11 @@
         line-of(align(left + horizon, text(size: size, weight: "bold", r.label)), r.values.slice(0, boxes), compact: compact),
         ..r.notes.map(n => text(size: 8pt, fill: luma(40), n)),
       )),
-      // Two blank weapons, for what the character picks up at the table (the name on the rule), and
-      // the ammunition; when the list continues on page 2, they print there, after the last line.
+      // Blank weapons up to three lines, for what the character picks up at the table (the name on
+      // the rule), and the ammunition; when the list continues on page 2, they print there, after
+      // the last line.
       ..if not more { (
-        ..range(2).map(_ => line-of(write-line, ("",) * boxes, compact: compact)),
+        ..range(calc.max(0, 3 - items(b).filter(is-weapon).len())).map(_ => line-of(write-line, ("",) * boxes, compact: compact)),
         v(0.05cm),
         grid(
           columns: (auto, 1fr),

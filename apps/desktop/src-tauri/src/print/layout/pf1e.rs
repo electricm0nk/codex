@@ -33,6 +33,7 @@ const SHEET: &[Placed] = &[
     Placed::under("attack", blocks::attack, 0, 7),
     Placed::under("saves", blocks::saves, 0, 7),
     Placed::under("conditionalBonuses", blocks::conditional_bonuses, 0, 7),
+    Placed::under("resistances", blocks::resistances, 0, 7),
     Placed::at("abilities", blocks::abilities, 7, 5),
     Placed::under("skills", blocks::skills, 7, 5),
     // Page 2 opens with the Identity block until the Bio pages take it (E3.4).

@@ -224,9 +224,10 @@ pub(crate) fn page_one<'a>(text: &'a str, title: &str, pages: usize) -> Option<&
 
 /// The blocks page 1 holds (operator ruling R5, SD-40 `technical-design.md §4`, `decisions.md §23.3`):
 /// the portrait and the Character Name and Campaign fields, the step-1 blocks and the Languages
-/// line (E2.13; the eleven E2.4 holds on page 1) and the Conditional Bonuses box (E2.20), by
+/// line (E2.13; the eleven E2.4 holds on page 1), the Conditional Bonuses box (E2.20) and the
+/// Resistances block (E2.22), by
 /// vocabulary id.
-pub(crate) const PAGE_ONE_BLOCKS: [&str; 12] = [
+pub(crate) const PAGE_ONE_BLOCKS: [&str; 13] = [
     "portrait",
     "nameCampaign",
     "abilities",
@@ -235,6 +236,7 @@ pub(crate) const PAGE_ONE_BLOCKS: [&str; 12] = [
     "attack",
     "saves",
     "conditionalBonuses",
+    "resistances",
     "speed",
     "skills",
     "weapons",

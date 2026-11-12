@@ -87,8 +87,8 @@ fn line(sources: &SheetSources, label: &str, cells: Vec<String>, source: &str) -
 }
 
 /// The screen's square group (`squareBlock`, SD-40 E2.9, `decisions.md §23.1` item 3a): Hit Points
-/// (`hit_points.max`, the current and nonlethal write-ins, the Defense tab's `Damage Reduction:
-/// <n>/—` whenever the screen shows one), Initiative (the total only), Encumbrance (the load
+/// (`hit_points.max`, the current and nonlethal write-ins; Damage Reduction prints in the
+/// Resistances block, E2.22), Initiative (the total only), Encumbrance (the load
 /// response's limits, carried weight, remaining pounds, gear value and the load's name, as the
 /// Carried Weight panel shows them) and Conditions (the saved `custom.json` conditions, else the
 /// write-in). The hit point and initiative notes print in the Conditional Bonuses box (E2.20).
@@ -102,9 +102,6 @@ pub fn square_block(sources: &SheetSources) -> SheetBlock {
         line(sources, "Max", vec![max], "hit_points.max"),
         SheetRow::new("Nonlethal", [write_in()]),
     ];
-    if let Some(reduction) = sources.loaded.snapshot.as_ref().and_then(|s| s.damage_reduction) {
-        rows.push(line(sources, "Damage Reduction", vec![format!("{reduction}/—")], "class_feature.barbarian.damage_reduction"));
-    }
     rows.extend([
         line(sources, "Initiative", vec![with_sign(row_value(sources, "initiative.total"))], "initiative.total"),
         SheetRow::new("Conditions", [sources.custom.conditions.join(", ")]),
@@ -212,6 +209,36 @@ pub fn conditional_bonuses(sources: &SheetSources) -> SheetBlock {
         skills.situational.iter().chain(&skills.unknown).map(|line| SheetRow::new("Skills", [format!("{} on {}: {}", line.label, super::skills::skill_name(&line.skill), line.reason)])),
     );
     SheetBlock::new("Conditional Bonuses", rows).in_look(Look::ConditionalBonuses)
+}
+
+/// The Resistances block (`resistances`, print-only, SD-40 E2.22, `decisions.md §24.3.6`): the load
+/// response's `resistances` (E2.21) in eight boxes: Acid, Cold, Electricity, Fire, Sonic (the
+/// amount), Damage Reduction (each `amount/bypass`, or the record's words), Spell Resistance (each
+/// value, or the words) and Immunities (the names as one comma list). A box the character has
+/// nothing for is empty, for the pencil. The class DR has the engine's row behind it (Show the math).
+pub fn resistances(sources: &SheetSources) -> SheetBlock {
+    use codex::rules_core::pilot_compute::resistances::ENERGIES;
+    let held = &sources.loaded.resistances;
+    let mut rows: Vec<SheetRow> = ENERGIES
+        .iter()
+        .map(|energy| SheetRow::new(*energy, [held.energy.iter().find(|e| e.energy == *energy).map_or_else(write_in, |e| e.amount.to_string())]))
+        .collect();
+    let words = |amount: Option<i16>, words: &Option<String>| amount.map(|n| n.to_string()).or_else(|| words.clone()).unwrap_or_default();
+    let reduction = held
+        .damage_reduction
+        .iter()
+        .map(|dr| match dr.amount {
+            Some(amount) => format!("{amount}/{}", dr.bypass),
+            None => words(None, &dr.words),
+        })
+        .collect::<Vec<_>>()
+        .join(", ");
+    let derivation: Vec<_> = held.damage_reduction.iter().flat_map(|dr| dr.source.split("; ")).flat_map(|source| sources.derivation_of(source)).collect();
+    let reduction = SheetRow::new("Damage Reduction", [reduction]);
+    rows.push(if derivation.is_empty() { reduction } else { reduction.derived(derivation) });
+    rows.push(SheetRow::new("Spell Resistance", [held.spell_resistance.iter().map(|sr| words(sr.value, &sr.words)).collect::<Vec<_>>().join(", ")]));
+    rows.push(SheetRow::new("Immunities", [held.immunities.iter().map(|immunity| immunity.name.as_str()).collect::<Vec<_>>().join(", ")]));
+    SheetBlock::new("Resistances", rows).in_look(Look::Resistances)
 }
 
 /// The screen's Attack box (`attack`): Base Attack Bonus, Melee, CMB and CMD.

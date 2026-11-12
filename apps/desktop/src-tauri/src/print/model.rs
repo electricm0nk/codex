@@ -159,12 +159,15 @@ pub enum Look {
     /// The Conditional Bonuses box (SD-40 E2.20): an outlined box of fixed height, a ruled line per
     /// conditional, then blank write-in lines to its foot.
     ConditionalBonuses,
+    /// The Resistances block (SD-40 E2.22): five energy boxes, Damage Reduction, Spell Resistance and
+    /// Immunities, each empty when the character has none.
+    Resistances,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 13] = [
+    pub const ALL: [Look; 14] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -178,6 +181,7 @@ impl Look {
         Look::NameCampaign,
         Look::Languages,
         Look::ConditionalBonuses,
+        Look::Resistances,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -196,6 +200,7 @@ impl Look {
             Look::NameCampaign => "name-campaign",
             Look::Languages => "languages",
             Look::ConditionalBonuses => "conditional-bonuses",
+            Look::Resistances => "resistances",
         }
     }
 }
