@@ -814,7 +814,12 @@ fn print_pf_blocks_weapons_print_as_one_table() {
         let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
         assert_eq!(weapons.look.name(), "weapons", "{tag}: the Weapons print in their own look");
         assert!(!loaded.weapon_damage.is_empty(), "{tag}: the seed holds a weapon in hand");
-        let per_weapon: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_")).collect();
+        // The three rows this look prints; `combat.weapon_damage_total.` (SD-40 E2.14) is E2.10's.
+        let per_weapon: Vec<_> = loaded
+            .explanations
+            .iter()
+            .filter(|row| row.id.starts_with("combat.weapon_") && !row.id.starts_with("combat.weapon_damage_total."))
+            .collect();
         assert_eq!(per_weapon.len(), 3 * loaded.weapon_damage.len(), "{tag}: three engine rows per weapon in hand");
         for weapon in &loaded.weapon_damage {
             // The engine keys a weapon's rows by its record's name, letters and digits only.

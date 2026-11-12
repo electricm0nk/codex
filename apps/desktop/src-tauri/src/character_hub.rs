@@ -20171,12 +20171,18 @@ mod tests {
         let response = load_saved_character_at_root(&root).expect("saved rogue should load");
         let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
 
-        // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6) and one
-        // total per Skills panel row (E8.7), which are not the chassis's records.
+        // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6), one
+        // total per Skills panel row (E8.7) and one damage total per weapon in hand (SD-40 E2.14),
+        // which are not the chassis's records.
         let sheet_totals = ["hit_points.max", "speed.land"];
         let (appended, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| {
-            row.id.starts_with("feats.budget.") || row.id.starts_with("skill.total.") || sheet_totals.contains(&row.id.as_str())
+            row.id.starts_with("feats.budget.")
+                || row.id.starts_with("skill.total.")
+                || row.id.starts_with("combat.weapon_damage_total.")
+                || sheet_totals.contains(&row.id.as_str())
         });
+        let damage_totals = appended.iter().filter(|row| row.id.starts_with("combat.weapon_damage_total.")).count();
+        assert_eq!(damage_totals, response.weapon_damage.iter().filter(|weapon| weapon.base_dice.is_some()).count(), "one damage total per weapon");
         let budget: Vec<_> = appended.iter().filter(|row| row.id.starts_with("feats.budget.")).collect();
         assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
         let skill_totals = appended.iter().filter(|row| row.id.starts_with("skill.total.")).count();
