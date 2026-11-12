@@ -48,7 +48,7 @@ const MC_EXTRA = `This is a merge check, so be adversarial: re-derive the claims
 
 const GATE_EXTRA = (n) => `Operator gate. Render the PDFs and PNGs your criterion names. Write the receipt with one line per sheet: "usable: " for the operator to fill (${n} lines). If those lines already all read "usable: yes", return complete. If any reads something else, turn each named defect into a discovered card in this epic and return partial naming them. Otherwise leave the row partial, push, and return partial with the absolute file paths. Never sign for the operator.`
 
-const ORDER = ['C1','E0.1','E0.2','E1.1','E1.2','E1.MC','E2.1','E2.2','E2.3','E2.MC','E2.5','E2.6','E2.7','E2.8','E2.14','E2.9','E2.10','E2.11','E2.15','E2.12','E2.13','E2.4','E2.MC2','E2.G','E3.1','E3.2','E3.3','E3.6','E3.4','E3.5','E3.MC','E4.1','E4.2','E4.MC','E5.1','E5.2','E5.3','E5.4','E5.5']
+const ORDER = ['C1','E0.1','E0.2','E1.1','E1.2','E1.MC','E2.1','E2.2','E2.3','E2.MC','E2.5','E2.6','E2.7','E2.8','E2.14','E2.9','E2.10','E2.11','E2.15','E2.12','E2.13','E2.4','E2.MC2','E2.27','E2.17','E2.16','E2.18','E2.19','E2.20','E2.21','E2.22','E2.23','E2.24','E2.25','E2.26','E2.MC3','E2.G','E3.1','E3.2','E3.3','E3.6','E3.4','E3.5','E3.7','E3.MC','E4.1','E4.2','E4.MC','E5.1','E5.2','E5.3','E5.4','E5.5']
 const startAt = ORDER.indexOf((args && args.start) || 'C1')
 const skip = (id) => ORDER.indexOf(id) >= 0 && ORDER.indexOf(id) < startAt
 
@@ -154,12 +154,31 @@ try {
   await go('E2.4', 'opus', P2)
   if (!skip('E2.MC2')) await drainBoard('E2', P2)
   await go('E2.MC2', 'opus', P2, 'main', MC_EXTRA)
-  const g1 = await gate('E2.G', 2, P2, ' This is round 2 (decisions.md §23). Only the round-2 "usable:" lines count; the round-1 verdict above them is already carded, never card it again.'); if (g1) return g1
+  // Round 3 (decisions.md §24): engine lane E2.17 -> E2.19 -> E2.21 beside the main lane E2.27 -> ... -> E2.26.
+  const p17 = go('E2.17', 'opus', P2, 'engine', ENGINE_EXTRA(false))
+  const p19 = p17.then(() => go('E2.19', 'opus', P2, 'engine', ENGINE_EXTRA(false)))
+  const p21 = p19.then(() => go('E2.21', 'opus', P2, 'engine', ENGINE_EXTRA(true)))
+  const w17 = wrap(p17), w19 = wrap(p19), w21 = wrap(p21)
+  await go('E2.27', 'opus', P2)
+  await go('E2.16', 'opus', P2)
+  await need(w17)
+  await go('E2.18', 'opus', P2)
+  await need(w19)
+  await go('E2.20', 'opus', P2)
+  await need(w21)
+  await go('E2.22', 'opus', P2)
+  await go('E2.23', 'opus', P2)
+  await go('E2.24', 'opus', P2)
+  await go('E2.25', 'opus', P2)
+  await go('E2.26', 'opus', P2)
+  if (!skip('E2.MC3')) await drainBoard('E2', P2)
+  await go('E2.MC3', 'opus', P2, 'main', MC_EXTRA)
+  const g1 = await gate('E2.G', 3, P2, ' This is round 3 (decisions.md §24). Only the round-3 "usable:" lines count; the round-1 and round-2 verdicts above them are already carded, never card them again.'); if (g1) return g1
 
   phase('E3 — remaining looks')
   await catchUp('E3 — remaining looks')
   await drainEarlier(['E0','E1','E2'], 'E3 — remaining looks')
-  await epic('E3 — remaining looks', [['E3.1','opus'],['E3.2','opus'],['E3.3','opus'],['E3.6','opus'],['E3.4','opus'],['E3.5','opus'],['E3.MC','opus']])
+  await epic('E3 — remaining looks', [['E3.1','opus'],['E3.2','opus'],['E3.3','opus'],['E3.6','opus'],['E3.4','opus'],['E3.5','opus'],['E3.7','opus'],['E3.MC','opus']])
 
   phase('E4 — print sections')
   await epic('E4 — print sections', [['E4.1','opus'],['E4.2','opus'],['E4.MC','opus']])
