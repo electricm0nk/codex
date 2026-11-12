@@ -1,0 +1,14 @@
+# G-1 seed deltas, E2.19 (base c4830cf5be = E2.17's code, head 850b6867c3)
+## head sha256.txt (PF_SEED_RENDER_OUT=… cargo test --locked -j 8 --bins pf_seed_render_hash)
+cf567ef330725a75bb97b67d31150a79ac5874f9233a0aa4800f384f16964b14  aldric.json
+fffb2e9ae4e24b475178693436e8d6b8b44edb1a5020827dd4146c8a3ae31168  elowen.json
+fed9681bb1530c18f80dee45564c127a5049cd14f704234cdea1404ceca578c2  tomas.json
+## head JSON with exactly the two new empty keys removed ("combatManeuverBonus": [], "combatManeuverDefense": [], 1 removal per seed) -> sha256
+5e11269ab5c542d4584d89f4b875fd0b1083d0eafc0ffdaab9ea8bc0eac685a7  aldric.json
+c41a15c041686ddb16a7a57dfd37ac8ad5c4a3b51f5c1fd5e0e56db17f640695  elowen.json
+10362833cfbe3a4de1c167ae622cda3cc2a4e69fe2da914df4784e37c0f81422  tomas.json
+= E2.17's recorded hashes (artifacts/epic_2/E2.17/g1-seed-deltas.txt): byte-identical
+## acceptance-and-verification.md G-1 strip script (base = derived, head = render)
+aldric.json SAME_EXCEPT_NAMED
+elowen.json SAME_EXCEPT_NAMED
+tomas.json SAME_EXCEPT_NAMED

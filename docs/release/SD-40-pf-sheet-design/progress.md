@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 25 of 54 (→ 25 at E2.27; `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 54: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan + 3 UI cards + E2.27, `decisions.md §24`) |
+| Cards complete | 28 of 55 (→ 28 at E2.19, total 55 with E2.28 discovered by E2.19; → 25 at E2.27; `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 54: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan + 3 UI cards + E2.27, `decisions.md §24`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -112,6 +112,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E2.27 | E2.27 | complete | 9c6e14cf24 + receipt commit | artifacts/epic_2/E2.27_cycle_receipt.md |
 | E2.16 | E2.16 | complete | 86b1cc2872 + receipt commit | artifacts/epic_2/E2.16_cycle_receipt.md |
 | E2.17 | E2.17 | complete | 9a539933c4 + 57224da926 + receipt commit | artifacts/epic_2/E2.17_cycle_receipt.md |
+| E2.19 | E2.19 | complete | 850b6867c3 + receipt commit | artifacts/epic_2/E2.19_cycle_receipt.md |
 
 ## Epic reports
 

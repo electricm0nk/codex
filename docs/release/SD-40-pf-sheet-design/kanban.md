@@ -29,7 +29,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E5
 cd docs/release/SD-40-pf-sheet-design
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 54 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan; + E3.6 by the operator's answers, decisions.md §23.7; + E2.15 by E2.7; + 10 by the E2.G round-2 replan, decisions.md §24: E2.16–E2.23, E2.MC3, E3.7; + 3 UI cards E2.24–E2.26 for the operator's UI addition, §24.7; + E2.27 for the operator's answer Q2, §24.6)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 55 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan; + E3.6 by the operator's answers, decisions.md §23.7; + E2.15 by E2.7; + 10 by the E2.G round-2 replan, decisions.md §24: E2.16–E2.23, E2.MC3, E3.7; + 3 UI cards E2.24–E2.26 for the operator's UI addition, §24.7; + E2.27 for the operator's answer Q2, §24.6; + E2.28 discovered by E2.19)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -62,15 +62,16 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 54 (24 + E
 | E2.16 | Languages: comma list, no write-in line, room for 7; Aldric's seven stored in the proof (`decisions.md §24.3.3`) | opus | complete | E2.27 | main lane; receipt `artifacts/epic_2/E2.16_cycle_receipt.md`; print_pf_blocks 34 → 35; print_proof 16 → 18; desktop full 1271 passed 0 failed; G-1 sha256 identical ×3; G-2 16/16 byte-identical; PF pages unchanged; fence exit `character_hub.rs` (`save_character_bio_at_root` → `pub(crate)`); no discovered card |
 | E2.17 | Engine: swim + fly speed rows (`speed.swim`, `speed.fly`, maneuverability words) | opus | complete | E2.MC2 | side lane `engine`; code `9a539933c4`; receipt `artifacts/epic_2/E2.17_cycle_receipt.md`; speed_modes 1 passed (Undine swim 30, + Aquatic Ancestry 40; Strix fly 60 `average`; Aldric/Elowen none); root resolver test 1 passed, race_trait_tokens 17 passed; desktop full 1272 + 2 (rebased), root --lib 3086, codex-ingest 1859, 0 FAILED; settled race_trait bundles ×11 regenerated (7 of 919 records state swim/fly); G-1 seed hashes identical; FILES YOU OWN corrected (retro) |
 | E2.18 | Page-1 grid: Name/Campaign row, AC row without heading + Speed Land/Swim/Fly, right column Abilities then Skills | opus | waiting | E2.16, E2.17 | main lane; `decisions.md §24.3.1–2` |
-| E2.19 | Engine: CMB and CMD conditional notes | opus | waiting | E2.17 | side lane `engine`; ∥ E2.18 |
+| E2.19 | Engine: CMB and CMD conditional notes | opus | complete | E2.17 | side lane `engine`; code `850b6867c3`; receipt `artifacts/epic_2/E2.19_cycle_receipt.md`; root conditional_notes 7 passed (6 + 1: Dwarf Stability → CMD, Relentless → CMB; census 22), desktop conditional_notes 2 passed (8 keys, Aldric CMB/CMD empty); root --lib 3087, desktop 1272 + 2, npm 191/191, 0 FAILED; G-1 SAME_EXCEPT_NAMED ×3 (derived base byte-identical to E2.17's hashes); acceptance example corrected (centipede is `print: false`); fence exit `character_hub.rs` seed test; discovered E2.28 |
 | E2.20 | Conditional Bonuses box (fixed size, every conditional, write-in space); notes leave HP/Init/Enc, Saves, Skills | opus | waiting | E2.18, E2.19 | main lane; `decisions.md §24.3.4–5`; owns the box's overflow (SD-b) |
-| E2.21 | Engine: `resistances` on the load response (energy, DR, SR, immunities) | opus | waiting | E2.19 | side lane `engine`; ∥ E2.20; closes the lane |
+| E2.21 | Engine: `resistances` on the load response (energy, DR, SR, immunities) | opus | waiting | E2.19 | side lane `engine`; ∥ E2.20 |
+| E2.28 | Engine: conditional notes from held `print: false` rules (Vermin Focus CMD, 13 entries) | opus | waiting | E2.21 | side lane `engine`; discovered by E2.19; closes the lane |
 | E2.22 | Resistances block (blank boxes when none); DR leaves Hit Points | opus | waiting | E2.20, E2.21 | main lane; `decisions.md §24.3.6` |
 | E2.23 | Sections: a page break and a prominent title per section (Abilities and Feats, Inventory, Spellbook, Bio, Math) | opus | waiting | E2.22 | main lane; `decisions.md §24.3.7`; Progression's title arrives with E3.7 |
 | E2.24 | UI: Swim and Fly beside Land (same engine rows as the print) | opus | waiting | E2.23, E2.17 | main lane; operator UI addition, `decisions.md §24.3.8`; ui-smoke +1 |
 | E2.25 | UI: Conditional Bonuses list under Saving Throws | opus | waiting | E2.24, E2.19 | main lane; ui-smoke +1 |
 | E2.26 | UI: Resistances panel in the Defense tab | opus | waiting | E2.25, E2.21 | main lane; ui-smoke +1 |
-| E2.MC3 | E2 merge check, round 3 + Epic report | opus | waiting | E2.26 | adversarial; re-renders the E2.G round-3 PDFs + PNGs |
+| E2.MC3 | E2 merge check, round 3 + Epic report | opus | waiting | E2.26, E2.28 | adversarial; re-renders the E2.G round-3 PDFs + PNGs |
 | E2.G | OPERATOR GATE: Aldric page 1 printed, `usable: yes` (round 3) | sonnet | partial | E2.MC3 | round 1 (2026-11-11) → `decisions.md §23`; round 2 (2026-11-12) `usable: no` ×2 → `decisions.md §24`; round 3 renders the seven-language Aldric after E2.MC3 and waits for `grep -c '^- Aldric .* — usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md` → 2 |
 | E3.1 | Feats, class features, actions looks (section 2) | opus | waiting | E2.G | rewritten: no `feats-full` |
 | E3.2 | Inventory pages: defense, gear (worn / carried / left behind), money (section 3) | opus | waiting | E3.1 | rewritten |
