@@ -48,7 +48,7 @@ const MC_EXTRA = `This is a merge check, so be adversarial: re-derive the claims
 
 const GATE_EXTRA = (n) => `Operator gate. Render the PDFs and PNGs your criterion names. Write the receipt with one line per sheet: "usable: " for the operator to fill (${n} lines). If those lines already all read "usable: yes", return complete. If any reads something else, turn each named defect into a discovered card in this epic and return partial naming them. Otherwise leave the row partial, push, and return partial with the absolute file paths. Never sign for the operator.`
 
-const ORDER = ['C1','E0.1','E0.2','E1.1','E1.2','E1.MC','E2.1','E2.2','E2.3','E2.MC','E2.5','E2.6','E2.7','E2.8','E2.14','E2.9','E2.10','E2.11','E2.12','E2.13','E2.4','E2.MC2','E2.G','E3.1','E3.2','E3.3','E3.6','E3.4','E3.5','E3.MC','E4.1','E4.2','E4.MC','E5.1','E5.2','E5.3','E5.4','E5.5']
+const ORDER = ['C1','E0.1','E0.2','E1.1','E1.2','E1.MC','E2.1','E2.2','E2.3','E2.MC','E2.5','E2.6','E2.7','E2.8','E2.14','E2.9','E2.10','E2.11','E2.15','E2.12','E2.13','E2.4','E2.MC2','E2.G','E3.1','E3.2','E3.3','E3.6','E3.4','E3.5','E3.MC','E4.1','E4.2','E4.MC','E5.1','E5.2','E5.3','E5.4','E5.5']
 const startAt = ORDER.indexOf((args && args.start) || 'C1')
 const skip = (id) => ORDER.indexOf(id) >= 0 && ORDER.indexOf(id) < startAt
 
@@ -139,14 +139,16 @@ try {
   const p7 = p6.then(() => go('E2.7', 'opus', P2, 'engine', ENGINE_EXTRA(false)))
   const p8 = p7.then(() => go('E2.8', 'opus', P2, 'engine', ENGINE_EXTRA(false)))
   const p14 = p8.then(() => go('E2.14', 'opus', P2, 'engine', ENGINE_EXTRA(true)))
-  const w6 = wrap(p6), w7 = wrap(p7), w8 = wrap(p8), w14 = wrap(p14)
+  // E2.15 discovered by E2.7; E2.14 already removed the engine tree, so E2.15 makes it again and removes it at the end.
+  const p15 = p14.then(() => go('E2.15', 'opus', P2, 'engine', ENGINE_EXTRA(true)))
+  const w6 = wrap(p6), w7 = wrap(p7), w8 = wrap(p8), w14 = wrap(p14), w15 = wrap(p15)
   await go('E2.5', 'opus', P2)
   await need(w6); await need(w8)
   await go('E2.9', 'opus', P2)
   await need(w14)
   await go('E2.10', 'opus', P2)
   await go('E2.11', 'opus', P2)
-  await need(w7)
+  await need(w7); await need(w15)
   await go('E2.12', 'opus', P2)
   await go('E2.13', 'opus', P2)
   await go('E2.4', 'opus', P2)
