@@ -102,7 +102,7 @@ character_hub.rs
   remove_equipment_selection  = also drops the copy from every set and re-ordinals later copies of the same item/bonus
   purchase_equipment          = unchanged; the app requests SelectedInactive (CharacterSheet.tsx:3295); bought_copy_placement removed
 character_custom.rs
-  CustomRecordDto += base_item_id: Option<String> (serde default); save refuses an unknown id; weight and container-ness from the base
+  CustomRecordDto += weight_lbs, price_gp, container_capacity_lbs: Option<..> (serde default; decisions.md §25); create_custom_item deducts the price; custom items weigh via compute_encumbrance's extra copies
   WeaponDamageDto += in_hand (E2.4; from WeaponDamageBreakdown.in_hand, E1.4)
 main.rs: the five new commands registered
 boundary/moveEquipmentCopy.ts, boundary/equipmentSets.ts (new); listHeldEquipment.ts, loadCreateCharacter.ts, loadSavedCharacterDetail.ts, loadCharacterCustom.ts (types)
@@ -139,6 +139,58 @@ Not Carried (names only) → the totals and limits as today. `gear.rs::weapons` 
 then carried rows with "(carried)"; Not Carried weapons are absent from `weapon_damage` by E1.4.
 `looks/gear.typ` indents by the row's depth; it computes nothing (NR-2).
 
+## §7a The weapons rows after SD-41 (E1.4–E1.6, E2.4, E4.1; `decisions.md §9, §22, §23`)
+
+```
+WeaponDamageBreakdown += in_hand: bool, unarmed: bool, nonlethal: bool, uses_ammunition: bool, ammunition_carried: u32
+  input: EquippedActive + SelectedInactive weapons (Absent off) + one appended unarmed row from unarmed_strike.json
+  unarmed: die from the record (1d3; Small → size step), monk progression via class_monk.rs:470's table, nonlethal unless Improved Unarmed Strike
+  uses_ammunition: the record's `Projectile` tag; ammunition_carried: Σ quantity × base_quantity over carried `Ammunition` copies matching the weapon's CONTAINS family
+WeaponDamageDto += inHand, unarmed, nonlethal, usesAmmunition, ammunitionCarried
+order everywhere: in hand → carried "(carried)" → Unarmed last; 20 tick boxes + "<kind>: <n> carried" under uses_ammunition rows only; no global Ammunition row
+```
+
+## §8 The Market after SD-41 (E2.5, E2.6, E3.4; `decisions.md §24, §26, §28`)
+
+```
+equipment_catalog.rs   EquipmentCatalogEntryDto += slot: BodySlot (slot_of(record)); every producer sets it
+character_hub.rs       purchase_equipment  += quantity, negotiated_price_copper      (n copies, one save; price × n or the negotiated total)
+                       sell (existing path :4910) += quantity, negotiated_price_copper (default refund_copper × n)
+                       discard_equipment_copy { copy, quantity }                      (no money; set entries dropped)
+                       rename_equipment_copy { copy, name }                           (copyNames in equipment_sets.json)
+                       purchase_custom_equipment { baseItemId, name, masterwork, enhancement, specialAbilities, material, size, quantity, negotiatedPriceCopper }
+                       quote_custom_equipment (dry run: price, weight, unpriced eqmods)  list_custom_equipment_options { baseItemId }
+                       create_custom_item { name, description, weightLbs, priceGp, containerCapacityLbs, slot }   (custom.json; price deducted; Carried)
+ui/characterHub/marketModel.ts (pure)   sortEntries(entries, column, dir); affordable(entry, mode, totalCopper); quantityLabel; needsNegotiate(entry)
+ui/characterHub/MarketDialog.tsx        table Item | Price | Weight | Slot (sortable headers); description box; Only Show Affordable; Quantity; Negotiate; Buy Custom; Create; Sell table over stacks
+ui/characterHub/BuyCustomDialog.tsx, CreateItemDialog.tsx (new)
+```
+
+Pricing lives in Rust: `Enhanceable::price_gp` (masterwork + N² rate) + each eqmod's flat `COST` or an
+evaluated formula (`WT*N`, `BASECOST*N`, `+N`-equivalent steps); an unpriced eqmod makes the quote
+"negotiate". No TS multiplies a price: the quantity total and the custom quote come from the backend.
+
+## §9 Prices: the `convert` lane (E1.8, E1.9; `decisions.md §26`)
+
+```
+crates/codex-ingest/src/pcgen_import/corpus_equipment_json.rs, cache_gen/*.rs   composite rows (BASEITEM + EQMOD) keep name + tokens; cost = base + Σ eqmod cost; literal COST summed with eqmods (never negative)
+data/corpus/**/equipment/**            re-converted; only cost_gp / weight / name / raw_tokens may change (field-diff check)
+src/rules_core/rules_catalog/**        regenerated compiled tables (the Market's per-book maps)
+data/price_overrides/d20pfsrd-prices.json   [{ key, price_gp, url, fetched_at }]   converter input; one URL per item
+data/price_overrides/price-unknown.json     [{ key, reason }]                        the gate's only allowed exceptions
+tests: market_price_census (E1.8: the Market's none / zero / negative by book, category, cause) ; market_prices_are_positive_or_listed (E1.9 gate)
+```
+
+## §10 Stacks and created items (E1.7, E2.1, E2.3; `decisions.md §25, §28`)
+
+```
+held list: rows = group(copies by item_id, bonus, custom name, location) → { quantity, copies: [CopyKey], baseQuantity }   -- a view; nothing on disk changes
+labels: "<name> ×<n>" ; "<name> ×<n> = <n × baseQuantity>" when baseQuantity > 1   (TS formats the engine's figures)
+commands with quantity: purchase, sell, discard, move (ascending ordinals), drop (= move NotCarried)
+compute_encumbrance(selections, corpus, extra: &[WeighedCopy])   -- created custom items weigh through the engine, same Absent rule
+CustomRecordDto += weight_lbs, price_gp, container_capacity_lbs (Option; serde default)   -- custom.json; edit/remove in the Custom tab
+```
+
 ## §7 Tests the bundle adds (names are the acceptance filters)
 
 | Card | Where | Names |
@@ -147,10 +199,17 @@ then carried rows with "(carried)"; Not Carried weapons are absent from `weapon_
 | E1.2 | root `--lib`; `crates/codex-ingest/tests/equipment_sets_pcg_population.rs` | `equipment_sets_*` (8); the population test |
 | E1.3 | root `--lib` | `containers_*` (4) |
 | E1.4 | root `--lib` | `carried_weapon_*` (3) |
-| E2.1 | desktop | `equipment_sets_on_load_*` (2); `tests/old_save_loads_unchanged.rs` |
-| E2.2 | desktop | `move_equipment_*` (6) |
-| E2.3 | desktop; `customModel.test.ts` | `custom_container_*` (3) |
-| E2.4 | desktop | `weapons_in_hand_first_*` (2) |
+| E1.5 | root `--lib` | `unarmed_row_*` (4) |
+| E1.6 | root `--lib` | `uses_ammunition_*` (3) |
+| E1.7 | root `--lib` | `extra_weighed_*` (2), `base_quantity` (1) |
+| E1.8, E1.9 | `tests/market_price_census.rs` (codex-ingest or desktop) | `market_price_census`, `market_prices_are_positive_or_listed` |
+| E2.1 | desktop | `equipment_sets_on_load_*` (2), `held_list_stacks_*` (2); `tests/old_save_loads_unchanged.rs` |
+| E2.2 | desktop | `move_equipment_*` (6), `move_quantity_splits_a_stack` |
+| E2.3 | desktop; `customModel.test.ts` | `create_custom_item_*` (4) |
+| E2.4 | desktop; `weaponsTabModel.test.ts` | `weapons_in_hand_first_*` (3) |
+| E2.5 | desktop | `market_backend_*` (5), `catalog_slot_is_set_on_every_entry` |
+| E2.6 | desktop | `buy_custom_*` (4) |
 | E3.1, E3.2 | `gearScreenModel.test.ts` | ≥ 8 model cases + ≥ 4 drop cases |
-| E3.3 | ui-smoke | 7 new + 6 rewritten rows |
-| E4.1 | desktop `print_pf_blocks` | `print_pf_blocks_gear_*` (3) |
+| E3.4 | `marketModel.test.ts`, `MarketDialog.test.ts` | ≥ 6 model cases |
+| E3.3 | ui-smoke | 15 new + 6 rewritten rows |
+| E4.1 | desktop `print_pf_blocks` | `print_pf_blocks_gear_*` (5) |

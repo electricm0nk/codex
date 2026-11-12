@@ -10,6 +10,8 @@ logs and outputs beside it under `epic_<n>/<card>/`.
 | `cycle_1/` | C1's receipt |
 | `epic_0/` | `census.py` (run with `python3 -I` from the repo root) and `census.txt`, every figure with its command; the SD-40 overlap in §7 |
 | `epic_1/` | E1.x receipts; E1.MC's partition line and the Phase-1 resume receipt |
+| `epic_1/E1.8/` | `market-prices.json` — the Market's missing / zero / negative rows by book, category and converter cause |
+| `epic_1/E1.9/` | the corpus field-diff check output; the unevaluated-formula count; which agent fetched the d20pfsrd pages |
 | `epic_2/` | E2.x receipts; E2.MC's `.pcg` population probe output |
 | `epic_3/E3.3/` | the ui-smoke `results.json` of the 13 named rows |
 | `epic_3/E3.MC/` | four gear-screen screenshots (SD-l, SD-n) |

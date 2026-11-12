@@ -24,6 +24,14 @@ resolver passes from C1 on (`decisions.md §2`). Nothing publishes from `tranche
 - Market purchases go to Carried.
 - Weapons list in-hand first, then carried; the printed Inventory page prints the active set by location.
 - Old saves load into a Default set with AC and weight unchanged.
-- Starfinder and Cyberpunk RED gear are unchanged.
+- The Weapons block always ends with an Unarmed row; ammunition boxes appear only under weapons that use
+  ammunition, with the carried count.
+- The Market is a sortable table (Item, Price, Weight, Slot) with a description box, Only Show Affordable,
+  a Quantity, Negotiate on Buy and Sell, Buy Custom (name, masterwork, enhancement, abilities, material,
+  size, priced from the rules) and Create (a free-text item with a weight, an optional price, an optional
+  container and slot).
+- Missing and negative prices are fixed in the converter; the rest come from a cited price list.
+- Drop keeps the item as Not Carried; Sell and Discard are separate; identical items stack with a count.
+- Starfinder and Cyberpunk RED gear and markets are unchanged.
 
 Final figures, commands and the operator's two sign-offs are filled in at E5.3.

@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 1 of 23 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 1; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 23) |
+| Cards complete | 1 of 31 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 1; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 31: 23 at C0 + 8 from the seven follow-ups, `decisions.md §22–§28`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -57,6 +57,17 @@ Command: `grep -rhoE '<[a-z_-]+>' docs/release/SD-41-gear-and-equipment-sets/*.m
 run before commit; the list is pasted in `artifacts/cycle_0/C0_cycle_receipt.md`. Every token is in the
 `workflow-instruction.md §9` allowed list; zero bugs. Deferred values: `0.21.<run>`; the run id; the
 SD-40 merge SHA (R25); F-24's `N of N` (E1.2).
+
+## Cycle 0 amendment — the seven follow-ups (2026-11-12, planning session, docs only)
+
+The operator sent seven more items the same day (verbatim in `artifacts/cycle_0/operator-brief-2026-11-12.md`
+and `decisions.md §22–§28`). Census added to `census.py §8` (unarmed, ammunition tags, Market shape, prices
+by kind / book / category with the two named items' converter causes, eqmods, bundles, Drop surfaces). New
+cards: E1.5, E1.6, E1.7, E1.8, E1.9 (Phase 1; E1.8–E1.9 in the tool-side lane `convert`), E2.5, E2.6, E3.4;
+E2.3 rewritten (Create item backend; `base_item_id` dropped — `decisions.md §21` Q3 answered); E2.1, E2.2,
+E2.4, E3.1, E3.3, E4.1, E4.MC, E4.G widened. Cards 23 → 31. Open questions Q6–Q8 added with defaults.
+Partition re-run: the Market cards touch `CharacterSheet.tsx` (SD-40-owned) → Phase 2; the `convert` lane's
+files are owned by no open SD-40 card → Phase 1.
 
 ## Cycle log
 

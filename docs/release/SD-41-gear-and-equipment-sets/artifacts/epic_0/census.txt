@@ -1,7 +1,7 @@
 $ git rev-parse --short HEAD
-f7f85f3d24
+2fea61de8f
 
-# SD-41 census — base f7f85f3d24
+# SD-41 census — base 2fea61de8f
 ## 1. Screen: EquipmentPanel, boundaries, market
 $ wc -l apps/desktop/src/characterHub/EquipmentPanel.tsx apps/desktop/src/characterHub/MarketDialog.tsx apps/desktop/src/characterHub/CustomDialog.tsx apps/desktop/src/characterHub/customModel.ts apps/desktop/src/characterHub/encumbranceTabModel.ts apps/desktop/src/boundary/listHeldEquipment.ts apps/desktop/src/boundary/setEquipmentActiveState.ts | tail -8
 194 apps/desktop/src/characterHub/EquipmentPanel.tsx
@@ -167,4 +167,76 @@ inventorysectionheading.html
 $ awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' docs/release/SD-40-pf-sheet-design/kanban.md | awk 'END{print NR}'; awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md | awk 'END{print NR}'
 32
 56
+
+## 8. The seven follow-ups (2026-11-12)
+$ grep -n -i unarmed src/rules_core/damage_total.rs src/rules_core/pilot_compute/combat.rs
+src/rules_core/damage_total.rs:444:/// (`equipment_effects::is_natural_attack_weapon` — e.g. CRB's `Unarmed
+src/rules_core/pilot_compute/combat.rs:292:    //   Gladiator, Tactician, and Unarmed Fighter (all Ultimate Combat)
+
+$ grep -n 'fn ground_unchained_monk_unarmed_strike_damage' src/rules_core/pilot_compute/class_monk.rs
+470:pub(super) fn ground_unchained_monk_unarmed_strike_damage(
+
+$ grep -rl 'Improved Unarmed Strike' data/sheet_rules --include=*.json | awk 'END{print NR}'
+54
+
+$ python3 -I -c "import json;d=json.load(open('data/corpus/core_rulebook/equipment/arms_armor/unarmed_strike.json'))['data'];print([t for t in d['raw_tokens'] if t['key'] in ('DAMAGE','CRITMULT','COST','WT')])"
+[{'key': 'COST', 'value': '0'}, {'key': 'WT', 'value': '0'}, {'key': 'CRITMULT', 'value': 'x2'}, {'key': 'DAMAGE', 'value': '1d3'}]
+
+$ python3 -I <this script> §8 ammunition tags over data/sheet_rules/**/equipment/*.json: {'Thrown': 141, 'Ammunition': 83, 'Projectile': 132, 'Firearm': 63, 'Crossbow': 24, 'Sling': 11, 'Bow': 26} 
+
+$ python3 -I <this script> §8 corpus weapon records with a CONTAINS ammunition family: 79 
+
+$ grep -n '"Ammunition"' apps/desktop/src-tauri/resources/print/looks/weapons.typ
+88:          align(bottom, text(size: 8pt, weight: "bold", "Ammunition")),
+
+$ grep -c -i 'ammunition\|ammo' apps/desktop/src/characterHub/CharacterSheet.tsx
+0
+
+$ wc -l apps/desktop/src/characterHub/MarketDialog.tsx; grep -c "value: '" apps/desktop/src/characterHub/priceMode.ts; grep -n 'export type MarketCategory' apps/desktop/src/boundary/listMarket.ts
+402 apps/desktop/src/characterHub/MarketDialog.tsx
+3
+11:export type MarketCategory = 'weapon' | 'armor' | 'shield' | 'gear' | 'magicItem';
+
+$ grep -n 'pub(crate) fn refund_copper\|pub(crate) fn sell_held_copy_at_root' apps/desktop/src-tauri/src/character_hub.rs
+3741:pub(crate) fn refund_copper(cost_copper: u64, mode: PriceMode) -> u64 {
+4922:pub(crate) fn sell_held_copy_at_root(
+
+$ grep -n 'Drop' apps/desktop/src/characterHub/CharacterSheet.tsx | head -6
+749:   * Drops one carried copy of the item, with any equipmods attached to it, and sells it back
+870:                aria-label={`Drop ${row.name}`}
+874:                Drop
+881:        Dropping an item sells it back under the pricing chosen above.
+1706:                  aria-label={`Drop ${item.equipmentRecordName}`}
+1710:                  Drop
+
+$ python3 -I -c "import json;rows=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows'];print([r['id'] for r in rows if 'drop' in json.dumps(r).lower()])"
+['sheet-f7c-samurai-skills-only-skills']
+
+$ python3 -I <this script> §8 price census over data/corpus/**/equipment/**/*.json (a proxy for the Market; E1.8 derives the Market's own count): {'positive': 4854, 'none': 2476, 'zero': 470, 'negative': 4}
+   none by book {'core_rulebook': 1591, 'ultimate_equipment': 200, 'ultimate_psionics': 171, 'mythic_adventures': 107, 'advanced_class_guide': 75, 'inner_sea_magic': 62, 'inner_sea_gods': 53, 'pathfinder_unchained': 42} by category {'General': 134, 'Equipmods': 727, 'ArmsArmor': 148, 'MagicItems': 17, 'equipmods': 234, 'arms_armor': 174, 'magic_items': 1017, 'general': 24, None: 1}
+   zero by book {'core_rulebook': 215, 'ultimate_equipment': 79, 'ultimate_psionics': 71, 'advanced_players_guide': 23, 'ultimate_combat': 23, 'inner_sea_world_guide': 9, 'mythic_adventures': 9, 'bestiary_4': 7} by category {'MagicItems': 94, 'ArmsArmor': 89, 'Equipmods': 96, 'General': 9, 'equipmods': 57, 'magic_items': 22, 'arms_armor': 37, 'general': 66}
+   negative by book {'ultimate_psionics': 2, 'core_rulebook': 1, 'ultimate_equipment': 1} by category {'ArmsArmor': 3, 'arms_armor': 1}
+   negatives: [('Astral Juggernaut', -150.0), ('Astral Armor', -150.0), ('Demon Armor Claw Attack', -2300.0), ('Demon Prince Armor Claw Attack', -18300.0)] 
+
+$ python3 -I -c "import json;d=json.load(open('data/corpus/core_rulebook/equipment/arms_armor/adamantine_breastplate.json'));x=d['data'];print(x.get('name'),x.get('cost_gp'),len(x.get('raw_tokens',[])))"
+Breastplate (Base) None 0
+
+$ python3 -I -c "import json;d=json.load(open('data/corpus/ultimate_psionics/equipment/astral_armor.json'));x=d['data'];print([t for t in x['raw_tokens'] if t['key'] in ('COST','EQMOD')])"
+[{'key': 'COST', 'value': '-150'}, {'key': 'EQMOD', 'value': 'Special Quality ~ Masterwork ~ Armor'}]
+
+$ python3 -I <this script> §8 equipmod records: 1494 COST kinds {'formula': 97, 'flat': 608, 'none': 789} Material-typed 140 
+
+$ grep -rl '"Resizable"' data/sheet_rules --include=*.json | grep '/equipment/' | awk 'END{print NR}'
+733
+
+$ python3 -I <this script> §8 bundle-shaped records: 68 with BASEQTY 30 
+
+$ grep -n 'record.slot.is_some() || !record.bonuses.is_empty()' apps/desktop/src-tauri/src/character_hub.rs
+5015:    let custom_items: Vec<_> = custom.equipment.iter().filter(|record| record.slot.is_some() || !record.bonuses.is_empty()).collect();
+
+$ grep -rn 'compute_encumbrance' src apps/desktop/src-tauri/src crates --include=*.rs | awk 'END{print NR}'
+41
+
+$ awk -F'|' '$2 ~ /^ (E2\.2[3-9]|E2\.MC3|E2\.G|E3|E4|E5)[0-9A-Za-z.]* *$/ && $4 ~ /data\/|codex-ingest|rules_catalog/ {print $2}' docs/release/SD-40-pf-sheet-design/epic-breakdown.md | awk 'END{print NR}'
+0
 

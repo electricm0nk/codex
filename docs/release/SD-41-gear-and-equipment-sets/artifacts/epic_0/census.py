@@ -75,3 +75,61 @@ for f in ['character_hub.rs','CharacterSheet.tsx','main.rs','spec.json','gear.rs
     print(f"  {f:28s} {out or '(none)'}")
 print("  command: awk -F'|' -v f=<file> '$2 ~ /^ (E2\\.2[3-9]|E2\\.MC3|E2\\.G|E3|E4|E5)[0-9A-Za-z.]* *$/ && $0 ~ f {print $2}' " + EB + "\n")
 sh("awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' docs/release/SD-40-pf-sheet-design/kanban.md | awk 'END{print NR}'; awk -F'|' '$2 ~ /^ (C|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md | awk 'END{print NR}'")
+
+print("## 8. The seven follow-ups (2026-11-12)")
+sh("grep -n -i unarmed src/rules_core/damage_total.rs src/rules_core/pilot_compute/combat.rs")
+sh("grep -n 'fn ground_unchained_monk_unarmed_strike_damage' src/rules_core/pilot_compute/class_monk.rs")
+sh("grep -rl 'Improved Unarmed Strike' data/sheet_rules --include=*.json | awk 'END{print NR}'")
+sh("python3 -I -c \"import json;d=json.load(open('data/corpus/core_rulebook/equipment/arms_armor/unarmed_strike.json'))['data'];print([t for t in d['raw_tokens'] if t['key'] in ('DAMAGE','CRITMULT','COST','WT')])\"")
+tags=collections.Counter()
+for f in glob.glob('data/sheet_rules/**/equipment/*.json', recursive=True):
+    try: recs=json.load(open(f))
+    except Exception: continue
+    for r in (recs if isinstance(recs,list) else [recs]):
+        for k in ('Projectile','Ammunition','Thrown','Bow','Crossbow','Sling','Firearm'):
+            if k in set(r.get('tags',[])): tags[k]+=1
+print("$ python3 -I <this script> §8 ammunition tags over data/sheet_rules/**/equipment/*.json:", dict(tags), "\n")
+w=0
+for f in glob.glob('data/corpus/**/equipment/**/*.json', recursive=True):
+    try: x=json.load(open(f))['data']
+    except Exception: continue
+    toks={t['key']:t['value'] for t in x.get('raw_tokens',[]) if 'key' in t}
+    if 'CONTAINS' in toks and 'Weapon' in toks.get('TYPE',''): w+=1
+print("$ python3 -I <this script> §8 corpus weapon records with a CONTAINS ammunition family:", w, "\n")
+sh("grep -n '\"Ammunition\"' apps/desktop/src-tauri/resources/print/looks/weapons.typ")
+sh("grep -c -i 'ammunition\\|ammo' apps/desktop/src/characterHub/CharacterSheet.tsx")
+sh("wc -l apps/desktop/src/characterHub/MarketDialog.tsx; grep -c \"value: '\" apps/desktop/src/characterHub/priceMode.ts; grep -n 'export type MarketCategory' apps/desktop/src/boundary/listMarket.ts")
+sh("grep -n 'pub(crate) fn refund_copper\\|pub(crate) fn sell_held_copy_at_root' apps/desktop/src-tauri/src/character_hub.rs")
+sh("grep -n 'Drop' apps/desktop/src/characterHub/CharacterSheet.tsx | head -6")
+sh("python3 -I -c \"import json;rows=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows'];print([r['id'] for r in rows if 'drop' in json.dumps(r).lower()])\"")
+kinds=collections.Counter(); bybook=collections.defaultdict(collections.Counter); bycat=collections.defaultdict(collections.Counter); neg=[]
+for f in glob.glob('data/corpus/**/equipment/**/*.json', recursive=True):
+    try: d=json.load(open(f)); x=d.get('data',d)
+    except Exception: continue
+    c=x.get('cost_gp'); k='none' if c is None else ('zero' if c==0 else ('negative' if c<0 else 'positive'))
+    kinds[k]+=1; bybook[k][f.split('/')[2]]+=1; bycat[k][x.get('category')]+=1
+    if k=='negative': neg.append((x.get('name'),c))
+print("$ python3 -I <this script> §8 price census over data/corpus/**/equipment/**/*.json (a proxy for the Market; E1.8 derives the Market's own count):", dict(kinds))
+for k in ('none','zero','negative'): print("  ",k,"by book",dict(bybook[k].most_common(8)),"by category",dict(bycat[k]))
+print("   negatives:", neg, "\n")
+sh("python3 -I -c \"import json;d=json.load(open('data/corpus/core_rulebook/equipment/arms_armor/adamantine_breastplate.json'));x=d['data'];print(x.get('name'),x.get('cost_gp'),len(x.get('raw_tokens',[])))\"")
+sh("python3 -I -c \"import json;d=json.load(open('data/corpus/ultimate_psionics/equipment/astral_armor.json'));x=d['data'];print([t for t in x['raw_tokens'] if t['key'] in ('COST','EQMOD')])\"")
+n=0; costk=collections.Counter(); mat=0
+for f in [f for f in glob.glob('data/corpus/**/*.json', recursive=True) if 'equipmod' in f]:
+    try: d=json.load(open(f)); x=d.get('data',d)
+    except Exception: continue
+    n+=1; toks={t['key']:t['value'] for t in x.get('raw_tokens',[]) if 'key' in t}; c=toks.get('COST','')
+    costk['formula' if re.search(r'[A-Z(]',c) else ('none' if c=='' else 'flat')]+=1
+    if 'Material' in toks.get('TYPE',''): mat+=1
+print("$ python3 -I <this script> §8 equipmod records:", n, "COST kinds", dict(costk), "Material-typed", mat, "\n")
+sh("grep -rl '\"Resizable\"' data/sheet_rules --include=*.json | grep '/equipment/' | awk 'END{print NR}'")
+b=0;q=0
+for f in glob.glob('data/corpus/**/equipment/**/*.json', recursive=True):
+    try: x=json.load(open(f))['data']
+    except Exception: continue
+    toks={t['key']:t['value'] for t in x.get('raw_tokens',[]) if 'key' in t}
+    if re.search(r'\((\d+)\)', x.get('name') or '') or 'BASEQTY' in toks: b+=1; q+= 'BASEQTY' in toks
+print("$ python3 -I <this script> §8 bundle-shaped records:", b, "with BASEQTY", q, "\n")
+sh("grep -n 'record.slot.is_some() || !record.bonuses.is_empty()' apps/desktop/src-tauri/src/character_hub.rs")
+sh("grep -rn 'compute_encumbrance' src apps/desktop/src-tauri/src crates --include=*.rs | awk 'END{print NR}'")
+sh("awk -F'|' '$2 ~ /^ (E2\\.2[3-9]|E2\\.MC3|E2\\.G|E3|E4|E5)[0-9A-Za-z.]* *$/ && $4 ~ /data\\/|codex-ingest|rules_catalog/ {print $2}' docs/release/SD-40-pf-sheet-design/epic-breakdown.md | awk 'END{print NR}'")

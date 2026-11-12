@@ -30,6 +30,11 @@ status: planning-ready
 | R-13 | SD-40's retrospective lands after this package and names a change SD-41 ignores | medium | low | §12.2 of `workflow-instruction.md`: the lead reads it before E2.1 and records each change | yes — lead action |
 | R-14 | Three cargo lanes on the box with SD-40 live → OOM / Proxmox stop | medium | high | R-Q2: the prefix waits on `pgrep` < 3; `free -g` before long runs | yes |
 | R-15 | The operator's gate finds defects → the run must stop and restart | expected | low | gate defects are discovered cards; `START=<card>` restart; one wait by design | n/a |
+| R-16 | The equipment re-convert (E1.9) rewrites fields it must not (licence, PI, population — the "generated artifacts mutated post-hoc" hazard) or thousands of files SD-40's merge later conflicts with | medium | high | the field-diff Python check (only `cost_gp`, `weight`, `name`, `raw_tokens` may change); no open SD-40 card owns `data/`; E1.MC re-checks; the lane lands before E1.MC so the Phase-2 rebase carries it | yes |
+| R-17 | d20pfsrd unreachable from this box (HEAD → 410 on 2026-11-12) | high | medium | P-9: a browser user agent first; else the lead's `web-fetch` agent fills the list; the list's reach is bounded by E1.8 (Q7); unlisted rows sell through Negotiate | partly |
+| R-18 | Buy Custom prices drift from PCGen's eqmod formulas (97 formula kinds) | medium | medium | only flat costs and the named formula kinds are priced; the rest route through Negotiate (Q6) and are counted in the receipt; the test prices a known +1 flaming mithral longsword against the book | yes |
+| R-19 | Stacks hide a copy-identity bug (a move of 2 of 3 moves the wrong ordinals) | medium | medium | stacks are a view; moves act on explicit `CopyKey`s in ascending ordinal; E2.2 `move_quantity_splits_a_stack`; E2.1's stack tests | yes |
+| R-20 | The Unarmed row changes an existing seed value (a Monk seed's flurry rows) | low | high | the row is appended; G-1's `NEW_ROWS` names exactly the four unarmed ids; any other change is `VALUE_MOVED` | yes |
 
 ## 2. Open questions → defaults taken
 
@@ -46,6 +51,10 @@ one card takes; the run does not wait on them.
 | Weight-reduction containers | "no stated capacity"; contents weigh in full | DEF-1; Q4 |
 | Where the gear screen lives | the Gear tab, replacing the Equipment panel | `decisions.md §13`; Q5 |
 | Drag library | none (HTML5) | SD-g |
+| Buy Custom: unpriced eqmods | sold through Negotiate | `decisions.md §24`; Q6 |
+| The d20pfsrd list's reach | bounded by E1.8's Market census; the rest price-unknown | `decisions.md §26`; Q7 |
+| Splitting a bundle | not possible; a bundle is the unit | `decisions.md §28`; Q8 |
+| Where a Create item is edited | the Custom tab | `decisions.md §25` |
 
 ## 3. Non-self-healable conditions (card → `blocked-escalated`)
 

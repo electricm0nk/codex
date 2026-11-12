@@ -57,11 +57,16 @@ own `character_hub.rs` (E2.28, E2.29, E3.6), `CharacterSheet.tsx` (E2.24–E2.26
 (E3.1, E3.3, E4.1), `packaged_resources.rs` (E3.x, E5.1), `loadSavedCharacterDetail.ts` (E2.24–E2.26).
 None of SD-40's open cards owns `equipment_record.rs`, `encumbrance.rs`, `equipment_effects.rs`,
 `damage_total.rs`, `body_slots.rs`, `src/saved_character/**`, `character_custom.rs`, `EquipmentPanel.tsx`,
-`MarketDialog.tsx`, `CustomDialog.tsx` (the census §7 command, one line per file).
+`MarketDialog.tsx`, `CustomDialog.tsx` (the census §7 command, one line per file). The Market cards (E2.5,
+E2.6, E3.4) write `MarketDialog.tsx` (free) **and** `CharacterSheet.tsx` (its Market handlers; SD-40-owned),
+so they are Phase 2 like every other `apps/` card.
 
 - **Phase 1, now:** C0, C1 and Epic E1 (root crate + new files only: `src/rules_core/{equipment_record,
-  containers,damage_total}.rs`, `src/saved_character/equipment_sets.rs` *(new)*, their tests). One cargo
-  lane, in `.worktrees/sd41-main`, and only while SD-40 holds ≤ 2 (`pgrep -f '[c]argo'` lanes < 3; R-Q2).
+  containers,damage_total,encumbrance}.rs`, `src/saved_character/equipment_sets.rs` *(new)*, their tests),
+  plus the tool-side lane `convert` (E1.8, E1.9: `crates/codex-ingest/**`, `data/corpus/**/equipment/**`,
+  `data/price_overrides/**` *(new)*, the regenerated compiled tables — no open SD-40 card owns a `data/`
+  path: `awk -F'|' '$2 ~ /^ (E2\.2[3-9]|E2\.MC3|E2\.G|E3|E4|E5)[0-9A-Za-z.]* *$/ && $4 ~ /data\//' ../SD-40-pf-sheet-design/epic-breakdown.md`
+  prints nothing). Cargo lanes on the box stay ≤ 3 including SD-40's (`pgrep -f '[c]argo'`; R-Q2).
 - **Phase 2, after SD-40's PR merges:** the lead rebases `tranche-21` onto `develop` (SD-m, at most once,
   logged in `progress.md`), re-runs E1's tests, then dispatches E2 → E3 → E4 → E5. E2's first card
   (E2.1) is the first write to `character_hub.rs`.
@@ -210,7 +215,11 @@ every set, §5.3). `bought_copy_placement`'s wear-if-free branch becomes unreach
 removed with its test in the same card (no dead shipping code). The smoke row `sheet-market-buy-weapon-worn`
 is rewritten as `sheet-market-buy-carried` (E3.3). **Revisit:** none.
 
-## §11 — Custom items as containers (OPERATOR A3; DEFAULT on the mechanism)
+## §11 — Custom items as containers (OPERATOR A3; DEFAULT on the mechanism) — **superseded by §25 (2026-11-12)**
+
+> A custom container needs no base item: it is a stock record tagged `Container`, a Buy Custom item on a
+> container base (§24), or a Create item with a capacity (§25). `base_item_id` is not added. The text
+> below is kept for the record.
 
 `CustomRecordDto` (equipment kind) gains `base_item_id: Option<String>` (an equipment id the catalog
 knows). When set: the item's weight is the base's, it is a container iff the base is, and its capacity is
@@ -362,8 +371,228 @@ The lead re-reads this package against the repo before dispatch and records each
 |---|---|---|---|
 | Q1 | Where is a bought copy in the **other** sets? | Carried everywhere (an unnamed copy is Carried, §5.3); no set entry written | Not Carried in every set but the active one (then a purchase writes one entry per set) |
 | Q2 | Does a carried (not in hand) weapon get attack rows on the sheet and the print? | yes, after the in-hand rows, marked "(carried)", main-hand assumption (§9) | name + damage dice only, no attack total |
-| Q3 | Must a custom container name a base item? | yes: `base_item_id`; without one a custom item is weightless and holds nothing (§11) | a free-form "is a container, capacity N lb" on the custom item |
+| Q3 | Must a custom container name a base item? | **Answered by the operator the same day (§25, "Optional container + slot"): no** — a Create item may be a container with a capacity in lb and no base | — |
 | Q4 | Weight-reduction containers (bag of holding kinds, 25 records) | "no stated capacity"; contents weigh in full (DEF-1) | model `*N` as a fixed weight (contents weigh nothing) in SD-41 |
 | Q5 | Where the gear screen lives | replaces the Equipment panel in the Gear tab (§13) | a new "Equipment" tab (changes `SHEET_TABS` and the print/UI vocabulary fixture) |
 
+| Q6 | Buy Custom: an eqmod whose price is a formula the converter cannot evaluate (97 formula kinds among 1,494 eqmods) | offered without a price; Buy routes through Negotiate; the receipt lists the unevaluated formulas by count (§24) | refuse to offer the ability until its formula is modelled |
+| Q7 | How far the d20pfsrd price list goes (the proxy count is 2,476 none + 470 zero over all record kinds; the Market's own count comes from E1.8) | arms, armor, shields and general gear the Market lists after the converter fix; magic items priced by their eqmod formulas first; whatever is still missing is listed in `price-unknown.json` with a reason and routes through Negotiate (§26) | every Market row gets a cited price before the bundle closes (a d20pfsrd lookup per row) |
+| Q8 | Splitting a bundle (10 of "Arrows (20)" into a quiver) | not possible: the bundle is the unit the book sells; a stack splits by bundles (§28) | a per-arrow count on the stack (changes the saved shape, NR-3) |
+
 The author's recommendation is the default in every row.
+
+## §22 — Weapons: an Unarmed row, always (OPERATOR, 2026-11-12)
+
+> "Weapons - always include unarmed as an option"
+
+Answers relayed the same day: placement = **"Last row, full numbers"** — the Weapons block (screen and
+print) always ends with an Unarmed strike row showing the engine's real attack bonus and damage (1d3
+nonlethal Medium / 1d2 Small; monk unarmed damage progression when the character has it; Improved Unarmed
+Strike makes it lethal), computed in Rust, rendered by UI and print (twin rule). Timing = **"With SD-41
+gear work"** — carded with the weapons-block cards: E1.5 (engine row), E2.4 (tab), E4.1 (print).
+
+**Census** (`artifacts/epic_0/census.txt §8`): the engine has no unarmed attack or damage row today —
+`grep -n -i unarmed src/rules_core/damage_total.rs src/rules_core/pilot_compute/combat.rs` → one doc
+comment each. The corpus record exists: `data/corpus/core_rulebook/equipment/arms_armor/unarmed_strike.json`
+(`DAMAGE 1d3`, `CRITMULT x2`, `COST 0`, `WT 0`, TYPE holds `Unarmed.Monk.Natural.Light`). The monk
+progression exists: `src/rules_core/pilot_compute/class_monk.rs:470 ground_unchained_monk_unarmed_strike_damage`
+(1d6 / 1d8 / 1d10 / 2d6 / 2d8 / 2d10 bands, line 175) — the card reads whether the CRB monk path shares it
+and names the function it reuses. Improved Unarmed Strike: 54 sheet-rule files name it; Monk grants it
+(`feat_effects.rs:3218`). **DEFAULT on the shape:** the row is a `WeaponDamageBreakdown` with
+`weapon_item_id = "item:unarmed_strike"`, `in_hand: true`, `unarmed: true`, `nonlethal: bool`, built from
+the corpus record (never a literal in code), Small size → `1d2` by the record's size step; the attack row is
+the melee attack path with the record (a light weapon, finesseable). **Order:** in hand → carried →
+Unarmed last. **Enforced by:** E1.5 tests (Aldric Fighter 3 → `1d3+3` nonlethal; a Monk 4 → `1d8` lethal;
+a Small character → `1d2`); G-1: an added row id `combat.weapon_*.unarmedstrike` for every seed, named in
+`NEW_ROWS`.
+
+## §23 — Weapons: ammunition boxes only for weapons that use ammunition (OPERATOR, 2026-11-12)
+
+> "weapons - only show ammunition if the item has ammuntion.  ie:  swords don't have ammo, don't show it.
+> crossbows do have ammo, show the ammo indicators"
+
+Answers: timing = **"With SD-41 gear work"**; scope = **"Yes, screen and print"**. Today page 1 prints one
+global "Ammunition" row of boxes under the weapons (`resources/print/looks/weapons.typ:88`); the UI shows no
+ammunition (`grep -n -i 'ammunition\|ammo' apps/desktop/src/characterHub/CharacterSheet.tsx` → 0). New rule:
+each weapon that uses ammunition gets its own tick boxes under its row; weapons without (swords, thrown
+daggers, Unarmed) get none; no global row.
+
+**Census:** the corpus marks ammunition users by the `Projectile` tag (sheet rules: 132 records; of them
+Bow 26, Crossbow 24, Sling 11, Firearm 63, the counts overlap and include "(weapon)" twins); `Thrown` (141)
+is not ammunition; `Ammunition` (83) tags the ammunition itself; 79 corpus weapon records also carry a
+`CONTAINS` token naming their ammunition family (`Pistol: 1|Firearm Bullet=1`). **DEFAULT:** `uses_ammunition`
+= the `Projectile` tag (E1.6, root crate; decided by the engine from corpus data, never a TS list);
+`ammunition_carried` = the count of carried copies whose record carries the `Ammunition` tag **and** whose
+name or type matches the weapon's `CONTAINS` family when the weapon has one (bows: `Arrow`; crossbows:
+`Bolt`; firearms: `Firearm Bullet`; slings: `Bullet (Sling)`), else the carried `Ammunition` count of any
+kind — the figure the stacked rows give (§28). The screen and the print show **20 tick boxes** per
+ammunition weapon (write-in, SD-m's ruled blank) with the label "Arrows: 60 carried" when the engine
+counts any; the print's global row goes. **Enforced by:** E1.6 tests (longbow yes, longsword no, dagger
+no, pistol yes); E2.4 (tab); E4.1 (print: `grep -c '"Ammunition"' looks/weapons.typ` → 0 as a global row).
+
+## §24 — The Market screen: table, sort, description, Only Show Affordable, Buy Custom (OPERATOR, 2026-11-12)
+
+> "on the market screen:  I would prefer the list of armor be more of a table view that shows the item and
+> the price.  Include a space at the bottom of the window for description that shows the description of
+> the item that is highlighted.  You should be able to sort any list by the name or the price.  Include a
+> checkbox called 'Only Show Affordable' that filters out items that the character lacks sufficient funds
+> to purchase.  We also need a buy custom button.  Take a look at the pcgen code for how this works.  It
+> allows the assignemtn of custom names and abilities to the item being purchased."
+
+Answers: Buy Custom = **"Full rules builder"**: base item + custom name + masterwork + enhancement +1…+5
++ special abilities (flaming, keen …) + special material (mithral, cold iron …) + size; price and weight
+computed from the rules (corpus data, in Rust); enhancement reaches AC / attack / damage through the
+engine; ability text prints as text, dice literal (paper-sheet rule). PCGen's custom-equipment builder is
+read for FUNCTION only (`technical-design.md §1`: right-click → Create custom item; properties with
+prerequisites; Name, Sprop, Cost, Weight editable; OK adds to the list, Buy also buys). Columns = **"Item,
+Price, Weight"** (+ Slot by §26), every list sortable by any column header. Description box at the bottom
+shows the highlighted item's corpus description. 'Only Show Affordable' filters by the character's funds
+at the active price mode (three modes exist: `cashless`, `standard`, `characterBuild`,
+`apps/desktop/src/characterHub/priceMode.ts`; funds from `load_character_money`'s `total_copper`). Package
+= **"SD-41, with the gear work"**; custom-bought items land as Carried with their custom names, which the
+gear screen's container logic uses.
+
+**Census:** `MarketDialog.tsx` (402 lines) lists `list_market` entries as buttons with `+1…+5` variants
+(`MarketVariantDto { bonus, name, price_gp, modifier_key }`), category tabs (`weapon | armor | shield |
+gear | magicItem`), a search, a book filter, and a Sell list of held copies; no sort, no description box,
+no weight column; `EquipmentCatalogEntryDto` already carries `cost_gp`, `weight_lbs`, `types`,
+`description`. The `+N` price rule is `Enhanceable::price_gp` (`body_slots.rs:412`: masterwork 150/300 +
+N² × 1,000/2,000) and the modifier is attached through `applied_modifiers` (`attach_equipment_modifier`).
+Equipmods in the corpus: **1,494** records, COST flat 608 / formula 97 / none 789; **140** tagged `Material`
+(`Paueliel Wood: WT*15` is a formula kind); `Resizable` on 733 sheet-rule equipment records.
+**DEFAULTS:** (a) Buy Custom is `purchase_custom_equipment` (E2.6): the base selection plus
+`applied_modifiers` for the enhancement (today's path), each chosen special ability, the material and the
+size, in that order, with the price from each eqmod's flat `COST` and the formulas the card can evaluate
+(`WT*N`, `BASECOST*N`, the `+N`-equivalent abilities' bonus-equivalent rule: a +2-equivalent ability prices
+as the next enhancement step); an eqmod whose formula the card cannot evaluate is **offered without a
+price and routes through Negotiate** (§26), never a guessed number. (b) The custom name is stored per copy
+in `equipment_sets.json`'s `copyNames` map (`CopyKey → name`), shown everywhere the copy is named.
+(c) Sorting and filtering are pure functions in `marketModel.ts` (new) over the DTO; the description box
+reads `description`. **Rules gap → `§21` Q6.**
+
+## §25 — The Market's Create option (OPERATOR, 2026-11-12)
+
+> "On the market screen, include a Create option that allows the user to manufactor a custom items.  They
+> can free text the name and description, and then enter a weight."
+
+Answers: price = **"Optional price"** — a price field starting at 0; above 0 it is deducted from the
+character's funds like a normal purchase. Kind = **"Optional container + slot"** — an optional 'Container'
+toggle with a capacity in lb, and an optional body slot (default none); a created item lands as Carried
+like every Market item. Distinct from Buy Custom (which starts from a corpus base item): Create makes an
+item with **no corpus base**. It persists with the character, round-trips save/load/clone, prints on the
+inventory page with its weight, counts toward encumbrance when carried, works as a container in the gear
+screen, and is editable/removable afterwards.
+
+**Census:** `character_custom.rs` stores custom records in `<character root>/custom.json`
+(`CustomRecordDto { id, name, description, stats, bonuses, slot, worn, left_behind }`, F-12: no weight, no
+price, no capacity); `list_held_equipment_at_root` lists a custom item only when it has a slot or a bonus
+(`character_hub.rs:5015`); the engine never weighs a custom item. **A no-base item fits that store**
+with three new optional fields. **DEFAULTS:** (a) `CustomRecordDto` (equipment kind) gains `weight_lbs:
+Option<f64>`, `price_gp: Option<f64>`, `container_capacity_lbs: Option<f64>` (serde default; old
+`custom.json` loads unchanged); `create_custom_item` (E2.3) writes the record, deducts the price at the
+active price mode, and lists it Carried (unnamed in every set). (b) The engine weighs custom items:
+`compute_encumbrance` takes extra weighed copies `(id, weight_lbs, active_state)` (E1.7, root crate), so
+the total stays one Rust sum (NR-2) and the projection (§6) covers them. (c) The held list includes every
+custom equipment record (the `:5015` filter widens to "equipment kind"). (d) **Edit and remove live in the
+Custom tab** (the existing `CustomDialog` edits custom records; it gains the three fields); the gear screen
+moves, sells (no price → Negotiate), drops and discards them like any copy. (e) This supersedes `§11`'s
+`base_item_id`: a custom container needs no base — it is either a stock record tagged `Container`, a Buy
+Custom item on a container base, or a Create item with a capacity. `§21` Q3 is answered.
+
+## §26 — Prices: missing and negative; Negotiate; Market columns (OPERATOR, 2026-11-12)
+
+> "I see a few items with no price:  Adamantine Breastplate - we need to find the actual price for all
+> items.  Another example is Astral Armor that has a negative price.  All that needs to get cleaned up.  If
+> you cant find the price in the pcgen files, get it from d20pfrsd.com.  ie:
+> https://www.d20pfsrd.com/magic-items/magic-armor/specific-magic-armor/adamantine-breastplate/.  Oh, all
+> items in marketplace should include 2 more colums: weight and slot"
+
+> "allow the user to specify the price on purchase - which gives me an idea, let's add a negotiage button
+> next two buy that allows the user to customize what they pay.  We need a similar option where we can
+> negotiate the sale price if selling something."
+
+Answers: (1) Source = **"Fix converter + cited list"**: first fix the tool-side converter so prices derive
+as PCGen's data defines them; prices still missing come from d20pfsrd.com into ONE checked-in list with the
+page URL per item (a converter input, tool side; the live app reads only converted data); a test fails if
+any Market item has a missing or negative price (allowing only items explicitly listed as price-unknown).
+(2) A **Negotiate** button next to Buy (the user enters what they pay; default = the listed price at the
+active price mode; a price-unknown item's Buy routes through Negotiate) and a Negotiate option on Sell
+(default = the app's current sell rule: `refund_copper`, `character_hub.rs:3741`, 50 % standard / 100 %
+character build / 0 cashless). (3) Market columns become **Item, Price, Weight, Slot**, all sortable.
+
+**Census** (`census.txt §8`; over `data/corpus/**/equipment/**`, 7,804 records, all `in_scope` — a proxy
+for the Market, which serves compiled per-book tables plus corpus gap rows, `equipment_catalog.rs:468`;
+E1.8 derives the Market's own count through `build_equipment_catalog()`): price positive 4,854; **none
+2,476** (Equipmods 961, magic items 1,034, arms & armor 322, general 158; by book: core 1,591, UE 200, UP
+171 …); **zero 470** (core 215, UE 79, UP 71 …; magic items 116, arms & armor 126, equipmods 153, general
+75); **negative 4** (Astral Armor −150, Astral Juggernaut −150, Demon Armor Claw Attack −2,300, Demon
+Prince Armor Claw Attack −18,300). **Root causes, proved on the two named items:** *Adamantine Breastplate*
+(`data/corpus/core_rulebook/equipment/arms_armor/adamantine_breastplate.json`) is converted as
+`name: "Breastplate (Base)"`, `cost_gp: None`, **no raw tokens** — the converter resolved the PCGen row
+(a `BASEITEM:Breastplate` + `EQMOD:ADAMANTINE` composite) to its base template and dropped the material;
+PCGen's own price is base + the material eqmod's formula, which the live catalog cannot read because the
+tokens are gone. *Astral Armor* carries PCGen's literal `COST:-150` beside `EQMOD:Special Quality ~
+Masterwork ~ Armor` (+150): PCGen sums COST with the eqmods' costs (→ 0 for an astral suit); the converter
+copies COST alone. The negatives are all of this shape (an eqmod-offset literal); the 2,476 `none` rows are
+dominated by eqmods (not Market rows) and magic items whose price is a formula on their eqmods. **DEFAULTS:**
+(a) E1.8 (tool lane `convert`) is a census card: a `codex-ingest` test prints the Market's missing / zero /
+negative rows by book and category and names the converter cause per class — that count, not this proxy,
+bounds the d20pfsrd list. (b) E1.9 fixes the converter: composite rows keep their base + eqmods and price
+as base + Σ eqmod cost (flat and the formulas the converter evaluates), re-converts the equipment corpus
+(`docs/governance/book-ingestion-playbook.md`'s path; the diff must touch only `cost_gp`, `weight`,
+`raw_tokens`, `name`, never `license` / `pi_*` fields — the "generated artifacts mutated post-hoc" hazard),
+regenerates the compiled tables, and reads `data/price_overrides/d20pfsrd-prices.json` *(new)* —
+`[{ key, price_gp, url, fetched_at }]`, one row per item with the page URL — for what is still missing; the
+gate test allows only keys in `data/price_overrides/price-unknown.json` *(new, with a reason each)*. (c)
+**Network:** `curl -sI https://www.d20pfsrd.com/` answered `HTTP/1.1 410 Gone` from this box on 2026-11-12;
+the card tries a browser user agent, else the lead's session fetches the pages (a `web-fetch` agent) and
+the card consumes the list; the operator is asked only if both fail (P-9). (d) Negotiate on Buy and Sell
+is a `negotiated_price_copper: Option<u64>` on the existing purchase and sell requests (E2.5), applied
+instead of the catalog price at the active mode; the receipt row says "negotiated". (e) Slot column =
+`body_slots::slot_of(record)` on the catalog entry (E2.5). **Revisit:** `§21` Q7 (how far the d20pfsrd
+list goes).
+
+## §27 — Drop goes to Not Carried; Sell and Discard are separate (OPERATOR, 2026-11-12)
+
+> "the dropped option in gear is causing the item to disappear, it should go to the \"not carried\" slot
+> instead"
+
+Facts: today "Drop" sells the item back (`CharacterSheet.tsx:749` doc; buttons at `:870` and `:1706`; the
+caption `:881` "Dropping an item sells it back under the pricing chosen above"). Answer: **"Sell + Discard
+buttons"** — Drop moves the item to Not Carried in the active set (no money, item kept); Sell is a separate
+button that sells it (with the Negotiate sale price, §26); Discard deletes it for no money after a confirm.
+**Census:** no ui-smoke row drives Drop (`python3 -I -c … 'drop' in json.dumps(r).lower()` → only
+`sheet-f7c-samurai-skills-only-skills`, a dropdown); the caption and the two buttons are the surfaces.
+**DEFAULTS:** Drop = `move_equipment_copy(NotCarried)` (E2.2); Discard = `discard_equipment_copy` (E2.5:
+removes the selection and its set entries, no refund, `confirm` in the UI); the caption reads "Drop keeps
+the item and marks it Not Carried; Sell returns money under the pricing above; Discard removes it for
+nothing." The three buttons live on the gear screen's rows (E3.1) and the Weapons tab keeps Drop only.
+Smoke rows: `sheet-gear-drop-not-carried`, `sheet-gear-discard-confirm` (E3.3).
+
+## §28 — Bulk buying and selling; stacks (OPERATOR, 2026-11-12)
+
+> "We also need to allow someone to buy things in bulk.  No one wants to click buy 50 times to buy 50
+> arrows.  Same with Sell"
+
+Answers: **"One row with a count"** — Buy and Sell (and Negotiate) take a Quantity; identical items stack
+into one gear row "Arrows ×50" with weight and price × quantity; Move asks how many and splits the stack;
+Sell / Drop / Discard also take a quantity. **"Bundles, as the book sells them"** — Quantity counts the
+corpus item as sold (3 × "Arrows (20)" = 60 arrows at 3× bundle price/weight); the row shows "Arrows (20)
+×3 = 60"; prices and weights stay exact to the book.
+
+**Census:** the store keeps **one `equipment=` line per copy** (`local_store.rs:458`); no quantity field
+exists on `EquipmentSelection` (F-5: 97 producers, untouched by NR-3); bundle-shaped corpus records: **68**
+whose name holds `(N)` or whose tokens hold `BASEQTY`, **30** with `BASEQTY` (`Arrow, Flight (20)`:
+`BASEQTY 20`, `COST 2`, `WT 3`). **DEFAULTS:** (a) **Stacks are a view, not a store change:** copies with
+the same `item_id`, `bonus`, custom name and location stack into one row with `quantity` = the copy count
+(E2.1's held list gains `quantity` and `copies: [CopyKey]`); weight × quantity is what the engine already
+sums copy by copy; existing duplicate entries become stacks on first load **with no migration** (nothing on
+disk changes; G-1 holds). (b) `purchase_equipment`, the sell and discard commands and `move_equipment_copy`
+take `quantity` (default 1) and act on that many copies of the stack atomically (one save; price ×
+quantity, or negotiated total); a move of part of a stack splits it by ordinals (`Inside(quiver)` for 1
+bundle, `Inside(pack)` for 2). (c) The row label is `"<name> ×<n>"`, and `"<name> ×<n> = <n × BASEQTY>"`
+when the record carries `BASEQTY` > 1 (E1.1 adds `base_quantity()` to the record read; the figure is the
+engine's, the TS only formats). (d) The ammunition count (§23) is Σ `quantity × base_quantity` over the
+carried ammunition stacks matching the weapon. (e) Splitting below one bundle (10 of an "Arrows (20)") is
+not possible: a bundle is the unit the book sells (`§21` Q8). **Enforced by:** E2.1 `held_list_stacks_identical_copies`;
+E2.5 `purchase_quantity_buys_n_copies_at_n_times_price`, `move_quantity_splits_a_stack`; E3.1 model tests.

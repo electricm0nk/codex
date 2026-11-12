@@ -24,6 +24,7 @@ status: planning-ready
 | P-5 | Disk ≥ 24 G free before any full sweep; cargo lanes on the box < 3 | `df -h /`; `pgrep -f '[c]argo' \| awk 'END{print NR}'` | every cargo card |
 | P-6 | `pdftoppm`, `pdftotext`, `pdfinfo` present; the `run-desktop` skill's screenshot path works with an isolated `XDG_DATA_HOME` | `which pdftoppm pdftotext pdfinfo` → three paths; one screenshot under `artifacts/epic_3/E3.MC/` | E4.1; E3.MC |
 | P-7 | Release-notes pointer resolves after C1 | `python3 tools/release/resolve_release_notes.py --repo-root .` exit 0 | C1 |
+| P-9 | d20pfsrd.com reachable for E1.9's price list, or the lead's `web-fetch` agent supplies it | `curl -s -o /dev/null -w '%{http_code}' -A 'Mozilla/5.0' https://www.d20pfsrd.com/equipment/` → 200 (a HEAD without a user agent answered 410 on 2026-11-12); else the receipt names the agent that fetched | E1.9 |
 | P-8 | The root `--lib` suite and the desktop suite are green on the base | `cargo test --locked -j 8 --lib -- --test-threads=8` 0 FAILED; `cd apps/desktop/src-tauri && cargo test --locked -j 8 --no-fail-fast -- --test-threads=8` 0 FAILED (counts quoted) | E1.1 (root baseline); E2.1 (desktop baseline, after the rebase) |
 
 ## 2. Normative requirements
@@ -44,9 +45,14 @@ status: planning-ready
 | NR-12 | The gear screen's every move is reachable by keyboard through "Move to"; drag calls the same boundary with the same arguments | E3.1, E3.2 tests; E3.MC's eye |
 | NR-13 | The 13 named ui-smoke rows pass by name; none deleted; the inventory regenerated | E3.3; G-6 |
 | NR-14 | Every screen and print card's receipt has a "Looked at" row naming its images | G-8's `grep -L` |
+| NR-15 | The Weapons block always ends with the Unarmed row; its numbers are engine rows built from the corpus record (no literal die in code) | E1.5 tests; `grep -c '"1d3"' src/rules_core/damage_total.rs` → 0 |
+| NR-16 | Ammunition boxes appear only under weapons whose record carries the `Projectile` tag; no global ammunition row; tab and print agree | E1.6, E2.4, E4.1 tests; G-9 |
+| NR-17 | No Market row has a missing, zero or negative price unless its key is in `price-unknown.json` with a reason; every d20pfsrd price carries its URL | G-10's gate test |
+| NR-18 | No TS computes a price: quantities, negotiated totals and Buy Custom quotes come from the backend; `refundPreviewCopper` stays the one mirrored rule | E3.4 model tests; E3.MC's read |
+| NR-19 | Stacks change nothing on disk; a stack is `quantity` identical copies the engine already weighs one by one | E2.1 tests; G-1 |
 
 ## 3. Out of scope
 
-DEF-1…DEF-4 and FSR-C1…C5 (`forward-scope-register.md`); any converter change; any engine change beyond
-E1.1–E1.4's named functions and fields; any book content; SF1e and CPR gear screens; the Hermes kanban
+DEF-1…DEF-6 and FSR-C2…C5 (`forward-scope-register.md`); any converter change beyond E1.9's price derivation;
+any engine change beyond E1.1–E1.7's named functions and fields; any book content; SF1e and CPR gear screens; the Hermes kanban
 (retired).

@@ -32,6 +32,12 @@ authoring; its Inventory section (E3.2) is what E4.1 re-lays by location.
 | COM-10 | ui-smoke rows for the screen; the replaced rows rewritten | R17, R24 | E3.3 |
 | COM-11 | Print: Inventory by location with nested containers; totals = encumbrance | A7 | E4.1 |
 | COM-12 | Operator gate on the screen and the printed page; closure in the standing order | §12, §18 | E4.G, E5.1–E5.4 |
+| COM-13 | The Unarmed row, always last, with real numbers (monk progression, IUS lethal) | `decisions.md §22` | E1.5, E2.4, E4.1 |
+| COM-14 | Ammunition boxes only under ammunition weapons, with the carried count; no global row | `decisions.md §23` | E1.6, E2.4, E4.1 |
+| COM-15 | The Market table (Item / Price / Weight / Slot, sortable), description box, Only Show Affordable, Quantity, Negotiate on Buy and Sell, Buy Custom builder, Create dialog | `decisions.md §24–§26, §28` | E2.5, E2.6, E3.4 |
+| COM-16 | Created items: weight, optional price, optional container + slot; persisted, printed, weighed, editable in the Custom tab | `decisions.md §25` | E1.7, E2.3 |
+| COM-17 | Prices: converter fix, cited d20pfsrd list, price-unknown list, the gate test | `decisions.md §26` | E1.8, E1.9 |
+| COM-18 | Drop → Not Carried; Sell and Discard separate; stacks with quantities on every action (was FSR-C1) | `decisions.md §27, §28` | E2.1, E2.2, E2.5, E3.1 |
 
 ## 2. Structurally implied
 
@@ -49,7 +55,7 @@ authoring; its Inventory section (E3.2) is what E4.1 re-lays by location.
 
 | ID | Work | Source | Why not in SD-41's DoD | Revisit condition (checked at E5.2) |
 |---|---|---|---|---|
-| FSR-C1 | Quantity stacks (one row "Arrows ×20") | PCGen's Purchase tab buys n at a time | today one copy is one row; the identity model (`ordinal`) already allows n copies | the operator asks; or a `.pcg` import with a quantity > 1 lands wrong (`grep -c 'QUANTITY' scripts/oracle_harness/eqm-fixtures/*.pcg` is the population) |
+| FSR-C1 | Quantity stacks (one row "Arrows ×20") | PCGen's Purchase tab buys n at a time | **No longer a candidate: committed as COM-18 by the operator's bulk-buying item (2026-11-12, `decisions.md §28`)** | none: E5.2 checks E2.5 is `complete` |
 | FSR-C2 | Wield styles per weapon (one-handed / two-handed / off-hand) beyond the three wield slots | PCGen equips weapons by style | the app's `wield_main` / `wield_off` / `wield_two_handed` slots carry the choice today | the operator asks |
 | FSR-C3 | Moving an item to another character | PCGen's "Move To / Copy To" | not requested | the operator asks |
 | FSR-C4 | Starfinder and Cyberpunk RED gear screens | A1 names the Pathfinder list | their markets are separate shells | a scope draft after SD-41's launch names them: `git log --since=2026-11-12 --diff-filter=AM --name-only --format= -- 'docs/release/SD-*/scope-draft.md' \| sort -u \| grep -v SD-41 \| xargs -r grep -lis 'starfinder.*gear\|cyberpunk.*gear' \| awk 'END{print NR}'` ≥ 1 |
@@ -66,6 +72,8 @@ author's default or the operator's silence, named here.
 | DEF-2 | Drag in ui-smoke | the harness has no drag op (`census.txt §5`) | `python3 -c "import json;print('drag' in {s['op'] for r in json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows'] for s in r['steps']})"` → `True` once a drag op exists | drag is proven by a unit test and the operator's eye |
 | DEF-3 | Per-set print (print the Formalwear set without activating it) | A2: one active set drives the print | the operator asks | switch the set, then print |
 | DEF-4 | A set's own AC / weight preview before activating | A2 | the operator asks | activate to see |
+| DEF-5 | Eqmod price formulas the converter does not evaluate | `decisions.md §24`, Q6 | E1.9's receipt lists the count; the operator asks | those abilities sell through Negotiate |
+| DEF-6 | Splitting a bundle below the book's unit | `decisions.md §28`, Q8 | the operator asks | a stack splits by bundles |
 
 If the operator says any of these was meant to be in the DoD, it becomes a blocker.
 
@@ -75,5 +83,6 @@ No card in `kanban.md` may be moved here by a cycle. A card that cannot close is
 
 ## 6. Excluded from this scope (the operator passed on them or the request did not name them)
 
-PCGen's code or data model (A-request: "do not copy the code"); a converter change of any kind; an engine
-change beyond E1.1–E1.4's named functions and fields (`decisions.md §16`); a new app tab (Q5 default).
+PCGen's code or data model (A-request: "do not copy the code"); a converter change beyond E1.9's price
+derivation; an engine change beyond E1.1–E1.7's named functions and fields (`decisions.md §16`); a new app
+tab (Q5 default).

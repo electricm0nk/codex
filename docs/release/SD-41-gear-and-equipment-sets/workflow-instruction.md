@@ -38,7 +38,8 @@ precondition).
 - **Tiering** (`~/.claude/CLAUDE.md` 2026-09-29): `opus` for the engine, the commands, the screen, the
   print card and every merge check; `sonnet` for the gate card, E5.1, E5.3's notes and E5.4; `haiku` for
   C1. Merge checks never downgraded.
-- **Concurrency:** one serial main lane; one side lane `smoke` (E3.3, beside E4.1, landing before E4.MC).
+- **Concurrency:** one serial main lane; two side lanes: `convert` (E1.8 → E1.9, tool side, Phase 1, beside
+  E1.1–E1.7, landing before E1.MC) and `smoke` (E3.3, beside E3.MC and E4.1, landing before E4.MC).
   **At most 3 cargo lanes across the box, SD-40's included while it runs** (R-Q2): in Phase 1, SD-41
   builds only when `pgrep -f '[c]argo' | awk 'END{print NR}'` < 3.
 
@@ -52,10 +53,10 @@ ENVIRONMENT (SD-41, binding — every rule here applies to you):
 - export PATH="$HOME/.cargo/bin:$PATH"
 - export RETRO_ACTOR=sd41-<card-id>          # the ONLY value you bind, e.g. RETRO_ACTOR=sd41-e1.2
 - ONE WRITER PER TREE. The main lane works in /home/ubuntu/workspace/repos/codex/.worktrees/sd41-main
-  (branch tranche-21). The side lane `smoke` makes its OWN tree first, from the pushed branch:
+  (branch tranche-21). Each side lane (`convert`, `smoke`) makes its OWN tree first, from the pushed branch:
       git -C /home/ubuntu/workspace/repos/codex fetch origin tranche-21
-      git -C /home/ubuntu/workspace/repos/codex worktree add -b sd41/smoke \
-          /home/ubuntu/workspace/repos/codex/.worktrees/sd41-smoke origin/tranche-21
+      git -C /home/ubuntu/workspace/repos/codex worktree add -b sd41/<lane> \
+          /home/ubuntu/workspace/repos/codex/.worktrees/sd41-<lane> origin/tranche-21
   Start EVERY command with `cd <your tree> &&` (the shell's directory resets). Never write in
   /home/ubuntu/workspace/repos/codex itself (the lead's checkout) and NEVER in
   /home/ubuntu/workspace/repos/codex/.worktrees/sd40-main or any sd40-* tree (another run's trees).
@@ -72,8 +73,14 @@ ENVIRONMENT (SD-41, binding — every rule here applies to you):
 - TWO CARGO WORKSPACES: the repo root (src/, crates/) and apps/desktop/src-tauri are separate; the desktop
   crate is a binary crate with no lib target (its tests are #[cfg(test)] modules or tests/*.rs, run with
   `cargo test --locked -j 8 <filter> -- --test-threads=8` from that directory).
-- PHASE 1 CARDS (C1, E1.x) NEVER WRITE UNDER apps/: `git diff --name-only <base>..HEAD -- apps | awk 'END{print NR}'`
-  must print 0 before you commit; a Phase-1 need for an apps/ file is a `declined` with ownedBy:<E2 card>.
+- PHASE 1 CARDS (C1, E1.x) NEVER WRITE UNDER apps/ (the one exception: E1.8/E1.9's price test file under
+  apps/desktop/src-tauri/tests/ if the catalog can only be called from that crate): `git diff --name-only <base>..HEAD -- apps | grep -v 'tests/market_price' | awk 'END{print NR}'`
+  must print 0 before you commit; any other Phase-1 need for an apps/ file is a `declined` with ownedBy:<E2 card>.
+- THE CONVERT LANE (E1.8, E1.9) re-converts equipment records only: after the re-convert run the field-diff
+  check (only cost_gp / weight / name / raw_tokens may change; license, pi_field, pi_marker, population,
+  source never) and `git diff --name-only -- data | grep -v '/equipment/' | grep -v price_overrides | awk 'END{print NR}'` → 0.
+- NETWORK (E1.9 only): fetch d20pfsrd pages read-only with a browser user agent; record the URL per price;
+  if the site refuses, stop fetching and say so in the receipt (the lead's web-fetch agent fills the list).
 - CLIPPY BEFORE THE FIRST COMMIT of any card that touches a .rs file:
   `cargo clippy --locked --tests -j 8` in each touched workspace (R16).
 - LONG RUNS: anything that may run > 10 minutes: write a not-run skeleton results file FIRST, then
@@ -84,7 +91,7 @@ ENVIRONMENT (SD-41, binding — every rule here applies to you):
 - `decisions.md §20` WINS over older text in this package. Reuse before you build: read the existing code
   your card names first (equipment_sets.rs once it exists, character_hub.rs's held list, body_slots.rs).
 - A test filter that matches 0 tests is a FAIL. Run each filter in the cargo workspace that holds the test.
-- WORKTREES: the side lane removes its own worktree, its local sd41/smoke branch and its CARGO_TARGET_DIR
+- WORKTREES: each side lane removes its own worktree, its local sd41/<lane> branch and its CARGO_TARGET_DIR
   when its work is pushed.
 - SEEDS AND GOLDENS (G-1, G-2): PF seed render JSON is UNCHANGED except the NEW_KEYS the gate names; SF1e
   and CPR golden TEXT and PAGE COUNTS equal the base's; PF golden page counts may move at E4.1 and every
@@ -155,8 +162,9 @@ Load the `workflow-authoring` skill first. Plain JavaScript:
 2. **A script has no file access**, so the card list is in the script and each dispatched agent reads
    `kanban.md`: it returns `declined` if a `Depends on` is not `complete`. Each agent returns
    `{status, sha, receipt, discovered}`; `discovered` card IDs run before that epic's merge check (R8).
-3. `pipeline()` in the main lane; `parallel()` only for the `smoke` side lane (E3.3 beside E4.1), which
-   makes its own worktree per the prefix (never the harness's isolation: its base is the session checkout).
+3. `pipeline()` in the main lane; `parallel()` only for the side lanes `convert` (E1.8 → E1.9 beside
+   E1.1–E1.7) and `smoke` (E3.3 beside E3.MC and E4.1), each making its own worktree per the prefix (never
+   the harness's isolation: its base is the session checkout).
 4. Cargo lanes stay ≤ 3 by construction **including SD-40's** in Phase 1 (the prefix's `pgrep` wait).
 5. **Every `agent()` sets `model`** from the Tier column, on the same line as `agent(`. Check:
    `awk '/agent\(/ && !/model:/' <script>` prints nothing. Tier is exactly `opus`, `sonnet` or `haiku`;
@@ -190,11 +198,13 @@ const go = async (card) => { quotaGate(); return run(card) }
 
 if (START <= 'E1.MC') {                       // Phase 1 — may run beside SD-40
 phase('C — package + cut');           await go(C1)
-phase('E1 — engine (Phase 1)');       for (const c of [E1_1, E1_2, E1_3, E1_4, E1_MC]) await go(c)
+phase('E1 — engine (Phase 1)');       const convert = (async () => { await go(E1_8); await go(E1_9) })()   // side lane convert
+                                      for (const c of [E1_1, E1_2, E1_3, E1_4, E1_5, E1_6, E1_7]) await go(c)
+                                      await convert; await go(E1_MC)
                                       return resumeReceipt('E2.1 after SD-40 merges + SD-m rebase')
 }
-phase('E2 — desktop backend');        for (const c of [E2_1, E2_2, E2_3, E2_4, E2_MC]) await go(c)
-phase('E3 — gear screen');            await go(E3_1); await go(E3_2)
+phase('E2 — desktop backend');        for (const c of [E2_1, E2_2, E2_3, E2_4, E2_5, E2_6, E2_MC]) await go(c)
+phase('E3 — gear screen');            await go(E3_1); await go(E3_2); await go(E3_4)
                                       const smoke = go(E3_3)              // side lane smoke, beside E3.MC + E4.1
                                       await go(E3_MC)
 phase('E4 — print + gate');           await go(E4_1); await smoke; await go(E4_MC)
@@ -213,10 +223,10 @@ Phase titles above match these rows. Shared-file writer order: `epic-breakdown.m
 | Phase / epic | Cards | Parallel? | File-touch set | Gated on |
 |---|---|---|---|---|
 | C — package + cut | C0, C1 | no | this package; the 14 F-1 surfaces + `current-release.json` | — |
-| E1 — engine (Phase 1) | E1.1–E1.4, E1.MC | no | `src/rules_core/{equipment_record,sheet_rule,containers,damage_total,mod}.rs`, `src/rules_core/pilot_compute/combat.rs` (named lines), `src/saved_character/{equipment_sets,mod}.rs`, `crates/codex-ingest/tests/equipment_sets_pcg_population.rs` *(new)*; **nothing under `apps/`** | C1; SD-40 lanes ≤ 2 for cargo |
-| E2 — desktop backend | E2.1–E2.4, E2.MC | no | `desktop/character_hub.rs`, `desktop/main.rs`, `desktop/character_custom.rs`, `desktop/pf1_adapter.rs` (named), `desktop/pf_seed_render_hash.rs` (if pinned), `tests/old_save_loads_unchanged.rs` + fixture *(new)*, `ui/boundary/{loadSavedCharacterDetail,loadCreateCharacter,listHeldEquipment,setEquipmentActiveState,loadCharacterCustom}.ts`, `ui/boundary/{moveEquipmentCopy,equipmentSets}.ts` *(new)*, `ui/characterHub/CharacterSheet.tsx` (line 3295; the Weapons tab order), `ui/characterHub/{CustomDialog,CustomTab}.tsx`, `customModel.ts` + test, `MarketDialog.test.ts` | E1.MC; **SD-40 merged + SD-m rebase (R25)** |
-| E3 — gear screen | E3.1, E3.2, E3.3, E3.MC | `smoke` (E3.3) ∥ E3.MC, E4.1 | `ui/characterHub/GearScreen.tsx` *(new)*, `gearScreenModel.ts` + test *(new)*, `CharacterSheet.tsx` (the Gear tab line + handlers), `EquipmentPanel.tsx` + test (deleted); `smoke`: `spec.json`, `docs/testing/ui-smoke-inventory.md`, `apps/desktop/scripts/ui-smoke/**` (only a missing step kind), `artifacts/epic_3/E3.3/**` | E2.MC |
-| E4 — print + gate | E4.1, E4.MC, E4.G | no | `desktop/print/blocks/gear.rs`, `print/layout/pf1e.rs` (if the rows' shape changes), `resources/print/looks/gear.typ`, `print/golden/print_golden.json`, `print/blocks/print_pf_blocks.rs`, `print/print_golden.rs`, `artifacts/epic_4/**` | E3.MC; E4.MC also on E3.3 |
+| E1 — engine (Phase 1) | E1.1–E1.7, E1.MC; `convert`: E1.8, E1.9 | `convert` ∥ E1.1–E1.7 | main: `src/rules_core/{equipment_record,sheet_rule,containers,damage_total,encumbrance,mod}.rs`, `src/rules_core/pilot_compute/{combat,class_monk}.rs` (named lines), every `compute_encumbrance` caller (`&[]`), `src/saved_character/{equipment_sets,mod}.rs`, `crates/codex-ingest/tests/equipment_sets_pcg_population.rs` *(new)*; `convert`: `crates/codex-ingest/src/pcgen_import/**` (named), `data/corpus/**/equipment/**`, `src/rules_core/rules_catalog/**` (regenerated), `data/price_overrides/*.json` *(new)*, the price test file; **nothing else under `apps/`** | C1; SD-40 lanes ≤ 2 for cargo |
+| E2 — desktop backend | E2.1–E2.6, E2.MC | no | `desktop/character_hub.rs`, `desktop/main.rs`, `desktop/character_custom.rs`, `desktop/equipment_catalog.rs`, `desktop/pf1_adapter.rs` (named), `desktop/pf_seed_render_hash.rs` (if pinned), `src/saved_character/equipment_sets.rs` (`copyNames`), `src/rules_core/body_slots.rs` (named, E2.6), `tests/old_save_loads_unchanged.rs` + fixture *(new)*, `ui/boundary/{loadSavedCharacterDetail,loadCreateCharacter,listHeldEquipment,setEquipmentActiveState,loadCharacterCustom,purchaseEquipment,listMarket}.ts`, `ui/boundary/{moveEquipmentCopy,equipmentSets,createCustomItem,sellEquipment,discardEquipmentCopy,renameEquipmentCopy,purchaseCustomEquipment,listCustomEquipmentOptions,quoteCustomEquipment}.ts` *(new or extended)*, `ui/characterHub/CharacterSheet.tsx` (line 3295; the Weapons tab rows), `ui/characterHub/weaponsTabModel.ts` + test *(new)*, `ui/characterHub/{CustomDialog,CustomTab}.tsx`, `customModel.ts` + test, `MarketDialog.test.ts` | E1.MC; **SD-40 merged + SD-m rebase (R25)** |
+| E3 — gear screen | E3.1, E3.2, E3.4, E3.3, E3.MC | `smoke` (E3.3) ∥ E3.MC, E4.1 | `ui/characterHub/GearScreen.tsx` *(new)*, `gearScreenModel.ts` + test *(new)*, `CharacterSheet.tsx` (the Gear tab line + handlers; the Market handlers), `EquipmentPanel.tsx` + test (deleted), `MarketDialog.tsx` + test, `marketModel.ts` + test *(new)*, `{BuyCustomDialog,CreateItemDialog}.tsx` *(new)*; `smoke`: `spec.json`, `docs/testing/ui-smoke-inventory.md`, `apps/desktop/scripts/ui-smoke/**` (only a missing step kind), `artifacts/epic_3/E3.3/**` | E2.MC |
+| E4 — print + gate | E4.1, E4.MC, E4.G | no | `desktop/print/blocks/gear.rs`, `print/layout/pf1e.rs` (if the rows' shape changes), `resources/print/looks/{gear,weapons}.typ`, `print/golden/print_golden.json`, `print/blocks/print_pf_blocks.rs`, `print/print_golden.rs`, `artifacts/epic_4/**` | E3.MC; E4.MC also on E3.3 |
 | E5 — closure | E5.1–E5.4 | no | `scripts/verify-baselines.env`, `docs/retro/sd41-retrospective.md`, `docs/architecture/**`, graph outputs, this folder, `artifacts/epic_5/**` | E4.G |
 
 **Fences.** A lane that needs a file outside its row returns `declined` with `ownedBy:<card>` unless
@@ -330,8 +340,8 @@ on `origin/tranche-21` and merge nothing.
   file; `CLAIM-EXISTS`.
 - **Blocker doctrine:** cleared or escalated, never deferred. The test: was this scope in the Definition
   of Done at scoping? If yes, it is a blocker.
-- **Disk:** after the side lane ends, `df -h /` and `git worktree list`; prune the merged, unlocked,
-  clean `sd41-smoke` worktree and its `CARGO_TARGET_DIR`. Never remove a `locked` tree or any `sd40-*` tree.
+- **Disk:** after a side lane ends, `df -h /` and `git worktree list`; prune the merged, unlocked,
+  clean `sd41-convert` / `sd41-smoke` worktree and its `CARGO_TARGET_DIR`. Never remove a `locked` tree or any `sd40-*` tree.
 
 ## 9. Placeholder-resolution checklist
 
@@ -344,7 +354,8 @@ card binds (`<sha>`, `<base>`, `<head>`, `<dir>`, `<lane>`, `<card>`, `<card-id>
 `<list>`, `<text>`, `<output>`, `<violations>`, `<result>`, `<value>`, `<cmd>`, `<log>`, `<pidfile>`,
 `<script>`, `<type>`, `<keys>`, `<file>`, `<id>`, `<path>`, `<defect>`, `<itemId>`, `<bonus>`, `<ordinal>`, `<kind>`, `<slot>`, `<lb>`,
 `<name>`, `<state>`, `<select>`, `<out>`, `<clean-worktree>`, `<epic-start>`, `<date>`, `<filter>`, `<description>`, `<run>`,
-`<your tree>`, `<E2 card>`, `<E1.MC sha>`, `<E3.1 sha>`, `<C1 sha>`, `<SD-40 merge sha>`, `<the SD-40 closing count>`, `<character root>`),
+`<your tree>`, `<E2 card>`, `<E1.MC sha>`, `<E3.1 sha>`, `<C1 sha>`, `<SD-40 merge sha>`, `<the SD-40 closing count>`, `<character root>`,
+`<total>`, `<column>`, `<eqmod keys>`, `<eqmod key>`, `<lb>`),
 (b) a deferred value with a named resolution point (`0.21.<run>` → first tester publish after the
 operator merges; the run id → launch; the SD-40 merge SHA → the lead at R25), or (c) a bug to fix before
 launch. The author's run is recorded in `progress.md`.
@@ -412,7 +423,7 @@ launch. The author's run is recorded in `progress.md`.
 | R21 RED before dispatch | the lead runs every card's acceptance command on the pre-change tree and requires a failure or non-zero exit | the dispatch prompt carries the RED output; the receipt's RED row equals it |
 | R22 Second call sites by `git grep` | the lead derives each card's second-call-site list over the producers named in its row before dispatch | the dispatch log in `progress.md` names the grep per card |
 | R23 Name the population | every non-MC card's "Does not cover" row names the population it proved and its denominator | `grep -L 'denominator\|of [0-9]' artifacts/epic_*/*_cycle_receipt.md` read by each MC |
-| R24 One writer per JSON array | one writer at a time on `spec.json`: E3.3 only, after SD-40's E4.2 has merged | §3 file-touch sets; phasing |
+| R24 One writer per JSON array | one writer at a time on `spec.json`: E3.3 only, after SD-40's E4.2 has merged; one writer on `data/price_overrides/*.json`: E1.9 | §3 file-touch sets; phasing |
 
 ### 12.2 SD-41's own rule (R25) and SD-40's retrospective
 

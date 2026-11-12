@@ -27,8 +27,8 @@ cd apps/desktop/src-tauri && mkdir -p <dir>/base <dir>/head
 PF_SEED_RENDER_OUT=<dir>/head cargo test --locked -j 8 --bins pf_seed_render_hash -- --test-threads=8 --nocapture
 python3 - <dir>/base <dir>/head <<'PY'                 # pass = prints SAME_EXCEPT_NAMED for each seed
 import json, sys, pathlib
-NEW_KEYS = {'equipmentSets', 'containerLoads', 'location', 'ordinal', 'inHand'}   # E2.1, E2.4 (the card names any other)
-NEW_ROWS = ()                                                                      # none: carried-weapon rows exist only for copies no seed holds (E1.4, E2.4 state the population)
+NEW_KEYS = {'equipmentSets', 'containerLoads', 'location', 'ordinal', 'quantity', 'copies', 'baseQuantity', 'inHand', 'unarmed', 'nonlethal', 'usesAmmunition', 'ammunitionCarried', 'slot'}   # E2.1, E2.4, E2.5 (the card names any other)
+NEW_ROWS = ('combat.weapon_attack_bonus.unarmedstrike', 'combat.weapon_damage_total.unarmedstrike', 'combat.weapon_damage_bonus.unarmedstrike', 'combat.weapon_threat_range_low.unarmedstrike')   # E1.5 / E2.4: the Unarmed row every seed gains; carried-weapon rows exist only for copies no seed holds (E1.4 states the population)
 def strip(node):
     if isinstance(node, dict):
         return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS}
@@ -66,8 +66,9 @@ PF golden page counts may move at E4.1 and are listed before → after in the re
 ## G-3 The partition held (DoD, `decisions.md §4`) — E1.MC
 
 ```bash
-git diff --name-only <C1 sha>..HEAD -- apps | awk 'END{print NR}'        # 0
+git diff --name-only <C1 sha>..HEAD -- apps | grep -v '^apps/desktop/src-tauri/tests/market_price' | awk 'END{print NR}'   # 0
 git diff --name-only <C1 sha>..HEAD -- src crates | awk 'END{print NR}'   # > 0
+git diff --name-only <C1 sha>..HEAD -- data | grep -v '/equipment/' | grep -v price_overrides | awk 'END{print NR}'   # 0 (E1.9 touched only equipment records and the override lists)
 ```
 
 ## G-4 Locations, projection and the Default set (DoD 1, 2, 4, 5) — E1.2, E2.1, E2.2, E2.MC
@@ -79,12 +80,13 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 --test old_save_loads_unch
 cd apps/desktop/src-tauri && cargo test --locked -j 8 move_equipment -- --test-threads=8                      # ≥ 6 passed
 ```
 
-## G-5 Containers (DoD 3, 8) — E1.1, E1.3, E2.3, E3.1
+## G-5 Containers and created items (DoD 3, 8, 17) — E1.1, E1.3, E1.7, E2.3, E3.1
 
 ```bash
 cargo test --locked -j 8 --lib container_ -- --test-threads=8        # 4 passed; counts 232 / 138 / 70 / 43 / 25 pinned
 cargo test --locked -j 8 --lib containers_ -- --test-threads=8       # 4 passed
-cd apps/desktop/src-tauri && cargo test --locked -j 8 custom_container -- --test-threads=8   # 3 passed
+cargo test --locked -j 8 --lib extra_weighed -- --test-threads=8     # 2 passed
+cd apps/desktop/src-tauri && cargo test --locked -j 8 create_custom_item -- --test-threads=8   # 4 passed
 cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts   # the over-capacity and nesting cases among ≥ 8
 ```
 
@@ -94,7 +96,27 @@ cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts   # the over
 cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc && git status --porcelain ../../docs/testing/ui-smoke-inventory.md   # empty
 test ! -f apps/desktop/src/characterHub/EquipmentPanel.tsx && echo PANEL_GONE
 grep -nE '\b(reduce\(|\+= *[a-z]*[wW]eight|lbs *[-+*/])' apps/desktop/src/characterHub/GearScreen.tsx apps/desktop/src/characterHub/gearScreenModel.ts | awk 'END{print NR}'   # 0 (NR-2)
-python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 13 []
+python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 21 []
+cd apps/desktop && npx tsx src/characterHub/marketModel.test.ts && npx tsx src/characterHub/weaponsTabModel.test.ts   # E3.4, E2.4
+```
+
+## G-9 Weapons: order, Unarmed, ammunition (DoD 7, 14, 15) — E1.5, E1.6, E2.4, E4.1
+
+```bash
+cargo test --locked -j 8 --lib unarmed_row -- --test-threads=8                       # 4 passed
+cargo test --locked -j 8 --lib uses_ammunition -- --test-threads=8                   # 3 passed
+cd apps/desktop/src-tauri && cargo test --locked -j 8 weapons_in_hand_first -- --test-threads=8   # 3 passed
+grep -c '"Ammunition"' apps/desktop/src-tauri/resources/print/looks/weapons.typ      # 0 (no global row)
+```
+
+## G-10 Prices and the Market (DoD 16, 18–21) — E1.8, E1.9, E2.5, E2.6, E3.4
+
+```bash
+cargo test --locked -j 8 --test market_price_census -- --test-threads=8              # 2 passed (census + the gate)
+python3 -I -c "import json;print(len(json.load(open('data/price_overrides/d20pfsrd-prices.json'))),len(json.load(open('data/price_overrides/price-unknown.json'))))"   # both figures quoted with E1.8's denominators
+cd apps/desktop/src-tauri && cargo test --locked -j 8 market_backend -- --test-threads=8   # 5 passed
+cd apps/desktop/src-tauri && cargo test --locked -j 8 catalog_slot -- --test-threads=8     # 1 passed
+cd apps/desktop/src-tauri && cargo test --locked -j 8 buy_custom -- --test-threads=8       # 4 passed
 ```
 
 ## G-7 No PCGen in live code (`decisions.md §17`) — every `*.MC`, E5.1
@@ -109,7 +131,7 @@ bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 ```bash
 cd docs/release/SD-41-gear-and-equipment-sets
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 23) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 31) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 2 (anchored; the receipt's own instructions must not match)
 grep -c 'SD-41 INTERIM NOTES' release-notes.md                        # 0 at E5.3+
@@ -131,13 +153,16 @@ fresh-install check recorded in E5.1's receipt.
 | G-3 | E1.MC | the receipt's partition line |
 | G-4 | E1.2, E2.1, E2.2, E2.MC | `artifacts/epic_1/`, `artifacts/epic_2/`; the `.pcg` population line |
 | G-5 | E1.1, E1.3, E2.3, E3.1 | `artifacts/epic_1/`, `artifacts/epic_2/E2.3_cycle_receipt.md` |
-| G-6 | E3.1–E3.3, E3.MC | `artifacts/epic_3/E3.3/results.json`, `artifacts/epic_3/E3.MC/*.png` |
+| G-6 | E3.1–E3.4, E3.MC | `artifacts/epic_3/E3.3/results.json`, `artifacts/epic_3/E3.MC/*.png` |
+| G-9 | E1.5, E1.6, E2.4, E4.1 | receipts; `artifacts/epic_4/E4.1/*.png` |
+| G-10 | E1.8, E1.9, E2.5, E2.6, E3.4 | `artifacts/epic_1/E1.8/market-prices.json`, `data/price_overrides/*.json`, receipts |
 | G-7 | every MC, E5.1 | receipts |
-| E4.G | E4.MC, E4.G | `artifacts/epic_4/E4.G/` (4 PDFs, ≥ 9 PNGs, the signed receipt) |
+| E4.G | E4.MC, E4.G | `artifacts/epic_4/E4.G/` (4 PDFs, ≥ 12 PNGs, the signed receipt) |
 | G-8 | E5.1–E5.4 | `artifacts/epic_5/`, `receipts.md`, `docs/retro/sd41-retrospective.md` |
 
 ## Does not cover
 
-Pixel positions; drag in ui-smoke (no drag op; E4.G's eye); Starfinder and Cyberpunk RED gear (unchanged);
-macOS and Windows installers; weight-reduction containers (DEF-1); any rules value beyond the container
-sums (`decisions.md §16`).
+Pixel positions; drag in ui-smoke (no drag op; E4.G's eye); Starfinder and Cyberpunk RED gear and markets
+(unchanged); macOS and Windows installers; weight-reduction containers (DEF-1); eqmod formulas the converter
+does not evaluate (listed by count, Q6); splitting a bundle (Q8); any rules value beyond the container sums,
+the unarmed row and the ammunition count (`decisions.md §16`).

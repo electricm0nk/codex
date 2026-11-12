@@ -31,7 +31,7 @@ operator's two `usable: yes` lines exist.
 cd docs/release/SD-41-gear-and-equipment-sets
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 23
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 31 (23 + 8 from the operator's seven follow-ups of 2026-11-12, decisions.md §22–§28)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -42,18 +42,26 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 23
 | E1.2 | Equipment sets: model, file, projection, Default (root crate) | opus | waiting | E1.1 | Phase 1; `src/saved_character/equipment_sets.rs` (new); the round-trip theorem over seeds + `.pcg` fixtures |
 | E1.3 | Container loads (recursive contents vs capacity) | opus | waiting | E1.2 | Phase 1; `src/rules_core/containers.rs` (new) |
 | E1.4 | Carried weapons: `in_hand` on the breakdown | opus | waiting | E1.3 | Phase 1; `damage_total.rs` |
-| E1.MC | E1 merge check + Epic report; Phase-1 run ends | opus | waiting | E1.4 | adversarial; partition check `git diff … -- apps` → 0; writes the resume receipt (`START=E2.1`) |
-| E2.1 | Load response: `equipmentSets`, `containerLoads`, `location` + `ordinal`; Default file on first load; old-save test | opus | waiting | E1.MC, SD-40 merged | Phase 2; first write to `character_hub.rs`; G-1 NEW_KEYS named |
-| E2.2 | Commands: move, set CRUD, activate; market → Carried; `set_equipment_active_state` + sell over the sets; TS boundaries | opus | waiting | E2.1 | `main.rs` registration; `CharacterSheet.tsx:3295` |
-| E2.3 | Custom items: `base_item_id`; weight + container-ness from the base; Custom dialog picker | opus | waiting | E2.2 | `character_custom.rs`; old `custom.json` loads |
-| E2.4 | Weapons DTO `inHand`; Weapons tab in hand → carried; Not Carried off | opus | waiting | E2.3 | |
-| E2.MC | E2 merge check + Epic report | opus | waiting | E2.4 | adversarial; `.pcg` population probe (Default file + AC/weight unchanged) |
-| E3.1 | Gear screen: split panel, filter, right tree, Move to menu, set picker, capacity warning; replaces EquipmentPanel | opus | waiting | E2.MC | `GearScreen.tsx` + `gearScreenModel.ts` (new); `EquipmentPanel.tsx` deleted |
+| E1.5 | The Unarmed row: always last, real numbers, monk progression, IUS lethal | opus | waiting | E1.4 | Phase 1; `decisions.md §22` |
+| E1.6 | `uses_ammunition` (Projectile tag) + `ammunition_carried` per weapon | opus | waiting | E1.5 | Phase 1; `decisions.md §23` |
+| E1.7 | Encumbrance weighs extra copies (Create items); `base_quantity()` | opus | waiting | E1.6 | Phase 1; `decisions.md §25, §28` |
+| E1.8 | Price census through the catalog: missing / zero / negative by book + category; converter causes | opus | waiting | C1 | Phase 1; side lane `convert` (`.worktrees/sd41-convert`) ∥ E1.1–E1.7; `decisions.md §26` |
+| E1.9 | Converter fix + re-convert + `d20pfsrd-prices.json` + `price-unknown.json` + price gate | opus | waiting | E1.8 | Phase 1; lane `convert`; corpus diff limited to price/weight/token/name fields; P-9 network |
+| E1.MC | E1 merge check + Epic report; Phase-1 run ends | opus | waiting | E1.7, E1.9 | adversarial; partition check `git diff … -- apps` → 0 (less the price test file); corpus field check; writes the resume receipt (`START=E2.1`) |
+| E2.1 | Load response: `equipmentSets`, `containerLoads`, `location` + `ordinal`, stacks (`quantity`, `copies`, `baseQuantity`), custom names; Default file on first load; old-save test | opus | waiting | E1.MC, SD-40 merged | Phase 2; first write to `character_hub.rs`; G-1 NEW_KEYS named |
+| E2.2 | Commands: move (with quantity; Drop = Not Carried), set CRUD, activate; market → Carried; `set_equipment_active_state` + sell over the sets; TS boundaries | opus | waiting | E2.1 | `main.rs` registration; `CharacterSheet.tsx:3295`; `decisions.md §27, §28` |
+| E2.3 | Create item backend: weight / price / container capacity on custom records; `create_custom_item`; custom items weighed + listed; Custom dialog fields | opus | waiting | E2.2 | `decisions.md §25`; old `custom.json` loads |
+| E2.4 | Weapons DTO: `inHand`, `unarmed`, `nonlethal`, `usesAmmunition`, `ammunitionCarried`; tab order in hand → carried → Unarmed last; ammo boxes per ammunition weapon | opus | waiting | E2.3 | `decisions.md §9, §22, §23` |
+| E2.5 | Market backend: `slot` column; quantity + negotiated price on buy and sell; discard; copy names | opus | waiting | E2.4 | `decisions.md §26–§28` |
+| E2.6 | Buy Custom backend: `purchase_custom_equipment` + `list_custom_equipment_options` + quote; price and weight from eqmod data | opus | waiting | E2.5 | `decisions.md §24`; Q6 |
+| E2.MC | E2 merge check + Epic report | opus | waiting | E2.6 | adversarial; `.pcg` population probe (Default file + AC/weight unchanged) |
+| E3.1 | Gear screen: split panel, filter, right tree, Move to menu (quantity on stacks), Drop / Sell / Discard, set picker, capacity warning; replaces EquipmentPanel | opus | waiting | E2.MC | `GearScreen.tsx` + `gearScreenModel.ts` (new); `EquipmentPanel.tsx` deleted; `decisions.md §27, §28` |
 | E3.2 | Drag and drop over the same boundary; `dropTarget` pure + tested | opus | waiting | E3.1 | no dependency added (SD-g) |
-| E3.3 | ui-smoke: 7 new rows, 6 rewritten; inventory regenerated | opus | waiting | E3.2 | side lane `smoke` (`.worktrees/sd41-smoke`), beside E4.1; lands before E4.MC; the only `spec.json` writer (R24) |
-| E3.MC | E3 merge check + Epic report (4 screenshots, looked at) | opus | waiting | E3.2 | adversarial; runs beside E3.3 only on files it does not own |
-| E4.1 | Print: Inventory by location (slots → Carried nested → Not Carried); Weapons in hand → carried | opus | waiting | E3.MC | `gear.rs`; G-2; Looked at |
-| E4.MC | E4 merge check + E4.G's PDFs (4) and screenshots (≥ 9) | opus | waiting | E4.1, E3.3 | adversarial; looks at everything it renders |
+| E3.4 | Market screen: Item / Price / Weight / Slot table, sortable; description box; Only Show Affordable; Quantity; Negotiate; Buy Custom builder; Create dialog | opus | waiting | E3.2 | `MarketDialog.tsx`, `marketModel.ts` (new), two dialogs (new); `decisions.md §24–§26, §28` |
+| E3.3 | ui-smoke: 15 new rows, 6 rewritten; inventory regenerated | opus | waiting | E3.4 | side lane `smoke` (`.worktrees/sd41-smoke`), beside E3.MC and E4.1; lands before E4.MC; the only `spec.json` writer (R24) |
+| E3.MC | E3 merge check + Epic report (6 screenshots, looked at) | opus | waiting | E3.4 | adversarial; runs beside E3.3 only on files it does not own |
+| E4.1 | Print: Inventory by location (slots → Carried nested → Not Carried; stacks; Create items); Weapons in hand → carried → Unarmed last; ammo boxes per ammunition weapon, no global row | opus | waiting | E3.MC | `gear.rs`, `weapons.typ`; G-2; Looked at; `decisions.md §22, §23, §28` |
+| E4.MC | E4 merge check + E4.G's PDFs (4) and screenshots (≥ 12) | opus | waiting | E4.1, E3.3 | adversarial; looks at everything it renders |
 | E4.G | OPERATOR GATE: gear screen + printed inventory page, `usable: yes` ×2 | sonnet | waiting | E4.MC | the run ends here until the operator signs; `grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md` → 2 |
 | E5.1 | Widest verify + clean build + packaged resources + fresh-install check | sonnet | waiting | E4.G | |
 | E5.2 | Final-acceptance scan → retrospective → sweep | opus | waiting | E5.1 | |

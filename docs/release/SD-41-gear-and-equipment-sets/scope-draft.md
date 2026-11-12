@@ -31,7 +31,11 @@ status: planning-ready — the request and the nine answers are the operator's (
 > customize items. I use a custom named pouch called food, and then put food in food pouch. I might have
 > another that is called camping and i put a bedroll and such in that thing."
 
-The nine answers of the same day are in `decisions.md §3`.
+The nine answers of the same day are in `decisions.md §3`. The operator added seven items the same day, each
+quoted verbatim with its answers in `decisions.md §22–§28`: the Unarmed row; ammunition boxes only for
+ammunition weapons; the Market as a sortable table with a description box, Only Show Affordable and Buy
+Custom; a Create option; missing and negative prices, Negotiate on Buy and Sell, Weight and Slot columns;
+Drop → Not Carried with separate Sell and Discard; bulk Quantity and stacks.
 
 What the code does today (checked on `tranche-20` @ `f7f85f3d24`, 2026-11-12; every figure in
 `artifacts/epic_0/census.txt` with its command):
@@ -103,19 +107,39 @@ SD-41 is done when every row below holds on `tranche-21` and the operator has si
 13. **Closure.** All cards `complete` → final-acceptance scan → retrospective written and cited → sweep →
     release notes → architecture truth-up + claims critic → **graphify LAST** → **PR last**
     (`decisions.md §18`). The operator merges.
+14. **The Unarmed row.** The Weapons block (tab and print) always ends with an Unarmed strike row with the
+    engine's attack bonus and damage (1d3 / 1d2 nonlethal; the monk progression; lethal with Improved
+    Unarmed Strike). (`decisions.md §22`.)
+15. **Ammunition per weapon.** Tick boxes only under weapons the engine says use ammunition (the `Projectile`
+    tag), with the carried count; no global row; tab and print. (`decisions.md §23`.)
+16. **The Market table.** Item / Price / Weight / Slot, sortable by any header; a description box; Only
+    Show Affordable at the active price mode; Quantity; Negotiate on Buy and Sell; Buy Custom (base + name +
+    masterwork + enhancement + abilities + material + size, priced from the rules in Rust); Create (free
+    text, weight, optional price, optional container + slot). (`decisions.md §24–§26, §28`.)
+17. **Created items** persist, round-trip, print with their weight, weigh when carried, work as containers,
+    and are edited or removed in the Custom tab. (`decisions.md §25`.)
+18. **Prices.** The converter prices composites and eqmod-offset literals as PCGen's data defines them; the
+    rest come from one checked-in list with a d20pfsrd URL per item; a gate test fails on any Market row with
+    a missing, zero or negative price not listed as price-unknown. (`decisions.md §26`.)
+19. **Drop keeps the item** (Not Carried); Sell and Discard are separate buttons; the caption says so.
+    (`decisions.md §27`.)
+20. **Stacks.** Identical copies in one location are one row with a quantity; buy, sell, move, drop and
+    discard take a quantity; bundles count as the book sells them. (`decisions.md §28`.)
 
 ## 3. Not in the Definition of Done (planned deferrals, `forward-scope-register.md §4`)
 
 Weight-reduction containers (bag of holding kinds, 25 records: contents weigh in full, "no stated
-capacity" shown); moving items between characters; quantity stacks (today one copy is one row);
-Starfinder and Cyberpunk RED gear screens (their markets stay as they are); a wield style per weapon
-(one-handed / two-handed) beyond the three wield slots the app already has; charges.
+capacity" shown); moving items between characters; splitting a bundle below the unit the book sells;
+eqmod price formulas the converter does not evaluate (sold through Negotiate); Starfinder and Cyberpunk
+RED gear screens and markets (they stay as they are); a wield style per weapon (one-handed / two-handed)
+beyond the three wield slots the app already has; charges.
 
 ## 4. Epic order and the SD-40 partition
 
-C → **E1 (engine, root crate; may run now beside SD-40)** → *SD-40 merges; `tranche-21` catches up* → E2
-(desktop backend: sets file on the character root, commands, DTOs, migration) → E3 (the gear screen, drag,
-smoke rows) → E4 (print; merge check; **E4.G operator gate**) → E5 (closure). The partition is derived
+C → **E1 (engine, root crate, plus the tool-side `convert` lane for prices; may run now beside SD-40)** →
+*SD-40 merges; `tranche-21` catches up* → E2 (desktop backend: sets file, commands, DTOs, migration, Create,
+Market backend, Buy Custom) → E3 (the gear screen, drag, the Market screen, smoke rows) → E4 (print; merge
+check; **E4.G operator gate**) → E5 (closure). The partition is derived
 from SD-40's open cards' FILES YOU OWN (`artifacts/epic_0/census.txt §7`; `epic-breakdown.md §0`).
 
 ## 5. Mode
