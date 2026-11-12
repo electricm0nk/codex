@@ -857,12 +857,14 @@ pub fn resolve_weapon_damage_breakdown(
 }
 
 /// SD-40 E2.14: one weapon's damage as the sheet prints it, the die and one signed sum (`1d8+4`),
-/// as the `combat.weapon_damage_total.<weapon>` row. The sum is the facets
-/// [`resolve_weapon_damage_breakdown`] already holds, added and nothing else: the Strength part
-/// (`strength`: its value and the corpus `WIELD:` word it was read under), the weapon's
-/// enhancement to damage, and each constant feat (or item) damage bonus. Its value is the sum;
-/// its detail opens with the printed `1d8+4` and names every part. `None` when the weapon has no
-/// dice: absence, never a `0`.
+/// as the `combat.weapon_damage_total.<weapon>` row. The sum is facets the load response already
+/// holds, added and nothing else: the Strength part [`resolve_weapon_damage_breakdown`] read
+/// (`strength`: its value and the corpus `WIELD:` word), the weapon's enhancement to damage, the
+/// weapon's feat damage row (`feat_row`: [`weapon_feat_damage_row_id`], the Specialization feats
+/// that name this weapon) and each item damage bonus in `damage_bonuses`. A feat's own entry in
+/// `damage_bonuses` (`resolve_feat_damage_effect` knows it) is not added again: the feat row
+/// already holds it, for the weapon the feat chose. Its value is the sum; its detail opens with
+/// the printed `1d8+4` and names every part. `None` when the weapon has no dice: absence, never `0`.
 ///
 /// The Strength part is the primary hand's (`WeaponHandSlot::Primary`): no input records a hand,
 /// so an off-hand weapon's half Strength is not applied, and the detail says so.
@@ -871,7 +873,8 @@ pub fn weapon_damage_total_row(
     dice: Option<DiceExpression>,
     strength: Option<(i16, String)>,
     enhancement: Option<i16>,
-    feats: &[(String, i16)],
+    feat_row: Option<i16>,
+    damage_bonuses: &[(String, i16)],
 ) -> Option<ComputationExplanation> {
     let dice = dice?;
     let mut parts: Vec<String> = Vec::new();
@@ -884,22 +887,35 @@ pub fn weapon_damage_total_row(
         sum += value;
         parts.push(format!("enhancement {value:+}"));
     }
-    for (feat, value) in feats {
+    match feat_row {
+        Some(value) => {
+            sum += value;
+            parts.push(format!("feats naming this weapon {value:+}"));
+        }
+        None => parts.push("no feat damage row for this weapon".to_owned()),
+    }
+    for (source, value) in damage_bonuses.iter().filter(|(source, _)| resolve_feat_damage_effect(source).is_none()) {
         sum += value;
-        parts.push(format!("{feat} {value:+}"));
+        parts.push(format!("{source} {value:+}"));
     }
     let die = format!("{}d{}", dice.count, dice.die_size);
     let printed = if sum == 0 { die.clone() } else { format!("{die}{sum:+}") };
-    let parts = if parts.is_empty() { "no bonus".to_owned() } else { parts.join(" + ") };
     Some(ComputationExplanation {
         id: format!("combat.weapon_damage_total.{}", normalize_weapon_identity(weapon_record_key)),
         value: sum,
         detail: format!(
-            "{printed}: damage with the equipped {weapon_record_key}: the {die} die + {parts} = {printed}. \
+            "{printed}: damage with the equipped {weapon_record_key}: the {die} die + {} = {printed}. \
              The Strength part is the primary hand's: no input records which hand holds a weapon, so \
-             an off-hand weapon's half Strength is not applied."
+             an off-hand weapon's half Strength is not applied.",
+            parts.join(" + ")
         ),
     })
+}
+
+/// The id of the row holding a weapon's feat damage (`combat.weapon_damage_bonus.<weapon>`), the
+/// part [`weapon_damage_total_row`] reads as `feat_row`.
+pub fn weapon_feat_damage_row_id(weapon_record_key: &str) -> String {
+    format!("combat.weapon_damage_bonus.{}", normalize_weapon_identity(weapon_record_key))
 }
 
 /// SD-40 E2.14: the range increment, in feet, the weapon's record states (`RANGE:10` on
@@ -1147,51 +1163,56 @@ mod weapon_damage_total_tests {
         resolve_weapon_damage_breakdown(&input, &corpus, &effects, str_modifier).remove(0)
     }
 
-    fn row_of(weapon: &WeaponDamageBreakdown) -> Option<ComputationExplanation> {
-        let feats: Vec<(String, i16)> =
+    fn row_of(weapon: &WeaponDamageBreakdown, feat_row: i16, items: &[(&str, i16)]) -> Option<ComputationExplanation> {
+        let mut feats: Vec<(String, i16)> =
             weapon.feat_effects.iter().map(|feat| (feat.feat_key.clone(), feat.damage_bonus)).collect();
+        feats.extend(items.iter().map(|(name, value)| ((*name).to_owned(), *value)));
         weapon_damage_total_row(
             weapon.base_dice.as_ref().map(|dice| dice.weapon_record_key.as_str()).unwrap_or(&weapon.weapon_item_id),
             weapon.base_dice.as_ref().map(|dice| dice.base_dice),
             weapon.str_modifier.as_ref().map(|part| (part.str_damage_modifier, format!("{:?}", part.wield_category))),
             weapon.weapon_enhancement.as_ref().map(|part| part.damage_bonus),
+            Some(feat_row),
             &feats,
         )
     }
 
-    /// Aldric's longsword (Strength 19, +4; one-handed in the primary hand; no `+N`, no damage
-    /// feat): the printed value is the die and the one signed sum, `1d8+4`.
+    /// Aldric's longsword (Strength 19, +4; one-handed in the primary hand; no `+N`; his feat
+    /// damage row reads 0): the printed value is the die and the one signed sum, `1d8+4`.
     #[test]
     fn weapon_damage_total_of_aldrics_longsword_is_the_die_and_one_sum() {
         let sword = breakdown("Longsword (Base)", &[], &[], 4);
-        let row = row_of(&sword).expect("a weapon with dice has a total");
+        let row = row_of(&sword, 0, &[]).expect("a weapon with dice has a total");
         let facets = sword.str_modifier.as_ref().unwrap().str_damage_modifier
-            + sword.weapon_enhancement.as_ref().map_or(0, |part| part.damage_bonus)
-            + sword.feat_effects.iter().map(|feat| feat.damage_bonus).sum::<i16>();
+            + sword.weapon_enhancement.as_ref().map_or(0, |part| part.damage_bonus);
         assert_eq!(row.id, "combat.weapon_damage_total.longsword");
+        assert_eq!(weapon_feat_damage_row_id("Longsword (Base)"), "combat.weapon_damage_bonus.longsword");
         assert_eq!(row.value, facets);
         assert_eq!(row.value, 4);
         assert!(row.detail.starts_with("1d8+4:"), "{}", row.detail);
         assert!(row.detail.contains("primary hand") && row.detail.contains("OneHanded"), "{}", row.detail);
     }
 
-    /// Every part sums: Strength +4, the sword's own `+1`, Weapon Specialization's `+2` -> `1d8+7`;
-    /// a negative sum keeps its sign (`1d8-1`); a zero sum prints the die alone.
+    /// Every part sums: Strength +4, the sword's own `+1`, the feat row's Weapon Specialization
+    /// `+2` and an item's `+3` -> `1d8+10`. The breakdown's own Weapon Specialization entry (`+2`
+    /// on every weapon) is not added a second time. A negative sum keeps its sign (`1d8-1`); a
+    /// zero sum prints the die alone.
     #[test]
-    fn weapon_damage_total_sums_strength_enhancement_and_feats() {
+    fn weapon_damage_total_sums_strength_enhancement_feats_and_items() {
         let sword = breakdown("Longsword (Base)", &["Special Ability ~ +1 ~ Weapon"], &["Weapon Specialization"], 4);
-        let row = row_of(&sword).unwrap();
-        assert_eq!(row.value, 7, "{}", row.detail);
-        assert!(row.detail.starts_with("1d8+7:"), "{}", row.detail);
-        assert!(row.detail.contains("Weapon Specialization +2"), "{}", row.detail);
-        assert!(row_of(&breakdown("Longsword (Base)", &[], &[], -1)).unwrap().detail.starts_with("1d8-1:"));
-        assert!(row_of(&breakdown("Longsword (Base)", &[], &[], 0)).unwrap().detail.starts_with("1d8:"));
+        assert_eq!(sword.feat_effects.iter().map(|feat| feat.damage_bonus).sum::<i16>(), 2, "{:?}", sword.feat_effects);
+        let row = row_of(&sword, 2, &[("Gauntlet of Everything", 3)]).unwrap();
+        assert_eq!(row.value, 10, "{}", row.detail);
+        assert!(row.detail.starts_with("1d8+10:"), "{}", row.detail);
+        assert!(row.detail.contains("feats naming this weapon +2") && row.detail.contains("Gauntlet of Everything +3"), "{}", row.detail);
+        assert!(row_of(&breakdown("Longsword (Base)", &[], &[], -1), 0, &[]).unwrap().detail.starts_with("1d8-1:"));
+        assert!(row_of(&breakdown("Longsword (Base)", &[], &[], 0), 0, &[]).unwrap().detail.starts_with("1d8:"));
     }
 
     /// A weapon with no dice has no total row: absence, never `0`.
     #[test]
     fn weapon_damage_total_needs_dice() {
-        assert_eq!(weapon_damage_total_row("Net (Base)", None, None, None, &[]), None);
+        assert_eq!(weapon_damage_total_row("Net (Base)", None, None, None, None, &[]), None);
     }
 
     /// The range increment is the record's own `RANGE:` (the dagger's 10 ft.), or its base item's

@@ -2905,25 +2905,31 @@ pub(crate) fn load_saved_character_at_root(
 }
 
 /// SD-40 E2.14: one `combat.weapon_damage_total.<weapon>` row per weapon in hand with dice, summed
-/// in `damage_total::weapon_damage_total_row` from the facets `weapon_damage` holds once the worn
-/// custom items' damage bonuses are in it, so the row and the facets beside it agree. A second
-/// weapon of the same kind shares the first's row id and adds none.
+/// in `damage_total::weapon_damage_total_row` from what this response already holds for it: its
+/// `weapon_damage` facets once the worn custom items' damage bonuses are in them, and its
+/// `combat.weapon_damage_bonus.<weapon>` feat row. A second weapon of the same kind shares the
+/// first's row id and adds none.
 fn push_weapon_damage_total_rows(sheet: &mut LoadSavedCharacterResponse) {
+    use codex::rules_core::damage_total::{weapon_damage_total_row, weapon_feat_damage_row_id, DiceExpression};
+    let mut rows: Vec<ExplanationDto> = Vec::new();
     for weapon in &sheet.weapon_damage {
-        let feats: Vec<(String, i16)> = weapon.feat_effects.iter().map(|feat| (feat.feat_key.clone(), feat.damage_bonus)).collect();
-        let row = codex::rules_core::damage_total::weapon_damage_total_row(
-            weapon.weapon_record_key.as_deref().unwrap_or(&weapon.weapon_item_id),
-            weapon.base_dice.map(|dice| codex::rules_core::damage_total::DiceExpression { count: dice.count, die_size: dice.die_size }),
+        let key = weapon.weapon_record_key.as_deref().unwrap_or(&weapon.weapon_item_id);
+        let feat_id = weapon_feat_damage_row_id(key);
+        let feat_row = sheet.explanations.iter().find(|row| row.id == feat_id).map(|row| row.value);
+        let bonuses: Vec<(String, i16)> = weapon.feat_effects.iter().map(|feat| (feat.feat_key.clone(), feat.damage_bonus)).collect();
+        let row = weapon_damage_total_row(
+            key,
+            weapon.base_dice.map(|dice| DiceExpression { count: dice.count, die_size: dice.die_size }),
             weapon.str_damage_modifier.map(|value| (value, weapon.wield_category.clone().unwrap_or_default())),
             weapon.enhancement_damage_bonus,
-            &feats,
+            feat_row,
+            &bonuses,
         );
-        if let Some(row) = row {
-            if !sheet.explanations.iter().any(|existing| existing.id == row.id) {
-                sheet.explanations.push(ExplanationDto { id: row.id, value: row.value, detail: row.detail });
-            }
+        if let Some(row) = row.filter(|row| !rows.iter().chain(&sheet.explanations).any(|existing| existing.id == row.id)) {
+            rows.push(ExplanationDto { id: row.id, value: row.value, detail: row.detail });
         }
     }
+    sheet.explanations.extend(rows);
 }
 
 /// The Skills panel's rows, as `skill:<name>` (`skillsModel.ts`'s `SKILLS`): the book's skills, each
@@ -12825,6 +12831,31 @@ mod tests {
         assert!(row.detail.starts_with("1d4+6:"), "{}", row.detail);
     }
 
+    /// SD-40 E2.14: Weapon Specialization (Longsword), saved the way the app saves a feat and its
+    /// choice, reaches the Longsword's total once (`1d8+6`: Strength +4, the feat row's +2) and
+    /// not the Dagger's.
+    #[test]
+    fn weapon_damage_total_holds_weapon_specialization_for_its_weapon() {
+        let (dir, root) = enhancement_rows_aldric("weapon-damage-total-specialization");
+        enhancement_buy(&root, "Dagger (Base)", ActiveState::EquippedActive, 2);
+        mutate_saved_character_at_root(&root, "2026-11-11T00:00:00Z", |input| {
+            input.chosen.selected_feats.push("feat:weapon_specialization".to_owned());
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:weapon_specialization_target".to_owned(),
+                selection_id: "weapon:Longsword".to_owned(),
+            });
+        })
+        .expect("save");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("no {id}"));
+        assert_eq!(row("combat.weapon_damage_bonus.longsword").value, 2, "{}", row("combat.weapon_damage_bonus.longsword").detail);
+        let sword = row("combat.weapon_damage_total.longsword");
+        assert_eq!(sword.value, 6, "{}", sword.detail);
+        assert!(sword.detail.starts_with("1d8+6:"), "{}", sword.detail);
+        assert_eq!(row("combat.weapon_damage_total.dagger").value, 6, "Strength +4 and the dagger's +2 only");
+    }
+
     /// Every weapon the Market sells a `+N` of, in hand at its highest offer, has a row holding that
     /// bonus. The Market offers none on what has no row to hold it: no damage die to add to.
     #[test]
@@ -20823,7 +20854,7 @@ mod starter_seed_tests {
 
     /// SD-40 E2.14: every weapon in hand with dice has one `combat.weapon_damage_total.<weapon>`
     /// row whose value is the signed sum of the facets the same response holds for it (Strength,
-    /// enhancement, each damage bonus) and whose detail opens with the printed `1d8+4`; the
+    /// enhancement, its feat damage row, each item damage bonus) and whose detail opens with the printed `1d8+4`; the
     /// Longsword states no range. Aldric (Strength 19): `1d8+4`.
     #[test]
     fn weapon_damage_total_reaches_the_load_response_of_the_seeds() {
@@ -20845,8 +20876,10 @@ mod starter_seed_tests {
                 let rows: Vec<&serde_json::Value> =
                     wire["explanations"].as_array().unwrap().iter().filter(|row| row["id"] == id).collect();
                 assert_eq!(rows.len(), 1, "{id}");
+                let feat_row = wire["explanations"].as_array().unwrap().iter().find(|row| row["id"] == "combat.weapon_damage_bonus.longsword");
                 let facets = weapon["strDamageModifier"].as_i64().unwrap_or(0)
                     + weapon["enhancementDamageBonus"].as_i64().unwrap_or(0)
+                    + feat_row.expect("the feat damage row")["value"].as_i64().unwrap()
                     + weapon["featEffects"].as_array().unwrap().iter().map(|feat| feat["damageBonus"].as_i64().unwrap()).sum::<i64>();
                 assert_eq!(rows[0]["value"].as_i64(), Some(facets), "{}", rows[0]);
                 let dice = format!("{}d{}", weapon["baseDice"]["count"], weapon["baseDice"]["dieSize"]);
