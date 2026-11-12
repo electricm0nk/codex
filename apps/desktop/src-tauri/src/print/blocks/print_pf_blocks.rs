@@ -22,21 +22,21 @@ const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
 const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
-/// The 20 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
+/// The 19 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
 /// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3) under the
-/// portrait and the Character Name field, the Identity block opening page 2 (E2.5).
-const BASE_HEADINGS: [&str; 20] = [
+/// portrait and the Character Name field, the Hit Points and Initiative one square block (E2.9),
+/// the Identity block opening page 2 (E2.5).
+const BASE_HEADINGS: [&str; 19] = [
     "Portrait",
     "Character Name",
-    "Initiative",
+    "Speed",
+    "Armor Class",
     "Hit Points",
     "Abilities",
-    "Armor Class",
-    "Attack",
     "Skills",
     "Weapons",
+    "Attack",
     "Saving Throws",
-    "Speed",
     "Identity",
     "Armor",
     "Inventory",
@@ -101,7 +101,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
         expected.extend([SPELLBOOK, MATH, BIO]);
-        assert_eq!(headings, expected, "{tag}: the 23 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
+        assert_eq!(headings, expected, "{tag}: the 22 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
         let full = render(&root, &all);
         assert_in_order(&pdf_text(&full), &expected);
         // For a reader's own look (`pdftotext`, a viewer): the full sheet, when asked for.
@@ -459,8 +459,8 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
 
     loaded.snapshot.as_mut().expect("Aldric computes a snapshot").damage_reduction = Some(3);
     let text = typeset_text(&loaded);
-    let hit_points = &text[text.find("Hit Points").expect("Hit Points")..text.find("Armor Class").expect("Armor Class")];
-    assert!(hit_points.contains("Damage Reduction 3/—"), "the Hit Points block prints `Damage Reduction 3/—`: {hit_points}");
+    let hit_points = &text[text.find("Hit Points").expect("Hit Points")..text.find("Abilities").expect("Abilities")];
+    assert!(hit_points.contains("Damage Reduction 3/—"), "the square block's Hit Points print `Damage Reduction 3/—`: {hit_points}");
 }
 
 /// The screen's and the paper's one vocabulary (SD-40 `decisions.md §5`): every block the
@@ -530,16 +530,16 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     let mut document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
     assert_eq!(document.columns(), GRID_COLUMNS, "the Pathfinder sheet prints on the page grid");
     let place = |id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{id} prints")).place;
-    assert_eq!(place("abilities"), Place::at(0, 6), "the Abilities take the row's left half");
-    assert_eq!(place("armorClass"), Place::at(6, 6), "the Armor Class sits beside them, on the right half");
-    assert_eq!(place("attack"), Place::under(6, 6), "the Attack is stacked under the Armor Class");
-    let abilities = document.blocks.iter().position(|block| block.id == "abilities").expect("the Abilities block");
-    assert_eq!(document.blocks[abilities + 1].id, "armorClass", "one row: Abilities, then Armor Class beside them");
+    assert_eq!(place("squareBlock"), Place::at(0, 7), "the square block takes the row's left seven columns (E2.9)");
+    assert_eq!(place("abilities"), Place::at(7, 5), "the Abilities sit beside it, on the right");
+    assert_eq!(place("attack"), Place::under(7, 5), "the Attack is stacked under the Weapons");
+    let square = document.blocks.iter().position(|block| block.id == "squareBlock").expect("the square block");
+    assert_eq!(document.blocks[square + 1].id, "abilities", "one row: the square block, then the Abilities beside it");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
 
-    document.blocks[abilities + 1].place = Place::at(8, 6);
+    document.blocks[square + 1].place = Place::at(8, 5);
     let refused = crate::print::typst::typeset(&document).expect_err("a block past column 12 is refused");
-    assert!(refused.contains("print.layout") && refused.contains("armorClass") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
+    assert!(refused.contains("print.layout") && refused.contains("abilities") && refused.contains("past the 12-column grid"), "the refusal names the block and the grid: {refused}");
 }
 
 /// The page grid's other refusals (`SheetDocument::check_places`, SD-40 `decisions.md §21`): a block
@@ -606,9 +606,10 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
 
         let w = String::new;
         let expected: Vec<SplitLine> = vec![
-            ("hitPoints", "Hit Points", "hit-points", "Total", vec![row("hit_points.max").value.to_string()], Some("hit_points.max")),
-            ("hitPoints", "Hit Points", "hit-points", "Current", vec![w()], None),
-            ("hitPoints", "Hit Points", "hit-points", "Nonlethal", vec![w()], None),
+            ("squareBlock", "Hit Points", "square-block", "Max", vec![row("hit_points.max").value.to_string()], Some("hit_points.max")),
+            ("squareBlock", "Hit Points", "square-block", "Current", vec![w()], None),
+            ("squareBlock", "Hit Points", "square-block", "Nonlethal", vec![w()], None),
+            ("squareBlock", "Hit Points", "square-block", "Initiative", vec![signed(row("initiative.total").value)], Some("initiative.total")),
             ("armorClass", "Armor Class", "armor-class", "Armor Class", vec![snapshot.baseline_armor_class.to_string()], Some("defense.baseline_armor_class")),
             ("armorClass", "Armor Class", "armor-class", "Touch", vec![row("defense.touch_armor_class").value.to_string()], Some("defense.touch_armor_class")),
             ("armorClass", "Armor Class", "armor-class", "Flat-Footed", vec![row("defense.flat_footed_armor_class").value.to_string()], Some("defense.flat_footed_armor_class")),
@@ -619,7 +620,6 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             ("armorClass", "Armor Class", "armor-class", "Natural", vec![w()], None),
             ("armorClass", "Armor Class", "armor-class", "Deflection", vec![w()], None),
             ("armorClass", "Armor Class", "armor-class", "Misc", vec![w()], None),
-            ("initiative", "Initiative", "initiative", "Modifier", vec![signed(row("initiative.total").value), signed(modifiers.dexterity), w()], Some("initiative.total")),
             ("saves", "Saving Throws", "saves", "Fortitude", vec![signed(snapshot.total_saves.fortitude), signed(snapshot.base_saves.fortitude), signed(modifiers.constitution), w()], Some("defense.total_save.fortitude")),
             ("saves", "Saving Throws", "saves", "Reflex", vec![signed(snapshot.total_saves.reflex), signed(snapshot.base_saves.reflex), signed(modifiers.dexterity), w()], Some("defense.total_save.reflex")),
             ("saves", "Saving Throws", "saves", "Will", vec![signed(snapshot.total_saves.will), signed(snapshot.base_saves.will), signed(modifiers.wisdom), w()], Some("defense.total_save.will")),
@@ -634,20 +634,25 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             let printed = block(id);
             assert_eq!((printed.heading.as_str(), printed.look.name()), (*heading, *look), "{tag}: {id}'s heading and look");
             let line = printed.rows.iter().find(|line| line.label == *label).unwrap_or_else(|| panic!("{tag}: {id} prints `{label}`"));
-            assert_eq!(&line.values, cells, "{tag}: {id} `{label}` prints the engine's value, write-in cells empty");
+            // The square block pads every line to its widest (Encumbrance's seven cells).
+            let values: Vec<String> = line.values.iter().take(cells.len()).cloned().collect();
+            assert!(line.values[cells.len()..].iter().all(String::is_empty), "{tag}: {id} `{label}` pads with empty cells only");
+            assert_eq!(&values, cells, "{tag}: {id} `{label}` prints the engine's value, write-in cells empty");
             assert_eq!(line.derivation, source.map(behind), "{tag}: {id} `{label}` has the same engine row behind it");
             numbers += usize::from(source.is_some());
         }
         assert_eq!(numbers, 13, "{tag}: the 13 numbers the Combat block printed");
-        for id in ["hitPoints", "armorClass", "initiative", "saves", "attack", "speed"] {
+        for id in ["armorClass", "saves", "attack", "speed"] {
             let rows = expected.iter().filter(|line| line.0 == id).count();
-            assert_eq!(block(id).rows.len(), rows, "{tag}: {id} prints exactly its rows (no Damage Reduction on a seed)");
+            assert_eq!(block(id).rows.len(), rows, "{tag}: {id} prints exactly its rows");
         }
+        // The square block also prints Encumbrance and Conditions (E2.9); no Damage Reduction on a seed.
+        assert_eq!(block("squareBlock").rows.len(), 4 + 2, "{tag}: the square block's rows");
 
         let text = pdf_text(&render(&root, &request(false, false, false)));
-        assert_in_order(&text, &["Initiative", "Hit Points", "Armor Class", "Attack", "Skills", "Saving Throws", "Speed"]);
+        assert_in_order(&text, &["Speed", "Armor Class", "Hit Points", "Initiative", "Skills", "Attack", "Saving Throws"]);
         for line in [
-            format!("Total {}", row("hit_points.max").value),
+            format!("Max {}", row("hit_points.max").value),
             format!("Touch {}", row("defense.touch_armor_class").value),
             format!("CMD {}", row("defense.combat_maneuver_defense").value),
             format!("Land {} ft.", row("speed.land").value),
@@ -1064,4 +1069,126 @@ fn print_pf_blocks_campaign_prints_names_or_a_blank_line() {
     assert_eq!(header.rows.last().map(|row| (row.label.clone(), row.values.clone())), Some(("Campaign".to_owned(), vec![String::new()])), "no campaign: a write-in cell");
     let campaign = &one[one.find("Campaign").expect("the Campaign label prints")..];
     assert!(!campaign.starts_with("Campaign —") && !campaign.starts_with("Campaign -"), "no campaign prints no dash: {campaign}");
+}
+
+/// The square block's text in the PDF: from its heading to the Abilities block after it.
+fn square_text(text: &str) -> &str {
+    let from = text.find("Hit Points").expect("the square block prints");
+    &text[from..from + text[from..].find("Abilities").expect("the Abilities block follows the square block")]
+}
+
+/// E2.9 (`decisions.md §23.1` item 3a, §23.3): one `squareBlock` replaces page 1's Hit Points and
+/// Initiative blocks: Hit Points (max, the current and nonlethal write-ins), Initiative (the total
+/// only), Encumbrance (Light / Medium / Heavy limits, carried, remaining, gear value, the load's
+/// name) and Conditions (the `custom.json` conditions the screen shows, else a write-in). Every
+/// number is the load response's field, formatted.
+#[test]
+fn print_pf_blocks_square_block_prints_hp_initiative_encumbrance_and_conditions() {
+    use super::pounds;
+    let root = seeded("square-aldric", ALDRIC_ID);
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("the {id} row")).value;
+    let signed = |n: i16| if n >= 0 { format!("+{n}") } else { n.to_string() };
+    let load = &loaded.corpus_derived.encumbrance;
+    assert_eq!(load.level, "Light", "Aldric carries a light load");
+    let encumbrance = vec![
+        pounds(load.light_max_lbs),
+        pounds(load.medium_max_lbs),
+        pounds(load.heavy_max_lbs),
+        pounds(load.total_carried_weight_lbs),
+        pounds(load.remaining_lbs),
+        format!("{} gp", super::trim_number(load.total_carried_cost_gp)),
+        "Light Load".to_owned(),
+    ];
+    let square = |root: &Path| {
+        let document = sheet_document_at_root(root, &request(false, false, false)).expect("the document builds");
+        for retired in ["hitPoints", "initiative"] {
+            assert!(document.blocks.iter().all(|block| block.id != retired), "no `{retired}` block is left on the sheet");
+        }
+        document.blocks.iter().find(|block| block.id == "squareBlock").expect("the squareBlock prints").clone()
+    };
+    // A row's cells, without the padding `SheetBlock::new` adds to match the widest row.
+    let cells = |block: &crate::print::model::SheetBlock, label: &str| {
+        let mut values = block.rows.iter().find(|row| row.label == label).unwrap_or_else(|| panic!("the square block prints `{label}`: {:?}", block.rows)).values.clone();
+        while values.last().is_some_and(String::is_empty) {
+            values.pop();
+        }
+        values
+    };
+
+    let block = square(&root);
+    assert_eq!(block.look.name(), "square-block", "the square block prints in its own look");
+    assert_eq!(cells(&block, "Max"), vec![row("hit_points.max").to_string()], "Max is hit_points.max");
+    assert_eq!(cells(&block, "Current"), Vec::<String>::new(), "Current is the pencil's");
+    assert_eq!(cells(&block, "Nonlethal"), Vec::<String>::new(), "Nonlethal is the pencil's");
+    assert_eq!(cells(&block, "Initiative"), vec![signed(row("initiative.total"))], "Initiative is the total only");
+    assert_eq!(cells(&block, "Encumbrance"), encumbrance, "each encumbrance cell is the response's field");
+    assert_eq!(cells(&block, "Conditions"), Vec::<String>::new(), "no condition saved: a write-in box");
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    let printed = square_text(&text);
+    for piece in ["Initiative", "Encumbrance", "Conditions"].into_iter().map(str::to_owned).chain(encumbrance.iter().cloned()).chain([row("hit_points.max").to_string()]) {
+        assert!(printed.contains(&piece), "the square block prints `{piece}`: {printed}");
+    }
+
+    let mut custom = load_character_custom_at_root(&root).unwrap_or_default();
+    custom.conditions = vec!["Shaken".to_owned()];
+    save_character_custom_at_root(&root, &custom, AT).expect("the condition saves");
+    assert_eq!(cells(&square(&root), "Conditions"), vec!["Shaken".to_owned()], "the saved condition fills the box");
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    let printed = square_text(&text);
+    assert!(printed[printed.find("Conditions").expect("Conditions")..].contains("Shaken"), "Shaken prints in the Conditions box: {printed}");
+}
+
+/// E2.9 (`decisions.md §23.1` item 3a): under the square block, the engine's notes (E2.6's
+/// `conditionalNotes`), each `label: value condition`: the hit point notes, then the initiative
+/// notes, each list followed by two blank lines, then two blank lines for encumbrance notes (no
+/// engine source, E2.6). E2.6's initiative fixture (APG trait Veteran of Battle, saved on Aldric)
+/// prints its note under Initiative; Aldric as seeded holds none, so only the captions and the
+/// blank lines print.
+#[test]
+fn print_pf_blocks_square_block_prints_the_engine_notes() {
+    use codex::saved_character::local_store::SavedCharacterStore;
+    let notes_of = |block: &crate::print::model::SheetBlock, label: &str| {
+        block.rows.iter().find(|row| row.label == label).unwrap_or_else(|| panic!("`{label}`: {:?}", block.rows)).notes.clone()
+    };
+    let square = |root: &Path| {
+        let document = sheet_document_at_root(root, &request(false, false, false)).expect("the document builds");
+        document.blocks.iter().find(|block| block.id == "squareBlock").expect("the squareBlock prints").clone()
+    };
+
+    let plain = seeded("square-notes-aldric", ALDRIC_ID);
+    let loaded = load_saved_character_at_root(&plain).expect("Aldric loads");
+    assert!(loaded.conditional_notes.hit_points.is_empty() && loaded.conditional_notes.initiative.is_empty(), "Aldric holds no HP or initiative note");
+    let block = square(&plain);
+    assert_eq!((notes_of(&block, "Max"), notes_of(&block, "Initiative")), (Vec::<String>::new(), Vec::new()), "Aldric: no note, blank lines only");
+    let text = pdf_text(&render(&plain, &request(false, false, false)));
+    assert_in_order(square_text(&text), &["Hit point notes", "Initiative notes", "Encumbrance notes"]);
+
+    let veteran = seeded("square-notes-veteran", ALDRIC_ID);
+    let mut envelope = SavedCharacterStore::load(&veteran).expect("the seed's envelope loads");
+    envelope.character_input.chosen.selected_traits.push("trait:trait_veteran_of_battle".to_owned());
+    SavedCharacterStore::save(&envelope, &veteran).expect("the trait saves");
+    let loaded = load_saved_character_at_root(&veteran).expect("the veteran loads");
+    let note = loaded
+        .conditional_notes
+        .initiative
+        .iter()
+        .find(|note| note.rule_id == "advanced_players_guide:trait:trait_veteran_of_battle")
+        .unwrap_or_else(|| panic!("E2.6's initiative fixture lands in `initiative`: {:?}", loaded.conditional_notes));
+    let words = format!("{}: {} {}", note.label, note.value, note.condition);
+    assert_eq!(notes_of(&square(&veteran), "Initiative"), vec![words.clone()], "the note, in the engine's words");
+    let letter = PrintRequest { paper: Paper::Letter, ..request(false, false, false) };
+    let pdf = render(&veteran, &letter);
+    // For a reader's own look: the veteran's page 1, with Shaken saved too, when asked for.
+    if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+        let mut custom = load_character_custom_at_root(&veteran).unwrap_or_default();
+        custom.conditions = vec!["Shaken".to_owned(), "Fatigued".to_owned()];
+        save_character_custom_at_root(&veteran, &custom, AT).expect("the conditions save");
+        std::fs::create_dir_all(&out).expect("the output dir is creatable");
+        std::fs::write(Path::new(&out).join("veteran-shaken-letter.pdf"), render(&veteran, &letter)).expect("the PDF writes");
+    }
+    let text = pdf_text(&pdf);
+    let printed = square_text(&text);
+    let initiative_notes = &printed[printed.find("Initiative notes").expect("Initiative notes")..printed.find("Encumbrance notes").expect("Encumbrance notes")];
+    assert!(initiative_notes.contains(&words), "`{words}` prints under Initiative notes: {printed}");
 }

@@ -5,8 +5,7 @@
 
 #import "/looks/table.typ": look as table-look
 #import "/looks/abilities.typ": look as abilities-look
-#import "/looks/hit-points.typ": look as hit-points-look
-#import "/looks/initiative.typ": look as initiative-look
+#import "/looks/square-block.typ": look as square-block-look
 #import "/looks/armor-class.typ": look as armor-class-look
 #import "/looks/attack.typ": look as attack-look
 #import "/looks/saves.typ": look as saves-look
@@ -19,8 +18,7 @@
 #let looks = (
   table: table-look,
   abilities: abilities-look,
-  "hit-points": hit-points-look,
-  initiative: initiative-look,
+  "square-block": square-block-look,
   "armor-class": armor-class-look,
   attack: attack-look,
   saves: saves-look,

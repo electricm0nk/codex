@@ -28,7 +28,7 @@
 
 #let captions = ("Score", "Modifier", "Temp score", "Temp modifier")
 #let label-column = 1fr
-#let box-width = 1.25cm
+#let box-width = 1.1cm
 #let operators = false
 
 #let look(b) = {

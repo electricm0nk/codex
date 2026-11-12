@@ -1,5 +1,5 @@
 //! The shared blocks (SD-39 E8.2, `technical-design.md §1`, operator ruling R2): one builder per
-//! block type -- Identity, Abilities, Hit Points, Armor Class, Initiative, Saving Throws, Attack,
+//! block type -- Identity, Abilities, the square block (Hit Points, Initiative, Encumbrance, Conditions), Armor Class, Saving Throws, Attack,
 //! Speed (the Combat block's parts, SD-40 `decisions.md §8`), Skills, Weapons, Armor, Inventory,
 //! Feats, ClassFeatures, Spells (list or spellbook), Custom, Pets, Actions, Math, BioNotes. A layout
 //! file picks which blocks a system prints, in which order.
@@ -20,7 +20,7 @@ mod skills;
 mod spells;
 
 pub use bio_notes::bio_notes;
-pub use core::{abilities, armor_class, attack, character_details, hit_points, initiative, name_campaign, portrait, saves, speed};
+pub use core::{abilities, armor_class, attack, character_details, name_campaign, portrait, saves, speed, square_block};
 pub use extras::{custom, pets};
 pub use feats::{actions, class_features, feats};
 pub(crate) use feats::line_row;

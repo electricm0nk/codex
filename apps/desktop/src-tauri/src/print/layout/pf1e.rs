@@ -1,10 +1,10 @@
 //! The Pathfinder 1e layout file (operator ruling R2; SD-40 `decisions.md §4`): which blocks the
 //! sheet prints, in which order, and where on the 12-column page grid. Page 1 (`technical-design.md
 //! §4`, Letter first) opens with the portrait box beside the Character Name and Campaign fields (no
-//! title above them, `decisions.md §23.3`), the Initiative under those fields and the Hit Points
-//! beside them, so page 1 keeps its room; the
-//! Abilities beside the Armor Class with the Attack under it; the Skills in two narrow columns
-//! beside the Weapons, with the Saving Throws and the Speed under them (the Combat block split along
+//! title above them, `decisions.md §23.3`), the Speed under those fields and the Armor Class beside
+//! them; then the square block (Hit Points, Initiative, Encumbrance, Conditions and their notes,
+//! E2.9) beside the Abilities; the Skills in two narrow columns beside the Weapons, with the Attack
+//! and the Saving Throws under them (the Combat block split along
 //! the screen's boxes, `decisions.md §8`). Page 2 starts with the Identity block, then the armor; gear, feats, features,
 //! spells, custom records, pets and actions follow; then the option blocks, each on pages of its
 //! own: Spellbook, Show the math, Bio and campaign notes (R4). The blocks
@@ -18,16 +18,15 @@ use crate::print::model::{SheetBlock, SheetDocument};
 /// The sheet's blocks, in print order, each under its vocabulary id (`golden/block_vocabulary.json`).
 const SHEET: &[Placed] = &[
     Placed::at("portrait", blocks::portrait, 0, 3),
-    Placed::at("nameCampaign", blocks::name_campaign, 3, 5),
-    Placed::under("initiative", blocks::initiative, 3, 5),
-    Placed::at("hitPoints", blocks::hit_points, 8, 4),
-    Placed::at("abilities", blocks::abilities, 0, 6),
-    Placed::at("armorClass", blocks::armor_class, 6, 6),
-    Placed::under("attack", blocks::attack, 6, 6),
+    Placed::at("nameCampaign", blocks::name_campaign, 3, 4),
+    Placed::under("speed", blocks::speed, 3, 4),
+    Placed::at("armorClass", blocks::armor_class, 7, 5),
+    Placed::at("squareBlock", blocks::square_block, 0, 7),
+    Placed::at("abilities", blocks::abilities, 7, 5),
     Placed::at("skills", blocks::skills, 0, 7),
     Placed::at("weapons", blocks::weapons, 7, 5),
+    Placed::under("attack", blocks::attack, 7, 5),
     Placed::under("saves", blocks::saves, 7, 5),
-    Placed::under("speed", blocks::speed, 7, 5),
     // Page 2 opens with the Identity block until the Bio pages take it (E3.4).
     Placed::full("characterDetails", blocks::character_details),
     Placed::full("defense", blocks::armor),

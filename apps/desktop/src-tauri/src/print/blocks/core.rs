@@ -1,11 +1,11 @@
 //! Identity (the screen's Character Details), Abilities and the boxes the one Combat block printed
-//! until SD-40 split it along the screen's ids (`decisions.md §8`): Hit Points, Armor Class,
-//! Initiative, Saving Throws, Attack and Speed. Each value is the field the screen's tile reads
+//! until SD-40 split it along the screen's ids (`decisions.md §8`): the square block (Hit Points,
+//! Initiative, Encumbrance, Conditions; E2.9), Armor Class, Saving Throws, Attack and Speed. Each value is the field the screen's tile reads
 //! (`CharacterSheet.tsx`'s `ac`, `touch`, `flatFooted`, `cmb`, `cmd`, `saves`, `initiativeRow`,
 //! `AbilitiesPanel`, the Hit Points and Speed tiles). A write-in cell is an empty string: the
 //! player's pencil fills it at the table, never a number made up here (NR-2, `decisions.md §11`).
 
-use super::SheetSources;
+use super::{pounds, trim_number, SheetSources};
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{Look, SheetBlock, SheetRow};
 
@@ -84,20 +84,62 @@ fn line(sources: &SheetSources, label: &str, cells: Vec<String>, source: &str) -
     SheetRow::new(label, cells).derived(sources.derivation_of(source))
 }
 
-/// The screen's Hit Points tile (`hitPoints`): the load response's `hit_points.max`, then the current
-/// and nonlethal damage write-ins, and the Defense tab's `Damage Reduction: <n>/—` whenever the
-/// screen shows one.
-pub fn hit_points(sources: &SheetSources) -> SheetBlock {
-    let total = row_value(sources, "hit_points.max").map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string());
+/// The screen's square group (`squareBlock`, SD-40 E2.9, `decisions.md §23.1` item 3a): Hit Points
+/// (`hit_points.max`, the current and nonlethal write-ins, the Defense tab's `Damage Reduction:
+/// <n>/—` whenever the screen shows one), Initiative (the total only), Encumbrance (the load
+/// response's limits, carried weight, remaining pounds, gear value and the load's name, as the
+/// Carried Weight panel shows them) and Conditions (the saved `custom.json` conditions, else the
+/// write-in). The engine's hit point and initiative notes (E2.6) ride on the `Max` and `Initiative`
+/// lines, each `label: value condition`; the look prints them, then the blank lines.
+pub fn square_block(sources: &SheetSources) -> SheetBlock {
+    let max = row_value(sources, "hit_points.max").map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string());
+    let notes = &sources.loaded.conditional_notes;
+    let load = &sources.loaded.corpus_derived.encumbrance;
+    // In print order (the page-1 tests find a block by its heading and first words): the current
+    // area, then the max beside it.
     let mut rows = vec![
-        line(sources, "Total", vec![total], "hit_points.max"),
         SheetRow::new("Current", [write_in()]),
+        line(sources, "Max", vec![max], "hit_points.max").with_notes(notes.hit_points.iter().map(note_words)),
         SheetRow::new("Nonlethal", [write_in()]),
     ];
     if let Some(reduction) = sources.loaded.snapshot.as_ref().and_then(|s| s.damage_reduction) {
         rows.push(line(sources, "Damage Reduction", vec![format!("{reduction}/—")], "class_feature.barbarian.damage_reduction"));
     }
-    SheetBlock::new("Hit Points", rows).in_look(Look::HitPoints)
+    rows.extend([
+        line(sources, "Initiative", vec![with_sign(row_value(sources, "initiative.total"))], "initiative.total").with_notes(notes.initiative.iter().map(note_words)),
+        SheetRow::new("Conditions", [sources.custom.conditions.join(", ")]),
+        SheetRow::new(
+            "Encumbrance",
+            [
+                pounds(load.light_max_lbs),
+                pounds(load.medium_max_lbs),
+                pounds(load.heavy_max_lbs),
+                pounds(load.total_carried_weight_lbs),
+                pounds(load.remaining_lbs),
+                format!("{} gp", trim_number(load.total_carried_cost_gp)),
+                load_name(&load.level),
+            ],
+        )
+        .derived(Vec::new()),
+    ]);
+    SheetBlock::new("Hit Points", rows).in_look(Look::SquareBlock)
+}
+
+/// A conditional note as the sheet prints it: `label: value condition`, the engine's words.
+fn note_words(note: &codex::rules_core::pilot_compute::conditional_notes::ConditionalNote) -> String {
+    let said: Vec<&str> = [note.value.as_str(), note.condition.as_str()].into_iter().filter(|part| !part.is_empty()).collect();
+    format!("{}: {}", note.label, said.join(" "))
+}
+
+/// The load's name as the Carried Weight panel shows it (`encumbranceTabModel.ts`'s `LEVEL_LABELS`).
+fn load_name(level: &str) -> String {
+    match level {
+        "Light" => "Light Load".to_owned(),
+        "Medium" => "Medium Load".to_owned(),
+        "Heavy" => "Heavy Load".to_owned(),
+        "OverHeavyCapacity" => "Over Capacity".to_owned(),
+        other => other.to_owned(),
+    }
 }
 
 /// The screen's Armor Class box (`armorClass`): AC, Touch and Flat-Footed, then the AC's component
@@ -112,17 +154,6 @@ pub fn armor_class(sources: &SheetSources) -> SheetBlock {
     ];
     rows.extend(["Armor", "Shield", "Dex", "Size", "Natural", "Deflection", "Misc"].map(|part| SheetRow::new(part, [write_in()])));
     SheetBlock::new("Armor Class", rows).in_look(Look::ArmorClass)
-}
-
-/// The screen's Initiative tile (`initiative`): the engine's total, the Dexterity modifier and the
-/// misc write-in.
-pub fn initiative(sources: &SheetSources) -> SheetBlock {
-    let dexterity = sources.loaded.snapshot.as_ref().map(|s| s.ability_modifiers.dexterity);
-    SheetBlock::new(
-        "Initiative",
-        vec![line(sources, "Modifier", vec![with_sign(row_value(sources, "initiative.total")), with_sign(dexterity), write_in()], "initiative.total")],
-    )
-    .in_look(Look::Initiative)
 }
 
 /// The screen's Saving Throws box (`saves`): each save's total, its class base save, its ability's

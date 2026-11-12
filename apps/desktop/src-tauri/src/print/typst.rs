@@ -32,8 +32,7 @@ const BLOCKS_TYP: &str = include_str!("../../resources/print/blocks.typ");
 pub(crate) const LOOKS: &[(&str, &str)] = &[
     ("table", include_str!("../../resources/print/looks/table.typ")),
     ("abilities", include_str!("../../resources/print/looks/abilities.typ")),
-    ("hit-points", include_str!("../../resources/print/looks/hit-points.typ")),
-    ("initiative", include_str!("../../resources/print/looks/initiative.typ")),
+    ("square-block", include_str!("../../resources/print/looks/square-block.typ")),
     ("armor-class", include_str!("../../resources/print/looks/armor-class.typ")),
     ("attack", include_str!("../../resources/print/looks/attack.typ")),
     ("saves", include_str!("../../resources/print/looks/saves.typ")),

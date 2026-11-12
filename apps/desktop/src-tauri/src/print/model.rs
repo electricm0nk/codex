@@ -116,10 +116,9 @@ pub enum Look {
     Table,
     /// The six ability boxes: score, modifier, and the temp score and temp modifier write-ins.
     Abilities,
-    /// The hit point boxes: the total, and the current and nonlethal write-ins.
-    HitPoints,
-    /// The initiative box: the total, the Dexterity modifier and the misc write-in.
-    Initiative,
+    /// The square block (SD-40 E2.9): Hit Points (max, the big current-HP area, nonlethal),
+    /// Initiative, Encumbrance and Conditions, then the notes and their blank lines.
+    SquareBlock,
     /// Armor Class, Touch and Flat-Footed boxes over a strip of the AC's component cells.
     ArmorClass,
     /// The Base Attack Bonus, Melee, CMB and CMD boxes.
@@ -145,11 +144,10 @@ pub enum Look {
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 12] = [
+    pub const ALL: [Look; 11] = [
         Look::Table,
         Look::Abilities,
-        Look::HitPoints,
-        Look::Initiative,
+        Look::SquareBlock,
         Look::ArmorClass,
         Look::Attack,
         Look::Saves,
@@ -165,8 +163,7 @@ impl Look {
         match self {
             Look::Table => "table",
             Look::Abilities => "abilities",
-            Look::HitPoints => "hit-points",
-            Look::Initiative => "initiative",
+            Look::SquareBlock => "square-block",
             Look::ArmorClass => "armor-class",
             Look::Attack => "attack",
             Look::Saves => "saves",

@@ -127,7 +127,7 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
         format!("Melee {}", signed(i64::from(snapshot.baseline_melee_attack_bonus))),
         format!("CMB {}", signed(i64::from(explained("combat.combat_maneuver_bonus")))),
         format!("CMD {}", explained("defense.combat_maneuver_defense")),
-        format!("Initiative Modifier {}", signed(i64::from(explained("initiative.total")))),
+        format!("Initiative {}", signed(i64::from(explained("initiative.total")))),
         format!("Saving Throws Fortitude {}", signed(i64::from(snapshot.total_saves.fortitude))),
         format!("Reflex {}", signed(i64::from(snapshot.total_saves.reflex))),
         format!("Will {}", signed(i64::from(snapshot.total_saves.will))),
@@ -150,7 +150,8 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
     let at = |heading: &str| text.find(heading).unwrap_or_else(|| panic!("heading {heading} printed: {text}"));
     assert!(at("Portrait") < at("Character Name") && at("Character Name") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Portrait, Character Name, Hit Points, Abilities in order: {text}");
     assert!(at("Speed") < at("Identity"), "the Identity block opens page 2, after page 1's Speed: {text}");
-    assert!(at("Abilities") < at("Armor Class") && at("Armor Class") < at("Attack") && at("Attack") < at("Saving Throws"), "Abilities, Armor Class, Attack, Saving Throws in order: {text}");
+    // E2.9: the Armor Class shares the top band; the Attack sits under the Weapons.
+    assert!(at("Armor Class") < at("Abilities") && at("Abilities") < at("Weapons") && at("Weapons") < at("Attack") && at("Attack") < at("Saving Throws"), "Armor Class, Abilities, Weapons, Attack, Saving Throws in order: {text}");
 }
 
 #[test]
@@ -208,7 +209,7 @@ fn print_smoke_hit_points_and_speed_print_the_load_responses_one_value_for_aldri
     // rolls: 10 + 2, then the d10's average 6 + 2 twice (CRB p.30).
     assert_eq!((hit_points, speed), (28, 30), "Aldric's maximum hit points and land speed");
     let text = pdf_text(&render(&root, Paper::A4));
-    for line in [format!("Hit Points Total {hit_points}"), format!("Speed Land {speed} ft.")] {
+    for line in [format!("Max {hit_points}"), format!("Speed Land {speed} ft.")] {
         assert!(text.contains(&line), "the PDF prints `{line}` under its own heading: {text}");
     }
 }
@@ -248,7 +249,7 @@ fn print_smoke_hit_points_and_speed_carry_a_gm_grant_and_a_worn_speed_item() {
     let (hit_points, speed) = hit_points_and_speed(&root);
     assert_eq!((hit_points, speed), (base_hit_points + 5 + 3, base_speed + 10), "worn boots add their hit points and speed");
     let text = pdf_text(&render(&root, Paper::A4));
-    for line in [format!("Hit Points Total {hit_points}"), format!("Speed Land {speed} ft.")] {
+    for line in [format!("Max {hit_points}"), format!("Speed Land {speed} ft.")] {
         assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
     }
 }
