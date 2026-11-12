@@ -160,15 +160,15 @@ of page 2 under "<heading> (continued)"; no page-1 block leaves page 1.
   E4.1 keeps the three booleans with `#[serde(default)]` and maps them when `sections` is absent; E4.2 removes
   them from `PrintRequest`, `PrintOptionsDto`, `PRINT_OPTION_BOXES` and the golden `request()`. Nothing ticked:
   `print.no_sections`.
-- `layout/pf1e.rs`: `pub const SECTIONS: [(Section, &[Placed]); 6]`; `layout(sources)` concatenates the ticked
-  lists in box order, each from a new page: (1) page 1; (2) `feats`, `classFeatures`, `actions`, `spells`,
+- `layout/pf1e.rs`: `pub const SECTIONS: [(Section, &[Placed]); 7]` (seven since `decisions.md §24.3.7`; built by E2.23, Progression
+  by E3.7); `layout(sources)` concatenates the ticked lists in box order, each from a new page under its title (none on page 1): (1) page 1; (2) `feats`, `classFeatures`, `actions`, `spells`,
   `custom`, `pets`; (3) `defense`, `gear`, `money`; (4) `spellbook`; (5) `characterDetails`, Backstory (E3.6), campaign notes,
-  ruled lines; (6) breakdown tables + derivations, built from the page-1 blocks even when (1) is unticked.
+  ruled lines; (6) `progression` (E3.7); (7) Math: breakdown tables + derivations, built from the page-1 blocks even when (1) is unticked.
 - `layout/mod.rs with_options(sheet, spellbook, sources)` maps `sections` → SF1e/CPR's `(spellbook, math, bio)`
   and drops their sheet when Main is unticked, so `sf1e.rs` and `cpr.rs` do not change.
-- Goldens: the 24 names stay (none = 1+2+3, spellbook = 1+2+3+4, math = 1+2+3+6, all = 1–6) + 6
+- Goldens: the 24 names stay (none = 1+2+3, spellbook = 1+2+3+4, math = 1+2+3+7, all = 1–7) + 6
   `spellbookOnly` = 30.
-- `PrintDialog.tsx`: six checkboxes (`data-testid="print-section-<key>"`), four on SF1e/CPR sheets (1, 4, 5, 6);
+- `PrintDialog.tsx`: seven checkboxes labelled Primary (page 1), Abilities and Feats, Inventory, Spellbook, Bio, Progression, Math (`data-testid="print-section-<key>"`), four on SF1e/CPR sheets (1, 4, 5, 7);
   the paper select and both buttons stay; ticks remembered per character under
   `codex.print.sections.<characterId>` (`settings/printSections.ts`, the `printPaper.ts` shape); first time
   1+2+3. Four ui-smoke rows.

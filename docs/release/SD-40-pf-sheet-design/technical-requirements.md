@@ -39,7 +39,7 @@ status: planning-ready
 | NR-6 | Every PF print block id is in `block_vocabulary.json`; every `ui`-sourced id exists in the registry or tab list | `print_pf_blocks` + `sheetLayout.test.ts` (G-3) |
 | NR-7 | Every look has a template file and every template a variant | `print_pf_blocks_every_look_has_its_template` |
 | NR-8 | Page 1 of Aldric holds the eleven page-1 blocks of `decisions.md §23.3` whole on one page, both papers; a page-1 list too long for its cell continues on page 2, no block leaves page 1 | G-4 |
-| NR-9 | Sections are data: each is a list in `layout/pf1e.rs`; the dialog offers exactly the six (four on SF1e/CPR), remembered per character, first time 1 + 2 + 3 (`decisions.md §23.4`) | G-5 |
+| NR-9 | Sections are data: each is a list in `layout/pf1e.rs`; the dialog offers exactly the seven (four on SF1e/CPR), each section on its own pages under its title, remembered per character, first time 1 + 2 + 3 (`decisions.md §23.4`, §24.3.7) | G-5 |
 | NR-10 | Page counts are recorded, not capped: every look card's receipt lists each PF case's page count before → after on both papers; no test asserts a page-count ceiling (`decisions.md §10`, §22) | receipts' "Golden deltas" rows; G-6 |
 | NR-11 | Every look/layout card's receipt has a "Looked at" row naming its PNGs and the reference compared | `grep -L 'Looked at' artifacts/epic_[1-4]/*_cycle_receipt.md` prints only the non-look cards named in G-8 |
 | NR-12 | Write-in space exists where `decisions.md §11` lists it | E2.MC, E3.MC, E5.2 |

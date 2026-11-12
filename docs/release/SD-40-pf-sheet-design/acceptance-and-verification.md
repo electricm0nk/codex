@@ -29,8 +29,8 @@ PF_SEED_RENDER_OUT=<dir>/head cargo test --locked -j 8 --bins pf_seed_render_has
 diff <dir>/base/sha256.txt <dir>/head/sha256.txt      # before the engine lane: pass = no output
 python3 - <dir>/base <dir>/head <<'PY'                 # after it: pass = prints SAME_EXCEPT_NAMED for each seed
 import json, sys, pathlib
-NEW_KEYS = {'conditionalNotes', 'languages', 'remainingLbs', 'rangeIncrement', 'backstory'}   # E2.6, E2.8, E2.14, E3.6 (the card names any other)
-NEW_ROWS = ('defense.armor_class.', 'combat.weapon_damage_total.')                  # E2.7, E2.14
+NEW_KEYS = {'conditionalNotes', 'languages', 'remainingLbs', 'rangeIncrement', 'backstory', 'resistances'}   # E2.6, E2.8, E2.14, E3.6, E2.21 (the card names any other)
+NEW_ROWS = ('defense.armor_class.', 'combat.weapon_damage_total.', 'speed.swim', 'speed.fly')   # E2.7, E2.14, E2.17
 def strip(node):
     if isinstance(node, dict):
         return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS}
@@ -74,12 +74,12 @@ python3 -c "import json;d=json.load(open('apps/desktop/src-tauri/src/print/golde
 ls apps/desktop/src-tauri/resources/print/looks/*.typ | awk 'END{print NR}'                   # the look count; equals the Look variants (the Rust test)
 ```
 
-## G-4 Page 1 and the step-1 gate (DoD 3) — E2.3, E2.MC, E2.4, E2.MC2, E2.G
+## G-4 Page 1 and the step-1 gate (DoD 3) — E2.3, E2.MC, E2.4, E2.MC2, E2.16–E2.23, E2.MC3, E2.G
 
 ```bash
-cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers -- --test-threads=8   # 1 passed (eleven anchors after E2.4, decisions.md §23.3)
-ls docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G/*.pdf | awk 'END{print NR}'        # 2 (A4, Letter)
-grep -c 'usable: yes' docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G_cycle_receipt.md   # 2 (round 2: one line per paper; round 1 recorded no `usable: yes`)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers -- --test-threads=8   # 1 passed (the page-1 anchors: eleven after E2.4, decisions.md §23.3; re-pinned to the round-2 grid by E2.18, + conditionalBonuses (E2.20), + resistances (E2.22), decisions.md §24.3)
+ls docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G/aldric-languages7-*.pdf | awk 'END{print NR}'   # 2 (A4, Letter; round 3, rendered by E2.MC3)
+grep -c '^- Aldric .* — usable: yes' docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G_cycle_receipt.md   # 2 (round 3: one line per paper; rounds 1-2 recorded none; anchored 2026-11-12, decisions.md §24.5: the unanchored count read 3 with no sign-off)
 ```
 
 ## G-5 Sections and the checkbox dialog (DoD 5, `decisions.md §23.4`) — E4.1, E4.2, E4.MC
@@ -88,7 +88,7 @@ grep -c 'usable: yes' docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G_c
 cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_each_section_is_a_list -- --test-threads=8    # 1 passed
 grep -c 'SECTIONS' apps/desktop/src-tauri/src/print/layout/pf1e.rs                               # >= 1
 grep -rn 'PRINT_OPTION_BOXES\|spellbook: bool\|math: bool' apps/desktop/src apps/desktop/src-tauri/src/print | awk 'END{print NR}'   # 0 after E4.2
-cd apps/desktop && npx tsx src/characterHub/PrintDialog.test.ts && grep -c 'print-section-' src/characterHub/PrintDialog.test.ts   # exit 0; >= 6
+cd apps/desktop && npx tsx src/characterHub/PrintDialog.test.ts && grep -c 'print-section-' src/characterHub/PrintDialog.test.ts   # exit 0; >= 7 (seven sections, decisions.md §24.3.7)
 npx tsx src/settings/printSections.test.ts                                                       # exit 0 (first time 1+2+3; remembered per character)
 ```
 
@@ -118,10 +118,10 @@ grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ | awk 'END{print 
 ```bash
 cd docs/release/SD-40-pf-sheet-design
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 40) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 50) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[3-5] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
-grep -c 'usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md        # 2
-grep -c 'usable: yes' artifacts/epic_5/E5.2_cycle_receipt.md        # 5
+grep -c '^- Aldric .* — usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md        # 2 (anchored, decisions.md §24.5)
+grep -c 'usable: yes' artifacts/epic_5/E5.2_cycle_receipt.md        # 5 (E5.2 must anchor this as G-4 now is: its receipt's own instructions must not match, decisions.md §24.5)
 grep -c 'SD-40 INTERIM NOTES' release-notes.md                        # 0 at E5.4+
 python3 ../../../tools/release/resolve_release_notes.py --repo-root ../../..
 grep -L 'Looked at' artifacts/epic_[1-4]/*_cycle_receipt.md | grep -v 'E1.1_\|E1.2_\|E2.6_\|E2.7_\|E2.8_\|E2.14_\|E2.15_\|E2.G_\|E4.1_\|E4.2_'   # prints nothing (NR-11; E2.6–E2.8, E2.14, E2.15 are engine cards)

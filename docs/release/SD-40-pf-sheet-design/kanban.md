@@ -29,7 +29,7 @@ Row order is dispatch order. **Closure rule:** no PR while any row other than E5
 cd docs/release/SD-40-pf-sheet-design
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 40 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan; + E3.6 by the operator's answers, decisions.md §23.7; + E2.15 by E2.7)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 50 (24 + E2.4 by E2.MC; + E2.5 at E2.G round 1; + 12 by the E2.G round-1 replan; + E3.6 by the operator's answers, decisions.md §23.7; + E2.15 by E2.7; + 10 by the E2.G round-2 replan, decisions.md §24: E2.16–E2.23, E2.MC3, E3.7)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -58,16 +58,26 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 40 (24 + E
 | E2.13 | Languages on page 1: comma list + exactly one write-in line | opus | complete | E2.12, E2.8 | code `b26684e4f1`; receipt `artifacts/epic_2/E2.13_cycle_receipt.md`; print_pf_blocks 33 (32 + 1; heading order + top-band ids re-pinned); desktop 1268 passed; G-1 sha256 identical; G-2 16/16 byte-identical; PF pages unchanged; placed under the portrait (Letter page 1 has no room lower down) |
 | E2.4 | Page 1 assembled + overflow rule (rewritten, `decisions.md §23.5`) | opus | complete | E2.13 | code `60a5f93776`; receipt `artifacts/epic_2/E2.4_cycle_receipt.md`; print_pf_blocks 34 (33 + 1; page-1 test + square-notes test re-pinned); print_smoke 9; print_golden 24; desktop 1269 passed; G-1 sha256 identical; G-2 16/16 byte-identical; PF goldens byte-identical (seeds fit; rule does not fire); 12 stress renders, continuations on 5; the lead deletes `sd40/e2.4-parked` |
 | E2.MC2 | E2 merge check, round 2 + Epic report | opus | complete | E2.4 | docs only (this commit); receipt `artifacts/epic_2/E2.MC2_cycle_receipt.md`; print_ 82 (print_pf_blocks 34, print_golden 24, print_smoke 9); desktop 1269 + 2, root --lib 3085, npm 191/191, 0 FAILED; G-1 SAME_EXCEPT_NAMED ×3 vs C1; G-2 16/16 byte-identical; PF goldens 5/6/12/14 both papers (= C1); `.pcg` page-1 probe 37 saved × 2 papers = 74 renders, 0 faults, 0 continuations; NR-2 grep corrected; no discovered card |
-| E2.G | OPERATOR GATE: Aldric page 1 printed, `usable: yes` (round 2) | sonnet | partial | E2.MC2 | PDFs + PNGs rendered to artifacts/epic_2/E2.G/; receipt holds the sign-off lines; round 1 (2026-11-11) recorded → `decisions.md §23`; round 2 re-renders after E2.MC2 and waits for the operator's `usable: yes` |
+| E2.16 | Languages: comma list, no write-in line, room for 7; seven-language proof fixture (`decisions.md §24`) | opus | ready | E2.MC2 | main lane; print-only fixture via `sheet_document_from_loaded`; print_proof 16 → 18 |
+| E2.17 | Engine: swim + fly speed rows (`speed.swim`, `speed.fly`, maneuverability words) | opus | ready | E2.MC2 | side lane `engine` (reopened; `.worktrees/sd40-engine`); no `print/**`; ∥ E2.16 |
+| E2.18 | Page-1 grid: Name/Campaign row, AC row without heading + Speed Land/Swim/Fly, right column Abilities then Skills | opus | waiting | E2.16, E2.17 | main lane; `decisions.md §24.3.1–2` |
+| E2.19 | Engine: CMB and CMD conditional notes | opus | waiting | E2.17 | side lane `engine`; ∥ E2.18 |
+| E2.20 | Conditional Bonuses box (fixed size, every conditional, write-in space); notes leave HP/Init/Enc, Saves, Skills | opus | waiting | E2.18, E2.19 | main lane; `decisions.md §24.3.4–5`; owns the box's overflow (SD-b) |
+| E2.21 | Engine: `resistances` on the load response (energy, DR, SR, immunities) | opus | waiting | E2.19 | side lane `engine`; ∥ E2.20; closes the lane |
+| E2.22 | Resistances block (blank boxes when none); DR leaves Hit Points | opus | waiting | E2.20, E2.21 | main lane; `decisions.md §24.3.6` |
+| E2.23 | Sections: a page break and a prominent title per section (Abilities and Feats, Inventory, Spellbook, Bio, Math) | opus | waiting | E2.22 | main lane; `decisions.md §24.3.7`; Progression's title arrives with E3.7 |
+| E2.MC3 | E2 merge check, round 3 + Epic report | opus | waiting | E2.23, E2.21 | adversarial; re-renders the E2.G round-3 PDFs + PNGs |
+| E2.G | OPERATOR GATE: Aldric page 1 printed, `usable: yes` (round 3) | sonnet | partial | E2.MC3 | round 1 (2026-11-11) → `decisions.md §23`; round 2 (2026-11-12) `usable: no` ×2 → `decisions.md §24`; round 3 renders the seven-language Aldric after E2.MC3 and waits for `grep -c '^- Aldric .* — usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md` → 2 |
 | E3.1 | Feats, class features, actions looks (section 2) | opus | waiting | E2.G | rewritten: no `feats-full` |
 | E3.2 | Inventory pages: defense, gear (worn / carried / left behind), money (section 3) | opus | waiting | E3.1 | rewritten |
 | E3.3 | Daily spells, spellbook, custom, pets looks (sections 2, 4) | opus | waiting | E3.2 | rewritten: bio, math, details moved to E3.4, E3.5 |
 | E3.6 | Backstory field in the app (Bio UI + `bio.json`), ui-smoke row | opus | waiting | E3.3, E0.2 | operator answer Q2, `decisions.md §23.7`; before E3.4; writes `spec.json` after E0.2 |
 | E3.4 | Bio pages: details, Backstory, campaign notes, ruled lines (section 5) | opus | waiting | E3.6 | |
-| E3.5 | Show-the-math pages: every page-1 breakdown + derivations (section 6) | opus | waiting | E3.4 | |
-| E3.MC | E3 merge check + Epic report | opus | waiting | E3.5 | |
-| E4.1 | Sections as lists; `PrintSections`; golden 24 + 6 | opus | waiting | E3.MC | rewritten (was presets; `decisions.md §9` superseded by §23.4) |
-| E4.2 | Print dialog: six checkboxes remembered per character; booleans removed; ui-smoke rows | opus | waiting | E4.1, E0.2 | rewritten; serial edge E0.2 → E4.2 (`spec.json`) |
+| E3.5 | Show-the-math pages: every page-1 breakdown + derivations (section 7, Math) | opus | waiting | E3.4 | section renumbered by `decisions.md §24.3.7` |
+| E3.7 | Progression pages: the Show Progression drawer level by level (section 6) | opus | waiting | E3.5 | new, `decisions.md §24.3.7`; main lane |
+| E3.MC | E3 merge check + Epic report | opus | waiting | E3.7 | |
+| E4.1 | Sections as lists; `PrintSections`; golden 24 + 6 | opus | waiting | E3.MC | rewritten (was presets; `decisions.md §9` superseded by §23.4); seven sections, `decisions.md §24.3.7` |
+| E4.2 | Print dialog: seven checkboxes (`decisions.md §24.3.7`) remembered per character; booleans removed; ui-smoke rows | opus | waiting | E4.1, E0.2 | rewritten; serial edge E0.2 → E4.2 (`spec.json`) |
 | E4.MC | E4 merge check + Epic report | opus | waiting | E4.2 | |
 | E5.1 | Widest verify + clean build + packaged resources | sonnet | waiting | E4.MC | |
 | E5.2 | OPERATOR GATE: the full set printed, `usable: yes` ×5 | sonnet | waiting | E5.1 | the run ends here until the operator signs |

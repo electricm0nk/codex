@@ -342,7 +342,7 @@ card binds (`<sha>`, `<base>`, `<head>`, `<dir>`, `<lane>`, `<card>`, `<card-id>
 `<list>`, `<text>`, `<output>`, `<violations>`, `<result>`, `<value>`, `<cmd>`, `<log>`, `<pidfile>`,
 `<script>`, `<type>`, `<look>`, `<preset>`, `<sections>`, `<heading>`, `<the four new ids>`, `<save>`, `<part>`, `<weapon>`, `<key>`, `<attack>`, `<critical>`, `<name>`, `<pdf>`, `<pdf-dir>`, `<png-dir>`, `<pcg>`, `<sheet>`,
 `<out>`, `<settings>`, `<binary>`, `<clean-worktree>`, `<system>`, `<paper>`, `<seed>`, `<the two new ids>`,
-`<epic-start>`, `<date>`, `<filter>`, `<description>`, `<run>`), (b) a deferred value with a named resolution point (`0.20.<run>` → first tester
+`<epic-start>`, `<date>`, `<filter>`, `<description>`, `<run>`, and the printed-line schema words of `decisions.md §24` `<what>`, `<label>`, `<condition>`, `<mode>`, `<maneuverability>`), (b) a deferred value with a named resolution point (`0.20.<run>` → first tester
 publish after the operator merges; `(E0.1)` figures → that card; the run id → launch), or (c) a bug to fix
 before launch. The author's run is recorded in `progress.md`.
 

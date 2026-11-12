@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 24 of 40 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 40, E2.15 discovered by E2.7) |
+| Cards complete | 24 of 50 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 50: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan, `decisions.md §24`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -159,6 +159,26 @@ deltas, what was looked at, retro summary, worktrees swept)
 - **Retro summary:** `python3 scripts/retro.py summary --since 2026-11-11 --actor sd40-e2.4 … --actor sd40-e2.15 --actor sd40-e2.mc2 --json` (13 actors) → 21 events: correction 11, rework 3, verification 7; 0 incidents, 0 deferrals, 0 recurrence keys. Category: 10 of 11 corrections are this package's own criterion/acceptance/FILES-YOU-OWN wording (the 11th, `pf1_adapter.rs`'s AC row, was fixed in code by E2.7); "the PF seed check is desktop-side, not root `--lib`" fired twice (E2.8, E2.14), under R-W's > 2 threshold. The control that caught them is R21 (the lead runs each acceptance command before dispatch); no new control.
 - **Open blockers:** none. Open card: E2.G round 2 (operator gate, `partial`).
 - **Worktrees swept:** `.worktrees/sd40-e2mc2-base` (C1 base) and `.worktrees/sd40-e2mc2-probe` (scratch probe tree) with `/home/ubuntu/cargo-target/sd40-e2mc2-base` and `/home/ubuntu/cargo-target/sd40-e2mc2-probe`; no other `sd40-*` side worktree existed (`git worktree list`: main checkout, `appimage-self-install`, `readme`, `sd40-main`). `sd40-main` kept. Branch `sd40/e2.4-parked` (local and origin) still exists: the lead's to delete (`decisions.md §23.5`; E2.4 is complete).
+
+## 2026-11-12 E2.G round 2 verdict and replan (planning lane, Opus 5.5; docs only, no code)
+
+- **Input:** the operator's round-2 words and same-day answers, verbatim in `decisions.md §24.1`; both round-2
+  sheets `usable: no` (`artifacts/epic_2/E2.G_cycle_receipt.md`), blank round-3 lines for the seven-language
+  Aldric.
+- **Rulings recorded (`decisions.md §24.3`):** the two-column grid (Name/Campaign one row; AC row without its
+  heading + Speed Land/Swim/Fly beside the portrait; Abilities then Skills on the right); languages without a
+  write-in line, seven names fit; every conditional in one fixed-size Conditional Bonuses box; a Resistances
+  block; seven sections in the operator's order, each on its own pages under a prominent title.
+- **Repo facts (census, `python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r2/census.py`,
+  output `census.txt`):** `speed.swim`/`speed.fly` rows 0; no resistances field on the load response (Ifrit/Undine
+  numbers survive only in the corpus's `raw_bonus_chains`; race_trait energy chains 15); no CMB/CMD conditional
+  list (CombatBonus aspects naming CMB/CMD/combat maneuver 22); AC notes printed nowhere; no section titles and
+  no progression block; every PF character's languages are the constant `["Common"]`.
+- **Correction:** G-4's `grep -c 'usable: yes'` counted the receipt's own instructions (3 with no sign-off on
+  `d5cd0a3ea6`); anchored to `^- Aldric .* — usable: yes` (`decisions.md §24.5`).
+- **Cards:** 40 → 50. New: E2.16, E2.18, E2.20, E2.22, E2.23 (main), E2.17, E2.19, E2.21 (side lane `engine`,
+  reopened), E2.MC3, E3.7. Rewritten: E2.G (round 3), E3.5 (section 7), E3.MC, E4.1, E4.2, E4.MC, E5.2, E5.4
+  (seven sections). `SAME_IDS` check passes. Three operator questions open with DEFAULTs (`decisions.md §24.6`).
 
 ## Lead's dispatch log
 

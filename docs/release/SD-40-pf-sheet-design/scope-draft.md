@@ -55,10 +55,10 @@ SD-40 is done when every row below holds on `tranche-20` and the operator has si
 4. **The rest of the PF blocks have looks, on their own pages:** feats, class features and special
    abilities (actions), daily spells, custom records, pets (section 2); armor, gear (worn | carried | left
    behind), money (section 3, Inventory); the spellbook (section 4); bio details, the Backstory (a new
-   app field, E3.6), campaign notes and ruled lines (section 5); show-the-math with every page-1 breakdown (section 6).
+   app field, E3.6), campaign notes and ruled lines (section 5); progression level by level (section 6, `decisions.md §24.3.7`); Math with every page-1 breakdown (section 7). Each section after page 1 starts a page under a prominent title.
 5. **Section checkboxes** (replace the presets, operator at E2.G round 1, `decisions.md §23.4`). The print
-   dialog offers six boxes: Main sheet, Feats / class features / actions, Inventory, Spellbook, Bio, Show the
-   math; paper stays separate; the ticks are remembered per character, first time 1 + 2 + 3; each section is a
+   dialog offers seven boxes (`decisions.md §24.3.7`): Primary (page 1), Abilities and Feats, Inventory, Spellbook, Bio,
+   Progression, Math; paper stays separate; the ticks are remembered per character, first time 1 + 2 + 3; each section is a
    layout list in `layout/pf1e.rs`; SF1e and CPR show boxes 1, 4, 5, 6 and print through their flow layouts.
 6. **Density.** On A4 **and** US Letter, designed Letter-first, with **no page-count ceiling** (operator
    answer "3: No hard limits", `decisions.md §22`): every look card's receipt records each PF case's page

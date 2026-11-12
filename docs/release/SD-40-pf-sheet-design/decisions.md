@@ -479,3 +479,147 @@ checks it is gone.
 | smaller defaults | **accepted** | localStorage per machine; SF1e/CPR show 4 boxes; "Not added to a total" under the skills column |
 
 **Enforced by:** E2.8, E2.13, E2.14, E3.6, E3.4 (`epic-breakdown.md`). Cards 38 → 39.
+
+## §24 — Operator at E2.G, round 2 (2026-11-12): page-1 grid, conditional-bonuses box, resistances, section pages
+
+**OPERATOR.** The operator looked at round 2's page 1 (`artifacts/epic_2/E2.G/aldric-{a4,letter}-none.pdf`,
+rendered on `7bb1b2c874` after E2.MC2) and wrote `usable: no` for both sheets
+(`artifacts/epic_2/E2.G_cycle_receipt.md`, "Round 2 verdict"). Census of what the repo holds:
+`artifacts/epic_2/replan-r2/census.py`, output `census.txt`
+(`python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r2/census.py`, from the repo root).
+
+### §24.1 The operator's words (verbatim) and answers
+
+> "a few things:  Skills should be on the right underneight Abilities.  Let's keep those two in a column of a uniform width.  Languages - remove the blank line.  For our test character, give him 7 languages to make sure we have given enough space for them all to show.  Campaign should be where Armor Class is - Character Name and Campaign are a row with a consistent height.  The armor class block title is not necessary, remove it.  For speed you have land, but not swim, nor fly - add a blocks for those two.  Remove hitpoint notes and initiative notes and encumberance notes (and the blank lines that accompany them).  We need a block that lists all the conditional bonuses - put that block in an outline with a fixed size that has a health blank space for people to add things in that we haven't worked out how to print yet.  This would be things like elves haveing a bonus to will save against enchantments.  Another example would be conditional bonsues to combat maneuvers or to initiatives - kind of a catch all for that type of thing.   A player also asked if we could add in energy resistances - some races have those automatically like ifrit and undine.  Let's also make seperate pages for the big sections - i mean they should have a page break when they are done so that they can be printed individually if desired.  Primary (page 1), Abilities and Feats, Inventory, Spellbook, Bio, Progression, Math.  Give each of those sections (except Primary) a prominant title."
+
+Answers the same day (relayed by the lead):
+
+- **Columns:** left column, top to bottom = HP / Initiative / Encumbrance / Conditions, then Weapons, Attack,
+  Saving Throws, Conditional bonuses box, Resistances. Right column (even width) = Abilities, then Skills (one column).
+- **Grid:**
+
+  ```text
+  +---------+------------+-----------+
+  |Portrait | Name       | Campaign  |
+  +---------+------------+-----------+
+  | AC  Touch  FF | parts   | Speed L/S/F
+  +---------------------+-------------+
+  | HP Init Enc Cond    | Abilities   |
+  | Weapons             |             |
+  | Attack              | Skills      |
+  | Saving Throws       |  (one col)  |
+  | Conditional bonuses |             |
+  | Resistances         |             |
+  +---------------------+-------------+
+  ```
+
+- **AC + Speed:** a second row beside the portrait: AC / Touch / Flat-Footed boxes plus the filled parts row
+  (no "Armor Class" block title), then Speed with Land, Swim, Fly boxes. Languages stays under the portrait. A
+  speed the character lacks prints an empty box to write in.
+- **Conditional box:** move ALL conditional notes into it (saves, CMB/CMD, initiative, AC, skills); nothing
+  conditional prints anywhere else on page 1.
+- **Resistances:** one block with energy resistances, damage reduction, spell resistance and immunities; blank
+  boxes when the character has none.
+
+### §24.2 What the repo holds (census, 2026-11-12, base `d5cd0a3ea6`)
+
+Every figure: `python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r2/census.py` (section
+letter given), output committed as `census.txt`.
+
+| # | Question | Finding |
+|---|---|---|
+| a | Swim / fly speed | The engine states **land speed only**: one `speed.<mode>` row, `speed.land` (`character_hub.rs:3132`), from the race's walk speed (`race_creation.rs:244`) plus worn items. `speed.swim` / `speed.fly` rows: **0**. Two feat rows carry a swim or fly increase (`feat.arg_standalone.aquatic_ancestry_swim_speed`, `…stretched_wings_fly_speed`, `feat_pillar_and_pool_aggregation.rs:2057`, `:2143`); maneuverability is words in comments only. Corpus `MOVE` tokens: race_trait Swim **5**, Fly **2**, Climb **4** records (e.g. `undine_speed` `MOVE:Walk,30,Swim,30`, `strix_flight` `MOVE:Fly,60`); race records Walk only (39). The print Speed block prints Land only (`print/blocks/core.rs:207-209`) |
+| b | Energy resistance, DR, SR, immunities | **No resistances or immunities field on the load response** (0 matches). Held today: `damage_reduction` on the snapshot (barbarian only, `pilot_view_model.rs:337`; printed under Hit Points, `core.rs:107`), `spell_resistance_total` from worn items (`character_hub.rs:287`), energy-resistance rows for ARG feats and two class features (`feat_pillar_and_pool_aggregation.rs:2004`, `class_inquisitor_warpriest.rs:411`, `class_sorcerer_wizard.rs:2802`). Ifrit and Undine: the converted rule keeps the words only (`bestiary_2:race_trait:ifrit_energy_resistance` target `None`, value `Text`, "Ifrits have fire resistance 5."); the number lives in the corpus record's `raw_bonus_chains` (`VAR FireResistanceBonus 5`). Corpus records granting each (predicate: an energy `BONUS:VAR <Energy>ResistanceBonus` chain; a `DR` token; an `SR` token; a record key naming `Immun`): race_trait energy **15** (awk cross-check: Fire alone 5 files), DR 1, SR 3, Immun 5; class_feature DR **54**, SR 8, Immun 16; ability DR 30, SR 6, Immun 13 |
+| c | Conditional bonuses | Round-1 figures re-derived unchanged: situational Hp 15, Initiative 10, Fort 52, Ref 58, Will 78, Ac 178, Cmb **0**, Cmd **0**; Aspect SaveBonus 407, CombatBonus 314. Also situational Skill 216, SkillGroup 41, SkillSituation 19; of the 314 CombatBonus aspects **22** name CMB, CMD or "combat maneuver". The engine's `ConditionalNotes` holds **six** lists (hp, initiative, fortitude, reflex, will, armor_class; `conditional_notes.rs:55-60`) and gathers no CombatBonus aspect (`:111-114`): **no CMB/CMD list**. Skills' conditionals are `feat_skill_bonuses.situational`, printed under the Skills column as "Not added to a total:" (`print/blocks/skills.rs:67`). Page 1 prints notes on Max HP and Initiative (`core.rs:103`, `:110`) and under each save (`core.rs:186`); the **AC notes print nowhere** (0 matches). Elf "+2 vs enchantment": present — `core_rulebook:race_trait:elf_elven_immunities` carries an Aspect SaveBonus, which feeds all three saves (`conditional_notes.rs:133`) |
+| d | Print sections | `layout/pf1e.rs`: page 1 = 11 `Placed::at/under` rows (`:20-34`); page 2 opens at `characterDetails` (`:50`); then `defense`, `gear`, `feats`, `classFeatures`, `spells`, `custom`, `pets`, `actions` flow on (`:36-44`); Spellbook, Show the Math, Bio and Campaign Notes are option blocks that each start a new page (`spells.rs:107`, `math.rs:27`, `bio_notes.rs:35`), in that order (`pf1e.rs:67-74`). **No section titles** (0). **No progression block** in `print/` (0); the Show Progression drawer reads `list_progression_ledger_at_root` (`character_ledger.rs:705`, `ProgressionLedgerDto` `:613`) |
+| e | Aldric's languages | Seed `character_hub.rs:2473` (Human Fighter 3, Int 14; ranks `ALDRIC_SEED_SKILL_RANKS` `:2372`, no Linguistics). **Every PF character knows exactly `Common`**: `known_languages()` is a constant (`character_hub.rs:743`); no save field holds languages. Pins: `character_hub.rs:20853` (`{"known": ["Common"]}` for the seeds), `print_pf_blocks.rs:1513` (contains Common; values `[known, ""]`), `print_golden.rs:229` (`languages` page-1 anchor); `print_golden.json` pins headings and pages only. Giving Aldric 7 real languages needs a language store the app does not have, or Linguistics ranks the seed does not have (moves skill totals: G-1 `VALUE_MOVED`). Cleanest: a **print-proof fixture** through a seam in `print/mod.rs` (`sheet_document_at_root` loads and lays out in one function, `:85-86`) |
+
+### §24.3 Rulings
+
+1. **Page-1 grid** (E2.18). Row 1: portrait (columns 0–2, spans rows 1–2) · Character Name (3–7) · Campaign
+   (8–11), the two fields one row of one height. Row 2 beside the portrait: AC / Touch / Flat-Footed boxes and the
+   seven-part row, **no "Armor Class" heading** (columns 3–8), then Speed with **Land, Swim, Fly** boxes (9–11).
+   Languages under the portrait. Body: left column (0–6) = square block (HP, Initiative, Encumbrance, Conditions),
+   Weapons, Attack, Saving Throws, Conditional Bonuses, Resistances; right column (7–11, one width for both) =
+   Abilities then Skills (one column, as E2.11). The column split 7 / 5 is the author's DEFAULT (E2.11 found one
+   skills column needs 5 of 12); the card may move it if a block clips, and names the move.
+2. **Speed** (E2.17, E2.18). The engine gains `speed.swim` and `speed.fly` explanations rows (feet), from the
+   race traits the character holds (their `MOVE` tokens, alternate-trait replacement honoured as the land speed's
+   is) plus the two feat increases; the fly row's detail names the maneuverability when the record states one
+   ("average", "poor"). No row when the character has none; the box then prints empty for the pencil (never a
+   dash, never 0). Climb and burrow: not asked; not printed (they stay in the rules text).
+3. **Languages** (E2.16). Comma list, **no write-in line**; the cell holds seven names on Letter and A4. The test
+   character's seven languages are a **print-proof fixture**, not seed data: `print/mod.rs` splits
+   `sheet_document_at_root` into load + `sheet_document_from_loaded(root, &loaded, request)`, and `print_proof`
+   renders Aldric a second time with `languages.known` = `Common, Dwarven, Elven, Giant, Gnome, Goblin, Orc`
+   (`aldric-languages7-{a4,letter}-none.pdf`; 16 → 18 PDFs). The seed, the engine and every value stay as they
+   are (G-1). E2.G round 3 judges the seven-language sheets.
+4. **Notes leave the blocks** (E2.20). The HP, Initiative and Encumbrance notes, their headings ("Hit point
+   notes", …) and their blank lines go; the save notes no longer print under Saving Throws; "Not added to a total:"
+   no longer prints under Skills (its lines move, "Ranks with no Skills panel total:" stays: it is not a
+   conditional bonus).
+5. **Conditional Bonuses box** (E2.19, E2.20). An outlined box of **fixed height**, heading "Conditional
+   Bonuses", listing every conditional the engine states for the character: HP, initiative, Fortitude, Reflex,
+   Will (a note given to several saves prints once, as today), AC, CMB, CMD (new engine lists, E2.19: the Aspect
+   CombatBonus entries whose words name CMB, CMD or combat maneuvers, and any Situational rule targeting `Cmb` /
+   `Cmd`), and skills (`feat_skill_bonuses.situational`); each line `<what>: <label>: <value> <condition>` in the
+   engine's words; then ruled blank write-in lines to the box's foot. DEFAULT size: 14 body lines on Letter and
+   A4, of which **at least 4 are always blank** (§24.6 Q1). A list too long for the box follows the SD-b rule
+   (§23.2): shrink to the 8 pt floor, then continue at the top of page 2 under "Conditional Bonuses (continued)";
+   the 4 blank lines stay on page 1.
+6. **Resistances block** (E2.21, E2.22). Heading "Resistances": five energy boxes (Acid, Cold, Electricity, Fire,
+   Sonic), Damage Reduction (each `amount/bypass`), Spell Resistance, Immunities (a line of names). Filled from a
+   new load-response field `resistances` (E2.21) built from the sources the character holds: race traits' energy
+   `BONUS:VAR` chains (Ifrit fire 5, Undine cold 5), `DR` and `SR` tokens of held race traits, class features and
+   abilities, the existing barbarian DR, worn-item SR and energy-resistance rows; immunities = held records whose
+   name says Immunity, by name (words, never a number). A DR or SR the engine cannot evaluate to a number prints
+   the record's words in that box (paper-sheet rule, §17: print the rule, do not simulate). Blank boxes when
+   none. The barbarian's "Damage Reduction" line leaves the Hit Points block for this block.
+7. **Sections** (E2.23, E3.7). Seven sections in this order: **Primary** (page 1, no title), **Abilities and
+   Feats** (`feats`, `classFeatures`, `actions`, `spells`, `custom`, `pets`), **Inventory** (`defense`, `gear`,
+   then `money` from E3.2), **Spellbook**, **Bio** (`characterDetails` + the bio/campaign notes; E3.4 reworks),
+   **Progression** (new, E3.7: the Show Progression drawer's content level by level), **Math**. Each section
+   after Primary starts on a new page under a **prominent title** (a section-title look, full width, larger and
+   bolder than any block heading) and ends with a page break, so it prints alone. The dialog's checkbox labels are
+   these seven names (E4.2); first-time ticks stay Primary + Abilities and Feats + Inventory; Progression is
+   Pathfinder only (SF1e/CPR show Primary, Spellbook, Bio, Math).
+
+### §24.4 What this supersedes
+
+| Superseded | By | Effect |
+|---|---|---|
+| §23.3 page-1 composition (Speed under the name, AC in the top band with its heading, square block beside Abilities, Skills left beside Weapons) | §24.3.1 | The grid above (E2.18) |
+| §23.1 item 3a "SPECIAL NOTES … then a few blank lines"; §23.3 "then the notes for HP, initiative and encumbrance and two blank lines"; §23.2's "two blank ruled lines after each notes list" | §24.3.4–5 | Notes print only in the Conditional Bonuses box; its write-in space replaces the per-list blank lines |
+| §23.1 item 4 "Saves … PLUS conditional save bonuses printed as notes … then a blank line or two" | §24.3.5 | Saving Throws print the three totals only |
+| §23.7 Q1 "exactly one blank line" (E2.13's write-in line) | §24.3.3 | No write-in line under Languages |
+| §23.7 smaller default "'Not added to a total' under the skills column" | §24.3.5 | Those lines print in the box |
+| §23.3 "Damage Reduction when the screen shows one" in the Hit Points block | §24.3.6 | Damage Reduction prints in Resistances |
+| §23.1 item 4 AC exception: heading "Armor Class" | §24.3.1 | The parts stay; the heading goes |
+| §23.1 item 5 / §23.4: six sections, labels "Main sheet … Show the math", order 5 Bio → 6 Show the math | §24.3.7 | Seven sections, operator's names and order (Progression new, Math last), section titles; `PrintSections` gains `progression`; golden mapping all = 1–7, math = 1+2+3+7; dialog boxes 7 (4 on SF1e/CPR) |
+| §23.6 Q1 / E2.8 "every character knows Common" as the printed list | — | **Stands** for real characters (§24.6 Q2); the seven languages are a print-proof fixture |
+
+SD-b (§23.2, the overflow rule E2.4 built) **stands**; its "a notes list" case is now the Conditional Bonuses box.
+§23.1 items 1, 2, 3a (one square block), 3b, 3c, the AC parts, §23.4's per-character memory, §23.5, §23.7 Q2–Q5
+stand.
+
+### §24.5 Correction found while recording the verdict
+
+The G-4 check `grep -c 'usable: yes' …/E2.G_cycle_receipt.md` → 2 counted the receipt's own instructions: on
+`d5cd0a3ea6`, with no sign-off written, it printed **3**
+(`git show d5cd0a3ea6:docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G_cycle_receipt.md | grep -c 'usable: yes'`
+→ 3). A presence gate that can pass, or miscount, without the operator. Replaced by the anchored
+`grep -c '^- Aldric .* — usable: yes'` (→ 0 now, 2 when round 3 is signed) in the receipt, G-4, G-8 and the E2.G
+card. E5.2's `grep -c 'usable: yes'` has the same shape; E5.2's card must write its sign-off lines so an anchored
+count works (G-8 note).
+
+### §24.6 Questions only the operator can settle (DEFAULT taken; work proceeds on it)
+
+| # | Question | Facts | DEFAULT |
+|---|---|---|---|
+| Q1 | How big is the Conditional Bonuses box? | Aldric holds one conditional (Bravery, +1 Will vs. fear); the left column also carries 6 other blocks on Letter | 14 body lines, at least 4 always blank; overflow per SD-b |
+| Q2 | Should real characters record their languages? | `known_languages()` is the constant `["Common"]` (`character_hub.rs:743`); the app has no language store or picker; 7 languages exist only in the print proof | No store in SD-40; the seven-language Aldric is a print-proof fixture. A languages field (free text, saved with the bio, printed on page 1) would be one new main-lane card before E2.MC3 if the operator wants it |
+| Q3 | Fly maneuverability on paper | The fly record states it in words ("average") | Printed beside the Fly box value: `60 ft. (average)` |
+
+**Enforced by:** E2.16–E2.23, E2.MC3, E2.G round 3, E3.7, E3.MC, E4.1, E4.2, E4.MC (`kanban.md`,
+`epic-breakdown.md`). Cards 40 → 50 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`).
+**Revisit:** the operator, at E2.G round 3 (page 1) and E5.2 (the sections).
