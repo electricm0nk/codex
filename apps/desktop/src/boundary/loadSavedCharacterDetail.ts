@@ -315,6 +315,8 @@ export interface WeaponDamageDto {
   /** Inclusive `[low, high]` threat bounds, e.g. `[19, 20]`. */
   criticalThreatRange: [number, number] | null;
   criticalMultiplier: number | null;
+  /** Range increment in feet the weapon's record states (a Dagger's 10); null for a melee weapon (SD-40 E2.14). */
+  rangeIncrement?: number | null;
   /** Constant feat damage bonuses; gathered per character, not per weapon. */
   featEffects: WeaponFeatEffectDto[];
 }

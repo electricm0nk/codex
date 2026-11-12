@@ -638,12 +638,12 @@ pub struct LoadSavedCharacterResponse {
     /// weapon (`damage_total::resolve_weapon_damage_breakdown`), carrying
     /// that weapon's corpus-cited damage facets.
     ///
-    /// **No summed damage total, deliberately.** Each facet stays its own
-    /// field, exactly as `contract.rs`'s `PilotReceipt::weapon_damage`
-    /// boundary note requires: no summed "damage roll total" formula
-    /// exists anywhere in this codebase, and the wield multiplier that
-    /// would be needed to build one honestly is unknown. The sheet
-    /// renders the breakdown as separate columns; it does not add them up.
+    /// Each facet stays its own field. The one summed figure, the damage
+    /// the sheet prints (`1d8+4`), is the engine's
+    /// `combat.weapon_damage_total.<weapon>` row in `explanations` (SD-40
+    /// E2.14, `damage_total::weapon_damage_total_row`), summed from these
+    /// facets with the primary-hand Strength part named in its detail;
+    /// neither the screen nor the print adds the facets up.
     pub weapon_damage: Vec<WeaponDamageDto>,
     /// The ARG alternate racial traits this character actually holds, read back
     /// out of its persisted `chosen.selected_choices` (SD-27).
@@ -1056,6 +1056,10 @@ pub struct WeaponDamageDto {
     /// for a longsword.
     pub critical_threat_range: Option<[u8; 2]>,
     pub critical_multiplier: Option<u8>,
+    /// The range increment in feet the weapon's record states (`RANGE:10` on `Dagger (Base)`; a
+    /// variant reads its base item's), from `damage_total::weapon_range_increment`. `None` for a
+    /// weapon with no range: a melee weapon prints no range, not `0`.
+    pub range_increment: Option<u16>,
     /// Constant damage bonuses from the character's feats. Gathered once
     /// per character, not per weapon — this bounded slice does not model
     /// per-weapon feat targeting.
@@ -1111,6 +1115,10 @@ pub(crate) fn map_weapon_damage_dto(
                 .critical_multiplier
                 .as_ref()
                 .map(|multiplier| multiplier.critical_multiplier),
+            range_increment: sheet_rule_package().as_ref().ok().and_then(|package| {
+                let key = breakdown.base_dice.as_ref()?.weapon_record_key.as_str();
+                codex::rules_core::damage_total::weapon_range_increment(package, corpus_fixture_bundle(), key)
+            }),
             feat_effects: breakdown
                 .feat_effects
                 .iter()
@@ -2888,11 +2896,34 @@ pub(crate) fn load_saved_character_at_root(
         languages: known_languages(),
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
+    push_weapon_damage_total_rows(&mut sheet);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
     let ability_modifiers = snapshot.as_ref().map_or(corpus_receipt.base.ability_modifiers, |snapshot| snapshot.ability_modifiers);
     let selected_skill_modifiers = snapshot.as_ref().map(|snapshot| snapshot.skill.selected_modifier);
     push_skill_total_rows(&envelope.character_input, ability_modifiers, selected_skill_modifiers, &mut sheet);
     Ok(sheet)
+}
+
+/// SD-40 E2.14: one `combat.weapon_damage_total.<weapon>` row per weapon in hand with dice, summed
+/// in `damage_total::weapon_damage_total_row` from the facets `weapon_damage` holds once the worn
+/// custom items' damage bonuses are in it, so the row and the facets beside it agree. A second
+/// weapon of the same kind shares the first's row id and adds none.
+fn push_weapon_damage_total_rows(sheet: &mut LoadSavedCharacterResponse) {
+    for weapon in &sheet.weapon_damage {
+        let feats: Vec<(String, i16)> = weapon.feat_effects.iter().map(|feat| (feat.feat_key.clone(), feat.damage_bonus)).collect();
+        let row = codex::rules_core::damage_total::weapon_damage_total_row(
+            weapon.weapon_record_key.as_deref().unwrap_or(&weapon.weapon_item_id),
+            weapon.base_dice.map(|dice| codex::rules_core::damage_total::DiceExpression { count: dice.count, die_size: dice.die_size }),
+            weapon.str_damage_modifier.map(|value| (value, weapon.wield_category.clone().unwrap_or_default())),
+            weapon.enhancement_damage_bonus,
+            &feats,
+        );
+        if let Some(row) = row {
+            if !sheet.explanations.iter().any(|existing| existing.id == row.id) {
+                sheet.explanations.push(ExplanationDto { id: row.id, value: row.value, detail: row.detail });
+            }
+        }
+    }
 }
 
 /// The Skills panel's rows, as `skill:<name>` (`skillsModel.ts`'s `SKILLS`): the book's skills, each
@@ -12778,6 +12809,22 @@ mod tests {
         assert_eq!((dagger.enhancement_attack_bonus, dagger.enhancement_damage_bonus), (Some(2), Some(2)));
     }
 
+    /// SD-40 E2.14: a thrown weapon carries its record's range increment (the Dagger's 10 ft.)
+    /// and its own total row beside the Longsword's.
+    #[test]
+    fn weapon_damage_total_and_range_of_a_second_weapon() {
+        let (dir, root) = enhancement_rows_aldric("weapon-damage-total-dagger");
+        enhancement_buy(&root, "Dagger (Base)", ActiveState::EquippedActive, 2);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        let dagger = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Dagger (Base)")).unwrap();
+        assert_eq!(dagger.range_increment, Some(10));
+        let row = loaded.explanations.iter().find(|row| row.id == "combat.weapon_damage_total.dagger").expect("the dagger's total");
+        // Strength +4 (light, primary hand) and the dagger's own +2.
+        assert_eq!(row.value, 6, "{}", row.detail);
+        assert!(row.detail.starts_with("1d4+6:"), "{}", row.detail);
+    }
+
     /// Every weapon the Market sells a `+N` of, in hand at its highest offer, has a row holding that
     /// bonus. The Market offers none on what has no row to hold it: no damage die to add to.
     #[test]
@@ -20772,6 +20819,46 @@ mod starter_seed_tests {
         // Aldric (Strength 19: heavy 350 lb; his kit weighs 29 lb): 350 - 29 = 321.
         let numbers = ["heavyMaxLbs", "totalCarriedWeightLbs", "remainingLbs"].map(|key| aldric[key].as_f64());
         assert_eq!(numbers, [Some(350.0), Some(29.0), Some(321.0)], "{aldric}");
+    }
+
+    /// SD-40 E2.14: every weapon in hand with dice has one `combat.weapon_damage_total.<weapon>`
+    /// row whose value is the signed sum of the facets the same response holds for it (Strength,
+    /// enhancement, each damage bonus) and whose detail opens with the printed `1d8+4`; the
+    /// Longsword states no range. Aldric (Strength 19): `1d8+4`.
+    #[test]
+    fn weapon_damage_total_reaches_the_load_response_of_the_seeds() {
+        let app_data_dir = temp_app_data_dir("weapon-damage-total-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded: Vec<serde_json::Value> = [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID]
+            .iter()
+            .map(|id| serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json"))
+            .collect();
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        let mut printed = Vec::new();
+        for wire in &loaded {
+            let weapons = wire["weaponDamage"].as_array().expect("weaponDamage");
+            assert!(!weapons.is_empty(), "every seed holds a weapon");
+            for weapon in weapons {
+                let key = weapon["weaponRecordKey"].as_str().expect("record key");
+                assert_eq!(key, "Longsword (Base)", "the seeds hold a Longsword");
+                let id = "combat.weapon_damage_total.longsword";
+                let rows: Vec<&serde_json::Value> =
+                    wire["explanations"].as_array().unwrap().iter().filter(|row| row["id"] == id).collect();
+                assert_eq!(rows.len(), 1, "{id}");
+                let facets = weapon["strDamageModifier"].as_i64().unwrap_or(0)
+                    + weapon["enhancementDamageBonus"].as_i64().unwrap_or(0)
+                    + weapon["featEffects"].as_array().unwrap().iter().map(|feat| feat["damageBonus"].as_i64().unwrap()).sum::<i64>();
+                assert_eq!(rows[0]["value"].as_i64(), Some(facets), "{}", rows[0]);
+                let dice = format!("{}d{}", weapon["baseDice"]["count"], weapon["baseDice"]["dieSize"]);
+                let literal = if facets == 0 { dice } else { format!("{dice}{facets:+}") };
+                let detail = rows[0]["detail"].as_str().unwrap();
+                assert!(detail.starts_with(&format!("{literal}:")), "{detail}");
+                assert_eq!(weapon["rangeIncrement"], serde_json::Value::Null, "{key} states no range");
+                eprintln!("{}: {id} {literal}", wire["summary"]["displayLabel"]);
+                printed.push(literal);
+            }
+        }
+        assert_eq!(printed[0], "1d8+4", "Aldric's longsword");
     }
 
     /// SD-40 E2.6: a Dwarf's racial traits come from the race resolver (no trait passed by

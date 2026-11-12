@@ -125,9 +125,11 @@ use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::equipment_resolver::{
     equipment_converted_resolve, equipment_id_resolve,
 };
+use crate::rules_core::pilot_compute::{normalize_weapon_identity, ComputationExplanation};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_catalog::crb::feats::{feat_tables, EffectSelection, FeatEffectBonus};
 use crate::rules_core::rules_catalog::RuleSetId;
+use crate::rules_core::sheet_rule::{slug, ProseFamily, ProsePiece, SheetRulePackage};
 use crate::rules_core::source_content::SourcePackageContent;
 
 /// A PF1 dice expression, e.g. `"1d8"` -> `{ count: 1, die_size: 8 }`,
@@ -854,6 +856,81 @@ pub fn resolve_weapon_damage_breakdown(
         .collect()
 }
 
+/// SD-40 E2.14: one weapon's damage as the sheet prints it, the die and one signed sum (`1d8+4`),
+/// as the `combat.weapon_damage_total.<weapon>` row. The sum is the facets
+/// [`resolve_weapon_damage_breakdown`] already holds, added and nothing else: the Strength part
+/// (`strength`: its value and the corpus `WIELD:` word it was read under), the weapon's
+/// enhancement to damage, and each constant feat (or item) damage bonus. Its value is the sum;
+/// its detail opens with the printed `1d8+4` and names every part. `None` when the weapon has no
+/// dice: absence, never a `0`.
+///
+/// The Strength part is the primary hand's (`WeaponHandSlot::Primary`): no input records a hand,
+/// so an off-hand weapon's half Strength is not applied, and the detail says so.
+pub fn weapon_damage_total_row(
+    weapon_record_key: &str,
+    dice: Option<DiceExpression>,
+    strength: Option<(i16, String)>,
+    enhancement: Option<i16>,
+    feats: &[(String, i16)],
+) -> Option<ComputationExplanation> {
+    let dice = dice?;
+    let mut parts: Vec<String> = Vec::new();
+    let mut sum = 0_i16;
+    if let Some((value, wield)) = &strength {
+        sum += value;
+        parts.push(format!("Strength {value:+} (primary hand, {wield} WIELD)"));
+    }
+    if let Some(value) = enhancement {
+        sum += value;
+        parts.push(format!("enhancement {value:+}"));
+    }
+    for (feat, value) in feats {
+        sum += value;
+        parts.push(format!("{feat} {value:+}"));
+    }
+    let die = format!("{}d{}", dice.count, dice.die_size);
+    let printed = if sum == 0 { die.clone() } else { format!("{die}{sum:+}") };
+    let parts = if parts.is_empty() { "no bonus".to_owned() } else { parts.join(" + ") };
+    Some(ComputationExplanation {
+        id: format!("combat.weapon_damage_total.{}", normalize_weapon_identity(weapon_record_key)),
+        value: sum,
+        detail: format!(
+            "{printed}: damage with the equipped {weapon_record_key}: the {die} die + {parts} = {printed}. \
+             The Strength part is the primary hand's: no input records which hand holds a weapon, so \
+             an off-hand weapon's half Strength is not applied."
+        ),
+    })
+}
+
+/// SD-40 E2.14: the range increment, in feet, the weapon's record states (`RANGE:10` on
+/// `Dagger (Base)`), read from its sheet-rule record's Range line; a variant that states none
+/// (`Dagger (Adamantine)`) reads its base item's. `None` for a weapon with no range (a melee
+/// weapon) or one whose range is not a whole number of feet.
+pub fn weapon_range_increment(
+    package: &SheetRulePackage,
+    corpus: &SourcePackageContent,
+    weapon_record_key: &str,
+) -> Option<u16> {
+    let stated = |key: &str| {
+        let rule = package.rule(package.find("equipment", &slug(key))?)?;
+        let words: String = rule
+            .prose
+            .iter()
+            .filter(|segment| matches!(&segment.family, ProseFamily::StatBlock(name) if name == "Range"))
+            .flat_map(|segment| &segment.pieces)
+            .filter_map(|piece| match piece {
+                ProsePiece::Text(text) => Some(text.as_str()),
+                _ => None,
+            })
+            .collect();
+        words.trim().trim_end_matches("ft.").trim().parse::<u16>().ok()
+    };
+    stated(weapon_record_key).or_else(|| {
+        let base = equipment_converted_resolve(weapon_record_key, corpus)?.base_item.as_deref()?;
+        stated(base)
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1035,4 +1112,96 @@ mod eqmweapon_damagesize_tests {
     }
 
 
+}
+
+/// SD-40 E2.14: one damage total per weapon in hand, and the range increment its record states.
+#[cfg(test)]
+mod weapon_damage_total_tests {
+    use super::*;
+    use crate::rules_core::character_input::{load_character_input_fixture, EquipmentSelection};
+    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+    use crate::rules_core::equipment_effects::compute_equipment_effects;
+    use std::path::Path;
+
+    fn core_rulebook() -> SourcePackageContent<'static> {
+        load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }])
+    }
+
+    fn breakdown(item: &str, modifiers: &[&str], feats: &[&str], str_modifier: i16) -> WeaponDamageBreakdown {
+        let corpus = core_rulebook();
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:3\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.selected_feats = feats.iter().map(|feat| (*feat).to_owned()).collect();
+        input.chosen.equipment_selections = vec![EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: modifiers.iter().map(|m| (*m).to_owned()).collect(),
+        }];
+        let effects = compute_equipment_effects(&input.chosen.equipment_selections, &corpus);
+        resolve_weapon_damage_breakdown(&input, &corpus, &effects, str_modifier).remove(0)
+    }
+
+    fn row_of(weapon: &WeaponDamageBreakdown) -> Option<ComputationExplanation> {
+        let feats: Vec<(String, i16)> =
+            weapon.feat_effects.iter().map(|feat| (feat.feat_key.clone(), feat.damage_bonus)).collect();
+        weapon_damage_total_row(
+            weapon.base_dice.as_ref().map(|dice| dice.weapon_record_key.as_str()).unwrap_or(&weapon.weapon_item_id),
+            weapon.base_dice.as_ref().map(|dice| dice.base_dice),
+            weapon.str_modifier.as_ref().map(|part| (part.str_damage_modifier, format!("{:?}", part.wield_category))),
+            weapon.weapon_enhancement.as_ref().map(|part| part.damage_bonus),
+            &feats,
+        )
+    }
+
+    /// Aldric's longsword (Strength 19, +4; one-handed in the primary hand; no `+N`, no damage
+    /// feat): the printed value is the die and the one signed sum, `1d8+4`.
+    #[test]
+    fn weapon_damage_total_of_aldrics_longsword_is_the_die_and_one_sum() {
+        let sword = breakdown("Longsword (Base)", &[], &[], 4);
+        let row = row_of(&sword).expect("a weapon with dice has a total");
+        let facets = sword.str_modifier.as_ref().unwrap().str_damage_modifier
+            + sword.weapon_enhancement.as_ref().map_or(0, |part| part.damage_bonus)
+            + sword.feat_effects.iter().map(|feat| feat.damage_bonus).sum::<i16>();
+        assert_eq!(row.id, "combat.weapon_damage_total.longsword");
+        assert_eq!(row.value, facets);
+        assert_eq!(row.value, 4);
+        assert!(row.detail.starts_with("1d8+4:"), "{}", row.detail);
+        assert!(row.detail.contains("primary hand") && row.detail.contains("OneHanded"), "{}", row.detail);
+    }
+
+    /// Every part sums: Strength +4, the sword's own `+1`, Weapon Specialization's `+2` -> `1d8+7`;
+    /// a negative sum keeps its sign (`1d8-1`); a zero sum prints the die alone.
+    #[test]
+    fn weapon_damage_total_sums_strength_enhancement_and_feats() {
+        let sword = breakdown("Longsword (Base)", &["Special Ability ~ +1 ~ Weapon"], &["Weapon Specialization"], 4);
+        let row = row_of(&sword).unwrap();
+        assert_eq!(row.value, 7, "{}", row.detail);
+        assert!(row.detail.starts_with("1d8+7:"), "{}", row.detail);
+        assert!(row.detail.contains("Weapon Specialization +2"), "{}", row.detail);
+        assert!(row_of(&breakdown("Longsword (Base)", &[], &[], -1)).unwrap().detail.starts_with("1d8-1:"));
+        assert!(row_of(&breakdown("Longsword (Base)", &[], &[], 0)).unwrap().detail.starts_with("1d8:"));
+    }
+
+    /// A weapon with no dice has no total row: absence, never `0`.
+    #[test]
+    fn weapon_damage_total_needs_dice() {
+        assert_eq!(weapon_damage_total_row("Net (Base)", None, None, None, &[]), None);
+    }
+
+    /// The range increment is the record's own `RANGE:` (the dagger's 10 ft.), or its base item's
+    /// for a variant that states none; a melee weapon has none.
+    #[test]
+    fn weapon_damage_total_range_increment_is_the_records() {
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("the converted package loads");
+        let corpus = core_rulebook();
+        assert_eq!(weapon_range_increment(package, &corpus, "Dagger (Base)"), Some(10));
+        assert_eq!(weapon_range_increment(package, &corpus, "Dagger (Adamantine)"), Some(10));
+        assert_eq!(weapon_range_increment(package, &corpus, "Longsword (Base)"), None);
+    }
 }

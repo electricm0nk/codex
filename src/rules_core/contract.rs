@@ -222,8 +222,12 @@ pub struct PilotReceipt {
     /// stays the structured per-weapon breakdown, reachable directly by
     /// callers, matching the same "not every epic output becomes a sheet
     /// cell" precedent `spellbook`/`feats`/`equipment_effects` above
-    /// already set. A future, separate cycle owns turning this structured
-    /// data into a summed display number, if that is ever wanted.
+    /// already set. The summed display number is its own, later cycle's
+    /// (SD-40 E2.14, operator "One total"): `damage_total::weapon_damage_total_row`
+    /// adds these facets (Strength at the primary hand, enhancement, each
+    /// constant damage bonus) into the `combat.weapon_damage_total.<weapon>`
+    /// row the load response carries (`1d8+4`); this field stays the
+    /// unsummed breakdown.
     pub weapon_damage: Vec<WeaponDamageBreakdown>,
     /// v0.6 alpha swarm task 5's real carrying-capacity/encumbrance
     /// computation (`encumbrance::compute_encumbrance`). Computed over
