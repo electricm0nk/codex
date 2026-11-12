@@ -1209,6 +1209,37 @@ mod weapon_damage_total_tests {
         assert!(row_of(&breakdown("Longsword (Base)", &[], &[], 0), 0, &[]).unwrap().detail.starts_with("1d8:"));
     }
 
+    /// A weapon the Core Rulebook table does not hold by its own name (`Dagger (Adamantine)`) has
+    /// its feat damage row on the corpus path too, so its total holds Weapon Specialization
+    /// (Dagger): `+2`, read from the base weapon the feat chose.
+    #[test]
+    fn weapon_damage_total_feat_row_of_a_variant_weapon() {
+        let corpus = core_rulebook();
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:4\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.selected_feats = vec!["feat:weapon_specialization".to_owned()];
+        input.chosen.selected_choices.push(crate::rules_core::character_input::SelectedChoice {
+            choice_set_id: "choice:weapon_specialization_target".to_owned(),
+            selection_id: "weapon:Dagger".to_owned(),
+        });
+        input.chosen.equipment_selections = vec![EquipmentSelection {
+            item_id: "Dagger (Adamantine)".to_owned(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }];
+        let base = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let rows = crate::rules_core::pilot_compute_corpus::corpus_weapon_attack_rows(&base, &input, &corpus);
+        let id = weapon_feat_damage_row_id("Dagger (Adamantine)");
+        let row = rows.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("no {id} in {rows:#?}"));
+        assert_eq!(row.value, 2, "{}", row.detail);
+    }
+
     /// A weapon with no dice has no total row: absence, never `0`.
     #[test]
     fn weapon_damage_total_needs_dice() {

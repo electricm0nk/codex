@@ -3234,6 +3234,19 @@ pub(crate) fn melee_weapon_in_hand(
     })
 }
 
+/// SD-40 E2.14: the Weapon Specialization / Greater Weapon Specialization damage bonus for the
+/// weapon the feats chose, the damage sibling of [`weapon_focus_bonus_for`]; 0 when none names it.
+pub(crate) fn weapon_specialization_bonus_for(input: &CharacterInput, weapon_name: &str) -> i16 {
+    let wanted = normalize_weapon_identity(weapon_name);
+    crate::rules_core::feat_effects::weapon_specialization_facts_from_choices(
+        &effective_character_feats(input),
+        &input.chosen.selected_choices,
+    )
+    .iter()
+    .find(|fact| normalize_weapon_identity(&fact.weapon_name) == wanted)
+    .map_or(0, |fact| fact.damage_bonus)
+}
+
 /// The feat bonus to hit with the named weapon. The feat seeded at creation names no target, and the
 /// target it stands for is the Longsword (`feat:weapon_focus`, every class's seed).
 pub(crate) fn weapon_focus_bonus_for(input: &CharacterInput, weapon_name: &str) -> i16 {

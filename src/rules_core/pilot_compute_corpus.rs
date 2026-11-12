@@ -25,7 +25,7 @@
 use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
-use crate::rules_core::damage_total::resolve_base_damage_dice;
+use crate::rules_core::damage_total::{resolve_base_damage_dice, weapon_feat_damage_row_id};
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::contract::encumbrance_size_for_race;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, stand_in_record, EquipmentEffects};
@@ -39,7 +39,7 @@ use crate::rules_core::pilot_compute::{
     fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
     attack_ability_modifier_for, has_supported_class_chassis, melee_attack_ability_modifier, normalize_weapon_identity, require_active_state,
     ArmorClassPart, ArmorClassParts, ComputationExplanation, FeatDerivedPillarContributions,
-    weapon_focus_bonus_for, weapon_training_bonus_for,
+    weapon_focus_bonus_for, weapon_specialization_bonus_for, weapon_training_bonus_for,
     selected_skill_climb_is_class_skill, selected_skill_ranks,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
     selected_skill_class_skill_unknowns,
@@ -809,6 +809,8 @@ fn is_weapon_in_hand(record_key: &str, corpus: &SourcePackageContent) -> bool {
 /// path cannot ground (`ground_per_weapon_combat_totals`): a variant such as `Dagger (Adamantine)`,
 /// or another book's weapon. The same terms: base attack, the governing ability, the Focus feats, the
 /// penalty when the table's answer is known, size. Its `+N` is on its Weapons row, as a table weapon's is.
+/// Beside it, its feat damage row (`combat.weapon_damage_bonus.<weapon>`, SD-40 E2.14), as the
+/// headless path grounds for a table weapon, so its damage total holds the Specialization feats.
 pub fn corpus_weapon_attack_rows(
     base: &PilotBaseChassisComputation,
     input: &CharacterInput,
@@ -851,6 +853,16 @@ pub fn corpus_weapon_attack_rows(
                  modifier ({ability:+}) + weapon feats ({focus:+}) + nonproficiency penalty ({penalty}) \
                  + size modifier ({size:+}) = {value}.{proficiency_detail}",
                 base.base_attack_bonus
+            ),
+        });
+        let damage = weapon_specialization_bonus_for(input, weapon.as_ref().map_or(key, |weapon| weapon.key));
+        rows.push(ComputationExplanation {
+            id: weapon_feat_damage_row_id(key),
+            value: damage,
+            detail: format!(
+                "Feat damage bonus with the equipped {key}: {damage:+}, the Weapon Specialization / \
+                 Greater Weapon Specialization naming it. The feat contribution alone, not a damage \
+                 total: combat.weapon_damage_total.<weapon> is the total."
             ),
         });
     }
