@@ -29,13 +29,25 @@ export function ArmorClassPanel(props: { ac: number; touch: number | null; flatF
   );
 }
 
-export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; will: number }; boxStyle?: CSSProperties }) {
+/**
+ * SD-40 E2.25: `conditionalBonuses` are `conditionalBonusLines`' lines (the printed Conditional
+ * Bonuses box's entries, in the engine's words), listed under the three totals.
+ */
+export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; will: number }; conditionalBonuses: string[]; boxStyle?: CSSProperties }) {
   return (
     <StatBox title="Saving Throws">
       <div style={props.boxStyle ?? layoutBox(SHEET_LAYOUT, 'saves').boxStyle}>
         <StatTile label="Fortitude" value={fmt(props.saves.fortitude)} />
         <StatTile label="Reflex" value={fmt(props.saves.reflex)} />
         <StatTile label="Will" value={fmt(props.saves.will)} />
+      </div>
+      <div style={{ marginTop: '0.5rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, margin: '0 0 0.2rem' }}>Conditional Bonuses</p>
+        <ul style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', listStyle: 'none', margin: 0, padding: 0 }}>
+          {props.conditionalBonuses.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
       </div>
     </StatBox>
   );

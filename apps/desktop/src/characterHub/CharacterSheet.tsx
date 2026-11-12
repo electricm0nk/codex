@@ -4,6 +4,7 @@ import {
   loadSavedCharacterDetail,
   NO_FEAT_SKILL_BONUSES,
   type ExplanationDto,
+  type ConditionalNotesDto,
   type FeatSkillBonusesDto,
   type LoadSavedCharacterResponse,
   type SheetLineDto,
@@ -161,6 +162,7 @@ import {
 } from './skillsModel';
 import { AbilitiesPanel } from './panels/AbilitiesPanel';
 import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './panels/CombatPanels';
+import { conditionalBonusLines } from './conditionalBonusesModel';
 import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
 import { SquareBlock, initiativeRow } from './panels/SquareBlock';
 import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type SheetStack } from './sheetLayout';
@@ -3025,6 +3027,8 @@ export function CharacterSheet(props: {
     knownLanguages: string[];
     /** SD-40 E2.24: the engine's `flyManeuverability` words; `null` until a read carries them. */
     flyManeuverability: string | null;
+    /** SD-40 E2.25: the engine's `conditionalNotes` (the Saving Throws box lists them); `undefined` until a read carries them. */
+    conditionalNotes: ConditionalNotesDto | undefined;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3037,6 +3041,7 @@ export function CharacterSheet(props: {
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
     knownLanguages: props.detail?.languages?.known ?? [],
     flyManeuverability: props.detail?.flyManeuverability ?? null,
+    conditionalNotes: props.detail?.conditionalNotes,
   });
   useEffect(() => {
     let cancelled = false;
@@ -3052,6 +3057,7 @@ export function CharacterSheet(props: {
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
     knownLanguages: props.detail?.languages?.known ?? [],
     flyManeuverability: props.detail?.flyManeuverability ?? null,
+    conditionalNotes: props.detail?.conditionalNotes,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3068,6 +3074,7 @@ export function CharacterSheet(props: {
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       knownLanguages: loaded.languages?.known ?? [],
       flyManeuverability: loaded.flyManeuverability ?? null,
+      conditionalNotes: loaded.conditionalNotes,
           });
         }
       })
@@ -3666,6 +3673,7 @@ export function CharacterSheet(props: {
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       knownLanguages: loaded.languages?.known ?? [],
       flyManeuverability: loaded.flyManeuverability ?? null,
+      conditionalNotes: loaded.conditionalNotes,
     });
     await refreshDurability();
   }
@@ -4032,6 +4040,7 @@ export function CharacterSheet(props: {
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
       knownLanguages: loaded.languages?.known ?? [],
       flyManeuverability: loaded.flyManeuverability ?? null,
+      conditionalNotes: loaded.conditionalNotes,
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4551,7 +4560,7 @@ export function CharacterSheet(props: {
           />
         );
       case 'saves':
-        return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
+        return <SavingThrowsPanel saves={saves} conditionalBonuses={conditionalBonusLines(engineRecords.conditionalNotes, engineRecords.featSkillBonuses)} boxStyle={boxStyle} />;
     }
   }
 
