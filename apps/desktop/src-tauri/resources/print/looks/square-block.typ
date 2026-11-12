@@ -10,6 +10,10 @@
 // hit point notes), Current, Nonlethal, Damage Reduction (when there is one), Initiative (its notes
 // are the initiative notes), Encumbrance (light, medium, heavy, carried, remaining, gear value,
 // load), Conditions.
+//
+// Page 1's overflow rule (E2.4, decisions.md §23.2 SD-b): the hit point and initiative notes are
+// the list the frame may cut (`list`, `more`: the rest and the ruled lines continue on page 2); a
+// `continued` block prints the rest of the notes lists and their ruled lines under its heading.
 
 #let title(t) = {
   text(size: 12pt, weight: "bold", t)
@@ -30,19 +34,28 @@
 // A ruled line the player writes on.
 #let write-line = box(width: 100%, height: 0.4cm, stroke: (bottom: 0.5pt + luma(60)))
 
-// One notes list: its caption, each note, then two ruled lines.
-#let notes-area(label, notes) = stack(
+// One notes list: its caption, each note, then two ruled lines (none when the list continues on
+// page 2: they print there).
+#let notes-area(label, notes, more: false) = stack(
   spacing: 0.08cm,
   caption(label),
   ..notes.map(n => text(size: 8pt, fill: luma(40), n)),
-  write-line,
-  write-line,
+  ..if not more { (write-line, write-line) },
 )
+
+// The list the overflow rule may split: each hit point note, then each initiative note, as (its
+// list's caption, the note).
+#let items(b) = {
+  let notes(label) = { let r = b.rows.find(r => r.label == label); if r == none { () } else { r.notes } }
+  notes("Max").map(n => ("Hit point notes", n)) + notes("Initiative").map(n => ("Initiative notes", n))
+}
 
 #let look(b) = {
   let row(label) = b.rows.find(r => r.label == label)
   let value(label) = { let r = row(label); if r == none { "" } else { r.values.at(0) } }
-  let notes(label) = { let r = row(label); if r == none { () } else { r.notes } }
+  let list = b.at("list", default: items(b))
+  let notes(kind) = list.filter(e => e.at(0) == kind).map(e => e.at(1))
+  let more = b.at("more", default: false)
   let load = { let r = row("Encumbrance"); if r == none { ("",) * 7 } else { r.values } }
   let reduction = row("Damage Reduction")
   // A row this look has no place for prints its label and values under the block.
@@ -51,6 +64,16 @@
   // Three columns: Hit Points (the current-HP area, 3 cm square, SD-m, with the max and nonlethal
   // boxes beside it), Initiative over Conditions, Encumbrance; under each, its notes list.
   let columns = (4.5cm, 2.4cm, 1fr)
+  let notes-grid = grid(
+    columns: columns,
+    column-gutter: 0.25cm,
+    notes-area("Hit point notes", notes("Hit point notes"), more: more),
+    notes-area("Initiative notes", notes("Initiative notes"), more: more),
+    notes-area("Encumbrance notes", (), more: more),
+  )
+  if b.at("continued", default: false) {
+    return block(breakable: false, width: 100%, above: 1em, below: 0.6em, title(b.heading) + notes-grid)
+  }
   block(breakable: false, width: 100%, above: 1em, below: 0.6em)[
     #grid(
       columns: columns,
@@ -95,13 +118,8 @@
       ),
     )
     #v(0.1cm)
-    #grid(
-      columns: columns,
-      column-gutter: 0.25cm,
-      notes-area("Hit point notes", notes("Max")),
-      notes-area("Initiative notes", notes("Initiative")),
-      notes-area("Encumbrance notes", ()),
-    )
+    #notes-grid
+    #if more { v(0.1cm); text(size: 8pt, fill: luma(60))[continued on page 2] }
     #for r in others {
       v(0.1cm)
       text(size: 8.5pt, weight: "bold", r.label)

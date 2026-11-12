@@ -4,10 +4,19 @@
 // ("Campaign") over its value; an empty value is the bare ruled line the player writes on. It
 // formats; it computes nothing.
 
+// A value wider than the cell (a long name, several campaigns) prints at 10 pt, wrapped over as
+// many lines as it needs (E2.4): every word prints, nothing runs past the cell.
 #let field(label, value, size: 10pt) = stack(
   spacing: 0.08cm,
   text(size: 7.5pt, weight: "bold", label),
-  box(width: 100%, height: size * 1.35, align(left + bottom, text(size: size, weight: "bold", value))),
+  layout(cell => {
+    let one-line = text(size: size, weight: "bold", value)
+    if measure(one-line).width <= cell.width {
+      box(width: 100%, height: size * 1.35, align(left + bottom, one-line))
+    } else {
+      block(width: 100%, above: 0em, below: 0em, inset: (top: 0.1cm), text(size: calc.min(size, 10pt), weight: "bold", value))
+    }
+  }),
   line(length: 100%, stroke: 0.6pt + luma(60)),
 )
 

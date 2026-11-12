@@ -838,10 +838,10 @@ fn assert_page_one_whole(tag: &str, document: &crate::print::model::SheetDocumen
     );
 }
 
-/// Page 1 (operator ruling R5, SD-40 `technical-design.md §4`): on Letter and on A4, the first
-/// page holds the character's details and every step-1 block (abilities, hit points, initiative,
-/// armor class, attack, saves, speed, skills, weapons), whole (`assert_page_one_whole`); with three
-/// weapons in hand too.
+/// Page 1 (operator ruling R5, SD-40 `technical-design.md §4`, `decisions.md §23.3`, E2.4): on
+/// Letter and on A4, the first page holds its eleven blocks (portrait, Character Name and Campaign,
+/// square block, abilities, armor class, attack, speed, saves, weapons, skills, languages), each
+/// whole (`assert_page_one_whole`), for the three seeds; with three weapons in hand too.
 #[test]
 fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
     for (tag, id) in [("page-one-aldric", ALDRIC_ID), ("page-one-elowen", ELOWEN_ID), ("page-one-tomas", TOMAS_ID)] {
@@ -853,7 +853,7 @@ fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
         }
     }
     // A character with three weapons in hand (the seed's longsword line three times over: the
-    // seeds hold one each) still prints the ten blocks on page 1, on Letter and on A4.
+    // seeds hold one each) still prints the eleven blocks on page 1, on Letter and on A4.
     let root = seeded("page-one-three-weapons", ALDRIC_ID);
     for paper in [Paper::Letter, Paper::A4] {
         let mut document = sheet_document_at_root(&root, &PrintRequest { paper, ..request(false, false, false) }).expect("the document builds");
@@ -912,6 +912,129 @@ fn print_pf_blocks_page_one_stays_whole_with_a_bought_weapon_and_ring_with_no_ra
                 assert!(weapons.rows.iter().any(|line| line.label.contains("Dagger")), "{tag}: the dagger prints a weapon line: {:?}", weapons.rows);
             }
             assert_page_one_whole(&format!("{tag} {paper:?}"), &document, &render(root, &printed));
+        }
+    }
+}
+
+/// E2.4 (`decisions.md §23.2` new SD-b, §23.5): page 1's overflow rule. A Dwarf (Aldric with his
+/// race saved as `race:dwarf`: Hardy and Bravery under the saves) under each stress alone and all at
+/// once: six weapon lines, ten "Not added to a total" lines, a 40-character name, three campaigns.
+/// On Letter and A4, Typst diagnostics 0, and:
+/// - no page-1 block leaves page 1: each of the eleven `PAGE_ONE_BLOCKS` prints its heading and first
+///   words before page 1's footer;
+/// - every line prints: each weapon line, save note, hit point and initiative note, skill line,
+///   not-added line, the name and each campaign is on page 1, or on page 2 after its block's
+///   `<heading> (continued)`;
+/// - a continuation opens page 2 (nothing else of page 1 ran over), and all four at once on Letter
+///   needs one (the rule fires).
+#[test]
+fn print_pf_blocks_page_one_lists_continue_on_page_two_and_no_block_leaves() {
+    use crate::print::model::{SheetDocument, SheetRow};
+    use crate::print::print_golden::{block_anchor, page_one, PAGE_ONE_BLOCKS};
+    use codex::saved_character::local_store::SavedCharacterStore;
+    const NAME: &str = "Aldric Stonehammer of the Western Marche";
+    assert_eq!(NAME.chars().count(), 40, "the long name is 40 characters");
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+
+    let root = seeded("overflow-dwarf", ALDRIC_ID);
+    let mut envelope = SavedCharacterStore::load(&root).expect("the seed's envelope loads");
+    envelope.character_input.chosen.race_id = "race:dwarf".to_owned();
+    SavedCharacterStore::save(&envelope, &root).expect("the dwarf saves");
+    let three_campaigns: Vec<CampaignNote> = ["Rise of the Runelords", "Curse of the Crimson Throne", "Second Darkness"]
+        .into_iter()
+        .map(|name| CampaignNote { name: name.to_owned(), description: String::new() })
+        .collect();
+
+    let block = |document: &mut SheetDocument, id: &str| -> usize {
+        document.blocks.iter().position(|block| block.id == id).unwrap_or_else(|| panic!("the {id} block"))
+    };
+    let six_weapons = |document: &mut SheetDocument| {
+        let at = block(document, "weapons");
+        let weapons = &mut document.blocks[at];
+        let line = weapons.rows[1].clone();
+        let lines = (1..=6).map(|n| SheetRow { label: format!("{} {n}", line.label), ..line.clone() });
+        weapons.rows.splice(1..2, lines);
+    };
+    let ten_not_added = |document: &mut SheetDocument| {
+        let at = block(document, "skills");
+        let skills = &mut document.blocks[at];
+        skills.rows.retain(|row| row.label != "Not added to a total:");
+        let lines = (1..=10).map(|n| format!("Probe feat {n:02} on Perception: +2 when the stress test says so"));
+        skills.rows.push(SheetRow::new("Not added to a total:", Vec::<String>::new()).with_notes(lines));
+    };
+    let long_name = |document: &mut SheetDocument| {
+        document.title = NAME.to_owned();
+        let at = block(document, "nameCampaign");
+        document.blocks[at].rows[0].values[0] = NAME.to_owned();
+    };
+    type Stress<'a> = &'a dyn Fn(&mut SheetDocument);
+    let shapes: [(&str, bool, &[Stress]); 6] = [
+        ("dwarf", false, &[]),
+        ("six weapons", false, &[&six_weapons]),
+        ("ten not-added lines", false, &[&ten_not_added]),
+        ("40-character name", false, &[&long_name]),
+        ("three campaigns", true, &[]),
+        ("all at once", true, &[&six_weapons, &ten_not_added, &long_name]),
+    ];
+    for (shape, with_campaigns, stresses) in shapes {
+        for paper in [Paper::Letter, Paper::A4] {
+            let tag = format!("{shape} {paper:?}");
+            let campaigns = if with_campaigns { three_campaigns.clone() } else { Vec::new() };
+            let mut document = sheet_document_at_root(&root, &PrintRequest { paper, campaigns, ..request(false, false, false) }).expect("the document builds");
+            for stress in stresses {
+                stress(&mut document);
+            }
+            let typeset = crate::print::typst::typeset(&document).expect("the stressed sheet typesets");
+            assert!(typeset.warnings.is_empty(), "{tag}: Typst reports no diagnostics: {:?}", typeset.warnings);
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("overflow-{}-{paper:?}.pdf", shape.replace(' ', "-"))), &typeset.pdf).expect("the PDF writes");
+            }
+            let text = pdf_text(&typeset.pdf);
+            let pages = page_count(&typeset.pdf);
+            let one = page_one(&text, &document.title, pages).unwrap_or_else(|| panic!("{tag}: page 1's footer prints: {text}"));
+            let first = unspaced(one);
+            for block_id in PAGE_ONE_BLOCKS {
+                let block = document.blocks.iter().find(|block| block.id == block_id).unwrap_or_else(|| panic!("{tag}: the {block_id} block"));
+                assert!(first.contains(&block_anchor(block)), "{tag}: no block leaves page 1: page 1 holds {:?}; page 1 reads: {one}", block.heading);
+            }
+            let (_, after) = text[one.len()..].split_once(&format!("page 1 of {pages}")).unwrap_or_else(|| panic!("{tag}: page 1's footer"));
+            let second = unspaced(after.split_once(" page 2 of ").map_or(after, |(page, _)| page));
+
+            // Every line of page 1's lists, by the block that prints it.
+            let mut lines: Vec<(&str, String)> = Vec::new();
+            for block in &document.blocks {
+                let listed: Vec<String> = match block.id {
+                    "weapons" => block.rows.iter().skip(1).map(|row| row.label.clone()).collect(),
+                    "saves" | "squareBlock" => block.rows.iter().flat_map(|row| row.notes.clone()).collect(),
+                    // Each skill line by its name, then each line under the column.
+                    "skills" => block.rows.iter().flat_map(|row| if row.values.is_empty() { row.notes.clone() } else { vec![row.label.clone()] }).collect(),
+                    "nameCampaign" => block.rows.iter().flat_map(|row| row.values.clone()).filter(|value| !value.is_empty()).collect(),
+                    _ => continue,
+                };
+                lines.extend(listed.into_iter().map(|line| (block.heading.as_str(), line)));
+            }
+            let mut continued = 0;
+            for (heading, line) in &lines {
+                let line = unspaced(line);
+                if first.contains(&line) {
+                    continue;
+                }
+                let head = unspaced(&format!("{heading} (continued)"));
+                let at = second.find(&head).unwrap_or_else(|| panic!("{tag}: `{line}` is not on page 1, so page 2 holds `{heading} (continued)`; page 2 reads: {second}"));
+                assert!(second[at..].contains(&line), "{tag}: `{line}` prints under `{heading} (continued)`; page 2 reads: {second}");
+                continued += 1;
+            }
+            let identity = document.blocks.iter().find(|block| block.id == "characterDetails").expect("the Identity block");
+            if continued == 0 {
+                assert!(second.starts_with(&block_anchor(identity)), "{tag}: nothing continues, page 2 opens with the Identity; page 2 reads: {second}");
+            } else {
+                let opens = document.blocks.iter().any(|block| second.starts_with(&unspaced(&format!("{} (continued)", block.heading))));
+                assert!(opens, "{tag}: page 2 opens with a continuation; page 2 reads: {second}");
+            }
+            if shape == "all at once" && matches!(paper, Paper::Letter) {
+                assert!(continued > 0, "{tag}: page 1 cannot hold every line at once, so a list continues on page 2");
+            }
         }
     }
 }
@@ -1092,7 +1215,9 @@ fn print_pf_blocks_square_block_prints_hp_initiative_encumbrance_and_conditions(
 /// notes, each list followed by two blank lines, then two blank lines for encumbrance notes (no
 /// engine source, E2.6). E2.6's initiative fixture (APG trait Veteran of Battle, saved on Aldric)
 /// prints its note under Initiative; Aldric as seeded holds none, so only the captions and the
-/// blank lines print.
+/// blank lines print. On Letter page 1 has no room for the note's three lines in the Initiative
+/// column, so it prints under `Hit Points (continued)` at the top of page 2 (E2.4's overflow rule,
+/// `decisions.md §23.2` SD-b): its Initiative notes list holds it either way.
 #[test]
 fn print_pf_blocks_square_block_prints_the_engine_notes() {
     use codex::saved_character::local_store::SavedCharacterStore;
@@ -1136,7 +1261,7 @@ fn print_pf_blocks_square_block_prints_the_engine_notes() {
         std::fs::write(Path::new(&out).join("veteran-shaken-letter.pdf"), render(&veteran, &letter)).expect("the PDF writes");
     }
     let text = pdf_text(&pdf);
-    let printed = square_text(&text);
+    let printed = text.find("Hit Points (continued)").map_or_else(|| square_text(&text), |at| &text[at..]);
     let initiative_notes = &printed[printed.find("Initiative notes").expect("Initiative notes")..printed.find("Encumbrance notes").expect("Encumbrance notes")];
     assert!(initiative_notes.contains(&words), "`{words}` prints under Initiative notes: {printed}");
 }

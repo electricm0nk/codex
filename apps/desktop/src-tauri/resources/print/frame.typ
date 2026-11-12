@@ -10,7 +10,7 @@
 // lays each run of blocks between page breaks on a page grid, each block in its cell at its
 // `place` (first column `x`, `span` columns wide); the layout file fills each row in order.
 
-#import "/blocks.typ": sheet-block, block-look
+#import "/blocks.typ": sheet-block, block-look, lists
 
 // A block marked `under` shares the cell of the block before it, stacked beneath it, so a column
 // of short blocks can sit beside a tall one.
@@ -37,11 +37,93 @@
   )
 }
 
+// The page's margins: the frame sets them and page 1's fit (below) measures against them.
+#let margin = (x: 1.6cm, y: 1.8cm)
+
+// Page 1's overflow rule (SD-40 E2.4, decisions.md §23.2 SD-b). When page 1's run is taller than
+// the room page 1 has, the lists on it (`lists`: weapon lines, notes, the lines under the skills)
+// first shrink to the 8 pt floor (`compact`); if the run is still too tall, the lists give up their
+// last lines one at a time (the save notes, then the hit point and initiative notes, then the
+// skills' lines from the foot of the column, then the weapon lines; only where it lowers the run)
+// until it fits. What a list gave up prints at the top of page 2 under "<heading> (continued)",
+// in block order, each as wide as its block.
+// No page-1 block leaves page 1 and no line is dropped. Heights are measured, never a rules
+// number (NR-2).
+#let cut-order = ("saves", "square-block", "skills", "weapons")
+
+#let grid-runs(columns, runs) = context {
+  let width = page.width - 2 * margin.x
+  let room = page.height - margin.y - here().position().y
+  let tall(run) = measure(grid-run(columns, run), width: width).height
+  let first = runs.first()
+  let rest = runs.slice(1)
+  let splits(b) = b.look in lists and b.look in cut-order
+  if tall(first) > room {
+    first = first.map(b => if splits(b) { b + (compact: true) } else { b })
+  }
+  // How many lines of each list page 1 keeps (none: the block has no list).
+  let keep = first.map(b => if splits(b) { (lists.at(b.look))(b).len() } else { none })
+  let cut(keep) = first.enumerate().map(((i, b)) => {
+    if keep.at(i) == none { return b }
+    let items = (lists.at(b.look))(b)
+    if keep.at(i) == items.len() { b } else { b + (list: items.slice(0, keep.at(i)), more: true) }
+  })
+  let height = tall(first)
+  while height > room {
+    // The lists that still have a line to give, lowest priority first.
+    let open = range(first.len())
+      .filter(i => keep.at(i) != none and keep.at(i) > 0)
+      .sorted(key: i => cut-order.position(l => l == first.at(i).look))
+    if open.len() == 0 { break }
+    // The first one whose last line lowers the run; if none does alone (two columns equally tall,
+    // or the "continued" caption outweighs the line), the first one.
+    let pick = open.first()
+    let pick-height = none
+    for i in open {
+      let trial = keep
+      trial.at(i) -= 1
+      let h = tall(cut(trial))
+      if h < height {
+        pick = i
+        pick-height = h
+        break
+      }
+    }
+    keep.at(pick) -= 1
+    height = if pick-height != none { pick-height } else { tall(cut(keep)) }
+  }
+  let continued = ()
+  for (i, b) in first.enumerate() {
+    if keep.at(i) == none { continue }
+    let items = (lists.at(b.look))(b)
+    if keep.at(i) < items.len() {
+      // Each continuation keeps its block's width, at the left edge on a row of its own (a grid
+      // row fills left to right, so a cell is never placed over another), stacked as on page 1
+      // when the block it sat under continues too.
+      let under = b.place.under and continued.len() > 0 and continued.last().place.span == b.place.span
+      continued.push(b + (
+        heading: b.heading + " (continued)",
+        list: items.slice(keep.at(i)),
+        continued: true,
+        place: (x: 0, span: b.place.span, under: under),
+      ))
+    }
+  }
+  grid-run(columns, cut(keep))
+  if continued.len() > 0 {
+    if rest.len() > 0 { rest.at(0) = continued + rest.at(0) } else { rest.push(continued) }
+  }
+  for run in rest {
+    pagebreak(weak: true)
+    grid-run(columns, run)
+  }
+}
+
 #let sheet(doc) = {
   set document(title: doc.title, date: none)
   set page(
     paper: doc.paper,
-    margin: (x: 1.6cm, y: 1.8cm),
+    margin: margin,
     footer: context align(center, text(size: 8pt, fill: luma(90))[
       #doc.title · page #counter(page).display() of #counter(page).final().first()
     ]),
@@ -60,17 +142,19 @@
       sheet-block(b)
     }
   } else {
+    // The runs of blocks between page breaks; page 1's run is fitted to its page.
+    let runs = ()
     let run = ()
     for b in doc.blocks {
       if b.new_page and run.len() > 0 {
-        grid-run(doc.columns, run)
-        pagebreak(weak: true)
+        runs.push(run)
         run = ()
       }
       run.push(b)
     }
     if run.len() > 0 {
-      grid-run(doc.columns, run)
+      runs.push(run)
     }
+    grid-runs(doc.columns, runs)
   }
 }

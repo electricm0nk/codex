@@ -6,6 +6,11 @@
 // adds) prints its label and its notes under the column. It formats; it adds nothing up (NR-2).
 //
 // A skill row's values, as `print/blocks/skills.rs` sends them: 0 the signed total.
+//
+// Page 1's overflow rule (E2.4, decisions.md §23.2 SD-b): the skill lines, then the lines under the
+// column, are the list the frame may shrink (`compact`: the lines under the column at 8 pt; the
+// names are at the floor already) and cut from its end (`list`, `more`: the rest continues on page
+// 2); a `continued` block prints the rest the same way under its heading.
 
 #let heading-of(b) = {
   text(size: 12pt, weight: "bold", b.heading)
@@ -46,20 +51,42 @@
   [], caption[Total],
 ))
 
+// The list the overflow rule may split: each skill line, as `(row: <the row>)`; then each line under
+// the column, as `(label: <its row's label>, note: <the note, or none for a row of words alone>)`.
+#let items(b) = {
+  let out = b.rows.filter(is-skill).map(r => (row: r))
+  for r in b.rows.filter(r => not is-skill(r)) {
+    if r.notes.len() == 0 { out.push((label: r.label, note: none)) } else { for n in r.notes { out.push((label: r.label, note: n)) } }
+  }
+  out
+}
+
+// The lines under the column: each row's label once, then its notes.
+#let words-of(entries, size) = {
+  let groups = ()
+  for e in entries {
+    if groups.len() == 0 or groups.last().label != e.label { groups.push((label: e.label, notes: ())) }
+    if e.note != none { groups.last().notes.push(e.note) }
+  }
+  for g in groups {
+    v(0.2em)
+    text(size: size, weight: "bold", g.label)
+    if g.notes.len() > 0 {
+      v(-0.3em)
+      stack(spacing: 0.45em, ..g.notes.map(n => text(size: size, fill: luma(40), n)))
+    }
+  }
+}
+
 // The skills print whole beside the Weapons, then the lines that are not a panel total.
 #let look(b) = {
-  let skills = b.rows.filter(is-skill)
-  let words = b.rows.filter(r => not is-skill(r))
+  let size = if b.at("compact", default: false) { 8pt } else { 8.5pt }
+  let entries = b.at("list", default: items(b))
+  let skills = entries.filter(e => "row" in e).map(e => e.row)
   block(breakable: false, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
-    #column-of(skills)
-    #for r in words {
-      v(0.2em)
-      text(size: 8.5pt, weight: "bold", r.label)
-      if r.notes.len() > 0 {
-        v(-0.3em)
-        stack(spacing: 0.45em, ..r.notes.map(n => text(size: 8.5pt, fill: luma(40), n)))
-      }
-    }
+    #if skills.len() > 0 or not b.at("continued", default: false) { column-of(skills) }
+    #words-of(entries.filter(e => "note" in e), size)
+    #if b.at("more", default: false) { v(0.2em); caption[continued on page 2] }
   ]
 }
