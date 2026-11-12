@@ -161,3 +161,17 @@ show('print entry: load + layout in one function (the seam a print-only fixture 
 show('print_proof cases:', grep('assert_eq!(written', 'apps/desktop/src-tauri/src/print/print_proof.rs'))
 gold = json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'))
 print(f'  print_golden.json: {len(gold)} cases, keys per case {sorted(next(iter(gold.values())))} (no language text pinned)')
+
+print('\n== (f) the desktop UI (apps/desktop/src) today: speed, AC, saves, notes, resistances')
+UI = ['apps/desktop/src/characterHub/CharacterSheet.tsx', 'apps/desktop/src/characterHub/panels/CombatPanels.tsx', 'apps/desktop/src/characterHub/customModel.ts']
+show('Speed: the panel shows Land only, from the engine row speed.land:', grep('export function SpeedPanel\\|label="Land"', *UI) + grep('<SpeedPanel', *UI) + grep("engineRowValue(explanations, 'speed.land')", *UI))
+show('Swim / Fly anywhere in the UI (speed.swim, speed.fly, swim/fly speed):', grep('speed\\.swim\\|speed\\.fly\\|swimSpeed\\|flySpeed', 'apps/desktop/src/characterHub', 'apps/desktop/src/boundary'))
+show('AC and saves panels (sheet boxes armorClass, saves) and the Defense tab saves:', grep('export function ArmorClassPanel\\|export function SavingThrowsPanel', *UI) + grep('<ArmorClassPanel\\|<SavingThrowsPanel\\|^function SavesPanel\\|<SavesPanel', *UI))
+show('conditional notes read by any UI file (conditionalNotes off the load response):', grep('conditionalNotes', 'apps/desktop/src/characterHub'))
+show('the TS type that carries them:', grep('conditionalNotes?: ConditionalNotesDto\\|export interface ConditionalNotesDto', 'apps/desktop/src/boundary/loadSavedCharacterDetail.ts'))
+show('the only conditional list the UI shows (skills, "Not added to a total"):', grep('Not added to a total', *UI))
+show('Damage Reduction and Spell Resistance in the Defense tab / equipment effects:', grep('Damage Reduction:\\|label="Spell Resistance"\\|^function DefenseTab', *UI))
+show('energy resistance or immunities shown anywhere in the UI (words outside comments):', grep('[Ee]nergy [Rr]esistance\\|[Ii]mmunit', 'apps/desktop/src/characterHub/CharacterSheet.tsx', 'apps/desktop/src/characterHub/panels'))
+spec = json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']
+hits = [r['id'] for r in spec if re.search(r'Swim|Fly|Resistance|Immun|Bravery|Conditional', json.dumps(r.get('expect', [])))]
+print(f"  ui-smoke spec rows: {len(spec)}; rows expecting Swim/Fly/Resistance/Immunity/Bravery/Conditional: {len(hits)} {hits[:5]}")

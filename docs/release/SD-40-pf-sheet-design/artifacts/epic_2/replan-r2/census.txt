@@ -1,4 +1,4 @@
-$ python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r2/census.py   # run from the repo root at d5cd0a3ea6, 2026-11-12
+$ python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r2/census.py   # run from the repo root at 49c0bc4679, 2026-11-12 (section (f) added after the operator's UI addition)
 == (a) speeds: land / swim / fly / maneuverability
   engine rows named speed.<mode> (producer of speed.land):  [1 line(s)]
     apps/desktop/src-tauri/src/character_hub.rs:3132:    Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
@@ -205,3 +205,41 @@ $ python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r2/censu
   print_proof cases:  [1 line(s)]
     apps/desktop/src-tauri/src/print/print_proof.rs:56:    assert_eq!(written, 16, "2 seeds x 2 papers x 4 option sets");
   print_golden.json: 24 cases, keys per case ['headings', 'pages'] (no language text pinned)
+
+== (f) the desktop UI (apps/desktop/src) today: speed, AC, saves, notes, resistances
+  Speed: the panel shows Land only, from the engine row speed.land:  [4 line(s)]
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:55:export function SpeedPanel(props: { land: string; boxStyle?: CSSProperties }) {
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:59:        <StatTile label="Land" value={props.land} />
+    apps/desktop/src/characterHub/CharacterSheet.tsx:4506:        return <SpeedPanel land={sheetLandSpeed(engineRecords.explanations)} boxStyle={boxStyle} />;
+    apps/desktop/src/characterHub/customModel.ts:192:  const feet = engineRowValue(explanations, 'speed.land');
+  Swim / Fly anywhere in the UI (speed.swim, speed.fly, swim/fly speed):  [0 line(s)]
+    (no match)
+  AC and saves panels (sheet boxes armorClass, saves) and the Defense tab saves:  [6 line(s)]
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:20:export function ArmorClassPanel(props: { ac: number; touch: number | null; flatFooted: number | null; boxStyle?: CSSPropert
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:32:export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; will: number }; boxStyle?: CSSProper
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1422:      <SavesPanel baseSaves={props.baseSaves} totalSaves={props.totalSaves} />
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1432:function SavesPanel(props: { baseSaves: BaseSavesDto | undefined; totalSaves: BaseSavesDto | undefined }) {
+    apps/desktop/src/characterHub/CharacterSheet.tsx:4502:        return <ArmorClassPanel ac={ac} touch={touch} flatFooted={flatFooted} boxStyle={boxStyle} />;
+    apps/desktop/src/characterHub/CharacterSheet.tsx:4508:        return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
+  conditional notes read by any UI file (conditionalNotes off the load response):  [9 line(s)]
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-netrunner-decked.json:1275:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-arsenal.json:2344:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-kitted.json:1296:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-ledger.json:1042:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-streetrat.json:1002:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Envoy-3.json:851:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Mystic-5.json:1314:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Soldier-3.json:928:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Technomancer-5.json:1206:  "conditionalNotes": {
+  the TS type that carries them:  [2 line(s)]
+    apps/desktop/src/boundary/loadSavedCharacterDetail.ts:160:  conditionalNotes?: ConditionalNotesDto;
+    apps/desktop/src/boundary/loadSavedCharacterDetail.ts:224:export interface ConditionalNotesDto {
+  the only conditional list the UI shows (skills, "Not added to a total"):  [1 line(s)]
+    apps/desktop/src/characterHub/CharacterSheet.tsx:523:          Not added to a total: {featBonusesNotAdded.map((entry) => `${entry.label} (${entry.reason})`).join('; ')}
+  Damage Reduction and Spell Resistance in the Defense tab / equipment effects:  [3 line(s)]
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1368:        {spellResistanceTotal !== undefined ? <StatTile label="Spell Resistance" value={spellResistanceTotal} /> : null}
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1390:function DefenseTab(props: {
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1419:          <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
+  energy resistance or immunities shown anywhere in the UI (words outside comments):  [1 line(s)]
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1885:    note: "Every Rage Power this catalog can render without a missing value, whether or not this build has selected one. A rag
+  ui-smoke spec rows: 173; rows expecting Swim/Fly/Resistance/Immunity/Bravery/Conditional: 0 []

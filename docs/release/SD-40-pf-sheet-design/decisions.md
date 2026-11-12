@@ -532,9 +532,10 @@ letter given), output committed as `census.txt`.
 | b | Energy resistance, DR, SR, immunities | **No resistances or immunities field on the load response** (0 matches). Held today: `damage_reduction` on the snapshot (barbarian only, `pilot_view_model.rs:337`; printed under Hit Points, `core.rs:107`), `spell_resistance_total` from worn items (`character_hub.rs:287`), energy-resistance rows for ARG feats and two class features (`feat_pillar_and_pool_aggregation.rs:2004`, `class_inquisitor_warpriest.rs:411`, `class_sorcerer_wizard.rs:2802`). Ifrit and Undine: the converted rule keeps the words only (`bestiary_2:race_trait:ifrit_energy_resistance` target `None`, value `Text`, "Ifrits have fire resistance 5."); the number lives in the corpus record's `raw_bonus_chains` (`VAR FireResistanceBonus 5`). Corpus records granting each (predicate: an energy `BONUS:VAR <Energy>ResistanceBonus` chain; a `DR` token; an `SR` token; a record key naming `Immun`): race_trait energy **15** (awk cross-check: Fire alone 5 files), DR 1, SR 3, Immun 5; class_feature DR **54**, SR 8, Immun 16; ability DR 30, SR 6, Immun 13 |
 | c | Conditional bonuses | Round-1 figures re-derived unchanged: situational Hp 15, Initiative 10, Fort 52, Ref 58, Will 78, Ac 178, Cmb **0**, Cmd **0**; Aspect SaveBonus 407, CombatBonus 314. Also situational Skill 216, SkillGroup 41, SkillSituation 19; of the 314 CombatBonus aspects **22** name CMB, CMD or "combat maneuver". The engine's `ConditionalNotes` holds **six** lists (hp, initiative, fortitude, reflex, will, armor_class; `conditional_notes.rs:55-60`) and gathers no CombatBonus aspect (`:111-114`): **no CMB/CMD list**. Skills' conditionals are `feat_skill_bonuses.situational`, printed under the Skills column as "Not added to a total:" (`print/blocks/skills.rs:67`). Page 1 prints notes on Max HP and Initiative (`core.rs:103`, `:110`) and under each save (`core.rs:186`); the **AC notes print nowhere** (0 matches). Elf "+2 vs enchantment": present — `core_rulebook:race_trait:elf_elven_immunities` carries an Aspect SaveBonus, which feeds all three saves (`conditional_notes.rs:133`) |
 | d | Print sections | `layout/pf1e.rs`: page 1 = 11 `Placed::at/under` rows (`:20-34`); page 2 opens at `characterDetails` (`:50`); then `defense`, `gear`, `feats`, `classFeatures`, `spells`, `custom`, `pets`, `actions` flow on (`:36-44`); Spellbook, Show the Math, Bio and Campaign Notes are option blocks that each start a new page (`spells.rs:107`, `math.rs:27`, `bio_notes.rs:35`), in that order (`pf1e.rs:67-74`). **No section titles** (0). **No progression block** in `print/` (0); the Show Progression drawer reads `list_progression_ledger_at_root` (`character_ledger.rs:705`, `ProgressionLedgerDto` `:613`) |
+| f | The desktop UI today (added after the operator's UI addition, §24.3.8) | Speed: the `speed` box shows **Land only** (`panels/CombatPanels.tsx:55-59`, called at `CharacterSheet.tsx:4506`), from the engine row through `sheetLandSpeed` (`customModel.ts:192`); swim / fly anywhere in the UI: **0**. AC and saves: `ArmorClassPanel` / `SavingThrowsPanel` (`CombatPanels.tsx:20`, `:32`; `CharacterSheet.tsx:4502`, `:4508`) and the Defense tab's `SavesPanel` (`CharacterSheet.tsx:1422`, `:1432`) show totals only. **No UI component reads `conditionalNotes`** (its 9 matches are SF/CPR test fixtures; the type is `loadSavedCharacterDetail.ts:160`, `:224`); the only conditional list shown is the Skills panel's "Not added to a total" (`CharacterSheet.tsx:523`). Damage Reduction: one line in the Defense tab (`CharacterSheet.tsx:1419`); Spell Resistance: an equipment-effects tile (`:1368`); energy resistance and immunities: **shown nowhere** (the one word match, `:1885`, is a catalog note). ui-smoke: 173 rows, 0 expecting Swim, Fly, Resistance, Immunity, Bravery or Conditional |
 | e | Aldric's languages | Seed `character_hub.rs:2473` (Human Fighter 3, Int 14; ranks `ALDRIC_SEED_SKILL_RANKS` `:2372`, no Linguistics). **Every PF character knows exactly `Common`**: `known_languages()` is a constant (`character_hub.rs:743`); no save field holds languages. Pins: `character_hub.rs:20853` (`{"known": ["Common"]}` for the seeds), `print_pf_blocks.rs:1513` (contains Common; values `[known, ""]`), `print_golden.rs:229` (`languages` page-1 anchor); `print_golden.json` pins headings and pages only. Giving Aldric 7 real languages needs a language store the app does not have, or Linguistics ranks the seed does not have (moves skill totals: G-1 `VALUE_MOVED`). Cleanest: a **print-proof fixture** through a seam in `print/mod.rs` (`sheet_document_at_root` loads and lays out in one function, `:85-86`) |
 
-### §24.3 Rulings
+### §24.3 Rulings (item 8 added the same day for the operator's UI addition)
 
 1. **Page-1 grid** (E2.18). Row 1: portrait (columns 0–2, spans rows 1–2) · Character Name (3–7) · Campaign
    (8–11), the two fields one row of one height. Row 2 beside the portrait: AC / Touch / Flat-Footed boxes and the
@@ -546,7 +547,8 @@ letter given), output committed as `census.txt`.
 2. **Speed** (E2.17, E2.18). The engine gains `speed.swim` and `speed.fly` explanations rows (feet), from the
    race traits the character holds (their `MOVE` tokens, alternate-trait replacement honoured as the land speed's
    is) plus the two feat increases; the fly row's detail names the maneuverability when the record states one
-   ("average", "poor"). No row when the character has none; the box then prints empty for the pencil (never a
+   ("average", "poor"), and the load response gains `flyManeuverability` (the record's word, or absent) so the
+   print and the screen read one field. No row when the character has none; the box then prints empty for the pencil (never a
    dash, never 0). Climb and burrow: not asked; not printed (they stay in the rules text).
 3. **Languages** (E2.16). Comma list, **no write-in line**; the cell holds seven names on Letter and A4. The test
    character's seven languages are a **print-proof fixture**, not seed data: `print/mod.rs` splits
@@ -583,6 +585,23 @@ letter given), output committed as `census.txt`.
    bolder than any block heading) and ends with a page break, so it prints alone. The dialog's checkbox labels are
    these seven names (E4.2); first-time ticks stay Primary + Abilities and Feats + Inventory; Progression is
    Pathfinder only (SF1e/CPR show Primary, Spellbook, Bio, Math).
+8. **The desktop UI shows the same new fields** (operator, 2026-11-12, verbatim: "let's make adjustments to the ui to
+   include these fields as well"; E2.24–E2.26). Each UI card renders the **same engine rows and fields the print
+   reads** (no TypeScript re-derivation of a rules number: AGENTS.md "a magnitude is not wired until it moves on the
+   twin the player reads", SD-27 `decisions.md §29`), adds its ui-smoke row to `apps/desktop/scripts/ui-smoke/spec.json`,
+   regenerates `docs/testing/ui-smoke-inventory.md`, and depends on the engine card that feeds it. Placements
+   **chosen by the author** (closest existing neighbour; not questions):
+   - **Swim and Fly** (E2.24): two tiles beside Land in the sheet's `speed` box (`SpeedPanel`), `<n> ft.` from
+     `speed.swim` / `speed.fly`, the fly value followed by `(<maneuverability>)` from `flyManeuverability`; a mode the
+     character lacks shows `—` (the screen's no-value mark; paper keeps its empty box).
+   - **Conditional bonuses** (E2.25): a "Conditional Bonuses" list directly under the three totals in the sheet's
+     `saves` box (`SavingThrowsPanel`): the same entries and order as the printed box (HP, Initiative, Fortitude,
+     Reflex, Will once per rule, AC, CMB, CMD, the Skills' situational lines); none → "None stated.". The Skills
+     panel's "Not added to a total" line stays where it is (the screen has room; not asked to move).
+   - **Resistances** (E2.26): a "Resistances" panel in the Defense tab where the Damage Reduction line is today
+     (`CharacterSheet.tsx:1417-1421`, above `SavesPanel`): Acid, Cold, Electricity, Fire, Sonic tiles, Damage
+     Reduction, Spell Resistance and Immunities from `resistances`; the old one-line DR moves into it; the
+     equipment-effects Spell Resistance tile (`:1368`) stays (it is the items' own total). None → `—` tiles.
 
 ### §24.4 What this supersedes
 
@@ -620,6 +639,8 @@ count works (G-8 note).
 | Q2 | Should real characters record their languages? | `known_languages()` is the constant `["Common"]` (`character_hub.rs:743`); the app has no language store or picker; 7 languages exist only in the print proof | No store in SD-40; the seven-language Aldric is a print-proof fixture. A languages field (free text, saved with the bio, printed on page 1) would be one new main-lane card before E2.MC3 if the operator wants it |
 | Q3 | Fly maneuverability on paper | The fly record states it in words ("average") | Printed beside the Fly box value: `60 ft. (average)` |
 
-**Enforced by:** E2.16–E2.23, E2.MC3, E2.G round 3, E3.7, E3.MC, E4.1, E4.2, E4.MC (`kanban.md`,
-`epic-breakdown.md`). Cards 40 → 50 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`).
+**Enforced by:** E2.16–E2.26, E2.MC3, E2.G round 3, E3.7, E3.MC, E4.1, E4.2, E4.MC (`kanban.md`,
+`epic-breakdown.md`). Cards 40 → 53: 50 at the replan, + E2.24–E2.26 for the operator's UI addition, §24.3.8
+(`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'` → 53). ui-smoke rows 173 → 176 (E2.24–E2.26) → 177 (E3.6)
+→ 181 (E4.2), G-9.
 **Revisit:** the operator, at E2.G round 3 (page 1) and E5.2 (the sections).

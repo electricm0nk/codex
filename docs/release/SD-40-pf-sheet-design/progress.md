@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 24 of 50 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 50: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan, `decisions.md §24`) |
+| Cards complete | 24 of 53 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 53: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan + 3 UI cards, `decisions.md §24`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -176,7 +176,10 @@ deltas, what was looked at, retro summary, worktrees swept)
   no progression block; every PF character's languages are the constant `["Common"]`.
 - **Correction:** G-4's `grep -c 'usable: yes'` counted the receipt's own instructions (3 with no sign-off on
   `d5cd0a3ea6`); anchored to `^- Aldric .* — usable: yes` (`decisions.md §24.5`).
-- **Cards:** 40 → 50. New: E2.16, E2.18, E2.20, E2.22, E2.23 (main), E2.17, E2.19, E2.21 (side lane `engine`,
+- **Operator addition (same day):** "let's make adjustments to the ui to include these fields as well" → UI cards
+  E2.24 (Swim/Fly beside Land), E2.25 (Conditional Bonuses under Saving Throws), E2.26 (Resistances in the Defense
+  tab), placements chosen by the author (`decisions.md §24.3.8`); census (f) added. ui-smoke rows 173 → 176.
+- **Cards:** 40 → 53. New: E2.16, E2.18, E2.20, E2.22, E2.23, E2.24–E2.26 (main), E2.17, E2.19, E2.21 (side lane `engine`,
   reopened), E2.MC3, E3.7. Rewritten: E2.G (round 3), E3.5 (section 7), E3.MC, E4.1, E4.2, E4.MC, E5.2, E5.4
   (seven sections). `SAME_IDS` check passes. Three operator questions open with DEFAULTs (`decisions.md §24.6`).
 
