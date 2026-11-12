@@ -22,12 +22,13 @@ const ELOWEN_ID: &str = "00000000-0000-0000-0000-000000000002";
 const TOMAS_ID: &str = "00000000-0000-0000-0000-000000000003";
 const AT: &str = "2026-11-05T00:00:00Z";
 
-/// The 20 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
+/// The 21 blocks every Pathfinder sheet prints, in the layout file's order: the Combat block split
 /// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the round-2 grid (E2.18,
 /// `decisions.md §24.3.1`: the AC boxes with no heading, then Speed; the left column, then the
 /// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Identity
-/// block opening page 2 (E2.5), the Languages under the portrait (E2.13).
-const BASE_HEADINGS: [&str; 20] = [
+/// block opening page 2 (E2.5), the Languages under the portrait (E2.13), the Conditional Bonuses
+/// box under the Saving Throws (E2.20).
+const BASE_HEADINGS: [&str; 21] = [
     "Portrait",
     "Languages",
     "Character Name",
@@ -37,6 +38,7 @@ const BASE_HEADINGS: [&str; 20] = [
     "Weapons",
     "Attack",
     "Saving Throws",
+    "Conditional Bonuses",
     "Abilities",
     "Skills",
     "Identity",
@@ -103,7 +105,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
         expected.extend([SPELLBOOK, MATH, BIO]);
-        assert_eq!(headings, expected, "{tag}: the 23 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
+        assert_eq!(headings, expected, "{tag}: the 24 blocks (Spells twice: its list, then the Spellbook), in the layout file's order");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -536,7 +538,7 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     assert_eq!(place("abilities"), Place::at(7, 5), "the Abilities sit beside it, on the right");
     assert_eq!(place("attack"), Place::under(0, 7), "the Attack is stacked in the left column, under the Weapons (E2.18)");
     let abilities = document.blocks.iter().position(|block| block.id == "abilities").expect("the Abilities");
-    assert_eq!(document.blocks[abilities - 1].id, "saves", "one row: the left column's cell, then the Abilities beside it");
+    assert_eq!(document.blocks[abilities - 1].id, "conditionalBonuses", "one row: the left column's cell, then the Abilities beside it");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
 
     document.blocks[abilities].place = Place::at(8, 5);
@@ -861,7 +863,7 @@ fn assert_page_one_whole(tag: &str, document: &crate::print::model::SheetDocumen
 }
 
 /// Page 1 (operator ruling R5, SD-40 `technical-design.md §4`, `decisions.md §23.3`, E2.4): on
-/// Letter and on A4, the first page holds its eleven blocks (portrait, Character Name and Campaign,
+/// Letter and on A4, the first page holds its twelve blocks (portrait, Character Name and Campaign,
 /// square block, abilities, armor class, attack, speed, saves, weapons, skills, languages), each
 /// whole (`assert_page_one_whole`), for the three seeds; with three weapons in hand too.
 #[test]
@@ -875,7 +877,7 @@ fn print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers() {
         }
     }
     // A character with three weapons in hand (the seed's longsword line three times over: the
-    // seeds hold one each) still prints the eleven blocks on page 1, on Letter and on A4.
+    // seeds hold one each) still prints the twelve blocks on page 1, on Letter and on A4.
     let root = seeded("page-one-three-weapons", ALDRIC_ID);
     for paper in [Paper::Letter, Paper::A4] {
         let mut document = sheet_document_at_root(&root, &PrintRequest { paper, ..request(false, false, false) }).expect("the document builds");
@@ -939,14 +941,14 @@ fn print_pf_blocks_page_one_stays_whole_with_a_bought_weapon_and_ring_with_no_ra
 }
 
 /// E2.4 (`decisions.md §23.2` new SD-b, §23.5): page 1's overflow rule. A Dwarf (Aldric with his
-/// race saved as `race:dwarf`: Hardy and Bravery under the saves) under each stress alone and all at
-/// once: six weapon lines, ten "Not added to a total" lines, a 40-character name, three campaigns.
+/// race saved as `race:dwarf`: Hardy, Bravery and Stability in the Conditional Bonuses box, E2.20)
+/// under each stress alone and all at once: six weapon lines, ten more lines in the Conditional
+/// Bonuses box (the notes case, `decisions.md §24.4`), a 40-character name, three campaigns.
 /// On Letter and A4, Typst diagnostics 0, and:
-/// - no page-1 block leaves page 1: each of the eleven `PAGE_ONE_BLOCKS` prints its heading and first
+/// - no page-1 block leaves page 1: each of the twelve `PAGE_ONE_BLOCKS` prints its heading and first
 ///   words before page 1's footer;
-/// - every line prints: each weapon line, save note, hit point and initiative note, skill line,
-///   not-added line, the name and each campaign is on page 1, or on page 2 after its block's
-///   `<heading> (continued)`;
+/// - every line prints: each weapon line, conditional bonus, skill line, the name and each campaign
+///   is on page 1, or on page 2 after its block's `<heading> (continued)`;
 /// - a continuation opens page 2 (nothing else of page 1 ran over), and all four at once on Letter
 ///   needs one (the rule fires).
 #[test]
@@ -977,12 +979,10 @@ fn print_pf_blocks_page_one_lists_continue_on_page_two_and_no_block_leaves() {
         let lines = (1..=6).map(|n| SheetRow { label: format!("{} {n}", line.label), ..line.clone() });
         weapons.rows.splice(1..2, lines);
     };
-    let ten_not_added = |document: &mut SheetDocument| {
-        let at = block(document, "skills");
-        let skills = &mut document.blocks[at];
-        skills.rows.retain(|row| row.label != "Not added to a total:");
-        let lines = (1..=10).map(|n| format!("Probe feat {n:02} on Perception: +2 when the stress test says so"));
-        skills.rows.push(SheetRow::new("Not added to a total:", Vec::<String>::new()).with_notes(lines));
+    let ten_conditional = |document: &mut SheetDocument| {
+        let at = block(document, "conditionalBonuses");
+        let lines = (1..=10).map(|n| SheetRow::new("Skills", [format!("Probe feat {n:02} on Perception: +2 when the stress test says so")]));
+        document.blocks[at].rows.extend(lines);
     };
     let long_name = |document: &mut SheetDocument| {
         document.title = NAME.to_owned();
@@ -993,10 +993,10 @@ fn print_pf_blocks_page_one_lists_continue_on_page_two_and_no_block_leaves() {
     let shapes: [(&str, bool, &[Stress]); 6] = [
         ("dwarf", false, &[]),
         ("six weapons", false, &[&six_weapons]),
-        ("ten not-added lines", false, &[&ten_not_added]),
+        ("ten conditional lines", false, &[&ten_conditional]),
         ("40-character name", false, &[&long_name]),
         ("three campaigns", true, &[]),
-        ("all at once", true, &[&six_weapons, &ten_not_added, &long_name]),
+        ("all at once", true, &[&six_weapons, &ten_conditional, &long_name]),
     ];
     for (shape, with_campaigns, stresses) in shapes {
         for paper in [Paper::Letter, Paper::A4] {
@@ -1028,7 +1028,7 @@ fn print_pf_blocks_page_one_lists_continue_on_page_two_and_no_block_leaves() {
             for block in &document.blocks {
                 let listed: Vec<String> = match block.id {
                     "weapons" => block.rows.iter().skip(1).map(|row| row.label.clone()).collect(),
-                    "saves" | "squareBlock" => block.rows.iter().flat_map(|row| row.notes.clone()).collect(),
+                    "conditionalBonuses" => block.rows.iter().map(|row| format!("{}: {}", row.label, row.values[0])).collect(),
                     // Each skill line by its name, then each line under the column.
                     "skills" => block.rows.iter().flat_map(|row| if row.values.is_empty() { row.notes.clone() } else { vec![row.label.clone()] }).collect(),
                     "nameCampaign" => block.rows.iter().flat_map(|row| row.values.clone()).filter(|value| !value.is_empty()).collect(),
@@ -1234,32 +1234,26 @@ fn print_pf_blocks_square_block_prints_hp_initiative_encumbrance_and_conditions(
     assert!(printed[printed.find("Conditions").expect("Conditions")..].contains("Shaken"), "Shaken prints in the Conditions box: {printed}");
 }
 
-/// E2.9 (`decisions.md §23.1` item 3a): under the square block, the engine's notes (E2.6's
-/// `conditionalNotes`), each `label: value condition`: the hit point notes, then the initiative
-/// notes, each list followed by two blank lines, then two blank lines for encumbrance notes (no
-/// engine source, E2.6). E2.6's initiative fixture (APG trait Veteran of Battle, saved on Aldric)
-/// prints its note under Initiative; Aldric as seeded holds none, so only the captions and the
-/// blank lines print. On Letter page 1 has no room for the note's three lines in the Initiative
-/// column, so it prints under `Hit Points (continued)` at the top of page 2 (E2.4's overflow rule,
-/// `decisions.md §23.2` SD-b): its Initiative notes list holds it either way.
+/// E2.9, re-pinned by E2.20 (`decisions.md §24.3.4`): the square block prints no notes, no notes
+/// captions and no blank notes lines; the engine's hit point and initiative notes (E2.6's
+/// `conditionalNotes`) print in the Conditional Bonuses box, each `<what>: label: value condition`.
+/// Aldric as seeded holds none; E2.6's initiative fixture (APG trait Veteran of Battle, saved on
+/// Aldric) prints its note in the box under `Initiative`, on Letter page 1.
 #[test]
 fn print_pf_blocks_square_block_prints_the_engine_notes() {
     use codex::saved_character::local_store::SavedCharacterStore;
-    let notes_of = |block: &crate::print::model::SheetBlock, label: &str| {
-        block.rows.iter().find(|row| row.label == label).unwrap_or_else(|| panic!("`{label}`: {:?}", block.rows)).notes.clone()
-    };
-    let square = |root: &Path| {
-        let document = sheet_document_at_root(root, &request(false, false, false)).expect("the document builds");
-        document.blocks.iter().find(|block| block.id == "squareBlock").expect("the squareBlock prints").clone()
-    };
+    let document_of = |root: &Path| sheet_document_at_root(root, &request(false, false, false)).expect("the document builds");
+    let block = |document: &crate::print::model::SheetDocument, id: &str| document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("the {id} block")).clone();
 
     let plain = seeded("square-notes-aldric", ALDRIC_ID);
     let loaded = load_saved_character_at_root(&plain).expect("Aldric loads");
     assert!(loaded.conditional_notes.hit_points.is_empty() && loaded.conditional_notes.initiative.is_empty(), "Aldric holds no HP or initiative note");
-    let block = square(&plain);
-    assert_eq!((notes_of(&block, "Max"), notes_of(&block, "Initiative")), (Vec::<String>::new(), Vec::new()), "Aldric: no note, blank lines only");
+    let square = block(&document_of(&plain), "squareBlock");
+    assert!(square.rows.iter().all(|row| row.notes.is_empty()), "the square block carries no notes: {:?}", square.rows);
     let text = pdf_text(&render(&plain, &request(false, false, false)));
-    assert_in_order(square_text(&text), &["Hit point notes", "Initiative notes", "Encumbrance notes"]);
+    for retired in ["Hit point notes", "Initiative notes", "Encumbrance notes"] {
+        assert!(!square_text(&text).contains(retired), "no `{retired}` under the square block: {}", square_text(&text));
+    }
 
     let veteran = seeded("square-notes-veteran", ALDRIC_ID);
     let mut envelope = SavedCharacterStore::load(&veteran).expect("the seed's envelope loads");
@@ -1273,7 +1267,10 @@ fn print_pf_blocks_square_block_prints_the_engine_notes() {
         .find(|note| note.rule_id == "advanced_players_guide:trait:trait_veteran_of_battle")
         .unwrap_or_else(|| panic!("E2.6's initiative fixture lands in `initiative`: {:?}", loaded.conditional_notes));
     let words = format!("{}: {} {}", note.label, note.value, note.condition);
-    assert_eq!(notes_of(&square(&veteran), "Initiative"), vec![words.clone()], "the note, in the engine's words");
+    let document = document_of(&veteran);
+    assert!(block(&document, "squareBlock").rows.iter().all(|row| row.notes.is_empty()), "the note leaves the square block");
+    let boxed = block(&document, "conditionalBonuses");
+    assert!(boxed.rows.iter().any(|row| row.label == "Initiative" && row.values == vec![words.clone()]), "the note, in the engine's words, under Initiative: {:?}", boxed.rows);
     let letter = PrintRequest { paper: Paper::Letter, ..request(false, false, false) };
     let pdf = render(&veteran, &letter);
     // For a reader's own look: the veteran's page 1, with Shaken saved too, when asked for.
@@ -1285,9 +1282,9 @@ fn print_pf_blocks_square_block_prints_the_engine_notes() {
         std::fs::write(Path::new(&out).join("veteran-shaken-letter.pdf"), render(&veteran, &letter)).expect("the PDF writes");
     }
     let text = pdf_text(&pdf);
-    let printed = text.find("Hit Points (continued)").map_or_else(|| square_text(&text), |at| &text[at..]);
-    let initiative_notes = &printed[printed.find("Initiative notes").expect("Initiative notes")..printed.find("Encumbrance notes").expect("Encumbrance notes")];
-    assert!(initiative_notes.contains(&words), "`{words}` prints under Initiative notes: {printed}");
+    let one = crate::print::print_golden::page_one(&text, &document.title, page_count(&pdf)).expect("page 1's footer");
+    let boxed = &one[one.find("Conditional Bonuses").expect("the box prints on page 1")..];
+    assert!(boxed.contains(&format!("Initiative: {words}")), "`Initiative: {words}` prints in the box: {boxed}");
 }
 
 /// How often `token` prints as a word of its own in `text` (split on whitespace).
@@ -1344,10 +1341,10 @@ fn print_pf_blocks_page_one_prints_totals_only() {
     }
 }
 
-/// E2.10 (`decisions.md §23.1` item 4): under the three save totals, each save's notes from E2.6
-/// (`label: value condition`), a note the rules give all three saves printed once, then two blank
-/// lines. A Dwarf (Aldric with his race saved as `race:dwarf`): Hardy's words (CRB p.21) print
-/// once under the saves; Bravery (CRB p.55, Will alone) prints too.
+/// E2.10, re-pinned by E2.20 (`decisions.md §24.3.4–5`): the Saving Throws print their three
+/// totals and no note; each save's notes print in the Conditional Bonuses box, a note the rules give
+/// all three saves once under `Saves`. A Dwarf (Aldric with his race saved as `race:dwarf`): Hardy's
+/// words (CRB p.21) print once in the box under `Saves`; Bravery (CRB p.55, Will alone) under `Will`.
 #[test]
 fn print_pf_blocks_save_notes_print_under_the_saves() {
     use codex::saved_character::local_store::SavedCharacterStore;
@@ -1361,23 +1358,23 @@ fn print_pf_blocks_save_notes_print_under_the_saves() {
     for list in [&notes.reflex, &notes.will] {
         assert!(list.iter().any(|note| note.rule_id == hardy.rule_id), "Hardy lands under each save: {notes:?}");
     }
-    let words = |note: &codex::rules_core::pilot_compute::conditional_notes::ConditionalNote| {
-        [note.value.as_str(), note.condition.as_str()].into_iter().filter(|part| !part.is_empty()).collect::<Vec<_>>().join(" ")
-    };
-    let hardy_words = format!("{}: {}", hardy.label, words(hardy));
+    let hardy_words = format!("Saves: {}", box_words(hardy));
     let bravery = notes.will.iter().find(|note| note.label == "Bravery").expect("Bravery lands under Will");
-    let bravery_words = format!("{}: {}", bravery.label, words(bravery));
+    let bravery_words = format!("Will: {}", box_words(bravery));
 
     let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
     let saves = document.blocks.iter().find(|block| block.id == "saves").expect("the saves block");
-    let printed: Vec<&String> = saves.rows.iter().flat_map(|row| &row.notes).collect();
-    assert_eq!(printed.iter().filter(|note| ***note == hardy_words).count(), 1, "Hardy prints once: {printed:?}");
-    assert!(printed.iter().any(|note| **note == bravery_words), "Bravery prints: {printed:?}");
+    assert!(saves.rows.iter().all(|row| row.notes.is_empty()), "the saves carry no notes: {:?}", saves.rows);
+    let boxed = document.blocks.iter().find(|block| block.id == "conditionalBonuses").expect("the box");
+    let printed: Vec<String> = boxed.rows.iter().map(|row| format!("{}: {}", row.label, row.values[0])).collect();
+    assert_eq!(printed.iter().filter(|line| **line == hardy_words).count(), 1, "Hardy prints once: {printed:?}");
+    assert!(printed.contains(&bravery_words), "Bravery prints: {printed:?}");
     for paper in [Paper::Letter, Paper::A4] {
         let (_, one, _) = page_one_text(&root, paper, Vec::new());
-        let under = &one[one.find("Saving Throws").expect("the saves print")..];
-        assert_eq!(under.matches(&hardy_words).count(), 1, "{paper:?}: Hardy's words print once under the saves: {under}");
-        assert!(under.contains(&bravery_words), "{paper:?}: Bravery's words print under the saves: {under}");
+        let saves_text = &one[one.find("Saving Throws").expect("the saves print")..one.find("Conditional Bonuses").expect("the box prints")];
+        assert!(!saves_text.contains("Hardy") && !saves_text.contains("Bravery"), "{paper:?}: no note under the saves: {saves_text}");
+        assert_eq!(one.matches(&hardy_words).count(), 1, "{paper:?}: Hardy's words print once: {one}");
+        assert!(one.contains(&bravery_words), "{paper:?}: Bravery's words print in the box: {one}");
     }
 }
 
@@ -1445,7 +1442,7 @@ fn print_pf_blocks_skills_print_one_line_each_with_name_and_total() {
     for block in &mut document.blocks {
         match block.id {
             "squareBlock" => block.place = Place::at(0, 9),
-            "weapons" | "attack" | "saves" => block.place = Place::under(0, 9),
+            "weapons" | "attack" | "saves" | "conditionalBonuses" => block.place = Place::under(0, 9),
             "abilities" => block.place = Place::at(9, 3),
             "skills" => block.place = Place::under(9, 3),
             _ => {}
@@ -1588,6 +1585,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
         ("weapons", place(0, 7, true, 1)),
         ("attack", place(0, 7, true, 1)),
         ("saves", place(0, 7, true, 1)),
+        ("conditionalBonuses", place(0, 7, true, 1)),
         ("abilities", place(7, 5, false, 1)),
         ("skills", place(7, 5, true, 1)),
     ];
@@ -1603,7 +1601,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
             assert_eq!(one.matches("Armor Class").count(), 1, "{tag} {paper:?}: `Armor Class` prints once, as the AC box's label: {one}");
             assert_in_order(
                 &one,
-                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Abilities", "Skills"],
+                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Conditional Bonuses", "Abilities", "Skills"],
             );
         }
     }
@@ -1652,5 +1650,203 @@ fn print_pf_blocks_speed_prints_land_swim_fly_boxes() {
                 std::fs::write(Path::new(&out).join(format!("speed-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
             }
         }
+    }
+}
+
+/// The `conditional-bonuses` look's own facts about its box (`look_metadata`): the box's lines, the
+/// blank ones among them, and its measured height in points.
+fn conditional_box(document: &crate::print::model::SheetDocument) -> (u64, u64, f64) {
+    let facts = crate::print::typst::look_metadata(document, "conditional-bonuses-box").expect("the sheet typesets");
+    assert_eq!(facts.len(), 1, "one Conditional Bonuses box prints: {facts:?}");
+    let fact = &facts[0];
+    let number = |key: &str| fact[key].as_f64().unwrap_or_else(|| panic!("the box states `{key}`: {fact}"));
+    (number("lines") as u64, number("blank") as u64, number("height"))
+}
+
+/// The engine's words for `note`, as the box prints them after `<what>: `: `label: value condition`.
+fn box_words(note: &codex::rules_core::pilot_compute::conditional_notes::ConditionalNote) -> String {
+    let said: Vec<&str> = [note.value.as_str(), note.condition.as_str()].into_iter().filter(|part| !part.is_empty()).collect();
+    format!("{}: {}", note.label, said.join(" "))
+}
+
+/// E2.20 (`decisions.md §24.3.4–5`, §24.6 Q1): the Conditional Bonuses box, under the Saving Throws
+/// in the left column, lists every conditional the engine states, in order HP, Initiative,
+/// Fortitude, Reflex, Will (a note on several saves once), AC, CMB, CMD, Skills, each line
+/// `<what>: <label>: <value> <condition>`, in an outlined box of 10 lines of which at least 4 are
+/// blank. Nothing conditional prints anywhere else on page 1: no `Hit point notes`, `Initiative
+/// notes`, `Encumbrance notes`, `Not added to a total`. Letter and A4: Aldric (Bravery), Aldric
+/// saved as an Elf (Elven Immunities, on all three saves, once), and a fixture holding a note of
+/// every kind (Aldric as a Dwarf with the Veteran of Battle trait: Hardy, Bravery, Stability,
+/// Veteran of Battle from the engine; an HP, an AC, a CMB and a skill line added to its load
+/// response): more lines than the box holds, so the rest continue on page 2, each once, and the
+/// Weapons keep page 1.
+#[test]
+fn print_pf_blocks_conditional_bonuses_box_lists_every_conditional() {
+    use crate::character_custom::CharacterCustomDto;
+    use codex::rules_core::pilot_compute::conditional_notes::ConditionalNote;
+    use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillNotFolded;
+    use codex::saved_character::local_store::SavedCharacterStore;
+    const RETIRED: [&str; 4] = ["Hit point notes", "Initiative notes", "Encumbrance notes", "Not added to a total"];
+    let as_race = |tag: &str, race: &str, traits: &[&str]| {
+        let root = seeded(tag, ALDRIC_ID);
+        let mut envelope = SavedCharacterStore::load(&root).expect("the seed's envelope loads");
+        envelope.character_input.chosen.race_id = race.to_owned();
+        envelope.character_input.chosen.selected_traits.extend(traits.iter().map(|t| (*t).to_owned()));
+        SavedCharacterStore::save(&envelope, &root).expect("the race saves");
+        root
+    };
+    let lines_of = |document: &crate::print::model::SheetDocument| -> Vec<String> {
+        let block = document.blocks.iter().find(|block| block.id == "conditionalBonuses").unwrap_or_else(|| panic!("the conditionalBonuses block: {:?}", document.blocks.iter().map(|b| b.id).collect::<Vec<_>>()));
+        assert_eq!((block.heading.as_str(), block.look.name()), ("Conditional Bonuses", "conditional-bonuses"), "the box's heading and look");
+        let at = document.blocks.iter().position(|b| b.id == "conditionalBonuses").expect("placed");
+        assert_eq!(document.blocks[at - 1].id, "saves", "the box sits under the Saving Throws");
+        assert_eq!((block.place.x, block.place.span, block.place.under), (0, 7, true), "in the left column");
+        block.rows.iter().map(|row| format!("{}: {}", row.label, row.values.join(" "))).collect()
+    };
+    // Each line prints once: in the box on page 1, or (`may_continue`, a box too full for its lines)
+    // under `Conditional Bonuses (continued)` at the top of page 2.
+    let check_page_one = |tag: &str, document: &crate::print::model::SheetDocument, pdf: &[u8], lines: &[String], may_continue: bool| {
+        let text = pdf_text(pdf);
+        let pages = page_count(pdf);
+        let one = crate::print::print_golden::page_one(&text, &document.title, pages).unwrap_or_else(|| panic!("{tag}: page 1's footer: {text}"));
+        let boxed = &one[one.find("Conditional Bonuses").unwrap_or_else(|| panic!("{tag}: the box prints on page 1: {one}"))..];
+        let (_, after) = text[one.len()..].split_once(&format!("page 1 of {pages}")).unwrap_or_else(|| panic!("{tag}: page 1's footer"));
+        let two = after.split_once(" page 2 of ").map_or(after, |(page, _)| page).trim_start();
+        // Matched without whitespace: a line breaks at a word's own hyphen ("spell-like").
+        let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+        let continued = unspaced(two.strip_prefix("Conditional Bonuses (continued)").unwrap_or(""));
+        assert!(may_continue || continued.is_empty(), "{tag}: every line fits the box: page 2 reads {two}");
+        let (one_flat, boxed) = (unspaced(one), unspaced(boxed));
+        for line in lines {
+            let line = unspaced(line);
+            assert_eq!(one_flat.matches(&line).count() + continued.matches(&line).count(), 1, "{tag}: `{line}` prints once: page 1 {one}, page 2 {two}");
+            assert!(boxed.contains(&line) || continued.contains(&line), "{tag}: `{line}` prints in the box or its continuation: {boxed}");
+        }
+        for retired in RETIRED {
+            assert!(!one.contains(retired), "{tag}: page 1 prints no `{retired}`: {one}");
+        }
+        let (lines, blank, _) = conditional_box(document);
+        assert_eq!(lines, 10, "{tag}: the box is 10 lines (operator Q1)");
+        assert!(blank >= 4, "{tag}: at least 4 blank lines, {blank} printed");
+    };
+
+    // Aldric: Bravery, in the box and nowhere else on page 1.
+    let aldric = seeded("box-aldric", ALDRIC_ID);
+    let loaded = load_saved_character_at_root(&aldric).expect("Aldric loads");
+    let bravery = loaded.conditional_notes.will.iter().find(|note| note.label == "Bravery").expect("Aldric holds Bravery");
+    let bravery_line = format!("Will: {}", box_words(bravery));
+    // Elf: Elven Immunities on every save, printed once.
+    let elf = as_race("box-elf", "race:elf", &[]);
+    let elf_loaded = load_saved_character_at_root(&elf).expect("the elf loads");
+    let immunities = elf_loaded.conditional_notes.will.iter().find(|note| note.label == "Elven Immunities").unwrap_or_else(|| panic!("the elf holds Elven Immunities: {:?}", elf_loaded.conditional_notes));
+    assert!(elf_loaded.conditional_notes.fortitude.iter().chain(&elf_loaded.conditional_notes.reflex).filter(|n| n.rule_id == immunities.rule_id).count() == 2, "on all three saves");
+    let immunities_line = format!("Saves: {}", box_words(immunities));
+    for (tag, root, line) in [("aldric", &aldric, &bravery_line), ("elf", &elf, &immunities_line)] {
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, _, pdf) = page_one_text(root, paper, Vec::new());
+            let lines = lines_of(&document);
+            assert!(lines.contains(line), "{tag} {paper:?}: the box lists `{line}`: {lines:?}");
+            check_page_one(&format!("{tag} {paper:?}"), &document, &pdf, &lines, false);
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("box-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            }
+        }
+    }
+
+    // Every kind: the engine's Dwarf + Veteran of Battle notes, and an HP, AC, CMB and skill line.
+    let every = as_race("box-every", "race:dwarf", &["trait:trait_veteran_of_battle"]);
+    let mut loaded = load_saved_character_at_root(&every).expect("the dwarf loads");
+    let probe = |label: &str, condition: &str| ConditionalNote { label: label.to_owned(), value: "+2".to_owned(), condition: condition.to_owned(), rule_id: format!("probe:{label}") };
+    let notes = &mut loaded.conditional_notes;
+    assert!(!notes.initiative.is_empty() && !notes.combat_maneuver_defense.is_empty() && !notes.fortitude.is_empty(), "the engine's notes: {notes:?}");
+    notes.hit_points.push(probe("Probe Toughness", "when the probe says so"));
+    notes.armor_class.push(probe("Probe Dodge", "against the probe"));
+    notes.combat_maneuver_bonus.push(probe("Probe Grapple", "to grapple the probe"));
+    loaded.feat_skill_bonuses.situational.push(FeatSkillNotFolded {
+        skill: "perception".to_owned(),
+        rule_id: "probe:alert".to_owned(),
+        label: "Probe Alert".to_owned(),
+        reason: "+2 when the probe listens".to_owned(),
+    });
+    let notes = &loaded.conditional_notes;
+    let hardy = notes.fortitude.iter().find(|n| n.label == "Hardy").expect("Hardy");
+    let mut want = vec![format!("HP: {}", box_words(&notes.hit_points[0]))];
+    want.extend(notes.initiative.iter().map(|n| format!("Initiative: {}", box_words(n))));
+    want.push(format!("Saves: {}", box_words(hardy)));
+    want.extend(notes.will.iter().filter(|n| n.rule_id != hardy.rule_id).map(|n| format!("Will: {}", box_words(n))));
+    want.push(format!("AC: {}", box_words(&notes.armor_class[0])));
+    want.push(format!("CMB: {}", box_words(&notes.combat_maneuver_bonus[0])));
+    want.extend(notes.combat_maneuver_defense.iter().map(|n| format!("CMD: {}", box_words(n))));
+    want.push("Skills: Probe Alert on Perception: +2 when the probe listens".to_owned());
+    assert!(notes.fortitude.iter().chain(&notes.reflex).all(|n| n.rule_id == hardy.rule_id), "the dwarf's only Fortitude and Reflex note is Hardy: {notes:?}");
+    for paper in [Paper::Letter, Paper::A4] {
+        let request = PrintRequest { paper, ..request(false, false, false) };
+        let sources = super::SheetSources {
+            loaded: &loaded,
+            held: list_held_equipment_at_root(&every).expect("the copies list"),
+            custom: CharacterCustomDto::default(),
+            bio: CharacterBioDto::default(),
+            money: None,
+            portrait: None,
+            request: &request,
+        };
+        let document = crate::print::layout::pf1e::layout(&sources);
+        assert_eq!(lines_of(&document), want, "{paper:?}: every kind, under its word, in order");
+        let typeset = crate::print::typst::typeset(&document).expect("the sheet typesets");
+        assert!(typeset.warnings.is_empty(), "{paper:?}: Typst reports no diagnostics: {:?}", typeset.warnings);
+        check_page_one(&format!("every kind {paper:?}"), &document, &typeset.pdf, &want, true);
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("box-every-kind-{paper:?}.pdf")), &typeset.pdf).expect("the PDF writes");
+        }
+        let identity = pdf_text(&typeset.pdf);
+        assert!(!identity.contains("Weapons (continued)"), "every kind {paper:?}: a full box takes no room from the Weapons: {identity}");
+    }
+}
+
+/// E2.20 (`decisions.md §24.3.5`, SD-b): 30 notes in the box. On Letter and A4 the box keeps its
+/// height (the one-note box's) and its 4 blank lines; every note prints once, on page 1 in the box
+/// or at the top of page 2 under `Conditional Bonuses (continued)`; some do continue.
+#[test]
+fn print_pf_blocks_conditional_bonuses_overflow_continues_on_page_two() {
+    use crate::print::model::SheetRow;
+    let root = seeded("box-overflow", ALDRIC_ID);
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("thirty {paper:?}");
+        let printed = PrintRequest { paper, ..request(false, false, false) };
+        let mut document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let at = document.blocks.iter().position(|block| block.id == "conditionalBonuses").expect("the conditionalBonuses block");
+        let (_, _, one_note_height) = conditional_box(&document);
+        let notes: Vec<String> = (1..=30).map(|n| format!("Probe note {n:02}: +1 when the overflow test says so")).collect();
+        document.blocks[at].rows = notes.iter().map(|note| SheetRow::new("Will", [note.clone()])).collect();
+        let typeset = crate::print::typst::typeset(&document).expect("thirty notes typeset");
+        assert!(typeset.warnings.is_empty(), "{tag}: Typst reports no diagnostics: {:?}", typeset.warnings);
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("box-thirty-{paper:?}.pdf")), &typeset.pdf).expect("the PDF writes");
+        }
+        let (lines, blank, height) = conditional_box(&document);
+        assert_eq!(lines, 10, "{tag}: the box is 10 lines");
+        assert!(blank >= 4, "{tag}: the 4 blank lines stay, {blank} printed");
+        assert!((height - one_note_height).abs() < 0.01, "{tag}: the box keeps its height: {height} pt against {one_note_height} pt");
+        let text = pdf_text(&typeset.pdf);
+        let pages = page_count(&typeset.pdf);
+        let one = crate::print::print_golden::page_one(&text, &document.title, pages).unwrap_or_else(|| panic!("{tag}: page 1's footer"));
+        let first = unspaced(one);
+        let (_, after) = text[one.len()..].split_once(&format!("page 1 of {pages}")).unwrap_or_else(|| panic!("{tag}: page 1's footer"));
+        let second = unspaced(after.split_once(" page 2 of ").map_or(after, |(page, _)| page));
+        let head = unspaced("Conditional Bonuses (continued)");
+        assert!(second.starts_with(&head), "{tag}: page 2 opens with the continuation: {second}");
+        let mut continued = 0;
+        for note in &notes {
+            let line = unspaced(&format!("Will: {note}"));
+            let on_one = first.matches(&line).count();
+            let on_two = second[head.len()..].matches(&line).count();
+            assert_eq!(on_one + on_two, 1, "{tag}: `{note}` prints once, on page 1 ({on_one}) or under the continuation ({on_two})");
+            continued += on_two;
+        }
+        assert!(continued > 0 && continued < notes.len(), "{tag}: some notes fill the box, the rest continue: {continued} of 30 on page 2");
     }
 }

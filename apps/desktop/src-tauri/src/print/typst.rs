@@ -42,6 +42,7 @@ pub(crate) const LOOKS: &[(&str, &str)] = &[
     ("portrait", include_str!("../../resources/print/looks/portrait.typ")),
     ("name-campaign", include_str!("../../resources/print/looks/name-campaign.typ")),
     ("languages", include_str!("../../resources/print/looks/languages.typ")),
+    ("conditional-bonuses", include_str!("../../resources/print/looks/conditional-bonuses.typ")),
 ];
 
 /// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).
@@ -191,6 +192,35 @@ pub fn typeset(document: &SheetDocument) -> Result<TypesetSheet, String> {
 }
 
 fn typeset_as_given(document: &SheetDocument) -> Result<TypesetSheet, String> {
+    let (paged, warnings) = compile(document)?;
+    let options = PdfOptions { ident: typst::foundations::Smart::Custom(document.title.clone()), ..PdfOptions::default() };
+    let pdf = typst_pdf::pdf(&paged, &options)
+        .map_err(|errors| format!("the sheet did not export to PDF: {}", describe(&errors).join("; ")))?;
+    Ok(TypesetSheet { pdf, warnings })
+}
+
+/// What a look states about its own layout: the value of every `metadata` element labelled `label`
+/// in the typeset sheet, in page order (a look's measured facts that the PDF's text cannot show,
+/// such as how many blank lines a fixed box holds).
+#[cfg(test)]
+pub fn look_metadata(document: &SheetDocument, label: &str) -> Result<Vec<serde_json::Value>, String> {
+    use typst::foundations::{Label, Selector};
+    use typst::introspection::Introspector;
+    let (paged, _) = compile(document)?;
+    let label = Label::new(typst::utils::PicoStr::intern(label)).ok_or_else(|| format!("`{label}` is not a label"))?;
+    paged
+        .introspector()
+        .query(&Selector::Label(label))
+        .iter()
+        .map(|element| {
+            let value = element.get_by_name("value").map_err(|err| format!("metadata without a value: {err:?}"))?;
+            serde_json::to_value(&value).map_err(|err| err.to_string())
+        })
+        .collect()
+}
+
+/// The sheet typeset into pages, and every warning Typst raised.
+fn compile(document: &SheetDocument) -> Result<(PagedDocument, Vec<String>), String> {
     document.check_places()?;
     if let Some(block) = document.blocks.iter().find(|block| !LOOKS.iter().any(|(name, _)| *name == block.look.name())) {
         return Err(format!("print.look: block `{}` ({}) names the look `{}`, which has no template", block.id, block.heading, block.look.name()));
@@ -209,8 +239,5 @@ fn typeset_as_given(document: &SheetDocument) -> Result<TypesetSheet, String> {
     let paged = warned
         .output
         .map_err(|errors| format!("the sheet did not typeset: {}", describe(&errors).join("; ")))?;
-    let options = PdfOptions { ident: typst::foundations::Smart::Custom(document.title.clone()), ..PdfOptions::default() };
-    let pdf = typst_pdf::pdf(&paged, &options)
-        .map_err(|errors| format!("the sheet did not export to PDF: {}", describe(&errors).join("; ")))?;
-    Ok(TypesetSheet { pdf, warnings })
+    Ok((paged, warnings))
 }

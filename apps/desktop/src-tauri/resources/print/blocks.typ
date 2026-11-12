@@ -5,16 +5,17 @@
 
 #import "/looks/table.typ": look as table-look
 #import "/looks/abilities.typ": look as abilities-look
-#import "/looks/square-block.typ": look as square-block-look, items as square-block-items
+#import "/looks/square-block.typ": look as square-block-look
 #import "/looks/armor-class.typ": look as armor-class-look
 #import "/looks/attack.typ": look as attack-look
-#import "/looks/saves.typ": look as saves-look, items as saves-items
+#import "/looks/saves.typ": look as saves-look
 #import "/looks/speed.typ": look as speed-look
 #import "/looks/skills.typ": look as skills-look, items as skills-items
 #import "/looks/weapons.typ": look as weapons-look, items as weapons-items
 #import "/looks/portrait.typ": look as portrait-look
 #import "/looks/name-campaign.typ": look as name-campaign-look
 #import "/looks/languages.typ": look as languages-look
+#import "/looks/conditional-bonuses.typ": look as conditional-bonuses-look, fit as conditional-bonuses-fit
 
 #let looks = (
   table: table-look,
@@ -29,15 +30,20 @@
   portrait: portrait-look,
   "name-campaign": name-campaign-look,
   languages: languages-look,
+  "conditional-bonuses": conditional-bonuses-look,
 )
 
 // The looks whose list page 1's overflow rule may shrink and split (E2.4, decisions.md §23.2
 // SD-b): each look's `items(b)`, the lines it prints that can continue on page 2.
 #let lists = (
-  "square-block": square-block-items,
-  saves: saves-items,
   skills: skills-items,
   weapons: weapons-items,
+)
+
+// The looks of fixed height (E2.20): each look's `fit(b, width)` keeps what fills its box and hands
+// the rest (`rest`) to page 2, whatever room page 1 has.
+#let boxes = (
+  "conditional-bonuses": conditional-bonuses-fit,
 )
 
 // One block in its own look, without the page break: what a grid cell holds.

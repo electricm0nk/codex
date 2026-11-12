@@ -132,13 +132,13 @@ pub enum Look {
     /// The six ability boxes: score, modifier, and the temp score and temp modifier write-ins.
     Abilities,
     /// The square block (SD-40 E2.9): Hit Points (max, the big current-HP area, nonlethal),
-    /// Initiative, Encumbrance and Conditions, then the notes and their blank lines.
+    /// Initiative, Encumbrance and Conditions.
     SquareBlock,
     /// Armor Class, Touch and Flat-Footed boxes over a strip of the AC's component cells.
     ArmorClass,
     /// The Base Attack Bonus, Melee, CMB and CMD boxes.
     Attack,
-    /// The three saves: total, base, ability and the misc write-in.
+    /// The three saves, each its total, three to a line (E2.20).
     Saves,
     /// The land speed box.
     Speed,
@@ -156,12 +156,15 @@ pub enum Look {
     NameCampaign,
     /// The languages (SD-40 E2.13): the known list as one comma list, then one blank write-in line.
     Languages,
+    /// The Conditional Bonuses box (SD-40 E2.20): an outlined box of fixed height, a ruled line per
+    /// conditional, then blank write-in lines to its foot.
+    ConditionalBonuses,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 12] = [
+    pub const ALL: [Look; 13] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -174,6 +177,7 @@ impl Look {
         Look::Portrait,
         Look::NameCampaign,
         Look::Languages,
+        Look::ConditionalBonuses,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -191,6 +195,7 @@ impl Look {
             Look::Portrait => "portrait",
             Look::NameCampaign => "name-campaign",
             Look::Languages => "languages",
+            Look::ConditionalBonuses => "conditional-bonuses",
         }
     }
 }

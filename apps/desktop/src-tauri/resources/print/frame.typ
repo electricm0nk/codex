@@ -11,7 +11,7 @@
 // `place` (first column `x`, `span` columns wide, `row_span` rows tall); the layout file fills each
 // row in order.
 
-#import "/blocks.typ": sheet-block, block-look, lists
+#import "/blocks.typ": sheet-block, block-look, lists, boxes
 
 // A block marked `under` shares the cell of the block before it, stacked beneath it, so a column
 // of short blocks can sit beside a tall one.
@@ -35,7 +35,8 @@
       colspan: cell.first().place.span,
       // A cell more than one row tall (page 1's portrait beside the name row and the AC row, E2.18).
       rowspan: cell.first().place.at("row_span", default: 1),
-      if cell.len() == 1 { block-look(cell.first()) } else { stack(spacing: 1em, ..cell.map(block-look)) },
+      // Blocks stacked in one cell sit 0.7em apart: page 1's left column holds seven (E2.20).
+      if cell.len() == 1 { block-look(cell.first()) } else { stack(spacing: 0.7em, ..cell.map(block-look)) },
     )),
   )
 }
@@ -46,19 +47,27 @@
 // Page 1's overflow rule (SD-40 E2.4, decisions.md §23.2 SD-b). When page 1's run is taller than
 // the room page 1 has, the lists on it (`lists`: weapon lines, notes, the lines under the skills)
 // first shrink to the 8 pt floor (`compact`); if the run is still too tall, the lists give up their
-// last lines one at a time (the save notes, then the hit point and initiative notes, then the
-// skills' lines from the foot of the column, then the weapon lines; only where it lowers the run)
-// until it fits. What a list gave up prints at the top of page 2 under "<heading> (continued)",
-// in block order, each as wide as its block.
+// last lines one at a time (the skills' lines from the foot of the column, then the weapon lines;
+// only where it lowers the run) until it fits. A box of fixed height (`boxes`: the Conditional
+// Bonuses, E2.20) first keeps what fills its own lines, whatever room page 1 has. What a list or a
+// box gave up prints at the top of page 2 under "<heading> (continued)", in block order, each as
+// wide as its block.
 // No page-1 block leaves page 1 and no line is dropped. Heights are measured, never a rules
 // number (NR-2).
-#let cut-order = ("saves", "square-block", "skills", "weapons")
+#let cut-order = ("skills", "weapons")
+
+// A block's cell width on a `columns`-column grid `width` wide (the grid's gutter, below).
+#let cell-width(b, columns, width) = {
+  let gutter = 0.8em.to-absolute()
+  let column = (width - (columns - 1) * gutter) / columns
+  column * b.place.span + gutter * (b.place.span - 1)
+}
 
 #let grid-runs(columns, runs) = context {
   let width = page.width - 2 * margin.x
   let room = page.height - margin.y - here().position().y
   let tall(run) = measure(grid-run(columns, run), width: width).height
-  let first = runs.first()
+  let first = runs.first().map(b => if b.look in boxes { (boxes.at(b.look))(b, cell-width(b, columns, width)) } else { b })
   let rest = runs.slice(1)
   let splits(b) = b.look in lists and b.look in cut-order
   if tall(first) > room {
@@ -97,6 +106,10 @@
   }
   let continued = ()
   for (i, b) in first.enumerate() {
+    if keep.at(i) == none and b.at("rest", default: ()).len() > 0 {
+      let under = b.place.under and continued.len() > 0 and continued.last().place.span == b.place.span
+      continued.push(b + (heading: b.heading + " (continued)", list: b.rest, more: false, continued: true, place: (x: 0, span: b.place.span, under: under)))
+    }
     if keep.at(i) == none { continue }
     let items = (lists.at(b.look))(b)
     if keep.at(i) < items.len() {

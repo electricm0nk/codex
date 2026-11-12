@@ -8,6 +8,7 @@
 use super::{pounds, trim_number, SheetSources};
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{Look, SheetBlock, SheetRow};
+use codex::rules_core::pilot_compute::conditional_notes::ConditionalNote;
 use codex::rules_core::pilot_compute::ArmorClassPart;
 
 /// The portrait box (`portrait`, SD-40 E2.5): the saved portrait when the character has one (the
@@ -90,24 +91,22 @@ fn line(sources: &SheetSources, label: &str, cells: Vec<String>, source: &str) -
 /// <n>/—` whenever the screen shows one), Initiative (the total only), Encumbrance (the load
 /// response's limits, carried weight, remaining pounds, gear value and the load's name, as the
 /// Carried Weight panel shows them) and Conditions (the saved `custom.json` conditions, else the
-/// write-in). The engine's hit point and initiative notes (E2.6) ride on the `Max` and `Initiative`
-/// lines, each `label: value condition`; the look prints them, then the blank lines.
+/// write-in). The hit point and initiative notes print in the Conditional Bonuses box (E2.20).
 pub fn square_block(sources: &SheetSources) -> SheetBlock {
     let max = row_value(sources, "hit_points.max").map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string());
-    let notes = &sources.loaded.conditional_notes;
     let load = &sources.loaded.corpus_derived.encumbrance;
     // In print order (the page-1 tests find a block by its heading and first words): the current
     // area, then the max beside it.
     let mut rows = vec![
         SheetRow::new("Current", [write_in()]),
-        line(sources, "Max", vec![max], "hit_points.max").with_notes(notes.hit_points.iter().map(note_words)),
+        line(sources, "Max", vec![max], "hit_points.max"),
         SheetRow::new("Nonlethal", [write_in()]),
     ];
     if let Some(reduction) = sources.loaded.snapshot.as_ref().and_then(|s| s.damage_reduction) {
         rows.push(line(sources, "Damage Reduction", vec![format!("{reduction}/—")], "class_feature.barbarian.damage_reduction"));
     }
     rows.extend([
-        line(sources, "Initiative", vec![with_sign(row_value(sources, "initiative.total"))], "initiative.total").with_notes(notes.initiative.iter().map(note_words)),
+        line(sources, "Initiative", vec![with_sign(row_value(sources, "initiative.total"))], "initiative.total"),
         SheetRow::new("Conditions", [sources.custom.conditions.join(", ")]),
         SheetRow::new(
             "Encumbrance",
@@ -127,7 +126,7 @@ pub fn square_block(sources: &SheetSources) -> SheetBlock {
 }
 
 /// A conditional note as the sheet prints it: `label: value condition`, the engine's words.
-fn note_words(note: &codex::rules_core::pilot_compute::conditional_notes::ConditionalNote) -> String {
+fn note_words(note: &ConditionalNote) -> String {
     let said: Vec<&str> = [note.value.as_str(), note.condition.as_str()].into_iter().filter(|part| !part.is_empty()).collect();
     format!("{}: {}", note.label, said.join(" "))
 }
@@ -164,29 +163,55 @@ pub fn armor_class(sources: &SheetSources) -> SheetBlock {
 }
 
 /// The screen's Saving Throws box (`saves`, SD-40 E2.10, `decisions.md §23.1` item 4): each save's
-/// total only (the breakdown is Show the math's), then the save's notes from the engine (E2.6), each
-/// `label: value condition`; a note the rules give more than one save (a Dwarf's Hardy) rides on the
-/// first and prints once. The look adds the two blank lines.
+/// total only (the breakdown is Show the math's); the save notes print in the Conditional Bonuses
+/// box (E2.20, `decisions.md §24.3.4`).
 pub fn saves(sources: &SheetSources) -> SheetBlock {
     let snapshot = sources.loaded.snapshot.as_ref();
-    let notes = &sources.loaded.conditional_notes;
-    let mut printed: Vec<&str> = Vec::new();
-    let mut rows = Vec::new();
-    for (label, key, total, list) in [
-        ("Fortitude", "fortitude", snapshot.map(|s| s.total_saves.fortitude), &notes.fortitude),
-        ("Reflex", "reflex", snapshot.map(|s| s.total_saves.reflex), &notes.reflex),
-        ("Will", "will", snapshot.map(|s| s.total_saves.will), &notes.will),
-    ] {
-        let mut own = Vec::new();
-        for note in list {
-            if !printed.contains(&note.rule_id.as_str()) {
-                printed.push(&note.rule_id);
-                own.push(note_words(note));
-            }
-        }
-        rows.push(line(sources, label, vec![with_sign(total)], &format!("defense.total_save.{key}")).with_notes(own));
-    }
+    let rows = [
+        ("Fortitude", "fortitude", snapshot.map(|s| s.total_saves.fortitude)),
+        ("Reflex", "reflex", snapshot.map(|s| s.total_saves.reflex)),
+        ("Will", "will", snapshot.map(|s| s.total_saves.will)),
+    ]
+    .into_iter()
+    .map(|(label, key, total)| line(sources, label, vec![with_sign(total)], &format!("defense.total_save.{key}")))
+    .collect();
     SheetBlock::new("Saving Throws", rows).in_look(Look::Saves)
+}
+
+/// The Conditional Bonuses box (`conditionalBonuses`, print-only, SD-40 E2.20, `decisions.md
+/// §24.3.5`): every conditional the engine states, one row each, in order HP, Initiative,
+/// Fortitude, Reflex, Will, AC, CMB, CMD (`conditionalNotes`), then Skills (what a feat states on a
+/// skill and no total adds, `feat_skill_bonuses`). A row's label is what the bonus is to; its value
+/// is the engine's words, `label: value condition`. A note the rules give several saves prints once,
+/// under `Saves` when it is on all three, else under the saves that hold it. The look prints the
+/// rows in a fixed box with its blank write-in lines.
+pub fn conditional_bonuses(sources: &SheetSources) -> SheetBlock {
+    let notes = &sources.loaded.conditional_notes;
+    let mut rows: Vec<SheetRow> = Vec::new();
+    let noted = |rows: &mut Vec<SheetRow>, what: &str, list: &[ConditionalNote]| rows.extend(list.iter().map(|note| SheetRow::new(what, [note_words(note)])));
+    noted(&mut rows, "HP", &notes.hit_points);
+    noted(&mut rows, "Initiative", &notes.initiative);
+    let saves = [("Fortitude", &notes.fortitude), ("Reflex", &notes.reflex), ("Will", &notes.will)];
+    let mut printed: Vec<&str> = Vec::new();
+    for (_, list) in saves {
+        for note in list {
+            if printed.contains(&note.rule_id.as_str()) {
+                continue;
+            }
+            printed.push(&note.rule_id);
+            let held: Vec<&str> = saves.iter().filter(|(_, list)| list.iter().any(|n| n.rule_id == note.rule_id)).map(|(name, _)| *name).collect();
+            let what = if held.len() == saves.len() { "Saves".to_owned() } else { held.join(" / ") };
+            rows.push(SheetRow::new(what, [note_words(note)]));
+        }
+    }
+    noted(&mut rows, "AC", &notes.armor_class);
+    noted(&mut rows, "CMB", &notes.combat_maneuver_bonus);
+    noted(&mut rows, "CMD", &notes.combat_maneuver_defense);
+    let skills = &sources.loaded.feat_skill_bonuses;
+    rows.extend(
+        skills.situational.iter().chain(&skills.unknown).map(|line| SheetRow::new("Skills", [format!("{} on {}: {}", line.label, super::skills::skill_name(&line.skill), line.reason)])),
+    );
+    SheetBlock::new("Conditional Bonuses", rows).in_look(Look::ConditionalBonuses)
 }
 
 /// The screen's Attack box (`attack`): Base Attack Bonus, Melee, CMB and CMD.

@@ -20,7 +20,7 @@ mod skills;
 mod spells;
 
 pub use bio_notes::bio_notes;
-pub use core::{abilities, armor_class, attack, character_details, languages, name_campaign, portrait, saves, speed, square_block};
+pub use core::{abilities, armor_class, attack, character_details, conditional_bonuses, languages, name_campaign, portrait, saves, speed, square_block};
 pub use extras::{custom, pets};
 pub use feats::{actions, class_features, feats};
 pub(crate) use feats::line_row;

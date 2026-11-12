@@ -2,8 +2,8 @@
 //! the `skills` look: one column, each row the name and the load response's total (the one value
 //! the panel reads too) and nothing else (SD-40 E2.11, `decisions.md §23.1` item 3c: page 1 prints
 //! totals only; the breakdown is Show the math's, E3.5). A skill the character put ranks in with no
-//! panel row has no total: it prints under the column, with its ranks and `—`, as does what a feat
-//! states on a skill and no total adds.
+//! panel row has no total: it prints under the column, with its ranks and `—` (what a feat states on
+//! a skill and no total adds prints in the Conditional Bonuses box, E2.20).
 
 use super::{words_of, SheetSources};
 use crate::print::layout::{signed, NO_VALUE};
@@ -55,17 +55,7 @@ pub fn skills(sources: &SheetSources) -> SheetBlock {
     if !no_total.is_empty() {
         rows.push(SheetRow::new("Ranks with no Skills panel total:", Vec::<String>::new()).with_notes(no_total.into_iter().map(|(_, line)| line)));
     }
-    // What a feat states on a skill and no total adds: printed with its condition (§25, E4.6).
-    let bonuses = &loaded.feat_skill_bonuses;
-    let not_added: Vec<String> = bonuses
-        .situational
-        .iter()
-        .chain(&bonuses.unknown)
-        .map(|line| format!("{} on {}: {}", line.label, skill_name(&line.skill), line.reason))
-        .collect();
-    if !not_added.is_empty() {
-        rows.push(SheetRow::new("Not added to a total:", Vec::<String>::new()).with_notes(not_added));
-    }
+    // What a feat states on a skill and no total adds prints in the Conditional Bonuses box (E2.20).
     SheetBlock::new("Skills", rows).in_look(Look::Skills)
 }
 

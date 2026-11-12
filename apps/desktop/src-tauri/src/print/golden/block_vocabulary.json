@@ -30,5 +30,6 @@
   "math": {"ui": null, "printOnly": "Show the math: the engine rows behind each printed number, an option the screen has no box for"},
   "nameCampaign": {"ui": null, "printOnly": "the screen's IdentityPanel (Character Name, Campaign) is not a registry box or a tab; page 1 prints it beside the portrait (E2.5)"},
   "languages": {"ui": null, "printOnly": "the Skills panel's Languages line is not a registry box or a tab; page 1 prints it under the skills (E2.13)"},
+  "conditionalBonuses": {"ui": null, "printOnly": "every conditional bonus the engine states, in an outlined box with write-in lines; the screen lists them under the Saving Throws totals (E2.25), not as a registry box or a tab (E2.20)"},
   "bioNotes": {"ui": null, "printOnly": "Bio and campaign notes, an option page the screen has no box for"}
 }

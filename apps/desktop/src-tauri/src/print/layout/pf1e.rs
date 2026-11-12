@@ -4,7 +4,8 @@
 //! two rows tall with the Languages under it, beside the Character Name and Campaign fields (one
 //! row, no title above them), then the Armor Class boxes (no heading) and the Speed (Land, Swim, Fly)
 //! beside it; then a left column of the square block (Hit Points, Initiative, Encumbrance,
-//! Conditions, E2.9), the Weapons, the Attack and the Saving Throws, and a right column of one width
+//! Conditions, E2.9), the Weapons, the Attack, the Saving Throws and the Conditional Bonuses box
+//! (E2.20), and a right column of one width
 //! holding the Abilities over the Skills (one column, name + total, E2.11). Page 2 starts with the
 //! Identity block, then the armor; gear, feats, features, spells, custom records, pets and actions
 //! follow; then the option blocks, each on pages of its
@@ -31,6 +32,7 @@ const SHEET: &[Placed] = &[
     Placed::under("weapons", blocks::weapons, 0, 7),
     Placed::under("attack", blocks::attack, 0, 7),
     Placed::under("saves", blocks::saves, 0, 7),
+    Placed::under("conditionalBonuses", blocks::conditional_bonuses, 0, 7),
     Placed::at("abilities", blocks::abilities, 7, 5),
     Placed::under("skills", blocks::skills, 7, 5),
     // Page 2 opens with the Identity block until the Bio pages take it (E3.4).

@@ -2,8 +2,9 @@
 // skills in ONE column, each row on one line: the name and its signed total, nothing else (the
 // breakdown prints on the Show-the-math pages). A Knowledge name shortens to `Know. (<Subject>)`
 // only when the full name, measured at the row's font, is wider than its cell; every other name
-// prints as the block sends it. Any other row (what has no total, what a feat states and no total
-// adds) prints its label and its notes under the column. It formats; it adds nothing up (NR-2).
+// prints as the block sends it. Any other row (the ranks with no panel total) prints its label and
+// its notes under the column; what a feat states and no total adds prints in the Conditional
+// Bonuses box (E2.20). It formats; it adds nothing up (NR-2).
 //
 // A skill row's values, as `print/blocks/skills.rs` sends them: 0 the signed total.
 //
