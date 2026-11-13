@@ -90,7 +90,7 @@ use codex::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use codex::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use codex::rules_core::equipment_effects::EquipmentStatEffect;
 use codex::rules_core::equipment_effects::skill_set_rows;
-use codex::rules_core::equipment_record::{CorpusEquipmentRecord, StatedBonus};
+use codex::rules_core::equipment_record::{ContainerCapacity, CorpusEquipmentRecord, StatedBonus};
 use codex::rules_core::spell_record::CorpusSpellRecord;
 use crate::pcgen_import::ir_content_payload::{
     record_to_live, IrContentPayload, IrContentRecord, IrPackageContent,
@@ -523,6 +523,30 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         is_natural_attack: is_natural_attack_of(record),
         is_shield: is_shield_of(record),
         is_modifier: matches!(record.kind, EquipmentRecordKind::EquipMod),
+        container: container_of(record),
+        container_capacity: if container_of(record) { container_capacity_of(record) } else { ContainerCapacity::Unstated },
+    }
+}
+
+/// Whether the item is a container (SD-41 `decisions.md §31` R2, "Container tag, but not
+/// weapons"): `TYPE` holds `Container`, and the record is not a weapon by either signal the corpus
+/// gives -- no `DAMAGE` and no `Weapon` type word. A weapon's `CONTAINS` names its loaded
+/// ammunition (Pistol `1|FirearmBullet=1`, Wrist Launcher `UNLIM|Dart=1`), not a carried bag.
+fn container_of(record: &EquipmentRecord) -> bool {
+    let words: Vec<&str> = equipment_token_value(record, "TYPE").map_or(Vec::new(), |value| value.split('.').collect());
+    words.contains(&"Container") && !words.contains(&"Weapon") && !states_base_damage_of(record)
+}
+
+/// A container's capacity from `CONTAINS`'s first `|` field: `UNLIM…` is unlimited, a number is
+/// pounds, and a `*…` weight-reduction kind or an absent token states none (DEF-1).
+fn container_capacity_of(record: &EquipmentRecord) -> ContainerCapacity {
+    let Some(first) = equipment_token_value(record, "CONTAINS").and_then(|value| value.split('|').next()) else {
+        return ContainerCapacity::Unstated;
+    };
+    if first.starts_with("UNLIM") {
+        ContainerCapacity::Unlimited
+    } else {
+        first.parse::<f64>().map_or(ContainerCapacity::Unstated, ContainerCapacity::Pounds)
     }
 }
 
@@ -1890,5 +1914,57 @@ mod tests {
         };
         let canonical = d.to_canonical();
         assert_eq!(canonical.source_ref.line, 0);
+    }
+
+    /// A record carrying exactly these `KEY:VALUE` tokens.
+    fn equipment_with(tokens: &[(&str, &str)]) -> EquipmentRecord {
+        let mut record = fake_equipment();
+        record.tokens = tokens
+            .iter()
+            .map(|(key, value)| EquipmentToken {
+                key: key.to_string(),
+                value: value.to_string(),
+                line_number: 4,
+                raw_pair: format!("{key}:{value}"),
+            })
+            .collect();
+        record
+    }
+
+    /// SD-41 E1.1 (`decisions.md §31` R2, "Container tag, but not weapons").
+    #[test]
+    fn container_of_is_container_typed_and_not_a_weapon() {
+        let backpack = equipment_with(&[("TYPE", "Goods.Container.General.Resizable"), ("CONTAINS", "UNLIM|Any")]);
+        let pistol = equipment_with(&[
+            ("TYPE", "Weapon.Exotic.Ranged.Container.Projectile.Firearm"),
+            ("CONTAINS", "1|FirearmBullet=1"),
+            ("DAMAGE", "1d8"),
+        ]);
+        let launcher = equipment_with(&[("TYPE", "Weapon.Exotic.Ranged.Container.Projectile"), ("CONTAINS", "UNLIM|Dart=1")]);
+        let rope = equipment_with(&[("TYPE", "Goods.General"), ("CONTAINS", "UNLIM|Any")]);
+        assert!(container_of(&backpack));
+        assert!(!container_of(&pistol), "states DAMAGE");
+        assert!(!container_of(&launcher), "Weapon-typed");
+        assert!(!container_of(&rope), "no Container type word");
+        let converted = equipment_record_to_corpus(&backpack);
+        assert!(converted.is_container());
+        let converted = equipment_record_to_corpus(&pistol);
+        assert!(!converted.is_container());
+        assert_eq!(converted.capacity(), ContainerCapacity::Unstated, "capacity settled only on a container");
+    }
+
+    #[test]
+    fn container_of_capacity_reads_the_first_contains_field() {
+        let capacity = |contains: Option<&str>| {
+            let mut tokens = vec![("TYPE", "Goods.Container")];
+            tokens.extend(contains.map(|value| ("CONTAINS", value)));
+            container_capacity_of(&equipment_with(&tokens))
+        };
+        assert_eq!(capacity(Some("UNLIM|Any")), ContainerCapacity::Unlimited);
+        assert_eq!(capacity(Some("2000|Any")), ContainerCapacity::Pounds(2000.0));
+        assert_eq!(capacity(Some("1.5|Liquid=3")), ContainerCapacity::Pounds(1.5));
+        assert_eq!(capacity(Some("*20|Any")), ContainerCapacity::Unstated, "weight-reduction kind (DEF-1)");
+        assert_eq!(capacity(None), ContainerCapacity::Unstated);
+        assert_eq!(equipment_record_to_corpus(&equipment_with(&[("TYPE", "Goods.Container"), ("CONTAINS", "60|Any")])).capacity(), ContainerCapacity::Pounds(60.0));
     }
 }

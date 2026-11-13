@@ -212,9 +212,43 @@ pub struct CorpusEquipmentRecord {
     /// distinction is settled here instead -- the same two-valued answer, from
     /// the same source record, on the side that ships.
     pub is_modifier: bool,
+    /// Whether the item is a container a character can put other copies in: its type holds
+    /// `Container` and it is not a weapon (SD-41 `decisions.md §31` R2). A weapon's own `CONTAINS`
+    /// names its loaded ammunition, not a carried bag. Omitted from the settled bundle when `false`.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub container: bool,
+    /// What a container holds, settled only when [`Self::container`] is true; `Unstated` otherwise.
+    #[serde(default, skip_serializing_if = "ContainerCapacity::is_unstated")]
+    pub container_capacity: ContainerCapacity,
+}
+
+/// A container's stated capacity (SD-41 `decisions.md §7`). `Unstated` covers a container that
+/// states none and the weight-reduction kinds, whose contents weigh in full (DEF-1).
+#[derive(Debug, Clone, Copy, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub enum ContainerCapacity {
+    Pounds(f64),
+    Unlimited,
+    #[default]
+    Unstated,
+}
+
+impl ContainerCapacity {
+    pub fn is_unstated(&self) -> bool {
+        matches!(self, Self::Unstated)
+    }
 }
 
 impl CorpusEquipmentRecord {
+    /// Whether other copies can be put inside this one.
+    pub fn is_container(&self) -> bool {
+        self.container
+    }
+
+    /// The container's capacity; `Unstated` for a non-container.
+    pub fn capacity(&self) -> ContainerCapacity {
+        self.container_capacity
+    }
+
     /// Weight in pounds and price in gold, the pair
     /// [`crate::rules_core::encumbrance`] reads for one carried item.
     pub fn weight_and_cost(&self) -> (Option<f64>, Option<f64>) {
@@ -222,3 +256,176 @@ impl CorpusEquipmentRecord {
     }
 }
 
+
+#[cfg(test)]
+mod container_tests {
+    //! SD-41 E1.1 (`decisions.md §7, §31`): which settled records are containers and what they hold.
+    //! The raw-corpus walks below are this test's second implementation of each figure; the live
+    //! side reads only the settled `container` / `container_capacity` fields.
+    use super::{ContainerCapacity, CorpusEquipmentRecord};
+    use crate::rules_core::settled_corpus::{corpus_book_dirs, read_equipment_bundle, SettledBundleError};
+    use std::path::{Path, PathBuf};
+
+    fn repo() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn json_files(dir: &Path, out: &mut Vec<PathBuf>) {
+        let Ok(entries) = std::fs::read_dir(dir) else { return };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                json_files(&path, out);
+            } else if path.extension().is_some_and(|ext| ext == "json") {
+                out.push(path);
+            }
+        }
+    }
+
+    /// Every settled equipment record across the 30 corpus books, keyed `<book>/<path>`.
+    fn settled() -> Vec<(String, CorpusEquipmentRecord)> {
+        let mut rows = Vec::new();
+        for book in corpus_book_dirs(&repo().join("data/corpus")) {
+            let name = book.file_name().unwrap().to_string_lossy().to_string();
+            let bundle = match read_equipment_bundle(&book) {
+                Ok(bundle) => bundle,
+                Err(SettledBundleError::Missing) if !book.join("equipment").is_dir() => continue,
+                Err(err) => panic!("{}: {err}", book.display()),
+            };
+            rows.extend(bundle.records.into_iter().map(|(key, entry)| (format!("{name}/{key}"), entry.record)));
+        }
+        rows
+    }
+
+    fn settled_record(key: &str) -> CorpusEquipmentRecord {
+        settled().into_iter().find(|(k, _)| k == key).unwrap_or_else(|| panic!("no settled record {key}")).1
+    }
+
+    /// The source corpus records' first value per token key, from `data/corpus/<book>/equipment/**`.
+    fn corpus_token_maps() -> Vec<std::collections::BTreeMap<String, String>> {
+        let mut files = Vec::new();
+        for book in corpus_book_dirs(&repo().join("data/corpus")) {
+            json_files(&book.join("equipment"), &mut files);
+        }
+        files
+            .iter()
+            .filter_map(|path| {
+                let value: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(path).ok()?).ok()?;
+                let tokens = value.get("data")?.get("raw_tokens")?.as_array()?;
+                let mut map = std::collections::BTreeMap::new();
+                for token in tokens {
+                    if let (Some(k), Some(v)) = (token["key"].as_str(), token["value"].as_str()) {
+                        map.entry(k.to_string()).or_insert_with(|| v.to_string());
+                    }
+                }
+                Some(map)
+            })
+            .collect()
+    }
+
+    fn kind_of(capacity: &ContainerCapacity) -> &'static str {
+        match capacity {
+            ContainerCapacity::Pounds(_) => "lb",
+            ContainerCapacity::Unlimited => "unlim",
+            ContainerCapacity::Unstated => "unstated",
+        }
+    }
+
+    #[test]
+    fn container_tag_population_is_232_files_265_rows() {
+        let mut files = Vec::new();
+        for book in std::fs::read_dir(repo().join("data/sheet_rules")).unwrap().flatten() {
+            json_files(&book.path().join("equipment"), &mut files);
+        }
+        let (mut tagged_files, mut tagged_rows, mut weapon_rows) = (0, 0, 0);
+        for path in &files {
+            let rows: Vec<serde_json::Value> = match serde_json::from_str(&std::fs::read_to_string(path).unwrap()) {
+                Ok(serde_json::Value::Array(rows)) => rows,
+                _ => continue,
+            };
+            let has = |row: &serde_json::Value, tag: &str| {
+                row["tags"].as_array().is_some_and(|tags| tags.iter().any(|t| t == tag))
+            };
+            let container_rows: Vec<_> = rows.iter().filter(|row| has(row, "Container")).collect();
+            tagged_files += usize::from(!container_rows.is_empty());
+            tagged_rows += container_rows.len();
+            weapon_rows += container_rows.iter().filter(|row| has(row, "Weapon")).count();
+        }
+        assert_eq!((tagged_files, tagged_rows, weapon_rows), (232, 265, 123), "sheet-rule Container tag population");
+    }
+
+    #[test]
+    fn container_capacity_population_is_210_88_73_49() {
+        // The source population: every corpus record with a CONTAINS token, by its first field.
+        let maps = corpus_token_maps();
+        let first_kind = |value: &str| {
+            let first = value.split('|').next().unwrap_or("");
+            if first.starts_with("UNLIM") {
+                "unlim"
+            } else if first.starts_with('*') {
+                "unstated"
+            } else if first.parse::<f64>().is_ok() {
+                "lb"
+            } else {
+                "other"
+            }
+        };
+        let contains: Vec<&str> = maps.iter().filter_map(|m| m.get("CONTAINS").map(|v| first_kind(v))).collect();
+        let count = |rows: &[&str], kind: &str| rows.iter().filter(|k| **k == kind).count();
+        assert_eq!(
+            (contains.len(), count(&contains, "lb"), count(&contains, "unlim"), count(&contains, "unstated"), count(&contains, "other")),
+            (210, 88, 73, 49, 0),
+            "CONTAINS records by first field"
+        );
+
+        // The settled containers: Container-typed, not a weapon (no DAMAGE, no Weapon type word).
+        // Implementation A: the settled bundles. Implementation B: the source records.
+        let settled = settled();
+        let a: Vec<&str> =
+            settled.iter().filter(|(_, r)| r.is_container()).map(|(_, r)| kind_of(&r.capacity())).collect();
+        let b: Vec<&str> = maps
+            .iter()
+            .filter(|m| {
+                let words: Vec<&str> = m.get("TYPE").map_or(vec![], |t| t.split('.').collect());
+                words.contains(&"Container") && !words.contains(&"Weapon") && !m.contains_key("DAMAGE")
+            })
+            .map(|m| m.get("CONTAINS").map_or("unstated", |v| match first_kind(v) {
+                "other" => "unstated",
+                kind => kind,
+            }))
+            .collect();
+        let tally = |rows: &[&str]| (rows.len(), count(rows, "lb"), count(rows, "unlim"), count(rows, "unstated"));
+        assert_eq!(tally(&a), tally(&b), "settled containers agree with the source predicate");
+        assert_eq!(tally(&a), (130, 32, 50, 48), "settled containers: total, lb, unlimited, unstated");
+        assert!(
+            settled.iter().all(|(_, r)| r.is_container() || r.capacity() == ContainerCapacity::Unstated),
+            "capacity is settled only on containers"
+        );
+    }
+
+    #[test]
+    fn container_capacity_reads_backpack_unlimited() {
+        for key in [
+            "core_rulebook/general/backpack.json",
+            "advanced_players_guide/backpack_masterwork.json",
+            "ultimate_equipment/powder_horn.json",
+        ] {
+            let record = settled_record(key);
+            assert!(record.is_container(), "{key} is a container");
+            assert_eq!(record.capacity(), ContainerCapacity::Unlimited, "{key}: UNLIM|…");
+        }
+        assert_eq!(settled_record("core_rulebook/general/sled.json").capacity(), ContainerCapacity::Pounds(2000.0));
+        assert_eq!(settled_record("core_rulebook/general/waterskin.json").capacity(), ContainerCapacity::Pounds(4.0));
+    }
+
+    #[test]
+    fn container_weapon_with_contains_is_not_a_container() {
+        // Pistol states DAMAGE 1d8; Wrist Launcher states no DAMAGE but is Weapon-typed. Both name
+        // their loaded ammunition in CONTAINS, which is not a carried bag (operator, §31 R2).
+        for key in ["ultimate_equipment/pistol.json", "ultimate_intrigue/wrist_launcher.json"] {
+            let record = settled_record(key);
+            assert!(!record.is_container(), "{key} is a weapon, not a container");
+            assert_eq!(record.capacity(), ContainerCapacity::Unstated, "{key}");
+        }
+    }
+}
