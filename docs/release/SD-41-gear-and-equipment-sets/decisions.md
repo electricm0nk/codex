@@ -152,7 +152,7 @@ engine keys on `ActiveState`.
 ## §7 — Containers and capacity (OPERATOR A3; DEFAULT on the data source)
 
 - **Is a container:** the record's tags hold `Container` (`data/sheet_rules/**/equipment/*.json` `tags`;
-  232 files / 265 rows) **and the record states no base damage** (operator, §31 R2: "Container tag, but not
+  232 files / 265 rows) **and the record is not a weapon: no base damage and no `Weapon` type word** (§20; operator, §31 R2: "Container tag, but not
   weapons"). E1.1 settles `container` and `container_capacity` through `ir_converter.rs` into
   `data/corpus/*/_settled/equipment.json`, the file `CorpusEquipmentRecord` is read from (§31 R1); the live record
   never reads tags or tokens.
@@ -251,7 +251,7 @@ without asking"):
 
 | # | Decision point | Safe default |
 |---|---|---|
-| SD-a | A `Container`-typed record that is a weapon (Pistol: `CONTAINS 1|FirearmBullet=1`) | **replaced by the operator's ruling (§31 R2, "Container tag, but not weapons"):** a container is `Container`-typed **and** states no base damage; Pistol is not one, Powder Horn is; logged once per card when the rule excludes a record
+| SD-a | A `Container`-typed record that is a weapon (Pistol: `CONTAINS 1|FirearmBullet=1`) | **replaced by the operator's ruling (§31 R2, "Container tag, but not weapons"):** a container is `Container`-typed **and** states no base damage **and** has no `Weapon` type word (§20: Wrist Launcher); Pistol is not one, Powder Horn is; logged once per card when the rule excludes a record
 | SD-b | A record's weight is unknown (`weight_and_cost()` → `None`) inside a container | contents weigh what the engine already says (nothing); the container's "x of y" counts only weighed copies; the same "weight could not be verified" posture `encumbrance.rs` has |
 | SD-c | The screen's left list order | saved order (the order the engine weighs in); the filter never re-sorts |
 | SD-d | A slot that is full when a move asks for it | refuse with the existing `slot_conflict` diagnostic ("head slot is taken by …"); the item stays where it was; the screen shows the refusal word for word (today's posture) |
@@ -373,6 +373,8 @@ The lead re-reads this package against the repo before dispatch and records each
 | §31 R4 / E1.8 / E1.11: "`build_equipment_catalog()` … reads the settled bundles" | `build_equipment_catalog()` (`desktop/equipment_catalog.rs:468`) chains the compiled per-book tables (`src/rules_core/rules_catalog/*/equipment_tables.rs`) and `equipment_gap_tables`; it reads no `_settled/equipment.json` | E1.9's price fix reaches the Market only through the regenerated compiled tables (its (b) already names them); the settled regen serves the live record, not the Market (sd41-e1.8) |
 | E1.8 / E1.9 / E1.11 / G-8 / G-10: `cargo test --locked -j 8 --test market_price_census -- --test-threads=8` → 1 / 2 / 3 passed | the file lives in `apps/desktop/src-tauri/tests/` (the crate has no lib target; the catalog modules are `#[path]`-included), so their own `#[cfg(test)]` suites compile in too: unfiltered the binary holds 134 tests | commands now `cd apps/desktop/src-tauri` and filter `market_price` (1 passed, 133 filtered out) (sd41-e1.8) |
 | E1.9 (a) formula kinds: `WT*N`, `BASECOST*N`, `+N` | of the 1,763 unpriced Market rows, 1,278 are priced only by their eqmods; their eqmods' costs are `%SPELLLEVEL`/`%CASTERLEVEL` (scrolls 558, wands 351, potions 108 rows), `%CHOICE` (111) and `%CHARGES` formulas whose inputs are the `EQMOD:` token's own arguments (`SPELLLEVEL[2]CASTERLEVEL[3]`, `\|1721`, `CHARGES[50]`) | d20pfsrd list = 1,477 rows if E1.9 evaluates only its listed kinds, 346 if it also evaluates the in-record `%` kinds (`artifacts/epic_1/E1.8/market-prices.json` `d20pfsrd_bound`); the lead decides E1.9's kinds before E1.11 is sized (sd41-e1.8) |
+| §31 R2 / E1.1: "not a weapon" = "no `DAMAGE` token" alone | of 209 corpus records whose `TYPE` holds `Container`, 130 have neither `DAMAGE` nor the `Weapon` type word, 78 have both, **1 has `Weapon` without `DAMAGE`**: Ultimate Intrigue `wrist_launcher.json` (`CONTAINS UNLIM\|Dart=1`); its desktop twin `fixtures_src/equipment/equip_wrist_launcher.json` would make the fixture bundle move, against R1 (Python recursive walk over `data/corpus/**/equipment/**/*.json`, first `TYPE`/`DAMAGE` token; pinned by `container_capacity_population_is_210_88_73_49`) | E1.1 settles `container` = `Container` and no `DAMAGE` **and** no `Weapon` type word — the operator's "not weapons" by either signal; 130 settled containers (32 lb / 50 unlimited / 48 unstated); fixture sha256 unchanged (sd41-e1.1, 2026-11-12) |
+| §31 R1 / E1.1: "`cd crates/codex-ingest && cargo run --locked --bin gen_settled_corpus`" | the binary reads the relative `data/corpus`; from `crates/codex-ingest` it prints `gen_settled_corpus: no corpus roots under data/corpus; run from the repo root` and exits 2 | run from the repo root: `cargo run --locked -p codex-ingest --bin gen_settled_corpus` (sd41-e1.1, 2026-11-12) |
 
 ## §21 — Questions only the operator can settle (defaults taken; the run does not wait)
 
@@ -732,7 +734,7 @@ corrections were recorded. The lead's rulings:
 
 - **(R1) LEAD GRANT.** E1.1's FILES YOU OWN widens to `crates/codex-ingest/src/pcgen_import/ir_converter.rs`
   (`equipment_record_to_corpus` + its new `*_of` helpers) and the regenerated `data/corpus/*/_settled/equipment.json`
-  (`cd crates/codex-ingest && cargo run --locked --bin gen_settled_corpus`). The desktop fixture
+  (from the repo root: `cargo run --locked -p codex-ingest --bin gen_settled_corpus`; §20). The desktop fixture
   `apps/desktop/src-tauri/resources/corpus_fixtures/_settled/equipment.json` **stays byte-identical**: the new
   fields are omitted at their defaults and settled only for non-weapons (the receipt's proposal (b)); E1.1 checks
   `sha256sum` before and after. **Sequencing:** E1.9 now depends on E1.1 too (both edit `ir_converter.rs`); E1.8
