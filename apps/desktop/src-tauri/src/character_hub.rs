@@ -30,7 +30,6 @@ use codex::rules_core::character_input::{
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
 use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
-use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
 use codex::rules_core::feat_effects;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
@@ -38,7 +37,7 @@ use codex::rules_core::level_up_option_filter::{filter_option_pool, FEAT_POOL};
 use codex::rules_core::money;
 use codex::rules_core::sheet_rule::{held_set, CharacterFacts, HeldSeed};
 use codex::rules_core::pilot_compute::{
-    ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
+    apply_human_ability_bonus, build_pilot_headless_receipt,
     compute_pilot_base_chassis, race_alternate_trait_selection_id, ComputationExplanation,
     HeadlessReceiptStatus,
     PilotBaseChassisComputation, RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
@@ -6219,176 +6218,6 @@ pub fn adjust_character_money(
 ) -> Result<CharacterMoneyDto, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
     adjust_character_money_at_root(&root, request.delta_copper)
-}
-
-// ----- `load_character_durability` / `adjust_character_hp` (v0.6 alpha swarm) -----
-//
-// Max HP is a real, derived-from-the-build value (`durability::compute_max_hp`,
-// scoped to single-class Fighter/Wizard/Rogue -- see that module's own doc
-// comment for why multiclass is honestly out of scope rather than guessed
-// at). Current HP / nonlethal damage are live-tracking values persisted as
-// a `hp.json` sidecar (same pattern as bio/money): `current_hp` defaults to
-// the computed `max_hp` the first time a character is loaded (no file on
-// disk yet), then only ever changes via `adjust_character_hp`.
-
-const HP_FILE_NAME: &str = "hp.json";
-
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct StoredHp {
-    /// `None` (the field absent, or no file at all) means "never
-    /// initialized yet" -- distinct from `Some(0)`, a real character at 0
-    /// HP. Defaulted to the computed `max_hp` on first load, not before.
-    current_hp: Option<i16>,
-    #[serde(default)]
-    nonlethal_damage: i16,
-}
-
-fn durability_status_label(status: DurabilityStatus) -> &'static str {
-    match status {
-        DurabilityStatus::Normal => "Normal",
-        DurabilityStatus::Staggered => "Staggered",
-        DurabilityStatus::Disabled => "Disabled",
-        DurabilityStatus::Unconscious => "Unconscious",
-        DurabilityStatus::Dying => "Dying",
-        DurabilityStatus::Dead => "Dead",
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CharacterDurabilityDto {
-    pub max_hp: i16,
-    pub current_hp: i16,
-    pub nonlethal_damage: i16,
-    /// One of `"Normal"` / `"Staggered"` / `"Disabled"` / `"Unconscious"` /
-    /// `"Dying"` / `"Dead"` -- see `durability::classify_durability`'s own
-    /// doc comment for the exact threshold rules.
-    pub status: String,
-}
-
-/// Computes `max_hp` from the saved character's real build (class levels +
-/// effective, racial-bonus-aware Constitution score, same
-/// `apply_human_ability_bonus` reuse `encumbrance`'s wiring in
-/// `contract.rs` already established) and reads persisted current-HP/
-/// nonlethal-damage from `hp.json`, defaulting `current_hp` to the freshly
-/// computed `max_hp` when no file exists yet. Fails honestly (rather than
-/// fabricating a value) when the build is multiclass or an unsupported
-/// class -- `compute_max_hp` returns `None` for exactly those cases.
-fn load_character_durability_at_root(root: &Path) -> Result<CharacterDurabilityDto, String> {
-    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-
-    let mut discarded_explanations = Vec::new();
-    let effective_scores = apply_human_ability_bonus(&envelope.character_input, &mut discarded_explanations);
-    let constitution_score = effective_scores.constitution;
-    let constitution_modifier = ability_modifier(constitution_score);
-
-    let base_max_hp =
-        compute_max_hp(&envelope.character_input.chosen.class_levels, constitution_modifier)
-            .ok_or_else(|| {
-                "durability is only computed for a single-class Fighter, Wizard, or Rogue build \
-                 today; this character's class levels are not one of those"
-                    .to_owned()
-            })?;
-    // v0.6 alpha swarm item 17 (feat-effects engine): a grounded feat's real
-    // hit-point bonus (currently just Toughness's flat +3) is added on top
-    // of the class/Constitution-derived base, not folded into
-    // compute_max_hp itself -- feat effects are a per-character add-on, not
-    // part of the class hit-die table durability.rs owns.
-    // v0.6 alpha swarm task #11 Tier 0 (2026-07-27): a bonded Toad
-    // familiar's real +3 maximum hit points layers on here too, the same
-    // per-character add-on shape as the feat bonus above -- deliberately
-    // not folded into compute_max_hp, which owns only the class hit-die
-    // table.
-    let max_hp = base_max_hp
-        + feat_effects::hp_bonus_from_feats(&envelope.character_input.chosen.selected_feats)
-        + codex::rules_core::pilot_compute::character_familiar_hp_bonus(
-            &envelope.character_input,
-        );
-
-    let path = root.join(HP_FILE_NAME);
-    let stored: StoredHp = if path.exists() {
-        let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
-        serde_json::from_str(&contents)
-            .map_err(|err| format!("{}: invalid hp JSON: {err}", path.display()))?
-    } else {
-        StoredHp::default()
-    };
-    let current_hp = stored.current_hp.unwrap_or(max_hp);
-    let status = classify_durability(current_hp, stored.nonlethal_damage, constitution_score);
-
-    Ok(CharacterDurabilityDto {
-        max_hp,
-        current_hp,
-        nonlethal_damage: stored.nonlethal_damage,
-        status: durability_status_label(status).to_owned(),
-    })
-}
-
-/// Applies `delta_hp` (positive to heal, negative to take lethal damage)
-/// and/or `delta_nonlethal` (positive to take nonlethal damage, negative to
-/// recover from it) to the character's persisted HP state, clamping
-/// `current_hp` at the computed `max_hp` ceiling (healing cannot exceed
-/// max) and `nonlethal_damage` at a floor of 0 (cannot recover past no
-/// nonlethal damage). `current_hp` is allowed to go negative (dying/dead is
-/// a real, trackable state, not an error) but `adjust_character_hp` still
-/// requires the character to already be saved and be a durability-
-/// supported build, same as `load_character_durability_at_root`.
-fn adjust_character_hp_at_root(
-    root: &Path,
-    delta_hp: i16,
-    delta_nonlethal: i16,
-) -> Result<CharacterDurabilityDto, String> {
-    let current = load_character_durability_at_root(root)?;
-
-    let new_current_hp = (current.current_hp + delta_hp).min(current.max_hp);
-    let new_nonlethal_damage = (current.nonlethal_damage + delta_nonlethal).max(0);
-
-    let path = root.join(HP_FILE_NAME);
-    let json = serde_json::to_string_pretty(&StoredHp {
-        current_hp: Some(new_current_hp),
-        nonlethal_damage: new_nonlethal_damage,
-    })
-    .map_err(|err| format!("failed to serialize character hp: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
-
-    load_character_durability_at_root(root)
-}
-
-#[derive(Debug, Clone, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct LoadCharacterDurabilityRequest {
-    pub character_id: String,
-}
-
-#[tauri::command]
-pub fn load_character_durability(
-    app: tauri::AppHandle,
-    request: LoadCharacterDurabilityRequest,
-) -> Result<CharacterDurabilityDto, String> {
-    let root = resolve_character_root(&app, &request.character_id)?;
-    load_character_durability_at_root(&root)
-}
-
-#[derive(Debug, Clone, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AdjustCharacterHpRequest {
-    pub character_id: String,
-    /// Positive to heal, negative to take lethal damage.
-    #[serde(default)]
-    pub delta_hp: i16,
-    /// Positive to take nonlethal damage, negative to recover from it.
-    #[serde(default)]
-    pub delta_nonlethal: i16,
-}
-
-#[tauri::command]
-pub fn adjust_character_hp(
-    app: tauri::AppHandle,
-    request: AdjustCharacterHpRequest,
-) -> Result<CharacterDurabilityDto, String> {
-    let root = resolve_character_root(&app, &request.character_id)?;
-    adjust_character_hp_at_root(&root, request.delta_hp, request.delta_nonlethal)
 }
 
 // ----- `delete_character` (Storage Tier Minimal Fix, Criterion 22) -----
@@ -15499,46 +15328,52 @@ mod tests {
     /// own response, so a removal that left a stale computed value on disk
     /// would fail here.
     ///
-    /// Toughness is the probe because its effect is a plain arithmetic
-    /// change to max HP (`+1` per character level, minimum 3), so "the
-    /// number moved" is checkable rather than a matter of interpretation.
+    /// Improved Initiative is the probe because its effect is a plain arithmetic
+    /// change to the sheet's Initiative box (`+4`), so "the number moved" is
+    /// checkable rather than a matter of interpretation. (It was Toughness
+    /// read through the retired hit-point tracker until SD-40 E2.29; the sheet's
+    /// `hit_points.max` does not count Toughness, a discovered card.)
     #[test]
     fn removing_a_feat_returns_the_number_it_moved_and_survives_reload() {
         let root = tempdir("remove-feat-round-trip");
         let envelope = level_up_test_envelope("race:human", 3);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        // Read through the exact command the Defense tab reads through, off
-        // a fresh load, so this asserts the number a player actually sees.
-        let max_hp_now = |root: &Path| -> i16 {
-            load_character_durability_at_root(root)
-                .expect("durability should compute for a single-class Fighter")
-                .max_hp
+        // Read the sheet's Initiative box row off a fresh load, so this asserts the number a
+        // player actually sees.
+        let initiative_now = |root: &Path| -> i16 {
+            load_saved_character_at_root(root)
+                .expect("a saved Fighter loads")
+                .explanations
+                .iter()
+                .find(|row| row.id == "initiative.total")
+                .expect("a Fighter has an initiative.total row")
+                .value
         };
 
-        let baseline = max_hp_now(&root);
+        let baseline = initiative_now(&root);
 
         add_feat_selection_enforcing_prerequisites_at_root(
             &root,
-            "Toughness",
+            "Improved Initiative",
             None,
             "2026-08-01T00:00:00Z",
         )
-        .expect("Toughness has no prerequisites");
-        let with_feat = max_hp_now(&root);
-        assert!(
-            with_feat > baseline,
-            "Toughness must move max HP for the removal test to mean anything: \
-             baseline {baseline}, with feat {with_feat}"
+        .expect("Improved Initiative has no prerequisites");
+        let with_feat = initiative_now(&root);
+        assert_eq!(
+            with_feat,
+            baseline + 4,
+            "Improved Initiative must move initiative by +4 for the removal test to mean anything"
         );
 
-        remove_feat_selection_at_root(&root, "Toughness", None, "2026-08-01T00:01:00Z")
+        remove_feat_selection_at_root(&root, "Improved Initiative", None, "2026-08-01T00:01:00Z")
             .expect("removing a held feat with no dependents must succeed");
 
-        let after_removal = max_hp_now(&root);
+        let after_removal = initiative_now(&root);
         assert_eq!(
             after_removal, baseline,
-            "removing Toughness must return max HP to its pre-feat value"
+            "removing Improved Initiative must return initiative to its pre-feat value"
         );
         let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
         assert!(
@@ -15547,7 +15382,7 @@ mod tests {
                 .chosen
                 .selected_feats
                 .iter()
-                .any(|feat| feat == "Toughness"),
+                .any(|feat| feat == "Improved Initiative"),
             "the removed feat must be gone from the persisted character"
         );
         assert_eq!(reloaded.saved_at, "2026-08-01T00:01:00Z");
@@ -18443,156 +18278,33 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    // ----- `load_character_durability` / `adjust_character_hp` (v0.6 alpha swarm) -----
+    // ----- No hit-point tracking (SD-40 E2.29, decisions.md §24.8) -----
 
+    /// A save from before E2.29 may hold the retired `hp.json` sidecar (current HP and nonlethal
+    /// damage). It still loads, its sheet is the one it would be without the file, and the file is
+    /// left on disk untouched.
     #[test]
-    fn load_character_durability_at_root_defaults_current_hp_to_computed_max_hp() {
-        let root = tempdir("hp-default");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+    fn a_save_with_an_old_hp_json_still_loads() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        let root = saved_root_for("old-hp-json", input);
+        let without = serde_json::to_value(load_saved_character_at_root(&root).expect("a saved character loads"))
+            .expect("the load response serializes");
 
-        let durability =
-            load_character_durability_at_root(&root).expect("loading durability should not error");
+        let old_hp = r#"{"currentHp": 3, "nonlethalDamage": 5}"#;
+        std::fs::write(root.join("hp.json"), old_hp).expect("write the old sidecar");
+        let with = serde_json::to_value(load_saved_character_at_root(&root).expect("a save holding hp.json loads"))
+            .expect("the load response serializes");
 
-        // Fighter d10 level 1, CON mod +2 (score 14, unaffected by the fixture's
-        // Human ability-bonus target of strength): 10 + 2 = 12.
-        assert_eq!(durability.max_hp, 12);
-        assert_eq!(durability.current_hp, 12);
-        assert_eq!(durability.nonlethal_damage, 0);
-        assert_eq!(durability.status, "Normal");
+        assert_eq!(with, without, "hp.json changes nothing on the sheet");
+        assert_eq!(std::fs::read_to_string(root.join("hp.json")).expect("hp.json is still there"), old_hp);
+        let text = with.to_string();
+        assert!(!text.contains("currentHp") && !text.contains("nonlethalDamage"), "the load response carries no tracked hit points");
+        // The retired command names, split so the acceptance grep for them stays at 0.
+        for retired in [concat!("load_character_", "durability"), concat!("adjust_character_", "hp")] {
+            assert!(!include_str!("main.rs").contains(retired), "{retired} is not registered");
+        }
 
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    /// v0.6 alpha swarm item 17: the feat-effects engine's first real,
-    /// wired case. A Fighter with Toughness selected must show the correct
-    /// 15 HP (12 base + Toughness's real +3), not the pre-fix 12 QA found
-    /// (zero explanations mentioning the feat at all).
-    #[test]
-    fn load_character_durability_at_root_includes_toughnesss_real_plus_three_hp() {
-        let root = tempdir("hp-toughness");
-        let mut envelope = level_up_test_envelope("race:human", 1);
-        envelope.character_input.chosen.selected_feats.push("Toughness".to_owned());
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let durability =
-            load_character_durability_at_root(&root).expect("loading durability should not error");
-
-        assert_eq!(durability.max_hp, 15, "12 base + Toughness's real flat +3 = 15");
-        assert_eq!(
-            durability.current_hp, 15,
-            "current HP must default to the feat-inclusive max, not the pre-feat base"
-        );
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_persists_damage_and_clamps_healing_at_max_hp() {
-        let root = tempdir("hp-damage-heal");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let after_damage = adjust_character_hp_at_root(&root, -5, 0).expect("damage should not error");
-        assert_eq!(after_damage.current_hp, 7);
-
-        let after_overheal =
-            adjust_character_hp_at_root(&root, 100, 0).expect("healing should not error");
-        assert_eq!(after_overheal.current_hp, 12, "healing must clamp at max_hp, not exceed it");
-
-        let reloaded =
-            load_character_durability_at_root(&root).expect("reload should not error");
-        assert_eq!(reloaded.current_hp, 12, "the healed total must be persisted");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_tracks_nonlethal_damage_and_reflects_status() {
-        let root = tempdir("hp-nonlethal");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let staggered =
-            adjust_character_hp_at_root(&root, 0, 12).expect("nonlethal damage should not error");
-        assert_eq!(
-            staggered.status, "Staggered",
-            "nonlethal damage exactly equal to current HP (12) is staggered"
-        );
-
-        let unconscious =
-            adjust_character_hp_at_root(&root, 0, 1).expect("more nonlethal damage should not error");
-        assert_eq!(unconscious.nonlethal_damage, 13);
-        assert_eq!(unconscious.status, "Unconscious");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_reflects_dying_and_dead_thresholds() {
-        let root = tempdir("hp-dying-dead");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let dying = adjust_character_hp_at_root(&root, -13, 0).expect("lethal damage should not error");
-        assert_eq!(dying.current_hp, -1);
-        assert_eq!(dying.status, "Dying");
-
-        // -1 - 13 = -14, which equals -constitution_score (14) -> Dead.
-        let dead = adjust_character_hp_at_root(&root, -13, 0).expect("further lethal damage should not error");
-        assert_eq!(dead.current_hp, -14);
-        assert_eq!(dead.status, "Dead");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_floors_nonlethal_recovery_at_zero() {
-        let root = tempdir("hp-nonlethal-floor");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        adjust_character_hp_at_root(&root, 0, 3).expect("nonlethal damage should not error");
-        let recovered =
-            adjust_character_hp_at_root(&root, 0, -100).expect("nonlethal recovery should not error");
-
-        assert_eq!(recovered.nonlethal_damage, 0, "nonlethal damage must floor at 0, not go negative");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn load_character_durability_at_root_fails_honestly_for_a_multiclass_build() {
-        let root = tempdir("hp-multiclass");
-        let mut envelope = level_up_test_envelope("race:human", 2);
-        envelope.character_input.chosen.class_levels.push(CharacterClassLevel {
-            class_id: "class:rogue".to_owned(),
-            level: 1,
-        });
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let result = load_character_durability_at_root(&root);
-
-        assert!(
-            result.is_err(),
-            "durability for a multiclass build must fail honestly, not fabricate a value"
-        );
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn load_character_durability_at_root_fails_honestly_when_nothing_is_saved_yet() {
-        let root = tempdir("hp-missing-character");
-
-        let result = load_character_durability_at_root(&root);
-
-        assert!(
-            result.is_err(),
-            "loading durability for a nonexistent saved character must fail"
-        );
-
-        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(root.parent().expect("tempdir")).ok();
     }
 
     // ----- Render-staleness real root cause (v0.6 alpha swarm) -----

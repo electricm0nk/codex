@@ -703,9 +703,9 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Defense" }],
-      "marker": "HIT POINTS",
-      "expect": ["HIT POINTS", "EQUIPMENT EFFECTS", "SAVING THROWS"],
-      "notes": "SHEET_TABS[1]. Damage/Heal HP-adjust controls also live on this tab (see sheet-action-hp-adjust). Marker changed from 'Damage Reduction' to 'HIT POINTS' (uppercase per the section heading's own CSS text-transform, same innerText-vs-source-case note as landing-render), confirmed live 2026-09-17: this row now actually reaches the Defense tab (previously cascaded red from sheet-open-for-tabs being manual), and the 'Damage Reduction' section is honest-empty -- it does not render at all -- for a character with no DR source, which every character this row can now load is (the freshly-created 'Smoke Test PC'). 'HIT POINTS'/'EQUIPMENT EFFECTS'/'SAVING THROWS' are unconditional DefenseTab content."
+      "marker": "EQUIPMENT EFFECTS",
+      "expect": ["EQUIPMENT EFFECTS", "SAVING THROWS"],
+      "notes": "SHEET_TABS[1]. Re-pinned 2026-11-12 (SD-40 E2.29, decisions.md §24.8): the app tracks no hit points, so the Defense tab's HIT POINTS panel and the sheet-action-hp-adjust row are gone; marker and expect are content that stays. Earlier: marker changed from 'Damage Reduction' to 'HIT POINTS' (uppercase per the section heading's own CSS text-transform, same innerText-vs-source-case note as landing-render), confirmed live 2026-09-17: this row now actually reaches the Defense tab (previously cascaded red from sheet-open-for-tabs being manual), and the 'Damage Reduction' section is honest-empty -- it does not render at all -- for a character with no DR source, which every character this row can now load is (the freshly-created 'Smoke Test PC'). 'HIT POINTS'/'EQUIPMENT EFFECTS'/'SAVING THROWS' are unconditional DefenseTab content."
     },
     {
       "id": "sheet-tab-gear",
@@ -1033,22 +1033,6 @@
       "marker": "Manage skill allocation",
       "expect": ["Manage skill allocation"],
       "notes": "SkillAllocationDialog (role=dialog, aria-label + h2 both 'Manage skill allocation'; portals to document.body) opened via SkillsBox's own button of the same name."
-    },
-    {
-      "id": "sheet-action-hp-adjust",
-      "screen": "sheet",
-      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-defense"],
-      "steps": [
-        { "op": "click", "target": "amount" },
-        { "op": "type", "text": "1" },
-        { "op": "click", "target": "Damage" },
-        { "op": "click", "target": "amount" },
-        { "op": "type", "text": "1" },
-        { "op": "click", "target": "Heal" }
-      ],
-      "marker": "HIT POINTS",
-      "expect": ["HIT POINTS", "NONLETHAL"],
-      "notes": "DurabilityPanel lives inside DefenseTab. Both buttons are disabled until the 'amount' input holds a positive number, so a bare click (no type step first) would silently no-op -- this row damages then heals the same amount back so a repeated unattended run is net-zero on HP. Marker/expect uppercased (CSS text-transform vs innerText, same note as sheet-tab-defense) -- confirmed live 2026-09-17."
     },
     {
       "id": "sheet-action-money-adjust",

@@ -70,7 +70,7 @@ export function SquareBlock(props: SquareBlockProps) {
       case 'hitPoints':
         return (
           <SquareBox title="Hit Points" style={style}>
-            {props.hp === null ? absentValue('Unknown') : <p style={VALUE}>{`${props.hp} / ${props.hp}`}</p>}
+            {props.hp === null ? absentValue('Unknown') : <p style={VALUE}>{props.hp}</p>}
           </SquareBox>
         );
       case 'initiative':

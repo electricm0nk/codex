@@ -173,7 +173,6 @@ import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/s
 import { loadCharacterBio, parseLanguages, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
-import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -1278,89 +1277,6 @@ function MoneyPanel(props: {
 }
 
 /**
- * Real HP/durability tracking, wired to `load_character_durability` /
- * `adjust_character_hp` (v0.6 alpha swarm, risks-and-open-questions.md
- * item 4). `durability` is `null` both while the initial load is in
- * flight and — indistinguishably, on purpose — when this build isn't
- * durability-supported (only single-class Fighter/Wizard/Rogue); either
- * way, the honest "not available" line is correct and nothing is
- * fabricated in its place. `status` is a pre-computed label from the real
- * PF1 injury/death thresholds — rendered directly, no client-side
- * re-derivation.
- */
-function DurabilityPanel(props: {
-  durability: CharacterDurabilityDto | null;
-  busy: boolean;
-  error: string | null;
-  onAdjust: (deltaHp: number) => void;
-}) {
-  const [amountInput, setAmountInput] = useState('');
-  const parsedAmount = Number(amountInput);
-  const validAmount = amountInput.trim() !== '' && Number.isFinite(parsedAmount) && parsedAmount > 0;
-
-  if (!props.durability) {
-    return (
-      <p style={{ color: 'var(--color-text-faint)', margin: '0 0 1rem', textAlign: 'center' }}>
-        HP tracking isn't available for this build yet — only single-class Fighter, Wizard, or Rogue.
-      </p>
-    );
-  }
-
-  const { currentHp, maxHp, nonlethalDamage, status } = props.durability;
-  return (
-    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
-        Hit Points
-      </p>
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.6rem' }}>
-        <StatTile label="Current" value={currentHp} />
-        <StatTile label="Max" value={maxHp} />
-        <StatTile label="Nonlethal" value={nonlethalDamage} />
-        <StatTile label="Status" value={status} emphasize={status !== 'Normal'} />
-      </div>
-      <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
-        <input
-          type="number"
-          min="0"
-          step="1"
-          placeholder="amount"
-          value={amountInput}
-          onChange={(event) => setAmountInput(event.target.value)}
-          style={{ ...bioFieldInputStyle, width: 110 }}
-        />
-        <button
-          type="button"
-          disabled={!validAmount || props.busy}
-          onClick={() => {
-            props.onAdjust(-parsedAmount);
-            setAmountInput('');
-          }}
-          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
-        >
-          Damage
-        </button>
-        <button
-          type="button"
-          disabled={!validAmount || props.busy}
-          onClick={() => {
-            props.onAdjust(parsedAmount);
-            setAmountInput('');
-          }}
-          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
-        >
-          Heal
-        </button>
-      </div>
-      {props.error ? (
-        <p role="alert" style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.72rem', margin: '0.5rem 0 0' }}>
-          {props.error}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-/**
  * Real, corpus-resolved equipment-effect totals (v0.6 alpha swarm item 1,
  * shape (c)) — not claim-gated, reflects whatever gear is actually
  * equipped regardless of whether the build reaches `Computed`.
@@ -1395,8 +1311,7 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
 }
 
 /**
- * Real, bounded: HP/durability tracking and equipment effects (above) are
- * real for whatever this build actually has equipped. Resistances (energy,
+ * Real, bounded: equipment effects (above) are real for whatever this build actually has equipped. Resistances (energy,
  * Damage Reduction, Spell Resistance, Immunities) render the load
  * response's `resistances` as the printed Resistances block does (SD-40
  * E2.26). Saving throws render base (class progression) beside total, both
@@ -1410,10 +1325,6 @@ function DefenseTab(props: {
   resistances: ResistancesDto | undefined;
   equipmentEffects: EquipmentEffectsDto | undefined;
   encumbrance: EncumbranceDto | undefined;
-  durability: CharacterDurabilityDto | null;
-  durabilityBusy: boolean;
-  durabilityError: string | null;
-  onAdjustHp: (deltaHp: number) => void;
   onOpenMarket: () => void;
 }) {
   return (
@@ -1423,12 +1334,6 @@ function DefenseTab(props: {
           Market
         </button>
       </div>
-      <DurabilityPanel
-        durability={props.durability}
-        busy={props.durabilityBusy}
-        error={props.durabilityError}
-        onAdjust={props.onAdjustHp}
-      />
       <EquipmentEffectsPanel effects={props.equipmentEffects} />
       <AcBySourcePanel effects={props.equipmentEffects} encumbrance={props.encumbrance} />
       <ResistancesPanel resistances={props.resistances} />
@@ -3084,34 +2989,6 @@ export function CharacterSheet(props: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.row.characterId]);
 
-  const [durability, setDurability] = useState<CharacterDurabilityDto | null>(null);
-  const [durabilityBusy, setDurabilityBusy] = useState(false);
-  const [durabilityError, setDurabilityError] = useState<string | null>(null);
-  // Loads the real persisted HP/durability whenever the sheet opens on a
-  // different character. Unlike bio/money, a rejection here is a real,
-  // structural "this build isn't durability-supported" outcome (only
-  // single-class Fighter/Wizard/Rogue), not an expected empty-first-load
-  // state — `durability` staying `null` is exactly how the Defense tab
-  // renders that as an honest "not available for this build" line rather
-  // than a fabricated HP value or an alarming error.
-  useEffect(() => {
-    let cancelled = false;
-    setDurability(null);
-    loadCharacterDurability(props.row.characterId)
-      .then((loaded) => {
-        if (!cancelled) {
-          setDurability(loaded);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setDurability(null);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [props.row.characterId]);
   // SD-36 F7a: the persisted allocation, re-read with the engine records -- never a constant.
   const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>(() =>
     allocationFromPersisted(props.detail?.skillAllocations ?? [])
@@ -3270,10 +3147,7 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(featRefresh.detail);
-      // Same as handleAddFeat — the feat grant can change maxHp, and
-      // neither this call's response nor the level-up's own carries a
-      // durability field. Nor the engine's own records.
-      await refreshDurability();
+      // Neither this call's response nor the level-up's own carries the engine's records.
       await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -3613,11 +3487,7 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(refresh.detail);
-      // A feat can change maxHp (e.g. Toughness) but add_feat_selection's
-      // response carries no durability field — refresh it explicitly so
-      // the Defense tab doesn't show a stale pre-feat value.
-      await refreshDurability();
-      // A feat can also change a weapon's damage (Weapon Specialization)
+      // A feat can change a weapon's damage (Weapon Specialization)
       // and gate class-feature records.
       await refreshEngineRecords();
       announceEligibilityDelta(verdictsBefore, await featVerdictsForCharacter(), featId);
@@ -3673,7 +3543,6 @@ export function CharacterSheet(props: {
       conditionalNotes: loaded.conditionalNotes,
       resistances: loaded.resistances,
     });
-    await refreshDurability();
   }
 
   /**
@@ -3988,26 +3857,6 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * Re-fetches HP/durability after a mutation that can change `maxHp` (a
-   * feat grant, e.g. Toughness's +3 HP) but whose own response carries no
-   * durability field — unlike `adjustCharacterHp`'s. Without this, the
-   * Defense tab would keep showing the pre-feat `maxHp` until the sheet
-   * was closed and reopened (QA found this verifying item 17 — same
-   * render-staleness shape as the `corpus_derived` bug and the Load-list
-   * staleness item 26 already fixed). Failure falls back to `null`, the
-   * same honest "not available" treatment the initial per-character load
-   * uses — never a stale or fabricated value.
-   */
-  async function refreshDurability() {
-    try {
-      const loaded = await loadCharacterDurability(props.row.characterId);
-      setDurability(loaded);
-    } catch {
-      setDurability(null);
-    }
-  }
-
-  /**
    * Re-reads the engine's computed records (class-feature explanations and
    * the per-weapon damage breakdown) after a mutation.
    *
@@ -4015,9 +3864,7 @@ export function CharacterSheet(props: {
    * neither — only `load_saved_character` does. Carrying the pre-mutation
    * records forward instead would be worse than re-reading: a level-up
    * moves nearly every class-feature magnitude, so the sheet would show
-   * last level's numbers as if they were current. Same post-mutation
-   * re-read shape `refreshDurability` above already uses, for the same
-   * render-staleness reason.
+   * last level's numbers as if they were current.
    *
    * A failure leaves whatever is already on screen rather than blanking
    * the section — the browser preview (no Tauri runtime) takes this path
@@ -4043,25 +3890,6 @@ export function CharacterSheet(props: {
       });
     } catch {
       // Intentionally keeps the current records.
-    }
-  }
-
-  /**
-   * `deltaHp`/`deltaNonlethal` are already the exact wire deltas (positive
-   * to heal / take nonlethal damage is the caller's choice, see
-   * `adjustCharacterHp`'s own doc comment) — one atomic round trip, no
-   * read-then-write coordination needed on this side.
-   */
-  async function handleAdjustHp(deltaHp: number, deltaNonlethal: number) {
-    setDurabilityError(null);
-    setDurabilityBusy(true);
-    try {
-      const updated = await adjustCharacterHp(props.row.characterId, deltaHp, deltaNonlethal);
-      setDurability(updated);
-    } catch (cause: unknown) {
-      setDurabilityError(cause instanceof Error ? cause.message : 'Could not update HP.');
-    } finally {
-      setDurabilityBusy(false);
     }
   }
 
@@ -4590,10 +4418,6 @@ export function CharacterSheet(props: {
                     resistances={engineRecords.resistances}
                     equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
                     encumbrance={props.detail?.corpusDerived?.encumbrance}
-                    durability={durability}
-                    durabilityBusy={durabilityBusy}
-                    durabilityError={durabilityError}
-                    onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
                     onOpenMarket={() => setMarketCategory('armor')}
                   />
                 ) : name === 'Spells' ? (
