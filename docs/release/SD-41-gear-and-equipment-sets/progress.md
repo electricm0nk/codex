@@ -119,6 +119,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E1.5 | 2026-11-13 | `80b2ce8757` + this commit | complete | `artifacts/epic_1/E1.5_cycle_receipt.md` (4 tests + 3 E1.4 tests updated for the Unarmed row; root lib 3120 tests; PF seeds byte-identical; Aldric `1d3+4`) |
 | E1.6 | 2026-11-13 | `3f38f51edf` + this commit | complete | `artifacts/epic_1/E1.6_cycle_receipt.md` (3 card tests + 1 population test + 1 converter test; root lib 3124 tests; codex-ingest 1,863 passed; PF seeds byte-identical; desktop fixture restored byte-identical; discovered E1.13, E2.9) |
 | E1.7 | 2026-11-13 | `9050445ff0` + this commit | complete | `artifacts/epic_1/E1.7_cycle_receipt.md` (5 tests; root lib 3129 tests; codex-ingest 1,863 passed; 19 callers pass `&[], &[]`) |
+| E1.10 | 2026-11-13 | `de3e5d35d4` + this commit | complete | `artifacts/epic_1/E1.10_cycle_receipt.md` (5 tests; root lib 3134 tests, 3128 passed, 6 ignored; `saved_character` 26 passed) |
 
 ## Epic reports
 
