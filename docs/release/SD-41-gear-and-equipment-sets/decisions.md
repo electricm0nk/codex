@@ -378,6 +378,7 @@ The lead re-reads this package against the repo before dispatch and records each
 | Q6 | Buy Custom: an eqmod whose price is a formula the converter cannot evaluate (97 formula kinds among 1,494 eqmods) | offered without a price; Buy routes through Negotiate; the receipt lists the unevaluated formulas by count (§24) | refuse to offer the ability until its formula is modelled |
 | Q7 | How far the d20pfsrd price list goes (the proxy count is 2,476 none + 470 zero over all record kinds; the Market's own count comes from E1.8) | arms, armor, shields and general gear the Market lists after the converter fix; magic items priced by their eqmod formulas first; whatever is still missing is listed in `price-unknown.json` with a reason and routes through Negotiate (§26) | every Market row gets a cited price before the bundle closes (a d20pfsrd lookup per row) |
 | Q8 | Splitting a bundle (10 of "Arrows (20)" into a quiver) | not possible: the bundle is the unit the book sells; a stack splits by bundles (§28) | a per-arrow count on the stack (changes the saved shape, NR-3) |
+| Q9 | Where campaign membership is the truth | the character's `campaigns.json` (the app is master, §29); the campaign's `partyCharacterIds` is kept in step by the dialog | the campaign snapshot alone (then every save must read the Drive folder to know where to copy) |
 
 The author's recommendation is the default in every row.
 
@@ -596,3 +597,66 @@ engine's, the TS only formats). (d) The ammunition count (§23) is Σ `quantity 
 carried ammunition stacks matching the weapon. (e) Splitting below one bundle (10 of an "Arrows (20)") is
 not possible: a bundle is the unit the book sells (`§21` Q8). **Enforced by:** E2.1 `held_list_stacks_identical_copies`;
 E2.5 `purchase_quantity_buys_n_copies_at_n_times_price`, `move_quantity_splits_a_stack`; E3.1 model tests.
+
+## §29 — Campaign folders: write-through of the character's files; the Campaign field and buttons (OPERATOR, 2026-11-12)
+
+> "for SD41:  when addiing a character to a campaign, the characters data needs to be written to the
+> campaign folder.  Every update to the character should be written to that folder.  Story character files
+> separately from each other so that they do not collide as might happen if all characters are stored in a
+> single json file.  In the UI, make the campaign option clickable - from here a user can add one or more
+> campaigns, or remove them from a campaigns.  If the User is in a campaign, expose a campaign button under
+> skills that will take the to the campaign manager screen."
+
+Answers: master = **"App is master, folder is a copy"** (one-way write-through: every save of the character
+writes a fresh copy to each campaign folder it belongs to; nothing is read back). Files = **"Full character
+folder"**: `<campaign dir>/characters/<slug>-<characterId>/` holding the same files the app keeps (the saved
+character, `bio.json` incl. the Backstory from SD-40 E3.6, the portrait, `equipment_sets.json`, `custom.json`
+…) — one folder per character, atomic write (temp + rename), never a shared JSON. Remove = **"Keep it, stop
+updating"** (the folder stays; saves stop going there). Button = **"One button per campaign"** under the
+Skills block, each opening that campaign in the Campaign Manager. "Campaign option clickable" = the
+Campaign field on the sheet's identity row (`CharacterSheet.tsx` `IdentityPanel`, the "Campaign" label at
+`:410`; SD-40 E2.18 built the printed Name/Campaign row) opens a dialog to add the character to one or more
+campaigns or remove it.
+
+**Census** (`artifacts/epic_0/census.txt §9`): the campaign dir is `<driveFolderPath>/<folderName>/`
+(`campaign_drive.rs:195 campaign_dir_for`) with `.config/<sanitized name>.json` written by
+`codex::campaign::local_store::CampaignStore::save` (`src/campaign/local_store.rs:53`, atomic write, nonce
+sidecar); `drive_folder_path` arrives **per request** from the UI's Google Drive settings
+(`apps/desktop/src/settings/googleDrive.ts:16`; the backend keeps no copy); `partyCharacterIds` is written only
+by `EditCampaignScreen.tsx:112` through `drive_save_campaign` (E2.10's nonce check); the Campaign Manager is
+`CharacterHubPage.tsx:128` `setMode('campaign-list')` → `CampaignManagerScreen` (`onLoad(campaignId)` opens
+`CampaignSheet`); the sheet shows the campaign as read-only text (`IdentityPanel`, `:403–412`). Character
+writers: `SavedCharacterStore::save` (171 call sites across 16 files, `grep -rn 'SavedCharacterStore::save('
+… | awk 'END{print NR}'`) plus the sidecar writers in the desktop crate (`custom.json` 13 write lines,
+`hit_points.json` 5, `money.json` 2, `bio.json` 1, portrait 8, and E1.2's `equipment_sets.json`). A missing
+Drive folder is already a surfaced error (`campaign_drive.rs:91`). 5 smoke rows cover campaigns today.
+
+**DEFAULTS:** (a) **Membership lives with the character:** `<character root>/campaigns.json` *(new)* =
+`[{ campaignId, campaignName, campaignDir, active }]`, written by the sheet's dialog (E2.7); the dialog also
+updates the campaign's `partyCharacterIds` through the existing `drive_save_campaign` (with its nonce) so the
+Manager agrees; Remove sets `active: false` and drops the id from the party — the folder stays. (b) **One
+mirror function, root crate** (E1.10, `src/saved_character/campaign_mirror.rs` *(new)*): `mirror(root,
+memberships) -> Vec<MirrorWarning>` copies **every file** of the character root to
+`<campaignDir>/characters/<slug>-<characterId>/` for each active membership (`slug` = `sanitize_filename`
+of the display label, lower-cased, spaces → `-`; the id makes the folder unique: two characters named alike
+never share a path), by writing `<target>.tmp-<pid>` and renaming over the old folder; `campaigns.json`
+itself is not copied. A missing or unwritable campaign dir is a **warning**, never an error: the local save
+has already succeeded. (c) **Every writer calls the mirror after its write:** `SavedCharacterStore::save`
+(root crate; covers the 171 sites) and each desktop sidecar writer (`save_character_custom`,
+`save_character_bio_at_root`, `save_character_hit_points_at_root`, the money writer, the portrait writer,
+`equipment_sets::save`'s desktop caller) — E2.7 names each; a **source-scanning test** (the shape
+`packaged_resources.rs` uses) lists every `fs::write` / `atomic_write` whose path is under a character root
+in the desktop crate and fails if its enclosing function does not call `campaign_mirror::after_write`. (d)
+Warnings reach the UI as `mirrorWarnings: string[]` on `CreateCharacterOutcome` and are shown on the sheet
+("Campaign copy failed: <dir>: <reason>"). (e) **UI** (E3.5): the Campaign label becomes a button opening
+`CampaignMembershipDialog` *(new)* listing the Drive folder's campaigns (`drive_list_campaigns`) with a
+checkbox each (checked = active); under the Skills block, one button per active campaign, "Open <name>",
+which sets the hub's mode to the campaign sheet for that id (`CharacterHubPage` gains a `campaign-sheet`
+entry with the id; `CampaignManagerScreen.onLoad` already names it). (f) `clone_character` copies no
+membership (a clone is a new character). **Enforced by:** E1.10 tests (two alike names, two ids → two
+folders; byte-identical copy of every file; an unwritable dir → warning + local files intact; inactive
+membership → no write); E2.7's scanning test and an end-to-end test (save custom → the campaign copy's
+`custom.json` changes); E3.5 model tests; smoke rows `sheet-campaign-add-from-identity`,
+`sheet-campaign-button-under-skills`, `sheet-campaign-remove-keeps-folder` (E3.3). **Overlap:** the
+root-crate mirror (E1.10) touches no SD-40 file → Phase 1; the hooks and the UI touch `character_hub.rs`,
+`CharacterSheet.tsx`, `CharacterHubPage.tsx` → Phase 2.

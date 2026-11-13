@@ -1,6 +1,6 @@
 ---
 title: SD-41 — Gear and Equipment Sets — Release Package
-status: planning-ready — authored 2026-11-12 from the operator's request, nine answers and seven follow-up items of the same day (decisions.md §3, §22–§28); the lead re-reads against the repo before launch (decisions.md §20)
+status: planning-ready — authored 2026-11-12 from the operator's request, nine answers and eight follow-up items of the same day (decisions.md §3, §22–§29); the lead re-reads against the repo before launch (decisions.md §20)
 bundle_id: SD-41
 slug: gear-and-equipment-sets
 scope: docs/release/SD-41-gear-and-equipment-sets
@@ -47,19 +47,19 @@ weight unchanged.
 | Slug | `gear-and-equipment-sets` |
 | Canonical branch | `tranche-21`, cut 2026-11-12 from `origin/tranche-20` @ `f7f85f3d24` (`git merge-base HEAD origin/tranche-20`); catches up to `tranche-20`'s tip and then to `develop` after SD-40 merges (`decisions.md §4`) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E1–E5 / **31 cards** (23 + 8 from the seven follow-ups, `decisions.md §22–§28`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 31) |
+| Epics / cards | C, E1–E5 / **34 cards** (23 + 8 from the seven follow-ups + 3 from the campaign item, `decisions.md §22–§29`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 34) |
 | Target version | `0.21.0`, stamped by C1's single commit on the 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run per phase (`decisions.md §12.2`); ends cleanly at E4.G |
 | Cadence | N/A |
-| Closure gate | 31 cards `complete` (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
-| Source | the operator's request, answers and seven follow-ups (`artifacts/cycle_0/operator-brief-2026-11-12.md`); the census (`artifacts/epic_0/census.txt`); PCGen's Equipping, Purchase and custom-item tabs as a functional reference only (`decisions.md §17`) |
+| Closure gate | 34 cards `complete` (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Source | the operator's request, answers and eight follow-ups (`artifacts/cycle_0/operator-brief-2026-11-12.md`); the census (`artifacts/epic_0/census.txt`); PCGen's Equipping, Purchase and custom-item tabs as a functional reference only (`decisions.md §17`) |
 
 ## 2. Files in this folder
 
 | File | Job |
 |---|---|
 | `scope-draft.md` | The request in the operator's words, the code's state today, the Definition of Done, epic order |
-| `decisions.md` | §1–§28: the operator's nine answers verbatim (§3), the seven follow-ups verbatim with their census and defaults (§22 Unarmed row, §23 ammunition per weapon, §24 Market table / sort / description / Only Show Affordable / Buy Custom, §25 Create item, §26 prices + Negotiate + columns, §27 Drop / Sell / Discard, §28 bulk quantity and stacks), the location model and the sidecar file (§5), projection into today's engine inputs (§6), containers and capacity (§7), the Default-set migration (§8), weapons order (§9), the market default (§10), custom containers (§11), unattended protocol with safe defaults SD-a…SD-n (§12), the SD-40 partition (§4), PCGen rule (§17), the operator questions with defaults (§21) |
+| `decisions.md` | §1–§28: the operator's nine answers verbatim (§3), the seven follow-ups verbatim with their census and defaults (§22 Unarmed row, §23 ammunition per weapon, §24 Market table / sort / description / Only Show Affordable / Buy Custom, §25 Create item, §26 prices + Negotiate + columns, §27 Drop / Sell / Discard, §28 bulk quantity and stacks, §29 campaign folders: write-through, membership dialog, per-campaign buttons), the location model and the sidecar file (§5), projection into today's engine inputs (§6), containers and capacity (§7), the Default-set migration (§8), weapons order (§9), the market default (§10), custom containers (§11), unattended protocol with safe defaults SD-a…SD-n (§12), the SD-40 partition (§4), PCGen rule (§17), the operator questions with defaults (§21) |
 | `forward-scope-register.md` | Committed, implied, candidate rows; DEF-1…DEF-4 |
 | `technical-design.md` | Today's module map with line counts; the set model, the file, the projection, the container loads, the gear screen, the print page |
 | `technical-requirements.md` | Prerequisites P-1…P-8, normative requirements NR-1…NR-14 |
@@ -118,6 +118,7 @@ Repo files read `0.21.0` after C1.
 | 11 | Buy Custom pricing | from each eqmod's flat `COST` and the formulas the converter evaluates; an unpriced eqmod routes the purchase through Negotiate | `decisions.md §24`; `§21` Q6 |
 | 12 | The d20pfsrd list's reach | the Market rows still unpriced after the converter fix, bounded by E1.8's census; the rest listed as price-unknown with a reason and sold through Negotiate | `decisions.md §26`; `§21` Q7 |
 | 13 | A Create item's edit and removal | the Custom tab's existing dialog (it gains weight, price, capacity, slot) | `decisions.md §25` |
+| 14 | Campaign membership truth and the write-through hook | the character's `campaigns.json` (the app is master); one root-crate `mirror` called by `SavedCharacterStore::save` and every sidecar writer, closed by a source-scanning test; a bad folder is a warning, never a failed save | `decisions.md §29`; `§21` Q9 |
 
 ## 7. Initial-package construction
 

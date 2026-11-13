@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 1 of 31 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 1; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 31: 23 at C0 + 8 from the seven follow-ups, `decisions.md §22–§28`) |
+| Cards complete | 1 of 34 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 1; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 34: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item, `decisions.md §22–§29`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -68,6 +68,13 @@ E2.3 rewritten (Create item backend; `base_item_id` dropped — `decisions.md §
 E2.4, E3.1, E3.3, E4.1, E4.MC, E4.G widened. Cards 23 → 31. Open questions Q6–Q8 added with defaults.
 Partition re-run: the Market cards touch `CharacterSheet.tsx` (SD-40-owned) → Phase 2; the `convert` lane's
 files are owned by no open SD-40 card → Phase 1.
+
+**Eighth item, same day (campaign folders, `decisions.md §29`):** census §9 (171 `SavedCharacterStore::save`
+sites, six sidecar writers, the Drive folder lives UI-side, `partyCharacterIds` written by `EditCampaignScreen`,
+the Manager's route, 5 campaign smoke rows). New cards E1.10 (root-crate mirror, Phase 1), E2.7 (writer hooks +
+scanning test + `set_character_campaigns`), E3.5 (Campaign field dialog + per-campaign buttons); E3.3 → 18 new
+rows. Cards 31 → 34. Q9 added. No open SD-40 card owns `src/campaign/**`, `campaign_drive.rs`,
+`CharacterHubPage.tsx` or `LandingScreen.tsx` (census §9's last command → nothing).
 
 ## Cycle log
 

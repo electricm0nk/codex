@@ -50,6 +50,8 @@ status: planning-ready
 | NR-17 | No Market row has a missing, zero or negative price unless its key is in `price-unknown.json` with a reason; every d20pfsrd price carries its URL | G-10's gate test |
 | NR-18 | No TS computes a price: quantities, negotiated totals and Buy Custom quotes come from the backend; `refundPreviewCopper` stays the one mirrored rule | E3.4 model tests; E3.MC's read |
 | NR-19 | Stacks change nothing on disk; a stack is `quantity` identical copies the engine already weighs one by one | E2.1 tests; G-1 |
+| NR-20 | Every writer of a file under a character root mirrors to every active campaign folder after its write; a bad folder is a warning, never a failed local save; two characters never share a campaign file | E1.10 tests; E2.7's scanning test; G-11 |
+| NR-21 | The campaign copy is one-way: no code path reads a character from a campaign folder | `grep -rn 'characters/' src/saved_character/campaign_mirror.rs \| grep -c 'read'` → 0; E2.MC's read |
 
 ## 3. Out of scope
 

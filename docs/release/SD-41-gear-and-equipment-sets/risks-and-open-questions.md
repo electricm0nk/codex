@@ -35,6 +35,9 @@ status: planning-ready
 | R-18 | Buy Custom prices drift from PCGen's eqmod formulas (97 formula kinds) | medium | medium | only flat costs and the named formula kinds are priced; the rest route through Negotiate (Q6) and are counted in the receipt; the test prices a known +1 flaming mithral longsword against the book | yes |
 | R-19 | Stacks hide a copy-identity bug (a move of 2 of 3 moves the wrong ordinals) | medium | medium | stacks are a view; moves act on explicit `CopyKey`s in ascending ordinal; E2.2 `move_quantity_splits_a_stack`; E2.1's stack tests | yes |
 | R-20 | The Unarmed row changes an existing seed value (a Monk seed's flurry rows) | low | high | the row is appended; G-1's `NEW_ROWS` names exactly the four unarmed ids; any other change is `VALUE_MOVED` | yes |
+| R-21 | A character writer is missed by the campaign mirror (171 `SavedCharacterStore::save` sites; six sidecar writers), so the campaign copy goes stale silently | high without a control | medium | the mirror sits inside `SavedCharacterStore::save` (one place for the 171); the source-scanning test `every_character_root_writer_mirrors` fails on any sidecar writer without `after_write` (E2.7); the end-to-end test changes `custom.json` and reads the copy | yes |
+| R-22 | A campaign folder on a slow or absent Drive mount makes every save slow or fail | medium | medium | the mirror runs after the local save and returns warnings, never an error; a missing dir is one warning per save shown on the sheet; a membership can be set inactive | yes |
+| R-23 | The sheet's membership dialog and the Campaign Manager disagree on `partyCharacterIds` (nonce conflict) | low | low | the dialog writes through the existing `drive_save_campaign` with its nonce (E2.10) and shows its conflict message; the character's `campaigns.json` is the truth the mirror reads (Q9) | yes |
 
 ## 2. Open questions → defaults taken
 
@@ -55,6 +58,7 @@ one card takes; the run does not wait on them.
 | The d20pfsrd list's reach | bounded by E1.8's Market census; the rest price-unknown | `decisions.md §26`; Q7 |
 | Splitting a bundle | not possible; a bundle is the unit | `decisions.md §28`; Q8 |
 | Where a Create item is edited | the Custom tab | `decisions.md §25` |
+| Campaign membership truth | the character's `campaigns.json`; the party list kept in step by the dialog | `decisions.md §29`; Q9 |
 
 ## 3. Non-self-healable conditions (card → `blocked-escalated`)
 

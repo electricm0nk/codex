@@ -35,7 +35,10 @@ The nine answers of the same day are in `decisions.md §3`. The operator added s
 quoted verbatim with its answers in `decisions.md §22–§28`: the Unarmed row; ammunition boxes only for
 ammunition weapons; the Market as a sortable table with a description box, Only Show Affordable and Buy
 Custom; a Create option; missing and negative prices, Negotiate on Buy and Sell, Weight and Slot columns;
-Drop → Not Carried with separate Sell and Discard; bulk Quantity and stacks.
+Drop → Not Carried with separate Sell and Discard; bulk Quantity and stacks. An eighth item (`§29`) adds
+campaign folders: every save of a character in a campaign writes the character's whole folder to
+`<campaign dir>/characters/<slug>-<id>/`; the Campaign field opens a membership dialog; one button per
+campaign under Skills opens the Campaign Manager.
 
 What the code does today (checked on `tranche-20` @ `f7f85f3d24`, 2026-11-12; every figure in
 `artifacts/epic_0/census.txt` with its command):
@@ -125,6 +128,11 @@ SD-41 is done when every row below holds on `tranche-21` and the operator has si
     (`decisions.md §27`.)
 20. **Stacks.** Identical copies in one location are one row with a quantity; buy, sell, move, drop and
     discard take a quantity; bundles count as the book sells them. (`decisions.md §28`.)
+21. **Campaign folders.** A character in a campaign has its whole folder copied, atomically and on every
+    save by every writer, to `<campaign dir>/characters/<slug>-<characterId>/`; two characters never share a
+    file; a missing or unwritable folder is a warning, never a lost save; removal keeps the folder and stops
+    the copies; the Campaign field opens the membership dialog; one "Open <name>" button per campaign under
+    Skills opens that campaign. (`decisions.md §29`.)
 
 ## 3. Not in the Definition of Done (planned deferrals, `forward-scope-register.md §4`)
 

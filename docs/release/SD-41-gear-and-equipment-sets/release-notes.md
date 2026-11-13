@@ -32,6 +32,9 @@ resolver passes from C1 on (`decisions.md §2`). Nothing publishes from `tranche
   container and slot).
 - Missing and negative prices are fixed in the converter; the rest come from a cited price list.
 - Drop keeps the item as Not Carried; Sell and Discard are separate; identical items stack with a count.
+- A character in a campaign is copied, whole, to the campaign's folder on every save (one folder per
+  character); the Campaign field on the sheet adds or removes campaigns; one button per campaign under
+  Skills opens it in the Campaign Manager.
 - Starfinder and Cyberpunk RED gear and markets are unchanged.
 
 Final figures, commands and the operator's two sign-offs are filled in at E5.3.

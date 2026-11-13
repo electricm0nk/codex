@@ -27,7 +27,7 @@ cd apps/desktop/src-tauri && mkdir -p <dir>/base <dir>/head
 PF_SEED_RENDER_OUT=<dir>/head cargo test --locked -j 8 --bins pf_seed_render_hash -- --test-threads=8 --nocapture
 python3 - <dir>/base <dir>/head <<'PY'                 # pass = prints SAME_EXCEPT_NAMED for each seed
 import json, sys, pathlib
-NEW_KEYS = {'equipmentSets', 'containerLoads', 'location', 'ordinal', 'quantity', 'copies', 'baseQuantity', 'inHand', 'unarmed', 'nonlethal', 'usesAmmunition', 'ammunitionCarried', 'slot'}   # E2.1, E2.4, E2.5 (the card names any other)
+NEW_KEYS = {'equipmentSets', 'containerLoads', 'location', 'ordinal', 'quantity', 'copies', 'baseQuantity', 'inHand', 'unarmed', 'nonlethal', 'usesAmmunition', 'ammunitionCarried', 'slot', 'mirrorWarnings', 'campaigns'}   # E2.1, E2.4, E2.5, E2.7 (the card names any other)
 NEW_ROWS = ('combat.weapon_attack_bonus.unarmedstrike', 'combat.weapon_damage_total.unarmedstrike', 'combat.weapon_damage_bonus.unarmedstrike', 'combat.weapon_threat_range_low.unarmedstrike')   # E1.5 / E2.4: the Unarmed row every seed gains; carried-weapon rows exist only for copies no seed holds (E1.4 states the population)
 def strip(node):
     if isinstance(node, dict):
@@ -96,7 +96,7 @@ cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts   # the over
 cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc && git status --porcelain ../../docs/testing/ui-smoke-inventory.md   # empty
 test ! -f apps/desktop/src/characterHub/EquipmentPanel.tsx && echo PANEL_GONE
 grep -nE '\b(reduce\(|\+= *[a-z]*[wW]eight|lbs *[-+*/])' apps/desktop/src/characterHub/GearScreen.tsx apps/desktop/src/characterHub/gearScreenModel.ts | awk 'END{print NR}'   # 0 (NR-2)
-python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 21 []
+python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 24 []
 cd apps/desktop && npx tsx src/characterHub/marketModel.test.ts && npx tsx src/characterHub/weaponsTabModel.test.ts   # E3.4, E2.4
 ```
 
@@ -107,6 +107,15 @@ cargo test --locked -j 8 --lib unarmed_row -- --test-threads=8                  
 cargo test --locked -j 8 --lib uses_ammunition -- --test-threads=8                   # 3 passed
 cd apps/desktop/src-tauri && cargo test --locked -j 8 weapons_in_hand_first -- --test-threads=8   # 3 passed
 grep -c '"Ammunition"' apps/desktop/src-tauri/resources/print/looks/weapons.typ      # 0 (no global row)
+```
+
+## G-11 Campaign write-through (DoD 21) — E1.10, E2.7, E3.5
+
+```bash
+cargo test --locked -j 8 --lib campaign_mirror -- --test-threads=8                                   # 5 passed (two alike names → two folders; byte-identical; inactive writes nothing; missing dir warns, local intact)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 --test every_character_root_writer_mirrors -- --test-threads=8   # 1 passed (every writer calls after_write)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 campaign_write_through -- --test-threads=8     # 3 passed
+cd apps/desktop && npx tsx src/characterHub/campaignMembershipModel.test.ts                          # ≥ 4 cases
 ```
 
 ## G-10 Prices and the Market (DoD 16, 18–21) — E1.8, E1.9, E2.5, E2.6, E3.4
@@ -131,7 +140,7 @@ bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 ```bash
 cd docs/release/SD-41-gear-and-equipment-sets
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 31) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 34) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 2 (anchored; the receipt's own instructions must not match)
 grep -c 'SD-41 INTERIM NOTES' release-notes.md                        # 0 at E5.3+
@@ -153,9 +162,10 @@ fresh-install check recorded in E5.1's receipt.
 | G-3 | E1.MC | the receipt's partition line |
 | G-4 | E1.2, E2.1, E2.2, E2.MC | `artifacts/epic_1/`, `artifacts/epic_2/`; the `.pcg` population line |
 | G-5 | E1.1, E1.3, E2.3, E3.1 | `artifacts/epic_1/`, `artifacts/epic_2/E2.3_cycle_receipt.md` |
-| G-6 | E3.1–E3.4, E3.MC | `artifacts/epic_3/E3.3/results.json`, `artifacts/epic_3/E3.MC/*.png` |
+| G-6 | E3.1–E3.5, E3.MC | `artifacts/epic_3/E3.3/results.json`, `artifacts/epic_3/E3.MC/*.png` |
 | G-9 | E1.5, E1.6, E2.4, E4.1 | receipts; `artifacts/epic_4/E4.1/*.png` |
 | G-10 | E1.8, E1.9, E2.5, E2.6, E3.4 | `artifacts/epic_1/E1.8/market-prices.json`, `data/price_overrides/*.json`, receipts |
+| G-11 | E1.10, E2.7, E3.5 | receipts; `artifacts/epic_3/E3.3/results.json` (the three campaign rows) |
 | G-7 | every MC, E5.1 | receipts |
 | E4.G | E4.MC, E4.G | `artifacts/epic_4/E4.G/` (4 PDFs, ≥ 12 PNGs, the signed receipt) |
 | G-8 | E5.1–E5.4 | `artifacts/epic_5/`, `receipts.md`, `docs/retro/sd41-retrospective.md` |

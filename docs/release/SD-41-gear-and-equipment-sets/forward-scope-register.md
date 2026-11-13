@@ -38,6 +38,7 @@ authoring; its Inventory section (E3.2) is what E4.1 re-lays by location.
 | COM-16 | Created items: weight, optional price, optional container + slot; persisted, printed, weighed, editable in the Custom tab | `decisions.md §25` | E1.7, E2.3 |
 | COM-17 | Prices: converter fix, cited d20pfsrd list, price-unknown list, the gate test | `decisions.md §26` | E1.8, E1.9 |
 | COM-18 | Drop → Not Carried; Sell and Discard separate; stacks with quantities on every action (was FSR-C1) | `decisions.md §27, §28` | E2.1, E2.2, E2.5, E3.1 |
+| COM-19 | Campaign folders: write-through of the whole character folder on every save, one folder per character; membership dialog on the Campaign field; one button per campaign under Skills | `decisions.md §29` | E1.10, E2.7, E3.5 |
 
 ## 2. Structurally implied
 
@@ -58,6 +59,7 @@ authoring; its Inventory section (E3.2) is what E4.1 re-lays by location.
 | FSR-C1 | Quantity stacks (one row "Arrows ×20") | PCGen's Purchase tab buys n at a time | **No longer a candidate: committed as COM-18 by the operator's bulk-buying item (2026-11-12, `decisions.md §28`)** | none: E5.2 checks E2.5 is `complete` |
 | FSR-C2 | Wield styles per weapon (one-handed / two-handed / off-hand) beyond the three wield slots | PCGen equips weapons by style | the app's `wield_main` / `wield_off` / `wield_two_handed` slots carry the choice today | the operator asks |
 | FSR-C3 | Moving an item to another character | PCGen's "Move To / Copy To" | not requested | the operator asks |
+| FSR-C6 | Reading a character back from a campaign folder (two-way sync) | the operator's "App is master, folder is a copy" | one-way by ruling | the operator asks |
 | FSR-C4 | Starfinder and Cyberpunk RED gear screens | A1 names the Pathfinder list | their markets are separate shells | a scope draft after SD-41's launch names them: `git log --since=2026-11-12 --diff-filter=AM --name-only --format= -- 'docs/release/SD-*/scope-draft.md' \| sort -u \| grep -v SD-41 \| xargs -r grep -lis 'starfinder.*gear\|cyberpunk.*gear' \| awk 'END{print NR}'` ≥ 1 |
 | FSR-C5 | Charges on wands and the like | PCGen's Modify Charges | not requested | the operator asks |
 

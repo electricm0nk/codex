@@ -191,6 +191,19 @@ compute_encumbrance(selections, corpus, extra: &[WeighedCopy])   -- created cust
 CustomRecordDto += weight_lbs, price_gp, container_capacity_lbs (Option; serde default)   -- custom.json; edit/remove in the Custom tab
 ```
 
+## §11 Campaign write-through (E1.10, E2.7, E3.5; `decisions.md §29`)
+
+```
+<character root>/campaigns.json      [{ campaignId, campaignName, campaignDir, active }]     -- the app is master; written by set_character_campaigns
+src/saved_character/campaign_mirror.rs (new)
+  mirror(root, label, character_id, memberships) -> Vec<MirrorWarning>   -- every file of root (less campaigns.json) → <campaignDir>/characters/<slug>-<id>.tmp-<pid>/ → rename over the target; one warning per bad dir; nothing read back
+  SavedCharacterStore::save_with_warnings(...)   -- calls mirror after both files land; save(...) keeps the old signature for the 171 call sites
+desktop: campaign_mirror::after_write(root)      -- called by every sidecar writer (custom, bio, hit points, money, portrait, equipment_sets); tests/every_character_root_writer_mirrors.rs scans the sources for a writer without it
+UI: IdentityPanel's Campaign label → CampaignMembershipDialog (drive_list_campaigns; checkboxes; Save → set_character_campaigns + drive_save_campaign with nonce for partyCharacterIds)
+    Skills block footer: one "Open <name>" button per active campaign → CharacterHubPage mode campaign-sheet(id)
+    mirrorWarnings on CreateCharacterOutcome / the load response → a dismissible warning line on the sheet
+```
+
 ## §7 Tests the bundle adds (names are the acceptance filters)
 
 | Card | Where | Names |
@@ -203,6 +216,9 @@ CustomRecordDto += weight_lbs, price_gp, container_capacity_lbs (Option; serde d
 | E1.6 | root `--lib` | `uses_ammunition_*` (3) |
 | E1.7 | root `--lib` | `extra_weighed_*` (2), `base_quantity` (1) |
 | E1.8, E1.9 | `tests/market_price_census.rs` (codex-ingest or desktop) | `market_price_census`, `market_prices_are_positive_or_listed` |
+| E1.10 | root `--lib` | `campaign_mirror_*` (5) |
+| E2.7 | desktop `tests/`; desktop | `every_character_root_writer_mirrors`; `campaign_write_through_*` (3) |
+| E3.5 | `campaignMembershipModel.test.ts` | ≥ 4 cases |
 | E2.1 | desktop | `equipment_sets_on_load_*` (2), `held_list_stacks_*` (2); `tests/old_save_loads_unchanged.rs` |
 | E2.2 | desktop | `move_equipment_*` (6), `move_quantity_splits_a_stack` |
 | E2.3 | desktop; `customModel.test.ts` | `create_custom_item_*` (4) |
@@ -211,5 +227,5 @@ CustomRecordDto += weight_lbs, price_gp, container_capacity_lbs (Option; serde d
 | E2.6 | desktop | `buy_custom_*` (4) |
 | E3.1, E3.2 | `gearScreenModel.test.ts` | ≥ 8 model cases + ≥ 4 drop cases |
 | E3.4 | `marketModel.test.ts`, `MarketDialog.test.ts` | ≥ 6 model cases |
-| E3.3 | ui-smoke | 15 new + 6 rewritten rows |
+| E3.3 | ui-smoke | 18 new + 6 rewritten rows |
 | E4.1 | desktop `print_pf_blocks` | `print_pf_blocks_gear_*` (5) |
