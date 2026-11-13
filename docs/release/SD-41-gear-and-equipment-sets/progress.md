@@ -102,6 +102,7 @@ override row's source kind is `operator-ruling`.
 | E1.1 | 2026-11-12 | `370e3346b4` | blocked-escalated | `artifacts/epic_1/E1.1_cycle_receipt.md` |
 | E1.1 | 2026-11-12 | `6d7b0227ba` + this commit | complete | `artifacts/epic_1/E1.1_cycle_receipt.md` |
 | E1.2 | 2026-11-12 | `d3bdfe8ad6` + `fd85933387` + this commit | complete | `artifacts/epic_1/E1.2_cycle_receipt.md` (9 + 1 tests; 63 of 63 `.pcg` fixtures round-trip) |
+| E1.3 | 2026-11-13 | `9841098a84` + this commit | complete | `artifacts/epic_1/E1.3_cycle_receipt.md` (4 tests; root lib 3106 passed) |
 
 ## Epic reports
 
