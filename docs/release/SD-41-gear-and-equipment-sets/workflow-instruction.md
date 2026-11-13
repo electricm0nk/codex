@@ -355,7 +355,7 @@ card binds (`<sha>`, `<base>`, `<head>`, `<dir>`, `<lane>`, `<card>`, `<card-id>
 `<script>`, `<type>`, `<keys>`, `<file>`, `<id>`, `<path>`, `<defect>`, `<itemId>`, `<bonus>`, `<ordinal>`, `<kind>`, `<slot>`, `<lb>`,
 `<name>`, `<state>`, `<select>`, `<out>`, `<clean-worktree>`, `<epic-start>`, `<date>`, `<filter>`, `<description>`, `<run>`,
 `<your tree>`, `<E2 card>`, `<E1.MC sha>`, `<E3.1 sha>`, `<C1 sha>`, `<SD-40 merge sha>`, `<the SD-40 closing count>`, `<character root>`,
-`<total>`, `<column>`, `<eqmod keys>`, `<eqmod key>`, `<lb>`, `<target>`, `<reason>`, `<campaignId>`, `<campaign dir>`),
+`<total>`, `<column>`, `<eqmod keys>`, `<eqmod key>`, `<lb>`, `<target>`, `<reason>`, `<campaignId>`, `<campaign dir>`, `<campaign_dir>`, `<character_id>`, `<pid>`, `<root>`, `<slug>` (the mirror's path schema, `decisions.md §29`)),
 (b) a deferred value with a named resolution point (`0.21.<run>` → first tester publish after the
 operator merges; the run id → launch; the SD-40 merge SHA → the lead at R25), or (c) a bug to fix before
 launch. The author's run is recorded in `progress.md`.
