@@ -38,15 +38,15 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 35 (23 + 8
 |---|---|---|---|---|---|
 | C0 | Package committed + Cycle 0 receipt + census | lead | complete | — | this commit; branch cut by the planning session 2026-11-12 from `origin/tranche-20` @ `f7f85f3d24` |
 | C1 | 0.21.0 on 14 surfaces + notes pointer | haiku | complete | C0 | Phase 1; this commit; receipt `artifacts/cycle_0/C1_cycle_receipt.md` |
-| E1.1 | Containers in the record: `is_container`, `ContainerCapacity` from `CONTAINS` | opus | blocked-escalated | C1 | Phase 1; root crate only; FILES YOU OWN not closed (capacity needs the converter + `_settled` regen) and SD-a premise false; rulings R1/R2 in `artifacts/epic_1/E1.1_cycle_receipt.md` |
+| E1.1 | Containers settled into the record via `ir_converter.rs` + `_settled/equipment.json`; `is_container` = Container-typed and no base damage | opus | ready | C1 | Phase 1; blocker cleared 2026-11-12 (`decisions.md §31`: lead grant R1, operator ruling R2); fixture bundle byte-identical; first attempt `370e3346b4`, receipt `artifacts/epic_1/E1.1_cycle_receipt.md` |
 | E1.2 | Equipment sets: model, file, projection, Default (root crate) | opus | waiting | E1.1 | Phase 1; `src/saved_character/equipment_sets.rs` (new); the round-trip theorem over seeds + `.pcg` fixtures |
 | E1.3 | Container loads (recursive contents vs capacity) | opus | waiting | E1.2 | Phase 1; `src/rules_core/containers.rs` (new) |
 | E1.4 | Carried weapons: `in_hand` on the breakdown | opus | waiting | E1.3 | Phase 1; `damage_total.rs` |
 | E1.5 | The Unarmed row: always last, real numbers, monk progression, IUS lethal | opus | waiting | E1.4 | Phase 1; `decisions.md §22` |
-| E1.6 | `uses_ammunition` (Projectile tag) + `ammunition_carried` per weapon | opus | waiting | E1.5 | Phase 1; `decisions.md §23` |
-| E1.7 | Encumbrance weighs extra copies (Create items); `base_quantity()` | opus | waiting | E1.6 | Phase 1; `decisions.md §25, §28` |
+| E1.6 | `uses_ammunition` + `ammunition_family` settled via `ir_converter.rs`; `ammunition_carried` per weapon | opus | waiting | E1.5 | Phase 1; `decisions.md §23, §31` |
+| E1.7 | Encumbrance weighs extra copies + piece quantities; `base_quantity` settled via `ir_converter.rs` | opus | waiting | E1.6 | Phase 1; `decisions.md §25, §28, §30, §31` |
 | E1.8 | Price census through the catalog: missing / zero / negative by book + category; converter causes | opus | waiting | C1 | Phase 1; side lane `convert` (`.worktrees/sd41-convert`) ∥ E1.1–E1.7; `decisions.md §26` |
-| E1.9 | Converter fix + re-convert + override-list reader + price gate | opus | waiting | E1.8 | Phase 1; lane `convert`; corpus diff limited to price/weight/token/name fields |
+| E1.9 | Converter fix + re-convert + `_settled` regen + override-list reader + price gate | opus | waiting | E1.8, E1.1 | Phase 1; lane `convert`; after E1.1 (both edit `ir_converter.rs`, `decisions.md §31` R1); corpus diff limited to price/weight/token/name fields + the settled bundles |
 | E1.11 | Every Market item tried: d20pfsrd list in batches of ≤ 150 (lead's `web-fetch` agent per batch); leftover Market keys in `price-unknown.json` each with a `tried` list | opus | waiting | E1.9 | Phase 1; lane `convert`; the effort bar is a closure criterion (`decisions.md §30, §30.1`); P-9; no desktop file |
 | E1.10 | Campaign mirror (root crate): `campaigns.json`, atomic folder copy per active campaign, warnings never errors | opus | waiting | E1.7 | Phase 1; `decisions.md §29` |
 | E1.MC | E1 merge check + Epic report; Phase-1 run ends | opus | waiting | E1.10, E1.11 | adversarial; partition check `git diff … -- apps` → 0 (less the price test file); corpus field check; writes the resume receipt (`START=E2.1`) |

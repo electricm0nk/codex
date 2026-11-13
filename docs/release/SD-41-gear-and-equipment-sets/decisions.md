@@ -152,14 +152,16 @@ engine keys on `ActiveState`.
 ## §7 — Containers and capacity (OPERATOR A3; DEFAULT on the data source)
 
 - **Is a container:** the record's tags hold `Container` (`data/sheet_rules/**/equipment/*.json` `tags`;
-  232 records). E1.1 adds `is_container()` to the record the engine already reads for weight
-  (`CorpusEquipmentRecord`, `equipment_record.rs`, 224 lines) or, if that read path has no tags, to the
-  sheet-rule lookup the catalog uses; E1.1 names the path it chose in its receipt.
-- **Capacity:** the `CONTAINS` token's first field in the corpus record's `raw_tokens` (138 records:
-  `<lb>|…` 70, `UNLIM|…` 43, `*<n>|…` weight-reduction kinds 25). `ContainerCapacity = Pounds(f64) |
-  Unlimited | Unstated` (the `*` kinds are `Unstated`: contents weigh in full, DEF-1). `data/sheet_rules`
-  holds no `CONTAINS` (`grep -rl CONTAINS data/sheet_rules … | awk` → 1 file, not an equipment record), so
-  capacity is read from the corpus record, the same bytes weight comes from.
+  232 files / 265 rows) **and the record states no base damage** (operator, §31 R2: "Container tag, but not
+  weapons"). E1.1 settles `container` and `container_capacity` through `ir_converter.rs` into
+  `data/corpus/*/_settled/equipment.json`, the file `CorpusEquipmentRecord` is read from (§31 R1); the live record
+  never reads tags or tokens.
+- **Capacity:** the `CONTAINS` token's first field in the corpus record (210 of 7,804 records: `<lb>|…` 88,
+  `UNLIM|…` 73, `*<n>|…` weight-reduction kinds 49; §31 R3), settled by the converter as
+  `ContainerCapacity = Pounds(f64) | Unlimited | Unstated` (the `*` kinds are `Unstated`: contents weigh in full,
+  DEF-1; the base Backpack is `UNLIM|Any` → `Unlimited`). `data/sheet_rules` holds no `CONTAINS`
+  (`grep -rl CONTAINS data/sheet_rules … | awk` → 1 file, not an equipment record), so capacity comes from the
+  corpus record, the same bytes weight comes from, through the same settled bundle.
 - **Container loads** (E1.3, `src/rules_core/containers.rs` *(new)*): for every container copy in the
   active set, `ContainerLoad { copy, contents_lbs, capacity, over: bool }`, contents summed recursively
   (a pouch inside a backpack adds to both), weights from the same `weight_and_cost()` read encumbrance uses.
@@ -249,7 +251,7 @@ without asking"):
 
 | # | Decision point | Safe default |
 |---|---|---|
-| SD-a | A copy whose record has no `Container` tag but a `CONTAINS` token (ammunition holders: Pistol, Powder Horn) | not a container on the screen (the tag rules); the token is ignored; logged once per card |
+| SD-a | A `Container`-typed record that is a weapon (Pistol: `CONTAINS 1|FirearmBullet=1`) | **replaced by the operator's ruling (§31 R2, "Container tag, but not weapons"):** a container is `Container`-typed **and** states no base damage; Pistol is not one, Powder Horn is; logged once per card when the rule excludes a record
 | SD-b | A record's weight is unknown (`weight_and_cost()` → `None`) inside a container | contents weigh what the engine already says (nothing); the container's "x of y" counts only weighed copies; the same "weight could not be verified" posture `encumbrance.rs` has |
 | SD-c | The screen's left list order | saved order (the order the engine weighs in); the filter never re-sorts |
 | SD-d | A slot that is full when a move asks for it | refuse with the existing `slot_conflict` diagnostic ("head slot is taken by …"); the item stays where it was; the screen shows the refusal word for word (today's posture) |
@@ -716,3 +718,46 @@ E4.G. The `market: false` filter is dropped (E1.11 touches no desktop file); E2.
 with the listed exceptions each carrying `tried` (the stricter `market_prices_are_all_positive` is not a gate).
 §26 (d) as first written (a price-unknown item's Buy routes through Negotiate) stands; §30's "not buyable" and
 "leaves the Market listing" sentences are withdrawn.
+
+## §31 — E1.1 blocker cleared (2026-11-12): containers are settled by the converter; weapons are not containers
+
+E1.1 returned `blocked-escalated` (commit `370e3346b4`, `artifacts/epic_1/E1.1_cycle_receipt.md`): the live
+`CorpusEquipmentRecord` is read from `data/corpus/<book>/_settled/equipment.json` (30 bundles, written by
+`codex-ingest`'s `gen_settled_corpus` through `ir_converter::equipment_record_to_corpus`), and that record carries
+**no tags and no tokens**; reading `raw_tokens` in live code is a `pcgen-residue-gate` hit (§17). Four §20
+corrections were recorded. The lead's rulings:
+
+- **(R1) LEAD GRANT.** E1.1's FILES YOU OWN widens to `crates/codex-ingest/src/pcgen_import/ir_converter.rs`
+  (`equipment_record_to_corpus` + its new `*_of` helpers) and the regenerated `data/corpus/*/_settled/equipment.json`
+  (`cd crates/codex-ingest && cargo run --locked --bin gen_settled_corpus`). The desktop fixture
+  `apps/desktop/src-tauri/resources/corpus_fixtures/_settled/equipment.json` **stays byte-identical**: the new
+  fields are omitted at their defaults and settled only for non-weapons (the receipt's proposal (b)); E1.1 checks
+  `sha256sum` before and after. **Sequencing:** E1.9 now depends on E1.1 too (both edit `ir_converter.rs`); E1.8
+  (census, no converter edit) may still run beside E1.1.
+- **(R2) OPERATOR RULING, 2026-11-12.** Question: SD-a's premise is false — Pistol and Powder Horn both carry the
+  `Container` tag (sheet rules `ultimate_equipment/equipment/pistol.json`, `powder_horn.json`); what makes a copy a
+  container? Answer, verbatim: **"Container tag, but not weapons."** → `is_container` = `TYPE` holds `Container`
+  **and** the record is not a weapon. "Not a weapon" is **the record states no base damage** (`DAMAGE` absent in the
+  source; `states_base_damage == false` on the settled record): the corpus states `DAMAGE` on every weapon that
+  attacks (7,804 files; 78 of the 209 `Container`-typed corpus records carry `DAMAGE`, receipt figures), while the
+  `Weapon` TYPE word also sits on non-attacking gear (e.g. `Rock`, thrown improvised) and is absent on some
+  attacking exotics in other books — damage is what the engine already keys weapon rows on (`damage_total.rs`), so
+  it is the field the corpus states reliably and the one the engine trusts. Pistol (`DAMAGE 1d8`) → not a container;
+  Powder Horn (no `DAMAGE`, `CONTAINS UNLIM|BlackPowder=10`) → a container, `Unlimited`. SD-a is replaced (§12.1).
+- **(R3) Figures corrected everywhere** (`census.py:41` globbed `equipment/*.json` and skipped `equipment/<subdir>/`,
+  3,805 of 7,804 files): `CONTAINS` records **210** of 7,804 — **88 lb / 73 `UNLIM` / 49 `*`**; `Container` tag in
+  sheet rules **232 files / 265 rows** (123 rows also `Weapon`); base Backpack (`general/backpack.json`) reads
+  `UNLIM|Any` → **`Unlimited`**, not `Pounds(60.0)`; weapon records with a `CONTAINS` family 79 (unchanged).
+  `census.py` fixed and re-run; F-14, F-15, §7, E1.1, G-5, the design and the scope carry the new figures.
+- **(R4) Package defect fixed.** E1.9's price fix must also regenerate `_settled/equipment.json` (where the live
+  app reads `cost_gp`); its diff guard and the §2.1 prefix line allow `_settled/equipment.json`; E1.8's census and
+  E1.11's gate read the Market through `build_equipment_catalog()`, which reads the settled bundles, so they see
+  the regenerated prices.
+- **Settled-fields principle (derived from R1):** every corpus fact a Phase-1 card needs on the live record —
+  `container`, `container_capacity` (E1.1), `uses_ammunition` (`Projectile`) and `ammunition_family` (`CONTAINS`
+  family; E1.6), `base_quantity` (`BASEQTY`; E1.7), the unarmed record's size step (E1.5) — is **settled by
+  `ir_converter.rs` into `_settled/equipment.json`** and read from there; no live code reads tags or `raw_tokens`.
+  E1.6 and E1.7 therefore own `ir_converter.rs` and the regenerated bundles for their fields too (serial in the
+  main lane after E1.1; the same fixture-byte-identical check), and the sheet-rule `tags` are not a live read path.
+
+E1.1's kanban row is `ready` again; the `## Open blockers` entry is closed with this section.

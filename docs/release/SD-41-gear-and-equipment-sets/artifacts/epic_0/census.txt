@@ -1,7 +1,7 @@
 $ git rev-parse --short HEAD
-806acb7d9c
+370e3346b4
 
-# SD-41 census — base 806acb7d9c
+# SD-41 census — base 370e3346b4
 ## 1. Screen: EquipmentPanel, boundaries, market
 $ wc -l apps/desktop/src/characterHub/EquipmentPanel.tsx apps/desktop/src/characterHub/MarketDialog.tsx apps/desktop/src/characterHub/CustomDialog.tsx apps/desktop/src/characterHub/customModel.ts apps/desktop/src/characterHub/encumbranceTabModel.ts apps/desktop/src/boundary/listHeldEquipment.ts apps/desktop/src/boundary/setEquipmentActiveState.ts | tail -8
 194 apps/desktop/src/characterHub/EquipmentPanel.tsx
@@ -93,7 +93,7 @@ $ grep -n 'pub slot: Option<BodySlot>\|pub worn: bool\|pub left_behind: bool' ap
 113:    pub left_behind: bool,
 
 ## 4. Containers in the data
-$ python3 -I <this script> §4: data/corpus equipment files 3806; records with a CONTAINS token 138; by capacity kind {'weight_lb': 70, 'UNLIM': 43, 'reduction_or_other': 25}
+$ python3 -I <this script> §4: data/corpus equipment files 7804; records with a CONTAINS token 210; by capacity kind {'weight_lb': 88, 'UNLIM': 73, 'reduction_or_other': 49}
   examples: ['Pistol', 'Cannon', 'Wayfinder', 'Pepperbox', 'Powder Horn', 'Musket', 'Perilous Puzzle Box', 'Rat (Riding)', "Slaver's Crossbow, Heavy", "Slaver's Crossbow, Light", 'Rat (Riding/Combat Trained)', 'Backpack, Masterwork'] 
 
 $ grep -rl 'CONTAINS' data/corpus --include=*.json | grep '/equipment/' | awk 'END{print NR}'
@@ -101,6 +101,13 @@ $ grep -rl 'CONTAINS' data/corpus --include=*.json | grep '/equipment/' | awk 'E
 
 $ grep -rl '"Container"' data/sheet_rules --include=*.json | grep '/equipment/' | awk 'END{print NR}'
 232
+
+$ python3 -I <this script> §4 sheet-rule Container rows: 265 of which Weapon-tagged: 123 
+
+$ python3 -I <this script> §4 corpus TYPE holds Container: 209 of which with DAMAGE (weapons, not containers by §31 R2): 78 
+
+$ ls data/corpus/*/_settled/equipment.json | awk 'END{print NR}'
+30
 
 $ grep -rl 'CONTAINS' data/sheet_rules --include=*.json | awk 'END{print NR}'
 1

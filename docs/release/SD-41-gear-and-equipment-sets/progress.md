@@ -36,7 +36,7 @@ the resume `START=` card)
   `artifacts/epic_0/census.txt`): three states and no stored slot; 97 `EquipmentSelection` producers; 18
   slots; `equipment=` lines in `authoritative_character_input.txt`; AC/weight/weapons keyed on
   `ActiveState` at the three lines F-10 names; the market requests `'EquippedActive'`; no drag; no
-  container or capacity read; 232 container-tagged sheet rules; 138 `CONTAINS` records (70 / 43 / 25);
+  container or capacity read; 232 container-tagged sheet rules; `CONTAINS` records 138 (70 / 43 / 25) — **corrected by E1.1 to 210 (88 / 73 / 49), `decisions.md §31` R3**;
   custom items have no weight or base; 174 smoke rows, 31 on gear, no drag op; SD-40 at 32 of 56 with
   the overlap in `census.txt §7`.
 - PCGen read for function only: the Equipping and Purchase sub-tab docs under the pinned oracle
@@ -104,4 +104,4 @@ the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --f
 
 ## Open blockers
 
-- **E1.1 (2026-11-12, sd41-e1.1):** needs (R1) FILES YOU OWN widened to `crates/codex-ingest/src/pcgen_import/ir_converter.rs` (`equipment_record_to_corpus`) + regenerated `data/corpus/*/_settled/equipment.json`, sequenced before E1.9; (R2) a replacement for SD-a (Pistol and Powder Horn DO carry the `Container` tag; default proposed: container = `Container` tag and no stated damage). Tried: the in-fence paths (the settled record has no tags/tokens; `raw_tokens` in live code is a residue-gate hit). Blocks E1.2–E1.7, E1.10 (serial lane). Receipt: `artifacts/epic_1/E1.1_cycle_receipt.md`.
+- ~~E1.1~~ **closed 2026-11-12 by the lead's rulings R1–R4 and the operator's "Container tag, but not weapons" (`decisions.md §31`); E1.1 reset to `ready`; E1.9 now depends on E1.1; figures corrected; census.py:41 fixed.** Original entry: needs (R1) FILES YOU OWN widened to `crates/codex-ingest/src/pcgen_import/ir_converter.rs` (`equipment_record_to_corpus`) + regenerated `data/corpus/*/_settled/equipment.json`, sequenced before E1.9; (R2) a replacement for SD-a (Pistol and Powder Horn DO carry the `Container` tag; default proposed: container = `Container` tag and no stated damage). Tried: the in-fence paths (the settled record has no tags/tokens; `raw_tokens` in live code is a residue-gate hit). Blocks E1.2–E1.7, E1.10 (serial lane). Receipt: `artifacts/epic_1/E1.1_cycle_receipt.md`.

@@ -38,7 +38,7 @@ sh("grep -n 'weight\\|base_item' apps/desktop/src-tauri/src/character_custom.rs 
 sh("grep -n 'pub slot: Option<BodySlot>\\|pub worn: bool\\|pub left_behind: bool' apps/desktop/src-tauri/src/character_custom.rs")
 
 print("## 4. Containers in the data")
-files = glob.glob('data/corpus/**/equipment/*.json', recursive=True)
+files = glob.glob('data/corpus/**/equipment/**/*.json', recursive=True)
 n = 0; kinds = collections.Counter(); names = []
 for f in files:
     try: d = json.load(open(f))
@@ -53,6 +53,21 @@ print(f"$ python3 -I <this script> §4: data/corpus equipment files {len(files)}
 print("  examples:", names[:12], "\n")
 sh("grep -rl 'CONTAINS' data/corpus --include=*.json | grep '/equipment/' | awk 'END{print NR}'")
 sh("grep -rl '\"Container\"' data/sheet_rules --include=*.json | grep '/equipment/' | awk 'END{print NR}'")
+rows=0; wrows=0
+for f in glob.glob('data/sheet_rules/**/equipment/*.json', recursive=True):
+    try: recs=json.load(open(f))
+    except Exception: continue
+    for r in (recs if isinstance(recs,list) else [recs]):
+        if 'Container' in set(r.get('tags',[])): rows+=1; wrows+= 'Weapon' in set(r.get('tags',[]))
+print("$ python3 -I <this script> §4 sheet-rule Container rows:", rows, "of which Weapon-tagged:", wrows, "\n")
+ct=0; cd=0
+for f in glob.glob('data/corpus/**/equipment/**/*.json', recursive=True):
+    try: x=json.load(open(f))['data']
+    except Exception: continue
+    toks={t['key']:t['value'] for t in x.get('raw_tokens',[]) if 'key' in t}
+    if 'Container' in toks.get('TYPE',''): ct+=1; cd+= 'DAMAGE' in toks
+print("$ python3 -I <this script> §4 corpus TYPE holds Container:", ct, "of which with DAMAGE (weapons, not containers by §31 R2):", cd, "\n")
+sh("ls data/corpus/*/_settled/equipment.json | awk 'END{print NR}'")
 sh("grep -rl 'CONTAINS' data/sheet_rules --include=*.json | awk 'END{print NR}'")
 sh("grep -rn 'CONTAINS\\|is_container\\|capacity_lbs' src/rules_core/equipment_record.rs src/rules_core/encumbrance.rs apps/desktop/src-tauri/src/character_hub.rs | awk 'END{print NR}'")
 

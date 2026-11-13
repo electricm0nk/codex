@@ -68,7 +68,8 @@ PF golden page counts may move at E4.1 and are listed before → after in the re
 ```bash
 git diff --name-only <C1 sha>..HEAD -- apps | grep -v '^apps/desktop/src-tauri/tests/market_price' | awk 'END{print NR}'   # 0
 git diff --name-only <C1 sha>..HEAD -- src crates | awk 'END{print NR}'   # > 0
-git diff --name-only <C1 sha>..HEAD -- data | grep -v '/equipment/' | grep -v price_overrides | awk 'END{print NR}'   # 0 (E1.9 touched only equipment records and the override lists)
+git diff --name-only <C1 sha>..HEAD -- data | grep -v '/equipment/' | grep -v '_settled/equipment.json' | grep -v price_overrides | awk 'END{print NR}'   # 0 (E1.1/E1.6/E1.7/E1.9 touched only equipment records, the settled bundles and the override lists)
+sha256sum apps/desktop/src-tauri/resources/corpus_fixtures/_settled/equipment.json   # equal to the base's unless E1.9 names a wrong fixture price
 ```
 
 ## G-4 Locations, projection and the Default set (DoD 1, 2, 4, 5) — E1.2, E2.1, E2.2, E2.MC
@@ -83,7 +84,8 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 move_equipment -- --test-t
 ## G-5 Containers and created items (DoD 3, 8, 17) — E1.1, E1.3, E1.7, E2.3, E3.1
 
 ```bash
-cargo test --locked -j 8 --lib container_ -- --test-threads=8        # 4 passed; counts 232 / 138 / 70 / 43 / 25 pinned
+cargo test --locked -j 8 --lib container_ -- --test-threads=8        # 4 passed; counts 232 files / 265 rows, 210 / 88 / 73 / 49 pinned (decisions.md §31 R3)
+cd crates/codex-ingest && cargo test --locked -j 8 container_of -- --test-threads=8   # 2 passed
 cargo test --locked -j 8 --lib containers_ -- --test-threads=8       # 4 passed
 cargo test --locked -j 8 --lib extra_weighed -- --test-threads=8     # 2 passed
 cd apps/desktop/src-tauri && cargo test --locked -j 8 create_custom_item -- --test-threads=8   # 4 passed

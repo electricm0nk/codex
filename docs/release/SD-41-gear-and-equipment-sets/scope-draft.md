@@ -59,8 +59,10 @@ What the code does today (checked on `tranche-20` @ `f7f85f3d24`, 2026-11-12; ev
   only (`equipment_effects.rs:207`); weight counts everything but `Absent` (`encumbrance.rs:408`); the
   Weapons rows exist for `EquippedActive` weapons only (`damage_total.rs:820`).
 - **Containers do not exist.** No code reads `CONTAINS` or a capacity (`grep … | awk` → 0). The data
-  holds them: 232 sheet-rule equipment records carry the `Container` tag; 138 corpus records carry a
-  `CONTAINS` token, 70 with a weight capacity, 43 unlimited, 25 weight-reduction kinds.
+  holds them: 232 sheet-rule equipment files (265 rows) carry the `Container` tag, 123 rows of them weapons; 210
+  of 7,804 corpus records carry a `CONTAINS` token, 88 with a weight capacity, 73 unlimited, 49 weight-reduction
+  kinds (figures corrected by E1.1, `decisions.md §31`). The live record is read from the settled bundles
+  (`data/corpus/<book>/_settled/equipment.json`, 30 files), which carry no tags or tokens.
 - **Custom items** (`character_custom.rs`) have `slot`, `worn`, `left_behind` and bonuses; no weight, no
   base item, so a custom "Food" pouch neither weighs nor holds anything.
 - **The printed Inventory** (`print/blocks/gear.rs::inventory`) lists every copy with State (Worn (slot) /

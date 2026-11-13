@@ -36,8 +36,8 @@ apps/desktop/src/characterHub/EquipmentPanel.tsx 194 WORN_SLOTS (18); Worn / Car
 apps/desktop/src/characterHub/CharacterSheet.tsx     :562 SHEET_TABS; :1666 <EquipmentPanel …>; :3295 purchase requests 'EquippedActive'
 apps/desktop/src/boundary/listHeldEquipment.ts 67; setEquipmentActiveState.ts 39
 apps/desktop/scripts/ui-smoke/spec.json              174 rows; 31 equipment/market/custom rows; ops: click key type select scroll wait nativeFile (no drag)
-data/sheet_rules/**/equipment/*.json                 232 records tagged Container; 0 with CONTAINS
-data/corpus/**/equipment/*.json                      138 records with a CONTAINS token: 70 `<lb>|…`, 43 `UNLIM|…`, 25 `*…` (weight-reduction kinds)
+data/sheet_rules/**/equipment/*.json                 232 files / 265 rows tagged Container (123 rows weapons); 0 with CONTAINS
+data/corpus/**/equipment/**/*.json                   7,804 records; 210 with a CONTAINS token: 88 `<lb>|…`, 73 `UNLIM|…`, 49 `*…`; live record read from data/corpus/*/_settled/equipment.json (30 bundles, no tags/tokens)
 ```
 
 ## §1 PCGen's Equipping tab, in our words (functional reference only; `decisions.md §17`)
@@ -80,8 +80,9 @@ fixture population).
 ## §3 Containers (E1.1, E1.3; `decisions.md §7`)
 
 ```
-src/rules_core/equipment_record.rs     CorpusEquipmentRecord::is_container() -> bool     (the Container tag; the card names the read path)
-                                       CorpusEquipmentRecord::capacity() -> ContainerCapacity { Pounds(f64) | Unlimited | Unstated }   (CONTAINS first field)
+crates/codex-ingest/src/pcgen_import/ir_converter.rs   container_of(tokens) = TYPE has Container && no DAMAGE; container_capacity_of(tokens) from CONTAINS; settled into data/corpus/*/_settled/equipment.json (decisions.md §31)
+src/rules_core/equipment_record.rs     CorpusEquipmentRecord { container: bool, container_capacity: ContainerCapacity { Pounds(f64) | Unlimited | Unstated } } (serde default; omitted on weapons → fixture bundle byte-identical)
+                                       is_container() / capacity() read the settled fields; no live read of tags or raw_tokens
 src/rules_core/containers.rs (new)     pub struct ContainerLoad { copy: CopyKey, contents_lbs: f64, capacity: ContainerCapacity, over: bool }
                                        pub fn container_loads(set, selections, corpus, custom_bases) -> Vec<ContainerLoad>   // recursive; SD-b for unweighed copies
 ```
@@ -210,7 +211,7 @@ UI: IdentityPanel's Campaign label → CampaignMembershipDialog (drive_list_camp
 
 | Card | Where | Names |
 |---|---|---|
-| E1.1 | root `--lib` | `container_tag_population_is_232`, `container_capacity_population_is_138_70_43_25`, `container_capacity_reads_backpack`, `container_ammunition_holder_is_not_a_container` |
+| E1.1 | root `--lib`; codex-ingest | `container_tag_population_is_232_files_265_rows`, `container_capacity_population_is_210_88_73_49`, `container_capacity_reads_backpack_unlimited`, `container_weapon_with_contains_is_not_a_container`; `container_of` (2) |
 | E1.2 | root `--lib`; `crates/codex-ingest/tests/equipment_sets_pcg_population.rs` | `equipment_sets_*` (8); the population test |
 | E1.3 | root `--lib` | `containers_*` (4) |
 | E1.4 | root `--lib` | `carried_weapon_*` (3) |
