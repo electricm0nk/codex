@@ -776,6 +776,9 @@ pub struct WeaponDamageBreakdown {
     pub critical_threat_range: Option<DamageRollCriticalThreatRange>,
     pub critical_multiplier: Option<DamageRollCriticalMultiplier>,
     pub feat_effects: Vec<DamageRollFeatEffect>,
+    /// `false` for a carried (`SelectedInactive`) weapon, which only
+    /// [`resolve_weapon_damage_breakdown_with_carried`] returns.
+    pub in_hand: bool,
 }
 
 /// The wiring project's Cycle 5a aggregator: loops `character`'s equipped
@@ -806,6 +809,32 @@ pub fn resolve_weapon_damage_breakdown(
     equipment_effects: &EquipmentEffects,
     str_modifier: i16,
 ) -> Vec<WeaponDamageBreakdown> {
+    weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive)
+}
+
+/// SD-41 E1.4: the in-hand rows of [`resolve_weapon_damage_breakdown`] (unchanged, first), then
+/// one row per carried (`SelectedInactive`) weapon with `in_hand: false`, resolved with the same
+/// arithmetic as a weapon in the main hand (a carried `+N` reaches it through its own selection's
+/// `attached` bonus, since `equipment_effects` holds in-hand items only). `Absent` weapons have no row.
+pub fn resolve_weapon_damage_breakdown_with_carried(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+    str_modifier: i16,
+) -> Vec<WeaponDamageBreakdown> {
+    let mut rows = weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive);
+    rows.extend(weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::SelectedInactive));
+    rows
+}
+
+/// One breakdown per weapon selection in `state`, in input order.
+fn weapon_rows(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+    str_modifier: i16,
+    state: ActiveState,
+) -> Vec<WeaponDamageBreakdown> {
     let feat_effects: Vec<DamageRollFeatEffect> = character
         .chosen
         .selected_feats
@@ -817,7 +846,7 @@ pub fn resolve_weapon_damage_breakdown(
         .chosen
         .equipment_selections
         .iter()
-        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
+        .filter(|selection| selection.active_state == state)
         .filter_map(|selection| {
             let weapon_item_id = selection.item_id.as_str();
             let base_dice = resolve_base_damage_dice(weapon_item_id, corpus)?;
@@ -851,6 +880,7 @@ pub fn resolve_weapon_damage_breakdown(
                 critical_threat_range: resolve_critical_threat_range(weapon_item_id, corpus),
                 critical_multiplier: resolve_critical_multiplier(weapon_item_id, corpus),
                 feat_effects: feat_effects.clone(),
+                in_hand: state == ActiveState::EquippedActive,
             })
         })
         .collect()
@@ -1255,5 +1285,116 @@ mod weapon_damage_total_tests {
         assert_eq!(weapon_range_increment(package, &corpus, "Dagger (Base)"), Some(10));
         assert_eq!(weapon_range_increment(package, &corpus, "Dagger (Adamantine)"), Some(10));
         assert_eq!(weapon_range_increment(package, &corpus, "Longsword (Base)"), None);
+    }
+}
+
+/// SD-41 E1.4: a carried (`SelectedInactive`) weapon gets a row from the carried view, marked
+/// `in_hand: false`, with the same arithmetic as the weapon held in the main hand; the in-hand
+/// view is unchanged and `Absent` weapons appear in neither.
+#[cfg(test)]
+mod carried_weapon_tests {
+    use super::*;
+    use crate::rules_core::character_input::{load_character_input_fixture, EquipmentSelection};
+    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+    use crate::rules_core::equipment_effects::compute_equipment_effects;
+    use std::path::Path;
+
+    type Resolver = fn(&CharacterInput, &SourcePackageContent, &EquipmentEffects, i16) -> Vec<WeaponDamageBreakdown>;
+
+    fn select(item: &str, state: ActiveState, modifiers: &[&str]) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: state == ActiveState::EquippedActive,
+            active_state: state,
+            applied_modifiers: modifiers.iter().map(|m| (*m).to_owned()).collect(),
+        }
+    }
+
+    /// The callers' shape: equipment effects over the in-hand selections only.
+    fn rows(selections: Vec<EquipmentSelection>, resolve: Resolver) -> Vec<WeaponDamageBreakdown> {
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }]);
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:3\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.selected_feats = vec!["Weapon Specialization".to_owned()];
+        input.chosen.equipment_selections = selections;
+        let held: Vec<EquipmentSelection> = input
+            .chosen
+            .equipment_selections
+            .iter()
+            .filter(|s| s.active_state == ActiveState::EquippedActive)
+            .cloned()
+            .collect();
+        let effects = compute_equipment_effects(&held, &corpus);
+        resolve(&input, &corpus, &effects, 4)
+    }
+
+    const PLUS_ONE: &[&str] = &["Special Ability ~ +1 ~ Weapon"];
+
+    /// A carried `+1` longsword: one row, `in_hand: false`, and every other field equal to the same
+    /// sword held in the main hand (its `+1` reaches it through its own selection).
+    #[test]
+    fn carried_weapon_with_carried_gets_a_row_not_in_hand() {
+        let carried = rows(vec![select("Longsword (Base)", ActiveState::SelectedInactive, PLUS_ONE)], resolve_weapon_damage_breakdown_with_carried);
+        assert_eq!(carried.len(), 1, "{carried:#?}");
+        assert!(!carried[0].in_hand);
+        let enhancement = carried[0].weapon_enhancement.as_ref().expect("a weapon has an enhancement part");
+        assert_eq!((enhancement.attack_bonus, enhancement.damage_bonus), (1, 1));
+
+        let held = rows(vec![select("Longsword (Base)", ActiveState::EquippedActive, PLUS_ONE)], resolve_weapon_damage_breakdown);
+        assert_eq!(held.len(), 1);
+        assert!(held[0].in_hand);
+        assert_eq!(WeaponDamageBreakdown { in_hand: true, ..carried[0].clone() }, held[0], "same arithmetic as in hand");
+    }
+
+    /// The old entry point keeps its contract: in-hand weapons only, each `in_hand: true`.
+    #[test]
+    fn carried_weapon_old_entry_point_unchanged_in_hand_only() {
+        let old = rows(
+            vec![
+                select("Longsword (Base)", ActiveState::EquippedActive, &[]),
+                select("Dagger (Base)", ActiveState::SelectedInactive, &[]),
+            ],
+            resolve_weapon_damage_breakdown,
+        );
+        assert_eq!(old.iter().map(|row| (row.weapon_item_id.as_str(), row.in_hand)).collect::<Vec<_>>(), [("Longsword (Base)", true)]);
+        assert!(rows(vec![select("Dagger (Base)", ActiveState::SelectedInactive, PLUS_ONE)], resolve_weapon_damage_breakdown).is_empty());
+    }
+
+    /// The carried view lists the in-hand rows first, byte-identical to the old entry point's, then
+    /// the carried rows (input order within each group).
+    #[test]
+    fn carried_weapon_in_hand_rows_identical_between_entry_points() {
+        let loadout = || {
+            vec![
+                select("Dagger (Base)", ActiveState::SelectedInactive, PLUS_ONE),
+                select("Longsword (Base)", ActiveState::EquippedActive, PLUS_ONE),
+                select("Breastplate (Base)", ActiveState::EquippedActive, &[]),
+                select("Heavy Mace (Base)", ActiveState::EquippedActive, &[]),
+            ]
+        };
+        let old = rows(loadout(), resolve_weapon_damage_breakdown);
+        let new = rows(loadout(), resolve_weapon_damage_breakdown_with_carried);
+        assert_eq!(old.len(), 2, "{old:#?}");
+        assert_eq!(new.len(), 3, "{new:#?}");
+        assert_eq!(new[..2], old[..]);
+        assert_eq!((new[2].weapon_item_id.as_str(), new[2].in_hand), ("Dagger (Base)", false));
+    }
+
+    /// An `Absent` weapon has no row in either view; a carried non-weapon has none either.
+    #[test]
+    fn carried_weapon_absent_has_no_row_in_either() {
+        let loadout = || {
+            vec![
+                select("Longsword (Base)", ActiveState::Absent, PLUS_ONE),
+                select("Breastplate (Base)", ActiveState::SelectedInactive, &[]),
+            ]
+        };
+        assert!(rows(loadout(), resolve_weapon_damage_breakdown).is_empty());
+        assert!(rows(loadout(), resolve_weapon_damage_breakdown_with_carried).is_empty());
     }
 }
