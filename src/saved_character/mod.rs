@@ -4,6 +4,7 @@
 //! CharacterInput authoritative payload, along with a deterministic local-store
 //! boundary for save/load operations.
 
+pub mod equipment_sets;
 pub mod local_store;
 
 use crate::rules_core::character_input::CharacterInput;
