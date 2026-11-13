@@ -3077,7 +3077,9 @@ fn push_hit_points_and_speed_rows(root: &Path, input: &CharacterInput, constitut
     explanations.extend(speed);
 }
 
-/// Every held class level's hit points, plus the GM's `hit_points` grants and what worn items add.
+/// Every held class level's hit points, plus Toughness and a bonded Toad familiar (the engine's
+/// `hp_bonus_from_feats` and `character_familiar_hp_bonus`), the GM's `hit_points` grants and what
+/// worn items add.
 /// A level with a saved result (`hit_points.json`) counts as saved, plus the Constitution modifier,
 /// at least 1; the class's results past the levels it holds are ignored, and the order classes were
 /// added in does not matter. With no saved result at all, the character's first level takes the
@@ -3094,17 +3096,25 @@ fn max_hit_points_row(root: &Path, input: &CharacterInput, constitution_modifier
         .map(|grant| i16::try_from(grant.value).unwrap_or(0))
         .sum();
     let worn = worn_items.unwrap_or(0);
+    let feats = feat_effects::hp_bonus_from_feats(&input.chosen.selected_feats);
+    let familiar = codex::rules_core::pilot_compute::character_familiar_hp_bonus(input);
     let mut detail = format!(
         "{} (the full die at the first level, the die's average after it, a saved roll as saved; Constitution {constitution_modifier:+} per level, at least 1)",
         terms.join("; ")
     );
+    if feats != 0 {
+        detail.push_str(&format!("; feats {feats:+} (Toughness)"));
+    }
+    if familiar != 0 {
+        detail.push_str(&format!("; familiar {familiar:+} (a bonded Toad)"));
+    }
     if grants != 0 {
         detail.push_str(&format!("; GM grants {grants:+}"));
     }
     if worn != 0 {
         detail.push_str(&format!("; worn items {worn:+}"));
     }
-    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + grants + worn, detail })
+    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + feats + familiar + grants + worn, detail })
 }
 
 /// The held classes' hit points and one term per class for the row's detail; `None` with no class
@@ -10269,6 +10279,28 @@ mod tests {
         assert_eq!(total(&[], &[], 0), None, "no class held, no total");
     }
 
+    /// The sheet's `hit_points.max` counts Toughness and a bonded Toad familiar, through the
+    /// engine's own `hp_bonus_from_feats` and `character_familiar_hp_bonus`.
+    #[test]
+    fn hit_points_max_counts_toughness() {
+        let root = tempdir("hit-points-max-toughness");
+        let max = |input: &CharacterInput| max_hit_points_row(&root, input, 0, None).expect("a known class has a row").value;
+        let mut fighter = compose_character_input(&request_for("race:human", 3));
+        let baseline = max(&fighter);
+        fighter.chosen.selected_feats.push("Toughness".to_owned());
+        let row = max_hit_points_row(&root, &fighter, 0, None).expect("a Fighter has a row");
+        assert_eq!(row.value, baseline + 3, "Human Fighter 3 + Toughness: +3");
+        assert!(row.detail.contains("feats +3"), "the detail names the term: {}", row.detail);
+        let mut witch = compose_character_input(&request_for("race:human", 3));
+        witch.chosen.class_levels = vec![CharacterClassLevel { class_id: "class:witch".to_owned(), level: 3 }];
+        let baseline = max(&witch);
+        witch.chosen.selected_choices.push(SelectedChoice { choice_set_id: "choice:familiar_species".to_owned(), selection_id: "familiar:toad".to_owned() });
+        let row = max_hit_points_row(&root, &witch, 0, None).expect("a Witch has a row");
+        assert_eq!(row.value, baseline + 3, "a bonded Toad: +3");
+        assert!(row.detail.contains("familiar +3"), "the detail names the term: {}", row.detail);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     /// The sheet's `skill.total.<skill>` sum (E8.7), ported from the Skills panel's retired
     /// `skillModifier` and `featSkillBonusFor` tests.
     #[test]
@@ -15331,8 +15363,8 @@ mod tests {
     /// Improved Initiative is the probe because its effect is a plain arithmetic
     /// change to the sheet's Initiative box (`+4`), so "the number moved" is
     /// checkable rather than a matter of interpretation. (It was Toughness
-    /// read through the retired hit-point tracker until SD-40 E2.29; the sheet's
-    /// `hit_points.max` does not count Toughness, a discovered card.)
+    /// read through the retired hit-point tracker until SD-40 E2.29; `hit_points.max`
+    /// counts Toughness since E2.31, pinned by `hit_points_max_counts_toughness`.)
     #[test]
     fn removing_a_feat_returns_the_number_it_moved_and_survives_reload() {
         let root = tempdir("remove-feat-round-trip");
