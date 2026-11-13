@@ -44,11 +44,11 @@ later (`decisions.md §3`).
 | Slug | `pf-sheet-design` |
 | Canonical branch | `tranche-20`, cut 2026-11-07 from `tranche-19` @ `d4489b3557` (`git merge-base HEAD origin/tranche-19`); catches up to `develop` after SD-39 merges (`decisions.md` SD-o) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E0–E5 / **58 cards** (24 + E2.4 by E2.MC + E2.5 at E2.G round 1 + 12 by the round-1 replan + E3.6 from the operator's answers, `decisions.md §23` + E2.15 discovered by E2.7 + 10 by the round-2 replan + 3 UI cards + E2.27, `decisions.md §24` + E2.28 discovered by E2.19 + E2.29 no HP tracking, `decisions.md §24.8` + E2.30 Options menu, §24.10 + E2.31 discovered by E2.29), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 58) |
+| Epics / cards | C, E0–E5 / **59 cards** (24 + E2.4 by E2.MC + E2.5 at E2.G round 1 + 12 by the round-1 replan + E3.6 from the operator's answers, `decisions.md §23` + E2.15 discovered by E2.7 + 10 by the round-2 replan + 3 UI cards + E2.27, `decisions.md §24` + E2.28 discovered by E2.19 + E2.29 no HP tracking, `decisions.md §24.8` + E2.30 Options menu, §24.10 + E2.31 discovered by E2.29 + E2.32 discovered by E2.31), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 59) |
 | Target version | `0.20.0`, stamped by C1's single commit on 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run (`decisions.md §13.2`); ends cleanly at each gate |
 | Cadence | N/A |
-| Closure gate | 58 cards `complete` (E2.G and E5.2 need the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 59 cards `complete` (E2.G and E5.2 need the operator's signature) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's brief (`artifacts/cycle_0/operator-brief-2026-11-07.md`); PCGen pinned oracle for the reference picture only (`scripts/pcgen-oracle-pin.env`) |
 
 ## 2. Files in this folder

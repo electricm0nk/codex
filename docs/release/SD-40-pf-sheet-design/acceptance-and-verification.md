@@ -118,7 +118,7 @@ grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ | awk 'END{print 
 ```bash
 cd docs/release/SD-40-pf-sheet-design
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 58) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 59) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[3-5] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- Aldric .* — usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md        # 2 (anchored, decisions.md §24.5)
 grep -c 'usable: yes' artifacts/epic_5/E5.2_cycle_receipt.md        # 5 (E5.2 must anchor this as G-4 now is: its receipt's own instructions must not match, decisions.md §24.5)
