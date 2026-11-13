@@ -24,6 +24,8 @@
   "feats": {"ui": "SHEET_TABS"},
   "actions": {"ui": "SHEET_TABS"},
   "custom": {"ui": "SHEET_TABS"},
+  "biography": {"ui": "SHEET_TABS"},
+  "notes": {"ui": "SHEET_TABS"},
   "classFeatures": {"ui": null, "printOnly": "the screen's Class Features & Special Abilities section is not a registry box or a tab; the sheet prints it as a block of its own"},
   "money": {"ui": null, "printOnly": "the screen's Money panel is not a registry box or a tab; the sheet gives it a block of its own (E3.2)"},
   "spellbook": {"ui": null, "printOnly": "the full text of every held spell, an option the screen has no box for"},
