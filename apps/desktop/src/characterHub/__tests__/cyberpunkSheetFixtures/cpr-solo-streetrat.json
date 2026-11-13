@@ -24,6 +24,7 @@
       "lightMaxLbs": 0.0,
       "mediumMaxLbs": 0.0,
       "heavyMaxLbs": 0.0,
+      "remainingLbs": 0.0,
       "level": "",
       "loadArmorCheckPenalty": 0,
       "perItem": [],
@@ -997,5 +998,24 @@
     "contributions": [],
     "situational": [],
     "unknown": []
+  },
+  "conditionalNotes": {
+    "hitPoints": [],
+    "initiative": [],
+    "fortitude": [],
+    "reflex": [],
+    "will": [],
+    "armorClass": [],
+    "combatManeuverBonus": [],
+    "combatManeuverDefense": []
+  },
+  "languages": {
+    "known": []
+  },
+  "resistances": {
+    "energy": [],
+    "damageReduction": [],
+    "spellResistance": [],
+    "immunities": []
   }
 }

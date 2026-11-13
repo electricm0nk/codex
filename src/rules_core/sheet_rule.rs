@@ -2819,29 +2819,7 @@ type SheetLineDedupKey = (String, String, String, Vec<(String, SheetLineValue)>,
 ///   words ([`Evaluator::undecided_leaf`]).
 pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFacts) -> Vec<SheetLine> {
     let held = held_set(package, seed, facts);
-    let mut lines: Vec<SheetLine> = held
-        .rules
-        .iter()
-        .filter(|(id, _)| !held.removed.contains(*id))
-        .filter_map(|(id, entry)| package.rule(id).map(|r| (r, entry)))
-        .filter(|(r, _)| r.print)
-        .filter_map(|(r, entry)| {
-            let ctx = EvalContext {
-                holder_class: entry.holder_class.clone(),
-                spell_level: entry.spell_level.unwrap_or(0),
-                item_tags: if r.subject == Subject::Item { r.tags.clone() } else { Vec::new() },
-            };
-            if !r.id.contains('#') {
-                return Some(Evaluator::new(package, &held, facts, ctx).line(r));
-            }
-            if !sibling_line_gate(package, &held, facts, r, ctx.clone()).includes() {
-                return None;
-            }
-            let gate = line_gate(package, r);
-            Some(Evaluator::new(package, &held, facts, ctx).printing_undecided().line_gated(r, &gate))
-        })
-        .collect();
-    lines.sort_by(|a, b| a.kind.cmp(&b.kind).then(a.label.cmp(&b.label)).then(a.id.cmp(&b.id)));
+    let mut lines = held_lines(package, &held, facts, true);
     // SD-36 Epic F1 merge-readiness blocker 3: `held.rules` is keyed by rule id, so two
     // DIFFERENT ids can each be held and each `print: true` while rendering byte-identical
     // visible content -- a bare, class-agnostic record PF1 writes once (`wild_empathy`,
@@ -2867,6 +2845,43 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
         }
     });
     lines
+}
+
+/// Every held rule's line whose `print` flag is `print`, sorted by kind, label and id: the one
+/// evaluation [`render_sheet`] (`print: true`) and [`render_held_unprinted`] (`print: false`) share.
+fn held_lines(package: &SheetRulePackage, held: &HeldSet, facts: &CharacterFacts, print: bool) -> Vec<SheetLine> {
+    let mut lines: Vec<SheetLine> = held
+        .rules
+        .iter()
+        .filter(|(id, _)| !held.removed.contains(*id))
+        .filter_map(|(id, entry)| package.rule(id).map(|r| (r, entry)))
+        .filter(|(r, _)| r.print == print)
+        .filter_map(|(r, entry)| {
+            let ctx = EvalContext {
+                holder_class: entry.holder_class.clone(),
+                spell_level: entry.spell_level.unwrap_or(0),
+                item_tags: if r.subject == Subject::Item { r.tags.clone() } else { Vec::new() },
+            };
+            if !r.id.contains('#') {
+                return Some(Evaluator::new(package, held, facts, ctx).line(r));
+            }
+            if !sibling_line_gate(package, held, facts, r, ctx.clone()).includes() {
+                return None;
+            }
+            let gate = line_gate(package, r);
+            Some(Evaluator::new(package, held, facts, ctx).printing_undecided().line_gated(r, &gate))
+        })
+        .collect();
+    lines.sort_by(|a, b| a.kind.cmp(&b.kind).then(a.label.cmp(&b.label)).then(a.id.cmp(&b.id)));
+    lines
+}
+
+/// SD-40 E2.28: the lines of every held `print: false` rule -- a rule whose value folds into a
+/// total and prints no line of its own -- evaluated with the same gate and slot fill as
+/// [`render_sheet`]'s. Never printed: read only for the conditional words its prose states
+/// (`pilot_compute::conditional_notes`).
+pub fn render_held_unprinted(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFacts) -> Vec<SheetLine> {
+    held_lines(package, &held_set(package, seed, facts), facts, false)
 }
 
 /// Whether a held rule's line is open for this character -- the one decision [`render_sheet`]

@@ -1,0 +1,188 @@
+[
+  {
+    "id": "settings-open",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-open.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ☰ → Options → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive-disconnect",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-google-drive-disconnect.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ☰ → Options → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive-save",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-google-drive-save.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "encounter-builder-add-monster-and-rating",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/encounter-builder-add-monster-and-rating.png",
+    "rendered_excerpt": "☰ Menu\nDM\nEncounter builder\nstrawman — party-strength rating only; no XP budget, treasure or saving yet\nBack to console\nPARTY\n\nSmoke Test PC\nLevel 1 — read from the saved build by the engine\n×\nADD A SAVED CHARACTER\n\nAldric Ironhand\nElowen Ashgrave\nBrother Tomas Vane\nSmoke Test PC\nADD A TYPED LEVEL\n\nAdd\nMONSTERS\n\n\nAnkheg\nCR 3\n×\n\nAnkheg\nCR 3\nRATING\n\nHard (rulebook Challenging or Hard — merged)\nEvery",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "6c656cc7-5dcd-4757-af9d-4c026ef432a0"
+      ],
+      "deleted": [
+        "6c656cc7-5dcd-4757-af9d-4c026ef432a0"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "landing-campaign-gate",
+    "status": "blocked",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "could not reach the landing screen within 6 reset attempts",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-appearance",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-appearance.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": "auto-relaunch",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-theme-select-and-manage-themes-modal",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-theme-select-and-manage-themes-modal.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-google-drive",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-google-drive.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-update",
+    "status": "red",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-update.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Update (no probe report acknowledged command 'cmd-4031739-1794534368149-301' within 2000ms)' at row step 1/1 (click \"Update\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-bug",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-bug.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": "auto-relaunch",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-enhancement",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-enhancement.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-developer",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-tab-developer.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-close-esc",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.30/settings-close-esc.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-o7U0jP/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

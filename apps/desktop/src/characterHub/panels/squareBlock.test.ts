@@ -22,6 +22,7 @@ const LIGHT_LOAD: EncumbranceDto = {
   lightMaxLbs: 76,
   mediumMaxLbs: 153,
   heavyMaxLbs: 230,
+  remainingLbs: 201,
   level: 'Light',
   loadArmorCheckPenalty: 0,
   perItem: [],
@@ -82,7 +83,11 @@ function verifiesEncumbranceUsesDescribeEncumbrance() {
 }
 
 function verifiesHitPoints() {
-  assert(render().includes('12 / 12'), 'hit points render as current / max');
+  // decisions.md §24.8: the app tracks no hit points, so the box shows the max alone.
+  const html = render({ hp: 40 });
+  const box = html.slice(html.indexOf('Hit Points'), html.indexOf('Initiative')).replace(/<[^>]*>/g, ' ');
+  assert(/\b40\b/.test(box), `hit points render as the max: ${box}`);
+  assert(!box.includes('/'), `no current / max pair: ${box}`);
   assert(render({ hp: null }).includes('Unknown'), 'an unknown hit die reads Unknown');
 }
 

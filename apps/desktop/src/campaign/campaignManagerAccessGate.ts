@@ -22,6 +22,6 @@ export function computeCampaignManagerAccessGate(localFolderConfigured: boolean)
   }
   return {
     enabled: false,
-    disabledHint: 'Choose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.',
+    disabledHint: 'Choose a local Drive-synced folder under ☰ → Options → Google Drive to enable the Campaign Manager.',
   };
 }

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sheet-languages-stored-aldric",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd40-main/e2.mc3/smoke/sheet-languages-stored-aldric.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_mc3-eGExOc/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-speed-swim-fly-aldric",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd40-main/e2.mc3/smoke/sheet-speed-swim-fly-aldric.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_mc3-eGExOc/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-saves-conditional-bonuses-aldric",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd40-main/e2.mc3/smoke/sheet-saves-conditional-bonuses-aldric.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_mc3-eGExOc/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-defense-resistances-aldric",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd40-main/e2.mc3/smoke/sheet-defense-resistances-aldric.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_mc3-eGExOc/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

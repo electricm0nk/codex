@@ -41,13 +41,13 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
 
   // Anchor: tranche moves to 18 (tranche/18 is the active branch for the
   // SD-38 bundle, cut from PR #398's head) and major stays 0 until first
-  // main-publish (`0.19.<build>`). The tranche digit only advances when a
+  // main-publish (`0.20.<build>`). The tranche digit only advances when a
   // new tranche/N branch is cut for the next bundle — not automatically at a
   // bundle's own closure while still on the same tranche branch. Update this
   // anchor, src/release/buildVersionTriple.test.ts, and every
   // `Codex 0.<tranche>.0-test` build-label fixture in the SAME commit as the
   // version files (buildLabelFixtureFreshness.test.ts enforces the latter).
-  assert(pkg.startsWith('0.19.'), `version "${pkg}" must keep major=0, tranche=19 on tranche-19`);
+  assert(pkg.startsWith('0.20.'), `version "${pkg}" must keep major=0, tranche=20 on tranche-20`);
 }
 
 verifiesAllThreeVersionFilesAgreeAndFollowTripleShape();

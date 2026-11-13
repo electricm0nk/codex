@@ -1035,22 +1035,41 @@ fn upsert_corpus_aware_combat_explanations(
     // Melee and Armor Class keep the row the fixed-posture path wrote, whose prose names its terms.
     // That path refuses armor it holds no numbers for, and the sheet reads this one, so the row is
     // written here then.
-    for (id, value) in [
-        ("combat.baseline_melee_attack_bonus", combat.melee_attack_bonus),
-        ("defense.baseline_armor_class", combat.armor_class),
-    ] {
-        if !corpus_receipt.base.explanations.iter().any(|explanation| explanation.id == id) {
-            corpus_receipt.base.explanations.push(ComputationExplanation {
-                id: id.to_owned(),
-                value,
-                detail: format!(
-                    "{id} = {value}, computed by the corpus-aware combat baseline \
-                     (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this \
-                     character's actual resolved equipment loadout"
-                ),
-            });
-        }
+    let corpus_detail = |id: &str, value: i16| {
+        format!(
+            "{id} = {value}, computed by the corpus-aware combat baseline \
+             (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this \
+             character's actual resolved equipment loadout"
+        )
+    };
+    let id = "combat.baseline_melee_attack_bonus";
+    if !corpus_receipt.base.explanations.iter().any(|explanation| explanation.id == id) {
+        let detail = corpus_detail(id, combat.melee_attack_bonus);
+        corpus_receipt.base.explanations.push(ComputationExplanation { id: id.to_owned(), value: combat.melee_attack_bonus, detail });
     }
+
+    // SD-40 E2.7: the Armor Class row and its seven parts are the number the sheet prints
+    // (`PilotDefenseViewModel.baseline_armor_class = combat.armor_class`). The fixed path's row and
+    // parts stay, verbatim, when its sum is this one. A worn item it does not read (a Ring of
+    // Protection beside the Chain Shirt) makes its sum another number: the row then says this path's
+    // value and the parts are this path's, so 10 + the parts is the Armor Class on the sheet.
+    let id = "defense.baseline_armor_class";
+    let explanations = &mut corpus_receipt.base.explanations;
+    match explanations.iter_mut().find(|explanation| explanation.id == id) {
+        Some(row) if row.value == combat.armor_class => return,
+        Some(row) => {
+            row.value = combat.armor_class;
+            row.detail = corpus_detail(id, combat.armor_class);
+        }
+        None => explanations.push(ComputationExplanation {
+            id: id.to_owned(),
+            value: combat.armor_class,
+            detail: corpus_detail(id, combat.armor_class),
+        }),
+    }
+    explanations.retain(|explanation| !explanation.id.starts_with("defense.armor_class."));
+    let at = explanations.iter().position(|explanation| explanation.id == id).map_or(explanations.len(), |row| row + 1);
+    explanations.splice(at..at, combat.armor_class_parts.explanations());
 }
 
 /// Shared load -> recompute -> re-save -> return-envelope tail for every
@@ -1569,6 +1588,77 @@ mod tests {
     const GAME_SYSTEM_ID: &str = "pf1";
     const FIGHTER_CLASS_ID: &str = "class:fighter";
     const WIZARD_CLASS_ID: &str = "class:wizard";
+
+    // ----- SD-40 E2.7: the Armor Class's seven parts on the load response -----
+
+    /// The Armor Class row, the snapshot's Armor Class (what the sheet prints) and the seven
+    /// `defense.armor_class.*` rows in print order, after asserting `10 + Σ parts` is both.
+    fn armor_class_parts_hold(case: &str, sheet: &crate::character_hub::LoadSavedCharacterResponse) -> (i16, Vec<(String, i16)>) {
+        let row = sheet.explanations.iter().find(|row| row.id == "defense.baseline_armor_class").unwrap_or_else(|| panic!("{case}: the AC row"));
+        let printed = sheet.snapshot.as_ref().unwrap_or_else(|| panic!("{case}: a snapshot")).baseline_armor_class;
+        let parts: Vec<(String, i16)> =
+            sheet.explanations.iter().filter(|row| row.id.starts_with("defense.armor_class.")).map(|row| (row.id.clone(), row.value)).collect();
+        let ids: Vec<&str> = parts.iter().map(|(id, _)| id.as_str()).collect();
+        assert_eq!(ids, codex::rules_core::pilot_compute::ArmorClassPart::ALL.map(|part| part.id()), "{case}: seven parts, once each");
+        let total = 10 + parts.iter().map(|(_, value)| value).sum::<i16>();
+        assert_eq!((total, total), (row.value, printed), "{case}: 10 + {parts:?} is the AC row and the printed AC");
+        (printed, parts)
+    }
+
+    fn part(parts: &[(String, i16)], name: &str) -> i16 {
+        parts.iter().find(|(id, _)| id == &format!("defense.armor_class.{name}")).map(|(_, value)| *value).expect("the part")
+    }
+
+    #[test]
+    fn armor_class_parts_sum_to_the_armor_class_for_every_seed_and_probe() {
+        use crate::character_hub::{
+            adjust_character_money_at_root, load_saved_character_at_root, purchase_equipment_priced_at_root, seed_default_characters_at, PriceMode,
+            PurchaseEquipmentResponse,
+        };
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        use codex::saved_character::local_store::SavedCharacterStore;
+
+        let app_data = tempdir("armor-class-parts");
+        seed_default_characters_at(&app_data, "0.0.0-test").expect("starter seeding succeeds");
+        let root = |id: &str| app_data.join("characters").join(id);
+        let ids = ["00000000-0000-0000-0000-000000000001", "00000000-0000-0000-0000-000000000002", "00000000-0000-0000-0000-000000000003"];
+        let mut seeds = Vec::new();
+        for (name, id) in ["aldric", "elowen", "tomas"].into_iter().zip(ids) {
+            let sheet = load_saved_character_at_root(&root(id)).expect("the seed loads");
+            seeds.push(armor_class_parts_hold(name, &sheet));
+        }
+        let (aldric_ac, aldric) = &seeds[0];
+        assert_eq!(
+            (part(aldric, "armor"), part(aldric, "dexterity"), part(aldric, "misc"), part(aldric, "deflection")),
+            (4, 1, 1, 0),
+            "Aldric: Chain Shirt +4, Dex +1, Dodge +1: {aldric:?}"
+        );
+
+        // E2.MC's probe: a Ring of Protection +1 bought from the Market and worn.
+        let ringed = root(ids[0]);
+        adjust_character_money_at_root(&ringed, 1_000_000).expect("funds for the Market");
+        let filter = MarketFilter { category: MarketCategory::MagicItem, name_contains: Some("Ring of Protection +1".to_owned()), book: None };
+        let shelf = list_market(filter).entries;
+        let row = shelf.iter().find(|row| row.entry.name == "Ring of Protection +1" && row.entry.cost_gp.is_some()).expect("the Market sells the ring");
+        let bought = purchase_equipment_priced_at_root(&ringed, &row.entry.key, ActiveState::EquippedActive, "2026-11-11T00:00:00Z", PriceMode::Standard)
+            .expect("the purchase runs");
+        assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "{bought:?}");
+        let (ring_ac, ring) = armor_class_parts_hold("aldric + Ring of Protection +1", &load_saved_character_at_root(&ringed).expect("loads"));
+        assert_eq!((ring_ac, part(&ring, "deflection"), part(&ring, "armor")), (aldric_ac + 1, 1, 4), "{ring:?}");
+
+        // Aldric with no armor: the ringed Aldric with the Chain Shirt taken off. The fixed path
+        // refuses a ring with no Chain Shirt and writes no row; this path writes it.
+        let bare = root(ids[1]);
+        let mut envelope = SavedCharacterStore::load(&root(ids[0])).expect("Aldric's envelope");
+        let shirt = envelope.character_input.chosen.equipment_selections.iter_mut().find(|selection| selection.item_id == "item:chain_shirt").expect("worn");
+        shirt.active_state = ActiveState::Absent;
+        shirt.equipped_or_active = false;
+        std::fs::remove_dir_all(&bare).expect("clears a root for the bare copy");
+        SavedCharacterStore::save(&envelope, &bare).expect("the bare copy saves");
+        let (bare_ac, bare_parts) = armor_class_parts_hold("aldric, no armor", &load_saved_character_at_root(&bare).expect("loads"));
+        assert_eq!((bare_ac, part(&bare_parts, "armor"), part(&bare_parts, "deflection")), (aldric_ac - 4 + 1, 0, 1), "{bare_parts:?}");
+        std::fs::remove_dir_all(&app_data).ok();
+    }
 
     fn tempdir(label: &str) -> PathBuf {
         let unique = std::time::SystemTime::now()

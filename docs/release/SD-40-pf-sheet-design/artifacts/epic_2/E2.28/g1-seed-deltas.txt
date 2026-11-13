@@ -1,0 +1,6 @@
+# G-1 seed deltas, E2.28 (base f89112e1c6, head 439b519aa9)
+## head sha256 (cd apps/desktop/src-tauri && PF_SEED_RENDER_OUT=$CARGO_TARGET_DIR/g1head cargo test --locked -j 8 --bins pf_seed_render_hash; 1 passed)
+969962673d3c8717b7902ac6f3242de390dfc4b8b67127a7c420242b42c6772a  aldric.json
+3c08eb9f044123e2ffa947a502310a1b825e0a3052ed47e6aea74e8a8540cf6b  elowen.json
+c6faaa04c6ff2583057e952447688eed37b382a5cb77b5d1711d96dc0833782f  tomas.json
+= E2.21's recorded head hashes (E2.21/g1-seed-deltas.txt, first block): byte-identical; E2.22 and E2.23 recorded diff-empty since, E2.24-E2.26 touched no .rs (git diff --name-only b90411ae31 f89112e1c6 -- "*.rs": 8 files, all under apps/desktop/src-tauri/src/print/; git diff --name-only 660e2efec7 f89112e1c6 -- "*.rs": none).

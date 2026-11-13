@@ -216,6 +216,74 @@ fn without_footers(text: &str, title: &str, pages: usize) -> String {
     text
 }
 
+/// The PDF's text on its first page: everything before page 1's footer (`<title> · page 1 of
+/// <pages>`), which the frame prints at the foot of the page. `None` when no footer reads so.
+pub(crate) fn page_one<'a>(text: &'a str, title: &str, pages: usize) -> Option<&'a str> {
+    text.find(&format!("{} · page 1 of {pages}", folded(title))).map(|end| &text[..end])
+}
+
+/// The blocks page 1 holds (operator ruling R5, SD-40 `technical-design.md §4`, `decisions.md §23.3`):
+/// the portrait and the Character Name and Campaign fields, the step-1 blocks and the Languages
+/// line (E2.13; the eleven E2.4 holds on page 1), the Conditional Bonuses box (E2.20) and the
+/// Resistances block (E2.22), by
+/// vocabulary id.
+pub(crate) const PAGE_ONE_BLOCKS: [&str; 13] = [
+    "portrait",
+    "nameCampaign",
+    "abilities",
+    "squareBlock",
+    "armorClass",
+    "attack",
+    "saves",
+    "conditionalBonuses",
+    "resistances",
+    "speed",
+    "skills",
+    "weapons",
+    "languages",
+];
+
+/// A block's heading together with its first printed words, without whitespace: how the block is
+/// found in the PDF's text, so a heading's word inside another block ("Attack" in a weapon's
+/// captions) is not taken for it.
+pub(crate) fn block_anchor(block: &crate::print::model::SheetBlock) -> String {
+    let first = block
+        .rows
+        .iter()
+        .flat_map(|row| std::iter::once(&row.label).chain(row.values.iter()).chain(row.notes.iter()))
+        .map(|piece| unspaced(piece))
+        .find(|piece| !piece.is_empty())
+        .unwrap_or_default();
+    format!("{}{first}", unspaced(&block.heading))
+}
+
+/// The order the blocks' words come in the PDF's text: the layout file's, except that a cell more
+/// than one grid row tall (page 1's portrait, with the Languages stacked in it, SD-40 E2.18) prints
+/// after the other cells of the row it starts in: Typst lays a row-spanning cell out once that row
+/// is done. On a one-column sheet (Starfinder, Cyberpunk RED) it is the layout file's order.
+pub(crate) fn print_order(document: &SheetDocument) -> Vec<&crate::print::model::SheetBlock> {
+    let mut order = Vec::with_capacity(document.blocks.len());
+    let mut deferred = Vec::new();
+    let mut deferring = false;
+    for block in &document.blocks {
+        if block.place.under {
+            if deferring { deferred.push(block) } else { order.push(block) }
+            continue;
+        }
+        deferring = block.place.row_span > 1;
+        if deferring {
+            deferred.push(block);
+            continue;
+        }
+        order.push(block);
+        if block.place.x + block.place.span == crate::print::model::GRID_COLUMNS {
+            order.append(&mut deferred);
+        }
+    }
+    order.append(&mut deferred);
+    order
+}
+
 /// Every label, value and note of each block must be in the PDF's text between the block's heading
 /// and the next block's heading; the headings must come in the layout file's order. A heading is
 /// found together with its block's first printed words, so a heading's word inside an earlier
@@ -231,17 +299,18 @@ fn assert_blocks_print_in_order(document: &SheetDocument, text: &str, case: &str
             .filter(|piece| !piece.is_empty())
             .collect()
     };
-    let mut starts = Vec::with_capacity(document.blocks.len());
+    let blocks = print_order(document);
+    let mut starts = Vec::with_capacity(blocks.len());
     let mut from = 0;
-    for block in &document.blocks {
-        let anchor = format!("{}{}", unspaced(&block.heading), pieces(block).first().cloned().unwrap_or_default());
+    for block in &blocks {
+        let anchor = block_anchor(block);
         let at = text[from..]
             .find(&anchor)
             .unwrap_or_else(|| panic!("{case}: heading {:?} and its first words print after byte {from} of the PDF's text", block.heading));
         starts.push(from + at);
         from += at + unspaced(&block.heading).len();
     }
-    for (index, block) in document.blocks.iter().enumerate() {
+    for (index, block) in blocks.iter().enumerate() {
         let end = starts.get(index + 1).copied().unwrap_or(text.len());
         let segment = &text[starts[index]..end];
         for piece in pieces(block) {
@@ -283,6 +352,14 @@ fn golden_case(system: System, paper: Paper, options: Options) {
     assert_eq!(headings, golden_headings, "{case}: the headings, in print order");
     assert_eq!(sizes.len(), golden_pages, "{case}: the page count");
 
+    if matches!(system, System::Pf1e) {
+        let full = pdf_text(&pdf);
+        let first = unspaced(page_one(&full, &document.title, sizes.len()).unwrap_or_else(|| panic!("{case}: page 1's footer prints")));
+        for id in PAGE_ONE_BLOCKS {
+            let block = document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{case}: the {id} block"));
+            assert!(first.contains(&block_anchor(block)), "{case}: page 1 holds {:?}; page 1 reads: {first}", block.heading);
+        }
+    }
     let text = without_footers(&pdf_text(&pdf), &document.title, sizes.len());
     assert!(text.contains(&folded(&document.title)), "{case}: the title {:?} prints", document.title);
     assert_blocks_print_in_order(&document, &text, &case);

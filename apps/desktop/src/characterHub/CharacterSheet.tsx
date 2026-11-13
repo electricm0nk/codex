@@ -4,6 +4,8 @@ import {
   loadSavedCharacterDetail,
   NO_FEAT_SKILL_BONUSES,
   type ExplanationDto,
+  type ConditionalNotesDto,
+  type ResistancesDto,
   type FeatSkillBonusesDto,
   type LoadSavedCharacterResponse,
   type SheetLineDto,
@@ -44,7 +46,7 @@ import { PrintDialog } from './PrintDialog';
 import { PROGRESSION_DRAWER_CLOSED, ProgressionDrawer, ProgressionLedger, progressionDrawerReducer } from './ProgressionDrawer';
 import { CustomDialog } from './CustomDialog';
 import { CustomTab } from './CustomTab';
-import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
+import { EMPTY_CUSTOM, customIsEmpty, customOverrides, savedIntelligenceModifier, withCustomSkillPoints, sheetHitPoints, sheetLandSpeed, sheetSwimSpeed, sheetFlySpeed, withOverride, type CharacterCustom, type CustomOverrides } from './customModel';
 import { loadCharacterCustom, saveCharacterCustom } from '../boundary/characterCustom';
 import { DEFAULT_PRICE_MODE, type PriceMode } from './priceMode';
 import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
@@ -161,15 +163,17 @@ import {
 } from './skillsModel';
 import { AbilitiesPanel } from './panels/AbilitiesPanel';
 import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './panels/CombatPanels';
+import { ResistancesPanel } from './panels/ResistancesPanel';
+import { conditionalBonusLines } from './conditionalBonusesModel';
 import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
+import { AppMenu } from '../layout/AppMenu';
 import { SquareBlock, initiativeRow } from './panels/SquareBlock';
 import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type SheetStack } from './sheetLayout';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/setSkillAllocations';
-import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
+import { loadCharacterBio, parseLanguages, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
-import { adjustCharacterHp, loadCharacterDurability, type CharacterDurabilityDto } from '../boundary/characterDurability';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -414,9 +418,9 @@ function IdentityPanel(props: { name: string; campaign: string }) {
   );
 }
 
-/** Automatic PF1 languages: every character knows Common; a positive Int modifier grants that many bonus language slots. */
-function spokenLanguages(intelligenceModifier: number): string[] {
-  const languages = ['Common'];
+/** The engine's known languages (`languages.known`), then a positive Int modifier's bonus language slots. */
+function spokenLanguages(known: readonly string[], intelligenceModifier: number): string[] {
+  const languages = [...known];
   if (intelligenceModifier > 0) {
     languages.push(`+${intelligenceModifier} bonus language slot${intelligenceModifier > 1 ? 's' : ''} (not yet selectable)`);
   }
@@ -442,9 +446,16 @@ function SkillsPanel(props: {
    * total the printed sheet reads too.
    */
   explanations: readonly ExplanationDto[];
+  /** SD-40 E2.8: the sheet response's `languages.known`, printed on the Languages line. */
+  knownLanguages: readonly string[];
+  /** SD-40 E2.27: saves the Languages field's list with the bio (on blur, only when it changed). */
+  onLanguagesCommit: (languages: string[]) => void;
   onOpenDialog: () => void;
   custom: CharacterCustom;
 }) {
+  const shownLanguages = props.knownLanguages.join(', ');
+  const [languagesDraft, setLanguagesDraft] = useState(shownLanguages);
+  useEffect(() => setLanguagesDraft(shownLanguages), [shownLanguages]);
   const spent = skillPointsSpent(props.allocation);
   const budgetIntelligence = savedIntelligenceModifier(props.abilities.intelligence, props.explanations);
   const available = withCustomSkillPoints(totalSkillPointsAvailable(props.heldClasses, budgetIntelligence, props.isHuman), props.custom);
@@ -526,8 +537,19 @@ function SkillsPanel(props: {
         Languages
       </p>
       <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem', margin: 0 }}>
-        {spokenLanguages(budgetIntelligence).join(', ')}
+        {spokenLanguages(props.knownLanguages, budgetIntelligence).join(', ')}
       </p>
+      <input
+        aria-label="Languages"
+        style={{ ...bioFieldInputStyle, marginTop: '0.3rem' }}
+        value={languagesDraft}
+        onChange={(event) => setLanguagesDraft(event.target.value)}
+        onBlur={() => {
+          if (languagesDraft !== shownLanguages) {
+            props.onLanguagesCommit(parseLanguages(languagesDraft));
+          }
+        }}
+      />
     </StatBox>
   );
 }
@@ -559,6 +581,8 @@ export interface BioFields {
   weight: string;
   hair: string;
   eyes: string;
+  /** SD-40 E2.27: carried so a blur-save of another bio field keeps it; edited on the Skills panel. */
+  languages: string[];
 }
 
 export const BLANK_BIO_FIELDS: BioFields = {
@@ -571,6 +595,7 @@ export const BLANK_BIO_FIELDS: BioFields = {
   weight: '',
   hair: '',
   eyes: '',
+  languages: [],
 };
 
 const bioFieldLabelStyle: CSSProperties = {
@@ -1253,89 +1278,6 @@ function MoneyPanel(props: {
 }
 
 /**
- * Real HP/durability tracking, wired to `load_character_durability` /
- * `adjust_character_hp` (v0.6 alpha swarm, risks-and-open-questions.md
- * item 4). `durability` is `null` both while the initial load is in
- * flight and — indistinguishably, on purpose — when this build isn't
- * durability-supported (only single-class Fighter/Wizard/Rogue); either
- * way, the honest "not available" line is correct and nothing is
- * fabricated in its place. `status` is a pre-computed label from the real
- * PF1 injury/death thresholds — rendered directly, no client-side
- * re-derivation.
- */
-function DurabilityPanel(props: {
-  durability: CharacterDurabilityDto | null;
-  busy: boolean;
-  error: string | null;
-  onAdjust: (deltaHp: number) => void;
-}) {
-  const [amountInput, setAmountInput] = useState('');
-  const parsedAmount = Number(amountInput);
-  const validAmount = amountInput.trim() !== '' && Number.isFinite(parsedAmount) && parsedAmount > 0;
-
-  if (!props.durability) {
-    return (
-      <p style={{ color: 'var(--color-text-faint)', margin: '0 0 1rem', textAlign: 'center' }}>
-        HP tracking isn't available for this build yet — only single-class Fighter, Wizard, or Rogue.
-      </p>
-    );
-  }
-
-  const { currentHp, maxHp, nonlethalDamage, status } = props.durability;
-  return (
-    <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
-        Hit Points
-      </p>
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.6rem' }}>
-        <StatTile label="Current" value={currentHp} />
-        <StatTile label="Max" value={maxHp} />
-        <StatTile label="Nonlethal" value={nonlethalDamage} />
-        <StatTile label="Status" value={status} emphasize={status !== 'Normal'} />
-      </div>
-      <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
-        <input
-          type="number"
-          min="0"
-          step="1"
-          placeholder="amount"
-          value={amountInput}
-          onChange={(event) => setAmountInput(event.target.value)}
-          style={{ ...bioFieldInputStyle, width: 110 }}
-        />
-        <button
-          type="button"
-          disabled={!validAmount || props.busy}
-          onClick={() => {
-            props.onAdjust(-parsedAmount);
-            setAmountInput('');
-          }}
-          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
-        >
-          Damage
-        </button>
-        <button
-          type="button"
-          disabled={!validAmount || props.busy}
-          onClick={() => {
-            props.onAdjust(parsedAmount);
-            setAmountInput('');
-          }}
-          style={{ ...addItemButtonStyle, cursor: validAmount && !props.busy ? 'pointer' : 'not-allowed', opacity: validAmount && !props.busy ? 1 : 0.5, padding: '0.4rem 0.9rem' }}
-        >
-          Heal
-        </button>
-      </div>
-      {props.error ? (
-        <p role="alert" style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.72rem', margin: '0.5rem 0 0' }}>
-          {props.error}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-/**
  * Real, corpus-resolved equipment-effect totals (v0.6 alpha swarm item 1,
  * shape (c)) — not claim-gated, reflects whatever gear is actually
  * equipped regardless of whether the build reaches `Computed`.
@@ -1370,31 +1312,20 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
 }
 
 /**
- * Real, bounded: HP/durability tracking and equipment effects (above) are
- * real for whatever this build actually has equipped. The only other
- * Defense stat with a backend computation to show is the flat Damage
- * Reduction magnitude (`PilotSnapshotDto.damageReduction`,
- * `character_hub.rs`) — currently only ever grounded for Barbarian, which
- * isn't a chassis-supported class through this UI yet, so `undefined` here
- * is the expected, honest state for every character reachable today, not a
- * bug. Saving throws render base (class progression) beside total, both
+ * Real, bounded: equipment effects (above) are real for whatever this build actually has equipped. Resistances (energy,
+ * Damage Reduction, Spell Resistance, Immunities) render the load
+ * response's `resistances` as the printed Resistances block does (SD-40
+ * E2.26). Saving throws render base (class progression) beside total, both
  * verbatim from the engine (`baseSaves` / `totalSaves`); a per-source
  * breakdown of what sits between them has no backend computation yet, so
- * none is fabricated here. Note: the "Recompute" menu action doesn't currently
- * refresh `damageReduction` (`RecomputedCharacterSnapshotDto` doesn't carry
- * it), so it always reflects the originally loaded snapshot — a real,
- * narrow, pre-existing gap, not something this change papers over.
+ * none is fabricated here.
  */
 function DefenseTab(props: {
   baseSaves: BaseSavesDto | undefined;
   totalSaves: BaseSavesDto | undefined;
-  damageReduction: number | undefined;
+  resistances: ResistancesDto | undefined;
   equipmentEffects: EquipmentEffectsDto | undefined;
   encumbrance: EncumbranceDto | undefined;
-  durability: CharacterDurabilityDto | null;
-  durabilityBusy: boolean;
-  durabilityError: string | null;
-  onAdjustHp: (deltaHp: number) => void;
   onOpenMarket: () => void;
 }) {
   return (
@@ -1404,19 +1335,9 @@ function DefenseTab(props: {
           Market
         </button>
       </div>
-      <DurabilityPanel
-        durability={props.durability}
-        busy={props.durabilityBusy}
-        error={props.durabilityError}
-        onAdjust={props.onAdjustHp}
-      />
       <EquipmentEffectsPanel effects={props.equipmentEffects} />
       <AcBySourcePanel effects={props.equipmentEffects} encumbrance={props.encumbrance} />
-      {props.damageReduction !== undefined ? (
-        <p style={{ margin: '0 0 1rem', textAlign: 'center' }}>
-          <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
-        </p>
-      ) : null}
+      <ResistancesPanel resistances={props.resistances} />
       <SavesPanel baseSaves={props.baseSaves} totalSaves={props.totalSaves} />
     </div>
   );
@@ -2795,7 +2716,6 @@ export function CharacterSheet(props: {
     void ensureClassRosterLoaded();
   }, []);
   const [tab, setTab] = useState<Tab>('Weapons');
-  const [menuOpen, setMenuOpen] = useState(false);
   // SD-36 F6a: weapon proficiency, caster level and class skills per held class, from the engine
   // (`list_class_facts`). A failure prints Unknown with the notice; nothing falls back to a table.
   const [classFacts, setClassFacts] = useState<ClassFactsState>(LOADING_CLASS_FACTS);
@@ -3000,6 +2920,14 @@ export function CharacterSheet(props: {
     skillAllocations: SkillAllocationEntryDto[] | null;
     /** What the character holds under an override; a mutation's response does not carry it. */
     admittedUnderOverride: AdmittedRecordDto[];
+    /** SD-40 E2.8: the engine's known languages (`languages.known`); empty until a read carries them. */
+    knownLanguages: string[];
+    /** SD-40 E2.24: the engine's `flyManeuverability` words; `null` until a read carries them. */
+    flyManeuverability: string | null;
+    /** SD-40 E2.25: the engine's `conditionalNotes` (the Saving Throws box lists them); `undefined` until a read carries them. */
+    conditionalNotes: ConditionalNotesDto | undefined;
+    /** SD-40 E2.26: the engine's `resistances` (the Defense tab's Resistances panel); `undefined` until a read carries them. */
+    resistances: ResistancesDto | undefined;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
@@ -3010,6 +2938,10 @@ export function CharacterSheet(props: {
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
+    knownLanguages: props.detail?.languages?.known ?? [],
+    flyManeuverability: props.detail?.flyManeuverability ?? null,
+    conditionalNotes: props.detail?.conditionalNotes,
+    resistances: props.detail?.resistances,
   });
   useEffect(() => {
     let cancelled = false;
@@ -3023,6 +2955,10 @@ export function CharacterSheet(props: {
     abilityScores: props.detail?.abilityScores ?? null,
     skillAllocations: props.detail?.skillAllocations ?? null,
     admittedUnderOverride: props.detail?.admittedUnderOverride ?? [],
+    knownLanguages: props.detail?.languages?.known ?? [],
+    flyManeuverability: props.detail?.flyManeuverability ?? null,
+    conditionalNotes: props.detail?.conditionalNotes,
+    resistances: props.detail?.resistances,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -3037,6 +2973,10 @@ export function CharacterSheet(props: {
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
+      knownLanguages: loaded.languages?.known ?? [],
+      flyManeuverability: loaded.flyManeuverability ?? null,
+      conditionalNotes: loaded.conditionalNotes,
+      resistances: loaded.resistances,
           });
         }
       })
@@ -3049,34 +2989,6 @@ export function CharacterSheet(props: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.row.characterId]);
 
-  const [durability, setDurability] = useState<CharacterDurabilityDto | null>(null);
-  const [durabilityBusy, setDurabilityBusy] = useState(false);
-  const [durabilityError, setDurabilityError] = useState<string | null>(null);
-  // Loads the real persisted HP/durability whenever the sheet opens on a
-  // different character. Unlike bio/money, a rejection here is a real,
-  // structural "this build isn't durability-supported" outcome (only
-  // single-class Fighter/Wizard/Rogue), not an expected empty-first-load
-  // state — `durability` staying `null` is exactly how the Defense tab
-  // renders that as an honest "not available for this build" line rather
-  // than a fabricated HP value or an alarming error.
-  useEffect(() => {
-    let cancelled = false;
-    setDurability(null);
-    loadCharacterDurability(props.row.characterId)
-      .then((loaded) => {
-        if (!cancelled) {
-          setDurability(loaded);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setDurability(null);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [props.row.characterId]);
   // SD-36 F7a: the persisted allocation, re-read with the engine records -- never a constant.
   const [skillAllocation, setSkillAllocation] = useState<Record<string, number>>(() =>
     allocationFromPersisted(props.detail?.skillAllocations ?? [])
@@ -3235,10 +3147,7 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(featRefresh.detail);
-      // Same as handleAddFeat — the feat grant can change maxHp, and
-      // neither this call's response nor the level-up's own carries a
-      // durability field. Nor the engine's own records.
-      await refreshDurability();
+      // Neither this call's response nor the level-up's own carries the engine's records.
       await refreshEngineRecords();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -3578,11 +3487,7 @@ export function CharacterSheet(props: {
         return;
       }
       props.onDetailRefreshed(refresh.detail);
-      // A feat can change maxHp (e.g. Toughness) but add_feat_selection's
-      // response carries no durability field — refresh it explicitly so
-      // the Defense tab doesn't show a stale pre-feat value.
-      await refreshDurability();
-      // A feat can also change a weapon's damage (Weapon Specialization)
+      // A feat can change a weapon's damage (Weapon Specialization)
       // and gate class-feature records.
       await refreshEngineRecords();
       announceEligibilityDelta(verdictsBefore, await featVerdictsForCharacter(), featId);
@@ -3633,8 +3538,11 @@ export function CharacterSheet(props: {
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
+      knownLanguages: loaded.languages?.known ?? [],
+      flyManeuverability: loaded.flyManeuverability ?? null,
+      conditionalNotes: loaded.conditionalNotes,
+      resistances: loaded.resistances,
     });
-    await refreshDurability();
   }
 
   /**
@@ -3914,6 +3822,18 @@ export function CharacterSheet(props: {
     }
   }
 
+  /** SD-40 E2.27: stores the Languages field with the bio, then re-reads the sheet so `languages.known` shows it. */
+  async function handleLanguagesCommit(languages: string[]) {
+    const next = { ...bio, languages };
+    setBio(next);
+    try {
+      await updateCharacterBio(props.row.characterId, next);
+      props.onDetailRefreshed(await loadSavedCharacterDetail({ characterId: props.row.characterId }));
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : 'Could not save the languages.');
+    }
+  }
+
   /**
    * Applies a gp-denominated add/spend to the persisted money balance via
    * `adjust_character_money`. `gpAmount` is positive to add funds, negative
@@ -3937,26 +3857,6 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * Re-fetches HP/durability after a mutation that can change `maxHp` (a
-   * feat grant, e.g. Toughness's +3 HP) but whose own response carries no
-   * durability field — unlike `adjustCharacterHp`'s. Without this, the
-   * Defense tab would keep showing the pre-feat `maxHp` until the sheet
-   * was closed and reopened (QA found this verifying item 17 — same
-   * render-staleness shape as the `corpus_derived` bug and the Load-list
-   * staleness item 26 already fixed). Failure falls back to `null`, the
-   * same honest "not available" treatment the initial per-character load
-   * uses — never a stale or fabricated value.
-   */
-  async function refreshDurability() {
-    try {
-      const loaded = await loadCharacterDurability(props.row.characterId);
-      setDurability(loaded);
-    } catch {
-      setDurability(null);
-    }
-  }
-
-  /**
    * Re-reads the engine's computed records (class-feature explanations and
    * the per-weapon damage breakdown) after a mutation.
    *
@@ -3964,9 +3864,7 @@ export function CharacterSheet(props: {
    * neither — only `load_saved_character` does. Carrying the pre-mutation
    * records forward instead would be worse than re-reading: a level-up
    * moves nearly every class-feature magnitude, so the sheet would show
-   * last level's numbers as if they were current. Same post-mutation
-   * re-read shape `refreshDurability` above already uses, for the same
-   * render-staleness reason.
+   * last level's numbers as if they were current.
    *
    * A failure leaves whatever is already on screen rather than blanking
    * the section — the browser preview (no Tauri runtime) takes this path
@@ -3985,28 +3883,13 @@ export function CharacterSheet(props: {
       abilityScores: loaded.abilityScores ?? null,
       skillAllocations: loaded.skillAllocations ?? null,
       admittedUnderOverride: loaded.admittedUnderOverride ?? [],
+      knownLanguages: loaded.languages?.known ?? [],
+      flyManeuverability: loaded.flyManeuverability ?? null,
+      conditionalNotes: loaded.conditionalNotes,
+      resistances: loaded.resistances,
       });
     } catch {
       // Intentionally keeps the current records.
-    }
-  }
-
-  /**
-   * `deltaHp`/`deltaNonlethal` are already the exact wire deltas (positive
-   * to heal / take nonlethal damage is the caller's choice, see
-   * `adjustCharacterHp`'s own doc comment) — one atomic round trip, no
-   * read-then-write coordination needed on this side.
-   */
-  async function handleAdjustHp(deltaHp: number, deltaNonlethal: number) {
-    setDurabilityError(null);
-    setDurabilityBusy(true);
-    try {
-      const updated = await adjustCharacterHp(props.row.characterId, deltaHp, deltaNonlethal);
-      setDurability(updated);
-    } catch (cause: unknown) {
-      setDurabilityError(cause instanceof Error ? cause.message : 'Could not update HP.');
-    } finally {
-      setDurabilityBusy(false);
     }
   }
 
@@ -4481,6 +4364,8 @@ export function CharacterSheet(props: {
               allocation={skillAllocation}
               featSkillBonuses={engineRecords.featSkillBonuses}
               explanations={engineRecords.explanations}
+              knownLanguages={engineRecords.knownLanguages}
+              onLanguagesCommit={(languages) => void handleLanguagesCommit(languages)}
               onOpenDialog={() => setSkillDialogOpen(true)}
               custom={custom}
             />
@@ -4493,9 +4378,16 @@ export function CharacterSheet(props: {
       case 'attack':
         return <AttackPanel baseAttackBonus={baseAttackBonus} melee={meleeAttackBonus} cmb={cmb} cmd={cmd} boxStyle={boxStyle} />;
       case 'speed':
-        return <SpeedPanel land={sheetLandSpeed(engineRecords.explanations)} boxStyle={boxStyle} />;
+        return (
+          <SpeedPanel
+            land={sheetLandSpeed(engineRecords.explanations)}
+            swim={sheetSwimSpeed(engineRecords.explanations)}
+            fly={sheetFlySpeed(engineRecords.explanations, engineRecords.flyManeuverability)}
+            boxStyle={boxStyle}
+          />
+        );
       case 'saves':
-        return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
+        return <SavingThrowsPanel saves={saves} conditionalBonuses={conditionalBonusLines(engineRecords.conditionalNotes, engineRecords.featSkillBonuses)} boxStyle={boxStyle} />;
     }
   }
 
@@ -4523,13 +4415,9 @@ export function CharacterSheet(props: {
                   <DefenseTab
                     baseSaves={recomputed?.baseSaves ?? snapshot?.baseSaves}
                     totalSaves={recomputed?.totalSaves ?? snapshot?.totalSaves}
-                    damageReduction={snapshot?.damageReduction}
+                    resistances={engineRecords.resistances}
                     equipmentEffects={props.detail?.corpusDerived?.equipmentEffects}
                     encumbrance={props.detail?.corpusDerived?.encumbrance}
-                    durability={durability}
-                    durabilityBusy={durabilityBusy}
-                    durabilityError={durabilityError}
-                    onAdjustHp={(deltaHp) => void handleAdjustHp(deltaHp, 0)}
                     onOpenMarket={() => setMarketCategory('armor')}
                   />
                 ) : name === 'Spells' ? (
@@ -4595,7 +4483,7 @@ export function CharacterSheet(props: {
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
-      {/* Top menu bar — extra right padding + height keep the fixed gear clear of the accent line */}
+      {/* Top menu bar */}
       <div
         style={{
           alignItems: 'center',
@@ -4605,60 +4493,8 @@ export function CharacterSheet(props: {
           padding: '0.95rem 4rem 0.95rem 1.5rem',
         }}
       >
-        {/* Menu dropdown */}
-        <div style={{ position: 'relative' }}>
-          <button
-            type="button"
-            onClick={() => setMenuOpen((open) => !open)}
-            style={{ background: 'none', border: 'none', color: 'var(--color-text)', cursor: 'pointer', fontSize: '1.1rem', fontWeight: 700, padding: 0 }}
-          >
-            ☰ Menu
-          </button>
-          {menuOpen ? (
-            <>
-              <div onClick={() => setMenuOpen(false)} style={{ inset: 0, position: 'fixed', zIndex: 20 }} />
-              <div
-                style={{
-                  ...panel,
-                  backgroundColor: 'var(--color-surface)',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.45)',
-                  left: 0,
-                  minWidth: 160,
-                  overflow: 'hidden',
-                  position: 'absolute',
-                  top: 'calc(100% + 10px)',
-                  zIndex: 21,
-                }}
-              >
-                {menuItems.map((item) => (
-                  <div key={item.label}>
-                    {item.dividerBefore ? <div style={{ borderTop: '1px solid var(--color-border)', margin: '0.25rem 0' }} /> : null}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMenuOpen(false);
-                        item.onSelect();
-                      }}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        color: 'var(--color-text)',
-                        cursor: 'pointer',
-                        display: 'block',
-                        fontSize: '0.9rem',
-                        padding: '0.55rem 1rem',
-                        textAlign: 'left',
-                        width: '100%',
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : null}
-        </div>
+        {/* Menu dropdown: the shared ☰ menu, Options last (decisions.md §24.10). */}
+        <AppMenu items={menuItems} />
         <button
           type="button"
           onClick={props.onClose}

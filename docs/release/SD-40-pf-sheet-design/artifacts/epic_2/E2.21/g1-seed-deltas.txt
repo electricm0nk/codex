@@ -1,0 +1,10 @@
+# G-1 seed deltas, E2.21 (base 752f326da2 = E2.19's code 850b6867c3 + docs)
+## head sha256.txt (PF_SEED_RENDER_OUT=… cargo test --locked -j 8 --bins pf_seed_render_hash; 1 passed)
+969962673d3c8717b7902ac6f3242de390dfc4b8b67127a7c420242b42c6772a  aldric.json
+3c08eb9f044123e2ffa947a502310a1b825e0a3052ed47e6aea74e8a8540cf6b  elowen.json
+c6faaa04c6ff2583057e952447688eed37b382a5cb77b5d1711d96dc0833782f  tomas.json
+## head JSON with exactly the new key removed (the 6-line `"resistances": {four empty lists}` block, 1 removal per seed; python re.subn) -> sha256
+cf567ef330725a75bb97b67d31150a79ac5874f9233a0aa4800f384f16964b14  aldric.json
+fffb2e9ae4e24b475178693436e8d6b8b44edb1a5020827dd4146c8a3ae31168  elowen.json
+fed9681bb1530c18f80dee45564c127a5049cd14f704234cdea1404ceca578c2  tomas.json
+= E2.19's recorded head hashes (artifacts/epic_2/E2.19/g1-seed-deltas.txt, first block): byte-identical -> SAME_EXCEPT_NAMED x3 (NEW_KEYS already holds 'resistances')

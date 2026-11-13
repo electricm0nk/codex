@@ -25,7 +25,7 @@
 use std::collections::BTreeMap;
 
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
-use crate::rules_core::damage_total::resolve_base_damage_dice;
+use crate::rules_core::damage_total::{resolve_base_damage_dice, weapon_feat_damage_row_id};
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
 use crate::rules_core::contract::encumbrance_size_for_race;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, stand_in_record, EquipmentEffects};
@@ -38,8 +38,8 @@ use crate::rules_core::pilot_compute::{
     equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
     fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
     attack_ability_modifier_for, has_supported_class_chassis, melee_attack_ability_modifier, normalize_weapon_identity, require_active_state,
-    ComputationExplanation,
-    weapon_focus_bonus_for, weapon_training_bonus_for,
+    ArmorClassPart, ArmorClassParts, ComputationExplanation, FeatDerivedPillarContributions,
+    weapon_focus_bonus_for, weapon_specialization_bonus_for, weapon_training_bonus_for,
     selected_skill_climb_is_class_skill, selected_skill_ranks,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
     selected_skill_class_skill_unknowns,
@@ -362,10 +362,12 @@ pub fn compute_pilot_with_corpus(
 /// equipped alongside the required Longsword (the attack bonus is
 /// genuinely ambiguous then, same honest-absence reasoning
 /// `EquipmentEffects.attack_bonus_delta` already uses).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CorpusAwareCombatBaseline {
     pub melee_attack_bonus: i16,
     pub armor_class: i16,
+    /// SD-40 E2.7: the terms `armor_class` adds, by PF1 bonus type; `armor_class` is their total.
+    pub armor_class_parts: ArmorClassParts,
     /// SD-27, `decisions.md §28` defect 1: PF1 touch Armor Class -- `armor_class`
     /// above with the contributors a touch attack ignores removed. On this path
     /// that is the whole resolved armor+shield delta, since the corpus-aware
@@ -676,11 +678,18 @@ pub fn compute_combat_baseline_from_corpus(
     // size per creature so non-stacking holds structurally. `size` and
     // `size_armor_class_modifier` are resolved once, above the attack bonus,
     // because attack rolls take the identical Table 8-1 value.
-    let armor_class = ARMOR_CLASS_BASE
-        + effects.armor_class_delta
-        + dexterity_contribution
-        + size_armor_class_modifier
-        + feat_armor_class_bonus;
+    let armor_class_parts = armor_class_parts_from_corpus(
+        &effects,
+        (dexterity_modifier, effective_max_dex, dexterity_contribution),
+        (format!("{size:?}"), size_armor_class_modifier),
+        feat_contributions,
+    );
+    let armor_class = armor_class_parts.total();
+    debug_assert_eq!(
+        armor_class,
+        ARMOR_CLASS_BASE + effects.armor_class_delta + dexterity_contribution + size_armor_class_modifier + feat_armor_class_bonus,
+        "the parts hold every term of this path's sum"
+    );
 
     // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC / CMB / CMD on
     // the path the shipped sheet reads. All three used to be computed in React
@@ -750,11 +759,39 @@ pub fn compute_combat_baseline_from_corpus(
     Ok(CorpusAwareCombatBaseline {
         melee_attack_bonus,
         armor_class,
+        armor_class_parts,
         touch_armor_class: touch,
         flat_footed_armor_class: flat_footed,
         combat_maneuver_bonus: cmb,
         combat_maneuver_defense: cmd,
     })
+}
+
+/// SD-40 E2.7: the corpus-aware Armor Class's terms by part: each worn item's Armor Class (its
+/// enhancement in it, a bonus that lost to a higher one of its type at 0) in the part its bonus type
+/// names, the Dexterity contribution after the max Dex cap, the size modifier, and the shared feat
+/// seam's natural armor and dodge. Their total is this path's Armor Class.
+pub fn armor_class_parts_from_corpus(
+    effects: &EquipmentEffects,
+    (dexterity_modifier, effective_max_dex, dexterity_contribution): (i16, Option<i16>, i16),
+    (size_words, size_modifier): (String, i16),
+    feats: FeatDerivedPillarContributions,
+) -> ArmorClassParts {
+    let mut parts = ArmorClassParts::default();
+    for item in &effects.per_item {
+        let value = item.armor_class_bonus.unwrap_or(0) + item.armor_class_enhancement.unwrap_or(0);
+        parts.add_typed(&item.equipment_record_key, item.armor_class_bonus_type.as_deref(), value);
+    }
+    let cap = effective_max_dex.map_or_else(String::new, |cap| format!(" within MAXDEX:{cap}"));
+    parts.add(
+        ArmorClassPart::Dexterity,
+        format!("Dexterity contribution (DEX modifier {dexterity_modifier:+}{cap})"),
+        dexterity_contribution,
+    );
+    parts.add(ArmorClassPart::Size, format!("{size_words} size modifier (PF1 Table 8-1)"), size_modifier);
+    parts.add(ArmorClassPart::Natural, "feat natural armor bonus (ARG Armor of the Pit)", feats.natural_armor_bonus);
+    parts.add(ArmorClassPart::Misc, "Dodge (feat:dodge)", feats.dodge_armor_class_bonus);
+    parts
 }
 
 /// A weapon: it has damage dice, its own or its base item's, the signal the Weapons row reads; or its
@@ -772,6 +809,8 @@ fn is_weapon_in_hand(record_key: &str, corpus: &SourcePackageContent) -> bool {
 /// path cannot ground (`ground_per_weapon_combat_totals`): a variant such as `Dagger (Adamantine)`,
 /// or another book's weapon. The same terms: base attack, the governing ability, the Focus feats, the
 /// penalty when the table's answer is known, size. Its `+N` is on its Weapons row, as a table weapon's is.
+/// Beside it, its feat damage row (`combat.weapon_damage_bonus.<weapon>`, SD-40 E2.14), as the
+/// headless path grounds for a table weapon, so its damage total holds the Specialization feats.
 pub fn corpus_weapon_attack_rows(
     base: &PilotBaseChassisComputation,
     input: &CharacterInput,
@@ -814,6 +853,16 @@ pub fn corpus_weapon_attack_rows(
                  modifier ({ability:+}) + weapon feats ({focus:+}) + nonproficiency penalty ({penalty}) \
                  + size modifier ({size:+}) = {value}.{proficiency_detail}",
                 base.base_attack_bonus
+            ),
+        });
+        let damage = weapon_specialization_bonus_for(input, weapon.as_ref().map_or(key, |weapon| weapon.key));
+        rows.push(ComputationExplanation {
+            id: weapon_feat_damage_row_id(key),
+            value: damage,
+            detail: format!(
+                "Feat damage bonus with the equipped {key}: {damage:+}, the Weapon Specialization / \
+                 Greater Weapon Specialization naming it. The feat contribution alone, not a damage \
+                 total: combat.weapon_damage_total.<weapon> is the total."
             ),
         });
     }

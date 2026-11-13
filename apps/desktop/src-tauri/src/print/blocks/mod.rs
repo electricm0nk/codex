@@ -1,7 +1,8 @@
 //! The shared blocks (SD-39 E8.2, `technical-design.md §1`, operator ruling R2): one builder per
-//! block type -- Identity, Abilities, Combat, Skills, Weapons, Armor, Inventory, Feats,
-//! ClassFeatures, Spells (list or spellbook), Custom, Pets, Actions, Math, BioNotes. A layout file
-//! picks which blocks a system prints, in which order.
+//! block type -- Identity, Abilities, the square block (Hit Points, Initiative, Encumbrance, Conditions), Armor Class, Saving Throws, Attack,
+//! Speed (the Combat block's parts, SD-40 `decisions.md §8`), Skills, Weapons, Armor, Inventory,
+//! Feats, ClassFeatures, Spells (list or spellbook), Custom, Pets, Actions, Math, BioNotes. A layout
+//! file picks which blocks a system prints, in which order.
 //!
 //! Every block reads what the screen reads: the `LoadSavedCharacterResponse`, the owned copies
 //! (`list_held_equipment_at_root`, not `equipment_selections`, which also holds the loadout's
@@ -19,7 +20,7 @@ mod skills;
 mod spells;
 
 pub use bio_notes::bio_notes;
-pub use core::{abilities, combat, identity};
+pub use core::{abilities, armor_class, attack, character_details, conditional_bonuses, languages, name_campaign, portrait, resistances, saves, speed, square_block};
 pub use extras::{custom, pets};
 pub use feats::{actions, class_features, feats};
 pub(crate) use feats::line_row;
@@ -31,7 +32,7 @@ pub use spells::{spellbook, spells};
 use crate::character_custom::CharacterCustomDto;
 use crate::character_hub::{CharacterBioDto, CharacterMoneyDto, ExplanationDto, HeldEquipmentCopyDto, LoadSavedCharacterResponse};
 use crate::character_ledger::{AdmittedKind, OverrideFlag};
-use crate::print::model::Derivation;
+use crate::print::model::{Derivation, SheetImage};
 use crate::print::PrintRequest;
 
 /// What a sheet is printed from.
@@ -43,6 +44,9 @@ pub struct SheetSources<'a> {
     pub bio: CharacterBioDto,
     /// The Gear tab's money (`load_character_money`): Pathfinder only, `None` on the other sheets.
     pub money: Option<CharacterMoneyDto>,
+    /// The character's saved portrait (`portrait.png`, as `load_character_portrait` reads it):
+    /// Pathfinder only, `None` when there is none or on the other sheets.
+    pub portrait: Option<SheetImage>,
     pub request: &'a PrintRequest,
 }
 

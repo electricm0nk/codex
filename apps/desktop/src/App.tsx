@@ -38,6 +38,7 @@ import {
 import type { UpdateControllerDeps } from './update/updateModel';
 import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
 import { APP_SHELL_STYLE } from './layout/screenLayout';
+import { AppMenu, AppMenuHostContext, type AppMenuHost } from './layout/AppMenu';
 import { AppearancePanel } from './settings/AppearancePanel';
 import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
 import { applyThemeMode, getStoredThemeMode, type ThemeMode } from './settings/themeMode';
@@ -807,6 +808,18 @@ function UpdateSection() {
 
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  // How many screen ☰ menus are mounted; while one is, App's own stays hidden.
+  const [screenMenus, setScreenMenus] = useState(0);
+  const menuHost = useMemo<AppMenuHost>(
+    () => ({
+      openOptions: () => setSettingsOpen(true),
+      claimMenu: () => {
+        setScreenMenus((count) => count + 1);
+        return () => setScreenMenus((count) => count - 1);
+      },
+    }),
+    []
+  );
   const [settingsTab, setSettingsTab] = useState<SettingsTab>('appearance');
   const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode);
   const [surface, setSurface] = useState<TesterWorkbenchSurface | null>(null);
@@ -843,33 +856,10 @@ export default function App() {
   }, []);
 
   return (
+    <AppMenuHostContext.Provider value={menuHost}>
     <main style={APP_SHELL_STYLE}>
-      {/* Settings gear — fixed to the viewport top-right on every screen. */}
-      <button
-        type="button"
-        aria-label="Open settings"
-        title="Settings"
-        onClick={() => setSettingsOpen(true)}
-        style={{
-          alignItems: 'center',
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
-          borderRadius: 8,
-          color: 'var(--color-text-secondary)',
-          cursor: 'pointer',
-          display: 'flex',
-          fontSize: '1.6rem',
-          height: 48,
-          justifyContent: 'center',
-          position: 'fixed',
-          right: 18,
-          top: 10,
-          width: 48,
-          zIndex: 950,
-        }}
-      >
-        ⚙
-      </button>
+      {/* The ☰ menu with Options (decisions.md §24.10): App's own, top-right, on every screen whose top bar has none. */}
+      {screenMenus === 0 ? <AppMenu items={[]} fixed /> : null}
 
       <CharacterHubPage />
 
@@ -1049,5 +1039,6 @@ export default function App() {
         }}
       />
     </main>
+    </AppMenuHostContext.Provider>
   );
 }

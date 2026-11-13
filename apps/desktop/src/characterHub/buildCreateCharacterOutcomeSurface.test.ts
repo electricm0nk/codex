@@ -90,6 +90,7 @@ function verifiesSavedOutcome() {
           lightMaxLbs: 33,
           mediumMaxLbs: 66,
           heavyMaxLbs: 100,
+          remainingLbs: 100,
           level: 'Light',
           loadArmorCheckPenalty: 0,
           perItem: [],

@@ -419,7 +419,7 @@ pub(crate) mod tests {
                     .clone(),
             };
 
-            let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
+            let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
                 crate::character_hub::sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
             Ok(LoadSavedCharacterResponse {
@@ -455,6 +455,10 @@ pub(crate) mod tests {
                 sheet_lines,
                 sheet_rules_unavailable_reason,
                 feat_skill_bonuses,
+                conditional_notes,
+                languages: crate::character_hub::known_languages(),
+                fly_maneuverability: None,
+                resistances: Default::default(),
             })
         }
     }

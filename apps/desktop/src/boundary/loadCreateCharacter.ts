@@ -348,6 +348,8 @@ export interface EncumbranceDto {
   lightMaxLbs: number;
   mediumMaxLbs: number;
   heavyMaxLbs: number;
+  /** Pounds still carryable before the heavy maximum, floored at 0 (`rules_core::encumbrance`). */
+  remainingLbs: number;
   /** `'Light' | 'Medium' | 'Heavy' | 'OverHeavyCapacity'`. */
   level: string;
   /**

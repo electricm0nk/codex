@@ -15,6 +15,7 @@ const WIRE = {
     lightMaxLbs: 100,
     mediumMaxLbs: 200,
     heavyMaxLbs: 300,
+    remainingLbs: 271,
     level: 'Light',
     loadArmorCheckPenalty: 0,
     perItem: [

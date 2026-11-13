@@ -794,6 +794,127 @@ mod base_class_weapon_and_armor_proficiency_tests {
     }
 }
 
+/// One of the seven parts the sheet prints beside the Armor Class (`defense.armor_class.<part>`).
+/// PF1: AC = 10 + armor + shield + Dexterity + size + natural armor + deflection + misc.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ArmorClassPart {
+    Armor,
+    Shield,
+    Dexterity,
+    Size,
+    Natural,
+    Deflection,
+    Misc,
+}
+
+impl ArmorClassPart {
+    /// In the order the sheet prints them.
+    pub const ALL: [ArmorClassPart; 7] = [
+        ArmorClassPart::Armor,
+        ArmorClassPart::Shield,
+        ArmorClassPart::Dexterity,
+        ArmorClassPart::Size,
+        ArmorClassPart::Natural,
+        ArmorClassPart::Deflection,
+        ArmorClassPart::Misc,
+    ];
+
+    /// The explanation row's id.
+    pub fn id(self) -> &'static str {
+        match self {
+            ArmorClassPart::Armor => "defense.armor_class.armor",
+            ArmorClassPart::Shield => "defense.armor_class.shield",
+            ArmorClassPart::Dexterity => "defense.armor_class.dexterity",
+            ArmorClassPart::Size => "defense.armor_class.size",
+            ArmorClassPart::Natural => "defense.armor_class.natural",
+            ArmorClassPart::Deflection => "defense.armor_class.deflection",
+            ArmorClassPart::Misc => "defense.armor_class.misc",
+        }
+    }
+
+    fn words(self) -> &'static str {
+        match self {
+            ArmorClassPart::Armor => "Armor",
+            ArmorClassPart::Shield => "Shield",
+            ArmorClassPart::Dexterity => "Dexterity",
+            ArmorClassPart::Size => "Size",
+            ArmorClassPart::Natural => "Natural armor",
+            ArmorClassPart::Deflection => "Deflection",
+            ArmorClassPart::Misc => "Misc",
+        }
+    }
+
+    /// The part a bonus of the engine's type word lands in (`Armor`, `ShieldEnhancement`, …, as
+    /// `equipment_effects` carries it). A type the six named parts do not hold, or none, is Misc.
+    pub fn of_bonus_type(bonus_type: Option<&str>) -> Self {
+        match bonus_type {
+            Some("Armor" | "ArmorEnhancement") => ArmorClassPart::Armor,
+            Some("Shield" | "ShieldEnhancement") => ArmorClassPart::Shield,
+            Some("NaturalArmor" | "NaturalArmorEnhancement") => ArmorClassPart::Natural,
+            Some("Deflection") => ArmorClassPart::Deflection,
+            _ => ArmorClassPart::Misc,
+        }
+    }
+}
+
+/// The terms an Armor Class sum adds, each in the part its PF1 bonus type puts it. A combat path
+/// builds one from the very terms it sums and takes its Armor Class from [`Self::total`], so the
+/// parts the sheet prints cannot drift from the number beside them.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct ArmorClassParts {
+    terms: Vec<(ArmorClassPart, String, i16)>,
+}
+
+impl ArmorClassParts {
+    /// One term of the sum. A zero term is kept off the row's words, except the Dexterity and size
+    /// terms, which every character has.
+    pub fn add(&mut self, part: ArmorClassPart, words: impl Into<String>, value: i16) {
+        if value != 0 || matches!(part, ArmorClassPart::Dexterity | ArmorClassPart::Size) {
+            self.terms.push((part, words.into(), value));
+        }
+    }
+
+    /// A term typed by the engine's bonus-type word, in the part that word names; Misc names the
+    /// type (or "untyped") in its words.
+    pub fn add_typed(&mut self, words: &str, bonus_type: Option<&str>, value: i16) {
+        let part = ArmorClassPart::of_bonus_type(bonus_type);
+        let type_words = bonus_type.unwrap_or("untyped");
+        self.add(part, format!("{words} ({type_words})"), value);
+    }
+
+    /// The part's value: the sum of its terms.
+    pub fn value(&self, part: ArmorClassPart) -> i16 {
+        self.terms.iter().filter(|(of, _, _)| *of == part).map(|(_, _, value)| value).sum()
+    }
+
+    /// 10 + every term: the Armor Class.
+    pub fn total(&self) -> i16 {
+        ARMOR_CLASS_BASE + self.terms.iter().map(|(_, _, value)| value).sum::<i16>()
+    }
+
+    /// The seven `defense.armor_class.<part>` rows, each naming its terms.
+    pub fn explanations(&self) -> Vec<ComputationExplanation> {
+        ArmorClassPart::ALL
+            .iter()
+            .map(|&part| {
+                let value = self.value(part);
+                let named: Vec<String> = self
+                    .terms
+                    .iter()
+                    .filter(|(of, _, _)| *of == part)
+                    .map(|(_, words, term)| format!("{words} ({term:+})"))
+                    .collect();
+                let named = if named.is_empty() { "none".to_owned() } else { named.join(" + ") };
+                ComputationExplanation {
+                    id: part.id().to_owned(),
+                    value,
+                    detail: format!("Armor Class part, {}: {named} = {value}", part.words()),
+                }
+            })
+            .collect()
+    }
+}
+
 /// Compute the baseline melee attack bonus and armor class from what is in hand and worn, or block
 /// the claim on what this path has no number for (`unmet_combat_posture_conditions`).
 ///
@@ -1158,21 +1279,32 @@ pub(super) fn compute_combat_baseline(
     // de-duplicating a list.
     let size_armor_class_modifier = size.armor_class_and_attack;
     let size_label = size.label;
-    let armor_class = ARMOR_CLASS_BASE
-        + armor_bonus
-        + dexterity_contribution
-        + size_armor_class_modifier
-        + dodge_armor_class_bonus
-        + rage_armor_class_penalty
-        + inspired_rage_armor_class_penalty
-        + bloodrage_armor_class_penalty
-        + brawler_ac_bonus_value
-        + alchemist_mutagen_ac_bonus_value
-        + protection_judgment_ac_bonus
-        + natures_whispers_ac_bonus
-        + challenge_armor_class_penalty
-        + draconic_dragon_resistances_natural_armor_bonus
-        + armor_of_the_pit_natural_armor_bonus;
+    // SD-40 E2.7: the sum is the parts' total, each term in the part its PF1 bonus type puts it,
+    // so the seven `defense.armor_class.*` rows below are the very terms this Armor Class adds.
+    let mut armor_class_parts = ArmorClassParts::default();
+    armor_class_parts.add(ArmorClassPart::Armor, armor_words, armor_bonus);
+    armor_class_parts.add(
+        ArmorClassPart::Dexterity,
+        format!("Dexterity contribution (DEX modifier {dexterity_modifier:+}{max_dex_detail})"),
+        dexterity_contribution,
+    );
+    armor_class_parts.add(ArmorClassPart::Size, format!("{size_label} size modifier (PF1 Table 8-1)"), size_armor_class_modifier);
+    armor_class_parts.add(ArmorClassPart::Natural, "Alchemist Mutagen natural armor bonus", alchemist_mutagen_ac_bonus_value);
+    armor_class_parts.add(
+        ArmorClassPart::Natural,
+        "Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus",
+        draconic_dragon_resistances_natural_armor_bonus,
+    );
+    armor_class_parts.add(ArmorClassPart::Natural, "ARG Armor of the Pit natural armor bonus", armor_of_the_pit_natural_armor_bonus);
+    armor_class_parts.add(ArmorClassPart::Misc, format!("Dodge ({DODGE_FEAT_ID})"), dodge_armor_class_bonus);
+    armor_class_parts.add(ArmorClassPart::Misc, "Barbarian Rage penalty", rage_armor_class_penalty);
+    armor_class_parts.add(ArmorClassPart::Misc, "Skald Inspired Rage penalty", inspired_rage_armor_class_penalty);
+    armor_class_parts.add(ArmorClassPart::Misc, "Bloodrager Bloodrage penalty", bloodrage_armor_class_penalty);
+    armor_class_parts.add(ArmorClassPart::Misc, "Brawler AC Bonus (dodge)", brawler_ac_bonus_value);
+    armor_class_parts.add(ArmorClassPart::Misc, "Inquisitor Protection judgment sacred/profane bonus", protection_judgment_ac_bonus);
+    armor_class_parts.add(ArmorClassPart::Misc, "Oracle Nature's Whispers Charisma-for-Dexterity substitution", natures_whispers_ac_bonus);
+    armor_class_parts.add(ArmorClassPart::Misc, "Cavalier Challenge penalty", challenge_armor_class_penalty);
+    let armor_class = armor_class_parts.total();
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -1201,6 +1333,7 @@ pub(super) fn compute_combat_baseline(
              is absent (+0) = {armor_class}"
         ),
     });
+    explanations.extend(armor_class_parts.explanations());
 
     // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC, CMB and CMD.
     //
@@ -2161,3 +2294,150 @@ mod ultimate_combat_chassis_gate_tests {
     }
 }
 
+
+/// SD-40 E2.7: the Armor Class's seven parts as explanation rows, from the terms the fixed-posture
+/// path sums. Invariant: `10 + Σ parts == defense.baseline_armor_class`.
+#[cfg(test)]
+mod armor_class_parts_tests {
+    use super::*;
+    use crate::rules_core::class_census::load_sweep_fixture;
+    use crate::rules_core::class_seeds::input_for;
+
+    fn rows<'a>(explanations: &'a [ComputationExplanation], id: &str) -> Vec<&'a ComputationExplanation> {
+        explanations.iter().filter(|row| row.id.starts_with(id)).collect()
+    }
+
+    /// The parts stated beside `defense.baseline_armor_class`, in print order, as (id, value).
+    fn parts_of(explanations: &[ComputationExplanation]) -> Vec<(String, i16)> {
+        rows(explanations, "defense.armor_class.").iter().map(|row| (row.id.clone(), row.value)).collect()
+    }
+
+    fn armor_class_of(explanations: &[ComputationExplanation]) -> Option<i16> {
+        explanations.iter().find(|row| row.id == "defense.baseline_armor_class").map(|row| row.value)
+    }
+
+    #[test]
+    fn armor_class_parts_bucket_each_bonus_type_and_total_ten_plus_the_terms() {
+        let mut parts = ArmorClassParts::default();
+        parts.add_typed("Chain Shirt", Some("Armor"), 4);
+        parts.add_typed("+1 enhancement", Some("ArmorEnhancement"), 1);
+        parts.add_typed("Heavy Steel Shield", Some("Shield"), 2);
+        parts.add_typed("Amulet of Natural Armor +1", Some("NaturalArmor"), 1);
+        parts.add_typed("Ring of Protection +1", Some("Deflection"), 1);
+        parts.add_typed("Dusty Rose Prism", Some("Insight"), 1);
+        parts.add_typed("Robe of Vermin", None, -2);
+        parts.add_typed("a beaten deflection bonus", Some("Deflection"), 0);
+        parts.add(ArmorClassPart::Dexterity, "Dexterity contribution", 0);
+        parts.add(ArmorClassPart::Size, "Small size modifier", 1);
+        let values: Vec<(String, i16)> = parts.explanations().iter().map(|row| (row.id.clone(), row.value)).collect();
+        assert_eq!(
+            values,
+            [
+                ("defense.armor_class.armor", 5),
+                ("defense.armor_class.shield", 2),
+                ("defense.armor_class.dexterity", 0),
+                ("defense.armor_class.size", 1),
+                ("defense.armor_class.natural", 1),
+                ("defense.armor_class.deflection", 1),
+                ("defense.armor_class.misc", -1),
+            ]
+            .map(|(id, value)| (id.to_owned(), value))
+        );
+        assert_eq!(parts.total(), 10 + 5 + 2 + 1 + 1 + 1 - 1);
+        let misc = parts.explanations().into_iter().find(|row| row.id == "defense.armor_class.misc").unwrap();
+        assert_eq!(misc.detail, "Armor Class part, Misc: Dusty Rose Prism (Insight) (+1) + Robe of Vermin (untyped) (-2) = -1");
+        let deflection = parts.explanations().into_iter().find(|row| row.id == "defense.armor_class.deflection").unwrap();
+        assert!(!deflection.detail.contains("beaten"), "a zero term is not named: {}", deflection.detail);
+        let empty = ArmorClassParts::default().explanations();
+        assert_eq!(empty[1].detail, "Armor Class part, Shield: none = 0");
+    }
+
+    #[test]
+    fn armor_class_parts_name_the_chain_shirt_and_dodge_for_a_human_fighter_three() {
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let receipt = build_pilot_headless_receipt(&input_for(&fixture, "fighter", 3));
+        let explanations = &receipt.computation.explanations;
+        let armor_class = armor_class_of(explanations).expect("the fixed path computes a Human Fighter 3");
+        assert_eq!(
+            parts_of(explanations),
+            [
+                ("defense.armor_class.armor", 4),
+                ("defense.armor_class.shield", 0),
+                ("defense.armor_class.dexterity", 2),
+                ("defense.armor_class.size", 0),
+                ("defense.armor_class.natural", 0),
+                ("defense.armor_class.deflection", 0),
+                ("defense.armor_class.misc", 1),
+            ]
+            .map(|(id, value)| (id.to_owned(), value))
+        );
+        assert_eq!(armor_class, 10 + 4 + 2 + 1);
+        let misc = rows(explanations, "defense.armor_class.misc")[0];
+        assert!(misc.detail.contains("Dodge") && misc.detail.contains("(+1)"), "{}", misc.detail);
+        let armor = rows(explanations, "defense.armor_class.armor")[0];
+        assert!(armor.detail.contains("Chain Shirt"), "{}", armor.detail);
+    }
+
+    #[test]
+    fn armor_class_parts_read_armor_zero_with_no_armor_worn() {
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let mut input = input_for(&fixture, "fighter", 3);
+        input.chosen.equipment_selections.retain(|selection| selection.item_id != CHAIN_SHIRT_ITEM_ID);
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanations = &receipt.computation.explanations;
+        let armor_class = armor_class_of(explanations).expect("no armor is a loadout the fixed path holds");
+        let parts = parts_of(explanations);
+        assert_eq!(parts[0], ("defense.armor_class.armor".to_owned(), 0));
+        assert_eq!(armor_class, 10 + parts.iter().map(|(_, value)| value).sum::<i16>());
+    }
+
+    #[test]
+    fn armor_class_parts_are_absent_where_the_fixed_path_refuses_the_loadout() {
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let mut input = input_for(&fixture, "fighter", 3);
+        for selection in &mut input.chosen.equipment_selections {
+            if selection.item_id == SHIELD_ITEM_ID {
+                selection.active_state = ActiveState::EquippedActive;
+                selection.equipped_or_active = true;
+            }
+        }
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanations = &receipt.computation.explanations;
+        assert_eq!(armor_class_of(explanations), None, "this path holds no numbers for a shield");
+        assert!(parts_of(explanations).is_empty(), "no Armor Class, no parts");
+    }
+
+    /// The population: every class the fixed path has a chassis for, levels 1–5, from the census
+    /// fixture. Where the path states an Armor Class it states all seven parts and they sum; where it
+    /// refuses the loadout it states none.
+    #[test]
+    fn armor_class_parts_sum_to_the_fixed_path_armor_class_for_every_census_class() {
+        let fixture = load_sweep_fixture().expect("census fixture");
+        let classes = [
+            "alchemist", "barbarian", "bard", "bloodrager", "brawler", "cavalier", "cleric", "druid", "fighter", "inquisitor",
+            "monk", "oracle", "paladin", "ranger", "rogue", "skald", "sorcerer", "wizard",
+        ];
+        let (mut stated, mut without) = (0, 0);
+        for class in classes {
+            for level in 1..=5 {
+                let receipt = build_pilot_headless_receipt(&input_for(&fixture, class, level));
+                let explanations = &receipt.computation.explanations;
+                let parts = parts_of(explanations);
+                match armor_class_of(explanations) {
+                    Some(armor_class) => {
+                        stated += 1;
+                        let ids: Vec<&str> = parts.iter().map(|(id, _)| id.as_str()).collect();
+                        assert_eq!(ids, ArmorClassPart::ALL.map(ArmorClassPart::id), "{class} {level}");
+                        assert_eq!(10 + parts.iter().map(|(_, value)| value).sum::<i16>(), armor_class, "{class} {level}: {parts:?}");
+                    }
+                    None => {
+                        without += 1;
+                        assert!(parts.is_empty(), "{class} {level}: parts without an Armor Class: {parts:?}");
+                    }
+                }
+            }
+        }
+        eprintln!("armor_class_parts fixed path: stated {stated}, without {without}, of {}", classes.len() * 5);
+        assert!(stated > 0, "the population states at least one Armor Class");
+    }
+}

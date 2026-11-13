@@ -1,0 +1,128 @@
+    // E2.MC2 population probe (SD-40). NOT shipped: pasted into a scratch tree's
+    // `apps/desktop/src-tauri/src/character_hub.rs` test module (after
+    // `pcg_sidecar_missing_gives_a_named_error`), where `pcg_import_via_sidecar` and `tempdir` live.
+    // Run: PCG_PROBE_OUT=<file> cargo test --locked -j 8 pcg_page_one_population_probe -- --test-threads=8 --nocapture
+    // Population: E1.MC's (the `.pcg` set `codex-ingest/src/pcg_import/fixtures_tests.rs` walks), page 1
+    // (no option ticked) on A4 and Letter, each checked as E2.4's overflow test checks a stressed sheet.
+    #[test]
+    fn pcg_page_one_population_probe() {
+        use crate::print::print_golden::{block_anchor, page_one, PAGE_ONE_BLOCKS};
+        fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(&path, out);
+                } else if path.extension().is_some_and(|ext| ext == "pcg") {
+                    out.push(path);
+                }
+            }
+        }
+        let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+        let mut files = Vec::new();
+        walk(&pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures"), &mut files);
+        let oracle = match std::env::var("PCGEN_REPO_DIR") {
+            Ok(dir) if !dir.is_empty() => PathBuf::from(dir),
+            _ => PathBuf::from(std::env::var("HOME").unwrap()).join("workspace/repos/pcgen"),
+        };
+        walk(&oracle, &mut files);
+        files.sort();
+        let mut lines = Vec::new();
+        let (mut saved, mut blocked, mut refused, mut renders, mut bad) = (0, 0, 0, 0, 0);
+        for (n, file) in files.iter().enumerate() {
+            let root = tempdir(&format!("pcg-p1-probe-{n}")).join("imported");
+            match pcg_import_via_sidecar(file, &root) {
+                Ok(ImportPcgResponse { outcome: CreateCharacterResponse::Saved { .. }, .. }) => {
+                    saved += 1;
+                    for paper in [crate::print::Paper::A4, crate::print::Paper::Letter] {
+                        let request = crate::print::PrintRequest { paper, ..Default::default() };
+                        let case = format!("{} {paper:?}", file.display());
+                        let document = crate::print::sheet_document_at_root(&root, &request).unwrap_or_else(|e| panic!("{case}: {e}"));
+                        let sheet = match crate::print::render_sheet_pdf_at_root(&root, &request) {
+                            Ok(sheet) => sheet,
+                            Err(err) => {
+                                bad += 1;
+                                lines.push(format!("RENDER_ERR\t{case}\t{err}"));
+                                continue;
+                            }
+                        };
+                        renders += 1;
+                        let pages = lopdf::Document::load_mem(&sheet.pdf).map(|d| d.get_pages().len()).unwrap_or(0);
+                        let raw = pdf_extract::extract_text_from_mem(&sheet.pdf).expect("text extracts");
+                        let text = raw.split_whitespace().collect::<Vec<_>>().join(" ");
+                        let mut faults: Vec<String> = Vec::new();
+                        if !sheet.warnings.is_empty() {
+                            faults.push(format!("warnings={:?}", sheet.warnings));
+                        }
+                        let (mut weapons, mut continued) = (0, 0);
+                        match page_one(&text, &document.title, pages) {
+                            None => faults.push("no page-1 footer".to_owned()),
+                            Some(one) => {
+                                let first = unspaced(one);
+                                for id in PAGE_ONE_BLOCKS {
+                                    match document.blocks.iter().find(|b| b.id == id) {
+                                        None => faults.push(format!("no {id} block")),
+                                        Some(block) if !first.contains(&block_anchor(block)) => faults.push(format!("{id} not on page 1")),
+                                        Some(_) => {}
+                                    }
+                                }
+                                let after = text[one.len()..].split_once(&format!("page 1 of {pages}")).map(|(_, a)| a).unwrap_or("");
+                                let second = unspaced(after.split_once(" page 2 of ").map_or(after, |(page, _)| page));
+                                for block in &document.blocks {
+                                    let listed: Vec<String> = match block.id {
+                                        "weapons" => block.rows.iter().skip(1).map(|row| row.label.clone()).collect(),
+                                        "saves" | "squareBlock" => block.rows.iter().flat_map(|row| row.notes.clone()).collect(),
+                                        "skills" => block.rows.iter().flat_map(|row| if row.values.is_empty() { row.notes.clone() } else { vec![row.label.clone()] }).collect(),
+                                        "nameCampaign" => block.rows.iter().flat_map(|row| row.values.clone()).filter(|v| !v.is_empty()).collect(),
+                                        _ => continue,
+                                    };
+                                    if block.id == "weapons" {
+                                        weapons = listed.len();
+                                    }
+                                    for line in listed {
+                                        let line = unspaced(&line);
+                                        if first.contains(&line) {
+                                            continue;
+                                        }
+                                        let head = unspaced(&format!("{} (continued)", block.heading));
+                                        match second.find(&head) {
+                                            Some(at) if second[at..].contains(&line) => continued += 1,
+                                            _ => faults.push(format!("line `{line}` of {} lost", block.id)),
+                                        }
+                                    }
+                                }
+                                let identity = document.blocks.iter().find(|b| b.id == "characterDetails").map(block_anchor).unwrap_or_default();
+                                let opens_ok = if continued == 0 {
+                                    second.starts_with(&identity)
+                                } else {
+                                    document.blocks.iter().any(|b| second.starts_with(&unspaced(&format!("{} (continued)", b.heading))))
+                                };
+                                if !opens_ok {
+                                    faults.push(format!("page 2 opens wrong: {}", &second[..second.len().min(120)]));
+                                }
+                            }
+                        }
+                        if !faults.is_empty() {
+                            bad += 1;
+                        }
+                        lines.push(format!("RENDER\t{case}\tpages={pages}\tweapons={weapons}\tcontinued={continued}\tfaults={}", faults.join(" | ")));
+                    }
+                }
+                Ok(_) => {
+                    blocked += 1;
+                    lines.push(format!("BLOCKED\t{}", file.display()));
+                }
+                Err(err) => {
+                    refused += 1;
+                    lines.push(format!("REFUSED\t{}\t{}", file.display(), err.lines().next().unwrap_or("")));
+                }
+            }
+        }
+        lines.push(format!("SUMMARY\tfiles={}\tsaved={saved}\tblocked={blocked}\trefused={refused}\trenders={renders}\tbad={bad}", files.len()));
+        let text = lines.join("\n") + "\n";
+        if let Ok(out) = std::env::var("PCG_PROBE_OUT") {
+            std::fs::write(out, &text).unwrap();
+        }
+        println!("{text}");
+        assert_eq!(bad, 0, "every saved import's page 1 is whole with diagnostics 0");
+    }

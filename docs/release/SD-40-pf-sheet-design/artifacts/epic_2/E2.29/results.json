@@ -1,0 +1,20 @@
+[
+  {
+    "id": "sheet-tab-defense",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/apps/desktop/scripts/ui-smoke/.out/sd40-e2.29/sheet-tab-defense.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nCHARACTER DETAILS\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nLow-light vision\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically wh",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_29-KOFuaj/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [
+        "d6718f66-4f46-4aef-bd68-4efd307ae3f2"
+      ],
+      "deleted": [
+        "d6718f66-4f46-4aef-bd68-4efd307ae3f2"
+      ],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

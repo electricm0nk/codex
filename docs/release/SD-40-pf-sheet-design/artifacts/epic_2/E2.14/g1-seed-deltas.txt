@@ -1,0 +1,23 @@
+# G-1 (rewritten) — E2.14. base = E2.8's head render (41f2385895; CARD_BASE ead57d16c5 differs from it in docs only: git diff --name-only 41f2385895 ead57d16c5 -- src apps crates data | awk 'END{print NR}' -> 0), head = 0f6026468c (desktop full run with PF_SEED_RENDER_OUT; the later commit changes two tests only), same tree/CARGO_TARGET_DIR
+## diff base/sha256.txt head/sha256.txt
+1,3c1,3
+< a7b2e4e6adbe9409d17f0bd50b9022f3545d41013e842cba87fdbd3ca7c3f330  aldric.json
+< 45b07de194ef03284d04507e4a080af9249a4b7475a1ba6eb1161d27cb733563  elowen.json
+< 8b3a9cf681fed8e2315f52a6c385a0f6c21bb0bb6c5d0b104fcd4b83df2a1598  tomas.json
+---
+> 5e11269ab5c542d4584d89f4b875fd0b1083d0eafc0ffdaab9ea8bc0eac685a7  aldric.json
+> c41a15c041686ddb16a7a57dfd37ac8ad5c4a3b51f5c1fd5e0e56db17f640695  elowen.json
+> 10362833cfbe3a4de1c167ae622cda3cc2a4e69fe2da914df4784e37c0f81422  tomas.json
+## acceptance-and-verification.md G-1 strip script (NEW_KEYS has 'rangeIncrement'; NEW_ROWS has 'combat.weapon_damage_total.')
+aldric.json SAME_EXCEPT_NAMED
+   added row combat.weapon_damage_total.longsword 4 | 1d8+4: damage with the equipped Longsword (Base): the 1d8 die + Strength +4 (primary hand, OneHanded WIELD) + enhancement +0 + feats naming this weapon +0 = 1d8+4. The Strength part is the primary hand's: no input records which hand holds a weapon, so an off-hand weapon's half Strength is not applied.
+   weaponDamage[0] Longsword (Base) strDamageModifier 4 enhancementDamageBonus 0 featEffects [] rangeIncrement None
+   feat row [('combat.weapon_damage_bonus.longsword', 0)]
+elowen.json SAME_EXCEPT_NAMED
+   added row combat.weapon_damage_total.longsword -1 | 1d8-1: damage with the equipped Longsword (Base): the 1d8 die + Strength -1 (primary hand, OneHanded WIELD) + enhancement +0 + feats naming this weapon +0 = 1d8-1. The Strength part is the primary hand's: no input records which hand holds a weapon, so an off-hand weapon's half Strength is not applied.
+   weaponDamage[0] Longsword (Base) strDamageModifier -1 enhancementDamageBonus 0 featEffects [] rangeIncrement None
+   feat row [('combat.weapon_damage_bonus.longsword', 0)]
+tomas.json SAME_EXCEPT_NAMED
+   added row combat.weapon_damage_total.longsword 2 | 1d8+2: damage with the equipped Longsword (Base): the 1d8 die + Strength +2 (primary hand, OneHanded WIELD) + enhancement +0 + feats naming this weapon +0 = 1d8+2. The Strength part is the primary hand's: no input records which hand holds a weapon, so an off-hand weapon's half Strength is not applied.
+   weaponDamage[0] Longsword (Base) strDamageModifier 2 enhancementDamageBonus 0 featEffects [] rangeIncrement None
+   feat row [('combat.weapon_damage_bonus.longsword', 0)]

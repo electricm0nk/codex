@@ -97,16 +97,12 @@ pub fn effective_feats(selected_feats: &[String], class_granted_feats: &[&str]) 
 /// happens to carry never decides whether the feat works.
 const TOUGHNESS_FEAT_KEY: &str = "Toughness";
 
-/// The real PF1 Core Rulebook Toughness feat benefit: a flat +3 hit points
-/// ("Benefit: You gain +3 hit points.") -- not level-scaled, unlike the
-/// D&D 3.5 predecessor version of this feat. Verified against the feat's
-/// own catalog record (`feat_data/general.rs`): `FeatEffectBonus`'s
-/// `qualifiers` cite `"HP"`/`"CURRENTMAX"`/`"max(3,TL)"`, i.e. the PCGen
-/// corpus source itself already encodes this feat as a flat +3 (the
-/// `max(3,TL)` qualifier is PCGen's own templating for a level-scaling
-/// variant that never actually engages at the levels this crate computes;
-/// `TL` -- total feat-granting levels -- never exceeds 1 for any class/
-/// level this crate reaches `Computed` for today).
+/// The real PF1 Core Rulebook Toughness feat benefit: "You gain +3 hit
+/// points. For every Hit Die you possess beyond 3, you gain an additional +1
+/// hit point." Verified against the feat's own catalog record
+/// (`feat_data/general.rs`): `FeatEffectBonus`'s `qualifiers` cite
+/// `"HP"`/`"CURRENTMAX"`/`"max(3,TL)"`, i.e. the larger of 3 and the total
+/// Hit Dice. This constant is the floor of that `max`.
 const TOUGHNESS_HP_BONUS: i16 = 3;
 
 /// Sums the real, computed hit-point bonus from every feat effect this
@@ -115,11 +111,12 @@ const TOUGHNESS_HP_BONUS: i16 = 3;
 /// `durability::compute_max_hp`'s result) -- this function only contributes
 /// the feat-driven delta, it is not itself a full max-HP computation.
 /// Returns `0` (not a fabricated value) when no grounded feat is present,
-/// or for any feat this engine does not yet ground.
-pub fn hp_bonus_from_feats(selected_feats: &[String]) -> i16 {
+/// or for any feat this engine does not yet ground. `hit_dice` is the
+/// character's total Hit Dice (Toughness gives `max(3, hit_dice)`).
+pub fn hp_bonus_from_feats(selected_feats: &[String], hit_dice: u8) -> i16 {
     let mut bonus = 0;
     if feat_identity::holds(selected_feats, TOUGHNESS_FEAT_KEY) {
-        bonus += TOUGHNESS_HP_BONUS;
+        bonus += TOUGHNESS_HP_BONUS.max(i16::from(hit_dice));
     }
     bonus
 }
@@ -2686,18 +2683,18 @@ mod tests {
     #[test]
     fn grants_no_bonus_when_toughness_is_not_selected() {
         let selected_feats = vec!["feat:power_attack".to_owned(), "Cleave".to_owned()];
-        assert_eq!(hp_bonus_from_feats(&selected_feats), 0);
+        assert_eq!(hp_bonus_from_feats(&selected_feats, 1), 0);
     }
 
     #[test]
     fn grants_no_bonus_for_an_empty_feat_list() {
-        assert_eq!(hp_bonus_from_feats(&[]), 0);
+        assert_eq!(hp_bonus_from_feats(&[], 1), 0);
     }
 
     #[test]
     fn grants_the_real_flat_plus_three_when_toughness_is_selected() {
         let selected_feats = vec!["feat:power_attack".to_owned(), "Toughness".to_owned()];
-        assert_eq!(hp_bonus_from_feats(&selected_feats), 3);
+        assert_eq!(hp_bonus_from_feats(&selected_feats, 1), 3);
     }
 
     /// **Deliberate behaviour change**, replacing a test that asserted
@@ -2710,16 +2707,26 @@ mod tests {
     /// own adapter tests. Treating the two shapes as different feats is what
     /// left a player who picked Dodge from the catalog with no armor class at
     /// all. Both shapes name Toughness, so both ground its real +3.
+    /// PF1 Toughness: +3, and +1 per Hit Die beyond 3 (`max(3,TL)`).
+    #[test]
+    fn toughness_scales_with_hit_dice() {
+        let toughness = vec!["Toughness".to_owned()];
+        for (hit_dice, bonus) in [(0, 3), (1, 3), (3, 3), (4, 4), (5, 5), (8, 8), (20, 20)] {
+            assert_eq!(hp_bonus_from_feats(&toughness, hit_dice), bonus, "{hit_dice} HD");
+        }
+        assert_eq!(hp_bonus_from_feats(&[], 20), 0, "no Toughness, no bonus at any level");
+    }
+
     #[test]
     fn grounds_toughness_from_the_engine_token_shape_too() {
-        assert_eq!(hp_bonus_from_feats(&["feat:toughness".to_owned()]), 3);
+        assert_eq!(hp_bonus_from_feats(&["feat:toughness".to_owned()], 1), 3);
     }
 
     /// The fold must not turn a *different* feat into Toughness.
     #[test]
     fn grounds_nothing_for_a_feat_that_merely_resembles_toughness() {
-        assert_eq!(hp_bonus_from_feats(&["feat:toughness_of_stone".to_owned()]), 0);
-        assert_eq!(hp_bonus_from_feats(&["Improved Toughness".to_owned()]), 0);
+        assert_eq!(hp_bonus_from_feats(&["feat:toughness_of_stone".to_owned()], 1), 0);
+        assert_eq!(hp_bonus_from_feats(&["Improved Toughness".to_owned()], 1), 0);
     }
 
     #[test]
@@ -2728,7 +2735,7 @@ mod tests {
         // pushes a duplicate), but the flat scan-and-match shape naturally
         // stays a single +3 rather than +3-per-occurrence, worth pinning.
         let selected_feats = vec!["Toughness".to_owned(), "Toughness".to_owned()];
-        assert_eq!(hp_bonus_from_feats(&selected_feats), 3);
+        assert_eq!(hp_bonus_from_feats(&selected_feats, 1), 3);
     }
 }
 

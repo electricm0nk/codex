@@ -596,6 +596,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
                     light_max_lbs: 0.0,
                     medium_max_lbs: 0.0,
                     heavy_max_lbs: 0.0,
+                    remaining_lbs: 0.0,
                     level: String::new(),
                     load_max_dex_cap: None,
                     load_armor_check_penalty: 0,
@@ -645,6 +646,10 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             sheet_lines,
             sheet_rules_unavailable_reason,
             feat_skill_bonuses: Default::default(),
+            conditional_notes: Default::default(),
+            languages: Default::default(),
+            fly_maneuverability: None,
+            resistances: Default::default(),
         })
     }
 }

@@ -1,11 +1,13 @@
-//! Skills: every skill the Skills panel lists (one `skill.total.<skill>` row each, E8.7), every skill
-//! the character put ranks in, and Climb, Intimidate and Swim, which the engine always totals: its
-//! ranks and the load response's total, the one value the panel reads too. A ranked skill with no
-//! panel row has no total: `—`.
+//! Skills: every skill the Skills panel lists (one `skill.total.<skill>` row each, E8.7), printed in
+//! the `skills` look: one column, each row the name and the load response's total (the one value
+//! the panel reads too) and nothing else (SD-40 E2.11, `decisions.md §23.1` item 3c: page 1 prints
+//! totals only; the breakdown is Show the math's, E3.5). A skill the character put ranks in with no
+//! panel row has no total: it prints under the column, with its ranks and `—` (what a feat states on
+//! a skill and no total adds prints in the Conditional Bonuses box, E2.20).
 
 use super::{words_of, SheetSources};
 use crate::print::layout::{signed, NO_VALUE};
-use crate::print::model::{SheetBlock, SheetRow};
+use crate::print::model::{Look, SheetBlock, SheetRow};
 
 /// The engine always totals these three, so they print with no rank too.
 const ENGINE_TOTAL_PREFIX: &str = "skill.selected_modifier.";
@@ -27,43 +29,34 @@ pub fn skills(sources: &SheetSources) -> SheetBlock {
             }
         }
     }
-    let mut lines: Vec<(String, SheetRow)> = slugs
-        .iter()
-        .map(|slug| {
-            let ranks = loaded
-                .skill_allocations
-                .iter()
-                .filter(|allocation| allocation.skill_id.strip_prefix("skill:") == Some(slug.as_str()))
-                .map(|allocation| u32::from(allocation.ranks))
-                .sum::<u32>();
-            let total = sources.explanation(&format!("{TOTAL_PREFIX}{slug}"));
-            let name = skill_name(slug);
-            let row = SheetRow::new(name.clone(), [ranks.to_string(), total.map_or_else(|| NO_VALUE.to_owned(), |row| signed(row.value))]);
-            let row = match total {
-                Some(row_of_total) => row.derived(vec![super::derivation(row_of_total)]),
-                None => row,
-            };
-            (name, row)
-        })
-        .collect();
+    let mut lines: Vec<(String, SheetRow)> = Vec::new();
+    let mut no_total: Vec<(String, String)> = Vec::new();
+    for slug in &slugs {
+        let ranks = loaded
+            .skill_allocations
+            .iter()
+            .filter(|allocation| allocation.skill_id.strip_prefix("skill:") == Some(slug.as_str()))
+            .map(|allocation| u32::from(allocation.ranks))
+            .sum::<u32>();
+        let name = skill_name(slug);
+        let Some(total) = sources.explanation(&format!("{TOTAL_PREFIX}{slug}")) else {
+            no_total.push((name.clone(), format!("{name}: {ranks} ranks, total {NO_VALUE}")));
+            continue;
+        };
+        let row = SheetRow::new(name.clone(), [signed(total.value)]).derived(vec![super::derivation(total)]);
+        lines.push((name, row));
+    }
     lines.sort_by(|a, b| a.0.cmp(&b.0));
-    let mut rows = vec![SheetRow::new("Skill", ["Ranks".to_owned(), "Total".to_owned()])];
-    if lines.is_empty() {
+    no_total.sort();
+    let mut rows: Vec<SheetRow> = lines.into_iter().map(|(_, row)| row).collect();
+    if rows.is_empty() && no_total.is_empty() {
         rows.push(SheetRow::new("No ranks spent.", Vec::<String>::new()));
     }
-    rows.extend(lines.into_iter().map(|(_, row)| row));
-    // What a feat states on a skill and no total adds: printed with its condition (§25, E4.6).
-    let bonuses = &loaded.feat_skill_bonuses;
-    let not_added: Vec<String> = bonuses
-        .situational
-        .iter()
-        .chain(&bonuses.unknown)
-        .map(|line| format!("{} on {}: {}", line.label, skill_name(&line.skill), line.reason))
-        .collect();
-    if !not_added.is_empty() {
-        rows.push(SheetRow::new("Not added to a total:", Vec::<String>::new()).with_notes(not_added));
+    if !no_total.is_empty() {
+        rows.push(SheetRow::new("Ranks with no Skills panel total:", Vec::<String>::new()).with_notes(no_total.into_iter().map(|(_, line)| line)));
     }
-    SheetBlock::new("Skills", rows)
+    // What a feat states on a skill and no total adds prints in the Conditional Bonuses box (E2.20).
+    SheetBlock::new("Skills", rows).in_look(Look::Skills)
 }
 
 /// `knowledge_arcana` reads `Knowledge (Arcana)`, `sleight_of_hand` reads `Sleight of Hand`: the

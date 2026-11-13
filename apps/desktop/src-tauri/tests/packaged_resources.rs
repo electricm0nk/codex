@@ -319,7 +319,7 @@ fn the_sidecar_and_the_print_assets_reach_every_installer() {
         .map(str::to_owned)
         .collect();
     let mut on_disk: Vec<String> = Vec::new();
-    for (dir, extension) in [("resources/fonts", "ttf"), ("resources/print", "typ")] {
+    for (dir, extension) in [("resources/fonts", "ttf"), ("resources/print", "typ"), ("resources/print/looks", "typ")] {
         for entry in fs::read_dir(src_tauri().join(dir)).unwrap_or_else(|e| panic!("cannot list {dir}: {e}")) {
             let path = entry.expect("entry").path();
             if path.extension().and_then(|e| e.to_str()) == Some(extension) {
@@ -331,5 +331,7 @@ fn the_sidecar_and_the_print_assets_reach_every_installer() {
     let mut compiled_sorted = compiled.clone();
     compiled_sorted.sort();
     assert_eq!(compiled_sorted, on_disk, "print/typst.rs does not compile in exactly the fonts and templates on disk");
-    assert_eq!(on_disk.len(), 6, "four Liberation Sans faces and two templates");
+    let looks = on_disk.iter().filter(|path| path.starts_with("resources/print/looks/")).count();
+    assert!(looks >= 1, "the block looks (SD-40): at least the table look is compiled in");
+    assert_eq!(on_disk.len(), 6 + looks, "four Liberation Sans faces, the frame and the dispatcher, and the {looks} looks");
 }

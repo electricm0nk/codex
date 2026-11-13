@@ -117,48 +117,6 @@ pub fn bespoke_hit_die(class_id: &str) -> Option<(u8, &'static str)> {
         .map(|pu| (pu_class_chassis::hit_die_for(pu), concat!("rules_tables", "::pathfinder_unchained::class_chassis")))
 }
 
-/// A character's current survivability state, in ascending order of
-/// severity (see `classify_durability`'s doc comment for the exact
-/// threshold rules, per QA's SRD-sourced spec appendix).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum DurabilityStatus {
-    Normal,
-    Staggered,
-    Disabled,
-    Unconscious,
-    Dying,
-    Dead,
-}
-
-/// Classifies a character's current survivability state from current HP,
-/// accumulated nonlethal damage, and Constitution score — standard PF1/d20
-/// SRD thresholds:
-/// - `current_hp <= -constitution_score` -> `Dead`.
-/// - `current_hp < 0` (and not dead) -> `Dying` (unconscious, losing 1 HP/round
-///   unless stabilized).
-/// - `current_hp == 0` -> `Disabled` (can take a single move or standard
-///   action per round; a standard action causes 1 more point of nonlethal
-///   damage).
-/// - `current_hp > 0` and `nonlethal_damage > current_hp` -> `Unconscious`
-///   (stable, not dying — the excess is nonlethal).
-/// - `current_hp > 0` and `nonlethal_damage == current_hp` -> `Staggered`.
-/// - otherwise -> `Normal`.
-pub fn classify_durability(current_hp: i16, nonlethal_damage: i16, constitution_score: i16) -> DurabilityStatus {
-    if current_hp <= -constitution_score {
-        DurabilityStatus::Dead
-    } else if current_hp < 0 {
-        DurabilityStatus::Dying
-    } else if current_hp == 0 {
-        DurabilityStatus::Disabled
-    } else if nonlethal_damage > current_hp {
-        DurabilityStatus::Unconscious
-    } else if nonlethal_damage == current_hp {
-        DurabilityStatus::Staggered
-    } else {
-        DurabilityStatus::Normal
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -258,37 +216,6 @@ mod tests {
     fn compute_max_hp_now_resolves_monk_the_last_class_to_join_table_class_id() {
         let max_hp = compute_max_hp(&[class_level("class:monk", 1)], 2);
         assert_eq!(max_hp, Some(10));
-    }
-
-    #[test]
-    fn classify_durability_normal_when_healthy() {
-        assert_eq!(classify_durability(20, 0, 14), DurabilityStatus::Normal);
-    }
-
-    #[test]
-    fn classify_durability_staggered_when_nonlethal_exactly_equals_current_hp() {
-        assert_eq!(classify_durability(10, 10, 14), DurabilityStatus::Staggered);
-    }
-
-    #[test]
-    fn classify_durability_unconscious_when_nonlethal_exceeds_current_hp() {
-        assert_eq!(classify_durability(10, 11, 14), DurabilityStatus::Unconscious);
-    }
-
-    #[test]
-    fn classify_durability_disabled_at_exactly_zero_hp() {
-        assert_eq!(classify_durability(0, 0, 14), DurabilityStatus::Disabled);
-    }
-
-    #[test]
-    fn classify_durability_dying_between_zero_and_negative_constitution() {
-        assert_eq!(classify_durability(-3, 0, 14), DurabilityStatus::Dying);
-    }
-
-    #[test]
-    fn classify_durability_dead_at_or_below_negative_constitution_score() {
-        assert_eq!(classify_durability(-14, 0, 14), DurabilityStatus::Dead);
-        assert_eq!(classify_durability(-20, 0, 14), DurabilityStatus::Dead);
     }
 }
 

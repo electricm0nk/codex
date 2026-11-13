@@ -23,6 +23,8 @@ import {
   sheetHitPoints,
   savedIntelligenceModifier,
   sheetLandSpeed,
+  sheetSwimSpeed,
+  sheetFlySpeed,
   withCustomSkillPoints,
   type CharacterCustom,
 } from './customModel';
@@ -127,6 +129,21 @@ function verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow() {
   assertEqual(sheetHitPoints(rows.slice(0, 2)), null, 'no row: unknown');
 }
 
+function verifiesSwimAndFlyReadTheEngineRows() {
+  // SD-40 E2.24 (decisions.md §24.3.8): the same `speed.swim` / `speed.fly` rows and `flyManeuverability`
+  // words the printed Speed box reads; a mode the character lacks is the screen's `—`.
+  const undine = [{ id: 'speed.land', value: 30, detail: '' }, { id: 'speed.swim', value: 30, detail: '' }];
+  assertEqual(sheetSwimSpeed(undine), '30 ft.', 'Undine: the engine swim row');
+  assertEqual(sheetFlySpeed(undine, undefined), '—', 'Undine: no fly row');
+  const strix = [{ id: 'speed.land', value: 30, detail: '' }, { id: 'speed.fly', value: 60, detail: 'average' }];
+  assertEqual(sheetFlySpeed(strix, 'average'), '60 ft. (average)', 'Strix: fly with its maneuverability');
+  assertEqual(sheetFlySpeed(strix, undefined), '60 ft.', 'a fly row with no word stated');
+  assertEqual(sheetSwimSpeed(strix), '—', 'Strix: no swim row');
+  const aldric = [{ id: 'speed.land', value: 20, detail: '' }];
+  assertEqual(sheetSwimSpeed(aldric), '—', 'Aldric: no swim');
+  assertEqual(sheetFlySpeed(aldric, undefined), '—', 'Aldric: no fly');
+}
+
 function verifiesTheMarketCannotSellACustomItem() {
   const copy = (itemId: string) => ({ itemId, name: itemId, bonus: 0 });
   assertEqual(sellableCopies([copy('item:longsword'), copy('custom:a')]).map((row) => row.itemId).join(), 'item:longsword', 'the custom row is off the Sell list');
@@ -153,6 +170,7 @@ verifiesABonusReadsAsThePlayerSaysIt();
 verifiesWhereACustomItemIs();
 verifiesTheBonusProblemsMatchTheBackend();
 verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow();
+verifiesSwimAndFlyReadTheEngineRows();
 verifiesTheMarketCannotSellACustomItem();
 verifiesTheOverridesGroupHoldsTheBackendsEightFlags();
 console.log('customModel.test.ts: all assertions passed');

@@ -120,15 +120,16 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
         format!("Name {}", loaded.summary.display_label),
         "Race Human".to_owned(),
         "Class Fighter 3".to_owned(),
+        // E2.18: no "Armor Class" heading over the boxes; the AC box's own label names it.
         format!("Armor Class {}", snapshot.baseline_armor_class),
         format!("Touch {}", explained("defense.touch_armor_class")),
         format!("Flat-Footed {}", explained("defense.flat_footed_armor_class")),
-        format!("Base Attack Bonus {}", signed(i64::from(snapshot.base_attack_bonus))),
+        format!("Attack Base Attack Bonus {}", signed(i64::from(snapshot.base_attack_bonus))),
         format!("Melee {}", signed(i64::from(snapshot.baseline_melee_attack_bonus))),
         format!("CMB {}", signed(i64::from(explained("combat.combat_maneuver_bonus")))),
         format!("CMD {}", explained("defense.combat_maneuver_defense")),
         format!("Initiative {}", signed(i64::from(explained("initiative.total")))),
-        format!("Fortitude {}", signed(i64::from(snapshot.total_saves.fortitude))),
+        format!("Saving Throws Fortitude {}", signed(i64::from(snapshot.total_saves.fortitude))),
         format!("Reflex {}", signed(i64::from(snapshot.total_saves.reflex))),
         format!("Will {}", signed(i64::from(snapshot.total_saves.will))),
         format!(
@@ -145,9 +146,15 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
     for line in expected {
         assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
     }
-    // The three blocks, in the PF layout file's order.
+    // The blocks, in the PF layout file's order: the Combat block split along the screen's boxes
+    // (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3): each row's cells left to right.
     let at = |heading: &str| text.find(heading).unwrap_or_else(|| panic!("heading {heading} printed: {text}"));
-    assert!(at("Identity") < at("Combat") && at("Combat") < at("Abilities"), "Identity, Combat, Abilities in order: {text}");
+    // E2.18: the portrait's two-row cell reads after the name row in the PDF's text.
+    assert!(at("Character Name") < at("Portrait") && at("Portrait") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Character Name, Portrait, Hit Points, Abilities in order: {text}");
+    assert!(at("Speed") < at("Identity"), "the Identity block opens page 2, after page 1's Speed: {text}");
+    // E2.18 (`decisions.md §24.3.1`): the AC row beside the portrait; the left column (Weapons,
+    // Attack, Saving Throws), then the right column's Abilities.
+    assert!(at("Armor Class") < at("Speed") && at("Speed") < at("Weapons") && at("Weapons") < at("Attack") && at("Attack") < at("Saving Throws") && at("Saving Throws") < at("Abilities"), "Armor Class, Speed, Weapons, Attack, Saving Throws, Abilities in order: {text}");
 }
 
 #[test]
@@ -188,7 +195,7 @@ fn print_smoke_print_writes_a_temp_copy_named_for_the_character() {
 }
 
 /// The load response's `hit_points.max` and `speed.land` rows (E8.6): the one value the sheet's
-/// Hit Points and Speed tiles read, and the one the Combat block prints.
+/// Hit Points and Speed tiles read, and the one the Hit Points and Speed blocks print.
 fn hit_points_and_speed(root: &Path) -> (i16, i16) {
     let loaded = load_saved_character_at_root(root).expect("the character loads");
     let row = |id: &str| {
@@ -205,12 +212,9 @@ fn print_smoke_hit_points_and_speed_print_the_load_responses_one_value_for_aldri
     // rolls: 10 + 2, then the d10's average 6 + 2 twice (CRB p.30).
     assert_eq!((hit_points, speed), (28, 30), "Aldric's maximum hit points and land speed");
     let text = pdf_text(&render(&root, Paper::A4));
-    for line in [format!("Hit Points {hit_points}"), format!("Speed {speed} ft.")] {
-        assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
+    for line in [format!("Max {hit_points}"), format!("Speed Land {speed} ft.")] {
+        assert!(text.contains(&line), "the PDF prints `{line}` under its own heading: {text}");
     }
-    let at = |label: &str| text.find(label).unwrap_or_else(|| panic!("{label} printed: {text}"));
-    assert!(at("Combat") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Hit Points in the Combat block: {text}");
-    assert!(at("Combat") < at("Speed") && at("Speed") < at("Abilities"), "Speed in the Combat block: {text}");
 }
 
 #[test]
@@ -248,7 +252,44 @@ fn print_smoke_hit_points_and_speed_carry_a_gm_grant_and_a_worn_speed_item() {
     let (hit_points, speed) = hit_points_and_speed(&root);
     assert_eq!((hit_points, speed), (base_hit_points + 5 + 3, base_speed + 10), "worn boots add their hit points and speed");
     let text = pdf_text(&render(&root, Paper::A4));
-    for line in [format!("Hit Points {hit_points}"), format!("Speed {speed} ft.")] {
+    for line in [format!("Max {hit_points}"), format!("Speed Land {speed} ft.")] {
         assert!(text.contains(&line), "the PDF prints `{line}`: {text}");
     }
+}
+
+/// Every Pathfinder starter seed the app writes (`seed_default_characters_at`; counted, not listed)
+/// prints through the page grid on both papers with each option set, and Typst reports no
+/// diagnostic for any of them (SD-40 E1.MC population probe; NR-4).
+#[test]
+fn print_smoke_every_pf_seed_renders_through_the_grid_with_no_diagnostics() {
+    let dir = std::env::temp_dir().join(format!("codex-print-smoke-{}-every-seed", std::process::id()));
+    let _ = std::fs::remove_dir_all(&dir);
+    std::fs::create_dir_all(&dir).expect("temp app-data dir is creatable");
+    seed_default_characters_at(&dir, "0.0.0-test").expect("starter seeding succeeds");
+    let mut roots: Vec<PathBuf> = std::fs::read_dir(dir.join("characters"))
+        .expect("the seeds' characters directory")
+        .map(|entry| entry.expect("a directory entry").path())
+        .filter(|root| {
+            crate::rule_system_adapter::load_saved_character_via_envelope(root).is_ok_and(|loaded| loaded.summary.game_system == "pf1")
+        })
+        .collect();
+    roots.sort();
+    assert_eq!(roots.len(), 3, "the Pathfinder starter seeds: Aldric, Elowen, Tomas: {roots:?}");
+    let mut rendered = 0;
+    for root in &roots {
+        for paper in [Paper::A4, Paper::Letter] {
+            for (spellbook, math, bio) in [(false, false, false), (true, false, false), (false, true, false), (true, true, true)] {
+                let request = PrintRequest { paper, spellbook, math, bio, ..PrintRequest::default() };
+                let case = format!("{} {paper:?} spellbook={spellbook} math={math} bio={bio}", root.display());
+                let document = super::sheet_document_at_root(root, &request).unwrap_or_else(|err| panic!("{case}: builds: {err}"));
+                assert_eq!(document.columns(), crate::print::model::GRID_COLUMNS, "{case}: prints on the page grid");
+                let sheet = super::typst::typeset(&document).unwrap_or_else(|err| panic!("{case}: typesets: {err}"));
+                assert!(sheet.warnings.is_empty(), "{case}: Typst reports no diagnostics: {:?}", sheet.warnings);
+                assert!(sheet.pdf.starts_with(b"%PDF-"), "{case}: the bytes are a PDF");
+                rendered += 1;
+            }
+        }
+    }
+    let _ = std::fs::remove_dir_all(&dir);
+    assert_eq!(rendered, 24, "3 seeds x 2 papers x 4 option sets");
 }

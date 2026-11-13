@@ -29,13 +29,25 @@ export function ArmorClassPanel(props: { ac: number; touch: number | null; flatF
   );
 }
 
-export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; will: number }; boxStyle?: CSSProperties }) {
+/**
+ * SD-40 E2.25: `conditionalBonuses` are `conditionalBonusLines`' lines (the printed Conditional
+ * Bonuses box's entries, in the engine's words), listed under the three totals.
+ */
+export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; will: number }; conditionalBonuses: string[]; boxStyle?: CSSProperties }) {
   return (
     <StatBox title="Saving Throws">
       <div style={props.boxStyle ?? layoutBox(SHEET_LAYOUT, 'saves').boxStyle}>
         <StatTile label="Fortitude" value={fmt(props.saves.fortitude)} />
         <StatTile label="Reflex" value={fmt(props.saves.reflex)} />
         <StatTile label="Will" value={fmt(props.saves.will)} />
+      </div>
+      <div style={{ marginTop: '0.5rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, margin: '0 0 0.2rem' }}>Conditional Bonuses</p>
+        <ul style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', listStyle: 'none', margin: 0, padding: 0 }}>
+          {props.conditionalBonuses.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
       </div>
     </StatBox>
   );
@@ -48,18 +60,17 @@ export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: n
  * It used to be the literal string `"30 ft."` for every character, which was
  * already wrong for Dwarf, Gnome and Halfling (20 ft.) among the races that
  * shipped, and is wrong for Duergar and Svirfneblin (20 ft.) and Merfolk
- * (5 ft.) among the Bestiary 1 races creation now offers. The other three
- * movement modes stay `—`: no ingested race declares a fly, swim or climb
- * speed, and this panel will not invent one.
+ * (5 ft.) among the Bestiary 1 races creation now offers. SD-40 E2.24:
+ * `swim` / `fly` are the engine's `speed.swim` / `speed.fly` rows the printed
+ * Speed box reads (`—` when the character has none); climb is not shown.
  */
-export function SpeedPanel(props: { land: string; boxStyle?: CSSProperties }) {
+export function SpeedPanel(props: { land: string; swim: string; fly: string; boxStyle?: CSSProperties }) {
   return (
     <StatBox title="Speed">
       <div style={props.boxStyle ?? layoutBox(SHEET_LAYOUT, 'speed').boxStyle}>
         <StatTile label="Land" value={props.land} />
-        <StatTile label="Fly" value="—" />
-        <StatTile label="Swim" value="—" />
-        <StatTile label="Climb" value="—" />
+        <StatTile label="Swim" value={props.swim} />
+        <StatTile label="Fly" value={props.fly} />
       </div>
     </StatBox>
   );

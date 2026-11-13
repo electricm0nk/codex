@@ -18,6 +18,7 @@ const LOAD: EncumbranceDto = {
   lightMaxLbs: 76,
   mediumMaxLbs: 153,
   heavyMaxLbs: 230,
+  remainingLbs: 201,
   level: 'Light',
   loadArmorCheckPenalty: 0,
   perItem: [],
@@ -32,7 +33,7 @@ function verifiesAReadyPreviewRendersTheEngineValues() {
   assert(html.includes('+6'), 'the engine initiative value');
   assert(html.includes(INITIATIVE.detail), 'the engine initiative detail, verbatim');
   assert(html.includes('Light Load') && html.includes('29 lb'), 'the engine encumbrance via describeEncumbrance');
-  assert(html.includes('12 / 12'), 'hit points from the Levels list');
+  assert(html.includes('>12<') && !html.includes('12 / 12'), 'hit points from the Levels list, the max alone (decisions.md §24.8)');
   assert(html.includes('Normal'), 'no conditions reads Normal');
   assert(!html.includes('—'), 'nothing reads absent');
 }

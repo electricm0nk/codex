@@ -1,0 +1,245 @@
+$ python3 -I docs/release/SD-40-pf-sheet-design/artifacts/epic_2/replan-r2/census.py   # run from the repo root at 49c0bc4679, 2026-11-12 (section (f) added after the operator's UI addition)
+== (a) speeds: land / swim / fly / maneuverability
+  engine rows named speed.<mode> (producer of speed.land):  [1 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:3132:    Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
+  speed.land producer and its only input (race walk speed):  [4 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:3120:fn land_speed_row(race_id: &str, worn_feet: Option<i16>, worn_percent: Option<i16>) -> Option<ExplanationDto> {
+    src/rules_core/race_creation.rs:35://! - a base land speed ([`ResolvedRace::walk_speed_ft`]);
+    src/rules_core/race_creation.rs:87:    /// Base land speed in feet — [`ResolvedRace::walk_speed_ft`]. Not the
+    src/rules_core/race_creation.rs:244:        .walk_speed_ft
+  speed.swim / speed.fly rows anywhere in the PF engine:  [0 line(s)]
+    (no match)
+  feat-only swim/fly rows (Aquatic Ancestry, Stretched Wings):  [2 line(s)]
+    src/rules_core/pilot_compute/feat_pillar_and_pool_aggregation.rs:2057:            id: "feat.arg_standalone.aquatic_ancestry_swim_speed".to_owned(),
+    src/rules_core/pilot_compute/feat_pillar_and_pool_aggregation.rs:2143:            id: "feat.arg_standalone.stretched_wings_fly_speed".to_owned(),
+  maneuverability anywhere in the engine (words only):  [9 line(s)]
+    src/rules_core/feat_effects.rs:1756://   budgets (`Halfling_AdaptableLuck_Times`), fly-maneuverability tiers
+    src/rules_core/feat_effects.rs:1757://   (`Maneuverability`). This engine models no spell-like abilities, no
+    src/rules_core/feat_effects.rs:1758://   per-day racial budgets and no maneuverability, so those numbers have
+    src/rules_core/feat_effects.rs:1787://   `BONUS:VAR|Maneuverability|1` is only half the record -- its other token is
+    src/rules_core/feat_effects.rs:2514:/// **Its companion `BONUS:VAR|Maneuverability|1` is deliberately not grounded.**
+    src/rules_core/feat_effects.rs:2516:/// the wing-clipped flight record sets `BONUS:VAR|Maneuverability|2|TYPE=Base`
+    src/rules_core/pilot_compute/feat_pillar_and_pool_aggregation.rs:2137:    // -- but that is only its `BONUS:VAR|Maneuverability|1` half. Its other
+    src/rules_core/pilot_compute/feat_pillar_and_pool_aggregation.rs:2148:                //   BONUS:VAR|Maneuverability|2|TYPE=Base for \"poor\"
+    src/rules_core/rules_catalog/book_of_the_damned_volume_1/mod.rs:91:        assert_eq!(devil.external_ability_refs, &["Flight Maneuverability"]);
+  the print Speed block (Land only):  [4 line(s)]
+    apps/desktop/src-tauri/src/print/blocks/core.rs:207:pub fn speed(sources: &SheetSources) -> SheetBlock {
+    apps/desktop/src-tauri/src/print/blocks/core.rs-208-    let land = row_value(sources, "speed.land").map_or_else(|| NO_VALUE.to_owned(), |v| format!("{v} ft."));
+    apps/desktop/src-tauri/src/print/blocks/core.rs-209-    SheetBlock::new("Speed", vec![line(sources, "Land", vec![land], "speed.land")]).in_look(Look::Speed)
+    apps/desktop/src-tauri/src/print/blocks/core.rs-210-}
+  corpus MOVE tokens by record kind and mode (records):
+    race       Walk      39  e.g. data/corpus/advanced_race_guide/race/catfolk.json MOVE:Walk,30
+    race_trait Climb      4  e.g. data/corpus/advanced_race_guide/race_trait/catfolk/catfolk_climber.json MOVE:Climb,20
+    race_trait Fly        2  e.g. data/corpus/advanced_race_guide/race_trait/strix/strix_flight.json MOVE:Fly,60
+    race_trait Swim       5  e.g. data/corpus/advanced_race_guide/race_trait/gillman/gillman_speed.json MOVE:Walk,30,Swim,30
+    race_trait Walk      46  e.g. data/corpus/advanced_race_guide/race_trait/catfolk/catfolk_speed.json MOVE:Walk,30
+  sheet_rules StatBlock Speed prose naming a mode (rules): {'Burrow': 103, 'Climb': 304, 'Fly': 535, 'Swim': 412}
+
+== (b) energy resistance, DR, SR, immunities
+  engine: snapshot damage_reduction (barbarian only) and its print line:  [4 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:125:    pub damage_reduction: Option<i16>,
+    src/rules_core/pilot_view_model.rs:337:    pub damage_reduction: Option<i16>,
+    apps/desktop/src-tauri/src/print/blocks/core.rs:89:/// (`hit_points.max`, the current and nonlethal write-ins, the Defense tab's `Damage Reduction:
+    apps/desktop/src-tauri/src/print/blocks/core.rs:107:        rows.push(line(sources, "Damage Reduction", vec![format!("{reduction}/—")], "class_feature.barbarian.damage_reduction"))
+  engine: spell resistance (worn items only):  [1 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:287:    pub spell_resistance_total: Option<i16>,
+  engine: energy resistance rows (feats + two class features):  [3 line(s)]
+    src/rules_core/pilot_compute/class_inquisitor_warpriest.rs:411:pub(super) fn inquisitor_resistance_judgment_energy_resistance(level: u8) -> i16 {
+    src/rules_core/pilot_compute/class_sorcerer_wizard.rs:2802:pub(super) fn sorcerer_draconic_dragon_resistances_energy_resistance_bonus(level: u8) -> i16 {
+    src/rules_core/pilot_compute/feat_pillar_and_pool_aggregation.rs:2004:            id: format!("feat.arg_energy_resistance.{feat_slug}.{}", fact.energy_type),
+  engine: any resistances/immunities field on the load response:  [0 line(s)]
+    (no match)
+  corpus records granting each (records, by kind):
+    ability       damage reduction (DR: token)                               30
+    ability       immunity (record KEY names Immun*)                         13
+    ability       spell resistance (SR: token)                                6
+    class_feature damage reduction (DR: token)                               54
+    class_feature immunity (record KEY names Immun*)                         16
+    class_feature spell resistance (SR: token)                                8
+    race_trait    damage reduction (DR: token)                                1
+    race_trait    energy resistance (BONUS:VAR <Energy>ResistanceBonus)      15
+    race_trait    immunity (record KEY names Immun*)                          5
+    race_trait    spell resistance (SR: token)                                3
+    e.g. ('ability', 'DR'): data/corpus/advanced_race_guide/ability/damage_reduction_dr_10_chaotic.json DR:10/Chaotic
+    e.g. ('ability', 'Immun'): data/corpus/advanced_race_guide/ability/duergar_immunities.json Builder Racial Trait ~ Duergar Immunities
+    e.g. ('ability', 'SR'): data/corpus/advanced_race_guide/ability/spell_resistance_greater.json SR:SpellResistanceBonus
+    e.g. ('class_feature', 'DR'): data/corpus/advanced_class_guide/class_feature/bloodrager/damage_reduction.json DR:BloodragerDR/-
+    e.g. ('class_feature', 'Immun'): data/corpus/advanced_class_guide/class_feature/abyssal_bloodrager_bloodline/demonic_immunities.json Abyssal Bloodrager Bloodline ~ Demonic Immunities
+    e.g. ('class_feature', 'SR'): data/corpus/core_rulebook/class_feature/aberrant_bloodline/alien_resistance.json SR:Sorcerer_AlienResistance_SR
+    e.g. ('race_trait', 'DR'): data/corpus/horror_adventures/race_trait/half_orc/half_orc_pain_tolerance.json DR:1/lethal
+    e.g. ('race_trait', 'Immun'): data/corpus/advanced_race_guide/race_trait/duergar/duergar_dwarf_traits_replaces_duergar_immunities.json Duergar ~ Dwarf Traits (Replaces Duergar Immunities)
+    e.g. ('race_trait', 'SR'): data/corpus/advanced_race_guide/race_trait/dwarf/dwarf_magic_resistant.json SR:5+(TL-HD)
+    e.g. ('race_trait', 'energy'): data/corpus/advanced_race_guide/race_trait/suli/suli_earthfoot.json ['VAR', 'AcidResistanceBonus', '5', 'TYPE=Resistance']
+  data/sheet_rules/bestiary_2/race_trait/ifrit_energy_resistance.json: target=None value=Text print=True prose=['Ifrits have fire resistance 5.']
+  data/sheet_rules/bestiary_2/race_trait/undine_energy_resistance.json: target=None value=Text print=True prose=['Undines have cold resistance 5.']
+  data/corpus/bestiary_2/race_trait/ifrit/ifrit_energy_resistance.json raw_bonus_chains=[{'qualifiers': ['VAR', 'FireResistanceBonus', '5', 'TYPE=Resistance']}] (the number the converted rule drops)
+  sheet_rules rules with target Dr: 39
+  awk cross-check (files whose JSON names FireResistanceBonus, race_trait only): 5
+
+== (c) conditional bonuses per target
+  re-derived round-1 census (artifacts/epic_2/replan-r1/census.py):
+    files 49768 rules 73363
+    situational rules by target (target count first-example):
+      Hp 15 core_rulebook:class_feature:sorcerer_bonus_spell_l2_false_life#bonus0
+      Initiative 10 advanced_class_guide:class_feature:bolt_ace_gunslinger_initiative
+      Ac 178 advanced_class_guide:class_feature:bloodrager_bloodrage#bonus1
+      Save:Fortitude 52 advanced_class_guide:class_feature:magus_spellblend_shield_companion#bonus1
+      Save:Reflex 58 advanced_class_guide:class_feature:magus_spellblend_shield_companion#bonus2
+      Save:Will 78 advanced_class_guide:class_feature:bloodrager_bloodrage#bonus0
+      Cmd 0 -
+      Cmb 0 -
+      Speed 39 advanced_class_guide:class_feature:magus_spellblend_air_step#bonus0
+    aspect prose entries (save/combat/AC families):
+      SaveBonus 407
+      AllSaveBonus 3
+      Save Bonus 2
+      WillSaveBonus 3
+      RefSaveBonus 2
+      CombatBonus 314
+      ModifyAC 6
+  situational rules, more targets: Skill 216, SkillGroup 41, SkillSituation 19, Attack 74, Dr 9, Cmb 0, Cmd 0
+  Aspect CombatBonus prose: {'all': 314, 'names CMB/CMD/combat maneuver': 22}; e.g. advanced_class_guide:class_feature:verminous_hunter_vermin_focus_centipede: + on CMD against pull, push, reposition, and trip combat maneuvers
+  engine ConditionalNotes lists (six; no CMB/CMD, no skills):  [6 line(s)]
+    src/rules_core/pilot_compute/conditional_notes.rs:55:    pub hit_points: Vec<ConditionalNote>,
+    src/rules_core/pilot_compute/conditional_notes.rs:56:    pub initiative: Vec<ConditionalNote>,
+    src/rules_core/pilot_compute/conditional_notes.rs:57:    pub fortitude: Vec<ConditionalNote>,
+    src/rules_core/pilot_compute/conditional_notes.rs:58:    pub reflex: Vec<ConditionalNote>,
+    src/rules_core/pilot_compute/conditional_notes.rs:59:    pub will: Vec<ConditionalNote>,
+    src/rules_core/pilot_compute/conditional_notes.rs:60:    pub armor_class: Vec<ConditionalNote>,
+  Aspect families gathered (CombatBonus is not one):  [4 line(s)]
+    src/rules_core/pilot_compute/conditional_notes.rs:111:const SAVE_ASPECTS: [&str; 3] = ["SaveBonus", "AllSaveBonus", "Save Bonus"];
+    src/rules_core/pilot_compute/conditional_notes.rs:112:const REFLEX_ASPECT: &str = "RefSaveBonus";
+    src/rules_core/pilot_compute/conditional_notes.rs:113:const WILL_ASPECT: &str = "WillSaveBonus";
+    src/rules_core/pilot_compute/conditional_notes.rs:114:const AC_ASPECT: &str = "ModifyAC";
+  skills: situational feat bonuses (a separate list, feat_skill_bonuses.situational):  [1 line(s)]
+    apps/desktop/src-tauri/src/print/blocks/skills.rs:61:        .situational
+  where page 1 prints notes today:  [5 line(s)]
+    apps/desktop/src-tauri/src/print/blocks/core.rs:103:        line(sources, "Max", vec![max], "hit_points.max").with_notes(notes.hit_points.iter().map(note_words)),
+    apps/desktop/src-tauri/src/print/blocks/core.rs:110:        line(sources, "Initiative", vec![with_sign(row_value(sources, "initiative.total"))], "initiative.total").with_notes(note
+    apps/desktop/src-tauri/src/print/blocks/core.rs:186:        rows.push(line(sources, label, vec![with_sign(total)], &format!("defense.total_save.{key}")).with_notes(own));
+    apps/desktop/src-tauri/src/print/blocks/skills.rs:56:        rows.push(SheetRow::new("Ranks with no Skills panel total:", Vec::<String>::new()).with_notes(no_total.into_iter().map(
+    apps/desktop/src-tauri/src/print/blocks/skills.rs:67:        rows.push(SheetRow::new("Not added to a total:", Vec::<String>::new()).with_notes(not_added));
+  AC notes printed anywhere in print/ (armor_class list):  [0 line(s)]
+    (no match)
+  Elf: core_rulebook:race_trait:elf_elven_immunities prose families ['Desc', {'Aspect': 'SaveBonus'}]: ['+2 racial saving throw bonus against enchantment spells and effects.']
+  Aspect SaveBonus with no save named feeds all three saves:  [1 line(s)]
+    src/rules_core/pilot_compute/conditional_notes.rs:133:            if named.is_empty() { ALL_SAVES.to_vec() } else { named }
+
+== (d) print sections today
+  pf1e.rs SHEET list (page 1 = the Placed::at/under rows; page 2 opens at characterDetails):  [20 line(s)]
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:20:    Placed::at("portrait", blocks::portrait, 0, 3),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:24:    Placed::under("languages", blocks::languages, 0, 3),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:25:    Placed::at("nameCampaign", blocks::name_campaign, 3, 4),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:26:    Placed::under("speed", blocks::speed, 3, 4),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:27:    Placed::at("armorClass", blocks::armor_class, 7, 5),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:28:    Placed::at("squareBlock", blocks::square_block, 0, 7),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:29:    Placed::at("abilities", blocks::abilities, 7, 5),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:31:    Placed::at("skills", blocks::skills, 0, 5),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:32:    Placed::at("weapons", blocks::weapons, 5, 7),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:33:    Placed::under("attack", blocks::attack, 5, 7),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:34:    Placed::under("saves", blocks::saves, 5, 7),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:36:    Placed::full("characterDetails", blocks::character_details),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:37:    Placed::full("defense", blocks::armor),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:38:    Placed::full("gear", blocks::inventory),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:39:    Placed::full("feats", blocks::feats),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:40:    Placed::full("classFeatures", blocks::class_features),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:41:    Placed::full("spells", blocks::spells),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:42:    Placed::full("custom", blocks::custom),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:43:    Placed::full("pets", blocks::pets),
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:44:    Placed::full("actions", blocks::actions),
+  option pages and the page-2 break:  [4 line(s)]
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:50:const PAGE_TWO_STARTS_WITH: &str = "characterDetails";
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:67:    if request.spellbook {
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:70:    if request.math {
+    apps/desktop/src-tauri/src/print/layout/pf1e.rs:74:    if request.bio {
+  blocks that start a new page:  [6 line(s)]
+    apps/desktop/src-tauri/src/print/blocks/bio_notes.rs:35:    SheetBlock::new("Bio and Campaign Notes", rows).on_new_page()
+    apps/desktop/src-tauri/src/print/blocks/math.rs:27:    SheetBlock::new("Show the Math", rows).on_new_page()
+    apps/desktop/src-tauri/src/print/blocks/print_pf_blocks.rs:553:    sheet(vec![block("left", 0, 6), block("right", 6, 6), block("under", 0, 12), block("next", 0, 4).on_new_page(), b
+    apps/desktop/src-tauri/src/print/blocks/print_pf_blocks.rs:563:    let open_break = sheet(vec![block("left", 0, 6), block("next", 0, 12).on_new_page()]).check_places().expect_err("
+    apps/desktop/src-tauri/src/print/blocks/print_pf_blocks.rs:578:    let broken = sheet(vec![block("top", 0, 12), under("broken", 0, 12).on_new_page()]).check_places().expect_err("a 
+    apps/desktop/src-tauri/src/print/blocks/spells.rs:107:    SheetBlock::new("Spellbook", rows).on_new_page()
+  block headings of the later sections:  [13 line(s)]
+    apps/desktop/src-tauri/src/print/blocks/bio_notes.rs:35:    SheetBlock::new("Bio and Campaign Notes", rows).on_new_page()
+    apps/desktop/src-tauri/src/print/blocks/extras.rs:56:    SheetBlock::new("Custom", rows)
+    apps/desktop/src-tauri/src/print/blocks/extras.rs:61:        return SheetBlock::new("Pets", vec![SheetRow::new("No animal companion or mount.", Vec::<String>::new())]);
+    apps/desktop/src-tauri/src/print/blocks/extras.rs:78:    SheetBlock::new("Pets", rows)
+    apps/desktop/src-tauri/src/print/blocks/feats.rs:82:    SheetBlock::new("Feats", rows)
+    apps/desktop/src-tauri/src/print/blocks/feats.rs:175:    SheetBlock::new("Class Features", rows)
+    apps/desktop/src-tauri/src/print/blocks/feats.rs:198:    SheetBlock::new("Actions", rows)
+    apps/desktop/src-tauri/src/print/blocks/gear.rs:105:    SheetBlock::new("Weapons", rows).in_look(Look::Weapons)
+    apps/desktop/src-tauri/src/print/blocks/gear.rs:136:    SheetBlock::new("Armor", rows)
+    apps/desktop/src-tauri/src/print/blocks/gear.rs:180:    SheetBlock::new("Inventory", rows)
+    apps/desktop/src-tauri/src/print/blocks/math.rs:27:    SheetBlock::new("Show the Math", rows).on_new_page()
+    apps/desktop/src-tauri/src/print/blocks/spells.rs:84:    SheetBlock::new("Spells", rows)
+    apps/desktop/src-tauri/src/print/blocks/spells.rs:107:    SheetBlock::new("Spellbook", rows).on_new_page()
+  progression in print/ (none) and its backend:  [3 line(s)]
+    (no match)
+    apps/desktop/src-tauri/src/character_ledger.rs:613:pub struct ProgressionLedgerDto {
+    apps/desktop/src-tauri/src/character_ledger.rs:705:pub(crate) fn list_progression_ledger_at_root(root: &Path) -> Result<ProgressionLedgerDto, String> {
+  section headings / titles (none today):  [0 line(s)]
+    (no match)
+
+== (e) Aldric and his languages
+  the seed:  [7 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:2473:                    "Aldric Ironhand",
+    apps/desktop/src-tauri/src/character_hub.rs:2550:/// Seeds the starter characters ("Aldric Ironhand": Human Fighter 3; "Elowen Ashgrave":
+    apps/desktop/src-tauri/src/character_hub.rs:21048:        assert_eq!(labels, vec!["Aldric Ironhand", "Elowen Ashgrave", "Brother Tomas Vane"]);
+    apps/desktop/src-tauri/src/character_hub.rs:21344:        assert_eq!(response.restored, vec!["Aldric Ironhand".to_owned()]);
+    apps/desktop/src-tauri/src/character_hub.rs:21382:            assert_eq!(pass.written, vec!["Aldric Ironhand".to_owned()], "{markers:?}");
+    apps/desktop/src-tauri/src/character_hub.rs:21473:            ["Aldric Ironhand", "Elowen Ashgrave", "Brother Tomas Vane", "Jax Moreno", "Nyx Calder", "Imani Okafor"]
+    apps/desktop/src-tauri/src/character_hub.rs:2372:const ALDRIC_SEED_SKILL_RANKS: &[(&str, u8)] = &[
+  known languages (one source, every PF character):  [1 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:743:    LanguagesDto { known: vec!["Common".to_owned()] }
+  tests that pin languages:  [3 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:20853:            assert_eq!(wire["languages"], serde_json::json!({ "known": ["Common"] }), "{}", wire["languages"]);
+    apps/desktop/src-tauri/src/print/blocks/print_pf_blocks.rs:1513:        assert!(known.contains("Common"), "{tag}: the engine's known list holds Common: {known}");
+    apps/desktop/src-tauri/src/print/print_golden.rs:229:    ["portrait", "nameCampaign", "abilities", "squareBlock", "armorClass", "attack", "saves", "speed", "skills", "weapons", "la
+  page-1 anchors naming the languages block:  [1 line(s)]
+    apps/desktop/src-tauri/src/print/print_golden.rs:229:    ["portrait", "nameCampaign", "abilities", "squareBlock", "armorClass", "attack", "saves", "speed", "skills", "weapons", "la
+  Linguistics ranks in a seed (line 2396 is Elowen's list; Aldric's, lines 2372-2380, has none):  [1 line(s)]
+    apps/desktop/src-tauri/src/character_hub.rs:2396:    ("skill:linguistics", 2),
+  print entry: load + layout in one function (the seam a print-only fixture needs):  [2 line(s)]
+    apps/desktop/src-tauri/src/print/mod.rs:85:pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<model::SheetDocument, String> {
+    apps/desktop/src-tauri/src/print/mod.rs:86:    let loaded = load_saved_character_via_envelope(root)?;
+  print_proof cases:  [1 line(s)]
+    apps/desktop/src-tauri/src/print/print_proof.rs:56:    assert_eq!(written, 16, "2 seeds x 2 papers x 4 option sets");
+  print_golden.json: 24 cases, keys per case ['headings', 'pages'] (no language text pinned)
+
+== (f) the desktop UI (apps/desktop/src) today: speed, AC, saves, notes, resistances
+  Speed: the panel shows Land only, from the engine row speed.land:  [4 line(s)]
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:55:export function SpeedPanel(props: { land: string; boxStyle?: CSSProperties }) {
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:59:        <StatTile label="Land" value={props.land} />
+    apps/desktop/src/characterHub/CharacterSheet.tsx:4506:        return <SpeedPanel land={sheetLandSpeed(engineRecords.explanations)} boxStyle={boxStyle} />;
+    apps/desktop/src/characterHub/customModel.ts:192:  const feet = engineRowValue(explanations, 'speed.land');
+  Swim / Fly anywhere in the UI (speed.swim, speed.fly, swim/fly speed):  [0 line(s)]
+    (no match)
+  AC and saves panels (sheet boxes armorClass, saves) and the Defense tab saves:  [6 line(s)]
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:20:export function ArmorClassPanel(props: { ac: number; touch: number | null; flatFooted: number | null; boxStyle?: CSSPropert
+    apps/desktop/src/characterHub/panels/CombatPanels.tsx:32:export function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; will: number }; boxStyle?: CSSProper
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1422:      <SavesPanel baseSaves={props.baseSaves} totalSaves={props.totalSaves} />
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1432:function SavesPanel(props: { baseSaves: BaseSavesDto | undefined; totalSaves: BaseSavesDto | undefined }) {
+    apps/desktop/src/characterHub/CharacterSheet.tsx:4502:        return <ArmorClassPanel ac={ac} touch={touch} flatFooted={flatFooted} boxStyle={boxStyle} />;
+    apps/desktop/src/characterHub/CharacterSheet.tsx:4508:        return <SavingThrowsPanel saves={saves} boxStyle={boxStyle} />;
+  conditional notes read by any UI file (conditionalNotes off the load response):  [9 line(s)]
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-netrunner-decked.json:1275:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-arsenal.json:2344:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-kitted.json:1296:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-ledger.json:1042:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/cyberpunkSheetFixtures/cpr-solo-streetrat.json:1002:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Envoy-3.json:851:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Mystic-5.json:1314:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Soldier-3.json:928:  "conditionalNotes": {
+    apps/desktop/src/characterHub/__tests__/starfinderSheetFixtures/SF-Technomancer-5.json:1206:  "conditionalNotes": {
+  the TS type that carries them:  [2 line(s)]
+    apps/desktop/src/boundary/loadSavedCharacterDetail.ts:160:  conditionalNotes?: ConditionalNotesDto;
+    apps/desktop/src/boundary/loadSavedCharacterDetail.ts:224:export interface ConditionalNotesDto {
+  the only conditional list the UI shows (skills, "Not added to a total"):  [1 line(s)]
+    apps/desktop/src/characterHub/CharacterSheet.tsx:523:          Not added to a total: {featBonusesNotAdded.map((entry) => `${entry.label} (${entry.reason})`).join('; ')}
+  Damage Reduction and Spell Resistance in the Defense tab / equipment effects:  [3 line(s)]
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1368:        {spellResistanceTotal !== undefined ? <StatTile label="Spell Resistance" value={spellResistanceTotal} /> : null}
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1390:function DefenseTab(props: {
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1419:          <span style={{ fontWeight: 700 }}>Damage Reduction:</span> {props.damageReduction}/—
+  energy resistance or immunities shown anywhere in the UI (words outside comments):  [1 line(s)]
+    apps/desktop/src/characterHub/CharacterSheet.tsx:1885:    note: "Every Rage Power this catalog can render without a missing value, whether or not this build has selected one. A rag
+  ui-smoke spec rows: 173; rows expecting Swim/Fly/Resistance/Immunity/Bravery/Conditional: 0 []

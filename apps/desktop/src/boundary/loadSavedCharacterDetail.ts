@@ -152,6 +152,29 @@ export interface LoadSavedCharacterResponse {
    */
   featSkillBonuses: FeatSkillBonusesDto;
   /**
+   * SD-40 E2.6: the conditional bonuses on Hit Points, Initiative, the three saves, Armor Class
+   * and (E2.19) CMB and CMD that the engine prints with their condition and never adds to the total
+   * (`conditional_notes::conditional_notes`). The print lists them; the screen does not read them
+   * yet. Absent on a mutation refresh (`toCharacterMutationRefresh`) until the sheet re-reads.
+   */
+  conditionalNotes?: ConditionalNotesDto;
+  /**
+   * SD-40 E2.8: the languages the character knows (`known_languages`), what the Skills panel's
+   * Languages line lists. Absent on a mutation refresh until the sheet re-reads.
+   */
+  languages?: LanguagesDto;
+  /**
+   * SD-40 E2.17: the fly maneuverability the character's flight trait states, in its words
+   * (`"average"`), beside the `speed.fly` explanations row; absent with no fly speed or no word.
+   */
+  flyManeuverability?: string;
+  /**
+   * SD-40 E2.21: energy resistances, damage reduction, spell resistance and immunities the
+   * character holds (`resistances::resistances`); four empty lists when none. The print's
+   * Resistances block and the Defense tab read it. Absent on a mutation refresh until the re-read.
+   */
+  resistances?: ResistancesDto;
+  /**
    * SD-36 F7a: the engine's effective ability scores (`effective_ability_scores_dto`: the stored
    * score with the Human +2 applied) -- what the Abilities panel prints. Absent on a mutation
    * refresh (`toCharacterMutationRefresh`) until the sheet re-reads the character.
@@ -190,6 +213,45 @@ export interface FeatSkillBonusesDto {
   contributions: FeatSkillContributionDto[];
   situational: FeatSkillNotFoldedDto[];
   unknown: FeatSkillNotFoldedDto[];
+}
+
+/** Mirrors `ConditionalNote` (engine): one bonus a record states for a total but does not add. */
+export interface ConditionalNoteDto {
+  /** The record's line label (`Hardy`). */
+  label: string;
+  /** The line's printed value (`+2`), or `""` when the words carry it. */
+  value: string;
+  /** When it applies, in the engine's words. */
+  condition: string;
+  ruleId: string;
+}
+
+/** Mirrors `LanguagesDto` in `character_hub.rs`: the languages the character knows. */
+export interface LanguagesDto {
+  known: string[];
+}
+
+/** Mirrors `ConditionalNotes` (engine): the notes per total, in sheet-line order. */
+export interface ConditionalNotesDto {
+  hitPoints: ConditionalNoteDto[];
+  initiative: ConditionalNoteDto[];
+  fortitude: ConditionalNoteDto[];
+  reflex: ConditionalNoteDto[];
+  will: ConditionalNoteDto[];
+  armorClass: ConditionalNoteDto[];
+  /** SD-40 E2.19: CMB and CMD notes (combat maneuver words; "against" a maneuver is CMD). */
+  combatManeuverBonus: ConditionalNoteDto[];
+  combatManeuverDefense: ConditionalNoteDto[];
+}
+
+/** Mirrors `Resistances` (engine `pilot_compute::resistances`). */
+export interface ResistancesDto {
+  /** One per energy (`Acid`, `Cold`, `Electricity`, `Fire`, `Sonic`): the highest, every source named (`; `). */
+  energy: { energy: string; amount: number; source: string }[];
+  /** `amount`/`bypass` (`—` when nothing overcomes it), or the record's `words` and no number. */
+  damageReduction: { amount: number | null; bypass: string; words: string | null; source: string }[];
+  spellResistance: { value: number | null; words: string | null; source: string }[];
+  immunities: { name: string; source: string }[];
 }
 
 /** No feat skill bonus: the value a response carries before the engine has answered. */
@@ -277,6 +339,8 @@ export interface WeaponDamageDto {
   /** Inclusive `[low, high]` threat bounds, e.g. `[19, 20]`. */
   criticalThreatRange: [number, number] | null;
   criticalMultiplier: number | null;
+  /** Range increment in feet the weapon's record states (a Dagger's 10); null for a melee weapon (SD-40 E2.14). */
+  rangeIncrement?: number | null;
   /** Constant feat damage bonuses; gathered per character, not per weapon. */
   featEffects: WeaponFeatEffectDto[];
 }

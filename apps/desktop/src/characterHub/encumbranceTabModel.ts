@@ -24,7 +24,7 @@ export interface DescribedEncumbrance {
   totalWeightLabel: string;
   totalCostLabel: string;
   capacityLabel: string;
-  /** Pounds still carryable before exceeding the heavy maximum; floors at 0. */
+  /** Pounds still carryable before exceeding the heavy maximum; the engine floors it at 0. */
   remainingLbs: number;
   /** Fraction of the heavy maximum currently carried, clamped to 0..1. */
   fractionOfCapacity: number;
@@ -56,6 +56,7 @@ export function describeEncumbrance(encumbrance: EncumbranceDto): DescribedEncum
     lightMaxLbs,
     mediumMaxLbs,
     heavyMaxLbs,
+    remainingLbs,
     level,
     loadMaxDexCap,
     loadArmorCheckPenalty,
@@ -71,8 +72,6 @@ export function describeEncumbrance(encumbrance: EncumbranceDto): DescribedEncum
   if (loadArmorCheckPenalty !== 0) {
     penalties.push({ label: 'Armor Check', value: String(loadArmorCheckPenalty) });
   }
-
-  const remainingLbs = Math.max(0, heavyMaxLbs - totalCarriedWeightLbs);
 
   return {
     levelLabel: LEVEL_LABELS[level] ?? level,

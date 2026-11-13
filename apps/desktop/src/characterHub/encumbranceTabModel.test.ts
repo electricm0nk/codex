@@ -14,6 +14,7 @@ const LIGHT: EncumbranceDto = {
   lightMaxLbs: 33,
   mediumMaxLbs: 66,
   heavyMaxLbs: 100,
+  remainingLbs: 71,
   level: 'Light',
   loadArmorCheckPenalty: 0,
   perItem: [
@@ -29,6 +30,7 @@ const MEDIUM: EncumbranceDto = {
   lightMaxLbs: 20,
   mediumMaxLbs: 40,
   heavyMaxLbs: 60,
+  remainingLbs: 31,
   level: 'Medium',
   loadMaxDexCap: 3,
   loadArmorCheckPenalty: -3,
@@ -57,22 +59,24 @@ function verifiesAMediumLoadSurfacesBothRealPenalties() {
   );
 }
 
-function verifiesRemainingCapacityIsMeasuredAgainstTheHeavyMaximum() {
-  const described = describeEncumbrance(LIGHT);
-  assertEqual(described.remainingLbs, 71, '100 lb heavy maximum less 29 lb carried');
+function verifiesRemainingCapacityIsTheEnginesFigure() {
+  assertEqual(describeEncumbrance(LIGHT).remainingLbs, 71, 'the engine states 100 lb heavy maximum less 29 lb carried');
+  // The model prints `remainingLbs` as the engine sent it (`rules_core::encumbrance`); it never subtracts.
+  assertEqual(describeEncumbrance({ ...LIGHT, remainingLbs: 12 }).remainingLbs, 12, 'read from the DTO, not re-derived');
 }
 
 function verifiesGoingOverTheHeavyMaximumIsFlaggedRatherThanShownAsNegative() {
   const described = describeEncumbrance({
     ...MEDIUM,
     totalCarriedWeightLbs: 120,
+    remainingLbs: 0,
     level: 'OverHeavyCapacity',
     loadMaxDexCap: 0,
     loadArmorCheckPenalty: -6,
   });
   assertEqual(described.levelLabel, 'Over Capacity', 'the fourth tier gets its own honest label');
   assert(described.overCapacity, 'past the heavy maximum must be flagged');
-  assertEqual(described.remainingLbs, 0, 'remaining capacity floors at zero rather than going negative');
+  assertEqual(described.remainingLbs, 0, 'the engine floors remaining capacity at zero; the model shows its 0');
 }
 
 function verifiesFractionalWeightsAndPricesKeepTheirPrecision() {
@@ -135,7 +139,7 @@ function verifiesEffectiveMaxDexTakesTheTighterOfArmorAndLoad() {
 function main() {
   verifiesALightLoadReportsNoPenalties();
   verifiesAMediumLoadSurfacesBothRealPenalties();
-  verifiesRemainingCapacityIsMeasuredAgainstTheHeavyMaximum();
+  verifiesRemainingCapacityIsTheEnginesFigure();
   verifiesGoingOverTheHeavyMaximumIsFlaggedRatherThanShownAsNegative();
   verifiesFractionalWeightsAndPricesKeepTheirPrecision();
   verifiesUnresolvedCarriedItemsAreReportedRatherThanHidden();

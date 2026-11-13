@@ -26,7 +26,8 @@
       "id": "settings-tab-google-drive-disconnect",
       "screen": "settings",
       "steps": [
-        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "☰ Menu" },
+        { "op": "click", "target": "Options" },
         { "op": "click", "target": "Google Drive" },
         { "op": "click", "target": "Disconnect" },
         { "op": "key", "key": "Escape" }
@@ -42,17 +43,17 @@
       "setup": ["settings-tab-google-drive-disconnect"],
       "steps": [],
       "marker": "CAMPAIGN",
-      "expect": ["Choose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager."],
+      "expect": ["Choose a local Drive-synced folder under ☰ → Options → Google Drive to enable the Campaign Manager."],
       "notes": "computeCampaignManagerAccessGate(isGoogleDriveConfigured()): the Campaign Manager banner is disabled and shows this exact hint (campaignManagerAccessGate.ts) whenever Drive is unconfigured. This row is only meaningful on a profile where Drive is genuinely unconfigured, and settings-tab-google-drive-save (needed by every campaign-*/dm-toolkit-*/encounter-builder-* row) genuinely persists a Drive config in this profile's real localStorage across the whole run and across cycles on a shared, non-reset dev profile -- so this row no longer trusts fresh-profile ordering and instead resets the gate itself via its own setup, settings-tab-google-drive-disconnect, before asserting the disabled-state hint. Every downstream row that needs Campaign Manager access re-configures Drive itself via its own settings-tab-google-drive-save setup entry, so this reset has no effect on any row that runs after it in the same cycle."
     },
 
     {
       "id": "settings-open",
       "screen": "settings",
-      "steps": [{ "op": "click", "target": "⚙" }],
+      "steps": [{ "op": "click", "target": "☰ Menu" }, { "op": "click", "target": "Options" }],
       "marker": "OPTIONS",
       "expect": ["Appearance", "Google Drive", "Update", "Bug Report", "Enhancement Request", "Developer"],
-      "notes": "SettingsModal's options rail renders all six SETTINGS_TABS at once regardless of the active tab. The gear button's target name is '⚙' (its trimmed textContent, per uiProbe.ts's nameOf() priority), not its aria-label 'Open settings' (App.tsx) -- textContent wins over aria-label whenever both are non-empty. Marker is 'OPTIONS' (uppercase) -- same CSS-uppercase-transform-vs-innerText mismatch as landing-render: the rail's own section label renders as 'OPTIONS', the mixed-case 'Options' string never appears at all. Confirmed live 2026-09-17."
+      "notes": "SettingsModal's options rail renders all six SETTINGS_TABS at once regardless of the active tab. Opened the way a player does since E2.30 (decisions.md §24.10): the ☰ menu's button ('☰ Menu', its trimmed textContent per uiProbe.ts's nameOf()), then its 'Options' entry (layout/AppMenu.tsx); the old fixed ⚙ button is gone. Marker is 'OPTIONS' (uppercase) -- same CSS-uppercase-transform-vs-innerText mismatch as landing-render: the rail's own section label renders as 'OPTIONS', the mixed-case 'Options' string never appears at all. Confirmed live 2026-09-17."
     },
     {
       "id": "settings-tab-appearance",
@@ -135,7 +136,8 @@
       "id": "settings-tab-google-drive-save",
       "screen": "settings",
       "steps": [
-        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "☰ Menu" },
+        { "op": "click", "target": "Options" },
         { "op": "click", "target": "Google Drive" },
         { "op": "click", "target": "you@example.com" },
         { "op": "type", "text": "ui-smoke@example.com" },
@@ -147,7 +149,7 @@
       "marker": "Corpus Ingest Diagnostic",
       "expect": ["Corpus Ingest Diagnostic"],
       "forbid": ["Choose a local Drive-synced folder"],
-      "notes": "Real GoogleDrivePanel Save: fills the account-email and folder-path fields (matched by their own `placeholder`, per uiProbe.ts's nameOf() chain, since neither carries an aria-label) and clicks Save, which calls saveGoogleDriveConfig() and is confirmed live to render 'Connected as ui-smoke@example.com -- campaigns will be created under ...'. Escape closes the modal back to landing; CharacterHubPage only recomputes computeCampaignManagerAccessGate() on ITS OWN next render, which the modal's close (a state change in App.tsx, re-rendering the whole subtree) reliably triggers -- confirmed live: the Campaign Manager banner's disabledHint ('Choose a local Drive-synced folder...') is gone immediately after this row, which is exactly the forbid check here. Every downstream row that needs Campaign Manager access (campaign-*, dm-toolkit-*, encounter-builder-*) depends on this row first. Safe to compose from ANY screen, not just landing: the ⚙ gear is a global affordance (present on every screen this harness visits) and Escape returns to whichever screen was underneath, unchanged -- but this row itself is only ever invoked fresh from landing (resetToLanding() runs before any row's own setup/steps), so 'Corpus Ingest Diagnostic' is a safe marker either way."
+      "notes": "Real GoogleDrivePanel Save: fills the account-email and folder-path fields (matched by their own `placeholder`, per uiProbe.ts's nameOf() chain, since neither carries an aria-label) and clicks Save, which calls saveGoogleDriveConfig() and is confirmed live to render 'Connected as ui-smoke@example.com -- campaigns will be created under ...'. Escape closes the modal back to landing; CharacterHubPage only recomputes computeCampaignManagerAccessGate() on ITS OWN next render, which the modal's close (a state change in App.tsx, re-rendering the whole subtree) reliably triggers -- confirmed live: the Campaign Manager banner's disabledHint ('Choose a local Drive-synced folder...') is gone immediately after this row, which is exactly the forbid check here. Every downstream row that needs Campaign Manager access (campaign-*, dm-toolkit-*, encounter-builder-*) depends on this row first. Safe to compose from ANY screen, not just landing: the ☰ menu's Options entry is on every screen (App's own ☰ menu, or the screen's, decisions.md §24.10) and Escape returns to whichever screen was underneath, unchanged -- but this row itself is only ever invoked fresh from landing (resetToLanding() runs before any row's own setup/steps), so 'Corpus Ingest Diagnostic' is a safe marker either way."
     },
 
     {
@@ -167,12 +169,12 @@
       "screen": "equipmentCatalog",
       "steps": [
         { "op": "click", "target": "Browse Equipment Catalog" },
-        { "op": "click", "target": "Magic Items" },
+        { "op": "click", "target": "Wondrous Items" },
         { "op": "click", "target": "Back" }
       ],
       "marker": "Corpus Ingest Diagnostic",
       "expect": ["Corpus Ingest Diagnostic"],
-      "notes": "The category chip row (All/Arms & Armor/General/Magic Items/Equipment Mods) plus Back returning to the landing screen."
+      "notes": "The category chip row plus Back returning to the landing screen. SD-40 E0.2: the chips are now the picker's item kinds with counts (`categoryTabs`, commit afff7a621f: All (n), Weapons (n), ... Wondrous Items (n), ... Equipment Mods (n)); the old four-way Arms & Armor/General/Magic Items/Equipment Mods row is gone, so the row clicks the magic-item kind 'Wondrous Items' (a prefix of its chip's name 'Wondrous Items (<count>)')."
     },
     {
       "id": "spell-catalog-open-and-search",
@@ -342,8 +344,8 @@
       "headingExact": "Create a character",
       "noHeadingMarkers": true,
       "forbid": ["H2"],
-      "selectsNonEmpty": ["character-race", "character-class"],
-      "notes": "This is the item-8-class check that historically catches the race-select-empty defect (see the harness spec's own precedent): the race select must carry more than zero <option>s, not merely render. Brief 1 F1: the operator saw a stray 'H2' before the title; `headingExact` requires a heading reading exactly 'Create a character' and `forbid: H2` fails on any 'H2' text. Neither sees CSS ::before content (innerText/textContent exclude it), which is where the Ayu Mirage community theme's `h2:before { content: \"H2 \" }` put it; `noHeadingMarkers` reads the computed ::before content (uiProbe headingMarkers) and the theme bridge stylesheet now switches the markers off."
+      "selectsNonEmpty": ["character-race", "Class to add"],
+      "notes": "This is the item-8-class check that historically catches the race-select-empty defect (see the harness spec's own precedent): the race select must carry more than zero <option>s, not merely render. Brief 1 F1: the operator saw a stray 'H2' before the title; `headingExact` requires a heading reading exactly 'Create a character' and `forbid: H2` fails on any 'H2' text. Neither sees CSS ::before content (innerText/textContent exclude it), which is where the Ayu Mirage community theme's `h2:before { content: \"H2 \" }` put it; `noHeadingMarkers` reads the computed ::before content (uiProbe headingMarkers) and the theme bridge stylesheet now switches the markers off. SD-40 E0.2: the class select now lives in the Levels panel (LevelsPanel.tsx) with aria-label 'Class to add', and the probe names a select by its aria-label before its id, so the row requires 'Class to add' (id character-class) non-empty."
     },
     {
       "id": "create-character-fill-and-submit",
@@ -387,6 +389,7 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
         { "op": "select", "target": "Samurai", "text": "class:samurai" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "wait", "ms": 3000 },
         { "op": "scroll", "ticks": 40, "direction": "up" },
@@ -398,7 +401,7 @@
       ],
       "marker": "☰ Menu",
       "expect": ["F4 Smoke Alpha", "Samurai 1"],
-      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (Ultimate Combat). Picks Race=Human (CRB) and Class=class:samurai by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Samurai' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Alpha' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Samurai 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green."
+      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (Ultimate Combat). Picks Race=Human (CRB) and Class=class:samurai by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Samurai' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Alpha' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Samurai 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green. SD-40 E0.2: the Create form no longer has a level select; the class select sits in the Levels panel and a level exists only after its 'Add level' button is clicked (the Create button stays disabled until then), so the row clicks Add level after picking the class."
     },
     {
       "id": "create-character-magus",
@@ -411,6 +414,7 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
         { "op": "select", "target": "Magus", "text": "class:magus" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "wait", "ms": 3000 },
         { "op": "scroll", "ticks": 40, "direction": "up" },
@@ -422,7 +426,7 @@
       ],
       "marker": "☰ Menu",
       "expect": ["F4 Smoke Bravo", "Magus 1"],
-      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (untabled exotic base (Ultimate Magic)). Picks Race=Human (CRB) and Class=class:magus by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Magus' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Bravo' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Magus 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green."
+      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (untabled exotic base (Ultimate Magic)). Picks Race=Human (CRB) and Class=class:magus by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Magus' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Bravo' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Magus 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green. SD-40 E0.2: the Create form no longer has a level select; the class select sits in the Levels panel and a level exists only after its 'Add level' button is clicked (the Create button stays disabled until then), so the row clicks Add level after picking the class."
     },
     {
       "id": "create-character-warrior",
@@ -435,6 +439,7 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
         { "op": "select", "target": "Warrior", "text": "class:warrior" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "wait", "ms": 3000 },
         { "op": "scroll", "ticks": 40, "direction": "up" },
@@ -446,7 +451,7 @@
       ],
       "marker": "☰ Menu",
       "expect": ["F4 Smoke Charlie", "Warrior 1"],
-      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (CRB NPC class). Picks Race=Human (CRB) and Class=class:warrior by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Warrior' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Charlie' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Warrior 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green."
+      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (CRB NPC class). Picks Race=Human (CRB) and Class=class:warrior by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Warrior' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Charlie' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Warrior 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green. SD-40 E0.2: the Create form no longer has a level select; the class select sits in the Levels panel and a level exists only after its 'Add level' button is clicked (the Create button stays disabled until then), so the row clicks Add level after picking the class."
     },
     {
       "id": "sheet-f6a-samurai-weapons",
@@ -513,6 +518,10 @@
         },
         {
           "op": "click",
+          "target": "Add level"
+        },
+        {
+          "op": "click",
           "target": "Create character"
         },
         {
@@ -561,7 +570,7 @@
       "allowGlobalForbid": [
         "failure"
       ],
-      "notes": "SD-36 F6c (polish.json F6-5). Creates Human Shaman 1 ('F6 Smoke India'), loads it and opens the Actions tab, where the Rules and features section prints the converted record's lines. Before F6c the shaman's BONUS:DOMAIN|NUMBER|1 (acg_classes.lst:221) printed 'Shaman (domains) +1'; ACG p.35 gives the shaman a spirit and spirit magic, never a domain. The converter now withholds a domain count its own class's DOMAIN: grants fill (pool_link::withhold_class_granted_domain_counts), and the domain records only that class grants (the ten '<X> (Spirit)' spirit-magic lists) print no line under a 'Domains' heading; the row forbids both and expects the Spirit Magic line. allowGlobalForbid 'failure': the sheet's Chain Shirt line prints the rule text 'Arcane spell failure: 20%' (first live run, 2026-09-27: the sole source of that string on this screen)."
+      "notes": "SD-36 F6c (polish.json F6-5). Creates Human Shaman 1 ('F6 Smoke India'), loads it and opens the Actions tab, where the Rules and features section prints the converted record's lines. Before F6c the shaman's BONUS:DOMAIN|NUMBER|1 (acg_classes.lst:221) printed 'Shaman (domains) +1'; ACG p.35 gives the shaman a spirit and spirit magic, never a domain. The converter now withholds a domain count its own class's DOMAIN: grants fill (pool_link::withhold_class_granted_domain_counts), and the domain records only that class grants (the ten '<X> (Spirit)' spirit-magic lists) print no line under a 'Domains' heading; the row forbids both and expects the Spirit Magic line. allowGlobalForbid 'failure': the sheet's Chain Shirt line prints the rule text 'Arcane spell failure: 20%' (first live run, 2026-09-27: the sole source of that string on this screen). SD-40 E0.2: the Create form no longer has a level select; the class select sits in the Levels panel and a level exists only after its 'Add level' button is clicked (the Create button stays disabled until then), so the row clicks Add level after picking the class."
     },
     {
       "id": "create-character-kineticist",
@@ -574,6 +583,7 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
         { "op": "select", "target": "Kineticist", "text": "class:kineticist" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "wait", "ms": 3000 },
         { "op": "scroll", "ticks": 40, "direction": "up" },
@@ -585,7 +595,7 @@
       ],
       "marker": "☰ Menu",
       "expect": ["F4 Smoke Delta", "Kineticist 1"],
-      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (untabled exotic base (Occult Adventures)). Picks Race=Human (CRB) and Class=class:kineticist by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Kineticist' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Delta' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Kineticist 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green."
+      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (untabled exotic base (Occult Adventures)). Picks Race=Human (CRB) and Class=class:kineticist by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Kineticist' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Delta' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Kineticist 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green. SD-40 E0.2: the Create form no longer has a level select; the class select sits in the Levels panel and a level exists only after its 'Add level' button is clicked (the Create button stays disabled until then), so the row clicks Add level after picking the class."
     },
     {
       "id": "create-character-inquisitor-generic",
@@ -598,6 +608,7 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
         { "op": "select", "target": "Inquisitor", "text": "class:inquisitor" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "wait", "ms": 3000 },
         { "op": "scroll", "ticks": 40, "direction": "up" },
@@ -609,7 +620,7 @@
       ],
       "marker": "☰ Menu",
       "expect": ["F4 Smoke Echo", "Inquisitor 1"],
-      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (APG; the generic Inquisitor, not the census-only ex_inquisitor state). Picks Race=Human (CRB) and Class=class:inquisitor by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Inquisitor' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Echo' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Inquisitor 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green."
+      "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (APG; the generic Inquisitor, not the census-only ex_inquisitor state). Picks Race=Human (CRB) and Class=class:inquisitor by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Inquisitor' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Echo' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Inquisitor 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green. SD-40 E0.2: the Create form no longer has a level select; the class select sits in the Levels panel and a level exists only after its 'Add level' button is clicked (the Create button stays disabled until then), so the row clicks Add level after picking the class."
     },
 
     {
@@ -694,9 +705,9 @@
       "screen": "sheet",
       "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Defense" }],
-      "marker": "HIT POINTS",
-      "expect": ["HIT POINTS", "EQUIPMENT EFFECTS", "SAVING THROWS"],
-      "notes": "SHEET_TABS[1]. Damage/Heal HP-adjust controls also live on this tab (see sheet-action-hp-adjust). Marker changed from 'Damage Reduction' to 'HIT POINTS' (uppercase per the section heading's own CSS text-transform, same innerText-vs-source-case note as landing-render), confirmed live 2026-09-17: this row now actually reaches the Defense tab (previously cascaded red from sheet-open-for-tabs being manual), and the 'Damage Reduction' section is honest-empty -- it does not render at all -- for a character with no DR source, which every character this row can now load is (the freshly-created 'Smoke Test PC'). 'HIT POINTS'/'EQUIPMENT EFFECTS'/'SAVING THROWS' are unconditional DefenseTab content."
+      "marker": "EQUIPMENT EFFECTS",
+      "expect": ["EQUIPMENT EFFECTS", "SAVING THROWS"],
+      "notes": "SHEET_TABS[1]. Re-pinned 2026-11-12 (SD-40 E2.29, decisions.md §24.8): the app tracks no hit points, so the Defense tab's HIT POINTS panel and the sheet-action-hp-adjust row are gone; marker and expect are content that stays. Earlier: marker changed from 'Damage Reduction' to 'HIT POINTS' (uppercase per the section heading's own CSS text-transform, same innerText-vs-source-case note as landing-render), confirmed live 2026-09-17: this row now actually reaches the Defense tab (previously cascaded red from sheet-open-for-tabs being manual), and the 'Damage Reduction' section is honest-empty -- it does not render at all -- for a character with no DR source, which every character this row can now load is (the freshly-created 'Smoke Test PC'). 'HIT POINTS'/'EQUIPMENT EFFECTS'/'SAVING THROWS' are unconditional DefenseTab content."
     },
     {
       "id": "sheet-tab-gear",
@@ -832,7 +843,12 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
         { "op": "select", "target": "Fighter", "text": "class:fighter" },
-        { "op": "select", "target": "12345678910", "text": "6" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "wait", "ms": 3000 },
         { "op": "scroll", "ticks": 40, "direction": "up" },
@@ -842,11 +858,13 @@
         { "op": "click", "target": "F4 Smoke Foxtrot" },
         { "op": "click", "target": "Load" },
         { "op": "click", "target": "+" },
-        { "op": "select", "target": "Arcane Archer", "text": "class:arcane_archer" }
+        { "op": "select", "target": "Arcane Archer", "text": "class:arcane_archer" },
+        { "op": "wait", "ms": 3000 }
       ],
       "marker": "Level up",
       "expect": ["Entry requirements — not all met (you may still take it)", "highest arcane spell level at least 1 — unmet", "base attack bonus at least 6 — met", "Arcane Archer 1 (new class) — character level 7", "Hit die: d10 · Skill points: 5"],
-      "notes": "SD-36 F4d (§6, §9.2 print-never-block; acceptance F4.4). Creates Human Fighter 6 ('F4 Smoke Foxtrot') through the Create form's Level select (target '12345678910' is the level select's concatenated option text), loads it, opens Level Up ('+'), and picks Arcane Archer from the 'Add a prestige class' group by value. Asserts the printed entry requirements with their notes for THIS character (BAB 6 met; arcane spell level unmet; the whole set 'not all met (you may still take it)', Accept left enabled) and the resulting level line 'Arcane Archer 1 (new class) — character level 7' with its 'Hit die: d10 · Skill points: 5' (Arcane Archer 4 + Int 0 + Human 1). The group heading 'Add a prestige class (74)' is an <optgroup> label and is not in innerText, so it is not asserted (first live run, 2026-09-26: it was the row's only miss). Expected strings are the ones f4c-level-up-fighter6-wire.json serves for Human Fighter 6. Leaves the dialog open (its marker is the dialog heading); resetToLanding's Escape closes it."
+      "allowGlobalForbid": ["failure"],
+      "notes": "SD-36 F4d (§6, §9.2 print-never-block; acceptance F4.4). Creates Human Fighter 6 ('F4 Smoke Foxtrot') through the Create form's Level select (target '12345678910' is the level select's concatenated option text), loads it, opens Level Up ('+'), and picks Arcane Archer from the 'Add a prestige class' group by value. Asserts the printed entry requirements with their notes for THIS character (BAB 6 met; arcane spell level unmet; the whole set 'not all met (you may still take it)', Accept left enabled) and the resulting level line 'Arcane Archer 1 (new class) — character level 7' with its 'Hit die: d10 · Skill points: 5' (Arcane Archer 4 + Int 0 + Human 1). The group heading 'Add a prestige class (74)' is an <optgroup> label and is not in innerText, so it is not asserted (first live run, 2026-09-26: it was the row's only miss). Expected strings are the ones f4c-level-up-fighter6-wire.json serves for Human Fighter 6. Leaves the dialog open (its marker is the dialog heading); resetToLanding's Escape closes it. SD-40 E0.2: the Create form's Level select (target '12345678910') is gone; levels are added one at a time with the Levels panel's 'Add level' button for the selected class, so the row clicks it six times for Fighter 6. The row waits 3s after picking Arcane Archer so the dialog's engine plan settles before the snapshot (SD-40 E0.2 runs: without it the snapshot raced the async 'Feats you qualify for' list and the row passed or failed by timing), and allows the global forbid 'failure' because that settled list prints the feat Deny the Reaper's prerequisite rule text '... such as from bleeding, failure to stabilize, or ongoing poison damage ...' (SD-40 E0.2 run, 2026-11-07: the sole source of that string on this screen)."
     },
     {
       "id": "level-up-fighter6-into-arcane-archer-accept",
@@ -859,7 +877,12 @@
         { "op": "type", "text": "UI Smoke Harness" },
         { "op": "select", "target": "Human (CRB)", "text": "Human (CRB)" },
         { "op": "select", "target": "Fighter", "text": "class:fighter" },
-        { "op": "select", "target": "12345678910", "text": "6" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
+        { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "wait", "ms": 3000 },
         { "op": "scroll", "ticks": 40, "direction": "up" },
@@ -881,7 +904,7 @@
       ],
       "marker": "You often notice things that others might miss.",
       "expect": ["☰ Menu", "Fighter 6 / Arcane Archer 1", "You often notice things that others might miss."],
-      "notes": "SD-36 F4d: the Accept half of level-up-fighter6-into-arcane-archer (not in F4.4's list of six; added because F4c carried forward that the prestige accept path - level_up_character with a prestige class id - had never been driven). Same Human Fighter 6 build under its own name ('F4 Smoke Golf', so it never loads a character a previous run already leveled), Accept on Arcane Archer; character level 7 grants the universal odd-level feat, so the sheet opens the feat picker ('Pick a feat — level 1') and the row searches 'Alertness', picks it and Adds it, which runs level_up_character then addFeatSelection. The pick target is 'AlertnessCRB': a picker row's name is its feat name followed by its book with no separator, and a bare 'Alertness' also prefix-matches 'Alertness (Mythic)', which the first live run (2026-09-26) picked. Asserts the sheet's held-class line 'Fighter 6 / Arcane Archer 1' and, on the Feats tab, the CRB Alertness text 'You often notice things that others might miss.' That text is the row's marker, so the settle wait covers the Feats tab's async catalog load (run 3, 2026-09-26: with the sheet's '☰ Menu' as marker the snapshot was read before the tab had resolved its rows)"
+      "notes": "SD-36 F4d: the Accept half of level-up-fighter6-into-arcane-archer (not in F4.4's list of six; added because F4c carried forward that the prestige accept path - level_up_character with a prestige class id - had never been driven). Same Human Fighter 6 build under its own name ('F4 Smoke Golf', so it never loads a character a previous run already leveled), Accept on Arcane Archer; character level 7 grants the universal odd-level feat, so the sheet opens the feat picker ('Pick a feat — level 1') and the row searches 'Alertness', picks it and Adds it, which runs level_up_character then addFeatSelection. The pick target is 'AlertnessCRB': a picker row's name is its feat name followed by its book with no separator, and a bare 'Alertness' also prefix-matches 'Alertness (Mythic)', which the first live run (2026-09-26) picked. Asserts the sheet's held-class line 'Fighter 6 / Arcane Archer 1' and, on the Feats tab, the CRB Alertness text 'You often notice things that others might miss.' That text is the row's marker, so the settle wait covers the Feats tab's async catalog load (run 3, 2026-09-26: with the sheet's '☰ Menu' as marker the snapshot was read before the tab had resolved its rows) SD-40 E0.2: the Create form's Level select (target '12345678910') is gone; levels are added one at a time with the Levels panel's 'Add level' button for the selected class, so the row clicks it six times for Fighter 6."
     },
     {
       "id": "level-up-fighter6-blockers-and-labels",
@@ -917,9 +940,28 @@
           "text": "class:fighter"
         },
         {
-          "op": "select",
-          "target": "12345678910",
-          "text": "6"
+          "op": "click",
+          "target": "Add level"
+        },
+        {
+          "op": "click",
+          "target": "Add level"
+        },
+        {
+          "op": "click",
+          "target": "Add level"
+        },
+        {
+          "op": "click",
+          "target": "Add level"
+        },
+        {
+          "op": "click",
+          "target": "Add level"
+        },
+        {
+          "op": "click",
+          "target": "Add level"
         },
         {
           "op": "click",
@@ -962,6 +1004,10 @@
           "op": "select",
           "target": "Arcane Archer",
           "text": "class:arcane_archer"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
         }
       ],
       "marker": "Level up",
@@ -973,7 +1019,10 @@
         "requires Longbow chosen for Weapon Focus",
         "Arcane Archer 1 (new class) — character level 7"
       ],
-      "notes": "SD-36 F6c (polish.json F6-4). Same Human Fighter 6 build as level-up-fighter6-into-arcane-archer under its own name ('F6 Smoke Hotel'). Opens Level Up, whose 'Cannot be taken (10)' block lists the options the engine refuses (list_level_up_class_options' blocker: the six FS-15 prestige classes, multiclass.save_shape.unrecognized, and the four Unchained base classes, multiclass.save_shape.unknown), then picks Arcane Archer. The first live run (2026-09-27) had the list in a collapsed <details> whose <summary> the probe could not click; the list now always prints. Asserts two of the refused lines with their plain reasons and that Arcane Archer's entry requirement prints the Weapon Focus choice by its labels ('requires Longbow chosen for Weapon Focus'), never the raw id ('core rulebook:feat:weapon focus') it printed before F6c. Expected strings are the ones f4c-level-up-fighter6-wire.json serves for Human Fighter 6."
+      "allowGlobalForbid": [
+        "failure"
+      ],
+      "notes": "SD-36 F6c (polish.json F6-4). Same Human Fighter 6 build as level-up-fighter6-into-arcane-archer under its own name ('F6 Smoke Hotel'). Opens Level Up, whose 'Cannot be taken (10)' block lists the options the engine refuses (list_level_up_class_options' blocker: the six FS-15 prestige classes, multiclass.save_shape.unrecognized, and the four Unchained base classes, multiclass.save_shape.unknown), then picks Arcane Archer. The first live run (2026-09-27) had the list in a collapsed <details> whose <summary> the probe could not click; the list now always prints. Asserts two of the refused lines with their plain reasons and that Arcane Archer's entry requirement prints the Weapon Focus choice by its labels ('requires Longbow chosen for Weapon Focus'), never the raw id ('core rulebook:feat:weapon focus') it printed before F6c. Expected strings are the ones f4c-level-up-fighter6-wire.json serves for Human Fighter 6. SD-40 E0.2: the Create form's Level select (target '12345678910') is gone; levels are added one at a time with the Levels panel's 'Add level' button for the selected class, so the row clicks it six times for Fighter 6. The row waits 3s after picking Arcane Archer so the dialog's engine plan settles before the snapshot (SD-40 E0.2 runs: without it the snapshot raced the async 'Feats you qualify for' list and the row passed or failed by timing), and allows the global forbid 'failure' because that settled list prints the feat Deny the Reaper's prerequisite rule text '... such as from bleeding, failure to stabilize, or ongoing poison damage ...' (SD-40 E0.2 run, 2026-11-07: the sole source of that string on this screen)."
     },
     {
       "id": "sheet-action-skill-allocation-dialog",
@@ -986,22 +1035,6 @@
       "marker": "Manage skill allocation",
       "expect": ["Manage skill allocation"],
       "notes": "SkillAllocationDialog (role=dialog, aria-label + h2 both 'Manage skill allocation'; portals to document.body) opened via SkillsBox's own button of the same name."
-    },
-    {
-      "id": "sheet-action-hp-adjust",
-      "screen": "sheet",
-      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-defense"],
-      "steps": [
-        { "op": "click", "target": "amount" },
-        { "op": "type", "text": "1" },
-        { "op": "click", "target": "Damage" },
-        { "op": "click", "target": "amount" },
-        { "op": "type", "text": "1" },
-        { "op": "click", "target": "Heal" }
-      ],
-      "marker": "HIT POINTS",
-      "expect": ["HIT POINTS", "NONLETHAL"],
-      "notes": "DurabilityPanel lives inside DefenseTab. Both buttons are disabled until the 'amount' input holds a positive number, so a bare click (no type step first) would silently no-op -- this row damages then heals the same amount back so a repeated unattended run is net-zero on HP. Marker/expect uppercased (CSS text-transform vs innerText, same note as sheet-tab-defense) -- confirmed live 2026-09-17."
     },
     {
       "id": "sheet-action-money-adjust",
@@ -1152,7 +1185,8 @@
         { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "click", "target": "Back" },
-        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "☰ Menu" },
+        { "op": "click", "target": "Options" },
         { "op": "click", "target": "Google Drive" },
         { "op": "click", "target": "you@example.com" },
         { "op": "type", "text": "ui-smoke@example.com" },
@@ -6130,6 +6164,10 @@
     {"id": "sheet-equipment-equip", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Equip Helm of Brilliance"}, {"op": "wait", "ms": 2000}], "marker": "Head: Helm of Brilliance", "expect": ["Head: Helm of Brilliance", "Hat of Disguise"], "forbid": ["head slot is taken", "Head: Hat of Disguise"], "notes": "SD-39 E4.3: runs on what sheet-equipment-unequip left. The head slot is free, so the Helm goes on."},
     {"id": "sheet-equipment-left-behind", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Leave Hat of Disguise behind"}, {"op": "wait", "ms": 2000}], "marker": "Pick up Hat of Disguise", "expect": ["Left behind", "Pick up Hat of Disguise", "Head: Helm of Brilliance"], "forbid": ["Equip Hat of Disguise", "Leave Hat of Disguise behind", "Nothing left behind."], "notes": "SD-39 E7.5 (R21): runs on what sheet-equipment-equip left. The Hat stays on the panel in its own group, offered Pick up; the fixed loadout's item:shield does not appear beside it."},
     {"id": "sheet-bio-deity-moves-melee", "screen": "sheet", "setup": ["create-character-render"], "steps": [{"op": "click", "target": "character-name"}, {"op": "type", "text": "Deity Smoke Cleric"}, {"op": "select", "target": "Human (CRB)", "text": "Human (CRB)"}, {"op": "select", "target": "Inquisitor", "text": "class:cleric"}, {"op": "click", "target": "Add level"}, {"op": "click", "target": "Create character"}, {"op": "wait", "ms": 3000}, {"op": "scroll", "ticks": 40, "direction": "up"}, {"op": "key", "key": "Shift"}, {"op": "click", "target": "Back"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Deity Smoke Cleric"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Deity"}, {"op": "type", "text": "Iomedae"}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "gp amount"}, {"op": "wait", "ms": 4000}], "marker": "Deity Smoke Cleric", "expect": ["Deity Smoke Cleric", "MELEE\n+5"], "forbid": ["MELEE\n+1"], "notes": "SD-39 E7.MC (R22): the Bio panel's Deity, on blur, reloads the sheet: the Longsword is the favored weapon of Iomedae, so the -4 goes from the Melee tile: +1 before (Strength +4, Weapon Focus +1, -4), +5 after. The click on the money box moves focus, which is the blur: the command channel focuses a text-entry control, and a click on anything else leaves focus where it was. Before E7.MC nothing exercised this refresh (E7.6's receipt)."},
+    {"id": "sheet-languages-stored-aldric", "screen": "sheet", "steps": [{"op": "click", "target": "Pathfinder 1e"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Languages"}, {"op": "type", "text": "Common, Elven"}, {"op": "click", "target": "Deity"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "✕"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}], "marker": "Common, Elven", "expect": ["Aldric Ironhand", "LANGUAGES", "Common, Elven"], "notes": "SD-40 E2.27 (decisions.md §24.6 Q2, §24.3.3): the Skills panel's Languages field (aria-label Languages) saves on blur with the bio (bio.json `languages`), and the load response's languages.known reads it. Types `Common, Elven`, blurs by clicking the Deity field (the command channel focuses a text-entry control; a click on a button leaves focus where it was), closes the sheet with ✕ (back to the Load list) and opens Aldric again: the Languages line, which prints languages.known, reads `Common, Elven` (before the save it read `Common`). The field's own value is an input value, not bodyText, so the line is what the row reads. The app-data root is per run, so the stored list does not leave the run."},
+    {"id": "sheet-speed-swim-fly-aldric", "screen": "sheet", "steps": [{"op": "click", "target": "Pathfinder 1e"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}], "marker": "SWIM", "expect": ["Aldric Ironhand", "SPEED", "LAND", "SWIM", "FLY"], "notes": "SD-40 E2.24 (decisions.md §24.3.8): the sheet's Speed box shows three tiles, Land, Swim and Fly (labels upper-cased by StatTile's style), Swim and Fly from the engine's speed.swim / speed.fly rows and flyManeuverability, the rows the printed Speed box reads. Aldric (Human, land 30 ft.) has neither mode, so both tiles show the screen's no-value mark. Before E2.24 the box showed Land, Fly, Swim, Climb with three hard-coded marks."},
+    {"id": "sheet-saves-conditional-bonuses-aldric", "screen": "sheet", "steps": [{"op": "click", "target": "Pathfinder 1e"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}], "marker": "Conditional Bonuses", "expect": ["Aldric Ironhand", "SAVING THROWS", "Conditional Bonuses", "Will: Bravery: "], "notes": "SD-40 E2.25 (decisions.md §24.3.8): the sheet's Saving Throws box lists, under its three totals, a Conditional Bonuses list: the load response's conditionalNotes (HP, Initiative, the saves once per rule, AC, CMB, CMD) and featSkillBonuses' situational and unknown lines, the entries and order the printed Conditional Bonuses box prints (conditionalBonusesModel.ts). Aldric (Human Fighter 3) holds Bravery on Will, so the list reads `Will: Bravery: ...` in the engine's words. Before E2.25 no UI component read conditionalNotes and the box showed the totals only."},
+    {"id": "sheet-defense-resistances-aldric", "screen": "sheet", "steps": [{"op": "click", "target": "Pathfinder 1e"}, {"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Defense"}, {"op": "wait", "ms": 1000}], "marker": "RESISTANCES", "expect": ["Aldric Ironhand", "RESISTANCES", "FIRE", "DAMAGE REDUCTION", "SPELL RESISTANCE", "IMMUNITIES"], "notes": "SD-40 E2.26 (decisions.md §24.3.8): the Defense tab shows a Resistances panel where the one-line Damage Reduction was: Acid, Cold, Electricity, Fire, Sonic, Damage Reduction, Spell Resistance and Immunities tiles (labels upper-cased by StatTile's style) from the load response's resistances (E2.21), the field the printed Resistances block reads (resistancesModel.ts). Aldric (Human Fighter 3) holds none, so every tile shows the screen's no-value mark. Before E2.26 energy resistance and immunities were shown nowhere. Loads Aldric directly, like the other E2 UI rows, rather than through sheet-open-for-tabs (which opens Smoke Test PC)."},
     {"id": "sheet-custom-item-worn", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "click", "target": "Edit Custom…"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Equipment (0)"}, {"op": "click", "target": "Add custom equipment"}, {"op": "click", "target": "Custom equipment name"}, {"op": "type", "text": "Ring of Hats"}, {"op": "select", "target": "Main hand", "text": "ring"}, {"op": "click", "target": "Add bonus"}, {"op": "select", "target": "untyped", "text": "Deflection"}, {"op": "click", "target": "Save"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Equip Ring of Hats"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Defense"}], "marker": "AC BY SOURCE", "expect": ["Ring of Hats", "AC +1"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E4.4: a custom item declared in the dialog (slot, +1 deflection to AC), worn from the Gear tab's Equipment control, has its row in AC by Source. The tile's own number is proved by custom_item_bonuses_worn_ac_plus_one_deflection_raises_ac_by_one_and_carried_adds_zero. A row's description can say 'spell failure', hence allowGlobalForbid."},
     {"id": "sheet-custom-item-stowed", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Gear"}, {"op": "wait", "ms": 1500}, {"op": "click", "target": "Stow Ring of Hats"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 1000}], "marker": "Carried (takes Ring)", "expect": ["Ring of Hats", "+1 deflection to AC"], "forbid": ["Worn, Ring"], "notes": "SD-39 E4.4: stowed from the Equipment control, the Custom tab reads the fresh record. Depends on sheet-custom-item-worn having run in this app-data root."},
     {"id": "sheet-override-tag-feat", "screen": "sheet", "steps": [{"op": "click", "target": "Load\nCharacter"}, {"op": "click", "target": "Aldric Ironhand"}, {"op": "click", "target": "Load"}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Feats without prerequisites"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Feats"}, {"op": "click", "target": "Add Feat"}, {"op": "wait", "ms": 6000}, {"op": "click", "target": "Search feats…"}, {"op": "type", "text": "Improved Two-Weapon Fighting"}, {"op": "wait", "ms": 1000}, {"op": "click", "target": "Improved Two-Weapon Fighting"}, {"op": "click", "target": "Add", "index": 1}, {"op": "wait", "ms": 3000}, {"op": "click", "target": "Custom"}, {"op": "wait", "ms": 500}, {"op": "click", "target": "Feats without prerequisites"}, {"op": "wait", "ms": 2000}, {"op": "click", "target": "Feats"}, {"op": "wait", "ms": 1000}], "marker": "Override: Feats without prerequisites", "expect": ["Override: Feats without prerequisites", "Improved Two-Weapon Fighting"], "forbid": [], "allowGlobalForbid": ["failure"], "notes": "SD-39 E6.2: the Custom tab's toggle, driven; a feat Aldric does not qualify for, added; its row on the Feats tab carries the tag. The picker's Add is the second control of that name; the Traits section's disabled Add is the first. The row then turns the flag off, which puts the toggle back for what runs later and shows the tag staying. The feat stays on Aldric."},

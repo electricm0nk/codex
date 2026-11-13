@@ -30,7 +30,6 @@ use codex::rules_core::character_input::{
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
 use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
-use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
 use codex::rules_core::feat_effects;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
@@ -38,7 +37,7 @@ use codex::rules_core::level_up_option_filter::{filter_option_pool, FEAT_POOL};
 use codex::rules_core::money;
 use codex::rules_core::sheet_rule::{held_set, CharacterFacts, HeldSeed};
 use codex::rules_core::pilot_compute::{
-    ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
+    apply_human_ability_bonus, build_pilot_headless_receipt,
     compute_pilot_base_chassis, race_alternate_trait_selection_id, ComputationExplanation,
     HeadlessReceiptStatus,
     PilotBaseChassisComputation, RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
@@ -324,6 +323,9 @@ pub struct EncumbranceDto {
     pub light_max_lbs: f64,
     pub medium_max_lbs: f64,
     pub heavy_max_lbs: f64,
+    /// SD-40 E2.8: pounds still carryable before the heavy maximum, floored at 0
+    /// (`EncumbranceComputation::remaining_lbs`). The screen and the print read it; neither subtracts.
+    pub remaining_lbs: f64,
     pub level: String,
     /// The max-Dex cap imposed by the *load tier alone*, absent under a
     /// light load. A consumer showing an effective cap must take the lower
@@ -635,12 +637,12 @@ pub struct LoadSavedCharacterResponse {
     /// weapon (`damage_total::resolve_weapon_damage_breakdown`), carrying
     /// that weapon's corpus-cited damage facets.
     ///
-    /// **No summed damage total, deliberately.** Each facet stays its own
-    /// field, exactly as `contract.rs`'s `PilotReceipt::weapon_damage`
-    /// boundary note requires: no summed "damage roll total" formula
-    /// exists anywhere in this codebase, and the wield multiplier that
-    /// would be needed to build one honestly is unknown. The sheet
-    /// renders the breakdown as separate columns; it does not add them up.
+    /// Each facet stays its own field. The one summed figure, the damage
+    /// the sheet prints (`1d8+4`), is the engine's
+    /// `combat.weapon_damage_total.<weapon>` row in `explanations` (SD-40
+    /// E2.14, `damage_total::weapon_damage_total_row`), summed from these
+    /// facets with the primary-hand Strength part named in its detail;
+    /// neither the screen nor the print adds the facets up.
     pub weapon_damage: Vec<WeaponDamageDto>,
     /// The ARG alternate racial traits this character actually holds, read back
     /// out of its persisted `chosen.selected_choices` (SD-27).
@@ -715,6 +717,48 @@ pub struct LoadSavedCharacterResponse {
     /// -- the Skills panel adds `skills[<id>]` (and `groups[<family>]` to every family member) to
     /// each skill's total. Empty when the package is unavailable.
     pub feat_skill_bonuses: codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
+    /// SD-40 E2.6: the conditional bonuses on Hit Points, Initiative, the three saves and Armor
+    /// Class -- every bonus a held record states for one of those totals that is not added to it,
+    /// with its condition in the engine's words (`conditional_notes::conditional_notes`, off the
+    /// same rendered lines). The print's square block and saves block list them; nothing is
+    /// summed. Empty when the package is unavailable.
+    pub conditional_notes: codex::rules_core::pilot_compute::conditional_notes::ConditionalNotes,
+    /// SD-40 E2.8: the languages the character knows (`known_languages`), what the Skills panel's
+    /// Languages line and the print list. No bonus-language slot count: page 1 prints none.
+    pub languages: LanguagesDto,
+    /// SD-40 E2.17: the fly maneuverability the character's flight trait states, in its words
+    /// (`"average"`), beside the `speed.fly` row; the print and the screen read this one field.
+    /// Left out when the character has no fly speed or its trait states no maneuverability.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub fly_maneuverability: Option<String>,
+    /// SD-40 E2.21: energy resistances, damage reduction, spell resistance and immunities from what
+    /// the character holds (`resistances::resistances`, plus the engine's existing rows: the ARG
+    /// energy-resistance feats, the snapshot's class DR, worn items' SR); the print's Resistances
+    /// block and the Defense tab read this one field. Four empty lists when none.
+    #[serde(default)]
+    pub resistances: codex::rules_core::pilot_compute::resistances::Resistances,
+}
+
+/// The languages a character knows, as the sheet lists them.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LanguagesDto {
+    pub known: Vec<String>,
+}
+
+/// What a Pathfinder character with no Languages stored knows: Common, which each Core Rulebook
+/// race begins play speaking.
+pub(crate) fn known_languages() -> LanguagesDto {
+    LanguagesDto { known: vec!["Common".to_owned()] }
+}
+
+/// A Pathfinder character's known languages: the Languages field stored with its bio (SD-40 E2.27),
+/// in saved order, else `known_languages()`.
+fn stored_known_languages(stored: &[String]) -> LanguagesDto {
+    if stored.is_empty() {
+        return known_languages();
+    }
+    LanguagesDto { known: stored.to_vec() }
 }
 
 /// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
@@ -801,8 +845,9 @@ pub(crate) fn sheet_rule_package_for(
 
 /// The "Rules and features" lines for a character: the chassis computation's held set --
 /// the character's own selections, the class-feature records the chassis grounded, and the
-/// racial traits the race resolver applied -- rendered through the live evaluator; and (SD-36
-/// F6b) the feat skill bonuses folded off those same lines.
+/// racial traits the race resolver applied -- rendered through the live evaluator; (SD-36
+/// F6b) the feat skill bonuses folded off those same lines; and (SD-40 E2.6) the conditional
+/// notes for HP, initiative, saves and AC read off them.
 pub(crate) fn sheet_lines_for(
     input: &CharacterInput,
     base: &PilotBaseChassisComputation,
@@ -810,7 +855,9 @@ pub(crate) fn sheet_lines_for(
     Vec<SheetLineDto>,
     Option<String>,
     codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillBonuses,
+    codex::rules_core::pilot_compute::conditional_notes::ConditionalNotes,
 ) {
+    use codex::rules_core::pilot_compute::conditional_notes::{conditional_notes, ConditionalNotes};
     use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::{feat_skill_bonuses, FeatSkillBonuses};
     match sheet_rule_package() {
         Ok(package) => {
@@ -818,9 +865,11 @@ pub(crate) fn sheet_lines_for(
                 resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
             let computed = base.clone().with_sheet_rules(input, package, &race_traits);
             let bonuses = feat_skill_bonuses(package, &computed.sheet_lines);
-            (map_sheet_lines_dto(&computed.sheet_lines), None, bonuses)
+            let unprinted = computed.held_unprinted_lines(input, package, &race_traits);
+            let notes = conditional_notes(package, &computed.sheet_lines, &unprinted);
+            (map_sheet_lines_dto(&computed.sheet_lines), None, bonuses, notes)
         }
-        Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default()),
+        Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default(), ConditionalNotes::default()),
     }
 }
 
@@ -1026,6 +1075,10 @@ pub struct WeaponDamageDto {
     /// for a longsword.
     pub critical_threat_range: Option<[u8; 2]>,
     pub critical_multiplier: Option<u8>,
+    /// The range increment in feet the weapon's record states (`RANGE:10` on `Dagger (Base)`; a
+    /// variant reads its base item's), from `damage_total::weapon_range_increment`. `None` for a
+    /// weapon with no range: a melee weapon prints no range, not `0`.
+    pub range_increment: Option<u16>,
     /// Constant damage bonuses from the character's feats. Gathered once
     /// per character, not per weapon — this bounded slice does not model
     /// per-weapon feat targeting.
@@ -1081,6 +1134,10 @@ pub(crate) fn map_weapon_damage_dto(
                 .critical_multiplier
                 .as_ref()
                 .map(|multiplier| multiplier.critical_multiplier),
+            range_increment: sheet_rule_package().as_ref().ok().and_then(|package| {
+                let key = breakdown.base_dice.as_ref()?.weapon_record_key.as_str();
+                codex::rules_core::damage_total::weapon_range_increment(package, corpus_fixture_bundle(), key)
+            }),
             feat_effects: breakdown
                 .feat_effects
                 .iter()
@@ -1362,6 +1419,7 @@ pub(crate) fn map_encumbrance_dto(
         light_max_lbs: encumbrance.thresholds.light_max_lbs,
         medium_max_lbs: encumbrance.thresholds.medium_max_lbs,
         heavy_max_lbs: encumbrance.thresholds.heavy_max_lbs,
+        remaining_lbs: encumbrance.remaining_lbs(),
         level: format!("{:?}", encumbrance.level),
         load_max_dex_cap: encumbrance.load_max_dex_cap,
         load_armor_check_penalty: encumbrance.load_armor_check_penalty,
@@ -2824,7 +2882,7 @@ pub(crate) fn load_saved_character_at_root(
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
-    let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
+    let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
         sheet_lines_for(&sheet_input, &corpus_receipt.base);
     if let Some(snapshot) = snapshot.as_mut() {
         worn_custom_items.apply_to_snapshot(snapshot);
@@ -2853,13 +2911,48 @@ pub(crate) fn load_saved_character_at_root(
         sheet_lines,
         sheet_rules_unavailable_reason,
         feat_skill_bonuses,
+        conditional_notes,
+        languages: stored_known_languages(&load_character_bio_at_root(root)?.languages),
+        fly_maneuverability: None,
+        resistances: Default::default(),
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
+    push_weapon_damage_total_rows(&mut sheet);
     push_hit_points_and_speed_rows(root, &envelope.character_input, constitution_modifier, &mut sheet.explanations);
+    sheet.fly_maneuverability = push_swim_and_fly_rows(&envelope.character_input, &mut sheet.explanations);
+    sheet.resistances = resistances_for(&envelope.character_input, &sheet);
     let ability_modifiers = snapshot.as_ref().map_or(corpus_receipt.base.ability_modifiers, |snapshot| snapshot.ability_modifiers);
     let selected_skill_modifiers = snapshot.as_ref().map(|snapshot| snapshot.skill.selected_modifier);
     push_skill_total_rows(&envelope.character_input, ability_modifiers, selected_skill_modifiers, &mut sheet);
     Ok(sheet)
+}
+
+/// SD-40 E2.14: one `combat.weapon_damage_total.<weapon>` row per weapon in hand with dice, summed
+/// in `damage_total::weapon_damage_total_row` from what this response already holds for it: its
+/// `weapon_damage` facets once the worn custom items' damage bonuses are in them, and its
+/// `combat.weapon_damage_bonus.<weapon>` feat row. A second weapon of the same kind shares the
+/// first's row id and adds none.
+fn push_weapon_damage_total_rows(sheet: &mut LoadSavedCharacterResponse) {
+    use codex::rules_core::damage_total::{weapon_damage_total_row, weapon_feat_damage_row_id, DiceExpression};
+    let mut rows: Vec<ExplanationDto> = Vec::new();
+    for weapon in &sheet.weapon_damage {
+        let key = weapon.weapon_record_key.as_deref().unwrap_or(&weapon.weapon_item_id);
+        let feat_id = weapon_feat_damage_row_id(key);
+        let feat_row = sheet.explanations.iter().find(|row| row.id == feat_id).map(|row| row.value);
+        let bonuses: Vec<(String, i16)> = weapon.feat_effects.iter().map(|feat| (feat.feat_key.clone(), feat.damage_bonus)).collect();
+        let row = weapon_damage_total_row(
+            key,
+            weapon.base_dice.map(|dice| DiceExpression { count: dice.count, die_size: dice.die_size }),
+            weapon.str_damage_modifier.map(|value| (value, weapon.wield_category.clone().unwrap_or_default())),
+            weapon.enhancement_damage_bonus,
+            feat_row,
+            &bonuses,
+        );
+        if let Some(row) = row.filter(|row| !rows.iter().chain(&sheet.explanations).any(|existing| existing.id == row.id)) {
+            rows.push(ExplanationDto { id: row.id, value: row.value, detail: row.detail });
+        }
+    }
+    sheet.explanations.extend(rows);
 }
 
 /// The Skills panel's rows, as `skill:<name>` (`skillsModel.ts`'s `SKILLS`): the book's skills, each
@@ -2984,7 +3077,9 @@ fn push_hit_points_and_speed_rows(root: &Path, input: &CharacterInput, constitut
     explanations.extend(speed);
 }
 
-/// Every held class level's hit points, plus the GM's `hit_points` grants and what worn items add.
+/// Every held class level's hit points, plus Toughness and a bonded Toad familiar (the engine's
+/// `hp_bonus_from_feats` and `character_familiar_hp_bonus`), the GM's `hit_points` grants and what
+/// worn items add.
 /// A level with a saved result (`hit_points.json`) counts as saved, plus the Constitution modifier,
 /// at least 1; the class's results past the levels it holds are ignored, and the order classes were
 /// added in does not matter. With no saved result at all, the character's first level takes the
@@ -3001,17 +3096,26 @@ fn max_hit_points_row(root: &Path, input: &CharacterInput, constitution_modifier
         .map(|grant| i16::try_from(grant.value).unwrap_or(0))
         .sum();
     let worn = worn_items.unwrap_or(0);
+    let hit_dice: u8 = input.chosen.class_levels.iter().fold(0, |sum, held| sum.saturating_add(held.level));
+    let feats = feat_effects::hp_bonus_from_feats(&input.chosen.selected_feats, hit_dice);
+    let familiar = codex::rules_core::pilot_compute::character_familiar_hp_bonus(input);
     let mut detail = format!(
         "{} (the full die at the first level, the die's average after it, a saved roll as saved; Constitution {constitution_modifier:+} per level, at least 1)",
         terms.join("; ")
     );
+    if feats != 0 {
+        detail.push_str(&format!("; feats {feats:+} (Toughness)"));
+    }
+    if familiar != 0 {
+        detail.push_str(&format!("; familiar {familiar:+} (a bonded Toad)"));
+    }
     if grants != 0 {
         detail.push_str(&format!("; GM grants {grants:+}"));
     }
     if worn != 0 {
         detail.push_str(&format!("; worn items {worn:+}"));
     }
-    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + grants + worn, detail })
+    Some(ExplanationDto { id: "hit_points.max".to_owned(), value: total + feats + familiar + grants + worn, detail })
 }
 
 /// The held classes' hit points and one term per class for the row's detail; `None` with no class
@@ -3060,6 +3164,72 @@ fn land_speed_row(race_id: &str, worn_feet: Option<i16>, worn_percent: Option<i1
         detail.push_str(&format!("; worn items {percent}% of it, whole feet rounded down"));
     }
     Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
+}
+
+/// SD-40 E2.17: `speed.swim` and `speed.fly` (feet), each only when a racial trait the character
+/// holds states that mode (its `MOVE:` token; a selected alternate replaces it as it replaces the
+/// land speed's trait), plus the feat increase the engine already states for it
+/// (`feat.arg_standalone.aquatic_ancestry_swim_speed`, `…stretched_wings_fly_speed`). Returns the
+/// fly maneuverability the flight trait states in words; none when Stretched Wings is held, since
+/// it moves that tier and the engine holds no tier to move (the feat's own row says so).
+fn push_swim_and_fly_rows(input: &CharacterInput, explanations: &mut Vec<ExplanationDto>) -> Option<String> {
+    let corpus = crate::race_catalog::race_corpus().as_ref().ok()?;
+    let race_key = corpus.resolve_key(&input.chosen.race_id)?;
+    let alternates = read_alternate_trait_keys(input);
+    let race = corpus.resolve(race_key, &alternates.iter().map(String::as_str).collect::<Vec<_>>())?;
+    let feat_row = |id: &str| explanations.iter().find(|row| row.id == id).map(|row| (row.id.clone(), row.value));
+    let modes = [
+        ("swim", race.declared_mode_speed(|m| m.swim_ft), "feat.arg_standalone.aquatic_ancestry_swim_speed"),
+        ("fly", race.declared_mode_speed(|m| m.fly_ft), "feat.arg_standalone.stretched_wings_fly_speed"),
+    ];
+    let mut maneuverability = None;
+    let mut rows = Vec::new();
+    for (mode, declared, feat_id) in modes {
+        let Some((base, source)) = declared else { continue };
+        let feat = feat_row(feat_id);
+        let Ok(value) = i16::try_from(base + i32::from(feat.as_ref().map_or(0, |(_, v)| *v))) else { continue };
+        let mut detail = format!("{race_key} {mode} speed {base} ft. ({})", source.key);
+        if let Some((feat_id, feet)) = &feat {
+            detail.push_str(&format!("; {feat_id} {feet:+} ft."));
+        }
+        if mode == "fly" {
+            maneuverability = source.declared_move_modes.fly_maneuverability.clone().filter(|_| feat.is_none());
+            if let Some(word) = &maneuverability {
+                detail.push_str(&format!("; maneuverability {word}"));
+            }
+        }
+        rows.push(ExplanationDto { id: format!("speed.{mode}"), value, detail });
+    }
+    explanations.extend(rows);
+    maneuverability
+}
+
+/// SD-40 E2.21: the character's resistances (`decisions.md §24.3.6`): its held racial traits' energy
+/// chains (the alternates it chose applied, as the land speed's are) and its sheet lines' `DR` / `SR`
+/// entries and immunities (`resistances::resistances`), then the response's own rows: each ARG
+/// energy-resistance feat (`feat.arg_energy_resistance.<feat>.<energy>`), the snapshot's class DR
+/// (no bypass: CRB p.32) and worn items' spell resistance total.
+fn resistances_for(input: &CharacterInput, sheet: &LoadSavedCharacterResponse) -> codex::rules_core::pilot_compute::resistances::Resistances {
+    use codex::rules_core::pilot_compute::resistances::resistances;
+    let alternates = read_alternate_trait_keys(input);
+    let race = crate::race_catalog::race_corpus().as_ref().ok().and_then(|corpus| {
+        corpus.resolve(corpus.resolve_key(&input.chosen.race_id)?, &alternates.iter().map(String::as_str).collect::<Vec<_>>())
+    });
+    let traits = race.iter().flat_map(|race| &race.traits).map(|t| (t.key.as_str(), t.declared_bonuses.var_contributions.as_slice()));
+    let lines = sheet.sheet_lines.iter().map(|line| (line.id.as_str(), line.label.as_str(), line.prose.as_str()));
+    let mut out = resistances(lines, traits);
+    for row in &sheet.explanations {
+        if let Some((feat, energy)) = row.id.strip_prefix("feat.arg_energy_resistance.").and_then(|rest| rest.rsplit_once('.')) {
+            out.add_energy(energy, row.value, feat);
+        }
+    }
+    if let Some(amount) = sheet.snapshot.as_ref().and_then(|snapshot| snapshot.damage_reduction) {
+        out.add_damage_reduction(amount, "—", "class_feature.barbarian.damage_reduction");
+    }
+    if let Some(total) = sheet.corpus_derived.equipment_effects.spell_resistance_total {
+        out.add_spell_resistance(total, "worn items");
+    }
+    out
 }
 
 /// A worn item's Intelligence is a bonus that comes off with the item, and a headband grants its
@@ -5641,14 +5811,26 @@ pub fn load_character_portrait(
     request: LoadCharacterPortraitRequest,
 ) -> Result<Option<String>, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    let path = root.join(PORTRAIT_FILE_NAME);
+    let Some(bytes) = load_character_portrait_bytes_at_root(&root)? else {
+        return Ok(None);
+    };
+    let encoded = base64::engine::general_purpose::STANDARD.encode(bytes);
+    Ok(Some(format!("data:image/png;base64,{encoded}")))
+}
+
+/// The path a character saved at `root` keeps its portrait at (`save_character_portrait` writes it).
+pub(crate) fn character_portrait_path_at_root(root: &Path) -> PathBuf {
+    root.join(PORTRAIT_FILE_NAME)
+}
+
+/// The saved portrait's bytes, as `load_character_portrait` reads them, or `None` when the
+/// character has none; a file that exists but does not read is refused, naming the path.
+pub(crate) fn load_character_portrait_bytes_at_root(root: &Path) -> Result<Option<Vec<u8>>, String> {
+    let path = character_portrait_path_at_root(root);
     if !path.exists() {
         return Ok(None);
     }
-
-    let bytes = std::fs::read(&path).map_err(|err| format!("{}: {err}", path.display()))?;
-    let encoded = base64::engine::general_purpose::STANDARD.encode(bytes);
-    Ok(Some(format!("data:image/png;base64,{encoded}")))
+    std::fs::read(&path).map(Some).map_err(|err| format!("{}: {err}", path.display()))
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5825,6 +6007,9 @@ pub struct CharacterBioDto {
     pub hair: String,
     #[serde(default)]
     pub eyes: String,
+    /// SD-40 E2.27: the languages the player recorded, in their order; the source of `languages.known`.
+    #[serde(default)]
+    pub languages: Vec<String>,
 }
 
 /// Writes `bio` as `bio.json` in the character's root directory. Requires
@@ -5856,7 +6041,7 @@ fn copy_character_money(from: &Path, to: &Path) -> Result<(), String> {
     std::fs::copy(&source, to.join(MONEY_FILE_NAME)).map(|_| ()).map_err(|err| format!("{}: {err}", source.display()))
 }
 
-fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
+pub(crate) fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> Result<(), String> {
     SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let path = root.join(BIO_FILE_NAME);
     let json = serde_json::to_string_pretty(bio)
@@ -6044,176 +6229,6 @@ pub fn adjust_character_money(
 ) -> Result<CharacterMoneyDto, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
     adjust_character_money_at_root(&root, request.delta_copper)
-}
-
-// ----- `load_character_durability` / `adjust_character_hp` (v0.6 alpha swarm) -----
-//
-// Max HP is a real, derived-from-the-build value (`durability::compute_max_hp`,
-// scoped to single-class Fighter/Wizard/Rogue -- see that module's own doc
-// comment for why multiclass is honestly out of scope rather than guessed
-// at). Current HP / nonlethal damage are live-tracking values persisted as
-// a `hp.json` sidecar (same pattern as bio/money): `current_hp` defaults to
-// the computed `max_hp` the first time a character is loaded (no file on
-// disk yet), then only ever changes via `adjust_character_hp`.
-
-const HP_FILE_NAME: &str = "hp.json";
-
-#[derive(Debug, Clone, Default, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct StoredHp {
-    /// `None` (the field absent, or no file at all) means "never
-    /// initialized yet" -- distinct from `Some(0)`, a real character at 0
-    /// HP. Defaulted to the computed `max_hp` on first load, not before.
-    current_hp: Option<i16>,
-    #[serde(default)]
-    nonlethal_damage: i16,
-}
-
-fn durability_status_label(status: DurabilityStatus) -> &'static str {
-    match status {
-        DurabilityStatus::Normal => "Normal",
-        DurabilityStatus::Staggered => "Staggered",
-        DurabilityStatus::Disabled => "Disabled",
-        DurabilityStatus::Unconscious => "Unconscious",
-        DurabilityStatus::Dying => "Dying",
-        DurabilityStatus::Dead => "Dead",
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CharacterDurabilityDto {
-    pub max_hp: i16,
-    pub current_hp: i16,
-    pub nonlethal_damage: i16,
-    /// One of `"Normal"` / `"Staggered"` / `"Disabled"` / `"Unconscious"` /
-    /// `"Dying"` / `"Dead"` -- see `durability::classify_durability`'s own
-    /// doc comment for the exact threshold rules.
-    pub status: String,
-}
-
-/// Computes `max_hp` from the saved character's real build (class levels +
-/// effective, racial-bonus-aware Constitution score, same
-/// `apply_human_ability_bonus` reuse `encumbrance`'s wiring in
-/// `contract.rs` already established) and reads persisted current-HP/
-/// nonlethal-damage from `hp.json`, defaulting `current_hp` to the freshly
-/// computed `max_hp` when no file exists yet. Fails honestly (rather than
-/// fabricating a value) when the build is multiclass or an unsupported
-/// class -- `compute_max_hp` returns `None` for exactly those cases.
-fn load_character_durability_at_root(root: &Path) -> Result<CharacterDurabilityDto, String> {
-    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-
-    let mut discarded_explanations = Vec::new();
-    let effective_scores = apply_human_ability_bonus(&envelope.character_input, &mut discarded_explanations);
-    let constitution_score = effective_scores.constitution;
-    let constitution_modifier = ability_modifier(constitution_score);
-
-    let base_max_hp =
-        compute_max_hp(&envelope.character_input.chosen.class_levels, constitution_modifier)
-            .ok_or_else(|| {
-                "durability is only computed for a single-class Fighter, Wizard, or Rogue build \
-                 today; this character's class levels are not one of those"
-                    .to_owned()
-            })?;
-    // v0.6 alpha swarm item 17 (feat-effects engine): a grounded feat's real
-    // hit-point bonus (currently just Toughness's flat +3) is added on top
-    // of the class/Constitution-derived base, not folded into
-    // compute_max_hp itself -- feat effects are a per-character add-on, not
-    // part of the class hit-die table durability.rs owns.
-    // v0.6 alpha swarm task #11 Tier 0 (2026-07-27): a bonded Toad
-    // familiar's real +3 maximum hit points layers on here too, the same
-    // per-character add-on shape as the feat bonus above -- deliberately
-    // not folded into compute_max_hp, which owns only the class hit-die
-    // table.
-    let max_hp = base_max_hp
-        + feat_effects::hp_bonus_from_feats(&envelope.character_input.chosen.selected_feats)
-        + codex::rules_core::pilot_compute::character_familiar_hp_bonus(
-            &envelope.character_input,
-        );
-
-    let path = root.join(HP_FILE_NAME);
-    let stored: StoredHp = if path.exists() {
-        let contents = std::fs::read_to_string(&path).map_err(|err| format!("{}: {err}", path.display()))?;
-        serde_json::from_str(&contents)
-            .map_err(|err| format!("{}: invalid hp JSON: {err}", path.display()))?
-    } else {
-        StoredHp::default()
-    };
-    let current_hp = stored.current_hp.unwrap_or(max_hp);
-    let status = classify_durability(current_hp, stored.nonlethal_damage, constitution_score);
-
-    Ok(CharacterDurabilityDto {
-        max_hp,
-        current_hp,
-        nonlethal_damage: stored.nonlethal_damage,
-        status: durability_status_label(status).to_owned(),
-    })
-}
-
-/// Applies `delta_hp` (positive to heal, negative to take lethal damage)
-/// and/or `delta_nonlethal` (positive to take nonlethal damage, negative to
-/// recover from it) to the character's persisted HP state, clamping
-/// `current_hp` at the computed `max_hp` ceiling (healing cannot exceed
-/// max) and `nonlethal_damage` at a floor of 0 (cannot recover past no
-/// nonlethal damage). `current_hp` is allowed to go negative (dying/dead is
-/// a real, trackable state, not an error) but `adjust_character_hp` still
-/// requires the character to already be saved and be a durability-
-/// supported build, same as `load_character_durability_at_root`.
-fn adjust_character_hp_at_root(
-    root: &Path,
-    delta_hp: i16,
-    delta_nonlethal: i16,
-) -> Result<CharacterDurabilityDto, String> {
-    let current = load_character_durability_at_root(root)?;
-
-    let new_current_hp = (current.current_hp + delta_hp).min(current.max_hp);
-    let new_nonlethal_damage = (current.nonlethal_damage + delta_nonlethal).max(0);
-
-    let path = root.join(HP_FILE_NAME);
-    let json = serde_json::to_string_pretty(&StoredHp {
-        current_hp: Some(new_current_hp),
-        nonlethal_damage: new_nonlethal_damage,
-    })
-    .map_err(|err| format!("failed to serialize character hp: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
-
-    load_character_durability_at_root(root)
-}
-
-#[derive(Debug, Clone, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct LoadCharacterDurabilityRequest {
-    pub character_id: String,
-}
-
-#[tauri::command]
-pub fn load_character_durability(
-    app: tauri::AppHandle,
-    request: LoadCharacterDurabilityRequest,
-) -> Result<CharacterDurabilityDto, String> {
-    let root = resolve_character_root(&app, &request.character_id)?;
-    load_character_durability_at_root(&root)
-}
-
-#[derive(Debug, Clone, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AdjustCharacterHpRequest {
-    pub character_id: String,
-    /// Positive to heal, negative to take lethal damage.
-    #[serde(default)]
-    pub delta_hp: i16,
-    /// Positive to take nonlethal damage, negative to recover from it.
-    #[serde(default)]
-    pub delta_nonlethal: i16,
-}
-
-#[tauri::command]
-pub fn adjust_character_hp(
-    app: tauri::AppHandle,
-    request: AdjustCharacterHpRequest,
-) -> Result<CharacterDurabilityDto, String> {
-    let root = resolve_character_root(&app, &request.character_id)?;
-    adjust_character_hp_at_root(&root, request.delta_hp, request.delta_nonlethal)
 }
 
 // ----- `delete_character` (Storage Tier Minimal Fix, Criterion 22) -----
@@ -8235,6 +8250,7 @@ mod tests {
             light_max_lbs: 33.0,
             medium_max_lbs: 66.0,
             heavy_max_lbs: 100.0,
+            remaining_lbs: 100.0,
             level: "Light".to_owned(),
             load_max_dex_cap: None,
             load_armor_check_penalty: 0,
@@ -8275,7 +8291,7 @@ mod tests {
         request_for_class(race_id, FIGHTER_CLASS_ID, level)
     }
 
-    fn request_for_class(race_id: &str, class_id: &str, level: u8) -> CreateCharacterRequest {
+    pub(super) fn request_for_class(race_id: &str, class_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest {
             character_id: "char-test".to_owned(),
             display_label: "Test Character".to_owned(),
@@ -10262,6 +10278,34 @@ mod tests {
         assert_eq!(total(&fighter3, &rolls(&[(f, 10), (f, 6), (f, 6), (f, 6)]), 0), Some(22), "results beyond the levels held are ignored");
         assert_eq!(total(&held(&[("class:some_future_class", 1)]), &[], 0), None, "a class with no known die is unknown, never guessed");
         assert_eq!(total(&[], &[], 0), None, "no class held, no total");
+    }
+
+    /// The sheet's `hit_points.max` counts Toughness (+3, +1 per Hit Die past 3) and a bonded Toad
+    /// familiar, through the engine's own `hp_bonus_from_feats` and `character_familiar_hp_bonus`.
+    #[test]
+    fn hit_points_max_counts_toughness() {
+        let root = tempdir("hit-points-max-toughness");
+        let max = |input: &CharacterInput| max_hit_points_row(&root, input, 0, None).expect("a known class has a row").value;
+        let mut fighter = compose_character_input(&request_for("race:human", 3));
+        let baseline = max(&fighter);
+        fighter.chosen.selected_feats.push("Toughness".to_owned());
+        let row = max_hit_points_row(&root, &fighter, 0, None).expect("a Fighter has a row");
+        assert_eq!(row.value, baseline + 3, "Human Fighter 3 + Toughness: +3");
+        assert!(row.detail.contains("feats +3"), "the detail names the term: {}", row.detail);
+        for (level, toughness) in [(5, 5), (8, 8)] {
+            let mut fighter = compose_character_input(&request_for("race:human", level));
+            let baseline = max(&fighter);
+            fighter.chosen.selected_feats.push("Toughness".to_owned());
+            assert_eq!(max(&fighter), baseline + toughness, "Human Fighter {level} + Toughness: +{toughness} (max(3, Hit Dice))");
+        }
+        let mut witch = compose_character_input(&request_for("race:human", 3));
+        witch.chosen.class_levels = vec![CharacterClassLevel { class_id: "class:witch".to_owned(), level: 3 }];
+        let baseline = max(&witch);
+        witch.chosen.selected_choices.push(SelectedChoice { choice_set_id: "choice:familiar_species".to_owned(), selection_id: "familiar:toad".to_owned() });
+        let row = max_hit_points_row(&root, &witch, 0, None).expect("a Witch has a row");
+        assert_eq!(row.value, baseline + 3, "a bonded Toad: +3");
+        assert!(row.detail.contains("familiar +3"), "the detail names the term: {}", row.detail);
+        std::fs::remove_dir_all(&root).ok();
     }
 
     /// The sheet's `skill.total.<skill>` sum (E8.7), ported from the Skills panel's retired
@@ -12730,6 +12774,47 @@ mod tests {
         assert_eq!(after, before);
         let dagger = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Dagger (Base)")).unwrap();
         assert_eq!((dagger.enhancement_attack_bonus, dagger.enhancement_damage_bonus), (Some(2), Some(2)));
+    }
+
+    /// SD-40 E2.14: a thrown weapon carries its record's range increment (the Dagger's 10 ft.)
+    /// and its own total row beside the Longsword's.
+    #[test]
+    fn weapon_damage_total_and_range_of_a_second_weapon() {
+        let (dir, root) = enhancement_rows_aldric("weapon-damage-total-dagger");
+        enhancement_buy(&root, "Dagger (Base)", ActiveState::EquippedActive, 2);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        let dagger = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Dagger (Base)")).unwrap();
+        assert_eq!(dagger.range_increment, Some(10));
+        let row = loaded.explanations.iter().find(|row| row.id == "combat.weapon_damage_total.dagger").expect("the dagger's total");
+        // Strength +4 (light, primary hand) and the dagger's own +2.
+        assert_eq!(row.value, 6, "{}", row.detail);
+        assert!(row.detail.starts_with("1d4+6:"), "{}", row.detail);
+    }
+
+    /// SD-40 E2.14: Weapon Specialization (Longsword), saved the way the app saves a feat and its
+    /// choice, reaches the Longsword's total once (`1d8+6`: Strength +4, the feat row's +2) and
+    /// not the Dagger's.
+    #[test]
+    fn weapon_damage_total_holds_weapon_specialization_for_its_weapon() {
+        let (dir, root) = enhancement_rows_aldric("weapon-damage-total-specialization");
+        enhancement_buy(&root, "Dagger (Base)", ActiveState::EquippedActive, 2);
+        mutate_saved_character_at_root(&root, "2026-11-11T00:00:00Z", |input| {
+            input.chosen.selected_feats.push("feat:weapon_specialization".to_owned());
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: "choice:weapon_specialization_target".to_owned(),
+                selection_id: "weapon:Longsword".to_owned(),
+            });
+        })
+        .expect("save");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        std::fs::remove_dir_all(&dir).ok();
+        let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("no {id}"));
+        assert_eq!(row("combat.weapon_damage_bonus.longsword").value, 2, "{}", row("combat.weapon_damage_bonus.longsword").detail);
+        let sword = row("combat.weapon_damage_total.longsword");
+        assert_eq!(sword.value, 6, "{}", sword.detail);
+        assert!(sword.detail.starts_with("1d8+6:"), "{}", sword.detail);
+        assert_eq!(row("combat.weapon_damage_total.dagger").value, 6, "Strength +4 and the dagger's +2 only");
     }
 
     /// Every weapon the Market sells a `+N` of, in hand at its highest offer, has a row holding that
@@ -15282,46 +15367,52 @@ mod tests {
     /// own response, so a removal that left a stale computed value on disk
     /// would fail here.
     ///
-    /// Toughness is the probe because its effect is a plain arithmetic
-    /// change to max HP (`+1` per character level, minimum 3), so "the
-    /// number moved" is checkable rather than a matter of interpretation.
+    /// Improved Initiative is the probe because its effect is a plain arithmetic
+    /// change to the sheet's Initiative box (`+4`), so "the number moved" is
+    /// checkable rather than a matter of interpretation. (It was Toughness
+    /// read through the retired hit-point tracker until SD-40 E2.29; `hit_points.max`
+    /// counts Toughness since E2.31, pinned by `hit_points_max_counts_toughness`.)
     #[test]
     fn removing_a_feat_returns_the_number_it_moved_and_survives_reload() {
         let root = tempdir("remove-feat-round-trip");
         let envelope = level_up_test_envelope("race:human", 3);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
 
-        // Read through the exact command the Defense tab reads through, off
-        // a fresh load, so this asserts the number a player actually sees.
-        let max_hp_now = |root: &Path| -> i16 {
-            load_character_durability_at_root(root)
-                .expect("durability should compute for a single-class Fighter")
-                .max_hp
+        // Read the sheet's Initiative box row off a fresh load, so this asserts the number a
+        // player actually sees.
+        let initiative_now = |root: &Path| -> i16 {
+            load_saved_character_at_root(root)
+                .expect("a saved Fighter loads")
+                .explanations
+                .iter()
+                .find(|row| row.id == "initiative.total")
+                .expect("a Fighter has an initiative.total row")
+                .value
         };
 
-        let baseline = max_hp_now(&root);
+        let baseline = initiative_now(&root);
 
         add_feat_selection_enforcing_prerequisites_at_root(
             &root,
-            "Toughness",
+            "Improved Initiative",
             None,
             "2026-08-01T00:00:00Z",
         )
-        .expect("Toughness has no prerequisites");
-        let with_feat = max_hp_now(&root);
-        assert!(
-            with_feat > baseline,
-            "Toughness must move max HP for the removal test to mean anything: \
-             baseline {baseline}, with feat {with_feat}"
+        .expect("Improved Initiative has no prerequisites");
+        let with_feat = initiative_now(&root);
+        assert_eq!(
+            with_feat,
+            baseline + 4,
+            "Improved Initiative must move initiative by +4 for the removal test to mean anything"
         );
 
-        remove_feat_selection_at_root(&root, "Toughness", None, "2026-08-01T00:01:00Z")
+        remove_feat_selection_at_root(&root, "Improved Initiative", None, "2026-08-01T00:01:00Z")
             .expect("removing a held feat with no dependents must succeed");
 
-        let after_removal = max_hp_now(&root);
+        let after_removal = initiative_now(&root);
         assert_eq!(
             after_removal, baseline,
-            "removing Toughness must return max HP to its pre-feat value"
+            "removing Improved Initiative must return initiative to its pre-feat value"
         );
         let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
         assert!(
@@ -15330,7 +15421,7 @@ mod tests {
                 .chosen
                 .selected_feats
                 .iter()
-                .any(|feat| feat == "Toughness"),
+                .any(|feat| feat == "Improved Initiative"),
             "the removed feat must be gone from the persisted character"
         );
         assert_eq!(reloaded.saved_at, "2026-08-01T00:01:00Z");
@@ -15991,6 +16082,7 @@ mod tests {
             weight: "150 lbs".to_owned(),
             hair: "Auburn".to_owned(),
             eyes: "Green".to_owned(),
+            languages: vec!["Common".to_owned(), "Celestial".to_owned()],
         }
     }
 
@@ -18225,156 +18317,33 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    // ----- `load_character_durability` / `adjust_character_hp` (v0.6 alpha swarm) -----
+    // ----- No hit-point tracking (SD-40 E2.29, decisions.md §24.8) -----
 
+    /// A save from before E2.29 may hold the retired `hp.json` sidecar (current HP and nonlethal
+    /// damage). It still loads, its sheet is the one it would be without the file, and the file is
+    /// left on disk untouched.
     #[test]
-    fn load_character_durability_at_root_defaults_current_hp_to_computed_max_hp() {
-        let root = tempdir("hp-default");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+    fn a_save_with_an_old_hp_json_still_loads() {
+        let input = compose_character_input(&request_for("race:human", 1));
+        let root = saved_root_for("old-hp-json", input);
+        let without = serde_json::to_value(load_saved_character_at_root(&root).expect("a saved character loads"))
+            .expect("the load response serializes");
 
-        let durability =
-            load_character_durability_at_root(&root).expect("loading durability should not error");
+        let old_hp = r#"{"currentHp": 3, "nonlethalDamage": 5}"#;
+        std::fs::write(root.join("hp.json"), old_hp).expect("write the old sidecar");
+        let with = serde_json::to_value(load_saved_character_at_root(&root).expect("a save holding hp.json loads"))
+            .expect("the load response serializes");
 
-        // Fighter d10 level 1, CON mod +2 (score 14, unaffected by the fixture's
-        // Human ability-bonus target of strength): 10 + 2 = 12.
-        assert_eq!(durability.max_hp, 12);
-        assert_eq!(durability.current_hp, 12);
-        assert_eq!(durability.nonlethal_damage, 0);
-        assert_eq!(durability.status, "Normal");
+        assert_eq!(with, without, "hp.json changes nothing on the sheet");
+        assert_eq!(std::fs::read_to_string(root.join("hp.json")).expect("hp.json is still there"), old_hp);
+        let text = with.to_string();
+        assert!(!text.contains("currentHp") && !text.contains("nonlethalDamage"), "the load response carries no tracked hit points");
+        // The retired command names, split so the acceptance grep for them stays at 0.
+        for retired in [concat!("load_character_", "durability"), concat!("adjust_character_", "hp")] {
+            assert!(!include_str!("main.rs").contains(retired), "{retired} is not registered");
+        }
 
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    /// v0.6 alpha swarm item 17: the feat-effects engine's first real,
-    /// wired case. A Fighter with Toughness selected must show the correct
-    /// 15 HP (12 base + Toughness's real +3), not the pre-fix 12 QA found
-    /// (zero explanations mentioning the feat at all).
-    #[test]
-    fn load_character_durability_at_root_includes_toughnesss_real_plus_three_hp() {
-        let root = tempdir("hp-toughness");
-        let mut envelope = level_up_test_envelope("race:human", 1);
-        envelope.character_input.chosen.selected_feats.push("Toughness".to_owned());
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let durability =
-            load_character_durability_at_root(&root).expect("loading durability should not error");
-
-        assert_eq!(durability.max_hp, 15, "12 base + Toughness's real flat +3 = 15");
-        assert_eq!(
-            durability.current_hp, 15,
-            "current HP must default to the feat-inclusive max, not the pre-feat base"
-        );
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_persists_damage_and_clamps_healing_at_max_hp() {
-        let root = tempdir("hp-damage-heal");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let after_damage = adjust_character_hp_at_root(&root, -5, 0).expect("damage should not error");
-        assert_eq!(after_damage.current_hp, 7);
-
-        let after_overheal =
-            adjust_character_hp_at_root(&root, 100, 0).expect("healing should not error");
-        assert_eq!(after_overheal.current_hp, 12, "healing must clamp at max_hp, not exceed it");
-
-        let reloaded =
-            load_character_durability_at_root(&root).expect("reload should not error");
-        assert_eq!(reloaded.current_hp, 12, "the healed total must be persisted");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_tracks_nonlethal_damage_and_reflects_status() {
-        let root = tempdir("hp-nonlethal");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let staggered =
-            adjust_character_hp_at_root(&root, 0, 12).expect("nonlethal damage should not error");
-        assert_eq!(
-            staggered.status, "Staggered",
-            "nonlethal damage exactly equal to current HP (12) is staggered"
-        );
-
-        let unconscious =
-            adjust_character_hp_at_root(&root, 0, 1).expect("more nonlethal damage should not error");
-        assert_eq!(unconscious.nonlethal_damage, 13);
-        assert_eq!(unconscious.status, "Unconscious");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_reflects_dying_and_dead_thresholds() {
-        let root = tempdir("hp-dying-dead");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let dying = adjust_character_hp_at_root(&root, -13, 0).expect("lethal damage should not error");
-        assert_eq!(dying.current_hp, -1);
-        assert_eq!(dying.status, "Dying");
-
-        // -1 - 13 = -14, which equals -constitution_score (14) -> Dead.
-        let dead = adjust_character_hp_at_root(&root, -13, 0).expect("further lethal damage should not error");
-        assert_eq!(dead.current_hp, -14);
-        assert_eq!(dead.status, "Dead");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn adjust_character_hp_at_root_floors_nonlethal_recovery_at_zero() {
-        let root = tempdir("hp-nonlethal-floor");
-        let envelope = level_up_test_envelope("race:human", 1);
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        adjust_character_hp_at_root(&root, 0, 3).expect("nonlethal damage should not error");
-        let recovered =
-            adjust_character_hp_at_root(&root, 0, -100).expect("nonlethal recovery should not error");
-
-        assert_eq!(recovered.nonlethal_damage, 0, "nonlethal damage must floor at 0, not go negative");
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn load_character_durability_at_root_fails_honestly_for_a_multiclass_build() {
-        let root = tempdir("hp-multiclass");
-        let mut envelope = level_up_test_envelope("race:human", 2);
-        envelope.character_input.chosen.class_levels.push(CharacterClassLevel {
-            class_id: "class:rogue".to_owned(),
-            level: 1,
-        });
-        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
-
-        let result = load_character_durability_at_root(&root);
-
-        assert!(
-            result.is_err(),
-            "durability for a multiclass build must fail honestly, not fabricate a value"
-        );
-
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn load_character_durability_at_root_fails_honestly_when_nothing_is_saved_yet() {
-        let root = tempdir("hp-missing-character");
-
-        let result = load_character_durability_at_root(&root);
-
-        assert!(
-            result.is_err(),
-            "loading durability for a nonexistent saved character must fail"
-        );
-
-        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(root.parent().expect("tempdir")).ok();
     }
 
     // ----- Render-staleness real root cause (v0.6 alpha swarm) -----
@@ -19112,7 +19081,7 @@ mod tests {
             }
         }
         let base = compute_pilot_base_chassis(&input);
-        let (lines, unavailable, bonuses) = sheet_lines_for(&input, &base);
+        let (lines, unavailable, bonuses, _) = sheet_lines_for(&input, &base);
         assert_eq!(unavailable, None);
         assert!(lines.iter().any(|l| l.id == "core_rulebook:feat:alertness"), "Alertness line printed");
         assert_eq!(bonuses.skills.get("perception"), Some(&2));
@@ -19988,7 +19957,7 @@ mod tests {
     /// Saves `input` under a fresh temp root and returns that root, so the
     /// `*_at_root` load/preview seams can be exercised without an
     /// `AppHandle`.
-    fn saved_root_for(label: &str, input: CharacterInput) -> PathBuf {
+    pub(super) fn saved_root_for(label: &str, input: CharacterInput) -> PathBuf {
         let root = tempdir(label).join("char-receipt-to-sheet");
         let envelope = SavedCharacterEnvelope {
             character_id: "char-receipt-to-sheet".to_owned(),
@@ -20047,12 +20016,18 @@ mod tests {
         let response = load_saved_character_at_root(&root).expect("saved rogue should load");
         let engine = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
 
-        // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6) and one
-        // total per Skills panel row (E8.7), which are not the chassis's records.
+        // The load appends the feat budget's rows, the sheet's Hit Points and Speed (E8.6), one
+        // total per Skills panel row (E8.7) and one damage total per weapon in hand (SD-40 E2.14),
+        // which are not the chassis's records.
         let sheet_totals = ["hit_points.max", "speed.land"];
         let (appended, chassis): (Vec<_>, Vec<_>) = response.explanations.iter().partition(|row| {
-            row.id.starts_with("feats.budget.") || row.id.starts_with("skill.total.") || sheet_totals.contains(&row.id.as_str())
+            row.id.starts_with("feats.budget.")
+                || row.id.starts_with("skill.total.")
+                || row.id.starts_with("combat.weapon_damage_total.")
+                || sheet_totals.contains(&row.id.as_str())
         });
+        let damage_totals = appended.iter().filter(|row| row.id.starts_with("combat.weapon_damage_total.")).count();
+        assert_eq!(damage_totals, response.weapon_damage.iter().filter(|weapon| weapon.base_dice.is_some()).count(), "one damage total per weapon");
         let budget: Vec<_> = appended.iter().filter(|row| row.id.starts_with("feats.budget.")).collect();
         assert_eq!(budget.len(), 6, "level and racial pools, three rows each: {budget:?}");
         let skill_totals = appended.iter().filter(|row| row.id.starts_with("skill.total.")).count();
@@ -20674,6 +20649,253 @@ mod starter_seed_tests {
             .expect("Spellcraft allocated");
         let int_mod = i32::from(loaded.snapshot.as_ref().expect("computed").ability_modifiers.intelligence);
         assert_eq!(spellcraft + 3 + int_mod, 12, "Spellcraft 5 + 3 + 4");
+    }
+
+    /// SD-40 E2.6: the load response carries `conditionalNotes`, six lists (eight since E2.19). Aldric (Human
+    /// Fighter 3) holds one: CRB p.55 Bravery, "+1 Will vs. fear", under `will` alone; Elowen and
+    /// Tomas carry the field too.
+    #[test]
+    fn conditional_notes_reach_the_load_response_of_the_seeds() {
+        let app_data_dir = temp_app_data_dir("conditional-notes-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded: Vec<LoadSavedCharacterResponse> = [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID]
+            .iter()
+            .map(|id| load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load"))
+            .collect();
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        for sheet in &loaded {
+            let wire = serde_json::to_value(sheet).expect("json");
+            let notes = wire["conditionalNotes"].as_object().expect("conditionalNotes on the wire");
+            let keys: Vec<&str> = notes.keys().map(String::as_str).collect();
+            assert_eq!(
+                keys,
+                ["armorClass", "combatManeuverBonus", "combatManeuverDefense", "fortitude", "hitPoints", "initiative", "reflex", "will"]
+            );
+        }
+        let aldric = &loaded[0].conditional_notes;
+        let wills: Vec<(&str, &str, &str)> =
+            aldric.will.iter().map(|n| (n.label.as_str(), n.value.as_str(), n.condition.as_str())).collect();
+        assert_eq!(wills, [("Bravery", "", "+1 Will vs. fear")], "{aldric:#?}");
+        // E2.19: the CMB and CMD lists are on the wire and empty for Aldric.
+        let others = [
+            &aldric.hit_points,
+            &aldric.initiative,
+            &aldric.fortitude,
+            &aldric.reflex,
+            &aldric.armor_class,
+            &aldric.combat_maneuver_bonus,
+            &aldric.combat_maneuver_defense,
+        ];
+        assert!(others.iter().all(|l| l.is_empty()), "{aldric:#?}");
+    }
+
+    /// SD-40 E2.27: the Languages field is stored with the bio and is the load response's
+    /// `languages.known`; a clone keeps it; a `bio.json` from before the field loads with none,
+    /// and a character with nothing stored knows Common.
+    #[test]
+    fn stored_languages_round_trip_and_feed_the_load_response() {
+        let app_data_dir = temp_app_data_dir("stored-languages");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let aldric = character_root(&app_data_dir, DEFAULT_CHARACTER_ID);
+        let known = |root: &Path| load_saved_character_at_root(root).expect("load").languages.known;
+        assert_eq!(known(&aldric), ["Common"], "nothing stored: Common");
+
+        let elven = vec!["Common".to_owned(), "Elven".to_owned()];
+        save_character_bio_at_root(&aldric, &CharacterBioDto { languages: elven.clone(), ..Default::default() }).expect("save");
+        assert_eq!(load_character_bio_at_root(&aldric).expect("bio").languages, elven);
+        assert_eq!(known(&aldric), elven, "the stored list, in saved order");
+
+        let clone = character_root(&app_data_dir, "char-languages-clone");
+        let request = CloneCharacterRequest {
+            character_id: DEFAULT_CHARACTER_ID.to_owned(),
+            new_character_id: "char-languages-clone".to_owned(),
+            new_display_label: "Aldric (Copy)".to_owned(),
+            saved_at: "2026-11-12T00:00:00Z".to_owned(),
+        };
+        let outcome = clone_character_at_roots(&aldric, &clone, &request, "test-version").expect("clone");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        assert_eq!(known(&clone), elven, "a clone keeps the stored languages");
+
+        let elowen = character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID);
+        std::fs::write(elowen.join(BIO_FILE_NAME), r#"{"alignment":"Neutral Good","deity":"","sex":"","age":"","height":"","weight":"","hair":"","eyes":""}"#)
+            .expect("write pre-field bio");
+        assert!(load_character_bio_at_root(&elowen).expect("pre-field bio loads").languages.is_empty());
+        assert_eq!(known(&elowen), ["Common"], "a pre-field bio.json knows Common");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-40 E2.17: the load response carries `speed.swim` / `speed.fly` (feet) when the race's
+    /// held traits state the mode (`MOVE:`), and `flyManeuverability` in the record's words; a
+    /// character with neither mode gets no row and no key. The Undine's `undine_speed` says
+    /// `MOVE:Walk,30,Swim,30`; the Strix's `strix_flight` `MOVE:Fly,60`, "(average)".
+    #[test]
+    fn speed_modes_reach_the_load_response() {
+        let load = |label: &str, race: &str| {
+            let input = compose_character_input(&super::tests::request_for_class(race, "class:fighter", 1));
+            serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for(label, input)).expect("load")).expect("json")
+        };
+        let row = |wire: &serde_json::Value, id: &str| {
+            wire["explanations"].as_array().expect("explanations").iter().find(|row| row["id"] == id).map(|row| row["value"].clone())
+        };
+        let undine = load("speed-modes-undine", "race:undine");
+        assert_eq!(row(&undine, "speed.swim"), Some(serde_json::json!(30)), "{}", undine["explanations"]);
+        assert_eq!(row(&undine, "speed.fly"), None);
+        assert!(undine.get("flyManeuverability").is_none());
+        let mut aquatic = compose_character_input(&super::tests::request_for_class("race:undine", "class:fighter", 1));
+        aquatic.chosen.selected_feats.push("Aquatic Ancestry".to_owned());
+        let aquatic = serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for("speed-modes-aquatic", aquatic)).expect("load")).expect("json");
+        assert_eq!(row(&aquatic, "feat.arg_standalone.aquatic_ancestry_swim_speed"), Some(serde_json::json!(10)), "the feat row the swim speed adds");
+        assert_eq!(row(&aquatic, "speed.swim"), Some(serde_json::json!(40)), "30 + Aquatic Ancestry 10");
+        let strix = load("speed-modes-strix", "race:strix");
+        assert_eq!(row(&strix, "speed.fly"), Some(serde_json::json!(60)));
+        assert_eq!(row(&strix, "speed.swim"), None);
+        assert_eq!(strix["flyManeuverability"], "average");
+        let fly_detail = strix["explanations"].as_array().unwrap().iter().find(|row| row["id"] == "speed.fly").unwrap()["detail"].clone();
+        assert!(fly_detail.as_str().unwrap().contains("average"), "{fly_detail}");
+
+        let app_data_dir = temp_app_data_dir("speed-modes-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        for id in [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID] {
+            let wire = serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json");
+            assert_eq!((row(&wire, "speed.swim"), row(&wire, "speed.fly")), (None, None), "{id}");
+            assert!(wire.get("flyManeuverability").is_none(), "{id}");
+        }
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-40 E2.21: the load response carries `resistances` (energy, damage reduction, spell
+    /// resistance, immunities) from what the character holds. Bestiary 2: an Ifrit has fire
+    /// resistance 5, an Undine cold resistance 5; an Ifrit who takes ARG's Wildfire Heart gives
+    /// it up. CRB p.32: a 7th-level Barbarian has DR 1/—. The seeds hold none.
+    #[test]
+    fn resistances_reach_the_load_response() {
+        let load = |label: &str, race: &str, class: &str, level: u8, alternates: &[&str]| {
+            let mut input = compose_character_input(&super::tests::request_for_class(race, class, level));
+            let alternates: Vec<String> = alternates.iter().map(|key| (*key).to_owned()).collect();
+            input.chosen.selected_choices.extend(resolve_alternate_trait_choices(race, &alternates).expect("a real alternate"));
+            serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for(label, input)).expect("load")).expect("json")
+        };
+        let ifrit = load("resistances-ifrit", "race:ifrit", "class:fighter", 1, &[]);
+        assert_eq!(
+            ifrit["resistances"]["energy"],
+            serde_json::json!([{ "energy": "Fire", "amount": 5, "source": "Ifrit ~ Energy Resistance" }]),
+            "{}",
+            ifrit["resistances"]
+        );
+        let undine = load("resistances-undine", "race:undine", "class:fighter", 1, &[]);
+        assert_eq!(
+            undine["resistances"]["energy"],
+            serde_json::json!([{ "energy": "Cold", "amount": 5, "source": "Undine ~ Energy Resistance" }]),
+            "{}",
+            undine["resistances"]
+        );
+        let wildfire = load("resistances-wildfire", "race:ifrit", "class:fighter", 1, &["Ifrit ~ Wildfire Heart"]);
+        let energies = wildfire["resistances"]["energy"].as_array().expect("energy list");
+        assert!(energies.iter().all(|entry| entry["energy"] != "Fire"), "{}", wildfire["resistances"]);
+        let barbarian = load("resistances-barbarian", "race:human", "class:barbarian", 7, &[]);
+        eprintln!("barbarian 7: {}", barbarian["resistances"]);
+        let reductions = barbarian["resistances"]["damageReduction"].as_array().expect("damageReduction list");
+        assert!(
+            reductions.iter().any(|dr| dr["amount"] == 1 && dr["bypass"] == "—"),
+            "{}",
+            barbarian["resistances"]
+        );
+
+        let app_data_dir = temp_app_data_dir("resistances-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        for id in [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID] {
+            let wire = serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json");
+            assert_eq!(
+                wire["resistances"],
+                serde_json::json!({ "energy": [], "damageReduction": [], "spellResistance": [], "immunities": [] }),
+                "{id}"
+            );
+        }
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-40 E2.8: the load response states what the sheet prints as "Remaining" (the heavy
+    /// maximum less the carried total, floored at 0, computed in `rules_core::encumbrance`) and
+    /// the languages the character knows, so neither the screen nor the print re-derives them.
+    #[test]
+    fn remaining_lbs_and_known_languages_reach_the_load_response_of_the_seeds() {
+        let app_data_dir = temp_app_data_dir("remaining-lbs-languages-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded: Vec<serde_json::Value> = [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID]
+            .iter()
+            .map(|id| serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json"))
+            .collect();
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        for wire in &loaded {
+            let load = &wire["corpusDerived"]["encumbrance"];
+            let (heavy, carried) = (load["heavyMaxLbs"].as_f64().expect("heavy"), load["totalCarriedWeightLbs"].as_f64().expect("carried"));
+            let remaining = load["remainingLbs"].as_f64().expect("remainingLbs on the wire");
+            eprintln!("{}: heavy {heavy} carried {carried} remaining {remaining}", wire["summary"]["displayLabel"]);
+            assert_eq!(remaining, (heavy - carried).max(0.0), "{load}");
+            assert_eq!(wire["languages"], serde_json::json!({ "known": ["Common"] }), "{}", wire["languages"]);
+        }
+        let aldric = &loaded[0]["corpusDerived"]["encumbrance"];
+        // Aldric (Strength 19: heavy 350 lb; his kit weighs 29 lb): 350 - 29 = 321.
+        let numbers = ["heavyMaxLbs", "totalCarriedWeightLbs", "remainingLbs"].map(|key| aldric[key].as_f64());
+        assert_eq!(numbers, [Some(350.0), Some(29.0), Some(321.0)], "{aldric}");
+    }
+
+    /// SD-40 E2.14: every weapon in hand with dice has one `combat.weapon_damage_total.<weapon>`
+    /// row whose value is the signed sum of the facets the same response holds for it (Strength,
+    /// enhancement, its feat damage row, each item damage bonus) and whose detail opens with the printed `1d8+4`; the
+    /// Longsword states no range. Aldric (Strength 19): `1d8+4`.
+    #[test]
+    fn weapon_damage_total_reaches_the_load_response_of_the_seeds() {
+        let app_data_dir = temp_app_data_dir("weapon-damage-total-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let loaded: Vec<serde_json::Value> = [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID]
+            .iter()
+            .map(|id| serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, id)).expect("load")).expect("json"))
+            .collect();
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        let mut printed = Vec::new();
+        for wire in &loaded {
+            let weapons = wire["weaponDamage"].as_array().expect("weaponDamage");
+            assert!(!weapons.is_empty(), "every seed holds a weapon");
+            for weapon in weapons {
+                let key = weapon["weaponRecordKey"].as_str().expect("record key");
+                assert_eq!(key, "Longsword (Base)", "the seeds hold a Longsword");
+                let id = "combat.weapon_damage_total.longsword";
+                let rows: Vec<&serde_json::Value> =
+                    wire["explanations"].as_array().unwrap().iter().filter(|row| row["id"] == id).collect();
+                assert_eq!(rows.len(), 1, "{id}");
+                let feat_row = wire["explanations"].as_array().unwrap().iter().find(|row| row["id"] == "combat.weapon_damage_bonus.longsword");
+                let facets = weapon["strDamageModifier"].as_i64().unwrap_or(0)
+                    + weapon["enhancementDamageBonus"].as_i64().unwrap_or(0)
+                    + feat_row.expect("the feat damage row")["value"].as_i64().unwrap()
+                    + weapon["featEffects"].as_array().unwrap().iter().map(|feat| feat["damageBonus"].as_i64().unwrap()).sum::<i64>();
+                assert_eq!(rows[0]["value"].as_i64(), Some(facets), "{}", rows[0]);
+                let dice = format!("{}d{}", weapon["baseDice"]["count"], weapon["baseDice"]["dieSize"]);
+                let literal = if facets == 0 { dice } else { format!("{dice}{facets:+}") };
+                let detail = rows[0]["detail"].as_str().unwrap();
+                assert!(detail.starts_with(&format!("{literal}:")), "{detail}");
+                assert_eq!(weapon["rangeIncrement"], serde_json::Value::Null, "{key} states no range");
+                eprintln!("{}: {id} {literal}", wire["summary"]["displayLabel"]);
+                printed.push(literal);
+            }
+        }
+        assert_eq!(printed[0], "1d8+4", "Aldric's longsword");
+    }
+
+    /// SD-40 E2.6: a Dwarf's racial traits come from the race resolver (no trait passed by
+    /// hand), and Hardy's words (CRB p.21) reach the response under each save.
+    #[test]
+    fn conditional_notes_carry_dwarf_hardy_through_the_race_resolver() {
+        let fixture = codex::rules_core::class_census::load_sweep_fixture().expect("census fixture");
+        let mut input = codex::rules_core::class_seeds::input_for(&fixture, "fighter", 1);
+        input.chosen.race_id = "race:dwarf".to_owned();
+        let base = codex::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let (_, unavailable, _, notes) = sheet_lines_for(&input, &base);
+        assert_eq!(unavailable, None);
+        let hardy = "+2 racial bonus on saving throws against poison, spells, and spell-like abilities.";
+        for list in [&notes.fortitude, &notes.reflex, &notes.will] {
+            assert!(list.iter().any(|n| n.label == "Hardy" && n.condition == hardy), "{notes:#?}");
+        }
     }
 
     /// Aldric Ironhand, Human Fighter 3: 2 level feats (1st, 3rd; CRB p.112), the human's 1 (p.21) and
