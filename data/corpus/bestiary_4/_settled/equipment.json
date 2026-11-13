@@ -121,6 +121,17 @@
     "equipmods/material_ironwood.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,

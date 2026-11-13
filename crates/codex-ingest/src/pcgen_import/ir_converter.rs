@@ -525,7 +525,43 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         is_modifier: matches!(record.kind, EquipmentRecordKind::EquipMod),
         container: container_of(record),
         container_capacity: if container_of(record) { container_capacity_of(record) } else { ContainerCapacity::Unstated },
+        uses_ammunition: uses_ammunition_of(record),
+        ammunition_family: if uses_ammunition_of(record) { ammunition_family_of(record) } else { None },
+        ammunition_kinds: ammunition_kinds_of(record),
+        base_quantity: base_quantity_of(record),
     }
+}
+
+/// The record's `TYPE` words.
+fn type_words(record: &EquipmentRecord) -> Vec<&str> {
+    equipment_token_value(record, "TYPE").map_or(Vec::new(), |value| value.split('.').collect())
+}
+
+/// Whether the item fires ammunition: `TYPE` holds `Projectile` (SD-41 `decisions.md §23`).
+fn uses_ammunition_of(record: &EquipmentRecord) -> bool {
+    type_words(record).contains(&"Projectile")
+}
+
+/// The ammunition family `CONTAINS` names after its capacity field, up to any `=count`, spaces
+/// removed: Longbow `UNLIM|Arrow` is `Arrow`, Pistol `1|Firearm Bullet=1` is `FirearmBullet`. Only
+/// the first family of a several-family weapon is kept (`FirearmBullet=1|FirearmPellet=1`).
+fn ammunition_family_of(record: &EquipmentRecord) -> Option<String> {
+    let family = equipment_token_value(record, "CONTAINS")?.split('|').nth(1)?.split('=').next()?.replace(' ', "");
+    (!family.is_empty() && family != "Any").then_some(family)
+}
+
+/// An `Ammunition`-typed item's `TYPE` words, spaces removed; empty for anything else.
+fn ammunition_kinds_of(record: &EquipmentRecord) -> Vec<String> {
+    let words = type_words(record);
+    if !words.contains(&"Ammunition") {
+        return Vec::new();
+    }
+    words.iter().map(|word| word.replace(' ', "")).collect()
+}
+
+/// Pieces per copy as the book sells it: `BASEQTY`, when it is a positive whole number.
+fn base_quantity_of(record: &EquipmentRecord) -> Option<u32> {
+    equipment_token_value(record, "BASEQTY").and_then(|value| value.parse::<u32>().ok()).filter(|n| *n > 0)
 }
 
 /// Whether the item is a container (SD-41 `decisions.md §31` R2, "Container tag, but not
@@ -1951,6 +1987,29 @@ mod tests {
         let converted = equipment_record_to_corpus(&pistol);
         assert!(!converted.is_container());
         assert_eq!(converted.capacity(), ContainerCapacity::Unstated, "capacity settled only on a container");
+    }
+
+    /// SD-41 E1.6 (`decisions.md §23, §31`): ammunition users, their family, ammunition, bundle size.
+    #[test]
+    fn ammunition_of_settles_projectile_family_kinds_and_bundle() {
+        let longbow = equipment_with(&[("TYPE", "Weapon.Ranged.Container.Projectile.Bow"), ("CONTAINS", "UNLIM|Arrow"), ("DAMAGE", "1d8")]);
+        let pistol = equipment_with(&[("TYPE", "Weapon.Container.Projectile.Firearm"), ("CONTAINS", "1|Firearm Bullet=1|FirearmPellet=1"), ("DAMAGE", "1d8")]);
+        let sling = equipment_with(&[("TYPE", "Weapon.Ranged.Projectile.Sling"), ("DAMAGE", "1d4")]);
+        let dagger = equipment_with(&[("TYPE", "Weapon.Melee.Ranged.Thrown.Dagger"), ("DAMAGE", "1d4")]);
+        let arrows = equipment_with(&[("TYPE", "Ammunition.Resizable.Standard.Arrow"), ("BASEQTY", "20")]);
+        let backpack = equipment_with(&[("TYPE", "Goods.Container.General"), ("CONTAINS", "UNLIM|Any")]);
+        let settled = |record: &EquipmentRecord| {
+            let r = equipment_record_to_corpus(record);
+            (r.uses_ammunition(), r.ammunition_family().map(str::to_owned), r.is_ammunition(), r.base_quantity())
+        };
+        assert_eq!(settled(&longbow), (true, Some("Arrow".to_owned()), false, 1));
+        assert_eq!(settled(&pistol), (true, Some("FirearmBullet".to_owned()), false, 1));
+        assert_eq!(settled(&sling), (true, None, false, 1), "no CONTAINS: any ammunition");
+        assert_eq!(settled(&dagger), (false, None, false, 1), "Thrown is not Projectile");
+        assert_eq!(settled(&arrows), (false, None, true, 20));
+        assert_eq!(settled(&backpack), (false, None, false, 1), "a container's CONTAINS is no family");
+        assert!(equipment_record_to_corpus(&arrows).is_ammunition_for(Some("Arrow")));
+        assert!(!equipment_record_to_corpus(&arrows).is_ammunition_for(Some("Bolt")));
     }
 
     #[test]

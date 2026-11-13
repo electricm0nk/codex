@@ -4,10 +4,17 @@
     "black_powder_dose.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "BlackPowder"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 1,
         "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -43,10 +50,17 @@
     "black_powder_keg.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "BlackPowder"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 100,
         "cost_gp": 1000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -181,10 +195,17 @@
     "bullet_firearm.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Bullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 1,
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -220,6 +241,7 @@
     "cannon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "CannonBall",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -253,6 +275,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -267,10 +290,17 @@
     "cannon_ball.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Bullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 1,
         "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -712,6 +742,17 @@
     "equipmods/leaf.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -751,6 +792,17 @@
     "equipmods/material_leaf.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -790,6 +842,13 @@
     "equipmods/material_paueliel_wood.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "MasterworkQuality",
+          "Ammunition",
+          "Weapon",
+          "Shield"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -873,6 +932,13 @@
     "equipmods/paueliel.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "MasterworkQuality",
+          "Ammunition",
+          "Weapon",
+          "Shield"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1368,6 +1434,7 @@
     "musket.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1401,6 +1468,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1463,6 +1531,7 @@
     "pepperbox.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1496,6 +1565,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1588,6 +1658,7 @@
     "pistol.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1621,6 +1692,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,

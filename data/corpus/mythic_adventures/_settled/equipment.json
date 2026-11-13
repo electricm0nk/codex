@@ -8894,6 +8894,12 @@
     "fortune_s_arrow.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Artifact",
+          "Minor",
+          "Arrow",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,

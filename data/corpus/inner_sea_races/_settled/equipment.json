@@ -483,6 +483,7 @@
     "clever_sling_staff.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "SlingStone",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -521,6 +522,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,

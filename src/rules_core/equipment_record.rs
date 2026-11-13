@@ -220,6 +220,22 @@ pub struct CorpusEquipmentRecord {
     /// What a container holds, settled only when [`Self::container`] is true; `Unstated` otherwise.
     #[serde(default, skip_serializing_if = "ContainerCapacity::is_unstated")]
     pub container_capacity: ContainerCapacity,
+    /// Whether the item fires ammunition: its type holds `Projectile` (SD-41 `decisions.md §23`).
+    /// `Thrown` does not count. Omitted from the settled bundle when `false`.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub uses_ammunition: bool,
+    /// The ammunition family an ammunition user's `CONTAINS` names (`Arrow`, `Bolt`,
+    /// `FirearmBullet`), spaces removed; `None` when it names none (any ammunition fits).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ammunition_family: Option<String>,
+    /// An `Ammunition`-typed item's type words, spaces removed, that a weapon's family is matched
+    /// against; empty for anything that is not ammunition.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub ammunition_kinds: Vec<String>,
+    /// How many pieces one copy is, as the book sells it (`BASEQTY`: `Arrow, Flight (20)` is 20);
+    /// `None` when the record states none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub base_quantity: Option<u32>,
 }
 
 /// A container's stated capacity (SD-41 `decisions.md §7`). `Unstated` covers a container that
@@ -247,6 +263,37 @@ impl CorpusEquipmentRecord {
     /// The container's capacity; `Unstated` for a non-container.
     pub fn capacity(&self) -> ContainerCapacity {
         self.container_capacity
+    }
+
+    /// Whether the item fires ammunition (`Projectile`).
+    pub fn uses_ammunition(&self) -> bool {
+        self.uses_ammunition
+    }
+
+    /// The ammunition family the item fires, `None` when any ammunition fits.
+    pub fn ammunition_family(&self) -> Option<&str> {
+        self.ammunition_family.as_deref()
+    }
+
+    /// Whether the item is ammunition.
+    pub fn is_ammunition(&self) -> bool {
+        !self.ammunition_kinds.is_empty()
+    }
+
+    /// Whether the item is ammunition a weapon of `family` fires: any ammunition when the weapon
+    /// names no family, else one whose type words or name hold the family (§23), ignoring case
+    /// and spaces.
+    pub fn is_ammunition_for(&self, family: Option<&str>) -> bool {
+        let squash = |text: &str| text.replace(' ', "").to_lowercase();
+        self.is_ammunition()
+            && family.map(squash).is_none_or(|family| {
+                self.ammunition_kinds.iter().any(|kind| squash(kind) == family) || squash(&self.name).contains(&family)
+            })
+    }
+
+    /// Pieces in one copy: the stated `BASEQTY`, else 1.
+    pub fn base_quantity(&self) -> u32 {
+        self.base_quantity.unwrap_or(1)
     }
 
     /// Weight in pounds and price in gold, the pair
@@ -401,6 +448,34 @@ mod container_tests {
             settled.iter().all(|(_, r)| r.is_container() || r.capacity() == ContainerCapacity::Unstated),
             "capacity is settled only on containers"
         );
+    }
+
+    /// SD-41 E1.6 (`decisions.md §23, §31`): the settled ammunition fields agree with the source
+    /// tokens: `Projectile` users, users naming a `CONTAINS` family, `Ammunition` items, `BASEQTY`.
+    #[test]
+    fn ammunition_population_is_87_77_228_30() {
+        let settled = settled();
+        let a = (
+            settled.iter().filter(|(_, r)| r.uses_ammunition()).count(),
+            settled.iter().filter(|(_, r)| r.ammunition_family().is_some()).count(),
+            settled.iter().filter(|(_, r)| r.is_ammunition()).count(),
+            settled.iter().filter(|(_, r)| r.base_quantity.is_some()).count(),
+        );
+        let maps = corpus_token_maps();
+        let words = |m: &std::collections::BTreeMap<String, String>| m.get("TYPE").map_or(Vec::new(), |t| t.split('.').map(str::to_owned).collect::<Vec<_>>());
+        let projectile: Vec<_> = maps.iter().filter(|m| words(m).iter().any(|w| w == "Projectile")).collect();
+        let family = |m: &&&std::collections::BTreeMap<String, String>| {
+            m.get("CONTAINS").and_then(|c| c.split('|').nth(1)).map(|f| f.split('=').next().unwrap_or("").replace(' ', ""))
+                .is_some_and(|f| !f.is_empty() && f != "Any")
+        };
+        let b = (
+            projectile.len(),
+            projectile.iter().filter(family).count(),
+            maps.iter().filter(|m| words(m).iter().any(|w| w == "Ammunition")).count(),
+            maps.iter().filter(|m| m.get("BASEQTY").and_then(|q| q.parse::<u32>().ok()).is_some_and(|q| q > 0)).count(),
+        );
+        assert_eq!(a, b, "settled ammunition fields agree with the source tokens");
+        assert_eq!(a, (87, 77, 228, 30), "uses ammunition, names a family, is ammunition, states BASEQTY");
     }
 
     #[test]

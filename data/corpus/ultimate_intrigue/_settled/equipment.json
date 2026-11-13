@@ -834,6 +834,15 @@
     "dart_of_recovery.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Magic",
+          "Resizable",
+          "Specific",
+          "Dart",
+          "Individual",
+          "LesserMinor"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -876,10 +885,17 @@
     "darts_featherweight_10.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Dart"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 10,
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -1161,6 +1177,12 @@
     "equipmods/peaceful.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1200,6 +1222,12 @@
     "equipmods/silencing.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1317,6 +1345,12 @@
     "equipmods/special_ability_peaceful_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1356,6 +1390,12 @@
     "equipmods/special_ability_silencing_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -2292,6 +2332,7 @@
     "launcher_of_distraction.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -2329,6 +2370,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -2997,6 +3039,20 @@
     "prying_star.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Magic",
+          "Resizable",
+          "Exotic",
+          "Ranged",
+          "Specific",
+          "Piercing",
+          "Thrown",
+          "Consumable",
+          "Shuriken",
+          "Ammunition",
+          "LesserMinor"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3601,6 +3657,7 @@
     "silent_sentry_crossbow.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -3638,6 +3695,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -4138,6 +4196,7 @@
     "wrist_launcher.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Dart",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -4166,6 +4225,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": false,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -4180,6 +4240,7 @@
     "wrist_launcher_heavy.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -4214,6 +4275,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,

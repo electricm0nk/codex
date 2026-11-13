@@ -278,10 +278,19 @@
     "arms_armor/heartstake_bolts_5.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Specific",
+          "Bolt",
+          "Racial",
+          "Dhampir"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 5,
         "cost_gp": 100.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -1108,6 +1117,7 @@
     "arms_armor/underwater_crossbow_heavy.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1141,6 +1151,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1155,6 +1166,7 @@
     "arms_armor/underwater_crossbow_light.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1188,6 +1200,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1372,6 +1385,10 @@
     "equipmods/cruel.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -2001,6 +2018,10 @@
     "equipmods/special_ability_cruel_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -2040,6 +2061,10 @@
     "equipmods/special_ability_deadly_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
