@@ -1,1 +1,248 @@
-[]
+[
+  {
+    "key": "Aklys",
+    "price_gp": 5.0,
+    "url": "https://www.d20pfsrd.com/equipment/weapons/",
+    "fetched_at": "2026-11-13T20:04:31Z"
+  },
+  {
+    "key": "Armor of Arrow Attraction",
+    "price_gp": 10650.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Armor of Rage",
+    "price_gp": 1850.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Bag of Devouring",
+    "price_gp": 120000.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Berserking Sword",
+    "price_gp": 36190.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Bracers of Defenselessness",
+    "price_gp": 12500.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Caparison of Resistance +1 (Mount)",
+    "price_gp": 2700.0,
+    "url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Caparison of Resistance +2 (Mount)",
+    "price_gp": 10800.0,
+    "url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Caparison of Resistance +3 (Mount)",
+    "price_gp": 24300.0,
+    "url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Caparison of Resistance +4 (Mount)",
+    "price_gp": 43200.0,
+    "url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Caparison of Resistance +5 (Mount)",
+    "price_gp": 67500.0,
+    "url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Crystal Hypnosis Ball",
+    "price_gp": 49000.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Cursed Backbiter Spear",
+    "price_gp": 3901.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Dagger (Silver/Masterwork)",
+    "price_gp": 322.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/silver-dagger-masterwork/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Darkwood Buckler",
+    "price_gp": 203.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/specific-magic-shields/darkwood-buckler/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Darkwood Shield",
+    "price_gp": 257.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/specific-magic-shields/darkwood-shield/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Flask of Curses",
+    "price_gp": 25000.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Holy Avenger",
+    "price_gp": 120630.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/holy-avenger/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Horsemaster's Saddle (Mount)",
+    "price_gp": 12000.0,
+    "url": "https://www.d20pfsrd.com/magic-items/wondrous-items/h-l/horsemaster-s-saddle/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Longbow (Composite +0)",
+    "price_gp": 100.0,
+    "url": "https://www.d20pfsrd.com/equipment/weapons/",
+    "fetched_at": "2026-11-13T20:04:31Z"
+  },
+  {
+    "key": "Longsword (Cold Iron/Masterwork)",
+    "price_gp": 330.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/longsword-cold-iron-masterwork/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Maiden's Panoply",
+    "price_gp": 30650.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/specific-magic-armor/maidens-panoply/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Necklace of Strangulation",
+    "price_gp": 95000.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Net of Snaring",
+    "price_gp": 16320.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Oathbow",
+    "price_gp": 25600.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/oathbow/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Potion of Poison",
+    "price_gp": 1800.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Quarterstaff (Hurricane)",
+    "price_gp": 7840.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/hurricane-quarterstaff/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Quarterstaff of Contemplation",
+    "price_gp": 34800.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/quarterstaff-of-contemplation/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Quarterstaff of Vaulting",
+    "price_gp": 19100.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/quarterstaff-of-vaulting/",
+    "fetched_at": "2026-11-13T20:04:45Z"
+  },
+  {
+    "key": "Ring of Clumsiness",
+    "price_gp": 1100.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Robe of Vermin",
+    "price_gp": 30000.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Scarab of Death",
+    "price_gp": 6000.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Shadow Spike",
+    "price_gp": 96600.0,
+    "url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/magic-weapons/",
+    "fetched_at": "2026-11-13T20:04:29Z"
+  },
+  {
+    "key": "Shifter's Sorrow",
+    "price_gp": 12780.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/shifter-s-sorrow/",
+    "fetched_at": "2026-11-13T20:07:46Z"
+  },
+  {
+    "key": "Shortbow (Composite +0)",
+    "price_gp": 75.0,
+    "url": "https://www.d20pfsrd.com/equipment/weapons/",
+    "fetched_at": "2026-11-13T20:04:31Z"
+  },
+  {
+    "key": "Sling (Frostbite)",
+    "price_gp": 9380.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/frostbite-sling/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Spellbreaker",
+    "price_gp": 71600.0,
+    "url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/magic-weapons/",
+    "fetched_at": "2026-11-13T20:04:29Z"
+  },
+  {
+    "key": "Stone of Weight (Loadstone)",
+    "price_gp": 5400.0,
+    "url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+    "fetched_at": "2026-11-13T20:04:44Z"
+  },
+  {
+    "key": "Sun Blade (Short)",
+    "price_gp": 50335.0,
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/sun-blade/",
+    "fetched_at": "2026-11-13T20:04:45Z"
+  },
+  {
+    "key": "Torc of Interrogation",
+    "price_gp": 20000.0,
+    "url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+    "fetched_at": "2026-11-13T20:04:29Z"
+  },
+  {
+    "key": "Weapon (Dwarven Boulder)",
+    "price_gp": 20.0,
+    "url": "https://www.d20pfsrd.com/equipment/weapons/",
+    "fetched_at": "2026-11-13T20:04:31Z"
+  }
+]

@@ -355,30 +355,34 @@ fn main() {
                     Some(row) => {
                         let first = row.split('\t').next().unwrap_or("").trim().to_string();
                         let base = first.split_once(".COPY=").map(|(b, _)| b.to_string());
+                        // `None`: the `.COPY=` base is outside the oracle's files, so the converter
+                        // cannot price the row; the cited list below still can.
                         let base_tokens = match &base {
                             Some(identity) => match oracle.base_row(&rel, identity) {
-                                Some(t) => Some(t),
+                                Some(t) => Some(Some(t)),
                                 None => {
                                     report.count("copy_base_missing");
                                     *report.unpriced.entry("copy_base_missing".to_string()).or_default() += 1;
-                                    continue;
+                                    None
                                 }
                             },
-                            None => None,
+                            None => Some(None),
                         };
                         let book = record.book.clone();
                         let lookup = |k: &str| eqmods_by_book.get(&(book.clone(), k.to_string())).or_else(|| eqmods.get(k)).cloned();
                         let spell = |name: &str| spell_costs.get(name).copied().unwrap_or(0.0);
-                        match equipment_price_gp(&line_tokens(&row), base_tokens.as_deref(), &lookup, &spell) {
-                            Ok(price) => new = Some(price),
-                            Err(why) => {
-                                let class = match why {
-                                    Unpriced::ItemCostFormula(_) => "item_cost_formula",
-                                    Unpriced::EqmodMissing(_) => "eqmod_missing",
-                                    Unpriced::Formula(_) => "formula_not_evaluated",
-                                    Unpriced::Prerequisite(_) => "itemcost_prerequisite_not_evaluated",
-                                };
-                                *report.unpriced.entry(class.to_string()).or_default() += 1;
+                        if let Some(base_tokens) = base_tokens {
+                            match equipment_price_gp(&line_tokens(&row), base_tokens.as_deref(), &lookup, &spell) {
+                                Ok(price) => new = Some(price),
+                                Err(why) => {
+                                    let class = match why {
+                                        Unpriced::ItemCostFormula(_) => "item_cost_formula",
+                                        Unpriced::EqmodMissing(_) => "eqmod_missing",
+                                        Unpriced::Formula(_) => "formula_not_evaluated",
+                                        Unpriced::Prerequisite(_) => "itemcost_prerequisite_not_evaluated",
+                                    };
+                                    *report.unpriced.entry(class.to_string()).or_default() += 1;
+                                }
                             }
                         }
                     }

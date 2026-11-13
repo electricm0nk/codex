@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": 0.0,
+    "cost_gp": 1850.0,
     "description": "All unfriendly creatures within 300 feet gain a +1 morale bonus on attack rolls against the wearer.",
     "key": "Armor of Rage",
     "name": "Armor of Rage",

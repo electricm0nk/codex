@@ -1,0 +1,875 @@
+[
+ {
+  "key": "Rod of Arson",
+  "name": "Rod of Arson",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Cannibal Ring",
+  "name": "Cannibal Ring",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Ring of Truth",
+  "name": "Ring of Truth",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/3rd-party-magic-items/magic-items-legendary-games/ring-of-truth/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Cloak of Immolation",
+  "name": "Cloak of Immolation",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Crown of Blindness",
+  "name": "Crown of Blindness",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Hat of Hatreds",
+  "name": "Hat of Hatreds",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Girdle of Opposite Gender",
+  "name": "Girdle of Opposite Gender",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Riot Pipes",
+  "name": "Riot Pipes",
+  "category": "magicItem",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Heartstone (Night Hag)",
+  "name": "Heartstone",
+  "category": "magicItem",
+  "book": "B1",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price"
+ },
+ {
+  "key": "Fetish Mask",
+  "name": "Fetish Mask",
+  "category": "magicItem",
+  "book": "ARG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price"
+ },
+ {
+  "key": "Armor of Arrow Attraction",
+  "name": "Armor of Arrow Attraction",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 10650.0
+ },
+ {
+  "key": "Armor of Rage",
+  "name": "Armor of Rage",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 1850.0
+ },
+ {
+  "key": "Ornery Pistol",
+  "name": "Ornery Pistol",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Unstable Musket",
+  "name": "Unstable Musket",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Cursed Sword (-2)",
+  "name": "Cursed Sword (-2)",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Berserking Sword",
+  "name": "Berserking Sword",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 36190.0
+ },
+ {
+  "key": "Biting Battleaxe",
+  "name": "Biting Battleaxe",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Heavy Hammer",
+  "name": "Heavy Hammer",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Net of Snaring",
+  "name": "Net of Snaring",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 16320.0
+ },
+ {
+  "key": "Unwieldy Glaive",
+  "name": "Unwieldy Glaive",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Cursed Backbiter Spear",
+  "name": "Cursed Backbiter Spear",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 3901.0
+ },
+ {
+  "key": "Deadly Returns Throwing Axe",
+  "name": "Deadly Returns Throwing Axe",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Arrowbreak Bow",
+  "name": "Arrowbreak Bow",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Nearfiring Bow",
+  "name": "Nearfiring Bow",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Amulet of Inescapable Location",
+  "name": "Amulet of Inescapable Location",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Bag of Devouring",
+  "name": "Bag of Devouring",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 120000.0
+ },
+ {
+  "key": "Belt of Weakness",
+  "name": "Belt of Weakness",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Boots of Dancing",
+  "name": "Boots of Dancing",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd's cursed-item table prices it '*' (as the item it appears to be)"
+ },
+ {
+  "key": "Bracers of Defenselessness",
+  "name": "Bracers of Defenselessness",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 12500.0
+ },
+ {
+  "key": "Broom of Animated Attack",
+  "name": "Broom of Animated Attack",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Cape of Anchoring",
+  "name": "Cape of Anchoring",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Crystal Hypnosis Ball",
+  "name": "Crystal Hypnosis Ball",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 49000.0
+ },
+ {
+  "key": "Drums of Lethargy",
+  "name": "Drums of Lethargy",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Dust of Sneezing and Choking",
+  "name": "Dust of Sneezing and Choking",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Eyes of Blindness",
+  "name": "Eyes of Blindness",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Flask of Curses",
+  "name": "Flask of Curses",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 25000.0
+ },
+ {
+  "key": "Gauntlets of Fumbling",
+  "name": "Gauntlets of Fumbling",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd's cursed-item table prices it '*' (as the item it appears to be)"
+ },
+ {
+  "key": "Headband of Stupidity",
+  "name": "Headband of Stupidity",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Helm of Opposite Alignment",
+  "name": "Helm of Opposite Alignment",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Incense of Obsession",
+  "name": "Incense of Obsession",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Mask of Ugliness",
+  "name": "Mask of Ugliness",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Medallion of Thought Projection",
+  "name": "Medallion of Thought Projection",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Necklace of Strangulation",
+  "name": "Necklace of Strangulation",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 95000.0
+ },
+ {
+  "key": "Pauldrons of the Jackass",
+  "name": "Pauldrons of the Jackass",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Periapt of Foul Rotting",
+  "name": "Periapt of Foul Rotting",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Petrifying Cloak",
+  "name": "Petrifying Cloak",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Poisonous Cloak",
+  "name": "Poisonous Cloak",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Potion of Poison",
+  "name": "Potion of Poison",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 1800.0
+ },
+ {
+  "key": "Ring of Clumsiness",
+  "name": "Ring of Clumsiness",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 1100.0
+ },
+ {
+  "key": "Ring of Lifebleed",
+  "name": "Ring of Lifebleed",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Ring of Spell Devouring",
+  "name": "Ring of Spell Devouring",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Robe of Powerlessness",
+  "name": "Robe of Powerlessness",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Robe of Vermin",
+  "name": "Robe of Vermin",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 30000.0
+ },
+ {
+  "key": "Rod of Foiled Magic",
+  "name": "Rod of Foiled Magic",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Scarab of Death",
+  "name": "Scarab of Death",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 6000.0
+ },
+ {
+  "key": "Scattershot Bracers",
+  "name": "Scattershot Bracers",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Staff of Occasional Wonder",
+  "name": "Staff of Occasional Wonder",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Stone of Weight (Loadstone)",
+  "name": "Stone of Weight (Loadstone)",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "priced",
+  "price_gp": 5400.0
+ },
+ {
+  "key": "Unguent of Aging",
+  "name": "Unguent of Aging",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Unlucky Figurine",
+  "name": "Unlucky Figurine",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Vacuous Grimoire",
+  "name": "Vacuous Grimoire",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Branch of Life",
+  "name": "Branch of Life",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/branch-of-life/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Crown of the Iron King",
+  "name": "Crown of the Iron King",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/crown-of-the-iron/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Monkey's Paw",
+  "name": "Monkey's Paw",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/monkey-s-paw/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Runescarred Dragonship",
+  "name": "Runescarred Dragonship",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/runescarred-dragonship/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Weird Queen's Magpie",
+  "name": "Weird Queen's Magpie",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/weird-queen-s-magpie/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Brazen Egg",
+  "name": "Brazen Egg",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/brazen-egg/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Celestial Lens",
+  "name": "Celestial Lens",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/celestial-lens/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Flame of Guidance",
+  "name": "Flame of Guidance",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/flame-of-guidance/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Jar of Dragon's Teeth",
+  "name": "Jar of Dragon's Teeth",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/jar-of-dragon-s-teeth/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Horns of Naraga",
+  "name": "Horns of Naraga",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Moaning Diamond",
+  "name": "Moaning Diamond",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/moaning-diamond-major-artifact/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Perfection's Key",
+  "name": "Perfection's Key",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/perfection-s-key/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Skullsoul",
+  "name": "Skullsoul",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/skull-soul/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Page of Spell Knowledge",
+  "name": "Page of Spell Knowledge",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/wondrous-items/m-p/page-of-spell-knowledge/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices it by bonus or spell level (a table of prices); the row names neither"
+ },
+ {
+  "key": "Astral Skin",
+  "name": "Astral Skin",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/classes/aegis/astral-suits/",
+  "outcome": "price-unknown",
+  "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item"
+ },
+ {
+  "key": "Dorje",
+  "name": "Dorje",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind"
+ },
+ {
+  "key": "Power Stone",
+  "name": "Power Stone",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind"
+ },
+ {
+  "key": "Psicrown",
+  "name": "Psicrown",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind"
+ },
+ {
+  "key": "Psionic Tattoo",
+  "name": "Psionic Tattoo",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind"
+ },
+ {
+  "key": "Crawling Tattoo",
+  "name": "Crawling Tattoo",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a generic slot or item-kind placeholder (the base a magic item is built on); d20pfsrd prices only the named items of its kind"
+ },
+ {
+  "key": "Mind Stone",
+  "name": "Mind Stone",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices it by bonus or spell level (a table of prices); the row names neither"
+ },
+ {
+  "key": "Mind Stone (Greater)",
+  "name": "Greater Mind Stone",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices it by bonus or spell level (a table of prices); the row names neither"
+ },
+ {
+  "key": "Torc of Interrogation",
+  "name": "Torc of Interrogation",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/universal-items/",
+  "outcome": "priced",
+  "price_gp": 20000.0
+ },
+ {
+  "key": "Sutra of Tranquil Thought",
+  "name": "Sutra of Tranquil Thought",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Annulus",
+  "name": "Annulus",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Psicrown of the Crystal Mind",
+  "name": "Psicrown of the Crystal Mind",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/psionic-artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Book of Perilous Journeys",
+  "name": "Book of Perilous Journeys",
+  "category": "magicItem",
+  "book": "HA",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Needful Doll",
+  "name": "Needful Doll",
+  "category": "magicItem",
+  "book": "HA",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/cursed-items/",
+  "outcome": "price-unknown",
+  "reason": "a cursed item: d20pfsrd's entry for it states no price (only the CRB table's items carry one)"
+ },
+ {
+  "key": "Cup of Forbidden Knowledge",
+  "name": "Cup of Forbidden Knowledge",
+  "category": "magicItem",
+  "book": "HA",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/cup-of-forbidden-knowledge/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Dark Grimoire",
+  "name": "Dark Grimoire",
+  "category": "magicItem",
+  "book": "HA",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/dark-grimoire/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Elder Sign",
+  "name": "Elder Sign",
+  "category": "magicItem",
+  "book": "HA",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/elder-sign/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Final Blade",
+  "name": "Final Blade",
+  "category": "magicItem",
+  "book": "ISWG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Sun Orchid Elixir",
+  "name": "Sun Orchid Elixir",
+  "category": "magicItem",
+  "book": "ISWG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Wardstone",
+  "name": "Wardstone",
+  "category": "magicItem",
+  "book": "ISWG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Book of the Damned (Demonic)",
+  "name": "Book of the Damned (Demonic)",
+  "category": "magicItem",
+  "book": "BOTD2",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/major-artifacts/book-of-the-damned-demonic/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Halcyon Bonded Mask",
+  "name": "Halcyon Bonded Mask",
+  "category": "magicItem",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price"
+ }
+]

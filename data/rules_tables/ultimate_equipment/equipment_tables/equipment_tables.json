@@ -3853,7 +3853,7 @@
       "key": "Armor of Arrow Attraction",
       "category": "ArmsArmor",
       "name": "Armor of Arrow Attraction",
-      "cost_gp": 0.0,
+      "cost_gp": 10650.0,
       "weight_lbs": 50.0,
       "description": "The wearer takes a -15 penalty to AC against ranged weapons."
     },
@@ -3861,7 +3861,7 @@
       "key": "Armor of Rage",
       "category": "ArmsArmor",
       "name": "Armor of Rage",
-      "cost_gp": 0.0,
+      "cost_gp": 1850.0,
       "weight_lbs": 50.0,
       "description": "All unfriendly creatures within 300 feet gain a +1 morale bonus on attack rolls against the wearer."
     },
@@ -5421,7 +5421,7 @@
       "key": "Quarterstaff (Hurricane)",
       "category": "ArmsArmor",
       "name": "Quarterstaff (Hurricane)",
-      "cost_gp": null,
+      "cost_gp": 7840.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5429,7 +5429,7 @@
       "key": "Quarterstaff of Vaulting",
       "category": "ArmsArmor",
       "name": "Quarterstaff of Vaulting",
-      "cost_gp": null,
+      "cost_gp": 19100.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5453,7 +5453,7 @@
       "key": "Sling (Frostbite)",
       "category": "ArmsArmor",
       "name": "Sling, Frostbite",
-      "cost_gp": null,
+      "cost_gp": 9380.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5525,7 +5525,7 @@
       "key": "Berserking Sword",
       "category": "ArmsArmor",
       "name": "Berserking Sword",
-      "cost_gp": 0.0,
+      "cost_gp": 36190.0,
       "weight_lbs": 8.0,
       "description": "Whenever used in battle the wielder goes berserk as per Barbarian's Rage ability."
     },
@@ -5557,7 +5557,7 @@
       "key": "Net of Snaring",
       "category": "ArmsArmor",
       "name": "Net of Snaring",
-      "cost_gp": 0.0,
+      "cost_gp": 16320.0,
       "weight_lbs": 1.0,
       "description": "Can only be thrown underwater. If thrown on land, targets creature that threw it."
     },
@@ -5733,7 +5733,7 @@
       "key": "Cursed Backbiter Spear",
       "category": "ArmsArmor",
       "name": "Cursed Backbiter Spear",
-      "cost_gp": 0.0,
+      "cost_gp": 3901.0,
       "weight_lbs": 3.0,
       "description": "When attack roll is natural 1, deals damage to wielder."
     },
@@ -5773,7 +5773,7 @@
       "key": "Bag of Devouring",
       "category": "MagicItems",
       "name": "Bag of Devouring",
-      "cost_gp": 0.0,
+      "cost_gp": 120000.0,
       "weight_lbs": 15.0,
       "description": null
     },
@@ -5797,7 +5797,7 @@
       "key": "Bracers of Defenselessness",
       "category": "MagicItems",
       "name": "Bracers of Defenselessness",
-      "cost_gp": 0.0,
+      "cost_gp": 12500.0,
       "weight_lbs": 1.0,
       "description": null
     },
@@ -5821,7 +5821,7 @@
       "key": "Crystal Hypnosis Ball",
       "category": "MagicItems",
       "name": "Crystal Hypnosis Ball",
-      "cost_gp": 0.0,
+      "cost_gp": 49000.0,
       "weight_lbs": 7.0,
       "description": null
     },
@@ -5853,7 +5853,7 @@
       "key": "Flask of Curses",
       "category": "MagicItems",
       "name": "Flask of Curses",
-      "cost_gp": 0.0,
+      "cost_gp": 25000.0,
       "weight_lbs": 2.0,
       "description": "When the flask is first unstoppered, all creatures within 30 feet must make a DC 17 Will save or be cursed, taking a \u00162 penalty on attack rolls, saving throws, and skill checks until a remove curse spell is cast upon them."
     },
@@ -5909,7 +5909,7 @@
       "key": "Necklace of Strangulation",
       "category": "MagicItems",
       "name": "Necklace of Strangulation",
-      "cost_gp": 0.0,
+      "cost_gp": 95000.0,
       "weight_lbs": null,
       "description": "Immediately tightens, dealing 6 points of damage per round."
     },
@@ -5949,7 +5949,7 @@
       "key": "Potion of Poison",
       "category": "MagicItems",
       "name": "Potion of Poison",
-      "cost_gp": 0.0,
+      "cost_gp": 1800.0,
       "weight_lbs": null,
       "description": "1d3 Con per round for 6 rounds, DC 14 Fort negates."
     },
@@ -5957,7 +5957,7 @@
       "key": "Ring of Clumsiness",
       "category": "MagicItems",
       "name": "Ring of Clumsiness",
-      "cost_gp": 0.0,
+      "cost_gp": 1100.0,
       "weight_lbs": null,
       "description": "Acts as Ring of Featherfall"
     },
@@ -5989,7 +5989,7 @@
       "key": "Robe of Vermin",
       "category": "MagicItems",
       "name": "Robe of Vermin",
-      "cost_gp": 0.0,
+      "cost_gp": 30000.0,
       "weight_lbs": 1.0,
       "description": "Must make concentration check (DC 20 + spell level) or lose the spell when casting."
     },
@@ -6005,7 +6005,7 @@
       "key": "Scarab of Death",
       "category": "MagicItems",
       "name": "Scarab of Death",
-      "cost_gp": 0.0,
+      "cost_gp": 6000.0,
       "weight_lbs": null,
       "description": "DC 25 Reflex save or die, or take 3d6 points of damage."
     },
@@ -6029,7 +6029,7 @@
       "key": "Stone of Weight (Loadstone)",
       "category": "MagicItems",
       "name": "Stone of Weight (Loadstone)",
-      "cost_gp": 0.0,
+      "cost_gp": 5400.0,
       "weight_lbs": 1.0,
       "description": null
     },
@@ -10317,7 +10317,7 @@
       "key": "Horsemaster's Saddle (Mount)",
       "category": "MagicItems",
       "name": "Horsemaster's Saddle (Mount)",
-      "cost_gp": null,
+      "cost_gp": 12000.0,
       "weight_lbs": 5.0,
       "description": null
     },

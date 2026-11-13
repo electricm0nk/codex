@@ -6,7 +6,7 @@
     "key": "Longsword (Cold Iron/Masterwork)",
     "category": "arms_armor",
     "name": "Longsword (Base)",
-    "cost_gp": null,
+    "cost_gp": 330.0,
     "weight_lbs": null,
     "description": "This nonmagical longsword is crafted out of cold iron. As a masterwork weapon, it has a +1 enhancement bonus on attack rolls."
   },

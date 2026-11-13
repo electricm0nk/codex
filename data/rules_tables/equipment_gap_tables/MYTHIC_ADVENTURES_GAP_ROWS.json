@@ -137,7 +137,7 @@
       "key": "Shadow Spike",
       "name": "Shadow Spike",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 96600.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -167,7 +167,7 @@
       "key": "Spellbreaker",
       "name": "Spellbreaker",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 71600.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null

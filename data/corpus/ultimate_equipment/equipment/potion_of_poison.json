@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 1800.0,
     "description": "1d3 Con per round for 6 rounds, DC 14 Fort negates.",
     "key": "Potion of Poison",
     "name": "Potion of Poison",

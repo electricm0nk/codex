@@ -375,3 +375,59 @@ fn market_prices_are_positive_or_listed() {
         unlisted.iter().take(20).collect::<Vec<_>>()
     );
 }
+
+/// E1.11's tightening of the gate (`decisions.md §30.1`): a Market key listed in
+/// `price-unknown.json` must name every source tried — the converter and at least one d20pfsrd
+/// page — and every price cited in `d20pfsrd-prices.json` must be the price the Market serves for
+/// that key (the cited list reaches the Market through `settle_equipment_prices`).
+#[test]
+fn market_price_unknown_rows_name_every_source_tried() {
+    let root = repo_root();
+    let read = |name: &str| -> Vec<Value> {
+        let path = root.join("data/price_overrides").join(name);
+        serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap_or_else(|e| panic!("{}: {e}", path.display()))
+    };
+    let unknown = read("price-unknown.json");
+    let cited = read("d20pfsrd-prices.json");
+    let market: HashMap<String, Option<f64>> = MARKET_CATEGORIES
+        .iter()
+        .flat_map(|&category| list_market(MarketFilter { category, name_contains: None, book: None }).entries)
+        .map(|row| (row.entry.key.clone(), row.entry.cost_gp))
+        .collect();
+
+    let mut untried = Vec::new();
+    for row in &unknown {
+        let key = row["key"].as_str().unwrap_or_default();
+        if !market.contains_key(key) {
+            continue;
+        }
+        let tried: Vec<&str> =
+            row["tried"].as_array().map(|t| t.iter().filter_map(Value::as_str).collect()).unwrap_or_default();
+        let converter = tried.first() == Some(&"converter");
+        let d20pfsrd = tried.iter().any(|t| t.starts_with("d20pfsrd:https://www.d20pfsrd.com/"));
+        if !(converter && d20pfsrd) {
+            untried.push(format!("{key}: tried {tried:?}"));
+        }
+    }
+    assert!(
+        untried.is_empty(),
+        "{} price-unknown Market rows do not name every source tried (converter, then a d20pfsrd URL); first 20: {:#?}",
+        untried.len(),
+        untried.iter().take(20).collect::<Vec<_>>()
+    );
+
+    let unknown_keys: Vec<&str> = unknown.iter().filter_map(|r| r["key"].as_str()).collect();
+    let mut unreached = Vec::new();
+    for row in &cited {
+        let key = row["key"].as_str().expect("a cited row has a key");
+        let price = row["price_gp"].as_f64().expect("a cited row has a price_gp");
+        assert!(price > 0.0, "{key}: a cited price is positive");
+        assert!(row["url"].as_str().is_some_and(|u| u.starts_with("https://www.d20pfsrd.com/")), "{key}: cites a d20pfsrd page");
+        assert!(row["fetched_at"].as_str().is_some_and(|t| !t.is_empty()), "{key}: says when the page was fetched");
+        assert!(!unknown_keys.contains(&key), "{key}: both cited and listed price-unknown");
+        if market.get(key) != Some(&Some(price)) {
+            unreached.push(format!("{key}: cited {price}, Market {:?}", market.get(key)));
+        }
+    }
+    assert!(unreached.is_empty(), "cited prices the Market does not serve: {unreached:#?}");
+}

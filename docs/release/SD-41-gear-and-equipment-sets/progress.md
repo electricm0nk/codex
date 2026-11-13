@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 12 of 45 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 12 (sd41-e1.9, E1.10 landed beside it); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 45 (sd41-e1.9, 2026-11-13: + E1.15 and E2.10 discovered by E1.9; earlier 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
+| Cards complete | 13 of 46 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 13 (sd41-e1.11; 12 at E1.9, E1.10 landed beside it); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 46 (sd41-e1.11, 2026-11-13: + E2.11 discovered by E1.11; 45 at E1.9: + E1.15 and E2.10 discovered by E1.9; earlier 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -121,6 +121,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E1.6 | 2026-11-13 | `3f38f51edf` + this commit | complete | `artifacts/epic_1/E1.6_cycle_receipt.md` (3 card tests + 1 population test + 1 converter test; root lib 3124 tests; codex-ingest 1,863 passed; PF seeds byte-identical; desktop fixture restored byte-identical; discovered E1.13, E2.9) |
 | E1.7 | 2026-11-13 | `9050445ff0` + this commit | complete | `artifacts/epic_1/E1.7_cycle_receipt.md` (5 tests; root lib 3129 tests; codex-ingest 1,863 passed; 19 callers pass `&[], &[]`) |
 | E1.10 | 2026-11-13 | `de3e5d35d4` + this commit | complete | `artifacts/epic_1/E1.10_cycle_receipt.md` (5 tests; root lib 3134 tests, 3128 passed, 6 ignored; `saved_character` 26 passed) |
+| E1.11 | 2026-11-13 | this commit | complete | `artifacts/epic_1/E1.11_cycle_receipt.md` (397 unpriced Market rows in 3 batches: 41 priced from d20pfsrd with URL, 356 in `price-unknown.json` each with `tried`; Market unpriced 397 → 356; settler fence exit for `.COPY=` rows; 13 golden digests re-pinned; SD-27 absent-price pin takes the cited price; discovered E2.11) |
 
 ## Epic reports
 

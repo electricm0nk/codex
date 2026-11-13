@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 25000.0,
     "description": "When the flask is first unstoppered, all creatures within 30 feet must make a DC 17 Will save or be cursed, taking a \u00162 penalty on attack rolls, saving throws, and skill checks until a remove curse spell is cast upon them.",
     "key": "Flask of Curses",
     "name": "Flask of Curses",

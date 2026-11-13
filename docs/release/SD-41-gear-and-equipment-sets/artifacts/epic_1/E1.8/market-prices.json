@@ -1,12 +1,12 @@
 {
-  "ambiguous_corpus_keys": 3,
+  "ambiguous_corpus_keys": 2,
   "by_book": {
     "ACG": {
       "none": 3,
       "zero": 1
     },
     "AG": {
-      "none": 7,
+      "none": 1,
       "zero": 1
     },
     "APG": {
@@ -14,12 +14,11 @@
       "zero": 20
     },
     "ARG": {
-      "none": 1,
       "zero": 1
     },
     "B1": {
       "none": 1,
-      "zero": 5
+      "zero": 4
     },
     "B2": {
       "zero": 3
@@ -34,14 +33,11 @@
       "zero": 1
     },
     "CRB": {
-      "none": 37,
+      "none": 27,
       "zero": 121
     },
     "HA": {
       "zero": 6
-    },
-    "ISC": {
-      "none": 1
     },
     "ISI": {
       "zero": 1
@@ -53,7 +49,7 @@
       "zero": 3
     },
     "MYTHIC": {
-      "none": 23
+      "none": 21
     },
     "OA": {
       "none": 8
@@ -62,8 +58,8 @@
       "none": 1
     },
     "UE": {
-      "none": 7,
-      "zero": 70
+      "none": 3,
+      "zero": 55
     },
     "UI": {
       "zero": 3
@@ -73,7 +69,7 @@
     },
     "UPSI": {
       "none": 9,
-      "zero": 52
+      "zero": 51
     },
     "UW": {
       "none": 2
@@ -81,39 +77,28 @@
   },
   "by_category": {
     "armor": {
-      "none": 1,
       "zero": 9
     },
     "gear": {
-      "none": 40,
+      "none": 33,
       "zero": 71
     },
     "magicItem": {
-      "none": 46,
-      "zero": 132
+      "none": 40,
+      "zero": 116
     },
     "shield": {
-      "none": 2,
       "zero": 4
     },
     "weapon": {
-      "none": 12,
-      "zero": 80
+      "none": 4,
+      "zero": 79
     }
   },
   "by_cause": {
     "composite_resolved_to_base": [
       "Gauntlet (Part of Armor Suit)",
-      "Holy Avenger",
-      "Longsword (Cold Iron/Masterwork)",
-      "Shifter's Sorrow",
-      "Dagger (Silver/Masterwork)",
-      "Longbow (Composite +0)",
-      "Shortbow (Composite +0)",
-      "Oathbow",
       "Rag Armor (Dark Creeper)",
-      "Darkwood Buckler",
-      "Darkwood Shield",
       "Padded Barding (Base)",
       "Leather Barding (Base)",
       "Studded Leather Barding (Base)",
@@ -137,8 +122,7 @@
       "Barding (Splint Mail)",
       "Barding (Banded Mail)",
       "Barding (Half-Plate)",
-      "Barding (Full Plate)",
-      "Sun Blade (Short)"
+      "Barding (Full Plate)"
     ],
     "cost_literal_zero": [
       "Club (Base)",
@@ -308,35 +292,25 @@
       "Fetish Mask",
       "Heavy Hammer",
       "Amulet of Inescapable Location",
-      "Bag of Devouring",
       "Belt of Weakness",
       "Boots of Dancing",
-      "Bracers of Defenselessness",
       "Broom of Animated Attack",
-      "Crystal Hypnosis Ball",
       "Drums of Lethargy",
       "Dust of Sneezing and Choking",
       "Eyes of Blindness",
-      "Flask of Curses",
       "Gauntlets of Fumbling",
       "Headband of Stupidity",
       "Helm of Opposite Alignment",
       "Incense of Obsession",
       "Mask of Ugliness",
       "Medallion of Thought Projection",
-      "Necklace of Strangulation",
       "Periapt of Foul Rotting",
-      "Potion of Poison",
-      "Ring of Clumsiness",
       "Ring of Lifebleed",
       "Ring of Spell Devouring",
       "Robe of Powerlessness",
-      "Robe of Vermin",
       "Rod of Foiled Magic",
-      "Scarab of Death",
       "Scattershot Bracers",
       "Staff of Occasional Wonder",
-      "Stone of Weight (Loadstone)",
       "Unguent of Aging",
       "Unlucky Figurine",
       "Vacuous Grimoire",
@@ -361,7 +335,6 @@
       "Crawling Tattoo",
       "Mind Stone",
       "Mind Stone (Greater)",
-      "Torc of Interrogation",
       "Sutra of Tranquil Thought",
       "Annulus",
       "Psicrown of the Crystal Mind",
@@ -384,7 +357,6 @@
     "no_cost_token": [
       "Bomb",
       "Fake Rapier",
-      "Weapon (Dwarven Boulder)",
       "Seedpod",
       "Holly and Mistletoe",
       "Holy Symbol",
@@ -394,7 +366,6 @@
       "Holy Symbol (Compartment)",
       "Holy Symbol (Flask)",
       "Monkey's Paw",
-      "Horsemaster's Saddle (Mount)",
       "Reverse Capacitor",
       "Crown of Chaos",
       "Disruptor",
@@ -435,14 +406,8 @@
     "no_raw_tokens": [
       "Rock (Small)",
       "Rock (Medium)",
-      "Maiden's Panoply",
       "Spell Tattoo",
       "Riffle Scroll",
-      "Caparison of Resistance +1 (Mount)",
-      "Caparison of Resistance +2 (Mount)",
-      "Caparison of Resistance +3 (Mount)",
-      "Caparison of Resistance +4 (Mount)",
-      "Caparison of Resistance +5 (Mount)",
       "Rod (Storm Kindler's)",
       "Halcyon Bonded Mask"
     ],
@@ -452,7 +417,6 @@
       "Stake (Wood)",
       "Improvised Weapon (One-Handed)",
       "Improvised Weapon (Two-Handed)",
-      "Aklys",
       "Amentum",
       "Mind Blade (Light Bludgeoning)",
       "Mind Blade (Light Piercing)",
@@ -477,27 +441,16 @@
       "Mind Bolt (Short Range Slashing)",
       "Amentum (Javelin)",
       "Living Grimoire Holy Text",
-      "Quarterstaff (Hurricane)",
-      "Quarterstaff of Vaulting",
-      "Sling (Frostbite)",
-      "Shadow Spike",
-      "Spellbreaker",
-      "Quarterstaff of Contemplation",
       "Amulet of Mighty Fists",
       "Staff of the Magi",
       "Talisman of Pure Good",
       "Talisman of Ultimate Evil",
       "Rod of Arson",
-      "Armor of Arrow Attraction",
-      "Armor of Rage",
       "Ornery Pistol",
       "Unstable Musket",
       "Cursed Sword (-2)",
-      "Berserking Sword",
       "Biting Battleaxe",
-      "Net of Snaring",
       "Unwieldy Glaive",
-      "Cursed Backbiter Spear",
       "Deadly Returns Throwing Axe",
       "Arrowbreak Bow",
       "Nearfiring Bow",
@@ -516,10 +469,9 @@
   },
   "by_eqmod_cost_kind": {
     "charges_arg": 3,
-    "choice_arg": 3,
-    "enhancement_plus": 10,
-    "numeric": 59,
-    "weight_or_basecost": 2
+    "enhancement_plus": 4,
+    "numeric": 48,
+    "weight_or_basecost": 1
   },
   "command": "cd apps/desktop/src-tauri && cargo test --locked -j 8 --test market_price_census market_price -- --test-threads=8 --nocapture",
   "converter_causes": [
@@ -529,43 +481,43 @@
   ],
   "counts": {
     "by_cause": {
-      "composite_resolved_to_base": 36,
-      "cost_literal_zero": 233,
+      "composite_resolved_to_base": 26,
+      "cost_literal_zero": 222,
       "cost_offset_by_eqmod": 4,
-      "no_cost_token": 49,
-      "no_raw_tokens": 12,
-      "price_in_eqmods": 61,
+      "no_cost_token": 47,
+      "no_raw_tokens": 6,
+      "price_in_eqmods": 49,
       "retirement_directive_row": 2
     },
     "negative": 0,
-    "none": 101,
-    "zero": 296
+    "none": 77,
+    "zero": 279
   },
   "d20pfsrd_bound": {
     "every_unpriced": {
-      "armor": 10,
-      "gear": 111,
-      "magicItem": 178,
-      "shield": 6,
-      "weapon": 92
-    },
-    "every_unpriced_total": 397,
-    "if_converter_evaluates_e19_listed_kinds_only": {
-      "armor": 7,
-      "gear": 83,
+      "armor": 9,
+      "gear": 104,
       "magicItem": 156,
       "shield": 4,
-      "weapon": 52
+      "weapon": 83
     },
-    "if_converter_evaluates_e19_listed_kinds_only_total": 302,
-    "if_converter_evaluates_every_in_record_kind": {
-      "armor": 7,
+    "every_unpriced_total": 356,
+    "if_converter_evaluates_e19_listed_kinds_only": {
+      "armor": 6,
       "gear": 80,
-      "magicItem": 153,
+      "magicItem": 139,
       "shield": 4,
-      "weapon": 52
+      "weapon": 51
     },
-    "if_converter_evaluates_every_in_record_kind_total": 296,
+    "if_converter_evaluates_e19_listed_kinds_only_total": 280,
+    "if_converter_evaluates_every_in_record_kind": {
+      "armor": 6,
+      "gear": 80,
+      "magicItem": 136,
+      "shield": 4,
+      "weapon": 51
+    },
+    "if_converter_evaluates_every_in_record_kind_total": 277,
     "predicate": "a row is left for the lookup unless its cause is a converter cause and (it is a composite resolved to its base, whose eqmods are unknown until E1.9 restores them, or every eqmod it names states a cost of an evaluated kind); in_record kinds = numeric, WT/BASECOST, +N, and the %SPELL/%CHARGES/%CHOICE formulas whose inputs are the EQMOD token arguments; e19_listed = numeric, WT/BASECOST, +N"
   },
   "market_rows": {
@@ -577,118 +529,6 @@
   },
   "negative": [],
   "none": [
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Longsword (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/holy_avenger.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Holy Avenger",
-      "market_category": "weapon",
-      "name": "Holy Avenger"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Longsword (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/longsword_cold_iron_masterwork.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Longsword (Cold Iron/Masterwork)",
-      "market_category": "weapon",
-      "name": "Longsword (Cold Iron/Masterwork)"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Two-Bladed Sword (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/shifter_s_sorrow.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Shifter's Sorrow",
-      "market_category": "weapon",
-      "name": "Shifter's Sorrow"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Dagger (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/dagger_silver_masterwork.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Dagger (Silver/Masterwork)",
-      "market_category": "weapon",
-      "name": "Dagger (Silver/Masterwork)"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Composite Longbow (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/longbow_composite_0.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Longbow (Composite +0)",
-      "market_category": "weapon",
-      "name": "Longbow (Composite +0)"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Composite Shortbow (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/shortbow_composite_0.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Shortbow (Composite +0)",
-      "market_category": "weapon",
-      "name": "Shortbow (Composite +0)"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Composite Longbow (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/oathbow.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Oathbow",
-      "market_category": "weapon",
-      "name": "Oathbow"
-    },
     {
       "book": "APG",
       "catalog_category": "ArmsArmor",
@@ -720,22 +560,6 @@
       "key": "Fake Rapier",
       "market_category": "weapon",
       "name": "Fake Rapier"
-    },
-    {
-      "book": "ARG",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Weapon (Dwarven Boulder)",
-      "cause": "no_cost_token",
-      "corpus": [
-        "data/corpus/advanced_race_guide/equipment/arms_armor/weapon_dwarven_boulder.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Weapon (Dwarven Boulder)",
-      "market_category": "weapon",
-      "name": "Weapon (Dwarven Boulder)"
     },
     {
       "book": "UC",
@@ -776,54 +600,6 @@
       "key": "Seedpod",
       "market_category": "weapon",
       "name": "Seedpod"
-    },
-    {
-      "book": "AG",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Maiden's Panoply",
-      "cause": "no_raw_tokens",
-      "corpus": [
-        "data/corpus/adventurers_guide/equipment/maiden_s_panoply.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Maiden's Panoply",
-      "market_category": "armor",
-      "name": "Maiden's Panoply"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Light Wooden Shield (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/darkwood_buckler.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Darkwood Buckler",
-      "market_category": "shield",
-      "name": "Darkwood Buckler"
-    },
-    {
-      "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Heavy Wooden Shield (Base)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/darkwood_shield.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Darkwood Shield",
-      "market_category": "shield",
-      "name": "Darkwood Shield"
     },
     {
       "book": "CRB",
@@ -1211,22 +987,6 @@
     },
     {
       "book": "CRB",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Sun Blade (Bastard)",
-      "cause": "composite_resolved_to_base",
-      "corpus": [
-        "data/corpus/core_rulebook/equipment/arms_armor/sun_blade_short.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Sun Blade (Short)",
-      "market_category": "gear",
-      "name": "Sun Blade (Bastard)"
-    },
-    {
-      "book": "CRB",
       "catalog_category": "General",
       "catalog_name": "Holly and Mistletoe",
       "cause": "no_cost_token",
@@ -1338,80 +1098,6 @@
       "name": "Holy Symbol, Flask"
     },
     {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Quarterstaff (Hurricane)",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/quarterstaff_hurricane.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {
-        "Material ~ Wood": "numeric",
-        "Special Ability ~ +1 ~ Weapon": "enhancement_plus",
-        "Special Ability ~ Enhancement Cost": "choice_arg"
-      },
-      "eqmods": [
-        "Material ~ Wood",
-        "Special Ability ~ Enhancement Cost",
-        "Special Ability ~ +1 ~ Weapon"
-      ],
-      "key": "Quarterstaff (Hurricane)",
-      "market_category": "gear",
-      "name": "Quarterstaff (Hurricane)"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Quarterstaff of Vaulting",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/quarterstaff_of_vaulting.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {
-        "Material ~ Darkwood": "weight_or_basecost",
-        "Special Ability ~ +1 ~ Weapon": "enhancement_plus",
-        "Special Ability ~ Enhancement Cost": "choice_arg"
-      },
-      "eqmods": [
-        "Material ~ Darkwood",
-        "Special Ability ~ Enhancement Cost",
-        "Special Ability ~ +1 ~ Weapon"
-      ],
-      "key": "Quarterstaff of Vaulting",
-      "market_category": "gear",
-      "name": "Quarterstaff of Vaulting"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Sling, Frostbite",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/sling_frostbite.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {
-        "Material ~ Leather": "numeric",
-        "Special Ability ~ +1 ~ Weapon": "enhancement_plus",
-        "Special Ability ~ Enhancement Cost": "choice_arg",
-        "Special Ability ~ Frost ~ Weapon": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Leather",
-        "Special Ability ~ Frost ~ Weapon",
-        "Special Ability ~ Enhancement Cost",
-        "Special Ability ~ +1 ~ Weapon"
-      ],
-      "key": "Sling (Frostbite)",
-      "market_category": "gear",
-      "name": "Sling, Frostbite"
-    },
-    {
       "book": "ACG",
       "catalog_category": "General",
       "catalog_name": "Dust Knuckles.FORGET",
@@ -1438,92 +1124,6 @@
       "key": "False Face.FORGET",
       "market_category": "gear",
       "name": "False Face.FORGET"
-    },
-    {
-      "book": "MYTHIC",
-      "catalog_category": "General",
-      "catalog_name": "Shadow Spike",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/mythic_adventures/equipment/shadow_spike.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {
-        "Material ~ Wood": "numeric",
-        "Special Ability ~ +2 ~ Weapon": "enhancement_plus",
-        "Special Ability ~ Cruel ~ Weapon": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Wood",
-        "Special Ability ~ Cruel ~ Weapon",
-        "Special Ability ~ +2 ~ Weapon"
-      ],
-      "key": "Shadow Spike",
-      "market_category": "gear",
-      "name": "Shadow Spike"
-    },
-    {
-      "book": "MYTHIC",
-      "catalog_category": "General",
-      "catalog_name": "Spellbreaker",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/mythic_adventures/equipment/spellbreaker.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {
-        "Material ~ Wood": "numeric",
-        "Special Ability ~ +3 ~ Weapon": "enhancement_plus",
-        "Special Ability ~ Bane ~ Weapon": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Wood",
-        "Special Ability ~ Bane ~ Weapon",
-        "Special Ability ~ +3 ~ Weapon"
-      ],
-      "key": "Spellbreaker",
-      "market_category": "gear",
-      "name": "Spellbreaker"
-    },
-    {
-      "book": "ISC",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Quarterstaff of Contemplation",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/inner_sea_combat/equipment/quarterstaff_of_contemplation.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {
-        "Material ~ Wood": "numeric",
-        "Special Ability ~ +2 ~ Weapon": "enhancement_plus"
-      },
-      "eqmods": [
-        "Material ~ Wood",
-        "Special Ability ~ +2 ~ Weapon"
-      ],
-      "key": "Quarterstaff of Contemplation",
-      "market_category": "gear",
-      "name": "Quarterstaff of Contemplation"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Horsemaster's Saddle (Mount)",
-      "cause": "no_cost_token",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/horsemaster_s_saddle_mount.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Horsemaster's Saddle (Mount)",
-      "market_category": "magicItem",
-      "name": "Horsemaster's Saddle (Mount)"
     },
     {
       "book": "UPSI",
@@ -2170,86 +1770,6 @@
       "key": "Trueforge",
       "market_category": "magicItem",
       "name": "Trueforge"
-    },
-    {
-      "book": "AG",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Caparison of Resistance +1 (Mount)",
-      "cause": "no_raw_tokens",
-      "corpus": [
-        "data/corpus/adventurers_guide/equipment/caparison_of_resistance_1_mount.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Caparison of Resistance +1 (Mount)",
-      "market_category": "magicItem",
-      "name": "Caparison of Resistance +1 (Mount)"
-    },
-    {
-      "book": "AG",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Caparison of Resistance +2 (Mount)",
-      "cause": "no_raw_tokens",
-      "corpus": [
-        "data/corpus/adventurers_guide/equipment/caparison_of_resistance_2_mount.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Caparison of Resistance +2 (Mount)",
-      "market_category": "magicItem",
-      "name": "Caparison of Resistance +2 (Mount)"
-    },
-    {
-      "book": "AG",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Caparison of Resistance +3 (Mount)",
-      "cause": "no_raw_tokens",
-      "corpus": [
-        "data/corpus/adventurers_guide/equipment/caparison_of_resistance_3_mount.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Caparison of Resistance +3 (Mount)",
-      "market_category": "magicItem",
-      "name": "Caparison of Resistance +3 (Mount)"
-    },
-    {
-      "book": "AG",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Caparison of Resistance +4 (Mount)",
-      "cause": "no_raw_tokens",
-      "corpus": [
-        "data/corpus/adventurers_guide/equipment/caparison_of_resistance_4_mount.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Caparison of Resistance +4 (Mount)",
-      "market_category": "magicItem",
-      "name": "Caparison of Resistance +4 (Mount)"
-    },
-    {
-      "book": "AG",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Caparison of Resistance +5 (Mount)",
-      "cause": "no_raw_tokens",
-      "corpus": [
-        "data/corpus/adventurers_guide/equipment/caparison_of_resistance_5_mount.json"
-      ],
-      "cost_gp": null,
-      "cost_token": [],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Caparison of Resistance +5 (Mount)",
-      "market_category": "magicItem",
-      "name": "Caparison of Resistance +5 (Mount)"
     },
     {
       "book": "AG",
@@ -2979,29 +2499,6 @@
       "key": "Brawler's Flurry",
       "market_category": "weapon",
       "name": "Brawler's Flurry"
-    },
-    {
-      "book": "B1",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Aklys",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/beastiary/equipment/aklys.json",
-        "data/corpus/ultimate_equipment/equipment/aklys.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {
-        "Material ~ Wood": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Wood"
-      ],
-      "key": "Aklys",
-      "market_category": "weapon",
-      "name": "Aklys"
     },
     {
       "book": "UI",
@@ -6183,50 +5680,6 @@
     {
       "book": "UE",
       "catalog_category": "ArmsArmor",
-      "catalog_name": "Armor of Arrow Attraction",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/armor_of_arrow_attraction.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {
-        "Material ~ Steel": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Steel"
-      ],
-      "key": "Armor of Arrow Attraction",
-      "market_category": "magicItem",
-      "name": "Armor of Arrow Attraction"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Armor of Rage",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/armor_of_rage.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {
-        "Material ~ Steel": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Steel"
-      ],
-      "key": "Armor of Rage",
-      "market_category": "magicItem",
-      "name": "Armor of Rage"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
       "catalog_name": "Ornery Pistol",
       "cause": "price_in_eqmods",
       "corpus": [
@@ -6293,28 +5746,6 @@
     {
       "book": "UE",
       "catalog_category": "ArmsArmor",
-      "catalog_name": "Berserking Sword",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/berserking_sword.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {
-        "Material ~ Steel": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Steel"
-      ],
-      "key": "Berserking Sword",
-      "market_category": "magicItem",
-      "name": "Berserking Sword"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
       "catalog_name": "Biting Battleaxe",
       "cause": "price_in_eqmods",
       "corpus": [
@@ -6355,28 +5786,6 @@
     {
       "book": "UE",
       "catalog_category": "ArmsArmor",
-      "catalog_name": "Net of Snaring",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/net_of_snaring.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {
-        "Special Quality ~ Nonlethal": "numeric"
-      },
-      "eqmods": [
-        "Special Quality ~ Nonlethal"
-      ],
-      "key": "Net of Snaring",
-      "market_category": "magicItem",
-      "name": "Net of Snaring"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
       "catalog_name": "Unwieldy Glaive",
       "cause": "price_in_eqmods",
       "corpus": [
@@ -6395,30 +5804,6 @@
       "key": "Unwieldy Glaive",
       "market_category": "magicItem",
       "name": "Unwieldy Glaive"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "ArmsArmor",
-      "catalog_name": "Cursed Backbiter Spear",
-      "cause": "price_in_eqmods",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/cursed_backbiter_spear.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {
-        "Material ~ Steel": "numeric",
-        "Material ~ Wood": "numeric"
-      },
-      "eqmods": [
-        "Material ~ Steel",
-        "Material ~ Wood"
-      ],
-      "key": "Cursed Backbiter Spear",
-      "market_category": "magicItem",
-      "name": "Cursed Backbiter Spear"
     },
     {
       "book": "UE",
@@ -6509,24 +5894,6 @@
     {
       "book": "UE",
       "catalog_category": "MagicItems",
-      "catalog_name": "Bag of Devouring",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/bag_of_devouring.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Bag of Devouring",
-      "market_category": "magicItem",
-      "name": "Bag of Devouring"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
       "catalog_name": "Belt of Weakness",
       "cause": "cost_literal_zero",
       "corpus": [
@@ -6559,24 +5926,6 @@
       "key": "Boots of Dancing",
       "market_category": "magicItem",
       "name": "Boots of Dancing"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Bracers of Defenselessness",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/bracers_of_defenselessness.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Bracers of Defenselessness",
-      "market_category": "magicItem",
-      "name": "Bracers of Defenselessness"
     },
     {
       "book": "UE",
@@ -6617,24 +5966,6 @@
       "key": "Cape of Anchoring",
       "market_category": "magicItem",
       "name": "Cape of Anchoring"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Crystal Hypnosis Ball",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/crystal_hypnosis_ball.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Crystal Hypnosis Ball",
-      "market_category": "magicItem",
-      "name": "Crystal Hypnosis Ball"
     },
     {
       "book": "UE",
@@ -6689,24 +6020,6 @@
       "key": "Eyes of Blindness",
       "market_category": "magicItem",
       "name": "Eyes of Blindness"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Flask of Curses",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/flask_of_curses.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Flask of Curses",
-      "market_category": "magicItem",
-      "name": "Flask of Curses"
     },
     {
       "book": "UE",
@@ -6819,24 +6132,6 @@
     {
       "book": "UE",
       "catalog_category": "MagicItems",
-      "catalog_name": "Necklace of Strangulation",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/necklace_of_strangulation.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Necklace of Strangulation",
-      "market_category": "magicItem",
-      "name": "Necklace of Strangulation"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
       "catalog_name": "Pauldrons of the Jackass",
       "cause": "price_in_eqmods",
       "corpus": [
@@ -6921,42 +6216,6 @@
     {
       "book": "UE",
       "catalog_category": "MagicItems",
-      "catalog_name": "Potion of Poison",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/potion_of_poison.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Potion of Poison",
-      "market_category": "magicItem",
-      "name": "Potion of Poison"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Ring of Clumsiness",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/ring_of_clumsiness.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Ring of Clumsiness",
-      "market_category": "magicItem",
-      "name": "Ring of Clumsiness"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
       "catalog_name": "Ring of Lifebleed",
       "cause": "cost_literal_zero",
       "corpus": [
@@ -7011,24 +6270,6 @@
     {
       "book": "UE",
       "catalog_category": "MagicItems",
-      "catalog_name": "Robe of Vermin",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/robe_of_vermin.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Robe of Vermin",
-      "market_category": "magicItem",
-      "name": "Robe of Vermin"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
       "catalog_name": "Rod of Foiled Magic",
       "cause": "cost_literal_zero",
       "corpus": [
@@ -7043,24 +6284,6 @@
       "key": "Rod of Foiled Magic",
       "market_category": "magicItem",
       "name": "Rod of Foiled Magic"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Scarab of Death",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/scarab_of_death.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Scarab of Death",
-      "market_category": "magicItem",
-      "name": "Scarab of Death"
     },
     {
       "book": "UE",
@@ -7097,24 +6320,6 @@
       "key": "Staff of Occasional Wonder",
       "market_category": "magicItem",
       "name": "Staff of Occasional Wonder"
-    },
-    {
-      "book": "UE",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Stone of Weight (Loadstone)",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_equipment/equipment/stone_of_weight_loadstone.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Stone of Weight (Loadstone)",
-      "market_category": "magicItem",
-      "name": "Stone of Weight (Loadstone)"
     },
     {
       "book": "UE",
@@ -7564,24 +6769,6 @@
       "key": "Mind Stone (Greater)",
       "market_category": "magicItem",
       "name": "Greater Mind Stone"
-    },
-    {
-      "book": "UPSI",
-      "catalog_category": "MagicItems",
-      "catalog_name": "Torc of Interrogation",
-      "cause": "cost_literal_zero",
-      "corpus": [
-        "data/corpus/ultimate_psionics/equipment/torc_of_interrogation.json"
-      ],
-      "cost_gp": 0.0,
-      "cost_token": [
-        "0"
-      ],
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Torc of Interrogation",
-      "market_category": "magicItem",
-      "name": "Torc of Interrogation"
     },
     {
       "book": "UPSI",

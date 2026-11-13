@@ -113,6 +113,17 @@ fn every_newly_reachable_record_is_priced_by_its_own_corpus_cost_token() {
     let mut checked_numeric = 0usize;
     let mut checked_formula = 0usize;
     let mut checked_absent = 0usize;
+    let mut checked_cited = 0usize;
+    // A record PCGen leaves without a price may carry one cited from d20pfsrd with its page URL
+    // (`docs/release/SD-41-gear-and-equipment-sets/decisions.md §26` (1), `§30`): that price is
+    // sourced, not fabricated, and must be exactly the cited figure.
+    let cited: BTreeMap<String, f64> = serde_json::from_str::<Vec<serde_json::Value>>(
+        &fs::read_to_string("data/price_overrides/d20pfsrd-prices.json").expect("the cited price list exists"),
+    )
+    .expect("the cited price list is JSON")
+    .iter()
+    .map(|r| (r["key"].as_str().unwrap().to_string(), r["price_gp"].as_f64().unwrap()))
+    .collect();
 
     for (book_code, book_dir) in NEWLY_REACHABLE_BOOKS {
         for record in load_records(book_dir) {
@@ -162,15 +173,20 @@ fn every_newly_reachable_record_is_priced_by_its_own_corpus_cost_token() {
                     }
                 },
                 None => {
+                    let cited_price = cited.get(&record.key).copied();
                     assert_eq!(
                         row.cost_gp,
-                        None,
-                        "{book_code} {:?} has no COST: token in the corpus at all, so any price \
-                         at all would be fabricated ({})",
+                        cited_price,
+                        "{book_code} {:?} has no COST: token in the corpus at all, so its price is \
+                         its cited d20pfsrd price or none; any other price would be fabricated ({})",
                         record.key,
                         record.path.display()
                     );
-                    checked_absent += 1;
+                    if cited_price.is_some() {
+                        checked_cited += 1;
+                    } else {
+                        checked_absent += 1;
+                    }
                 }
             }
         }
@@ -206,11 +222,14 @@ fn every_newly_reachable_record_is_priced_by_its_own_corpus_cost_token() {
     // 140 -> 126 (-14), total unchanged (574 = 447+1+126) -- the SAME 574
     // records, 14 reclassified from "no known price" to "a real price",
     // never a population change.
+    // SD-41 E1.11, 2026-11-13: ARG `Weapon (Dwarven Boulder)` (no COST: token) takes its cited
+    // d20pfsrd price, 20 gp (`data/price_overrides/d20pfsrd-prices.json`): checked_absent
+    // 126 -> 125, checked_cited 0 -> 1; the same 574 records.
     assert_eq!(
-        (checked_numeric, checked_formula, checked_absent),
-        (447, 1, 126),
-        "records priced by a numeric COST: token, by an unevaluated formula, and with no COST: \
-         token at all"
+        (checked_numeric, checked_formula, checked_absent, checked_cited),
+        (447, 1, 125, 1),
+        "records priced by a numeric COST: token, by an unevaluated formula, with no COST: token \
+         at all, and with no COST: token but a cited d20pfsrd price"
     );
     // RAISED `SD31-W4-INTEGRATE-001`, 2026-08-16, same reconciliation as the
     // tuple assertion above: 511 -> 574 (433 + 1 + 140), covering
@@ -218,7 +237,7 @@ fn every_newly_reachable_record_is_priced_by_its_own_corpus_cost_token() {
     // original ACG 269 + ARG 200 + PU 42 population. Every record in all
     // three books is still covered, so none can be skipped by a
     // silently-failing file walk.
-    assert_eq!(checked_numeric + checked_formula + checked_absent, 574);
+    assert_eq!(checked_numeric + checked_formula + checked_absent + checked_cited, 574);
 }
 
 /// The two rows named in the on-screen defect report, stated explicitly so

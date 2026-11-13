@@ -6,7 +6,7 @@
     "key": "Dagger (Silver/Masterwork)",
     "category": "arms_armor",
     "name": "Dagger (Base)",
-    "cost_gp": null,
+    "cost_gp": 322.0,
     "weight_lbs": null,
     "description": "As a masterwork weapon, this alchemical silver dagger has a +1 enhancement bonus on attack rolls (but not to damage rolls)."
   },

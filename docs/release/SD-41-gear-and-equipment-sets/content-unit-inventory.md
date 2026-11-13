@@ -21,7 +21,7 @@ them all with their commands into `artifacts/epic_0/census.txt`.
 |---|---|---|---|
 | F-1 | Version surfaces C1 bumps to `0.21.` (the files SD-40's C1 bumped, less the pointer) | **14** | `git show --name-only --format= 3ceeb63b66 \| awk 'NF' \| grep -vc current-release.json` |
 | F-2 | C1 commit file count (F-1 + `current-release.json`) | **15** | `git show --name-only --format= <sha> \| awk 'NF' \| wc -l` |
-| F-3 | Cards in this bundle | **45** (E1.15, E2.10 discovered by E1.9; E1.14; E4.2–E4.4, §34; E1.13, E2.9 discovered by E1.6; E1.12; 23 at C0 + 8 follow-ups + 3 campaign + E1.11 + E2.8 discovered by E1.8) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-41-gear-and-equipment-sets/kanban.md \| awk 'END{print NR}'` |
+| F-3 | Cards in this bundle | **46** (E2.11 discovered by E1.11; E1.15, E2.10 discovered by E1.9; E1.14; E4.2–E4.4, §34; E1.13, E2.9 discovered by E1.6; E1.12; 23 at C0 + 8 follow-ups + 3 campaign + E1.11 + E2.8 discovered by E1.8) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-41-gear-and-equipment-sets/kanban.md \| awk 'END{print NR}'` |
 | F-4 | Chassis files present | **16** (13 required + `technical-design.md`, `technical-requirements.md`, `kanban.md`) | `find docs/release/SD-41-gear-and-equipment-sets -maxdepth 2 -name '*.md' \| awk 'END{print NR}'` |
 
 ## §2 The gear model today

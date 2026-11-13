@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "MagicItems",
-    "cost_gp": null,
+    "cost_gp": 12000.0,
     "description": null,
     "key": "Horsemaster's Saddle (Mount)",
     "name": "Horsemaster's Saddle (Mount)",

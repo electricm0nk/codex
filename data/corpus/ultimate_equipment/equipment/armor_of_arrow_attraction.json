@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": 0.0,
+    "cost_gp": 10650.0,
     "description": "The wearer takes a -15 penalty to AC against ranged weapons.",
     "key": "Armor of Arrow Attraction",
     "name": "Armor of Arrow Attraction",

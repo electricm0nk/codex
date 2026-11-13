@@ -274,7 +274,7 @@
       "key": "Maiden's Panoply",
       "name": "Maiden's Panoply",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 30650.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -640,7 +640,7 @@
       "key": "Caparison of Resistance +1 (Mount)",
       "name": "Caparison of Resistance +1 (Mount)",
       "category": "MagicItems",
-      "cost_gp": null,
+      "cost_gp": 2700.0,
       "weight_lbs": 4.0,
       "description": null,
       "name_pi_citation": null
@@ -660,7 +660,7 @@
       "key": "Caparison of Resistance +2 (Mount)",
       "name": "Caparison of Resistance +2 (Mount)",
       "category": "MagicItems",
-      "cost_gp": null,
+      "cost_gp": 10800.0,
       "weight_lbs": 4.0,
       "description": null,
       "name_pi_citation": null
@@ -680,7 +680,7 @@
       "key": "Caparison of Resistance +3 (Mount)",
       "name": "Caparison of Resistance +3 (Mount)",
       "category": "MagicItems",
-      "cost_gp": null,
+      "cost_gp": 24300.0,
       "weight_lbs": 4.0,
       "description": null,
       "name_pi_citation": null
@@ -700,7 +700,7 @@
       "key": "Caparison of Resistance +4 (Mount)",
       "name": "Caparison of Resistance +4 (Mount)",
       "category": "MagicItems",
-      "cost_gp": null,
+      "cost_gp": 43200.0,
       "weight_lbs": 4.0,
       "description": null,
       "name_pi_citation": null
@@ -720,7 +720,7 @@
       "key": "Caparison of Resistance +5 (Mount)",
       "name": "Caparison of Resistance +5 (Mount)",
       "category": "MagicItems",
-      "cost_gp": null,
+      "cost_gp": 67500.0,
       "weight_lbs": 4.0,
       "description": null,
       "name_pi_citation": null

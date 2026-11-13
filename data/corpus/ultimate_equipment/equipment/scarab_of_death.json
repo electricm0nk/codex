@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 6000.0,
     "description": "DC 25 Reflex save or die, or take 3d6 points of damage.",
     "key": "Scarab of Death",
     "name": "Scarab of Death",

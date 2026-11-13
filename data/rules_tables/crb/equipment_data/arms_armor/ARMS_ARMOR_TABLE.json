@@ -757,7 +757,7 @@
       "key": "Darkwood Buckler",
       "category": "ArmsArmor",
       "name": "Light Wooden Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 203.0,
       "weight_lbs": null,
       "description": "This nonmagical light wooden shield is made out of darkwood. It has no enhancement bonus, but its construction material makes it lighter than a normal wooden shield. It has no armor check penalty."
     },
@@ -765,7 +765,7 @@
       "key": "Darkwood Shield",
       "category": "ArmsArmor",
       "name": "Heavy Wooden Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 257.0,
       "weight_lbs": null,
       "description": "This nonmagical heavy wooden shield is made out of darkwood. It has no enhancement bonus, but its construction material makes it lighter than a normal wooden shield. It has no armor check penalty."
     },
@@ -1773,7 +1773,7 @@
       "key": "Holy Avenger",
       "category": "ArmsArmor",
       "name": "Longsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 120630.0,
       "weight_lbs": null,
       "description": "This +2 cold iron longsword becomes a +5 holy cold iron longsword in the hands of a paladin.\nThis sacred weapon provides spell resistance of 5 + the paladin's level to the wielder and anyone adjacent to her. It also enables the paladin to use greater dispel magic (once per round as a standard action) at the class level of the paladin. Only the area dispel is possible, not the targeted dispel or counterspell versions of greater dispel magic."
     },
@@ -1789,7 +1789,7 @@
       "key": "Longsword (Cold Iron/Masterwork)",
       "category": "ArmsArmor",
       "name": "Longsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 330.0,
       "weight_lbs": null,
       "description": "This nonmagical longsword is crafted out of cold iron. As a masterwork weapon, it has a +1 enhancement bonus on attack rolls."
     },
@@ -1869,7 +1869,7 @@
       "key": "Shifter's Sorrow",
       "category": "ArmsArmor",
       "name": "Two-Bladed Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 12780.0,
       "weight_lbs": null,
       "description": "This +1/+1 two-bladed sword has blades of alchemical silver. The weapon deals an extra 2d6 points of damage against any creature with the shapechanger subtype. When a shapechanger or a creature in an alternate form (such as a druid using wild shape) is struck by the weapon, it must make a DC 15 Will save or return to its natural form."
     },
@@ -1877,7 +1877,7 @@
       "key": "Dagger (Silver/Masterwork)",
       "category": "ArmsArmor",
       "name": "Dagger (Base)",
-      "cost_gp": null,
+      "cost_gp": 322.0,
       "weight_lbs": null,
       "description": "As a masterwork weapon, this alchemical silver dagger has a +1 enhancement bonus on attack rolls (but not to damage rolls)."
     },
@@ -1893,7 +1893,7 @@
       "key": "Sun Blade (Short)",
       "category": "ArmsArmor",
       "name": "Sun Blade (Bastard)",
-      "cost_gp": null,
+      "cost_gp": 50335.0,
       "weight_lbs": null,
       "description": "This sword is the size of a bastard sword. However, a sun blade is wielded as if it were a short sword with respect to weight and ease of use. In other words, the weapon appears to all viewers to be a bastard sword, and deals bastard sword damage, but the wielder feels and reacts as if the weapon were a short sword. Any individual able to use either a bastard sword or a short sword with proficiency is proficient in the use of a sun blade. Likewise, Weapon Focus and Weapon Specialization in short sword and bastard sword apply equally, but the benefits of those feats do not stack.\nIn normal combat, the glowing golden blade of the weapon is equal to a +2 bastard sword. Against evil creatures, its enhancement bonus is +4. Against Negative Energy Plane creatures or undead creatures, the sword deals double damage (and x3 on a critical hit instead of the usual x2).\nThe blade also has a special sunlight power. Once per day, the wielder can swing the blade vigorously above his head while speaking a command word. The sun blade then sheds a bright yellow radiance that acts like bright light and affects creatures susceptible to light as if it were natural sunlight. The radiance begins shining in a 10-foot radius around the sword wielder and extends outward at 5 feet per round for 10 rounds thereafter, to create a globe of light with a 60-foot radius. When the wielder stops swinging, the radiance fades to a dim glow that persists for another minute before disappearing entirely. All sun blades are of good alignment, and any evil creature attempting to wield one gains one negative level. The negative level remains as long as the sword is in hand and disappears when the sword is no longer wielded. This negative level cannot be overcome in any way (including by restoration spells) while the sword is wielded."
     },
@@ -2213,7 +2213,7 @@
       "key": "Longbow (Composite +0)",
       "category": "ArmsArmor",
       "name": "Composite Longbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": "You need at least two hands to use a bow, regardless of its size. You can use a composite longbow while mounted. All composite bows are made with a particular strength rating (that is, each requires a minimum Strength modifier to use with proficiency). If your Strength bonus is less than the strength rating of the composite bow, you can't effectively use it, so you take a -2 penalty on attacks with it. The default composite longbow requires a Strength modifier of +0 or higher to use with proficiency. A composite longbow can be made with a high strength rating to take advantage of an above-average Strength score; this feature allows you to add your Strength bonus to damage, up to the maximum bonus indicated for the bow. Each point of Strength bonus granted by the bow adds 100 gp to its cost. If you have a penalty for low Strength, apply it to damage rolls when you use a composite longbow.\nFor purposes of Weapon Proficiency and similar feats, a composite longbow is treated as if it were a longbow."
     },
@@ -2237,7 +2237,7 @@
       "key": "Shortbow (Composite +0)",
       "category": "ArmsArmor",
       "name": "Composite Shortbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 75.0,
       "weight_lbs": null,
       "description": "You need at least two hands to use a bow, regardless of its size. You can use a composite shortbow while mounted. All composite bows are made with a particular strength rating (that is, each requires a minimum Strength modifier to use with proficiency). If your Strength bonus is lower than the strength rating of the composite bow, you can't effectively use it, so you take a -2 penalty on attacks with it. The default composite shortbow requires a Strength modifier of +0 or higher to use with proficiency. A composite shortbow can be made with a high strength rating to take advantage of an above-average Strength score; this feature allows you to add your Strength bonus to damage, up to the maximum bonus indicated for the bow. Each point of Strength bonus granted by the bow adds 75 gp to its cost. If you have a penalty for low Strength, apply it to damage rolls when you use a composite shortbow.\nFor purposes of Weapon Proficiency, Weapon Focus, and similar feats, a composite shortbow is treated as if it were a shortbow."
     },
@@ -2309,7 +2309,7 @@
       "key": "Oathbow",
       "category": "ArmsArmor",
       "name": "Composite Longbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 25600.0,
       "weight_lbs": null,
       "description": "Of elven make, this white +2 composite longbow (+2 Str bonus) whispers, \"Swift defeat to my enemies\" in Elven when nocked and pulled. Once per day, if the archer swears aloud to slay her target (a free action), the bow's whisper becomes the shout \"Death to those who have wronged me!\" Against such a sworn enemy, the bow has a +5 enhancement bonus, and arrows launched from it deal an additional 2d6 points of damage (and x4 on a critical hit instead of the normal x3). After an enemy has been sworn, the bow is treated as only a masterwork weapon against all foes other than the sworn enemy, and the archer takes a -1 penalty on attack rolls with any weapon other than the oathbow. These bonuses and penalties last for 7 days or until the sworn enemy is slain or destroyed by the wielder of the oathbow, whichever comes first.\nThe oathbow may only have one sworn enemy at a time. Once the wielder swears to slay a target, he cannot make a new oath until he has slain that target or 7 days have passed. Even if the wielder slays the sworn enemy on the same day that he makes the oath, he cannot activate the oathbow's special power again until 24 hours have passed from the time he made the oath."
     },

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 95000.0,
     "description": "Immediately tightens, dealing 6 points of damage per round.",
     "key": "Necklace of Strangulation",
     "name": "Necklace of Strangulation",

@@ -229,7 +229,7 @@
       "key": "Weapon (Dwarven Boulder)",
       "category": "ArmsArmor",
       "name": "Weapon (Dwarven Boulder)",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null
     }

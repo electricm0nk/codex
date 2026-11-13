@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 9380.0,
     "description": null,
     "key": "Sling (Frostbite)",
     "name": "Sling, Frostbite",

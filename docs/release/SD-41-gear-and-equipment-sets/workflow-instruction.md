@@ -85,7 +85,7 @@ ENVIRONMENT (SD-41, binding — every rule here applies to you):
   _settled/equipment.json, never read from tags or raw_tokens in live code; after every regen check
   `sha256sum apps/desktop/src-tauri/resources/corpus_fixtures/_settled/equipment.json` is unchanged (E1.9 may
   change it only for a named wrong fixture price).
-- NETWORK (E1.9 only): fetch d20pfsrd pages read-only with a browser user agent; record the URL per price;
+- NETWORK (E1.9, E1.11): fetch d20pfsrd pages read-only with a browser user agent; record the URL per price;
   if the site refuses, stop fetching and say so in the receipt (the lead's web-fetch agent fills the list).
 - CLIPPY BEFORE THE FIRST COMMIT of any card that touches a .rs file:
   `cargo clippy --locked --tests -j 8` in each touched workspace (R16).
