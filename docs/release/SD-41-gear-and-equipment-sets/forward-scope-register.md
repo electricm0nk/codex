@@ -36,7 +36,7 @@ authoring; its Inventory section (E3.2) is what E4.1 re-lays by location.
 | COM-14 | Ammunition boxes only under ammunition weapons, with the carried count; no global row | `decisions.md §23` | E1.6, E2.4, E4.1 |
 | COM-15 | The Market table (Item / Price / Weight / Slot, sortable), description box, Only Show Affordable, Quantity, Negotiate on Buy and Sell, Buy Custom builder, Create dialog | `decisions.md §24–§26, §28` | E2.5, E2.6, E3.4 |
 | COM-16 | Created items: weight, optional price, optional container + slot; persisted, printed, weighed, editable in the Custom tab | `decisions.md §25` | E1.7, E2.3 |
-| COM-17 | Prices: converter fix, cited d20pfsrd list, price-unknown list, the gate test | `decisions.md §26` | E1.8, E1.9 |
+| COM-17 | Prices: converter fix, cited d20pfsrd list for every Market row, the gate `market_prices_are_all_positive` (a closure criterion) | `decisions.md §26, §30` | E1.8, E1.9, E1.11 |
 | COM-18 | Drop → Not Carried; Sell and Discard separate; stacks with quantities on every action (was FSR-C1) | `decisions.md §27, §28` | E2.1, E2.2, E2.5, E3.1 |
 | COM-19 | Campaign folders: write-through of the whole character folder on every save, one folder per character; membership dialog on the Campaign field; one button per campaign under Skills | `decisions.md §29` | E1.10, E2.7, E3.5 |
 
@@ -75,7 +75,7 @@ author's default or the operator's silence, named here.
 | DEF-3 | Per-set print (print the Formalwear set without activating it) | A2: one active set drives the print | the operator asks | switch the set, then print |
 | DEF-4 | A set's own AC / weight preview before activating | A2 | the operator asks | activate to see |
 | DEF-5 | Eqmod price formulas the converter does not evaluate | `decisions.md §24`, Q6 | E1.9's receipt lists the count; the operator asks | those abilities sell through Negotiate |
-| DEF-6 | Splitting a bundle below the book's unit | `decisions.md §28`, Q8 | the operator asks | a stack splits by bundles |
+| ~~DEF-6~~ | Splitting a bundle below the book's unit | **withdrawn 2026-11-12: the operator answered Q8 "Count single arrows" (`decisions.md §30`); pieces are in the DoD (COM-18)** | — | — |
 
 If the operator says any of these was meant to be in the DoD, it becomes a blocker.
 

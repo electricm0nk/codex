@@ -47,11 +47,11 @@ weight unchanged.
 | Slug | `gear-and-equipment-sets` |
 | Canonical branch | `tranche-21`, cut 2026-11-12 from `origin/tranche-20` @ `f7f85f3d24` (`git merge-base HEAD origin/tranche-20`); catches up to `tranche-20`'s tip and then to `develop` after SD-40 merges (`decisions.md §4`) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E1–E5 / **34 cards** (23 + 8 from the seven follow-ups + 3 from the campaign item, `decisions.md §22–§29`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 34) |
+| Epics / cards | C, E1–E5 / **35 cards** (23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, `decisions.md §22–§30`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 35) |
 | Target version | `0.21.0`, stamped by C1's single commit on the 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run per phase (`decisions.md §12.2`); ends cleanly at E4.G |
 | Cadence | N/A |
-| Closure gate | 34 cards `complete` (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 35 cards `complete` (E4.G needs the operator's two `usable: yes` lines; every Market row priced, `decisions.md §30`) (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's request, answers and eight follow-ups (`artifacts/cycle_0/operator-brief-2026-11-12.md`); the census (`artifacts/epic_0/census.txt`); PCGen's Equipping, Purchase and custom-item tabs as a functional reference only (`decisions.md §17`) |
 
 ## 2. Files in this folder
@@ -114,9 +114,9 @@ Repo files read `0.21.0` after C1.
 | 7 | Where the gear screen lives | it replaces the Equipment panel inside the Gear tab; `SHEET_TABS` unchanged | `decisions.md §13`; `§21` Q5 |
 | 8 | Drag and drop in ui-smoke | the harness has no drag op (`census.txt §5`); every smoke row moves through the "Move to" menu; drag is proven by a unit test of the drop handler and the operator's eye at E4.G | `decisions.md §14` |
 | 9 | Phasing against SD-40 | E1 (root crate + new files + the `convert` lane) now; E2–E5 after SD-40 merges and `tranche-21` catches up to `develop` | `decisions.md §4` |
-| 10 | Stacks are a view, not a store change | copies with one item, bonus, name and location collapse into one row with a quantity; no migration; buy / sell / move / drop / discard take a quantity; a bundle is the unit | `decisions.md §28`; `§21` Q8 |
-| 11 | Buy Custom pricing | from each eqmod's flat `COST` and the formulas the converter evaluates; an unpriced eqmod routes the purchase through Negotiate | `decisions.md §24`; `§21` Q6 |
-| 12 | The d20pfsrd list's reach | the Market rows still unpriced after the converter fix, bounded by E1.8's census; the rest listed as price-unknown with a reason and sold through Negotiate | `decisions.md §26`; `§21` Q7 |
+| 10 | Where a stack's piece count lives | **operator Q8 (§30): pieces** — `quantity` per stack in `equipment_sets.json`'s `copies` map (the saved input keeps one line per stack; `EquipmentSelection` untouched); a bundle copy without one is `base_quantity` pieces (the migration); the engine weighs `weight × quantity / base_quantity` | `decisions.md §28, §30` |
+| 11 | Buy Custom pricing | **operator Q6 (§30): the default stands** — flat `COST` + evaluable formulas; an unpriced eqmod prices by Negotiate | `decisions.md §24, §30` |
+| 12 | The d20pfsrd list's reach | **operator Q7 (§30): every Market item** — a closure criterion; E1.11 in batches via the lead's `web-fetch` agent; `price-unknown.json` empty for Market rows; Negotiate is haggling only | `decisions.md §26, §30` |
 | 13 | A Create item's edit and removal | the Custom tab's existing dialog (it gains weight, price, capacity, slot) | `decisions.md §25` |
 | 14 | Campaign membership truth and the write-through hook | the character's `campaigns.json` (the app is master); one root-crate `mirror` called by `SavedCharacterStore::save` and every sidecar writer, closed by a source-scanning test; a bad folder is a warning, never a failed save | `decisions.md §29`; `§21` Q9 |
 

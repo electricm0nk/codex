@@ -122,12 +122,15 @@ SD-41 is done when every row below holds on `tranche-21` and the operator has si
 17. **Created items** persist, round-trip, print with their weight, weigh when carried, work as containers,
     and are edited or removed in the Custom tab. (`decisions.md §25`.)
 18. **Prices.** The converter prices composites and eqmod-offset literals as PCGen's data defines them; the
-    rest come from one checked-in list with a d20pfsrd URL per item; a gate test fails on any Market row with
-    a missing, zero or negative price not listed as price-unknown. (`decisions.md §26`.)
+    rest come from one checked-in list with a d20pfsrd URL per item; **every item the Market shows has a real
+    price at closure** (`price-unknown.json` names no Market row; the gate `market_prices_are_all_positive`
+    passes); Negotiate is haggling, never a stand-in. (`decisions.md §26, §30`.)
 19. **Drop keeps the item** (Not Carried); Sell and Discard are separate buttons; the caption says so.
     (`decisions.md §27`.)
-20. **Stacks.** Identical copies in one location are one row with a quantity; buy, sell, move, drop and
-    discard take a quantity; bundles count as the book sells them. (`decisions.md §28`.)
+20. **Stacks in pieces.** The Market sells by the book's bundle (3 × "Arrows (20)" = 60 arrows); once bought
+    they are single pieces in one stack; stacks split to any count on move; sell, drop and discard take a
+    piece count; ammunition boxes count pieces; an old save's bundle copy becomes `base_quantity` pieces with
+    its weight unchanged (tested). (`decisions.md §28, §30`.)
 21. **Campaign folders.** A character in a campaign has its whole folder copied, atomically and on every
     save by every writer, to `<campaign dir>/characters/<slug>-<characterId>/`; two characters never share a
     file; a missing or unwritable folder is a warning, never a lost save; removal keeps the folder and stops

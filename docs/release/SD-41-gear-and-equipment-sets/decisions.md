@@ -375,9 +375,9 @@ The lead re-reads this package against the repo before dispatch and records each
 | Q4 | Weight-reduction containers (bag of holding kinds, 25 records) | "no stated capacity"; contents weigh in full (DEF-1) | model `*N` as a fixed weight (contents weigh nothing) in SD-41 |
 | Q5 | Where the gear screen lives | replaces the Equipment panel in the Gear tab (§13) | a new "Equipment" tab (changes `SHEET_TABS` and the print/UI vocabulary fixture) |
 
-| Q6 | Buy Custom: an eqmod whose price is a formula the converter cannot evaluate (97 formula kinds among 1,494 eqmods) | offered without a price; Buy routes through Negotiate; the receipt lists the unevaluated formulas by count (§24) | refuse to offer the ability until its formula is modelled |
-| Q7 | How far the d20pfsrd price list goes (the proxy count is 2,476 none + 470 zero over all record kinds; the Market's own count comes from E1.8) | arms, armor, shields and general gear the Market lists after the converter fix; magic items priced by their eqmod formulas first; whatever is still missing is listed in `price-unknown.json` with a reason and routes through Negotiate (§26) | every Market row gets a cited price before the bundle closes (a d20pfsrd lookup per row) |
-| Q8 | Splitting a bundle (10 of "Arrows (20)" into a quiver) | not possible: the bundle is the unit the book sells; a stack splits by bundles (§28) | a per-arrow count on the stack (changes the saved shape, NR-3) |
+| Q6 | Buy Custom: an eqmod whose price is a formula the converter cannot evaluate (97 formula kinds among 1,494 eqmods) | **Answered 2026-11-12 (§30): "Offer them, price by Negotiate"** — the default stands | — |
+| Q7 | How far the d20pfsrd price list goes | **Answered 2026-11-12 (§30): "Every Market item"** — a closure criterion; `price-unknown.json` empty for Market-visible rows; card E1.11 in batches via the lead's `web-fetch` agent; Negotiate is haggling only | — |
+| Q8 | Splitting a bundle (10 of "Arrows (20)" into a quiver) | **Answered 2026-11-12 (§30): "Count single arrows"** — pieces; `quantity` per stack in the sidecar's `copies` map; migration = a bundle copy without a quantity is `base_quantity` pieces; old-save weight unchanged | — |
 | Q9 | Where campaign membership is the truth | the character's `campaigns.json` (the app is master, §29); the campaign's `partyCharacterIds` is kept in step by the dialog | the campaign snapshot alone (then every save must read the Drive folder to know where to copy) |
 
 The author's recommendation is the default in every row.
@@ -660,3 +660,40 @@ membership → no write); E2.7's scanning test and an end-to-end test (save cust
 `sheet-campaign-button-under-skills`, `sheet-campaign-remove-keeps-folder` (E3.3). **Overlap:** the
 root-crate mirror (E1.10) touches no SD-40 file → Phase 1; the hooks and the UI touch `character_hub.rs`,
 `CharacterSheet.tsx`, `CharacterHubPage.tsx` → Phase 2.
+
+## §30 — Operator answers to §21 Q6–Q8 (2026-11-12, verbatim as relayed by the lead)
+
+- **Q7 = "Every Market item":** SD-41 does not close until every item the Market shows has a real price
+  (converter fix, else d20pfsrd with URL); `price-unknown.json` must be **empty for Market-visible items at
+  closure** (it may hold non-Market records only); Negotiate is for haggling, not a missing-price stand-in.
+  → A **closure criterion** (G-8, G-10): the gate test `market_prices_are_positive_or_listed` becomes
+  `market_prices_are_all_positive` at closure (no Market row may be in `price-unknown.json`). The lookup work
+  is sized from E1.8's count and runs as card **E1.11** in batches (R-B batch big: one pass per batch of
+  ≤ 150 rows; the receipt per batch names the rows and URLs). **How the pages are fetched:** d20pfsrd answered
+  `410 Gone` to a bare `curl -sI` on 2026-11-12; the plan is the lead's `web-fetch` agent per batch (E1.11's
+  dispatch names it), with a browser-user-agent `curl` as the first try inside the card (P-9); the card
+  writes `d20pfsrd-prices.json` from what the agent returns, one URL per item. Until E1.11 completes, a
+  Market row without a price is **not buyable** (the Buy button is disabled with "no price yet"); Negotiate
+  never substitutes for a missing price (`§26` (d) amended).
+- **Q6 = "Offer them, price by Negotiate"** (the default stands): a Buy Custom eqmod whose formula the
+  converter cannot evaluate is offered, and the purchase is priced by Negotiate (the quote says which eqmod
+  is unpriced).
+- **Q8 = "Count single arrows":** bundles become single pieces once bought (the Market still sells by the
+  book's bundle: buying 3 × "Arrows (20)" adds 60 arrows); stacks split to any count; ammo boxes count real
+  pieces. **This changes the saved shape** — the lead asked for a quantity on the stored copy (or equivalent),
+  a migration for existing bundle copies (1 copy of "Arrows (20)" → 20 pieces) with weight and price
+  unchanged, and an old-save test. **DEFAULT (the equivalent that keeps NR-3):** the per-copy `quantity`
+  (pieces) lives in `equipment_sets.json`'s `copies` map beside the custom name
+  (`copies: { "<itemId>|<bonus>|<ordinal>": { name?, quantity? } }`); the saved input keeps one `equipment=`
+  line per **stack** (a line is now "a stack of n pieces", n = 1 when absent); `EquipmentSelection` is
+  untouched (97 producers). The engine learns pieces through E1.7's extra argument: `compute_encumbrance(…,
+  quantities: &[(CopyKey, u32)])` weighs a stack as `record.weight × quantity / base_quantity`; a copy with no
+  `quantity` entry weighs **one bundle** (= `base_quantity` pieces) — so an old save's "Arrows (20)" line
+  weighs exactly what it weighs today, which is the migration: E2.1 writes `quantity = base_quantity` for
+  every bundle copy without one and the old-save test asserts `total_carried_weight_lbs` unchanged. Buying
+  3 × "Arrows (20)" appends one line with `quantity 60` (or adds 60 to an existing Carried stack of the same
+  item, bonus and name); a move of n pieces lowers one stack and raises or creates another at the target;
+  Sell / Discard of n pieces price `n / base_quantity × bundle price` floored to a copper; the row reads
+  `"Arrows ×60"` (pieces; the bundle name's `(20)` is dropped from the label). Ammunition boxes count Σ
+  `quantity` over matching ammunition stacks (`§23` amended: no `× base_quantity`). `§28` (a), (c), (d),
+  (e) and `§21` Q8 are amended by this section; DEF-6 is withdrawn.

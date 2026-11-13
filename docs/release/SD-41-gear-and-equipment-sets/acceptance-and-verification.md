@@ -118,11 +118,12 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 campaign_write_through -- 
 cd apps/desktop && npx tsx src/characterHub/campaignMembershipModel.test.ts                          # ≥ 4 cases
 ```
 
-## G-10 Prices and the Market (DoD 16, 18–21) — E1.8, E1.9, E2.5, E2.6, E3.4
+## G-10 Prices and the Market (DoD 16, 18–21) — E1.8, E1.9, E1.11, E2.5, E2.6, E3.4
 
 ```bash
-cargo test --locked -j 8 --test market_price_census -- --test-threads=8              # 2 passed (census + the gate)
+cargo test --locked -j 8 --test market_price_census -- --test-threads=8              # 3 passed (census, the listed gate, market_prices_are_all_positive at E1.11+)
 python3 -I -c "import json;print(len(json.load(open('data/price_overrides/d20pfsrd-prices.json'))),len(json.load(open('data/price_overrides/price-unknown.json'))))"   # both figures quoted with E1.8's denominators
+ls docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_1/E1.11/batch-*.json | awk 'END{print NR}'   # ⌈unpriced Market rows / 150⌉
 cd apps/desktop/src-tauri && cargo test --locked -j 8 market_backend -- --test-threads=8   # 5 passed
 cd apps/desktop/src-tauri && cargo test --locked -j 8 catalog_slot -- --test-threads=8     # 1 passed
 cd apps/desktop/src-tauri && cargo test --locked -j 8 buy_custom -- --test-threads=8       # 4 passed
@@ -140,9 +141,11 @@ bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 ```bash
 cd docs/release/SD-41-gear-and-equipment-sets
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 34) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 35) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 2 (anchored; the receipt's own instructions must not match)
+cargo test --locked -j 8 --test market_price_census -- --test-threads=8 2>&1 | grep -c 'market_prices_are_all_positive .* ok'   # 1 (Q7 closure criterion, decisions.md §30)
+python3 -I -c "import json;u={r['key'] for r in json.load(open('../../../data/price_overrides/price-unknown.json'))};print(len(u))"   # quoted; the gate proves none is Market-visible
 grep -c 'SD-41 INTERIM NOTES' release-notes.md                        # 0 at E5.3+
 python3 ../../../tools/release/resolve_release_notes.py --repo-root ../../..
 grep -L 'Looked at' artifacts/epic_[34]/*_cycle_receipt.md | grep -v 'E3.1_\|E3.2_\|E3.3_\|E4.G_'   # prints nothing (E3.MC, E4.1, E4.MC looked)
@@ -164,7 +167,7 @@ fresh-install check recorded in E5.1's receipt.
 | G-5 | E1.1, E1.3, E2.3, E3.1 | `artifacts/epic_1/`, `artifacts/epic_2/E2.3_cycle_receipt.md` |
 | G-6 | E3.1–E3.5, E3.MC | `artifacts/epic_3/E3.3/results.json`, `artifacts/epic_3/E3.MC/*.png` |
 | G-9 | E1.5, E1.6, E2.4, E4.1 | receipts; `artifacts/epic_4/E4.1/*.png` |
-| G-10 | E1.8, E1.9, E2.5, E2.6, E3.4 | `artifacts/epic_1/E1.8/market-prices.json`, `data/price_overrides/*.json`, receipts |
+| G-10 | E1.8, E1.9, E1.11, E2.5, E2.6, E3.4 | `artifacts/epic_1/E1.8/market-prices.json`, `artifacts/epic_1/E1.11/batch-*.json`, `data/price_overrides/*.json`, receipts |
 | G-11 | E1.10, E2.7, E3.5 | receipts; `artifacts/epic_3/E3.3/results.json` (the three campaign rows) |
 | G-7 | every MC, E5.1 | receipts |
 | E4.G | E4.MC, E4.G | `artifacts/epic_4/E4.G/` (4 PDFs, ≥ 12 PNGs, the signed receipt) |

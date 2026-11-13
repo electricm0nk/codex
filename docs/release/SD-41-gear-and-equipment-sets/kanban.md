@@ -31,7 +31,7 @@ operator's two `usable: yes` lines exist.
 cd docs/release/SD-41-gear-and-equipment-sets
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 34 (23 + 8 from the operator's seven follow-ups + 3 from the campaign item of 2026-11-12, decisions.md §22–§29)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 35 (23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, decisions.md §22–§30)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -46,14 +46,15 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 34 (23 + 8
 | E1.6 | `uses_ammunition` (Projectile tag) + `ammunition_carried` per weapon | opus | waiting | E1.5 | Phase 1; `decisions.md §23` |
 | E1.7 | Encumbrance weighs extra copies (Create items); `base_quantity()` | opus | waiting | E1.6 | Phase 1; `decisions.md §25, §28` |
 | E1.8 | Price census through the catalog: missing / zero / negative by book + category; converter causes | opus | waiting | C1 | Phase 1; side lane `convert` (`.worktrees/sd41-convert`) ∥ E1.1–E1.7; `decisions.md §26` |
-| E1.9 | Converter fix + re-convert + `d20pfsrd-prices.json` + `price-unknown.json` + price gate | opus | waiting | E1.8 | Phase 1; lane `convert`; corpus diff limited to price/weight/token/name fields; P-9 network |
+| E1.9 | Converter fix + re-convert + override-list reader + price gate | opus | waiting | E1.8 | Phase 1; lane `convert`; corpus diff limited to price/weight/token/name fields |
+| E1.11 | Every Market item priced: d20pfsrd list in batches of ≤ 150 (lead's `web-fetch` agent per batch); `price-unknown.json` empty for Market rows; gate `market_prices_are_all_positive` | opus | waiting | E1.9 | Phase 1; lane `convert`; a closure criterion (`decisions.md §30` Q7); P-9 |
 | E1.10 | Campaign mirror (root crate): `campaigns.json`, atomic folder copy per active campaign, warnings never errors | opus | waiting | E1.7 | Phase 1; `decisions.md §29` |
-| E1.MC | E1 merge check + Epic report; Phase-1 run ends | opus | waiting | E1.10, E1.9 | adversarial; partition check `git diff … -- apps` → 0 (less the price test file); corpus field check; writes the resume receipt (`START=E2.1`) |
-| E2.1 | Load response: `equipmentSets`, `containerLoads`, `location` + `ordinal`, stacks (`quantity`, `copies`, `baseQuantity`), custom names; Default file on first load; old-save test | opus | waiting | E1.MC, SD-40 merged | Phase 2; first write to `character_hub.rs`; G-1 NEW_KEYS named |
-| E2.2 | Commands: move (with quantity; Drop = Not Carried), set CRUD, activate; market → Carried; `set_equipment_active_state` + sell over the sets; TS boundaries | opus | waiting | E2.1 | `main.rs` registration; `CharacterSheet.tsx:3295`; `decisions.md §27, §28` |
+| E1.MC | E1 merge check + Epic report; Phase-1 run ends | opus | waiting | E1.10, E1.11 | adversarial; partition check `git diff … -- apps` → 0 (less the price test file); corpus field check; writes the resume receipt (`START=E2.1`) |
+| E2.1 | Load response: `equipmentSets`, `containerLoads`, `location` + `ordinal`, stacks in pieces (`quantity`, `copies`, `baseQuantity`), custom names; Default file + bundle-quantity migration on first load; old-save test (AC, weight) | opus | waiting | E1.MC, SD-40 merged | Phase 2; first write to `character_hub.rs`; G-1 NEW_KEYS named |
+| E2.2 | Commands: move (n pieces; Drop = Not Carried), set CRUD, activate; market → Carried; `set_equipment_active_state` + sell over the sets; TS boundaries | opus | waiting | E2.1 | `main.rs` registration; `CharacterSheet.tsx:3295`; `decisions.md §27, §28` |
 | E2.3 | Create item backend: weight / price / container capacity on custom records; `create_custom_item`; custom items weighed + listed; Custom dialog fields | opus | waiting | E2.2 | `decisions.md §25`; old `custom.json` loads |
 | E2.4 | Weapons DTO: `inHand`, `unarmed`, `nonlethal`, `usesAmmunition`, `ammunitionCarried`; tab order in hand → carried → Unarmed last; ammo boxes per ammunition weapon | opus | waiting | E2.3 | `decisions.md §9, §22, §23` |
-| E2.5 | Market backend: `slot` column; quantity + negotiated price on buy and sell; discard; copy names | opus | waiting | E2.4 | `decisions.md §26–§28` |
+| E2.5 | Market backend: `slot` column; buy by bundle → pieces; sell / discard n pieces; negotiated price (haggling only; unpriced rows not buyable); copy names | opus | waiting | E2.4 | `decisions.md §26–§28` |
 | E2.6 | Buy Custom backend: `purchase_custom_equipment` + `list_custom_equipment_options` + quote; price and weight from eqmod data | opus | waiting | E2.5 | `decisions.md §24`; Q6 |
 | E2.7 | Campaign write-through hooks in every writer + scanning test; `set_character_campaigns`; `mirrorWarnings` | opus | waiting | E2.6 | `decisions.md §29` |
 | E2.MC | E2 merge check + Epic report | opus | waiting | E2.7 | adversarial; `.pcg` population probe (Default file + AC/weight unchanged) |

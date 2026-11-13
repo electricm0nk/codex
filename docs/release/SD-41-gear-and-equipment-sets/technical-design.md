@@ -184,10 +184,12 @@ tests: market_price_census (E1.8: the Market's none / zero / negative by book, c
 ## §10 Stacks and created items (E1.7, E2.1, E2.3; `decisions.md §25, §28`)
 
 ```
-held list: rows = group(copies by item_id, bonus, custom name, location) → { quantity, copies: [CopyKey], baseQuantity }   -- a view; nothing on disk changes
-labels: "<name> ×<n>" ; "<name> ×<n> = <n × baseQuantity>" when baseQuantity > 1   (TS formats the engine's figures)
-commands with quantity: purchase, sell, discard, move (ascending ordinals), drop (= move NotCarried)
-compute_encumbrance(selections, corpus, extra: &[WeighedCopy])   -- created custom items weigh through the engine, same Absent rule
+equipment_sets.json copies map: "<itemId>|<bonus>|<ordinal>" → { name?, quantity? }   -- pieces per stack (decisions.md §30); absent = one bundle (base_quantity pieces)
+held list: rows = group(copies by item_id, bonus, name, location) → { quantity: Σ pieces, copies: [CopyKey], baseQuantity }; one equipment= line per stack
+migration (E2.1, first load): a bundle copy without a quantity gets quantity = base_quantity; weight unchanged (old-save test)
+labels: "<name> ×<n>" in pieces (the bundle's "(20)" dropped)   (TS formats the engine's figures)
+commands: purchase by bundle (adds quantity × base_quantity pieces), sell / discard n pieces (price n / base_quantity × bundle price, floored), move n pieces (lowers one stack, raises or creates one at the target), drop (= move NotCarried)
+compute_encumbrance(selections, corpus, extra: &[WeighedCopy], quantities: &[(CopyKey, u32)])   -- a stack weighs weight × quantity / base_quantity; created items weigh via extra; same Absent rule
 CustomRecordDto += weight_lbs, price_gp, container_capacity_lbs (Option; serde default)   -- custom.json; edit/remove in the Custom tab
 ```
 

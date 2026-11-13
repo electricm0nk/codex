@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 1 of 34 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 1; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 34: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item, `decisions.md §22–§29`) |
+| Cards complete | 1 of 35 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 1; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 35: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -75,6 +75,13 @@ the Manager's route, 5 campaign smoke rows). New cards E1.10 (root-crate mirror,
 scanning test + `set_character_campaigns`), E3.5 (Campaign field dialog + per-campaign buttons); E3.3 → 18 new
 rows. Cards 31 → 34. Q9 added. No open SD-40 card owns `src/campaign/**`, `campaign_drive.rs`,
 `CharacterHubPage.tsx` or `LandingScreen.tsx` (census §9's last command → nothing).
+
+**Operator answers Q6–Q8, same day (`decisions.md §30`):** Q6 default stands; Q7 "Every Market item" → E1.11
+(lane `convert`, batches of ≤ 150 via the lead's `web-fetch` agent) and a closure criterion in G-8/G-10; Q8
+"Count single arrows" → pieces per stack in the sidecar's `copies` map, migration on first load (E2.1),
+`compute_encumbrance` quantities (E1.7), buy by bundle → pieces, sell / move / discard by pieces (E2.2, E2.5).
+Cards 34 → 35. Partition unchanged: E1.11 is root/tool side (Phase 1; its `equipment_catalog.rs` filter is a
+named exception the receipt states, or moves to E2.5).
 
 ## Cycle log
 
