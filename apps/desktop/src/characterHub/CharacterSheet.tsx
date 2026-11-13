@@ -563,7 +563,7 @@ function SkillsPanel(props: {
 // 'Overrides' was removed for the same reason (v0.8 F-5): it had no panel
 // behind it, and a visible affordance with no behavior is a stub. Every
 // tab listed here has a real panel in the switch below.
-export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom'] as const;
+export const SHEET_TABS = ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom', 'Biography', 'Notes'] as const;
 type Tab = (typeof SHEET_TABS)[number];
 
 export interface BioFields {
@@ -602,6 +602,23 @@ export const BLANK_BIO_FIELDS: BioFields = {
   biography: '',
   notes: '',
 };
+
+/** SD-40 E3.6: the Biography and Notes tabs: one large text area each, saved with the bio on blur. */
+function FreeTextTab(props: { label: 'Biography' | 'Notes'; hint: string; value: string; onChange: (text: string) => void; onBlur: () => void }) {
+  return (
+    <div>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 0.6rem' }}>{props.hint}</p>
+      <textarea
+        aria-label={props.label}
+        value={props.value}
+        onChange={(event) => props.onChange(event.target.value)}
+        onBlur={props.onBlur}
+        rows={16}
+        style={{ ...bioFieldInputStyle, fontWeight: 400, lineHeight: 1.5, resize: 'vertical' }}
+      />
+    </div>
+  );
+}
 
 const bioFieldLabelStyle: CSSProperties = {
   color: 'var(--color-text-muted)',
@@ -4469,6 +4486,10 @@ export function CharacterSheet(props: {
             />
                 ) : name === 'Pets' ? (
                   <PetsTab snapshot={snapshot} />
+                ) : name === 'Biography' ? (
+                  <FreeTextTab label="Biography" hint="Your character's story: who they are and the events of their life." value={bio.biography} onChange={(biography) => updateBio({ biography })} onBlur={() => void handleBioBlur()} />
+                ) : name === 'Notes' ? (
+                  <FreeTextTab label="Notes" hint="Notes to yourself: plans, reminders, rulings from the table." value={bio.notes} onChange={(notes) => updateBio({ notes })} onBlur={() => void handleBioBlur()} />
                 ) : name === 'Custom' ? (
                   <CustomTab custom={custom} loading={customLoading} error={customError} onEdit={() => setCustomDialogOpen(true)} onOverrideChange={(key, on) => void handleOverrideChange(key, on)} admittedLevels={classLevelsAdmitted(engineRecords.admittedUnderOverride, heldClasses)} />
                 ) : (

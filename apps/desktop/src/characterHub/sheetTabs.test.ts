@@ -15,4 +15,6 @@ assert(
   ['Weapons', 'Defense', 'Gear', 'Spells', 'Pets', 'Feats', 'Actions', 'Custom'].every((t) => tabs.includes(t)),
   'every wired tab is still offered',
 );
+// SD-40 E3.6 (decisions.md §24.9): the two free-text tabs sit together at the end.
+assert(tabs.slice(-2).join() === 'Biography,Notes', `Biography then Notes close the tab strip: ${tabs.join(', ')}`);
 console.log('sheetTabs tests passed');
