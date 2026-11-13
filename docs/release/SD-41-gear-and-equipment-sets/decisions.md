@@ -766,3 +766,40 @@ corrections were recorded. The lead's rulings:
   main lane after E1.1; the same fixture-byte-identical check), and the sheet-rule `tags` are not a live read path.
 
 E1.1's kanban row is `ready` again; the `## Open blockers` entry is closed with this section.
+
+## §32 — The Backpack holds 60 lb; an override switch (OPERATOR, 2026-11-12)
+
+> "Make the backpack have a 60 lbs limit, but also add an override switch in the custom settings menu as an option."
+
+**The data and the books (checked 2026-11-12 on the pinned oracle `7f818006e371188e5717fd18d74d18a420747fc6`):**
+PCGen's CRB row `Backpack` carries `CONTAINS:UNLIM|Any` and `SOURCEPAGE:p.158`
+(`$PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst`); Ultimate Equipment's
+`Backpack.MOD` (`SOURCEPAGE:p.58`) renames it "Backpack, Common" and changes no capacity; the APG/UE
+`Backpack (Masterwork)` is `UNLIM|Any` too. The converted CRB record (`data/corpus/core_rulebook/equipment/general/backpack.json`)
+has no description text; no backpack record in `data/corpus` or `data/sheet_rules` mentions "60"
+(`grep -rl -i backpack data/corpus --include=*.json | grep /equipment/ | xargs grep -l '60 pounds\|60 lb' → none`;
+the only equipment text with a pound limit is the Handy Haversack). **No PF1e book in the pinned data prints a
+60 lb limit for the Backpack**; the PCGen data says unlimited. The 60 lb figure is therefore recorded as the
+**operator's ruling**, not as a book citation (flagged to the lead in the reply).
+
+**DEFAULTS:** (a) **A cited capacity override list, like the price fix** (`§26`):
+`data/capacity_overrides/container-capacities.json` *(new)* = `[{ key, capacity_lbs, source: { kind:
+"operator-ruling" | "book", ref, date } }]`; one row: `{ "key": "Backpack", "capacity_lbs": 60, "source": { "kind":
+"operator-ruling", "ref": "decisions.md §32; overrides PCGen CRB p.158 CONTAINS:UNLIM|Any", "date": "2026-11-12" } }`.
+`ir_converter::container_capacity_of` applies the list after the token (an override row wins); the settled
+`container_capacity` for Backpack reads `Pounds(60.0)`; live code reads only the settled field and never names
+"backpack" (`grep -rn -i backpack src/ apps/desktop/src-tauri/src/ | grep -v test` → 0). Card **E1.12** (opus,
+Phase 1, `convert` scope, after E1.1 and E1.9: all three edit `ir_converter.rs` and regenerate `_settled`).
+Backpack (Masterwork) is not overridden (the operator named the backpack; a second row is a later ruling).
+(b) **The override switch is a per-character toggle, "Ignore container capacity limits",** in the Custom tab's
+existing Overrides group (SD-39: `Overrides` in `character_custom.rs:120–128`; `OVERRIDE_TOGGLES` in
+`customModel.ts:90`), not the app-wide ☰ Options; it persists in `custom.json` with the other overrides
+(`ignore_container_capacity: bool`, serde default false). When on: the gear screen and the print still show
+"x of y lb" but no container is flagged overweight (`containerLoads[].over` stays the engine's figure; the
+screen and print suppress the warning when the override is on), and the sheet tags the override visibly as
+the other Overrides do (`OverrideTag`, the `admittedUnderOverride` posture). Owned by E2.3 (the field, the
+DTO, the Custom tab toggle: it already edits `character_custom.rs`, `CustomDialog/CustomTab`, `customModel.ts`),
+E3.1 (the gear screen's suppression + tag) and E4.1 (the print's). Smoke row `sheet-gear-capacity-override`
+(E3.3, 19 new). **Enforced by:** E1.12's RED test `container_capacity_backpack_is_60_lb` on the settled bundle;
+E2.3 `custom_overrides_ignore_container_capacity_round_trips`; E3.1 model test "over suppressed when the
+override is on"; E4.1 `print_pf_blocks_gear_capacity_override_hides_the_flag`.

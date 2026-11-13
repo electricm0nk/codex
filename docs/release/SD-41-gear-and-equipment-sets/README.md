@@ -47,11 +47,11 @@ weight unchanged.
 | Slug | `gear-and-equipment-sets` |
 | Canonical branch | `tranche-21`, cut 2026-11-12 from `origin/tranche-20` @ `f7f85f3d24` (`git merge-base HEAD origin/tranche-20`); catches up to `tranche-20`'s tip and then to `develop` after SD-40 merges (`decisions.md §4`) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E1–E5 / **36 cards** (23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, `decisions.md §22–§30`, + E2.8 discovered by E1.8), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 36) |
+| Epics / cards | C, E1–E5 / **37 cards** (E1.12 from the Backpack ruling, `decisions.md §32`; 23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, `decisions.md §22–§30`, + E2.8 discovered by E1.8), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 36) |
 | Target version | `0.21.0`, stamped by C1's single commit on the 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run per phase (`decisions.md §12.2`); ends cleanly at E4.G |
 | Cadence | N/A |
-| Closure gate | 36 cards `complete` (E4.G needs the operator's two `usable: yes` lines; every unpriced Market row tried, `decisions.md §30.1`) (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 37 cards `complete` (E4.G needs the operator's two `usable: yes` lines; every unpriced Market row tried, `decisions.md §30.1`) (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's request, answers and eight follow-ups (`artifacts/cycle_0/operator-brief-2026-11-12.md`); the census (`artifacts/epic_0/census.txt`); PCGen's Equipping, Purchase and custom-item tabs as a functional reference only (`decisions.md §17`) |
 
 ## 2. Files in this folder

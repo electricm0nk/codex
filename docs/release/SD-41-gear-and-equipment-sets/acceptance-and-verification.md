@@ -86,6 +86,8 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 move_equipment -- --test-t
 ```bash
 cargo test --locked -j 8 --lib container_ -- --test-threads=8        # 4 passed; counts 232 files / 265 rows, 210 / 88 / 73 / 49 pinned (decisions.md §31 R3)
 cd crates/codex-ingest && cargo test --locked -j 8 container_of -- --test-threads=8   # 2 passed
+cargo test --locked -j 8 --lib container_capacity_backpack -- --test-threads=8   # 1 passed (60 lb, decisions.md §32)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 custom_overrides_ignore_container_capacity -- --test-threads=8   # 1 passed
 cargo test --locked -j 8 --lib containers_ -- --test-threads=8       # 4 passed
 cargo test --locked -j 8 --lib extra_weighed -- --test-threads=8     # 2 passed
 cd apps/desktop/src-tauri && cargo test --locked -j 8 create_custom_item -- --test-threads=8   # 4 passed
@@ -98,7 +100,7 @@ cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts   # the over
 cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc && git status --porcelain ../../docs/testing/ui-smoke-inventory.md   # empty
 test ! -f apps/desktop/src/characterHub/EquipmentPanel.tsx && echo PANEL_GONE
 grep -nE '\b(reduce\(|\+= *[a-z]*[wW]eight|lbs *[-+*/])' apps/desktop/src/characterHub/GearScreen.tsx apps/desktop/src/characterHub/gearScreenModel.ts | awk 'END{print NR}'   # 0 (NR-2)
-python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 24 []
+python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 25 []
 cd apps/desktop && npx tsx src/characterHub/marketModel.test.ts && npx tsx src/characterHub/weaponsTabModel.test.ts   # E3.4, E2.4
 ```
 
@@ -143,7 +145,7 @@ bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 ```bash
 cd docs/release/SD-41-gear-and-equipment-sets
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 36) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 37) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 2 (anchored; the receipt's own instructions must not match)
 (cd ../../../apps/desktop/src-tauri && cargo test --locked -j 8 --test market_price_census market_price -- --test-threads=8) 2>&1 | grep -c 'market_price_unknown_rows_name_every_source_tried .* ok'   # 1 (Q7 effort bar, decisions.md §30.1)

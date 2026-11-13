@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 3 of 36 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 3; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 36: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8) |
+| Cards complete | 3 of 37 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 3; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 36: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -84,6 +84,13 @@ Cards 34 → 35. Partition unchanged: E1.11 is tool side (Phase 1). **Lead's cor
 row stays listed and buys through Negotiate (the operator's "allow the user to specify the price on purchase");
 Q7 is the effort bar; the `market: false` filter is dropped (no desktop file in E1.11); `price-unknown.json`
 rows carry `tried`; E2.5's test is `market_backend_unpriced_item_buys_through_negotiate`.
+
+**Operator ruling, Backpack 60 lb + override switch (`decisions.md §32`):** discovered card E1.12 (convert
+lane, after E1.1 and E1.9; a cited capacity override list, like the price fix; RED test settled capacity ==
+60 lb); the per-character "Ignore container capacity limits" toggle added to E2.3 (Overrides field + Custom tab),
+E3.1 and E4.1 (warning suppressed, override tagged); E3.3 +1 row. Cards 36 → 37. **Flag:** no PF1e book in the
+pinned data prints 60 lb for the Backpack (CRB p.158 `CONTAINS:UNLIM|Any`; UE p.58 `.MOD` unchanged); the
+override row's source kind is `operator-ruling`.
 
 ## Cycle log
 
