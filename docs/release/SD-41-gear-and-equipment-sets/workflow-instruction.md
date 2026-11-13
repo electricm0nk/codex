@@ -213,7 +213,7 @@ phase('E2 — desktop backend');        for (const c of [E2_1, E2_2, E2_3, E2_4,
 phase('E3 — gear screen');            await go(E3_1); await go(E3_2); await go(E3_4); await go(E3_5)
                                       const smoke = go(E3_3)              // side lane smoke, beside E3.MC + E4.1
                                       await go(E3_MC)
-phase('E4 — print + gate');           await go(E4_1); await smoke; await go(E4_MC)
+phase('E4 — print + gate');           for (const c of [E4_1, E4_2, E4_3, E4_4]) await go(c); await smoke; await go(E4_MC)
                                       { const r = await go(E4_G); if (r.status !== 'complete') return resumeReceipt('E4.G') }
 phase('E5 — closure');                for (const c of [E5_1, E5_2, E5_3a, E5_3b, E5_4]) await go(c)
 ```
@@ -232,7 +232,7 @@ Phase titles above match these rows. Shared-file writer order: `epic-breakdown.m
 | E1 — engine (Phase 1) | E1.1–E1.7, E1.10, E1.MC; `convert`: E1.8, E1.9, E1.11, E1.12 | `convert` ∥ E1.1–E1.7 | main: `src/rules_core/{equipment_record,sheet_rule,containers,damage_total,encumbrance,mod}.rs`, `src/rules_core/pilot_compute/{combat,class_monk}.rs` (named lines), every `compute_encumbrance` caller (`&[]`), `src/saved_character/{equipment_sets,campaign_mirror,mod,local_store}.rs`, `crates/codex-ingest/tests/equipment_sets_pcg_population.rs` *(new)*; `convert`: `crates/codex-ingest/src/pcgen_import/**` (named), `data/corpus/**/equipment/**`, `src/rules_core/rules_catalog/**` (regenerated), `data/price_overrides/*.json` *(new)*, the price test file; **nothing else under `apps/`** | C1; SD-40 lanes ≤ 2 for cargo |
 | E2 — desktop backend | E2.1–E2.7, E2.MC | no | `desktop/character_hub.rs`, `desktop/main.rs`, `desktop/character_custom.rs`, `desktop/equipment_catalog.rs`, `tests/every_character_root_writer_mirrors.rs` *(new)*, `ui/boundary/setCharacterCampaigns.ts` *(new)*, `desktop/pf1_adapter.rs` (named), `desktop/pf_seed_render_hash.rs` (if pinned), `src/saved_character/equipment_sets.rs` (`copyNames`), `src/rules_core/body_slots.rs` (named, E2.6), `tests/old_save_loads_unchanged.rs` + fixture *(new)*, `ui/boundary/{loadSavedCharacterDetail,loadCreateCharacter,listHeldEquipment,setEquipmentActiveState,loadCharacterCustom,purchaseEquipment,listMarket}.ts`, `ui/boundary/{moveEquipmentCopy,equipmentSets,createCustomItem,sellEquipment,discardEquipmentCopy,renameEquipmentCopy,purchaseCustomEquipment,listCustomEquipmentOptions,quoteCustomEquipment}.ts` *(new or extended)*, `ui/characterHub/CharacterSheet.tsx` (line 3295; the Weapons tab rows), `ui/characterHub/weaponsTabModel.ts` + test *(new)*, `ui/characterHub/{CustomDialog,CustomTab}.tsx`, `customModel.ts` + test, `MarketDialog.test.ts` | E1.MC; **SD-40 merged + SD-m rebase (R25)** |
 | E3 — gear screen | E3.1, E3.2, E3.4, E3.5, E3.3, E3.MC | `smoke` (E3.3) ∥ E3.MC, E4.1 | `ui/characterHub/GearScreen.tsx` *(new)*, `gearScreenModel.ts` + test *(new)*, `CharacterSheet.tsx` (the Gear tab line + handlers; the Market handlers; the Campaign field and the Skills footer), `CharacterHubPage.tsx` (the `campaign-sheet` mode), `CampaignMembershipDialog.tsx` + `campaignMembershipModel.ts` + test *(new)*, `EquipmentPanel.tsx` + test (deleted), `MarketDialog.tsx` + test, `marketModel.ts` + test *(new)*, `{BuyCustomDialog,CreateItemDialog}.tsx` *(new)*; `smoke`: `spec.json`, `docs/testing/ui-smoke-inventory.md`, `apps/desktop/scripts/ui-smoke/**` (only a missing step kind), `artifacts/epic_3/E3.3/**` | E2.MC |
-| E4 — print + gate | E4.1, E4.MC, E4.G | no | `desktop/print/blocks/gear.rs`, `print/layout/pf1e.rs` (if the rows' shape changes), `resources/print/looks/{gear,weapons}.typ`, `print/golden/print_golden.json`, `print/blocks/print_pf_blocks.rs`, `print/print_golden.rs`, `artifacts/epic_4/**` | E3.MC; E4.MC also on E3.3 |
+| E4 — print + gate | E4.1, E4.2, E4.3, E4.4, E4.MC, E4.G | no | `desktop/print/blocks/gear.rs`, `print/layout/pf1e.rs` (if the rows' shape changes), `resources/print/looks/{gear,weapons,skills,speed,portrait,conditional-bonuses,…}.typ` (the 11 page-1 looks, E4.2), `resources/print/frame.typ`, `resources/print/logos/*.png` *(new, operator-supplied)*, `tauri.conf.json`, `tests/packaged_resources.rs` (E4.4), `print/blocks/core.rs`, `print/golden/print_golden.json`, `print/blocks/print_pf_blocks.rs`, `print/print_golden.rs`, `artifacts/epic_4/**` | E3.MC; E4.MC also on E3.3 |
 | E5 — closure | E5.1–E5.4 | no | `scripts/verify-baselines.env`, `docs/retro/sd41-retrospective.md`, `docs/architecture/**`, graph outputs, this folder, `artifacts/epic_5/**` | E4.G |
 
 **Fences.** A lane that needs a file outside its row returns `declined` with `ownedBy:<card>` unless
@@ -361,7 +361,7 @@ card binds (`<sha>`, `<base>`, `<head>`, `<dir>`, `<lane>`, `<card>`, `<card-id>
 `<script>`, `<type>`, `<keys>`, `<file>`, `<id>`, `<path>`, `<defect>`, `<itemId>`, `<bonus>`, `<ordinal>`, `<kind>`, `<slot>`, `<lb>`,
 `<name>`, `<state>`, `<select>`, `<out>`, `<clean-worktree>`, `<epic-start>`, `<date>`, `<filter>`, `<description>`, `<run>`,
 `<your tree>`, `<E2 card>`, `<E1.MC sha>`, `<E3.1 sha>`, `<C1 sha>`, `<SD-40 merge sha>`, `<the SD-40 closing count>`, `<character root>`,
-`<total>`, `<column>`, `<eqmod keys>`, `<eqmod key>`, `<lb>`, `<target>`, `<reason>`, `<campaignId>`, `<campaign dir>`, `<campaign_dir>`, `<character_id>`, `<pid>`, `<root>`, `<slug>` (the mirror's path schema, `decisions.md §29`), `<url>`, `<book>`, `<subdir>` (the settled-bundle path, `decisions.md §31`)),
+`<total>`, `<column>`, `<eqmod keys>`, `<eqmod key>`, `<lb>`, `<target>`, `<reason>`, `<campaignId>`, `<campaign dir>`, `<campaign_dir>`, `<character_id>`, `<pid>`, `<root>`, `<slug>` (the mirror's path schema, `decisions.md §29`), `<url>`, `<book>`, `<subdir>` (the settled-bundle path, `decisions.md §31`), `<system>` (the logo asset path, `decisions.md §34`)),
 (b) a deferred value with a named resolution point (`0.21.<run>` → first tester publish after the
 operator merges; the run id → launch; the SD-40 merge SHA → the lead at R25), or (c) a bug to fix before
 launch. The author's run is recorded in `progress.md`.
@@ -379,7 +379,7 @@ launch. The author's run is recorded in `progress.md`.
 ## 11. Bundle closure epilogue (corrected order — `decisions.md §18`)
 
 1. **E5.2 final-acceptance scan** — the fenced commands in `acceptance-and-verification.md` G-8. Pass =
-   no output from the two `awk`s, `usable: yes` 2 (E4.G), the price gate passed with every
+   no output from the two `awk`s, `usable: yes` 3 (E4.G), the price gate passed with every
    Market key in `price-unknown.json` carrying a `tried` list (`decisions.md §30.1`), every DEF/FSR revisit command pasted. **If
    anything is short, stop here:** no retrospective, no sweep, **no PR**. That is a correct outcome.
 2. **E5.2 retrospective:** `scripts/retro.py summary --since 2026-11-12 --json`; write

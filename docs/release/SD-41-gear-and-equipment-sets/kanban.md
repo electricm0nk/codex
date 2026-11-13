@@ -23,7 +23,7 @@ and its commit SHA.
 `SD-40 merged` on E2.1 is a dependency the **lead** clears by hand (replacing it with the merge SHA after
 the catch-up rebase, `decisions.md §4`, SD-m). Row order is dispatch order. **Closure rule:** no PR while
 any row other than E5.4 is anything but `complete`. **One operator gate:** E4.G stays `partial` until the
-operator's two `usable: yes` lines exist.
+operator's three `usable: yes` lines exist.
 
 **Same-ID check** (`epic-breakdown.md` ↔ this file):
 
@@ -31,7 +31,7 @@ operator's two `usable: yes` lines exist.
 cd docs/release/SD-41-gear-and-equipment-sets
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 39 (E1.13 and E2.9 discovered by E1.6; was 37: E1.12 from the Backpack ruling, decisions.md §32; was 36: 23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, decisions.md §22–§30, + E2.8 discovered by E1.8)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 42 (E4.2–E4.4 from the page-1 request, decisions.md §34; was 39 (E1.13 and E2.9 discovered by E1.6; was 37: E1.12 from the Backpack ruling, decisions.md §32; was 36: 23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, decisions.md §22–§30, + E2.8 discovered by E1.8)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -69,8 +69,11 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 39 (E1.13 
 | E3.3 | ui-smoke: 19 new rows, 6 rewritten; inventory regenerated | opus | waiting | E3.5 | side lane `smoke` (`.worktrees/sd41-smoke`), beside E3.MC and E4.1; lands before E4.MC; the only `spec.json` writer (R24) |
 | E3.MC | E3 merge check + Epic report (7 screenshots, looked at) | opus | waiting | E3.5 | adversarial; runs beside E3.3 only on files it does not own |
 | E4.1 | Print: Inventory by location (slots → Carried nested → Not Carried; stacks; Create items); Weapons in hand → carried → Unarmed last; ammo boxes per ammunition weapon, no global row | opus | waiting | E3.MC | `gear.rs`, `weapons.typ`; G-2; Looked at; `decisions.md §22, §23, §28` |
-| E4.MC | E4 merge check + E4.G's PDFs (4) and screenshots (≥ 12) | opus | waiting | E4.1, E3.3 | adversarial; looks at everything it renders |
-| E4.G | OPERATOR GATE: gear screen + printed inventory page, `usable: yes` ×2 | sonnet | waiting | E4.MC | the run ends here until the operator signs; `grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md` → 2 |
+| E4.2 | Print page 1: section titles as filled boxes (one shared style); Conditional Bonuses ↔ Resistances swapped; Conditional Bonuses an empty box | opus | waiting | E4.1 | Phase 2; `decisions.md §34` (1)–(3); goldens; Looked at |
+| E4.3 | Print page 1: Skills table with shaded alternate rows; Weapons without blank rows; Speed 2×2 with Climb (\"—\" without an engine row) | opus | waiting | E4.2 | Phase 2; `decisions.md §34` (4)–(6); Q11 |
+| E4.4 | Print page 1: the stored portrait image, else the system logo asset; never the word | opus | waiting | E4.3 | Phase 2; `decisions.md §34` (7); logo files = operator ruling Q10 (`blocked-escalated` on the files alone) |
+| E4.MC | E4 merge check + E4.G's PDFs (4) and screenshots (≥ 12) | opus | waiting | E4.4, E3.3 | adversarial; looks at everything it renders |
+| E4.G | OPERATOR GATE: gear screen + printed inventory page + page 1, `usable: yes` ×3 | sonnet | waiting | E4.MC | the run ends here until the operator signs; `grep -c '^- \(Gear screen\|Inventory page\|Page 1 ([^)]*)\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md` → 3 |
 | E5.1 | Widest verify + clean build + packaged resources + fresh-install check | sonnet | waiting | E4.G | |
 | E5.2 | Final-acceptance scan → retrospective → sweep | opus | waiting | E5.1 | |
 | E5.3 | Release notes → architecture truth-up → claims critic | sonnet + opus | waiting | E5.2 | |

@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 9 of 39 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 9 (sd41-e1.6); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39 (sd41-e1.6, 2026-11-13: 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
+| Cards complete | 9 of 42 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 9 (sd41-e1.6); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39 (sd41-e1.6, 2026-11-13: 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -92,6 +92,12 @@ E3.1 and E4.1 (warning suppressed, override tagged); E3.3 +1 row. Cards 36 → 3
 pinned data prints 60 lb for the Backpack (CRB p.158 `CONTAINS:UNLIM|Any`; UE p.58 `.MOD` unchanged); the
 override row's source kind is `operator-ruling`.
 
+**Operator request, print page 1 (`decisions.md §34`, 2026-11-13):** cards E4.2 (title boxes, swap, empty
+Conditional Bonuses box), E4.3 (skills table, weapons cleanup, speed 2×2 with Climb "—"), E4.4 (portrait image
+else system logo; logo files = ruling request Q10). Phase 2, serial after E4.1. E4.G gains a third `usable: yes`
+line (page 1). Census: a portrait store exists (`character_hub.rs:5744/5811/5817`, read by `print/mod.rs`);
+no `speed.climb` row (Q11); no logo file in the repo. Cards 39 → 42.
+
 ## Cycle log
 
 | Card | Date | SHA | Status | Receipt |
@@ -118,6 +124,12 @@ override row's source kind is `operator-ruling`.
 the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --format=%s`)
 
 ## Open blockers
+
+- **Q10 — logo files (2026-11-13, ruling request, `decisions.md §34` (7), `§21` Q10):** E4.4 prints the game
+  system's logo in the portrait box when no portrait is stored; the repo is public and system logos are trademarks,
+  so the operator supplies the three files (`apps/desktop/src-tauri/resources/print/logos/{pf1e,sf1e,cpr}.png`)
+  or rules "no logo". Needed before E4.4's dispatch (Phase 2); E4.4 returns `blocked-escalated` on the files
+  alone if they have not arrived. Not a Phase-1 blocker.
 
 - ~~E1.1~~ **closed 2026-11-12 by the lead's rulings R1–R4 and the operator's "Container tag, but not weapons" (`decisions.md §31`); E1.1 reset to `ready`; E1.9 now depends on E1.1; figures corrected; census.py:41 fixed.** Original entry: needs (R1) FILES YOU OWN widened to `crates/codex-ingest/src/pcgen_import/ir_converter.rs` (`equipment_record_to_corpus`) + regenerated `data/corpus/*/_settled/equipment.json`, sequenced before E1.9; (R2) a replacement for SD-a (Pistol and Powder Horn DO carry the `Container` tag; default proposed: container = `Container` tag and no stated damage). Tried: the in-fence paths (the settled record has no tags/tokens; `raw_tokens` in live code is a residue-gate hit). Blocks E1.2–E1.7, E1.10 (serial lane). Receipt: `artifacts/epic_1/E1.1_cycle_receipt.md`.
 - ~~E1.4~~ **closed 2026-11-13 by the lead's option (c) (`decisions.md §33`): an additive entry point `resolve_weapon_damage_breakdown_with_carried`; the old function and every existing test unchanged; E2.4 switches the desktop callers and marks carried rows; E4.1 the print. E1.4 reset to `ready`.** Original entry: needs one lead action: (a) grant E1.4 a named `apps/` exception for `apps/desktop/src-tauri/src/character_hub.rs` test `enhancement_rows_a_stowed_plus_one_adds_nothing` (lines 10720-10725: replace `is_empty()` with "one row, `in_hand == false`, enhancement +1") and widen FILES YOU OWN to `tests/worn_vs_carried.rs` (lines 122-123, 155) and `src/rules_core/corpus_loader.rs` (test, 634-636), accepting that carried weapons show unmarked on the Weapons tab and the PF print until E2.4/E4.1; or (b) fold E1.4 into E2.4 (desktop lane) and re-point E1.5's dependency. Tried: the in-fence path (every root-only widening of `resolve_weapon_damage_breakdown` turns that desktop test red; a separate unconsumed function would not be the wired widening the criterion names). Blocks E1.5–E1.7 (serial lane). Receipt: `artifacts/epic_1/E1.4_cycle_receipt.md`.

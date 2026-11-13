@@ -406,6 +406,8 @@ The lead re-reads this package against the repo before dispatch and records each
 | Q6 | Buy Custom: an eqmod whose price is a formula the converter cannot evaluate (97 formula kinds among 1,494 eqmods) | **Answered 2026-11-12 (§30): "Offer them, price by Negotiate"** — the default stands | — |
 | Q7 | How far the d20pfsrd price list goes | **Answered 2026-11-12 (§30): "Every Market item"** — a closure criterion; `price-unknown.json` empty for Market-visible rows; card E1.11 in batches via the lead's `web-fetch` agent; Negotiate is haggling only | — |
 | Q8 | Splitting a bundle (10 of "Arrows (20)" into a quiver) | **Answered 2026-11-12 (§30): "Count single arrows"** — pieces; `quantity` per stack in the sidecar's `copies` map; migration = a bundle copy without a quantity is `base_quantity` pieces; old-save weight unchanged | — |
+| Q10 | Which logo file per game system (PF1e, SF1e, CPR) for the portrait box when no portrait is stored (§34; trademarks, public repo) | **none taken — a ruling request** (`progress.md ## Open blockers`): E4.4 ships the three asset paths and is `blocked-escalated` on the files until the operator supplies them | the operator supplies three files, or rules "no logo: print nothing in the box" |
+| Q11 | A `speed.climb` engine row for races with a climb speed (Vanara, `class_shared_core.rs:2733`) so the Speed grid prints a Climb value | not in SD-41: Climb prints "—" unless a `speed.climb` row exists (§34 (6); paper-sheet rule) | add the row in E1 for the races that state one (a value that lands on the sheet) |
 | Q9 | Where campaign membership is the truth | the character's `campaigns.json` (the app is master, §29); the campaign's `partyCharacterIds` is kept in step by the dialog | the campaign snapshot alone (then every save must read the Drive folder to know where to copy) |
 
 The author's recommendation is the default in every row.
@@ -842,3 +844,56 @@ unwired path (the wired-integration doctrine's concern in the receipt) — it is
 scoped to call. The `in_hand` field lands on `WeaponDamageBreakdown` in E1.4 (default `true` for every row the
 old function returns, so its callers compile and behave unchanged). E1.5's unarmed row and E1.6's ammunition
 flags build on the same struct. E1.4 is `ready` again; the `## Open blockers` entry is closed with this section.
+
+## §34 — Print page 1: title boxes, swap, skills table, weapons cleanup, speed 2×2, portrait or logo (OPERATOR, 2026-11-13)
+
+> "On the print. You have the following in place Speed, Hit Points, Initiatives, Ecumberance, Abilitys, Skills,
+> Weapons, Attacks, Saving Trhows, Conditional Bonuses, and Resistances all of their titles, when an underline. I
+> would prefer to have that be a colored box with white letters - similar to the pcgen sheets. I also want to swap
+> locations between Conditional Bonuses and Resistances. I would also like to remove the lines inside of conditional
+> bonuses - just leave it an empty box. For Skills, let's make that more of a table that has alternate rows have a
+> highlight. Weapons also has blanks line and boxes - we don't need that. Speed also neeeds to include climb - You
+> probably have enough room to do it in 2x2 instead of 1x4. Instead of hte word portrait, we need to either print a
+> portrait or we should put in a logo. We should grab the logo for the game system involved."
+
+**Lead rulings (2026-11-13):** all are print page-1 changes under `apps/desktop/src-tauri/src/print/` →
+**Phase 2**, after SD-40 (PR #406) merges and `tranche-21` is rebased; in E4, serial after E4.1 (the SD-41 print
+card that already touches page 1), so two cards never edit one block file at once. (1) **Section titles:** a
+filled box with white bold letters, like the PCGen sheets; default colour near-black (`#222` or the sheet's
+existing ink token); **one shared title style** in the frame for all 11 sections (Speed, Hit Points, Initiative,
+Encumbrance, Abilities, Skills, Weapons, Attack, Saving Throws, Conditional Bonuses, Resistances), not one per
+block; checked at A4 and Letter. (2) **Swap** Conditional Bonuses and Resistances on page 1. (3) **Conditional
+Bonuses:** an empty bordered box, no ruled lines inside; the printed bonuses it already shows stay; only the
+blank ruled lines go. (4) **Skills:** a table with alternate rows shaded light grey that still reads on a
+black-and-white printer. (5) **Weapons:** no blank lines and no empty boxes; only real weapon rows (with SD-41's
+rule: Unarmed last, ammunition boxes only under ammunition weapons). (6) **Speed:** add Climb; a 2×2 grid
+(Land, Fly, Swim, Climb) instead of 1×4; Climb from the engine's climb speed; if the engine has none, print "—",
+never a made-up value (paper-sheet rule). (7) **Portrait box:** never print the word "portrait"; print the
+character's portrait image when there is one, else the game system's logo. **HOLD the logo source:** the repo
+is public and system logos are trademarks; the operator rules which file to use. The card makes the logo a
+bundled asset per system (one path each: PF1e, SF1e, CPR); the files are a named pending item the operator
+supplies — listed under `progress.md ## Open blockers` as a ruling request. (8) Goldens: each card updates the
+PF print goldens and names its test; E4.G gains a gate line for page 1 so the operator checks these in the
+round-1 print.
+
+**Census (2026-11-13, `tranche-21` @ `79b08e4760`):** a portrait store **exists** — `save_character_portrait`
+(`character_hub.rs:5744`), `character_portrait_path_at_root` (`:5811`), `load_character_portrait_bytes_at_root`
+(`:5817`), read by `print/mod.rs` into the `portrait` block; `looks/portrait.typ` (SD-40 E2.5) frames the image
+when the block carries one, else prints the word. Looks today: `abilities, armor-class, attack, conditional-bonuses,
+languages, name-campaign, portrait, resistances, saves, skills, speed, square-block, table, weapons` (14 files,
+`ls apps/desktop/src-tauri/resources/print/looks/`). Speed: `core.rs:269` builds Land / Swim / Fly from the
+`speed.land` / `speed.swim` / `speed.fly` rows; **no `speed.climb` row exists** (`grep -rn '"speed.climb"'
+src/rules_core` → 0; the Vanara climb speed is a constant, `class_shared_core.rs:2733`, not a row). No logo
+file exists in the repo (`find apps/desktop -iname '*logo*'` → none; `resources/` holds `authoring_workbench
+corpus_bundle corpus_fixtures fonts print`).
+
+**DEFAULTS:** three cards, E4.2 → E4.3 → E4.4, each serial after E4.1. **E4.2** titles + swap + empty box.
+**E4.3** skills table + weapons cleanup + speed 2×2 (Climb reads a `speed.climb` row when one exists, else "—";
+adding the row is `§21` Q11, default not in SD-41). **E4.4** portrait or logo: `looks/portrait.typ` prints the
+image, else `resources/print/logos/<system>.png` (`pf1e.png`, `sf1e.png`, `cpr.png`; `packaged_resources.rs`
+asserts them), never a word; until the operator supplies the files the card ships **placeholder-free**: the
+three paths exist as committed files the operator replaces (a plain framed system name typeset in the box is
+**not** acceptable to the operator's words — so E4.4 is `blocked-escalated` on the files alone if they have not
+arrived by its dispatch; everything else in the card lands). `§21` Q10 records the ruling request. The title
+style is a `frame.typ` function every look calls (one place; NR-2 unchanged: strings only). Shading uses a
+grey ≥ `luma(230)` (SD-40 SD-d's range) so it prints on a monochrome printer.

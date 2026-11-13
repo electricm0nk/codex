@@ -48,7 +48,7 @@ A `VALUE_MOVED` line is a defect; a new key or row id a card adds must be added 
 in the card's receipt with its reason. **The old-save test** (E2.1, `tests/old_save_loads_unchanged.rs`)
 is G-1's second leg: AC and weight literals recorded from the base.
 
-## G-2 SF1e and CPR golden output unchanged — E4.1, E4.MC, E5.1
+## G-2 SF1e and CPR golden output unchanged — E4.1–E4.4 (E4.4 names its portrait-box exception), E4.MC, E5.1
 
 ```bash
 cd apps/desktop/src-tauri && mkdir -p <dir>/base <dir>/head
@@ -145,9 +145,9 @@ bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 ```bash
 cd docs/release/SD-41-gear-and-equipment-sets
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 39) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 42) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
-grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 2 (anchored; the receipt's own instructions must not match)
+grep -c '^- \(Gear screen\|Inventory page\|Page 1 ([^)]*)\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match; the third line is the page-1 print, decisions.md §34)
 (cd ../../../apps/desktop/src-tauri && cargo test --locked -j 8 --test market_price_census market_price -- --test-threads=8) 2>&1 | grep -c 'market_price_unknown_rows_name_every_source_tried .* ok'   # 1 (Q7 effort bar, decisions.md §30.1)
 python3 -I -c "import json;u=json.load(open('../../../data/price_overrides/price-unknown.json'));print(len(u),sum(1 for r in u if r.get('tried')))"   # equal figures; the count the operator saw at E4.G
 grep -c 'SD-41 INTERIM NOTES' release-notes.md                        # 0 at E5.3+
@@ -174,7 +174,8 @@ fresh-install check recorded in E5.1's receipt.
 | G-10 | E1.8, E1.9, E1.11, E2.5, E2.6, E3.4 | `artifacts/epic_1/E1.8/market-prices.json`, `artifacts/epic_1/E1.11/batch-*.json`, `data/price_overrides/*.json`, receipts |
 | G-11 | E1.10, E2.7, E3.5 | receipts; `artifacts/epic_3/E3.3/results.json` (the three campaign rows) |
 | G-7 | every MC, E5.1 | receipts |
-| E4.G | E4.MC, E4.G | `artifacts/epic_4/E4.G/` (4 PDFs, ≥ 12 PNGs, the signed receipt) |
+| E4.G | E4.MC, E4.G | `artifacts/epic_4/E4.G/` (4 PDFs, ≥ 12 PNGs, the signed receipt with three lines) |
+| §34 page 1 | E4.2–E4.4 | `artifacts/epic_4/E4.{2,3,4}/*.png`; `print_golden.json` PF rows; the `print_pf_blocks_page1_*` tests |
 | G-8 | E5.1–E5.4 | `artifacts/epic_5/`, `receipts.md`, `docs/retro/sd41-retrospective.md` |
 
 ## Does not cover
