@@ -103,6 +103,7 @@ override row's source kind is `operator-ruling`.
 | E1.1 | 2026-11-12 | `6d7b0227ba` + this commit | complete | `artifacts/epic_1/E1.1_cycle_receipt.md` |
 | E1.2 | 2026-11-12 | `d3bdfe8ad6` + `fd85933387` + this commit | complete | `artifacts/epic_1/E1.2_cycle_receipt.md` (9 + 1 tests; 63 of 63 `.pcg` fixtures round-trip) |
 | E1.3 | 2026-11-13 | `9841098a84` + this commit | complete | `artifacts/epic_1/E1.3_cycle_receipt.md` (4 tests; root lib 3106 passed) |
+| E1.4 | 2026-11-13 | this commit (docs only) | declined (ownedBy E2.4) | `artifacts/epic_1/E1.4_cycle_receipt.md` (no code; the widening breaks a desktop test Phase 1 may not edit) |
 
 ## Epic reports
 
@@ -116,3 +117,4 @@ the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --f
 ## Open blockers
 
 - ~~E1.1~~ **closed 2026-11-12 by the lead's rulings R1–R4 and the operator's "Container tag, but not weapons" (`decisions.md §31`); E1.1 reset to `ready`; E1.9 now depends on E1.1; figures corrected; census.py:41 fixed.** Original entry: needs (R1) FILES YOU OWN widened to `crates/codex-ingest/src/pcgen_import/ir_converter.rs` (`equipment_record_to_corpus`) + regenerated `data/corpus/*/_settled/equipment.json`, sequenced before E1.9; (R2) a replacement for SD-a (Pistol and Powder Horn DO carry the `Container` tag; default proposed: container = `Container` tag and no stated damage). Tried: the in-fence paths (the settled record has no tags/tokens; `raw_tokens` in live code is a residue-gate hit). Blocks E1.2–E1.7, E1.10 (serial lane). Receipt: `artifacts/epic_1/E1.1_cycle_receipt.md`.
+- **E1.4 — open 2026-11-13.** Needs one lead action: (a) grant E1.4 a named `apps/` exception for `apps/desktop/src-tauri/src/character_hub.rs` test `enhancement_rows_a_stowed_plus_one_adds_nothing` (lines 10720-10725: replace `is_empty()` with "one row, `in_hand == false`, enhancement +1") and widen FILES YOU OWN to `tests/worn_vs_carried.rs` (lines 122-123, 155) and `src/rules_core/corpus_loader.rs` (test, 634-636), accepting that carried weapons show unmarked on the Weapons tab and the PF print until E2.4/E4.1; or (b) fold E1.4 into E2.4 (desktop lane) and re-point E1.5's dependency. Tried: the in-fence path (every root-only widening of `resolve_weapon_damage_breakdown` turns that desktop test red; a separate unconsumed function would not be the wired widening the criterion names). Blocks E1.5–E1.7 (serial lane). Receipt: `artifacts/epic_1/E1.4_cycle_receipt.md`.
