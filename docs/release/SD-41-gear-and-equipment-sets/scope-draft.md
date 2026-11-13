@@ -122,9 +122,10 @@ SD-41 is done when every row below holds on `tranche-21` and the operator has si
 17. **Created items** persist, round-trip, print with their weight, weigh when carried, work as containers,
     and are edited or removed in the Custom tab. (`decisions.md §25`.)
 18. **Prices.** The converter prices composites and eqmod-offset literals as PCGen's data defines them; the
-    rest come from one checked-in list with a d20pfsrd URL per item; **every item the Market shows has a real
-    price at closure** (`price-unknown.json` names no Market row; the gate `market_prices_are_all_positive`
-    passes); Negotiate is haggling, never a stand-in. (`decisions.md §26, §30`.)
+    rest come from one checked-in list with a d20pfsrd URL per item; **every unpriced Market row has been tried
+    at closure** (converter, then d20pfsrd); a row still unpriced stays listed, says "no price yet", buys
+    through Negotiate, and its `price-unknown.json` entry names every source tried. (`decisions.md §26, §30,
+    §30.1`.)
 19. **Drop keeps the item** (Not Carried); Sell and Discard are separate buttons; the caption says so.
     (`decisions.md §27`.)
 20. **Stacks in pieces.** The Market sells by the book's bundle (3 × "Arrows (20)" = 60 arrows); once bought

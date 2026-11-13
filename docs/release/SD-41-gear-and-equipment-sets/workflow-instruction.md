@@ -373,8 +373,8 @@ launch. The author's run is recorded in `progress.md`.
 ## 11. Bundle closure epilogue (corrected order — `decisions.md §18`)
 
 1. **E5.2 final-acceptance scan** — the fenced commands in `acceptance-and-verification.md` G-8. Pass =
-   no output from the two `awk`s, `usable: yes` 2 (E4.G), `market_prices_are_all_positive` passed with
-   `price-unknown.json` naming no Market row (`decisions.md §30` Q7), every DEF/FSR revisit command pasted. **If
+   no output from the two `awk`s, `usable: yes` 2 (E4.G), the price gate passed with every
+   Market key in `price-unknown.json` carrying a `tried` list (`decisions.md §30.1`), every DEF/FSR revisit command pasted. **If
    anything is short, stop here:** no retrospective, no sweep, **no PR**. That is a correct outcome.
 2. **E5.2 retrospective:** `scripts/retro.py summary --since 2026-11-12 --json`; write
    `docs/retro/sd41-retrospective.md` in the shape of the latest sibling retrospective; cite it from

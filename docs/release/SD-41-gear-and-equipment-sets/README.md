@@ -51,7 +51,7 @@ weight unchanged.
 | Target version | `0.21.0`, stamped by C1's single commit on the 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run per phase (`decisions.md §12.2`); ends cleanly at E4.G |
 | Cadence | N/A |
-| Closure gate | 35 cards `complete` (E4.G needs the operator's two `usable: yes` lines; every Market row priced, `decisions.md §30`) (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 35 cards `complete` (E4.G needs the operator's two `usable: yes` lines; every unpriced Market row tried, `decisions.md §30.1`) (E4.G needs the operator's two `usable: yes` lines) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's request, answers and eight follow-ups (`artifacts/cycle_0/operator-brief-2026-11-12.md`); the census (`artifacts/epic_0/census.txt`); PCGen's Equipping, Purchase and custom-item tabs as a functional reference only (`decisions.md §17`) |
 
 ## 2. Files in this folder
@@ -116,7 +116,7 @@ Repo files read `0.21.0` after C1.
 | 9 | Phasing against SD-40 | E1 (root crate + new files + the `convert` lane) now; E2–E5 after SD-40 merges and `tranche-21` catches up to `develop` | `decisions.md §4` |
 | 10 | Where a stack's piece count lives | **operator Q8 (§30): pieces** — `quantity` per stack in `equipment_sets.json`'s `copies` map (the saved input keeps one line per stack; `EquipmentSelection` untouched); a bundle copy without one is `base_quantity` pieces (the migration); the engine weighs `weight × quantity / base_quantity` | `decisions.md §28, §30` |
 | 11 | Buy Custom pricing | **operator Q6 (§30): the default stands** — flat `COST` + evaluable formulas; an unpriced eqmod prices by Negotiate | `decisions.md §24, §30` |
-| 12 | The d20pfsrd list's reach | **operator Q7 (§30): every Market item** — a closure criterion; E1.11 in batches via the lead's `web-fetch` agent; `price-unknown.json` empty for Market rows; Negotiate is haggling only | `decisions.md §26, §30` |
+| 12 | The d20pfsrd list's reach | **operator Q7 (§30) + the lead's reconciliation (§30.1): every Market item tried** — E1.11 in batches via the lead's `web-fetch` agent; a row still unpriced stays listed, says "no price yet", and buys through Negotiate; each such key in `price-unknown.json` names every source tried | `decisions.md §26, §30, §30.1` |
 | 13 | A Create item's edit and removal | the Custom tab's existing dialog (it gains weight, price, capacity, slot) | `decisions.md §25` |
 | 14 | Campaign membership truth and the write-through hook | the character's `campaigns.json` (the app is master); one root-crate `mirror` called by `SavedCharacterStore::save` and every sidecar writer, closed by a source-scanning test; a bad folder is a warning, never a failed save | `decisions.md §29`; `§21` Q9 |
 

@@ -80,8 +80,10 @@ rows. Cards 31 → 34. Q9 added. No open SD-40 card owns `src/campaign/**`, `cam
 (lane `convert`, batches of ≤ 150 via the lead's `web-fetch` agent) and a closure criterion in G-8/G-10; Q8
 "Count single arrows" → pieces per stack in the sidecar's `copies` map, migration on first load (E2.1),
 `compute_encumbrance` quantities (E1.7), buy by bundle → pieces, sell / move / discard by pieces (E2.2, E2.5).
-Cards 34 → 35. Partition unchanged: E1.11 is root/tool side (Phase 1; its `equipment_catalog.rs` filter is a
-named exception the receipt states, or moves to E2.5).
+Cards 34 → 35. Partition unchanged: E1.11 is tool side (Phase 1). **Lead's correction (§30.1):** an unpriced
+row stays listed and buys through Negotiate (the operator's "allow the user to specify the price on purchase");
+Q7 is the effort bar; the `market: false` filter is dropped (no desktop file in E1.11); `price-unknown.json`
+rows carry `tried`; E2.5's test is `market_backend_unpriced_item_buys_through_negotiate`.
 
 ## Cycle log
 

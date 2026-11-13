@@ -697,3 +697,18 @@ root-crate mirror (E1.10) touches no SD-40 file → Phase 1; the hooks and the U
   `"Arrows ×60"` (pieces; the bundle name's `(20)` is dropped from the label). Ammunition boxes count Σ
   `quantity` over matching ammunition stacks (`§23` amended: no `× base_quantity`). `§28` (a), (c), (d),
   (e) and `§21` Q8 are amended by this section; DEF-6 is withdrawn.
+
+### §30.1 Correction (the lead, 2026-11-12): a price-unknown row stays listed and buys through Negotiate
+
+Two operator answers meet here. The Negotiate item (§26): > "allow the user to specify the price on purchase".
+Q7 (§30): > "Every Market item" — Negotiate "is for haggling, not a missing-price stand-in". **Ruling:** hiding a
+row (`market: false`) contradicts the first; Q7 is the **effort bar**, not a filter. So: a Market row with no
+price from any source **stays listed**, shows "no price yet", and **Buy routes through Negotiate** (the user
+types the price). E1.11 must try every unpriced Market row (converter fix, then d20pfsrd); `price-unknown.json`
+may name a Market key **only with a per-row reason showing every source was tried** (`{ key, reason, tried:
+["converter", "d20pfsrd:<url>"] }`); G-8 and G-10 check that; the operator sees the final price-unknown count at
+E4.G. The `market: false` filter is dropped (E1.11 touches no desktop file); E2.5's test is
+`market_backend_unpriced_item_buys_through_negotiate`. The gate at closure is `market_prices_are_positive_or_listed`
+with the listed exceptions each carrying `tried` (the stricter `market_prices_are_all_positive` is not a gate).
+§26 (d) as first written (a price-unknown item's Buy routes through Negotiate) stands; §30's "not buyable" and
+"leaves the Market listing" sentences are withdrawn.

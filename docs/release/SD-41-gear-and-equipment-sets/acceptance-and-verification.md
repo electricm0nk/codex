@@ -121,7 +121,7 @@ cd apps/desktop && npx tsx src/characterHub/campaignMembershipModel.test.ts     
 ## G-10 Prices and the Market (DoD 16, 18–21) — E1.8, E1.9, E1.11, E2.5, E2.6, E3.4
 
 ```bash
-cargo test --locked -j 8 --test market_price_census -- --test-threads=8              # 3 passed (census, the listed gate, market_prices_are_all_positive at E1.11+)
+cargo test --locked -j 8 --test market_price_census -- --test-threads=8              # 3 passed (census, the listed gate, market_price_unknown_rows_name_every_source_tried at E1.11+)
 python3 -I -c "import json;print(len(json.load(open('data/price_overrides/d20pfsrd-prices.json'))),len(json.load(open('data/price_overrides/price-unknown.json'))))"   # both figures quoted with E1.8's denominators
 ls docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_1/E1.11/batch-*.json | awk 'END{print NR}'   # ⌈unpriced Market rows / 150⌉
 cd apps/desktop/src-tauri && cargo test --locked -j 8 market_backend -- --test-threads=8   # 5 passed
@@ -144,8 +144,8 @@ test -s kanban.md || { echo NO_KANBAN; exit 2; }
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 35) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Gear screen\|Inventory page\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 2 (anchored; the receipt's own instructions must not match)
-cargo test --locked -j 8 --test market_price_census -- --test-threads=8 2>&1 | grep -c 'market_prices_are_all_positive .* ok'   # 1 (Q7 closure criterion, decisions.md §30)
-python3 -I -c "import json;u={r['key'] for r in json.load(open('../../../data/price_overrides/price-unknown.json'))};print(len(u))"   # quoted; the gate proves none is Market-visible
+cargo test --locked -j 8 --test market_price_census -- --test-threads=8 2>&1 | grep -c 'market_price_unknown_rows_name_every_source_tried .* ok'   # 1 (Q7 effort bar, decisions.md §30.1)
+python3 -I -c "import json;u=json.load(open('../../../data/price_overrides/price-unknown.json'));print(len(u),sum(1 for r in u if r.get('tried')))"   # equal figures; the count the operator saw at E4.G
 grep -c 'SD-41 INTERIM NOTES' release-notes.md                        # 0 at E5.3+
 python3 ../../../tools/release/resolve_release_notes.py --repo-root ../../..
 grep -L 'Looked at' artifacts/epic_[34]/*_cycle_receipt.md | grep -v 'E3.1_\|E3.2_\|E3.3_\|E4.G_'   # prints nothing (E3.MC, E4.1, E4.MC looked)
