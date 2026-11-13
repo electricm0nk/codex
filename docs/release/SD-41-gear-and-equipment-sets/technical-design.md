@@ -144,7 +144,9 @@ then carried rows with "(carried)"; Not Carried weapons are absent from `weapon_
 
 ```
 WeaponDamageBreakdown += in_hand: bool, unarmed: bool, nonlethal: bool, uses_ammunition: bool, ammunition_carried: u32
-  input: EquippedActive + SelectedInactive weapons (Absent off) + one appended unarmed row from unarmed_strike.json
+  resolve_weapon_damage_breakdown: unchanged (EquippedActive only, in_hand true)   -- decisions.md §33
+  resolve_weapon_damage_breakdown_with_carried (new, E1.4): in-hand rows, then SelectedInactive weapons in_hand false (Absent off) + one appended unarmed row from unarmed_strike.json (E1.5)
+  desktop callers (character_hub.rs:2879, rule_system_adapter.rs:435) switch to the carried view in E2.4, marking carried rows in the same card
   unarmed: die from the record (1d3; Small → size step), monk progression via class_monk.rs:470's table, nonlethal unless Improved Unarmed Strike
   uses_ammunition: the record's `Projectile` tag; ammunition_carried: Σ quantity × base_quantity over carried `Ammunition` copies matching the weapon's CONTAINS family
 WeaponDamageDto += inHand, unarmed, nonlethal, usesAmmunition, ammunitionCarried

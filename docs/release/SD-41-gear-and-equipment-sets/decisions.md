@@ -811,3 +811,25 @@ E3.1 (the gear screen's suppression + tag) and E4.1 (the print's). Smoke row `sh
 (E3.3, 19 new). **Enforced by:** E1.12's RED test `container_capacity_backpack_is_60_lb` on the settled bundle;
 E2.3 `custom_overrides_ignore_container_capacity_round_trips`; E3.1 model test "over suppressed when the
 override is on"; E4.1 `print_pf_blocks_gear_capacity_override_hides_the_flag`.
+
+## §33 — E1.4 re-scoped as an additive engine entry point (LEAD, 2026-11-13)
+
+E1.4 declined with no code written (`862ca3fe86`, `artifacts/epic_1/E1.4_cycle_receipt.md`): widening
+`resolve_weapon_damage_breakdown` so a `SelectedInactive` weapon gets a row turns a desktop test red
+(`character_hub.rs:10720–10725`, "a stowed sword has no damage row"), and the desktop calls the function directly
+(`character_hub.rs:2879`, `rule_system_adapter.rs:435`); Phase 1 may not write under `apps/`. The lead's ruling,
+verbatim: **"use option (c). Do not use (a) or (b)."** — *"(c) makes the change additive. E1.4 adds a new engine
+entry point for the carried view (for example `resolve_weapon_damage_breakdown_with_carried`, or a parameter on a
+new function). The existing `resolve_weapon_damage_breakdown` keeps its exact behaviour. No desktop caller and no
+existing test changes. That covers `tests/worn_vs_carried.rs:122-123,155`, `src/rules_core/corpus_loader.rs:634-636`
+and the desktop test. E2.4 switches the desktop callers to the new entry point, marks carried weapons, and
+updates the desktop test there. E4.1 does the same for the print."*
+
+**Why:** (1) the Phase-1 `apps/` fence stays intact — no exception, no desktop test edit before SD-40 merges;
+(2) **no unmarked carried weapon ever appears on `tranche-21`**: the old function keeps returning in-hand rows
+only, so the Weapons tab and the PF print are unchanged until E2.4 / E4.1 switch to the new entry point *and* mark
+the carried rows in the same card; (3) the new function is consumed in Phase 2 by named callers, so it is not an
+unwired path (the wired-integration doctrine's concern in the receipt) — it is the entry point E2.4 and E4.1 are
+scoped to call. The `in_hand` field lands on `WeaponDamageBreakdown` in E1.4 (default `true` for every row the
+old function returns, so its callers compile and behave unchanged). E1.5's unarmed row and E1.6's ammunition
+flags build on the same struct. E1.4 is `ready` again; the `## Open blockers` entry is closed with this section.
