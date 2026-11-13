@@ -57,7 +57,7 @@ them all with their commands into `artifacts/epic_0/census.txt`.
 | F-21 | SD-40 cards complete / total at authoring | **32 / 56** | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'`; `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' docs/release/SD-40-pf-sheet-design/kanban.md \| awk 'END{print NR}'` |
 | F-22 | Rust files mentioning equip/carried/encumbrance under `src/rules_core` + desktop `tests/`; `print_pf_blocks_` test names | **153**; **40** | `grep -rlE 'equip\|carried\|encumbr' apps/desktop/src-tauri/tests src/rules_core --include=*.rs \| awk 'END{print NR}'`; `grep -c 'print_pf_blocks_' apps/desktop/src-tauri/src/print/blocks/print_pf_blocks.rs` |
 | F-23 | The print gear block's functions and state words | `weapons` :72, `armor` :108, `inventory` :139; 6 state-word lines | `grep -n 'pub fn inventory\|pub fn weapons\|pub fn armor' apps/desktop/src-tauri/src/print/blocks/gear.rs`; `grep -c 'Left behind\|Carried\|Worn' apps/desktop/src-tauri/src/print/blocks/gear.rs` |
-| F-24 | `.pcg` import fixtures the population tests cover | **(E1.2 states: N of N)**; SD-40's E1.MC counted 37 saved of 65 files | `crates/codex-ingest/src/pcg_import/fixtures_tests.rs::fixtures()`; the receipt quotes the test's own line |
+| F-24 | `.pcg` import fixtures the population tests cover | **63 of 63** converted files round-trip (65 files, 2 refused as older than the format; E1.2, `decisions.md §20`); SD-40's E1.MC counted 37 saved of 65 files (another predicate) | `crates/codex-ingest/src/pcg_import/fixtures_tests.rs::fixtures()`; the receipt quotes the test's own line |
 
 ## §5 The seven follow-ups (2026-11-12; `census.txt §8`)
 
