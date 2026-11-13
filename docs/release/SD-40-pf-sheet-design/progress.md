@@ -129,7 +129,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E2.MC3 | E2.MC3 | complete | receipt commit (docs only) | artifacts/epic_2/E2.MC3_cycle_receipt.md |
 | E2.G (round 3) | E2.G | complete (operator signed round 3, 2026-11-13: asked for the PR now; E3, E4 and closure cards still waiting) | this commit | artifacts/epic_2/E2.G_cycle_receipt.md |
 | E3.1 | E3.1 | complete | 8d2e756f7f + a96a17c57b + receipt commit | artifacts/epic_3/E3.1_cycle_receipt.md |
-| E3.6 | E3.6 | blocked-escalated (side lane `bio`; tabs + 2 rows held on `origin/sd40/bio` `0e8d526d49` for two `block_vocabulary.json` lines) | 2a41592335 + receipt commit | artifacts/epic_3/E3.6_cycle_receipt.md |
+| E3.6 | E3.6 | complete (side lane `bio`; tabs + 2 rows + vocabulary lines landed by lead ruling 2026-11-13) | 2a41592335 + c2738d00f7 + 0eb0236b24 + receipt commit | artifacts/epic_3/E3.6_cycle_receipt.md |
 
 ## Epic reports
 
@@ -229,4 +229,4 @@ R21 RED output path, the R22 grep)
 
 ## Open blockers
 
-- **E3.6 (2026-11-13, side lane `bio`):** the Biography and Notes tabs and their two ui-smoke rows (`0e8d526d49`, `origin/sd40/bio`, all green: rows 2/2, desktop 1292/0) cannot land: `sheetLayout.test.ts` holds every `SHEET_TABS` id to `apps/desktop/src-tauri/src/print/golden/block_vocabulary.json`, which needs `"biography": {"ui": "SHEET_TABS"},` and `"notes": {"ui": "SHEET_TABS"},` after `"custom"`; the operator ruling of 2026-11-13 gives `print/**` to the main lane. Ruling needed: the main lane adds the two lines, or the bio lane gets that one file; then cherry-pick `0e8d526d49`, `npm test`, the two rows, E3.6 `complete`.
+none. (E3.6, filed 2026-11-13, cleared the same day: the lead granted the bio lane `print/golden/block_vocabulary.json` for the two lines.)
