@@ -174,8 +174,8 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
         "Chain Shirt +4".to_owned(),
         // Inventory: the encumbrance the engine computed.
         "Load Medium".to_owned(),
-        // Feats: the engine's budget rows.
-        format!("Feat slots: level granted {}", explained("feats.budget.level.granted")),
+        // Feats: the engine's budget rows, one line `<pool> <spent> of <granted>` (E3.1).
+        format!("Feat slots: level {} of {}", explained("feats.budget.level.spent"), explained("feats.budget.level.granted")),
         // Spells: the save DC and spells per day rows.
         format!("Wizard: spell save DC, level 3 {}", explained("class_chassis.wizard.spell_save_dc.spell_level_3")),
         format!("Wizard: spells per day, level 3 {}", explained("class_spell.wizard.total_spells_per_day.spell_level_3")),
@@ -443,7 +443,9 @@ fn print_pf_blocks_every_class_features_panel_row_prints_its_label_and_value() {
                 .iter()
                 .find(|printed| printed.label == label)
                 .unwrap_or_else(|| panic!("{tag}: the Class Features block holds `{label}`: {:?}", block.rows));
-            assert_eq!(printed.values, vec![value.clone()], "{tag}: `{label}` prints its value");
+            // E3.1: the block's class lines carry two cells, so a feature row's value is its first.
+            assert_eq!(printed.values.first(), Some(&value), "{tag}: `{label}` prints its value");
+            assert!(printed.values[1..].iter().all(String::is_empty), "{tag}: `{label}` prints one value");
             let line = format!("{label} {value}");
             assert!(features.contains(&line), "{tag}: the PDF's Class Features prints `{line}`: {features}");
         }
@@ -2038,6 +2040,134 @@ fn print_pf_blocks_page_one_carries_no_section_title() {
             let one = &pages_text(&text, &document.title, page_count(&pdf))[0];
             assert!(one.starts_with("Character Name"), "{tag}: page 1 opens with the Character Name field, untitled: {one}");
             assert!(!one.contains("Abilities and Feats"), "{tag}: page 1 prints no section title: {one}");
+        }
+    }
+}
+
+/// A look's one stated fact about itself (`look_metadata` under `label`): one per block printed in it.
+fn look_fact(document: &crate::print::model::SheetDocument, label: &str) -> serde_json::Value {
+    let facts = crate::print::typst::look_metadata(document, label).expect("the sheet typesets");
+    assert_eq!(facts.len(), 1, "one block states `{label}`: {facts:?}");
+    facts[0].clone()
+}
+
+/// The PDF's text from `from` up to the next `to` after it.
+fn text_between<'a>(text: &'a str, from: &str, to: &str) -> &'a str {
+    let start = text.find(from).unwrap_or_else(|| panic!("`{from}` prints: {text}"));
+    let rest = &text[start..];
+    &rest[..rest[from.len()..].find(to).map_or(rest.len(), |at| at + from.len())]
+}
+
+/// E3.1 (`decisions.md §23.4`, section 2 "Abilities and Feats"): the Feats block prints in its own
+/// look, two columns: each feat's name, its chosen target in brackets and its rule's whole text
+/// (the "Rules and features" words the Feats tab shows); the budget rows as one line, `<pool>
+/// <spent> of <granted>` per pool, from the engine's `feats.budget.*` rows; then two blank rows.
+/// Aldric (Weapon Focus (longsword)) and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_feats_print_name_target_and_text() {
+    for (tag, id) in [("aldric", ALDRIC_ID), ("elowen", ELOWEN_ID)] {
+        let root = seeded(&format!("feats-look-{tag}"), id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let row_value = |id: &str| loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value).unwrap_or_else(|| panic!("{tag}: {id}"));
+        let mut pools: Vec<&str> = Vec::new();
+        for row in loaded.explanations.iter().filter(|row| row.id.starts_with("feats.budget.")) {
+            let pool = row.id["feats.budget.".len()..].rsplit_once('.').map_or("", |(pool, _)| pool);
+            if !pools.contains(&pool) {
+                pools.push(pool);
+            }
+        }
+        assert!(!pools.is_empty(), "{tag}: the engine states a feat budget");
+        let budget: Vec<String> = pools
+            .iter()
+            .map(|pool| {
+                let field = |name: &str| row_value(&format!("feats.budget.{pool}.{name}"));
+                format!("{} {} of {}", pool.replace('_', " "), field("spent"), field("granted"))
+            })
+            .collect();
+        let budget = budget.join(" · ");
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let block = document.blocks.iter().find(|block| block.id == "feats").expect("the Feats block");
+            assert_eq!(block.look.name(), "feats", "{tag} {paper:?}: the Feats block prints in the feats look");
+            let slots = block.rows.iter().filter(|row| row.label == "Feat slots").collect::<Vec<_>>();
+            assert_eq!(slots.len(), 1, "{tag} {paper:?}: the budget is one line: {:?}", block.rows);
+            assert_eq!(slots[0].values.first().map(String::as_str), Some(budget.as_str()), "{tag} {paper:?}: `<pool> <spent> of <granted>` per pool");
+            assert!(slots[0].derivation.as_ref().is_some_and(|rows| rows.len() == pools.len() * 3), "{tag} {paper:?}: Show the math keeps every budget row");
+            let fact = look_fact(&document, "feats-look");
+            assert_eq!((fact["columns"].as_u64(), fact["blank"].as_u64()), (Some(2), Some(2)), "{tag} {paper:?}: two columns, two blank rows: {fact}");
+
+            let text = pdf_text(&render(&root, &printed));
+            let feats = text_between(&text, "Feats", "Class Features");
+            assert!(feats.contains(&format!("Feat slots: {budget}")), "{tag} {paper:?}: the budget line prints: {feats}");
+            for feat in &loaded.selected_feats {
+                let label = super::feats::feat_label(feat);
+                let target = loaded
+                    .chosen_feat_targets
+                    .iter()
+                    .find(|chosen| &chosen.feat_id == feat && !chosen.targets.is_empty())
+                    .map(|chosen| format!(" ({})", chosen.targets.join(", ")))
+                    .unwrap_or_default();
+                let name = format!("{label}{target}");
+                let row = block.rows.iter().find(|row| row.label == name).unwrap_or_else(|| panic!("{tag}: `{name}` is a row: {:?}", block.rows));
+                assert!(feats.contains(&name), "{tag} {paper:?}: `{name}` prints: {feats}");
+                let words = loaded.sheet_lines.iter().find(|line| line.kind == "feat" && line.label == label).map(|line| line.prose.clone()).unwrap_or_default();
+                for line in words.split('\n').filter(|line| !line.trim().is_empty()) {
+                    assert!(row.notes.iter().any(|note| note == line), "{tag}: `{name}` holds its rule's words `{line}`");
+                    let flat = line.split_whitespace().collect::<Vec<_>>().join(" ");
+                    assert!(feats.contains(&flat), "{tag} {paper:?}: `{name}`'s whole text prints `{flat}`: {feats}");
+                }
+            }
+            if tag == "aldric" {
+                assert!(feats.contains("Weapon Focus (longsword)"), "{tag} {paper:?}: the target prints in brackets: {feats}");
+            }
+        }
+    }
+}
+
+/// E3.1 (`decisions.md §23.4`, section 2): the Class Features block prints in its own look: per held
+/// class, its name and level, its hit die and its skill ranks per level (the class's own "Rules and
+/// features" words, held here to the engine's `class_hit_die_for` and the converted record's `Skill
+/// ranks per level`), then every feature line
+/// with its value and condition, in two columns; the Actions block prints the Actions tab's lines as
+/// a table under `Name`, `Kind`, `Value`. Aldric (Fighter), Elowen (Wizard), Letter and A4.
+#[test]
+fn print_pf_blocks_class_features_print_in_two_columns() {
+    use codex::rules_core::pilot_compute::class_chassis_sheet_rules::skill_ranks_per_level_from_package;
+    for (tag, id, class_id, name) in [("aldric", ALDRIC_ID, "class:fighter", "Fighter"), ("elowen", ELOWEN_ID, "class:wizard", "Wizard")] {
+        let root = seeded(&format!("class-look-{tag}"), id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let level = loaded
+            .summary
+            .class_summary
+            .split(',')
+            .find_map(|segment| segment.trim().strip_prefix(&format!("{class_id}:")).map(str::to_owned))
+            .unwrap_or_else(|| panic!("{tag}: holds {class_id}: {}", loaded.summary.class_summary));
+        let die = crate::character_hub::class_hit_die_for(class_id).expect("the engine states the hit die");
+        let ranks = skill_ranks_per_level_from_package(&class_id["class:".len()..]).expect("the record states skill ranks").0;
+        let header = format!("{name} level {level}");
+        let facts = [format!("Hit die: d{die}"), format!("Skill ranks per level: {ranks}")];
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let block = document.blocks.iter().find(|block| block.id == "classFeatures").expect("the Class Features block");
+            assert_eq!(block.look.name(), "class-features", "{tag} {paper:?}: Class Features prints in its own look");
+            let first = block.rows.first().expect("a row");
+            assert_eq!((first.label.as_str(), &first.values[..2]), (header.as_str(), &facts[..]), "{tag} {paper:?}: the class line opens the block");
+            let fact = look_fact(&document, "class-features-look");
+            assert_eq!(fact["columns"].as_u64(), Some(2), "{tag} {paper:?}: the feature lines print in two columns: {fact}");
+            let actions = document.blocks.iter().find(|block| block.id == "actions").expect("the Actions block");
+            assert_eq!(actions.look.name(), "actions", "{tag} {paper:?}: Actions prints in its own look");
+
+            let text = pdf_text(&render(&root, &printed));
+            let features = text_between(&text, "Class Features", "Actions");
+            assert!(features.contains(&format!("{header} {} {}", facts[0], facts[1])), "{tag} {paper:?}: the class line prints: {features}");
+            assert_eq!(features.matches(&facts[0]).count(), 1, "{tag} {paper:?}: the hit die prints once, on the class line: {features}");
+            let table = text_between(&text, "Actions", "Spells");
+            assert!(table.starts_with("Actions Name Kind Value"), "{tag} {paper:?}: the Actions table's columns: {table}");
+            for applied in &loaded.resolved_racial_traits.applied_traits {
+                assert!(table.contains(&format!("{} Racial trait", applied.name)), "{tag} {paper:?}: `{}` prints with its kind: {table}", applied.name);
+            }
         }
     }
 }

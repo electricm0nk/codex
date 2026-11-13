@@ -165,12 +165,20 @@ pub enum Look {
     /// A section's title (SD-40 E2.23, `decisions.md §24.3.7`): full width, larger and bolder than any
     /// block heading, a rule under it; it opens each section after page 1.
     SectionTitle,
+    /// The Feats (SD-40 E3.1): the budget as one line, then each feat's name, target and whole text
+    /// in two columns, then two blank rows.
+    Feats,
+    /// The Class Features (SD-40 E3.1): a line per held class (level, hit die, ranks per level),
+    /// then each feature line with its value and condition in two columns.
+    ClassFeatures,
+    /// The Actions (SD-40 E3.1): the Actions tab's lines as a table of name, kind and value.
+    Actions,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 15] = [
+    pub const ALL: [Look; 18] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -186,6 +194,9 @@ impl Look {
         Look::ConditionalBonuses,
         Look::Resistances,
         Look::SectionTitle,
+        Look::Feats,
+        Look::ClassFeatures,
+        Look::Actions,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -206,6 +217,9 @@ impl Look {
             Look::ConditionalBonuses => "conditional-bonuses",
             Look::Resistances => "resistances",
             Look::SectionTitle => "section-title",
+            Look::Feats => "feats",
+            Look::ClassFeatures => "class-features",
+            Look::Actions => "actions",
         }
     }
 }
@@ -326,6 +340,11 @@ pub struct SheetRow {
     pub label: String,
     pub values: Vec<String>,
     pub notes: Vec<String>,
+    /// What kind of line it is, for a look that prints its kinds apart (SD-40 E3.1: `class`, a held
+    /// class's line; `budget`, the feat budget; an Actions line's kind as its table prints it). Empty:
+    /// a plain row, left out of the sheet's JSON.
+    #[serde(skip_serializing_if = "str::is_empty")]
+    pub kind: &'static str,
     /// For a line that prints a computed number: the engine's rows behind it, which "Show the math"
     /// prints (empty: the engine recorded none). `None` for a line of words or of the player's own
     /// choices (ranks, scores), which no derivation is behind. Not sent to Typst.
@@ -335,13 +354,18 @@ pub struct SheetRow {
 
 impl SheetRow {
     pub fn new(label: impl Into<String>, values: impl IntoIterator<Item = String>) -> Self {
-        Self { label: label.into(), values: values.into_iter().collect(), notes: Vec::new(), derivation: None }
+        Self { label: label.into(), values: values.into_iter().collect(), notes: Vec::new(), kind: "", derivation: None }
     }
 
     /// The same line, with `notes` printed under it.
     pub fn with_notes(mut self, notes: impl IntoIterator<Item = String>) -> Self {
         self.notes.extend(notes.into_iter().filter(|note| !note.trim().is_empty()));
         self
+    }
+
+    /// The same line, of `kind`.
+    pub fn of_kind(self, kind: &'static str) -> Self {
+        Self { kind, ..self }
     }
 
     /// The same line, marked as a computed number with these rows behind it.

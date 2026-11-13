@@ -18,6 +18,9 @@
 #import "/looks/conditional-bonuses.typ": look as conditional-bonuses-look, fit as conditional-bonuses-fit
 #import "/looks/resistances.typ": look as resistances-look
 #import "/looks/section-title.typ": look as section-title-look
+#import "/looks/feats.typ": look as feats-look
+#import "/looks/class-features.typ": look as class-features-look
+#import "/looks/actions.typ": look as actions-look
 
 #let looks = (
   table: table-look,
@@ -35,6 +38,9 @@
   "conditional-bonuses": conditional-bonuses-look,
   resistances: resistances-look,
   "section-title": section-title-look,
+  feats: feats-look,
+  "class-features": class-features-look,
+  actions: actions-look,
 )
 
 // The looks whose list page 1's overflow rule may shrink and split (E2.4, decisions.md §23.2
