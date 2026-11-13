@@ -866,7 +866,8 @@ pub(crate) fn sheet_lines_for(
                 resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
             let computed = base.clone().with_sheet_rules(input, package, &race_traits);
             let bonuses = feat_skill_bonuses(package, &computed.sheet_lines);
-            let notes = conditional_notes(package, &computed.sheet_lines);
+            let unprinted = computed.held_unprinted_lines(input, package, &race_traits);
+            let notes = conditional_notes(package, &computed.sheet_lines, &unprinted);
             (map_sheet_lines_dto(&computed.sheet_lines), None, bonuses, notes)
         }
         Err(reason) => (Vec::new(), Some(reason.clone()), FeatSkillBonuses::default(), ConditionalNotes::default()),
