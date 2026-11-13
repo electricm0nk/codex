@@ -4,12 +4,12 @@
 // condition and words the width of the table. It formats strings it is given; it computes nothing
 // (NR-2).
 
-#let heading-of(b) = {
+// The heading stays on the page of the block's first line (`sticky`): never alone at a page's foot.
+#let heading-of(b) = block(sticky: true, below: 0.5em, {
   text(size: 12pt, weight: "bold", b.heading)
   v(-0.4em)
   line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+})
 
 #let caption(t) = text(size: 8pt, weight: "bold", fill: luma(60), t)
 
@@ -36,7 +36,7 @@
       stroke: (x, y) => if y == 0 { (bottom: 0.6pt + luma(60)) } else if ends.at(y, default: false) { (bottom: 0.4pt + luma(190)) } else { none },
       inset: (x: 4pt, y: 3pt),
       align: (x, y) => if x == 2 { right } else { left },
-      ..head,
+      table.header(..head),
       ..rows.map(line-of).flatten(),
     )
   ]

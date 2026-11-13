@@ -7,23 +7,24 @@
 
 #let blank = 2
 
-#let heading-of(b) = {
+// The heading stays on the page of the block's first line (`sticky`): never alone at a page's foot.
+#let heading-of(b) = block(sticky: true, below: 0.5em, {
   text(size: 12pt, weight: "bold", b.heading)
   v(-0.4em)
   line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+})
 
 #let kind(r) = r.at("kind", default: "")
 
-// One feat: its name (and any value it is given) over its words.
-#let entry(r) = {
+// One feat: its name (and any value it is given) over its words, whole on one page, so its words
+// never break around the feat beside it.
+#let entry(r) = block(breakable: false, width: 100%, {
   text(size: 9.5pt, weight: "bold", (r.label, ..r.values).filter(t => t != "").join(" "))
   if r.notes.len() > 0 {
     v(-0.45em)
     stack(spacing: 0.4em, ..r.notes.map(n => text(size: 8.5pt, n)))
   }
-}
+})
 
 #let write-line = box(width: 100%, height: 0.5cm, stroke: (bottom: 0.5pt + luma(60)))
 
@@ -32,10 +33,9 @@
   let feats = b.rows.filter(r => kind(r) != "budget")
   block(breakable: true, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
-    #for r in budget [
-      #text(size: 9pt)[*#r.label:* #r.values.at(0, default: "")]
-      #v(0.1em)
-    ]
+    #for r in budget {
+      block(sticky: true, below: 0.7em, text(size: 9pt)[*#r.label:* #r.values.at(0, default: "")])
+    }
     #grid(
       columns: (1fr, 1fr),
       column-gutter: 0.6cm,

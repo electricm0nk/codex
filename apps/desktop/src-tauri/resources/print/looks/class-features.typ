@@ -4,16 +4,17 @@
 // label, its value in bold at the right, and its condition and words under it. It formats strings
 // it is given; it computes nothing (NR-2).
 
-#let heading-of(b) = {
+// The heading stays on the page of the block's first line (`sticky`): never alone at a page's foot.
+#let heading-of(b) = block(sticky: true, below: 0.5em, {
   text(size: 12pt, weight: "bold", b.heading)
   v(-0.4em)
   line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+})
 
 #let kind(r) = r.at("kind", default: "")
 
-#let entry(r) = block(width: 100%, {
+// A line stays whole on one page, so its words never break around the cell beside it.
+#let entry(r) = block(breakable: false, width: 100%, {
   grid(
     columns: (1fr, auto),
     column-gutter: 0.3cm,
@@ -33,10 +34,9 @@
   let lines = b.rows.filter(r => kind(r) != "class")
   block(breakable: true, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
-    #for r in classes [
-      #text(size: 10pt, weight: "bold", r.label)#for v in r.values.filter(v => v != "") [#h(1.2em)#text(size: 9.5pt, v)]
-      #v(0.1em)
-    ]
+    #for r in classes {
+      block(sticky: true, below: 0.6em)[#text(size: 10pt, weight: "bold", r.label)#for v in r.values.filter(v => v != "") [#h(1.2em)#text(size: 9.5pt, v)]]
+    }
     #grid(columns: (1fr, 1fr), column-gutter: 0.6cm, row-gutter: 0.5em, ..lines.map(entry))
     #metadata((columns: 2)) <class-features-look>
   ]
