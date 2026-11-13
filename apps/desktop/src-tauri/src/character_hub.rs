@@ -3096,7 +3096,8 @@ fn max_hit_points_row(root: &Path, input: &CharacterInput, constitution_modifier
         .map(|grant| i16::try_from(grant.value).unwrap_or(0))
         .sum();
     let worn = worn_items.unwrap_or(0);
-    let feats = feat_effects::hp_bonus_from_feats(&input.chosen.selected_feats);
+    let hit_dice: u8 = input.chosen.class_levels.iter().fold(0, |sum, held| sum.saturating_add(held.level));
+    let feats = feat_effects::hp_bonus_from_feats(&input.chosen.selected_feats, hit_dice);
     let familiar = codex::rules_core::pilot_compute::character_familiar_hp_bonus(input);
     let mut detail = format!(
         "{} (the full die at the first level, the die's average after it, a saved roll as saved; Constitution {constitution_modifier:+} per level, at least 1)",
@@ -10279,8 +10280,8 @@ mod tests {
         assert_eq!(total(&[], &[], 0), None, "no class held, no total");
     }
 
-    /// The sheet's `hit_points.max` counts Toughness and a bonded Toad familiar, through the
-    /// engine's own `hp_bonus_from_feats` and `character_familiar_hp_bonus`.
+    /// The sheet's `hit_points.max` counts Toughness (+3, +1 per Hit Die past 3) and a bonded Toad
+    /// familiar, through the engine's own `hp_bonus_from_feats` and `character_familiar_hp_bonus`.
     #[test]
     fn hit_points_max_counts_toughness() {
         let root = tempdir("hit-points-max-toughness");
@@ -10291,6 +10292,12 @@ mod tests {
         let row = max_hit_points_row(&root, &fighter, 0, None).expect("a Fighter has a row");
         assert_eq!(row.value, baseline + 3, "Human Fighter 3 + Toughness: +3");
         assert!(row.detail.contains("feats +3"), "the detail names the term: {}", row.detail);
+        for (level, toughness) in [(5, 5), (8, 8)] {
+            let mut fighter = compose_character_input(&request_for("race:human", level));
+            let baseline = max(&fighter);
+            fighter.chosen.selected_feats.push("Toughness".to_owned());
+            assert_eq!(max(&fighter), baseline + toughness, "Human Fighter {level} + Toughness: +{toughness} (max(3, Hit Dice))");
+        }
         let mut witch = compose_character_input(&request_for("race:human", 3));
         witch.chosen.class_levels = vec![CharacterClassLevel { class_id: "class:witch".to_owned(), level: 3 }];
         let baseline = max(&witch);
