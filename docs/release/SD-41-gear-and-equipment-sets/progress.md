@@ -91,6 +91,7 @@ rows carry `tried`; E2.5's test is `market_backend_unpriced_item_buys_through_ne
 |---|---|---|---|---|
 | C0 | 2026-11-12 | this commit | complete | `artifacts/cycle_0/C0_cycle_receipt.md` |
 | C1 | 2026-11-12 | this commit | complete | `artifacts/cycle_0/C1_cycle_receipt.md` |
+| E1.1 | 2026-11-12 | this commit | blocked-escalated | `artifacts/epic_1/E1.1_cycle_receipt.md` |
 
 ## Epic reports
 
@@ -103,4 +104,4 @@ the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --f
 
 ## Open blockers
 
-(none)
+- **E1.1 (2026-11-12, sd41-e1.1):** needs (R1) FILES YOU OWN widened to `crates/codex-ingest/src/pcgen_import/ir_converter.rs` (`equipment_record_to_corpus`) + regenerated `data/corpus/*/_settled/equipment.json`, sequenced before E1.9; (R2) a replacement for SD-a (Pistol and Powder Horn DO carry the `Container` tag; default proposed: container = `Container` tag and no stated damage). Tried: the in-fence paths (the settled record has no tags/tokens; `raw_tokens` in live code is a residue-gate hit). Blocks E1.2–E1.7, E1.10 (serial lane). Receipt: `artifacts/epic_1/E1.1_cycle_receipt.md`.

@@ -364,6 +364,10 @@ The lead re-reads this package against the repo before dispatch and records each
 | "which corpus items are containers and whether capacity data exists" | two sources: the `Container` tag in sheet rules (232) and the `CONTAINS` token in corpus records (138; 70 with a weight); the app reads no capacity today (0 hits) | §7 |
 | "how equip/carry state is stored on disk" | `equipment=item:<id>:<equipped\|selected_inactive\|absent>` lines in `authoritative_character_input.txt`; the slot is never stored | §5.3 chooses a sidecar; the input format is untouched |
 | "custom items … custom named pouch" | `CustomRecordDto` has `slot`, `worn`, `left_behind`, no weight, no base item | §11 adds `base_item_id` |
+| "138 records with a `CONTAINS` token (70 / 43 / 25)" (§7, this table, E1.1) | 210 of 7,804 equipment files: 88 lb / 73 `UNLIM` / 49 `*` (`grep -rl CONTAINS data/corpus --include=*.json \| grep /equipment/ \| awk 'END{print NR}'` → 210); `census.py:41` globbed `equipment/*.json` and skipped `equipment/<subdir>/` (3,805 files); base Backpack is `general/backpack.json`, `CONTAINS UNLIM\|Any` | E1.1 tests pin the corrected figures (sd41-e1.1, 2026-11-12) |
+| "232 container-tagged records" | 232 files, 265 rows; 123 of the rows also tagged `Weapon` | E1.1 names which population it pins |
+| SD-a: "ammunition holders (Pistol, Powder Horn) have no `Container` tag" | both carry `Container` (sheet rules `ultimate_equipment/equipment/pistol.json`, `powder_horn.json`) | SD-a's rule needs replacing; E1.1 blocked-escalated, receipt R2 |
+| E1.1 FILES YOU OWN "`equipment_record.rs` (+ `sheet_rule.rs`)" | the live record is read from `data/corpus/<book>/_settled/equipment.json` (written by `codex-ingest`'s `gen_settled_corpus`) and carries no tags or tokens; live `raw_tokens` reads are residue-gate hits | E1.1 blocked-escalated, receipt R1 |
 
 ## §21 — Questions only the operator can settle (defaults taken; the run does not wait)
 

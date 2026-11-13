@@ -38,7 +38,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 35 (23 + 8
 |---|---|---|---|---|---|
 | C0 | Package committed + Cycle 0 receipt + census | lead | complete | — | this commit; branch cut by the planning session 2026-11-12 from `origin/tranche-20` @ `f7f85f3d24` |
 | C1 | 0.21.0 on 14 surfaces + notes pointer | haiku | complete | C0 | Phase 1; this commit; receipt `artifacts/cycle_0/C1_cycle_receipt.md` |
-| E1.1 | Containers in the record: `is_container`, `ContainerCapacity` from `CONTAINS` | opus | waiting | C1 | Phase 1; root crate only |
+| E1.1 | Containers in the record: `is_container`, `ContainerCapacity` from `CONTAINS` | opus | blocked-escalated | C1 | Phase 1; root crate only; FILES YOU OWN not closed (capacity needs the converter + `_settled` regen) and SD-a premise false; rulings R1/R2 in `artifacts/epic_1/E1.1_cycle_receipt.md` |
 | E1.2 | Equipment sets: model, file, projection, Default (root crate) | opus | waiting | E1.1 | Phase 1; `src/saved_character/equipment_sets.rs` (new); the round-trip theorem over seeds + `.pcg` fixtures |
 | E1.3 | Container loads (recursive contents vs capacity) | opus | waiting | E1.2 | Phase 1; `src/rules_core/containers.rs` (new) |
 | E1.4 | Carried weapons: `in_hand` on the breakdown | opus | waiting | E1.3 | Phase 1; `damage_total.rs` |
