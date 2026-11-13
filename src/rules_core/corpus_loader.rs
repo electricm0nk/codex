@@ -577,7 +577,7 @@ mod tests {
             active_state: ActiveState::EquippedActive,
             applied_modifiers: Vec::new(),
         }];
-        let computation = compute_encumbrance(&equipped, &package, 10, SizeCategory::Medium);
+        let computation = compute_encumbrance(&equipped, &package, 10, SizeCategory::Medium, &[], &[]);
         assert_eq!(computation.total_carried_weight_lbs, 1.0, "ARG Dogslicer's real WT:1 through the real loader");
         assert!(computation.unresolved_item_ids.is_empty());
     }

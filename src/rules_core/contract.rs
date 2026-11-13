@@ -390,6 +390,8 @@ pub fn to_pilot_receipt(
         corpus,
         effective_ability_scores.strength,
         size,
+        &[],
+        &[],
     );
     let mut diagnostics = receipt.base.diagnostics.clone();
     diagnostics.extend(size_diagnostic);

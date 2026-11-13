@@ -64,6 +64,7 @@ use crate::rules_core::equipment_effects::{stand_in_record, worn_item_stated_bon
 use crate::rules_core::equipment_resolver::equipment_converted_resolve;
 use crate::rules_core::size::SizeCategory;
 use crate::rules_core::source_content::SourcePackageContent;
+use crate::saved_character::equipment_sets::{copy_keys, CopyKey};
 
 /// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): whether
 /// resolving `item_id` against `corpus` finds a real, parseable `WT:`
@@ -324,6 +325,15 @@ pub struct CarriedItem {
     pub cost_gp: Option<f64>,
 }
 
+/// SD-41 E1.7 (`decisions.md §25`): a copy with no corpus record (a created item) that still
+/// weighs: its own stated weight under its projected state, summed like a corpus copy.
+#[derive(Debug, Clone, PartialEq)]
+pub struct WeighedCopy {
+    pub id: String,
+    pub weight_lbs: f64,
+    pub active_state: ActiveState,
+}
+
 /// Real, corpus-grounded carrying-capacity/encumbrance computation for a
 /// character's full carried loadout (v0.6 alpha swarm, task 5).
 ///
@@ -393,18 +403,26 @@ impl EncumbranceComputation {
 /// they stay named gaps rather than half-applied ones. In particular a
 /// Small character's weapon damage dice are still computed at Medium in
 /// `resolve_weapon_damage_breakdown`.
+///
+/// SD-41 E1.7 (`decisions.md §25, §30`): `extra` are weighed copies with no corpus record, summed
+/// under the same `Absent`-is-nothing rule; `quantities` are the pieces per copy the
+/// equipment-sets file states, and a copy weighs (and costs) `record × quantity / base_quantity`.
+/// A copy with no entry is one bundle, so `&[], &[]` is the figure this function always gave.
 pub fn compute_encumbrance(
     equipment_selections: &[EquipmentSelection],
     corpus: &SourcePackageContent,
     strength_score: i16,
     size: SizeCategory,
+    extra: &[WeighedCopy],
+    quantities: &[(CopyKey, u32)],
 ) -> EncumbranceComputation {
     let mut per_item = Vec::new();
     let mut unresolved_item_ids = Vec::new();
     let mut total_carried_weight_lbs = 0.0_f64;
     let mut total_carried_cost_gp = 0.0_f64;
+    let keys = copy_keys(equipment_selections.iter().map(|selection| (selection.item_id.as_str(), copy_bonus(selection))));
 
-    for selection in equipment_selections {
+    for (selection, key) in equipment_selections.iter().zip(&keys) {
         if selection.active_state == ActiveState::Absent {
             continue;
         }
@@ -418,6 +436,9 @@ pub fn compute_encumbrance(
         let stand_in = stand_in_record(record, corpus);
         let weight = weight.or_else(|| stand_in.and_then(|base| base.weight_lbs));
         let cost = cost.or_else(|| stand_in.and_then(|base| base.cost_gp));
+        let bundles = quantities.iter().find(|(copy, _)| copy == key).map_or(1.0, |(_, pieces)| {
+            f64::from(*pieces) / f64::from(record.base_quantity.or(stand_in.and_then(|base| base.base_quantity)).unwrap_or(1).max(1))
+        });
 
         // Weight is what makes an item *carried* for encumbrance purposes,
         // so a record with no `WT:` token is unresolved. Cost is
@@ -428,11 +449,17 @@ pub fn compute_encumbrance(
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let cost_gp = cost;
+        let weight_lbs = weight_lbs * bundles;
+        let cost_gp = cost.map(|cost| cost * bundles);
 
         total_carried_weight_lbs += weight_lbs;
         total_carried_cost_gp += cost_gp.unwrap_or(0.0);
         per_item.push(CarriedItem { item_id: selection.item_id.clone(), weight_lbs, cost_gp });
+    }
+
+    for copy in extra.iter().filter(|copy| copy.active_state != ActiveState::Absent) {
+        total_carried_weight_lbs += copy.weight_lbs;
+        per_item.push(CarriedItem { item_id: copy.id.clone(), weight_lbs: copy.weight_lbs, cost_gp: None });
     }
 
     let worn = worn_item_stated_bonuses(equipment_selections, corpus);
@@ -449,6 +476,20 @@ pub fn compute_encumbrance(
         load_max_dex_cap: level.max_dex_cap(),
         load_armor_check_penalty: level.armor_check_penalty(),
     }
+}
+
+/// A copy's `+N`, as the equipment-sets file keys it: the highest `Special Ability ~ +N ~ …` it holds.
+// shortcut: the same body as `damage_total::copy_bonus` (private there, outside E1.7's files); fold the two when a card owns both.
+fn copy_bonus(selection: &EquipmentSelection) -> u8 {
+    use crate::rules_core::body_slots::Enhanceable;
+    (1..=10u8)
+        .filter(|n| {
+            [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon]
+                .iter()
+                .any(|kind| selection.applied_modifiers.contains(&kind.modifier_key(*n)))
+        })
+        .max()
+        .unwrap_or(0)
 }
 
 // ---- Starfinder 1e: bulk, not pounds ---------------------------------------------------------
@@ -662,10 +703,10 @@ mod tests {
     #[test]
     fn remaining_lbs_is_the_heavy_maximum_less_the_carried_weight() {
         let corpus = core_rulebook();
-        let load = compute_encumbrance(&[held("Chain Shirt (Base)"), held("Longsword (Base)")], &corpus, 16, SizeCategory::Medium);
+        let load = compute_encumbrance(&[held("Chain Shirt (Base)"), held("Longsword (Base)")], &corpus, 16, SizeCategory::Medium, &[], &[]);
         assert_eq!((load.total_carried_weight_lbs, load.thresholds.heavy_max_lbs), (29.0, 230.0), "{load:#?}");
         assert_eq!(load.remaining_lbs(), 201.0);
-        let empty = compute_encumbrance(&[], &corpus, 16, SizeCategory::Medium);
+        let empty = compute_encumbrance(&[], &corpus, 16, SizeCategory::Medium, &[], &[]);
         assert_eq!(empty.remaining_lbs(), 230.0, "nothing carried: the whole heavy maximum remains");
     }
 
@@ -673,9 +714,72 @@ mod tests {
     /// (heavy 10 lb) carrying the 25 lb Chain Shirt is over capacity.
     #[test]
     fn remaining_lbs_reads_zero_over_the_heavy_maximum() {
-        let load = compute_encumbrance(&[held("Chain Shirt (Base)")], &core_rulebook(), 1, SizeCategory::Medium);
+        let load = compute_encumbrance(&[held("Chain Shirt (Base)")], &core_rulebook(), 1, SizeCategory::Medium, &[], &[]);
         assert_eq!((load.level, load.thresholds.heavy_max_lbs), (EncumbranceLevel::OverHeavyCapacity, 10.0), "{load:#?}");
         assert_eq!(load.remaining_lbs(), 0.0);
+    }
+
+    /// SD-41 E1.7 (`decisions.md §25`): a created item with no corpus record ("Food", 5 lb) weighs
+    /// what it states while carried, beside the corpus copies.
+    fn food_pouch(active_state: ActiveState) -> WeighedCopy {
+        WeighedCopy { id: "custom:food".to_owned(), weight_lbs: 5.0, active_state }
+    }
+
+    #[test]
+    fn extra_weighed_copy_counts_when_carried() {
+        let load = compute_encumbrance(
+            &[held("Longsword (Base)")],
+            &core_rulebook(),
+            16,
+            SizeCategory::Medium,
+            &[food_pouch(ActiveState::SelectedInactive)],
+            &[],
+        );
+        assert_eq!(load.total_carried_weight_lbs, 4.0 + 5.0, "{load:#?}");
+        assert!(
+            load.per_item.contains(&CarriedItem { item_id: "custom:food".to_owned(), weight_lbs: 5.0, cost_gp: None }),
+            "{load:#?}"
+        );
+    }
+
+    #[test]
+    fn extra_weighed_copy_absent_adds_nothing() {
+        let load =
+            compute_encumbrance(&[held("Longsword (Base)")], &core_rulebook(), 16, SizeCategory::Medium, &[food_pouch(ActiveState::Absent)], &[]);
+        assert_eq!(load.total_carried_weight_lbs, 4.0, "Not Carried adds 0: {load:#?}");
+        assert_eq!(load.per_item.len(), 1, "{load:#?}");
+    }
+
+    /// SD-41 E1.7 (`decisions.md §30`): the Advanced Player's Guide `Arrow, Flight (20)` is one
+    /// bundle of 20 pieces weighing 3 lb (`BASEQTY 20`, `WT 3`, `COST 2`).
+    const FLIGHT_ARROWS: &str = "Arrows (Flight/20)";
+
+    fn advanced_players_guide() -> SourcePackageContent<'static> {
+        use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+        use std::path::Path;
+        load_equipment_corpus(&[BookCorpusRoot { book_id: "advanced_players_guide", dir: Path::new("data/corpus/advanced_players_guide") }])
+    }
+
+    fn arrows_weighing(quantities: &[(CopyKey, u32)]) -> EncumbranceComputation {
+        compute_encumbrance(&[held(FLIGHT_ARROWS)], &advanced_players_guide(), 10, SizeCategory::Medium, &[], quantities)
+    }
+
+    fn arrows_copy(ordinal: u32) -> CopyKey {
+        CopyKey { item_id: FLIGHT_ARROWS.to_owned(), bonus: 0, ordinal }
+    }
+
+    #[test]
+    fn piece_quantity_scales_the_bundle_weight() {
+        let sixty = arrows_weighing(&[(arrows_copy(0), 60)]);
+        assert_eq!((sixty.total_carried_weight_lbs, sixty.total_carried_cost_gp), (9.0, 6.0), "60 of 20 per 3 lb / 2 gp: {sixty:#?}");
+        let ten = arrows_weighing(&[(arrows_copy(0), 10)]);
+        assert_eq!((ten.total_carried_weight_lbs, ten.total_carried_cost_gp), (1.5, 1.0), "{ten:#?}");
+    }
+
+    #[test]
+    fn piece_quantity_absent_is_one_bundle() {
+        assert_eq!(arrows_weighing(&[]).total_carried_weight_lbs, 3.0, "no entry: one bundle");
+        assert_eq!(arrows_weighing(&[(arrows_copy(1), 60)]).total_carried_weight_lbs, 3.0, "another copy's entry does not apply");
     }
 
 

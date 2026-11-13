@@ -493,6 +493,13 @@ mod container_tests {
         assert_eq!(settled_record("core_rulebook/general/waterskin.json").capacity(), ContainerCapacity::Pounds(4.0));
     }
 
+    /// SD-41 E1.7 (`decisions.md §28, §30`): the settled `BASEQTY` is the pieces in one copy.
+    #[test]
+    fn base_quantity_reads_the_settled_bundle_size() {
+        assert_eq!(settled_record("advanced_players_guide/arrows_flight_20.json").base_quantity(), 20, "Arrow, Flight (20)");
+        assert_eq!(settled_record("core_rulebook/general/backpack.json").base_quantity(), 1, "no BASEQTY: one piece");
+    }
+
     #[test]
     fn container_weapon_with_contains_is_not_a_container() {
         // Pistol states DAMAGE 1d8; Wrist Launcher states no DAMAGE but is Weapon-typed. Both name

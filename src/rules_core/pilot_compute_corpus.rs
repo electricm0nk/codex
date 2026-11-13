@@ -306,6 +306,8 @@ pub fn compute_pilot_with_corpus(
         corpus,
         effective_ability_scores.strength,
         size,
+        &[],
+        &[],
     );
 
     CorpusPilotReceipt {
