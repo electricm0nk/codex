@@ -66,7 +66,7 @@ so they are Phase 2 like every other `apps/` card.
   plus the tool-side lane `convert` (E1.8, E1.9: `crates/codex-ingest/**`, `data/corpus/**/equipment/**`,
   `data/price_overrides/**` *(new)*, the regenerated compiled tables — no open SD-40 card owns a `data/`
   path: `awk -F'|' '$2 ~ /^ (E2\.2[3-9]|E2\.MC3|E2\.G|E3|E4|E5)[0-9A-Za-z.]* *$/ && $4 ~ /data\//' ../SD-40-pf-sheet-design/epic-breakdown.md`
-  prints nothing). Cargo lanes on the box stay ≤ 3 including SD-40's (`pgrep -f '[c]argo'`; R-Q2).
+  prints nothing). Cargo lanes on the box stay ≤ 3 including SD-40's (`pgrep -x cargo`; R-Q2).
 - **Phase 2, after SD-40's PR merges:** the lead rebases `tranche-21` onto `develop` (SD-m, at most once,
   logged in `progress.md`), re-runs E1's tests, then dispatches E2 → E3 → E4 → E5. E2's first card
   (E2.1) is the first write to `character_hub.rs`.
@@ -370,6 +370,9 @@ The lead re-reads this package against the repo before dispatch and records each
 | "232 container-tagged records" | 232 files, 265 rows; 123 of the rows also tagged `Weapon` | E1.1 names which population it pins |
 | SD-a: "ammunition holders (Pistol, Powder Horn) have no `Container` tag" | both carry `Container` (sheet rules `ultimate_equipment/equipment/pistol.json`, `powder_horn.json`) | SD-a's rule needs replacing; E1.1 blocked-escalated, receipt R2 |
 | E1.1 FILES YOU OWN "`equipment_record.rs` (+ `sheet_rule.rs`)" | the live record is read from `data/corpus/<book>/_settled/equipment.json` (written by `codex-ingest`'s `gen_settled_corpus`) and carries no tags or tokens; live `raw_tokens` reads are residue-gate hits | E1.1 blocked-escalated, receipt R1 |
+| §31 R4 / E1.8 / E1.11: "`build_equipment_catalog()` … reads the settled bundles" | `build_equipment_catalog()` (`desktop/equipment_catalog.rs:468`) chains the compiled per-book tables (`src/rules_core/rules_catalog/*/equipment_tables.rs`) and `equipment_gap_tables`; it reads no `_settled/equipment.json` | E1.9's price fix reaches the Market only through the regenerated compiled tables (its (b) already names them); the settled regen serves the live record, not the Market (sd41-e1.8) |
+| E1.8 / E1.9 / E1.11 / G-8 / G-10: `cargo test --locked -j 8 --test market_price_census -- --test-threads=8` → 1 / 2 / 3 passed | the file lives in `apps/desktop/src-tauri/tests/` (the crate has no lib target; the catalog modules are `#[path]`-included), so their own `#[cfg(test)]` suites compile in too: unfiltered the binary holds 134 tests | commands now `cd apps/desktop/src-tauri` and filter `market_price` (1 passed, 133 filtered out) (sd41-e1.8) |
+| E1.9 (a) formula kinds: `WT*N`, `BASECOST*N`, `+N` | of the 1,763 unpriced Market rows, 1,278 are priced only by their eqmods; their eqmods' costs are `%SPELLLEVEL`/`%CASTERLEVEL` (scrolls 558, wands 351, potions 108 rows), `%CHOICE` (111) and `%CHARGES` formulas whose inputs are the `EQMOD:` token's own arguments (`SPELLLEVEL[2]CASTERLEVEL[3]`, `\|1721`, `CHARGES[50]`) | d20pfsrd list = 1,477 rows if E1.9 evaluates only its listed kinds, 346 if it also evaluates the in-record `%` kinds (`artifacts/epic_1/E1.8/market-prices.json` `d20pfsrd_bound`); the lead decides E1.9's kinds before E1.11 is sized (sd41-e1.8) |
 
 ## §21 — Questions only the operator can settle (defaults taken; the run does not wait)
 

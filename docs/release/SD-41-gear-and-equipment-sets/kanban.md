@@ -31,7 +31,7 @@ operator's two `usable: yes` lines exist.
 cd docs/release/SD-41-gear-and-equipment-sets
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 35 (23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, decisions.md §22–§30)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 36 (23 + 8 from the seven follow-ups + 3 from the campaign item + E1.11 from the Q7 answer, decisions.md §22–§30, + E2.8 discovered by E1.8)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -45,7 +45,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 35 (23 + 8
 | E1.5 | The Unarmed row: always last, real numbers, monk progression, IUS lethal | opus | waiting | E1.4 | Phase 1; `decisions.md §22` |
 | E1.6 | `uses_ammunition` + `ammunition_family` settled via `ir_converter.rs`; `ammunition_carried` per weapon | opus | waiting | E1.5 | Phase 1; `decisions.md §23, §31` |
 | E1.7 | Encumbrance weighs extra copies + piece quantities; `base_quantity` settled via `ir_converter.rs` | opus | waiting | E1.6 | Phase 1; `decisions.md §25, §28, §30, §31` |
-| E1.8 | Price census through the catalog: missing / zero / negative by book + category; converter causes | opus | waiting | C1 | Phase 1; side lane `convert` (`.worktrees/sd41-convert`) ∥ E1.1–E1.7; `decisions.md §26` |
+| E1.8 | Price census through the catalog: missing / zero / negative by book + category; converter causes | opus | complete | C1 | Phase 1; side lane `convert`; this commit; receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; 1,763 unpriced of 5,880 Market rows (none 1,448 / zero 311 / negative 4); d20pfsrd list 346–1,763 by what E1.9 evaluates; discovered E2.8 |
 | E1.9 | Converter fix + re-convert + `_settled` regen + override-list reader + price gate | opus | waiting | E1.8, E1.1 | Phase 1; lane `convert`; after E1.1 (both edit `ir_converter.rs`, `decisions.md §31` R1); corpus diff limited to price/weight/token/name fields + the settled bundles |
 | E1.11 | Every Market item tried: d20pfsrd list in batches of ≤ 150 (lead's `web-fetch` agent per batch); leftover Market keys in `price-unknown.json` each with a `tried` list | opus | waiting | E1.9 | Phase 1; lane `convert`; the effort bar is a closure criterion (`decisions.md §30, §30.1`); P-9; no desktop file |
 | E1.10 | Campaign mirror (root crate): `campaigns.json`, atomic folder copy per active campaign, warnings never errors | opus | waiting | E1.7 | Phase 1; `decisions.md §29` |
@@ -57,7 +57,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 35 (23 + 8
 | E2.5 | Market backend: `slot` column; buy by bundle → pieces; sell / discard n pieces; negotiated price (an unpriced row buys through Negotiate, `decisions.md §30.1`); copy names | opus | waiting | E2.4 | `decisions.md §26–§28` |
 | E2.6 | Buy Custom backend: `purchase_custom_equipment` + `list_custom_equipment_options` + quote; price and weight from eqmod data | opus | waiting | E2.5 | `decisions.md §24`; Q6 |
 | E2.7 | Campaign write-through hooks in every writer + scanning test; `set_character_campaigns`; `mirrorWarnings` | opus | waiting | E2.6 | `decisions.md §29` |
-| E2.MC | E2 merge check + Epic report | opus | waiting | E2.7 | adversarial; `.pcg` population probe (Default file + AC/weight unchanged) |
+| E2.8 | Market hides PCGen retirement rows (`.FORGET` keys) *(discovered by E1.8)* | sonnet | waiting | E2.7 | Phase 2; `desktop/equipment_catalog.rs` `hidden_from_market` + the two pinned `character_hub.rs` lists; `decisions.md §19` |
+| E2.MC | E2 merge check + Epic report | opus | waiting | E2.8 | adversarial; `.pcg` population probe (Default file + AC/weight unchanged) |
 | E3.1 | Gear screen: split panel, filter, right tree, Move to menu (quantity on stacks), Drop / Sell / Discard, set picker, capacity warning; replaces EquipmentPanel | opus | waiting | E2.MC | `GearScreen.tsx` + `gearScreenModel.ts` (new); `EquipmentPanel.tsx` deleted; `decisions.md §27, §28` |
 | E3.2 | Drag and drop over the same boundary; `dropTarget` pure + tested | opus | waiting | E3.1 | no dependency added (SD-g) |
 | E3.4 | Market screen: Item / Price / Weight / Slot table, sortable; description box; Only Show Affordable; Quantity; Negotiate; Buy Custom builder; Create dialog | opus | waiting | E3.2 | `MarketDialog.tsx`, `marketModel.ts` (new), two dialogs (new); `decisions.md §24–§26, §28` |

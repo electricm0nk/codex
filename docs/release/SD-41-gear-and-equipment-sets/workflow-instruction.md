@@ -41,7 +41,7 @@ precondition).
 - **Concurrency:** one serial main lane; two side lanes: `convert` (E1.8 → E1.9, tool side, Phase 1, beside
   E1.1–E1.7, landing before E1.MC) and `smoke` (E3.3, beside E3.MC and E4.1, landing before E4.MC).
   **At most 3 cargo lanes across the box, SD-40's included while it runs** (R-Q2): in Phase 1, SD-41
-  builds only when `pgrep -f '[c]argo' | awk 'END{print NR}'` < 3.
+  builds only when `pgrep -x cargo | awk 'END{print NR}'` < 3 (process name, not -f: -f matches wrappers and /home/ubuntu/cargo-target/ paths).
 
 ### 2.1 Agent environment — the shared dispatch prefix
 
@@ -65,7 +65,7 @@ ENVIRONMENT (SD-41, binding — every rule here applies to you):
   Claim it: mkdir -p "$CARGO_TARGET_DIR" && echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"
 - DISK FIRST: `df -h /` before any build; a full sweep needs ~24 G free; if less, stop and report.
 - AT MOST 3 CARGO LANES at once across the box, SD-40's lanes included. Before any cargo command:
-  `pgrep -f '[c]argo' | awk 'END{print NR}'` < 3, else wait inside the turn (poll every 60 s, up to 40 min).
+  `pgrep -x cargo | awk 'END{print NR}'` < 3 (process name, not -f: -f matches wrappers and /home/ubuntu/cargo-target/ paths), else wait inside the turn (poll every 60 s, up to 40 min).
 - MEMORY GUARD: one cargo process at a time in your lane; -j 8; `-- --test-threads=8`; `free -g`
   before a run expected > 10 min.
 - NEVER `git stash`. NEVER `git add -A` (stage by explicit path). NEVER force-push.

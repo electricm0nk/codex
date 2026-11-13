@@ -21,7 +21,7 @@ status: planning-ready
 | P-2 | Working tree clean; `sd40-main` untouched | `git status --porcelain \| wc -l` → 0; `git worktree list` recorded | C1 |
 | P-3 | **SD-40 merged and `tranche-21` caught up** (the Phase-2 precondition, R25) | `git merge-base --is-ancestor <SD-40 merge sha> HEAD` in `sd41-main`; `kanban.md` E2.1's `SD-40 merged` token replaced by the SHA | E2.1 (the lead) |
 | P-4 | Doctrine present | `test -f docs/governance/no-stub-mvp-doctrine.md && test -f docs/doctrine-external/identifier-discipline.md` | C1 |
-| P-5 | Disk ≥ 24 G free before any full sweep; cargo lanes on the box < 3 | `df -h /`; `pgrep -f '[c]argo' \| awk 'END{print NR}'` | every cargo card |
+| P-5 | Disk ≥ 24 G free before any full sweep; cargo lanes on the box < 3 | `df -h /`; `pgrep -x cargo \| awk 'END{print NR}'` | every cargo card |
 | P-6 | `pdftoppm`, `pdftotext`, `pdfinfo` present; the `run-desktop` skill's screenshot path works with an isolated `XDG_DATA_HOME` | `which pdftoppm pdftotext pdfinfo` → three paths; one screenshot under `artifacts/epic_3/E3.MC/` | E4.1; E3.MC |
 | P-7 | Release-notes pointer resolves after C1 | `python3 tools/release/resolve_release_notes.py --repo-root .` exit 0 | C1 |
 | P-9 | d20pfsrd.com reachable for E1.9's price list, or the lead's `web-fetch` agent supplies it | `curl -s -o /dev/null -w '%{http_code}' -A 'Mozilla/5.0' https://www.d20pfsrd.com/equipment/` → 200 (a HEAD without a user agent answered 410 on 2026-11-12); else the receipt names the agent that fetched | E1.9 |
