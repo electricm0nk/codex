@@ -43,8 +43,15 @@ function testParseLanguagesSplitsACommaList() {
   assertEqual(JSON.stringify(BLANK_CHARACTER_BIO.languages), '[]', 'a blank bio stores no languages');
 }
 
+/** SD-40 E3.6: Biography and Notes are free text carried with the bio; a blank bio holds neither. */
+function testBlankBioHasEmptyBiographyAndNotes() {
+  assertEqual(BLANK_CHARACTER_BIO.biography, '', 'a blank bio has no Biography');
+  assertEqual(BLANK_CHARACTER_BIO.notes, '', 'a blank bio has no Notes');
+}
+
 async function main() {
   testParseLanguagesSplitsACommaList();
+  testBlankBioHasEmptyBiographyAndNotes();
   await testLoadWithNoRuntimeResolvesToBlankDefault();
   await testUpdateWithNoRuntimeThrowsDescriptiveError();
 }

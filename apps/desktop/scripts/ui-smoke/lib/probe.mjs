@@ -116,7 +116,7 @@ export function headingsOf(snapshot) {
   return Array.isArray(snapshot?.headings) ? snapshot.headings : [];
 }
 
-/** True when `needle` appears in the snapshot's headings, body text, or open-dialog labels. */
+/** True when `needle` appears in the snapshot's headings, body text, open-dialog labels, or text-area values. */
 export function screenContains(snapshot, needle) {
   if (!snapshot) {
     return false;
@@ -128,6 +128,10 @@ export function screenContains(snapshot, needle) {
     return true;
   }
   if (Array.isArray(snapshot.dialogs) && snapshot.dialogs.some((d) => d.includes(needle))) {
+    return true;
+  }
+  // A text area's value is not part of innerText (SD-40 E3.6).
+  if (Array.isArray(snapshot.fieldValues) && snapshot.fieldValues.some((v) => v.includes(needle))) {
     return true;
   }
   return false;

@@ -583,6 +583,9 @@ export interface BioFields {
   eyes: string;
   /** SD-40 E2.27: carried so a blur-save of another bio field keeps it; edited on the Skills panel. */
   languages: string[];
+  /** SD-40 E3.6: the Biography and Notes text, carried so a blur-save of any bio field keeps it. */
+  biography: string;
+  notes: string;
 }
 
 export const BLANK_BIO_FIELDS: BioFields = {
@@ -596,6 +599,8 @@ export const BLANK_BIO_FIELDS: BioFields = {
   hair: '',
   eyes: '',
   languages: [],
+  biography: '',
+  notes: '',
 };
 
 const bioFieldLabelStyle: CSSProperties = {
