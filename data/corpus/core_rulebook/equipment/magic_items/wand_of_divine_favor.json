@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "Calling upon the strength and wisdom of a deity, you gain a +1 to +3 luck bonus on attack and weapon damage rolls.",
     "key": "Wand of Divine Favor",
     "name": "Wand",

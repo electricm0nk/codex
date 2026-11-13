@@ -6,7 +6,7 @@
     "key": "Hateful Sting",
     "category": "ArmsArmor",
     "name": "Hateful Sting",
-    "cost_gp": null,
+    "cost_gp": 60302.0,
     "weight_lbs": null,
     "description": "Can attack foes up to 60 feet from the activating character, can store up to 4 doses of poison, which it can apply to itself automatically."
   },

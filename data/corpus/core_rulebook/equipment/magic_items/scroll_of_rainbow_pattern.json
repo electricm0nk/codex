@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 700.0,
     "description": "Lights fascinate 24 HD of creatures.",
     "key": "Scroll of Rainbow Pattern",
     "name": "Scroll",

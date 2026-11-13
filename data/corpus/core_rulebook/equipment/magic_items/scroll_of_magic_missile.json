@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 25.0,
     "description": "1d4+1 damage; +1 missile per two levels above 1st (max 5).",
     "key": "Scroll of Magic Missile",
     "name": "Scroll",

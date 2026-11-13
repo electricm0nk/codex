@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "General",
-    "cost_gp": null,
+    "cost_gp": 5380.0,
     "description": null,
     "key": "Gravewatcher Chainmail",
     "name": "Gravewatcher Chainmail",

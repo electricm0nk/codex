@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 700.0,
     "description": "Makes one type of terrain appear like another (field as forest, or the like).",
     "key": "Scroll of Hallucinatory Terrain",
     "name": "Scroll",

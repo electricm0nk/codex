@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 50.0,
     "description": "Opponent must succed at a DC 11 Will save to attack target for 1 round",
     "key": "Potion of Sanctuary",
     "name": "Potion",

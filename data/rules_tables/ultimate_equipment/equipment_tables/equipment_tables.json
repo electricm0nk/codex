@@ -1301,7 +1301,7 @@
       "key": "Artisan's Tools (Masterwork)",
       "category": "General",
       "name": "Artisan's Tools, Masterwork",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1341,7 +1341,7 @@
       "key": "Musical Instrument (Harpsichord/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Harpsichord",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1349,7 +1349,7 @@
       "key": "Musical Instrument (Piano/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Piano",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1357,7 +1357,7 @@
       "key": "Musical Instrument (Pipe Organ/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Pipe Organ",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1365,7 +1365,7 @@
       "key": "Musical Instrument (Bells/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Bells",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1373,7 +1373,7 @@
       "key": "Musical Instrument (Chimes/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Chimes",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1381,7 +1381,7 @@
       "key": "Musical Instrument (Drums/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Drums",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1389,7 +1389,7 @@
       "key": "Musical Instrument (Gong/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Gong",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1397,7 +1397,7 @@
       "key": "Musical Instrument (Fiddle/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Fiddle",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1405,7 +1405,7 @@
       "key": "Musical Instrument (Harp/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Harp",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1413,7 +1413,7 @@
       "key": "Musical Instrument (Lute/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Lute",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1421,7 +1421,7 @@
       "key": "Musical Instrument (Mandolin/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Mandolin",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1429,7 +1429,7 @@
       "key": "Musical Instrument (Flute/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Flute",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1437,7 +1437,7 @@
       "key": "Musical Instrument (Pan Pipes/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Pan Pipes",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1445,7 +1445,7 @@
       "key": "Musical Instrument (Recorder/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Recorder",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1453,7 +1453,7 @@
       "key": "Musical Instrument (Trumpet/Masterwork)",
       "category": "General",
       "name": "Musical Instrument, Masterwork Trumpet",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1501,7 +1501,7 @@
       "key": "Surgeon's Tools (Small)",
       "category": "General",
       "name": "Surgeon's Tools (Small)",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1509,7 +1509,7 @@
       "key": "Thieves' Tools (Masterwork)",
       "category": "General",
       "name": "Thieves' Tools (Masterwork)",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1517,7 +1517,7 @@
       "key": "Traveling Formula Book",
       "category": "General",
       "name": "Traveling Formula Book",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1629,7 +1629,7 @@
       "key": "Candles (10)",
       "category": "General",
       "name": "Candles (10)",
-      "cost_gp": null,
+      "cost_gp": 0.01,
       "weight_lbs": null,
       "description": null
     },
@@ -3869,7 +3869,7 @@
       "key": "Demon Prince Armor",
       "category": "ArmsArmor",
       "name": "Demon Prince Armor",
-      "cost_gp": 0.0,
+      "cost_gp": 100150.0,
       "weight_lbs": 80.0,
       "description": null
     },
@@ -4213,7 +4213,7 @@
       "key": "Barding (Haramaki/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Haramaki/Large)",
-      "cost_gp": null,
+      "cost_gp": 6.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4221,7 +4221,7 @@
       "key": "Barding (Quilted Cloth/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Quilted Cloth/Large)",
-      "cost_gp": null,
+      "cost_gp": 200.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4229,7 +4229,7 @@
       "key": "Barding (Silken Ceremonial/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Silken Ceremonial/Large)",
-      "cost_gp": null,
+      "cost_gp": 60.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4237,7 +4237,7 @@
       "key": "Barding (Lamellar Cuirass/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Lamellar Cuirass/Large)",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4245,7 +4245,7 @@
       "key": "Barding (Parade/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Parade/Large)",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4253,7 +4253,7 @@
       "key": "Barding (Wooden/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Wooden/Large)",
-      "cost_gp": null,
+      "cost_gp": 40.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4261,7 +4261,7 @@
       "key": "Barding (Lamellar/Leather/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Lamellar/Leather/Large)",
-      "cost_gp": null,
+      "cost_gp": 120.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4269,7 +4269,7 @@
       "key": "Barding (Armored Coat/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Armored Coat/Large)",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4277,7 +4277,7 @@
       "key": "Barding (Do-maru/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Do-maru/Large)",
-      "cost_gp": null,
+      "cost_gp": 400.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4285,7 +4285,7 @@
       "key": "Barding (Kikko/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Kikko/Large)",
-      "cost_gp": null,
+      "cost_gp": 60.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4293,7 +4293,7 @@
       "key": "Barding (Lemellar/Horn/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Lemellar/Horn/Large)",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4301,7 +4301,7 @@
       "key": "Barding (Agile Breastplate/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Agile Breastplate/Large)",
-      "cost_gp": null,
+      "cost_gp": 800.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4309,7 +4309,7 @@
       "key": "Barding (Four-mirror/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Four-mirror/Large)",
-      "cost_gp": null,
+      "cost_gp": 90.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4317,7 +4317,7 @@
       "key": "Barding (Lamellar/Steel/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Lamellar/Steel/Large)",
-      "cost_gp": null,
+      "cost_gp": 300.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4325,7 +4325,7 @@
       "key": "Barding (Mountain Pattern/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Mountain Pattern/Large)",
-      "cost_gp": null,
+      "cost_gp": 500.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4333,7 +4333,7 @@
       "key": "Barding (Kusari Gusoku/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Kusari Gusoku/Large)",
-      "cost_gp": null,
+      "cost_gp": 700.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4341,7 +4341,7 @@
       "key": "Barding (Lamellar/Iron/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Lamellar/Iron/Large)",
-      "cost_gp": null,
+      "cost_gp": 400.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4349,7 +4349,7 @@
       "key": "Barding (Tatami-do/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Tatami-do/Large)",
-      "cost_gp": null,
+      "cost_gp": 2000.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4357,7 +4357,7 @@
       "key": "Barding (Agile Half-Plate/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Agile Half-Plate/Large)",
-      "cost_gp": null,
+      "cost_gp": 1700.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4365,7 +4365,7 @@
       "key": "Barding (Lamellar/Stone/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Lamellar/Stone/Large)",
-      "cost_gp": null,
+      "cost_gp": 1000.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4373,7 +4373,7 @@
       "key": "Barding (O-yoroi/Large)",
       "category": "ArmsArmor",
       "name": "Barding (O-yoroi/Large)",
-      "cost_gp": null,
+      "cost_gp": 3400.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4381,7 +4381,7 @@
       "key": "Barding (Stone Plate/Large)",
       "category": "ArmsArmor",
       "name": "Barding (Stone Plate/Large)",
-      "cost_gp": null,
+      "cost_gp": 3600.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4549,7 +4549,7 @@
       "key": "Arrow (Hushing)",
       "category": "ArmsArmor",
       "name": "Arrow, Hushing",
-      "cost_gp": null,
+      "cost_gp": 0.05,
       "weight_lbs": null,
       "description": null
     },
@@ -4557,7 +4557,7 @@
       "key": "Arrow (Hushing/Greater)",
       "category": "ArmsArmor",
       "name": "Arrow, Greater Hushing",
-      "cost_gp": null,
+      "cost_gp": 0.05,
       "weight_lbs": null,
       "description": null
     },
@@ -4565,7 +4565,7 @@
       "key": "Bolt (Hushing)",
       "category": "ArmsArmor",
       "name": "Bolt, Hushing",
-      "cost_gp": null,
+      "cost_gp": 0.1,
       "weight_lbs": null,
       "description": null
     },
@@ -4573,7 +4573,7 @@
       "key": "Bolt (Hushing/Greater)",
       "category": "ArmsArmor",
       "name": "Bolt, Greater Hushing",
-      "cost_gp": null,
+      "cost_gp": 0.1,
       "weight_lbs": null,
       "description": null
     },
@@ -4581,7 +4581,7 @@
       "key": "Bolt (Dust)",
       "category": "ArmsArmor",
       "name": "Bolt, Dust",
-      "cost_gp": null,
+      "cost_gp": 0.1,
       "weight_lbs": null,
       "description": null
     },
@@ -4589,7 +4589,7 @@
       "key": "Bullet (Alchemist's)",
       "category": "ArmsArmor",
       "name": "Bullet, Alchemist's",
-      "cost_gp": null,
+      "cost_gp": 0.01,
       "weight_lbs": null,
       "description": null
     },
@@ -4597,7 +4597,7 @@
       "key": "Bullet (Burrowing/Greater)",
       "category": "ArmsArmor",
       "name": "Bullet (Burrowing/Greater)",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4605,7 +4605,7 @@
       "key": "Bullet (Burrowing/Lesser)",
       "category": "ArmsArmor",
       "name": "Bullet (Burrowing/Lesser)",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4613,7 +4613,7 @@
       "key": "Bullet (Tracer)",
       "category": "ArmsArmor",
       "name": "Bullet (Tracer)",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4789,7 +4789,7 @@
       "key": "Pistol (Firedrake)",
       "category": "ArmsArmor",
       "name": "Pistol (Firedrake)",
-      "cost_gp": null,
+      "cost_gp": 1000.0,
       "weight_lbs": null,
       "description": null
     },
@@ -4797,7 +4797,7 @@
       "key": "Pistol of the Infinite Sky",
       "category": "ArmsArmor",
       "name": "Pistol of the Infinite Sky",
-      "cost_gp": null,
+      "cost_gp": 1000.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5261,7 +5261,7 @@
       "key": "Bastard's Sting",
       "category": "ArmsArmor",
       "name": "Bastard's Sting",
-      "cost_gp": null,
+      "cost_gp": 35.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5269,7 +5269,7 @@
       "key": "Blade of the Rising Sun",
       "category": "ArmsArmor",
       "name": "Blade of the Rising Sun",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5277,7 +5277,7 @@
       "key": "Blade of the Sword-Saint",
       "category": "ArmsArmor",
       "name": "Blade of the Sword-Saint",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5285,7 +5285,7 @@
       "key": "Cutthroat's Apprentice",
       "category": "ArmsArmor",
       "name": "Cutthroat's Apprentice",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5293,7 +5293,7 @@
       "key": "Dagger (Bloodthirst)",
       "category": "ArmsArmor",
       "name": "Bloodthirst Dagger",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5301,7 +5301,7 @@
       "key": "Dagger of Doubling",
       "category": "ArmsArmor",
       "name": "Dagger of Doubling",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5309,7 +5309,7 @@
       "key": "Demonsorrow Curve Blade",
       "category": "ArmsArmor",
       "name": "Demonsorrow Curve Blade",
-      "cost_gp": null,
+      "cost_gp": 80.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5317,7 +5317,7 @@
       "key": "Disarming Blade",
       "category": "ArmsArmor",
       "name": "Disarming Blade",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5325,7 +5325,7 @@
       "key": "Dragon's Doom",
       "category": "ArmsArmor",
       "name": "Dragon's Doom",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5333,7 +5333,7 @@
       "key": "Earthenflail",
       "category": "ArmsArmor",
       "name": "Earthenflail",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5341,7 +5341,7 @@
       "key": "Everflowing Aspergillum",
       "category": "ArmsArmor",
       "name": "Everflowing Aspergillum",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5349,7 +5349,7 @@
       "key": "Fighter's Fork",
       "category": "ArmsArmor",
       "name": "Fighter's Fork",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5357,7 +5357,7 @@
       "key": "Greataxe (Swift Obsidian)",
       "category": "ArmsArmor",
       "name": "Greataxe, Swift Obsidian",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5365,7 +5365,7 @@
       "key": "Guisarme (Dragoncatch)",
       "category": "ArmsArmor",
       "name": "Guisarme, Dragoncatch",
-      "cost_gp": null,
+      "cost_gp": 9.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5373,7 +5373,7 @@
       "key": "Ghoul's Lament",
       "category": "ArmsArmor",
       "name": "Ghoul's Lament",
-      "cost_gp": null,
+      "cost_gp": 12.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5381,7 +5381,7 @@
       "key": "Hammer (Dwarfbond)",
       "category": "ArmsArmor",
       "name": "Hammer, Dwarfbond",
-      "cost_gp": null,
+      "cost_gp": 12.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5389,7 +5389,7 @@
       "key": "Hammer (Polarity)",
       "category": "ArmsArmor",
       "name": "Hammer (Polarity)",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5397,7 +5397,7 @@
       "key": "Hellscourge",
       "category": "ArmsArmor",
       "name": "Hellscourge",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5405,7 +5405,7 @@
       "key": "Kukri (Bloodletting)",
       "category": "ArmsArmor",
       "name": "Kukri, Bloodletting",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5413,7 +5413,7 @@
       "key": "Lash of the Howler",
       "category": "ArmsArmor",
       "name": "Lash of the Howler",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5437,7 +5437,7 @@
       "key": "Scimitar of the Spellthief",
       "category": "ArmsArmor",
       "name": "Scimitar of the Spellthief",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5445,7 +5445,7 @@
       "key": "Scythe (Void)",
       "category": "ArmsArmor",
       "name": "Scythe, Void",
-      "cost_gp": null,
+      "cost_gp": 18.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5461,7 +5461,7 @@
       "key": "Spider's Fang",
       "category": "ArmsArmor",
       "name": "Spider's Fang",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5469,7 +5469,7 @@
       "key": "Spirit Caller",
       "category": "ArmsArmor",
       "name": "Spirit Caller",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5477,7 +5477,7 @@
       "key": "Summoner's Sorrow",
       "category": "ArmsArmor",
       "name": "Summoner's Sorrow",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5485,7 +5485,7 @@
       "key": "Sword (Ten-Ring)",
       "category": "ArmsArmor",
       "name": "Sword (Ten-Ring)",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5493,7 +5493,7 @@
       "key": "Trident (Triton's)",
       "category": "ArmsArmor",
       "name": "Trident, Triton's",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5501,7 +5501,7 @@
       "key": "Valor's Minion",
       "category": "ArmsArmor",
       "name": "Valor's Minion",
-      "cost_gp": null,
+      "cost_gp": 35.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5509,7 +5509,7 @@
       "key": "Warbringer",
       "category": "ArmsArmor",
       "name": "Warbringer",
-      "cost_gp": null,
+      "cost_gp": 75.0,
       "weight_lbs": null,
       "description": null
     },
@@ -5549,7 +5549,7 @@
       "key": "Mace of Blood",
       "category": "ArmsArmor",
       "name": "Mace of Blood",
-      "cost_gp": 0.0,
+      "cost_gp": 18300.0,
       "weight_lbs": 8.0,
       "description": "Must be coated in blood every day. Owner must make a DC 13 Will save every day or become Chaotic Evil."
     },
@@ -5573,7 +5573,7 @@
       "key": "Demon Prince Armor Claw Attack",
       "category": "ArmsArmor",
       "name": "Demon Prince Armor Claw Attack",
-      "cost_gp": -18300.0,
+      "cost_gp": 0.0,
       "weight_lbs": 0.0,
       "description": "Those struck by the claws must succeed at a DC 20 Fortitude save or be affected as per the spell contagion."
     },
@@ -5581,7 +5581,7 @@
       "key": "Hammer of Thunderbolts (Minor Form)",
       "category": "ArmsArmor",
       "name": "Hammer of Thunderbolts (Minor Form)",
-      "cost_gp": 0.0,
+      "cost_gp": 50300.0,
       "weight_lbs": 15.0,
       "description": null
     },
@@ -5589,7 +5589,7 @@
       "key": "Hammer of Thunderbolts (Major Form)",
       "category": "ArmsArmor",
       "name": "Hammer of Thunderbolts (Major Form)",
-      "cost_gp": 0.0,
+      "cost_gp": 162300.0,
       "weight_lbs": 15.0,
       "description": "On hit when thrown, all creatures within 90 ft stunned 1 round (Fort DC 15 negates)"
     },
@@ -5725,7 +5725,7 @@
       "key": "Spear (Heartswood)",
       "category": "ArmsArmor",
       "name": "Heartswood Spear",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null
     },

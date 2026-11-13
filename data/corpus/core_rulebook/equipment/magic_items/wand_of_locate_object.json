@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "You sense the direction of a well-known or clearly visualized object.",
     "key": "Wand of Locate Object",
     "name": "Wand",

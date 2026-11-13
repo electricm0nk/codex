@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 2275.0,
     "description": "1d6/level fire damage; you can postpone blast for up to 5 rounds.",
     "key": "Scroll of Delayed Blast Fireball",
     "name": "Scroll",

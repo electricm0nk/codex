@@ -6,7 +6,7 @@
     "key": "Spade",
     "category": "general",
     "name": "Shovel",
-    "cost_gp": null,
+    "cost_gp": 2.0,
     "weight_lbs": null,
     "description": "If a shovel is used in combat, treat it as a onehanded improvised weapon that deals bludgeoning damage equal to that of a club of its size."
   },

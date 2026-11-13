@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 150.0,
     "description": "Subject takes 1d6 penalty to Int, Wis, and Cha.",
     "key": "Scroll of Touch of Idiocy",
     "name": "Scroll",

@@ -6,7 +6,7 @@
     "key": "Mule",
     "category": "general",
     "name": "Donkey",
-    "cost_gp": null,
+    "cost_gp": 8.0,
     "weight_lbs": null,
     "description": "Donkeys and mules are stolid in the face of danger, hardy, surefooted, and capable of carrying heavy loads over vast distances. Unlike a horse, a donkey or a mule is willing (though not eager) to enter dungeons and other strange or threatening places."
   },

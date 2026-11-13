@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 25.0,
     "description": "+2 to AC and saves, plus additional protection against selected alignment.",
     "key": "Scroll of Protection from Law (Arcane)",
     "name": "Scroll",

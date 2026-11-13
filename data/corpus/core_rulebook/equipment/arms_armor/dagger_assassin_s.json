@@ -6,7 +6,7 @@
     "key": "Dagger (Assassin's)",
     "category": "arms_armor",
     "name": "Dagger (Base)",
-    "cost_gp": null,
+    "cost_gp": 10302.0,
     "weight_lbs": null,
     "description": "This wicked-looking, curved +2 dagger provides a +1 bonus to the DC of a Fortitude save forced by the death attack of an assassin."
   },

@@ -6,7 +6,7 @@
     "key": "Celestial Armor",
     "category": "arms_armor",
     "name": "Chainmail (Base)",
-    "cost_gp": null,
+    "cost_gp": 22400.0,
     "weight_lbs": null,
     "description": "This bright silver or gold +3 chainmail is so fine and light that it can be worn under normal clothing without betraying its presence. It has a maximum Dexterity bonus of +8, an armor check penalty of -2, and an arcane spell failure chance of 15%%. It is considered light armor and allows the wearer to use fly on command (as the spell) once per day."
   },

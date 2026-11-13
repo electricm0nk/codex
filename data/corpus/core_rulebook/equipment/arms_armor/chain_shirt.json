@@ -6,7 +6,7 @@
     "key": "Chain Shirt",
     "category": "arms_armor",
     "name": "Chain Shirt (Base)",
-    "cost_gp": null,
+    "cost_gp": 100.0,
     "weight_lbs": null,
     "description": "Covering the torso, this shirt is made up of thousands of interlocking metal rings."
   },

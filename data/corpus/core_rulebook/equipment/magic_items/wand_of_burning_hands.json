@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "A cone of searing flame shoots from your fingertips dealing 1d4/level, max 5d4 points of fire damage to any creature in the effect area.",
     "key": "Wand of Burning Hands",
     "name": "Wand",

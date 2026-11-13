@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "The subject gets a +10 enhancement bonus on Acrobatics checks made to attempt high jumps or long jumps.",
     "key": "Wand of Jump",
     "name": "Wand",

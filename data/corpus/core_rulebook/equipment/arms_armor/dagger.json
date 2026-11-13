@@ -6,7 +6,7 @@
     "key": "Dagger",
     "category": "arms_armor",
     "name": "Dagger (Base)",
-    "cost_gp": null,
+    "cost_gp": 2.0,
     "weight_lbs": null,
     "description": "A dagger has a blade that is about 1 foot in length. You get a +2 bonus on Sleight of Hand skill checks made to conceal a dagger on your body."
   },

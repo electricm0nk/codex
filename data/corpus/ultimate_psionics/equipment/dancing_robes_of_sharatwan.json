@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "MagicItems",
-    "cost_gp": null,
+    "cost_gp": 150.0,
     "description": null,
     "key": "Dancing Robes of Sharatwan",
     "name": "Dancing Robes of Sharatwan",

@@ -6,7 +6,7 @@
     "key": "Glaive",
     "category": "arms_armor",
     "name": "Glaive (Base)",
-    "cost_gp": null,
+    "cost_gp": 8.0,
     "weight_lbs": null,
     "description": "A glaive is a simple blade, mounted to the end of a pole about 7 feet in length."
   },

@@ -103,7 +103,7 @@
           "die_size": 8
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 2300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,

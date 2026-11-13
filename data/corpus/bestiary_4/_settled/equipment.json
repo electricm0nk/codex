@@ -47,7 +47,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 162300.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -178,7 +178,7 @@
           "die_size": 4
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 2300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           19,

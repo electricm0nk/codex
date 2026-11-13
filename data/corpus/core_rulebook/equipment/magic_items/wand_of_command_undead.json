@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "This spell allows you a degree of control over an undead creature.",
     "key": "Wand of Command Undead",
     "name": "Wand",

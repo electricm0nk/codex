@@ -159,15 +159,15 @@ mod tests {
         }
     }
 
-    /// Astral Armor/Astral Juggernaut's real, verbatim negative COST:-150
-    /// -- pinned so a future "cost must be non-negative" cleanup does not
-    /// silently clamp real corpus data.
+    /// Astral Armor/Astral Juggernaut carry PCGen's `COST:-150` beside the masterwork eqmod's
+    /// `+150`; PCGen sums the two, so the converter settles them at 0 (SD-41 E1.9,
+    /// `decisions.md §26`: "Astral Armor → 0, never negative"). Not a clamp: the sum.
     #[test]
-    fn astral_suit_family_keeps_its_real_negative_cost() {
+    fn astral_suit_family_settles_cost_and_eqmod_at_zero() {
         let armor = equipment_resolve("Astral Armor").expect("Astral Armor must resolve");
-        assert_eq!(armor.cost_gp, Some(-150.0));
+        assert_eq!(armor.cost_gp, Some(0.0));
         let juggernaut = equipment_resolve("Astral Juggernaut").expect("Astral Juggernaut must resolve");
-        assert_eq!(juggernaut.cost_gp, Some(-150.0));
+        assert_eq!(juggernaut.cost_gp, Some(0.0));
     }
 
     /// Field-coverage audit row pins the exact counts named in this
@@ -177,7 +177,8 @@ mod tests {
         let report = field_coverage_report();
         assert_eq!(report.total_records, 439);
         assert_eq!(report.records_expected, 439);
-        assert_eq!(report.has_cost, 315 + 33);
+        // + 2 rows the converter priced from their eqmods (SD-41 E1.9).
+        assert_eq!(report.has_cost, 315 + 33 + 2);
         assert_eq!(report.has_weight, 324);
         assert_eq!(report.has_description, 216 + 95);
     }

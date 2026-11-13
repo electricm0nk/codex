@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 50.0,
     "description": null,
     "key": "Barding (Parade/Large)",
     "name": "Barding (Parade/Large)",

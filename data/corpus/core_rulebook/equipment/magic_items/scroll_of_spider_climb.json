@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 150.0,
     "description": "Grants ability to walk on walls and ceilings.",
     "key": "Scroll of Spider Climb",
     "name": "Scroll",

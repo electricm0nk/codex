@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 3000.0,
     "description": "Create shadows, wraiths, spectres, or devourers.",
     "key": "Scroll of Create Undead (Greater) (Divine)",
     "name": "Scroll",

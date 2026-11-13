@@ -6,7 +6,7 @@
     "key": "Mace of Smiting",
     "category": "arms_armor",
     "name": "Heavy Mace (Base)",
-    "cost_gp": null,
+    "cost_gp": 75312.0,
     "weight_lbs": null,
     "description": "This +3 adamantine heavy mace has a +5 enhancement bonus against constructs, and a successful critical hit dealt to a construct completely destroys the construct (no saving throw). A critical hit dealt to an outsider deals x4 damage rather than x2."
   },

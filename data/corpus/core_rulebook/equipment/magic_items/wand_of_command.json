@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity.",
     "key": "Wand of Command",
     "name": "Wand",

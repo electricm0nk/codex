@@ -6,7 +6,7 @@
     "key": "Dragonhide Plate",
     "category": "arms_armor",
     "name": "Full Plate (Base)",
-    "cost_gp": null,
+    "cost_gp": 3300.0,
     "weight_lbs": null,
     "description": "This suit of full plate is made of dragonhide, rather than metal, so druids can wear it. It is otherwise identical to masterwork full plate."
   },

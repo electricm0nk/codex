@@ -6,7 +6,7 @@
     "key": "Adamantine Breastplate",
     "category": "arms_armor",
     "name": "Breastplate (Base)",
-    "cost_gp": null,
+    "cost_gp": 10200.0,
     "weight_lbs": null,
     "description": "This nonmagical breastplate is made of adamantine, giving its wearer damage reduction of 2/--."
   },

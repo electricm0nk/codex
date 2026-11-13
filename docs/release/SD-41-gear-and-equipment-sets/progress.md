@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 10 of 43 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 10 (sd41-e1.7); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39 (sd41-e1.6, 2026-11-13: 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
+| Cards complete | 12 of 45 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 12 (sd41-e1.9, E1.10 landed beside it); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 45 (sd41-e1.9, 2026-11-13: + E1.15 and E2.10 discovered by E1.9; earlier 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -110,6 +110,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | C0 | 2026-11-12 | this commit | complete | `artifacts/cycle_0/C0_cycle_receipt.md` |
 | C1 | 2026-11-12 | this commit | complete | `artifacts/cycle_0/C1_cycle_receipt.md` |
 | E1.8 | 2026-11-12 | this commit | complete | `artifacts/epic_1/E1.8_cycle_receipt.md` (census 1,763 of 5,880 Market rows unpriced; discovered E2.8) |
+| E1.9 | 2026-11-13 | this commit | complete | `artifacts/epic_1/E1.9_cycle_receipt.md` (converter prices 1,433 records + 1,386 Market table rows; Market unpriced 1,763 → 397, all in `price-unknown.json`; discovered E1.15, E2.10) |
 | E1.1 | 2026-11-12 | `370e3346b4` | blocked-escalated | `artifacts/epic_1/E1.1_cycle_receipt.md` |
 | E1.1 | 2026-11-12 | `6d7b0227ba` + this commit | complete | `artifacts/epic_1/E1.1_cycle_receipt.md` |
 | E1.2 | 2026-11-12 | `d3bdfe8ad6` + `fd85933387` + this commit | complete | `artifacts/epic_1/E1.2_cycle_receipt.md` (9 + 1 tests; 63 of 63 `.pcg` fixtures round-trip) |

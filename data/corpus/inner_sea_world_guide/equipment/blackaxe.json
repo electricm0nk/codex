@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": 0.0,
+    "cost_gp": 75000.0,
     "description": "epic weapon, +1d6 acid (additional +2d10 on crit), Heal 1/min by striking living tree",
     "key": "Blackaxe",
     "name": "Blackaxe",

@@ -6,7 +6,7 @@
     "key": "Ranseur",
     "category": "arms_armor",
     "name": "Ranseur (Base)",
-    "cost_gp": null,
+    "cost_gp": 10.0,
     "weight_lbs": null,
     "description": "Similar in appearance to a trident, a ranseur has a single spear at its tip, flanked by a pair of short, curving blades."
   },

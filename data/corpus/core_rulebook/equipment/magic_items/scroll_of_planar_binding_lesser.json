@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1125.0,
     "description": "Traps extraplanar creature of 6 HD or less until it performs a task.",
     "key": "Scroll of Planar Binding (Lesser)",
     "name": "Scroll",

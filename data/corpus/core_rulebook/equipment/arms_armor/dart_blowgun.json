@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "arms_armor",
-    "cost_gp": null,
+    "cost_gp": 0.05,
     "description": null,
     "key": "Dart (Blowgun)",
     "name": "Blowgun Dart (Base)",

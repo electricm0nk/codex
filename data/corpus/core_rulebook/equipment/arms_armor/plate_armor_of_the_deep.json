@@ -6,7 +6,7 @@
     "key": "Plate Armor of the Deep",
     "category": "arms_armor",
     "name": "Full Plate (Base)",
-    "cost_gp": null,
+    "cost_gp": 24650.0,
     "weight_lbs": null,
     "description": "This +1 full plate is decorated with a wave and fish motif. Although the armor remains as heavy and bulky as normal full plate, the wearer of plate armor of the deep is treated as unarmored for purposes of Swim checks. The wearer can breathe underwater and can converse with any water-breathing creature with a language."
   },

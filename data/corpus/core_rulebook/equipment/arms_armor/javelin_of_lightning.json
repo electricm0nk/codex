@@ -6,7 +6,7 @@
     "key": "Javelin of Lightning",
     "category": "arms_armor",
     "name": "Javelin (Base)",
-    "cost_gp": null,
+    "cost_gp": 1500.0,
     "weight_lbs": null,
     "description": "This javelin becomes a 5d6 lightning bolt when thrown (Reflex DC 14 half ). It is consumed in the attack."
   },

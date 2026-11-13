@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 800.0,
     "description": null,
     "key": "Barding (Agile Breastplate/Large)",
     "name": "Barding (Agile Breastplate/Large)",

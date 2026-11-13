@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1125.0,
     "description": "As minor creation, plus stone and metal.",
     "key": "Scroll of Major Creation (Arcane)",
     "name": "Scroll",

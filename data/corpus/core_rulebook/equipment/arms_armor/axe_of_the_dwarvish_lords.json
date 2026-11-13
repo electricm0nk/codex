@@ -6,7 +6,7 @@
     "key": "Axe of the Dwarvish Lords",
     "category": "arms_armor",
     "name": "Dwarven Waraxe (Base)",
-    "cost_gp": null,
+    "cost_gp": 30.0,
     "weight_lbs": null,
     "description": "This is a +6 keen throwing goblinoid bane dwarven waraxe. Any dwarf who holds it doubles the range of his or her darkvision. Any nondwarf who grasps the Axe takes 4 points of temporary Charisma damage; these points cannot be healed or restored in any way while the Axe is held. The current owner of the Axe gains a +10 bonus on Craft (armor, jewelry, stonemasonry, traps, and weapons) checks. The wielder of the Axe can summon an elder earth elemental (as summon monster IX; duration 20 rounds) once per week."
   },

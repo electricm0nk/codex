@@ -6,7 +6,7 @@
     "key": "Kukri",
     "category": "arms_armor",
     "name": "Kukri (Base)",
-    "cost_gp": null,
+    "cost_gp": 8.0,
     "weight_lbs": null,
     "description": "A kukri is a curved blade, about 1 foot in length."
   },

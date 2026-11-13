@@ -6,7 +6,7 @@
     "key": "Luck Blade (0 wishes)",
     "category": "arms_armor",
     "name": "Short Sword (Base)",
-    "cost_gp": null,
+    "cost_gp": 22060.0,
     "weight_lbs": null,
     "description": "This +2 short sword gives its possessor a +1 luck bonus on all saving throws. Its possessor also gains the power of good fortune, usable once per day. This extraordinary ability allows its possessor to reroll one roll that she just made, before the results are revealed. She must take the result of the reroll, even if it's worse than the original roll. In addition, a luck blade may contain up to three wishes (when randomly rolled, a luck blade holds 1d4-1 wishes, minimum 0). When the last wish is used, the sword remains a +2 short sword, still grants the +1 luck bonus, and still grants its reroll power."
   },

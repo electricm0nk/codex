@@ -6,7 +6,7 @@
     "key": "Leather",
     "category": "arms_armor",
     "name": "Leather Armor (Base)",
-    "cost_gp": null,
+    "cost_gp": 10.0,
     "weight_lbs": null,
     "description": "Leather armor is made up of pieces of hard boiled leather carefully sewn together."
   },

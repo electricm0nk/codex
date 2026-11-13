@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "When this spell is cast upon a piece of rope from 5 to 30 feet ,long, one end of the rope rises into the air until the whole rope hangs perpendicular to the ground, as if affixed at the upper end.",
     "key": "Wand of Rope Trick",
     "name": "Wand",

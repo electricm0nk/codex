@@ -6,7 +6,7 @@
     "key": "Lance",
     "category": "arms_armor",
     "name": "Lance (Base)",
-    "cost_gp": null,
+    "cost_gp": 10.0,
     "weight_lbs": null,
     "description": "A lance deals double damage when used from the back of a charging mount. While mounted, you can wield a lance with one hand."
   },

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1650.0,
     "description": "Cures 10 points/level damage, all diseases and mental conditions.",
     "key": "Scroll of Heal",
     "name": "Scroll",

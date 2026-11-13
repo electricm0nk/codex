@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 2275.0,
     "description": "As arcane sight, but also reveals magic effects on creatures and objects.",
     "key": "Scroll of Arcane Sight (Greater)",
     "name": "Scroll",

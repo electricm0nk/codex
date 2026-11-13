@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 3000.0,
     "description": "Object or location affected by spell repels certain creatures.",
     "key": "Scroll of Antipathy (Arcane)",
     "name": "Scroll",

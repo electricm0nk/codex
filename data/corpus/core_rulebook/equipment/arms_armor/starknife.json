@@ -6,7 +6,7 @@
     "key": "Starknife",
     "category": "arms_armor",
     "name": "Starknife (Base)",
-    "cost_gp": null,
+    "cost_gp": 24.0,
     "weight_lbs": null,
     "description": "From a central metal ring, four tapering metal blades extend like points on a compass rose. A wielder can stab with the starknife or throw it."
   },

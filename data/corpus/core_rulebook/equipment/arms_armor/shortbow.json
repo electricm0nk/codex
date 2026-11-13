@@ -6,7 +6,7 @@
     "key": "Shortbow",
     "category": "arms_armor",
     "name": "Shortbow (Base)",
-    "cost_gp": null,
+    "cost_gp": 30.0,
     "weight_lbs": null,
     "description": "A shortbow is made up of one piece of wood, about 3 feet in length. You need two hands to use a bow, regardless of its size. You can use a shortbow while mounted. If you have a penalty for low Strength, apply it to damage rolls when you use a shortbow. If you have a bonus for high Strength, you can apply it to damage rolls when you use a composite shortbow, but not a regular shortbow."
   },

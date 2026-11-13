@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 11250.0,
     "description": "Touch attack, 3d8 damage + 1/level (max +15).",
     "key": "Wand of Inflict Serious Wounds",
     "name": "Wand",

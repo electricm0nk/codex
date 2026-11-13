@@ -6,7 +6,7 @@
     "key": "Mithral Full Plate of Speed",
     "category": "arms_armor",
     "name": "Full Plate (Base)",
-    "cost_gp": null,
+    "cost_gp": 26500.0,
     "weight_lbs": null,
     "description": "As a free action, the wearer of this fine set of +1 mithral full plate can activate it, enabling him to act as though affected by a haste spell for up to 10 rounds each day. The duration of the haste effect need not be consecutive rounds.\nThe armor has an arcane spell failure chance of 25%%, a maximum Dexterity bonus of +3, and an armor check penalty of -3. It is considered medium armor, except that you must be proficient in heavy armor to avoid taking nonproficiency penalties."
   },

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": -18300.0,
+    "cost_gp": 0.0,
     "description": "Those struck by the claws must succeed at a DC 20 Fortitude save or be affected as per the spell contagion.",
     "key": "Demon Prince Armor Claw Attack",
     "name": "Demon Prince Armor Claw Attack",

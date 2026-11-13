@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "General",
-    "cost_gp": null,
+    "cost_gp": 5.0,
     "description": null,
     "key": "Musical Instrument (Piano/Masterwork)",
     "name": "Musical Instrument, Masterwork Piano",

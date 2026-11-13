@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 375.0,
     "description": "Electricity deals 1d6/level damage.",
     "key": "Scroll of Lightning Bolt",
     "name": "Scroll",

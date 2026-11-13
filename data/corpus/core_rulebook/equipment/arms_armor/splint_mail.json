@@ -6,7 +6,7 @@
     "key": "Splint Mail",
     "category": "arms_armor",
     "name": "Splint Mail (Base)",
-    "cost_gp": null,
+    "cost_gp": 200.0,
     "weight_lbs": null,
     "description": "Splint mail is made up of metal strips, like banded mail. The suit includes gauntlets."
   },

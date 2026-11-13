@@ -6,7 +6,7 @@
     "key": "Mace (Light)",
     "category": "arms_armor",
     "name": "Light Mace (Base)",
-    "cost_gp": null,
+    "cost_gp": 5.0,
     "weight_lbs": null,
     "description": "A mace is made up of an ornate metal head attached to a simple wooden or metal shaft."
   },

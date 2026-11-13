@@ -21,7 +21,7 @@
       "key": "Astral Armor",
       "category": "ArmsArmor",
       "name": "Astral Armor",
-      "cost_gp": -150.0,
+      "cost_gp": 0.0,
       "weight_lbs": 40.0,
       "description": null
     },
@@ -29,7 +29,7 @@
       "key": "Astral Juggernaut",
       "category": "ArmsArmor",
       "name": "Astral Juggernaut",
-      "cost_gp": -150.0,
+      "cost_gp": 0.0,
       "weight_lbs": 50.0,
       "description": null
     },
@@ -333,7 +333,7 @@
       "key": "Astral Warrior Weapon (Bludgeoning)",
       "category": "ArmsArmor",
       "name": "Astral Warrior Weapon (Bludgeoning)",
-      "cost_gp": 0.0,
+      "cost_gp": 300.0,
       "weight_lbs": 0.0,
       "description": null
     },
@@ -341,7 +341,7 @@
       "key": "Astral Warrior Weapon (Piercing)",
       "category": "ArmsArmor",
       "name": "Astral Warrior Weapon (Piercing)",
-      "cost_gp": 0.0,
+      "cost_gp": 300.0,
       "weight_lbs": 0.0,
       "description": null
     },
@@ -349,7 +349,7 @@
       "key": "Astral Warrior Weapon (Slashing)",
       "category": "ArmsArmor",
       "name": "Astral Warrior Weapon (Slashing)",
-      "cost_gp": 0.0,
+      "cost_gp": 300.0,
       "weight_lbs": 0.0,
       "description": null
     },
@@ -2549,7 +2549,7 @@
       "key": "Dancing Robes of Sharatwan",
       "category": "MagicItems",
       "name": "Dancing Robes of Sharatwan",
-      "cost_gp": null,
+      "cost_gp": 150.0,
       "weight_lbs": 10.0,
       "description": null
     },
@@ -2581,7 +2581,7 @@
       "key": "Heartstaff",
       "category": "MagicItems",
       "name": "The Heartstaff",
-      "cost_gp": null,
+      "cost_gp": 300.0,
       "weight_lbs": 5.0,
       "description": "Can hold psicrystal, 3 setting stones, 10 companion stones; Can hold psicrystal, 5 setting stones, 10 companion stones; psicrystal repairs 1 hp/minute; double personality bonuses [not implemented]"
     },

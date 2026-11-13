@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 21000.0,
     "description": "Hail deals 5d6 damage in cylinder 40 ft. across.",
     "key": "Wand of Ice Storm",
     "name": "Wand",

@@ -68,7 +68,7 @@ PF golden page counts may move at E4.1 and are listed before → after in the re
 ```bash
 git diff --name-only <C1 sha>..HEAD -- apps | grep -v '^apps/desktop/src-tauri/tests/market_price' | awk 'END{print NR}'   # 0
 git diff --name-only <C1 sha>..HEAD -- src crates | awk 'END{print NR}'   # > 0
-git diff --name-only <C1 sha>..HEAD -- data | grep -v '/equipment/' | grep -v '_settled/equipment.json' | grep -v price_overrides | awk 'END{print NR}'   # 0 (E1.1/E1.6/E1.7/E1.9 touched only equipment records, the settled bundles and the override lists)
+git diff --name-only <C1 sha>..HEAD -- data | grep -v '/equipment/' | grep -v '_settled/equipment.json' | grep -v price_overrides | grep -v '^data/rules_tables/.*equipment' | awk 'END{print NR}'   # 0 (E1.1/E1.6/E1.7/E1.9 touched only equipment records, the settled bundles, the Market's equipment tables and the override lists)
 sha256sum apps/desktop/src-tauri/resources/corpus_fixtures/_settled/equipment.json   # equal to the base's unless E1.9 names a wrong fixture price
 ```
 
@@ -145,7 +145,7 @@ bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 ```bash
 cd docs/release/SD-41-gear-and-equipment-sets
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 43) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 45) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Gear screen\|Inventory page\|Page 1 ([^)]*)\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match; the third line is the page-1 print, decisions.md §34)
 (cd ../../../apps/desktop/src-tauri && cargo test --locked -j 8 --test market_price_census market_price -- --test-threads=8) 2>&1 | grep -c 'market_price_unknown_rows_name_every_source_tried .* ok'   # 1 (Q7 effort bar, decisions.md §30.1)

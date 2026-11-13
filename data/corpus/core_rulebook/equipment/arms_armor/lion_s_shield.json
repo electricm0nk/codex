@@ -6,7 +6,7 @@
     "key": "Lion's Shield",
     "category": "arms_armor",
     "name": "Heavy Steel Shield (Base)",
-    "cost_gp": null,
+    "cost_gp": 9170.0,
     "weight_lbs": null,
     "description": "This +2 heavy steel shield is fashioned to appear to be a roaring lion's head. Three times per day as a free action, the lion's head can be commanded to attack (independently of the shield wearer), biting with the wielder's base attack bonus (including multiple attacks, if the wielder has them) and dealing 2d6 points of damage. This attack is in addition to any actions performed by the wielder."
   },

@@ -6,7 +6,7 @@
     "key": "Shuriken",
     "category": "arms_armor",
     "name": "Shuriken (Base)",
-    "cost_gp": null,
+    "cost_gp": 0.2,
     "weight_lbs": null,
     "description": "A shuriken is a small piece of metal with sharpened edges, designed for throwing. A shuriken can't be used as a melee weapon. Although they are thrown weapons, shuriken are treated as ammunition for the purposes of drawing them, crafting masterwork or otherwise special versions of them, and what happens to them after they are thrown."
   },

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 200300.0,
     "description": "A magical ranseur that once belonged to an archdevil, granting bonuses to Diplomacy and Intimidate checks and a scorching ray ability; any nonevil creature that touches it must become lawful evil immediately or die.",
     "key": "Fork of the Forgotten One",
     "name": "Fork of the Forgotten One",

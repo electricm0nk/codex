@@ -6,7 +6,7 @@
     "key": "Bolas",
     "category": "arms_armor",
     "name": "Bolas (Base)",
-    "cost_gp": null,
+    "cost_gp": 5.0,
     "weight_lbs": null,
     "description": "A bolas is a pair of weights, connected by a thin rope or cord. You can use this weapon to make a ranged trip attack against an opponent. You can't be tripped during your own trip attempt when using a bolas."
   },

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 25.0,
     "description": "Knocks unconscious, blinds, and/or stuns weak creatures.",
     "key": "Scroll of Color Spray",
     "name": "Scroll",

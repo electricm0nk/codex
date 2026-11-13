@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 150.0,
     "description": "Reveals invisible creatures or objects.",
     "key": "Scroll of See Invisibility",
     "name": "Scroll",

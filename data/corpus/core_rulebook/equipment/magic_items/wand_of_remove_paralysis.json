@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "You can free one or more creatures from the effects of temporary paralysis or related magic.",
     "key": "Wand of Remove Paralysis",
     "name": "Wand",

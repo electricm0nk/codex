@@ -6,7 +6,7 @@
     "key": "Trident of Warning",
     "category": "arms_armor",
     "name": "Trident (Base)",
-    "cost_gp": null,
+    "cost_gp": 10115.0,
     "weight_lbs": null,
     "description": "A weapon of this type enables its wielder to determine the location, depth, kind, and number of aquatic predators within 680 feet. A trident of warning must be grasped and pointed in order for the character using it to gain such information, and it requires 1 round to scan a hemisphere with a radius of 680 feet. The weapon is otherwise a +2 trident."
   },

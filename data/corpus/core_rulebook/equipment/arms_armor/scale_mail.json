@@ -6,7 +6,7 @@
     "key": "Scale Mail",
     "category": "arms_armor",
     "name": "Scale Mail (Base)",
-    "cost_gp": null,
+    "cost_gp": 50.0,
     "weight_lbs": null,
     "description": "Scale mail is made up of dozens of small overlapping metal plates. The suit includes gauntlets."
   },

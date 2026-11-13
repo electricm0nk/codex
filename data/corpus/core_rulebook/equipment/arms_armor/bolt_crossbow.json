@@ -6,7 +6,7 @@
     "key": "Bolt (Crossbow)",
     "category": "arms_armor",
     "name": "Bolt (Base)",
-    "cost_gp": null,
+    "cost_gp": 0.1,
     "weight_lbs": null,
     "description": "A crossbow bolt used as a melee weapon is treated as a light improvised weapon (-4 penalty on attack rolls) and deals damage as a dagger of its size (crit x2). Bolts come in a case or quiver that holds 10 bolts (or 5, for a repeating crossbow)."
   },

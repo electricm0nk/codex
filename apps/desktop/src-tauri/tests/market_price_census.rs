@@ -279,12 +279,15 @@ fn market_price_census() {
         }
     }
 
-    // The two rows the operator named (`decisions.md §26`) carry the causes it proved.
+    // The two rows the operator named (`decisions.md §26`): E1.8 proved their causes on its base
+    // (`composite_resolved_to_base`, `cost_offset_by_eqmod`); since E1.9's converter fix the
+    // breastplate is priced and Astral Armor settles at 0 (an eqmod-offset literal, never negative).
     let cause_of = |key: &str| {
         by_cause.iter().find(|(_, keys)| keys.iter().any(|k| k == key)).map(|(c, _)| c.as_str())
     };
-    assert_eq!(cause_of("Adamantine Breastplate"), Some("composite_resolved_to_base"));
+    assert_eq!(cause_of("Adamantine Breastplate"), None);
     assert_eq!(cause_of("Astral Armor"), Some("cost_offset_by_eqmod"));
+    assert!(negative.is_empty(), "no Market row is negative after E1.9: {negative:?}");
 
     let counts = json!({
         "none": none.len(), "zero": zero.len(), "negative": negative.len(),
@@ -320,4 +323,55 @@ fn market_price_census() {
     println!("market rows {market_rows:?}");
     println!("{}", serde_json::to_string_pretty(&counts).unwrap());
     println!("d20pfsrd bound {}", serde_json::to_string(&report["d20pfsrd_bound"]).unwrap());
+}
+
+/// The keys `data/price_overrides/price-unknown.json` lists, each with its reason. A missing file
+/// lists nothing, so every unpriced Market row fails the gate below (fails closed).
+fn price_unknown_keys(root: &Path) -> BTreeMap<String, String> {
+    let path = root.join("data/price_overrides/price-unknown.json");
+    let Ok(text) = std::fs::read_to_string(&path) else { return BTreeMap::new() };
+    let rows: Vec<Value> = serde_json::from_str(&text).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+    rows.iter()
+        .map(|row| {
+            let key = row["key"].as_str().unwrap_or_else(|| panic!("price-unknown row without a key: {row}"));
+            let reason = row["reason"].as_str().unwrap_or("");
+            assert!(!reason.trim().is_empty(), "price-unknown row {key:?} names no reason");
+            (key.to_string(), reason.to_string())
+        })
+        .collect()
+}
+
+/// The price gate (`decisions.md §26` (1), `§30.1`): every Market row has a positive price, or its
+/// key is listed in `price-unknown.json` with a reason. E1.11 tightens what a listed row must carry.
+#[test]
+fn market_prices_are_positive_or_listed() {
+    let root = repo_root();
+    // The converter prices composites and eqmod-priced rows as the book does (CRB p.464, 465, 477, 496).
+    let market: Vec<_> = MARKET_CATEGORIES
+        .iter()
+        .flat_map(|&category| list_market(MarketFilter { category, name_contains: None, book: None }).entries)
+        .collect();
+    let price = |key: &str| market.iter().find(|row| row.entry.key == key).and_then(|row| row.entry.cost_gp);
+    assert_eq!(price("Adamantine Breastplate"), Some(10_200.0));
+    assert_eq!(price("Banded Mail of Luck"), Some(18_900.0));
+    assert_eq!(price("Potion of Cure Light Wounds"), Some(50.0));
+    assert_eq!(price("Wand of Magic Missile"), Some(750.0));
+    assert_eq!(price("Astral Armor"), Some(0.0), "an eqmod-offset literal settles at 0, never negative");
+    let listed = price_unknown_keys(&root);
+    let mut unlisted = Vec::new();
+    for category in MARKET_CATEGORIES {
+        let market = list_market(MarketFilter { category, name_contains: None, book: None });
+        for row in &market.entries {
+            let e = &row.entry;
+            if !e.cost_gp.is_some_and(|c| c > 0.0) && !listed.contains_key(&e.key) {
+                unlisted.push(format!("{} [{}] {:?}", e.key, e.book, e.cost_gp));
+            }
+        }
+    }
+    assert!(
+        unlisted.is_empty(),
+        "{} Market rows have a missing, zero or negative price and are not in price-unknown.json; first 20: {:#?}",
+        unlisted.len(),
+        unlisted.iter().take(20).collect::<Vec<_>>()
+    );
 }

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 150.0,
     "description": "Sends a short message 1 mile/level.",
     "key": "Scroll of Whispering Wind",
     "name": "Scroll",

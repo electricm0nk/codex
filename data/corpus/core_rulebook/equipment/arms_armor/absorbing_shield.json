@@ -6,7 +6,7 @@
     "key": "Absorbing Shield",
     "category": "arms_armor",
     "name": "Heavy Steel Shield (Base)",
-    "cost_gp": null,
+    "cost_gp": 50170.0,
     "weight_lbs": null,
     "description": "This +1 heavy steel shield is made of metal, but its color is flat black that seems to absorb light. Once every 2 days, on command, it can disintegrate an object that it touches, as the spell but requiring a melee touch attack. This effect only functions as an attack--it can't be activated to target a creature or weapon as it strikes the shield."
   },

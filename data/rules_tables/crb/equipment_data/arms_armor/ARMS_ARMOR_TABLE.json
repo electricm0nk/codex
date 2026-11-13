@@ -61,7 +61,7 @@
       "key": "Bolt (Crossbow)",
       "category": "ArmsArmor",
       "name": "Bolt (Base)",
-      "cost_gp": null,
+      "cost_gp": 0.1,
       "weight_lbs": null,
       "description": "A crossbow bolt used as a melee weapon is treated as a light improvised weapon (-4 penalty on attack rolls) and deals damage as a dagger of its size (crit x2). Bolts come in a case or quiver that holds 10 bolts (or 5, for a repeating crossbow)."
     },
@@ -69,7 +69,7 @@
       "key": "Bolt (Crossbow/Repeating)",
       "category": "ArmsArmor",
       "name": "Repeating Bolt (Base)",
-      "cost_gp": null,
+      "cost_gp": 0.2,
       "weight_lbs": null,
       "description": "A crossbow bolt used as a melee weapon is treated as a light improvised weapon (-4 penalty on attack rolls) and deals damage as a dagger of its size (crit x2). Bolts come in a case or quiver that holds 10 bolts (or 5, for a repeating crossbow)."
     },
@@ -77,7 +77,7 @@
       "key": "Bullet (Sling)",
       "category": "ArmsArmor",
       "name": "Sling Bullet (Base)",
-      "cost_gp": null,
+      "cost_gp": 0.01,
       "weight_lbs": null,
       "description": "Bullets are shaped metal balls, designed to be used by a sling or halfling sling staff. Bullets come in a leather pouch that holds 10 bullets."
     },
@@ -85,7 +85,7 @@
       "key": "Dart (Blowgun)",
       "category": "ArmsArmor",
       "name": "Blowgun Dart (Base)",
-      "cost_gp": null,
+      "cost_gp": 0.05,
       "weight_lbs": null,
       "description": null
     },
@@ -133,7 +133,7 @@
       "key": "Bolt (Screaming)",
       "category": "ArmsArmor",
       "name": "Bolt (Base)",
-      "cost_gp": 0.0,
+      "cost_gp": 267.0,
       "weight_lbs": 0.1,
       "description": "These +2 bolts scream when fired, forcing all enemies of the wielder within 20 feet of the path of the bolt to succeed on a DC 14 Will save or become shaken. This is a mind-affecting fear effect."
     },
@@ -141,7 +141,7 @@
       "key": "Arrow (Slaying)",
       "category": "ArmsArmor",
       "name": "Arrow (Base)",
-      "cost_gp": 0.0,
+      "cost_gp": 2282.0,
       "weight_lbs": 0.1,
       "description": "This +1 arrow is keyed to a particular type or subtype of creature. If it strikes such a creature, the target must make a DC 20 Fortitude save or take 50 points of damage. Note that even creatures normally exempt from Fortitude saves (undead and constructs) are subject to this attack. When keyed to a living creature, this is a death effect (and thus death ward protects a target)."
     },
@@ -149,7 +149,7 @@
       "key": "Arrow (Slaying/Greater)",
       "category": "ArmsArmor",
       "name": "Arrow (Base)",
-      "cost_gp": 0.0,
+      "cost_gp": 4057.0,
       "weight_lbs": 0.1,
       "description": "This +1 arrow is keyed to a particular type or subtype of creature. If it strikes such a creature, the target must make a DC 23 Fortitude save or take 100 points of damage. Note that even creatures normally exempt from Fortitude saves (undead and constructs) are subject to this attack. When keyed to a living creature, this is a death effect (and thus death ward protects a target)."
     },
@@ -157,7 +157,7 @@
       "key": "Arrow (Sleep)",
       "category": "ArmsArmor",
       "name": "Arrow (Base)",
-      "cost_gp": 0.0,
+      "cost_gp": 132.0,
       "weight_lbs": 0.1,
       "description": "This +1 arrow is painted white and has white fletching. If it strikes a foe so that it would normally deal damage, it instead bursts into magical energy that deals nonlethal damage (in the same amount as would lethal damage) and forces the target to make a DC 11 Will save or fall asleep."
     },
@@ -261,7 +261,7 @@
       "key": "Padded",
       "category": "ArmsArmor",
       "name": "Padded Armor (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "Little more than heavy, quilted cloth, this armor provides only the most basic protection."
     },
@@ -269,7 +269,7 @@
       "key": "Leather",
       "category": "ArmsArmor",
       "name": "Leather Armor (Base)",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": "Leather armor is made up of pieces of hard boiled leather carefully sewn together."
     },
@@ -293,7 +293,7 @@
       "key": "Hide",
       "category": "ArmsArmor",
       "name": "Hide Armor (Base)",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": "Hide armor is made up of the tanned and preserved skin of any thick-hided beast."
     },
@@ -357,7 +357,7 @@
       "key": "Adamantine Breastplate",
       "category": "ArmsArmor",
       "name": "Breastplate (Base)",
-      "cost_gp": null,
+      "cost_gp": 10200.0,
       "weight_lbs": null,
       "description": "This nonmagical breastplate is made of adamantine, giving its wearer damage reduction of 2/--."
     },
@@ -365,7 +365,7 @@
       "key": "Banded Mail of Luck",
       "category": "ArmsArmor",
       "name": "Banded Mail (Base)",
-      "cost_gp": null,
+      "cost_gp": 18900.0,
       "weight_lbs": null,
       "description": "Ten 100-gp gems adorn this +3 banded mail. Once per week, the armor allows its wearer to require that an attack roll made against him be rerolled. He must take whatever consequences come from the second roll. The wearer's player must decide whether to have the attack roll rerolled before damage is rolled."
     },
@@ -373,7 +373,7 @@
       "key": "Breastplate of Command",
       "category": "ArmsArmor",
       "name": "Breastplate (Base)",
-      "cost_gp": null,
+      "cost_gp": 25400.0,
       "weight_lbs": null,
       "description": "This +2 breastplate bestows a commanding aura upon its wearer. The wearer gains a +2 competence bonus on all Charisma checks, including Charisma-based skill checks. The wearer also gains a +2 competence bonus to his Leadership score. Friendly troops within 360 feet of the user become braver than normal, gaining a +2 resistance bonus on saving throws against fear. Since the effect arises in great part from the distinctiveness of the armor, it does not function if the wearer hides or conceals herself in any way."
     },
@@ -381,7 +381,7 @@
       "key": "Celestial Armor",
       "category": "ArmsArmor",
       "name": "Chainmail (Base)",
-      "cost_gp": null,
+      "cost_gp": 22400.0,
       "weight_lbs": null,
       "description": "This bright silver or gold +3 chainmail is so fine and light that it can be worn under normal clothing without betraying its presence. It has a maximum Dexterity bonus of +8, an armor check penalty of -2, and an arcane spell failure chance of 15%%. It is considered light armor and allows the wearer to use fly on command (as the spell) once per day."
     },
@@ -389,7 +389,7 @@
       "key": "Demon Armor",
       "category": "ArmsArmor",
       "name": "Full Plate (Base)",
-      "cost_gp": null,
+      "cost_gp": 52260.0,
       "weight_lbs": null,
       "description": "This plate armor is fashioned to make the wearer appear to be a demon. The helmet is shaped to look like a horned demon head, and its wearer looks out of the open, tooth-filled mouth. This +4 full plate allows the wearer to make claw attacks that deal 1d10 points of damage, strike as +1 weapons, and afflict the target as if she had been struck by a contagion spell (Fortitude DC 14 negates). Use of contagion requires a normal melee attack with the claws. The \"claws\" are built into the armor's vambraces and gauntlets, and cannot be disarmed.\nA suit of demon armor is infused with evil, and as a result it bestows one negative level on any nonevil creature wearing it. This negative level persists as long as the armor is worn and disappears when the armor is removed. The negative level cannot be overcome in any way (including restoration spells) while the armor is worn."
     },
@@ -397,7 +397,7 @@
       "key": "Dwarven Plate",
       "category": "ArmsArmor",
       "name": "Full Plate (Base)",
-      "cost_gp": null,
+      "cost_gp": 16500.0,
       "weight_lbs": null,
       "description": "This full plate is made of adamantine, giving its wearer damage reduction of 3/--."
     },
@@ -405,7 +405,7 @@
       "key": "Dragonhide Plate",
       "category": "ArmsArmor",
       "name": "Full Plate (Base)",
-      "cost_gp": null,
+      "cost_gp": 3300.0,
       "weight_lbs": null,
       "description": "This suit of full plate is made of dragonhide, rather than metal, so druids can wear it. It is otherwise identical to masterwork full plate."
     },
@@ -413,7 +413,7 @@
       "key": "Elven Chain",
       "category": "ArmsArmor",
       "name": "Chainmail (Base)",
-      "cost_gp": null,
+      "cost_gp": 5150.0,
       "weight_lbs": null,
       "description": "This extremely light chainmail is made of very fine mithral links. This armor is treated, in all ways, like light armor, including when determining proficiency. The armor has an arcane spell failure chance of 20%%, a maximum Dexterity bonus of +4, and an armor check penalty of -2."
     },
@@ -421,7 +421,7 @@
       "key": "Mithral Full Plate of Speed",
       "category": "ArmsArmor",
       "name": "Full Plate (Base)",
-      "cost_gp": null,
+      "cost_gp": 26500.0,
       "weight_lbs": null,
       "description": "As a free action, the wearer of this fine set of +1 mithral full plate can activate it, enabling him to act as though affected by a haste spell for up to 10 rounds each day. The duration of the haste effect need not be consecutive rounds.\nThe armor has an arcane spell failure chance of 25%%, a maximum Dexterity bonus of +3, and an armor check penalty of -3. It is considered medium armor, except that you must be proficient in heavy armor to avoid taking nonproficiency penalties."
     },
@@ -429,7 +429,7 @@
       "key": "Mithral Shirt",
       "category": "ArmsArmor",
       "name": "Chain Shirt (Base)",
-      "cost_gp": null,
+      "cost_gp": 1100.0,
       "weight_lbs": 20.0,
       "description": "This extremely light chain shirt is made of very fine mithral links. The armor has an arcane spell failure chance of 10%%, a maximum Dexterity bonus of +6, and no armor check penalty. It is considered light armor."
     },
@@ -437,7 +437,7 @@
       "key": "Plate Armor of the Deep",
       "category": "ArmsArmor",
       "name": "Full Plate (Base)",
-      "cost_gp": null,
+      "cost_gp": 24650.0,
       "weight_lbs": null,
       "description": "This +1 full plate is decorated with a wave and fish motif. Although the armor remains as heavy and bulky as normal full plate, the wearer of plate armor of the deep is treated as unarmored for purposes of Swim checks. The wearer can breathe underwater and can converse with any water-breathing creature with a language."
     },
@@ -445,7 +445,7 @@
       "key": "Rhino Hide",
       "category": "ArmsArmor",
       "name": "Hide Armor (Base)",
-      "cost_gp": null,
+      "cost_gp": 5165.0,
       "weight_lbs": null,
       "description": "This +2 hide armor is made from rhinoceros hide. In addition to granting a +2 enhancement bonus to AC, it has a -1 armor check penalty and deals an additional 2d6 points of damage on any successful charge attack made by the wearer, including a mounted charge."
     },
@@ -701,7 +701,7 @@
       "key": "Shield (Light/Wooden)",
       "category": "ArmsArmor",
       "name": "Light Wooden Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 3.0,
       "weight_lbs": null,
       "description": "You strap a shield to your forearm and grip it with your hand. A light shield's weight lets you carry other items in that hand, although you cannot use weapons with it.\nWooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to some spells and effects.\nShield Bash Attacks: You can bash an opponent with a light shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right."
     },
@@ -709,7 +709,7 @@
       "key": "Shield (Light/Steel)",
       "category": "ArmsArmor",
       "name": "Light Steel Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 9.0,
       "weight_lbs": null,
       "description": "You strap a shield to your forearm and grip it with your hand. A light shield's weight lets you carry other items in that hand, although you cannot use weapons with it.\nWooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to some spells and effects.\nShield Bash Attacks: You can bash an opponent with a light shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right."
     },
@@ -717,7 +717,7 @@
       "key": "Shield (Heavy/Wooden)",
       "category": "ArmsArmor",
       "name": "Heavy Wooden Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 7.0,
       "weight_lbs": null,
       "description": "You strap a shield to your forearm and grip it with your hand. A heavy shield is so heavy that you can't use your shield hand for anything else.\nWooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to spells and effects.\nShield Bash Attacks: You can bash an opponent with a heavy shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right."
     },
@@ -725,7 +725,7 @@
       "key": "Shield (Heavy/Steel)",
       "category": "ArmsArmor",
       "name": "Heavy Steel Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": "You strap a shield to your forearm and grip it with your hand. A heavy shield is so heavy that you can't use your shield hand for anything else.\nWooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to spells and effects.\nShield Bash Attacks: You can bash an opponent with a heavy shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right."
     },
@@ -733,7 +733,7 @@
       "key": "Shield (Tower)",
       "category": "ArmsArmor",
       "name": "Tower Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": "This massive wooden shield is nearly as tall as you are. In most situations, it provides the indicated shield bonus to your AC. As a standard action, however, you can use a tower shield to grant you total cover until the beginning of your next turn. When using a tower shield in this way, you must choose one edge of your space. That edge is treated as a solid wall for attacks targeting you only. You gain total cover for attacks that pass through this edge and no cover for attacks that do not pass through this edge. The shield does not, however, provide cover against targeted spells; a spellcaster can cast a spell on you by targeting the shield you are holding. You cannot bash with a tower shield, nor can you use your shield hand for anything else.\nWhen employing a tower shield in combat, you take a -2 penalty on attack rolls because of the shield's encumbrance."
     },
@@ -741,7 +741,7 @@
       "key": "Absorbing Shield",
       "category": "ArmsArmor",
       "name": "Heavy Steel Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 50170.0,
       "weight_lbs": null,
       "description": "This +1 heavy steel shield is made of metal, but its color is flat black that seems to absorb light. Once every 2 days, on command, it can disintegrate an object that it touches, as the spell but requiring a melee touch attack. This effect only functions as an attack--it can't be activated to target a creature or weapon as it strikes the shield."
     },
@@ -749,7 +749,7 @@
       "key": "Caster's Shield",
       "category": "ArmsArmor",
       "name": "Light Wooden Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 3153.0,
       "weight_lbs": null,
       "description": "This +1 light wooden shield has a leather strip on the back on which a spellcaster can scribe a single spell as on a scroll. A spell so scribed requires half the normal cost in raw materials. The strip cannot accommodate spells of higher than 3rd level. The strip is reusable.\nA random caster's shield has a 50%% chance of having a single medium scroll spell on it. The spell is divine (01-80 on d%%) or arcane (81-100). A caster's shield has a 5%% arcane spell failure chance."
     },
@@ -773,7 +773,7 @@
       "key": "Lion's Shield",
       "category": "ArmsArmor",
       "name": "Heavy Steel Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 9170.0,
       "weight_lbs": null,
       "description": "This +2 heavy steel shield is fashioned to appear to be a roaring lion's head. Three times per day as a free action, the lion's head can be commanded to attack (independently of the shield wearer), biting with the wielder's base attack bonus (including multiple attacks, if the wielder has them) and dealing 2d6 points of damage. This attack is in addition to any actions performed by the wielder."
     },
@@ -789,7 +789,7 @@
       "key": "Spined Shield",
       "category": "ArmsArmor",
       "name": "Heavy Steel Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 5580.0,
       "weight_lbs": null,
       "description": "This +1 heavy steel shield is covered in spines. It acts as a normal spiked shield. On command up to three times per day, the shield's wearer can fire one of the shield's spines. A fired spine has a +1 enhancement bonus, a range increment of 120 feet, and deals 1d10 points of damage (19-20/x2). Fired spines regenerate each day."
     },
@@ -797,7 +797,7 @@
       "key": "Winged Shield",
       "category": "ArmsArmor",
       "name": "Heavy Wooden Shield (Base)",
-      "cost_gp": null,
+      "cost_gp": 17257.0,
       "weight_lbs": null,
       "description": "This heavy wooden shield has a +3 enhancement bonus. Arching bird wings are carved into the face of the shield. Once per day, it can be commanded to fly (as the spell), carrying the wielder. The shield can carry up to 133 pounds and move at 60 feet per round, or up to 266 pounds and move at 40 feet per round."
     },
@@ -805,7 +805,7 @@
       "key": "Demon Armor Claw Attack",
       "category": "ArmsArmor",
       "name": "Demon Armor Claw Attack",
-      "cost_gp": -2300.0,
+      "cost_gp": 0.0,
       "weight_lbs": 0.0,
       "description": null
     },
@@ -1285,7 +1285,7 @@
       "key": "Dagger (Punching)",
       "category": "ArmsArmor",
       "name": "Punching Dagger (Base)",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": "A punching dagger's blade is attached to a horizontal handle that projects out from the fist when held."
     },
@@ -1293,7 +1293,7 @@
       "key": "Gauntlet (Spiked)",
       "category": "ArmsArmor",
       "name": "Spiked Gauntlet (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "The cost and weight given are for a single gauntlet. An attack with a spiked gauntlet is considered an armed attack. Your opponent cannot use a disarm action to disarm you of spiked gauntlets."
     },
@@ -1301,7 +1301,7 @@
       "key": "Mace (Light)",
       "category": "ArmsArmor",
       "name": "Light Mace (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A mace is made up of an ornate metal head attached to a simple wooden or metal shaft."
     },
@@ -1325,7 +1325,7 @@
       "key": "Mace (Heavy)",
       "category": "ArmsArmor",
       "name": "Heavy Mace (Base)",
-      "cost_gp": null,
+      "cost_gp": 12.0,
       "weight_lbs": null,
       "description": "A heavy mace has a larger head and a longer handle than a normal mace."
     },
@@ -1373,7 +1373,7 @@
       "key": "Axe (Throwing)",
       "category": "ArmsArmor",
       "name": "Throwing Axe (Base)",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1381,7 +1381,7 @@
       "key": "Hammer (Light)",
       "category": "ArmsArmor",
       "name": "Light Hammer (Base)",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1405,7 +1405,7 @@
       "key": "Pick (Light)",
       "category": "ArmsArmor",
       "name": "Light Pick (Base)",
-      "cost_gp": null,
+      "cost_gp": 4.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1437,7 +1437,7 @@
       "key": "Sword (Short)",
       "category": "ArmsArmor",
       "name": "Short Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": "This sword is about 2 feet in length."
     },
@@ -1453,7 +1453,7 @@
       "key": "Flail",
       "category": "ArmsArmor",
       "name": "Light Flail (Base)",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": "A flail consists of a spiked metal ball, connected to a handle by a sturdy chain."
     },
@@ -1469,7 +1469,7 @@
       "key": "Pick (Heavy)",
       "category": "ArmsArmor",
       "name": "Heavy Pick (Base)",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": null
     },
@@ -1541,7 +1541,7 @@
       "key": "Flail (Heavy)",
       "category": "ArmsArmor",
       "name": "Heavy Flail (Base)",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": "Similar to a flail, a heavy flail has a larger metal ball and a longer handle."
     },
@@ -1613,7 +1613,7 @@
       "key": "Nunchaku (Metal)",
       "category": "ArmsArmor",
       "name": "Nunchaku (Base)",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": "A nunchaku is made up of two wooden or metal bars connected by a small length of rope or chain."
     },
@@ -1637,7 +1637,7 @@
       "key": "Sword (Bastard)",
       "category": "ArmsArmor",
       "name": "Bastard Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 35.0,
       "weight_lbs": null,
       "description": "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon."
     },
@@ -1645,7 +1645,7 @@
       "key": "Waraxe (Dwarven)",
       "category": "ArmsArmor",
       "name": "Dwarven Waraxe (Base)",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": "A dwarven waraxe has a large, ornate head mounted to a thick handle, making it too large to use in one hand without special training; thus, it is an exotic weapon. A Medium character can use a dwarven waraxe two-handed as a martial weapon, or a Large creature can use it one-handed in the same way. A dwarf treats a dwarven waraxe as a martial weapon even when using it in one hand."
     },
@@ -1661,7 +1661,7 @@
       "key": "Axe (Orc Double)",
       "category": "ArmsArmor",
       "name": "Orc Double Axe (Base)",
-      "cost_gp": null,
+      "cost_gp": 60.0,
       "weight_lbs": null,
       "description": "A cruel weapon with blades placed at opposite ends of a long haft, an orc double axe is a double weapon."
     },
@@ -1669,7 +1669,7 @@
       "key": "Chain (Spiked)",
       "category": "ArmsArmor",
       "name": "Spiked Chain (Base)",
-      "cost_gp": null,
+      "cost_gp": 25.0,
       "weight_lbs": null,
       "description": "A spiked chain is about 4 feet in length, covered in wicked barbs. You can use the Weapon Finesse feat to apply your Dexterity modifier instead of your Strength modifier to attack rolls with a spiked chain sized for you, even though it isn't a light weapon."
     },
@@ -1677,7 +1677,7 @@
       "key": "Curve Blade (Elven)",
       "category": "ArmsArmor",
       "name": "Elven Curve Blade (Base)",
-      "cost_gp": null,
+      "cost_gp": 80.0,
       "weight_lbs": null,
       "description": "Essentially a longer version of a scimitar, but with a thinner blade, the elven curve blade is exceptionally rare. You receive a +2 circumstance bonus to your Combat Maneuver Defense whenever a foe attempts to sunder your elven curve blade due to its flexible metal.\nYou can use the Weapon Finesse feat to apply your Dexterity modifier instead of your Strength modifier to attack rolls with an elven curve blade sized for you, even though it isn't a light weapon."
     },
@@ -1685,7 +1685,7 @@
       "key": "Flail (Dire)",
       "category": "ArmsArmor",
       "name": "Dire Flail (Base)",
-      "cost_gp": null,
+      "cost_gp": 90.0,
       "weight_lbs": null,
       "description": "A dire flail consists of two spheres of spiked iron dangling from chains at opposite ends of a long haft."
     },
@@ -1693,7 +1693,7 @@
       "key": "Hammer (Gnome Hooked)",
       "category": "ArmsArmor",
       "name": "Gnome Hooked Hammer (Base)",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": "A gnome hooked hammer is a double weapon--an ingenious tool with a hammer head at one end of its haft and a long, curved pick at the other. The hammer's blunt head is a bludgeoning weapon that deals 1d6 points of damage (crit x3). Its hook is a piercing weapon that deals 1d4 points of damage (crit x4). You can use either head as the primary weapon. Gnomes treat hooked hammers as martial weapons."
     },
@@ -1701,7 +1701,7 @@
       "key": "Sword (Two-Bladed)",
       "category": "ArmsArmor",
       "name": "Two-Bladed Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": "A two-bladed sword is a double weapon--twin blades extend from either side of a central, short haft, allowing the wielder to attack with graceful but deadly flourishes."
     },
@@ -1709,7 +1709,7 @@
       "key": "Urgrosh (Dwarven)",
       "category": "ArmsArmor",
       "name": "Dwarven Urgrosh (Base)",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": "A dwarven urgrosh is a double weapon--an axe head and a spear point on opposite ends of a long haft. The urgrosh's axe head is a slashing weapon that deals 1d8 points of damage. Its spear head is a piercing weapon that deals 1d6 points of damage. You can use either head as the primary weapon. The other becomes the off-hand weapon. If you use an urgrosh against a charging character, the spear head is the part of the weapon that deals damage. Dwarves treat dwarven urgroshes as martial weapons."
     },
@@ -1717,7 +1717,7 @@
       "key": "Battleaxe (Adamantine)",
       "category": "ArmsArmor",
       "name": "Battleaxe (Base)",
-      "cost_gp": null,
+      "cost_gp": 3010.0,
       "weight_lbs": null,
       "description": "This nonmagical axe is made out of adamantine. As a masterwork weapon, it has a +1 enhancement bonus on attack rolls."
     },
@@ -1725,7 +1725,7 @@
       "key": "Dagger (Adamantine)",
       "category": "ArmsArmor",
       "name": "Dagger (Base)",
-      "cost_gp": null,
+      "cost_gp": 3002.0,
       "weight_lbs": null,
       "description": "This nonmagical dagger is made out of adamantine. As a masterwork weapon, it has a +1 enhancement bonus on attack rolls."
     },
@@ -1733,7 +1733,7 @@
       "key": "Dagger (Assassin's)",
       "category": "ArmsArmor",
       "name": "Dagger (Base)",
-      "cost_gp": null,
+      "cost_gp": 10302.0,
       "weight_lbs": null,
       "description": "This wicked-looking, curved +2 dagger provides a +1 bonus to the DC of a Fortitude save forced by the death attack of an assassin."
     },
@@ -1741,7 +1741,7 @@
       "key": "Dagger of Venom",
       "category": "ArmsArmor",
       "name": "Dagger (Base)",
-      "cost_gp": null,
+      "cost_gp": 8302.0,
       "weight_lbs": null,
       "description": "This black +1 dagger has a serrated edge. It allows the wielder to use a poison effect (as the spell, save DC 14) upon a creature struck by the blade once per day. The wielder can decide to use the power after he has struck. Doing so is a free action, but the poison effect must be invoked in the same round that the dagger strikes."
     },
@@ -1749,7 +1749,7 @@
       "key": "Dwarven Thrower",
       "category": "ArmsArmor",
       "name": "Warhammer (Base)",
-      "cost_gp": null,
+      "cost_gp": 60312.0,
       "weight_lbs": null,
       "description": "This weapon functions as a +2 warhammer in the hands of most users. Yet in the hands of a dwarf, the warhammer gains an additional +1 enhancement bonus (for a total enhancement bonus of +3) and gains the returning special ability. It can be hurled with a 30-foot range increment. When hurled, a dwarven thrower deals an extra 2d8 points of damage against creatures of the giant subtype or an extra 1d8 points of damage against any other target."
     },
@@ -1757,7 +1757,7 @@
       "key": "Flame Tongue",
       "category": "ArmsArmor",
       "name": "Longsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 20715.0,
       "weight_lbs": null,
       "description": "This is a +1 flaming burst longsword. Once per day, the sword can blast forth a fiery ray at any target within 30 feet as a ranged touch attack. The ray deals 4d6 points of fire damage on a successful hit."
     },
@@ -1765,7 +1765,7 @@
       "key": "Frost Brand",
       "category": "ArmsArmor",
       "name": "Greatsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 54475.0,
       "weight_lbs": null,
       "description": "This +3 frost greatsword sheds light as a torch when the temperature drops below 0° F. At such times it cannot be concealed when drawn, nor can its light be shut off. Its wielder is protected from fire; the sword absorbs the first 10 points of fire damage each round that the wielder would otherwise take.\nA frost brand extinguishes all nonmagical fires in a 20-foot radius. As a standard action, it can also dispel lasting fire spells, but not instantaneous effects. You must succeed on a dispel check (1d20 +14) against each spell to dispel it. The DC to dispel such spells is 11 + the caster level of the fire spell."
     },
@@ -1781,7 +1781,7 @@
       "key": "Life-Drinker",
       "category": "ArmsArmor",
       "name": "Greataxe (Base)",
-      "cost_gp": null,
+      "cost_gp": 40320.0,
       "weight_lbs": null,
       "description": "This +1 greataxe is favored by undead and constructs, who do not suffer its drawback. A life-drinker bestows two negative levels on its target whenever it deals damage, just as if its target had been struck by an undead creature. One day after being struck, subjects must make a DC 16 Fortitude save for each negative level or the negative levels become permanent.\nEach time a life-drinker deals damage to a foe, it also bestows one negative level on the wielder. Any negative levels gained by the wielder in this fashion lasts for 1 hour."
     },
@@ -1797,7 +1797,7 @@
       "key": "Luck Blade (0 wishes)",
       "category": "ArmsArmor",
       "name": "Short Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 22060.0,
       "weight_lbs": null,
       "description": "This +2 short sword gives its possessor a +1 luck bonus on all saving throws. Its possessor also gains the power of good fortune, usable once per day. This extraordinary ability allows its possessor to reroll one roll that she just made, before the results are revealed. She must take the result of the reroll, even if it's worse than the original roll. In addition, a luck blade may contain up to three wishes (when randomly rolled, a luck blade holds 1d4-1 wishes, minimum 0). When the last wish is used, the sword remains a +2 short sword, still grants the +1 luck bonus, and still grants its reroll power."
     },
@@ -1805,7 +1805,7 @@
       "key": "Luck Blade (1 wish)",
       "category": "ArmsArmor",
       "name": "Short Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 62360.0,
       "weight_lbs": null,
       "description": "This +2 short sword gives its possessor a +1 luck bonus on all saving throws. Its possessor also gains the power of good fortune, usable once per day. This extraordinary ability allows its possessor to reroll one roll that she just made, before the results are revealed. She must take the result of the reroll, even if it's worse than the original roll. In addition, a luck blade may contain up to three wishes (when randomly rolled, a luck blade holds 1d4-1 wishes, minimum 0). When the last wish is used, the sword remains a +2 short sword, still grants the +1 luck bonus, and still grants its reroll power."
     },
@@ -1813,7 +1813,7 @@
       "key": "Luck Blade (2 wishes)",
       "category": "ArmsArmor",
       "name": "Short Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 102660.0,
       "weight_lbs": null,
       "description": "This +2 short sword gives its possessor a +1 luck bonus on all saving throws. Its possessor also gains the power of good fortune, usable once per day. This extraordinary ability allows its possessor to reroll one roll that she just made, before the results are revealed. She must take the result of the reroll, even if it's worse than the original roll. In addition, a luck blade may contain up to three wishes (when randomly rolled, a luck blade holds 1d4-1 wishes, minimum 0). When the last wish is used, the sword remains a +2 short sword, still grants the +1 luck bonus, and still grants its reroll power."
     },
@@ -1821,7 +1821,7 @@
       "key": "Luck Blade (3 wishes)",
       "category": "ArmsArmor",
       "name": "Short Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 142960.0,
       "weight_lbs": null,
       "description": "This +2 short sword gives its possessor a +1 luck bonus on all saving throws. Its possessor also gains the power of good fortune, usable once per day. This extraordinary ability allows its possessor to reroll one roll that she just made, before the results are revealed. She must take the result of the reroll, even if it's worse than the original roll. In addition, a luck blade may contain up to three wishes (when randomly rolled, a luck blade holds 1d4-1 wishes, minimum 0). When the last wish is used, the sword remains a +2 short sword, still grants the +1 luck bonus, and still grants its reroll power."
     },
@@ -1829,7 +1829,7 @@
       "key": "Mace of Smiting",
       "category": "ArmsArmor",
       "name": "Heavy Mace (Base)",
-      "cost_gp": null,
+      "cost_gp": 75312.0,
       "weight_lbs": null,
       "description": "This +3 adamantine heavy mace has a +5 enhancement bonus against constructs, and a successful critical hit dealt to a construct completely destroys the construct (no saving throw). A critical hit dealt to an outsider deals x4 damage rather than x2."
     },
@@ -1837,7 +1837,7 @@
       "key": "Mace of Terror",
       "category": "ArmsArmor",
       "name": "Heavy Mace (Base)",
-      "cost_gp": null,
+      "cost_gp": 38552.0,
       "weight_lbs": null,
       "description": "This weapon usually appears to be a particularly frightening-looking iron or steel mace. On command, this +2 heavy mace causes the wielder's clothes and appearance to transform into an illusion of darkest horror such that living creatures in a 30-foot cone become panicked as if by a fear spell (Will DC 16 partial). Those who fail take a -2 morale penalty on saving throws, and they flee from the wielder. The wielder may use this ability up to three times per day."
     },
@@ -1845,7 +1845,7 @@
       "key": "Nine Lives Stealer",
       "category": "ArmsArmor",
       "name": "Longsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 23057.0,
       "weight_lbs": null,
       "description": "This longsword always performs as a +2 longsword, but it also has the power to draw the life force from an opponent. It can do this nine times before the ability is lost. At that point, the sword becomes a simple +2 longsword (with a faint evil aura). A critical hit must be dealt for the sword's death-dealing ability to function, and this weapon has no effect on creatures not subject to critical hits. The victim is entitled to a DC 20 Fortitude save to avoid death. If the save is successful, the sword's death-dealing ability does not function, no use of the ability is expended, and normal critical damage is determined. This sword is evil, and any good character attempting to wield it gains two negative levels. These negative levels remain as long as the sword is in hand and disappear when the sword is no longer wielded. These negative levels never result in actual level loss, but they cannot be overcome in any way (including restoration spells) while the sword is wielded."
     },
@@ -1853,7 +1853,7 @@
       "key": "Rapier of Puncturing",
       "category": "ArmsArmor",
       "name": "Rapier (Base)",
-      "cost_gp": null,
+      "cost_gp": 50320.0,
       "weight_lbs": null,
       "description": "Three times per day, this +2 wounding rapier allows the wielder to make a touch attack with the weapon that deals 1d6 points of Constitution damage by draining blood. Creatures immune to critical hits are immune to the Constitution damage dealt by this weapon."
     },
@@ -1861,7 +1861,7 @@
       "key": "Shatterspike",
       "category": "ArmsArmor",
       "name": "Longsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 4315.0,
       "weight_lbs": null,
       "description": "This intimidating weapon appears to be a longsword with multiple hooks, barbs, and serrations along the blade, excellent for catching and sundering a foe's weapon. Wielders without the Improved Sunder feat use a shatterspike as a +1 longsword only. Wielders with the Improved Sunder feat instead use shatterspike as a +4 longsword when attempting to sunder an opponent's weapon. Shatterspike can damage weapons with an enhancement bonus of +4 or lower."
     },
@@ -1885,7 +1885,7 @@
       "key": "Sun Blade (Bastard)",
       "category": "ArmsArmor",
       "name": "Bastard Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 50335.0,
       "weight_lbs": 2.0,
       "description": "This sword is the size of a bastard sword. However, a sun blade is wielded as if it were a short sword with respect to weight and ease of use. In other words, the weapon appears to all viewers to be a bastard sword, and deals bastard sword damage, but the wielder feels and reacts as if the weapon were a short sword. Any individual able to use either a bastard sword or a short sword with proficiency is proficient in the use of a sun blade. Likewise, Weapon Focus and Weapon Specialization in short sword and bastard sword apply equally, but the benefits of those feats do not stack.\nIn normal combat, the glowing golden blade of the weapon is equal to a +2 bastard sword. Against evil creatures, its enhancement bonus is +4. Against Negative Energy Plane creatures or undead creatures, the sword deals double damage (and x3 on a critical hit instead of the usual x2).\nThe blade also has a special sunlight power. Once per day, the wielder can swing the blade vigorously above his head while speaking a command word. The sun blade then sheds a bright yellow radiance that acts like bright light and affects creatures susceptible to light as if it were natural sunlight. The radiance begins shining in a 10-foot radius around the sword wielder and extends outward at 5 feet per round for 10 rounds thereafter, to create a globe of light with a 60-foot radius. When the wielder stops swinging, the radiance fades to a dim glow that persists for another minute before disappearing entirely. All sun blades are of good alignment, and any evil creature attempting to wield one gains one negative level. The negative level remains as long as the sword is in hand and disappears when the sword is no longer wielded. This negative level cannot be overcome in any way (including by restoration spells) while the sword is wielded."
     },
@@ -1901,7 +1901,7 @@
       "key": "Sword of Life Stealing",
       "category": "ArmsArmor",
       "name": "Longsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 25715.0,
       "weight_lbs": null,
       "description": "This black iron +2 longsword bestows a negative level when it deals a critical hit. The sword wielder gains 1d6 temporary hit points each time a negative level is bestowed on another. These temporary hit points last for 24 hours. One day after being struck, subjects must make a DC 16 Fortitude save for each negative level gained or they become permanent."
     },
@@ -1909,7 +1909,7 @@
       "key": "Sword of the Planes",
       "category": "ArmsArmor",
       "name": "Longsword (Base)",
-      "cost_gp": null,
+      "cost_gp": 22315.0,
       "weight_lbs": null,
       "description": "This longsword has an enhancement bonus of +1 on the Material Plane, but on any Elemental Plane its enhancement bonus increases to +2. The +2 enhancement bonus also applies whenever the weapon is used against creatures native to the Elemental Plane. It operates as a +3 longsword on the Astral Plane and the Ethereal Plane, or when used against opponents native to either of those planes. On any other plane, or against any outsider, it functions as a +4 longsword."
     },
@@ -1917,7 +1917,7 @@
       "key": "Sword of Subtlety",
       "category": "ArmsArmor",
       "name": "Short Sword (Base)",
-      "cost_gp": null,
+      "cost_gp": 22310.0,
       "weight_lbs": null,
       "description": "A +1 short sword with a thin, dull gray blade, this weapon provides a +4 bonus on its wielder's attack and damage rolls when he is making a sneak attack with it."
     },
@@ -1925,7 +1925,7 @@
       "key": "Sylvan Scimitar",
       "category": "ArmsArmor",
       "name": "Scimitar (Base)",
-      "cost_gp": null,
+      "cost_gp": 47315.0,
       "weight_lbs": null,
       "description": "This +3 scimitar, when used outdoors in a temperate climate, grants its wielder the use of the Cleave feat and deals an extra 1d6 points of damage."
     },
@@ -1933,7 +1933,7 @@
       "key": "Trident of Fish Command",
       "category": "ArmsArmor",
       "name": "Trident (Base)",
-      "cost_gp": null,
+      "cost_gp": 18650.0,
       "weight_lbs": null,
       "description": "The magical properties of this +1 trident with a 6-foot-long haft enable its wielder to charm up to 14 HD of aquatic animals as per the spell charm animals (Will DC 16 negates, animals get a +5 bonus if currently under attack by the wielder or his allies), no two of which can be more than 30 feet apart. The wielder can use this effect up to three times per day. The wielder can communicate with the animals as if using a speak with animals spell. Animals making their saving throws are free of control, but they will not approach within 10 feet of the trident."
     },
@@ -1941,7 +1941,7 @@
       "key": "Trident of Warning",
       "category": "ArmsArmor",
       "name": "Trident (Base)",
-      "cost_gp": null,
+      "cost_gp": 10115.0,
       "weight_lbs": null,
       "description": "A weapon of this type enables its wielder to determine the location, depth, kind, and number of aquatic predators within 680 feet. A trident of warning must be grasped and pointed in order for the character using it to gain such information, and it requires 1 round to scan a hemisphere with a radius of 680 feet. The weapon is otherwise a +2 trident."
     },
@@ -1965,7 +1965,7 @@
       "key": "Axe of the Dwarvish Lords",
       "category": "ArmsArmor",
       "name": "Dwarven Waraxe (Base)",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": "This is a +6 keen throwing goblinoid bane dwarven waraxe. Any dwarf who holds it doubles the range of his or her darkvision. Any nondwarf who grasps the Axe takes 4 points of temporary Charisma damage; these points cannot be healed or restored in any way while the Axe is held. The current owner of the Axe gains a +10 bonus on Craft (armor, jewelry, stonemasonry, traps, and weapons) checks. The wielder of the Axe can summon an elder earth elemental (as summon monster IX; duration 20 rounds) once per week."
     },
@@ -2157,7 +2157,7 @@
       "key": "Crossbow (Heavy)",
       "category": "ArmsArmor",
       "name": "Heavy Crossbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": "You draw a heavy crossbow back by turning a small winch. Loading a heavy crossbow is a fullround action that provokes attacks of opportunity.\nNormally, operating a heavy crossbow requires two hands. However, you can shoot, but not load, a heavy crossbow with one hand at a -4 penalty on attack rolls. You can shoot a heavy crossbow with each hand, but you take a penalty on attack rolls as if attacking with two one-handed weapons. This penalty is cumulative with the penalty for one-handed firing."
     },
@@ -2165,7 +2165,7 @@
       "key": "Crossbow (Light)",
       "category": "ArmsArmor",
       "name": "Light Crossbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 35.0,
       "weight_lbs": null,
       "description": null
     },
@@ -2205,7 +2205,7 @@
       "key": "Longbow (Composite)",
       "category": "ArmsArmor",
       "name": "Composite Longbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": "You need at least two hands to use a bow, regardless of its size. You can use a composite longbow while mounted. All composite bows are made with a particular strength rating (that is, each requires a minimum Strength modifier to use with proficiency). If your Strength bonus is less than the strength rating of the composite bow, you can't effectively use it, so you take a -2 penalty on attacks with it. The default composite longbow requires a Strength modifier of +0 or higher to use with proficiency. A composite longbow can be made with a high strength rating to take advantage of an above-average Strength score; this feature allows you to add your Strength bonus to damage, up to the maximum bonus indicated for the bow. Each point of Strength bonus granted by the bow adds 100 gp to its cost. If you have a penalty for low Strength, apply it to damage rolls when you use a composite longbow.\nFor purposes of Weapon Proficiency and similar feats, a composite longbow is treated as if it were a longbow."
     },
@@ -2229,7 +2229,7 @@
       "key": "Shortbow (Composite)",
       "category": "ArmsArmor",
       "name": "Composite Shortbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 75.0,
       "weight_lbs": null,
       "description": "You need at least two hands to use a bow, regardless of its size. You can use a composite shortbow while mounted. All composite bows are made with a particular strength rating (that is, each requires a minimum Strength modifier to use with proficiency). If your Strength bonus is lower than the strength rating of the composite bow, you can't effectively use it, so you take a -2 penalty on attacks with it. The default composite shortbow requires a Strength modifier of +0 or higher to use with proficiency. A composite shortbow can be made with a high strength rating to take advantage of an above-average Strength score; this feature allows you to add your Strength bonus to damage, up to the maximum bonus indicated for the bow. Each point of Strength bonus granted by the bow adds 75 gp to its cost. If you have a penalty for low Strength, apply it to damage rolls when you use a composite shortbow.\nFor purposes of Weapon Proficiency, Weapon Focus, and similar feats, a composite shortbow is treated as if it were a shortbow."
     },
@@ -2253,7 +2253,7 @@
       "key": "Crossbow (Hand)",
       "category": "ArmsArmor",
       "name": "Hand Crossbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": "You can draw a hand crossbow back by hand. Loading a hand crossbow is a move action that provokes attacks of opportunity. You can shoot, but not load, a hand crossbow with one hand at no penalty. You can shoot a hand crossbow with each hand, but you take a penalty on attack rolls as if attacking with two light weapons."
     },
@@ -2261,7 +2261,7 @@
       "key": "Crossbow (Repeating Heavy)",
       "category": "ArmsArmor",
       "name": "Repeating Heavy Crossbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 400.0,
       "weight_lbs": null,
       "description": "The repeating crossbow (whether heavy or light) holds 5 crossbow bolts. As long as it holds bolts, you can reload it by pulling the reloading lever (a free action). Loading a new case of 5 bolts is a full-round action that provokes attacks of opportunity.\nYou can fire a repeating crossbow with one hand or fire a repeating crossbow in each hand in the same manner as you would a normal crossbow of the same size. However, you must fire the weapon with two hands in order to use the reloading lever, and you must use two hands to load a new case of bolts."
     },
@@ -2269,7 +2269,7 @@
       "key": "Crossbow (Repeating Light)",
       "category": "ArmsArmor",
       "name": "Repeating Light Crossbow (Base)",
-      "cost_gp": null,
+      "cost_gp": 250.0,
       "weight_lbs": null,
       "description": "The repeating crossbow (whether heavy or light) holds 5 crossbow bolts. As long as it holds bolts, you can reload it by pulling the reloading lever (a free action). Loading a new case of 5 bolts is a full-round action that provokes attacks of opportunity.\nYou can fire a repeating crossbow with one hand or fire a repeating crossbow in each hand in the same manner as you would a normal crossbow of the same size. However, you must fire the weapon with two hands in order to use the reloading lever, and you must use two hands to load a new case of bolts."
     },
@@ -2293,7 +2293,7 @@
       "key": "Sling Staff (Halfling)",
       "category": "ArmsArmor",
       "name": "Halfling Sling Staff (Base)",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": "Made from a specially designed sling attached to a short club, a halfling sling staff can be used by a proficient wielder to devastating effect. Your Strength modifier applies to damage rolls when you use a halfling sling staff, just as it does for thrown weapons. You can fire, but not load, a halfling sling staff with one hand. Loading a halfling sling staff is a move action that requires two hands and provokes attacks of opportunity.\nYou can hurl ordinary stones with a halfling sling staff, but stones are not as dense or as round as bullets. Thus, such an attack deals damage as if the weapon were designed for a creature one size category smaller than you and you take a -1 penalty on attack rolls.\nA halfling sling staff can be used as a simple weapon that deals bludgeoning damage equal to that of a club of its size. Halflings treat halfling sling staves as martial weapons."
     },
@@ -2301,7 +2301,7 @@
       "key": "Javelin of Lightning",
       "category": "ArmsArmor",
       "name": "Javelin (Base)",
-      "cost_gp": null,
+      "cost_gp": 1500.0,
       "weight_lbs": null,
       "description": "This javelin becomes a 5d6 lightning bolt when thrown (Reflex DC 14 half ). It is consumed in the attack."
     },

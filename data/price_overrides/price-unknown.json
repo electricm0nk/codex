@@ -1,0 +1,1590 @@
+[
+  {
+    "key": "Aklys",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Amentum",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Amentum (Javelin)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Amulet",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Amulet of Inescapable Location",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Amulet of Mighty Fists",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Annulus",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Antidote (Vial)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Apocalypse Box",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Armor Spikes",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Armor of Arrow Attraction",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Armor of Rage",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Arrowbreak Bow",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Art",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Astral Armor",
+    "reason": "PCGen's literal COST plus its eqmods sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Astral Juggernaut",
+    "reason": "PCGen's literal COST plus its eqmods sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Astral Skin",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Astral Suit Ram 1",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Astral Suit Ram 2",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Astral Suit Ram 3",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Astral Suit Ram 4",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Bag of Devouring",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Banded Mail Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Banded Mail)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Breastplate)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Chain Shirt)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Chainmail)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Full Plate)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Half-Plate)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Hide)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Leather)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Padded)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Scale Mail)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Splint Mail)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Barding (Studded Leather)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Beacon of True Faith",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Belt",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Belt of Weakness",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Berserking Sword",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Biting Battleaxe",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Bomb",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Book of Infinite Spells",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Book of Perilous Journeys",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Book of the Damned (Demonic)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Boots",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Boots of Dancing",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Bottle of the Bound",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Bracelets",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Bracers",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Bracers of Defenselessness",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Branch of Life",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Brawler's Flurry",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Brazen Egg",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Breastplate Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Breezeblown Dandelion Flower",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Brilliant Plan Encumberance",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Brooch",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Broom of Animated Attack",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Bullroarers of Outburst",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cannibal Ring",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Caparison of Resistance +1 (Mount)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Caparison of Resistance +2 (Mount)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Caparison of Resistance +3 (Mount)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Caparison of Resistance +4 (Mount)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Caparison of Resistance +5 (Mount)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cape",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cape of Anchoring",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Celestial Lens",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Chain Shirt Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Chainmail Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Circlet",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cloak",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cloak of Immolation",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cloud Castle of the Storm King",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Club (Base)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Codex of the Infinite Planes",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Crawling Tattoo",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Crown",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Crown of Blindness",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Crown of Chaos",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Crown of the Iron King",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Crystal Hypnosis Ball",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Crystal Shard",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cup of Forbidden Knowledge",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cursed Backbiter Spear",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Cursed Sword (-2)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Dagger (Silver/Masterwork)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Dark Grimoire",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Darkwood Buckler",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Darkwood Shield",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Deadly Fist",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Deadly Returns Throwing Axe",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Deck of Many Things",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Demon Armor Claw Attack",
+    "reason": "PCGen's literal COST plus its eqmods sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Demon Prince Armor Claw Attack",
+    "reason": "PCGen's literal COST plus its eqmods sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Diadem of Nod",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Disruptor",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Dissonance",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Dorje",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Drums of Lethargy",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Dust Knuckles.FORGET",
+    "reason": "a PCGen removal directive, not an item (E2.8 hides it from the Market)"
+  },
+  {
+    "key": "Dust of Sneezing and Choking",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Elder Sign",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Elemental Chain",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Emperor's Mammoth",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Eye Lenses",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Eyes of Blindness",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Fake Rapier",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "False Face.FORGET",
+    "reason": "a PCGen removal directive, not an item (E2.8 hides it from the Market)"
+  },
+  {
+    "key": "Fetish Mask",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Final Blade",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Flame of Guidance",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Flask of Curses",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Fleshhook of Mythic Sustenance",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Flurry of Blows",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Flurry of Fists",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Flurry of Strikes",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Abyss)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Astral Plane)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Elysium)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Ethereal Plane)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Heaven)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Hell)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Material Plane)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Negative Energy Plane)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Air)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Earth)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Fire)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Plane of Water)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Positive Energy Plane)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Forked Metal Rod (Shadow Plane)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Fortune's Arrow",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Frozen Heart of Cocytus",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Full Plate Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Gaff",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Gauntlet (Part of Armor Suit)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Gauntlets",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Gauntlets of Fumbling",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Gem",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Girdle",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Girdle of Opposite Gender",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Glabrezu Claw",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Gloves",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Goggles",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Groundscorn Boots",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Halcyon Bonded Mask",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Half-Plate Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Hat",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Hat of Hatreds",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Haunted Doll",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Headband",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Headband of Stupidity",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Heartstone (Night Hag)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Heavy Hammer",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Helm of Opposite Alignment",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Helm of the Hydra",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Helmet",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Hermetic Flask",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Hide Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Holly and Mistletoe",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Holy Avenger",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Holy Symbol",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Holy Symbol (Compartment)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Holy Symbol (Flask)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Horns of Naraga",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Horsemaster's Saddle (Mount)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improved Mind Armor (Heavy)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improved Mind Armor (Light)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improved Mind Armor (Medium)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (1d10)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (1d12)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (1d2)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (1d3)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (1d4)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (1d6)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (1d8)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (2d10)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (2d4)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (2d6)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (2d8)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (One-Handed)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d10)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d12)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d2)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d3)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d4)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d6)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (1d8)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d10)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d4)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d6)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Thrown) (2d8)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Improvised Weapon (Two-Handed)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Incense of Obsession",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Jar of Dragon's Teeth",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Jewelry",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Knucklebone of Fickle Fortune",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Leather Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Living Grimoire Holy Text",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Longbow (Composite +0)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Longsword (Cold Iron/Masterwork)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Maiden's Panoply",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Maniac Hand",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mantle",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mask",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mask of Ugliness",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Medallion",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Medallion of Thought Projection",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Armor (Heavy)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Armor (Light)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Armor (Medium)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Arrow",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (Light Bludgeoning)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (Light Piercing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (Light Slashing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (One-Handed Bludgeoning)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (One-Handed Piercing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (One-Handed Slashing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (Two-Handed Bludgeoning)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (Two-Handed Piercing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Blade (Two-Handed Slashing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Long Range Bludgeoning)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Long Range Piercing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Long Range Slashing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Medium Range Bludgeoning)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Medium Range Piercing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Medium Range Slashing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Short Range Bludgeoning)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Short Range Piercing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Bolt (Short Range Slashing)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Dagger",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Shield",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Shield (Heavy)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Shield (Tower)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Stone",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Stone (Greater)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mind Xephyr Knife",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mirror of Soul Snaring",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Moaning Diamond",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Moldev",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Monkey's Paw",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Mystic Bolts",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Nearfiring Bow",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Necklace",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Necklace of Strangulation",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Needful Doll",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Net of Snaring",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Netherworld Cauldron",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Nimbus of Radiant Truth",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Oathbow",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Black)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Blue)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Brass)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Bronze)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Copper)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Gold)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Green)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Red)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (Silver)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Orb of Dragonkind (White)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ornery Pistol",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Padded Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Page of Spell Knowledge",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Pauldrons of the Jackass",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Perfect Golden Lute",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Perfection's Key",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Periapt",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Periapt of Foul Rotting",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Petrifying Cloak",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Philosopher's Stone",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Phylactery",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Plaguebringer",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Poison (Black Smear)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Poisonous Cloak",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Portal Network",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Potion",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Potion of Poison",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Powder Keg",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Power Stone",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Primordial Symbol",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Psicrown",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Psicrown of the Crystal Mind",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Psionic Tattoo",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Quarterstaff (Base)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Quarterstaff (Hurricane)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Quarterstaff of Contemplation",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Quarterstaff of Vaulting",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Quick-Change Outfit",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Raft",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rag Armor (Dark Creeper)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ranged Cannon ~ Clockwork Goliath",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Reverse Capacitor",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Riffle Scroll",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ring",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ring of Clumsiness",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ring of Equilibrium",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ring of Lifebleed",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ring of Rat Fangs Bite Attack",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ring of Spell Devouring",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Ring of Truth",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Riot Pipes",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Robe",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Robe of Powerlessness",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Robe of Vermin",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rock (Fine)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rock (Huge)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rock (Korred)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rock (Large)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rock (Medium)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rock (Small)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rod",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rod (Storm Kindler's)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rod of Arson",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rod of Foiled Magic",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Rod of Spell Sundering",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Runescarred Dragonship",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Scale Mail Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Scarab",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Scarab of Death",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Scattershot Bracers",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Scroll",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Scroll Blade",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Scroll Shield",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Seedpod",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Severis",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shadow Spike",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shadowstaff",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shadowwraith Heart",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shieldbash (Heavy)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shieldbash (Light)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shifter's Sorrow",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shirt",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shoes",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Shortbow (Composite +0)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Silver Maiden",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Skull",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Skullsoul",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Sling (Base)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Sling (Frostbite)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Slippers",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Soul Portrait",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Spell Component",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Spell Focus",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Spell Tattoo",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Spellbreaker",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Sphere of Annihilation",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Spiked Armor (Base)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Spindle of Perfect Knowledge",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Splint Mail Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Staff",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Staff of Eldritch sovereignty",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Staff of Occasional Wonder",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Staff of the Magi",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Stake (Wood)",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Stannum Crown",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Stone of Weight (Loadstone)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Studded Leather Barding (Base)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Sun Blade (Short)",
+    "reason": "the .COPY= base row is not in the pinned oracle's equipment files, or the composite sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Sun Orchid Elixir",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Sutra of Tranquil Thought",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Talisman of Pure Good",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Talisman of Reluctant Wishes",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Talisman of Ultimate Evil",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Talisman of the Sphere",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tarnhelm",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Belt",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Body",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Chest",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Feet",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Hands",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Head",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Neck",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Ring",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Shoulders",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tattoo Wrist",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Tempest's Blade",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "The Moaning Diamond",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "The Shield of the Sun",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Thought Record",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Torc of Interrogation",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Torc of the Heavens",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Touch Attack (Ray)",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Trueforge",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Unarmed Strike",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Unguent of Aging",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Unholy Symbol",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Unlucky Figurine",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Unstable Musket",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Unwieldy Glaive",
+    "reason": "an eqmod cost the converter does not evaluate (SIZE formula, an unread ITEMCOST prerequisite) or sums to 0; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Vacuous Grimoire",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Vest",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Vestment",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Wand",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Wardstone",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Weapon (Dwarven Boulder)",
+    "reason": "the record states no price in PCGen; awaiting the d20pfsrd lookup (E1.11)"
+  },
+  {
+    "key": "Weird Queen's Magpie",
+    "reason": "PCGen states COST:0 and no eqmod; awaiting the d20pfsrd lookup (E1.11)"
+  }
+]

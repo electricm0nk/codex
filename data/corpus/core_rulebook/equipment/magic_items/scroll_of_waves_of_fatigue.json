@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1125.0,
     "description": "Several targets become fatigued.",
     "key": "Scroll of Waves of Fatigue",
     "name": "Scroll",

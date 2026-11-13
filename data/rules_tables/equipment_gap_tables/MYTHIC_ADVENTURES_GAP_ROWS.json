@@ -14,7 +14,7 @@
       "key": "Bastion of the Inheritor",
       "name": "Bastion of the Inheritor",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -24,7 +24,7 @@
       "key": "Spiritwalk Armor",
       "name": "Spiritwalk Armor",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -34,7 +34,7 @@
       "key": "Stalwart Breastplate",
       "name": "Stalwart Breastplate",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 200.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -44,7 +44,7 @@
       "key": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_12)",
       "name": "Codex-Named Unit (equipment_mythic_adventures_ma_equip_lst_12)",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
@@ -57,7 +57,7 @@
       "key": "Brutal Axe",
       "name": "Brutal Axe",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -67,7 +67,7 @@
       "key": "Chaos Hammer",
       "name": "Chaos Hammer",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 12.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -77,7 +77,7 @@
       "key": "Dagger of a Thousand Bites",
       "name": "Dagger of a Thousand Bites",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -87,7 +87,7 @@
       "key": "Dragonbreath Bow",
       "name": "Dragonbreath Bow",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 75.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -97,7 +97,7 @@
       "key": "Fire Goddess's Blade",
       "name": "Fire Goddess's Blade",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -107,7 +107,7 @@
       "key": "Gun with no Name",
       "name": "Gun with no Name",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3000.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -117,7 +117,7 @@
       "key": "Pick of Stonecleaving",
       "name": "Pick of Stonecleaving",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -127,7 +127,7 @@
       "key": "Sacred Avenger",
       "name": "Sacred Avenger",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -147,7 +147,7 @@
       "key": "Shadow's Touch",
       "name": "Shadow's Touch",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -157,7 +157,7 @@
       "key": "Skirmishing Spear",
       "name": "Skirmishing Spear",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -177,7 +177,7 @@
       "key": "Stormcaller",
       "name": "Stormcaller",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -187,7 +187,7 @@
       "key": "Sword of Inner Fire",
       "name": "Sword of Inner Fire",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -830,7 +830,7 @@
       "key": "Aegis",
       "name": "Aegis",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -840,7 +840,7 @@
       "key": "Black Iron Axe",
       "name": "Black Iron Axe",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -850,7 +850,7 @@
       "key": "Screaming Spear of the Sun",
       "name": "Screaming Spear of the Sun",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -860,7 +860,7 @@
       "key": "Sword of the Mists",
       "name": "Sword of the Mists",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -870,7 +870,7 @@
       "key": "Witherfang",
       "name": "Witherfang",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -880,7 +880,7 @@
       "key": "Legendsbane",
       "name": "Legendsbane",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -890,7 +890,7 @@
       "key": "Scepter of the Shining Lord",
       "name": "Scepter of the Shining Lord",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null

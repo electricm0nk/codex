@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "Casting goodberry makes 2d4 freshly picked berries magical.",
     "key": "Wand of Goodberry",
     "name": "Wand",

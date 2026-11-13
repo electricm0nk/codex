@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1650.0,
     "description": "As lesser geas, but affects any creature.",
     "key": "Scroll of Geas/Quest (Arcane)",
     "name": "Scroll",

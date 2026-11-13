@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "When you need to keep track of comrades who may get separated, status allows you to mentally monitor their relative positions and general condition.",
     "key": "Wand of Status",
     "name": "Wand",

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 3000.0,
     "description": "Devastating yell deals 10d6 sonic damage; stuns creatures.",
     "key": "Scroll of Shout (Greater)",
     "name": "Scroll",

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 375.0,
     "description": "Creates text symbol that immobilizes reader.",
     "key": "Scroll of Sepia Snake Sigil",
     "name": "Scroll",

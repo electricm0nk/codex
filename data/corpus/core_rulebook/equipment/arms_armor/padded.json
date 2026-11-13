@@ -6,7 +6,7 @@
     "key": "Padded",
     "category": "arms_armor",
     "name": "Padded Armor (Base)",
-    "cost_gp": null,
+    "cost_gp": 5.0,
     "weight_lbs": null,
     "description": "Little more than heavy, quilted cloth, this armor provides only the most basic protection."
   },

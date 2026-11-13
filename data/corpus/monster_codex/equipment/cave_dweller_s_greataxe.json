@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 20.0,
     "description": null,
     "key": "Cave Dweller's Greataxe",
     "name": "Cave Dweller's Greataxe",

@@ -14,7 +14,7 @@
       "key": "Backbreaker Mail",
       "name": "Backbreaker Mail",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 200.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -24,7 +24,7 @@
       "key": "Blackjacket",
       "name": "Blackjacket",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -34,7 +34,7 @@
       "key": "Broadside Bulwark",
       "name": "Broadside Bulwark",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 7.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -44,7 +44,7 @@
       "key": "Crag Linnorm Plate",
       "name": "Crag Linnorm Plate",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 1500.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -54,7 +54,7 @@
       "key": "Eagle Knight Dress Uniform",
       "name": "Eagle Knight Dress Uniform",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 25.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -64,7 +64,7 @@
       "key": "Ekujae Jungle Armor",
       "name": "Ekujae Jungle Armor",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 500.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -74,7 +74,7 @@
       "key": "Gelugon Plate",
       "name": "Gelugon Plate",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 2150.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -84,7 +84,7 @@
       "key": "Ghoul Hide",
       "name": "Ghoul Hide",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -94,7 +94,7 @@
       "key": "Guard of Man",
       "name": "Guard of Man",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -104,7 +104,7 @@
       "key": "Lyrune-Quah Klar",
       "name": "Lyrune-Quah Klar",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 12.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -114,7 +114,7 @@
       "key": "Mammoth Hide",
       "name": "Mammoth Hide",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -124,7 +124,7 @@
       "key": "Mosswater Stained Leather",
       "name": "Mosswater Stained Leather",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 25.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -134,7 +134,7 @@
       "key": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_18)",
       "name": "Codex-Named Unit (equipment_inner_sea_combat_isc_equip_arms_armor_lst_18)",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 200.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
@@ -147,7 +147,7 @@
       "key": "Okeno Madu",
       "name": "Okeno Madu",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -157,7 +157,7 @@
       "key": "Scouting Leather",
       "name": "Scouting Leather",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -167,7 +167,7 @@
       "key": "Truefaith Vestments",
       "name": "Truefaith Vestments",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 100.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -177,7 +177,7 @@
       "key": "Tunnel Defender Stoneplate",
       "name": "Tunnel Defender Stoneplate",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 1800.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -187,7 +187,7 @@
       "key": "War Commander's Field Plate",
       "name": "War Commander's Field Plate",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 1200.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -197,7 +197,7 @@
       "key": "Xill Carapace Armor",
       "name": "Xill Carapace Armor",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 600.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -220,7 +220,7 @@
       "key": "Crimson Bluff",
       "name": "Crimson Bluff",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 35.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -230,7 +230,7 @@
       "key": "Earth Breaker of Righted Injustice",
       "name": "Earth Breaker of Righted Injustice",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 40.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -240,7 +240,7 @@
       "key": "Final Word",
       "name": "Final Word",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -250,7 +250,7 @@
       "key": "Greenblood Scourge",
       "name": "Greenblood Scourge",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -260,7 +260,7 @@
       "key": "Hunter's Starknife",
       "name": "Hunter's Starknife",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 24.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -270,7 +270,7 @@
       "key": "Monastic Warden",
       "name": "Monastic Warden",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -280,7 +280,7 @@
       "key": "Peacekeeping Pistol",
       "name": "Peacekeeping Pistol",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 1000.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -290,7 +290,7 @@
       "key": "Purging Falcata",
       "name": "Purging Falcata",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 18.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -310,7 +310,7 @@
       "key": "Risen Blade",
       "name": "Risen Blade",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -320,7 +320,7 @@
       "key": "Rostland Edge",
       "name": "Rostland Edge",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -330,7 +330,7 @@
       "key": "Shadde-Quah Spirit Bolas",
       "name": "Shadde-Quah Spirit Bolas",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -340,7 +340,7 @@
       "key": "Shadowbound Chains",
       "name": "Shadowbound Chains",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 25.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -350,7 +350,7 @@
       "key": "Shearing Sword",
       "name": "Shearing Sword",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -360,7 +360,7 @@
       "key": "Steadfast Urumi",
       "name": "Steadfast Urumi",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 30.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -370,7 +370,7 @@
       "key": "Wanderer's Scarf",
       "name": "Wanderer's Scarf",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 12.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -380,7 +380,7 @@
       "key": "Wendifisa Spear",
       "name": "Wendifisa Spear",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null

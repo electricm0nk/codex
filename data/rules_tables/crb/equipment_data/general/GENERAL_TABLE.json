@@ -701,7 +701,7 @@
       "key": "Map Case",
       "category": "General",
       "name": "Scroll Case",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": null
     },
@@ -981,7 +981,7 @@
       "key": "Tankard",
       "category": "General",
       "name": "Mug (Clay)",
-      "cost_gp": null,
+      "cost_gp": 0.02,
       "weight_lbs": null,
       "description": null
     },
@@ -1125,7 +1125,7 @@
       "key": "Spade",
       "category": "General",
       "name": "Shovel",
-      "cost_gp": null,
+      "cost_gp": 2.0,
       "weight_lbs": null,
       "description": "If a shovel is used in combat, treat it as a onehanded improvised weapon that deals bludgeoning damage equal to that of a club of its size."
     },
@@ -1365,7 +1365,7 @@
       "key": "Holy Symbol (Wooden)",
       "category": "General",
       "name": "Holy Symbol",
-      "cost_gp": null,
+      "cost_gp": 1.0,
       "weight_lbs": null,
       "description": "A holy symbol focuses positive energy and is used by good clerics and paladins (or by neutral clerics who want to cast good spells or channel positive energy). Each religion has its own holy symbol."
     },
@@ -1373,7 +1373,7 @@
       "key": "Holy Symbol (Silver)",
       "category": "General",
       "name": "Holy Symbol",
-      "cost_gp": null,
+      "cost_gp": 25.0,
       "weight_lbs": null,
       "description": "A holy symbol focuses positive energy and is used by good clerics and paladins (or by neutral clerics who want to cast good spells or channel positive energy). Each religion has its own holy symbol."
     },
@@ -1389,7 +1389,7 @@
       "key": "Musical Instrument (Harpsichord)",
       "category": "General",
       "name": "Harpsichord (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1397,7 +1397,7 @@
       "key": "Musical Instrument (Piano)",
       "category": "General",
       "name": "Piano (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1405,7 +1405,7 @@
       "key": "Musical Instrument (Pipe Organ)",
       "category": "General",
       "name": "Pipe Organ (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1413,7 +1413,7 @@
       "key": "Musical Instrument (Bells)",
       "category": "General",
       "name": "Bells (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1421,7 +1421,7 @@
       "key": "Musical Instrument (Chimes)",
       "category": "General",
       "name": "Chimes (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1429,7 +1429,7 @@
       "key": "Musical Instrument (Drums)",
       "category": "General",
       "name": "Drums (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1437,7 +1437,7 @@
       "key": "Musical Instrument (Gong)",
       "category": "General",
       "name": "Gong (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1445,7 +1445,7 @@
       "key": "Musical Instrument (Fiddle)",
       "category": "General",
       "name": "Fiddle (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1453,7 +1453,7 @@
       "key": "Musical Instrument (Harp)",
       "category": "General",
       "name": "Harp (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1461,7 +1461,7 @@
       "key": "Musical Instrument (Lute)",
       "category": "General",
       "name": "Lute (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1469,7 +1469,7 @@
       "key": "Musical Instrument (Mandolin)",
       "category": "General",
       "name": "Mandolin (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1477,7 +1477,7 @@
       "key": "Musical Instrument (Flute)",
       "category": "General",
       "name": "Flute (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1485,7 +1485,7 @@
       "key": "Musical Instrument (Pan Pipes)",
       "category": "General",
       "name": "Pan Pipes (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1493,7 +1493,7 @@
       "key": "Musical Instrument (Recorder)",
       "category": "General",
       "name": "Recorder (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1501,7 +1501,7 @@
       "key": "Musical Instrument (Trumpet)",
       "category": "General",
       "name": "Trumpet (Base)",
-      "cost_gp": null,
+      "cost_gp": 5.0,
       "weight_lbs": null,
       "description": "A masterwork instrument grants a +2 circumstance bonus on Perform checks involving its use."
     },
@@ -1909,7 +1909,7 @@
       "key": "Mule",
       "category": "General",
       "name": "Donkey",
-      "cost_gp": null,
+      "cost_gp": 8.0,
       "weight_lbs": null,
       "description": "Donkeys and mules are stolid in the face of danger, hardy, surefooted, and capable of carrying heavy loads over vast distances. Unlike a horse, a donkey or a mule is willing (though not eager) to enter dungeons and other strange or threatening places."
     },

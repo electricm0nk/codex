@@ -6,7 +6,7 @@
     "key": "Raiment of Chains",
     "category": "ArmsArmor",
     "name": "Raiment of Chains",
-    "cost_gp": null,
+    "cost_gp": 6250.0,
     "weight_lbs": null,
     "description": "The wearer can don or remove the armor as a move action. Three times per day as a standard action, the wearer can command chains to shoot out from the raiment of chains and attempt a reposition or trip combat maneuver check against a single target within 20 feet. The wearer is considered proficient with the chains and uses her own CMB with a +1 enhancement bonus on the check. The combat maneuver provokes attacks of opportunity as normal. The chains immediately retract back into the armor once the combat maneuver check has been attempted."
   },

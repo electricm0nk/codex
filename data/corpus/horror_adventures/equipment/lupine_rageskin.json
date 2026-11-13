@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 12160.0,
     "description": "This +1 leather armor consists of wolf skins sewn together with sinew. When the wearer rages, he automatically turns into a Medium wolf, as if using change shape (beast shape I). The armor melds with his new form as normal, but the armor's enhancement bonus changes into a +1 enhancement bonus to her natural armor. When the rage ends, the wearer reverts to his own form. when wearer rages, he turns into a Medium wolf with +1 bonus to natural armor",
     "key": "Lupine Rageskin",
     "name": "Lupine Rageskin",

@@ -6,7 +6,7 @@
     "key": "Trident of Fish Command",
     "category": "arms_armor",
     "name": "Trident (Base)",
-    "cost_gp": null,
+    "cost_gp": 18650.0,
     "weight_lbs": null,
     "description": "The magical properties of this +1 trident with a 6-foot-long haft enable its wielder to charm up to 14 HD of aquatic animals as per the spell charm animals (Will DC 16 negates, animals get a +5 bonus if currently under attack by the wielder or his allies), no two of which can be more than 30 feet apart. The wielder can use this effect up to three times per day. The wielder can communicate with the animals as if using a speak with animals spell. Animals making their saving throws are free of control, but they will not approach within 10 feet of the trident."
   },

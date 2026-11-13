@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "General",
-    "cost_gp": null,
+    "cost_gp": 2.0,
     "description": null,
     "key": "Skirmishing Spear",
     "name": "Skirmishing Spear",

@@ -165,7 +165,7 @@
       "key": "Talonstrike Sword",
       "name": "Talonstrike Sword",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 33035.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -175,7 +175,7 @@
       "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_19)",
       "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_19)",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 29015.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
@@ -188,7 +188,7 @@
       "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_20)",
       "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_20)",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 10305.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
@@ -201,7 +201,7 @@
       "key": "Monastic Warden",
       "name": "Monastic Warden",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 23530.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -211,7 +211,7 @@
       "key": "Banshee's Howl",
       "name": "Banshee's Howl",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 38480.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -221,7 +221,7 @@
       "key": "Mammoth Lance",
       "name": "Mammoth Lance",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 32310.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -251,7 +251,7 @@
       "key": "Devil Catcher",
       "name": "Devil Catcher",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 30320.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -261,7 +261,7 @@
       "key": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_28)",
       "name": "Codex-Named Unit (equipment_adventurers_guide_ag_equip_arms_armor_lst_28)",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 18175.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": [
@@ -294,7 +294,7 @@
       "key": "Elven Vengeance",
       "name": "Elven Vengeance",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 16150.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -304,7 +304,7 @@
       "key": "Mammoth Hide",
       "name": "Mammoth Hide",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 14665.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -314,7 +314,7 @@
       "key": "Red Stalker Armor",
       "name": "Red Stalker Armor",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 3020.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -324,7 +324,7 @@
       "key": "Maiden's Aegis",
       "name": "Maiden's Aegis",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 9170.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null

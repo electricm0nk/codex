@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 21000.0,
     "description": "Subject moves normally despite impediments to restrict movement.",
     "key": "Wand of Freedom of Movement",
     "name": "Wand",

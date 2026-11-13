@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 375.0,
     "description": "Ghost sound allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place.",
     "key": "Wand of Ghost Sound",
     "name": "Wand",

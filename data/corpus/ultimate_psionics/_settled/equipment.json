@@ -86,7 +86,7 @@
         "armor_class_chain_bonus": 6,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": -150.0,
+        "cost_gp": 0.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -127,7 +127,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": -150.0,
+        "cost_gp": 0.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -390,7 +390,7 @@
           "die_size": 8
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,
@@ -437,7 +437,7 @@
           "die_size": 8
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,
@@ -484,7 +484,7 @@
           "die_size": 8
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,
@@ -3955,7 +3955,7 @@
         "armor_class_chain_bonus": 1,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 150.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -14767,7 +14767,7 @@
           "die_size": 6
         },
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,

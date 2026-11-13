@@ -6,7 +6,7 @@
     "key": "Hide",
     "category": "arms_armor",
     "name": "Hide Armor (Base)",
-    "cost_gp": null,
+    "cost_gp": 15.0,
     "weight_lbs": null,
     "description": "Hide armor is made up of the tanned and preserved skin of any thick-hided beast."
   },

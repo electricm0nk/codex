@@ -6,7 +6,7 @@
     "key": "Flail",
     "category": "arms_armor",
     "name": "Light Flail (Base)",
-    "cost_gp": null,
+    "cost_gp": 8.0,
     "weight_lbs": null,
     "description": "A flail consists of a spiked metal ball, connected to a handle by a sturdy chain."
   },

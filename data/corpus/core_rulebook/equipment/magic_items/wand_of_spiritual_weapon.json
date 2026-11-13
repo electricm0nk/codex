@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "A weapon made of force appears and attacks foes at a distance, as you direct it, dealing 1d8+ 1 to 5 force damage per hit.",
     "key": "Wand of Spiritual Weapon",
     "name": "Wand",

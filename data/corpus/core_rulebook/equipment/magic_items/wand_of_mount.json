@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "You summon a light horse or a pony (your choice) to serve you as a mount.",
     "key": "Wand of Mount",
     "name": "Wand",

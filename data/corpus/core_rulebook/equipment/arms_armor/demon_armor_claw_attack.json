@@ -2,7 +2,7 @@
   "completeness": "chassis_plus_extract",
   "data": {
     "category": "arms_armor",
-    "cost_gp": -2300.0,
+    "cost_gp": 0.0,
     "description": null,
     "key": "Demon Armor Claw Attack",
     "name": "Demon Armor Claw Attack",

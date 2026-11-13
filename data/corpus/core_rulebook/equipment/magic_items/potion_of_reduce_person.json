@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 50.0,
     "description": "Target's size category decreases to next smaller category for 1 minute",
     "key": "Potion of Reduce Person",
     "name": "Potion",
