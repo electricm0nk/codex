@@ -28,7 +28,7 @@ PF_SEED_RENDER_OUT=<dir>/head cargo test --locked -j 8 --bins pf_seed_render_has
 python3 - <dir>/base <dir>/head <<'PY'                 # pass = prints SAME_EXCEPT_NAMED for each seed
 import json, sys, pathlib
 NEW_KEYS = {'equipmentSets', 'containerLoads', 'location', 'ordinal', 'quantity', 'copies', 'baseQuantity', 'inHand', 'unarmed', 'nonlethal', 'usesAmmunition', 'ammunitionCarried', 'slot', 'mirrorWarnings', 'campaigns'}   # E2.1, E2.4, E2.5, E2.7 (the card names any other)
-NEW_ROWS = ('combat.weapon_attack_bonus.unarmedstrike', 'combat.weapon_damage_total.unarmedstrike', 'combat.weapon_damage_bonus.unarmedstrike', 'combat.weapon_threat_range_low.unarmedstrike')   # E1.5 / E2.4: the Unarmed row every seed gains; carried-weapon rows exist only for copies no seed holds (E1.4 states the population)
+NEW_ROWS = ('combat.weapon_attack_bonus.unarmedstrike', 'combat.weapon_damage_total.unarmedstrike', 'combat.weapon_damage_bonus.unarmedstrike', 'combat.weapon_threat_range_low.unarmedstrike', 'speed.climb')   # E1.5 / E2.4: the Unarmed row every seed gains; speed.climb (E1.14 / E2.4, only for a race that climbs); carried-weapon rows exist only for copies no seed holds (E1.4 states the population)
 def strip(node):
     if isinstance(node, dict):
         return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS}
@@ -145,7 +145,7 @@ bash scripts/verify.sh --only pcgen-residue-gate -j 8   # PASS
 ```bash
 cd docs/release/SD-41-gear-and-equipment-sets
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 42) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 43) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Gear screen\|Inventory page\|Page 1 ([^)]*)\) — usable: yes' artifacts/epic_4/E4.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match; the third line is the page-1 print, decisions.md §34)
 (cd ../../../apps/desktop/src-tauri && cargo test --locked -j 8 --test market_price_census market_price -- --test-threads=8) 2>&1 | grep -c 'market_price_unknown_rows_name_every_source_tried .* ok'   # 1 (Q7 effort bar, decisions.md §30.1)

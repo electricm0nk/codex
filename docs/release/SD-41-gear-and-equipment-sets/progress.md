@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 9 of 42 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 9 (sd41-e1.6); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39 (sd41-e1.6, 2026-11-13: 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
+| Cards complete | 9 of 43 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 9 (sd41-e1.6); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39 (sd41-e1.6, 2026-11-13: 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -98,6 +98,11 @@ else system logo; logo files = ruling request Q10). Phase 2, serial after E4.1. 
 line (page 1). Census: a portrait store exists (`character_hub.rs:5744/5811/5817`, read by `print/mod.rs`);
 no `speed.climb` row (Q11); no logo file in the repo. Cards 39 → 42.
 
+**Operator rulings Q10 + Q11 (`decisions.md §35`, 2026-11-13):** logos in git (E4.4 fetches + cites; no
+blocker); climb → discovered card E1.14 (root: `climb_ft` on `DeclaredMoveModes` from the race-trait `MOVE`
+data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is desktop code
+(`character_hub.rs:3158`), so it lands in E2.4 (Phase 2); E4.3 reads the row. Cards 42 → 43.
+
 ## Cycle log
 
 | Card | Date | SHA | Status | Receipt |
@@ -125,7 +130,7 @@ the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --f
 
 ## Open blockers
 
-- **Q10 — logo files (2026-11-13, ruling request, `decisions.md §34` (7), `§21` Q10):** E4.4 prints the game
+- ~~Q10~~ **closed 2026-11-13: the operator put the logos in git (`decisions.md §35`); E4.4 fetches them from the publishers' sources and cites them in `logos/SOURCES.md`; `LEAD_WEB_FETCH` on a failed fetch.** Original entry: logo files (ruling request, `decisions.md §34` (7), `§21` Q10): E4.4 prints the game
   system's logo in the portrait box when no portrait is stored; the repo is public and system logos are trademarks,
   so the operator supplies the three files (`apps/desktop/src-tauri/resources/print/logos/{pf1e,sf1e,cpr}.png`)
   or rules "no logo". Needed before E4.4's dispatch (Phase 2); E4.4 returns `blocked-escalated` on the files

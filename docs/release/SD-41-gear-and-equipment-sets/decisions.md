@@ -406,8 +406,8 @@ The lead re-reads this package against the repo before dispatch and records each
 | Q6 | Buy Custom: an eqmod whose price is a formula the converter cannot evaluate (97 formula kinds among 1,494 eqmods) | **Answered 2026-11-12 (§30): "Offer them, price by Negotiate"** — the default stands | — |
 | Q7 | How far the d20pfsrd price list goes | **Answered 2026-11-12 (§30): "Every Market item"** — a closure criterion; `price-unknown.json` empty for Market-visible rows; card E1.11 in batches via the lead's `web-fetch` agent; Negotiate is haggling only | — |
 | Q8 | Splitting a bundle (10 of "Arrows (20)" into a quiver) | **Answered 2026-11-12 (§30): "Count single arrows"** — pieces; `quantity` per stack in the sidecar's `copies` map; migration = a bundle copy without a quantity is `base_quantity` pieces; old-save weight unchanged | — |
-| Q10 | Which logo file per game system (PF1e, SF1e, CPR) for the portrait box when no portrait is stored (§34; trademarks, public repo) | **none taken — a ruling request** (`progress.md ## Open blockers`): E4.4 ships the three asset paths and is `blocked-escalated` on the files until the operator supplies them | the operator supplies three files, or rules "no logo: print nothing in the box" |
-| Q11 | A `speed.climb` engine row for races with a climb speed (Vanara, `class_shared_core.rs:2733`) so the Speed grid prints a Climb value | not in SD-41: Climb prints "—" unless a `speed.climb` row exists (§34 (6); paper-sheet rule) | add the row in E1 for the races that state one (a value that lands on the sheet) |
+| Q10 | Which logo file per game system for the portrait box when no portrait is stored (§34) | **Answered 2026-11-13 (§35): the logos go in git**; E4.4 fetches them from the publishers' official sources and cites the URLs in `logos/SOURCES.md` | — |
+| Q11 | A `speed.climb` engine row for races with a climb speed | **Answered 2026-11-13 (§35): "For climb, yes - add to engine"** — card E1.14 (root: `climb_ft` on the declared move modes, Vanara 20 ft from data); the desktop row push lands in E2.4; E4.3 reads it | — |
 | Q9 | Where campaign membership is the truth | the character's `campaigns.json` (the app is master, §29); the campaign's `partyCharacterIds` is kept in step by the dialog | the campaign snapshot alone (then every save must read the Drive folder to know where to copy) |
 
 The author's recommendation is the default in every row.
@@ -897,3 +897,34 @@ three paths exist as committed files the operator replaces (a plain framed syste
 arrived by its dispatch; everything else in the card lands). `§21` Q10 records the ruling request. The title
 style is a `frame.typ` function every look calls (one place; NR-2 unchanged: strings only). Shading uses a
 grey ≥ `luma(230)` (SD-40 SD-d's range) so it prints on a monochrome printer.
+
+## §35 — Q10 and Q11 answered: logos in git; a `speed.climb` engine row (OPERATOR, 2026-11-13)
+
+**Q10, logos.** The operator: > "why not put the logos git? i don't understand why we wouldn't do that."
+**Ruling:** the logos go in git at `apps/desktop/src-tauri/resources/print/logos/{pf1e,sf1e,cpr}.png`. The
+operator accepts the trademark risk; the repo already carries the CPR book text on the same basis (SD-38). E4.4
+no longer blocks on operator files: the card **fetches each logo itself** from the publisher's official source, at
+print resolution, and records the source URL and the fetch date in its receipt and in
+`resources/print/logos/SOURCES.md`; if a fetch fails, the card returns `blocked-escalated` with
+`LEAD_WEB_FETCH: <system, candidate URL>`. The Q10 `## Open blockers` entry is closed.
+
+**Q11, climb.** The operator: > "For climb, yes - add to engine". **Ruling:** a discovered Phase-1 card
+**E1.14** (opus, main lane, `src/` only, no `apps/`): the engine's race layer declares a climb speed on the same
+path as swim and fly — `DeclaredMoveModes` (`src/rules_core/race_record.rs:72`: `swim_ft`, `fly_ft`,
+`fly_maneuverability`) gains `climb_ft`, settled from the race-trait record's `MOVE:…,Climb,<ft>` data (the
+sheet rule `bestiary_3/race_trait/vanara_speed.json` prints "Walk 30 ft., Climb 20 ft." from
+`vanara_abilities_race.lst:17 MOVE:Walk,30,Climb,20`; the Tree Stranger alternate replaces it); the constant
+`VANARA_CLIMB_SPEED_FEET` (`class_shared_core.rs:2733`) moves into data (removed from code; its two doc-comment
+and seam uses in `race_seams.rs:652–699` read the declared mode instead). Only sheet-total-feeding values: no
+spell-duration simulation (Spider Climb stays printed text); absent means no row. **Census:** the Vanara's
+climb is **20 ft** (`data/sheet_rules/bestiary_3/race_trait/vanara_speed.json` StatBlock pieces `Climb 20 ft.`;
+source `pathfinder/paizo/roleplaying_game/core_essentials/races/vanara/vanara_abilities_race.lst:17`, pin
+`7f818006e371188e5717fd18d74d18a420747fc6`); the Skinwalker change-shape alternates state climb 20 / 30 ft
+(`race_resolver.rs:2606–2607`). **Where the row is emitted:** the `speed.swim` / `speed.fly` rows are pushed by
+the **desktop** crate (`character_hub.rs:3158 push_swim_and_fly_rows`, reading
+`race.declared_mode_speed(|m| m.swim_ft)`), not by `src/` — so the Phase-1 card E1.14 lands the engine's
+declared climb mode (the root crate, `src/` only, as ruled) and the one-line `("climb", declared_mode_speed(|m|
+m.climb_ft))` push in `push_swim_and_fly_rows` is added by **E2.4** (Phase 2, `character_hub.rs`), whose G-1
+`NEW_ROWS` gains `speed.climb`. E4.3 then reads the real row; "—" stays only when the response holds no
+`speed.climb`. E1.14 depends on E1.3 (the last E1 card before the serial lane reaches the race layer; no SD-41
+card touches the speed path before it). Q11 is closed.
