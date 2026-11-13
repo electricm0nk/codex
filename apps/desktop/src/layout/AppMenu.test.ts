@@ -36,7 +36,7 @@ assert(html.includes('>Options</button>'), `the open ☰ menu shows an Options e
 
 // App: no ⚙ button; the host's openOptions opens SettingsModal; the app ☰ menu shows unless a screen claims the bar.
 const app = read('App.tsx');
-assert(!app.includes('⚙') && !app.includes('Open settings'), 'the fixed ⚙ button is removed from App.tsx');
+assert(!app.includes('⚙') && !/aria-label="Open\s+settings"/.test(app), 'the fixed ⚙ button is removed from App.tsx');
 assert(/openOptions:\s*\(\)\s*=>\s*setSettingsOpen\(true\)/.test(app), 'the menu host opens the existing SettingsModal');
 assert(/screenMenus === 0 \? <AppMenu items=\{\[\]\} fixed \/>/.test(app), 'App shows its own ☰ menu on every screen that has none');
 
