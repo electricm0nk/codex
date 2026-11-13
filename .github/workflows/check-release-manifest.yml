@@ -28,6 +28,8 @@ on:
       - 'apps/desktop/src/sd17/**'
       - 'release-manifest.json'
       - 'docs/release/**/release-notes.md'
+      - 'docs/release/current-release.json'
+      - 'scripts/tranche/validate-tranche-notes.py'
       - '.github/workflows/publish-tester-release.yml'
       - '.github/workflows/check-release-manifest.yml'
 
@@ -45,6 +47,12 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+
+      # Same two commands as the publish lane: a PR must not merge notes the publish would refuse.
+      - name: Resolve and validate the current tranche release notes
+        run: |
+          NOTES_PATH="$(python3 tools/release/resolve_release_notes.py --repo-root .)"
+          python3 scripts/tranche/validate-tranche-notes.py --release-notes-path "${NOTES_PATH}"
 
       - name: Detect release-manifest.json additions / modifications
         id: detect
