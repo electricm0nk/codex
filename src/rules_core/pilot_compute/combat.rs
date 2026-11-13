@@ -915,6 +915,42 @@ impl ArmorClassParts {
     }
 }
 
+/// SD-41 E1.5: the Unarmed row's attack, feat damage and threat range rows
+/// (`combat.weapon_*.unarmedstrike`), every character's whatever it holds: the per-weapon melee path
+/// ([`ground_per_weapon_combat_totals`]) over the Core Rulebook `Unarmed Strike` (a light,
+/// finesseable melee weapon) alone. Additive: the pilot's own rows are unchanged.
+pub fn unarmed_strike_combat_rows(base: &PilotBaseChassisComputation, input: &CharacterInput) -> Vec<ComputationExplanation> {
+    let mut unarmed = input.clone();
+    unarmed.chosen.equipment_selections = vec![crate::rules_core::character_input::EquipmentSelection {
+        item_id: crate::rules_core::damage_total::UNARMED_STRIKE_ITEM_ID.to_owned(),
+        equipped_or_active: true,
+        active_state: ActiveState::EquippedActive,
+        applied_modifiers: Vec::new(),
+    }];
+    let mut rows = Vec::new();
+    ground_per_weapon_combat_totals(&unarmed, &base.ability_modifiers, base.base_attack_bonus, &mut rows, &mut Vec::new());
+    rows
+}
+
+/// The character's monk levels, Core Rulebook and Unchained together: the two read one unarmed
+/// damage table ([`monk_unarmed_strike_damage_die_for_size`]).
+pub fn unarmed_strike_monk_level(input: &CharacterInput) -> u8 {
+    input
+        .chosen
+        .class_levels
+        .iter()
+        .filter(|class_level| [MONK_CLASS_ID, "class:unchained_monk"].contains(&class_level.class_id.as_str()))
+        .map(|class_level| class_level.level)
+        .sum()
+}
+
+/// Improved Unarmed Strike, chosen or granted: the Monk's grant (`class_granted_feats`) or the
+/// Unchained Monk's (`unchained_monk_unarmed_strike.json`, `FEAT|VIRTUAL|Improved Unarmed Strike`).
+pub fn holds_improved_unarmed_strike(input: &CharacterInput) -> bool {
+    crate::rules_core::feat_identity::holds(&effective_character_feats(input), "Improved Unarmed Strike")
+        || input.chosen.class_levels.iter().any(|class_level| class_level.class_id == "class:unchained_monk")
+}
+
 /// Compute the baseline melee attack bonus and armor class from what is in hand and worn, or block
 /// the claim on what this path has no number for (`unmet_combat_posture_conditions`).
 ///
