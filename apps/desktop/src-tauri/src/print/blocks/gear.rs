@@ -1,10 +1,11 @@
-//! Weapons, Armor and Inventory. Weapons print page 1's totals (SD-40 E2.10): the attack total and
+//! Weapons, and section 3's Defense, Gear and Money (SD-40 E3.2). Weapons print page 1's totals (SD-40 E2.10): the attack total and
 //! the engine's damage total (`1d8+4`, E2.14), the dice literal, nothing summed here. The
 //! Inventory lists every owned copy off `list_held_equipment_at_root` -- worn, carried or left
 //! behind (E7.5, operator ruling R21) -- and a copy left behind weighs nothing.
 
 use super::{derivation, override_tag, pounds, trim_number, words_of, SheetSources};
 use crate::character_hub::{ActiveStateDto, WeaponDamageDto};
+use codex::rules_core::body_slots::BodySlot;
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{Look, SheetBlock, SheetRow};
 
@@ -105,10 +106,15 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Weapons", rows).in_look(Look::Weapons)
 }
 
+/// The Defense block (SD-40 E3.2, section 3 Inventory): the armor and shield table, a line per worn
+/// piece (AC bonus, max Dex, check, failure, and the weight the engine carries it at), then the
+/// worn totals the engine states. The `defense` look adds one blank row.
 pub fn armor(sources: &SheetSources) -> SheetBlock {
     let effects = &sources.loaded.corpus_derived.equipment_effects;
-    let mut rows = vec![SheetRow::new("Armor or shield", ["AC", "Max Dex", "Check", "Failure"].map(str::to_owned))];
+    let weights = &sources.loaded.corpus_derived.encumbrance.per_item;
+    let mut rows = vec![SheetRow::new("Armor or shield", ["AC", "Max Dex", "Check", "Failure", "Weight"].map(str::to_owned)).of_kind("captions")];
     for item in effects.per_item.iter().filter(|item| item.armor_class_bonus.is_some()) {
+        let weight = weights.iter().find(|carried| carried.item_id == item.item_id).map_or_else(|| NO_VALUE.to_owned(), |carried| pounds(carried.weight_lbs));
         rows.push(
             SheetRow::new(
                 item_name(sources, &item.item_id, Some(&item.equipment_record_key)),
@@ -117,6 +123,7 @@ pub fn armor(sources: &SheetSources) -> SheetBlock {
                     item.max_dex.map_or_else(|| NO_VALUE.to_owned(), signed),
                     item.armor_check_penalty.map_or_else(|| NO_VALUE.to_owned(), |v| v.to_string()),
                     item.spell_failure.map_or_else(|| NO_VALUE.to_owned(), |v| format!("{}%", trim_number(f64::from(v)))),
+                    weight,
                 ],
             )
             .derived(Vec::new()),
@@ -125,59 +132,75 @@ pub fn armor(sources: &SheetSources) -> SheetBlock {
     if rows.len() == 1 {
         rows.push(SheetRow::new("No armor or shield is worn.", Vec::<String>::new()));
     } else {
-        rows.push(SheetRow::new("Armor check penalty, all worn", [effects.armor_check_penalty_total.to_string()]).derived(Vec::new()));
+        rows.push(SheetRow::new("Armor check penalty, all worn", [effects.armor_check_penalty_total.to_string()]).of_kind("total").derived(Vec::new()));
         if let Some(cap) = effects.max_dex_cap {
-            rows.push(SheetRow::new("Max Dex, all worn", [signed(cap)]).derived(Vec::new()));
+            rows.push(SheetRow::new("Max Dex, all worn", [signed(cap)]).of_kind("total").derived(Vec::new()));
         }
         if let Some(chance) = effects.spell_failure_chance {
-            rows.push(SheetRow::new("Arcane spell failure, all worn", [format!("{}%", trim_number(f64::from(chance)))]).derived(Vec::new()));
+            rows.push(SheetRow::new("Arcane spell failure, all worn", [format!("{}%", trim_number(f64::from(chance)))]).of_kind("total").derived(Vec::new()));
         }
     }
-    SheetBlock::new("Armor", rows)
+    SheetBlock::new("Armor and Shields", rows).in_look(Look::Defense)
 }
 
+/// The Gear block (SD-40 E3.2, section 3 Inventory): every owned copy off `list_held_equipment_at_root`
+/// under one of three sections, Worn (in body-slot order, its slot beside it), Carried and Left
+/// behind, each with the weight the engine carries it at (a copy left behind weighs nothing); then
+/// the carried weight, the load and the three limits. The `gear` look adds two blank rows per section.
 pub fn inventory(sources: &SheetSources) -> SheetBlock {
     let encumbrance = &sources.loaded.corpus_derived.encumbrance;
     // The engine weighs each copy it carries, in selection order; a copy left behind is not weighed.
     let mut weighed: Vec<Option<&crate::character_hub::CarriedItemDto>> = encumbrance.per_item.iter().map(Some).collect();
-    let mut rows = vec![SheetRow::new("Item", ["State".to_owned(), "Weight".to_owned()])];
+    let mut sections: [(&str, Vec<(BodySlot, SheetRow)>); 3] = [("Worn", Vec::new()), ("Carried", Vec::new()), ("Left behind", Vec::new())];
     for copy in &sources.held {
-        let (state, weight) = match copy.active_state {
-            ActiveStateDto::Absent => ("Left behind".to_owned(), "no weight".to_owned()),
+        let (section, slot, weight) = match copy.active_state {
+            ActiveStateDto::Absent => (2, String::new(), "no weight".to_owned()),
             ActiveStateDto::EquippedActive | ActiveStateDto::SelectedInactive => {
                 let weight = weighed
                     .iter_mut()
                     .find(|slot| slot.is_some_and(|item| item.item_id == copy.item_id))
                     .and_then(Option::take)
                     .map_or_else(|| NO_VALUE.to_owned(), |item| pounds(item.weight_lbs));
-                let state = if copy.active_state == ActiveStateDto::EquippedActive {
-                    match slot_words(copy) {
-                        Some(slot) => format!("Worn ({slot})"),
-                        None => "Worn".to_owned(),
-                    }
+                if copy.active_state == ActiveStateDto::EquippedActive {
+                    (0, slot_words(copy).unwrap_or_default(), weight)
                 } else {
-                    "Carried".to_owned()
-                };
-                (state, weight)
+                    (1, String::new(), weight)
+                }
             }
         };
-        rows.push(SheetRow::new(copy.name.clone(), [state, weight]).with_notes(copy.override_flag.map(override_tag)));
+        let row = SheetRow::new(copy.name.clone(), [slot, weight]).of_kind("item").with_notes(copy.override_flag.map(override_tag));
+        sections[section].1.push((copy.slot, row));
     }
-    if rows.len() == 1 {
-        rows.push(SheetRow::new("Nothing is owned.", Vec::<String>::new()));
+    sections[0].1.sort_by_key(|(slot, _)| *slot);
+    let mut rows = vec![SheetRow::new("Item", ["Slot".to_owned(), "Weight".to_owned()]).of_kind("captions")];
+    for (title, items) in sections {
+        rows.push(SheetRow::new(title, Vec::<String>::new()).of_kind("section"));
+        rows.extend(items.into_iter().map(|(_, row)| row));
     }
-    rows.extend([
-        SheetRow::new("Carried weight", [pounds(encumbrance.total_carried_weight_lbs)]).derived(Vec::new()),
-        SheetRow::new("Load", [encumbrance.level.clone()]),
-        SheetRow::new("Light load up to", [pounds(encumbrance.light_max_lbs)]).derived(Vec::new()),
-        SheetRow::new("Medium load up to", [pounds(encumbrance.medium_max_lbs)]).derived(Vec::new()),
-        SheetRow::new("Heavy load up to", [pounds(encumbrance.heavy_max_lbs)]).derived(Vec::new()),
-    ]);
-    // The Gear tab's money tiles, as `load_character_money` breaks the saved copper down.
-    if let Some(money) = &sources.money {
-        rows.extend([("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)].map(|(label, value)| SheetRow::new(label, [value.to_string()])));
-    }
-    SheetBlock::new("Inventory", rows)
+    rows.extend(
+        [
+            SheetRow::new("Carried weight", [pounds(encumbrance.total_carried_weight_lbs)]).derived(Vec::new()),
+            SheetRow::new("Load", [encumbrance.level.clone()]),
+            SheetRow::new("Light load up to", [pounds(encumbrance.light_max_lbs)]).derived(Vec::new()),
+            SheetRow::new("Medium load up to", [pounds(encumbrance.medium_max_lbs)]).derived(Vec::new()),
+            SheetRow::new("Heavy load up to", [pounds(encumbrance.heavy_max_lbs)]).derived(Vec::new()),
+        ]
+        .map(|row| row.of_kind("total")),
+    );
+    SheetBlock::new("Gear", rows).in_look(Look::Gear)
+}
+
+/// The Money block (SD-40 E3.2, section 3 Inventory): the Gear tab's four coin tiles, as
+/// `load_character_money` breaks the saved copper down; an empty box where there is none. The
+/// `money` look adds the four-line ledger.
+pub fn money(sources: &SheetSources) -> SheetBlock {
+    let coins = sources.money.as_ref().map(|money| [money.platinum, money.gold, money.silver, money.copper]);
+    let rows = ["PP", "GP", "SP", "CP"]
+        .into_iter()
+        .enumerate()
+        .map(|(index, label)| SheetRow::new(label, [coins.map_or_else(String::new, |coins| coins[index].to_string())]))
+        .collect();
+    SheetBlock::new("Money", rows).in_look(Look::Money)
 }
 
 /// Where a worn copy sits, in words (`wield_main` reads `Wield main`); none for a slotless item.

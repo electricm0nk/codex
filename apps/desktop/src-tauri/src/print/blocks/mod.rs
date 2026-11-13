@@ -24,7 +24,7 @@ pub use core::{abilities, armor_class, attack, character_details, conditional_bo
 pub use extras::{custom, pets};
 pub use feats::{actions, class_features, feats};
 pub(crate) use feats::line_row;
-pub use gear::{armor, inventory, weapons};
+pub use gear::{armor, inventory, money, weapons};
 pub use math::math;
 pub use skills::skills;
 pub use spells::{spellbook, spells};

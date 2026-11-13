@@ -28,8 +28,9 @@ const AT: &str = "2026-11-05T00:00:00Z";
 /// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Languages
 /// under the portrait (E2.13), the Conditional Bonuses box under the Saving Throws (E2.20), the
 /// Resistances block under it (E2.22); then the sections, each under its title (E2.23,
-/// `decisions.md §24.3.7`): Abilities and Feats, Inventory, Bio (the Identity block).
-const BASE_HEADINGS: [&str; 25] = [
+/// `decisions.md §24.3.7`): Abilities and Feats, Inventory (Armor and Shields, Gear, Money, E3.2), Bio
+/// (the Identity block).
+const BASE_HEADINGS: [&str; 26] = [
     "Portrait",
     "Languages",
     "Character Name",
@@ -51,8 +52,9 @@ const BASE_HEADINGS: [&str; 25] = [
     "Custom",
     "Pets",
     "Inventory",
-    "Armor",
-    "Inventory",
+    "Armor and Shields",
+    "Gear",
+    "Money",
     "Bio",
     "Identity",
 ];
@@ -111,7 +113,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         // Every option: the Spellbook section before Bio, the Bio notes in Bio, the Math section last.
         let mut expected: Vec<&str> = BASE_HEADINGS[..BASE_HEADINGS.len() - 2].to_vec();
         expected.extend(["Spellbook", SPELLBOOK, "Bio", "Identity", BIO, "Math", MATH]);
-        assert_eq!(headings, expected, "{tag}: the 32 blocks and titles, in the layout file's order");
+        assert_eq!(headings, expected, "{tag}: the 33 blocks and titles, in the layout file's order");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -263,8 +265,9 @@ fn print_pf_blocks_every_skills_panel_total_prints_ranked_or_not() {
     }
 }
 
-/// The Gear tab's money tiles (PP, GP, SP, CP, `load_character_money`) and the Details panel's Size
-/// and Vision (the race roster's, `deriveRaceTraits`) print on the basic sheet as the screen shows them.
+/// The Gear tab's money tiles (PP, GP, SP, CP, `load_character_money`; the Money block's, E3.2) and the
+/// Details panel's Size and Vision (the race roster's, `deriveRaceTraits`) print on the basic sheet as
+/// the screen shows them.
 #[test]
 fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let root = seeded("money-size", ALDRIC_ID);
@@ -279,9 +282,10 @@ fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let identity = &text[text.find("Bio Identity").expect("the Bio section opens with the Identity block")..];
     assert!(identity.contains(&format!("Size {}", race.size)), "Size {}: {identity}", race.size);
     assert!(identity.contains(&format!("Vision {}", race.vision)), "Vision {}: {identity}", race.vision);
-    let inventory = gear_text(&text);
+    // Each coin's label is over its value in its box; the text extraction runs the two together.
+    let coins: String = text_between(&text, "Money PP", "Bio Identity").split_whitespace().collect();
     for (label, value) in [("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)] {
-        assert!(inventory.contains(&format!("{label} {value}")), "{label} {value}: {inventory}");
+        assert!(coins.contains(&format!("{label}{value}")), "{label} {value}: {coins}");
     }
 }
 
@@ -365,12 +369,11 @@ fn print_pf_blocks_an_override_tag_prints_on_what_it_let_in() {
     assert!(text.contains("Override: Feats without prerequisites"), "the tag prints on the feat: {text}");
 }
 
-/// The Inventory block's text: in the Inventory section (its title, then the Armor block), up to the
-/// Bio section's title over the Identity block (E2.23).
+/// The Gear block's text: in the Inventory section (its title, then the Armor and Shields block), up
+/// to the Money block after it (E3.2).
 fn gear_text(text: &str) -> &str {
-    let section = &text[text.find("Inventory Armor").expect("the Inventory section opens with the Armor block") + "Inventory".len()..];
-    let gear = &section[section.find("Inventory").expect("the Inventory block")..];
-    &gear[..gear.find("Bio Identity").expect("the Bio section follows the Inventory")]
+    let section = &text[text.find("Inventory Armor and Shields").expect("the Inventory section opens with the Armor and Shields block")..];
+    text_between(section, "Gear Item", "Money PP")
 }
 
 #[test]
@@ -381,8 +384,9 @@ fn print_pf_blocks_a_left_behind_item_is_owned_with_no_weight() {
     assert!(held.iter().any(|copy| copy.item_id == "item:chain_shirt" && copy.active_state == ActiveStateDto::Absent));
     let text = pdf_text(&render(&root, &request(false, false, false)));
     let inventory = gear_text(&text);
-    assert!(inventory.contains("Chain Shirt Left behind"), "listed as owned: {inventory}");
-    assert!(inventory.contains("Left behind no weight"), "with no weight: {inventory}");
+    // A section's title and its first line are two table rows, which the text extraction runs together.
+    let bare: String = inventory.split_whitespace().collect();
+    assert!(bare.contains("LeftbehindChainShirtnoweight"), "listed as owned, left behind, with no weight: {inventory}");
     // The loadout's `item:shield` row and the Power Attack toggle are not things the character owns.
     assert!(!inventory.contains("power_attack") && !inventory.contains("shield"), "{inventory}");
 }
@@ -1989,7 +1993,7 @@ fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
         }
         let expected: Vec<(&str, Vec<&str>)> = vec![
             ("Abilities and Feats", vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
-            ("Inventory", vec!["defense", "gear"]),
+            ("Inventory", vec!["defense", "gear", "money"]),
             ("Spellbook", vec!["spellbook"]),
             ("Bio", vec!["characterDetails", "bioNotes"]),
             ("Math", vec!["math"]),
@@ -2169,5 +2173,171 @@ fn print_pf_blocks_class_features_print_in_two_columns() {
                 assert!(table.contains(&format!("{} Racial trait", applied.name)), "{tag} {paper:?}: `{}` prints with its kind: {table}", applied.name);
             }
         }
+    }
+}
+
+/// The Inventory section's blocks (E3.2, `decisions.md §23.1` item 5, §24.3.7): Defense, Gear, Money.
+const INVENTORY_BLOCKS: [&str; 3] = ["defense", "gear", "money"];
+
+/// E3.2 (`decisions.md §23.1` item 5 "Inventory: its own page(s), starts on a new page"): the
+/// Inventory section opens a page under its title, then the armor and shield table (`defense`, in
+/// its own look, a Weight column and one blank row), then `gear`, then `money`; nothing else is in
+/// it. Aldric with no option and with every option, Letter and A4.
+#[test]
+fn print_pf_blocks_inventory_starts_on_a_new_page() {
+    let root = seeded("inventory-page", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        for all in [false, true] {
+            let tag = format!("aldric all={all} {paper:?}");
+            let printed = PrintRequest { paper, ..request(all, all, all) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let title = document.blocks.iter().position(|block| block.id == "inventoryTitle").expect("the Inventory title");
+            assert!(document.blocks[title].new_page, "{tag}: the Inventory title starts a page");
+            let ids: Vec<&str> = document.blocks[title + 1..].iter().take_while(|block| block.look.name() != "section-title").map(|block| block.id).collect();
+            assert_eq!(ids, INVENTORY_BLOCKS.to_vec(), "{tag}: the Inventory section holds Defense, Gear, Money");
+            let looks: Vec<&str> = document.blocks[title + 1..title + 4].iter().map(|block| block.look.name()).collect();
+            assert_eq!(looks, vec!["defense", "gear", "money"], "{tag}: each prints in its own look");
+            let defense = &document.blocks[title + 1];
+            assert_eq!(defense.rows[0].values.last().map(String::as_str), Some("Weight"), "{tag}: the armor table has a Weight column: {:?}", defense.rows[0]);
+            assert_eq!(look_fact(&document, "defense-look")["blank"].as_u64(), Some(1), "{tag}: one blank row");
+
+            let pdf = render(&root, &printed);
+            let text = pdf_text(&pdf);
+            let pages = pages_text(&text, &document.title, page_count(&pdf));
+            let opening = format!("Inventory {}", defense.heading);
+            assert!(
+                pages.iter().any(|page| page.starts_with(&opening)),
+                "{tag}: a page opens `{opening}`; pages open: {:?}",
+                pages.iter().map(|p| p.chars().take(40).collect::<String>()).collect::<Vec<_>>()
+            );
+        }
+    }
+}
+
+/// E3.2: the Gear block prints every owned copy under one of three sections, Worn (by slot, its slot
+/// beside it), Carried, Left behind, each with its weight (a copy left behind weighs nothing), then
+/// the carried weight, the load and the three limits; two blank rows per section. Aldric with a
+/// Dagger and then a Ring of Protection +1 bought and worn (the ring's slot comes first), his chain
+/// shirt left behind and his longsword carried, Letter and A4.
+#[test]
+fn print_pf_blocks_gear_prints_worn_carried_and_left_behind_sections() {
+    use crate::character_hub::{adjust_character_money_at_root, purchase_equipment_priced_at_root, PriceMode, PurchaseEquipmentResponse};
+    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+    let root = seeded("gear-sections", ALDRIC_ID);
+    adjust_character_money_at_root(&root, 1_000_000).expect("funds for the Market");
+    for (category, name) in [(MarketCategory::Weapon, "Dagger"), (MarketCategory::MagicItem, "Ring of Protection +1")] {
+        let shelf = list_market(MarketFilter { category, name_contains: Some(name.to_owned()), book: None }).entries;
+        let row = shelf.iter().find(|row| row.entry.name == name && row.entry.cost_gp.is_some()).unwrap_or_else(|| panic!("the Market sells {name}"));
+        let response = purchase_equipment_priced_at_root(&root, &row.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{name} is bought: {response:?}");
+    }
+    set_equipment_active_state_at_root(&root, "item:chain_shirt", ActiveState::Absent, AT).expect("left behind");
+    set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, AT).expect("carried");
+    let held = list_held_equipment_at_root(&root).expect("held");
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let encumbrance = &loaded.corpus_derived.encumbrance;
+    let section_of = |state: ActiveStateDto| match state {
+        ActiveStateDto::EquippedActive => "Worn",
+        ActiveStateDto::SelectedInactive => "Carried",
+        ActiveStateDto::Absent => "Left behind",
+    };
+    for state in [ActiveStateDto::EquippedActive, ActiveStateDto::SelectedInactive, ActiveStateDto::Absent] {
+        assert!(held.iter().any(|copy| copy.active_state == state), "Aldric holds a {} copy: {held:?}", section_of(state));
+    }
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("aldric {paper:?}");
+        let printed = PrintRequest { paper, ..request(false, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let gear = document.blocks.iter().find(|block| block.id == "gear").expect("the Gear block");
+        assert_eq!(gear.look.name(), "gear", "{tag}: Gear prints in its own look");
+        // The rows section by section: each section's heading row, then its items.
+        let mut sections: Vec<(&str, Vec<&crate::print::model::SheetRow>)> = Vec::new();
+        for row in &gear.rows {
+            match row.kind {
+                "section" => sections.push((row.label.as_str(), Vec::new())),
+                "item" => sections.last_mut().expect("an item under a section").1.push(row),
+                _ => {}
+            }
+        }
+        let titles: Vec<&str> = sections.iter().map(|(title, _)| *title).collect();
+        assert_eq!(titles, vec!["Worn", "Carried", "Left behind"], "{tag}: the three sections, in order");
+        for (title, rows) in &sections {
+            let owned: Vec<&str> = held.iter().filter(|copy| section_of(copy.active_state) == *title).map(|copy| copy.name.as_str()).collect();
+            let mut printed: Vec<&str> = rows.iter().map(|row| row.label.as_str()).collect();
+            let mut expected = owned.clone();
+            printed.sort_unstable();
+            expected.sort_unstable();
+            assert_eq!(printed, expected, "{tag}: `{title}` lists every copy in that state");
+        }
+        // Worn by slot: in the body-slot order, each with its slot's words.
+        let worn: Vec<&crate::character_hub::HeldEquipmentCopyDto> = {
+            let mut worn: Vec<_> = held.iter().filter(|copy| copy.active_state == ActiveStateDto::EquippedActive).collect();
+            worn.sort_by_key(|copy| copy.slot);
+            worn
+        };
+        let printed_worn: Vec<&str> = sections[0].1.iter().map(|row| row.label.as_str()).collect();
+        assert_eq!(printed_worn, worn.iter().map(|copy| copy.name.as_str()).collect::<Vec<_>>(), "{tag}: Worn is in slot order");
+        assert!(worn.len() >= 2 && worn[0].slot < worn[1].slot, "{tag}: two worn copies in two slots: {worn:?}");
+        for left in &sections[2].1 {
+            assert_eq!(left.values.last().map(String::as_str), Some("no weight"), "{tag}: a copy left behind weighs nothing: {left:?}");
+        }
+        // A worn or carried copy prints the weight the engine carries it at; none stated: the no-value mark.
+        for carried in sections[0].1.iter().chain(&sections[1].1) {
+            let copy = held.iter().find(|copy| copy.name == carried.label).expect("a held copy");
+            let stated = encumbrance.per_item.iter().find(|item| item.item_id == copy.item_id);
+            let expected = stated.map_or_else(|| crate::print::layout::NO_VALUE.to_owned(), |item| super::pounds(item.weight_lbs));
+            assert_eq!(carried.values.last(), Some(&expected), "{tag}: `{}` prints its weight", carried.label);
+        }
+        assert!(sections[0].1.iter().chain(&sections[1].1).any(|row| row.values.last().is_some_and(|weight| weight.ends_with(" lb"))), "{tag}: a weighed copy prints in pounds");
+        let fact = look_fact(&document, "gear-look");
+        assert_eq!((fact["sections"].as_u64(), fact["blank"].as_u64()), (Some(3), Some(2)), "{tag}: three sections, two blank rows each: {fact}");
+
+        let text = pdf_text(&render(&root, &printed));
+        let block = text_between(&text, "Gear Item", "Money PP");
+        let bare: String = block.split_whitespace().collect();
+        assert_in_order(&bare, &["Worn", "Carried", "Longsword", "Leftbehind", "ChainShirtnoweight"]);
+        for (label, value) in [
+            ("Carried weight", super::pounds(encumbrance.total_carried_weight_lbs)),
+            ("Load", encumbrance.level.clone()),
+            ("Light load up to", super::pounds(encumbrance.light_max_lbs)),
+            ("Medium load up to", super::pounds(encumbrance.medium_max_lbs)),
+            ("Heavy load up to", super::pounds(encumbrance.heavy_max_lbs)),
+        ] {
+            let pair: String = format!("{label}{value}").split_whitespace().collect();
+            assert!(bare.contains(&pair), "{tag}: `{label} {value}` prints: {block}");
+        }
+    }
+}
+
+/// E3.2: Money is a block of its own: four coin boxes, PP, GP, SP and CP, each holding the Gear
+/// tab's value (`load_character_money`), then a write-in ledger of four lines. Aldric, Letter and A4.
+#[test]
+fn print_pf_blocks_money_prints_four_coin_boxes() {
+    let root = seeded("money-boxes", ALDRIC_ID);
+    crate::character_hub::adjust_character_money_at_root(&root, 1_234_567).expect("money adjusts");
+    let money = crate::character_hub::load_character_money_at_root(&root).expect("money loads");
+    let coins = [("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)];
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("aldric {paper:?}");
+        let printed = PrintRequest { paper, ..request(false, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let block = document.blocks.iter().find(|block| block.id == "money").expect("the Money block");
+        assert_eq!(block.look.name(), "money", "{tag}: Money prints in its own look");
+        let rows: Vec<(&str, &str)> = block.rows.iter().map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
+        let values: Vec<String> = coins.iter().map(|(_, value)| value.to_string()).collect();
+        let expected: Vec<(&str, &str)> = coins.iter().zip(&values).map(|((label, _), value)| (*label, value.as_str())).collect();
+        assert_eq!(rows, expected, "{tag}: four coin boxes with the Gear tab's values");
+        let fact = look_fact(&document, "money-look");
+        assert_eq!((fact["boxes"].as_u64(), fact["ledger"].as_u64()), (Some(4), Some(4)), "{tag}: four boxes, a four-line ledger: {fact}");
+        let gear = document.blocks.iter().find(|block| block.id == "gear").expect("the Gear block");
+        assert!(gear.rows.iter().all(|row| !["PP", "GP", "SP", "CP"].contains(&row.label.as_str())), "{tag}: the coins left the Gear block");
+
+        let text = pdf_text(&render(&root, &printed));
+        let printed_money = &text[text.find("Money PP").unwrap_or_else(|| panic!("{tag}: the Money block opens with PP: {text}"))..];
+        // Each coin's label is over its value in its box; the text extraction runs the two together.
+        let bare: String = printed_money.split_whitespace().collect();
+        let boxes: String = coins.iter().map(|(label, value)| format!("{label}{value}")).collect();
+        assert!(bare.starts_with(&format!("Money{boxes}Ledger")), "{tag}: the four boxes in order, then the ledger: {printed_money}");
+        assert!(printed_money.contains("Ledger"), "{tag}: the ledger prints: {printed_money}");
     }
 }

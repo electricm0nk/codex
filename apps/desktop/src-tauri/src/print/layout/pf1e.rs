@@ -8,7 +8,7 @@
 //! (E2.20), and a right column of one width
 //! holding the Abilities over the Skills (one column, name + total, E2.11). Then the sections
 //! (`decisions.md §24.3.7`, E2.23), each from a new page under its title: Abilities and Feats,
-//! Inventory, Spellbook (when asked), Bio (the Identity block, then the bio and campaign notes when
+//! Inventory (Defense, Gear, Money, E3.2), Spellbook (when asked), Bio (the Identity block, then the bio and campaign notes when
 //! asked), Math (when asked). The blocks
 //! themselves (`print/blocks/`) read what the Character Sheet reads; nothing here computes a
 //! number (NR-2).
@@ -49,7 +49,11 @@ const ABILITIES_AND_FEATS: &[Placed] = &[
     Placed::full("custom", blocks::custom),
     Placed::full("pets", blocks::pets),
 ];
-const INVENTORY: &[Placed] = &[Placed::full("defense", blocks::armor), Placed::full("gear", blocks::inventory)];
+const INVENTORY: &[Placed] = &[
+    Placed::full("defense", blocks::armor),
+    Placed::full("gear", blocks::inventory),
+    Placed::full("money", blocks::money),
+];
 const BIO: &[Placed] = &[Placed::full("characterDetails", blocks::character_details)];
 
 /// A section: its title block opens a page, its blocks follow it with no break of their own (the

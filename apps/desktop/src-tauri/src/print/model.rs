@@ -173,12 +173,20 @@ pub enum Look {
     ClassFeatures,
     /// The Actions (SD-40 E3.1): the Actions tab's lines as a table of name, kind and value.
     Actions,
+    /// The armor and shield table (SD-40 E3.2): a line per worn piece under its captions, one blank
+    /// row, then the worn totals.
+    Defense,
+    /// The Gear (SD-40 E3.2): Worn, Carried and Left behind, each its items and two blank rows, then
+    /// the carried weight, the load and the three limits.
+    Gear,
+    /// The Money (SD-40 E3.2): four coin boxes (PP, GP, SP, CP) and a four-line write-in ledger.
+    Money,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 18] = [
+    pub const ALL: [Look; 21] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -197,6 +205,9 @@ impl Look {
         Look::Feats,
         Look::ClassFeatures,
         Look::Actions,
+        Look::Defense,
+        Look::Gear,
+        Look::Money,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -220,6 +231,9 @@ impl Look {
             Look::Feats => "feats",
             Look::ClassFeatures => "class-features",
             Look::Actions => "actions",
+            Look::Defense => "defense",
+            Look::Gear => "gear",
+            Look::Money => "money",
         }
     }
 }
