@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 9 of 43 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 9 (sd41-e1.6); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39 (sd41-e1.6, 2026-11-13: 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
+| Cards complete | 10 of 43 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 10 (sd41-e1.7); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 39 (sd41-e1.6, 2026-11-13: 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -118,6 +118,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E1.4 | 2026-11-13 | `0a725d14bf` + this commit | complete | `artifacts/epic_1/E1.4_cycle_receipt.md` (4 tests; root lib 3110 passed, 6 ignored; codex-ingest 1862 passed over 179 suites; PF seeds byte-identical) |
 | E1.5 | 2026-11-13 | `80b2ce8757` + this commit | complete | `artifacts/epic_1/E1.5_cycle_receipt.md` (4 tests + 3 E1.4 tests updated for the Unarmed row; root lib 3120 tests; PF seeds byte-identical; Aldric `1d3+4`) |
 | E1.6 | 2026-11-13 | `3f38f51edf` + this commit | complete | `artifacts/epic_1/E1.6_cycle_receipt.md` (3 card tests + 1 population test + 1 converter test; root lib 3124 tests; codex-ingest 1,863 passed; PF seeds byte-identical; desktop fixture restored byte-identical; discovered E1.13, E2.9) |
+| E1.7 | 2026-11-13 | `9050445ff0` + this commit | complete | `artifacts/epic_1/E1.7_cycle_receipt.md` (5 tests; root lib 3129 tests; codex-ingest 1,863 passed; 19 callers pass `&[], &[]`) |
 
 ## Epic reports
 
