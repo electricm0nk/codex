@@ -73,7 +73,7 @@ ENVIRONMENT (SD-41, binding — every rule here applies to you):
 - TWO CARGO WORKSPACES: the repo root (src/, crates/) and apps/desktop/src-tauri are separate; the desktop
   crate is a binary crate with no lib target (its tests are #[cfg(test)] modules or tests/*.rs, run with
   `cargo test --locked -j 8 <filter> -- --test-threads=8` from that directory).
-- PHASE 1 CARDS (C1, E1.x) NEVER WRITE UNDER apps/ (the one exception: E1.8/E1.9's price test file under
+- PHASE 1 CARDS (E1.x) NEVER WRITE UNDER apps/ (C1 is the named exception: its FILES YOU OWN are the 14 F-1 version surfaces, and its commit is the base of the E1.MC partition check; the other exception: E1.8/E1.9's price test file under
   apps/desktop/src-tauri/tests/ if the catalog can only be called from that crate): `git diff --name-only <base>..HEAD -- apps | grep -v 'tests/market_price' | awk 'END{print NR}'`
   must print 0 before you commit; any other Phase-1 need for an apps/ file is a `declined` with ownedBy:<E2 card>.
 - THE CONVERT LANE (E1.8, E1.9) re-converts equipment records only: after the re-convert run the field-diff

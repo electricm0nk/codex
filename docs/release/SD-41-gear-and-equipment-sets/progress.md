@@ -90,6 +90,7 @@ rows carry `tried`; E2.5's test is `market_backend_unpriced_item_buys_through_ne
 | Card | Date | SHA | Status | Receipt |
 |---|---|---|---|---|
 | C0 | 2026-11-12 | this commit | complete | `artifacts/cycle_0/C0_cycle_receipt.md` |
+| C1 | 2026-11-12 | this commit | complete | `artifacts/cycle_0/C1_cycle_receipt.md` |
 
 ## Epic reports
 
