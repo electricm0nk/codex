@@ -91,12 +91,18 @@ try {
   phase(P1)
   // Side lane convert (E1.8 -> E1.9 -> E1.11) beside the main lane E1.1 ... E1.10.
   const wrap = (p) => p.then(r => ({ r }), e => ({ e }))
+  // E1.1, E1.6, E1.7 and E1.9 all edit ir_converter.rs and regenerate the settled bundles (decisions.md §31),
+  // so E1.9 waits for E1.7; E1.8 (census, read only) runs beside.
+  const pSettled = (async () => { for (const id of ['E1.1','E1.2','E1.3','E1.4','E1.5','E1.6','E1.7']) await go(id, 'opus', P1) })()
+  const wSettled = wrap(pSettled)
   const conv = wrap((async () => {
     await go('E1.8', 'opus', P1, 'convert')
+    const x = await wSettled; if (x.e) throw x.e
     await go('E1.9', 'opus', P1, 'convert')
     await go('E1.11', 'opus', P1, 'convert', 'LAST_IN_LANE ' + E111_EXTRA)
   })())
-  for (const id of ['E1.1','E1.2','E1.3','E1.4','E1.5','E1.6','E1.7','E1.10']) await go(id, 'opus', P1)
+  await pSettled
+  await go('E1.10', 'opus', P1)
   const c = await conv
   if (c.e) throw c.e
   if (!skip('E1.MC')) await drainBoard('E1', P1)
