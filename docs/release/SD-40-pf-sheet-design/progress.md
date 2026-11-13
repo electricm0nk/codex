@@ -127,6 +127,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E2.31 | E2.31 | complete | ba2d867974 + receipt commit | artifacts/epic_2/E2.31_cycle_receipt.md |
 | E2.32 | E2.32 | complete | 1d7d3521bd + receipt commit | artifacts/epic_2/E2.32_cycle_receipt.md |
 | E2.MC3 | E2.MC3 | complete | receipt commit (docs only) | artifacts/epic_2/E2.MC3_cycle_receipt.md |
+| E2.G (round 3) | E2.G | complete (operator signed round 3, 2026-11-13: asked for the PR now; E3, E4 and closure cards still waiting) | this commit | artifacts/epic_2/E2.G_cycle_receipt.md |
 
 ## Epic reports
 
