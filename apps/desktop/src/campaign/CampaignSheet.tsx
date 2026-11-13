@@ -15,6 +15,7 @@ import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../bo
 import { hasTauriRuntime } from '../boundary/runtime';
 import { buildPreviewDetail } from '../characterHub/previewData';
 import { formatHeldClasses } from '../characterHub/characterProgression';
+import { AppMenu } from '../layout/AppMenu';
 
 /**
  * Post-load campaign screen, styled like the Character Sheet: a full-bleed
@@ -296,7 +297,7 @@ export function CampaignSheet(props: {
           padding: '0.95rem 4rem 0.95rem 1.5rem',
         }}
       >
-        <span style={{ fontSize: '1.1rem', fontWeight: 700 }}>☰ Menu</span>
+        <AppMenu items={[]} />
         <button
           type="button"
           onClick={props.onClose}

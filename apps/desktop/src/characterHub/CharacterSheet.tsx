@@ -166,6 +166,7 @@ import { ArmorClassPanel, AttackPanel, SavingThrowsPanel, SpeedPanel } from './p
 import { ResistancesPanel } from './panels/ResistancesPanel';
 import { conditionalBonusLines } from './conditionalBonusesModel';
 import { StatBox, StatTile, fmt, fmtOrAbsent, panel } from './panels/StatBox';
+import { AppMenu } from '../layout/AppMenu';
 import { SquareBlock, initiativeRow } from './panels/SquareBlock';
 import { SHEET_LAYOUT, SHEET_REGION_STYLES, boxesInColumn, type SheetBoxId, type SheetStack } from './sheetLayout';
 import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
@@ -2715,7 +2716,6 @@ export function CharacterSheet(props: {
     void ensureClassRosterLoaded();
   }, []);
   const [tab, setTab] = useState<Tab>('Weapons');
-  const [menuOpen, setMenuOpen] = useState(false);
   // SD-36 F6a: weapon proficiency, caster level and class skills per held class, from the engine
   // (`list_class_facts`). A failure prints Unknown with the notice; nothing falls back to a table.
   const [classFacts, setClassFacts] = useState<ClassFactsState>(LOADING_CLASS_FACTS);
@@ -4483,7 +4483,7 @@ export function CharacterSheet(props: {
 
   return (
     <div style={{ marginLeft: 'calc(50% - 50vw)', marginTop: '-3rem', width: '100vw' }}>
-      {/* Top menu bar — extra right padding + height keep the fixed gear clear of the accent line */}
+      {/* Top menu bar */}
       <div
         style={{
           alignItems: 'center',
@@ -4493,60 +4493,8 @@ export function CharacterSheet(props: {
           padding: '0.95rem 4rem 0.95rem 1.5rem',
         }}
       >
-        {/* Menu dropdown */}
-        <div style={{ position: 'relative' }}>
-          <button
-            type="button"
-            onClick={() => setMenuOpen((open) => !open)}
-            style={{ background: 'none', border: 'none', color: 'var(--color-text)', cursor: 'pointer', fontSize: '1.1rem', fontWeight: 700, padding: 0 }}
-          >
-            ☰ Menu
-          </button>
-          {menuOpen ? (
-            <>
-              <div onClick={() => setMenuOpen(false)} style={{ inset: 0, position: 'fixed', zIndex: 20 }} />
-              <div
-                style={{
-                  ...panel,
-                  backgroundColor: 'var(--color-surface)',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.45)',
-                  left: 0,
-                  minWidth: 160,
-                  overflow: 'hidden',
-                  position: 'absolute',
-                  top: 'calc(100% + 10px)',
-                  zIndex: 21,
-                }}
-              >
-                {menuItems.map((item) => (
-                  <div key={item.label}>
-                    {item.dividerBefore ? <div style={{ borderTop: '1px solid var(--color-border)', margin: '0.25rem 0' }} /> : null}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMenuOpen(false);
-                        item.onSelect();
-                      }}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        color: 'var(--color-text)',
-                        cursor: 'pointer',
-                        display: 'block',
-                        fontSize: '0.9rem',
-                        padding: '0.55rem 1rem',
-                        textAlign: 'left',
-                        width: '100%',
-                      }}
-                    >
-                      {item.label}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : null}
-        </div>
+        {/* Menu dropdown: the shared ☰ menu, Options last (decisions.md §24.10). */}
+        <AppMenu items={menuItems} />
         <button
           type="button"
           onClick={props.onClose}

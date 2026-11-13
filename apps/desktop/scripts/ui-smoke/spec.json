@@ -26,7 +26,8 @@
       "id": "settings-tab-google-drive-disconnect",
       "screen": "settings",
       "steps": [
-        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "☰ Menu" },
+        { "op": "click", "target": "Options" },
         { "op": "click", "target": "Google Drive" },
         { "op": "click", "target": "Disconnect" },
         { "op": "key", "key": "Escape" }
@@ -42,17 +43,17 @@
       "setup": ["settings-tab-google-drive-disconnect"],
       "steps": [],
       "marker": "CAMPAIGN",
-      "expect": ["Choose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager."],
+      "expect": ["Choose a local Drive-synced folder under ☰ → Options → Google Drive to enable the Campaign Manager."],
       "notes": "computeCampaignManagerAccessGate(isGoogleDriveConfigured()): the Campaign Manager banner is disabled and shows this exact hint (campaignManagerAccessGate.ts) whenever Drive is unconfigured. This row is only meaningful on a profile where Drive is genuinely unconfigured, and settings-tab-google-drive-save (needed by every campaign-*/dm-toolkit-*/encounter-builder-* row) genuinely persists a Drive config in this profile's real localStorage across the whole run and across cycles on a shared, non-reset dev profile -- so this row no longer trusts fresh-profile ordering and instead resets the gate itself via its own setup, settings-tab-google-drive-disconnect, before asserting the disabled-state hint. Every downstream row that needs Campaign Manager access re-configures Drive itself via its own settings-tab-google-drive-save setup entry, so this reset has no effect on any row that runs after it in the same cycle."
     },
 
     {
       "id": "settings-open",
       "screen": "settings",
-      "steps": [{ "op": "click", "target": "⚙" }],
+      "steps": [{ "op": "click", "target": "☰ Menu" }, { "op": "click", "target": "Options" }],
       "marker": "OPTIONS",
       "expect": ["Appearance", "Google Drive", "Update", "Bug Report", "Enhancement Request", "Developer"],
-      "notes": "SettingsModal's options rail renders all six SETTINGS_TABS at once regardless of the active tab. The gear button's target name is '⚙' (its trimmed textContent, per uiProbe.ts's nameOf() priority), not its aria-label 'Open settings' (App.tsx) -- textContent wins over aria-label whenever both are non-empty. Marker is 'OPTIONS' (uppercase) -- same CSS-uppercase-transform-vs-innerText mismatch as landing-render: the rail's own section label renders as 'OPTIONS', the mixed-case 'Options' string never appears at all. Confirmed live 2026-09-17."
+      "notes": "SettingsModal's options rail renders all six SETTINGS_TABS at once regardless of the active tab. Opened the way a player does since E2.30 (decisions.md §24.10): the ☰ menu's button ('☰ Menu', its trimmed textContent per uiProbe.ts's nameOf()), then its 'Options' entry (layout/AppMenu.tsx); the old fixed ⚙ button is gone. Marker is 'OPTIONS' (uppercase) -- same CSS-uppercase-transform-vs-innerText mismatch as landing-render: the rail's own section label renders as 'OPTIONS', the mixed-case 'Options' string never appears at all. Confirmed live 2026-09-17."
     },
     {
       "id": "settings-tab-appearance",
@@ -135,7 +136,8 @@
       "id": "settings-tab-google-drive-save",
       "screen": "settings",
       "steps": [
-        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "☰ Menu" },
+        { "op": "click", "target": "Options" },
         { "op": "click", "target": "Google Drive" },
         { "op": "click", "target": "you@example.com" },
         { "op": "type", "text": "ui-smoke@example.com" },
@@ -147,7 +149,7 @@
       "marker": "Corpus Ingest Diagnostic",
       "expect": ["Corpus Ingest Diagnostic"],
       "forbid": ["Choose a local Drive-synced folder"],
-      "notes": "Real GoogleDrivePanel Save: fills the account-email and folder-path fields (matched by their own `placeholder`, per uiProbe.ts's nameOf() chain, since neither carries an aria-label) and clicks Save, which calls saveGoogleDriveConfig() and is confirmed live to render 'Connected as ui-smoke@example.com -- campaigns will be created under ...'. Escape closes the modal back to landing; CharacterHubPage only recomputes computeCampaignManagerAccessGate() on ITS OWN next render, which the modal's close (a state change in App.tsx, re-rendering the whole subtree) reliably triggers -- confirmed live: the Campaign Manager banner's disabledHint ('Choose a local Drive-synced folder...') is gone immediately after this row, which is exactly the forbid check here. Every downstream row that needs Campaign Manager access (campaign-*, dm-toolkit-*, encounter-builder-*) depends on this row first. Safe to compose from ANY screen, not just landing: the ⚙ gear is a global affordance (present on every screen this harness visits) and Escape returns to whichever screen was underneath, unchanged -- but this row itself is only ever invoked fresh from landing (resetToLanding() runs before any row's own setup/steps), so 'Corpus Ingest Diagnostic' is a safe marker either way."
+      "notes": "Real GoogleDrivePanel Save: fills the account-email and folder-path fields (matched by their own `placeholder`, per uiProbe.ts's nameOf() chain, since neither carries an aria-label) and clicks Save, which calls saveGoogleDriveConfig() and is confirmed live to render 'Connected as ui-smoke@example.com -- campaigns will be created under ...'. Escape closes the modal back to landing; CharacterHubPage only recomputes computeCampaignManagerAccessGate() on ITS OWN next render, which the modal's close (a state change in App.tsx, re-rendering the whole subtree) reliably triggers -- confirmed live: the Campaign Manager banner's disabledHint ('Choose a local Drive-synced folder...') is gone immediately after this row, which is exactly the forbid check here. Every downstream row that needs Campaign Manager access (campaign-*, dm-toolkit-*, encounter-builder-*) depends on this row first. Safe to compose from ANY screen, not just landing: the ☰ menu's Options entry is on every screen (App's own ☰ menu, or the screen's, decisions.md §24.10) and Escape returns to whichever screen was underneath, unchanged -- but this row itself is only ever invoked fresh from landing (resetToLanding() runs before any row's own setup/steps), so 'Corpus Ingest Diagnostic' is a safe marker either way."
     },
 
     {
@@ -1183,7 +1185,8 @@
         { "op": "click", "target": "Add level" },
         { "op": "click", "target": "Create character" },
         { "op": "click", "target": "Back" },
-        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "☰ Menu" },
+        { "op": "click", "target": "Options" },
         { "op": "click", "target": "Google Drive" },
         { "op": "click", "target": "you@example.com" },
         { "op": "type", "text": "ui-smoke@example.com" },
