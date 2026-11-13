@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 3 of 37 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 3; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 36: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8) |
+| Cards complete | 7 of 37 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 7; total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 37 (sd41-e1.4, 2026-11-13; the itemization that follows sums to 36 and was not re-derived): 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -104,6 +104,7 @@ override row's source kind is `operator-ruling`.
 | E1.2 | 2026-11-12 | `d3bdfe8ad6` + `fd85933387` + this commit | complete | `artifacts/epic_1/E1.2_cycle_receipt.md` (9 + 1 tests; 63 of 63 `.pcg` fixtures round-trip) |
 | E1.3 | 2026-11-13 | `9841098a84` + this commit | complete | `artifacts/epic_1/E1.3_cycle_receipt.md` (4 tests; root lib 3106 passed) |
 | E1.4 | 2026-11-13 | this commit (docs only) | declined (ownedBy E2.4) | `artifacts/epic_1/E1.4_cycle_receipt.md` (no code; the widening breaks a desktop test Phase 1 may not edit) |
+| E1.4 | 2026-11-13 | `0a725d14bf` + this commit | complete | `artifacts/epic_1/E1.4_cycle_receipt.md` (4 tests; root lib 3110 passed, 6 ignored; codex-ingest 1862 passed over 179 suites; PF seeds byte-identical) |
 
 ## Epic reports
 
