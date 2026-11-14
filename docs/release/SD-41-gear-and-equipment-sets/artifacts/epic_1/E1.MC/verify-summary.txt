@@ -1,0 +1,36 @@
+== root-lib.log: test result lines (suites / passed / failed / ignored summed)
+suites 1 passed 3133 failed 0 ignored 6
+== root-lib-after.log: test result lines (suites / passed / failed / ignored summed)
+suites 1 passed 3134 failed 0 ignored 6
+== sd24.log: test result lines (suites / passed / failed / ignored summed)
+suites 1 passed 5 failed 0 ignored 0
+== ingest.log: test result lines (suites / passed / failed / ignored summed)
+suites 180 passed 1877 failed 0 ignored 43
+== market.log: test result lines (suites / passed / failed / ignored summed)
+suites 1 passed 3 failed 0 ignored 0
+== verify.sh --only clippy
+
+RESULT: PASS
+logs in /tmp/codex-verify-M42qHl
+== verify.sh --only pcgen-residue-gate
+
+RESULT: PASS
+logs in /tmp/codex-verify-x0e9Wi
+== acceptance_filter_counts.py root-lib-after.log
+OK       --lib ammunition_tests::uses_ammunition: claimed 3, matched 3, ok 3
+OK       --lib base_quantity: claimed 2, matched 2, ok 2
+OK       --lib campaign_mirror: claimed 5, matched 5, ok 5
+OK       --lib carried_weapon: claimed 4, matched 4, ok 4
+OK       --lib climb_speed: claimed 3, matched 3, ok 3
+OK       --lib container_: claimed 9, matched 9, ok 9
+OK       --lib container_capacity_backpack: claimed 1, matched 1, ok 1
+OK       --lib containers_: claimed 5, matched 5, ok 5
+OK       --lib extra_weighed: claimed 2, matched 2, ok 2
+OK       --lib inherited_copy_bundles: claimed 1, matched 1, ok 1
+OK       --lib piece_quantity: claimed 2, matched 2, ok 2
+OK       --lib unarmed_row: claimed 4, matched 4, ok 4
+12 claims, 0 mismatches
+== epic_field_check.py c817ad502f
+{'new': 3, 'settled_equipment': 24, 'settled_race_trait': 11, 'equipment_records': 1478, 'tables': 24}
+{'record.cost_gp': 1474, 'record.raw_tokens': 4, 'settled_equipment.record.ammunition_family': 77, 'settled_equipment.record.ammunition_kinds': 228, 'settled_equipment.record.base_quantity': 34, 'settled_equipment.record.container': 130, 'settled_equipment.record.container_capacity': 49, 'settled_equipment.record.container_capacity.Pounds': 33, 'settled_equipment.record.cost_gp': 1462, 'settled_equipment.record.eqmod_references': 4, 'settled_equipment.record.uses_ammunition': 87, 'settled_race_trait.declared_move_modes.climb_ft': 4, 'table.cost_gp': 1428}
+FIELDS_OK

@@ -84,7 +84,7 @@ crates/codex-ingest/src/pcgen_import/ir_converter.rs   container_of(tokens) = TY
 src/rules_core/equipment_record.rs     CorpusEquipmentRecord { container: bool, container_capacity: ContainerCapacity { Pounds(f64) | Unlimited | Unstated } } (serde default; omitted on weapons → fixture bundle byte-identical)
                                        is_container() / capacity() read the settled fields; no live read of tags or raw_tokens
 src/rules_core/containers.rs (new)     pub struct ContainerLoad { copy: CopyKey, contents_lbs: f64, capacity: ContainerCapacity, over: bool }
-                                       pub fn container_loads(set, selections, corpus, custom_bases) -> Vec<ContainerLoad>   // recursive; SD-b for unweighed copies
+                                       pub fn container_loads(set, held, corpus, created, weighed, quantities) -> Vec<ContainerLoad>   // recursive; SD-b for unweighed copies; stacks and created items weigh as compute_encumbrance weighs them (decisions.md §20, E1.MC)
 ```
 
 Carried-ness of contents is the projection's job (`Inside(c)` follows `c`); `containers.rs` only sums

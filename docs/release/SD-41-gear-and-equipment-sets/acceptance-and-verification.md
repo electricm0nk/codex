@@ -84,11 +84,11 @@ cd apps/desktop/src-tauri && cargo test --locked -j 8 move_equipment -- --test-t
 ## G-5 Containers and created items (DoD 3, 8, 17) — E1.1, E1.3, E1.7, E2.3, E3.1
 
 ```bash
-cargo test --locked -j 8 --lib container_ -- --test-threads=8        # 4 passed; counts 232 files / 265 rows, 210 / 88 / 73 / 49 pinned (decisions.md §31 R3)
+cargo test --locked -j 8 --lib container_ -- --test-threads=8        # 9 passed (E1.1's 4 + 5 later, decisions.md §20); counts 232 files / 265 rows, 210 / 88 / 73 / 49 pinned (decisions.md §31 R3)
 cd crates/codex-ingest && cargo test --locked -j 8 container_of -- --test-threads=8   # 2 passed
 cargo test --locked -j 8 --lib container_capacity_backpack -- --test-threads=8   # 1 passed (60 lb, decisions.md §32)
 cd apps/desktop/src-tauri && cargo test --locked -j 8 custom_overrides_ignore_container_capacity -- --test-threads=8   # 1 passed
-cargo test --locked -j 8 --lib containers_ -- --test-threads=8       # 4 passed
+cargo test --locked -j 8 --lib containers_ -- --test-threads=8       # 5 passed (E1.MC added one, decisions.md §20)
 cargo test --locked -j 8 --lib extra_weighed -- --test-threads=8     # 2 passed
 cd apps/desktop/src-tauri && cargo test --locked -j 8 create_custom_item -- --test-threads=8   # 4 passed
 cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts   # the over-capacity and nesting cases among ≥ 8
