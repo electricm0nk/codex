@@ -54,8 +54,7 @@ fn page_sizes(bytes: &[u8]) -> Vec<(f32, f32)> {
 }
 
 fn render(root: &Path, paper: Paper) -> Vec<u8> {
-    // Bio ticked: the details (Race, Class and level) print on its page (E4.1: Bio is its own box).
-    let rendered = render_sheet_pdf_at_root(root, &PrintRequest { paper, bio: true, ..PrintRequest::default() }).expect("Aldric's sheet renders");
+    let rendered = render_sheet_pdf_at_root(root, &PrintRequest { paper, ..PrintRequest::default() }).expect("Aldric's sheet renders");
     assert!(
         rendered.warnings.is_empty(),
         "Typst reports no diagnostics for {paper:?}: {:?}",
@@ -116,7 +115,9 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
     };
     let scores = &loaded.ability_scores;
     let signed = |n: i64| if n >= 0 { format!("+{n}") } else { n.to_string() };
-    let text = pdf_text(&render(&root, Paper::A4));
+    // Bio ticked: the details (Race, Class and level) print on its page (E4.1: Bio is its own box).
+    let bio = PrintRequest { paper: Paper::A4, bio: true, ..PrintRequest::default() };
+    let text = pdf_text(&render_sheet_pdf_at_root(&root, &bio).expect("Aldric's sheet renders").pdf);
     let expected = [
         format!("Name {}", loaded.summary.display_label),
         "Race Human".to_owned(),
