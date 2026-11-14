@@ -62,11 +62,8 @@ fn print_proof() {
         save_character_bio_at_root(&root, &bio).expect("the proof's Notes text saves");
         for (paper, paper_name) in [(Paper::A4, "a4"), (Paper::Letter, "letter")] {
             for (options, sections) in SECTION_SETS {
-                let campaigns = if sections.bio {
-                    vec![CampaignNote { name: "The Golden Road".to_owned(), description: "Proof campaign note.".to_owned() }]
-                } else {
-                    Vec::new()
-                };
+                // As the dialog sends them: on every print (page 1's Campaign cell; the Bio section's notes).
+                let campaigns = vec![CampaignNote { name: "The Golden Road".to_owned(), description: "Proof campaign note.".to_owned() }];
                 let request = PrintRequest { paper, sections: Some(sections), campaigns };
                 let case = format!("{seed}-{paper_name}-{options}");
                 let rendered = render_sheet_pdf_at_root(&root, &request).unwrap_or_else(|err| panic!("{case}: renders: {err}"));

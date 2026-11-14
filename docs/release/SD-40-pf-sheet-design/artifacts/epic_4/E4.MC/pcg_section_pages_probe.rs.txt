@@ -1,0 +1,132 @@
+    // E4.MC page-count probe (SD-40). NOT shipped: pasted into a scratch tree's
+    // `apps/desktop/src-tauri/src/character_hub.rs` test module (before `fn tempdir`).
+    // Sharded: PCG_PROBE_SHARD=<k>/<n> keeps the files whose sorted index % n == k (the seeds go to shard 0); the
+    // shards' TSVs concatenate (SUMMARY lines add). Run: PCG_PROBE_OUT=<file> cargo test --locked -j 8 pcg_section_pages_probe -- --test-threads=8 --nocapture
+    // Population: E3.MC's (`scripts/oracle_harness/eqm-fixtures/*.pcg` + every `.pcg` under the pinned
+    // oracle checkout) plus the two PF seeds (Aldric, Elowen, each with the proof's Notes text stored).
+    // Each character x {A4, Letter} x 11 section sets: first-time (1+2+3), all seven (1-7), all eight,
+    // and each of the eight boxes alone. Per render: pages (`pdfinfo`), Typst warnings. Then the
+    // additivity claim E4.1's layout makes (every non-Primary section opens its own page, Primary
+    // prints no blank page when unticked): pages(set) == sum of pages(each box alone).
+    #[test]
+    fn pcg_section_pages_probe() {
+        use crate::print::{render_sheet_pdf_at_root, CampaignNote, Paper, PrintRequest, PrintSections};
+        fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(&path, out);
+                } else if path.extension().is_some_and(|ext| ext == "pcg") {
+                    out.push(path);
+                }
+            }
+        }
+        fn pages(pdf: &[u8], scratch: &Path) -> usize {
+            std::fs::write(scratch, pdf).unwrap();
+            let out = std::process::Command::new("pdfinfo").arg(scratch).output().expect("pdfinfo runs");
+            String::from_utf8_lossy(&out.stdout).lines().find_map(|l| l.strip_prefix("Pages:").map(|v| v.trim().parse().unwrap())).expect("pdfinfo prints Pages")
+        }
+        let off = PrintSections::default();
+        let singles: [(&str, PrintSections); 8] = [
+            ("1", PrintSections { main: true, ..off }),
+            ("2", PrintSections { feats: true, ..off }),
+            ("3", PrintSections { inventory: true, ..off }),
+            ("4", PrintSections { spellbook: true, ..off }),
+            ("5", PrintSections { bio: true, ..off }),
+            ("6", PrintSections { progression: true, ..off }),
+            ("7", PrintSections { math: true, ..off }),
+            ("8", PrintSections { notes: true, ..off }),
+        ];
+        let all7 = PrintSections { main: true, feats: true, inventory: true, spellbook: true, bio: true, progression: true, math: true, notes: false };
+        let sets: Vec<(&str, PrintSections, &[usize])> = vec![
+            ("1+2+3", PrintSections::FIRST_TIME, &[0, 1, 2]),
+            ("1-7", all7, &[0, 1, 2, 3, 4, 5, 6]),
+            ("1-8", PrintSections { notes: true, ..all7 }, &[0, 1, 2, 3, 4, 5, 6, 7]),
+        ];
+        let mut characters: Vec<(String, PathBuf)> = Vec::new();
+        let seeds_dir = tempdir("pages-probe-seeds");
+        crate::character_hub::seed_default_characters_at(&seeds_dir, "0.0.0-test").unwrap();
+        for (seed, id) in [("seed:aldric", "00000000-0000-0000-0000-000000000001"), ("seed:elowen", "00000000-0000-0000-0000-000000000002")] {
+            let root = seeds_dir.join("characters").join(id);
+            let bio = CharacterBioDto { notes: "Remember to take Whirlwind as the next feat.\nThe DM ruled a wand of cure light wounds recharges for 500 gp and half a day of crafting.".to_owned(), ..load_character_bio_at_root(&root).unwrap() };
+            save_character_bio_at_root(&root, &bio).unwrap();
+            characters.push((seed.to_owned(), root));
+        }
+        let mut files = Vec::new();
+        walk(&pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures"), &mut files);
+        let oracle = match std::env::var("PCGEN_REPO_DIR") {
+            Ok(dir) if !dir.is_empty() => PathBuf::from(dir),
+            _ => PathBuf::from(std::env::var("HOME").unwrap()).join("workspace/repos/pcgen"),
+        };
+        walk(&oracle, &mut files);
+        files.sort();
+        let (shard, shards) = std::env::var("PCG_PROBE_SHARD").ok().and_then(|v| v.split_once('/').map(|(k, n)| (k.parse::<usize>().unwrap(), n.parse::<usize>().unwrap()))).unwrap_or((0, 1));
+        files = files.into_iter().enumerate().filter(|(i, _)| i % shards == shard).map(|(_, f)| f).collect();
+        if shard != 0 {
+            characters.clear();
+        }
+        let lines = std::cell::RefCell::new(Vec::new());
+        let (mut saved, mut blocked, mut refused, mut renders, mut warned, mut errors, mut not_additive) = (0, 0, 0, 0, 0, 0, 0);
+        for (n, file) in files.iter().enumerate() {
+            let root = tempdir(&format!("pages-probe-{n}")).join("imported");
+            match pcg_import_via_sidecar(file, &root) {
+                Ok(ImportPcgResponse { outcome: CreateCharacterResponse::Saved { .. }, .. }) => {
+                    saved += 1;
+                    characters.push((file.strip_prefix(&oracle).or_else(|_| file.strip_prefix(pcg_repo_root())).unwrap_or(file).display().to_string(), root));
+                }
+                Ok(_) => {
+                    blocked += 1;
+                    lines.borrow_mut().push(format!("BLOCKED\t{}", file.display()));
+                }
+                Err(err) => {
+                    refused += 1;
+                    lines.borrow_mut().push(format!("REFUSED\t{}\t{}", file.display(), err.lines().next().unwrap_or("")));
+                }
+            }
+        }
+        let scratch = tempdir("pages-probe-pdf").join("p.pdf");
+        for (name, root) in &characters {
+            for (paper, paper_name) in [(Paper::A4, "a4"), (Paper::Letter, "letter")] {
+                let campaigns = vec![CampaignNote { name: "Probe Road".to_owned(), description: "Probe note one.".to_owned() }];
+                let mut render = |sections: PrintSections| -> Option<usize> {
+                    let request = PrintRequest { paper, sections: Some(sections), campaigns: if sections.bio { campaigns.clone() } else { Vec::new() } };
+                    match render_sheet_pdf_at_root(root, &request) {
+                        Ok(sheet) => {
+                            renders += 1;
+                            if !sheet.warnings.is_empty() {
+                                warned += 1;
+                                lines.borrow_mut().push(format!("WARN\t{name}\t{paper_name}\t{:?}", sheet.warnings));
+                            }
+                            Some(pages(&sheet.pdf, &scratch))
+                        }
+                        Err(err) => {
+                            errors += 1;
+                            lines.borrow_mut().push(format!("ERR\t{name}\t{paper_name}\t{err}"));
+                            None
+                        }
+                    }
+                };
+                let single: Vec<Option<usize>> = singles.iter().map(|(_, s)| render(*s)).collect();
+                let mut cells: Vec<String> = singles.iter().zip(&single).map(|((k, _), p)| format!("{k}={}", p.map_or("ERR".to_owned(), |p| p.to_string()))).collect();
+                for (set, sections, parts) in &sets {
+                    let got = render(*sections);
+                    let sum: Option<usize> = parts.iter().map(|i| single[*i]).sum();
+                    if got.is_none() || got != sum {
+                        not_additive += 1;
+                        lines.borrow_mut().push(format!("NOT_ADDITIVE\t{name}\t{paper_name}\t{set}\tgot={got:?}\tsum={sum:?}"));
+                    }
+                    cells.push(format!("{set}={}", got.map_or("ERR".to_owned(), |p| p.to_string())));
+                }
+                lines.borrow_mut().push(format!("PAGES\t{name}\t{paper_name}\t{}", cells.join("\t")));
+            }
+        }
+        lines.borrow_mut().push(format!("SUMMARY\tfiles={}\tsaved={saved}\tblocked={blocked}\trefused={refused}\tcharacters={}\trenders={renders}\twarned={warned}\terrors={errors}\tnot_additive={not_additive}", files.len(), characters.len()));
+        let text = lines.borrow().join("\n") + "\n";
+        if let Ok(out) = std::env::var("PCG_PROBE_OUT") {
+            std::fs::write(out, &text).unwrap();
+        }
+        println!("{text}");
+        assert_eq!((warned, errors), (0, 0), "every render has diagnostics 0");
+    }
+
