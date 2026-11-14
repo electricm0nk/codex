@@ -270,3 +270,5 @@ R21 RED output path, the R22 grep)
 ## Open blockers
 
 none. (E3.6, filed 2026-11-13, cleared the same day: the lead granted the bio lane `print/golden/block_vocabulary.json` for the two lines.)
+
+- **E5.2 (2026-11-14, sonnet, partial):** 10 gate PDFs and contact-sheet PNGs rendered via `print_proof` (253 s, 1 passed) under `artifacts/epic_5/E5.2/`; receipt has five blank `usable:` lines; waiting on the operator. Base `3887c64395`.
