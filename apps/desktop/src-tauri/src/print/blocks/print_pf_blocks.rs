@@ -111,8 +111,8 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         // Every option: the Spellbook section before Bio, the Bio notes inside its details (E3.4), the Math section last.
         let mut expected: Vec<&str> = BASE_HEADINGS[..BASE_HEADINGS.len() - 2].to_vec();
-        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Math", "Initiative Breakdown", "Saving Throw Breakdown", "Skill Breakdown", "Weapon Breakdown", MATH]);
-        assert_eq!(headings, expected, "{tag}: the 36 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns)");
+        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Progression", "", "Math", "Initiative Breakdown", "Saving Throw Breakdown", "Skill Breakdown", "Weapon Breakdown", MATH]);
+        assert_eq!(headings, expected, "{tag}: the 38 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns; E3.7: the Progression section, its block untitled under its title)");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -483,6 +483,7 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
             bio: crate::character_hub::load_character_bio_at_root(&root).expect("bio loads"),
             money: Some(crate::character_hub::load_character_money_at_root(&root).expect("money loads")),
             portrait: None,
+            progression: None,
             request: &basic,
         };
         let document = crate::print::layout::pf1e::layout(&sources);
@@ -1828,6 +1829,7 @@ fn print_pf_blocks_conditional_bonuses_box_lists_every_conditional() {
             bio: CharacterBioDto::default(),
             money: None,
             portrait: None,
+            progression: None,
             request: &request,
         };
         let document = crate::print::layout::pf1e::layout(&sources);
@@ -1963,8 +1965,8 @@ fn print_pf_blocks_resistances_print_boxes_and_values() {
 }
 
 /// The section titles after Primary, in the operator's order (E2.23, `decisions.md §24.3.7`;
-/// Progression's arrives with E3.7).
-const SECTION_TITLES: [&str; 5] = ["Abilities and Feats", "Inventory", "Spellbook", "Bio", "Math"];
+/// Progression's with E3.7, printed with every option until E4.1).
+const SECTION_TITLES: [&str; 6] = ["Abilities and Feats", "Inventory", "Spellbook", "Bio", "Progression", "Math"];
 
 /// The PDF's text page by page: each page's words before its footer (`<title> · page <n> of <pages>`).
 fn pages_text(text: &str, title: &str, pages: usize) -> Vec<String> {
@@ -2007,6 +2009,7 @@ fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
             ("Inventory", vec!["defense", "gear", "money"]),
             ("Spellbook", vec!["spellbook"]),
             ("Bio", vec!["characterDetails"]),
+            ("Progression", vec!["showProgression"]),
             ("Math", vec!["initiativeMath", "savesMath", "skillsMath", "weaponsMath", "math"]),
         ];
         assert_eq!(sections, expected, "{tag}: the sections, their titles and their blocks, in the operator's order");
@@ -2742,5 +2745,59 @@ fn print_pf_blocks_math_pages_print_without_the_main_sheet() {
             assert!(text.contains(line.as_str()), "{tag}: the Math section alone prints `{line}`: {text}");
         }
         assert!(text.contains(MATH) && text.contains("initiative.total"), "{tag}: then the derivation lines: {text}");
+    }
+}
+
+/// E3.7 (`decisions.md §24.3.7`): the Progression section prints the Show Progression drawer's
+/// content (`list_progression_ledger_at_root`, read as the drawer reads it) level by level, on pages
+/// of its own under the title `Progression`, between Bio and Math: one entry per character level,
+/// `Level <n> · <class> <class level>` (the drawer's heading), then the feats and spells the ledger holds at that
+/// level, by the ledger's names. Elowen (Wizard 5) prints five entries, Aldric (Fighter 3) three.
+/// Every option (until E4.1 the section prints with the `all` set only), Letter and A4.
+#[test]
+fn print_pf_blocks_progression_prints_each_level() {
+    for (tag, id, levels) in [("progression-elowen", ELOWEN_ID, 5), ("progression-aldric", ALDRIC_ID, 3)] {
+        let root = seeded(tag, id);
+        let ledger = crate::character_ledger::list_progression_ledger_at_root(&root).expect("the seed's ledger lists");
+        assert_eq!(ledger.levels.len(), levels, "{tag}: the ledger holds {levels} levels");
+        let feats: usize = ledger.levels.iter().map(|level| level.taken.feats.len()).sum();
+        assert!(feats > 0, "{tag}: the ledger places a feat at some level, so the check below checks something: {ledger:?}");
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(true, true, true) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let titles: Vec<&str> = document.blocks.iter().filter(|block| block.look.name() == "section-title").map(|block| block.heading.as_str()).collect();
+            assert_eq!(titles, ["Abilities and Feats", "Inventory", "Spellbook", "Bio", "Progression", "Math"], "{tag} {paper:?}: Progression sits between Bio and Math");
+
+            let pdf = render(&root, &printed);
+            let on_pages = pages_text(&pdf_text(&pdf), &document.title, page_count(&pdf));
+            let opens = |title: &str| on_pages.iter().position(|page| page.starts_with(title)).unwrap_or_else(|| panic!("{tag} {paper:?}: `{title}` opens a page"));
+            let (bio, progression, math) = (opens("Bio"), opens("Progression"), opens("Math"));
+            assert!(bio < progression && progression < math, "{tag} {paper:?}: Bio (page {}), Progression (page {}), Math (page {})", bio + 1, progression + 1, math + 1);
+            let text = on_pages[progression..math].join(" ");
+
+            let entries: Vec<String> =
+                ledger.levels.iter().map(|level| format!("Level {} · {} {}", level.character_level, super::core::class_name(&level.class_id), level.class_level)).collect();
+            let mut starts = Vec::new();
+            let mut from = 0;
+            for entry in &entries {
+                let at = text[from..].find(entry.as_str()).unwrap_or_else(|| panic!("{tag} {paper:?}: `{entry}` prints, after the level before it: {text}"));
+                from += at + entry.len();
+                starts.push(from);
+            }
+            for (at, level) in ledger.levels.iter().enumerate() {
+                let end = starts.get(at + 1).map_or(text.len(), |next| next - entries[at + 1].len());
+                let held = &text[starts[at]..end];
+                for feat in &level.taken.feats {
+                    assert!(held.contains(feat.name.as_str()), "{tag} {paper:?}: level {} prints its feat `{}`: {held}", level.character_level, feat.name);
+                }
+                for spell in &level.taken.spells {
+                    assert!(held.contains(spell.id.as_str()), "{tag} {paper:?}: level {} prints its spell `{}`: {held}", level.character_level, spell.id);
+                }
+            }
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("progression-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            }
+        }
     }
 }

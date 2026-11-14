@@ -9,7 +9,7 @@
 //! holding the Abilities over the Skills (one column, name + total, E2.11). Then the sections
 //! (`decisions.md §24.3.7`, E2.23), each from a new page under its title: Abilities and Feats,
 //! Inventory (Defense, Gear, Money, E3.2), Spellbook (when asked), Bio (the details, then the Biography and campaign notes when asked, then
-//! ruled lines, E3.4), Math (when asked: the breakdowns page 1 leaves out, then the derivation lines, E3.5). The blocks
+//! ruled lines, E3.4), Progression (the Show Progression drawer level by level, E3.7; with every option until E4.1), Math (when asked: the breakdowns page 1 leaves out, then the derivation lines, E3.5). The blocks
 //! themselves (`print/blocks/`) read what the Character Sheet reads; nothing here computes a
 //! number (NR-2).
 
@@ -75,6 +75,9 @@ pub fn layout(sources: &SheetSources) -> SheetDocument {
         section(&mut sheet, "spellbookTitle", "Spellbook", vec![blocks::spellbook(sources).with_id("spellbook")]);
     }
     section(&mut sheet, "bioTitle", "Bio", placed(BIO));
+    if let Some(ledger) = &sources.progression {
+        section(&mut sheet, "progressionTitle", "Progression", vec![blocks::progression(ledger).in_look(Look::Progression).with_id("showProgression")]);
+    }
     if request.math {
         // The breakdowns (E3.5) are built from the sources, not from page 1's printed blocks; the
         // derivation lines then follow, in two columns (the `math` look).

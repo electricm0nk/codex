@@ -201,12 +201,16 @@ pub enum Look {
     /// The derivation lines on the Math pages (SD-40 E3.5): each printed number's label and value,
     /// then the engine's rows behind it, in two columns at 8 pt.
     Math,
+    /// The Progression pages (SD-40 E3.7): one entry per character level, `Level <n>` and the class
+    /// and class level in bold over the drawer's lines (feats, spells, ranks, ability increase ...),
+    /// then the rows placed at no level.
+    Progression,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 28] = [
+    pub const ALL: [Look; 29] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -235,6 +239,7 @@ impl Look {
         Look::Bio,
         Look::Breakdown,
         Look::Math,
+        Look::Progression,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -268,6 +273,7 @@ impl Look {
             Look::Bio => "bio",
             Look::Breakdown => "breakdown",
             Look::Math => "math",
+            Look::Progression => "progression",
         }
     }
 }

@@ -23,6 +23,7 @@ use crate::character_hub::{
     character_portrait_path_at_root, list_held_equipment_at_root, load_character_bio_at_root, load_character_portrait_bytes_at_root,
     resolve_character_root,
 };
+use crate::character_ledger::list_progression_ledger_at_root;
 use crate::rule_system_adapter::load_saved_character_via_envelope;
 use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
 pub use model::Paper;
@@ -43,6 +44,14 @@ pub struct PrintRequest {
     /// The campaigns whose party lists this character. They live in the frontend's store
     /// (`campaignModel.ts`), which the backend cannot read, so the caller sends them.
     pub campaigns: Vec<CampaignNote>,
+}
+
+impl PrintRequest {
+    /// The Progression section prints (Pathfinder only): until the dialog's sections arrive (E4.1),
+    /// with every option box ticked, the `all` set (`decisions.md §24.3.7`).
+    pub fn prints_progression(&self) -> bool {
+        self.spellbook && self.math && self.bio
+    }
 }
 
 /// One campaign the character is in: its name and its description, as the Campaign screen saved them.
@@ -95,7 +104,9 @@ pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<mod
         if system == "pf1" { (list_held_equipment_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
     let money = if system == "pf1" { Some(crate::character_hub::load_character_money_at_root(root)?) } else { None };
     let portrait = if system == "pf1" { saved_portrait(root) } else { None };
-    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, request };
+    // Read as the Show Progression drawer reads it, and only when the section prints: it runs the engine once per level.
+    let progression = if system == "pf1" && request.prints_progression() { Some(list_progression_ledger_at_root(root)?) } else { None };
+    let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, progression, request };
     Ok(layout(&sources))
 }
 

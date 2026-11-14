@@ -31,6 +31,7 @@
 #import "/looks/bio.typ": look as bio-look
 #import "/looks/breakdown.typ": look as breakdown-look
 #import "/looks/math.typ": look as math-look
+#import "/looks/progression.typ": look as progression-look
 
 #let looks = (
   table: table-look,
@@ -61,6 +62,7 @@
   bio: bio-look,
   breakdown: breakdown-look,
   math: math-look,
+  progression: progression-look,
 )
 
 // The looks whose list page 1's overflow rule may shrink and split (E2.4, decisions.md §23.2
