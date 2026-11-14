@@ -2801,3 +2801,29 @@ fn print_pf_blocks_progression_prints_each_level() {
         }
     }
 }
+
+/// A table line prints whole (E3.MC): the Actions table's line with words under it (a racial trait's
+/// text) keeps its name, kind, value and first words as one run on one page, so a page break never
+/// parts a line from its words and no words print against the captions repeated on the next page.
+/// Elowen's A4 Actions table crosses page 3 to 4 at the Languages trait.
+#[test]
+fn print_pf_blocks_a_table_line_keeps_its_words_on_its_page() {
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    for (tag, id) in [("aldric", ALDRIC_ID), ("elowen", ELOWEN_ID)] {
+        let root = seeded(&format!("line-whole-{tag}"), id);
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let text = unspaced(&pdf_text(&render(&root, &printed)));
+            let block = document.blocks.iter().find(|block| block.id == "actions").expect("the Actions block");
+            let mut lines = 0;
+            for row in block.rows.iter().filter(|row| row.kind != "captions" && !row.notes.is_empty()) {
+                let value = row.values.iter().filter(|value| !value.is_empty()).cloned().collect::<Vec<_>>().join(", ");
+                let line = unspaced(&format!("{}{}{}{}", row.label, row.kind, value, row.notes[0]));
+                assert!(text.contains(&line), "{tag} {paper:?}: `{}` prints with its words on one page: {line}", row.label);
+                lines += 1;
+            }
+            assert!(lines > 0, "{tag} {paper:?}: the Actions table holds a line with words");
+        }
+    }
+}

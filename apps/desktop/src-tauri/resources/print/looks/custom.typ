@@ -10,16 +10,20 @@
   line(length: 100%, stroke: 0.6pt + luma(60))
 })
 
+// A line with words under it keeps both on one page (E3.MC): the table's zero-width first column
+// holds, beside such a line, one cell spanning its two rows that may not break across pages.
+#let keep(r) = if r.notes.len() == 0 { table.cell(inset: 0pt, []) } else { table.cell(rowspan: 2, breakable: false, inset: 0pt, []) }
+
 #let look(b) = {
   let width = b.value_columns + 1
   block(breakable: true, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
     #table(
-      columns: (1fr,) + (auto,) * b.value_columns,
+      columns: (0pt, 1fr) + (auto,) * b.value_columns,
       stroke: (x, y) => (bottom: 0.4pt + luma(190)),
       inset: (x: 4pt, y: 2.5pt),
       ..b.rows.map(r => {
-        let line = (text(size: 8.5pt, weight: "bold", r.label), ..r.values.map(v => text(size: 8.5pt, v)))
+        let line = (keep(r), text(size: 8.5pt, weight: "bold", r.label), ..r.values.map(v => text(size: 8.5pt, v)))
         if r.notes.len() == 0 { line } else {
           line + (table.cell(colspan: width, inset: (left: 10pt, right: 4pt, top: 0pt, bottom: 2.5pt), stack(spacing: 0.35em, ..r.notes.map(n => text(size: 8pt, fill: luma(40), n)))),)
         }

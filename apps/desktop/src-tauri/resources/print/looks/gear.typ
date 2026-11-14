@@ -17,14 +17,18 @@
 
 #let kind(r) = r.at("kind", default: "")
 
+// A line with words under it keeps both on one page (E3.MC): the table's zero-width first column
+// holds, beside such a line, one cell spanning its two rows that may not break across pages.
+#let keep(r) = if r.notes.len() == 0 { table.cell(inset: 0pt, []) } else { table.cell(rowspan: 2, breakable: false, inset: 0pt, []) }
+
 // The table cells of one row: a section's title across the table, closing the section before it
 // with its blank rows; an item's name, slot and weight, then its notes the width of the table.
 #let cells(r, first) = {
-  let blanks = range(blank).map(_ => table.cell(colspan: 3, box(height: 0.5cm)))
+  let blanks = range(blank).map(_ => table.cell(colspan: 4, box(height: 0.5cm)))
   if kind(r) == "section" {
-    (if first { () } else { blanks }) + (table.cell(colspan: 3, inset: (x: 4pt, top: 7pt, bottom: 3pt), text(size: 9.5pt, weight: "bold", r.label)),)
+    (if first { () } else { blanks }) + (table.cell(colspan: 4, inset: (x: 4pt, top: 7pt, bottom: 3pt), text(size: 9.5pt, weight: "bold", r.label)),)
   } else {
-    let line = (text(size: 9pt, r.label), text(size: 8.5pt, r.values.at(0, default: "")), text(size: 9pt, weight: "bold", r.values.at(1, default: "")))
+    let line = (keep(r), text(size: 9pt, r.label), text(size: 8.5pt, r.values.at(0, default: "")), text(size: 9pt, weight: "bold", r.values.at(1, default: "")))
     if r.notes.len() == 0 { line } else {
       line + (table.cell(colspan: 3, inset: (left: 10pt, right: 4pt, top: 0pt, bottom: 3pt), stack(spacing: 0.4em, ..r.notes.map(n => text(size: 8.5pt, fill: luma(40), n)))),)
     }
@@ -37,16 +41,17 @@
   let lines = b.rows.filter(r => kind(r) != "captions" and kind(r) != "total")
   let sections = lines.filter(r => kind(r) == "section").len()
   let head = if captions.len() > 0 { (captions.first().label, ..captions.first().values).map(caption) } else { ([], [], []) }
+  let head = ([],) + head
   block(breakable: true, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
     #table(
-      columns: (1fr, 3.2cm, 2.2cm),
+      columns: (0pt, 1fr, 3.2cm, 2.2cm),
       stroke: (x, y) => if y == 0 { (bottom: 0.6pt + luma(60)) } else { (bottom: 0.4pt + luma(190)) },
       inset: (x: 4pt, y: 3pt),
-      align: (x, y) => if x == 2 { right } else { left },
+      align: (x, y) => if x == 3 { right } else { left },
       table.header(..head),
       ..lines.enumerate().map(((i, r)) => cells(r, i == 0)).flatten(),
-      ..if sections > 0 { range(blank).map(_ => table.cell(colspan: 3, box(height: 0.5cm))) } else { () },
+      ..if sections > 0 { range(blank).map(_ => table.cell(colspan: 4, box(height: 0.5cm))) } else { () },
     )
     #v(0.4em)
     #grid(

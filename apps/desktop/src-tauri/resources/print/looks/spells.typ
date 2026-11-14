@@ -31,6 +31,10 @@
   if n == 0 { box(width: 100%, height: 0.34cm, stroke: (bottom: 0.5pt + luma(60))) } else { range(n).map(_ => used-box).join(h(2pt)) }
 }
 
+// A line with words under it keeps both on one page (E3.MC): the table's zero-width first column
+// holds, beside such a line, one cell spanning its two rows that may not break across pages.
+#let keep(r) = if r.notes.len() == 0 { table.cell(inset: 0pt, []) } else { table.cell(rowspan: 2, breakable: false, inset: 0pt, []) }
+
 // One class: its line, its level table, its names by level.
 #let class-look(rows) = {
   let class = rows.first()
@@ -44,13 +48,13 @@
   for n in class.notes { block(above: 0.2em, below: 0.3em, text(size: 8pt, fill: luma(40), n)) }
   if levels.len() > 0 {
     table(
-      columns: (1.6cm, 1.3cm, 1.5cm, 2.6cm, 1fr),
+      columns: (0pt, 1.6cm, 1.3cm, 1.5cm, 2.6cm, 1fr),
       stroke: (x, y) => if y == 0 { (bottom: 0.6pt + luma(60)) } else { (bottom: 0.4pt + luma(190)) },
       inset: (x: 4pt, y: 3pt),
-      align: (x, y) => if x in (1, 2, 3) { center + horizon } else { left + horizon },
-      table.header(..("Level", "DC", "Per day", "Known / Prepared", "Used").map(caption)),
+      align: (x, y) => if x in (2, 3, 4) { center + horizon } else { left + horizon },
+      table.header([], ..("Level", "DC", "Per day", "Known / Prepared", "Used").map(caption)),
       ..levels.map(r => {
-        let line = (text(size: 9pt, weight: "bold", r.label), text(size: 9pt, r.values.at(0)), text(size: 9pt, weight: "bold", r.values.at(1)), text(size: 9pt, r.values.at(2)), used(r))
+        let line = (keep(r), text(size: 9pt, weight: "bold", r.label), text(size: 9pt, r.values.at(0)), text(size: 9pt, weight: "bold", r.values.at(1)), text(size: 9pt, r.values.at(2)), used(r))
         if r.notes.len() == 0 { line } else {
           line + (table.cell(colspan: 5, inset: (left: 10pt, right: 4pt, top: 0pt, bottom: 3pt), stack(spacing: 0.4em, ..r.notes.map(n => text(size: 8pt, fill: luma(40), n)))),)
         }
