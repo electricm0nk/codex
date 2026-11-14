@@ -436,9 +436,7 @@ pub fn compute_encumbrance(
         let stand_in = stand_in_record(record, corpus);
         let weight = weight.or_else(|| stand_in.and_then(|base| base.weight_lbs));
         let cost = cost.or_else(|| stand_in.and_then(|base| base.cost_gp));
-        let bundles = quantities.iter().find(|(copy, _)| copy == key).map_or(1.0, |(_, pieces)| {
-            f64::from(*pieces) / f64::from(record.base_quantity.or(stand_in.and_then(|base| base.base_quantity)).unwrap_or(1).max(1))
-        });
+        let bundles = copy_bundles(record, stand_in, key, quantities);
 
         // Weight is what makes an item *carried* for encumbrance purposes,
         // so a record with no `WT:` token is unresolved. Cost is
@@ -476,6 +474,20 @@ pub fn compute_encumbrance(
         load_max_dex_cap: level.max_dex_cap(),
         load_armor_check_penalty: level.armor_check_penalty(),
     }
+}
+
+/// The bundles one copy weighs (`decisions.md §30`): its stated pieces over the record's (or its
+/// stand-in's) `base_quantity`; a copy with no `quantities` entry is one bundle. Shared with
+/// `containers::container_loads`, so a stack weighs the same in a container as on the character.
+pub(crate) fn copy_bundles(
+    record: &crate::rules_core::equipment_record::CorpusEquipmentRecord,
+    stand_in: Option<&crate::rules_core::equipment_record::CorpusEquipmentRecord>,
+    key: &CopyKey,
+    quantities: &[(CopyKey, u32)],
+) -> f64 {
+    quantities.iter().find(|(copy, _)| copy == key).map_or(1.0, |(_, pieces)| {
+        f64::from(*pieces) / f64::from(record.base_quantity.or(stand_in.and_then(|base| base.base_quantity)).unwrap_or(1).max(1))
+    })
 }
 
 /// A copy's `+N`, as the equipment-sets file keys it: the highest `Special Ability ~ +N ~ …` it holds.
