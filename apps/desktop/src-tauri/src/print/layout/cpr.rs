@@ -434,7 +434,7 @@ mod print_cpr {
 
     use crate::character_hub::LoadSavedCharacterResponse;
     use crate::print::model::SheetDocument;
-    use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, Paper, PrintRequest};
+    use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, Paper, PrintRequest, PrintSections};
     use crate::rule_system_adapter::load_saved_character_via_envelope;
 
     const OPTION_HEADINGS: [&str; 3] = ["Spellbook", "Show the Math", "Bio and Campaign Notes"];
@@ -460,7 +460,7 @@ mod print_cpr {
     }
 
     fn request(paper: Paper, spellbook: bool, math: bool, bio: bool) -> PrintRequest {
-        PrintRequest { paper, sections: None, spellbook, math, bio, campaigns: Vec::new() }
+        PrintRequest { paper, sections: Some(PrintSections { spellbook, math, bio, ..PrintSections::FIRST_TIME }), campaigns: Vec::new() }
     }
 
     fn pdf_text(bytes: &[u8]) -> String {

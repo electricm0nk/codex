@@ -29,40 +29,23 @@ use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
 pub use model::Paper;
 
 /// What to print: the paper and the sections ticked (SD-40 `decisions.md §23.4`, §24.3.7, §24.9).
-/// Every field defaults: a request naming only the paper prints Primary, Abilities and Feats and
-/// Inventory. While `sections` is absent, the three option boxes the dialog sent before the
-/// sections (operator ruling R4) are read through `sections()`.
+/// Every field defaults: a request naming only the paper prints the first-time ticks, Primary,
+/// Abilities and Feats and Inventory.
 #[derive(Debug, Clone, PartialEq, Eq, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct PrintRequest {
     pub paper: Paper,
-    /// The dialog's section boxes; `None` reads the three option boxes below.
+    /// The dialog's section boxes; `None` prints `PrintSections::FIRST_TIME`.
     pub sections: Option<PrintSections>,
-    /// Spellbook: the full text of every spell the character holds.
-    pub spellbook: bool,
-    /// Show the math: every engine row behind a printed number.
-    pub math: bool,
-    /// Bio and campaign notes: the character's bio and its campaigns' descriptions (R17).
-    pub bio: bool,
     /// The campaigns whose party lists this character. They live in the frontend's store
     /// (`campaignModel.ts`), which the backend cannot read, so the caller sends them.
     pub campaigns: Vec<CampaignNote>,
 }
 
 impl PrintRequest {
-    /// The sections to print: the request's, or, while it sends none, its three option boxes
-    /// mapped (`decisions.md §23.4`): Primary, Abilities and Feats and Inventory, plus the Spellbook,
-    /// Bio and Math each box names. No box maps to Progression or Notes.
+    /// The sections to print: the request's, or, while it sends none, the first-time ticks.
     pub fn sections(&self) -> PrintSections {
-        self.sections.unwrap_or(PrintSections {
-            main: true,
-            feats: true,
-            inventory: true,
-            spellbook: self.spellbook,
-            bio: self.bio,
-            math: self.math,
-            ..PrintSections::default()
-        })
+        self.sections.unwrap_or(PrintSections::FIRST_TIME)
     }
 }
 
@@ -83,6 +66,10 @@ pub struct PrintSections {
 }
 
 impl PrintSections {
+    /// The dialog's first-time ticks (`decisions.md §23.4`): Primary, Abilities and Feats, Inventory.
+    pub const FIRST_TIME: PrintSections =
+        PrintSections { main: true, feats: true, inventory: true, spellbook: false, bio: false, progression: false, math: false, notes: false };
+
     /// Whether the box `section` is ticked.
     pub fn has(&self, section: Section) -> bool {
         match section {

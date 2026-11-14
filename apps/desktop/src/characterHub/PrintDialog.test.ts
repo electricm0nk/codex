@@ -3,18 +3,23 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { PrintSheetPdfRequest, SaveSheetPdfRequest, SavedSheetPdf } from '../boundary/saveSheetPdf';
+import { FIRST_TIME_SECTIONS } from '../settings/printSections';
 import {
-  PRINT_OPTION_BOXES,
+  PRINT_SECTION_BOXES,
+  boxesFor,
   campaignNotesFor,
   printFileName,
+  printSummary,
   runPrintAction,
+  sectionsToSend,
   type PrintDialogDeps,
   type PrintOptions,
 } from './PrintDialog';
 
 /**
- * The Print dialog (operator rulings R3, R4, R5, R19): the paper (the setting, overridable once),
- * the three stacking option boxes, Save PDF (save-as, then the backend opens the file) and Print
+ * The Print dialog (operator rulings R3, R5, R19; SD-40 `decisions.md §23.4`, §24.3.7, §24.9): the
+ * paper (the setting, overridable once), the eight section boxes in box order (four on a Starfinder
+ * or Cyberpunk RED sheet), remembered per character (`printSections.test.ts`), Save PDF (save-as, then the backend opens the file) and Print
  * (the backend writes a temp PDF and opens it in the system viewer). The flow is tested with its
  * native dialog and both commands injected; the sources are read to prove the three sheets host
  * the dialog and the browser print path is gone.
@@ -56,7 +61,8 @@ function fakeDeps(overrides: Partial<PrintDialogDeps> = {}): { deps: PrintDialog
 }
 
 const target = { characterId: 'char-aldric', displayLabel: 'Aldric Ironhand' };
-const letterAll: PrintOptions = { paper: 'letter', spellbook: true, math: true, bio: true };
+const every = { main: true, feats: true, inventory: true, spellbook: true, bio: true, progression: true, math: true, notes: true };
+const letterAll: PrintOptions = { paper: 'letter', sections: every };
 
 async function verifiesSavePdfAsksWhereThenSendsEveryOption() {
   const { deps, calls } = fakeDeps();
@@ -68,13 +74,11 @@ async function verifiesSavePdfAsksWhereThenSendsEveryOption() {
     JSON.stringify({
       characterId: 'char-aldric',
       paper: 'letter',
-      spellbook: true,
-      math: true,
-      bio: true,
+      sections: every,
       campaigns: [{ name: 'Rise of the Runelords', description: 'Sandpoint, autumn.' }],
       filePath: '/home/player/Aldric.pdf',
     }),
-    'the request carries the paper, the three boxes, the campaigns that list the character and the chosen path',
+    'the request carries the paper, the eight sections, the campaigns that list the character and the chosen path',
   );
   assertEqual(calls.printed.length, 0, 'Save PDF does not print');
   assertEqual(outcome.kind, 'Saved', 'saved');
@@ -90,13 +94,13 @@ async function verifiesADismissedSaveDialogWritesNothing() {
 
 async function verifiesPrintWritesTheTempCopyWithNoDialog() {
   const { deps, calls } = fakeDeps();
-  const basic: PrintOptions = { paper: 'a4', spellbook: false, math: false, bio: false };
+  const basic: PrintOptions = { paper: 'a4', sections: FIRST_TIME_SECTIONS };
   const outcome = await runPrintAction('print', target, basic, deps);
   assertEqual(calls.saveDefault.length, 0, 'Print asks for no path');
   assertEqual(
     JSON.stringify(calls.printed[0]),
-    JSON.stringify({ characterId: 'char-aldric', paper: 'a4', spellbook: false, math: false, bio: false, campaigns: [] }),
-    'a basic print sends no boxes and no campaigns',
+    JSON.stringify({ characterId: 'char-aldric', paper: 'a4', sections: FIRST_TIME_SECTIONS, campaigns: [] }),
+    'a first-time print sends sections 1+2+3 and, without Bio, no campaigns',
   );
   assertEqual(outcome.kind, 'Printed', 'printed');
   assertEqual(
@@ -139,7 +143,52 @@ function verifiesCampaignNotesAndFileNames() {
   assertEqual(printFileName('Aldric Ironhand'), 'Aldric Ironhand.pdf', 'name kept');
   assertEqual(printFileName('V/../'), 'V.pdf', 'path characters dropped');
   assertEqual(printFileName('...'), 'character.pdf', 'an empty name falls back');
-  assertEqual(PRINT_OPTION_BOXES.map((box) => box.label).join('|'), 'Spellbook|Show the math|Bio and campaign notes', 'the three boxes of R4, in order');
+}
+
+function verifiesTheEightBoxesInBoxOrder() {
+  assertEqual(
+    PRINT_SECTION_BOXES.map((box) => box.label).join('|'),
+    'Primary (page 1)|Abilities and Feats|Inventory|Spellbook|Bio|Progression|Math|Notes',
+    'eight boxes labelled with the section titles, in box order',
+  );
+  assertEqual(
+    PRINT_SECTION_BOXES.map((box) => box.testId).join('|'),
+    [
+      'print-section-main',
+      'print-section-feats',
+      'print-section-inventory',
+      'print-section-spellbook',
+      'print-section-bio',
+      'print-section-progression',
+      'print-section-math',
+      'print-section-notes',
+    ].join('|'),
+    'each box addressable by data-testid print-section-<key>',
+  );
+  assertEqual(boxesFor(true).length, 8, 'a Pathfinder sheet shows all eight');
+  assertEqual(boxesFor(false).map((box) => box.label).join('|'), 'Primary (page 1)|Spellbook|Bio|Math', 'Starfinder and Cyberpunk RED show 1, 4, 5, 7');
+  const source = readFileSync(join(here, 'PrintDialog.tsx'), 'utf8');
+  assert(source.includes('data-testid={section.testId}'), 'the dialog renders each box with its data-testid');
+  assert(!source.includes('<legend'), 'the old Include fieldset is gone');
+}
+
+function verifiesWhatIsSentAndTheSummary() {
+  assertEqual(JSON.stringify(sectionsToSend(every, true)), JSON.stringify(every), 'Pathfinder sends every tick');
+  assertEqual(
+    JSON.stringify(sectionsToSend(every, false)),
+    JSON.stringify({ ...every, feats: false, inventory: false, progression: false, notes: false }),
+    'a Starfinder or Cyberpunk RED print sends only its four boxes',
+  );
+  assertEqual(printSummary(FIRST_TIME_SECTIONS), 'Prints: Primary (page 1), Abilities and Feats, Inventory.', 'the first-time ticks, named');
+  assertEqual(printSummary({ ...FIRST_TIME_SECTIONS, bio: true }), 'Prints: Primary (page 1), Abilities and Feats, Inventory, Bio.', 'in box order');
+  const nothing = { ...FIRST_TIME_SECTIONS, main: false, feats: false, inventory: false };
+  assertEqual(printSummary(nothing), 'Tick at least one section to print.', 'nothing ticked says why the buttons are off');
+  assertEqual(printSummary(sectionsToSend({ ...nothing, feats: true }, false)), 'Tick at least one section to print.', 'a hidden box ticked is not a print');
+  const source = readFileSync(join(here, 'PrintDialog.tsx'), 'utf8');
+  assert(/disabled=\{busy !== null \|\| nothingTicked\}/.test(source), 'nothing ticked disables Save PDF and Print');
+  for (const sheet of ['StarfinderCharacterSheet.tsx', 'CyberpunkCharacterSheet.tsx']) {
+    assert(readFileSync(join(here, sheet), 'utf8').includes('pathfinder={false}'), `${sheet} shows the four boxes`);
+  }
 }
 
 function collectSources(dir: string): string[] {
@@ -177,6 +226,8 @@ async function main() {
   await verifiesPrintWritesTheTempCopyWithNoDialog();
   await verifiesWarningsAndFailuresAreShown();
   verifiesCampaignNotesAndFileNames();
+  verifiesTheEightBoxesInBoxOrder();
+  verifiesWhatIsSentAndTheSummary();
   verifiesTheThreeSheetsHostTheDialogAndTheBrowserPrintPathIsGone();
   console.log('PrintDialog.test.ts: all assertions passed');
 }

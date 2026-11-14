@@ -67,7 +67,7 @@ fn print_proof() {
                 } else {
                     Vec::new()
                 };
-                let request = PrintRequest { paper, sections: Some(sections), campaigns, ..PrintRequest::default() };
+                let request = PrintRequest { paper, sections: Some(sections), campaigns };
                 let case = format!("{seed}-{paper_name}-{options}");
                 let rendered = render_sheet_pdf_at_root(&root, &request).unwrap_or_else(|err| panic!("{case}: renders: {err}"));
                 let path = out.join(format!("{case}.pdf"));

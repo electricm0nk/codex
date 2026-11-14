@@ -200,7 +200,7 @@ mod print_sf {
 
     use crate::character_hub::LoadSavedCharacterResponse;
     use crate::print::model::SheetDocument;
-    use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, CampaignNote, Paper, PrintRequest};
+    use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, CampaignNote, Paper, PrintRequest, PrintSections};
     use crate::rule_system_adapter::load_saved_character_via_envelope;
     use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
 
@@ -235,7 +235,7 @@ mod print_sf {
     }
 
     fn request(paper: Paper, spellbook: bool, math: bool, bio: bool) -> PrintRequest {
-        PrintRequest { paper, sections: None, spellbook, math, bio, campaigns: Vec::new() }
+        PrintRequest { paper, sections: Some(PrintSections { spellbook, math, bio, ..PrintSections::FIRST_TIME }), campaigns: Vec::new() }
     }
 
     fn pdf_text(bytes: &[u8]) -> String {

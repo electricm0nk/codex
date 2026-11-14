@@ -5,18 +5,21 @@ import {
   printSheetPdf,
   saveSheetPdf,
   type CampaignNoteDto,
+  type PrintSectionsDto,
   type PrintSheetPdfRequest,
   type SaveSheetPdfRequest,
   type SavedSheetPdf,
 } from '../boundary/saveSheetPdf';
 import { getCampaigns, type Campaign } from '../campaign/campaignModel';
 import { PRINT_PAPERS, getPrintPaper, isPrintPaper, type PrintPaper } from '../settings/printPaper';
+import { getPrintSections, setPrintSections } from '../settings/printSections';
 
 /**
  * The Print dialog every character sheet opens (SD-39 E8.4; operator rulings R3, R4, R5, R19).
  *
- * The paper starts from Settings, Print paper, and may be changed for this print only. The three
- * option boxes stack (none of them is the basic sheet, all three the full one). **Save PDF** asks
+ * The paper starts from Settings, Print paper, and may be changed for this print only. The section
+ * boxes (SD-40 `decisions.md §23.4`, §24.3.7, §24.9) pick what prints, each section on its own pages,
+ * and are remembered per character (`settings/printSections.ts`). **Save PDF** asks
  * where with the native save-as dialog, and the backend writes the sheet there and opens it.
  * **Print** has the backend write the same PDF to a temp file and open it in the system PDF viewer;
  * the player prints from there. The sheet is rendered by the Rust print pipeline from the saved
@@ -25,17 +28,52 @@ import { PRINT_PAPERS, getPrintPaper, isPrintPaper, type PrintPaper } from '../s
 
 export interface PrintOptions {
   paper: PrintPaper;
-  spellbook: boolean;
-  math: boolean;
-  bio: boolean;
+  sections: PrintSectionsDto;
 }
 
-/** The three option boxes of R4, in the order the dialog shows them. */
-export const PRINT_OPTION_BOXES: ReadonlyArray<{ key: 'spellbook' | 'math' | 'bio'; label: string; detail: string }> = [
-  { key: 'spellbook', label: 'Spellbook', detail: 'The full text of every spell the character holds.' },
-  { key: 'math', label: 'Show the math', detail: 'Every engine row behind a printed number.' },
-  { key: 'bio', label: 'Bio and campaign notes', detail: "The character's bio and its campaigns' descriptions." },
+interface PrintSectionBox {
+  key: keyof PrintSectionsDto;
+  label: string;
+  testId: string;
+  /** Only the Pathfinder sheet prints this section; Starfinder and Cyberpunk RED have no such box. */
+  pathfinderOnly: boolean;
+}
+
+const box = (key: keyof PrintSectionsDto, label: string, pathfinderOnly: boolean): PrintSectionBox => ({
+  key,
+  label,
+  testId: `print-section-${key}`,
+  pathfinderOnly,
+});
+
+/** The eight section boxes, in box order, labelled with the section titles (`decisions.md §24.3.7`, §24.9). */
+export const PRINT_SECTION_BOXES: ReadonlyArray<PrintSectionBox> = [
+  box('main', 'Primary (page 1)', false),
+  box('feats', 'Abilities and Feats', true),
+  box('inventory', 'Inventory', true),
+  box('spellbook', 'Spellbook', false),
+  box('bio', 'Bio', false),
+  box('progression', 'Progression', true),
+  box('math', 'Math', false),
+  box('notes', 'Notes', true),
 ];
+
+/** The boxes a sheet shows: all eight on Pathfinder; 1, 4, 5 and 7 on Starfinder and Cyberpunk RED. */
+export function boxesFor(pathfinder: boolean): ReadonlyArray<PrintSectionBox> {
+  return PRINT_SECTION_BOXES.filter((section) => pathfinder || !section.pathfinderOnly);
+}
+
+/** What the request carries: the ticks of the boxes shown; a box the sheet does not show is off. */
+export function sectionsToSend(ticks: PrintSectionsDto, pathfinder: boolean): PrintSectionsDto {
+  const shown = new Set(boxesFor(pathfinder).map((section) => section.key));
+  return Object.fromEntries(PRINT_SECTION_BOXES.map((section) => [section.key, shown.has(section.key) && ticks[section.key]])) as unknown as PrintSectionsDto;
+}
+
+/** The line under the boxes: what will print, or why the buttons are off. */
+export function printSummary(sections: PrintSectionsDto): string {
+  const ticked = PRINT_SECTION_BOXES.filter((section) => sections[section.key]).map((section) => section.label);
+  return ticked.length === 0 ? 'Tick at least one section to print.' : `Prints: ${ticked.join(', ')}.`;
+}
 
 export interface PrintDialogDeps {
   hasRuntime: () => boolean;
@@ -86,11 +124,9 @@ export async function runPrintAction(
     const request: PrintSheetPdfRequest = {
       characterId: target.characterId,
       paper: options.paper,
-      spellbook: options.spellbook,
-      math: options.math,
-      bio: options.bio,
-      // Only Bio and campaign notes prints them; a print without that box sends none.
-      campaigns: options.bio ? campaignNotesFor(target.characterId, deps.campaigns()) : [],
+      sections: options.sections,
+      // Only the Bio section prints them; a print without that box sends none.
+      campaigns: options.sections.bio ? campaignNotesFor(target.characterId, deps.campaigns()) : [],
     };
     if (action === 'print') {
       const printed = await deps.printSheetPdf(request);
@@ -130,11 +166,17 @@ export function PrintDialog(props: {
   characterId: string;
   displayLabel: string;
   onClose: () => void;
+  /** False on a Starfinder or Cyberpunk RED sheet, which shows boxes 1, 4, 5 and 7 only. */
+  pathfinder?: boolean;
   deps?: PrintDialogDeps;
 }) {
   const deps = props.deps ?? DESKTOP_PRINT_DEPS;
   const { onClose } = props;
-  const [options, setOptions] = useState<PrintOptions>(() => ({ paper: getPrintPaper(), spellbook: false, math: false, bio: false }));
+  const pathfinder = props.pathfinder ?? true;
+  const [paper, setPaper] = useState<PrintPaper>(getPrintPaper);
+  const [ticks, setTicks] = useState<PrintSectionsDto>(() => getPrintSections(props.characterId));
+  const sections = sectionsToSend(ticks, pathfinder);
+  const nothingTicked = PRINT_SECTION_BOXES.every((section) => !sections[section.key]);
   const [busy, setBusy] = useState<'save' | 'print' | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -154,7 +196,7 @@ export function PrintDialog(props: {
     setMessage(null);
     setError(null);
     try {
-      const outcome = await runPrintAction(action, { characterId: props.characterId, displayLabel: props.displayLabel }, options, deps);
+      const outcome = await runPrintAction(action, { characterId: props.characterId, displayLabel: props.displayLabel }, { paper, sections }, deps);
       if (outcome.kind === 'Saved' || outcome.kind === 'Printed') {
         setMessage(outcome.message);
       } else if (outcome.kind === 'Failed') {
@@ -206,11 +248,11 @@ export function PrintDialog(props: {
           <span style={{ fontWeight: 600 }}>Paper</span>
           <select
             aria-label="Paper"
-            value={options.paper}
+            value={paper}
             onChange={(event) => {
               const next = event.target.value;
               if (isPrintPaper(next)) {
-                setOptions({ ...options, paper: next });
+                setPaper(next);
               }
             }}
             style={{ ...buttonStyle, cursor: 'pointer' }}
@@ -224,22 +266,27 @@ export function PrintDialog(props: {
           <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>From Settings, Print; a change here is for this print only.</span>
         </label>
 
-        <fieldset style={{ border: '1px solid var(--color-border)', borderRadius: 8, display: 'flex', flexDirection: 'column', gap: '0.5rem', margin: 0, padding: '0.6rem 0.9rem' }}>
-          <legend style={{ fontWeight: 600, padding: '0 0.3rem' }}>Include</legend>
-          {PRINT_OPTION_BOXES.map((box) => (
-            <label key={box.key} style={{ alignItems: 'flex-start', display: 'flex', gap: '0.5rem' }}>
+        <div role="group" aria-label="Sections to print" style={{ border: '1px solid var(--color-border)', borderRadius: 8, display: 'flex', flexDirection: 'column', gap: '0.4rem', padding: '0.6rem 0.9rem' }}>
+          {boxesFor(pathfinder).map((section) => (
+            <label key={section.key} style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
               <input
                 type="checkbox"
-                checked={options[box.key]}
-                onChange={(event) => setOptions({ ...options, [box.key]: event.target.checked })}
+                aria-label={`Print ${section.label}`}
+                data-testid={section.testId}
+                checked={ticks[section.key]}
+                onChange={(event) => {
+                  const next = { ...ticks, [section.key]: event.target.checked };
+                  setTicks(next);
+                  setPrintSections(props.characterId, next);
+                }}
               />
-              <span>
-                <span style={{ fontWeight: 600 }}>{box.label}</span>
-                <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.8rem' }}>{box.detail}</span>
-              </span>
+              <span style={{ fontWeight: 600 }}>{section.label}</span>
             </label>
           ))}
-        </fieldset>
+          <p data-testid="print-dialog-summary" style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>
+            {printSummary(sections)}
+          </p>
+        </div>
 
         {message === null ? null : (
           <p role="status" data-testid="print-dialog-status" style={{ fontSize: '0.85rem', margin: 0, overflowWrap: 'anywhere' }}>
@@ -256,10 +303,10 @@ export function PrintDialog(props: {
           <button type="button" onClick={onClose} style={buttonStyle}>
             Cancel
           </button>
-          <button type="button" disabled={busy !== null} onClick={() => void run('save')} style={buttonStyle}>
+          <button type="button" disabled={busy !== null || nothingTicked} onClick={() => void run('save')} style={buttonStyle}>
             {busy === 'save' ? 'Saving…' : 'Save PDF'}
           </button>
-          <button type="button" disabled={busy !== null} onClick={() => void run('print')} style={buttonStyle}>
+          <button type="button" disabled={busy !== null || nothingTicked} onClick={() => void run('print')} style={buttonStyle}>
             {busy === 'print' ? 'Printing…' : 'Print'}
           </button>
         </div>

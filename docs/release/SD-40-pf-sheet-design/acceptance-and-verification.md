@@ -88,7 +88,7 @@ grep -c '^- Aldric .* — usable: yes' docs/release/SD-40-pf-sheet-design/artifa
 ```bash
 cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_each_section_is_a_list -- --test-threads=8    # 1 passed
 grep -c 'SECTIONS' apps/desktop/src-tauri/src/print/layout/pf1e.rs                               # >= 1
-grep -rn 'PRINT_OPTION_BOXES\|spellbook: bool\|math: bool' apps/desktop/src apps/desktop/src-tauri/src/print | awk 'END{print NR}'   # 0 after E4.2
+{ grep -rn 'PRINT_OPTION_BOXES' apps/desktop/src apps/desktop/src-tauri/src/print; awk '/^pub struct PrintRequest/,/^}/' apps/desktop/src-tauri/src/print/mod.rs | grep -E '(spellbook|math|bio): bool'; awk '/^export interface PrintOptions(Dto)? /,/^}/' apps/desktop/src/boundary/saveSheetPdf.ts apps/desktop/src/characterHub/PrintDialog.tsx | grep -E '(spellbook|math|bio)\??: boolean'; } | awk 'END{print NR}'   # 0 after E4.2 (13 on E4.2's base 93f49262c7; corrected at E4.2: the unscoped grep also matched PrintSections' own spellbook/math fields, Rust and TS, and three test helpers, so it could never read 0)
 cd apps/desktop && npx tsx src/characterHub/PrintDialog.test.ts && grep -c 'print-section-' src/characterHub/PrintDialog.test.ts   # exit 0; >= 8 (eight sections, decisions.md §24.3.7, §24.9)
 npx tsx src/settings/printSections.test.ts                                                       # exit 0 (first time 1+2+3; remembered per character)
 ```

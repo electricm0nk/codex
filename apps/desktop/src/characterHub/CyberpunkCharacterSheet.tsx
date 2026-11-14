@@ -180,7 +180,7 @@ export function CyberpunkCharacterSheet(props: {
         </div>
       </div>
 
-      {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} onClose={() => setPrintOpen(false)} /> : null}
+      {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} pathfinder={false} onClose={() => setPrintOpen(false)} /> : null}
 
       {improving ? (
         <CyberpunkImproveDialog

@@ -15,17 +15,6 @@ async function messageOf(run: () => Promise<unknown>): Promise<string> {
 }
 
 async function main() {
-  const options = { paper: 'a4' as const, spellbook: false, math: false, bio: false, campaigns: [] };
-  assertEqual(
-    await messageOf(() => saveSheetPdf({ characterId: 'char-test', filePath: '/tmp/sheet.pdf', ...options })),
-    'Tauri runtime not available for saving a sheet PDF',
-    'Save PDF without the runtime says so',
-  );
-  assertEqual(
-    await messageOf(() => printSheetPdf({ characterId: 'char-test', ...options })),
-    'Tauri runtime not available for printing a sheet',
-    'Print without the runtime says so',
-  );
   const sections: PrintSectionsDto = {
     main: true,
     feats: false,
@@ -36,10 +25,16 @@ async function main() {
     math: false,
     notes: true,
   };
+  const options = { paper: 'a4' as const, sections, campaigns: [] };
   assertEqual(
-    await messageOf(() => printSheetPdf({ characterId: 'char-test', ...options, sections })),
+    await messageOf(() => saveSheetPdf({ characterId: 'char-test', filePath: '/tmp/sheet.pdf', ...options })),
+    'Tauri runtime not available for saving a sheet PDF',
+    'Save PDF without the runtime says so',
+  );
+  assertEqual(
+    await messageOf(() => printSheetPdf({ characterId: 'char-test', ...options })),
     'Tauri runtime not available for printing a sheet',
-    'A request carrying sections is the same command',
+    'Print without the runtime says so',
   );
   console.log('saveSheetPdf.test.ts: all assertions passed');
 }

@@ -102,7 +102,7 @@ fn request(paper: Paper, options: Options) -> PrintRequest {
     } else {
         Vec::new()
     };
-    PrintRequest { paper, sections: Some(sections), campaigns, ..PrintRequest::default() }
+    PrintRequest { paper, sections: Some(sections), campaigns }
 }
 
 /// A fresh directory holding the system's character, saved the way the app saves it; returns its root.

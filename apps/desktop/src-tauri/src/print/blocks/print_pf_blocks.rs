@@ -71,13 +71,13 @@ fn seeded(tag: &str, character_id: &str) -> PathBuf {
     root
 }
 
-/// An old option set as the golden cases read it through the sections (`decisions.md §23.4`,
-/// §24.3.7): Primary, Abilities and Feats and Inventory, plus the Spellbook, Math and Bio each box
-/// names; all three is sections 1-7. The boxes ride along beside the sections.
+/// An old option set as the golden cases name it, as sections (`decisions.md §23.4`, §24.3.7):
+/// Primary, Abilities and Feats and Inventory, plus the Spellbook, Math and Bio each names; all
+/// three is sections 1-7.
 fn request(spellbook: bool, math: bool, bio: bool) -> PrintRequest {
     let progression = spellbook && math && bio;
-    let sections = PrintSections { main: true, feats: true, inventory: true, spellbook, bio, progression, math, notes: false };
-    PrintRequest { paper: Paper::A4, sections: Some(sections), spellbook, math, bio, campaigns: Vec::new() }
+    let sections = PrintSections { spellbook, bio, progression, math, ..PrintSections::FIRST_TIME };
+    PrintRequest { paper: Paper::A4, sections: Some(sections), campaigns: Vec::new() }
 }
 
 /// The one section `section` ticked alone.
@@ -2944,36 +2944,23 @@ fn print_pf_blocks_each_section_is_a_list() {
     }
 }
 
-/// E4.1 (`decisions.md §23.4`): a request without `sections` (the dialog before E4.2) reads its three
-/// option boxes: none is Primary + Abilities and Feats + Inventory; Spellbook adds section 4, Bio 5,
-/// Math 7; no box maps to Progression (6) or Notes (8). The wire's camelCase `sections` wins over
-/// the boxes when present.
+/// E4.2 (`decisions.md §23.4`): the three option booleans are gone from `PrintRequest`. A request
+/// without `sections` (one naming only the paper) prints the first-time ticks, Primary + Abilities
+/// and Feats + Inventory; the old wire's `spellbook`/`math`/`bio` keys are ignored, never mapped.
 #[test]
-fn print_pf_blocks_absent_sections_map_from_the_booleans() {
-    let root = seeded("boolean-map", ALDRIC_ID);
-    for (spellbook, math, bio) in [(false, false, false), (true, false, false), (false, true, false), (false, false, true), (true, true, true)] {
-        let tag = format!("spellbook={spellbook} math={math} bio={bio}");
-        let old = PrintRequest { spellbook, math, bio, ..PrintRequest::default() };
-        let want = PrintSections { main: true, feats: true, inventory: true, spellbook, bio, progression: false, math, notes: false };
-        assert_eq!(old.sections(), want, "{tag}: the boxes map to the sections");
-        let document = sheet_document_at_root(&root, &old).expect("the document builds");
-        let titles: Vec<&str> = sections_of(&document).1.into_iter().map(|(title, _)| title).collect();
-        let mut expected = vec!["Abilities and Feats", "Inventory"];
-        if spellbook {
-            expected.push("Spellbook");
-        }
-        if bio {
-            expected.push("Bio");
-        }
-        if math {
-            expected.push("Math");
-        }
-        assert_eq!(titles, expected, "{tag}: the sections printed");
-    }
-    let wire: PrintRequest = serde_json::from_str(r#"{"paper":"letter","spellbook":true}"#).expect("an old request parses");
-    assert_eq!((wire.sections, wire.sections()), (None, PrintSections { main: true, feats: true, inventory: true, spellbook: true, ..PrintSections::default() }), "the old wire shape");
-    let wire: PrintRequest = serde_json::from_str(r#"{"paper":"a4","spellbook":true,"sections":{"main":true,"notes":true}}"#).expect("a sectioned request parses");
-    assert_eq!(wire.sections(), PrintSections { main: true, notes: true, ..PrintSections::default() }, "the sections win over the boxes");
+fn print_pf_blocks_absent_sections_print_the_first_time_three() {
+    let root = seeded("absent-sections", ALDRIC_ID);
+    let first_time = PrintSections { main: true, feats: true, inventory: true, ..PrintSections::default() };
+    assert_eq!(PrintSections::FIRST_TIME, first_time, "the first-time ticks are 1+2+3");
+    let paper_only = PrintRequest { paper: Paper::Letter, ..PrintRequest::default() };
+    assert_eq!(paper_only.sections(), first_time, "a request naming only the paper");
+    let document = sheet_document_at_root(&root, &paper_only).expect("the document builds");
+    let titles: Vec<&str> = sections_of(&document).1.into_iter().map(|(title, _)| title).collect();
+    assert_eq!(titles, vec!["Abilities and Feats", "Inventory"], "Primary, then sections 2 and 3");
+    let wire: PrintRequest = serde_json::from_str(r#"{"paper":"letter","spellbook":true,"math":true,"bio":true}"#).expect("an old request still parses");
+    assert_eq!((wire.sections, wire.sections()), (None, first_time), "the old boxes are ignored, not mapped");
+    let wire: PrintRequest = serde_json::from_str(r#"{"paper":"a4","sections":{"main":true,"notes":true}}"#).expect("a sectioned request parses");
+    assert_eq!(wire.sections(), PrintSections { main: true, notes: true, ..PrintSections::default() }, "the sections the dialog sent");
 }
 
 /// E4.1 (`decisions.md §23.4`): nothing ticked prints nothing; the request is refused by name.

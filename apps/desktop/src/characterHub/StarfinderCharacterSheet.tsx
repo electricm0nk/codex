@@ -100,7 +100,7 @@ export function StarfinderCharacterSheet(props: {
         </p>
       )}
 
-      {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} onClose={() => setPrintOpen(false)} /> : null}
+      {printOpen ? <PrintDialog characterId={characterId} displayLabel={sheet.name} pathfinder={false} onClose={() => setPrintOpen(false)} /> : null}
 
       {levelUpOpen ? (
         <StarfinderLevelUpDialog characterId={characterId} onClose={() => setLevelUpOpen(false)} onLeveledUp={(line) => void handleLeveledUp(line)} />
