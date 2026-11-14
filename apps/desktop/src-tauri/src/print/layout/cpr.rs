@@ -460,7 +460,7 @@ mod print_cpr {
     }
 
     fn request(paper: Paper, spellbook: bool, math: bool, bio: bool) -> PrintRequest {
-        PrintRequest { paper, spellbook, math, bio, campaigns: Vec::new() }
+        PrintRequest { paper, sections: None, spellbook, math, bio, campaigns: Vec::new() }
     }
 
     fn pdf_text(bytes: &[u8]) -> String {

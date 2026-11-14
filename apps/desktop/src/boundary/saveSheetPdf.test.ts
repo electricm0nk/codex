@@ -1,4 +1,4 @@
-import { printSheetPdf, saveSheetPdf } from './saveSheetPdf';
+import { printSheetPdf, saveSheetPdf, type PrintSectionsDto } from './saveSheetPdf';
 import { assertEqual } from '../testSupport/asserts';
 
 /**
@@ -25,6 +25,21 @@ async function main() {
     await messageOf(() => printSheetPdf({ characterId: 'char-test', ...options })),
     'Tauri runtime not available for printing a sheet',
     'Print without the runtime says so',
+  );
+  const sections: PrintSectionsDto = {
+    main: true,
+    feats: false,
+    inventory: false,
+    spellbook: false,
+    bio: false,
+    progression: false,
+    math: false,
+    notes: true,
+  };
+  assertEqual(
+    await messageOf(() => printSheetPdf({ characterId: 'char-test', ...options, sections })),
+    'Tauri runtime not available for printing a sheet',
+    'A request carrying sections is the same command',
   );
   console.log('saveSheetPdf.test.ts: all assertions passed');
 }

@@ -54,7 +54,8 @@ fn page_sizes(bytes: &[u8]) -> Vec<(f32, f32)> {
 }
 
 fn render(root: &Path, paper: Paper) -> Vec<u8> {
-    let rendered = render_sheet_pdf_at_root(root, &PrintRequest { paper, ..PrintRequest::default() }).expect("Aldric's sheet renders");
+    // Bio ticked: the details (Race, Class and level) print on its page (E4.1: Bio is its own box).
+    let rendered = render_sheet_pdf_at_root(root, &PrintRequest { paper, bio: true, ..PrintRequest::default() }).expect("Aldric's sheet renders");
     assert!(
         rendered.warnings.is_empty(),
         "Typst reports no diagnostics for {paper:?}: {:?}",

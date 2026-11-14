@@ -8,8 +8,9 @@ import type { PrintPaper } from '../settings/printPaper';
  * `save_sheet_pdf` renders the character's sheet with the Rust print pipeline, writes it to the
  * path the save-as dialog returned and opens it in the system PDF viewer. `print_sheet_pdf` renders
  * the same bytes to `<temp>/codex-print/<characterId>.pdf` and opens that; the player prints from
- * the viewer. Both take the paper and the three option boxes flattened beside `characterId`, and
- * the campaigns that list the character, which live in the frontend's store (`campaignModel.ts`).
+ * the viewer. Both take the paper and the sections to print (or, without `sections`, the three option
+ * boxes, which the backend maps to sections) flattened beside `characterId`, and the campaigns that
+ * list the character, which live in the frontend's store (`campaignModel.ts`).
  */
 
 export interface CampaignNoteDto {
@@ -17,8 +18,22 @@ export interface CampaignNoteDto {
   description: string;
 }
 
+/** The print dialog's eight section boxes, in box order (`print/mod.rs` `PrintSections`). */
+export interface PrintSectionsDto {
+  main: boolean;
+  feats: boolean;
+  inventory: boolean;
+  spellbook: boolean;
+  bio: boolean;
+  progression: boolean;
+  math: boolean;
+  notes: boolean;
+}
+
 export interface PrintOptionsDto {
   paper: PrintPaper;
+  /** The sections ticked; when absent the three boxes below are read instead. */
+  sections?: PrintSectionsDto;
   spellbook: boolean;
   math: boolean;
   bio: boolean;

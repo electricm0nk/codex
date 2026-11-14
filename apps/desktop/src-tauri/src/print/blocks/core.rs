@@ -32,8 +32,8 @@ pub fn name_campaign(sources: &SheetSources) -> SheetBlock {
 /// The Bio section's page (`characterDetails`, SD-40 E3.4, `decisions.md §23.1` item 5, §24.9),
 /// under the heading Details: the Details panel's fields as a form (`detail` rows: Alignment …
 /// Eyes from the bio, Size and Vision as the panel shows them, Race, Class and level, Player; an
-/// empty field prints its label over a blank line); then, when the Bio notes are asked for, the
-/// Biography tab's text and each campaign's description (`text` rows, a paragraph per line; an
+/// empty field prints its label over a blank line); then the Biography tab's text and each
+/// campaign's description (`text` rows, a paragraph per line; an
 /// empty Biography and no campaign print nothing). The look ends the page with ruled lines.
 pub fn character_details(sources: &SheetSources) -> SheetBlock {
     let summary = &sources.loaded.summary;
@@ -55,13 +55,12 @@ pub fn character_details(sources: &SheetSources) -> SheetBlock {
         ("Player", bio.player_name.clone()),
     ];
     let mut rows: Vec<SheetRow> = details.into_iter().map(|(label, value)| SheetRow::new(label, [value]).of_kind("detail")).collect();
-    if sources.request.bio {
-        let text = |label: &str, body: &str| SheetRow::new(label, Vec::<String>::new()).with_notes(body.lines().map(str::to_owned)).of_kind("text");
-        if !bio.biography.trim().is_empty() {
-            rows.push(text("Biography", &bio.biography));
-        }
-        rows.extend(sources.request.campaigns.iter().map(|campaign| text(&campaign.name, &campaign.description)));
+    // The Bio page prints only when its box is ticked (E4.1), so its notes always join its details.
+    let text = |label: &str, body: &str| SheetRow::new(label, Vec::<String>::new()).with_notes(body.lines().map(str::to_owned)).of_kind("text");
+    if !bio.biography.trim().is_empty() {
+        rows.push(text("Biography", &bio.biography));
     }
+    rows.extend(sources.request.campaigns.iter().map(|campaign| text(&campaign.name, &campaign.description)));
     SheetBlock::new("Details", rows).in_look(Look::Bio)
 }
 

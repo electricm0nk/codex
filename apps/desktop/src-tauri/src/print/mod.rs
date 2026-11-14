@@ -28,13 +28,16 @@ use crate::rule_system_adapter::load_saved_character_via_envelope;
 use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
 pub use model::Paper;
 
-/// What to print: the paper, and the three option boxes (operator ruling R4, stacking: none of
-/// them is "basic", all three is "full").
-/// Every field defaults: a request naming only the paper prints the basic sheet.
+/// What to print: the paper and the sections ticked (SD-40 `decisions.md §23.4`, §24.3.7, §24.9).
+/// Every field defaults: a request naming only the paper prints Primary, Abilities and Feats and
+/// Inventory. While `sections` is absent, the three option boxes the dialog sent before the
+/// sections (operator ruling R4) are read through `sections()`.
 #[derive(Debug, Clone, PartialEq, Eq, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct PrintRequest {
     pub paper: Paper,
+    /// The dialog's section boxes; `None` reads the three option boxes below.
+    pub sections: Option<PrintSections>,
     /// Spellbook: the full text of every spell the character holds.
     pub spellbook: bool,
     /// Show the math: every engine row behind a printed number.
@@ -47,11 +50,65 @@ pub struct PrintRequest {
 }
 
 impl PrintRequest {
-    /// The Progression section prints (Pathfinder only): until the dialog's sections arrive (E4.1),
-    /// with every option box ticked, the `all` set (`decisions.md §24.3.7`).
-    pub fn prints_progression(&self) -> bool {
-        self.spellbook && self.math && self.bio
+    /// The sections to print: the request's, or, while it sends none, its three option boxes
+    /// mapped (`decisions.md §23.4`): Primary, Abilities and Feats and Inventory, plus the Spellbook,
+    /// Bio and Math each box names. No box maps to Progression or Notes.
+    pub fn sections(&self) -> PrintSections {
+        self.sections.unwrap_or(PrintSections {
+            main: true,
+            feats: true,
+            inventory: true,
+            spellbook: self.spellbook,
+            bio: self.bio,
+            math: self.math,
+            ..PrintSections::default()
+        })
     }
+}
+
+/// The print dialog's eight section boxes, in box order (`decisions.md §24.3.7`, §24.9): (1) Primary,
+/// page 1; (2) Abilities and Feats; (3) Inventory; (4) Spellbook; (5) Bio; (6) Progression and (8)
+/// Notes, Pathfinder only; (7) Math. Starfinder and Cyberpunk RED read 1, 4, 5 and 7.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", default)]
+pub struct PrintSections {
+    pub main: bool,
+    pub feats: bool,
+    pub inventory: bool,
+    pub spellbook: bool,
+    pub bio: bool,
+    pub progression: bool,
+    pub math: bool,
+    pub notes: bool,
+}
+
+impl PrintSections {
+    /// Whether the box `section` is ticked.
+    pub fn has(&self, section: Section) -> bool {
+        match section {
+            Section::Main => self.main,
+            Section::Feats => self.feats,
+            Section::Inventory => self.inventory,
+            Section::Spellbook => self.spellbook,
+            Section::Bio => self.bio,
+            Section::Progression => self.progression,
+            Section::Math => self.math,
+            Section::Notes => self.notes,
+        }
+    }
+}
+
+/// One section box, as `PrintSections::has` reads it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Section {
+    Main,
+    Feats,
+    Inventory,
+    Spellbook,
+    Bio,
+    Progression,
+    Math,
+    Notes,
 }
 
 /// One campaign the character is in: its name and its description, as the Campaign screen saved them.
@@ -105,9 +162,13 @@ pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<mod
     let money = if system == "pf1" { Some(crate::character_hub::load_character_money_at_root(root)?) } else { None };
     let portrait = if system == "pf1" { saved_portrait(root) } else { None };
     // Read as the Show Progression drawer reads it, and only when the section prints: it runs the engine once per level.
-    let progression = if system == "pf1" && request.prints_progression() { Some(list_progression_ledger_at_root(root)?) } else { None };
+    let progression = if system == "pf1" && request.sections().progression { Some(list_progression_ledger_at_root(root)?) } else { None };
     let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, progression, request };
-    Ok(layout(&sources))
+    let document = layout(&sources);
+    if document.blocks.is_empty() {
+        return Err("print.no_sections: no section of this sheet is ticked, so there is nothing to print".to_owned());
+    }
+    Ok(document)
 }
 
 /// The character's saved portrait for the portrait box. A file that does not read is still handed

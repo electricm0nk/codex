@@ -32,6 +32,7 @@
 #import "/looks/breakdown.typ": look as breakdown-look
 #import "/looks/math.typ": look as math-look
 #import "/looks/progression.typ": look as progression-look
+#import "/looks/notes.typ": look as notes-look
 
 #let looks = (
   table: table-look,
@@ -63,6 +64,7 @@
   breakdown: breakdown-look,
   math: math-look,
   progression: progression-look,
+  notes: notes-look,
 )
 
 // The looks whose list page 1's overflow rule may shrink and split (E2.4, decisions.md §23.2

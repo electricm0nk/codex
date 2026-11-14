@@ -205,12 +205,15 @@ pub enum Look {
     /// and class level in bold over the drawer's lines (feats, spells, ranks, ability increase ...),
     /// then the rows placed at no level.
     Progression,
+    /// The Notes pages (SD-40 E4.1): the Notes tab's text as paragraphs, then blank ruled lines to the
+    /// page's foot.
+    Notes,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 29] = [
+    pub const ALL: [Look; 30] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -240,6 +243,7 @@ impl Look {
         Look::Breakdown,
         Look::Math,
         Look::Progression,
+        Look::Notes,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -274,6 +278,7 @@ impl Look {
             Look::Breakdown => "breakdown",
             Look::Math => "math",
             Look::Progression => "progression",
+            Look::Notes => "notes",
         }
     }
 }

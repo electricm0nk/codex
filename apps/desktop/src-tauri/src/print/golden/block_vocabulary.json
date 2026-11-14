@@ -43,5 +43,6 @@
   "spellbookTitle": {"ui": null, "printOnly": "the \"Spellbook\" section's title on paper, opening its pages (E2.23); the screen has no sections"},
   "bioTitle": {"ui": null, "printOnly": "the \"Bio\" section's title on paper, opening its pages (E2.23); the screen has no sections"},
   "mathTitle": {"ui": null, "printOnly": "the \"Math\" section's title on paper, opening its pages (E2.23); the screen has no sections"},
-  "progressionTitle": {"ui": null, "printOnly": "the \"Progression\" section's title on paper, opening its pages (E3.7); the screen has no sections"}
+  "progressionTitle": {"ui": null, "printOnly": "the \"Progression\" section's title on paper, opening its pages (E3.7); the screen has no sections"},
+  "notesTitle": {"ui": null, "printOnly": "the \"Notes\" section's title on paper, opening its pages (E4.1); the screen has no sections"}
 }

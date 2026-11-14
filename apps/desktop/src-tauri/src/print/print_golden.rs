@@ -1,7 +1,10 @@
 //! `print_golden` (SD-39 E8.5, gate G-10, operator ruling R6): the golden suite. One character per
 //! system -- Pathfinder's Elowen (Wizard 5), Starfinder's SF-Mystic-5, Cyberpunk RED's
-//! cpr-netrunner-decked -- prints through the real print path on both papers with each of the four
-//! option sets: none, Spellbook, Show the math, and all three. 3 x 2 x 4 = 24 PDFs, one test each.
+//! cpr-netrunner-decked -- prints through the real print path on both papers with each of the five
+//! section sets (SD-40 `decisions.md §23.4`): the four old option sets read through the sections
+//! (none = Primary + Abilities and Feats + Inventory, spellbook adds the Spellbook, math the Math,
+//! all = sections 1-7; Notes is in none of them, §24.9) and the Spellbook alone (`spellbookOnly`).
+//! 3 x 2 x 5 = 30 PDFs, one test each.
 //!
 //! Each test asserts, on the PDF itself:
 //! - **Typst diagnostics 0** (a sheet that overflows or misses a font warns; NR-4);
@@ -33,7 +36,7 @@ use codex::saved_character::{SavedCharacterEnvelope, SavedCharacterRevisionKind,
 
 use crate::character_hub::seed_default_characters_at;
 use crate::print::model::SheetDocument;
-use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, CampaignNote, Paper, PrintRequest};
+use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, CampaignNote, Paper, PrintRequest, PrintSections};
 use crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID;
 
 /// Per case (`<system>-<paper>-<options>`): the page count and the headings in print order.
@@ -57,6 +60,7 @@ enum Options {
     Spellbook,
     Math,
     All,
+    SpellbookOnly,
 }
 
 impl Options {
@@ -66,6 +70,7 @@ impl Options {
             Options::Spellbook => "spellbook",
             Options::Math => "math",
             Options::All => "all",
+            Options::SpellbookOnly => "spellbookOnly",
         }
     }
 }
@@ -84,18 +89,20 @@ fn case_name(system: System, paper: Paper, options: Options) -> String {
 }
 
 fn request(paper: Paper, options: Options) -> PrintRequest {
-    let (spellbook, math, bio) = match options {
-        Options::None => (false, false, false),
-        Options::Spellbook => (true, false, false),
-        Options::Math => (false, true, false),
-        Options::All => (true, true, true),
+    let first_time = PrintSections { main: true, feats: true, inventory: true, ..PrintSections::default() };
+    let sections = match options {
+        Options::None => first_time,
+        Options::Spellbook => PrintSections { spellbook: true, ..first_time },
+        Options::Math => PrintSections { math: true, ..first_time },
+        Options::All => PrintSections { spellbook: true, bio: true, progression: true, math: true, ..first_time },
+        Options::SpellbookOnly => PrintSections { spellbook: true, ..PrintSections::default() },
     };
-    let campaigns = if bio {
+    let campaigns = if sections.bio {
         vec![CampaignNote { name: "The Golden Road".to_owned(), description: "Three sheets, two papers, four option sets.".to_owned() }]
     } else {
         Vec::new()
     };
-    PrintRequest { paper, spellbook, math, bio, campaigns }
+    PrintRequest { paper, sections: Some(sections), campaigns, ..PrintRequest::default() }
 }
 
 /// A fresh directory holding the system's character, saved the way the app saves it; returns its root.
@@ -352,7 +359,7 @@ fn golden_case(system: System, paper: Paper, options: Options) {
     assert_eq!(headings, golden_headings, "{case}: the headings, in print order");
     assert_eq!(sizes.len(), golden_pages, "{case}: the page count");
 
-    if matches!(system, System::Pf1e) {
+    if matches!(system, System::Pf1e) && request.sections().main {
         let full = pdf_text(&pdf);
         let first = unspaced(page_one(&full, &document.title, sizes.len()).unwrap_or_else(|| panic!("{case}: page 1's footer prints")));
         for id in PAGE_ONE_BLOCKS {
@@ -361,9 +368,11 @@ fn golden_case(system: System, paper: Paper, options: Options) {
         }
     }
     let text = without_footers(&pdf_text(&pdf), &document.title, sizes.len());
-    assert!(text.contains(&folded(&document.title)), "{case}: the title {:?} prints", document.title);
+    // With page 1 not ticked the sheet opens on a section's own page and the footers name the character (E4.1).
+    let named = if request.sections().main { text.clone() } else { pdf_text(&pdf) };
+    assert!(named.contains(&folded(&document.title)), "{case}: the title {:?} prints", document.title);
     assert_blocks_print_in_order(&document, &text, &case);
-    if request.bio {
+    if request.sections().bio {
         assert!(text.contains("The Golden Road") && text.contains("Three sheets, two papers, four option sets."), "{case}: the campaign prints");
     }
 }
@@ -384,24 +393,30 @@ golden! {
     pf1e_a4_spellbook: Pf1e A4 Spellbook;
     pf1e_a4_math: Pf1e A4 Math;
     pf1e_a4_all: Pf1e A4 All;
+    pf1e_a4_spellbook_only: Pf1e A4 SpellbookOnly;
     pf1e_letter_none: Pf1e Letter None;
     pf1e_letter_spellbook: Pf1e Letter Spellbook;
     pf1e_letter_math: Pf1e Letter Math;
     pf1e_letter_all: Pf1e Letter All;
+    pf1e_letter_spellbook_only: Pf1e Letter SpellbookOnly;
     sf1e_a4_none: Sf1e A4 None;
     sf1e_a4_spellbook: Sf1e A4 Spellbook;
     sf1e_a4_math: Sf1e A4 Math;
     sf1e_a4_all: Sf1e A4 All;
+    sf1e_a4_spellbook_only: Sf1e A4 SpellbookOnly;
     sf1e_letter_none: Sf1e Letter None;
     sf1e_letter_spellbook: Sf1e Letter Spellbook;
     sf1e_letter_math: Sf1e Letter Math;
     sf1e_letter_all: Sf1e Letter All;
+    sf1e_letter_spellbook_only: Sf1e Letter SpellbookOnly;
     cpr_a4_none: Cpr A4 None;
     cpr_a4_spellbook: Cpr A4 Spellbook;
     cpr_a4_math: Cpr A4 Math;
     cpr_a4_all: Cpr A4 All;
+    cpr_a4_spellbook_only: Cpr A4 SpellbookOnly;
     cpr_letter_none: Cpr Letter None;
     cpr_letter_spellbook: Cpr Letter Spellbook;
     cpr_letter_math: Cpr Letter Math;
     cpr_letter_all: Cpr Letter All;
+    cpr_letter_spellbook_only: Cpr Letter SpellbookOnly;
 }

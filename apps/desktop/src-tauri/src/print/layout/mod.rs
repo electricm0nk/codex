@@ -295,18 +295,24 @@ pub(crate) fn rules_and_features(lines: &[&SheetLineDto], unavailable: Option<&s
 }
 
 /// The option blocks after the sheet, each on pages of its own (operator ruling R4): the
-/// system's Spellbook, Show the math over what the sheet printed, Bio and campaign notes.
+/// system's Spellbook, Show the math over what the sheet printed, Bio and campaign notes. Starfinder's
+/// and Cyberpunk RED's boxes are the sections' Primary, Spellbook, Bio and Math (SD-40 `decisions.md
+/// §23.4`): the sheet itself prints only when Primary is ticked; Show the math reads it either way.
 pub(crate) fn with_options(mut sheet: Vec<SheetBlock>, spellbook: impl FnOnce() -> SheetBlock, sources: &SheetSources) -> Vec<SheetBlock> {
-    let request = sources.request;
-    if request.spellbook {
+    let ticked = sources.request.sections();
+    let main = sheet.len();
+    if ticked.spellbook {
         sheet.push(spellbook());
     }
-    if request.math {
+    if ticked.math {
         let math = blocks::math(&sheet);
         sheet.push(math);
     }
-    if request.bio {
+    if ticked.bio {
         sheet.push(blocks::bio_notes(sources));
+    }
+    if !ticked.main {
+        sheet.drain(..main);
     }
     sheet
 }
