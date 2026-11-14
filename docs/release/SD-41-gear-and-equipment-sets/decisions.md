@@ -942,3 +942,13 @@ m.climb_ft))` push in `push_swim_and_fly_rows` is added by **E2.4** (Phase 2, `c
 `NEW_ROWS` gains `speed.climb`. E4.3 then reads the real row; "—" stays only when the response holds no
 `speed.climb`. E1.14 depends on E1.3 (the last E1 card before the serial lane reaches the race layer; no SD-41
 card touches the speed path before it). Q11 is closed.
+
+## §36 — E1.14 Skinwalker climb: ruling (a), printed text (OPERATOR, 2026-11-14, as relayed by the lead)
+
+**Ruling:** option (a) of the E1.14 ruling request (`§20` E1.14 row; `progress.md` Open blockers). The paper-sheet
+rule applies: the Skinwalker bestial-form climb (`Skinwalker ~ Change Shape (Climb Speed 20/30 Feet)`, granting the
+`CATEGORY:Internal` `Skinwalker ~ Climb Speed 20/30` only under the form's `TEMPBONUS`) prints as the Change Shape
+text; it is **not modelled** — no `climb_ft` for a Skinwalker, no ingest of the Internal records, no stored form
+choice. `climb_speed_skinwalker_alternates` is dropped from the plan (not written). E1.14's acceptance changes from
+`climb_speed → 4 passed` to `→ 3 passed` (`epic-breakdown.md`, `kanban.md`). The Open blockers entry is closed;
+E1.14 is `complete`. E1.MC's "E1.1–E1.14" re-verify uses the 3-test acceptance.
