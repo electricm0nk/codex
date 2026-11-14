@@ -29,6 +29,8 @@
 #import "/looks/custom.typ": look as custom-look
 #import "/looks/pets.typ": look as pets-look
 #import "/looks/bio.typ": look as bio-look
+#import "/looks/breakdown.typ": look as breakdown-look
+#import "/looks/math.typ": look as math-look
 
 #let looks = (
   table: table-look,
@@ -57,6 +59,8 @@
   custom: custom-look,
   pets: pets-look,
   bio: bio-look,
+  breakdown: breakdown-look,
+  math: math-look,
 )
 
 // The looks whose list page 1's overflow rule may shrink and split (E2.4, decisions.md §23.2

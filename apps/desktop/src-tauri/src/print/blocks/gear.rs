@@ -106,6 +106,54 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Weapons", rows).in_look(Look::Weapons)
 }
 
+/// Show the math's Weapons breakdown (SD-40 E3.5, `decisions.md §23.1` item 4): a line per weapon in
+/// hand, its cells the ones page 1 dropped at E2.10: the attack total, the damage dice, the Strength
+/// and enhancement damage, the damage bonus (`combat.weapon_damage_bonus.<weapon>`), the threat
+/// range's first number, the critical and the wield; then each feat's damage note under it.
+pub(super) fn weapons_breakdown(sources: &SheetSources) -> SheetBlock {
+    let mut rows = vec![super::core::captions(&["Attack", "Dice", "Str", "Enh.", "Damage", "Threat", "Critical", "Wield"])];
+    for weapon in &sources.loaded.weapon_damage {
+        let name = item_name(sources, &weapon.weapon_item_id, weapon.weapon_record_key.as_deref());
+        let key = weapon_row_key(weapon.weapon_record_key.as_deref().unwrap_or(&name));
+        let cell = |prefix: &str| weapon_cell(prefix, sources.loaded.explanations.iter().find(|row| row.id.strip_prefix(prefix) == Some(key.as_str())));
+        let dice = weapon.base_dice.as_ref().map_or_else(|| NO_VALUE.to_owned(), |dice| format!("{}d{}", dice.count, dice.die_size));
+        let wield = weapon.wield_category.as_deref().map_or_else(|| NO_VALUE.to_owned(), spaced_words);
+        let notes = weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus)));
+        rows.push(
+            SheetRow::new(
+                name,
+                [
+                    cell("combat.weapon_attack_bonus."),
+                    dice,
+                    optional_signed(weapon.str_damage_modifier),
+                    optional_signed(weapon.enhancement_damage_bonus),
+                    cell("combat.weapon_damage_bonus."),
+                    cell("combat.weapon_threat_range_low."),
+                    critical(weapon),
+                    wield,
+                ],
+            )
+            .with_notes(notes),
+        );
+    }
+    if rows.len() == 1 {
+        rows.push(SheetRow::new("No weapon is wielded.", Vec::<String>::new()));
+    }
+    SheetBlock::new("Weapon Breakdown", rows).in_look(Look::Breakdown)
+}
+
+/// `OneHanded` reads `One Handed`.
+fn spaced_words(raw: &str) -> String {
+    let mut out = String::new();
+    for (index, ch) in raw.chars().enumerate() {
+        if index > 0 && ch.is_uppercase() {
+            out.push(' ');
+        }
+        out.push(ch);
+    }
+    out
+}
+
 /// The Defense block (SD-40 E3.2, section 3 Inventory): the armor and shield table, a line per worn
 /// piece (AC bonus, max Dex, check, failure, and the weight the engine carries it at), then the
 /// worn totals the engine states. The `defense` look adds one blank row.

@@ -195,12 +195,18 @@ pub enum Look {
     /// The Bio section's page (SD-40 E3.4): the details as a two-column form, the Biography and the
     /// campaign notes as paragraphs, then blank ruled lines to the page's foot.
     Bio,
+    /// A breakdown table on the Math pages (SD-40 E3.5): a caption header over a line per figure,
+    /// each the cells page 1 leaves out (`decisions.md §23.1` item 4).
+    Breakdown,
+    /// The derivation lines on the Math pages (SD-40 E3.5): each printed number's label and value,
+    /// then the engine's rows behind it, in two columns at 8 pt.
+    Math,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 26] = [
+    pub const ALL: [Look; 28] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -227,6 +233,8 @@ impl Look {
         Look::Custom,
         Look::Pets,
         Look::Bio,
+        Look::Breakdown,
+        Look::Math,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -258,6 +266,8 @@ impl Look {
             Look::Custom => "custom",
             Look::Pets => "pets",
             Look::Bio => "bio",
+            Look::Breakdown => "breakdown",
+            Look::Math => "math",
         }
     }
 }

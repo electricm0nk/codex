@@ -2,6 +2,7 @@
 //! printed, the engine's own rows behind it, verbatim; `(no derivation recorded)` where the
 //! engine recorded none. It prints the existing explanations, never a new derivation.
 
+use super::SheetSources;
 use crate::print::model::{SheetBlock, SheetRow};
 
 pub const NO_DERIVATION: &str = "(no derivation recorded)";
@@ -27,4 +28,16 @@ pub fn math(printed: &[SheetBlock]) -> SheetBlock {
         rows.push(SheetRow::new("The sheet prints no computed number.", Vec::<String>::new()));
     }
     SheetBlock::new("Show the Math", rows).on_new_page()
+}
+
+/// The Pathfinder Math section's breakdown tables (SD-40 E3.5, `decisions.md §23.1` item 4, §24.3.7):
+/// every cell page 1 dropped at E2.9–E2.11, Initiative, Saving Throws, Skills and Weapons, each built
+/// from what its page-1 block is built from, so they print whether or not page 1 does.
+pub fn breakdowns(sources: &SheetSources) -> Vec<SheetBlock> {
+    vec![
+        super::core::initiative_breakdown(sources).with_id("initiativeMath"),
+        super::core::saves_breakdown(sources).with_id("savesMath"),
+        super::skills::skills_breakdown(sources).with_id("skillsMath"),
+        super::gear::weapons_breakdown(sources).with_id("weaponsMath"),
+    ]
 }

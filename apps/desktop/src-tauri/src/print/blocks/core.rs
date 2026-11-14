@@ -194,6 +194,49 @@ pub fn saves(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Saving Throws", rows).in_look(Look::Saves)
 }
 
+/// A breakdown table's caption line (Show the math, SD-40 E3.5): the `breakdown` look prints it as
+/// the table's header.
+pub(super) fn captions(cells: &[&str]) -> SheetRow {
+    SheetRow::new("", cells.iter().map(|cell| (*cell).to_owned())).of_kind("captions")
+}
+
+/// Show the math's Initiative breakdown (SD-40 E3.5, `decisions.md §23.1` item 4): the cells page 1
+/// dropped at E2.9, the engine's total and the Dexterity modifier.
+pub(super) fn initiative_breakdown(sources: &SheetSources) -> SheetBlock {
+    let dexterity = sources.loaded.snapshot.as_ref().map(|s| s.ability_modifiers.dexterity);
+    SheetBlock::new(
+        "Initiative Breakdown",
+        vec![captions(&["Total", "Dex"]), SheetRow::new("Initiative", [with_sign(row_value(sources, "initiative.total")), with_sign(dexterity)])],
+    )
+    .in_look(Look::Breakdown)
+}
+
+/// Show the math's Saving Throws breakdown (SD-40 E3.5): the cells page 1 dropped at E2.10, each
+/// save's total, its class base save and its ability's modifier (Constitution, Dexterity, Wisdom).
+pub(super) fn saves_breakdown(sources: &SheetSources) -> SheetBlock {
+    let snapshot = sources.loaded.snapshot.as_ref();
+    let save = |label: &str, pick: fn(&crate::character_hub::BaseSavesDto) -> i16, ability: fn(&crate::character_hub::AbilityModifiersDto) -> i16| {
+        SheetRow::new(
+            label,
+            [
+                with_sign(snapshot.map(|s| pick(&s.total_saves))),
+                with_sign(snapshot.map(|s| pick(&s.base_saves))),
+                with_sign(snapshot.map(|s| ability(&s.ability_modifiers))),
+            ],
+        )
+    };
+    SheetBlock::new(
+        "Saving Throw Breakdown",
+        vec![
+            captions(&["Total", "Base", "Ability"]),
+            save("Fortitude", |s| s.fortitude, |m| m.constitution),
+            save("Reflex", |s| s.reflex, |m| m.dexterity),
+            save("Will", |s| s.will, |m| m.wisdom),
+        ],
+    )
+    .in_look(Look::Breakdown)
+}
+
 /// The Conditional Bonuses box (`conditionalBonuses`, print-only, SD-40 E2.20, `decisions.md
 /// §24.3.5`): every conditional the engine states, one row each, in order HP, Initiative,
 /// Fortitude, Reflex, Will, AC, CMB, CMD (`conditionalNotes`), then Skills (what a feat states on a

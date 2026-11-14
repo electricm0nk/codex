@@ -2007,7 +2007,7 @@ fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
             ("Inventory", vec!["defense", "gear", "money"]),
             ("Spellbook", vec!["spellbook"]),
             ("Bio", vec!["characterDetails"]),
-            ("Math", vec!["math"]),
+            ("Math", vec!["initiativeMath", "savesMath", "skillsMath", "weaponsMath", "math"]),
         ];
         assert_eq!(sections, expected, "{tag}: the sections, their titles and their blocks, in the operator's order");
 
@@ -2594,5 +2594,153 @@ fn print_pf_blocks_no_identity_block_before_the_bio() {
         for label in ["Alignment", "Deity", "Player", "Vision"] {
             assert!(!before.contains(label), "{tag}: `{label}` prints only on the Bio page");
         }
+    }
+}
+
+/// The breakdown lines the E2.MC tree's page-1 builders printed (`git show
+/// f5e4c781b2:apps/desktop/src-tauri/src/print/blocks/{core,skills,gear}.rs`), the list fixed here
+/// from the load response the way those builders read it: each line its label, then each non-empty
+/// cell in the old column order. Initiative: total, Dex modifier. Saves: total, base, ability
+/// modifier. Skills (every `skill.total.<skill>` row): the class-skill mark, the total, the key
+/// ability and its modifier, the ranks, the armor-check mark. Weapons (every weapon in hand): attack,
+/// dice, Str, Enh., damage bonus, threat range from, critical, wield; then each feat's damage note.
+fn page_one_breakdown_lines(loaded: &crate::character_hub::LoadSavedCharacterResponse) -> Vec<String> {
+    use crate::print::layout::{signed, NO_VALUE};
+    let sign = |value: Option<i16>| value.map_or_else(|| NO_VALUE.to_owned(), signed);
+    let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id);
+    let snapshot = loaded.snapshot.as_ref().expect("the seed computes");
+    let modifiers = &snapshot.ability_modifiers;
+    let line = |label: &str, cells: Vec<String>| {
+        std::iter::once(label.to_owned()).chain(cells.into_iter().filter(|cell| !cell.is_empty())).collect::<Vec<_>>().join(" ")
+    };
+    let mut lines = vec![line("Initiative", vec![sign(row("initiative.total").map(|r| r.value)), signed(modifiers.dexterity)])];
+    for (label, total, base, ability) in [
+        ("Fortitude", snapshot.total_saves.fortitude, snapshot.base_saves.fortitude, modifiers.constitution),
+        ("Reflex", snapshot.total_saves.reflex, snapshot.base_saves.reflex, modifiers.dexterity),
+        ("Will", snapshot.total_saves.will, snapshot.base_saves.will, modifiers.wisdom),
+    ] {
+        lines.push(line(label, vec![signed(total), signed(base), signed(ability)]));
+    }
+    let package = codex::rules_core::sheet_rule_package::package().as_ref().expect("the sheet-rule package loads");
+    for total in loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")) {
+        let slug = total.id.trim_start_matches("skill.total.");
+        let id = format!("skill:{slug}");
+        let ability = [("Str", modifiers.strength), ("Dex", modifiers.dexterity), ("Int", modifiers.intelligence), ("Wis", modifiers.wisdom), ("Cha", modifiers.charisma)]
+            .into_iter()
+            .zip(["strength", "dexterity", "intelligence", "wisdom", "charisma"])
+            .find(|(_, field)| codex::rules_core::equipment_effects::skill_set_rows(field).contains(&id))
+            .map_or_else(|| NO_VALUE.to_owned(), |((abbreviation, modifier), _)| format!("{abbreviation} {}", signed(modifier)));
+        let ranks: u32 = loaded.skill_allocations.iter().filter(|a| a.skill_id == id).map(|a| u32::from(a.ranks)).sum();
+        let armor_check = package.find("skill", slug).and_then(|rule| package.rule(rule)).is_some_and(|rule| rule.tags.iter().any(|tag| tag == "ACHECK"));
+        lines.push(line(
+            &super::skills::skill_name(slug),
+            vec![
+                if total.detail.contains("class skill +3") { "X".to_owned() } else { String::new() },
+                signed(total.value),
+                ability,
+                ranks.to_string(),
+                if armor_check { "*".to_owned() } else { String::new() },
+            ],
+        ));
+    }
+    for weapon in &loaded.weapon_damage {
+        let name = loaded
+            .corpus_derived
+            .equipped_items
+            .iter()
+            .find(|item| item.item_id == weapon.weapon_item_id)
+            .map(|item| item.equipment_record_name.clone())
+            .or_else(|| weapon.weapon_record_key.clone())
+            .unwrap_or_else(|| weapon.weapon_item_id.clone());
+        let record = weapon.weapon_record_key.clone().unwrap_or_else(|| name.clone());
+        let record = record.strip_prefix("item:").unwrap_or(&record);
+        let key: String = record.strip_suffix(" (Base)").unwrap_or(record).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect();
+        let per_weapon = |prefix: &str| row(&format!("{prefix}{key}"));
+        let critical = match (
+            weapon.critical_threat_range.map(|[low, high]| if low == high { low.to_string() } else { format!("{low}-{high}") }),
+            weapon.critical_multiplier.map(|m| format!("x{m}")),
+        ) {
+            (Some(range), Some(multiplier)) => format!("{range}/{multiplier}"),
+            (Some(one), None) | (None, Some(one)) => one,
+            (None, None) => NO_VALUE.to_owned(),
+        };
+        let wield = weapon.wield_category.as_deref().map_or_else(
+            || NO_VALUE.to_owned(),
+            |raw| raw.chars().enumerate().flat_map(|(i, c)| if i > 0 && c.is_uppercase() { vec![' ', c] } else { vec![c] }).collect(),
+        );
+        lines.push(line(
+            &name,
+            vec![
+                sign(per_weapon("combat.weapon_attack_bonus.").map(|r| r.value)),
+                weapon.base_dice.as_ref().map_or_else(|| NO_VALUE.to_owned(), |dice| format!("{}d{}", dice.count, dice.die_size)),
+                sign(weapon.str_damage_modifier),
+                sign(weapon.enhancement_damage_bonus),
+                sign(per_weapon("combat.weapon_damage_bonus.").map(|r| r.value)),
+                per_weapon("combat.weapon_threat_range_low.").map_or_else(|| NO_VALUE.to_owned(), |r| r.value.to_string()),
+                critical,
+                wield,
+            ],
+        ));
+        lines.extend(weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus))));
+    }
+    lines
+}
+
+/// The Math section's pages as text: from the page its title opens to the sheet's end.
+fn math_pages(document: &crate::print::model::SheetDocument, pdf: &[u8]) -> String {
+    let on_pages = pages_text(&pdf_text(pdf), &document.title, page_count(pdf));
+    let at = on_pages.iter().position(|page| page.starts_with("Math")).expect("the Math section opens a page");
+    on_pages[at..].join(" ")
+}
+
+/// E3.5 (`decisions.md §23.1` item 4, §24.3.7): the Math section's pages carry every breakdown page 1
+/// dropped at E2.9–E2.11: each line the E2.MC tree printed in a page-1 breakdown cell (the list
+/// above) prints on the math pages, then the derivation lines. Aldric and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_math_pages_print_every_page_one_breakdown() {
+    for (tag, id) in [("breakdown-aldric", ALDRIC_ID), ("breakdown-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let expected = page_one_breakdown_lines(&loaded);
+        assert!(expected.len() > 4 + loaded.weapon_damage.len(), "{tag}: initiative, three saves and the skills at least: {expected:?}");
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, true, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let pdf = render(&root, &printed);
+            let math = math_pages(&document, &pdf);
+            for line in &expected {
+                assert!(math.contains(line.as_str()), "{tag} {paper:?}: the math pages print `{line}`: {math}");
+            }
+            let derivations = math.find(MATH).unwrap_or_else(|| panic!("{tag} {paper:?}: the derivation lines print: {math}"));
+            assert!(math.find(expected.last().expect("a line").as_str()).is_some_and(|at| at < derivations), "{tag} {paper:?}: the breakdowns, then the derivation lines");
+            assert_eq!(document.blocks.iter().find(|block| block.heading == MATH).map(|block| block.look.name()), Some("math"), "{tag}: the derivation lines print in the math look");
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("math-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            }
+        }
+    }
+}
+
+/// E3.5: the Math section is built from what page 1 is built from, not from page 1's printed blocks:
+/// typeset alone (its title and blocks, no page 1 and no other section), it prints every breakdown
+/// line and the derivation lines. Aldric and Elowen, Letter.
+#[test]
+fn print_pf_blocks_math_pages_print_without_the_main_sheet() {
+    for (tag, id) in [("math-alone-aldric", ALDRIC_ID), ("math-alone-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let mut document = sheet_document_at_root(&root, &PrintRequest { paper: Paper::Letter, ..request(false, true, false) }).expect("the document builds");
+        let at = document.blocks.iter().position(|block| block.id == "mathTitle").expect("the Math section prints");
+        document.blocks.drain(..at);
+        let typeset = crate::print::typst::typeset(&document).expect("the Math section typesets alone");
+        assert!(typeset.warnings.is_empty(), "{tag}: no diagnostics: {:?}", typeset.warnings);
+        let text = pdf_text(&typeset.pdf);
+        let lines = page_one_breakdown_lines(&loaded);
+        assert_in_order(&text, &["Math", lines[0].as_str()]);
+        for line in lines {
+            assert!(text.contains(line.as_str()), "{tag}: the Math section alone prints `{line}`: {text}");
+        }
+        assert!(text.contains(MATH) && text.contains("initiative.total"), "{tag}: then the derivation lines: {text}");
     }
 }

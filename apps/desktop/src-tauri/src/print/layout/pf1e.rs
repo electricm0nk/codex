@@ -9,7 +9,7 @@
 //! holding the Abilities over the Skills (one column, name + total, E2.11). Then the sections
 //! (`decisions.md §24.3.7`, E2.23), each from a new page under its title: Abilities and Feats,
 //! Inventory (Defense, Gear, Money, E3.2), Spellbook (when asked), Bio (the details, then the Biography and campaign notes when asked, then
-//! ruled lines, E3.4), Math (when asked). The blocks
+//! ruled lines, E3.4), Math (when asked: the breakdowns page 1 leaves out, then the derivation lines, E3.5). The blocks
 //! themselves (`print/blocks/`) read what the Character Sheet reads; nothing here computes a
 //! number (NR-2).
 
@@ -76,8 +76,11 @@ pub fn layout(sources: &SheetSources) -> SheetDocument {
     }
     section(&mut sheet, "bioTitle", "Bio", placed(BIO));
     if request.math {
-        let math = blocks::math(&sheet).with_id("math");
-        section(&mut sheet, "mathTitle", "Math", vec![math]);
+        // The breakdowns (E3.5) are built from the sources, not from page 1's printed blocks; the
+        // derivation lines then follow, in two columns (the `math` look).
+        let mut math = blocks::breakdowns(sources);
+        math.push(blocks::math(&sheet).in_look(Look::Math).with_id("math"));
+        section(&mut sheet, "mathTitle", "Math", math);
     }
     SheetDocument { title: sources.loaded.summary.display_label.clone(), paper: request.paper.typst_name(), blocks: sheet }
 }
