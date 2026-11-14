@@ -25,6 +25,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -86,6 +87,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -135,6 +137,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -197,6 +200,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -269,6 +273,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -317,6 +322,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -364,6 +370,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -420,6 +427,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -477,6 +485,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -524,6 +533,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -581,6 +591,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -628,6 +639,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -694,6 +706,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -751,6 +764,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -812,6 +826,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -876,6 +891,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -939,6 +955,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -988,6 +1005,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1053,6 +1071,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1116,6 +1135,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1175,6 +1195,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1234,6 +1255,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1284,6 +1306,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1340,6 +1363,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1388,6 +1412,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1446,6 +1471,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1495,6 +1521,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1544,6 +1571,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1592,6 +1620,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1639,6 +1668,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1697,6 +1727,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1759,6 +1790,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1806,6 +1838,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1852,6 +1885,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1913,6 +1947,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -1964,6 +1999,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -2010,6 +2046,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -2067,6 +2104,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -2140,6 +2178,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -2199,6 +2238,7 @@
         "var_contributions": []
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -2261,6 +2301,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -2322,6 +2363,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null
@@ -2392,6 +2434,7 @@
         ]
       },
       "declared_move_modes": {
+        "climb_ft": null,
         "fly_ft": null,
         "fly_maneuverability": null,
         "swim_ft": null

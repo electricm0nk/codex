@@ -2730,8 +2730,6 @@ pub(super) const VANARA_RACE_ID: &str = "race:vanara";
 
 pub(super) const VANARA_BASE_SPEED_FEET: i16 = 30;
 
-pub(super) const VANARA_CLIMB_SPEED_FEET: i16 = 20;
-
 pub(super) const VANARA_REPLACE_SPEED_FLAG: &str = "Vanara_ReplaceSpeed";
 
 /// SD31-W27-RACETRAIT-001 — Samsaran (Advanced Race Guide), extending the

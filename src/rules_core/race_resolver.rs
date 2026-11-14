@@ -2334,6 +2334,37 @@ mod tests {
         assert!(corpus.resolve("Dwarf", &[]).expect("Dwarf").declared_mode_speed(swim).is_none());
     }
 
+    /// SD-41 E1.14 (`decisions.md §35` Q11): climb comes off the held traits'
+    /// `MOVE:` tokens the way swim and fly do. Vanara's racial-default speed
+    /// trait states `MOVE:Walk,30,Climb,20` (`vanara_abilities_race.lst:17`;
+    /// sheet rule `bestiary_3/race_trait/vanara_speed.json`).
+    #[test]
+    fn climb_speed_vanara_declares_20_ft() {
+        let corpus = all_books();
+        let vanara = corpus.resolve("Vanara", &[]).expect("Vanara resolves");
+        let climb = vanara.declared_mode_speed(|m| m.climb_ft).map(|(ft, t)| (ft, t.key.as_str()));
+        assert_eq!(climb, Some((20, "Vanara ~ Speed")));
+    }
+
+    #[test]
+    fn climb_speed_human_declares_none() {
+        let corpus = all_books();
+        let human = corpus.resolve("Human", &[]).expect("Human resolves");
+        assert!(human.declared_mode_speed(|m| m.climb_ft).is_none());
+    }
+
+    /// Tree Stranger sets `Vanara_ReplaceSpeed`, which suppresses `Vanara ~
+    /// Speed` and grants `Tree Stranger ~ Vanara ~ Speed` (`MOVE:Walk,30`, no
+    /// climb), so no held trait states a climb speed.
+    #[test]
+    fn climb_speed_tree_stranger_replaces_it() {
+        let corpus = all_books();
+        let stranger = corpus.resolve("Vanara", &["Vanara ~ Tree Stranger"]).expect("resolves");
+        assert!(stranger.traits.iter().any(|t| t.key == "Tree Stranger ~ Vanara ~ Speed"));
+        assert!(stranger.declared_mode_speed(|m| m.climb_ft).is_none());
+        assert_eq!(stranger.walk_speed_ft, Some(30));
+    }
+
     /// The protocol itself, end to end on one real swap: selecting ARG's
     /// `Dwarf ~ Ancient Enmity` fires `Dwarf_ReplaceHatred`, which removes the
     /// CRB `Hatred` standard trait and nothing else.

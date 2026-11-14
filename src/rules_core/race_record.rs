@@ -65,14 +65,15 @@ pub struct CorpusRaceRecord {
     pub hands: Option<i32>,
 }
 
-/// A racial trait's `MOVE:` swim and fly speeds in feet, and the fly
+/// A racial trait's `MOVE:` swim, fly and climb speeds in feet, and the fly
 /// maneuverability its description states in words (`"average"`), each `None`
-/// when the trait does not state it. Climb and burrow are not read.
+/// when the trait does not state it. Burrow is not read.
 #[derive(Debug, Clone, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct DeclaredMoveModes {
     pub swim_ft: Option<i32>,
     pub fly_ft: Option<i32>,
     pub fly_maneuverability: Option<String>,
+    pub climb_ft: Option<i32>,
 }
 
 /// One `data/corpus/<book>/race_trait/<race>/<slug>.json` record's `data`

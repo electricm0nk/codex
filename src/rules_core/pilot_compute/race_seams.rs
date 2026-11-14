@@ -649,13 +649,23 @@ pub(super) fn explain_gillman_flat_override_race_trait(
 }
 
 /// Vanara (Advanced Race Guide): racial-DEFAULT `~ Speed` states BOTH a
-/// {VANARA_BASE_SPEED_FEET} ft land speed and a {VANARA_CLIMB_SPEED_FEET} ft
-/// Climb speed (`MOVE:Walk,30,Climb,20`, `vanara_abilities_race.lst:17`);
+/// {VANARA_BASE_SPEED_FEET} ft land speed and a Climb speed
+/// (`MOVE:Walk,30,Climb,20`, `vanara_abilities_race.lst:17`), the climb read
+/// from that settled record ([`vanara_declared_climb_ft`]);
 /// the selectable `Vanara ~ Tree Stranger` alternate trait sets
 /// `Vanara_ReplaceSpeed=True` and replaces it with `Tree Stranger ~ Vanara ~
 /// Speed` — land speed only, no Climb speed at all (`arg_abilities_race.
 /// lst:1241`, `data/corpus/advanced_race_guide/race_trait/vanara/
 /// tree_stranger_vanara_speed.json`).
+/// The standard Vanara climb speed in feet: the declared `MOVE:` climb mode of
+/// the race-trait record the unmodified race holds (`Vanara ~ Speed`), `None`
+/// when the loaded corpus states none.
+fn vanara_declared_climb_ft() -> Option<i32> {
+    let corpus = crate::rules_core::race_resolver::live_race_corpus();
+    let vanara = corpus.resolve_key(VANARA_RACE_ID).and_then(|key| corpus.resolve(key, &[]))?;
+    vanara.declared_mode_speed(|m| m.climb_ft).map(|(ft, _)| ft)
+}
+
 pub(super) fn explain_vanara_flat_override_race_trait(
     input: &CharacterInput,
     explanations: &mut Vec<ComputationExplanation>,
@@ -663,6 +673,7 @@ pub(super) fn explain_vanara_flat_override_race_trait(
     if input.chosen.race_id != VANARA_RACE_ID {
         return;
     }
+    let climb = vanara_declared_climb_ft().map_or_else(|| "none".to_owned(), |ft| ft.to_string());
 
     if replaced_by_alternate_trait(input, VANARA_REPLACE_SPEED_FLAG) {
         let selected_tree_stranger = selected_alternate_trait_keys(input)
@@ -681,7 +692,7 @@ pub(super) fn explain_vanara_flat_override_race_trait(
                  MOVE:Walk,{TREE_STRANGER_VANARA_SPEED_FEET}). Tree stranger vanaras have \
                  {TREE_STRANGER_VANARA_SPEED_FEET} ft land speed only — no Climb speed, unlike the \
                  standard racial default. The standard \
-                 {VANARA_BASE_SPEED_FEET}/{VANARA_CLIMB_SPEED_FEET} ft record is therefore NOT \
+                 {VANARA_BASE_SPEED_FEET}/{climb} ft record is therefore NOT \
                  emitted for this character (selected_tree_stranger={selected_tree_stranger}, \
                  confirmed via the same flag `replaced_by_alternate_trait` checks). This is a \
                  grounded recognition value; it contributes no computed speed-derived effect to any \
@@ -695,8 +706,8 @@ pub(super) fn explain_vanara_flat_override_race_trait(
             detail: format!(
                 "Vanara racial trait bundle — speed: PF1 Advanced Race Guide Vanara has a base \
                  land speed of {VANARA_BASE_SPEED_FEET} ft and a Climb speed of \
-                 {VANARA_CLIMB_SPEED_FEET} ft (vanara_abilities_race.lst:17 \
-                 MOVE:Walk,{VANARA_BASE_SPEED_FEET},Climb,{VANARA_CLIMB_SPEED_FEET}). This is a \
+                 {climb} ft (vanara_abilities_race.lst:17 \
+                 MOVE:Walk,{VANARA_BASE_SPEED_FEET},Climb,{climb}). This is a \
                  grounded recognition value carrying the Vanara base-speed identity (both land \
                  and climb) on the deterministic pilot seam; it contributes no computed \
                  speed-derived effect to any chassis output, skill modifier, attack roll, or \
