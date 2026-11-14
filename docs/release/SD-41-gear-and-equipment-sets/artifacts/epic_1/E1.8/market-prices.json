@@ -518,7 +518,7 @@
       "weapon": 51
     },
     "if_converter_evaluates_every_in_record_kind_total": 277,
-    "predicate": "a row is left for the lookup unless its cause is a converter cause and (it is a composite resolved to its base, whose eqmods are unknown until E1.9 restores them, or every eqmod it names states a cost of an evaluated kind); in_record kinds = numeric, WT/BASECOST, +N, and the %SPELL/%CHARGES/%CHOICE formulas whose inputs are the EQMOD token arguments; e19_listed = numeric, WT/BASECOST, +N"
+    "predicate": "a row is left for the lookup unless its cause is a converter cause and (it is a composite resolved to its base, whose eqmods are unknown until E1.9 restores them, or every eqmod it names states a cost of an evaluated kind); in_record kinds = numeric, WT/BASECOST, +N, and the spell-effect, charges and choice-argument formulas whose inputs are the EQMOD token arguments; e19_listed = numeric, WT/BASECOST, +N"
   },
   "market_rows": {
     "armor": 63,

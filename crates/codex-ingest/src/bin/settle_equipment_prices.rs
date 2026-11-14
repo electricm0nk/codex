@@ -19,6 +19,10 @@
 //! never replaced. `gen_settled_corpus` then carries the price into `_settled/equipment.json`
 //! (`corpus_equipment_json` reads the settled `cost_gp` over a non-positive `COST` literal).
 //!
+//! It also writes the Market price census's record side (`artifacts/epic_1/E1.8/corpus-price-causes.json`
+//! in the SD-41 package): per key, the converter cause and eqmod cost kinds, so the desktop census
+//! (`apps/desktop/src-tauri/tests/market_price_census.rs`) reads no ingest token (E1.15).
+//!
 //! ```text
 //! cargo run --locked -p codex-ingest --bin settle_equipment_prices              # write
 //! cargo run --locked -p codex-ingest --bin settle_equipment_prices -- --check   # exit 1 if a write is due
@@ -311,6 +315,111 @@ fn table_book(rel: &Path) -> Option<String> {
     })
 }
 
+/// The Market price census's record side (SD-41 E1.8's cause classifier, moved here by E1.15 so the
+/// desktop census reads no ingest token, `decisions.md §17`): per corpus equipment key, its
+/// records, the converter cause its first record shows and its eqmods' cost kinds.
+const PRICE_CAUSES: &str = "docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_1/E1.8/corpus-price-causes.json";
+
+fn census_tokens<'a>(data: &'a Value, name: &str) -> Vec<&'a str> {
+    data["raw_tokens"]
+        .as_array()
+        .map(|ts| ts.iter().filter(|t| t["key"] == name).filter_map(|t| t["value"].as_str()).collect())
+        .unwrap_or_default()
+}
+
+/// The eqmod keys an `EQMOD:` token names: `.`-separated, each without its `|` arguments.
+fn census_eqmod_keys(data: &Value) -> Vec<String> {
+    census_tokens(data, "EQMOD")
+        .iter()
+        .flat_map(|v| v.split('.'))
+        .map(|k| k.split('|').next().unwrap_or("").trim().to_string())
+        .filter(|k| !k.is_empty())
+        .collect()
+}
+
+/// The kind of cost an eqmod record states, from its `COST` token and its `ITEMCOST` bonuses, the
+/// hardest first.
+fn census_eqmod_cost_kind(record: Option<&Value>) -> &'static str {
+    let Some(data) = record else { return "no_corpus_record" };
+    let mut formulas: Vec<&str> = census_tokens(data, "COST");
+    if let Some(chains) = data["raw_bonus_chains"].as_array() {
+        for q in chains.iter().filter_map(|c| c["qualifiers"].as_array()) {
+            if q.first().and_then(Value::as_str) == Some("ITEMCOST") {
+                formulas.extend(q.get(2).and_then(Value::as_str));
+            }
+        }
+    }
+    let any = |needle: &str| formulas.iter().any(|f| f.contains(needle));
+    if any("%SPELL") {
+        "spell_effect_args"
+    } else if any("%CHARGES") {
+        "charges_arg"
+    } else if any("%CHOICE") {
+        "choice_arg"
+    } else if any("PLUSTOTAL") {
+        "enhancement_plus"
+    } else if any("WT") || any("BASECOST") {
+        "weight_or_basecost"
+    } else if formulas.iter().all(|f| f.trim().parse::<f64>().is_ok()) {
+        "numeric"
+    } else {
+        "other_formula"
+    }
+}
+
+/// Why a record has no positive price. `no_raw_tokens` is refined by the census, which alone knows
+/// the Market's served name (a composite resolved to its base serves another item's name).
+fn census_cause(data: &Value) -> &'static str {
+    if data["cost_gp"].as_f64().is_some_and(|c| c > 0.0) {
+        return "table_disagrees_with_corpus";
+    }
+    if data["raw_tokens"].as_array().is_none_or(|t| t.is_empty()) {
+        return "no_raw_tokens";
+    }
+    let cost = census_tokens(data, "COST");
+    let has_eqmods = !census_eqmod_keys(data).is_empty();
+    let literal = cost.first().and_then(|c| c.trim().parse::<f64>().ok());
+    match (cost.first(), literal) {
+        (Some(_), Some(c)) if c < 0.0 && has_eqmods => "cost_offset_by_eqmod",
+        (Some(_), Some(c)) if c < 0.0 => "cost_literal_negative",
+        _ if has_eqmods => "price_in_eqmods",
+        (Some(_), None) => "cost_formula_unevaluated",
+        (Some(_), Some(_)) => "cost_literal_zero",
+        (None, _) => "no_cost_token",
+    }
+}
+
+/// The census artifact over every equipment record (eqmods included), as settled by this run.
+fn price_causes(equipment: &[Record]) -> String {
+    let mut by_key: BTreeMap<&str, Vec<&Record>> = BTreeMap::new();
+    for r in equipment {
+        if let Some(key) = r.data()["key"].as_str() {
+            by_key.entry(key).or_default().push(r);
+        }
+    }
+    let first = |key: &str| by_key.get(key).map(|rs| rs[0].data());
+    let out: BTreeMap<&str, Value> = by_key
+        .iter()
+        .map(|(key, rs)| {
+            let data = rs[0].data();
+            let eqmods = census_eqmod_keys(data);
+            let kinds: BTreeMap<&String, &str> =
+                eqmods.iter().map(|k| (k, census_eqmod_cost_kind(first(k)))).collect();
+            let row = serde_json::json!({
+                "corpus": rs.iter().map(|r| r.path.display().to_string()).collect::<Vec<_>>(),
+                "cause": census_cause(data),
+                "cost_token": census_tokens(data, "COST"),
+                "eqmods": eqmods,
+                "eqmod_cost_kinds": kinds,
+            });
+            (*key, row)
+        })
+        .collect();
+    // One key per line: the file stays diffable at ~8k keys.
+    let lines: Vec<String> = out.iter().map(|(k, v)| format!("  {}: {v}", Value::from(*k))).collect();
+    format!("{{\n{}\n}}\n", lines.join(",\n"))
+}
+
 fn main() {
     let check = std::env::args().any(|a| a == "--check");
     let mut oracle = Oracle::new(pcgen_corpus_root());
@@ -461,6 +570,14 @@ fn main() {
         }
     }
 
+    let causes = price_causes(&equipment);
+    if std::fs::read_to_string(PRICE_CAUSES).ok().as_deref() != Some(causes.as_str()) {
+        writes += 1;
+        if !check {
+            std::fs::write(PRICE_CAUSES, causes).unwrap_or_else(|e| panic!("{PRICE_CAUSES}: {e}"));
+        }
+    }
+
     println!("settle_equipment_prices: records {:?}", report.by_outcome);
     println!("settle_equipment_prices: not evaluated by the converter {:?}", report.unpriced);
     println!("settle_equipment_prices: table rows priced {table_rows}; files {}", writes);
@@ -495,6 +612,30 @@ mod tests {
         assert!(replaces(Some(-150.0), 0.0));
         assert!(!replaces(None, 0.0), "no zero claimed where nothing was stated");
         assert!(!replaces(Some(10.0), 20.0), "a positive price is never replaced");
+    }
+
+    #[test]
+    fn census_cause_and_eqmod_kind_read_the_record_tokens() {
+        let rec = |cost: &str, eqmod: Option<&str>| {
+            let mut ts = vec![serde_json::json!({"key": "COST", "value": cost})];
+            ts.extend(eqmod.map(|e| serde_json::json!({"key": "EQMOD", "value": e})));
+            serde_json::json!({"cost_gp": null, "raw_tokens": ts})
+        };
+        assert_eq!(census_cause(&serde_json::json!({"cost_gp": 5.0})), "table_disagrees_with_corpus");
+        assert_eq!(census_cause(&serde_json::json!({"cost_gp": null, "raw_tokens": []})), "no_raw_tokens");
+        assert_eq!(census_cause(&rec("-150", Some("MWORKW"))), "cost_offset_by_eqmod");
+        assert_eq!(census_cause(&rec("-150", None)), "cost_literal_negative");
+        assert_eq!(census_cause(&rec("0", Some("A.B|1"))), "price_in_eqmods");
+        assert_eq!(census_cause(&rec("WT*2", None)), "cost_formula_unevaluated");
+        assert_eq!(census_cause(&rec("0", None)), "cost_literal_zero");
+        assert_eq!(census_eqmod_keys(&rec("0", Some("A.B|1|2. C"))), ["A", "B", "C"]);
+        let chain = |formula: &str| {
+            serde_json::json!({"raw_tokens": [], "raw_bonus_chains": [{"qualifiers": ["ITEMCOST", "TYPE.X", formula]}]})
+        };
+        assert_eq!(census_eqmod_cost_kind(Some(&chain("%CHOICE*2"))), "choice_arg");
+        assert_eq!(census_eqmod_cost_kind(Some(&chain("PLUSTOTAL*1000"))), "enhancement_plus");
+        assert_eq!(census_eqmod_cost_kind(Some(&rec("150", None))), "numeric");
+        assert_eq!(census_eqmod_cost_kind(None), "no_corpus_record");
     }
 
     #[test]

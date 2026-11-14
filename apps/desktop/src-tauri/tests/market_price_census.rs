@@ -53,95 +53,16 @@ fn repo_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..").canonicalize().unwrap()
 }
 
-/// One converted corpus record: where it lives and its `data` object.
-struct CorpusRecord {
-    path: String,
-    data: Value,
-}
-
-/// Every `data/corpus/<book>/equipment/**/*.json` record, by `data.key`.
-fn corpus_equipment(root: &Path) -> HashMap<String, Vec<CorpusRecord>> {
-    fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
-        for entry in std::fs::read_dir(dir).unwrap() {
-            let path = entry.unwrap().path();
-            if path.is_dir() {
-                walk(&path, out);
-            } else if path.extension().is_some_and(|e| e == "json") {
-                out.push(path);
-            }
-        }
-    }
-    let mut files = Vec::new();
-    for book in std::fs::read_dir(root.join("data/corpus")).unwrap() {
-        let equipment = book.unwrap().path().join("equipment");
-        if equipment.is_dir() {
-            walk(&equipment, &mut files);
-        }
-    }
-    files.sort();
-    let mut by_key: HashMap<String, Vec<CorpusRecord>> = HashMap::new();
-    for file in files {
-        let doc: Value = serde_json::from_str(&std::fs::read_to_string(&file).unwrap())
-            .unwrap_or_else(|e| panic!("{}: {e}", file.display()));
-        let Some(key) = doc["data"]["key"].as_str() else { continue };
-        let path = file.strip_prefix(root).unwrap().display().to_string();
-        by_key.entry(key.to_string()).or_default().push(CorpusRecord { path, data: doc["data"].clone() });
-    }
-    by_key
-}
-
-fn tokens<'a>(data: &'a Value, name: &str) -> Vec<&'a str> {
-    data["raw_tokens"]
-        .as_array()
-        .map(|ts| {
-            ts.iter()
-                .filter(|t| t["key"] == name)
-                .filter_map(|t| t["value"].as_str())
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-/// The eqmod keys an `EQMOD:` token names: `.`-separated, each without its `|` arguments.
-fn eqmod_keys(data: &Value) -> Vec<String> {
-    tokens(data, "EQMOD")
-        .iter()
-        .flat_map(|v| v.split('.'))
-        .map(|k| k.split('|').next().unwrap_or("").trim().to_string())
-        .filter(|k| !k.is_empty())
-        .collect()
-}
-
-/// The kind of cost an eqmod states, from its `COST` token and its `ITEMCOST` bonuses, the
-/// hardest first. E1.9 (a) lists the kinds its converter evaluates: numbers, `WT*N` / `BASECOST`
-/// forms and the `+N` rate (`PLUSTOTAL`); the `%`-argument kinds read their inputs from the
-/// `EQMOD:` token's own `[...]` arguments (`SPELLLEVEL[2]CASTERLEVEL[3]`, `|1721`, `CHARGES[50]`).
-fn eqmod_cost_kind(key: &str, corpus: &HashMap<String, Vec<CorpusRecord>>) -> &'static str {
-    let Some(record) = corpus.get(key).and_then(|rs| rs.first()) else { return "no_corpus_record" };
-    let mut formulas: Vec<&str> = tokens(&record.data, "COST");
-    if let Some(chains) = record.data["raw_bonus_chains"].as_array() {
-        for q in chains.iter().filter_map(|c| c["qualifiers"].as_array()) {
-            if q.first().and_then(Value::as_str) == Some("ITEMCOST") {
-                formulas.extend(q.get(2).and_then(Value::as_str));
-            }
-        }
-    }
-    let any = |needle: &str| formulas.iter().any(|f| f.contains(needle));
-    if any("%SPELL") {
-        "spell_effect_args"
-    } else if any("%CHARGES") {
-        "charges_arg"
-    } else if any("%CHOICE") {
-        "choice_arg"
-    } else if any("PLUSTOTAL") {
-        "enhancement_plus"
-    } else if any("WT") || any("BASECOST") {
-        "weight_or_basecost"
-    } else if formulas.iter().all(|f| f.trim().parse::<f64>().is_ok()) {
-        "numeric"
-    } else {
-        "other_formula"
-    }
+/// The census's record side, written by `settle_equipment_prices` (E1.15): per corpus equipment
+/// key, its record paths, the converter cause its first record shows, its `COST` token and its
+/// eqmods' cost kinds. The classifier reads the converted record's ingest tokens, so it lives
+/// tool side (`decisions.md §17`); this test reads only its verdicts.
+fn corpus_price_causes(root: &Path) -> HashMap<String, Value> {
+    let path = root.join("docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_1/E1.8/corpus-price-causes.json");
+    let text = std::fs::read_to_string(&path).unwrap_or_else(|e| {
+        panic!("{}: {e}; run `cargo run --locked -p codex-ingest --bin settle_equipment_prices` from the repo root", path.display())
+    });
+    serde_json::from_str(&text).unwrap_or_else(|e| panic!("{}: {e}", path.display()))
 }
 
 /// Eqmod cost kinds E1.9 (a) names as evaluated by its converter fix.
@@ -150,43 +71,21 @@ const E19_LISTED_KINDS: [&str; 3] = ["numeric", "weight_or_basecost", "enhanceme
 const IN_RECORD_KINDS: [&str; 6] =
     ["numeric", "weight_or_basecost", "enhancement_plus", "spell_effect_args", "charges_arg", "choice_arg"];
 
-/// Why a Market row has no positive price, read off its converted record.
-fn cause(
-    entry: &EquipmentCatalogEntryDto,
-    catalog_name: &str,
-    record: Option<&CorpusRecord>,
-) -> &'static str {
+/// Why a Market row has no positive price: the record's cause, with a record that carries no
+/// tokens told apart by the name the Market serves for it.
+fn cause<'a>(entry: &EquipmentCatalogEntryDto, catalog_name: &str, record: Option<&'a Value>) -> &'a str {
     // A PCGen removal directive (`Dust Knuckles.FORGET`) served as a row: not an item to price.
     if entry.key.ends_with(".FORGET") {
         return "retirement_directive_row";
     }
     let Some(record) = record else { return "no_corpus_record" };
-    let data = &record.data;
-    let corpus_cost = data["cost_gp"].as_f64();
-    if corpus_cost.is_some_and(|c| c > 0.0) {
-        return "table_disagrees_with_corpus";
+    let why = record["cause"].as_str().expect("every census row names a cause");
+    // The served name is another item's (`Breastplate (Base)`, `Donkey` for Mule): the converter
+    // resolved the row to its base and dropped its own tokens.
+    if why == "no_raw_tokens" && catalog_name != entry.key && catalog_name != format!("{} (Base)", entry.key) {
+        return "composite_resolved_to_base";
     }
-    let has_tokens = data["raw_tokens"].as_array().is_some_and(|t| !t.is_empty());
-    if !has_tokens {
-        // The served name is another item's (`Breastplate (Base)`, `Donkey` for Mule): the
-        // converter resolved the row to its base and dropped its own tokens.
-        return if catalog_name != entry.key && catalog_name != format!("{} (Base)", entry.key) {
-            "composite_resolved_to_base"
-        } else {
-            "no_raw_tokens"
-        };
-    }
-    let cost = tokens(data, "COST");
-    let has_eqmods = !eqmod_keys(data).is_empty();
-    let literal = cost.first().and_then(|c| c.trim().parse::<f64>().ok());
-    match (cost.first(), literal) {
-        (Some(_), Some(c)) if c < 0.0 && has_eqmods => "cost_offset_by_eqmod",
-        (Some(_), Some(c)) if c < 0.0 => "cost_literal_negative",
-        _ if has_eqmods => "price_in_eqmods",
-        (Some(_), None) => "cost_formula_unevaluated",
-        (Some(_), Some(_)) => "cost_literal_zero",
-        (None, _) => "no_cost_token",
-    }
+    why
 }
 
 fn bump(map: &mut BTreeMap<String, BTreeMap<String, usize>>, outer: &str, inner: &str) {
@@ -196,7 +95,7 @@ fn bump(map: &mut BTreeMap<String, BTreeMap<String, usize>>, outer: &str, inner:
 #[test]
 fn market_price_census() {
     let root = repo_root();
-    let corpus = corpus_equipment(&root);
+    let corpus = corpus_price_causes(&root);
     // `list_market` keeps the first catalog row of a key; so does this lookup.
     let catalog = build_equipment_catalog();
     let mut catalog_names: HashMap<&str, &str> = HashMap::new();
@@ -230,15 +129,15 @@ fn market_price_census() {
                 Some(_) => continue,
             };
             let catalog_name = catalog_names.get(e.key.as_str()).copied().unwrap_or(&e.name);
-            let records = corpus.get(&e.key);
-            if records.is_some_and(|r| r.len() > 1) {
+            let record = corpus.get(&e.key);
+            if record.and_then(|r| r["corpus"].as_array()).is_some_and(|paths| paths.len() > 1) {
                 ambiguous_corpus_keys += 1;
             }
-            let record = records.and_then(|r| r.first());
             let why = cause(e, catalog_name, record);
-            let eqmods = record.map(|r| eqmod_keys(&r.data)).unwrap_or_default();
-            let eqmod_kinds: BTreeMap<&String, &str> =
-                eqmods.iter().map(|k| (k, eqmod_cost_kind(k, &corpus))).collect();
+            let eqmods = record.map(|r| r["eqmods"].clone()).unwrap_or_else(|| json!([]));
+            let eqmod_kinds: BTreeMap<String, String> = record
+                .map(|r| serde_json::from_value(r["eqmod_cost_kinds"].clone()).expect("eqmod_cost_kinds is a map"))
+                .unwrap_or_default();
             let out = json!({
                 "key": e.key,
                 "name": e.name,
@@ -248,8 +147,8 @@ fn market_price_census() {
                 "market_category": cat,
                 "cost_gp": e.cost_gp,
                 "cause": why,
-                "corpus": records.map(|rs| rs.iter().map(|r| r.path.clone()).collect::<Vec<_>>()),
-                "cost_token": record.map(|r| tokens(&r.data, "COST")),
+                "corpus": record.map(|r| r["corpus"].clone()),
+                "cost_token": record.map(|r| r["cost_token"].clone()),
                 "eqmods": eqmods,
                 "eqmod_cost_kinds": eqmod_kinds,
             });
@@ -267,7 +166,7 @@ fn market_price_census() {
             // A composite's dropped eqmods are unknown until E1.9 restores its tokens: counted fixed.
             let fixed_by = |kinds: &[&str]| {
                 CONVERTER_CAUSES.contains(&why)
-                    && (why == "composite_resolved_to_base" || eqmod_kinds.values().all(|k| kinds.contains(k)))
+                    && (why == "composite_resolved_to_base" || eqmod_kinds.values().all(|k| kinds.contains(&k.as_str())))
             };
             *every_unpriced.entry(cat.clone()).or_default() += 1;
             if !fixed_by(&IN_RECORD_KINDS) {
@@ -307,7 +206,7 @@ fn market_price_census() {
             "if_converter_evaluates_e19_listed_kinds_only_total": left_if_e19_listed.values().sum::<usize>(),
             "every_unpriced": every_unpriced,
             "every_unpriced_total": every_unpriced.values().sum::<usize>(),
-            "predicate": "a row is left for the lookup unless its cause is a converter cause and (it is a composite resolved to its base, whose eqmods are unknown until E1.9 restores them, or every eqmod it names states a cost of an evaluated kind); in_record kinds = numeric, WT/BASECOST, +N, and the %SPELL/%CHARGES/%CHOICE formulas whose inputs are the EQMOD token arguments; e19_listed = numeric, WT/BASECOST, +N",
+            "predicate": "a row is left for the lookup unless its cause is a converter cause and (it is a composite resolved to its base, whose eqmods are unknown until E1.9 restores them, or every eqmod it names states a cost of an evaluated kind); in_record kinds = numeric, WT/BASECOST, +N, and the spell-effect, charges and choice-argument formulas whose inputs are the EQMOD token arguments; e19_listed = numeric, WT/BASECOST, +N",
         },
         "ambiguous_corpus_keys": ambiguous_corpus_keys,
         "by_book": by_book,
