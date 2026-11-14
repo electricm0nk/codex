@@ -97,7 +97,7 @@ export function printFileName(displayLabel: string): string {
   return `${safeName}.pdf`;
 }
 
-/** The campaigns whose party holds the character, as the print's Bio and campaign notes take them (R17). */
+/** The campaigns whose party holds the character, as page 1's Campaign cell and the Bio section take them (R17). */
 export function campaignNotesFor(
   characterId: string,
   campaigns: ReadonlyArray<Pick<Campaign, 'name' | 'description' | 'partyCharacterIds'>>,
@@ -125,8 +125,8 @@ export async function runPrintAction(
       characterId: target.characterId,
       paper: options.paper,
       sections: options.sections,
-      // Only the Bio section prints them; a print without that box sends none.
-      campaigns: options.sections.bio ? campaignNotesFor(target.characterId, deps.campaigns()) : [],
+      // Always sent: page 1's Campaign cell prints their names; the Bio section, when ticked, their notes.
+      campaigns: campaignNotesFor(target.characterId, deps.campaigns()),
     };
     if (action === 'print') {
       const printed = await deps.printSheetPdf(request);

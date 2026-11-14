@@ -1,4 +1,4 @@
-// The `spellbook` look (SD-40 E3.3, decisions.md §22 "2: A": section 4, spells only; R3: PCGen's
+// The `spellbook` look (SD-40 E3.3, decisions.md §22 "2: A": section 4, spells only; R3: the reference render's
 // 3x5 spell cards as the picture). One card per spell (rows of kind `spell`), two to a line: its
 // name over a rule, then each field under the caption the row of kind `captions` gives it (School,
 // Level, Casting time, Components, Range, Target or area, Duration, Saving throw, Spell resistance),

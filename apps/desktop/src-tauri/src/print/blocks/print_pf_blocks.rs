@@ -384,6 +384,19 @@ fn print_pf_blocks_bio_prints_the_bio_and_the_campaigns_description() {
 }
 
 #[test]
+fn print_pf_blocks_page_one_names_the_campaign_without_the_bio_section() {
+    // The dialog sends the campaigns on every print (E4.MC): page 1's Campaign cell prints their
+    // names; their descriptions print only in the Bio section, which the first-time set leaves out.
+    let root = seeded("campaign-page-one-aldric", ALDRIC_ID);
+    let mut first_time = request(false, false, false);
+    first_time.campaigns = vec![CampaignNote { name: "Rise of the Runelords".to_owned(), description: "Sandpoint, autumn 4707.".to_owned() }];
+    let text = pdf_text(&render(&root, &first_time));
+    let page_one = text.split("Abilities and Feats").next().unwrap_or_default();
+    assert!(page_one.contains("Rise of the Runelords"), "page 1 names the campaign: {page_one}");
+    assert!(!text.contains("Sandpoint, autumn 4707."), "no Bio section, no description: {text}");
+}
+
+#[test]
 fn print_pf_blocks_an_override_tag_prints_on_what_it_let_in() {
     let root = seeded("override-aldric", ALDRIC_ID);
     let mut custom = load_character_custom_at_root(&root).expect("custom loads");

@@ -99,8 +99,13 @@ async function verifiesPrintWritesTheTempCopyWithNoDialog() {
   assertEqual(calls.saveDefault.length, 0, 'Print asks for no path');
   assertEqual(
     JSON.stringify(calls.printed[0]),
-    JSON.stringify({ characterId: 'char-aldric', paper: 'a4', sections: FIRST_TIME_SECTIONS, campaigns: [] }),
-    'a first-time print sends sections 1+2+3 and, without Bio, no campaigns',
+    JSON.stringify({
+      characterId: 'char-aldric',
+      paper: 'a4',
+      sections: FIRST_TIME_SECTIONS,
+      campaigns: [{ name: 'Rise of the Runelords', description: 'Sandpoint, autumn.' }],
+    }),
+    'a first-time print sends sections 1+2+3 and the campaigns that list the character: page 1 prints their names under Campaign',
   );
   assertEqual(outcome.kind, 'Printed', 'printed');
   assertEqual(
