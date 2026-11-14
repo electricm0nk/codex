@@ -1621,6 +1621,9 @@ pub struct HeldSeed {
     pub traits: Vec<String>,
     pub equipment: Vec<String>,
     pub spells: Vec<String>,
+    /// Spell slug -> the class slug it was chosen through (`SpellSelection::source_class_id`): the
+    /// holder whose caster level the spell's slots read (`ClassRef::Holder`).
+    pub spell_classes: BTreeMap<String, ClassId>,
     pub skills: Vec<String>,
     /// Applied racial-trait keys (`"Dwarf ~ Minesight"`), as the race resolver names them.
     pub race_traits: Vec<String>,
@@ -1679,6 +1682,8 @@ impl HeldSeed {
             traits: chosen.selected_traits.iter().map(|t| id_slug(t)).collect(),
             equipment: chosen.equipment_selections.iter().map(|e| id_slug(&e.item_id)).collect(),
             spells: chosen.spells_selected.iter().map(|s| id_slug(&s.spell_id)).collect(),
+            // shortcut: a spell chosen through two classes reads the first one's caster level; no seed holds one.
+            spell_classes: chosen.spells_selected.iter().rev().map(|s| (id_slug(&s.spell_id), id_slug(&s.source_class_id))).collect(),
             skills: chosen.skill_allocations.iter().filter(|a| a.ranks > 0).map(|a| id_slug(&a.skill_id)).collect(),
             race_traits: Vec::new(),
             class_features: Vec::new(),
@@ -2428,7 +2433,8 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
     for (kind, slugs) in [("feat", &seed.feats), ("trait", &seed.traits), ("equipment", &seed.equipment), ("spell", &seed.spells), ("skill", &seed.skills)] {
         for s in slugs {
             if let Some(id) = package.find(kind, s) {
-                add(&mut held, id, HeldRule::default());
+                let holder_class = if kind == "spell" { seed.spell_classes.get(s).cloned() } else { None };
+                add(&mut held, id, HeldRule { holder_class, ..Default::default() });
             }
         }
     }
@@ -3980,6 +3986,25 @@ mod tests {
             }
             other => panic!("an undecidable gate must never be approximated as granted or silently dropped: {other:?}"),
         }
+    }
+
+    /// A held spell's stat-block slots read the caster level of the class the spell was chosen
+    /// through (`SpellSelection::source_class_id`): Elowen's shape, Human Wizard 5 holding Fireball
+    /// (Long: 400 ft. + 40 ft./level, CRB p.283) and Light (10 min./level, CRB p.304).
+    #[test]
+    fn a_held_spells_stat_block_slots_read_its_classs_caster_level() {
+        let fixture = "case_id=wizard5-spells\nsource_package_id=pf1.core_rulebook\nrace_id=race:human\nclass_level=class:wizard:5\n\
+            ability=strength:8\nability=dexterity:14\nability=constitution:13\nability=intelligence:18\nability=wisdom:12\nability=charisma:10\n\
+            spell=Light:class:wizard:prepared\nspell=Fireball:class:wizard:prepared\n";
+        let input = crate::rules_core::character_input::load_character_input_fixture(fixture).character_input.expect("the fixture loads");
+        let computation = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("the converted package loads");
+        let lines = render_sheet(package, &HeldSeed::from_record(&input), &CharacterFacts::from_character(&input, &computation));
+        let prose = |label: &str| {
+            lines.iter().find(|l| l.kind == "spell" && l.label == label).map(|l| l.prose.clone()).unwrap_or_else(|| panic!("{label} is held"))
+        };
+        assert!(prose("Fireball").lines().any(|l| l == "Range: 600 ft."), "Fireball at caster level 5: {}", prose("Fireball"));
+        assert!(prose("Light").lines().any(|l| l == "Duration: 50 minutes"), "Light at caster level 5: {}", prose("Light"));
     }
 }
 
