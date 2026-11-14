@@ -1379,6 +1379,10 @@ pub struct CharacterFacts {
     pub speeds: BTreeMap<MoveMode, i64>,
     pub challenge_rating: i64,
     pub highest_spell_level: i64,
+    /// Class slug -> caster level, for a class whose caster level is not its class level (the
+    /// chassis' `class_chassis.<class>.partial_caster.effective_caster_level`: Paladin, Ranger).
+    /// `ClassRef::Holder` reads it, falling back to the class level for a class not listed here.
+    pub caster_levels: BTreeMap<ClassId, i64>,
     pub master_level: i64,
     /// SD-37 E5.4: a companion's master's variables, `VarId -> value` (each the master's own
     /// folded `Expr::Var`), which [`Expr::MasterVar`] reads. Empty for a character with no master
@@ -1537,12 +1541,21 @@ impl CharacterFacts {
         {
             speeds.insert("Walk".to_string(), i64::from(speed.value));
         }
+        let caster_levels = computation
+            .explanations
+            .iter()
+            .filter_map(|e| {
+                let class = e.id.strip_prefix("class_chassis.")?.strip_suffix(".partial_caster.effective_caster_level")?;
+                Some((class.to_string(), i64::from(e.value)))
+            })
+            .collect();
         let mut picks = CharacterFacts::default();
         for c in &chosen.selected_choices {
             picks.record_pick(&c.choice_set_id, &c.selection_id);
         }
         CharacterFacts {
             level,
+            caster_levels,
             class_levels,
             ability_scores: [s.strength, s.dexterity, s.constitution, s.intelligence, s.wisdom, s.charisma]
                 .map(i64::from),
@@ -1869,7 +1882,8 @@ impl<'a> Evaluator<'a> {
             Expr::ClassLevel(c) => Rat::int(self.class_level(c)),
             Expr::CasterLevel(ClassRef::Class(c)) => Rat::int(self.class_level(c)),
             Expr::CasterLevel(ClassRef::Holder) => {
-                Rat::int(self.ctx.holder_class.as_deref().map(|c| self.class_level(c)).unwrap_or(0))
+                let caster_level = |c: &str| self.facts.caster_levels.get(c).copied().unwrap_or_else(|| self.class_level(c));
+                Rat::int(self.ctx.holder_class.as_deref().map(caster_level).unwrap_or(0))
             }
             Expr::SpellLevel => Rat::int(self.ctx.spell_level),
             Expr::AbilityMod(a) => Rat::int(self.facts.ability_mods[ability_index(*a)]),
@@ -4005,6 +4019,22 @@ mod tests {
         };
         assert!(prose("Fireball").lines().any(|l| l == "Range: 600 ft."), "Fireball at caster level 5: {}", prose("Fireball"));
         assert!(prose("Light").lines().any(|l| l == "Duration: 50 minutes"), "Light at caster level 5: {}", prose("Light"));
+    }
+
+    /// A held spell's `Holder` caster level is the class's caster level, not its class level: a
+    /// Ranger 4 casts at caster level 1 (the chassis' `partial_caster.effective_caster_level`,
+    /// level - 3), so Entangle (Long: 400 ft. + 40 ft./level, CRB p.278) reads 440 ft., not 560 ft.
+    #[test]
+    fn a_held_spells_holder_caster_level_is_the_classs_caster_level_not_its_level() {
+        let fixture = "case_id=ranger4-spells\nsource_package_id=pf1.core_rulebook\nrace_id=race:human\nclass_level=class:ranger:4\n\
+            ability=strength:14\nability=dexterity:16\nability=constitution:12\nability=intelligence:10\nability=wisdom:14\nability=charisma:8\n\
+            spell=Entangle:class:ranger:prepared\n";
+        let input = crate::rules_core::character_input::load_character_input_fixture(fixture).character_input.expect("the fixture loads");
+        let computation = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&input);
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("the converted package loads");
+        let lines = render_sheet(package, &HeldSeed::from_record(&input), &CharacterFacts::from_character(&input, &computation));
+        let prose = lines.iter().find(|l| l.kind == "spell" && l.label == "Entangle").map(|l| l.prose.clone()).expect("Entangle is held");
+        assert!(prose.lines().any(|l| l == "Range: 440 ft."), "Entangle at ranger caster level 1: {prose}");
     }
 }
 
