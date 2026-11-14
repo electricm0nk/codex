@@ -134,6 +134,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E3.3 | E3.3 | complete (discovered E3.8) | 51502c32e7 + receipt commit | artifacts/epic_3/E3.3_cycle_receipt.md |
 | E3.4 | E3.4 | complete | ea273e3b0f + receipt commit | artifacts/epic_3/E3.4_cycle_receipt.md |
 | E3.5 | E3.5 | complete | 1b694147b6 + 7083568957 + receipt commit | artifacts/epic_3/E3.5_cycle_receipt.md |
+| E3.7 | E3.7 | complete | 0eeb64cf43 + receipt commit | artifacts/epic_3/E3.7_cycle_receipt.md |
 
 ## Epic reports
 
