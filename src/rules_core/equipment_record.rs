@@ -426,8 +426,16 @@ mod container_tests {
         );
 
         // The settled containers: Container-typed, not a weapon (no DAMAGE, no Weapon type word).
-        // Implementation A: the settled bundles. Implementation B: the source records.
+        // Implementation A: the settled bundles. Implementation B: the source records, with the
+        // cited capacity override list (`decisions.md §32`) applied by `KEY`.
         let settled = settled();
+        let overrides: Vec<serde_json::Value> = serde_json::from_str(
+            &std::fs::read_to_string(repo().join("data/capacity_overrides/container-capacities.json")).unwrap(),
+        )
+        .unwrap();
+        let overridden = |m: &std::collections::BTreeMap<String, String>| {
+            m.get("KEY").is_some_and(|key| overrides.iter().any(|row| row["key"] == key.as_str()))
+        };
         let a: Vec<&str> =
             settled.iter().filter(|(_, r)| r.is_container()).map(|(_, r)| kind_of(&r.capacity())).collect();
         let b: Vec<&str> = maps
@@ -436,14 +444,14 @@ mod container_tests {
                 let words: Vec<&str> = m.get("TYPE").map_or(vec![], |t| t.split('.').collect());
                 words.contains(&"Container") && !words.contains(&"Weapon") && !m.contains_key("DAMAGE")
             })
-            .map(|m| m.get("CONTAINS").map_or("unstated", |v| match first_kind(v) {
+            .map(|m| if overridden(m) { "lb" } else { m.get("CONTAINS").map_or("unstated", |v| match first_kind(v) {
                 "other" => "unstated",
                 kind => kind,
-            }))
+            }) })
             .collect();
         let tally = |rows: &[&str]| (rows.len(), count(rows, "lb"), count(rows, "unlim"), count(rows, "unstated"));
         assert_eq!(tally(&a), tally(&b), "settled containers agree with the source predicate");
-        assert_eq!(tally(&a), (130, 32, 50, 48), "settled containers: total, lb, unlimited, unstated");
+        assert_eq!(tally(&a), (130, 33, 49, 48), "settled containers: total, lb, unlimited, unstated (the Backpack: 60 lb, §32)");
         assert!(
             settled.iter().all(|(_, r)| r.is_container() || r.capacity() == ContainerCapacity::Unstated),
             "capacity is settled only on containers"
@@ -481,7 +489,6 @@ mod container_tests {
     #[test]
     fn container_capacity_reads_backpack_unlimited() {
         for key in [
-            "core_rulebook/general/backpack.json",
             "advanced_players_guide/backpack_masterwork.json",
             "ultimate_equipment/powder_horn.json",
         ] {
@@ -491,6 +498,18 @@ mod container_tests {
         }
         assert_eq!(settled_record("core_rulebook/general/sled.json").capacity(), ContainerCapacity::Pounds(2000.0));
         assert_eq!(settled_record("core_rulebook/general/waterskin.json").capacity(), ContainerCapacity::Pounds(4.0));
+    }
+
+    /// SD-41 E1.12 (`decisions.md §32`): the operator's 60 lb Backpack reaches the settled record
+    /// through the cited override list; Backpack (Masterwork) is not overridden.
+    #[test]
+    fn container_capacity_backpack_is_60_lb() {
+        assert_eq!(settled_record("core_rulebook/general/backpack.json").capacity(), ContainerCapacity::Pounds(60.0));
+        assert_eq!(
+            settled_record("advanced_players_guide/backpack_masterwork.json").capacity(),
+            ContainerCapacity::Unlimited,
+            "Backpack (Masterwork) keeps UNLIM|Any"
+        );
     }
 
     /// SD-41 E1.7 (`decisions.md §28, §30`): the settled `BASEQTY` is the pieces in one copy.

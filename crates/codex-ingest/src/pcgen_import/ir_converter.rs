@@ -573,9 +573,51 @@ fn container_of(record: &EquipmentRecord) -> bool {
     words.contains(&"Container") && !words.contains(&"Weapon") && !states_base_damage_of(record)
 }
 
-/// A container's capacity from `CONTAINS`'s first `|` field: `UNLIM…` is unlimited, a number is
-/// pounds, and a `*…` weight-reduction kind or an absent token states none (DEF-1).
+/// One row of the cited container-capacity override list (SD-41 `decisions.md §32`).
+#[derive(Debug, serde::Deserialize)]
+struct CapacityOverride {
+    key: String,
+    capacity_lbs: f64,
+    #[allow(dead_code)] // parsed so an uncited row fails; read by the tests and by people.
+    source: CapacitySource,
+}
+
+/// Where an override's figure comes from; a row without one does not parse.
+#[derive(Debug, serde::Deserialize)]
+#[allow(dead_code)] // read by the tests and by people, not by the converter.
+struct CapacitySource {
+    kind: String,
+    #[serde(rename = "ref")]
+    reference: String,
+    date: String,
+}
+
+/// `data/capacity_overrides/container-capacities.json`, compiled in so every conversion sees it.
+fn capacity_overrides() -> &'static [CapacityOverride] {
+    static ROWS: std::sync::OnceLock<Vec<CapacityOverride>> = std::sync::OnceLock::new();
+    ROWS.get_or_init(|| {
+        serde_json::from_str(include_str!("../../../../data/capacity_overrides/container-capacities.json"))
+            .expect("data/capacity_overrides/container-capacities.json parses")
+    })
+}
+
+/// The override keys that name no record among `identities`.
+#[cfg(test)]
+fn unmatched_capacity_override_keys<'a>(
+    rows: &'a [CapacityOverride],
+    identities: &std::collections::BTreeSet<String>,
+) -> Vec<&'a str> {
+    rows.iter().map(|row| row.key.as_str()).filter(|key| !identities.contains(*key)).collect()
+}
+
+/// A container's capacity: a cited override row for the record's identity wins (`decisions.md
+/// §32`); else `CONTAINS`'s first `|` field: `UNLIM…` is unlimited, a number is pounds, and a
+/// `*…` weight-reduction kind or an absent token states none (DEF-1).
 fn container_capacity_of(record: &EquipmentRecord) -> ContainerCapacity {
+    let identity = equipment_token_value(record, "KEY").unwrap_or(record.name.as_str());
+    if let Some(row) = capacity_overrides().iter().find(|row| row.key == identity) {
+        return ContainerCapacity::Pounds(row.capacity_lbs);
+    }
     let Some(first) = equipment_token_value(record, "CONTAINS").and_then(|value| value.split('|').next()) else {
         return ContainerCapacity::Unstated;
     };
@@ -2223,6 +2265,40 @@ mod tests {
         assert_eq!(capacity(Some("*20|Any")), ContainerCapacity::Unstated, "weight-reduction kind (DEF-1)");
         assert_eq!(capacity(None), ContainerCapacity::Unstated);
         assert_eq!(equipment_record_to_corpus(&equipment_with(&[("TYPE", "Goods.Container"), ("CONTAINS", "60|Any")])).capacity(), ContainerCapacity::Pounds(60.0));
+    }
+
+    /// SD-41 E1.12 (`decisions.md §32`): a cited override row wins over the `CONTAINS` token, by
+    /// the record's identity (`KEY`, else its name); other containers keep the token's capacity.
+    #[test]
+    fn capacity_override_row_wins_over_the_token() {
+        let backpack = equipment_with(&[("KEY", "Backpack"), ("TYPE", "Goods.Container.General"), ("CONTAINS", "UNLIM|Any")]);
+        let masterwork = equipment_with(&[("KEY", "Backpack (Masterwork)"), ("TYPE", "Goods.Container"), ("CONTAINS", "UNLIM|Any")]);
+        assert_eq!(equipment_record_to_corpus(&backpack).capacity(), ContainerCapacity::Pounds(60.0));
+        assert_eq!(equipment_record_to_corpus(&masterwork).capacity(), ContainerCapacity::Unlimited);
+        assert!(capacity_overrides().iter().all(|row| !row.source.kind.is_empty() && !row.source.reference.is_empty()), "every row is cited");
+    }
+
+    /// SD-41 E1.12: a row whose key names no converted equipment record is an error, and every row
+    /// of the shipped list names a record in the settled corpus.
+    #[test]
+    fn capacity_override_unknown_key_fails() {
+        let rows: Vec<CapacityOverride> = serde_json::from_str(
+            r#"[{ "key": "Backpack", "capacity_lbs": 60, "source": { "kind": "operator-ruling", "ref": "test", "date": "2026-11-12" } },
+                { "key": "No Such Bag", "capacity_lbs": 5, "source": { "kind": "book", "ref": "test", "date": "2026-11-12" } }]"#,
+        )
+        .unwrap();
+        let identities: std::collections::BTreeSet<String> = ["Backpack".to_string()].into();
+        assert_eq!(unmatched_capacity_override_keys(&rows, &identities), vec!["No Such Bag"]);
+
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        let mut corpus = std::collections::BTreeSet::new();
+        for book in codex::rules_core::settled_corpus::corpus_book_dirs(&root.join("data/corpus")) {
+            if let Ok(bundle) = codex::rules_core::settled_corpus::read_equipment_bundle(&book) {
+                corpus.extend(bundle.records.into_values().map(|entry| entry.record.identity));
+            }
+        }
+        assert!(corpus.len() > 1000, "settled equipment identities read: {}", corpus.len());
+        assert_eq!(unmatched_capacity_override_keys(capacity_overrides(), &corpus), Vec::<&str>::new());
     }
 }
 

@@ -1,0 +1,11 @@
+[
+  {
+    "key": "Backpack",
+    "capacity_lbs": 60,
+    "source": {
+      "kind": "operator-ruling",
+      "ref": "decisions.md §32; overrides PCGen CRB p.158 CONTAINS:UNLIM|Any",
+      "date": "2026-11-12"
+    }
+  }
+]
