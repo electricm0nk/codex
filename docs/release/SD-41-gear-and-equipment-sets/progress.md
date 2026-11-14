@@ -123,6 +123,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E1.10 | 2026-11-13 | `de3e5d35d4` + this commit | complete | `artifacts/epic_1/E1.10_cycle_receipt.md` (5 tests; root lib 3134 tests, 3128 passed, 6 ignored; `saved_character` 26 passed) |
 | E1.11 | 2026-11-13 | this commit | complete | `artifacts/epic_1/E1.11_cycle_receipt.md` (397 unpriced Market rows in 3 batches: 41 priced from d20pfsrd with URL, 356 in `price-unknown.json` each with `tried`; Market unpriced 397 → 356; settler fence exit for `.COPY=` rows; 13 golden digests re-pinned; SD-27 absent-price pin takes the cited price; discovered E2.11) |
 | E1.12 | 2026-11-13 | this commit | complete | `artifacts/epic_1/E1.12_cycle_receipt.md` (cited override list `data/capacity_overrides/container-capacities.json`, 1 row; CRB Backpack `Unlimited` → `Pounds(60.0)`; settled containers lb/unlimited 32/50 → 33/49; root 1 + ingest 2 tests; package grep command corrected, `decisions.md §20`) |
+| E1.14 | 2026-11-13 | `7421facb1e` + this commit | partial | `artifacts/epic_1/E1.14_cycle_receipt.md` (`DeclaredMoveModes.climb_ft` settled from `MOVE:…,Climb,<ft>`: 4 of 919 race-trait records; Vanara 20, Human none, Tree Stranger none (3 of the 4 named tests); `VANARA_CLIMB_SPEED_FEET` removed, the seam reads the declared mode; remainder: the Skinwalker form-option test needs a ruling, Open blockers) |
 
 ## Epic reports
 
@@ -134,6 +135,8 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --format=%s`)
 
 ## Open blockers
+
+- **E1.14 Skinwalker climb (ruling request, `decisions.md §20` E1.14 row).** The card's fourth test, "Skinwalker change-shape alternate → 20 / 30 per the held alternate", has no held state to read: the two `Change Shape (Climb Speed 20/30 Feet)` records are `Unclassified` per-transformation options (never applied by `resolve()`), and the climb lives on two `CATEGORY:Internal` records (`Skinwalker ~ Climb Speed 20/30`, `MOVE:Climb,20/30`) gated by the bestial form's `TEMPBONUS`, not in the corpus. Ruling needed, one of: **(a)** the paper-sheet rule applies — a form-only climb is printed text (the Change Shape description), no `climb_ft`; drop the test from E1.14's acceptance (`4 passed` → `3 passed`) and E1.14 is `complete`; or **(b)** model it — grant E1.14 (or a new card) write scope to ingest the two Internal records into `data/corpus/bestiary_5/race_trait/skinwalker/` (re-pinning the race-trait count tests) **and** name where a character's chosen form option is stored (no such field exists today) so a resolved Skinwalker can hold it. Tried: the in-fence path (the settle path reads only the record's own `MOVE` tokens; the option records carry none). Blocks E1.MC's "E1.1–E1.14" re-verify only for this one test. Receipt: `artifacts/epic_1/E1.14_cycle_receipt.md`.
 
 - ~~Q10~~ **closed 2026-11-13: the operator put the logos in git (`decisions.md §35`); E4.4 fetches them from the publishers' sources and cites them in `logos/SOURCES.md`; `LEAD_WEB_FETCH` on a failed fetch.** Original entry: logo files (ruling request, `decisions.md §34` (7), `§21` Q10): E4.4 prints the game
   system's logo in the portrait box when no portrait is stored; the repo is public and system logos are trademarks,
