@@ -8,8 +8,8 @@
 //! (E2.20), and a right column of one width
 //! holding the Abilities over the Skills (one column, name + total, E2.11). Then the sections
 //! (`decisions.md §24.3.7`, E2.23), each from a new page under its title: Abilities and Feats,
-//! Inventory (Defense, Gear, Money, E3.2), Spellbook (when asked), Bio (the Identity block, then the bio and campaign notes when
-//! asked), Math (when asked). The blocks
+//! Inventory (Defense, Gear, Money, E3.2), Spellbook (when asked), Bio (the details, then the Biography and campaign notes when asked, then
+//! ruled lines, E3.4), Math (when asked). The blocks
 //! themselves (`print/blocks/`) read what the Character Sheet reads; nothing here computes a
 //! number (NR-2).
 
@@ -40,7 +40,7 @@ const SHEET: &[Placed] = &[
 
 /// The sections after Primary (page 1), in the operator's order (`decisions.md §24.3.7`, E2.23): each
 /// opens a page under its title (vocabulary id, words) and ends with a page break, so it prints
-/// alone. Spellbook and Math print when asked; Bio's notes join its Identity block when asked.
+/// alone. Spellbook and Math print when asked; Bio's notes join its details when asked (E3.4).
 const ABILITIES_AND_FEATS: &[Placed] = &[
     Placed::full("feats", blocks::feats),
     Placed::full("classFeatures", blocks::class_features),
@@ -54,6 +54,7 @@ const INVENTORY: &[Placed] = &[
     Placed::full("gear", blocks::inventory),
     Placed::full("money", blocks::money),
 ];
+/// The Bio page (E3.4): the details, the Biography and campaign notes when asked, ruled lines.
 const BIO: &[Placed] = &[Placed::full("characterDetails", blocks::character_details)];
 
 /// A section: its title block opens a page, its blocks follow it with no break of their own (the
@@ -73,11 +74,7 @@ pub fn layout(sources: &SheetSources) -> SheetDocument {
     if request.spellbook {
         section(&mut sheet, "spellbookTitle", "Spellbook", vec![blocks::spellbook(sources).with_id("spellbook")]);
     }
-    let mut bio = placed(BIO);
-    if request.bio {
-        bio.push(blocks::bio_notes(sources).with_id("bioNotes"));
-    }
-    section(&mut sheet, "bioTitle", "Bio", bio);
+    section(&mut sheet, "bioTitle", "Bio", placed(BIO));
     if request.math {
         let math = blocks::math(&sheet).with_id("math");
         section(&mut sheet, "mathTitle", "Math", vec![math]);

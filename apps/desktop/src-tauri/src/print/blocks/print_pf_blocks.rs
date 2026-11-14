@@ -29,7 +29,7 @@ const AT: &str = "2026-11-05T00:00:00Z";
 /// under the portrait (E2.13), the Conditional Bonuses box under the Saving Throws (E2.20), the
 /// Resistances block under it (E2.22); then the sections, each under its title (E2.23,
 /// `decisions.md §24.3.7`): Abilities and Feats, Inventory (Armor and Shields, Gear, Money, E3.2), Bio
-/// (the Identity block).
+/// (the details, E3.4).
 const BASE_HEADINGS: [&str; 26] = [
     "Portrait",
     "Languages",
@@ -56,11 +56,10 @@ const BASE_HEADINGS: [&str; 26] = [
     "Gear",
     "Money",
     "Bio",
-    "Identity",
+    "Details",
 ];
 const SPELLBOOK: &str = "Spellbook";
 const MATH: &str = "Show the Math";
-const BIO: &str = "Bio and Campaign Notes";
 const NO_DERIVATION: &str = "(no derivation recorded)";
 
 /// A fresh app-data directory holding the starter seeds; returns the named seed's character root.
@@ -110,10 +109,10 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let all = request(true, true, true);
         let document = sheet_document_at_root(&root, &all).expect("the document builds");
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
-        // Every option: the Spellbook section before Bio, the Bio notes in Bio, the Math section last.
+        // Every option: the Spellbook section before Bio, the Bio notes inside its details (E3.4), the Math section last.
         let mut expected: Vec<&str> = BASE_HEADINGS[..BASE_HEADINGS.len() - 2].to_vec();
-        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Identity", BIO, "Math", MATH]);
-        assert_eq!(headings, expected, "{tag}: the 33 blocks and titles, in the layout file's order");
+        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Math", MATH]);
+        assert_eq!(headings, expected, "{tag}: the 32 blocks and titles, in the layout file's order");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -130,7 +129,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let text = pdf_text(&render(&root, &request(false, false, false)));
         let printed: Vec<&str> = crate::print::print_golden::print_order(&none).iter().map(|block| block.heading.as_str()).collect();
         assert_in_order(&text, &printed);
-        for option in [SPELLBOOK, MATH, BIO, NO_DERIVATION] {
+        for option in [SPELLBOOK, MATH, NO_DERIVATION] {
             assert!(!text.contains(option), "{tag}: basic prints no `{option}`: {text}");
         }
     }
@@ -149,8 +148,10 @@ fn print_pf_blocks_each_option_adds_pages() {
         eprintln!("{tag}: pages basic {basic}, spellbook {spellbook}, math {math}, bio {bio}, full {full}");
         assert!(spellbook > basic, "{tag}: Spellbook on adds a page ({basic} -> {spellbook})");
         assert!(math > basic, "{tag}: Show the math on adds a page ({basic} -> {math})");
-        // The Bio section prints on every sheet (E2.23); its notes join it, on its pages, when asked.
-        assert!(bio >= basic && pdf_text(&bio_pdf).contains(BIO), "{tag}: Bio and campaign notes on prints them in the Bio section ({basic} -> {bio})");
+        // The Bio section prints on every sheet (E2.23); its notes join its details, on its pages, when
+        // asked (E3.4: the seeds hold no Biography and the request no campaign, so nothing joins here;
+        // `print_pf_blocks_bio_prints_every_detail_then_notes_then_ruled_lines` prints both).
+        assert!(bio >= basic && pdf_text(&bio_pdf).contains("Bio Details"), "{tag}: Bio on prints the Bio section ({basic} -> {bio})");
         assert!(full > spellbook && full > math && full > bio, "{tag}: full is longer than any one option ({full})");
     }
 }
@@ -227,8 +228,8 @@ fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
         let root = seeded(tag, id);
         let loaded = load_saved_character_at_root(&root).expect("the seed loads");
         let text = pdf_text(&render(&root, &request(false, false, false)));
-        // E2.18: the Skills close page 1's right column; the Identity opens page 2.
-        let skills = &text[text.find("Skills").expect("Skills")..text.find("Identity").expect("Identity")];
+        // E2.18: the Skills close page 1's right column; the Bio details print after them (E3.4).
+        let skills = &text[text.find("Skills").expect("Skills")..text.find("Bio Details").expect("Bio Details")];
         let ranked: Vec<_> = loaded.skill_allocations.iter().filter(|allocation| allocation.ranks > 0).collect();
         assert!(ranked.len() >= 7, "{tag}: the seed holds ranks in at least 7 skills: {ranked:?}");
         for allocation in ranked {
@@ -258,7 +259,7 @@ fn print_pf_blocks_every_skills_panel_total_prints_ranked_or_not() {
         let root = seeded(tag, id);
         let loaded = load_saved_character_at_root(&root).expect("the seed loads");
         let text = pdf_text(&render(&root, &request(false, false, false)));
-        let skills = &text[text.find("Skills").expect("Skills")..text.find("Identity").expect("Identity")];
+        let skills = &text[text.find("Skills").expect("Skills")..text.find("Bio Details").expect("Bio Details")];
         let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")).collect();
         assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
         for row in totals {
@@ -281,12 +282,12 @@ fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let roster = crate::character_hub::list_race_creation_roster();
     let race = roster.races.iter().find(|race| race.race_id == loaded.summary.race_id).expect("the seed's race is on the roster");
     let text = pdf_text(&render(&root, &request(false, false, false)));
-    // The Identity block is the Bio section's, the sheet's last on the basic sheet (E2.23).
-    let identity = &text[text.find("Bio Identity").expect("the Bio section opens with the Identity block")..];
+    // The details are the Bio section's, the sheet's last on the basic sheet (E2.23, E3.4).
+    let identity = &text[text.find("Bio Details").expect("the Bio section opens with the details")..];
     assert!(identity.contains(&format!("Size {}", race.size)), "Size {}: {identity}", race.size);
     assert!(identity.contains(&format!("Vision {}", race.vision)), "Vision {}: {identity}", race.vision);
     // Each coin's label is over its value in its box; the text extraction runs the two together.
-    let coins: String = text_between(&text, "Money PP", "Bio Identity").split_whitespace().collect();
+    let coins: String = text_between(&text, "Money PP", "Bio Details").split_whitespace().collect();
     for (label, value) in [("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)] {
         assert!(coins.contains(&format!("{label}{value}")), "{label} {value}: {coins}");
     }
@@ -359,8 +360,9 @@ fn print_pf_blocks_bio_prints_the_bio_and_the_campaigns_description() {
     for line in ["Player Todd", "Alignment Lawful Good", "Deity Iomedae", "Eyes Grey", "Rise of the Runelords", "Sandpoint, autumn 4707."] {
         assert!(text.contains(line), "the bio page prints `{line}`: {text}");
     }
+    // No campaign prints no campaign notes (E3.4: none → nothing).
     let text = pdf_text(&render(&root, &request(false, false, true)));
-    assert!(text.contains("No campaign lists this character."), "{text}");
+    assert!(!text.contains("Rise of the Runelords") && !text.contains("No campaign lists this character."), "{text}");
 }
 
 #[test]
@@ -2004,7 +2006,7 @@ fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
             ("Abilities and Feats", vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
             ("Inventory", vec!["defense", "gear", "money"]),
             ("Spellbook", vec!["spellbook"]),
-            ("Bio", vec!["characterDetails", "bioNotes"]),
+            ("Bio", vec!["characterDetails"]),
             ("Math", vec!["math"]),
         ];
         assert_eq!(sections, expected, "{tag}: the sections, their titles and their blocks, in the operator's order");
@@ -2488,6 +2490,109 @@ fn print_pf_blocks_spellbook_prints_card_entries() {
         let bare: String = spellbook.split_whitespace().collect();
         for pair in ["Fireball", "Level:Wizard3", "Castingtime:1standardaction", "Duration:Instantaneous", "Savingthrow:Reflexhalf", "Spellresistance:Yes"] {
             assert!(bare.contains(pair), "{tag}: the Fireball card prints `{pair}`: {spellbook}");
+        }
+    }
+}
+
+/// The thirteen labels of the Bio section's details form (E3.4, `decisions.md §23.1` item 5), in order.
+const BIO_LABELS: [&str; 13] = ["Alignment", "Deity", "Sex", "Age", "Height", "Weight", "Hair", "Eyes", "Size", "Vision", "Race", "Class and level", "Player"];
+
+/// E3.4 (`decisions.md §23.1` item 5, §24.9): the Bio section opens its page with the details form
+/// (the thirteen labels in order, an empty field its label and a blank line), then the Biography
+/// as paragraphs, then each campaign's name and description, then blank ruled lines to the page's
+/// foot (the look's own measure: the room left under the last line is less than one line).
+/// Aldric with a saved bio (Hair left empty), a Biography of two paragraphs and one campaign,
+/// Letter and A4.
+#[test]
+fn print_pf_blocks_bio_prints_every_detail_then_notes_then_ruled_lines() {
+    let root = seeded("bio-page", ALDRIC_ID);
+    let bio = CharacterBioDto {
+        player_name: "Todd".to_owned(),
+        alignment: "Lawful Good".to_owned(),
+        deity: "Iomedae".to_owned(),
+        sex: "Male".to_owned(),
+        age: "27".to_owned(),
+        height: "6 ft. 1 in.".to_owned(),
+        weight: "190 lb".to_owned(),
+        eyes: "Grey".to_owned(),
+        biography: "Born in Sandpoint to a family of smiths.\nSworn to the Inheritor at sixteen.".to_owned(),
+        ..load_character_bio_at_root(&root).expect("the bio loads")
+    };
+    save_character_bio_at_root(&root, &bio).expect("the bio saves");
+    let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+    let campaign = CampaignNote { name: "Rise of the Runelords".to_owned(), description: "Sandpoint, autumn 4707.".to_owned() };
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("aldric bio {paper:?}");
+        let printed = PrintRequest { paper, campaigns: vec![campaign.clone()], ..request(false, false, true) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let at = document.blocks.iter().position(|block| block.id == "characterDetails").expect("the details print");
+        assert_eq!(document.blocks[at - 1].id, "bioTitle", "{tag}: the details open the Bio section");
+        assert_eq!(document.blocks[at].look.name(), "bio", "{tag}: the details print in the bio look");
+        let pdf = render(&root, &printed);
+        let pages = page_count(&pdf);
+        let on_pages = pages_text(&pdf_text(&pdf), &document.title, pages);
+        let page = on_pages.last().expect("a page");
+        assert!(page.starts_with("Bio Details"), "{tag}: the Bio section is the last page, opening with the details: {page}");
+        let values = [
+            "Lawful Good",
+            "Iomedae",
+            "Male",
+            "27",
+            "6 ft. 1 in.",
+            "190 lb",
+            "",
+            "Grey",
+            "",
+            "",
+            "",
+            "",
+            "Todd",
+        ];
+        let mut order: Vec<&str> = Vec::new();
+        for (label, value) in BIO_LABELS.iter().zip(values) {
+            order.push(label);
+            if !value.is_empty() {
+                order.push(value);
+            }
+        }
+        order.extend(["Biography", "Born in Sandpoint to a family of smiths.", "Sworn to the Inheritor at sixteen.", "Rise of the Runelords", "Sandpoint, autumn 4707."]);
+        assert_in_order(page, &order);
+        assert!(page.contains("Hair Eyes Grey"), "{tag}: the empty Hair prints its label and a blank line: {page}");
+        assert!(page.contains(&format!("Race {}", super::core::race_label(&loaded.summary.race_id))), "{tag}: {page}");
+        assert!(page.contains(&format!("Class and level {}", super::core::class_label(&loaded.summary.class_summary))), "{tag}: {page}");
+        let ruled = look_fact(&document, "bio-look");
+        let lines = ruled["lines"].as_u64().expect("the look states its lines");
+        let left = ruled["left"].as_f64().expect("the look states the room left");
+        let slot = ruled["slot"].as_f64().expect("the look states a line's height");
+        assert!(lines >= 10, "{tag}: blank ruled lines follow the notes: {ruled}");
+        assert!((0.0..slot).contains(&left), "{tag}: the ruled lines run to the page's foot: {ruled}");
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("bio-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+        }
+    }
+}
+
+/// E3.4: the interim Identity block is gone: no block is headed Identity, the details print once,
+/// as the Bio section's first block, and page 1 and the sections before Bio print none of the
+/// details' labels. Aldric with no option and with every option, Letter.
+#[test]
+fn print_pf_blocks_no_identity_block_before_the_bio() {
+    let root = seeded("no-identity", ALDRIC_ID);
+    for (options, all) in [("none", false), ("all", true)] {
+        let tag = format!("aldric {options}");
+        let printed = PrintRequest { paper: Paper::Letter, ..request(all, all, all) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        assert!(document.blocks.iter().all(|block| block.heading != "Identity" && block.id != "bioNotes"), "{tag}: no Identity or bioNotes block");
+        let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+        let title = ids.iter().position(|id| *id == "bioTitle").expect("the Bio section prints");
+        assert_eq!(ids.iter().position(|id| *id == "characterDetails"), Some(title + 1), "{tag}: the details are the Bio section's first block: {ids:?}");
+        assert_eq!(ids.iter().filter(|id| **id == "characterDetails").count(), 1, "{tag}: the details print once");
+        let text = pdf_text(&render(&root, &printed));
+        assert!(!text.contains("Identity"), "{tag}: no Identity heading prints: {text}");
+        let before = &text[..text.find("Bio Details").expect("the Bio section opens with the details")];
+        for label in ["Alignment", "Deity", "Player", "Vision"] {
+            assert!(!before.contains(label), "{tag}: `{label}` prints only on the Bio page");
         }
     }
 }

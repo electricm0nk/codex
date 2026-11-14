@@ -119,7 +119,8 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
     let expected = [
         format!("Name {}", loaded.summary.display_label),
         "Race Human".to_owned(),
-        "Class Fighter 3".to_owned(),
+        // E3.4: the Bio page's details form labels the class "Class and level".
+        "Class and level Fighter 3".to_owned(),
         // E2.18: no "Armor Class" heading over the boxes; the AC box's own label names it.
         format!("Armor Class {}", snapshot.baseline_armor_class),
         format!("Touch {}", explained("defense.touch_armor_class")),
@@ -151,7 +152,7 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
     let at = |heading: &str| text.find(heading).unwrap_or_else(|| panic!("heading {heading} printed: {text}"));
     // E2.18: the portrait's two-row cell reads after the name row in the PDF's text.
     assert!(at("Character Name") < at("Portrait") && at("Portrait") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Character Name, Portrait, Hit Points, Abilities in order: {text}");
-    assert!(at("Speed") < at("Identity"), "the Identity block opens page 2, after page 1's Speed: {text}");
+    assert!(at("Speed") < at("Details"), "the Bio section's details print after page 1's Speed (E3.4): {text}");
     // E2.18 (`decisions.md §24.3.1`): the AC row beside the portrait; the left column (Weapons,
     // Attack, Saving Throws), then the right column's Abilities.
     assert!(at("Armor Class") < at("Speed") && at("Speed") < at("Weapons") && at("Weapons") < at("Attack") && at("Attack") < at("Saving Throws") && at("Saving Throws") < at("Abilities"), "Armor Class, Speed, Weapons, Attack, Saving Throws, Abilities in order: {text}");

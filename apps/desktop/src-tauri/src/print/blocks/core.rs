@@ -1,4 +1,4 @@
-//! Identity (the screen's Character Details), Abilities and the boxes the one Combat block printed
+//! The Bio page's details (the screen's Character Details, E3.4), Abilities and the boxes the one Combat block printed
 //! until SD-40 split it along the screen's ids (`decisions.md §8`): the square block (Hit Points,
 //! Initiative, Encumbrance, Conditions; E2.9), Armor Class, Saving Throws, Attack and Speed. Each value is the field the screen's tile reads
 //! (`CharacterSheet.tsx`'s `ac`, `touch`, `flatFooted`, `cmb`, `cmd`, `saves`, `initiativeRow`,
@@ -29,21 +29,40 @@ pub fn name_campaign(sources: &SheetSources) -> SheetBlock {
     .in_look(Look::NameCampaign)
 }
 
-/// The screen's Character Details (`characterDetails`, SD-40 `decisions.md §5`), printed under
-/// the heading Identity: name, race, class, size, vision.
+/// The Bio section's page (`characterDetails`, SD-40 E3.4, `decisions.md §23.1` item 5, §24.9),
+/// under the heading Details: the Details panel's fields as a form (`detail` rows: Alignment …
+/// Eyes from the bio, Size and Vision as the panel shows them, Race, Class and level, Player; an
+/// empty field prints its label over a blank line); then, when the Bio notes are asked for, the
+/// Biography tab's text and each campaign's description (`text` rows, a paragraph per line; an
+/// empty Biography and no campaign print nothing). The look ends the page with ruled lines.
 pub fn character_details(sources: &SheetSources) -> SheetBlock {
     let summary = &sources.loaded.summary;
+    let bio = &sources.bio;
     let (size, vision) = size_and_vision(sources);
-    SheetBlock::new(
-        "Identity",
-        vec![
-            SheetRow::new("Name", [summary.display_label.clone()]),
-            SheetRow::new("Race", [race_label(&summary.race_id)]),
-            SheetRow::new("Class", [class_label(&summary.class_summary)]),
-            SheetRow::new("Size", [size]),
-            SheetRow::new("Vision", [vision]),
-        ],
-    )
+    let details = [
+        ("Alignment", bio.alignment.clone()),
+        ("Deity", bio.deity.clone()),
+        ("Sex", bio.sex.clone()),
+        ("Age", bio.age.clone()),
+        ("Height", bio.height.clone()),
+        ("Weight", bio.weight.clone()),
+        ("Hair", bio.hair.clone()),
+        ("Eyes", bio.eyes.clone()),
+        ("Size", size),
+        ("Vision", vision),
+        ("Race", race_label(&summary.race_id)),
+        ("Class and level", class_label(&summary.class_summary)),
+        ("Player", bio.player_name.clone()),
+    ];
+    let mut rows: Vec<SheetRow> = details.into_iter().map(|(label, value)| SheetRow::new(label, [value]).of_kind("detail")).collect();
+    if sources.request.bio {
+        let text = |label: &str, body: &str| SheetRow::new(label, Vec::<String>::new()).with_notes(body.lines().map(str::to_owned)).of_kind("text");
+        if !bio.biography.trim().is_empty() {
+            rows.push(text("Biography", &bio.biography));
+        }
+        rows.extend(sources.request.campaigns.iter().map(|campaign| text(&campaign.name, &campaign.description)));
+    }
+    SheetBlock::new("Details", rows).in_look(Look::Bio)
 }
 
 /// The Details panel's Size and Vision: the race roster's (`list_race_creation_roster`, what

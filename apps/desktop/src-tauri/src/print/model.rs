@@ -192,12 +192,15 @@ pub enum Look {
     Custom,
     /// The companion's line, its stats as a strip of small boxes and its notes (SD-40 E3.3).
     Pets,
+    /// The Bio section's page (SD-40 E3.4): the details as a two-column form, the Biography and the
+    /// campaign notes as paragraphs, then blank ruled lines to the page's foot.
+    Bio,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 25] = [
+    pub const ALL: [Look; 26] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -223,6 +226,7 @@ impl Look {
         Look::Spellbook,
         Look::Custom,
         Look::Pets,
+        Look::Bio,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -253,6 +257,7 @@ impl Look {
             Look::Spellbook => "spellbook",
             Look::Custom => "custom",
             Look::Pets => "pets",
+            Look::Bio => "bio",
         }
     }
 }
