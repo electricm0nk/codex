@@ -51,6 +51,10 @@ pub(crate) const LOOKS: &[(&str, &str)] = &[
     ("defense", include_str!("../../resources/print/looks/defense.typ")),
     ("gear", include_str!("../../resources/print/looks/gear.typ")),
     ("money", include_str!("../../resources/print/looks/money.typ")),
+    ("spells", include_str!("../../resources/print/looks/spells.typ")),
+    ("spellbook", include_str!("../../resources/print/looks/spellbook.typ")),
+    ("custom", include_str!("../../resources/print/looks/custom.typ")),
+    ("pets", include_str!("../../resources/print/looks/pets.typ")),
 ];
 
 /// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).

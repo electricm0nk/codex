@@ -181,12 +181,23 @@ pub enum Look {
     Gear,
     /// The Money (SD-40 E3.2): four coin boxes (PP, GP, SP, CP) and a four-line write-in ledger.
     Money,
+    /// The Spells (SD-40 E3.3): per class its caster level, then per spell level the save DC, spells
+    /// per day, known / prepared and one used write-in box per spell per day; the names by level in
+    /// two columns.
+    Spells,
+    /// The Spellbook (SD-40 E3.3): one card per spell (name, school, level, casting time, range,
+    /// duration, save, spell resistance, text), two to a line.
+    Spellbook,
+    /// The Custom tab's grants and records as a compact table (SD-40 E3.3).
+    Custom,
+    /// The companion's line, its stats as a strip of small boxes and its notes (SD-40 E3.3).
+    Pets,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 21] = [
+    pub const ALL: [Look; 25] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -208,6 +219,10 @@ impl Look {
         Look::Defense,
         Look::Gear,
         Look::Money,
+        Look::Spells,
+        Look::Spellbook,
+        Look::Custom,
+        Look::Pets,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -234,6 +249,10 @@ impl Look {
             Look::Defense => "defense",
             Look::Gear => "gear",
             Look::Money => "money",
+            Look::Spells => "spells",
+            Look::Spellbook => "spellbook",
+            Look::Custom => "custom",
+            Look::Pets => "pets",
         }
     }
 }

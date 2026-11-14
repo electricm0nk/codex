@@ -178,9 +178,12 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
         "Load Medium".to_owned(),
         // Feats: the engine's budget rows, one line `<pool> <spent> of <granted>` (E3.1).
         format!("Feat slots: level {} of {}", explained("feats.budget.level.spent"), explained("feats.budget.level.granted")),
-        // Spells: the save DC and spells per day rows.
-        format!("Wizard: spell save DC, level 3 {}", explained("class_chassis.wizard.spell_save_dc.spell_level_3")),
-        format!("Wizard: spells per day, level 3 {}", explained("class_spell.wizard.total_spells_per_day.spell_level_3")),
+        // Spells (E3.3): level 3's line, its save DC then its spells per day.
+        format!(
+            "Level 3 {} {}",
+            explained("class_chassis.wizard.spell_save_dc.spell_level_3"),
+            explained("class_spell.wizard.total_spells_per_day.spell_level_3")
+        ),
         "Fireball".to_owned(),
         // Actions: the race's own traits.
         "Skilled".to_owned(),
@@ -325,9 +328,15 @@ fn print_pf_blocks_spellbook_prints_each_known_spells_full_text() {
         // Compared with every space removed: the text's own line breaks print as separate lines,
         // which the extraction joins with no space ("level.Casting time").
         let bare = |text: &str| text.split_whitespace().collect::<String>();
-        let words = bare(&line.prose);
+        // E3.3: the stat-block lines (`Casting time: ...`) print as the card's fields; the rest of the
+        // rule's words print whole as its text.
+        let is_stat = |l: &str| l.split_once(": ").is_some_and(|(label, _)| ["School", "Subschool", "Descriptor", "Casting time", "Components", "Range", "Target or area", "Duration", "Saving throw", "Spell resistance"].contains(&label));
+        let words = bare(&line.prose.lines().filter(|l| !is_stat(l)).collect::<Vec<_>>().join(" "));
         assert!(words.len() > 200, "{name}: the rules hold its full text ({} chars)", words.len());
         assert!(bare(spellbook).contains(&words), "the Spellbook prints {name}'s whole text: {spellbook}");
+        for stat in line.prose.lines().filter(|l| is_stat(l) && !l.starts_with("School") && !l.starts_with("Descriptor")) {
+            assert!(bare(spellbook).contains(&bare(stat)), "the Spellbook prints {name}'s `{stat}`: {spellbook}");
+        }
     }
     // A character with no spell says so rather than printing an empty page.
     let aldric = seeded("spellbook-aldric", ALDRIC_ID);
@@ -2339,5 +2348,146 @@ fn print_pf_blocks_money_prints_four_coin_boxes() {
         let boxes: String = coins.iter().map(|(label, value)| format!("{label}{value}")).collect();
         assert!(bare.starts_with(&format!("Money{boxes}Ledger")), "{tag}: the four boxes in order, then the ledger: {printed_money}");
         assert!(printed_money.contains("Ledger"), "{tag}: the ledger prints: {printed_money}");
+    }
+}
+
+/// E3.3 (`decisions.md §23.4`, §23.7 Q3: section 2's daily spells list, custom and pets): the Spells
+/// block prints in its own look, per class: the class and its caster level, then per spell level a
+/// line of the save DC, the spells per day, the known / prepared counts and one **used** write-in box
+/// per spell per day; then the spell names by level in two columns. Every number is the engine's
+/// `explanations` row (`class_chassis.<class>.caster_level`, `.spell_save_dc.spell_level_<n>`,
+/// `class_spell.<class>.total_spells_per_day.spell_level_<n>`). Custom and Pets print as compact
+/// tables in looks of their own. Elowen (Wizard 5: Light, Fireball) and Aldric (no spell), Letter and A4.
+#[test]
+fn print_pf_blocks_spells_print_used_boxes_per_level() {
+    let root = seeded("spells-look-elowen", ELOWEN_ID);
+    let loaded = load_saved_character_at_root(&root).expect("Elowen loads");
+    let value_of = |id: String| loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value.to_string());
+    // The levels the engine grounds a per-day count for, from its own rows.
+    let mut per_day: Vec<(u8, String)> = loaded
+        .explanations
+        .iter()
+        .filter_map(|row| row.id.strip_prefix("class_spell.wizard.total_spells_per_day.spell_level_").map(|level| (level.parse::<u8>().expect("a level"), row.value.to_string())))
+        .collect();
+    per_day.sort();
+    assert!(per_day.iter().any(|(level, _)| *level == 3), "Elowen has third-level slots: {per_day:?}");
+    let boxes: u64 = per_day.iter().map(|(_, count)| count.parse::<u64>().expect("a count")).sum();
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("elowen {paper:?}");
+        let printed = PrintRequest { paper, ..request(false, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let spells = document.blocks.iter().find(|block| block.id == "spells").expect("the Spells block");
+        assert_eq!(spells.look.name(), "spells", "{tag}: Spells prints in its own look");
+        let class = spells.rows.iter().find(|row| row.kind == "class").unwrap_or_else(|| panic!("{tag}: a class line: {:?}", spells.rows));
+        assert_eq!(class.label, "Wizard", "{tag}");
+        assert_eq!(class.values.first().cloned(), value_of("class_chassis.wizard.caster_level".to_owned()), "{tag}: the caster level");
+        let levels: Vec<&crate::print::model::SheetRow> = spells.rows.iter().filter(|row| row.kind == "level").collect();
+        assert_eq!(levels.len(), per_day.len(), "{tag}: one line per level with slots: {levels:?}");
+        for ((level, count), row) in per_day.iter().zip(&levels) {
+            assert_eq!(row.label, format!("Level {level}"), "{tag}");
+            let dc = value_of(format!("class_chassis.wizard.spell_save_dc.spell_level_{level}")).unwrap_or_else(|| crate::print::layout::NO_VALUE.to_owned());
+            assert_eq!(row.values[0], dc, "{tag}: level {level}'s save DC");
+            assert_eq!(&row.values[1], count, "{tag}: level {level}'s spells per day");
+            let held = match level {
+                0 => "1 / 1",
+                3 => "1 / 1",
+                _ => "0 / 0",
+            };
+            assert_eq!(row.values[2], held, "{tag}: level {level}'s known / prepared (Light at 0, Fireball at 3)");
+        }
+        let names: Vec<(&str, &str)> = spells.rows.iter().filter(|row| row.kind == "spell").map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
+        assert!(spells.rows.iter().filter(|row| row.kind == "spell").all(|row| row.values.len() == 1 || row.values[1..].iter().all(String::is_empty)), "{tag}: a spell line holds its level only: {:?}", spells.rows);
+        assert_eq!(names, vec![("Light", "0"), ("Fireball", "3")], "{tag}: the spell names by level");
+        let fact = look_fact(&document, "spells-look");
+        assert_eq!((fact["boxes"].as_u64(), fact["columns"].as_u64()), (Some(boxes), Some(2)), "{tag}: one used box per spell per day, names in two columns: {fact}");
+
+        let text = pdf_text(&render(&root, &printed));
+        let block = text_between(&text, "Spells Wizard", "Custom");
+        let bare: String = block.split_whitespace().collect();
+        let caster = class.values[0].clone();
+        assert!(bare.contains(&format!("Casterlevel{caster}")), "{tag}: the caster level prints: {block}");
+        let third = levels.iter().find(|row| row.label == "Level 3").expect("level 3");
+        let line: String = format!("Level3{}{}", third.values[0], third.values[1]);
+        assert!(bare.contains(&line), "{tag}: level 3's DC and per day print on its line: {block}");
+        assert_in_order(&bare, &["Light", "Fireball"]);
+
+        // Custom and Pets (section 2): compact tables in looks of their own.
+        for (id, look) in [("custom", "custom"), ("pets", "pets")] {
+            let block = document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{tag}: the {id} block"));
+            assert_eq!(block.look.name(), look, "{tag}: {id} prints in its own look");
+        }
+        assert!(text.contains("No animal companion or mount."), "{tag}: Pets says so when there is none");
+    }
+    // No seed holds a companion: the `pets` look typesets one built as `blocks::pets` builds it.
+    {
+        use crate::print::model::{Look, SheetBlock, SheetDocument, SheetRow};
+        let rows = vec![
+            SheetRow::new("Animal companion", ["Wolf".to_owned()]).of_kind("companion").with_notes(["From Druid".to_owned()]),
+            SheetRow::new("Bite", ["+3".to_owned()]).of_kind("stat"),
+            SheetRow::new("AC", ["+4".to_owned()]).of_kind("stat"),
+            SheetRow::new("Notes", Vec::<String>::new()).of_kind("notes").with_notes(["Trip on a bite.".to_owned()]),
+        ];
+        let document = SheetDocument { title: "Pets probe".to_owned(), paper: "us-letter", blocks: vec![SheetBlock::new("Pets", rows).in_look(Look::Pets)] };
+        let typeset = crate::print::typst::typeset(&document).expect("the companion typesets");
+        assert!(typeset.warnings.is_empty(), "{:?}", typeset.warnings);
+        let bare: String = pdf_text(&typeset.pdf).split_whitespace().collect();
+        assert_in_order(&bare, &["AnimalcompanionWolf", "FromDruid", "Bite+3", "AC+4", "Notes", "Triponabite."]);
+    }
+    // A character with no spell prints the block's one line and no class.
+    let aldric = seeded("spells-look-aldric", ALDRIC_ID);
+    let document = sheet_document_at_root(&aldric, &request(false, false, false)).expect("the document builds");
+    let spells = document.blocks.iter().find(|block| block.id == "spells").expect("the Spells block");
+    assert_eq!(spells.look.name(), "spells", "aldric: Spells prints in its own look");
+    assert!(spells.rows.iter().all(|row| row.kind != "class"), "aldric: no class line: {:?}", spells.rows);
+    assert!(pdf_text(&render(&aldric, &request(false, false, false))).contains("No spell is known."));
+}
+
+/// E3.3 (`decisions.md §22` "2: A": the Spellbook prints spells only; R3: PCGen's 3x5 cards as the
+/// picture): one entry per held spell, its name, school, level for the class that holds it, casting
+/// time, range, duration, saving throw, spell resistance and its text, the entries two to a line.
+/// Each field is the spell rule's own words (its stat-block lines), never re-derived. Elowen's
+/// Fireball and Light, Letter and A4.
+#[test]
+fn print_pf_blocks_spellbook_prints_card_entries() {
+    let root = seeded("spellbook-cards-elowen", ELOWEN_ID);
+    let loaded = load_saved_character_at_root(&root).expect("Elowen loads");
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("elowen {paper:?}");
+        let printed = PrintRequest { paper, ..request(true, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let book = document.blocks.iter().find(|block| block.id == "spellbook").expect("the Spellbook block");
+        assert_eq!(book.look.name(), "spellbook", "{tag}: the Spellbook prints in its own look");
+        let captions = book.rows.iter().find(|row| row.kind == "captions").expect("the field captions");
+        let expected_captions = ["School", "Level", "Casting time", "Components", "Range", "Target or area", "Duration", "Saving throw", "Spell resistance"];
+        assert_eq!(captions.values, expected_captions.map(str::to_owned).to_vec(), "{tag}: the card's fields");
+        let field = |row: &crate::print::model::SheetRow, caption: &str| row.values[expected_captions.iter().position(|c| *c == caption).expect("a caption")].clone();
+        let entries: Vec<&crate::print::model::SheetRow> = book.rows.iter().filter(|row| row.kind == "spell").collect();
+        assert_eq!(entries.iter().map(|row| row.label.as_str()).collect::<Vec<_>>(), vec!["Light", "Fireball"], "{tag}: one entry per held spell");
+        let fireball = entries[1];
+        // The school with its descriptor, the way the books print it; the record's later
+        // `School: FireSchool` line (its elemental-school tag) is not the spell's school.
+        assert_eq!(field(fireball, "School"), "Evocation [Fire]", "{tag}: {fireball:?}");
+        assert_eq!(field(fireball, "Level"), "Wizard 3", "{tag}");
+        assert_eq!(field(fireball, "Casting time"), "1 standard action", "{tag}");
+        let line = loaded.sheet_lines.iter().find(|line| line.kind == "spell" && line.label == "Fireball").expect("Fireball's line");
+        let range = line.prose.lines().find_map(|l| l.strip_prefix("Range: ")).expect("the rule states a range");
+        assert_eq!(field(fireball, "Range"), range, "{tag}: the range is the rule's own words");
+        assert_eq!(field(fireball, "Duration"), "Instantaneous", "{tag}");
+        assert_eq!(field(fireball, "Saving throw"), "Reflex half", "{tag}");
+        assert_eq!(field(fireball, "Spell resistance"), "Yes", "{tag}");
+        assert_eq!(field(entries[0], "Level"), "Wizard 0", "{tag}: Light is a cantrip");
+        // The text is the rule's words with the stat-block lines lifted out into the fields.
+        let text_lines: Vec<&str> = line.prose.lines().filter(|l| !l.starts_with("Casting time: ") && !l.starts_with("Duration: ")).collect();
+        assert!(fireball.notes.iter().any(|note| text_lines.contains(&note.as_str())), "{tag}: the rule's text: {fireball:?}");
+        assert!(fireball.notes.iter().all(|note| !note.starts_with("Casting time: ")), "{tag}: no stat-block line left in the text: {fireball:?}");
+        let fact = look_fact(&document, "spellbook-look");
+        assert_eq!((fact["entries"].as_u64(), fact["columns"].as_u64()), (Some(2), Some(2)), "{tag}: two entries, two to a line: {fact}");
+
+        let text = pdf_text(&render(&root, &printed));
+        let spellbook = &text[text.find("Spellbook Spellbook").unwrap_or_else(|| panic!("{tag}: the Spellbook section: {text}"))..];
+        let bare: String = spellbook.split_whitespace().collect();
+        for pair in ["Fireball", "Level:Wizard3", "Castingtime:1standardaction", "Duration:Instantaneous", "Savingthrow:Reflexhalf", "Spellresistance:Yes"] {
+            assert!(bare.contains(pair), "{tag}: the Fireball card prints `{pair}`: {spellbook}");
+        }
     }
 }

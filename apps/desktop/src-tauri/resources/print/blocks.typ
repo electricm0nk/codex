@@ -24,6 +24,10 @@
 #import "/looks/defense.typ": look as defense-look
 #import "/looks/gear.typ": look as gear-look
 #import "/looks/money.typ": look as money-look
+#import "/looks/spells.typ": look as spells-look
+#import "/looks/spellbook.typ": look as spellbook-look
+#import "/looks/custom.typ": look as custom-look
+#import "/looks/pets.typ": look as pets-look
 
 #let looks = (
   table: table-look,
@@ -47,6 +51,10 @@
   defense: defense-look,
   gear: gear-look,
   money: money-look,
+  spells: spells-look,
+  spellbook: spellbook-look,
+  custom: custom-look,
+  pets: pets-look,
 )
 
 // The looks whose list page 1's overflow rule may shrink and split (E2.4, decisions.md §23.2
