@@ -461,7 +461,7 @@ mod container_tests {
     /// SD-41 E1.6 (`decisions.md §23, §31`): the settled ammunition fields agree with the source
     /// tokens: `Projectile` users, users naming a `CONTAINS` family, `Ammunition` items, `BASEQTY`.
     #[test]
-    fn ammunition_population_is_87_77_228_30() {
+    fn ammunition_population_is_87_77_228_34() {
         let settled = settled();
         let a = (
             settled.iter().filter(|(_, r)| r.uses_ammunition()).count(),
@@ -483,7 +483,7 @@ mod container_tests {
             maps.iter().filter(|m| m.get("BASEQTY").and_then(|q| q.parse::<u32>().ok()).is_some_and(|q| q > 0)).count(),
         );
         assert_eq!(a, b, "settled ammunition fields agree with the source tokens");
-        assert_eq!(a, (87, 77, 228, 30), "uses ammunition, names a family, is ammunition, states BASEQTY");
+        assert_eq!(a, (87, 77, 228, 34), "uses ammunition, names a family, is ammunition, states BASEQTY (30 + the 4 CRB inherited bundles, E1.13)");
     }
 
     #[test]
@@ -517,6 +517,47 @@ mod container_tests {
     fn base_quantity_reads_the_settled_bundle_size() {
         assert_eq!(settled_record("advanced_players_guide/arrows_flight_20.json").base_quantity(), 20, "Arrow, Flight (20)");
         assert_eq!(settled_record("core_rulebook/general/backpack.json").base_quantity(), 1, "no BASEQTY: one piece");
+    }
+
+    /// SD-41 E1.13 (`decisions.md §20`): the CRB bundles ingested as inherited copies keep the
+    /// `BASEQTY` their own `.COPY=` line states, so 3 × `Arrows (20)` beside a longbow is 60 arrows.
+    #[test]
+    fn inherited_copy_bundles_settle_base_quantity() {
+        use crate::rules_core::character_input::{load_character_input_fixture, ActiveState, EquipmentSelection};
+        use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+        use crate::rules_core::damage_total::ammunition_carried;
+        for (file, pieces) in [
+            ("arrows_20.json", 20),
+            ("bolts_crossbow_10.json", 10),
+            ("bolts_crossbow_repeating_5.json", 5),
+            ("bullets_sling_10.json", 10),
+            ("darts_blowgun_10.json", 10),
+        ] {
+            let record = settled_record(&format!("core_rulebook/arms_armor/{file}"));
+            assert_eq!(record.base_quantity, Some(pieces), "{file}");
+        }
+
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: &repo().join("data/corpus/core_rulebook") }]);
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:3\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+            .character_input
+            .expect("the fixture loads");
+        let select = |item: &str, state: ActiveState| EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: state == ActiveState::EquippedActive,
+            active_state: state,
+            applied_modifiers: Vec::new(),
+        };
+        input.chosen.equipment_selections = vec![
+            select("Longbow", ActiveState::EquippedActive),
+            select("Arrows (20)", ActiveState::SelectedInactive),
+            select("Arrows (20)", ActiveState::SelectedInactive),
+            select("Arrows (20)", ActiveState::EquippedActive),
+        ];
+        assert_eq!(ammunition_carried(&input, &corpus, Some("Arrow"), &[]), 60, "longbow + 3 × Arrows (20)");
     }
 
     #[test]

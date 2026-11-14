@@ -1,28 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
-    "key": "Bullets (Sling/10)",
     "category": "arms_armor",
-    "name": "Sling Bullet (Base)",
     "cost_gp": 0.1,
-    "weight_lbs": 5.0,
-    "description": "Bullets are shaped metal balls, designed to be used by a sling or halfling sling staff. Bullets come in a leather pouch that holds 10 bullets."
+    "description": "Bullets are shaped metal balls, designed to be used by a sling or halfling sling staff. Bullets come in a leather pouch that holds 10 bullets.",
+    "key": "Bullets (Sling/10)",
+    "name": "Sling Bullet (Base)",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bullets (Sling/10)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bullet, Sling (10)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "10 Bullets"
+      },
+      {
+        "key": "TYPE",
+        "value": "Stack"
+      },
+      {
+        "key": "COST",
+        "value": "0.1"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Sling Bullet (Base)"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "10"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
+    "inherited_from_record_key": "Sling Bullet (Base)",
     "kind": "lst_inherited_copy",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
     "line": 26,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
     "record_key": "Bullets (Sling/10)",
-    "inherited_from_record_key": "Sling Bullet (Base)"
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
   },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"
-  ],
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null
+  ]
 }
