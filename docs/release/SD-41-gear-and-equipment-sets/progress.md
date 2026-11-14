@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 14 of 46 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 14 (sd41-e1.12; 13 at E1.11; 12 at E1.9, E1.10 landed beside it); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 46 (sd41-e1.11, 2026-11-13: + E2.11 discovered by E1.11; 45 at E1.9: + E1.15 and E2.10 discovered by E1.9; earlier 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
+| Cards complete | 16 of 46 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 16 (sd41-e1.13; 15 at E1.14; 14 at E1.12; 13 at E1.11; 12 at E1.9, E1.10 landed beside it); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 46 (sd41-e1.11, 2026-11-13: + E2.11 discovered by E1.11; 45 at E1.9: + E1.15 and E2.10 discovered by E1.9; earlier 37 + E1.13 and E2.9 discovered by E1.6; the earlier itemization: 23 at C0 + 8 from the seven follow-ups + 3 from the campaign item + E1.11, `decisions.md §22–§30`, + E2.8 discovered by E1.8, + E1.12, `decisions.md §32`) |
 | Phase | 1 (C1, E1.x may run now beside SD-40; E2.1 waits for `SD-40 merged`, `decisions.md §4`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-21` SHA | `f7f85f3d24` at the cut (`origin/tranche-20`'s tip, 2026-11-12); C1's version commit replaces it |
@@ -125,6 +125,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E1.12 | 2026-11-13 | this commit | complete | `artifacts/epic_1/E1.12_cycle_receipt.md` (cited override list `data/capacity_overrides/container-capacities.json`, 1 row; CRB Backpack `Unlimited` → `Pounds(60.0)`; settled containers lb/unlimited 32/50 → 33/49; root 1 + ingest 2 tests; package grep command corrected, `decisions.md §20`) |
 | E1.14 | 2026-11-13 | `7421facb1e` + this commit | partial | `artifacts/epic_1/E1.14_cycle_receipt.md` (`DeclaredMoveModes.climb_ft` settled from `MOVE:…,Climb,<ft>`: 4 of 919 race-trait records; Vanara 20, Human none, Tree Stranger none (3 of the 4 named tests); `VANARA_CLIMB_SPEED_FEET` removed, the seam reads the declared mode; remainder: the Skinwalker form-option test needs a ruling, Open blockers) |
 | E1.14 | 2026-11-14 | `7421facb1e` + this commit | complete | `artifacts/epic_1/E1.14_cycle_receipt.md` (ruling (a), `decisions.md §36`: Skinwalker form climb is printed text; acceptance 4 → 3 passed; re-run `climb_speed` → 3 passed, 0 failed, 3135 filtered out) |
+| E1.13 | 2026-11-14 | `0434560514` + this commit | complete | `artifacts/epic_1/E1.13_cycle_receipt.md` (4 CRB inherited bundles settle `base_quantity` 20/10/5/10; Darts was already 10 (`lst_token`), 5 → 4 corrected, `decisions.md §20`; only `raw_tokens` moved; longbow + 3 × `Arrows (20)` → 60; root lib 3133 passed; codex-ingest 1,876 passed; fixture sha unchanged) |
 
 ## Epic reports
 
