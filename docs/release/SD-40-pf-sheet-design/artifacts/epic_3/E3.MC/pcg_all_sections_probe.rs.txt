@@ -1,0 +1,186 @@
+    // E3.MC population probe (SD-40). NOT shipped: pasted into a scratch tree's
+    // `apps/desktop/src-tauri/src/character_hub.rs` test module (before `fn tempdir`), with
+    // `mod print_golden` and its `pdf_text`, `page_sizes`, `without_footers`, `unspaced`,
+    // `print_order` made `pub(crate)` there (run 2: the E3.MC look fix applied there too).
+    // Run: PCG_PROBE_OUT=<file> cargo test --locked -j 8 pcg_all_sections_population_probe -- --test-threads=8 --nocapture
+    // Population: E1.MC's (`scripts/oracle_harness/eqm-fixtures/*.pcg` + every `.pcg` under the pinned
+    // oracle checkout). Each saved import x {A4, Letter} with every option ticked (Spellbook, Show the
+    // math, Bio with a two-line campaign note): print_golden's checks for one case, minus the golden
+    // fixture (Typst diagnostics 0, page size, the 13 page-1 blocks on page 1, the title, every
+    // block's heading in order with every label/value/note inside it or under its `(continued)`
+    // heading, or cut once by a page or column break (`split`), the campaign note). PCG_PROBE_ONLY=<a,b> narrows the files; PCG_PROBE_PDF_DIR keeps faulty PDFs.
+    #[test]
+    fn pcg_all_sections_population_probe() {
+        use crate::print::print_golden::{block_anchor, page_one, page_sizes, pdf_text, print_order, unspaced, without_footers, PAGE_ONE_BLOCKS};
+        fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(&path, out);
+                } else if path.extension().is_some_and(|ext| ext == "pcg") {
+                    out.push(path);
+                }
+            }
+        }
+        let mut files = Vec::new();
+        walk(&pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures"), &mut files);
+        let oracle = match std::env::var("PCGEN_REPO_DIR") {
+            Ok(dir) if !dir.is_empty() => PathBuf::from(dir),
+            _ => PathBuf::from(std::env::var("HOME").unwrap()).join("workspace/repos/pcgen"),
+        };
+        walk(&oracle, &mut files);
+        files.sort();
+        if let Ok(only) = std::env::var("PCG_PROBE_ONLY") {
+            files.retain(|file| only.split(',').any(|part| file.to_string_lossy().contains(part)));
+        }
+        let mut lines = Vec::new();
+        let (mut saved, mut blocked, mut refused, mut renders, mut bad) = (0, 0, 0, 0, 0);
+        for (n, file) in files.iter().enumerate() {
+            let root = tempdir(&format!("pcg-all-probe-{n}")).join("imported");
+            match pcg_import_via_sidecar(file, &root) {
+                Ok(ImportPcgResponse { outcome: CreateCharacterResponse::Saved { .. }, .. }) => {
+                    saved += 1;
+                    for paper in [crate::print::Paper::A4, crate::print::Paper::Letter] {
+                        let campaigns = vec![crate::print::CampaignNote { name: "Probe Road".to_owned(), description: "Probe note one.\nProbe note two.".to_owned() }];
+                        let request = crate::print::PrintRequest { paper, spellbook: true, math: true, bio: true, campaigns };
+                        let case = format!("{} {paper:?}", file.display());
+                        let document = match crate::print::sheet_document_at_root(&root, &request) {
+                            Ok(document) => document,
+                            Err(err) => {
+                                bad += 1;
+                                lines.push(format!("LAYOUT_ERR\t{case}\t{err}"));
+                                continue;
+                            }
+                        };
+                        let sheet = match crate::print::render_sheet_pdf_at_root(&root, &request) {
+                            Ok(sheet) => sheet,
+                            Err(err) => {
+                                bad += 1;
+                                lines.push(format!("RENDER_ERR\t{case}\t{err}"));
+                                continue;
+                            }
+                        };
+                        renders += 1;
+                        let mut faults: Vec<String> = Vec::new();
+                        if !sheet.warnings.is_empty() {
+                            faults.push(format!("warnings={:?}", sheet.warnings));
+                        }
+                        let want = match paper {
+                            crate::print::Paper::A4 => (595.28_f32, 841.89_f32),
+                            crate::print::Paper::Letter => (612.0, 792.0),
+                        };
+                        let sizes = page_sizes(&sheet.pdf);
+                        if sizes.iter().any(|(w, h)| (w - want.0).abs() >= 0.5 || (h - want.1).abs() >= 0.5) {
+                            faults.push("page size".to_owned());
+                        }
+                        let full = pdf_text(&sheet.pdf);
+                        match page_one(&full, &document.title, sizes.len()) {
+                            None => faults.push("no page-1 footer".to_owned()),
+                            Some(one) => {
+                                let first = unspaced(one);
+                                for id in PAGE_ONE_BLOCKS {
+                                    match document.blocks.iter().find(|b| b.id == id) {
+                                        None => faults.push(format!("no {id} block")),
+                                        Some(block) if !first.contains(&block_anchor(block)) => faults.push(format!("{id} not on page 1")),
+                                        Some(_) => {}
+                                    }
+                                }
+                            }
+                        }
+                        let text = without_footers(&full, &document.title, sizes.len());
+                        if !text.contains(&document.title.split_whitespace().collect::<Vec<_>>().join(" ")) {
+                            faults.push("title".to_owned());
+                        }
+                        if !(text.contains("Probe Road") && text.contains("Probe note one.") && text.contains("Probe note two.")) {
+                            faults.push("campaign note".to_owned());
+                        }
+                        // print_golden's order-and-presence check, continuation-aware (SD-b): a block's
+                        // piece prints between its anchor and the next block's, or after its
+                        // `<heading> (continued)` on a later page.
+                        let flat = unspaced(&text);
+                        let order = print_order(&document);
+                        let mut starts = Vec::new();
+                        let mut from = 0;
+                        for block in &order {
+                            match flat[from..].find(&block_anchor(block)) {
+                                Some(at) => {
+                                    starts.push(from + at);
+                                    from += at + unspaced(&block.heading).len();
+                                }
+                                None => {
+                                    faults.push(format!("anchor of {:?} after byte {from}", block.heading));
+                                    break;
+                                }
+                            }
+                        }
+                        let mut continued = 0;
+                        let mut split = 0;
+                        // A card or paragraph a page or column break cut once (the next card's words
+                        // print between its two parts): its longest leading part, then the rest after it.
+                        let found_split = |segment: &str, piece: &str| -> bool {
+                            let at: Vec<usize> = piece.char_indices().map(|(i, _)| i).chain(std::iter::once(piece.len())).collect();
+                            let (mut lo, mut hi) = (0, at.len() - 1);
+                            while lo < hi {
+                                let mid = (lo + hi + 1) / 2;
+                                if segment.contains(&piece[..at[mid]]) { lo = mid } else { hi = mid - 1 }
+                            }
+                            if lo < 20 || lo == at.len() - 1 {
+                                return false;
+                            }
+                            let head = &piece[..at[lo]];
+                            let start = segment.find(head).unwrap() + head.len();
+                            segment[start..].contains(&piece[at[lo]..])
+                        };
+                        if starts.len() == order.len() {
+                            for (index, block) in order.iter().enumerate() {
+                                let segment = &flat[starts[index]..starts.get(index + 1).copied().unwrap_or(flat.len())];
+                                let more = flat.find(&unspaced(&format!("{} (continued)", block.heading))).map(|at| &flat[at..]);
+                                for piece in block.rows.iter().flat_map(|row| std::iter::once(&row.label).chain(row.values.iter()).chain(row.notes.iter())).map(|piece| unspaced(piece)).filter(|piece| !piece.is_empty()) {
+                                    if segment.contains(&piece) {
+                                        continue;
+                                    }
+                                    if more.is_some_and(|rest| rest.contains(&piece)) {
+                                        continued += 1;
+                                        continue;
+                                    }
+                                    if found_split(segment, &piece) {
+                                        split += 1;
+                                        continue;
+                                    }
+                                    faults.push(format!("{:?} lost {:?}", block.heading, piece.chars().take(80).collect::<String>()));
+                                }
+                            }
+                        }
+                        if !faults.is_empty() {
+                            if let Ok(dir) = std::env::var("PCG_PROBE_PDF_DIR") {
+                                let name = format!("{}-{paper:?}.pdf", file.file_stem().unwrap().to_string_lossy());
+                                std::fs::write(PathBuf::from(dir).join(name), &sheet.pdf).unwrap();
+                            }
+                        }
+                        let sections: Vec<&str> = document.blocks.iter().filter(|b| b.look == crate::print::model::Look::SectionTitle).map(|b| b.heading.as_str()).collect();
+                        if !faults.is_empty() {
+                            bad += 1;
+                        }
+                        lines.push(format!("RENDER\t{case}\tpages={}\tblocks={}\tcontinued={continued}\tsplit={split}\tsections={}\tfaults={}", sizes.len(), document.blocks.len(), sections.join("/"), faults.join(" | ")));
+                    }
+                }
+                Ok(_) => {
+                    blocked += 1;
+                    lines.push(format!("BLOCKED\t{}", file.display()));
+                }
+                Err(err) => {
+                    refused += 1;
+                    lines.push(format!("REFUSED\t{}\t{}", file.display(), err.lines().next().unwrap_or("")));
+                }
+            }
+        }
+        lines.push(format!("SUMMARY\tfiles={}\tsaved={saved}\tblocked={blocked}\trefused={refused}\trenders={renders}\tbad={bad}", files.len()));
+        let text = lines.join("\n") + "\n";
+        if let Ok(out) = std::env::var("PCG_PROBE_OUT") {
+            std::fs::write(out, &text).unwrap();
+        }
+        println!("{text}");
+        assert_eq!(bad, 0, "every saved import prints every section whole with diagnostics 0");
+    }
+

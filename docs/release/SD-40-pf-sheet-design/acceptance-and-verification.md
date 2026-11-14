@@ -31,9 +31,10 @@ python3 - <dir>/base <dir>/head <<'PY'                 # after it: pass = prints
 import json, sys, pathlib
 NEW_KEYS = {'conditionalNotes', 'languages', 'remainingLbs', 'rangeIncrement', 'biography', 'notes', 'resistances', 'flyManeuverability'}   # E2.6, E2.8, E2.14, E3.6, E2.21, E2.17 (the card names any other)
 NEW_ROWS = ('defense.armor_class.', 'combat.weapon_damage_total.', 'speed.swim', 'speed.fly')   # E2.7, E2.14, E2.17
+NAMED_PROSE = {'core_rulebook:spell:fireball', 'core_rulebook:spell:light', 'core_rulebook:spell:spiritual_weapon'}   # E3.8: Range/Duration slots now read the caster level (Elowen 400 -> 600 ft., 0 -> 50 minutes; Tomas 0 -> 3 rounds, 100 -> 130 ft.)
 def strip(node):
     if isinstance(node, dict):
-        return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS}
+        return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS and not (k == 'prose' and node.get('id') in NAMED_PROSE)}
     if isinstance(node, list):
         return [strip(v) for v in node if not (isinstance(v, dict) and str(v.get('id', '')).startswith(NEW_ROWS))]
     return node
