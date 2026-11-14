@@ -111,8 +111,8 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
         // Every option: the Spellbook section before Bio, the Bio notes inside its details (E3.4), the Math section last.
         let mut expected: Vec<&str> = BASE_HEADINGS[..BASE_HEADINGS.len() - 2].to_vec();
-        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Math", MATH]);
-        assert_eq!(headings, expected, "{tag}: the 32 blocks and titles, in the layout file's order");
+        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Math", "Initiative Breakdown", "Saving Throw Breakdown", "Skill Breakdown", "Weapon Breakdown", MATH]);
+        assert_eq!(headings, expected, "{tag}: the 36 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns)");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
