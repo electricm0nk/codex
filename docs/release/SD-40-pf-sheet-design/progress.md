@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 49 of 60 (→ 49 at E3.5; → 48 at E3.4; → 47 at E3.3, total 60 with E3.8 discovered by E3.3; → 46 at E3.2, counting E3.6 landed by the `bio` lane: `awk -F"|" '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'` → 46; → 44 at E3.1; → 43 at E2.G round 3; → 42 at E2.MC3; → 41 at E2.32; → 40 at E2.31, total 59 with E2.32 discovered by E2.31; → 39 at E2.30; → 38 at E2.29, total 58 with E2.31 discovered by E2.29; → 37 at E2.28; → 36 at E2.26 and 35 at E2.25, per their commits; → 34 at E2.24; → 33 at E2.23, total 57 with E2.30 from §24.10; → 32 at E2.22, total 56 with E2.29 from §24.8; → 31 at E2.20; → 30 at E2.21, after E2.18; → 28 at E2.19, total 55 with E2.28 discovered by E2.19; → 25 at E2.27; `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 54: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan + 3 UI cards + E2.27, `decisions.md §24`) |
+| Cards complete | 51 of 61 (→ 51 at E3.8, total 61 with E3.9 discovered by E3.8: `awk -F"|" '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'` → 51; → 50 at E3.7, which left this field at 49; → 49 at E3.5; → 48 at E3.4; → 47 at E3.3, total 60 with E3.8 discovered by E3.3; → 46 at E3.2, counting E3.6 landed by the `bio` lane: `awk -F"|" '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'` → 46; → 44 at E3.1; → 43 at E2.G round 3; → 42 at E2.MC3; → 41 at E2.32; → 40 at E2.31, total 59 with E2.32 discovered by E2.31; → 39 at E2.30; → 38 at E2.29, total 58 with E2.31 discovered by E2.29; → 37 at E2.28; → 36 at E2.26 and 35 at E2.25, per their commits; → 34 at E2.24; → 33 at E2.23, total 57 with E2.30 from §24.10; → 32 at E2.22, total 56 with E2.29 from §24.8; → 31 at E2.20; → 30 at E2.21, after E2.18; → 28 at E2.19, total 55 with E2.28 discovered by E2.19; → 25 at E2.27; `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'` → 24 at E2.MC2 (E2.15, E2.12, E2.13, E2.4 and E2.MC2 since E2.11); total `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 54: E2.15 discovered by E2.7, + 10 by the E2.G round-2 replan + 3 UI cards + E2.27, `decisions.md §24`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-20` SHA | `3ceeb63b6622061d9dde1e0068df4b3d4065d626` (C1 version commit, pushed 2026-11-07; was `d4489b3557a1fa6f59be53ffc16561990c7e6715` at the cut) |
 
@@ -135,6 +135,7 @@ ceiling; page counts recorded per receipt; the operator's eye at E2.G and E5.2).
 | E3.4 | E3.4 | complete | ea273e3b0f + receipt commit | artifacts/epic_3/E3.4_cycle_receipt.md |
 | E3.5 | E3.5 | complete | 1b694147b6 + 7083568957 + receipt commit | artifacts/epic_3/E3.5_cycle_receipt.md |
 | E3.7 | E3.7 | complete | 0eeb64cf43 + receipt commit | artifacts/epic_3/E3.7_cycle_receipt.md |
+| E3.8 | E3.8 | complete (discovered E3.9) | a5867acaaa + receipt commit | artifacts/epic_3/E3.8_cycle_receipt.md |
 
 ## Epic reports
 
