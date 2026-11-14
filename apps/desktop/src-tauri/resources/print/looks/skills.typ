@@ -26,7 +26,9 @@
 #let total-width = 0.95cm
 #let gutter = 0cm
 
-#let is-skill(r) = r.values.len() > 0
+// A skill line has its total; `SheetBlock::new` pads every row to one value, so a line of words alone
+// (the ranks with no panel total) arrives with one empty value and is not a skill line (E3.MC).
+#let is-skill(r) = r.values.at(0, default: "") != ""
 
 // The name as it fits `width`: a Knowledge name too wide for it prints as `Know. (<Subject>)`.
 #let fitted(name, width) = {

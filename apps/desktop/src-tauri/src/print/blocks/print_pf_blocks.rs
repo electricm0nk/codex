@@ -1069,7 +1069,7 @@ fn print_pf_blocks_page_one_lists_continue_on_page_two_and_no_block_leaves() {
                     "weapons" => block.rows.iter().skip(1).map(|row| row.label.clone()).collect(),
                     "conditionalBonuses" => block.rows.iter().map(|row| format!("{}: {}", row.label, row.values[0])).collect(),
                     // Each skill line by its name, then each line under the column.
-                    "skills" => block.rows.iter().flat_map(|row| if row.values.is_empty() { row.notes.clone() } else { vec![row.label.clone()] }).collect(),
+                    "skills" => block.rows.iter().flat_map(|row| if row.values.iter().all(|value| value.is_empty()) { row.notes.clone() } else { vec![row.label.clone()] }).collect(),
                     "nameCampaign" => block.rows.iter().flat_map(|row| row.values.clone()).filter(|value| !value.is_empty()).collect(),
                     _ => continue,
                 };
@@ -2825,5 +2825,29 @@ fn print_pf_blocks_a_table_line_keeps_its_words_on_its_page() {
             }
             assert!(lines > 0, "{tag} {paper:?}: the Actions table holds a line with words");
         }
+    }
+}
+
+/// The ranks with no Skills panel total print their words on page 1 (E3.MC; found by the `.pcg`
+/// population probe: PCGen's CodeMonkey and 35e_Bard hold Craft (Pottery) ranks). `skills.rs` sends
+/// the line with no total; `SheetBlock::new` pads every row to one value, so the look must not take
+/// the padded line for a skill line, which prints no words.
+#[test]
+fn print_pf_blocks_ranks_with_no_panel_total_print_their_words() {
+    use crate::print::model::{SheetBlock, SheetRow};
+    const WORDS: &str = "Craft (Pottery): 1 ranks, total —";
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    let root = seeded("no-panel-total", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let mut document = sheet_document_at_root(&root, &PrintRequest { paper, ..request(false, false, false) }).expect("the document builds");
+        let at = document.blocks.iter().position(|block| block.id == "skills").expect("the Skills block");
+        let mut rows = document.blocks[at].rows.clone();
+        rows.push(SheetRow::new("Ranks with no Skills panel total:", Vec::<String>::new()).with_notes([WORDS.to_owned()]));
+        let padded = SheetBlock::new("Skills", rows).rows;
+        document.blocks[at].rows = padded;
+        let typeset = crate::print::typst::typeset(&document).expect("the sheet typesets");
+        assert!(typeset.warnings.is_empty(), "{paper:?}: Typst reports no diagnostics: {:?}", typeset.warnings);
+        let text = unspaced(&pdf_text(&typeset.pdf));
+        assert!(text.contains(&unspaced(WORDS)), "{paper:?}: the line's words print: {text}");
     }
 }
