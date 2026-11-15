@@ -10246,7 +10246,9 @@ mod tests {
         for key in ["bonuses", "slot", "worn"] {
             assert!(!raw.contains(&format!("\"{key}\"")), "{key} is not written for a text record: {raw}");
         }
-        assert!(held.iter().all(|copy| !copy.item_id.starts_with("custom:")), "a text record is listed on the Custom tab only: {held:?}");
+        // SD-41 E2.3 (`decisions.md §25` (c)): every custom equipment record is held, a text one Carried.
+        let pipe: Vec<_> = held.iter().filter(|copy| copy.item_id.starts_with("custom:")).map(|copy| (copy.item_id.as_str(), &copy.location)).collect();
+        assert_eq!(pipe, vec![("custom:t1", &Location::Carried)], "a text record is held, carried: {held:?}");
     }
 
     #[test]
