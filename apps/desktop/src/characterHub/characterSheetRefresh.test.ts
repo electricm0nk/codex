@@ -30,6 +30,7 @@ function verifiesSavedOutcomeRefreshesDetailWithNewLevel() {
   const result = toCharacterMutationRefresh(
     {
       kind: 'Saved',
+      mirrorWarnings: [],
       summary,
       snapshot: SNAPSHOT,
       corpusDerived: {

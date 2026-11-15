@@ -1153,7 +1153,7 @@ pub(crate) fn mutate_saved_character_gated_at_root(
     envelope.saved_at = saved_at.to_owned();
 
     let ledger = ledger_after_change_at_root(root, &before, &envelope.character_input, admitted)?;
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     if let Some(ledger) = ledger {
         write_character_ledger_at_root(root, &ledger)?;
     }
@@ -1163,6 +1163,7 @@ pub(crate) fn mutate_saved_character_gated_at_root(
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
         starting_wealth_note: None,
+        mirror_warnings: crate::character_hub::mirror_warnings_at_root(root),
     })
 }
 

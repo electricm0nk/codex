@@ -126,7 +126,7 @@ pub fn re_save_character_at_root(
     envelope.latest_authoritative_revision_ref = next_revision_id.clone();
     envelope.saved_at = saved_at.to_owned();
 
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
 
     Ok(ReSaveCharacterResponse {
         success: true,

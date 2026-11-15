@@ -51,6 +51,7 @@ use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
 use codex::saved_character::equipment_sets::{self, CopyKey, EquipmentSets, HeldCopy, Location};
+use codex::saved_character::campaign_mirror::{self, Membership, MirrorWarning};
 use codex::saved_character::{
     SavedCharacterEnvelope, SavedCharacterRevisionKind, SavedCharacterSummary,
     CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
@@ -748,6 +749,14 @@ pub struct LoadSavedCharacterResponse {
     /// (`containers::container_loads`). Left out when the character holds no container.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub container_loads: Vec<ContainerLoadDto>,
+    /// SD-41 E2.7 (`decisions.md §29`): the campaigns the character belongs to (`campaigns.json`),
+    /// for the sheet's Campaign dialog and its buttons. Left out when there is none.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub campaigns: Vec<Membership>,
+    /// SD-41 E2.7: each campaign copy the latest write could not make ("<dir>: <reason>"). Left out
+    /// when every copy was written.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub mirror_warnings: Vec<String>,
     /// SD-41 E2.3 (`decisions.md §32` (b)): the Custom tab's "Ignore container capacity limits",
     /// for the gear screen and the print, which then flag no container over. Left out when off.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
@@ -1287,6 +1296,10 @@ pub enum CreateCharacterResponse {
         /// says that the character starts with 0 gp and why.
         #[serde(rename = "startingWealthNote")]
         starting_wealth_note: Option<String>,
+
+        /// Each campaign copy the save could not write (`decisions.md §29`); empty when all were written.
+        #[serde(rename = "mirrorWarnings")]
+        mirror_warnings: Vec<String>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
@@ -2261,7 +2274,7 @@ pub(crate) fn create_character_at_root(
     };
 
     let ledger = ledger_of_a_new_character(root, &envelope.character_input)?;
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     if let Some(ledger) = ledger {
         write_character_ledger_at_root(root, &ledger)?;
     }
@@ -2284,6 +2297,7 @@ pub(crate) fn create_character_at_root(
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
         starting_wealth_note,
+        mirror_warnings: mirror_warnings_at_root(root),
     })
 }
 
@@ -2356,7 +2370,7 @@ fn clone_character_at_roots(
         character_input,
     };
 
-    SavedCharacterStore::save(&envelope, new_root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, new_root)?;
 
     copy_character_custom(source_root, new_root)?;
     // The clone holds the same lines, so the source's sets (what is inside a created container) still name them.
@@ -2380,6 +2394,7 @@ fn clone_character_at_roots(
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
         starting_wealth_note: None,
+        mirror_warnings: mirror_warnings_at_root(new_root),
     })
 }
 
@@ -2800,7 +2815,7 @@ fn save_pathfinder_starter(root: &Path, app_version: &str, seed: PathfinderStart
         display_label: request.display_label.clone(),
         character_input,
     };
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)
+    crate::character_hub::save_and_mirror(&envelope, root).map(|_warnings| ())
 }
 
 /// The errors of the latest starter seeding pass (the launch, or the last Restore), held as
@@ -3004,6 +3019,7 @@ pub(crate) fn load_saved_character_at_root(
         .as_ref()
         .map_or(corpus_receipt.base.ability_modifiers.constitution, |snapshot| snapshot.ability_modifiers.constitution);
 
+    let (campaigns, mirror_warnings) = campaign_state_at_root(root);
     let mut sheet = LoadSavedCharacterResponse {
         admitted_under_override: admitted_records_at_root(root, &envelope.character_input),
         summary: summarize_envelope(&envelope),
@@ -3030,6 +3046,8 @@ pub(crate) fn load_saved_character_at_root(
         resistances: Default::default(),
         equipment_sets: Some(EquipmentSetsSummaryDto { active: sets.active.clone(), names: sets.sets.iter().map(|set| set.name.clone()).collect() }),
         container_loads,
+        campaigns,
+        mirror_warnings,
         ignore_container_capacity: custom.overrides.ignore_container_capacity,
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
@@ -4156,7 +4174,7 @@ fn add_purchased_pieces_at_root(
         sets.copies.entry(row.copies[0].map_key()).or_default().quantity = Some(row.quantity.saturating_add(pieces));
         let response = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, |_| {})?;
         if matches!(response, CreateCharacterResponse::Saved { .. }) {
-            equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+            save_sets(root, &sets)?;
         }
         return Ok(response);
     }
@@ -4166,7 +4184,7 @@ fn add_purchased_pieces_at_root(
         let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
         let new = selection_copy_keys(&envelope.character_input.chosen.equipment_selections).pop().ok_or("the bought line was not saved")?;
         sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { name: None, quantity: Some(pieces) });
-        equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+        save_sets(root, &sets)?;
     }
     Ok(response)
 }
@@ -4319,7 +4337,7 @@ pub(crate) fn purchase_custom_equipment_at_root(
                 for key in &keys[keys.len().saturating_sub(copies as usize)..] {
                     sets.copies.entry(key.map_key()).or_default().name = Some(name.to_owned());
                 }
-                equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+                save_sets(root, &sets)?;
             }
             let cost_signed = i64::try_from(cost_copper).map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
             let money = if cost_signed > 0 { adjust_character_money_at_root(root, -cost_signed)? } else { load_character_money_at_root(root)? };
@@ -5454,7 +5472,7 @@ fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_
         if let Some((from, kept, _)) = split {
             sets.copies.entry(from.map_key()).or_default().quantity = Some(kept);
         }
-        equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+        save_sets(root, &sets)?;
         // Highest ordinal first, so each removal renumbers only copies still held.
         whole.sort_by_key(|copy| std::cmp::Reverse(copy.ordinal));
         for removed in &whole {
@@ -5480,7 +5498,7 @@ pub(crate) fn rename_equipment_copy_at_root(root: &Path, copy: &CopyKey, name: &
     }
     let name = name.trim();
     sets.copies.entry(copy.map_key()).or_default().name = (!name.is_empty()).then(|| name.to_owned());
-    equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+    save_sets(root, &sets)?;
     list_held_equipment_stacks_at_root(root)
 }
 
@@ -5635,7 +5653,7 @@ fn equipment_sets_at_root(root: &Path, input: &CharacterInput, rows: &[HeldEquip
         }
     }
     if changed {
-        equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+        save_sets(root, &sets)?;
     }
     Ok(sets)
 }
@@ -6205,7 +6223,7 @@ fn save_projected(
             return Ok(response);
         }
     }
-    equipment_sets::save(root, sets).map_err(|err| err.message)?;
+    save_sets(root, sets)?;
     Ok(response)
 }
 
@@ -6320,7 +6338,7 @@ pub(crate) fn create_equipment_set_at_root(root: &Path, name: &str, copy_active:
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
     sets.add_set(name, copy_active)?;
-    equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+    save_sets(root, &sets)?;
     Ok(sets_summary(&sets))
 }
 
@@ -6329,7 +6347,7 @@ pub(crate) fn rename_equipment_set_at_root(root: &Path, from: &str, to: &str) ->
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
     sets.rename_set(from, to)?;
-    equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+    save_sets(root, &sets)?;
     Ok(sets_summary(&sets))
 }
 
@@ -6395,7 +6413,7 @@ fn forget_copy_in_sets(root: &Path, removed: &CopyKey) -> Result<(), String> {
         }
     }
     sets.copies = copies;
-    equipment_sets::save(root, &sets).map_err(|err| err.message)
+    save_sets(root, &sets)
 }
 
 // ----- v0.8 B-4: `add_trait_selection` / `remove_trait_selection` -----
@@ -6821,7 +6839,9 @@ pub fn save_character_portrait(
     }
 
     let path = root.join(PORTRAIT_FILE_NAME);
-    std::fs::write(&path, &bytes).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::write(&path, &bytes).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(&root);
+    Ok(())
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -6894,8 +6914,94 @@ pub fn delete_character_portrait(
     let path = root.join(PORTRAIT_FILE_NAME);
     if path.exists() {
         std::fs::remove_file(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+        after_write(&root);
     }
     Ok(())
+}
+
+// ----- Campaign write-through (SD-41 `decisions.md §29`) -----
+//
+// The app is master; each campaign folder the character belongs to gets a fresh copy of the whole
+// character folder after every write. A copy that fails is a warning, never an error: the local
+// write has already happened. The last attempt's warnings per character are kept here so the load
+// response can show them whichever command did the write.
+
+static MIRROR_WARNINGS: std::sync::Mutex<BTreeMap<PathBuf, Vec<String>>> = std::sync::Mutex::new(BTreeMap::new());
+
+/// Keeps `warnings` as the character's latest campaign-copy outcome and returns them as lines.
+fn record_mirror_warnings(root: &Path, warnings: Vec<MirrorWarning>) -> Vec<String> {
+    let lines: Vec<String> = warnings.iter().map(|warning| format!("{}: {}", warning.campaign_dir.display(), warning.reason)).collect();
+    let mut store = MIRROR_WARNINGS.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    if lines.is_empty() {
+        store.remove(root);
+    } else {
+        store.insert(root.to_path_buf(), lines.clone());
+    }
+    lines
+}
+
+/// Called by every writer of a file under a character root, after its write: copies the root to
+/// each active campaign and returns the warnings (the scanning test
+/// `tests/every_character_root_writer_mirrors.rs` holds every writer to it).
+pub(crate) fn after_write(root: &Path) -> Vec<String> {
+    let warnings = match campaign_mirror::load_memberships(root) {
+        Ok(memberships) if !memberships.iter().any(|membership| membership.active) => Vec::new(),
+        Ok(memberships) => match SavedCharacterStore::load(root) {
+            Ok(envelope) => campaign_mirror::mirror(root, &envelope.display_label, &envelope.character_id, &memberships),
+            Err(err) => vec![MirrorWarning { campaign_dir: root.to_path_buf(), reason: err.message }],
+        },
+        Err(err) => vec![MirrorWarning { campaign_dir: root.join(campaign_mirror::MEMBERSHIPS_FILE), reason: err.message }],
+    };
+    record_mirror_warnings(root, warnings)
+}
+
+/// `SavedCharacterStore::save` for the desktop: the same save, with the campaign copies' warnings kept.
+pub(crate) fn save_and_mirror(envelope: &SavedCharacterEnvelope, root: &Path) -> Result<Vec<String>, String> {
+    let warnings = SavedCharacterStore::save_with_warnings(envelope, root).map_err(|err| err.message)?;
+    Ok(record_mirror_warnings(root, warnings))
+}
+
+/// `equipment_sets::save`, then the campaign copies.
+fn save_sets(root: &Path, sets: &EquipmentSets) -> Result<(), String> {
+    equipment_sets::save(root, sets).map_err(|err| err.message)?;
+    after_write(root);
+    Ok(())
+}
+
+/// The latest campaign-copy warnings for the character at `root` (none when every copy was written).
+pub(crate) fn mirror_warnings_at_root(root: &Path) -> Vec<String> {
+    MIRROR_WARNINGS.lock().unwrap_or_else(std::sync::PoisonError::into_inner).get(root).cloned().unwrap_or_default()
+}
+
+/// The character's campaigns and the latest copy warnings, for the load response. A campaigns file
+/// that does not read is shown as a warning, not a failed load.
+pub(crate) fn campaign_state_at_root(root: &Path) -> (Vec<Membership>, Vec<String>) {
+    let kept = mirror_warnings_at_root(root);
+    match campaign_mirror::load_memberships(root) {
+        Ok(memberships) => (memberships, kept),
+        Err(err) => (Vec::new(), [vec![err.message], kept].concat()),
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SetCharacterCampaignsRequest {
+    pub character_id: String,
+    pub memberships: Vec<Membership>,
+}
+
+/// Writes `campaigns.json` and copies the character to its active campaigns at once; the warnings
+/// name each copy that failed.
+pub(crate) fn set_character_campaigns_at_root(root: &Path, memberships: &[Membership]) -> Result<Vec<String>, String> {
+    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    campaign_mirror::save_memberships(root, memberships).map_err(|err| err.message)?;
+    Ok(after_write(root))
+}
+
+#[tauri::command]
+pub fn set_character_campaigns(app: tauri::AppHandle, request: SetCharacterCampaignsRequest) -> Result<Vec<String>, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    set_character_campaigns_at_root(&root, &request.memberships)
 }
 
 // ----- `update_character_bio` / `load_character_bio` (v0.6 alpha swarm) -----
@@ -6995,7 +7101,9 @@ fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -
     let path = root.join(HIT_POINTS_FILE_NAME);
     let json = serde_json::to_string_pretty(&CharacterHitPointsDto { levels: levels.to_vec() })
         .map_err(|err| format!("failed to serialize hit points: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(root);
+    Ok(())
 }
 
 /// The saved hit point results, or an empty list when the character has none (created before the
@@ -7098,7 +7206,9 @@ pub(crate) fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> 
     let path = root.join(BIO_FILE_NAME);
     let json = serde_json::to_string_pretty(bio)
         .map_err(|err| format!("failed to serialize character bio: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(root);
+    Ok(())
 }
 
 /// Reads `bio.json` from the character's root directory, or an all-empty
@@ -7245,6 +7355,7 @@ pub(crate) fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> 
     let json = serde_json::to_string_pretty(&StoredMoney { total_copper: new_total_copper })
         .map_err(|err| format!("failed to serialize character money: {err}"))?;
     std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(root);
 
     Ok(money_dto_from_total(new_total_copper))
 }
@@ -7667,7 +7778,7 @@ fn import_character_from_json(
         character_input,
     };
 
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     if let Some(bio) = &parsed.bio {
         save_character_bio_at_root(root, bio)?;
     }
@@ -7691,6 +7802,7 @@ fn import_character_from_json(
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
         corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
         starting_wealth_note: None,
+        mirror_warnings: mirror_warnings_at_root(root),
     })
 }
 
@@ -19351,6 +19463,7 @@ mod tests {
     ) {
         let response = CreateCharacterResponse::Saved {
             starting_wealth_note: None,
+            mirror_warnings: Vec::new(),
             summary: Box::new(CharacterSummaryDto {
                 character_id: "c".to_owned(),
                 display_label: "d".to_owned(),
@@ -22272,6 +22385,95 @@ mod tests {
         assert_eq!(stacks_of(&root, "item:dagger").len(), 1, "unnamed, the two stack again");
         assert!(rename_equipment_copy_at_root(&root, &sets_key("item:dagger", 5), "x").is_err());
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-41 E2.7: campaign write-through (decisions.md §29) -----
+
+    fn campaign_membership(dir: &Path, active: bool) -> campaign_mirror::Membership {
+        campaign_mirror::Membership { campaign_id: "camp-1".to_owned(), campaign_name: "Rise of the Runelords".to_owned(), campaign_dir: dir.to_path_buf(), active }
+    }
+
+    /// The one character folder in a campaign's `characters/`.
+    fn campaign_copy(campaign: &Path) -> PathBuf {
+        let folders: Vec<PathBuf> = std::fs::read_dir(campaign.join("characters")).expect("the campaign has a characters folder").map(|entry| entry.unwrap().path()).collect();
+        assert_eq!(folders.len(), 1, "{folders:?}");
+        folders[0].clone()
+    }
+
+    #[test]
+    fn campaign_write_through_custom_save_reaches_the_copy() {
+        let root = created_character("campaign-through");
+        let campaign = tempdir("campaign-through-dir");
+        let warnings = set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, true)]).expect("membership saved");
+        assert!(warnings.is_empty(), "{warnings:?}");
+        let copy = campaign_copy(&campaign);
+        let id = SavedCharacterStore::load(&root).unwrap().character_id;
+        assert!(copy.file_name().unwrap().to_string_lossy().ends_with(&id), "{copy:?} names the character id");
+        assert!(!copy.join(campaign_mirror::MEMBERSHIPS_FILE).exists(), "the membership file stays with the character");
+
+        let custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &custom, "2026-11-15T00:00:00Z").expect("custom saves");
+        assert_eq!(std::fs::read(copy.join("custom.json")).unwrap(), std::fs::read(root.join("custom.json")).unwrap(), "the campaign copy holds the new custom.json");
+        assert_eq!(std::fs::read(copy.join("authoritative_character_input.txt")).unwrap(), std::fs::read(root.join("authoritative_character_input.txt")).unwrap(), "and the re-saved input");
+
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(loaded.campaigns, vec![campaign_membership(&campaign, true)]);
+        assert!(loaded.mirror_warnings.is_empty(), "{:?}", loaded.mirror_warnings);
+
+        // A clone is a new character: it joins no campaign.
+        let clone_root = tempdir("campaign-through-clone");
+        let request = CloneCharacterRequest { character_id: id, new_character_id: "clone-of-campaign-character".to_owned(), new_display_label: "Clone".to_owned(), saved_at: "2026-11-15T00:00:01Z".to_owned() };
+        let cloned = clone_character_at_roots(&root, &clone_root, &request, "test-version").expect("clones");
+        assert!(matches!(cloned, CreateCharacterResponse::Saved { .. }), "{cloned:?}");
+        assert!(!clone_root.join(campaign_mirror::MEMBERSHIPS_FILE).exists(), "clone_character copies no campaigns.json");
+        assert_eq!(std::fs::read_dir(campaign.join("characters")).unwrap().count(), 1, "the clone wrote nothing to the campaign");
+        for dir in [&root, &campaign, &clone_root] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn campaign_write_through_inactive_stops_updating() {
+        let root = created_character("campaign-inactive");
+        let campaign = tempdir("campaign-inactive-dir");
+        set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, true)]).expect("joined");
+        let first = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &first, "2026-11-15T00:00:00Z").expect("first save");
+        let copy = campaign_copy(&campaign);
+        let copied = std::fs::read(copy.join("custom.json")).unwrap();
+
+        set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, false)]).expect("removed");
+        let second = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 2)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &second, "2026-11-15T00:00:01Z").expect("second save");
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Lawful Good".to_owned(), ..Default::default() }).expect("bio saves");
+
+        assert_ne!(std::fs::read(root.join("custom.json")).unwrap(), copied, "the local file changed");
+        assert_eq!(std::fs::read(copy.join("custom.json")).unwrap(), copied, "the copy kept what it had: removed = keep it, stop updating");
+        assert!(!copy.join("bio.json").exists(), "no later file reaches the copy");
+        for dir in [&root, &campaign] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn campaign_write_through_unwritable_dir_warns_and_keeps_local() {
+        let root = created_character("campaign-unwritable");
+        let campaign = tempdir("campaign-unwritable-dir");
+        // `characters` is a file, so no copy can be written under it (whoever runs the test).
+        std::fs::write(campaign.join("characters"), "not a folder").unwrap();
+        let warnings = set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, true)]).expect("the membership saves anyway");
+        assert_eq!(warnings.len(), 1, "{warnings:?}");
+
+        let custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &custom, "2026-11-15T00:00:00Z").expect("the command succeeds");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), custom, "the local file changed");
+
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(loaded.mirror_warnings.len(), 1, "{:?}", loaded.mirror_warnings);
+        assert!(loaded.mirror_warnings[0].starts_with(&campaign.display().to_string()), "the warning names the campaign folder: {:?}", loaded.mirror_warnings);
+        for dir in [&root, &campaign] {
+            std::fs::remove_dir_all(dir).ok();
+        }
     }
 }
 

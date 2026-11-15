@@ -38,6 +38,7 @@ use codex::rules_core::pilot_compute::sf_abilities::{self, INCREASE_LEVELS, SCOR
 use codex::rules_core::pilot_compute::sf_chassis::{self, SfChassisRefusal};
 use codex::rules_core::pilot_compute::sf_defense;
 use codex::rules_core::sheet_rule::{Ability, ProseFamily, ProsePiece, SheetRulePackage};
+#[cfg(test)]
 use codex::saved_character::local_store::SavedCharacterStore;
 use codex::saved_character::SavedCharacterEnvelope;
 
@@ -581,7 +582,7 @@ pub fn level_up_at_root(package: &SheetRulePackage, root: &Path, request: &SfLev
     envelope.latest_authoritative_revision_ref = next;
     envelope.saved_at = request.saved_at.clone();
     envelope.character_input = leveled;
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     Ok(SfCreateResponse::Saved {
         summary: Box::new(sf_adapter::summary_dto(&envelope)),
         explanations: sheet.explanations().into_iter().map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail }).collect(),

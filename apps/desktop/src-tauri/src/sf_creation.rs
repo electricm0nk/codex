@@ -50,6 +50,7 @@ use codex::rules_core::sheet_rule::{
     evaluate_applies, evaluate_expr, offer_open, offer_selects, split_rule_id, Ability, BonusTarget, EvalContext, OptionSet,
     SheetRule, SheetRulePackage, SheetValue,
 };
+#[cfg(test)]
 use codex::saved_character::local_store::SavedCharacterStore;
 use codex::saved_character::{SavedCharacterEnvelope, SavedCharacterRevisionKind, CURRENT_SAVED_CHARACTER_SCHEMA_VERSION};
 
@@ -786,7 +787,7 @@ pub fn create_at_root(
         display_label: request.display_label.trim().to_owned(),
         character_input: input,
     };
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     Ok(SfCreateResponse::Saved {
         summary: Box::new(sf_adapter::summary_dto(&envelope)),
         explanations: sheet

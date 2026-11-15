@@ -690,7 +690,9 @@ pub(crate) fn set_custom_item_state_at_root(root: &Path, id: &str, active_state:
 fn write_custom(root: &Path, custom: &CharacterCustomDto) -> Result<(), String> {
     let path = root.join(CUSTOM_FILE_NAME);
     let json = serde_json::to_string_pretty(custom).map_err(|err| format!("failed to serialize custom data: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    crate::character_hub::after_write(root);
+    Ok(())
 }
 
 /// Copies the file beside one character to beside another; no file, nothing to copy.

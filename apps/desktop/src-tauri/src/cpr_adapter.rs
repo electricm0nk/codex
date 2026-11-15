@@ -573,6 +573,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
         let sheet_rules_unavailable_reason = sheet_lines.is_empty().then(|| {
             "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows".to_owned()
         });
+        let (campaigns, mirror_warnings) = crate::character_hub::campaign_state_at_root(root);
         Ok(LoadSavedCharacterResponse {
             admitted_under_override: Vec::new(),
             summary: summary_dto(&character),
@@ -652,6 +653,8 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             resistances: Default::default(),
             equipment_sets: None,
             container_loads: Vec::new(),
+            campaigns,
+            mirror_warnings,
             ignore_container_capacity: false,
         })
     }
