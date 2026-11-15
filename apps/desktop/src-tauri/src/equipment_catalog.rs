@@ -53,7 +53,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::body_slots::{enhanceable_tags, is_magic_marked, Enhanceable};
+use codex::rules_core::body_slots::{enhanceable_tags, is_magic_marked, worn_slot, BodySlot, Enhanceable};
 use codex::rules_core::damage_total::resolve_base_damage_dice;
 use codex::rules_core::equipment_resolver::{equipment_catalog_rows, equipment_converted_resolve};
 use codex::rules_core::rules_catalog::{
@@ -143,7 +143,9 @@ pub struct EquipmentCatalogEntryDto {
     /// The record's own words, from [`row_description`]. `None` where the record
     /// genuinely states none — a real and documented gap for template and bookkeeping
     /// rows, never a fabricated stand-in.
-    pub description: Option<String>,
+    pub description: Option<String>,    /// The body slot a copy of this row takes (`body_slot_of_item` on the key, the held list's
+    /// read); `none` for the slotless. The Market's Slot column (SD-41 `decisions.md §26` (e)).
+    pub slot: BodySlot,
 }
 
 /// The description one catalog row serves.
@@ -254,6 +256,51 @@ pub struct EquipmentCatalogResponse {
     pub types_error: Option<String>,
 }
 
+/// The body slot `item_id` fills, read off its converted record. `None` when no record holds the
+/// id, which has no slot for the check to enforce. `Err` when the data itself cannot be read: that
+/// must not read as "this item has no slot" (`body_slots::slot_of`).
+pub(crate) fn body_slot_of_item(item_id: &str) -> Result<BodySlot, String> {
+    let package = codex::rules_core::corpus_loader::live_sheet_rules()
+        .ok_or_else(|| "the equipment records could not be read, so the body slots cannot be checked".to_owned())?;
+    let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
+    let Some(record) = package
+        .find("equipment", &codex::rules_core::sheet_rule::slug(needle))
+        .and_then(|id| package.rule(id))
+    else {
+        return Ok(BodySlot::None);
+    };
+    let types = codex::rules_core::equipment_types::equipment_types()
+        .as_ref()
+        .map_err(Clone::clone)?
+        .get(needle)
+        .map_or(&[][..], Vec::as_slice);
+    worn_slot(record, types, settled_wield_category(item_id))
+}
+
+/// A weapon's settled wield category, off its own record or the record it names as its stand-in
+/// (`Battleaxe` states none, and names `Battleaxe (Base)`). Off `full_corpus_bundle`, where a name
+/// answers by its own book's record and not by the fixture's.
+fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_total::WieldCategory> {
+    let corpus = crate::corpus_full::full_corpus_bundle();
+    let record = equipment_converted_resolve(item_id, corpus)?;
+    record.wield_category.or_else(|| {
+        let base = record.base_item.as_deref()?;
+        equipment_converted_resolve(base, corpus)?.wield_category
+    })
+}
+
+/// A catalog row's slot. When the data [`body_slot_of_item`] reads cannot be read, the catalog
+/// already says so (`types_error` for the type sidecar; no prose for the sheet rules), and the
+/// row shows no slot.
+///
+/// Read once per key: the read walks the whole corpus for a weapon's wield category, every
+/// catalog build asks for all 8,119 rows, and nothing it reads changes while the app runs.
+fn body_slot_or_none(key: &str) -> BodySlot {
+    static SLOTS: std::sync::OnceLock<std::sync::Mutex<std::collections::HashMap<String, BodySlot>>> = std::sync::OnceLock::new();
+    let mut slots = SLOTS.get_or_init(Default::default).lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    *slots.entry(key.to_owned()).or_insert_with(|| body_slot_of_item(key).unwrap_or(BodySlot::None))
+}
+
 fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
         types: Vec::new(),
@@ -264,6 +311,7 @@ fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight_lbs,
         book: BOOK_CRB.to_string(),
         description: row_description(BOOK_CRB, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -277,6 +325,7 @@ fn map_apg_entry(entry: &apg::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight,
         book: BOOK_APG.to_string(),
         description: row_description(BOOK_APG, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -290,6 +339,7 @@ fn map_acg_entry(entry: &acg::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight_lbs,
         book: BOOK_ACG.to_string(),
         description: row_description(BOOK_ACG, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -305,6 +355,7 @@ fn map_beastiary1_entry(
         weight_lbs: entry.weight_lbs,
         book: BOOK_B1.to_string(),
         description: row_description(BOOK_B1, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -318,6 +369,7 @@ fn map_arg_entry(entry: &arg::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight_lbs,
         book: BOOK_ARG.to_string(),
         description: row_description(BOOK_ARG, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -336,6 +388,7 @@ fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: None,
         book: BOOK_PU.to_string(),
         description: row_description(BOOK_PU, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -358,6 +411,7 @@ fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UI.to_string(),
         description: row_description(BOOK_UI, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -376,6 +430,7 @@ fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UE.to_string(),
         description: row_description(BOOK_UE, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -401,6 +456,7 @@ fn map_um_entry(entry: &um::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UM.to_string(),
         description: row_description(BOOK_UM, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -420,6 +476,7 @@ fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> Equipm
         weight_lbs: entry.weight_lbs,
         book: BOOK_UPSI.to_string(),
         description: row_description(BOOK_UPSI, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -439,6 +496,7 @@ fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UC.to_string(),
         description: row_description(BOOK_UC, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -458,6 +516,7 @@ fn map_gap_entry(
         weight_lbs: row.weight_lbs,
         book: row.book.to_string(),
         description: row_description(row.book, row.key, row.description),
+        slot: body_slot_or_none(row.key),
     }
 }
 
@@ -784,6 +843,29 @@ mod tests {
     use super::*;
     use codex::rules_core::equipment_resolver::equipment_catalog_row_by_key;
     use std::collections::{BTreeMap, BTreeSet};
+
+    /// SD-41 E2.5 (`decisions.md §26` (e)): every catalog row carries the slot a copy of it takes,
+    /// the read the held list makes of a copy ([`body_slot_of_item`] on the row's key), and the
+    /// Market's Slot column serializes it.
+    #[test]
+    fn catalog_slot_is_set_on_every_entry() {
+        use codex::rules_core::body_slots::BodySlot;
+        let entries = &built_catalog().entries;
+        let mut by_slot: BTreeMap<BodySlot, usize> = BTreeMap::new();
+        for entry in entries {
+            assert_eq!(Ok(entry.slot), body_slot_of_item(&entry.key), "{}", entry.key);
+            *by_slot.entry(entry.slot).or_default() += 1;
+        }
+        println!("catalog rows={} by slot: {by_slot:?}", entries.len());
+        let slot_of = |key: &str| entries.iter().find(|entry| entry.key == key).map(|entry| entry.slot);
+        assert_eq!(slot_of("Ring of Protection +1"), Some(BodySlot::Ring));
+        assert_eq!(slot_of("Chain Shirt"), Some(BodySlot::Armor));
+        assert_eq!(slot_of("Longbow"), Some(BodySlot::WieldTwoHanded));
+        assert_eq!(slot_of("Rope (Hemp/50 ft)"), Some(BodySlot::None));
+        let market = list_market(MarketFilter { category: MarketCategory::Armor, name_contains: Some("Chain Shirt".to_owned()), book: None });
+        let row = serde_json::to_value(&market.entries[0]).unwrap();
+        assert_eq!(row["slot"], serde_json::json!("armor"), "{row}");
+    }
 
     /// **The corpus-wide floor under the equipment catalog's prose.**
     ///

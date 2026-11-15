@@ -24,7 +24,8 @@ use uuid::Uuid;
 use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
 use crate::character_ledger::{admitted_records_at_root, AdmittedKind, AdmittedRecordDto, OverrideFlag, build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, list_progression_ledger_at_root, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto, ProgressionLedgerDto};
 use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
-use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
+use codex::rules_core::body_slots::{slot_conflict, worn_places, BodySlot};
+use crate::equipment_catalog::body_slot_of_item;
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
@@ -3997,12 +3998,13 @@ pub(crate) fn purchase_equipment_priced_at_root(
     saved_at: &str,
     mode: PriceMode,
 ) -> Result<PurchaseEquipmentResponse, String> {
-    purchase_equipment_offer_at_root(root, item_id, active_state, saved_at, mode, None)
+    purchase_equipment_deal_at_root(root, item_id, active_state, saved_at, mode, Deal::default())
 }
 
 /// [`purchase_equipment_priced_at_root`], optionally as a `+N`: the whole offer price replaces the
 /// catalog price, and the copy holds the offer's eqmod from the save that adds it. A bonus the row
 /// does not offer is refused in every mode, before anything is read from the balance.
+#[cfg(test)]
 pub(crate) fn purchase_equipment_offer_at_root(
     root: &Path,
     item_id: &str,
@@ -4011,7 +4013,41 @@ pub(crate) fn purchase_equipment_offer_at_root(
     mode: PriceMode,
     bonus: Option<u8>,
 ) -> Result<PurchaseEquipmentResponse, String> {
-    let offer = match bonus {
+    purchase_equipment_deal_at_root(root, item_id, active_state, saved_at, mode, Deal { bonus, ..Deal::default() })
+}
+
+/// What a Market buy, sale or discard names beyond the item (`decisions.md §26, §28, §30`).
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub(crate) struct Deal {
+    /// The `+N` to buy, one the row offers; absent buys the plain item.
+    pub(crate) bonus: Option<u8>,
+    /// A buy: bundles as the book sells them (absent: one). A sale or discard: pieces (absent: the
+    /// named line, or the whole stack for a discard).
+    pub(crate) quantity: Option<u32>,
+    /// The total the user agreed, in copper, in place of the listed price at the price mode.
+    /// `Cashless` moves no money either way.
+    pub(crate) negotiated_copper: Option<u64>,
+}
+
+/// [`purchase_equipment_offer_at_root`] of `deal.quantity` bundles: charged quantity × the price
+/// (the offer's, else the catalog's) or the negotiated total, and landed as quantity × the bundle's
+/// pieces on the Carried (or, asked `Absent`, Not Carried) stack of the same item, bonus and no
+/// custom name, or on a new line when there is none (`decisions.md §30`). A row with no price from
+/// any source is bought only at a negotiated price (`decisions.md §30.1`); without one it is
+/// `Blocked` and nothing changes.
+pub(crate) fn purchase_equipment_deal_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+    mode: PriceMode,
+    deal: Deal,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let bundles = deal.quantity.unwrap_or(1);
+    if bundles == 0 {
+        return Err(format!("cannot buy 0 of '{item_id}'"));
+    }
+    let offer = match deal.bonus {
         None => None,
         Some(bonus) => {
             let Some(offer) = market_offers(item_id).into_iter().find(|offer| offer.bonus == bonus) else {
@@ -4032,19 +4068,10 @@ pub(crate) fn purchase_equipment_offer_at_root(
     let modifier_key = offer.as_ref().map(|offer| offer.modifier_key.as_str());
     // A purchase lands Carried (`decisions.md §10`), or left behind when asked: wearing it is a move.
     let active_state = if active_state == ActiveState::Absent { ActiveState::Absent } else { ActiveState::SelectedInactive };
-    let (carried_reason, wear_flags) = (None, Vec::new());
     let copy_bonus = offer.as_ref().map_or(0, |offer| offer.bonus);
     let placed = ActiveStateDto::from(active_state);
+    let pieces = bundles.saturating_mul(bundle_pieces(item_id));
 
-    if mode == PriceMode::Cashless {
-        return match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
-            CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
-            CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
-                let money = load_character_money_at_root(root)?;
-                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
-            }
-        };
-    }
     // SD-27: the Add Weapon / Add Armor picker hands this command a catalog
     // `key` straight off `build_equipment_catalog()`, so the by-key lookup
     // is tried first -- it names the exact row the user picked, including
@@ -4053,22 +4080,28 @@ pub(crate) fn purchase_equipment_offer_at_root(
     // resolver remains the fallback for ids that are not catalog keys at
     // all, notably the legacy `"item:longsword"` fixture namespace that
     // seeded characters still carry.
-    let Some(cost_gp) = offer.as_ref().map(|offer| offer.price_gp).or_else(|| catalog_cost_gp(item_id)) else {
-        return Ok(PurchaseEquipmentResponse::Blocked {
-            diagnostics: vec![DiagnosticDto {
-                id: "money.equipment_purchase.unknown_cost".to_owned(),
-                message: format!(
-                    "'{item_id}' has no known gold-piece cost in the equipment catalog (a \
-                     template/base record with no independent price, or a formula-priced \
-                     equipment modifier), so affordability cannot be verified. The purchase \
-                     was not applied and no funds were charged."
-                ),
-                claim_blocking: true,
-            }],
-        });
+    let cost_copper = if mode == PriceMode::Cashless {
+        0
+    } else if let Some(negotiated) = deal.negotiated_copper {
+        negotiated
+    } else {
+        let Some(cost_gp) = offer.as_ref().map(|offer| offer.price_gp).or_else(|| catalog_cost_gp(item_id)) else {
+            return Ok(PurchaseEquipmentResponse::Blocked {
+                diagnostics: vec![DiagnosticDto {
+                    id: "money.equipment_purchase.unknown_cost".to_owned(),
+                    message: format!(
+                        "no listed price: negotiate. '{item_id}' has no known gold-piece cost (a \
+                         template/base record with no independent price, or a formula-priced \
+                         equipment modifier); buy it at a negotiated price. The purchase was not \
+                         applied and no funds were charged."
+                    ),
+                    claim_blocking: true,
+                }],
+            });
+        };
+        money::gp_to_copper(cost_gp).saturating_mul(u64::from(bundles))
     };
 
-    let cost_copper = money::gp_to_copper(cost_gp);
     let balance_copper = load_character_money_at_root(root)?.total_copper;
     if balance_copper < cost_copper {
         return Ok(PurchaseEquipmentResponse::Blocked {
@@ -4084,17 +4117,49 @@ pub(crate) fn purchase_equipment_offer_at_root(
         });
     }
 
-    match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
-        CreateCharacterResponse::Blocked { diagnostics } => {
-            Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
-        }
+    match add_purchased_pieces_at_root(root, (item_id, copy_bonus), modifier_key, active_state, pieces, saved_at)? {
+        CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
         CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
-            let cost_signed = i64::try_from(cost_copper)
-                .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
-            let money = adjust_character_money_at_root(root, -cost_signed)?;
-            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
+            let cost_signed = i64::try_from(cost_copper).map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
+            let money = if cost_signed > 0 { adjust_character_money_at_root(root, -cost_signed)? } else { load_character_money_at_root(root)? };
+            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason: None })
         }
     }
+}
+
+/// Saves `pieces` more of `item_id` at `bonus`: onto the first line of that item, bonus and no
+/// custom name already at the purchase's location (Carried, or Not Carried for `Absent`), or as a
+/// new line stating its pieces (`decisions.md §30`). The sets file is written after the character saved.
+fn add_purchased_pieces_at_root(
+    root: &Path,
+    (item_id, bonus): (&str, u8),
+    modifier_key: Option<&str>,
+    active_state: ActiveState,
+    pieces: u32,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let (rows, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+    let target = location_from_state(active_state, BodySlot::None);
+    let unnamed = |copy: &CopyKey| sets.copies.get(&copy.map_key()).is_none_or(|facts| facts.name.is_none());
+    let joins = rows.iter().find(|row| row.item_id == item_id && row.bonus == bonus && row.location == target && unnamed(&row.copies[0]));
+    if let Some(row) = joins {
+        sets.copies.entry(row.copies[0].map_key()).or_default().quantity = Some(row.quantity.saturating_add(pieces));
+        let response = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, |_| {})?;
+        if matches!(response, CreateCharacterResponse::Saved { .. }) {
+            equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+        }
+        return Ok(response);
+    }
+    let response = add_purchased_copy_at_root(root, (item_id, bonus), modifier_key, active_state, Vec::new(), saved_at)?;
+    if matches!(response, CreateCharacterResponse::Saved { .. }) && pieces != bundle_pieces(item_id) {
+        let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+        let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+        let new = selection_copy_keys(&envelope.character_input.chosen.equipment_selections).pop().ok_or("the bought line was not saved")?;
+        sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { name: None, quantity: Some(pieces) });
+        equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+    }
+    Ok(response)
 }
 
 /// Same wire shape as `PurchaseEquipmentResponse` (`Attached`/`Blocked`,
@@ -4324,6 +4389,13 @@ pub struct PurchaseEquipmentRequest {
     /// The `+N` to buy, one the Market row offers. Absent buys the plain item.
     #[serde(default)]
     pub bonus: Option<u8>,
+    /// Bundles as the book sells them (`decisions.md §28`). Absent buys one.
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    /// The total agreed with the seller, in copper, charged in place of the listed price
+    /// (`decisions.md §26`); the only way to buy a row with no price (`§30.1`).
+    #[serde(default)]
+    pub negotiated_price_copper: Option<u64>,
 }
 
 /// Atomically resolves `item_id`'s real catalog cost, verifies the
@@ -4337,14 +4409,8 @@ pub fn purchase_equipment(
     request: PurchaseEquipmentRequest,
 ) -> Result<PurchaseEquipmentResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    purchase_equipment_offer_at_root(
-        &root,
-        &request.item_id,
-        request.active_state.into(),
-        &request.saved_at,
-        request.price_mode,
-        request.bonus,
-    )
+    let deal = Deal { bonus: request.bonus, quantity: request.quantity, negotiated_copper: request.negotiated_price_copper };
+    purchase_equipment_deal_at_root(&root, &request.item_id, request.active_state.into(), &request.saved_at, request.price_mode, deal)
 }
 
 /// The wire-level projection of `AcquisitionMode` for the
@@ -5034,17 +5100,32 @@ pub(crate) fn sell_equipment_copy_at_root(
     mode: PriceMode,
     bonus: Option<u8>,
 ) -> Result<CreateCharacterResponse, String> {
-    sell_held_copy_at_root(root, item_id, saved_at, mode, CopyNamed { bonus, from_state: None })
+    sell_held_pieces_at_root(root, item_id, saved_at, mode, CopyNamed { bonus, from_state: None }, Deal::default())
 }
 
 /// [`sell_equipment_copy_at_root`] of the copy a row names. Named by no state, a copy the character
 /// has with them goes before one left behind.
+#[cfg(test)]
 pub(crate) fn sell_held_copy_at_root(
     root: &Path,
     item_id: &str,
     saved_at: &str,
     mode: PriceMode,
+    named: CopyNamed,
+) -> Result<CreateCharacterResponse, String> {
+    sell_held_pieces_at_root(root, item_id, saved_at, mode, named, Deal::default())
+}
+
+/// [`sell_held_copy_at_root`] of `deal.quantity` pieces of the named copy's stack (absent: that
+/// copy's own line), returning `refund_copper(pieces / bundle pieces × the bundle's price)` floored
+/// to a copper, or the negotiated total; `Cashless` returns nothing (`decisions.md §26, §30`).
+pub(crate) fn sell_held_pieces_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
     CopyNamed { bonus, from_state }: CopyNamed,
+    deal: Deal,
 ) -> Result<CreateCharacterResponse, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let held = &envelope.character_input.chosen.equipment_selections;
@@ -5065,23 +5146,111 @@ pub(crate) fn sell_held_copy_at_root(
         });
     };
     let sold_bonus = copy_bonus(&held[index], &offers);
-    let cost_gp = copy_price_gp(item_id, sold_bonus, &offers);
+    let cost_gp = copy_price_gp(&held[index].item_id, sold_bonus, &offers);
     let sold = selection_copy_keys(held).swap_remove(index);
 
-    let response = mutate_saved_character_at_root(root, saved_at, |character_input| {
-        character_input.chosen.equipment_selections.remove(index);
-    })?;
-    if matches!(response, CreateCharacterResponse::Saved { .. }) {
-        forget_copy_in_sets(root, &sold)?;
-    }
-    if let (CreateCharacterResponse::Saved { .. }, Some(cost_gp)) = (&response, cost_gp) {
-        let refund = refund_copper(money::gp_to_copper(cost_gp), mode);
+    let taken = take_pieces_at_root(root, &sold, deal.quantity, deal.quantity.is_none(), saved_at)?;
+    if let CreateCharacterResponse::Saved { .. } = &taken.response {
+        let listed = cost_gp.map_or(0, |gp| money::gp_to_copper(gp).saturating_mul(u64::from(taken.pieces)) / u64::from(taken.bundle_pieces));
+        let refund = match (mode, deal.negotiated_copper) {
+            (PriceMode::Cashless, _) => 0,
+            (_, Some(negotiated)) => negotiated,
+            (_, None) => refund_copper(listed, mode),
+        };
         if refund > 0 {
             let refund_signed = i64::try_from(refund).map_err(|_| "refund overflows a signed 64-bit total".to_owned())?;
             adjust_character_money_at_root(root, refund_signed)?;
         }
     }
-    Ok(response)
+    Ok(taken.response)
+}
+
+/// What [`take_pieces_at_root`] took.
+struct TakenPieces {
+    response: CreateCharacterResponse,
+    pieces: u32,
+    bundle_pieces: u32,
+}
+
+/// Which lines of `stack` (in order) `wanted` pieces take: whole lines first, then the line the
+/// count ends inside, as `(copy, pieces kept, pieces taken)`.
+fn split_stack(stack: &[&HeldEquipmentCopyDto], wanted: u32) -> (Vec<CopyKey>, Option<(CopyKey, u32, u32)>) {
+    let (mut whole, mut split, mut left) = (Vec::new(), None, wanted);
+    for row in stack {
+        if left == 0 {
+            break;
+        }
+        if left >= row.quantity {
+            whole.push(row.copies[0].clone());
+            left -= row.quantity;
+        } else {
+            split = Some((row.copies[0].clone(), row.quantity - left, left));
+            left = 0;
+        }
+    }
+    (whole, split)
+}
+
+/// Takes `quantity` pieces (absent: all) of the stack `copy` is in, from `copy` on (`line_only`:
+/// `copy`'s own line alone), for no money: whole lines leave the saved input and every set (what
+/// they held becomes Carried), and a line taken in part keeps the rest. An unknown copy, a created
+/// item, or more pieces than the stack holds is an error.
+fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_only: bool, saved_at: &str) -> Result<TakenPieces, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let input = &envelope.character_input;
+    let (rows, mut sets) = synced_rows_and_sets(root, input)?;
+    let Some(source) = rows.iter().find(|row| &row.copies[0] == copy && !row.item_id.starts_with(CUSTOM_ITEM_PREFIX)) else {
+        return Err(format!("'{}' cannot be removed: this character does not hold that copy", copy.map_key()));
+    };
+    let stack: Vec<&HeldEquipmentCopyDto> =
+        std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(row, source))).collect();
+    let total: u32 = stack.iter().map(|row| row.quantity).sum();
+    let wanted = quantity.unwrap_or(total);
+    if wanted == 0 || wanted > total {
+        return Err(format!("cannot remove {wanted} of {}: the stack holds {total}", source.name));
+    }
+    let (mut whole, split) = split_stack(&stack, wanted);
+    let keys = selection_copy_keys(&input.chosen.equipment_selections);
+    let gone: Vec<bool> = keys.iter().map(|key| whole.contains(key)).collect();
+    let response = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, move |character_input| {
+        let mut index = 0;
+        character_input.chosen.equipment_selections.retain(|_| {
+            index += 1;
+            !gone[index - 1]
+        });
+    })?;
+    if matches!(response, CreateCharacterResponse::Saved { .. }) {
+        if let Some((from, kept, _)) = split {
+            sets.copies.entry(from.map_key()).or_default().quantity = Some(kept);
+        }
+        equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+        // Highest ordinal first, so each removal renumbers only copies still held.
+        whole.sort_by_key(|copy| std::cmp::Reverse(copy.ordinal));
+        for removed in &whole {
+            forget_copy_in_sets(root, removed)?;
+        }
+    }
+    Ok(TakenPieces { response, pieces: wanted, bundle_pieces: source.base_quantity.max(1) })
+}
+
+/// Discards `quantity` pieces (absent: the whole stack) of the stack `copy` is in, for no money
+/// (`decisions.md §27`); see [`take_pieces_at_root`].
+pub(crate) fn discard_equipment_copy_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, saved_at: &str) -> Result<CreateCharacterResponse, String> {
+    take_pieces_at_root(root, copy, quantity, false, saved_at).map(|taken| taken.response)
+}
+
+/// Names one copy (`decisions.md §24` (b)): kept in the sets file's copies map, shown wherever the
+/// held list names the copy; a blank name clears it. Returns the held stacks.
+pub(crate) fn rename_equipment_copy_at_root(root: &Path, copy: &CopyKey, name: &str) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let (rows, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+    if !rows.iter().any(|row| &row.copies[0] == copy) {
+        return Err(format!("'{}' cannot be renamed: this character does not hold that copy", copy.map_key()));
+    }
+    let name = name.trim();
+    sets.copies.entry(copy.map_key()).or_default().name = (!name.is_empty()).then(|| name.to_owned());
+    equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+    list_held_equipment_stacks_at_root(root)
 }
 
 /// One held copy, as the Market's Sell list and the Gear tab's Equipment control show it. `bonus` is
@@ -5504,40 +5673,6 @@ fn state_change_target(selections: &[EquipmentSelection], item_id: &str, CopyNam
     copies().find(|(_, selection)| selection.active_state != active_state).or_else(|| copies().next()).map(|(index, _)| index)
 }
 
-/// The body slot `item_id` fills, read off its converted record. `None` when no record holds the
-/// id, which has no slot for the check to enforce. `Err` when the data itself cannot be read: that
-/// must not read as "this item has no slot" (`body_slots::slot_of`).
-fn body_slot_of_item(item_id: &str) -> Result<BodySlot, String> {
-    let package = codex::rules_core::corpus_loader::live_sheet_rules()
-        .ok_or_else(|| "the equipment records could not be read, so the body slots cannot be checked".to_owned())?;
-    let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
-    let Some(record) = package
-        .find("equipment", &codex::rules_core::sheet_rule::slug(needle))
-        .and_then(|id| package.rule(id))
-    else {
-        return Ok(BodySlot::None);
-    };
-    let types = codex::rules_core::equipment_types::equipment_types()
-        .as_ref()
-        .map_err(Clone::clone)?
-        .get(needle)
-        .map_or(&[][..], Vec::as_slice);
-    worn_slot(record, types, settled_wield_category(item_id))
-}
-
-/// A weapon's settled wield category, off its own record or the record it names as its stand-in
-/// (`Battleaxe` states none, and names `Battleaxe (Base)`). Off `full_corpus_bundle`, where a name
-/// answers by its own book's record and not by the fixture's.
-fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_total::WieldCategory> {
-    use codex::rules_core::equipment_resolver::equipment_converted_resolve;
-    let corpus = crate::corpus_full::full_corpus_bundle();
-    let record = equipment_converted_resolve(item_id, corpus)?;
-    record.wield_category.or_else(|| {
-        let base = record.base_item.as_deref()?;
-        equipment_converted_resolve(base, corpus)?.wield_category
-    })
-}
-
 /// Every worn selection on `character_input`, as `(name, slot)` in saved order.
 pub(crate) fn worn_stock_slots(character_input: &CharacterInput) -> Result<Vec<(String, BodySlot)>, String> {
     character_input
@@ -5875,20 +6010,7 @@ fn move_copies_at_root(
     if wanted == 0 || wanted > total {
         return Err(format!("cannot move {wanted} of {}: the stack holds {total}", source.name));
     }
-    // Whole lines first; the line the count ends inside is split.
-    let (mut whole, mut split, mut left) = (Vec::new(), None, wanted);
-    for row in &stack {
-        if left == 0 {
-            break;
-        }
-        if left >= row.quantity {
-            whole.push(row.copies[0].clone());
-            left -= row.quantity;
-        } else {
-            split = Some((row.copies[0].clone(), row.quantity - left, left));
-            left = 0;
-        }
-    }
+    let (whole, split) = split_stack(&stack, wanted);
 
     if let Location::Inside { container } = &location {
         let custom = custom_or_empty(root);
@@ -6276,6 +6398,13 @@ pub struct RemoveEquipmentSelectionRequest {
     /// The state the row selling this shows its copy in, as on `set_equipment_active_state`.
     #[serde(default)]
     pub from_state: Option<ActiveStateDto>,
+    /// Pieces to sell from the copy's stack (`decisions.md §28, §30`). Absent sells the copy's line.
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    /// The total agreed with the buyer, in copper, returned in place of the price mode's refund
+    /// (`decisions.md §26`).
+    #[serde(default)]
+    pub negotiated_price_copper: Option<u64>,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
@@ -6289,7 +6418,44 @@ pub fn remove_equipment_selection(
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    sell_held_copy_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) })
+    let named = CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) };
+    let deal = Deal { bonus: None, quantity: request.quantity, negotiated_copper: request.negotiated_price_copper };
+    sell_held_pieces_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, named, deal)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DiscardEquipmentCopyRequest {
+    pub character_id: String,
+    pub copy: CopyKey,
+    /// Pieces to discard; absent discards the whole stack `copy` is in.
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    pub saved_at: String,
+}
+
+/// Discards pieces of a held stack for no money (`decisions.md §27`); see
+/// [`discard_equipment_copy_at_root`].
+#[tauri::command]
+pub fn discard_equipment_copy(app: tauri::AppHandle, request: DiscardEquipmentCopyRequest) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    discard_equipment_copy_at_root(&root, &request.copy, request.quantity, &request.saved_at)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RenameEquipmentCopyRequest {
+    pub character_id: String,
+    pub copy: CopyKey,
+    /// The copy's name; blank clears it.
+    pub name: String,
+}
+
+/// Names one held copy; see [`rename_equipment_copy_at_root`].
+#[tauri::command]
+pub fn rename_equipment_copy(app: tauri::AppHandle, request: RenameEquipmentCopyRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    rename_equipment_copy_at_root(&root, &request.copy, &request.name)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -21593,6 +21759,144 @@ mod tests {
         let loaded = load_saved_character_at_root(&root).unwrap();
         assert!(loaded.ignore_container_capacity, "the load response carries it");
         assert_eq!(serde_json::to_value(&loaded).unwrap()["ignoreContainerCapacity"], serde_json::Value::Bool(true));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-41 E2.5: the Market backend (`decisions.md §26, §27, §28, §30, §30.1`) -----
+
+    const FLIGHT_ARROWS: &str = "Arrows (Flight/20)";
+
+    fn bought(root: &Path, item_id: &str, deal: Deal) -> PurchaseEquipmentResponse {
+        purchase_equipment_deal_at_root(root, item_id, ActiveState::SelectedInactive, MOVED_AT, PriceMode::Standard, deal).expect("the purchase runs")
+    }
+
+    fn copper(root: &Path) -> u64 {
+        load_character_money_at_root(root).unwrap().total_copper
+    }
+
+    /// 3 × "Arrow, Flight (20)" at standard costs 3 × 2 gp and lands as one Carried stack of 60
+    /// pieces weighing three bundles (9 lb); one more bundle joins that stack, no new line.
+    #[test]
+    fn market_backend_purchase_quantity_buys_n_copies_at_n_times_price() {
+        let root = fund_and_seed("market-backend-quantity", 10_000);
+        let weight = worn_vs_carried_weight(&root);
+        let response = bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 10_000 - 600, "3 × 2 gp");
+        let rows = stacks_of(&root, FLIGHT_ARROWS);
+        assert_eq!(rows.iter().map(|row| (row.location.clone(), row.quantity)).collect::<Vec<_>>(), vec![(Location::Carried, 60)]);
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == FLIGHT_ARROWS).count(), 1, "one line");
+        assert_eq!(worn_vs_carried_weight(&root), weight + 9.0, "three bundles of 3 lb");
+
+        bought(&root, FLIGHT_ARROWS, Deal::default());
+        assert_eq!(copper(&root), 10_000 - 800);
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 80, "one more bundle joins the stack");
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == FLIGHT_ARROWS).count(), 1, "still one line");
+        assert!(purchase_equipment_deal_at_root(&root, FLIGHT_ARROWS, ActiveState::SelectedInactive, MOVED_AT, PriceMode::Standard, Deal { quantity: Some(0), ..Deal::default() }).is_err());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A negotiated total is charged in place of quantity × the listed price.
+    #[test]
+    fn market_backend_negotiated_price_replaces_the_list() {
+        let root = fund_and_seed("market-backend-negotiated", 10_000);
+        let response = bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), negotiated_copper: Some(100), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 10_000 - 100, "1 gp, not 6");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 60);
+        let short = bought(&root, FLIGHT_ARROWS, Deal { negotiated_copper: Some(1_000_000), ..Deal::default() });
+        assert!(matches!(short, PurchaseEquipmentResponse::Blocked { .. }), "a negotiated total past the balance is refused: {short:?}");
+        assert_eq!(copper(&root), 9_900);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Selling 30 of 60 pieces at standard returns half of 1.5 bundles' price (1 gp 5 sp) and
+    /// leaves 30; a negotiated sale returns what was agreed.
+    #[test]
+    fn market_backend_sell_quantity_and_negotiated() {
+        let root = fund_and_seed("market-backend-sell", 10_000);
+        bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), ..Deal::default() });
+        let before = copper(&root);
+        let sold = sell_held_pieces_at_root(&root, FLIGHT_ARROWS, MOVED_AT, PriceMode::Standard, CopyNamed::default(), Deal { quantity: Some(30), ..Deal::default() }).unwrap();
+        assert!(matches!(sold, CreateCharacterResponse::Saved { .. }), "{sold:?}");
+        assert_eq!(copper(&root), before + 150, "30 / 20 × 2 gp × 50 %");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 30);
+
+        sell_held_pieces_at_root(&root, FLIGHT_ARROWS, MOVED_AT, PriceMode::Standard, CopyNamed::default(), Deal { quantity: Some(10), negotiated_copper: Some(7), ..Deal::default() }).unwrap();
+        assert_eq!(copper(&root), before + 157, "the negotiated 7 cp");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 20);
+
+        sell_held_pieces_at_root(&root, FLIGHT_ARROWS, MOVED_AT, PriceMode::Standard, CopyNamed::default(), Deal::default()).unwrap();
+        assert_eq!(copper(&root), before + 257, "the rest: one bundle at 50 %");
+        assert!(stacks_of(&root, FLIGHT_ARROWS).is_empty(), "the line is gone");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Discarding returns nothing: part of a stack lowers it; the whole stack leaves the saved
+    /// lines and every set entry naming it.
+    #[test]
+    fn market_backend_discard_refunds_nothing() {
+        let root = fund_and_seed("market-backend-discard", 10_000);
+        bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), ..Deal::default() });
+        let arrows = sets_key(FLIGHT_ARROWS, 0);
+        move_saved(&root, &arrows, Location::NotCarried, None);
+        create_equipment_set_at_root(&root, "Camp", true).unwrap();
+        let before = copper(&root);
+
+        let response = discard_equipment_copy_at_root(&root, &arrows, Some(20), MOVED_AT).unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 40);
+        discard_equipment_copy_at_root(&root, &arrows, None, MOVED_AT).unwrap();
+        assert_eq!(copper(&root), before, "a discard refunds nothing");
+        assert!(stacks_of(&root, FLIGHT_ARROWS).is_empty());
+        assert!(held_selections(&root).iter().all(|s| s.item_id != FLIGHT_ARROWS), "the line is gone");
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        assert!(sets.sets.iter().all(|set| set.locations.iter().all(|entry| entry.copy.item_id != FLIGHT_ARROWS)), "{sets:?}");
+        assert!(!sets.copies.contains_key(&arrows.map_key()));
+        assert!(discard_equipment_copy_at_root(&root, &arrows, None, MOVED_AT).is_err(), "nothing left to discard");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Market row with no price from any source buys only at a negotiated price (`decisions.md
+    /// §30.1`); without one it is refused and nothing is charged.
+    #[test]
+    fn market_backend_unpriced_item_buys_through_negotiate() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let unpriced = list_market(MarketFilter { category: MarketCategory::Gear, name_contains: None, book: None })
+            .entries
+            .into_iter()
+            .find(|row| row.entry.cost_gp.is_none() && row.variants.is_empty() && catalog_cost_gp(&row.entry.key).is_none())
+            .expect("an unpriced Market row");
+        let key = unpriced.entry.key;
+        let root = fund_and_seed("market-backend-unpriced", 10_000);
+        match bought(&root, &key, Deal::default()) {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(diagnostics.iter().any(|d| d.message.starts_with("no listed price: negotiate")), "{key}: {diagnostics:?}");
+            }
+            other => panic!("{key}: an unpriced row is never free: {other:?}"),
+        }
+        assert_eq!(copper(&root), 10_000);
+        let response = bought(&root, &key, Deal { negotiated_copper: Some(500), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{key}: {response:?}");
+        assert_eq!(copper(&root), 9_500);
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == key).count(), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A copy's custom name is kept in the sets file's copies map and read by the held list; an
+    /// empty name clears it.
+    #[test]
+    fn rename_equipment_copy_names_the_held_row() {
+        let root = sets_root("rename-copy", &[("item:dagger", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        let dagger = sets_key("item:dagger", 1);
+        let rows = rename_equipment_copy_at_root(&root, &dagger, "  Grandpa's Dagger ").unwrap();
+        let named: Vec<(&str, u32)> = rows.iter().filter(|row| row.item_id == "item:dagger").map(|row| (row.name.as_str(), row.quantity)).collect();
+        assert_eq!(named, vec![("Dagger", 1), ("Grandpa's Dagger", 1)]);
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        assert_eq!(sets.copies.get(&dagger.map_key()).and_then(|facts| facts.name.as_deref()), Some("Grandpa's Dagger"));
+        rename_equipment_copy_at_root(&root, &dagger, " ").unwrap();
+        assert_eq!(stacks_of(&root, "item:dagger").len(), 1, "unnamed, the two stack again");
+        assert!(rename_equipment_copy_at_root(&root, &sets_key("item:dagger", 5), "x").is_err());
         std::fs::remove_dir_all(&root).ok();
     }
 }

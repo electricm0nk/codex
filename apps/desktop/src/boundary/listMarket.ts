@@ -1,6 +1,7 @@
 import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { EquipmentCatalogEntryDto } from './loadEquipmentCatalog';
+import type { BodySlotDto } from './listHeldEquipment';
 
 /**
  * Read-only desktop boundary over one Market list. Invokes `list_market`, which returns only the
@@ -28,6 +29,8 @@ export interface MarketVariantDto {
 }
 
 export interface MarketEntryDto extends EquipmentCatalogEntryDto {
+  /** The body slot a copy of this row takes; `none` for the slotless (the Market's Slot column). */
+  slot: BodySlotDto;
   /** Empty when the row takes no `+N`. */
   variants: MarketVariantDto[];
 }

@@ -77,7 +77,7 @@ use character_hub::{
     list_class_creation_roster, draft_level_up_preview, draft_sheet_preview, draft_spell_options, list_feats_for_draft, list_feat_levels, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     list_held_equipment, list_progression_ledger, record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
-    move_equipment_copy, create_equipment_set, rename_equipment_set, delete_equipment_set, activate_equipment_set,
+    move_equipment_copy, discard_equipment_copy, rename_equipment_copy, create_equipment_set, rename_equipment_set, delete_equipment_set, activate_equipment_set,
     remove_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
@@ -297,6 +297,8 @@ fn main() {
             remove_trait_selection,
             set_equipment_active_state,
             move_equipment_copy,
+            discard_equipment_copy,
+            rename_equipment_copy,
             create_equipment_set,
             rename_equipment_set,
             delete_equipment_set,
