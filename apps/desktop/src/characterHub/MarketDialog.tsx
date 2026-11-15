@@ -204,36 +204,35 @@ export function MarketDialogView(props: MarketDialogViewProps) {
             );
           })}
         </div>
-        <div style={{ alignItems: 'center', display: 'flex', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <input
-            type="text"
-            autoFocus
-            aria-label="Search the market"
-            placeholder="Search the market…"
-            value={props.search}
-            onChange={(event) => props.onSearch(event.target.value)}
-            style={{
-              backgroundColor: 'var(--color-surface-2)',
-              border: '1px solid var(--color-border)',
-              borderRadius: 6,
-              boxSizing: 'border-box',
-              color: 'var(--color-text)',
-              flex: 1,
-              padding: '0.5rem 0.6rem',
-            }}
-          />
-          {props.onOnlyAffordable ? (
-            <label style={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-              <input
-                type="checkbox"
-                data-testid="market-only-affordable"
-                checked={props.onlyAffordable ?? false}
-                onChange={(event) => props.onOnlyAffordable?.(event.target.checked)}
-              />{' '}
-              Only Show Affordable
-            </label>
-          ) : null}
-        </div>
+        <input
+          type="text"
+          autoFocus
+          aria-label="Search the market"
+          placeholder="Search the market…"
+          value={props.search}
+          onChange={(event) => props.onSearch(event.target.value)}
+          style={{
+            backgroundColor: 'var(--color-surface-2)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 6,
+            boxSizing: 'border-box',
+            color: 'var(--color-text)',
+            marginBottom: '0.5rem',
+            padding: '0.5rem 0.6rem',
+            width: '100%',
+          }}
+        />
+        {props.onOnlyAffordable ? (
+          <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
+            <input
+              type="checkbox"
+              data-testid="market-only-affordable"
+              checked={props.onlyAffordable ?? false}
+              onChange={(event) => props.onOnlyAffordable?.(event.target.checked)}
+            />{' '}
+            Only Show Affordable
+          </label>
+        ) : null}
       </div>
 
       <div style={{ display: 'flex', flex: 1, flexWrap: 'wrap', minHeight: 0, overflowY: 'auto' }}>

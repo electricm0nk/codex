@@ -86,7 +86,7 @@ export function BuyCustomDialogView(props: BuyCustomDialogViewProps) {
     <div role="dialog" aria-modal="true" aria-label="Buy Custom" onClick={(event) => event.stopPropagation()} style={subDialog}>
       <h3 style={{ margin: 0 }}>Buy Custom: {props.baseName}</h3>
       <label>
-        Name <input aria-label="Custom name" value={draft.name} placeholder={props.baseName} onChange={(event) => set({ name: event.target.value })} style={field} />
+        Name (blank keeps {props.baseName}) <input aria-label="Custom name" value={draft.name} onChange={(event) => set({ name: event.target.value })} style={field} />
       </label>
       <label>
         <input type="checkbox" checked={draft.masterwork} onChange={(event) => set({ masterwork: event.target.checked })} /> Masterwork
