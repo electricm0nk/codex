@@ -1,0 +1,16 @@
+[
+  {
+    "id": "sheet-override-tag-slot",
+    "status": "red",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3.10-green/sheet-override-tag-slot.FAILED.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": "expected string missing: 'Eyes of the Eagle0 lb · Eyes'",
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_10-CHI4Fn/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

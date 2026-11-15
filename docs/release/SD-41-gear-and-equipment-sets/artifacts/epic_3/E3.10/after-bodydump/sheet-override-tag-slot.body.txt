@@ -1,0 +1,304 @@
+☰ Menu
+✕
+Aldric Ironhand — Fighter 3
+CHARACTER DETAILS
+«
+
+Level
+3
++
+Caster Level
+—
+RACE
+Human
+CLASS
+Fighter 3
+CHARACTER DETAILS
+
+ALIGNMENT
+
+DEITY
+
+SEX
+
+AGE
+
+HEIGHT
+
+WEIGHT
+
+HAIR
+
+EYES
+
+VISION
+Normal
+SIZE
+Medium
+Vision and Size are calculated from race and aren't editable — a race this build has no profile for reads "Unknown" rather than a guessed value. The other fields save automatically when you leave the field.
+Show Progression
+Character Name
+Aldric Ironhand
+
+Campaign
+—
+HIT POINTS
+28
+INITIATIVE
++1
+Initiative +1: Dexterity modifier +1. Bonuses that hold only while a grit or panache point is held are listed on their own and not added here
+ENCUMBRANCE
+Light Load
+29 lb carried
+Light / Med / Heavy 116 / 233 / 350 lb
+CONDITIONS
+Normal
+ARMOR CLASS
+
+AC
+16
+TOUCH
+12
+FLAT-FOOTED
+14
+ATTACK
+
+BAB
++3
+MELEE
++8
+CMB
++7
+CMD
+18
+SPEED
+
+LAND
+30 ft.
+SWIM
+—
+FLY
+—
+SAVING THROWS
+
+FORTITUDE
++5
+REFLEX
++2
+WILL
++2
+Conditional Bonuses
+Will: Bravery: +1 Will vs. fear
+Weapons
+Defense
+Gear
+Spells
+Pets
+Feats
+Actions
+Custom
+Biography
+Notes
+MONEY
+
+PP
+0
+GP
+0
+SP
+0
+CP
+0
+Add
+Spend
+CARRIED WEIGHT
+Light Load
+TOTAL WEIGHT
+29 lb
+LIGHT / MED / HEAVY
+116 / 233 / 350 lb
+REMAINING
+321 lb
+GEAR VALUE
+5115 gp
+1 carried item(s) have no corpus weight and are excluded from this total.
+Corpus-derived equipment — each item resolves against the real PF1 corpus, and its weight and price are that record's own corpus values.
+
+PRICING
+Cashless
+Buy 100% / Sell 50%
+Character build (100% / 100%)
+Pay the full catalog price; selling an item back returns half of it.
+Market
+Gear
+AC 16 · 29 lb carried
+
+Equipment set 
+New
+Rename
+Delete
+Show 
+Longsword4 lb · Main hand
+Move to
+Drop
+Sell
+Discard
+Chain Shirt25 lb · Armor
+Move to
+Drop
+Sell
+Discard
+Goggles of Minute Seeing0 lb · Eyes
+Move to
+Drop
+Sell
+Discard
+Eyes of the EagleOverride: Ignore body slot limits0 lb · Eyes
+Move to
+Drop
+Sell
+Discard
+Drop keeps the item and marks it Not Carried; Sell returns money under the pricing above; Discard removes it for nothing.
+
+Main hand1 of 1
+Longsword
+Move to
+Off hand0 of 1
+Both hands0 of 1
+Shield0 of 1
+Armor1 of 1
+Chain Shirt
+Move to
+Head0 of 1
+Headband0 of 1
+Eyes2 of 1
+Goggles of Minute Seeing
+Move to
+Eyes of the EagleOverride: Ignore body slot limits
+Move to
+Shoulders0 of 1
+Neck0 of 1
+Chest0 of 1
+Body0 of 1
+Belt0 of 1
+Wrist0 of 1
+Hands0 of 1
+Ring0 of 2
+Feet0 of 1
+Equipped
+Carried
+Not Carried
+2 items not shown (outside demo corpus): item:shield, power_attack
+
+Longsword(item:longsword)✓ grounded4 lb · 15 gp
+Attach Modifier
+Chain Shirt(item:chain_shirt)✓ grounded25 lb · 100 gp
+Attach Modifier
+Goggles of Minute Seeing(Goggles of Minute Seeing)✓ grounded0 lb · 2500 gp
+Attach Modifier
+Eyes of the Eagle(Eyes of the Eagle)✓ grounded0 lb · 2500 gp
+Attach Modifier
+ABILITIES
+
+STR
+19
++4
+DEX
+13
++1
+CON
+14
++2
+INT
+14
++2
+WIS
+12
++1
+CHA
+8
+-1
+SKILLS
+
+
+Manage skill allocation
+fully allocated
++1
+Acrobatics
++2
+Appraise
+-1
+Bluff
++7
+Climb
+(1)
++2
+Craft
+-1
+Diplomacy
++6
+Disable Device
+-1
+Disguise
++1
+Escape Artist
++1
+Fly
+-1
+Handle Animal
++1
+Heal
++3
+Intimidate
+(1)
++2
+Knowledge (Arcana)
++8
+Knowledge (Dungeoneering)
+(3)
++8
+Knowledge (Engineering)
+(3)
++2
+Knowledge (Geography)
++2
+Knowledge (History)
++2
+Knowledge (Local)
++2
+Knowledge (Nature)
++2
+Knowledge (Nobility)
++2
+Knowledge (Planes)
++2
+Knowledge (Religion)
++2
+Linguistics
++6
+Perception
+-1
+Perform
++1
+Profession
++7
+Ride
+(3)
++1
+Sense Motive
++1
+Sleight of Hand
++2
+Spellcraft
++1
+Stealth
++7
+Survival
+(3)
++7
+Swim
+(1)
+-1
+Use Magic Device
+LANGUAGES
+Common, +2 bonus language slots (not yet selectable)

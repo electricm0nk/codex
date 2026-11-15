@@ -148,6 +148,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E3.4 | 2026-11-15 | `b20514c524`, `2efbabb683` + this commit | complete | `artifacts/epic_3/E3.4_cycle_receipt.md` (Market screen: Item/Price/Weight/Slot table sortable, description box, Only Show Affordable, Quantity, Negotiate on Buy and Sell, Buy Custom builder over the quote, Create dialog; `marketModel.test.ts` 37 assertions, RED cannot find module; `npm test` 197/197; SF/CPR shells unchanged) |
 | E3.5 | 2026-11-15 | `caf0cdcc39` + this commit | complete | `artifacts/epic_3/E3.5_cycle_receipt.md` (Campaign field = button → `CampaignMembershipDialog` over `drive_list_campaigns` ∩ the Campaign Manager's campaigns; Save → `setCharacterCampaigns` + party via `updateCampaign` + `writeCampaignLocalFolderArtifacts`; field shows active names; one "Open <name>" per active campaign under Skills → `campaign-sheet`; dismissible mirror warnings incl. mutation refreshes; `campaignMembershipModel.test.ts` 5 cases, RED cannot find module; `npm test` 198/198) |
 | E3.3 | 2026-11-15 | `855dc7fe7d` + this commit | partial | `artifacts/epic_3/E3.3_cycle_receipt.md` (19 new rows + 9 rewritten, spec 182 → 201; acceptance run 27 of 28 green, `sheet-override-tag-slot` red at `click "Eyes"` until E3.10; harness `by: 'label'`, negative `index`, `{XDG_DATA_HOME}`; fence exit `uiProbe.ts`; real store untouched; E3.8 (stale detail after buy/attach/override), E3.9 (campaign with a member never gets a folder), E3.10 (no full slot under the slot override) discovered; `npm test` 198/198, typecheck clean) |
+| E3.10 | 2026-11-15 | `31c39ce10b` + this commit | blocked-escalated | `artifacts/epic_3/E3.10_cycle_receipt.md` (`GearContext.ignoreSlotLimits` from `customOverrides(custom)`; `moveTargets`/`dropTarget` offer a full slot under it; model case 14, RED `override: a full slot is offered`; typecheck clean, `npm test` 198/198; smoke RED at `click "Eyes"` → now red only on E3.3's `expect[0]` (tag inline: `Eyes of the EagleOverride: Ignore body slot limits0 lb · Eyes`); ownedBy:E3.3) |
 
 ## Epic reports
 
@@ -180,6 +181,8 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --format=%s`)
 
 ## Open blockers
+
+- **E3.10 / E3.3 `sheet-override-tag-slot` expect string (2026-11-15, sd41-e3.10):** E3.10's code is in (`31c39ce10b`); the row now runs all 47 steps and fails only `expected string missing: 'Eyes of the Eagle0 lb · Eyes'` because the gear row renders the `OverrideTag` between the name and the weight. Needs one lead action: E3.3's re-attempt sets `spec.json` row `sheet-override-tag-slot` `expect[0]` to `Eyes of the EagleOverride: Ignore body slot limits0 lb · Eyes` and re-runs the row (or grant E3.10 that fence exit). Tried: the in-fence path (no E3.10 file decides that string). Blocks E3.3, E3.10, E3.MC. Receipt: `artifacts/epic_3/E3.10_cycle_receipt.md`.
 
 - ~~E1.14 Skinwalker climb~~ **closed 2026-11-14: ruling (a), `decisions.md §36` — the bestial-form climb prints as Change Shape text; `climb_speed_skinwalker_alternates` dropped; E1.14 acceptance `3 passed`; E1.14 complete.**
 
