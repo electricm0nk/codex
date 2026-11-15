@@ -1,0 +1,531 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd39-e9.11": 1,
+      "sd39-e9.5": 2,
+      "sd39-e9.6": 1,
+      "sd39-e9.8": 1,
+      "sd39-e9.9": 8,
+      "sd40-e0.1": 1,
+      "sd40-e0.2": 1,
+      "sd40-e1.1": 2,
+      "sd40-e1.2": 1,
+      "sd40-e1.mc": 1,
+      "sd40-e2.1": 2,
+      "sd40-e2.10": 1,
+      "sd40-e2.11": 1,
+      "sd40-e2.14": 3,
+      "sd40-e2.16": 1,
+      "sd40-e2.17": 1,
+      "sd40-e2.18": 1,
+      "sd40-e2.19": 2,
+      "sd40-e2.2": 1,
+      "sd40-e2.20": 1,
+      "sd40-e2.21": 2,
+      "sd40-e2.22": 1,
+      "sd40-e2.23": 1,
+      "sd40-e2.24": 1,
+      "sd40-e2.25": 1,
+      "sd40-e2.26": 1,
+      "sd40-e2.27": 1,
+      "sd40-e2.28": 1,
+      "sd40-e2.29": 3,
+      "sd40-e2.3": 1,
+      "sd40-e2.30": 1,
+      "sd40-e2.31": 1,
+      "sd40-e2.6": 1,
+      "sd40-e2.7": 2,
+      "sd40-e2.8": 1,
+      "sd40-e2.9": 1,
+      "sd40-e2.mc": 3,
+      "sd40-e2.mc2": 1,
+      "sd40-e2.mc3": 1,
+      "sd40-e3.2": 1,
+      "sd40-e3.3": 1,
+      "sd40-e3.4": 1,
+      "sd40-e3.6": 2,
+      "sd40-e3.8": 1,
+      "sd40-e3.mc": 4,
+      "sd40-e4.1": 1,
+      "sd40-e4.2": 1,
+      "sd40-e4.mc": 1,
+      "sd40-e5.3": 1,
+      "sd40-replan-r2": 1
+    },
+    "by_subject": {
+      "E2.3 page-one test (print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers)": 1,
+      "E2.30 AppMenu.test.ts (own test)": 1,
+      "E2.4 overflow test / E2.MC3 pcg probe skills listing": 1,
+      "E3.3 / E3.MC (G-7)": 1,
+      "E9.5 / E9.11 pre-PR scan": 1,
+      "SD-39 epic-breakdown E9.6 acceptance command": 1,
+      "SD-40 E4.2 acceptance grep (epic-breakdown.md, acceptance-and-verification.md G-5)": 1,
+      "SD-40 G-4 acceptance check (E2.G sign-off count)": 1,
+      "SD-40 content-unit-inventory F-14": 1,
+      "SD-40 decisions.md \u00a74 / epic-breakdown.md E1.1": 1,
+      "SD-40 epic-breakdown E2.19 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown E2.19 acceptance": 1,
+      "SD-40 epic-breakdown E2.21 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown E2.21 row": 1,
+      "SD-40 epic-breakdown E3.2 row": 1,
+      "SD-40 epic-breakdown.md E1.1 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown.md E1.MC criterion": 1,
+      "SD-40 epic-breakdown.md E2.1 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown.md E2.1/E2.2/E2.3 acceptance": 1,
+      "SD-40 epic-breakdown.md E2.14 acceptance (root Aldric)": 1,
+      "SD-40 epic-breakdown.md E2.14 criterion (feat part)": 1,
+      "SD-40 epic-breakdown.md E2.14 criterion (range source + row site)": 1,
+      "SD-40 epic-breakdown.md E2.24 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown.md E2.25 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown.md E2.27 row": 1,
+      "SD-40 epic-breakdown.md E2.31 acceptance": 1,
+      "SD-40 epic-breakdown.md E2.8 acceptance": 1,
+      "SD-40 epic-breakdown.md E3.1/E3.2/E3.3 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown.md E3.3 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown.md E4.1 FILES YOU OWN": 1,
+      "SD-40 epic-breakdown.md E5.3 criterion + workflow-instruction.md \u00a711 step 1 (E2.G sign-off count)": 1,
+      "SD-40 package (epic-breakdown.md E0.2 acceptance, workflow-instruction.md \u00a72.1 FRONTEND)": 1,
+      "SD-40 technical-requirements.md NR-2 Typst grep": 1,
+      "SD-40 workflow-instruction \u00a76 step 8 and epic-breakdown E1.2 acceptance": 1,
+      "acceptance-and-verification.md G-1 strip": 1,
+      "architecture docs desktop-app.md, update-and-feedback.md, status.md, release-pipeline.md": 1,
+      "architecture_truth_up.py parse_source_dirs_index": 1,
+      "docs/architecture/desktop-app.md": 1,
+      "docs/architecture/persistence.md": 1,
+      "docs/architecture/release-pipeline.md": 1,
+      "docs/architecture/status.md": 1,
+      "e9.9-truth-up-receipt": 1,
+      "epic-breakdown E2.23 FILES YOU OWN": 1,
+      "epic-breakdown.md": 2,
+      "epic-breakdown.md E2.10 acceptance": 1,
+      "epic-breakdown.md E2.11 acceptance": 1,
+      "epic-breakdown.md E2.16 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.17 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.18 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.20 FILES YOU OWN": 1,
+      "epic-breakdown.md E2.22 row (FILES YOU OWN)": 1,
+      "epic-breakdown.md E2.26 row": 1,
+      "epic-breakdown.md E2.28 row FILES YOU OWN": 1,
+      "epic-breakdown.md E2.29 FILES YOU OWN": 3,
+      "epic-breakdown.md E2.6 acceptance": 1,
+      "epic-breakdown.md E2.7 acceptance": 1,
+      "epic-breakdown.md E2.9 FILES YOU OWN": 1,
+      "epic-breakdown.md E3.4 row": 1,
+      "epic-breakdown.md E3.6 FILES YOU OWN": 1,
+      "epic-breakdown.md E3.6 acceptance grep": 1,
+      "epic-breakdown.md E3.MC row": 1,
+      "epic-breakdown.md E9.9 acceptance command": 1,
+      "forward-scope-register.md": 2,
+      "pf1_adapter.rs upsert_corpus_aware_combat_explanations ('Melee and Armor Class keep the row the fixed-posture path wrote')": 1,
+      "progress.md Cards complete (E9.7)": 1,
+      "progress.md Cards complete (after E3.7)": 1,
+      "technical-requirements.md": 1,
+      "technical-requirements.md NR-2 Typst grep": 2
+    },
+    "by_verification_method": {
+      "architecture_truth_up.py --integration-target develop --receipts-md docs/release/SD-39-ui-print-corrections/receipts.md --bundle SD-39 --dry-run --force at d4489b3557": 1,
+      "awk '/\"actor\": \"sd39-/ && /\"recurrence_key\": \"sf-seed-lines-out-dir-missing\"/' docs/retro/events/*.jsonl | awk 'END{print NR}' -> 0; sd38- -> 3": 1,
+      "awk '/template match=\"character\"/{f=1} f' $PCGEN_REPO_DIR/outputsheets/d20/fantasy/pdf/fantasy_master_common_blocks.xslt | sed -n 50p ; pdftotext -layout artifacts/epic_0/E0.1/aldric-pcgen-std.pdf (no BAB box on page 1)": 1,
+      "awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md | awk 'END{print NR}'": 1,
+      "awk -F'|' '$2 ~ /^ E3\\.[123] /' epic-breakdown.md | grep -c blocks.typ \u2192 3 after (0 before); sed -n '/blocks.typ/p' on E2.1/E2.2 retro events": 1,
+      "bash ../../../scripts/print/rasterize.sh /home/ubuntu/cargo-target/sd40-proof .../png -> 130 lines, exit 2 on empty dir": 1,
+      "bash scripts/release/__tests__/test-windows-nsis-only.test.sh (FAIL before, PASS after); gh pr checks 403": 1,
+      "cargo test --locked -j 8 print_pf_blocks -- --test-threads=8 failed page_one_holds (Letter: Weapons (continued)) with only the named files changed; packaged_resources.rs:336 asserts 6 + looks counted from disk": 1,
+      "cargo test --locked -j 8 print_pf_blocks_page_one -- --test-threads=8 with the square block at 7 columns and abilities at 5: Letter page 1 whole only after the box-width change (Constitution wraps at 1.25 cm in 5 columns)": 1,
+      "cargo test print_pf_blocks_page_one_holds_the_step_one_blocks_on_both_papers RED on the pre-change tree ('page-one-aldric Letter: page 1 holds \"Skills\"'); proof PNG artifacts/epic_2/E2.2/aldric-letter-none-1.png ends page 1 after Saving Throws": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 conditional_notes -- --test-threads=8 (conditional_notes_reach_the_load_response_of_the_seeds) and root cargo test --lib conditional_notes (first GREEN run failed on fighter 3 with Bravery under will)": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks -- --test-threads=8 -> 17 passed; ... print_smoke -> 9 passed (base run, log /home/ubuntu/cargo-target/sd40-main/e2.1/base.log)": 1,
+      "desktop cargo test weapon_damage_total_holds_weapon_specialization on 92c3f0ca42 -> FAILED left 4 right 6; on 701a7f3f90 -> ok": 1,
+      "difflib over sheetLines prose, C1 base-seeds vs head-seeds at 2716fd0798: 3 ids differ, only Range/Duration fragments": 1,
+      "find crates/codex-ingest/tests -name '*.pcg' | awk 'END{print NR}' -> 0; ls scripts/oracle_harness/eqm-fixtures/*.pcg | awk 'END{print NR}' -> 13; find $HOME/workspace/repos/pcgen -name '*.pcg' | awk 'END{print NR}' -> 52": 1,
+      "first RED run: create-character-render.FAILED.png shows 'book directory not found: .../debug/data/corpus/core_rulebook'; node scripts/gen-corpus-bundle.mjs -> files_copied=14029; rerun reached the Create form": 1,
+      "git diff a2831cadcc..51502c32e7 -- apps/desktop/src-tauri/src/print/blocks/print_pf_blocks.rs (no hunk in print_pf_blocks_an_override_tag_prints_on_what_it_let_in)": 1,
+      "git grep -il aldric -- src crates tests (no seed builder); desktop cargo test languages -> 1 passed printing Aldric heavy 350 carried 29 remaining 321": 1,
+      "git grep -n 'Look::Languages\\|\"languages\"' apps/desktop/src-tauri/src/print apps/desktop/src-tauri/resources/print; sed -n 322,336p apps/desktop/src-tauri/tests/packaged_resources.rs": 1,
+      "git grep -n 'Open settings\\|>\\s*\u2699' -- apps/desktop/src | awk 'END{print NR}' \u2192 1, \u2192 0 after the regex": 1,
+      "git grep -n 'SavingThrowsPanel' -- apps/desktop/src; grep -n 'flyManeuverability' apps/desktop/src/characterHub/CharacterSheet.tsx": 1,
+      "git grep -n 'SheetDocument {' apps/desktop/src-tauri/src/print/layout/ (sf1e.rs:180, cpr.rs:415, pf1e.rs)": 1,
+      "git grep -n 'blocks::math\\|blocks::bio_notes' apps/desktop/src-tauri/src/print/layout/mod.rs; G-2 sha256 16/16 identical": 1,
+      "git grep -n 'fly_maneuverability: None' -- apps/desktop/src-tauri/src; cargo test sheet_fixtures_are_the_adapters_load_responses": 1,
+      "git grep -n 'known_languages' -- apps/desktop/src-tauri/src": 1,
+      "git grep -n 'languages: ' -- apps/desktop/src-tauri/src (3 adapter literals); cargo run --locked -p codex-ingest --bin gen_settled_corpus (11 race_trait bundles rewritten, 919 records)": 1,
+      "git grep -n 'load_character_durability_at_root' 1763d7ec2b -- apps/desktop/src-tauri/src/character_hub.rs": 1,
+      "git grep -n 'looks/' apps/desktop/src-tauri/resources/print/blocks.typ; cargo test print_pf_blocks_every_look_has_its_template": 1,
+      "git grep -n 'pub fn with_sheet_rules' -- src; git grep -n 'conditional_notes(' -- src apps | grep -v 'fn conditional_notes'": 1,
+      "git grep -n 'pub struct Place' apps/desktop/src-tauri/src -> src/print/model.rs:187; grep -n 'block.heading, row.label' apps/desktop/src-tauri/src/print/blocks/math.rs -> :21": 1,
+      "git grep -n 'pub use core::' apps/desktop/src-tauri/src/print/blocks/mod.rs; print_pf_blocks_every_look_has_its_template asserts blocks.typ imports \"/looks/<name>.typ\"": 1,
+      "git grep -n SpeedPanel -- apps/desktop/src (statPanels.test.ts:4,61,63)": 1,
+      "git log --since=2026-11-01 --diff-filter=AM --name-only --format= -- 'docs/release/SD-*/scope-draft.md' | sort -u | grep -v SD-39 | xargs -r grep -lis 'special abilit' | awk 'END{print NR}' -> 0": 1,
+      "git show 59fc722385:docs/release/SD-40-pf-sheet-design/kanban.md | awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /^ complete *$/' | awk 'END{print NR}' -> 50": 1,
+      "git show HEAD:docs/release/SD-39-ui-print-corrections/references/README.md | grep -c sd39-retrospective -> 1 before this card": 1,
+      "git show d08a3f8c91:apps/desktop/src-tauri/src/print/layout/pf1e.rs | grep -n 'Placed::full(\"defense\"'; git show d08a3f8c91:apps/desktop/src-tauri/src/print/golden/block_vocabulary.json | grep -n money": 1,
+      "git show d5cd0a3ea6:docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G_cycle_receipt.md | grep -c 'usable: yes'": 1,
+      "grep -c '^- Aldric .* \u2014 usable: yes' docs/release/SD-40-pf-sheet-design/artifacts/epic_2/E2.G_cycle_receipt.md -> 2": 1,
+      "grep -c 'label=\"Biography\"\\|label=\"Notes\"' apps/desktop/src/characterHub/CharacterSheet.tsx": 1,
+      "grep -n '\"notes\"' apps/desktop/src-tauri/src/print/golden/block_vocabulary.json -> 28: \"notes\": {\"ui\": \"SHEET_TABS\"} on base 18e6ed2e5e": 1,
+      "grep -n 'Smoke Test PC' apps/desktop/scripts/ui-smoke/spec.json (sheet-open-for-tabs notes); grep -c 'resistances: loaded.resistances\\|resistances: props.detail' CharacterSheet.tsx -> 5": 1,
+      "grep -n 'armorClass\", \"fortitude\", \"hitPoints\"' apps/desktop/src-tauri/src/character_hub.rs -> 1 line (the keys assert)": 1,
+      "grep -n 'body_slot' apps/desktop/src-tauri/src/sf_adapter.rs apps/desktop/src-tauri/src/cpr_adapter.rs -> none": 1,
+      "grep -n 'bundles nsis' .github/workflows/publish-tester-release.yml": 1,
+      "grep -n 'compute_max_hp\\|\\bability_modifier(' apps/desktop/src-tauri/src/character_hub.rs after the removal: import lines only": 1,
+      "grep -n 'fn import_pcg_with_sidecar\\|fn import_character_from_json\\|fn character_input_from_dto' apps/desktop/src-tauri/src/character_hub.rs (no pub); probe run: SUMMARY files=65 saved=37 stated=37 sums=37": 1,
+      "grep -n 'fn save_character_bio_at_root' apps/desktop/src-tauri/src/character_hub.rs -> 5952:fn save_character_bio_at_root (no pub)": 1,
+      "grep -n 'pub struct CustomRecordDto\\|pub struct Overrides\\|pub admitted' apps/desktop/src-tauri/src/character_custom.rs apps/desktop/src-tauri/src/character_ledger.rs": 1,
+      "grep -n 'pub struct PrintRequest' -A12 apps/desktop/src-tauri/src/print/mod.rs; epic-breakdown.md E4.1 row": 1,
+      "grep -rn 'PRINT_OPTION_BOXES\\|spellbook: bool\\|math: bool' apps/desktop/src apps/desktop/src-tauri/src/print (7 hits after E4.2) and the scoped command in G-5 (0 head, 13 base)": 1,
+      "grep -rn '_FILE_NAME: &str' apps/desktop/src-tauri/src": 1,
+      "grep -rnE '\\bcalc\\.[a-z]+\\(|\\beval\\(' apps/desktop/src-tauri/resources/print/ | grep -v 'calc.min(boxes, header.values.len())' | awk 'END{print NR}' -> 2": 1,
+      "grep -rnE '\\bcalc\\.[a-z]+\\(|\\beval\\(' apps/desktop/src-tauri/resources/print/ | grep -v -e 'calc.min(boxes, header.values.len())' -e 'calc.min(size, 10pt)' -e 'calc.min(1, b.rows.len())' | awk 'END{print NR}' -> 4 on 122e065f87": 1,
+      "grep -rnE '\\bcalc\\.[a-z]+\\(|\\beval\\(' apps/desktop/src-tauri/resources/print/ | grep -v <the 7 E2 exclusions> | awk 'END{print NR}' -> 4 on 2716fd0798": 1,
+      "grep -rnE '\\bcalc\\.|\\beval\\(' apps/desktop/src-tauri/resources/print/ | awk 'END{print NR}' \u2192 1 vs the old pattern \u2192 0": 1,
+      "grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ | awk 'END{print NR}'": 1,
+      "mutation PAGE_TWO_STARTS_WITH=gear in layout/pf1e.rs: the anchor asserts (line 871) pass and the new run-over assert (line 875) fails: page 2 reads \"Armor or shield AC Max Dex ...\" (log e2.mc/mutation2.log)": 1,
+      "mutation of E2.7's adapter (keep any existing row): cargo test armor_class_parts -> 'aldric + Ring of Protection +1 ... left: (17, 17) right: (16, 17)'": 1,
+      "npm test: FAIL src/characterHub/panels/createSheetBlock.test.ts 'hit points from the Levels list'": 1,
+      "npx tsx src/characterHub/sheetLayout.test.ts -> 'the vocabulary lists the screen's SHEET_TABS biography: expected SHEET_TABS, got undefined'; uiProbe.ts buildSnapshot bodyText = innerText": 1,
+      "pdftotext -f 1 -l 1 <base>/pf1e-letter-none.pdf - | grep -c 'Base Attack Bonus\\|Str ' (base golden page 1 prints both outside the abilities/saves/weapons blocks)": 1,
+      "print_pf_blocks_ranks_with_no_panel_total_print_their_words RED at ca4f211d92: words absent from PDF text; GREEN after is-skill fix": 1,
+      "python3 -I over data/sheet_rules/*/*/*.json: CombatBonus entries naming CMB/CMD/combat maneuver by print flag -> True 17, False 5; sheet_rule.rs render_sheet .filter(|(r, _)| r.print)": 1,
+      "python3 -c \"print(len(['Alignment','Deity','Sex','Age','Height','Weight','Hair','Eyes','Size','Vision','Race','Class and level','Player']))\" -> 13; the row's own list": 1,
+      "python3 -c over README.md: re.findall of the script's pattern gives 0 rows; dry-run printed 'docs touched: none' with diff_path_count 2104": 1,
+      "python3 /tmp/claude-1000/cnt.py HEAD (118) and origin/develop (103); grep fn perform_appimage_install; grep VERSION= publish-tester-release.yml": 1,
+      "python3 json read of both files; root cargo test --lib weapon_damage_total_range_increment -> ok (Dagger 10, Dagger (Adamantine) 10 via base item, Longsword None)": 1,
+      "same finding as E2.8's correction; desktop cargo test weapon_damage_total -> 3 passed": 1,
+      "sed -n 237,277p architecture_truth_up.py (block template); receipts.md written by it": 1,
+      "sed -n 2963,2990p src/rules_core/pilot_compute/class_sorcerer_wizard.rs; sed -n 883,900p src/rules_core/pilot_compute/class_inquisitor_warpriest.rs": 1,
+      "sed -n 312,335p apps/desktop/src-tauri/tests/packaged_resources.rs (scans resources/fonts and resources/print only; asserts 6)": 1,
+      "sed -n 44,51p .github/workflows/pr-tests.yml; git grep -n 'Command::new(\"pdf' -- apps/desktop/src-tauri/src -> 0 lines": 1,
+      "sed -n 96,125p src/rules_core/feat_effects.rs (const TOUGHNESS_HP_BONUS: i16 = 3; no level input)": 1
+    },
+    "caught_before": {
+      "implementation": 4
+    },
+    "recent": [
+      {
+        "actor": "sd40-e3.4",
+        "id": "1794621123786-sd40-e3.4-433d02",
+        "summary": "epic-breakdown.md E3.4 row claimed the twelve labels in order; actual thirteen labels (Alignment, Deity, Sex, Age, Height, Weight, Hair, Eyes, Size, Vision, Race, Class and level, Player)",
+        "ts": "2026-11-14T01:52:03Z"
+      },
+      {
+        "actor": "sd40-e3.8",
+        "id": "1794633190626-sd40-e3.8-b624bc",
+        "summary": "progress.md Cards complete (after E3.7) claimed 49 of 60; actual 50 of 60",
+        "ts": "2026-11-14T05:13:10Z"
+      },
+      {
+        "actor": "sd40-e3.mc",
+        "id": "1794647795172-sd40-e3.mc-3816ad",
+        "summary": "technical-requirements.md NR-2 Typst grep claimed 0 after E2.MC3's widening; actual 4 layout-only hits added by E3.1-E3.4 (feats calc.odd, gear calc.max(totals.len(),1), spells calc.min(1,starts.len()), bio calc.max(0,calc.floor(room/slot))); no E3 receipt ran the grep; widened, -> 0",
+        "ts": "2026-11-14T09:16:35Z"
+      },
+      {
+        "actor": "sd40-e3.mc",
+        "id": "1794647795459-sd40-e3.mc-639137",
+        "summary": "epic-breakdown.md E3.MC row claimed E3.MC looks at Aldric and Elowen with all eight sections (Notes with a text); actual PrintRequest at 2716fd0798 has only spellbook/math/bio booleans; the Notes print section (8) is built by E4.1 and looked at by E4.MC; E3.MC looks at the all option set (sections 1-7) with a campaign note",
+        "ts": "2026-11-14T09:16:35Z"
+      },
+      {
+        "actor": "sd40-e3.mc",
+        "id": "1794648459972-sd40-e3.mc-ce93bd",
+        "summary": "acceptance-and-verification.md G-1 strip claimed G-1 Python prints SAME_EXCEPT_NAMED for each seed against C1; actual after E3.8, elowen and tomas print VALUE_MOVED: sheetLines prose of fireball, light, spiritual_weapon (Range/Duration now read caster level, named in E3.8's receipt, not in G-1); NAMED_PROSE added -> 3/3 SAME_EXCEPT_NAMED",
+        "ts": "2026-11-14T09:27:39Z"
+      },
+      {
+        "actor": "sd40-e3.mc",
+        "id": "1794654363580-sd40-e3.mc-ac7267",
+        "summary": "E2.4 overflow test / E2.MC3 pcg probe skills listing claimed every line under the Skills column is checked on page 1 or under Skills (continued); actual both read words only from rows with values.is_empty(); SheetBlock::new pads every row to >=1 value, so no words were ever checked; the look dropped them (CodeMonkey, 35e_Bard)",
+        "ts": "2026-11-14T11:06:03Z"
+      },
+      {
+        "actor": "sd40-e4.1",
+        "id": "1794662343949-sd40-e4.1-e3fee7",
+        "summary": "SD-40 epic-breakdown.md E4.1 FILES YOU OWN claimed block_vocabulary.json gains notes as printOnly; actual notes is already in block_vocabulary.json as ui SHEET_TABS (E3.6, the Notes tab); E4.1 keeps it and adds notesTitle printOnly",
+        "ts": "2026-11-14T13:19:03Z"
+      },
+      {
+        "actor": "sd40-e4.2",
+        "id": "1794667906512-sd40-e4.2-d8ed1c",
+        "summary": "SD-40 E4.2 acceptance grep (epic-breakdown.md, acceptance-and-verification.md G-5) claimed grep -rn 'PRINT_OPTION_BOXES|spellbook: bool|math: bool' ... reads 0 after E4.2; actual 7 lines stay by design (PrintSections spellbook/math fields in print/mod.rs and saveSheetPdf.ts; 3 golden-option test helpers); the grep is scoped to PrintRequest/PrintOptionsDto/PrintOptions: 0 on E4.2, 13 on base 93f49262c7",
+        "ts": "2026-11-14T14:51:46Z"
+      },
+      {
+        "actor": "sd40-e4.mc",
+        "id": "1794672210994-sd40-e4.mc-f1154a",
+        "summary": "E3.3 / E3.MC (G-7) claimed grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ -> 0 (E2.MC3; E3.MC ran no G-7); actual 1: looks/spellbook.typ:1 comment 'R3: PCGen's 3x5 spell cards' (E3.3, 51502c32e7); comment reworded, -> 0",
+        "ts": "2026-11-14T16:03:30Z"
+      },
+      {
+        "actor": "sd40-e5.3",
+        "id": "1794703144534-sd40-e5.3-d7dd24",
+        "summary": "SD-40 epic-breakdown.md E5.3 criterion + workflow-instruction.md \u00a711 step 1 (E2.G sign-off count) claimed usable: yes count 1 for E2.G; actual 2 (one per sheet, anchored ^- Aldric .* \u2014 usable: yes; G-8 and decisions.md \u00a724.5 already say 2)",
+        "ts": "2026-11-15T00:39:04Z"
+      }
+    ],
+    "repeat_subjects": [
+      {
+        "count": 3,
+        "subject": "epic-breakdown.md E2.29 FILES YOU OWN"
+      },
+      {
+        "count": 2,
+        "subject": "forward-scope-register.md"
+      },
+      {
+        "count": 2,
+        "subject": "epic-breakdown.md"
+      },
+      {
+        "count": 2,
+        "subject": "technical-requirements.md NR-2 Typst grep"
+      }
+    ],
+    "total": 73,
+    "with_blast_radius": 5
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd39-e9.11": 1,
+      "sd39-e9.5": 2,
+      "sd39-e9.6": 1,
+      "sd39-e9.8": 1,
+      "sd39-e9.9": 8,
+      "sd39-lead": 1,
+      "sd40-bio": 1,
+      "sd40-e0.1": 1,
+      "sd40-e0.2": 1,
+      "sd40-e1.1": 2,
+      "sd40-e1.2": 1,
+      "sd40-e1.mc": 1,
+      "sd40-e2.1": 3,
+      "sd40-e2.10": 1,
+      "sd40-e2.11": 1,
+      "sd40-e2.12": 1,
+      "sd40-e2.13": 2,
+      "sd40-e2.14": 4,
+      "sd40-e2.15": 1,
+      "sd40-e2.16": 2,
+      "sd40-e2.17": 2,
+      "sd40-e2.18": 2,
+      "sd40-e2.19": 2,
+      "sd40-e2.2": 2,
+      "sd40-e2.20": 1,
+      "sd40-e2.21": 2,
+      "sd40-e2.22": 2,
+      "sd40-e2.23": 2,
+      "sd40-e2.24": 1,
+      "sd40-e2.25": 1,
+      "sd40-e2.26": 1,
+      "sd40-e2.27": 1,
+      "sd40-e2.28": 3,
+      "sd40-e2.29": 4,
+      "sd40-e2.3": 6,
+      "sd40-e2.30": 2,
+      "sd40-e2.31": 1,
+      "sd40-e2.4": 3,
+      "sd40-e2.6": 1,
+      "sd40-e2.7": 3,
+      "sd40-e2.8": 2,
+      "sd40-e2.9": 1,
+      "sd40-e2.mc": 4,
+      "sd40-e2.mc2": 1,
+      "sd40-e2.mc3": 1,
+      "sd40-e3.1": 2,
+      "sd40-e3.2": 1,
+      "sd40-e3.3": 2,
+      "sd40-e3.4": 1,
+      "sd40-e3.5": 2,
+      "sd40-e3.6": 3,
+      "sd40-e3.7": 1,
+      "sd40-e3.8": 2,
+      "sd40-e3.9": 1,
+      "sd40-e3.mc": 8,
+      "sd40-e4.1": 4,
+      "sd40-e4.2": 2,
+      "sd40-e4.mc": 3,
+      "sd40-e5.1": 1,
+      "sd40-e5.3": 1,
+      "sd40-engine": 3,
+      "sd40-main": 21,
+      "sd40-replan-r2": 1
+    },
+    "by_origin": {
+      "agent": 95,
+      "derived": 51
+    },
+    "by_type": {
+      "correction": 73,
+      "incident": 4,
+      "note": 6,
+      "rework": 12,
+      "verification": 51
+    },
+    "total": 146
+  },
+  "generated_at": "2026-11-15T00:39:20Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 174,
+    "events_per_commit": 0.8391,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        174
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "ci-runner-disk-exhausted": 1,
+      "fence-exit-print-file": 2,
+      "ui-smoke-update-tab-stall": 1
+    },
+    "recent": [
+      {
+        "actor": "sd39-lead",
+        "id": "1794090364222-sd39-lead-3d4682",
+        "summary": "PR #403 Test (PR into develop) ran out of runner disk in Run desktop shell tests (ld Bus error signal 7; earlier No space left on device + runner loss)",
+        "ts": "2026-11-07T22:26:04Z"
+      },
+      {
+        "actor": "sd40-e2.30",
+        "id": "1794537167082-sd40-e2.30-e63a58",
+        "summary": "ui-smoke settings-tab-update red: webview stops acknowledging commands once the Settings Update tab is clicked; red 3/3 on E2.30 and 1/1 on the base frontend (5836172c3f); green in SD-39 E2.4",
+        "ts": "2026-11-13T02:32:47Z"
+      },
+      {
+        "actor": "sd40-e3.6",
+        "id": "1794608928157-sd40-e3.6-c1f646",
+        "summary": "E3.6 tabs + two ui-smoke rows held on branch sd40/bio: landing them needs two lines in print/golden/block_vocabulary.json, which the operator ruling of 2026-11-13 forbids the bio lane to edit (detected by npm test: FAIL src/characterHub/sheetLayout.test.ts)",
+        "ts": "2026-11-13T22:28:48Z"
+      },
+      {
+        "actor": "sd40-e4.1",
+        "id": "1794662354125-sd40-e4.1-82dcd1",
+        "summary": "E4.1 needed two print files outside its FILES YOU OWN: resources/print/frame.typ (a sheet opening on a section's own page printed the name alone on a near-empty page 1) and print/blocks/core.rs (character_details gated the Biography on request.bio, false when sections are sent) (detected by print_pf_blocks_each_section_is_a_list (page 1 read 'Aldric Ironhand' only) and a read of every PrintRequest field reader (git grep request.bio))",
+        "ts": "2026-11-14T13:19:14Z"
+      }
+    ],
+    "recurring": [
+      {
+        "count": 2,
+        "recurrence_key": "fence-exit-print-file"
+      }
+    ],
+    "silent": 0,
+    "time_lost_minutes": 0,
+    "total": 4
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd40-main/docs/retro/events",
+    "problems": [],
+    "shards": 63
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "Letter page 1 has ~0.7 cm left under the skills column and the Weapons column grows per weapon; only the top band's portrait cell has slack (~1.2 cm)": 1,
+      "Letter page 1's left column had 1.63cm of room (pdftoppm -r 100 measure of base pf1e-letter-none page 1: left column ends 965px, content limit 1029px); the three-weapon stress case had less than the block's height": 1,
+      "breakable heading block and breakable grid cells in the new feats/class-features/actions looks; caught by the full desktop sweep (print_pf_blocks_class_features_print_in_two_columns, elowen Letter) and print_golden pf1e x4": 1,
+      "closure captured lines mutably while the loop also pushed to it (E0499)": 1,
+      "fix drafted while the verification lane held the cargo target dir": 1,
+      "grid cells with an explicit x fill rows left to right; a later cell at a lower x than an earlier one cannot share the row": 1,
+      "single process at ~15 s per debug render (progression/math sections) projected ~3.5 h; killed after ~1 h 45 min": 1,
+      "the 3 PF seeds hold 1 weapon each; a scratch probe (the seed's weapon line repeated) showed Speed leaving Letter page 1 at 2 weapons": 1,
+      "the heading-order pin lists the Math section's headings; only the sections-list pin was re-pinned before the first commit": 1,
+      "the helper is shared with two byte-equality tests that compare against a default-request write; the full desktop run failed both (1312 passed, 2 failed)": 1,
+      "the probe's presence check took page-2 continuations and page-split spell cards for lost text; the look fix landed mid-run": 1,
+      "the skills column (35 lines) alone exceeds Letter page 1's room once the top band grows; notes-only cutting could not fit it": 1
+    },
+    "recent": [
+      {
+        "actor": "sd40-e2.4",
+        "id": "1794484837367-sd40-e2.4-22e326",
+        "summary": "redid page-1 continuation blocks placed at their page-1 column; Typst refused 'cell would span a previously placed cell'; re-placed at x 0 with their width: grid cells with an explicit x fill rows left to right; a later cell at a lower x than an earlier one cannot share the row",
+        "ts": "2026-11-12T12:00:37Z"
+      },
+      {
+        "actor": "sd40-e2.4",
+        "id": "1794484837494-sd40-e2.4-909349",
+        "summary": "redid skills panel lines added to the splittable list after the all-at-once Letter stress pushed the Skills row whole to page 2: the skills column (35 lines) alone exceeds Letter page 1's room once the top band grows; notes-only cutting could not fit it",
+        "ts": "2026-11-12T12:00:37Z"
+      },
+      {
+        "actor": "sd40-e2.22",
+        "id": "1794518148448-sd40-e2.22-160737",
+        "summary": "redid resistances look: four-line layout, then two lines at 0.55cm, then 0.4cm; frame spacing 0.7em->0.25em->0.4em: Letter page 1's left column had 1.63cm of room (pdftoppm -r 100 measure of base pf1e-letter-none page 1: left column ends 965px, content limit 1029px); the three-weapon stress case had less than the block's height",
+        "ts": "2026-11-12T21:15:48Z"
+      },
+      {
+        "actor": "sd40-e3.1",
+        "id": "1794609043751-sd40-e3.1-191306",
+        "summary": "redid E3.1 looks: section-2 block headings could print alone at a page foot and a two-column cell's words broke around its neighbour across a page break: breakable heading block and breakable grid cells in the new feats/class-features/actions looks; caught by the full desktop sweep (print_pf_blocks_class_features_print_in_two_columns, elowen Letter) and print_golden pf1e x4",
+        "ts": "2026-11-13T22:30:43Z"
+      },
+      {
+        "actor": "sd40-e3.5",
+        "id": "1794627065873-sd40-e3.5-871473",
+        "summary": "redid print_pf_blocks_every_block_heading_prints_in_layout_order re-pinned after the full desktop run (Math section's 4 breakdown headings): the heading-order pin lists the Math section's headings; only the sections-list pin was re-pinned before the first commit",
+        "ts": "2026-11-14T03:31:05Z"
+      },
+      {
+        "actor": "sd40-e3.mc",
+        "id": "1794658340499-sd40-e3.mc-e02d00",
+        "summary": "redid E3.MC's .pcg probe run 1 (pre-fix looks, print_golden's non-continuation-aware order check) killed after 39 of 65 files and re-run twice: the probe's presence check took page-2 continuations and page-split spell cards for lost text; the look fix landed mid-run",
+        "ts": "2026-11-14T12:12:20Z"
+      },
+      {
+        "actor": "sd40-e3.mc",
+        "id": "1794658340644-sd40-e3.mc-3ca57d",
+        "summary": "redid E3.MC table-line look fix written before its RED test was run; the four looks were reverted from a patch file, RED run, then re-applied: fix drafted while the verification lane held the cargo target dir",
+        "ts": "2026-11-14T12:12:20Z"
+      },
+      {
+        "actor": "sd40-e4.1",
+        "id": "1794664093343-sd40-e4.1-49476a",
+        "summary": "redid print_smoke render helper: ticked Bio for the value test, then moved the tick into that one test: the helper is shared with two byte-equality tests that compare against a default-request write; the full desktop run failed both (1312 passed, 2 failed)",
+        "ts": "2026-11-14T13:48:13Z"
+      },
+      {
+        "actor": "sd40-e4.mc",
+        "id": "1794681814283-sd40-e4.mc-c28334",
+        "summary": "redid E4.MC page-count probe (858 renders) restarted as 8 shards: single process at ~15 s per debug render (progression/math sections) projected ~3.5 h; killed after ~1 h 45 min",
+        "ts": "2026-11-14T18:43:34Z"
+      },
+      {
+        "actor": "sd40-e4.mc",
+        "id": "1794681814409-sd40-e4.mc-c83c75",
+        "summary": "redid E4.MC probe first build: closure captured lines mutably while the loop also pushed to it (E0499)",
+        "ts": "2026-11-14T18:43:34Z"
+      }
+    ],
+    "total": 12
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": 0.0,
+    "failed_runs": 0,
+    "runs": 51
+  },
+  "window": {
+    "since": "2026-11-07T00:00:00+00:00",
+    "spec": "2026-11-07",
+    "until": null
+  }
+}
