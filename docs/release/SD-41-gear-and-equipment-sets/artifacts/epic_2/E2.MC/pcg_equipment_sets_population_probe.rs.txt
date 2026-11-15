@@ -1,0 +1,87 @@
+    // E2.MC `.pcg` population probe (SD-41). NOT shipped: pasted into a scratch copy of
+    // `apps/desktop/src-tauri/src/character_hub.rs`'s test module (before `pcg_sidecar_missing_gives_a_named_error`).
+    // Base mode (tranche-21 @ 0d04f5730d, before E2.1): PCG_PROBE_ROOTS=<dir> imports each fixture into <dir>/<n>
+    // with the base's import path and prints what the base reads from that root.
+    // Head mode: PCG_PROBE_LOAD_FROM=<dir> copies each saved root (a pre-SD-41 root: no sets file), loads it with
+    // the head, asserts the first load wrote a Default set, and prints the same fields.
+    // Population: scripts/oracle_harness/eqm-fixtures/*.pcg + every .pcg under $PCGEN_REPO_DIR (pinned).
+    #[test]
+    fn pcg_equipment_sets_population_probe() {
+        fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+            let Ok(entries) = std::fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    walk(&path, out);
+                } else if path.extension().is_some_and(|ext| ext == "pcg") {
+                    out.push(path);
+                }
+            }
+        }
+        fn read(root: &Path) -> String {
+            let sheet = load_saved_character_at_root(root).unwrap_or_else(|e| panic!("{}: {e}", root.display()));
+            let ac = sheet.snapshot.as_ref().map(|s| s.baseline_armor_class.to_string()).unwrap_or_else(|| "none".into());
+            let enc = &sheet.corpus_derived.encumbrance;
+            let rows: Vec<String> = sheet
+                .explanations
+                .iter()
+                .filter(|row| row.id.starts_with("defense.armor_class."))
+                .map(|row| format!("{}={}", row.id.trim_start_matches("defense.armor_class."), row.value))
+                .collect();
+            format!("ac={ac}\tweight={}\tlevel={}\trows={}", enc.total_carried_weight_lbs, enc.level, rows.join(","))
+        }
+        fn copy_dir(from: &Path, to: &Path) {
+            std::fs::create_dir_all(to).unwrap();
+            for entry in std::fs::read_dir(from).unwrap().flatten() {
+                let target = to.join(entry.file_name());
+                if entry.path().is_dir() { copy_dir(&entry.path(), &target) } else { std::fs::copy(entry.path(), target).unwrap(); }
+            }
+        }
+        let mut lines = Vec::new();
+        if let Ok(from) = std::env::var("PCG_PROBE_LOAD_FROM") {
+            let from = PathBuf::from(from);
+            let index = std::fs::read_to_string(from.join("index.tsv")).unwrap();
+            let (mut loaded, mut wrote_default) = (0, 0);
+            for line in index.lines() {
+                let (n, file) = line.split_once('\t').unwrap();
+                let root = tempdir(&format!("pcg-sets-probe-{n}")).join("imported");
+                copy_dir(&from.join(n), &root);
+                assert!(!root.join(codex::saved_character::equipment_sets::EQUIPMENT_SETS_FILE).exists(), "{file}: a pre-SD-41 root");
+                let fields = read(&root);
+                loaded += 1;
+                let sets = codex::saved_character::equipment_sets::load(&root).ok().flatten();
+                let default = sets.as_ref().is_some_and(|s| s.active == "Default" && s.sets.len() == 1 && s.sets[0].name == "Default");
+                if default { wrote_default += 1; }
+                lines.push(format!("SAVED\t{file}\t{fields}\tdefault={default}"));
+            }
+            lines.push(format!("SUMMARY\tloaded={loaded}\twrote_default={wrote_default}"));
+        } else {
+            let out_roots = PathBuf::from(std::env::var("PCG_PROBE_ROOTS").expect("PCG_PROBE_ROOTS"));
+            let mut files = Vec::new();
+            walk(&pcg_repo_root().join("scripts/oracle_harness/eqm-fixtures"), &mut files);
+            walk(&PathBuf::from(std::env::var("PCGEN_REPO_DIR").expect("PCGEN_REPO_DIR")), &mut files);
+            files.sort();
+            let (mut saved, mut blocked, mut refused) = (0, 0, 0);
+            let mut index = String::new();
+            for (n, file) in files.iter().enumerate() {
+                let root = out_roots.join(n.to_string());
+                let _ = std::fs::remove_dir_all(&root);
+                let name = file.strip_prefix(pcg_repo_root()).map(|p| p.display().to_string()).unwrap_or_else(|_| format!("oracle:{}", file.file_name().unwrap().to_string_lossy()));
+                match pcg_import_via_sidecar(file, &root) {
+                    Ok(ImportPcgResponse { outcome: CreateCharacterResponse::Saved { .. }, .. }) => {
+                        saved += 1;
+                        index.push_str(&format!("{n}\t{name}\n"));
+                        lines.push(format!("SAVED\t{name}\t{}\tdefault=n/a", read(&root)));
+                    }
+                    Ok(_) => { blocked += 1; lines.push(format!("BLOCKED\t{name}")); }
+                    Err(err) => { refused += 1; lines.push(format!("REFUSED\t{name}\t{}", err.lines().next().unwrap_or(""))); }
+                }
+            }
+            std::fs::write(out_roots.join("index.tsv"), index).unwrap();
+            lines.push(format!("SUMMARY\tfiles={}\tsaved={saved}\tblocked={blocked}\trefused={refused}", files.len()));
+        }
+        let text = lines.join("\n") + "\n";
+        if let Ok(out) = std::env::var("PCG_PROBE_OUT") { std::fs::write(out, &text).unwrap(); }
+        println!("{text}");
+    }
+

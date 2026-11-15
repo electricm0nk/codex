@@ -88,7 +88,7 @@ cargo test --locked -j 8 --lib container_ -- --test-threads=8        # 9 passed 
 cd crates/codex-ingest && cargo test --locked -j 8 container_of -- --test-threads=8   # 2 passed
 cargo test --locked -j 8 --lib container_capacity_backpack -- --test-threads=8   # 1 passed (60 lb, decisions.md §32)
 cd apps/desktop/src-tauri && cargo test --locked -j 8 custom_overrides_ignore_container_capacity -- --test-threads=8   # 1 passed
-cargo test --locked -j 8 --lib containers_ -- --test-threads=8       # 5 passed (E1.MC added one, decisions.md §20)
+cargo test --locked -j 8 --lib containers_ -- --test-threads=8       # 7 passed (E1.MC added one, decisions.md §20; E2.6 and E2.12 one each, sd41-e2.mc)
 cargo test --locked -j 8 --lib extra_weighed -- --test-threads=8     # 2 passed
 cd apps/desktop/src-tauri && cargo test --locked -j 8 create_custom_item -- --test-threads=8   # 4 passed
 cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts   # the over-capacity and nesting cases among ≥ 8
@@ -118,7 +118,7 @@ grep -c '"Ammunition"' apps/desktop/src-tauri/resources/print/looks/weapons.typ 
 ```bash
 cargo test --locked -j 8 --lib campaign_mirror -- --test-threads=8                                   # 5 passed (two alike names → two folders; byte-identical; inactive writes nothing; missing dir warns, local intact)
 cd apps/desktop/src-tauri && cargo test --locked -j 8 --test every_character_root_writer_mirrors -- --test-threads=8   # 1 passed (every writer calls after_write)
-cd apps/desktop/src-tauri && cargo test --locked -j 8 campaign_write_through -- --test-threads=8     # 3 passed
+cd apps/desktop/src-tauri && cargo test --locked -j 8 campaign_write_through -- --test-threads=8     # 4 passed (E2.13 added the CPR one, sd41-e2.mc)
 cd apps/desktop && npx tsx src/characterHub/campaignMembershipModel.test.ts                          # ≥ 4 cases
 ```
 
@@ -129,8 +129,8 @@ cd apps/desktop && npx tsx src/characterHub/campaignMembershipModel.test.ts     
 python3 -I -c "import json;print(len(json.load(open('data/price_overrides/d20pfsrd-prices.json'))),len(json.load(open('data/price_overrides/price-unknown.json'))))"   # both figures quoted with E1.8's denominators
 ls docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_1/E1.11/batch-*.json | awk 'END{print NR}'   # ⌈unpriced Market rows / 150⌉
 cd apps/desktop/src-tauri && cargo test --locked -j 8 market_backend -- --test-threads=8   # 5 passed
-cd apps/desktop/src-tauri && cargo test --locked -j 8 catalog_slot -- --test-threads=8     # 1 passed
-cd apps/desktop/src-tauri && cargo test --locked -j 8 buy_custom -- --test-threads=8       # 4 passed
+cd apps/desktop/src-tauri && cargo test --locked -j 8 --bins catalog_slot -- --test-threads=8     # 1 passed (unscoped: 2, the bin + market_price_census, sd41-e2.mc)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 buy_custom -- --test-threads=8       # 7 passed (E2.12 added 3, sd41-e2.mc)
 ```
 
 ## G-7 No PCGen in live code (`decisions.md §17`) — every `*.MC`, E5.1
