@@ -15,7 +15,11 @@ import {
   marketShownRows,
   MARKET_ROW_LIMIT,
 } from './itemPickerFilter';
-import { MARKET_CATEGORIES, MarketDialogView, type MarketDialogViewProps } from './MarketDialog';
+import { MARKET_CATEGORIES, MarketDialogView, type MarketDealsProps, type MarketDialogViewProps } from './MarketDialog';
+import { mapMarketTableRows } from './marketModel';
+import { buildOf, BuyCustomDialogView, EMPTY_BUY_CUSTOM } from './BuyCustomDialog';
+import { createItemFields, CreateItemDialogView, EMPTY_CREATE_ITEM } from './CreateItemDialog';
+import type { SizeCategory } from '../boundary/listCustomEquipmentOptions';
 
 const SWORD: MarketEntryDto = {
   key: 'Longsword (Base)',
@@ -167,8 +171,76 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   }
   assert(sheet.includes('<MarketDialog'), 'the sheet renders the dialog');
   assert(sheet.includes('listMarket('), 'its rows are list_market\'s, not a bundled list');
-  assert(sheet.includes('handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState)'), 'Sell names the copy');
+  assert(sheet.includes('handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState, deal)'), 'Sell names the copy, with its quantity and any negotiated price');
+  assert(sheet.includes('mapMarketTableRows(response.entries)'), 'the table rows carry weight, slot and description');
+  assert(/takesDeals\s+onBuyCustom=\{handleMarketBuyCustom\}\s+onCreate=\{handleMarketCreate\}/.test(sheet), 'the sheet wires Quantity, Negotiate, Buy Custom and Create');
+  assert(sheet.includes('purchaseCustomEquipment({') && sheet.includes('createCustomItem({'), 'Buy Custom and Create reach their commands');
   assert(sheet.includes('listHeldEquipment('), 'the Sell list is every held copy, not the demo corpus\'s equippedItems');
+}
+
+// SD-41 (`decisions.md §24–§26, §28`): the table, its sortable headers, the description box, Only Show
+// Affordable, Quantity, Negotiate, Buy Custom and Create.
+{
+  const deals: MarketDealsProps = {
+    quantity: '3',
+    onQuantity: () => {},
+    negotiation: null,
+    negotiatedGp: '',
+    onNegotiatedGp: () => {},
+    onNegotiateBuy: () => {},
+    onNegotiateSell: () => {},
+    onConfirmNegotiation: () => {},
+    onCancelNegotiation: () => {},
+  };
+  const rows = mapMarketTableRows([{ ...SWORD, slot: 'wield_main', description: 'A heavy blade.' } as MarketEntryDto, { ...ROPE, slot: 'none' } as MarketEntryDto]);
+  const full = { rows, sort: { column: 'price' as const, direction: 'desc' as const }, onSort: () => {}, onlyAffordable: true, onOnlyAffordable: () => {}, deals, onBuyCustom: () => {}, onCreate: () => {} };
+  const html = render({ ...full, selectedKey: 'Longsword (Base)' });
+  for (const id of ['market-table', 'market-sort-item', 'market-sort-price', 'market-sort-weight', 'market-sort-slot', 'market-description', 'market-only-affordable', 'market-quantity', 'market-negotiate', 'market-buy-custom', 'market-create']) {
+    assert(html.includes(`data-testid="${id}"`), `the ${id} control`);
+  }
+  for (const header of ['Item', 'Price', 'Weight', 'Slot']) {
+    assert(html.includes(`>${header}`), `the ${header} column`);
+  }
+  assert(html.includes('Price<!-- --> ▼') || html.includes('Price ▼'), 'the sorted column says which way');
+  assert(html.includes('4 lb') && html.includes('Main hand'), 'weight and slot cells');
+  assert(html.includes('A heavy blade.'), 'the description box shows the highlighted row');
+  assert(html.includes('checked=""'), 'Only Show Affordable reflects its state');
+  assert(html.includes('3 × 15 gp = 45 gp'), 'the price beside Buy is the quantity total');
+  assert(html.includes('>Negotiate</button>'), 'Negotiate on the inventory rows too');
+  const unpicked = render(full);
+  assert(unpicked.includes('Pick an item to read its description.'), 'no pick, no description');
+  assert(/<button[^>]*data-testid="market-buy-custom"[^>]*disabled=""/.test(unpicked), 'Buy Custom needs a base row');
+  const negotiating = render({ ...full, selectedKey: 'Rope (Hemp)', deals: { ...deals, negotiation: { kind: 'buy' } } });
+  assert(negotiating.includes('aria-label="Negotiated price"') && negotiating.includes('required'), 'an unpriced row is bought at a price the player names');
+  assert(/<button[^>]*disabled=""[^>]*>Buy at this price<\/button>/.test(negotiating), 'not until a price is named');
+  // A system shell passes none of these: the dialog shows none of them.
+  const shell = render({});
+  for (const id of ['market-only-affordable', 'market-quantity', 'market-negotiate', 'market-buy-custom', 'market-create']) {
+    assert(!shell.includes(`data-testid="${id}"`), `no ${id} without its handler`);
+  }
+  assert(shell.includes('data-testid="market-table"'), 'the table itself is every shell\'s');
+}
+
+// The builder and Create dialogs show the backend's quote and send what the player typed.
+{
+  const options = {
+    abilities: [{ key: 'FLAMING', name: 'Flaming', description: null, plus: 1, unpriced: false }, { key: 'ODD', name: 'Odd', description: null, plus: 0, unpriced: true }],
+    materials: [{ key: 'MITHRAL', name: 'Mithral', description: null, plus: 0, unpriced: false }],
+    sizes: ['Small', 'Large'] as SizeCategory[],
+  };
+  const base = { baseName: 'Longsword', currency: 'gp', options, draft: { ...EMPTY_BUY_CUSTOM, quantity: '2' }, onDraft: () => {}, error: null, busy: false, onBuy: () => {}, onClose: () => {} };
+  const priced = renderToStaticMarkup(createElement(BuyCustomDialogView, { ...base, quote: { modifiers: [], priceGp: 10015, unpriced: [], weightLbs: 2 } }));
+  assert(priced.includes('Total: 2 × 10,015 gp = 20,030 gp'), 'the running total is the quote times the quantity');
+  assert(priced.includes('Flaming (+1 equivalent)') && priced.includes('Odd (price: negotiate)') && priced.includes('Mithral') && priced.includes('Large'), 'abilities, materials and sizes from the options');
+  const unpriced = renderToStaticMarkup(createElement(BuyCustomDialogView, { ...base, quote: { modifiers: [], priceGp: null, unpriced: ['ODD'], weightLbs: 4 } }));
+  assert(unpriced.includes('price: negotiate (no price for ODD)'), 'an unpriced quote says so, and which part');
+  assert(/<button[^>]*disabled=""[^>]*>Buy custom<\/button>/.test(unpriced), 'an unpriced build buys only at a named price');
+  assertEqual(JSON.stringify(buildOf('Longsword (Base)', { ...EMPTY_BUY_CUSTOM, name: ' Dawn ', enhancement: 1, abilities: ['FLAMING'], material: 'MITHRAL' })), JSON.stringify({ baseItemId: 'Longsword (Base)', name: 'Dawn', masterwork: false, enhancement: 1, specialAbilities: ['FLAMING'], material: 'MITHRAL' }), 'the build the quote and the buy take');
+  const fields = createItemFields({ ...EMPTY_CREATE_ITEM, name: 'Food', description: 'A pouch', weight: '0.5', container: true, capacity: '10', slot: 'belt' });
+  assertEqual(JSON.stringify(fields), JSON.stringify({ name: 'Food', description: 'A pouch', weightLbs: 0.5, priceGp: 0, containerCapacityLbs: 10, slot: 'belt' }), 'Create sends name, description, weight, price 0, capacity, slot');
+  assertEqual(createItemFields({ ...EMPTY_CREATE_ITEM, name: 'Rock', capacity: '10' }).containerCapacityLbs, null, 'no capacity without Container');
+  const create = renderToStaticMarkup(createElement(CreateItemDialogView, { currency: 'gp', draft: EMPTY_CREATE_ITEM, onDraft: () => {}, error: null, busy: false, onCreate: () => {}, onClose: () => {} }));
+  assert(create.includes('value="0"') && /<button[^>]*disabled=""[^>]*>Create item<\/button>/.test(create), 'price starts at 0; a name is required');
 }
 
 console.log('MarketDialog.test.ts: all assertions passed');

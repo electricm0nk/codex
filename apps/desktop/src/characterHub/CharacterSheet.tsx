@@ -77,7 +77,6 @@ import {
   formatMarketPrice,
   mapEquipmentCatalogEntries,
   mapFeatCatalogEntries,
-  mapMarketEntries,
   mapSpellCatalogEntries,
   marketPlacementWords,
   marketMoneyMoved,
@@ -103,7 +102,11 @@ import type { BaseSavesDto, CreateCharacterOutcome, PilotSnapshotDto } from '../
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
-import { MarketDialog } from './MarketDialog';
+import { MarketDialog, type MarketDeal, type MarketHeldCopy, type MarketOutcome } from './MarketDialog';
+import { mapMarketTableRows } from './marketModel';
+import type { CreateItemFields } from './CreateItemDialog';
+import { purchaseCustomEquipment, type CustomEquipmentBuild } from '../boundary/purchaseCustomEquipment';
+import { createCustomItem } from '../boundary/createCustomItem';
 import { GearScreen } from './GearScreen';
 import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
 import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
@@ -3219,6 +3222,7 @@ export function CharacterSheet(props: {
   async function handleAddEquipment(
     itemId: string,
     bonus: number,
+    deal?: MarketDeal,
   ): Promise<{ money: CharacterMoneyDto; activeState: ActiveStateDto; carriedReason: string | null } | null> {
     setMutationError(null);
     try {
@@ -3230,6 +3234,8 @@ export function CharacterSheet(props: {
         savedAt: new Date().toISOString(),
         priceMode,
         ...(bonus > 0 ? { bonus } : {}),
+        ...(deal && deal.quantity > 1 ? { quantity: deal.quantity } : {}),
+        ...(deal?.negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(deal.negotiatedGp) }),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
@@ -3747,7 +3753,7 @@ export function CharacterSheet(props: {
    * is reloaded afterwards because a sale can change it. `bonus` names the copy when there are
    * several. Resolves to the new balance, or null when nothing was sold and `mutationError` says why.
    */
-  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto): Promise<CharacterMoneyDto | null> {
+  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto, deal?: MarketDeal): Promise<CharacterMoneyDto | null> {
     setMutationError(null);
     try {
       const outcome = await removeEquipmentSelection({
@@ -3757,6 +3763,8 @@ export function CharacterSheet(props: {
         priceMode,
         ...(bonus === undefined ? {} : { bonus }),
         ...(fromState === undefined ? {} : { fromState }),
+        ...(deal === undefined ? {} : { quantity: deal.quantity }),
+        ...(deal?.negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(deal.negotiatedGp) }),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
@@ -3791,27 +3799,72 @@ export function CharacterSheet(props: {
   }
 
   /** A Market buy, and what to tell the player about it. */
-  async function handleMarketBuy(row: MarketRow, bonus: number): Promise<string | null> {
+  async function handleMarketBuy(row: MarketRow, bonus: number, deal?: MarketDeal): Promise<string | null> {
     const before = money.totalCopper;
-    const bought = await handleAddEquipment(row.key, bonus);
+    const bought = await handleAddEquipment(row.key, bonus, deal);
     if (!bought) {
       return null;
     }
-    const name = bonus > 0 ? (row.variants.find((variant) => variant.bonus === bonus)?.name ?? row.name) : row.name;
+    const one = bonus > 0 ? (row.variants.find((variant) => variant.bonus === bonus)?.name ?? row.name) : row.name;
+    const name = deal && deal.quantity > 1 ? `${deal.quantity} × ${one}` : one;
     const paid = marketMoneyMoved(before, bought.money.totalCopper);
     const where = marketPlacementWords(bought.activeState, bought.carriedReason);
     return paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (${where}).` : `Added ${name}; no money moved (${where}).`;
   }
 
   /** A Market sale, and what to tell the player about it. */
-  async function handleMarketSell(copy: HeldEquipmentCopyDto): Promise<string | null> {
+  async function handleMarketSell(copy: MarketHeldCopy, deal?: MarketDeal): Promise<string | null> {
     const before = money.totalCopper;
-    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState);
+    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState, deal);
     if (!after) {
       return null;
     }
+    const name = deal && deal.quantity > 1 ? `${deal.quantity} × ${copy.name}` : copy.name;
     const returned = marketMoneyMoved(before, after.totalCopper);
-    return returned > 0 ? `Sold ${copy.name} for ${formatMarketPrice(returned, MARKET_CURRENCY)}.` : `Removed ${copy.name}; no money moved.`;
+    return returned > 0 ? `Sold ${name} for ${formatMarketPrice(returned, MARKET_CURRENCY)}.` : `Removed ${name}; no money moved.`;
+  }
+
+  /** The Market's Buy Custom (`decisions.md §24`): the rules price it, or the negotiated total; copies land Carried. */
+  async function handleMarketBuyCustom(build: CustomEquipmentBuild, quantity: number, negotiatedGp?: number): Promise<MarketOutcome> {
+    const before = money.totalCopper;
+    try {
+      const outcome = await purchaseCustomEquipment({
+        characterId: props.row.characterId,
+        ...build,
+        quantity,
+        ...(negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(negotiatedGp) }),
+        savedAt: new Date().toISOString(),
+        priceMode,
+      });
+      if (outcome.kind === 'Blocked') {
+        return { error: blockedMessageFromDiagnostics(outcome.diagnostics) };
+      }
+      setMoney(outcome.money);
+      await republishFromDisk();
+      const name = `${quantity > 1 ? `${quantity} × ` : ''}${build.name ?? 'custom item'}`;
+      const paid = marketMoneyMoved(before, outcome.money.totalCopper);
+      return { line: paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (carried).` : `Added ${name}; no money moved (carried).` };
+    } catch (cause: unknown) {
+      return { error: cause instanceof Error ? cause.message : String(cause) };
+    }
+  }
+
+  /** The Market's Create (`decisions.md §25`): a custom record with no corpus base, Carried; a price above 0 is paid. */
+  async function handleMarketCreate(fields: CreateItemFields): Promise<MarketOutcome> {
+    const before = money.totalCopper;
+    try {
+      const outcome = await createCustomItem({ characterId: props.row.characterId, ...fields, savedAt: new Date().toISOString(), priceMode });
+      if (outcome.kind === 'Blocked') {
+        return { error: blockedMessageFromDiagnostics(outcome.diagnostics) };
+      }
+      setMoney(outcome.money);
+      setCustom(outcome.custom);
+      await republishFromDisk();
+      const paid = marketMoneyMoved(before, outcome.money.totalCopper);
+      return { line: paid > 0 ? `Created ${fields.name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (carried).` : `Created ${fields.name} (carried).` };
+    } catch (cause: unknown) {
+      return { error: cause instanceof Error ? cause.message : String(cause) };
+    }
   }
 
   /**
@@ -4707,7 +4760,7 @@ export function CharacterSheet(props: {
               if (response.typesError) {
                 throw new Error(`Categories unavailable: ${response.typesError}`);
               }
-              return mapMarketEntries(response.entries);
+              return mapMarketTableRows(response.entries);
             })
           }
           currency={MARKET_CURRENCY}
@@ -4715,6 +4768,9 @@ export function CharacterSheet(props: {
           loadInventory={() => listHeldEquipment(props.row.characterId).then(sellableCopies)}
           onBuy={handleMarketBuy}
           onSell={handleMarketSell}
+          takesDeals
+          onBuyCustom={handleMarketBuyCustom}
+          onCreate={handleMarketCreate}
           priceMode={priceMode}
           onPriceModeChange={setPriceMode}
           error={mutationError}
