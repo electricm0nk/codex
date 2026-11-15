@@ -6979,13 +6979,22 @@ fn record_mirror_warnings(root: &Path, warnings: Vec<MirrorWarning>) -> Vec<Stri
 pub(crate) fn after_write(root: &Path) -> Vec<String> {
     let warnings = match campaign_mirror::load_memberships(root) {
         Ok(memberships) if !memberships.iter().any(|membership| membership.active) => Vec::new(),
-        Ok(memberships) => match SavedCharacterStore::load(root) {
-            Ok(envelope) => campaign_mirror::mirror(root, &envelope.display_label, &envelope.character_id, &memberships),
-            Err(err) => vec![MirrorWarning { campaign_dir: root.to_path_buf(), reason: err.message }],
+        Ok(memberships) => match character_identity(root) {
+            Ok((label, id)) => campaign_mirror::mirror(root, &label, &id, &memberships),
+            Err(reason) => vec![MirrorWarning { campaign_dir: root.to_path_buf(), reason }],
         },
         Err(err) => vec![MirrorWarning { campaign_dir: root.join(campaign_mirror::MEMBERSHIPS_FILE), reason: err.message }],
     };
     record_mirror_warnings(root, warnings)
+}
+
+/// The display label and id of the character at `root`: a Pathfinder or Starfinder envelope, else a
+/// Cyberpunk RED one (its store keeps no `authoritative_character_input.txt`).
+fn character_identity(root: &Path) -> Result<(String, String), String> {
+    match SavedCharacterStore::load(root) {
+        Ok(envelope) => Ok((envelope.display_label, envelope.character_id)),
+        Err(err) => codex::rules_core::cpr::store::CprCharacterStore::load(root).map(|c| (c.display_label, c.character_id)).map_err(|_| err.message),
+    }
 }
 
 /// `SavedCharacterStore::save` for the desktop: the same save, with the campaign copies' warnings kept.
@@ -7026,7 +7035,7 @@ pub struct SetCharacterCampaignsRequest {
 /// Writes `campaigns.json` and copies the character to its active campaigns at once; the warnings
 /// name each copy that failed.
 pub(crate) fn set_character_campaigns_at_root(root: &Path, memberships: &[Membership]) -> Result<Vec<String>, String> {
-    SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    character_identity(root)?;
     campaign_mirror::save_memberships(root, memberships).map_err(|err| err.message)?;
     Ok(after_write(root))
 }

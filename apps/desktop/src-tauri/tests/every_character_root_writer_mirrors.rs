@@ -28,6 +28,10 @@ const SAVE_FILES: &[&str] = &[
     "src/characterHub/appendToCharacter.rs",
 ];
 
+/// The files whose live functions save a Cyberpunk RED character through `CprCharacterStore::save*`
+/// (`git grep 'CprCharacterStore::save' -- apps/desktop/src-tauri/src`, test modules excluded).
+const CPR_SAVE_FILES: &[&str] = &["src/cpr_adapter.rs", "src/cpr_creation.rs", "src/cpr_improve.rs"];
+
 struct Function {
     name: String,
     body: Vec<String>,
@@ -101,9 +105,21 @@ fn every_character_root_writer_mirrors() {
                 .map(move |function| format!("{file}: {}", function.name))
         })
         .collect();
+    let cpr_unmirrored: Vec<String> = CPR_SAVE_FILES
+        .iter()
+        .flat_map(|file| {
+            live_functions(file)
+                .into_iter()
+                .filter(|function| function.body.iter().any(|line| line.contains("CprCharacterStore::save")) && !function.body.iter().any(|line| line.contains("after_write(")))
+                .map(move |function| format!("{file}: {}", function.name))
+        })
+        .collect();
+    let cpr_found: usize = CPR_SAVE_FILES.iter().map(|file| live_functions(file).iter().filter(|f| f.body.iter().any(|l| l.contains("CprCharacterStore::save"))).count()).sum();
     // The scan is only as good as its reach: the writers it knows must still be there to find.
     let found: usize = WRITER_FILES.iter().map(|file| live_functions(file).iter().filter(|f| f.body.iter().any(|l| l.contains("after_write("))).count()).sum();
     assert!(missing.is_empty(), "these functions write under a character root and do not call after_write: {missing:#?}");
     assert!(bare_saves.is_empty(), "these functions save with SavedCharacterStore::save, which drops the campaign warnings; use save_and_mirror: {bare_saves:#?}");
+    assert!(cpr_unmirrored.is_empty(), "these functions save a Cyberpunk RED character and do not call after_write: {cpr_unmirrored:#?}");
+    assert!(cpr_found >= 5, "only {cpr_found} functions save a Cyberpunk RED character; the scan lost the writers");
     assert!(found >= 6, "only {found} functions call after_write; the scan lost the writers");
 }
