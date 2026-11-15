@@ -292,6 +292,19 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
   return targets;
 }
 
+/** The drag data's format: the dragged row's id (`GearRow.id`). */
+export const DRAG_FORMAT = 'application/x-codex-gear-row';
+
+/**
+ * Where a drop of the dragged row onto `targetId` (a tree section's id or a Move to target's
+ * `inside-<copy>`) moves it: the same location the Move to menu would, or null where the menu offers
+ * nothing (itself, inside itself, a full slot, a non-container, its own place) (`decisions.md §14`).
+ */
+export function dropTarget(dataTransfer: Pick<DataTransfer, 'getData'>, targetId: string, model: GearModel): LocationDto | null {
+  const row = model.rows.find((candidate) => candidate.id === dataTransfer.getData(DRAG_FORMAT));
+  return (row && moveTargets(model, row).find((target) => target.id === targetId)?.location) ?? null;
+}
+
 /** "How many?" only on a stack: 1 to its pieces (`decisions.md §28, §30`). */
 export function quantityPrompt(held: PlacedEquipmentCopyDto): { min: number; max: number } | null {
   return held.quantity > 1 ? { min: 1, max: held.quantity } : null;

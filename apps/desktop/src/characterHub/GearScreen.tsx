@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type DragEvent, type HTMLAttributes, type KeyboardEvent } from 'react';
 import { discardEquipmentCopy } from '../boundary/discardEquipmentCopy';
 import { activateEquipmentSet, createEquipmentSet, deleteEquipmentSet, renameEquipmentSet } from '../boundary/equipmentSets';
 import type { LocationDto, PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
@@ -7,6 +7,8 @@ import type { EquipmentSetsSummaryDto } from '../boundary/loadSavedCharacterDeta
 import { OverrideTag } from './OverrideTag';
 import {
   copyId,
+  DRAG_FORMAT,
+  dropTarget,
   filterGearRows,
   gearScreenModel,
   menuKeyStep,
@@ -321,13 +323,48 @@ export function GearPanels(props: GearPanelsProps) {
   };
   const formAt = (at: string) =>
     pending && pending.at === at ? <PendingForm key={`${pending.kind}-${at}`} pending={pending} busy={props.busy} onConfirm={confirm} onCancel={() => setPending(null)} /> : null;
+  // Drag (`decisions.md §14`, SD-g): HTML5 only. `dragover` cannot read the drag data, so the dragged
+  // row's id is kept here too; the drop itself reads the data.
+  const dragging = useRef('');
+  const dragSource = (row: GearRow): HTMLAttributes<HTMLDivElement> => ({
+    draggable: !props.busy,
+    onDragStart: (event: DragEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+      event.dataTransfer.setData(DRAG_FORMAT, row.id);
+      event.dataTransfer.effectAllowed = 'move';
+      dragging.current = row.id;
+    },
+    onDragEnd: () => {
+      dragging.current = '';
+    },
+  });
+  const dropZone = (targetId: string, at: string): HTMLAttributes<HTMLDivElement> => ({
+    onDragOver: (event: DragEvent<HTMLDivElement>) => {
+      if (dropTarget({ getData: (format) => (format === DRAG_FORMAT ? dragging.current : '') }, targetId, model)) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.dataTransfer.dropEffect = 'move';
+      }
+    },
+    onDrop: (event: DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      dragging.current = '';
+      const location = dropTarget(event.dataTransfer, targetId, model);
+      const row = model.rows.find((candidate) => candidate.id === event.dataTransfer.getData(DRAG_FORMAT));
+      if (location && row) {
+        // The same call the Move to menu makes: a stack asks "how many?" first.
+        run({ kind: 'move', row, location, targetLabel: moveTargets(model, row).find((target) => target.id === targetId)?.label }, at);
+      }
+    },
+  });
   const tag = (row: GearRow) => (row.held.override ? <OverrideTag flag={row.held.override} /> : null);
 
   const treeItem = (item: GearTreeItem, depth: number) => {
     const at = `tree:${copyId(item.copy)}`;
     return (
       <div key={at}>
-        <div style={{ ...rowStyle, paddingLeft: `${depth * 1}rem` }}>
+        <div {...dragSource(item.row)} {...(item.row.isContainer ? dropZone(`inside-${copyId(item.copy)}`, at) : {})} style={{ ...rowStyle, paddingLeft: `${depth * 1}rem` }}>
           <span>
             {item.row.label}
             {tag(item.row)}
@@ -371,7 +408,7 @@ export function GearPanels(props: GearPanelsProps) {
             const at = `row:${row.id}`;
             return (
               <div key={at} data-testid={`gear-row-${row.id}`}>
-                <div style={rowStyle}>
+                <div {...dragSource(row)} {...(row.isContainer ? dropZone(`inside-${row.id}`, at) : {})} style={rowStyle}>
                   <span>
                     {row.label}
                     {tag(row)}
@@ -410,11 +447,12 @@ export function GearPanels(props: GearPanelsProps) {
             </p>
           ))}
           {model.tree.map((section) => (
-            <div key={section.id}>
+            <div key={section.id} {...dropZone(section.id, `section:${section.id}`)}>
               <div data-testid={`gear-location-${section.id}`} style={{ fontSize: '0.8rem', fontWeight: 700, marginTop: '0.4rem' }}>
                 {section.label}
                 {section.places ? <span style={{ ...quiet, fontWeight: 400, marginLeft: '0.4rem' }}>{section.places}</span> : null}
               </div>
+              {formAt(`section:${section.id}`)}
               {section.items.map((item) => treeItem(item, 1))}
             </div>
           ))}

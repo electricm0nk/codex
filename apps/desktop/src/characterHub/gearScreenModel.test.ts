@@ -5,6 +5,8 @@ import type { ContainerLoadDto } from '../boundary/loadSavedCharacterDetail';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { GearPanels } from './GearScreen';
 import {
+  DRAG_FORMAT,
+  dropTarget,
   filterGearRows,
   gearScreenModel,
   menuKeyStep,
@@ -204,4 +206,18 @@ assert(tagged.includes('Override: Ignore container capacity limits'), 'view: the
 assert(!tagged.includes('over its 60 lb'), 'view: no warning under the override');
 assert(!tagged.includes('gear-set-select'), 'view: no set picker without sets');
 
-console.log('gearScreenModel.test.ts: 12 cases passed');
+assert(html.includes('draggable="true"'), 'view: rows are draggable');
+
+// 13. dropTarget: the dragged row (its id in the drag data) and the target's id give the menu's location, or null.
+const dragging = (id: string) => ({ getData: (format: string) => (format === DRAG_FORMAT ? id : '') });
+assertEqual(JSON.stringify(dropTarget(dragging('item:dagger-0-0'), 'inside-item:backpack-0-0', model)), JSON.stringify({ kind: 'inside', container: BACKPACK }), 'drop: a row onto a container goes inside it');
+assertEqual(JSON.stringify(dropTarget(dragging('item:dagger-0-0'), 'slot-wield_off', model)), JSON.stringify({ kind: 'slot', slot: 'wield_off' }), 'drop: onto a free slot');
+assertEqual(JSON.stringify(dropTarget(dragging('item:backpack-0-0'), 'notCarried', model)), JSON.stringify({ kind: 'notCarried' }), 'drop: onto Not Carried');
+assertEqual(dropTarget(dragging('item:backpack-0-0'), 'inside-item:backpack-0-0', model), null, 'drop: null onto itself');
+assertEqual(dropTarget(dragging('item:backpack-0-0'), 'inside-item:belt_pouch-0-0', model), null, 'drop: null onto a descendant');
+assertEqual(dropTarget(dragging('item:dagger-0-0'), 'slot-wield_main', model), null, 'drop: null onto a full slot');
+assertEqual(dropTarget(dragging('item:backpack-0-0'), 'inside-item:dagger-0-0', model), null, 'drop: null onto a non-container');
+assertEqual(dropTarget(dragging('item:dagger-0-0'), 'carried', model), null, 'drop: null onto its own place');
+assertEqual(dropTarget(dragging(''), 'carried', model), null, 'drop: null without a gear row in the drag');
+
+console.log('gearScreenModel.test.ts: 13 cases passed');
