@@ -13345,8 +13345,9 @@ mod tests {
         assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
         // Every row that reads as unresolved when held, by why. The `.FORGET` pair are PCGen
         // removal rows; the two `Shield (...)` are the Quickdraw Shield rows' twins, which would
-        // answer the seeds' `item:shield`; the Ranged Cannon's identity has the shape of a modifier,
-        // which stays out; the rest have a sheet rule and no corpus record.
+        // answer the seeds' `item:shield`; the rest have a sheet rule and no corpus record. (The
+        // Ranged Cannon, whose identity has a modifier's `~` shape, resolves since E2.6 let every
+        // modifier in.)
         assert_eq!(
             no_record,
             [
@@ -13360,7 +13361,6 @@ mod tests {
                 "Manuscript of Jack Were-Son",
                 "Master Books of Rul Thaven",
                 "Otyugh Hide",
-                "Ranged Cannon ~ Clockwork Goliath",
                 "Shield (Light/Steel/Quickdraw)",
                 "Shield (Light/Wooden/Quickdraw)",
                 "The Formulae of Master Gebr",
@@ -13752,9 +13752,8 @@ mod tests {
     }
 
     /// The whole Weapons shelf, held at once: every row whose type tags name a weapon has its attack
-    /// row, and the 64 that do not (ammunition, and packs of it) have none. 480 rows: 416 and 64. The
-    /// one weapon with no row is the Ranged Cannon, which has no record on the sheet's corpus
-    /// (`worn_vs_carried_every_market_row_resolves_on_the_sheet_corpus` names it and why).
+    /// row, and the 64 that do not (ammunition, and packs of it) have none. 480 rows: 416 and 64.
+    /// The Ranged Cannon, kept off the sheet's corpus by its `~` identity until E2.6, has its row.
     #[test]
     fn no_required_gear_every_market_weapon_has_an_attack_row_and_ammunition_none() {
         use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
@@ -13778,7 +13777,7 @@ mod tests {
             .map(|row| row.entry.key.as_str())
             .filter(|key| !ids.contains(&format!("combat.weapon_attack_bonus.{}", slug(key))))
             .collect();
-        assert_eq!(missing, ["Ranged Cannon ~ Clockwork Goliath"]);
+        assert_eq!(missing, Vec::<&str>::new());
         let ammunition: Vec<&str> = others
             .iter()
             .map(|row| row.entry.key.as_str())
