@@ -135,6 +135,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E2.9 | 2026-11-14 | this commit | complete | `artifacts/epic_2/E2.9_cycle_receipt.md` (fixture regenerated: 41 `Projectile` weapons gain `uses_ammunition` + `ammunition_family`, nothing else moved; `--check` `drifted=0 PASS`; G-1 byte-identical) |
 | E2.10 | 2026-11-15 | this commit | complete | `artifacts/epic_2/E2.10_cycle_receipt.md` (one test re-pinned to `[("UE", "Masterwork Tool")]`; RED `left: [("UE", "Masterwork Tool")]`; GREEN 1 passed; clippy clean) |
 | E2.11 | 2026-11-15 | `04db00302d` + this commit | complete | `artifacts/epic_2/E2.11_cycle_receipt.md` (`market_variants` refuses a row whose converted record states `Aura:`; RED `Holy Avenger (no price: already magic) has offers: [… 122930.0 …]`; GREEN in both binaries; 333 → 310 rows with offers, 23 named magic weapons; desktop full run 0 failed) |
+| E2.4 | 2026-11-15 | `35f40731cc` + this commit | complete | `artifacts/epic_2/E2.4_cycle_receipt.md` (load response on the carried entry point; DTO `inHand`/`unarmed`/`nonlethal`/`usesAmmunition`/`ammunitionCarried`/`ammunitionFamily`; Unarmed attack rows pushed; `speed.climb` (Vanara 20, Aldric none); tab: in hand → Carried → Unarmed last, 20 boxes + count; print marks carried lines (fence exit); RED 0-match then E0609 ×12 + E0425 ×1; desktop full 1331/0, root `--lib` 3132/0; G-1 SAME_EXCEPT_NAMED ×3) |
 
 ## Epic reports
 

@@ -27,13 +27,13 @@ cd apps/desktop/src-tauri && mkdir -p <dir>/base <dir>/head
 PF_SEED_RENDER_OUT=<dir>/head cargo test --locked -j 8 --bins pf_seed_render_hash -- --test-threads=8 --nocapture
 python3 - <dir>/base <dir>/head <<'PY'                 # pass = prints SAME_EXCEPT_NAMED for each seed
 import json, sys, pathlib
-NEW_KEYS = {'equipmentSets', 'containerLoads', 'location', 'ordinal', 'quantity', 'copies', 'baseQuantity', 'inHand', 'unarmed', 'nonlethal', 'usesAmmunition', 'ammunitionCarried', 'slot', 'mirrorWarnings', 'campaigns'}   # E2.1, E2.4, E2.5, E2.7 (the card names any other)
+NEW_KEYS = {'equipmentSets', 'containerLoads', 'location', 'ordinal', 'quantity', 'copies', 'baseQuantity', 'inHand', 'unarmed', 'nonlethal', 'usesAmmunition', 'ammunitionCarried', 'ammunitionFamily', 'slot', 'mirrorWarnings', 'campaigns'}   # E2.1, E2.4, E2.5, E2.7 (the card names any other)
 NEW_ROWS = ('combat.weapon_attack_bonus.unarmedstrike', 'combat.weapon_damage_total.unarmedstrike', 'combat.weapon_damage_bonus.unarmedstrike', 'combat.weapon_threat_range_low.unarmedstrike', 'speed.climb')   # E1.5 / E2.4: the Unarmed row every seed gains; speed.climb (E1.14 / E2.4, only for a race that climbs); carried-weapon rows exist only for copies no seed holds (E1.4 states the population)
 def strip(node):
     if isinstance(node, dict):
         return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS}
     if isinstance(node, list):
-        return [strip(v) for v in node if not (isinstance(v, dict) and str(v.get('id', '')).startswith(NEW_ROWS))]
+        return [strip(v) for v in node if not (isinstance(v, dict) and (str(v.get('id', '')).startswith(NEW_ROWS) or v.get('weaponItemId') == 'item:unarmed_strike'))]   # E2.4: the Unarmed weaponDamage entry every seed gains
     return node
 base, head = map(pathlib.Path, sys.argv[1:3])
 seeds = sorted(p.name for p in base.glob('*.json'))
