@@ -685,8 +685,8 @@ fn market_name(entry: &EquipmentCatalogEntryDto) -> String {
     if entry.name.ends_with(" (Base)") { entry.key.clone() } else { entry.name.clone() }
 }
 
-/// The `+1`…`+5` a row is offered at. Only arms and armor with a price take one. No price means no
-/// offer, never an invented base. A free item takes one only as a base record (`Club (Base)`,
+/// The `+1`…`+5` a row is offered at. Only arms and armor with a price take one, and never a named
+/// magic item, which already carries its bonus. No price means no offer, never an invented base. A free item takes one only as a base record (`Club (Base)`,
 /// `Quarterstaff (Base)`): the other free rows are attacks and summoned arms, not goods
 /// (`Touch Attack (Ray)`, `Mind Blade (…)`), and a negative price is a record's cost correction.
 fn market_variants(entry: &EquipmentCatalogEntryDto, name: &str) -> Vec<MarketVariantDto> {
@@ -697,7 +697,7 @@ fn market_variants(entry: &EquipmentCatalogEntryDto, name: &str) -> Vec<MarketVa
     }
     let tags: Vec<&str> = entry.types.iter().map(String::as_str).collect();
     let Some(kind) = enhanceable_tags(&tags) else { return Vec::new() };
-    if !bonus_reaches_the_sheet(&entry.key, kind) {
+    if !bonus_reaches_the_sheet(&entry.key, kind) || is_named_magic_item(&entry.book, &entry.key) {
         return Vec::new();
     }
     (1..=5)
@@ -721,6 +721,22 @@ fn bonus_reaches_the_sheet(key: &str, kind: Enhanceable) -> bool {
             .is_some_and(|record| record.stat_effect.armor_class_bonus.is_some()),
         Enhanceable::Weapon => resolve_base_damage_dice(key, corpus).is_some(),
     }
+}
+
+/// Whether the row is a named magic item (`Holy Avenger`, `Flame Tongue`): its converted record
+/// states a magic item's `Aura:` line. Its type tags are its base weapon's, so they cannot say so,
+/// and a masterwork or special-material copy (`Longsword (Cold Iron/Masterwork)`) states no aura.
+fn is_named_magic_item(book: &str, key: &str) -> bool {
+    use codex::rules_core::sheet_rule::ProsePiece;
+    let (Some(dir), Some(package)) = (corpus_book_dir_opt(book), crate::converted_prose::package()) else {
+        return false;
+    };
+    EQUIPMENT_KINDS
+        .iter()
+        .filter_map(|kind| crate::converted_prose::rule_id_for(dir, kind, key))
+        .filter_map(|id| package.rule(&id))
+        .flat_map(|rule| rule.prose.iter().flat_map(|segment| &segment.pieces))
+        .any(|piece| matches!(piece, ProsePiece::Text(text) if text.starts_with("Aura:")))
 }
 
 /// Narrows a built catalog to one Market list. The first row of a key decides that key, as it does
@@ -2304,7 +2320,12 @@ mod tests {
             (&weapons, "Mind Blade (Light Piercing)", "not an item"),
             (&weapons, "Demon Armor Claw Attack", "a negative price"),
             (&weapons, "Gauntlet (Part of Armor Suit)", "comes with the armor"),
-            (&weapons, "Holy Avenger", "no price: already magic"),
+            (&weapons, "Holy Avenger", "a named magic item, priced"),
+            (&weapons, "Flame Tongue", "a named magic item"),
+            (&weapons, "Oathbow", "a named magic item"),
+            (&weapons, "Javelin of Lightning", "a named magic item priced under a +1"),
+            (&weapons, "Trident of Warning", "a named magic item"),
+            (&weapons, "Mace of Terror", "a named magic item"),
             (&armor, "Mind Armor (Light)", "not an item"),
             (&shields, "Mind Shield", "not an item"),
             (&gear, "Backpack", "not arms or armor"),
@@ -2314,12 +2335,38 @@ mod tests {
                 assert!(row.variants.is_empty(), "{key} ({why}) has offers: {:?}", row.variants);
             }
         }
-        for key in ["Arrow (Base)", "Touch Attack (Ray)", "Holy Avenger"] {
+        for key in ["Arrow (Base)", "Touch Attack (Ray)", "Holy Avenger", "Flame Tongue", "Javelin of Lightning"] {
             assert!(entry(&weapons, key).is_some(), "{key} must be listed for this check to mean anything");
+        }
+        // Masterwork and special-material copies of a base weapon are not magic: they keep their `+N`.
+        for (list, key) in [
+            (&weapons, "Longsword (Cold Iron/Masterwork)"),
+            (&weapons, "Battleaxe (Adamantine)"),
+            (&weapons, "Dagger (Silver/Masterwork)"),
+            (&shields, "Mithral Heavy Shield"),
+        ] {
+            let row = entry(list, key).unwrap_or_else(|| panic!("{key} is on sale"));
+            assert_eq!(row.variants.len(), 5, "{key} keeps its +1…+5");
         }
         for list in [&gear, &market(MarketCategory::MagicItem)] {
             assert!(list.iter().all(|r| r.variants.is_empty()), "gear and magic items take no +N");
         }
+    }
+
+    /// The census the receipt quotes: every priced arms-and-armor Market row with `+N` offers, one
+    /// line each (`--nocapture`), so a change to who takes a bonus is a diff of this output.
+    #[test]
+    fn enhancement_price_table_census_of_rows_with_offers() {
+        let mut lines = Vec::new();
+        for category in [MarketCategory::Weapon, MarketCategory::Armor, MarketCategory::Shield] {
+            for row in market(category).iter().filter(|row| !row.variants.is_empty()) {
+                let base = built_catalog().entries.iter().find(|e| e.key == row.entry.key).map(|e| e.name.as_str());
+                let desc: String = row.entry.description.as_deref().unwrap_or("").chars().take(70).collect();
+                lines.push(format!("OFFERS\t{:?}\t{}\t{:?}\t{:?}\t{desc}", category, row.entry.key, row.entry.cost_gp, base));
+            }
+        }
+        println!("{}", lines.join("\n"));
+        assert!(!lines.is_empty());
     }
 
     #[test]
