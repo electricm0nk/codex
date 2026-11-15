@@ -100,7 +100,7 @@ cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts   # the over
 cd apps/desktop && npm run typecheck && npm test && npm run ui-smoke:doc && git status --porcelain ../../docs/testing/ui-smoke-inventory.md   # empty
 test ! -f apps/desktop/src/characterHub/EquipmentPanel.tsx && echo PANEL_GONE
 grep -nE '\b(reduce\(|\+= *[a-z]*[wW]eight|lbs *[-+*/])' apps/desktop/src/characterHub/GearScreen.tsx apps/desktop/src/characterHub/gearScreenModel.ts | awk 'END{print NR}'   # 0 (NR-2)
-python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 25 []
+python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print(sum(x['status']=='green' for x in r),[x['id'] for x in r if x['status']!='green'])" docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_3/E3.3/results.json   # 28 [] (19 new + 9 rewritten, sd41-e3.1)
 cd apps/desktop && npx tsx src/characterHub/marketModel.test.ts && npx tsx src/characterHub/weaponsTabModel.test.ts   # E3.4, E2.4
 ```
 

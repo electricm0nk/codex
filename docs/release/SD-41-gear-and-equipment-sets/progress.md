@@ -143,6 +143,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E2.12 | 2026-11-15 | `88d29bea6e` + this commit | complete | `artifacts/epic_2/E2.12_cycle_receipt.md` (Buy Custom size: `SizeCategory` on the build, Small/Large priced and weighed by the transcribed size rule (no ingested source), `CopyFacts.size` read by encumbrance, containers and the weapon rows; Large longsword 30 gp / 8 lb / 2d6; `buy_custom` 7 passed; desktop full 1349/0; root `--lib` 3136/0; G-1 byte-identical ×3) |
 | E2.13 | 2026-11-15 | `777116753d` + this commit | complete | `artifacts/epic_2/E2.13_cycle_receipt.md` (CPR write-through: `after_write` in 5 live CPR writers; `after_write` / `set_character_campaigns_at_root` read a CPR envelope's identity; `campaign_write_through_cpr` 1 passed; scanning test 1 passed; desktop full 1350/0) |
 | E2.MC | 2026-11-15 | `fe7382e993` + this commit | complete | `artifacts/epic_2/E2.MC_cycle_receipt.md` (merge check on `424634c76b`: desktop full 0 failed, root `--lib` 3136/0, G-1 ×3, `.pcg` 37 of 37 unchanged + Default written, dual audit OK; Weapons-tab Drop fixed to Not Carried; 6 acceptance counts corrected; the E2.8/E2.12/E2.13 rows moved into this table from below Open blockers) |
+| E3.1 | 2026-11-15 | `53d8fc214f` + this commit | complete | `artifacts/epic_3/E3.1_cycle_receipt.md` (gear screen replaces EquipmentPanel; `gearScreenModel.test.ts` 12 cases, RED cannot-find-module; `npm test` 196/196; 8 old-panel smoke rows red until E3.3; E3.3 rewrite count 6 → 9) |
 
 ## Epic reports
 
