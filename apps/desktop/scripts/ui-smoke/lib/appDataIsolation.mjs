@@ -90,6 +90,20 @@ export function isolatedXdg(root) {
   };
 }
 
+/**
+ * A `type` step's text with `{XDG_DATA_HOME}` replaced by the run's isolated XDG_DATA_HOME, so a row
+ * can name a folder (a campaign's Drive folder) that lives and dies with the run's own root.
+ */
+export function expandRunPaths(text, xdgDataHome) {
+  if (!text.includes('{XDG_DATA_HOME}')) {
+    return text;
+  }
+  if (!xdgDataHome) {
+    throw new Error(`'${text}' names {XDG_DATA_HOME}, but this run has no isolated XDG_DATA_HOME`);
+  }
+  return text.replaceAll('{XDG_DATA_HOME}', xdgDataHome);
+}
+
 /** The environment run.mjs hands driver.sh: `baseEnv` plus the run's data root. */
 export function launchEnv(baseEnv, root) {
   return { ...baseEnv, RUN_DESKTOP_DATA_ROOT: root };

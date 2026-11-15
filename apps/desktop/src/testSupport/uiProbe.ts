@@ -53,6 +53,8 @@ export interface UiProbeCommand {
   text?: string;
   key?: string;
   index?: number;
+  /** click/select: match `target` against each control's `labelOf`, not its `nameOf`. */
+  by?: 'label';
 }
 
 /** What happened the last time a queued command was executed, echoed back on the next probe report. */
@@ -121,7 +123,7 @@ function nameOf(el: Element): string {
  * has no candidates at all. `index` (default 0) selects the nth candidate
  * *within whichever tier matched*, so a screen with two same-named controls
  * (e.g. a disabled/enabled pair across a re-render boundary, or a repeated
- * row action) is still addressable by position without the caller needing
+ * row action; a negative index counts from the end) is still addressable by position without the caller needing
  * to know which tier its name will land in.
  *
  * Pure and DOM-free on purpose: this is the piece a regression here would
@@ -146,7 +148,8 @@ export function matchCommandTarget(names: string[], target: string, index = 0): 
   });
   for (const tier of [exact, prefix, contains]) {
     if (tier.length > 0) {
-      return tier[index] ?? tier[0]!;
+      // A negative index counts from the end of the tier (-1 = the last).
+      return tier[index < 0 ? tier.length + index : index] ?? tier[0]!;
     }
   }
   return -1;
@@ -265,10 +268,23 @@ function collectInteractiveElements(): Element[] {
   return Array.from(document.body.querySelectorAll(INTERACTIVE_SELECTOR));
 }
 
+/**
+ * A control's label: its aria-label, else the text of the `<label>` around it, else the aria-label of
+ * the `role="group"` it sits in. Rows of buttons that all read "Move to" differ only here, a checkbox
+ * has no other name, and a confirm button is told apart by its group ("Discard Dagger").
+ */
+function labelOf(el: Element): string {
+  return (
+    (el.getAttribute('aria-label') ?? '').trim() ||
+    (el.closest('label')?.textContent ?? '').trim() ||
+    (el.closest('[role="group"][aria-label]')?.getAttribute('aria-label') ?? '').trim()
+  );
+}
+
 /** Resolves a command's `target`/`index` against the live DOM via `matchCommandTarget`. `null` when nothing matches. */
-function findElementByName(target: string, index: number): { el: Element; matchedName: string } | null {
+function findElementByName(target: string, index: number, by?: 'label'): { el: Element; matchedName: string } | null {
   const elements = collectInteractiveElements();
-  const names = elements.map(nameOf);
+  const names = elements.map(by === 'label' ? labelOf : nameOf);
   const matchIndex = matchCommandTarget(names, target, index);
   if (matchIndex === -1) {
     return null;
@@ -342,7 +358,7 @@ function executeCommand(cmd: UiProbeCommand): UiProbeLastCommand | Promise<UiPro
         );
       }
       case 'click': {
-        const found = findElementByName(cmd.target ?? '', cmd.index ?? 0);
+        const found = findElementByName(cmd.target ?? '', cmd.index ?? 0, cmd.by);
         if (!found) {
           return { id: cmd.id, ok: false, error: `no element named '${cmd.target ?? ''}'` };
         }
@@ -378,7 +394,7 @@ function executeCommand(cmd: UiProbeCommand): UiProbeLastCommand | Promise<UiPro
         return { id: cmd.id, ok: true, matchedName: nameOf(active) };
       }
       case 'select': {
-        const found = findElementByName(cmd.target ?? '', cmd.index ?? 0);
+        const found = findElementByName(cmd.target ?? '', cmd.index ?? 0, cmd.by);
         if (!found || !(found.el instanceof HTMLSelectElement)) {
           return { id: cmd.id, ok: false, error: `no <select> named '${cmd.target ?? ''}'` };
         }
@@ -528,4 +544,4 @@ export function installUiProbe(): void {
 // Exported for the harness's own unit tests (target-name derivation and the
 // command channel's name-matching tiers must not silently regress) — not
 // part of the runtime's own call surface.
-export const __testables = { nameOf, deriveMode, matchCommandTarget, executeCommand };
+export const __testables = { nameOf, labelOf, deriveMode, matchCommandTarget, executeCommand };
