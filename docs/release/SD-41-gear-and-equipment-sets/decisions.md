@@ -1032,3 +1032,34 @@ reopened), as the discovered card **E3.6** (`§19`; `kanban.md`, `epic-breakdown
 before E3.MC (R8). Rule after E3.6: an AppImage record is verifier-owned **only while it names the running path**; a
 same-path record with another sha stays with the verifier (the foreign-binary guard, transaction.rs:962–973). Deb,
 DevLocal and Windows behaviour unchanged.
+
+## §38 — Operator request: one table per container on the gear screen; into SD-41 now (2026-11-15)
+
+**Request (operator, 2026-11-15, verbatim):** "from a display perspective, i would like to see each container and
+it's contents listed individually. gear show show a container and each subitem (one deep) with it's weight. along
+with the ability to sell or remove, etc. So a backpack could show contents of 4 pouches and a peice of chalk. then in
+4 different tables you would see each pouch and their individual contents. this need not even be in a single top down
+list, there is likely adequate space to have multiple columns".
+
+**Ruling (operator, the same day):** this goes **into SD-41 now**, not SD-42 — the discovered card **E3.11** (`§19`;
+`kanban.md`, `epic-breakdown.md`; the card count 53 → 54 re-counted in `kanban.md`, G-8, `README.md` (which still
+read 49), `progress.md` in the same commit, R18). E3.11 depends on E3.3 (the only `spec.json` writer, R24) and E3.8
+(so its smoke rows need no sheet reopen after the Market buys) and lands before E3.MC, which now depends on it.
+
+**What the screen does today (read on `origin/tranche-21` @ `f6de44537d`):** the left panel is one flat list of every
+held row — contents of a container included, labelled `In <container>` — each with weight, Move to, Drop, Sell and
+Discard; the right panel is the locations tree, which nests containers recursively (`GearScreen.tsx` `treeItem`) and
+shows each container's `containerLoads` figure (`0.5 of 60 lb`) but no row weight and only Move to. So the
+request is a regrouping of the left list, not new data or new actions: the rows, their weight labels
+(`encumbrance.perItem`), the per-container loads (E1.3 `container_loads` through E2.1) and the four actions all
+exist. E3.11 adds one pure function, `containerTables()`, and renders the left panel as the top-level rows followed
+by one table per container **copy** in the grid the screen already uses. A stack of 4 belt pouches is one row in the
+backpack's table (`Pouch, Belt ×4`) and 4 tables of its own, as the request's "4 different tables" says.
+
+**Rules:** direct contents only (one level deep); a nested container is a row in its parent's table **and** has its
+own table; the table's caption figure is the existing `containerLoads` entry (`§16`: no second weight sum — E3.MC's
+NR-2 grep stays 0); the filter applies to the top-level rows only (DEFAULT); the right tree is unchanged. E3.3's
+markers and expects read the row text, which a table row keeps, so its gear rows stay green and E3.11 re-runs them.
+
+**R24 exit:** E3.11 is the second writer of `spec.json` in SD-41, **serially**, only after E3.3 is `complete`
+(`workflow-instruction.md §12.1` R24 amended). Print (E4.1) and PCGen import (SD-42) are untouched.
