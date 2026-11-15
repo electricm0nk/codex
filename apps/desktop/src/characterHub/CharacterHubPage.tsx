@@ -298,6 +298,10 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
           setMode('load');
         }}
         onCloned={reload}
+        onOpenCampaign={(campaignId) => {
+          setActiveCampaignId(campaignId);
+          setMode('campaign-sheet');
+        }}
       />
     );
   }

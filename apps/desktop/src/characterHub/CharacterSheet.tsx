@@ -177,6 +177,9 @@ import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/s
 import { loadCharacterBio, parseLanguages, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
+import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
+import { CampaignMembershipDialog } from './CampaignMembershipDialog';
+import { activeCampaigns, campaignFieldText } from './campaignMembershipModel';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -406,17 +409,23 @@ function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number | nu
 
 // ---------- center column ----------
 
-function IdentityPanel(props: { name: string; campaign: string }) {
+function IdentityPanel(props: { name: string; campaign: string; onEditCampaigns: () => void }) {
   return (
     <div style={{ ...panel, alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', padding: '0.6rem 0.75rem' }}>
       <div style={{ minWidth: 0 }}>
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Character Name</p>
         <p style={{ fontWeight: 700, margin: '0.1rem 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.name}</p>
       </div>
-      <div style={{ minWidth: 0, textAlign: 'right' }}>
+      <button
+        type="button"
+        data-testid="sheet-campaign-field"
+        title="Add this character to campaigns, or remove it"
+        onClick={props.onEditCampaigns}
+        style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', font: 'inherit', minWidth: 0, padding: 0, textAlign: 'right' }}
+      >
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Campaign</p>
         <p style={{ fontWeight: 700, margin: '0.1rem 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.campaign}</p>
-      </div>
+      </button>
     </div>
   );
 }
@@ -2762,6 +2771,8 @@ export function CharacterSheet(props: {
   onOpen: () => void;
   /** Top-menu "Clone": called after a successful clone so the parent can refresh its saved-character list; the sheet stays open on the original (un-cloned) character. */
   onCloned: () => void;
+  /** SD-41 E3.5: an "Open <name>" button under Skills opens that campaign's sheet. */
+  onOpenCampaign: (campaignId: string) => void;
 }) {
   // SD-36 F4c: class labels, hit dice and skill ranks read the engine's served class roster;
   // re-render when it (or the announced fallback) is installed.
@@ -2893,6 +2904,17 @@ export function CharacterSheet(props: {
   const [customLoading, setCustomLoading] = useState(true);
   const [customError, setCustomError] = useState<string | null>(null);
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
+  // SD-41 E3.5: the character's campaigns (from the load response, then the dialog's save) and the
+  // campaign copies the latest write could not make. A refresh without them keeps what the sheet has.
+  const [campaignDialogOpen, setCampaignDialogOpen] = useState(false);
+  const [campaignMemberships, setCampaignMemberships] = useState<CampaignMembershipDto[]>(() => props.detail?.campaigns ?? []);
+  const [mirrorWarnings, setMirrorWarnings] = useState<string[]>(() => props.detail?.mirrorWarnings ?? []);
+  useEffect(() => {
+    if (props.detail?.campaigns) setCampaignMemberships(props.detail.campaigns);
+  }, [props.detail?.campaigns]);
+  useEffect(() => {
+    if (props.detail?.mirrorWarnings?.length) setMirrorWarnings(props.detail.mirrorWarnings);
+  }, [props.detail?.mirrorWarnings]);
   const [customSaving, setCustomSaving] = useState(false);
   const [customSaveError, setCustomSaveError] = useState<string | null>(null);
   useEffect(() => {
@@ -4504,6 +4526,21 @@ export function CharacterSheet(props: {
               onOpenDialog={() => setSkillDialogOpen(true)}
               custom={custom}
             />
+            {activeCampaigns(campaignMemberships).length > 0 ? (
+              <div className="no-print" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.5rem' }}>
+                {activeCampaigns(campaignMemberships).map((membership) => (
+                  <button
+                    key={membership.campaignId}
+                    type="button"
+                    data-testid={`sheet-campaign-open-${membership.campaignId}`}
+                    onClick={() => props.onOpenCampaign(membership.campaignId)}
+                    style={{ background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text)', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, padding: '0.3rem 0.7rem' }}
+                  >
+                    Open {membership.campaignName}
+                  </button>
+                ))}
+              </div>
+            ) : null}
           </div>
         );
       case 'abilities':
@@ -4682,7 +4719,19 @@ export function CharacterSheet(props: {
 
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
-          <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
+          <IdentityPanel name={props.row.displayLabel} campaign={campaignFieldText(campaignMemberships)} onEditCampaigns={() => setCampaignDialogOpen(true)} />
+          {mirrorWarnings.length > 0 ? (
+            <div role="alert" data-testid="sheet-mirror-warnings" className="no-print" style={{ ...panel, alignItems: 'flex-start', backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', color: 'var(--color-warn)', display: 'flex', fontSize: '0.8rem', gap: '0.75rem', justifyContent: 'space-between', padding: '0.5rem 0.75rem' }}>
+              <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                {mirrorWarnings.map((warning) => (
+                  <li key={warning}>Campaign copy failed: {warning}</li>
+                ))}
+              </ul>
+              <button type="button" aria-label="Dismiss" onClick={() => setMirrorWarnings([])} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 700 }}>
+                ×
+              </button>
+            </div>
+          ) : null}
           {/* Under the name, one row: the 2x2 beside the 1x4, which wraps under it when narrow. Placed by SHEET_LAYOUT. */}
           <div style={SHEET_REGION_STYLES.combatRow}>{renderSheetRegion('combatRow')}</div>
 
@@ -4725,6 +4774,18 @@ export function CharacterSheet(props: {
         </div>
       </div>
 
+      {campaignDialogOpen ? (
+        <CampaignMembershipDialog
+          characterId={props.row.characterId}
+          memberships={campaignMemberships}
+          onSaved={(memberships, warnings) => {
+            setCampaignMemberships(memberships);
+            setMirrorWarnings(warnings);
+            setCampaignDialogOpen(false);
+          }}
+          onClose={() => setCampaignDialogOpen(false)}
+        />
+      ) : null}
       {printOpen ? (
         <PrintDialog characterId={props.row.characterId} displayLabel={props.row.displayLabel} onClose={() => setPrintOpen(false)} />
       ) : null}

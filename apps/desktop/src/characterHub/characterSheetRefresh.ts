@@ -125,6 +125,8 @@ export function toCharacterMutationRefresh(
       sheetRulesUnavailableReason: null,
       // SD-36 F6b: the feat skill-bonus fold, same rule: absent until re-read, never stale.
       featSkillBonuses: NO_FEAT_SKILL_BONUSES,
+      // SD-41 E3.5: the campaign copies this write could not make, shown on the sheet.
+      mirrorWarnings: outcome.mirrorWarnings,
     },
   };
 }

@@ -30,7 +30,7 @@ function verifiesSavedOutcomeRefreshesDetailWithNewLevel() {
   const result = toCharacterMutationRefresh(
     {
       kind: 'Saved',
-      mirrorWarnings: [],
+      mirrorWarnings: ['/drive/Rise: not a directory'],
       summary,
       snapshot: SNAPSHOT,
       corpusDerived: {
@@ -70,6 +70,7 @@ function verifiesSavedOutcomeRefreshesDetailWithNewLevel() {
   assertEqual(result.detail.selectedFeats[0], 'feat:power_attack', 'refreshed detail carries the caller-supplied selectedFeats verbatim');
   assertEqual(result.detail.spellsSelected.length, 1, 'refreshed detail carries the caller-supplied spellsSelected verbatim');
   assertEqual(result.detail.spellsSelected[0].spellId, 'Light', 'refreshed detail carries the caller-supplied spellsSelected verbatim');
+  assertEqual(result.detail.mirrorWarnings?.join('|'), '/drive/Rise: not a directory', 'SD-41 E3.5: the refresh carries the write\'s campaign-copy warnings to the sheet');
 }
 
 function verifiesBlockedOutcomeSurfacesRealDiagnosticVerbatim() {
