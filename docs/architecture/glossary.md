@@ -3,7 +3,7 @@
 > Scope: every project-specific term a newcomer meets in this codebase or its docs, each with a
 > short definition and a link to the doc that treats it in full.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60`** (SD-37 E7.9a): both term sets kept; the Data root entry now names the per-system roots.
-> Last verified: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the SD-38 terms (the
+> Last verified: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the SD-40 terms (look, print layout, print section). Earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the SD-38 terms (the
 > `cpr.` row, printed rule, the Game system entry). Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the SD-37 terms (game system, held set,
 > data package, rules catalog, golden digests, Starfinder chassis).
 > Also verified: **2026-10-07 against branch `tranche-16-ui`** for the four terms it added (data root, installed state, release-notes pointer, version stamp). Earlier: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
@@ -214,6 +214,12 @@ set (`sf_defense::held`), so a total on the sheet is the number the package's ow
 dispatch status (READY, blocked, complete). Read alongside `workflow-instruction.md`, not a
 substitute for it.
 
+## Look (print)
+
+One Typst template for one kind of printed block, `apps/desktop/src-tauri/resources/print/looks/<look>.typ`, named by
+`print::model::Look`. A look formats the strings its block carries and never computes a number; `looks/table.typ`
+is the generic table look. See [desktop-app.md](./desktop-app.md) §"Print: blocks, looks, layouts".
+
 ## Mechanism (unresolved-reference)
 
 A letter naming WHY a converted reference did not resolve, so a remainder is named by cause, never
@@ -258,6 +264,19 @@ so far checks presence... a wrong computed number looks exactly like a right one
 (`docs/release/SD-33-computed-value-verification/README.md`) — the distinction this program built
 `denominator-gate`/`figure-provenance` and the derived-evaluator fixture seam to close. See
 [testing.md](./testing.md).
+
+## Print layout (page grid)
+
+A system's print layout file (`apps/desktop/src-tauri/src/print/layout/<system>.rs`): an ordered list of blocks, each
+with a place on a 12-column page grid. A new print style is a new list, not new code. See
+[desktop-app.md](./desktop-app.md) §"Print: blocks, looks, layouts".
+
+## Print section
+
+One of the print dialog's eight checkboxes (Primary, Abilities and Feats, Inventory, Spellbook, Bio, Progression, Math,
+Notes; `print::PrintSections`). Every section after Primary (page 1) opens a new page under its title. The ticks are
+remembered per character in `localStorage`. See
+[desktop-app.md](./desktop-app.md).
 
 ## Probe
 

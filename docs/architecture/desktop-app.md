@@ -10,7 +10,7 @@
 > resources and the frontend map; the E7.7 claims critic (2026-10-07) also re-derived the **Landing** paragraph of
 > §"Character flow" (rule-set chips, per-system catalog links). Sections not named here (the Mode machine, boundary layer,
 > persistence-facing commands, ui_probe, the rest of character flow) were last verified 2026-09-28 against `tranche/16` (`b021509e23`) and not re-derived this pass.
-> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the command inventory (118), the `boundary/` count (76), the Print path (Rust and Typst, no `window.print()`), the Settings tabs and the print-assets rule under "Corpus root resolution"; the rest of this file was last verified in the passes that follow. Earlier pass: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for bundled resources, the dependency list, `load_backend_health`, the update commands, the root-resolution chain and its pitfalls, the command inventory (84) and the Create-screen section; the rest of this file was last verified in the pass that follows. Earlier pass: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
+> Last verified: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the command inventory (116), the `boundary/` count (75), the Print path (layouts on a 12-column grid, 30 looks, eight section checkboxes), the ☰ menu on every screen, the Biography and Notes tabs, the mutation table (no hit-point tracking), the ui-smoke `spec.json` size and the localStorage list. Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the command inventory (118), the `boundary/` count (76), the Print path (Rust and Typst, no `window.print()`), the Settings tabs and the print-assets rule under "Corpus root resolution"; the rest of this file was last verified in the passes that follow. Earlier pass: **2026-10-07 against branch `tranche-16-ui` (base `develop` @ `157873a67e`)** for bundled resources, the dependency list, `load_backend_health`, the update commands, the root-resolution chain and its pitfalls, the command inventory (84) and the Create-screen section; the rest of this file was last verified in the pass that follows. Earlier pass: **2026-09-28 against `tranche/16`, HEAD `b021509e23`** (SD-36 Epic F7: Abilities panel and Weapons tab read the engine's own numbers, class-skill lists hold only skills, prestige/Level-Up requirement labels, Expert/Summoner/Psion default-pick markers — no command added or removed). Earlier pass: **2026-09-27 against `tranche/16`, HEAD `08f8cb5ace`** (SD-36 Epic F6: class facts from the engine, HP source rule, Level Up blockers). Earlier pass: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -31,14 +31,16 @@ re-derives the same corrections independently:
   (`preview_level_up`) and grant lookup.
 - **The sheet's `☰ Menu` has no bare no-ops left.** `Open`, `Recompute`, `Clone`, `Export`, and
   `Print` are all wired to real handlers (`CharacterSheet.tsx`'s `menuItems`).
+- **Options live in a `☰` menu on every screen** (`layout/AppMenu.tsx`): `withOptions` appends an
+  `Options` entry, last, that opens the Settings modal; a screen that draws its own `☰` menu in its
+  top bar claims the menu (`claimMenu`) and App hides its own. There is no ⚙ button.
 - **`StubScreen.tsx` still exists as a component but nothing imports it** (confirmed by grep across
   `apps/desktop/src`) — it is dead code today, not a live placeholder for any screen.
-- **The command count is 118** — re-derived by parsing `generate_handler![...]`
+- **The command count is 116** — re-derived by parsing `generate_handler![...]`
   programmatically (`python3` script counting non-empty comma-separated entries after stripping `//` comments, run on `git show <rev>:apps/desktop/src-tauri/src/main.rs`); see
-  the inventory below. The same parse gives 103 on `origin/develop` @ `2b14020bc7` and 118 on `tranche-19` (SD-39's fifteen commands: Market, held equipment,
-  the progression ledger, `.pcg` import and the two print sinks; 103 + 15 = 118).
-- **`apps/desktop/src/boundary/` holds 76 non-test files today** (70 on `origin/develop`, 76 on `tranche-19`: SD-39 added `importPcg`, `listHeldEquipment`,
-  `listMarket`, `listProgressionLedger`, `saveSheetPdf` and `systemMarket`) — `git ls-tree --name-only HEAD apps/desktop/src/boundary/ | grep '\.ts$' | grep -v '\.test\.ts$' | awk 'END{print NR}'`.
+  the inventory below. The same parse gives 118 on SD-39's tip `cd873a6d0d`; the two hit-point tracking commands
+  (`adjust_character_hp`, `load_character_durability`) are gone (118 − 2 = 116).
+- **`apps/desktop/src/boundary/` holds 75 non-test files today** (76 at `cd873a6d0d`; `characterDurability.ts` is gone) — `git ls-tree --name-only HEAD apps/desktop/src/boundary/ | grep '\.ts$' | grep -v '\.test\.ts$' | awk 'END{print NR}'`.
 
 ## Build shape
 
@@ -130,7 +132,7 @@ export function formatError(cause: unknown): string {
 
 ## The complete Tauri command inventory
 
-**118 commands are registered** (reachable via `invoke()`; the same parse gives 103 on `origin/develop` @ `2b14020bc7`; SD-39 added 15), re-derived by parsing every entry of
+**116 commands are registered** (reachable via `invoke()`; the same parse gives 118 at `cd873a6d0d`, before the two hit-point tracking commands were removed), re-derived by parsing every entry of
 `tauri::generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` with comments stripped
 (`python3` one-liner splitting on `,` after a regex-stripped comment pass — a plain `grep -c ','`
 overcounts because several list entries carry inline `//` explanatory comments of their own with
@@ -147,7 +149,7 @@ Grouped by the Rust file that defines each command:
 | `main.rs` (inline) | `load_pilot_shell_snapshot`, `load_authoring_workbench_snapshot`, `load_backend_health` | Legacy scaffold snapshot; GE-08 authoring-workbench preview; crate-version + git-SHA IPC-liveness probe | superseded scaffold path; tester workbench "Backend" card |
 | `browser_handoff.rs` | `handoff_defect_report_to_browser` | Builds + validates a prefilled GitHub "new issue" URL and opens it via `tauri-plugin-opener` | feedback composers ([update-and-feedback.md](./update-and-feedback.md)) |
 | `update/transaction.rs` (+ `update/seed.rs`, `update/deb_install.rs`) | `is_install_eligible`, `perform_install`, `perform_restore_previous`, `verify_relaunch_artifact` | Self-update eligibility/install/rollback/verify; `seed.rs` records the running build in `installed-state.json` at startup; `perform_install` is real for `.deb` (download, verify, `pkexec apt-get`), AppImage (staged atomic replace) and Windows (NSIS installer run after Codex exits) installs, in `update/{deb,appimage,windows}_install.rs` over the shared `update/download.rs` | `App.tsx`'s `UpdateSection` ([update-and-feedback.md](./update-and-feedback.md)) |
-| `character_hub.rs` | `create_character`, `clone_character`, `list_saved_characters`, `load_saved_character`, `level_up_character`, `preview_level_up`, `add_equipment_selection`, `attach_equipment_modifier`, `purchase_equipment`, `add_spell_selection`, `record_and_prepare_spell_selection`, `add_feat_selection`, `list_feats_for_character`, `remove_feat_selection`, `set_equipment_active_state`, `add_trait_selection`, `remove_trait_selection`, `remove_spell_selection`, `remove_equipment_selection`, `set_skill_allocations`, `save_character_portrait`, `load_character_portrait`, `delete_character_portrait`, `export_character_json`, `update_character_bio`, `load_character_bio`, `load_character_money`, `adjust_character_money`, `load_character_durability`, `adjust_character_hp`, `delete_character`, `export_character`, `import_character`, `list_race_creation_roster`, `list_class_creation_roster`, `list_level_up_class_options` | The Character Hub's create/load/mutate/persist surface — by far the largest file in the crate (11,544 lines, `wc -l`, 2026-09-26); see "Character flow" below | `apps/desktop/src/characterHub/` |
+| `character_hub.rs` | `create_character`, `clone_character`, `list_saved_characters`, `load_saved_character`, `level_up_character`, `preview_level_up`, `add_equipment_selection`, `attach_equipment_modifier`, `purchase_equipment`, `add_spell_selection`, `record_and_prepare_spell_selection`, `add_feat_selection`, `list_feats_for_character`, `remove_feat_selection`, `set_equipment_active_state`, `add_trait_selection`, `remove_trait_selection`, `remove_spell_selection`, `remove_equipment_selection`, `set_skill_allocations`, `save_character_portrait`, `load_character_portrait`, `delete_character_portrait`, `export_character_json`, `update_character_bio`, `load_character_bio`, `load_character_money`, `adjust_character_money`, `delete_character`, `export_character`, `import_character`, `list_race_creation_roster`, `list_class_creation_roster`, `list_level_up_class_options` | The Character Hub's create/load/mutate/persist surface — by far the largest file in the crate (11,544 lines, `wc -l`, 2026-09-26); see "Character flow" below | `apps/desktop/src/characterHub/` |
 | `character_hub.rs` (Create-screen additions) | `list_feats_for_draft`, `draft_spell_options`, `starting_wealth_for_class`, `load_character_hit_points` | Ask the backend about a character that is **not saved yet**: the feat catalog with the draft's prerequisite verdicts; spells-per-day rows plus the race's spell-like abilities; the class's maximum starting money (or the reason there is none); the hit point results saved with a character | `CreateCharacterForm.tsx` Manage dialogs, `CharacterSheet.tsx` |
 | `character_custom.rs` | `load_character_custom`, `save_character_custom` | The GM's grants and house-rule records (`custom.json`); ability grants are applied to the saved scores | `CustomDialog.tsx`, `CustomTab.tsx`, `CreateCharacterForm.tsx` |
 | `characterHub/appendToCharacter.rs` | `append_to_character` | Batch, corpus-validated equipment append, via `RuleSystemAdapter` | none — no frontend caller (see "Rule-system adapter seam" below) |
@@ -166,7 +168,7 @@ Grouped by the Rust file that defines each command:
 | `equipment_catalog.rs` (Market) | `list_market` | One Market category with the `+N` each row can be bought at and its price; which rows exist and what they cost are the backend's answer | `MarketDialog.tsx` via `boundary/listMarket.ts` |
 | `sf_adapter.rs`, `sf_catalog.rs` (Market) | `starfinder_market_state`, `list_starfinder_market`, `buy_starfinder_market`, `sell_starfinder_market` | The Starfinder Market over the system's own catalog and currency | `SystemMarketDialog.tsx` via `boundary/systemMarket.ts` |
 | `cpr_adapter.rs`, `cpr_catalog.rs` (Market) | `cyberpunk_market_state`, `list_cyberpunk_market`, `buy_cyberpunk_market`, `sell_cyberpunk_market` | The Cyberpunk RED Market over the system's own catalog and currency | `SystemMarketDialog.tsx` via `boundary/systemMarket.ts` |
-| `print/mod.rs` | `save_sheet_pdf`, `print_sheet_pdf` | The sheet's PDF: the character's `LoadSavedCharacterResponse` goes through the system's layout (`print/layout/`: `pf1e.rs`, `sf1e.rs`, `cpr.rs`) into a `SheetDocument` (`print/model.rs`, blocks in `print/blocks/`), which Typst used as a library typesets with the bundled Liberation Sans faces only (`print/typst.rs`). `save_sheet_pdf` writes where the save-as dialog said and opens it; `print_sheet_pdf` writes `<temp>/codex-print/<characterId>.pdf` and opens that in the system PDF viewer. Both open through `tauri-plugin-opener`; the print path computes no number | `PrintDialog.tsx` via `boundary/saveSheetPdf.ts` |
+| `print/mod.rs` | `save_sheet_pdf`, `print_sheet_pdf` | The sheet's PDF for a `PrintRequest` (paper, the eight `PrintSections` boxes, the campaigns the frontend's store lists the character in): the character's `LoadSavedCharacterResponse` goes through the system's layout (`print/layout/`: `pf1e.rs`, `sf1e.rs`, `cpr.rs`) into a `SheetDocument` (`print/model.rs`, blocks in `print/blocks/`), which Typst used as a library typesets with the bundled Liberation Sans faces only (`print/typst.rs`). See §"Print: blocks, looks, layouts". `save_sheet_pdf` writes where the save-as dialog said and opens it; `print_sheet_pdf` writes `<temp>/codex-print/<characterId>.pdf` and opens that in the system PDF viewer. Both open through `tauri-plugin-opener`; the print path computes no number | `PrintDialog.tsx` via `boundary/saveSheetPdf.ts` |
 | `campaign_drive.rs` | `write_campaign_drive_artifacts`, `drive_list_campaigns`, `drive_load_campaign`, `drive_save_campaign`, `drive_delete_campaign` | `CampaignStore` wrapper over a local "Drive folder" path | only `write_campaign_drive_artifacts` is called, as a one-way mirror (see [persistence.md](./persistence.md)) |
 | `equipment_catalog.rs` | `list_equipment_catalog`, `list_equipment` | The equipment table store of **every ingested PF1 book**, not CRB alone (module's own header doc comment) — **8,119** entries test-pinned (`:1237`) across **29** distinct books; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `EquipmentCatalogScreen.tsx`; `CharacterSheet.tsx`'s item pickers |
 | `spell_catalog.rs` | `list_spell_catalog`, `list_spells` | **2,481** entries test-pinned (`:945`) across **26** distinct books, exhaustive; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `SpellCatalogScreen.tsx`; `CharacterSheet.tsx`'s spell picker |
@@ -307,7 +309,7 @@ directory (falling back to a source-tree path for tests), and everything else an
 - `tests/no_baked_manifest_dir_in_production.rs` (root crate) fails if production code, before a file's first `#[cfg(test)]`, reads `CARGO_MANIFEST_DIR` outside `support/paths.rs`. It does not see a baked path built another way or a production read placed after a file's first `#[cfg(test)]` module.
 - `apps/desktop/src-tauri/tests/packaged_resources.rs` reads `tauri.conf.json`, lays out **only** what `bundle.resources` lists (symlinks, nothing else) as the resource root, installs it with `set_data_root`, asserts every path the engine joins onto its root exists there (`FIXTURE_RELATIVE_PATH`, `MIX_PANEL_RELATIVE_PATH`, `RECORD_VARS_PATH`, `data/sheet_rules`, `data/class_feature_grants`, `data/corpus`, `data/cyberpunk-red/corpus`), and builds the class roster (more than the 31-class fallback), the sweep fixture, the mix panel and the sheet-rule package from it. It is one `#[test]` in its own process because the root is process-wide.
 
-A new file the engine reads at runtime therefore needs three things at once: the read through `repo_root()`, a `bundle.resources` entry in `tauri.conf.json`, and an assertion in `packaged_resources.rs`. The print fonts (`resources/fonts/*.ttf`) and Typst templates (`resources/print/*.typ`) are the exception: `print/typst.rs` compiles them into the binary (`include_bytes!`, `include_str!`), so they have no `bundle.resources` entry, and `packaged_resources.rs` asserts that every face and template on disk is compiled in. The `pcg_import` sidecar is bundled as `bundle.externalBin` through `tauri.sidecar.json` (see [pcg-import.md](./pcg-import.md)).
+A new file the engine reads at runtime therefore needs three things at once: the read through `repo_root()`, a `bundle.resources` entry in `tauri.conf.json`, and an assertion in `packaged_resources.rs`. The print fonts (`resources/fonts/*.ttf`) and Typst templates (`resources/print/*.typ` and the looks in `resources/print/looks/*.typ`) are the exception: `print/typst.rs` compiles them into the binary (`include_bytes!`, `include_str!`), so they have no `bundle.resources` entry, and `packaged_resources.rs` asserts that every face and template on disk is compiled in. The `pcg_import` sidecar is bundled as `bundle.externalBin` through `tauri.sidecar.json` (see [pcg-import.md](./pcg-import.md)).
 
 ## The corpus-bundle build step
 
@@ -366,7 +368,7 @@ flowchart LR
 *The ui-smoke harness closes the loop entirely through files, never through its own IPC — one JSON
 probe file and one JSON command file, both write-temp-then-rename for atomicity.*
 
-`apps/desktop/scripts/ui-smoke/spec.json` (**79,319 bytes**, `wc -c`, 76 rows, 2026-09-26) declares one row per scenario:
+`apps/desktop/scripts/ui-smoke/spec.json` (**321,475 bytes**, `wc -c`; 182 rows, `python3 -c "import json;print(len(json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']))"`; 2026-11-14) declares one row per scenario:
 `{id, screen, setup?: [rowIds], steps: [{op, target?, text?, key?, ticks?, ms?}], marker, expect:
 [string], forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?:
 reason, notes}`. `setup` is flat (a row's `setup` list runs only those rows' own `steps`, never their
@@ -377,6 +379,35 @@ desktop runtime'`, `'undefined'`, `'NaN'`, `'[object Object]'`), calls `resetToL
 row's own setup/steps (clicking `RESET_CLICK_NAMES` in order against whatever is on screen), and
 writes results through `lib/resultsSkeleton.mjs`'s not-run → pass/fail/manual state machine so a
 truncated run reports exactly which rows never ran, rather than silently omitting them.
+
+## Print: blocks, looks, layouts
+
+The printed sheet has three layers (`apps/desktop/src-tauri/src/print/`); the print path computes no number.
+
+- **Data blocks** (`print/blocks/*.rs`) build `SheetBlock`s (heading, rows of label, values and notes) from what the
+  Character Sheet reads: the engine's explanation rows and sheet lines, the bio, custom entries, held equipment and the
+  progression ledger. Each block carries a vocabulary id that matches the app's UI block names
+  (`print/golden/block_vocabulary.json`).
+- **Looks** (`resources/print/looks/*.typ`, 30 files: `ls apps/desktop/src-tauri/resources/print/looks/*.typ | awk 'END{print NR}'`)
+  are one Typst template per block kind, named by `print::model::Look` (`Look::ALL` has 30 entries). A look formats the
+  strings it is given and never adds or derives. `resources/print/frame.typ` sets up the paper, the font, the title and the footer, then prints the blocks in order; `resources/print/blocks.typ` dispatches each block
+  to the look it names. `looks/table.typ` is the generic table look, which Starfinder's and Cyberpunk RED's blocks print in.
+  `print/typst.rs` compiles every look into the binary (`include_str!`).
+- **Layouts** (`print/layout/pf1e.rs`, `sf1e.rs`, `cpr.rs`) are ordered lists of `Placed` blocks. Each has a `Place` on a
+  12-column grid (`model::GRID_COLUMNS`): `at(x, span)` starts a row, `under(x, span)` stacks in the same cell, and
+  `spanning_rows(n)` makes a cell taller. `SheetDocument::columns()` is 1 when every block is full width (Starfinder,
+  Cyberpunk RED) and 12 otherwise. `typeset` refuses a place past the grid or out of row order (`check_places`).
+- **Sections.** Pathfinder's layout is eight sections in box order (`pf1e::SECTIONS`): Primary (page 1: portrait and
+  Languages, Character Name and Campaign, Armor Class, Speed, then a left column of the square block with Hit Points,
+  Initiative, Encumbrance and Conditions, followed by Weapons, Attack, Saving Throws, Conditional Bonuses and Resistances,
+  and a right column of Abilities over Skills), Abilities and Feats, Inventory, Spellbook, Bio, Progression, Math and Notes.
+  Every section after Primary opens a new page under a section-title block. A page-1 list that does not fit shrinks
+  to the 8 pt floor, then continues at the top of page 2 under "<heading> (continued)". `PrintRequest.sections` names
+  the ticked boxes. With none sent, the first-time ticks print (`PrintSections::FIRST_TIME`: Primary, Abilities and
+  Feats, Inventory).
+
+Adding a print style means adding a list to a layout file, not code in a look. See [testing.md](./testing.md) §"Print tests" for
+the golden, block and proof suites.
 
 ## Rule-system adapter seam (hub-of-hubs)
 
@@ -524,7 +555,7 @@ module): `release/` holds `buildVersionTriple.test.ts` and `releaseClosureCheckl
 [release-pipeline.md](./release-pipeline.md).
 
 **`settings/`** — the settings modal and its panels. `SettingsModal.tsx` defines `SettingsTab =
-'appearance' | 'print' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer'`. `PrintPanel.tsx` / `printPaper.ts` hold the paper every printed sheet uses (A4 until the player picks US Letter, `localStorage`); `featPickerPreference.ts` holds the feat picker's "Hide feats I don't qualify for" setting. `AppearancePanel.tsx`
+'appearance' | 'print' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer'`. `PrintPanel.tsx` / `printPaper.ts` hold the paper every printed sheet uses (A4 until the player picks US Letter, `localStorage`); `printSections.ts` holds the print dialog's eight ticks per character (`localStorage` `codex.print.sections.<characterId>`; first time: Primary, Abilities and Feats, Inventory); `featPickerPreference.ts` holds the feat picker's "Hide feats I don't qualify for" setting. `AppearancePanel.tsx`
 / `themeMode.ts` / `communityTheme.ts` / `ThemeBrowserModal.tsx` / `obsidianThemeCatalog.ts` handle
 theme selection, localStorage-backed. `GoogleDrivePanel.tsx` / `googleDrive.ts` manage a
 locally-stored path config — there is no real Google OAuth or Drive API integration; "Drive folder"
@@ -620,7 +651,7 @@ The window opens maximized (`tauri.conf.json`) and the Create screen uses the wh
   proficiency, spells outside the class list, ignore slot limits, feat budget, alignment
   restrictions, encumbrance), each flag read by the command that enforces the rule it names; what a
   flag let in is recorded in `ledger.json`'s `admitted` list and tagged on the sheet and the print.
-- **Print** (`PrintDialog.tsx`, `boundary/saveSheetPdf.ts`, `print/`): the sheet's "Print" opens a dialog with the paper (A4 or US Letter, starting from Settings, Print) and three stacking option boxes (spellbook, show the math, bio and campaign notes). **Save PDF** asks where with the native save-as dialog; **Print** has the backend write the same PDF to a temp file and open it in the system PDF viewer. Rust makes the PDF (`save_sheet_pdf`, `print_sheet_pdf`); there is no `@media print` path and no `window.print()`.
+- **Print** (`PrintDialog.tsx`, `boundary/saveSheetPdf.ts`, `print/`): the sheet's "Print" opens a dialog with the paper (A4 or US Letter, starting from Settings, Print) and eight section checkboxes in box order (Primary, Abilities and Feats, Inventory, Spellbook, Bio, Progression, Math, Notes), remembered per character by `settings/printSections.ts`; Starfinder and Cyberpunk RED read Primary, Spellbook, Bio and Math. The dialog sends the character's campaigns with every print. **Save PDF** asks where with the native save-as dialog; **Print** has the backend write the same PDF to a temp file and open it in the system PDF viewer. Rust makes the PDF (`save_sheet_pdf`, `print_sheet_pdf`); there is no `@media print` path and no `window.print()`.
 
 Class facts come from the engine, not desktop tables (SD-36 F6a/F6b,
 `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f6/`): `list_class_facts`
@@ -673,9 +704,8 @@ modifiers) and `CorpusDerivedDto` (spell-school/equipment reachability). Per-tab
 | Add/remove a character trait | `add_trait_selection` / `remove_trait_selection` | yes |
 | Skill allocation dialog accept | `set_skill_allocations` (wholesale replace) | yes |
 | Level-up dialog accept | `level_up_character` (previewed first via `preview_level_up`) | yes |
-| Bio panel (alignment, deity, sex, age, height, weight, hair, eyes) | `update_character_bio` / `load_character_bio` | yes — `bio.json` sidecar (see [persistence.md](./persistence.md)) |
+| Bio panel (alignment, deity, sex, age, height, weight, hair, eyes), Languages, and the Biography and Notes tabs (one text area each, saved on blur) | `update_character_bio` / `load_character_bio` | yes — `bio.json` sidecar (see [persistence.md](./persistence.md)) |
 | Money adjustments | `load_character_money` / `adjust_character_money` | yes — `money.json` sidecar |
-| HP / nonlethal damage tracking | `load_character_durability` / `adjust_character_hp` | yes — `hp.json` sidecar |
 | Portrait upload/view/delete | `save_character_portrait` / `load_character_portrait` / `delete_character_portrait` | yes — `portrait.png` |
 | `☰ Menu` → Open / Recompute / Clone / Export / Print | real handlers, no bare no-ops | Recompute/Clone/Export persist or read; Print opens `PrintDialog.tsx`, whose Save PDF and Print call `save_sheet_pdf` and `print_sheet_pdf` |
 
@@ -705,8 +735,11 @@ mode unions. **localStorage usage** (grepped exhaustively across `apps/desktop/s
 - `settings/communityTheme.ts` — installed community theme CSS and the active-theme id.
 - `settings/googleDrive.ts` — the locally-configured Drive-folder-path config (no OAuth token).
 - `settings/themeMode.ts` — light/dark/system theme mode.
+- `settings/printPaper.ts`, `settings/printSections.ts` — the print paper and the print dialog's ticks per character.
+- `settings/featPickerPreference.ts` — the feat picker's "Hide feats I don't qualify for".
+- `dmToolkit/dmRecordModel.ts` — DM Toolkit records keyed per campaign, mirroring `campaignModel.ts`.
 
-Everything else that looks persistent (bio, money, HP, equipment/spell/feat/trait selections, skill
+Everything else that looks persistent (bio, money, equipment/spell/feat/trait selections, skill
 allocation, level-up) is real disk state reached through the mutation commands table above, not
 localStorage — see [persistence.md](./persistence.md).
 
