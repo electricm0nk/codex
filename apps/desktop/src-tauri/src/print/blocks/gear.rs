@@ -54,6 +54,11 @@ fn item_name(sources: &SheetSources, item_id: &str, record_key: Option<&str>) ->
         .unwrap_or_else(|| item_id.to_owned())
 }
 
+/// A carried weapon's line says so (SD-41 `decisions.md §9, §33`: never an unmarked carried weapon).
+fn marked(name: String, weapon: &WeaponDamageDto) -> String {
+    if weapon.in_hand { name } else { format!("{name} (carried)") }
+}
+
 fn critical(weapon: &WeaponDamageDto) -> String {
     let range = weapon.critical_threat_range.map(|[low, high]| if low == high { low.to_string() } else { format!("{low}-{high}") });
     let multiplier = weapon.critical_multiplier.map(|m| format!("x{m}"));
@@ -85,7 +90,7 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
         let notes = weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus)));
         let [attack, damage] = [0, 1].map(|index| weapon_cell(found[index].0, found[index].1));
         rows.push(
-            SheetRow::new(name, [attack, damage, critical(weapon), range])
+            SheetRow::new(marked(name, weapon), [attack, damage, critical(weapon), range])
                 .with_notes(notes)
                 .derived(found.iter().filter_map(|(_, row)| row.map(derivation)).collect()),
         );
@@ -121,7 +126,7 @@ pub(super) fn weapons_breakdown(sources: &SheetSources) -> SheetBlock {
         let notes = weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus)));
         rows.push(
             SheetRow::new(
-                name,
+                marked(name, weapon),
                 [
                     cell("combat.weapon_attack_bonus."),
                     dice,

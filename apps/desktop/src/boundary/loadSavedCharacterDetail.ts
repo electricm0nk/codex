@@ -368,6 +368,18 @@ export interface WeaponDamageDto {
   rangeIncrement?: number | null;
   /** Constant feat damage bonuses; gathered per character, not per weapon. */
   featEffects: WeaponFeatEffectDto[];
+  /** False for a carried (stowed) weapon: its row is the engine's as if wielded (SD-41 `decisions.md §9`). */
+  inHand: boolean;
+  /** The Unarmed strike row every character ends with (`decisions.md §22`). */
+  unarmed: boolean;
+  /** The strike deals nonlethal damage (Unarmed without Improved Unarmed Strike). */
+  nonlethal: boolean;
+  /** The weapon fires ammunition (`decisions.md §23`). */
+  usesAmmunition: boolean;
+  /** Pieces of matching ammunition carried, as the engine counts them; 0 when it uses none. */
+  ammunitionCarried: number;
+  /** The ammunition family the weapon's record names (`Arrow`); absent when it names none. */
+  ammunitionFamily?: string;
 }
 
 export interface ChosenFeatTargetsDto {

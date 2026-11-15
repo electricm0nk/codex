@@ -789,6 +789,9 @@ pub struct WeaponDamageBreakdown {
     pub uses_ammunition: bool,
     /// Pieces of carried ammunition this weapon fires ([`ammunition_carried`]); 0 when it uses none.
     pub ammunition_carried: u32,
+    /// The ammunition family the weapon's record names (`Arrow`), for the tab's "Arrow: 20 carried";
+    /// `None` for a weapon that names none or uses no ammunition.
+    pub ammunition_family: Option<String>,
 }
 
 /// The corpus record every character's Unarmed row is built from (Core Rulebook
@@ -894,6 +897,7 @@ fn unarmed_strike_row(
         nonlethal: !holds_improved_unarmed_strike(character),
         uses_ammunition: false,
         ammunition_carried: 0,
+        ammunition_family: None,
     })
 }
 
@@ -1002,6 +1006,7 @@ fn weapon_rows(
                 uses_ammunition: ammunition_user.is_some(),
                 ammunition_carried: ammunition_user
                     .map_or(0, |weapon| ammunition_carried(character, corpus, weapon.ammunition_family(), quantities)),
+                ammunition_family: ammunition_user.and_then(|weapon| weapon.ammunition_family()).map(str::to_owned),
             })
         })
         .collect()

@@ -3,8 +3,10 @@ import type { CorpusDerivedDto } from '../boundary/loadCreateCharacter';
 
 /**
  * Projects the engine's per-weapon damage breakdown
- * (`damage_total::resolve_weapon_damage_breakdown`) into the Weapons tab's
- * rows.
+ * (`damage_total::resolve_weapon_damage_breakdown_with_carried`) into the
+ * Weapons tab's rows: in hand, then carried, then the Unarmed row last
+ * (SD-41 `decisions.md §9, §22`), and 20 ammunition boxes under each weapon
+ * that fires ammunition (`decisions.md §23`).
  *
  * Before this model the tab rendered its column headers and then
  * unconditionally printed "No weapons added yet." — there was no
@@ -27,6 +29,13 @@ import type { CorpusDerivedDto } from '../boundary/loadCreateCharacter';
 /** What every column shows when the engine grounded no value for it. */
 export const ABSENT = '—';
 
+/** Tick boxes under a weapon that fires ammunition: a write-in, not a count (`decisions.md §23`). */
+export const AMMUNITION_BOXES = 20;
+
+export type WeaponGroup = 'inHand' | 'carried' | 'unarmed';
+
+const GROUP_ORDER: readonly WeaponGroup[] = ['inHand', 'carried', 'unarmed'];
+
 export interface WeaponRow {
   /** Stable row key — the character's own `EquipmentSelection.item_id`. */
   itemId: string;
@@ -48,6 +57,12 @@ export interface WeaponRow {
   wield: string;
   /** e.g. `'Weapon Specialization +2'`, one entry per feat effect. */
   featEffects: string[];
+  /** In hand, carried (stowed) or the Unarmed row; the surface lists them in that order. */
+  group: WeaponGroup;
+  /** `'(carried)'`, `'(nonlethal)'`, or `null`: the words shown beside the name. */
+  mark: string | null;
+  /** The ammunition boxes and the engine's count, or `null` for a weapon that fires none. */
+  ammunition: { boxes: number; carried: string | null } | null;
 }
 
 export interface WeaponsTabSurface {
@@ -104,11 +119,33 @@ function displayName(weapon: WeaponDamageDto, corpusDerived: CorpusDerivedDto | 
   return resolved?.equipmentRecordName ?? weapon.weaponRecordKey ?? weapon.weaponItemId;
 }
 
+function groupOf(weapon: WeaponDamageDto): WeaponGroup {
+  return weapon.unarmed ? 'unarmed' : weapon.inHand ? 'inHand' : 'carried';
+}
+
+function markOf(weapon: WeaponDamageDto): string | null {
+  if (!weapon.inHand) {
+    return '(carried)';
+  }
+  return weapon.nonlethal ? '(nonlethal)' : null;
+}
+
+/** `'Arrow: 20 carried'` when the engine counts any; the record's own family word, never a guess. */
+function ammunitionOf(weapon: WeaponDamageDto): WeaponRow['ammunition'] {
+  if (!weapon.usesAmmunition) {
+    return null;
+  }
+  const carried =
+    weapon.ammunitionCarried > 0 ? `${weapon.ammunitionFamily ?? 'Ammunition'}: ${weapon.ammunitionCarried} carried` : null;
+  return { boxes: AMMUNITION_BOXES, carried };
+}
+
 export function buildWeaponsTabSurface(
   weaponDamage: readonly WeaponDamageDto[],
   corpusDerived: CorpusDerivedDto | null
 ): WeaponsTabSurface {
-  const rows = weaponDamage.map((weapon) => ({
+  const ordered = GROUP_ORDER.flatMap((group) => weaponDamage.filter((weapon) => groupOf(weapon) === group));
+  const rows = ordered.map((weapon) => ({
     itemId: weapon.weaponItemId,
     name: displayName(weapon, corpusDerived),
     baseDice:
@@ -121,6 +158,9 @@ export function buildWeaponsTabSurface(
     featEffects: weapon.featEffects.map(
       (effect) => `${effect.featKey} ${effect.damageBonus >= 0 ? '+' : ''}${effect.damageBonus}`
     ),
+    group: groupOf(weapon),
+    mark: markOf(weapon),
+    ammunition: ammunitionOf(weapon),
   }));
 
   return { rows, isEmpty: rows.length === 0 };

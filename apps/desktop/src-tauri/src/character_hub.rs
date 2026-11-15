@@ -29,7 +29,7 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
-use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
+use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown_with_carried, WeaponDamageBreakdown};
 use codex::rules_core::feat_effects;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
@@ -634,9 +634,10 @@ pub struct LoadSavedCharacterResponse {
     /// did ground, and hiding them would flatten `Blocked` into "nothing
     /// computed."
     pub explanations: Vec<ExplanationDto>,
-    /// One entry per `EquippedActive` item the engine identifies as a
-    /// weapon (`damage_total::resolve_weapon_damage_breakdown`), carrying
-    /// that weapon's corpus-cited damage facets.
+    /// One entry per `EquippedActive` weapon, then per carried
+    /// (`SelectedInactive`, `inHand: false`) weapon, then the Unarmed row
+    /// (`damage_total::resolve_weapon_damage_breakdown_with_carried`),
+    /// carrying each weapon's corpus-cited damage facets.
     ///
     /// Each facet stays its own field. The one summed figure, the damage
     /// the sheet prints (`1d8+4`), is the engine's
@@ -1134,6 +1135,19 @@ pub struct WeaponDamageDto {
     /// per character, not per weapon — this bounded slice does not model
     /// per-weapon feat targeting.
     pub feat_effects: Vec<WeaponFeatEffectDto>,
+    /// `false` for a carried (stowed) weapon: the row is the engine's as if wielded, marked carried.
+    pub in_hand: bool,
+    /// The Unarmed strike row every character ends with (`decisions.md §22`).
+    pub unarmed: bool,
+    /// The strike deals nonlethal damage (Unarmed without Improved Unarmed Strike).
+    pub nonlethal: bool,
+    /// The weapon fires ammunition (`decisions.md §23`).
+    pub uses_ammunition: bool,
+    /// Pieces of matching ammunition carried; 0 when the weapon uses none.
+    pub ammunition_carried: u32,
+    /// The ammunition family the record names (`Arrow`); left out when it names none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ammunition_family: Option<String>,
 }
 
 /// Projects the engine's per-weapon damage breakdown onto the wire.
@@ -1197,6 +1211,12 @@ pub(crate) fn map_weapon_damage_dto(
                     damage_bonus: effect.damage_bonus,
                 })
                 .collect(),
+            in_hand: breakdown.in_hand,
+            unarmed: breakdown.unarmed,
+            nonlethal: breakdown.nonlethal,
+            uses_ammunition: breakdown.uses_ammunition,
+            ammunition_carried: breakdown.ammunition_carried,
+            ammunition_family: breakdown.ammunition_family.clone(),
         })
         .collect()
 }
@@ -2963,11 +2983,16 @@ pub(crate) fn load_saved_character_at_root(
     explanations.extend(sheet_skill_trait_modifier_rows(&sheet_input));
     explanations.extend(feat_budget_rows(&sheet_input, &corpus_receipt.base));
     budget_from_the_saved_intelligence(&mut explanations, &saved_input, &sheet_input);
-    let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
+    // In hand, then carried, then the Unarmed row (`decisions.md §9, §22`); its attack rows beside.
+    let unarmed_rows = codex::rules_core::pilot_compute::unarmed_strike_combat_rows(&corpus_receipt.base, &sheet_input);
+    let unarmed_rows: Vec<_> = unarmed_rows.into_iter().filter(|row| !explanations.iter().any(|held| held.id == row.id)).collect();
+    explanations.extend(map_explanations_dto(&unarmed_rows));
+    let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown_with_carried(
         &sheet_input,
         corpus_fixture_bundle(),
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
+        &quantities,
     ));
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
         sheet_lines_for(&sheet_input, &corpus_receipt.base);
@@ -3256,7 +3281,7 @@ fn land_speed_row(race_id: &str, worn_feet: Option<i16>, worn_percent: Option<i1
     Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
 }
 
-/// SD-40 E2.17: `speed.swim` and `speed.fly` (feet), each only when a racial trait the character
+/// SD-40 E2.17: `speed.swim` and `speed.fly` (and SD-41's `speed.climb`, `decisions.md §35`) (feet), each only when a racial trait the character
 /// holds states that mode (its `MOVE:` token; a selected alternate replaces it as it replaces the
 /// land speed's trait), plus the feat increase the engine already states for it
 /// (`feat.arg_standalone.aquatic_ancestry_swim_speed`, `…stretched_wings_fly_speed`). Returns the
@@ -3269,14 +3294,15 @@ fn push_swim_and_fly_rows(input: &CharacterInput, explanations: &mut Vec<Explana
     let race = corpus.resolve(race_key, &alternates.iter().map(String::as_str).collect::<Vec<_>>())?;
     let feat_row = |id: &str| explanations.iter().find(|row| row.id == id).map(|row| (row.id.clone(), row.value));
     let modes = [
-        ("swim", race.declared_mode_speed(|m| m.swim_ft), "feat.arg_standalone.aquatic_ancestry_swim_speed"),
-        ("fly", race.declared_mode_speed(|m| m.fly_ft), "feat.arg_standalone.stretched_wings_fly_speed"),
+        ("swim", race.declared_mode_speed(|m| m.swim_ft), Some("feat.arg_standalone.aquatic_ancestry_swim_speed")),
+        ("fly", race.declared_mode_speed(|m| m.fly_ft), Some("feat.arg_standalone.stretched_wings_fly_speed")),
+        ("climb", race.declared_mode_speed(|m| m.climb_ft), None),
     ];
     let mut maneuverability = None;
     let mut rows = Vec::new();
     for (mode, declared, feat_id) in modes {
         let Some((base, source)) = declared else { continue };
-        let feat = feat_row(feat_id);
+        let feat = feat_id.and_then(feat_row);
         let Ok(value) = i16::try_from(base + i32::from(feat.as_ref().map_or(0, |(_, v)| *v))) else { continue };
         let mut detail = format!("{race_key} {mode} speed {base} ft. ({})", source.key);
         if let Some((feat_id, feet)) = &feat {
@@ -11142,7 +11168,7 @@ mod tests {
         let row = |id: &str| {
             loaded.explanations.iter().find(|e| e.id == id).unwrap_or_else(|| panic!("no {id} row")).value
         };
-        let sword = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longsword (Base)"));
+        let sword = loaded.weapon_damage.iter().find(|w| w.in_hand && w.weapon_record_key.as_deref() == Some("Longsword (Base)"));
         EnhancementRead {
             melee: snapshot.baseline_melee_attack_bonus,
             armor_class: snapshot.baseline_armor_class,
@@ -11203,10 +11229,15 @@ mod tests {
         sword.active_state = ActiveState::SelectedInactive;
         let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
         assert_eq!(receipt.corpus_derived.equipment_effects.attack_bonus_delta, None, "no weapon in hand");
-        assert!(
-            resolve_weapon_damage_breakdown(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3).is_empty(),
-            "a stowed sword has no damage row"
-        );
+        // SD-41 E2.4: the stowed sword has one row, marked carried, with its own +1.
+        let rows: Vec<WeaponDamageBreakdown> =
+            resolve_weapon_damage_breakdown_with_carried(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3, &[])
+                .into_iter()
+                .filter(|row| !row.unarmed)
+                .collect();
+        assert_eq!(rows.len(), 1, "{rows:?}");
+        assert!(!rows[0].in_hand, "marked carried");
+        assert_eq!(rows[0].weapon_enhancement.as_ref().map(|e| e.attack_bonus), Some(1), "its own +1");
     }
 
     /// A worn `+N` armor adds to Armor Class and to flat-footed, and not to touch, which ignores armor.
@@ -11241,6 +11272,18 @@ mod tests {
         for held in ["summary", "equipmentSelections"] {
             object.remove(held);
         }
+        // SD-41 E2.4: a carried weapon has its own row, marked carried, and its damage total; neither is a number it moves.
+        let carried_totals: Vec<String> = loaded
+            .weapon_damage
+            .iter()
+            .filter(|weapon| !weapon.in_hand)
+            .filter_map(|weapon| weapon.weapon_record_key.as_deref())
+            .map(|key| codex::rules_core::damage_total::weapon_feat_damage_row_id(key).replacen("combat.weapon_damage_bonus.", "combat.weapon_damage_total.", 1))
+            .collect();
+        object.get_mut("weaponDamage").and_then(|w| w.as_array_mut()).unwrap().retain(|weapon| weapon["inHand"] != false);
+        object.get_mut("explanations").and_then(|e| e.as_array_mut()).unwrap().retain(|row| {
+            !carried_totals.iter().any(|id| row["id"] == id.as_str())
+        });
         let derived = object.get_mut("corpusDerived").and_then(|d| d.as_object_mut()).unwrap();
         for held in ["equippedItems", "unresolvedEquipmentItemIds", "encumbrance"] {
             derived.remove(held);
@@ -13041,8 +13084,20 @@ mod tests {
         loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value)
     }
 
+    /// The attack rows of the weapons in hand: the Unarmed row every character has (SD-41
+    /// `decisions.md §22`, `weapons_in_hand_first_then_carried_then_unarmed`) is not one.
     fn no_required_gear_attack_rows(loaded: &LoadSavedCharacterResponse) -> Vec<String> {
-        loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_attack_bonus.")).map(|row| row.id.clone()).collect()
+        loaded
+            .explanations
+            .iter()
+            .filter(|row| row.id.starts_with("combat.weapon_attack_bonus.") && !row.id.ends_with(".unarmedstrike"))
+            .map(|row| row.id.clone())
+            .collect()
+    }
+
+    /// The weapons in hand, without the carried ones and the Unarmed row (SD-41 E2.4).
+    fn in_hand_weapons(loaded: &LoadSavedCharacterResponse) -> Vec<&WeaponDamageDto> {
+        loaded.weapon_damage.iter().filter(|weapon| weapon.in_hand && !weapon.unarmed).collect()
     }
 
     /// Hand-derived from Aldric's sheet (Str +4, Dex +1, Con +2, Wis +1, Cha -1, base attack +3, Dodge,
@@ -13070,7 +13125,7 @@ mod tests {
         let skills = &snapshot.selected_skill_modifiers;
         assert_eq!((skills.climb, skills.intimidate, skills.swim), (8, 3, 8), "no armor, no check penalty");
 
-        assert!(loaded.weapon_damage.is_empty(), "{:?}", loaded.weapon_damage);
+        assert!(in_hand_weapons(&loaded).is_empty(), "{:?}", loaded.weapon_damage);
         assert_eq!(no_required_gear_attack_rows(&loaded), Vec::<String>::new());
         let melee = loaded.explanations.iter().find(|row| row.id == "combat.baseline_melee_attack_bonus").expect("the row");
         assert_eq!(melee.value, 7);
@@ -13148,7 +13203,7 @@ mod tests {
 
         let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
         assert_eq!((snapshot.baseline_melee_attack_bonus, snapshot.baseline_armor_class), (7, 12));
-        assert!(loaded.weapon_damage.is_empty());
+        assert!(in_hand_weapons(&loaded).is_empty());
         assert_eq!(build_pilot_headless_receipt(&envelope.character_input).status, HeadlessReceiptStatus::Computed);
     }
 
@@ -13169,9 +13224,9 @@ mod tests {
         assert_eq!(snapshot.baseline_melee_attack_bonus, 8, "base attack +3, Strength +4, its +1");
         assert_eq!(no_required_gear_attack_rows(&loaded), ["combat.weapon_attack_bonus.greatsword"]);
         assert_eq!(no_required_gear_row(&loaded, "combat.weapon_attack_bonus.greatsword"), Some(7));
-        assert_eq!(loaded.weapon_damage.len(), 1, "{:?}", loaded.weapon_damage);
-        assert_eq!(loaded.weapon_damage[0].weapon_record_key.as_deref(), Some(greatsword));
-        assert_eq!(loaded.weapon_damage[0].enhancement_attack_bonus, Some(1));
+        assert_eq!(in_hand_weapons(&loaded).len(), 1, "{:?}", loaded.weapon_damage);
+        assert_eq!(in_hand_weapons(&loaded)[0].weapon_record_key.as_deref(), Some(greatsword));
+        assert_eq!(in_hand_weapons(&loaded)[0].enhancement_attack_bonus, Some(1));
     }
 
     /// Each loadout through both twins: the corpus path the sheet reads and the headless one. They
@@ -13280,7 +13335,7 @@ mod tests {
         assert_eq!(row.value, 0, "+3, Dex +1, -4: {}", row.detail);
         assert!(row.detail.contains("nonproficiency penalty (-4)"), "{}", row.detail);
         assert_eq!(net.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(7), "a Net is not swung");
-        assert!(net.weapon_damage.is_empty(), "a Net deals no damage: {:?}", net.weapon_damage);
+        assert!(in_hand_weapons(&net).is_empty(), "a Net deals no damage: {:?}", net.weapon_damage);
 
         assert_eq!(no_required_gear_row(&swung, "combat.weapon_attack_bonus.crimsonbluff"), Some(3), "+3, Str +4, -4");
         assert_eq!(swung.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(3), "{:?}", swung.diagnostics);
@@ -13311,7 +13366,9 @@ mod tests {
         let loaded = no_required_gear_hold_alone(&root, &keys);
         std::fs::remove_dir_all(&dir).ok();
         assert!(loaded.snapshot.is_some(), "{:?}", loaded.diagnostics);
-        let ids: std::collections::BTreeSet<String> = no_required_gear_attack_rows(&loaded).into_iter().collect();
+        // Every attack row, the Unarmed Strike's among them (the shelf sells it).
+        let ids: std::collections::BTreeSet<String> =
+            loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_attack_bonus.")).map(|row| row.id.clone()).collect();
         let missing: Vec<&str> = weapons
             .iter()
             .map(|row| row.entry.key.as_str())
@@ -13340,7 +13397,7 @@ mod tests {
             std::fs::remove_dir_all(&dir).ok();
             assert_eq!(no_required_gear_attack_rows(&loaded), [row], "{weapon}");
             assert_eq!(no_required_gear_row(&loaded, row), Some(value), "{weapon}");
-            assert_eq!(loaded.weapon_damage.len(), 1, "{weapon}: {:?}", loaded.weapon_damage);
+            assert_eq!(in_hand_weapons(&loaded).len(), 1, "{weapon}: {:?}", loaded.weapon_damage);
         }
     }
 
@@ -13463,7 +13520,7 @@ mod tests {
                 applied_modifiers: vec![top.modifier_key.clone()],
             });
             let effects = compute_pilot_with_corpus(&input, corpus).corpus_derived.equipment_effects;
-            let rows = resolve_weapon_damage_breakdown(&input, corpus, &effects, 3);
+            let rows = codex::rules_core::damage_total::resolve_weapon_damage_breakdown(&input, corpus, &effects, 3);
             let bonus = rows.last().filter(|r| r.weapon_item_id == key).and_then(|r| r.weapon_enhancement.as_ref());
             let want = i16::from(top.bonus);
             if bonus.map(|b| (b.attack_bonus, b.damage_bonus)) != Some((want, want)) {
@@ -20556,6 +20613,7 @@ mod tests {
             row.id.starts_with("feats.budget.")
                 || row.id.starts_with("skill.total.")
                 || row.id.starts_with("combat.weapon_damage_total.")
+                || (row.id.starts_with("combat.weapon_") && row.id.ends_with(".unarmedstrike"))
                 || sheet_totals.contains(&row.id.as_str())
         });
         let damage_totals = appended.iter().filter(|row| row.id.starts_with("combat.weapon_damage_total.")).count();
@@ -20994,6 +21052,64 @@ mod tests {
 
     fn sets_key(item_id: &str, ordinal: u32) -> CopyKey {
         CopyKey { item_id: item_id.to_owned(), bonus: 0, ordinal }
+    }
+
+    /// SD-41 E2.4 (`decisions.md §9, §22`): the Weapons rows are the in-hand weapons, then the
+    /// carried ones (`inHand: false`), then one Unarmed row, nonlethal for a character without
+    /// Improved Unarmed Strike; the carried weapon and the Unarmed row each get their total rows.
+    #[test]
+    fn weapons_in_hand_first_then_carried_then_unarmed() {
+        let root = sets_root("weapons-order", &[("Dagger (Base)", ActiveState::SelectedInactive)]);
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        std::fs::remove_dir_all(&root).ok();
+        let rows: Vec<(Option<&str>, bool, bool)> =
+            loaded.weapon_damage.iter().map(|w| (w.weapon_record_key.as_deref(), w.in_hand, w.unarmed)).collect();
+        assert_eq!(rows.first(), Some(&(Some("Longsword (Base)"), true, false)), "{rows:?}");
+        assert_eq!(rows.iter().filter(|(_, in_hand, _)| !in_hand).collect::<Vec<_>>(), [&(Some("Dagger (Base)"), false, false)], "{rows:?}");
+        let first_carried = rows.iter().position(|(_, in_hand, _)| !in_hand).unwrap();
+        assert!(rows[..first_carried].iter().all(|(_, in_hand, unarmed)| *in_hand && !unarmed), "in hand first: {rows:?}");
+        let last = loaded.weapon_damage.last().unwrap();
+        assert!(last.unarmed && last.in_hand && last.nonlethal, "Unarmed last, nonlethal: {last:?}");
+        assert_eq!(loaded.weapon_damage.iter().filter(|w| w.unarmed).count(), 1);
+        let ids: Vec<&str> = loaded.explanations.iter().map(|row| row.id.as_str()).collect();
+        for id in ["combat.weapon_attack_bonus.unarmedstrike", "combat.weapon_damage_total.unarmedstrike", "combat.weapon_damage_total.dagger"] {
+            assert!(ids.contains(&id), "{id} missing: {ids:?}");
+        }
+    }
+
+    /// A weapon left Not Carried has no Weapons row (`decisions.md §9`).
+    #[test]
+    fn weapons_not_carried_has_no_row() {
+        let root = sets_root("weapons-not-carried", &[("Dagger (Base)", ActiveState::Absent)]);
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        std::fs::remove_dir_all(&root).ok();
+        let keys: Vec<Option<&str>> = loaded.weapon_damage.iter().map(|w| w.weapon_record_key.as_deref()).collect();
+        assert!(!keys.contains(&Some("Dagger (Base)")), "{keys:?}");
+        assert!(loaded.weapon_damage.last().is_some_and(|w| w.unarmed), "{keys:?}");
+    }
+
+    /// `usesAmmunition` / `ammunitionCarried` cross the wire (`decisions.md §23, §30`): a carried
+    /// Longbow counts the 20 pieces of one carried "Arrows (20)"; a Longsword and the Unarmed row
+    /// use none.
+    #[test]
+    fn weapons_ammunition_flags_reach_the_dto() {
+        let root = sets_root("weapons-ammunition", &[("Longbow (Base)", ActiveState::SelectedInactive), ("Arrows (20)", ActiveState::SelectedInactive)]);
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        std::fs::remove_dir_all(&root).ok();
+        let flags = |key: &str| {
+            let w = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some(key)).unwrap_or_else(|| panic!("no {key} row"));
+            (w.uses_ammunition, w.ammunition_carried)
+        };
+        assert_eq!(flags("Longbow (Base)"), (true, 20));
+        let bow = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longbow (Base)")).unwrap();
+        assert_eq!(bow.ammunition_family.as_deref(), Some("Arrow"));
+        assert_eq!(flags("Longsword (Base)"), (false, 0));
+        let unarmed = loaded.weapon_damage.last().unwrap();
+        assert_eq!((unarmed.unarmed, unarmed.uses_ammunition, unarmed.ammunition_carried), (true, false, 0));
+        let wire = serde_json::to_value(&loaded.weapon_damage[0]).unwrap();
+        for key in ["inHand", "unarmed", "nonlethal", "usesAmmunition", "ammunitionCarried"] {
+            assert!(wire.get(key).is_some(), "{key} on the wire: {wire}");
+        }
     }
 
     /// Each PF starter seed: the first load writes the Default set, once; the second load leaves
@@ -21833,6 +21949,23 @@ mod starter_seed_tests {
         std::fs::remove_dir_all(&app_data_dir).ok();
     }
 
+    /// SD-41 E2.4 (`decisions.md §35`): `speed.climb` (feet) when a held race trait declares a climb
+    /// speed: the Vanara's `MOVE:Walk,30,Climb,20` → 20; Aldric (Human) has no row.
+    #[test]
+    fn speed_climb_row_for_a_vanara_none_for_aldric() {
+        let row = |wire: &serde_json::Value, id: &str| {
+            wire["explanations"].as_array().expect("explanations").iter().find(|row| row["id"] == id).map(|row| row["value"].clone())
+        };
+        let input = compose_character_input(&super::tests::request_for_class("race:vanara", "class:fighter", 1));
+        let vanara = serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for("speed-climb-vanara", input)).expect("load")).expect("json");
+        assert_eq!(row(&vanara, "speed.climb"), Some(serde_json::json!(20)), "{}", vanara["explanations"]);
+        let app_data_dir = temp_app_data_dir("speed-climb-aldric");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let aldric = serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID)).expect("load")).expect("json");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        assert_eq!(row(&aldric, "speed.climb"), None);
+    }
+
     /// SD-40 E2.21: the load response carries `resistances` (energy, damage reduction, spell
     /// resistance, immunities) from what the character holds. Bestiary 2: an Ifrit has fire
     /// resistance 5, an Undine cold resistance 5; an Ifrit who takes ARG's Wildfire Heart gives
@@ -21926,6 +22059,8 @@ mod starter_seed_tests {
         let mut printed = Vec::new();
         for wire in &loaded {
             let weapons = wire["weaponDamage"].as_array().expect("weaponDamage");
+            assert_eq!(weapons.last().map(|w| &w["unarmed"]), Some(&serde_json::json!(true)), "the Unarmed row ends the list (SD-41 E2.4)");
+            let weapons: Vec<&serde_json::Value> = weapons.iter().filter(|w| w["unarmed"] == false).collect();
             assert!(!weapons.is_empty(), "every seed holds a weapon");
             for weapon in weapons {
                 let key = weapon["weaponRecordKey"].as_str().expect("record key");

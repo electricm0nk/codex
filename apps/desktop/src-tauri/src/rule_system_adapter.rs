@@ -221,7 +221,7 @@ pub(crate) mod tests {
         CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
         EquipmentEffectsDto, ResolvedEquipmentEffectDto, SchoolCoverageDto,
     };
-    use codex::rules_core::damage_total::resolve_weapon_damage_breakdown;
+    use codex::rules_core::damage_total::resolve_weapon_damage_breakdown_with_carried;
     use crate::characterHub::appendToCharacter::append_to_character_at_root;
     use crate::characterHub::recomputeCharacter::recompute_character_at_root;
     use crate::characterHub::reSaveCharacter::re_save_character_at_root;
@@ -432,11 +432,12 @@ pub(crate) mod tests {
                 spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
                 chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
                 explanations: map_explanations_dto(&corpus_receipt.base.explanations),
-                weapon_damage: map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
+                weapon_damage: map_weapon_damage_dto(&resolve_weapon_damage_breakdown_with_carried(
                     &envelope.character_input,
                     corpus_fixture_bundle(),
                     &corpus_receipt.corpus_derived.equipment_effects,
                     corpus_receipt.base.ability_modifiers.strength,
+                    &[],
                 )),
                 selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
                 selected_traits: envelope.character_input.chosen.selected_traits.clone(),

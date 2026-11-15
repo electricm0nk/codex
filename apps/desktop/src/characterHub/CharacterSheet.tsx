@@ -867,8 +867,13 @@ function WeaponsTab(props: {
           No weapons equipped.
         </p>
       ) : (
-        surface.rows.map((row) => (
-          <div key={row.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.45rem 0' }}>
+        surface.rows.map((row, index) => (
+          <div key={`${row.itemId}:${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.45rem 0' }}>
+            {row.group === 'carried' && surface.rows[index - 1]?.group !== 'carried' ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', letterSpacing: '0.04em', margin: '0 0 0.3rem', textTransform: 'uppercase' }}>
+                Carried
+              </p>
+            ) : null}
             <div
               style={{
                 display: 'grid',
@@ -877,7 +882,12 @@ function WeaponsTab(props: {
                 gridTemplateColumns: WEAPON_GRID_COLUMNS,
               }}
             >
-              <span style={{ color: 'var(--color-text)', fontWeight: 700 }}>{row.name}</span>
+              <span style={{ color: 'var(--color-text)', fontWeight: 700 }}>
+                {row.name}
+                {row.mark ? (
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 400 }}> {row.mark}</span>
+                ) : null}
+              </span>
               <span style={{ color: 'var(--color-text)' }}>{row.baseDice}</span>
               <span style={{ color: 'var(--color-text)' }}>{row.strDamage}</span>
               <span style={{ color: 'var(--color-text)' }}>{row.enhancementDamage}</span>
@@ -890,16 +900,28 @@ function WeaponsTab(props: {
                 Feat damage: {row.featEffects.join(', ')}
               </p>
             ) : null}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
-              <button
-                type="button"
-                aria-label={`Drop ${row.name}`}
-                onClick={() => props.onRemoveWeapon(row.itemId)}
-                style={removeItemButtonStyle}
-              >
-                Drop
-              </button>
-            </div>
+            {row.ammunition ? (
+              <div aria-label={`${row.name} ammunition`} style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.2rem', marginTop: '0.3rem' }}>
+                {Array.from({ length: row.ammunition.boxes }, (_, box) => (
+                  <span key={box} aria-hidden="true" style={{ border: '1px solid var(--color-border)', display: 'inline-block', height: '0.7rem', width: '0.7rem' }} />
+                ))}
+                {row.ammunition.carried ? (
+                  <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', marginLeft: '0.4rem' }}>{row.ammunition.carried}</span>
+                ) : null}
+              </div>
+            ) : null}
+            {row.group === 'unarmed' ? null : (
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
+                <button
+                  type="button"
+                  aria-label={`Drop ${row.name}`}
+                  onClick={() => props.onRemoveWeapon(row.itemId)}
+                  style={removeItemButtonStyle}
+                >
+                  Drop
+                </button>
+              </div>
+            )}
           </div>
         ))
       )}
