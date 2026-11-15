@@ -152,6 +152,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E3.3 | 2026-11-15 | `56024f4336` + this commit | complete | `artifacts/epic_3/E3.3_cycle_receipt.md` (re-attempt 3, lead action: `sheet-override-tag-slot` `expect[0]` → `Eyes of the EagleOverride: Ignore body slot limits0 lb · Eyes`; `--only sheet-override-tag-slot` → `1/1 green`, real store untouched; with run 2's 27 → 28 of 28; spec 201 rows; `npm test` 198/198; inventory regenerated) |
 | E3.10 | 2026-11-15 | `31c39ce10b`, `56024f4336` + this commit | complete | `artifacts/epic_3/E3.10_cycle_receipt.md` (acceptance row `sheet-override-tag-slot` green after E3.3's expect-string change; no further code) |
 | E3.6 | 2026-11-15 | `b3a239b589` + this commit | complete | `artifacts/epic_3/E3.6_cycle_receipt.md` (`owned_by_verifier` now also requires the record to name the running path; moved AppImage record → `Written`; same-path stays `Unchanged`; `--bins reconcile_` 3 passed; desktop full 5 targets 0 failed; package command `--lib` → `--bins`, retro correction) |
+| E3.7 | 2026-11-15 | this commit | complete | `artifacts/epic_3/E3.7_cycle_receipt.md` (`app.windows[0].dragDropEnabled: false`; command printed `None` on the base, `False` after; desktop `cargo build --locked -j 8` finished) |
 
 ## Epic reports
 
