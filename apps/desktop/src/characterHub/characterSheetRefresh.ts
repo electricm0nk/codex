@@ -110,8 +110,7 @@ export function toCharacterMutationRefresh(
       // records forward would show stale numbers as if they were current.
       // Callers that need the post-mutation records re-read the character
       // through `loadSavedCharacterDetail` — see `refreshEngineRecords` in
-      // `CharacterSheet.tsx`, the same post-mutation re-read pattern
-      // `refreshDurability` already established there.
+      // `CharacterSheet.tsx`.
       explanations: [],
       weaponDamage: [],
       // Same reasoning, one field further: a mutation that adds a feat really

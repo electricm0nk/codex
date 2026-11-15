@@ -90,6 +90,9 @@ function verifiesScreenContainsChecksHeadingsBodyAndDialogs() {
 
   assert(!screenContains(dialogSnapshot, 'Nowhere'), 'absent string is correctly reported absent');
   assert(!screenContains(null, 'anything'), 'a null snapshot never matches (never a silent false-pass)');
+  // SD-40 E3.6: a text area's value is not in innerText; the probe reports it as fieldValues.
+  const fieldSnapshot = { ts: 1, headings: [], bodyText: '', dialogs: [], targets: [], selects: [], fieldValues: ['Born in Absalom.'] };
+  assert(screenContains(fieldSnapshot, 'Absalom'), 'matches inside a text area value');
 }
 
 // Brief 1 F1: a theme's `h2:before { content: "H2 " }` is invisible to textContent/innerText, so the

@@ -14,7 +14,7 @@ status: planning-ready
 
 | Field | Value |
 |---|---|
-| Cards complete | 63 of 66 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
+| Cards complete | 64 of 66 (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/ && $5 ~ /^ complete *$/' kanban.md \| awk 'END{print NR}'`) |
 | Run id | — (written at launch, `workflow-instruction.md §2.4` item 9) |
 | Pinned `tranche-19` SHA | `49d598c13a1bd19ffd02106e23fa0f7671083a55` (C1 version commit 0.19.0; cut at C0 from `origin/develop` @ `2b14020bc7`) |
 
@@ -107,6 +107,7 @@ run 2026-11-01 before commit. Every token is in the `workflow-instruction.md §9
 | E9 | E9.7 | complete | receipt commit | artifacts/epic_9/E9.7_cycle_receipt.md; nothing to remove (found 0, removed 0) |
 | E9 | E9.8 | complete | receipt commit | artifacts/epic_9/E9.8_cycle_receipt.md; final release notes, sentinel gone |
 | E9 | E9.9 | partial | receipt commit | artifacts/epic_9/E9.9_cycle_receipt.md; truth-up half done, Opus claims critic pending |
+| E9 | E9.9 | complete | receipt commit | artifacts/epic_9/E9.9_cycle_receipt.md; Opus claims critic: 7 architecture-doc corrections, release notes unchanged, truth-up script checks pass |
 
 ## Epic reports
 
@@ -387,3 +388,7 @@ seed deltas, open blockers.)
 | wf_62657bd1-ded | E1.MC | same | 2026-11-01; stopped 2026-11-04 at E7.1: a re-dispatch declined, ownedBy:E7.3; the script had no E7.3 and did not reach E1.6; script fixed (`drainEarlier`, E7.3 in the E7 list) |
 | wf_e868cf50-1ae | E7.2 | same | 2026-11-04; stopped at E7.MC: an internet outage used all 4 attempts |
 | wf_81f1bec8-94e | E7.MC | same | 2026-11-05; reached the E9.4 operator gate; operator signed 2026-11-07 |
+| E9 | E9.10 | complete | receipt commit | artifacts/epic_9/E9.10_cycle_receipt.md; graphify run at cd873a6d0d, guard hit exit 1 (648327 vs 648328), graph.json untouched, receipt filed |
+| E9 | E9.11 | complete | receipt commit | artifacts/epic_9/E9.11_cycle_receipt.md; pre-PR scan clean; PR tranche-19 to develop opened as the final action; operator merges |
+| E9 | E9.11 | blocked-escalated | docs commit | PR #403 open; `Test (PR into develop)` red twice on runner loss at the desktop shell tests (run 42405549929), not a test failure |
+| E9 | E9.11 | complete | lead | `gh pr checks 403` all 3 pass (pr-tests run 42420606154) after CI disk fix 5a917f6077; operator merges |

@@ -1,4 +1,4 @@
-//! Identity (the screen's Character Details), Abilities and the boxes the one Combat block printed
+//! The Bio page's details (the screen's Character Details, E3.4), Abilities and the boxes the one Combat block printed
 //! until SD-40 split it along the screen's ids (`decisions.md §8`): the square block (Hit Points,
 //! Initiative, Encumbrance, Conditions; E2.9), Armor Class, Saving Throws, Attack and Speed. Each value is the field the screen's tile reads
 //! (`CharacterSheet.tsx`'s `ac`, `touch`, `flatFooted`, `cmb`, `cmd`, `saves`, `initiativeRow`,
@@ -29,21 +29,39 @@ pub fn name_campaign(sources: &SheetSources) -> SheetBlock {
     .in_look(Look::NameCampaign)
 }
 
-/// The screen's Character Details (`characterDetails`, SD-40 `decisions.md §5`), printed under
-/// the heading Identity: name, race, class, size, vision.
+/// The Bio section's page (`characterDetails`, SD-40 E3.4, `decisions.md §23.1` item 5, §24.9),
+/// under the heading Details: the Details panel's fields as a form (`detail` rows: Alignment …
+/// Eyes from the bio, Size and Vision as the panel shows them, Race, Class and level, Player; an
+/// empty field prints its label over a blank line); then the Biography tab's text and each
+/// campaign's description (`text` rows, a paragraph per line; an
+/// empty Biography and no campaign print nothing). The look ends the page with ruled lines.
 pub fn character_details(sources: &SheetSources) -> SheetBlock {
     let summary = &sources.loaded.summary;
+    let bio = &sources.bio;
     let (size, vision) = size_and_vision(sources);
-    SheetBlock::new(
-        "Identity",
-        vec![
-            SheetRow::new("Name", [summary.display_label.clone()]),
-            SheetRow::new("Race", [race_label(&summary.race_id)]),
-            SheetRow::new("Class", [class_label(&summary.class_summary)]),
-            SheetRow::new("Size", [size]),
-            SheetRow::new("Vision", [vision]),
-        ],
-    )
+    let details = [
+        ("Alignment", bio.alignment.clone()),
+        ("Deity", bio.deity.clone()),
+        ("Sex", bio.sex.clone()),
+        ("Age", bio.age.clone()),
+        ("Height", bio.height.clone()),
+        ("Weight", bio.weight.clone()),
+        ("Hair", bio.hair.clone()),
+        ("Eyes", bio.eyes.clone()),
+        ("Size", size),
+        ("Vision", vision),
+        ("Race", race_label(&summary.race_id)),
+        ("Class and level", class_label(&summary.class_summary)),
+        ("Player", bio.player_name.clone()),
+    ];
+    let mut rows: Vec<SheetRow> = details.into_iter().map(|(label, value)| SheetRow::new(label, [value]).of_kind("detail")).collect();
+    // The Bio page prints only when its box is ticked (E4.1), so its notes always join its details.
+    let text = |label: &str, body: &str| SheetRow::new(label, Vec::<String>::new()).with_notes(body.lines().map(str::to_owned)).of_kind("text");
+    if !bio.biography.trim().is_empty() {
+        rows.push(text("Biography", &bio.biography));
+    }
+    rows.extend(sources.request.campaigns.iter().map(|campaign| text(&campaign.name, &campaign.description)));
+    SheetBlock::new("Details", rows).in_look(Look::Bio)
 }
 
 /// The Details panel's Size and Vision: the race roster's (`list_race_creation_roster`, what
@@ -173,6 +191,49 @@ pub fn saves(sources: &SheetSources) -> SheetBlock {
     .map(|(label, key, total)| line(sources, label, vec![with_sign(total)], &format!("defense.total_save.{key}")))
     .collect();
     SheetBlock::new("Saving Throws", rows).in_look(Look::Saves)
+}
+
+/// A breakdown table's caption line (Show the math, SD-40 E3.5): the `breakdown` look prints it as
+/// the table's header.
+pub(super) fn captions(cells: &[&str]) -> SheetRow {
+    SheetRow::new("", cells.iter().map(|cell| (*cell).to_owned())).of_kind("captions")
+}
+
+/// Show the math's Initiative breakdown (SD-40 E3.5, `decisions.md §23.1` item 4): the cells page 1
+/// dropped at E2.9, the engine's total and the Dexterity modifier.
+pub(super) fn initiative_breakdown(sources: &SheetSources) -> SheetBlock {
+    let dexterity = sources.loaded.snapshot.as_ref().map(|s| s.ability_modifiers.dexterity);
+    SheetBlock::new(
+        "Initiative Breakdown",
+        vec![captions(&["Total", "Dex"]), SheetRow::new("Initiative", [with_sign(row_value(sources, "initiative.total")), with_sign(dexterity)])],
+    )
+    .in_look(Look::Breakdown)
+}
+
+/// Show the math's Saving Throws breakdown (SD-40 E3.5): the cells page 1 dropped at E2.10, each
+/// save's total, its class base save and its ability's modifier (Constitution, Dexterity, Wisdom).
+pub(super) fn saves_breakdown(sources: &SheetSources) -> SheetBlock {
+    let snapshot = sources.loaded.snapshot.as_ref();
+    let save = |label: &str, pick: fn(&crate::character_hub::BaseSavesDto) -> i16, ability: fn(&crate::character_hub::AbilityModifiersDto) -> i16| {
+        SheetRow::new(
+            label,
+            [
+                with_sign(snapshot.map(|s| pick(&s.total_saves))),
+                with_sign(snapshot.map(|s| pick(&s.base_saves))),
+                with_sign(snapshot.map(|s| ability(&s.ability_modifiers))),
+            ],
+        )
+    };
+    SheetBlock::new(
+        "Saving Throw Breakdown",
+        vec![
+            captions(&["Total", "Base", "Ability"]),
+            save("Fortitude", |s| s.fortitude, |m| m.constitution),
+            save("Reflex", |s| s.reflex, |m| m.dexterity),
+            save("Will", |s| s.will, |m| m.wisdom),
+        ],
+    )
+    .in_look(Look::Breakdown)
 }
 
 /// The Conditional Bonuses box (`conditionalBonuses`, print-only, SD-40 E2.20, `decisions.md

@@ -118,9 +118,11 @@ once for that character:
 | `bio.json` | `BIO_FILE_NAME` | `update_character_bio` | no bio saved yet — `load_character_bio` returns `CharacterBioDto::default()` (all-empty), not an error |
 | `money.json` | `MONEY_FILE_NAME` | `adjust_character_money` | zero balance — `load_character_money` returns a zero `CharacterMoneyDto`, not an error |
 | `hp.json` | `HP_FILE_NAME` | `adjust_character_hp` | current HP defaults to computed max HP — `load_character_durability` derives a default rather than erroring |
-| `ledger.json` | `LEDGER_FILE_NAME` (`character_ledger.rs`) | every Pathfinder change through `mutate_saved_character_at_root`, and an ability grant on the Custom tab | no ledger yet — the first load (or first change) builds one from what the character holds, each thing in the earliest slot of its kind, marked as worked out afterwards; `list_progression_ledger` reads it. The engine never reads it and no number depends on it |
+| `ledger.json` | `LEDGER_FILE_NAME` (`character_ledger.rs`) | every Pathfinder change through `mutate_saved_character_at_root`, and an ability grant on the Custom tab | no ledger yet — the first load (or first change) builds one from what the character holds, each thing in the earliest slot of its kind, marked as worked out afterwards; `list_progression_ledger` reads it. The engine never reads it and no number depends on it. It also holds `admitted`: each record an Overrides flag let in, with that flag |
+| `custom.json` | `CUSTOM_FILE_NAME` (`character_custom.rs`) | `save_character_custom`; an import restores it (`import_character_from_json`, behind `import_character` and `import_pcg`); `clone_character` copies it | nothing custom — `load_character_custom_at_root` returns `CharacterCustomDto::default()` (no grants, records, conditions, and every Overrides flag off), not an error |
+| `hit_points.json` | `HIT_POINTS_FILE_NAME` | `create_character` (the per-level hit point results), an import (`import_character_from_json`); `clone_character` copies it | no saved results — `load_character_hit_points_at_root` returns an empty list, not an error |
 
-The first four share one design rationale, stated directly in `character_hub.rs`'s
+The first four (`portrait.png`, `bio.json`, `money.json`, `hp.json`) share one design rationale, stated directly in `character_hub.rs`'s
 own comments: each is data the rules engine does not need to compute a
 character (money and HP tracking, narrative bio fields, a portrait image),
 so none of it belongs in `CharacterInput` — putting it there would make it

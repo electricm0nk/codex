@@ -1,0 +1,242 @@
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Bob_Companion.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Quasvin.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/data/zen_test/Dex3.pcg
+NOT_ADDITIVE	seed:aldric	a4	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	seed:aldric	a4	1-8	got=Some(12)	sum=Some(11)
+PAGES	seed:aldric	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	seed:aldric	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	seed:aldric	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	seed:aldric	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	seed:elowen	a4	1-7	got=Some(14)	sum=Some(11)
+NOT_ADDITIVE	seed:elowen	a4	1-8	got=Some(15)	sum=Some(12)
+PAGES	seed:elowen	a4	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=14	1-8=15
+NOT_ADDITIVE	seed:elowen	letter	1-7	got=Some(14)	sum=Some(11)
+NOT_ADDITIVE	seed:elowen	letter	1-8	got=Some(15)	sum=Some(12)
+PAGES	seed:elowen	letter	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=14	1-8=15
+PAGES	scripts/oracle_harness/eqm-fixtures/arrow_alone.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+PAGES	scripts/oracle_harness/eqm-fixtures/arrow_alone.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+PAGES	scripts/oracle_harness/eqm-fixtures/outfit_darkleaf.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+PAGES	scripts/oracle_harness/eqm-fixtures/outfit_darkleaf.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+NOT_ADDITIVE	build/install/pcgen/characters/SpecialWizard.pcg	a4	1-7	got=Some(21)	sum=Some(18)
+NOT_ADDITIVE	build/install/pcgen/characters/SpecialWizard.pcg	a4	1-8	got=Some(22)	sum=Some(19)
+PAGES	build/install/pcgen/characters/SpecialWizard.pcg	a4	1=1	2=4	3=1	4=7	5=1	6=1	7=3	8=1	1+2+3=6	1-7=21	1-8=22
+NOT_ADDITIVE	build/install/pcgen/characters/SpecialWizard.pcg	letter	1-7	got=Some(22)	sum=Some(19)
+NOT_ADDITIVE	build/install/pcgen/characters/SpecialWizard.pcg	letter	1-8	got=Some(23)	sum=Some(20)
+PAGES	build/install/pcgen/characters/SpecialWizard.pcg	letter	1=1	2=4	3=1	4=7	5=1	6=2	7=3	8=1	1+2+3=6	1-7=22	1-8=23
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Ivan.pcg	a4	1-7	got=Some(13)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Ivan.pcg	a4	1-8	got=Some(14)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/35e_Ivan.pcg	a4	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=13	1-8=14
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Ivan.pcg	letter	1-7	got=Some(14)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Ivan.pcg	letter	1-8	got=Some(15)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/35e_Ivan.pcg	letter	1=1	2=4	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=6	1-7=14	1-8=15
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_MonKee.pcg	a4	1-7	got=Some(15)	sum=Some(13)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_MonKee.pcg	a4	1-8	got=Some(16)	sum=Some(14)
+PAGES	code/testsuite/PCGfiles/3e_MonKee.pcg	a4	1=1	2=4	3=1	4=1	5=1	6=2	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_MonKee.pcg	letter	1-7	got=Some(16)	sum=Some(13)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_MonKee.pcg	letter	1-8	got=Some(17)	sum=Some(14)
+PAGES	code/testsuite/PCGfiles/3e_MonKee.pcg	letter	1=1	2=4	3=1	4=1	5=1	6=2	7=3	8=1	1+2+3=6	1-7=16	1-8=17
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Cleric.pcg	a4	1-7	got=Some(15)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Cleric.pcg	a4	1-8	got=Some(16)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/pf_Cleric.pcg	a4	1=1	2=3	3=2	4=1	5=1	6=1	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Cleric.pcg	letter	1-7	got=Some(15)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Cleric.pcg	letter	1-8	got=Some(16)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/pf_Cleric.pcg	letter	1=1	2=3	3=2	4=1	5=1	6=1	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+SUMMARY	files=9	saved=6	blocked=3	refused=0	characters=8	renders=176	warned=0	errors=0	not_additive=24
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Charlie.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Jango.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_UT~Gordon.pcg
+PAGES	scripts/oracle_harness/eqm-fixtures/arrow_alone_apg.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+PAGES	scripts/oracle_harness/eqm-fixtures/arrow_alone_apg.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+PAGES	scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	characters/CodeMonkey.pcg	a4	1-7	got=Some(14)	sum=Some(13)
+NOT_ADDITIVE	characters/CodeMonkey.pcg	a4	1-8	got=Some(15)	sum=Some(14)
+PAGES	characters/CodeMonkey.pcg	a4	1=1	2=5	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=7	1-7=14	1-8=15
+NOT_ADDITIVE	characters/CodeMonkey.pcg	letter	1-7	got=Some(14)	sum=Some(13)
+NOT_ADDITIVE	characters/CodeMonkey.pcg	letter	1-8	got=Some(15)	sum=Some(14)
+PAGES	characters/CodeMonkey.pcg	letter	1=1	2=5	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=7	1-7=14	1-8=15
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_SWizSam.pcg	a4	1-7	got=Some(14)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_SWizSam.pcg	a4	1-8	got=Some(15)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/3e_SWizSam.pcg	a4	1=1	2=3	3=1	4=2	5=1	6=1	7=3	8=1	1+2+3=5	1-7=14	1-8=15
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_SWizSam.pcg	letter	1-7	got=Some(15)	sum=Some(13)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_SWizSam.pcg	letter	1-8	got=Some(16)	sum=Some(14)
+PAGES	code/testsuite/PCGfiles/3e_SWizSam.pcg	letter	1=1	2=4	3=1	4=2	5=1	6=1	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Paladin.pcg	a4	1-7	got=Some(16)	sum=Some(14)
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Paladin.pcg	a4	1-8	got=Some(17)	sum=Some(15)
+PAGES	code/testsuite/PCGfiles/pf_Paladin.pcg	a4	1=1	2=5	3=2	4=1	5=1	6=1	7=3	8=1	1+2+3=8	1-7=16	1-8=17
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Paladin.pcg	letter	1-7	got=Some(17)	sum=Some(15)
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Paladin.pcg	letter	1-8	got=Some(18)	sum=Some(16)
+PAGES	code/testsuite/PCGfiles/pf_Paladin.pcg	letter	1=2	2=5	3=2	4=1	5=1	6=1	7=3	8=1	1+2+3=9	1-7=17	1-8=18
+SUMMARY	files=8	saved=5	blocked=3	refused=0	characters=5	renders=110	warned=0	errors=0	not_additive=14
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_CloudGiantHalfDragon.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_JimDop.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_UT~Harold.pcg
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	a4	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	a4	1-8	got=Some(13)	sum=Some(12)
+PAGES	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	a4	1=1	2=2	3=2	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	letter	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	letter	1-8	got=Some(13)	sum=Some(12)
+PAGES	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	letter	1=1	2=2	3=2	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	a4	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	a4	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	characters/Everything.pcg	a4	1-7	got=Some(26)	sum=Some(21)
+NOT_ADDITIVE	characters/Everything.pcg	a4	1-8	got=Some(27)	sum=Some(22)
+PAGES	characters/Everything.pcg	a4	1=1	2=11	3=1	4=2	5=1	6=2	7=3	8=1	1+2+3=13	1-7=26	1-8=27
+NOT_ADDITIVE	characters/Everything.pcg	letter	1-7	got=Some(27)	sum=Some(22)
+NOT_ADDITIVE	characters/Everything.pcg	letter	1-8	got=Some(28)	sum=Some(23)
+PAGES	characters/Everything.pcg	letter	1=1	2=12	3=1	4=2	5=1	6=2	7=3	8=1	1+2+3=14	1-7=27	1-8=28
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_WizShar.pcg	a4	1-7	got=Some(13)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_WizShar.pcg	a4	1-8	got=Some(14)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/3e_WizShar.pcg	a4	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=13	1-8=14
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_WizShar.pcg	letter	1-7	got=Some(14)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_WizShar.pcg	letter	1-8	got=Some(15)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/3e_WizShar.pcg	letter	1=2	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=6	1-7=14	1-8=15
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Rogue.pcg	a4	1-7	got=Some(15)	sum=Some(14)
+NOT_ADDITIVE	code/testsuite/PCGfiles/pf_Rogue.pcg	a4	1-8	got=Some(16)	sum=Some(15)
+PAGES	code/testsuite/PCGfiles/pf_Rogue.pcg	a4	1=1	2=4	3=2	4=1	5=1	6=2	7=3	8=1	1+2+3=7	1-7=15	1-8=16
+PAGES	code/testsuite/PCGfiles/pf_Rogue.pcg	letter	1=2	2=4	3=2	4=1	5=1	6=2	7=4	8=1	1+2+3=8	1-7=16	1-8=17
+SUMMARY	files=8	saved=5	blocked=3	refused=0	characters=5	renders=110	warned=0	errors=0	not_additive=18
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Dave.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_UT~Ivan.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/Zen_Nancy.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/pf_goldielocks.pcg
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_baseline.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_baseline.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_baseline.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_baseline.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	a4	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	a4	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	characters/Sorcerer.pcg	a4	1-7	got=Some(15)	sum=Some(13)
+NOT_ADDITIVE	characters/Sorcerer.pcg	a4	1-8	got=Some(16)	sum=Some(14)
+PAGES	characters/Sorcerer.pcg	a4	1=1	2=4	3=1	4=2	5=1	6=1	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+NOT_ADDITIVE	characters/Sorcerer.pcg	letter	1-7	got=Some(15)	sum=Some(13)
+NOT_ADDITIVE	characters/Sorcerer.pcg	letter	1-8	got=Some(16)	sum=Some(14)
+PAGES	characters/Sorcerer.pcg	letter	1=1	2=4	3=1	4=2	5=1	6=1	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L10(fighter-human).pcg	a4	1-7	got=Some(15)	sum=Some(14)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L10(fighter-human).pcg	a4	1-8	got=Some(16)	sum=Some(15)
+PAGES	code/testsuite/PCGfiles/35e_L10(fighter-human).pcg	a4	1=1	2=4	3=2	4=1	5=1	6=2	7=3	8=1	1+2+3=7	1-7=15	1-8=16
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L10(fighter-human).pcg	letter	1-7	got=Some(15)	sum=Some(14)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L10(fighter-human).pcg	letter	1-8	got=Some(16)	sum=Some(15)
+PAGES	code/testsuite/PCGfiles/35e_L10(fighter-human).pcg	letter	1=1	2=4	3=2	4=1	5=1	6=2	7=3	8=1	1+2+3=7	1-7=15	1-8=16
+SUMMARY	files=8	saved=4	blocked=4	refused=0	characters=4	renders=88	warned=0	errors=0	not_additive=14
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Eve.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/msrd_Elwood.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/sf_mechanic.pcg
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_draco.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_draco.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_draco.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_draco.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	a4	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	a4	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	characters/SpecialWizard.pcg	a4	1-7	got=Some(21)	sum=Some(18)
+NOT_ADDITIVE	characters/SpecialWizard.pcg	a4	1-8	got=Some(22)	sum=Some(19)
+PAGES	characters/SpecialWizard.pcg	a4	1=1	2=4	3=1	4=7	5=1	6=1	7=3	8=1	1+2+3=6	1-7=21	1-8=22
+NOT_ADDITIVE	characters/SpecialWizard.pcg	letter	1-7	got=Some(22)	sum=Some(19)
+NOT_ADDITIVE	characters/SpecialWizard.pcg	letter	1-8	got=Some(23)	sum=Some(20)
+PAGES	characters/SpecialWizard.pcg	letter	1=1	2=4	3=1	4=7	5=1	6=2	7=3	8=1	1+2+3=6	1-7=22	1-8=23
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L7-3(fighter-cleric-dwarf).pcg	a4	1-7	got=Some(18)	sum=Some(17)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L7-3(fighter-cleric-dwarf).pcg	a4	1-8	got=Some(19)	sum=Some(18)
+PAGES	code/testsuite/PCGfiles/35e_L7-3(fighter-cleric-dwarf).pcg	a4	1=2	2=5	3=2	4=2	5=1	6=2	7=3	8=1	1+2+3=9	1-7=18	1-8=19
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L7-3(fighter-cleric-dwarf).pcg	letter	1-7	got=Some(18)	sum=Some(17)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_L7-3(fighter-cleric-dwarf).pcg	letter	1-8	got=Some(19)	sum=Some(18)
+PAGES	code/testsuite/PCGfiles/35e_L7-3(fighter-cleric-dwarf).pcg	letter	1=2	2=5	3=2	4=2	5=1	6=2	7=3	8=1	1+2+3=9	1-7=18	1-8=19
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BarJack.pcg	a4	1-7	got=Some(14)	sum=Some(13)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BarJack.pcg	a4	1-8	got=Some(15)	sum=Some(14)
+PAGES	code/testsuite/PCGfiles/3e_BarJack.pcg	a4	1=2	2=4	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=7	1-7=14	1-8=15
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BarJack.pcg	letter	1-7	got=Some(14)	sum=Some(13)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BarJack.pcg	letter	1-8	got=Some(15)	sum=Some(14)
+PAGES	code/testsuite/PCGfiles/3e_BarJack.pcg	letter	1=2	2=4	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=7	1-7=14	1-8=15
+SUMMARY	files=8	saved=5	blocked=3	refused=0	characters=5	renders=110	warned=0	errors=0	not_additive=18
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Alice.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Fran.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Lauren.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/msrd_Ilyana.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/sf_mechanic_drone.pcg
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_dragonhide.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_dragonhide.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_dragonhide.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_dragonhide.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	build/install/pcgen/characters/CodeMonkey.pcg	a4	1-7	got=Some(14)	sum=Some(13)
+NOT_ADDITIVE	build/install/pcgen/characters/CodeMonkey.pcg	a4	1-8	got=Some(15)	sum=Some(14)
+PAGES	build/install/pcgen/characters/CodeMonkey.pcg	a4	1=1	2=5	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=7	1-7=14	1-8=15
+NOT_ADDITIVE	build/install/pcgen/characters/CodeMonkey.pcg	letter	1-7	got=Some(14)	sum=Some(13)
+NOT_ADDITIVE	build/install/pcgen/characters/CodeMonkey.pcg	letter	1-8	got=Some(15)	sum=Some(14)
+PAGES	build/install/pcgen/characters/CodeMonkey.pcg	letter	1=1	2=5	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=7	1-7=14	1-8=15
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BrdJoe.pcg	a4	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BrdJoe.pcg	a4	1-8	got=Some(13)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/3e_BrdJoe.pcg	a4	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BrdJoe.pcg	letter	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_BrdJoe.pcg	letter	1-8	got=Some(13)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/3e_BrdJoe.pcg	letter	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+SUMMARY	files=8	saved=3	blocked=5	refused=0	characters=3	renders=66	warned=0	errors=0	not_additive=10
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Gordon.pcg
+REFUSED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/none_PdfBuster.pcg	The PCGen import tool (pcg_import) refused the file: none_PdfBuster.pcg is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/sf_soldier.pcg
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_matdragonhide.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_matdragonhide.pcg	letter	1-7	got=Some(11)	sum=Some(10)
+NOT_ADDITIVE	scripts/oracle_harness/eqm-fixtures/leather_matdragonhide.pcg	letter	1-8	got=Some(12)	sum=Some(11)
+PAGES	scripts/oracle_harness/eqm-fixtures/leather_matdragonhide.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=11	1-8=12
+NOT_ADDITIVE	build/install/pcgen/characters/Everything.pcg	a4	1-7	got=Some(26)	sum=Some(21)
+NOT_ADDITIVE	build/install/pcgen/characters/Everything.pcg	a4	1-8	got=Some(27)	sum=Some(22)
+PAGES	build/install/pcgen/characters/Everything.pcg	a4	1=1	2=11	3=1	4=2	5=1	6=2	7=3	8=1	1+2+3=13	1-7=26	1-8=27
+NOT_ADDITIVE	build/install/pcgen/characters/Everything.pcg	letter	1-7	got=Some(27)	sum=Some(22)
+NOT_ADDITIVE	build/install/pcgen/characters/Everything.pcg	letter	1-8	got=Some(28)	sum=Some(23)
+PAGES	build/install/pcgen/characters/Everything.pcg	letter	1=1	2=12	3=1	4=2	5=1	6=2	7=3	8=1	1+2+3=14	1-7=27	1-8=28
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Bard.pcg	a4	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Bard.pcg	a4	1-8	got=Some(13)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/35e_Bard.pcg	a4	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Bard.pcg	letter	1-7	got=Some(13)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Bard.pcg	letter	1-8	got=Some(14)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/35e_Bard.pcg	letter	1=1	2=4	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=6	1-7=13	1-8=14
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Mallory.pcg	a4	1-7	got=Some(16)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Mallory.pcg	a4	1-8	got=Some(17)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/35e_Mallory.pcg	a4	1=1	2=4	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=6	1-7=16	1-8=17
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Mallory.pcg	letter	1-7	got=Some(16)	sum=Some(12)
+NOT_ADDITIVE	code/testsuite/PCGfiles/35e_Mallory.pcg	letter	1-8	got=Some(17)	sum=Some(13)
+PAGES	code/testsuite/PCGfiles/35e_Mallory.pcg	letter	1=1	2=4	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=6	1-7=16	1-8=17
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_CleElf.pcg	a4	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_CleElf.pcg	a4	1-8	got=Some(13)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/3e_CleElf.pcg	a4	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_CleElf.pcg	letter	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_CleElf.pcg	letter	1-8	got=Some(13)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/3e_CleElf.pcg	letter	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+SUMMARY	files=8	saved=5	blocked=2	refused=1	characters=5	renders=110	warned=0	errors=0	not_additive=18
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Bob.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Harold.pcg
+BLOCKED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/35e_Q-PsiCrystal.pcg
+REFUSED	/home/ubuntu/workspace/repos/pcgen/code/testsuite/PCGfiles/none_derth.pcg	The PCGen import tool (pcg_import) refused the file: none_derth.pcg is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)
+PAGES	scripts/oracle_harness/eqm-fixtures/outfit_baseline.pcg	a4	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+PAGES	scripts/oracle_harness/eqm-fixtures/outfit_baseline.pcg	letter	1=1	2=2	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=4	1-7=10	1-8=11
+NOT_ADDITIVE	build/install/pcgen/characters/Sorcerer.pcg	a4	1-7	got=Some(15)	sum=Some(13)
+NOT_ADDITIVE	build/install/pcgen/characters/Sorcerer.pcg	a4	1-8	got=Some(16)	sum=Some(14)
+PAGES	build/install/pcgen/characters/Sorcerer.pcg	a4	1=1	2=4	3=1	4=2	5=1	6=1	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+NOT_ADDITIVE	build/install/pcgen/characters/Sorcerer.pcg	letter	1-7	got=Some(15)	sum=Some(13)
+NOT_ADDITIVE	build/install/pcgen/characters/Sorcerer.pcg	letter	1-8	got=Some(16)	sum=Some(14)
+PAGES	build/install/pcgen/characters/Sorcerer.pcg	letter	1=1	2=4	3=1	4=2	5=1	6=1	7=3	8=1	1+2+3=6	1-7=15	1-8=16
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_FigFae.pcg	a4	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_FigFae.pcg	a4	1-8	got=Some(13)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/3e_FigFae.pcg	a4	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_FigFae.pcg	letter	1-7	got=Some(12)	sum=Some(11)
+NOT_ADDITIVE	code/testsuite/PCGfiles/3e_FigFae.pcg	letter	1-8	got=Some(13)	sum=Some(12)
+PAGES	code/testsuite/PCGfiles/3e_FigFae.pcg	letter	1=1	2=3	3=1	4=1	5=1	6=1	7=3	8=1	1+2+3=5	1-7=12	1-8=13
+NOT_ADDITIVE	code/testsuite/archive/PCGFiles/DrakelingSorc.pcg	a4	1-7	got=Some(16)	sum=Some(13)
+NOT_ADDITIVE	code/testsuite/archive/PCGFiles/DrakelingSorc.pcg	a4	1-8	got=Some(17)	sum=Some(14)
+PAGES	code/testsuite/archive/PCGFiles/DrakelingSorc.pcg	a4	1=1	2=3	3=1	4=3	5=1	6=1	7=3	8=1	1+2+3=5	1-7=16	1-8=17
+NOT_ADDITIVE	code/testsuite/archive/PCGFiles/DrakelingSorc.pcg	letter	1-7	got=Some(16)	sum=Some(13)
+NOT_ADDITIVE	code/testsuite/archive/PCGFiles/DrakelingSorc.pcg	letter	1-8	got=Some(17)	sum=Some(14)
+PAGES	code/testsuite/archive/PCGFiles/DrakelingSorc.pcg	letter	1=1	2=3	3=1	4=3	5=1	6=1	7=3	8=1	1+2+3=5	1-7=16	1-8=17
+SUMMARY	files=8	saved=4	blocked=3	refused=1	characters=4	renders=88	warned=0	errors=0	not_additive=12

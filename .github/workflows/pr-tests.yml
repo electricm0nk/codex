@@ -37,8 +37,17 @@ jobs:
       # 69 min (core) + 14 min (desktop) on job 123177169190. Local builds
       # are unchanged: this is a CI env var, not a Cargo.toml profile.
       CARGO_PROFILE_TEST_OPT_LEVEL: "1"
+      # Drop debuginfo: the ubuntu-latest runner disk filled during desktop shell
+      # tests (ld Bus error / No space left on device).
+      CARGO_PROFILE_TEST_DEBUG: "0"
+      CARGO_PROFILE_DEV_DEBUG: "0"
 
     steps:
+      - name: Free runner disk
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost "$AGENT_TOOLSDIRECTORY/CodeQL" || true
+          df -h /
+
       - uses: actions/checkout@v7
 
       - name: Install Linux build dependencies

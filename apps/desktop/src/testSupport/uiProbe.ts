@@ -76,6 +76,8 @@ export interface UiProbeSnapshot {
   targets: UiProbeTarget[];
   selects: UiProbeSelect[];
   dialogs: string[];
+  /** Every text area's current value: typed text that `bodyText` (innerText) does not include (SD-40 E3.6). */
+  fieldValues: string[];
   lastCommand?: UiProbeLastCommand;
 }
 
@@ -254,6 +256,7 @@ function buildSnapshot(root: Element): UiProbeSnapshot {
     targets: collectTargets(root),
     selects: collectSelects(root),
     dialogs: collectDialogs(root),
+    fieldValues: Array.from(root.querySelectorAll('textarea'), (el) => el.value),
   };
 }
 

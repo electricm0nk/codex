@@ -120,11 +120,26 @@ pub fn reconcile_installed_state_for(
     }
 
     let record = build_record(running, detect_install_kind_for(is_windows, running));
+    write_record(&path, &record)?;
+    Ok(SeedOutcome::Written(Box::new(record)))
+}
+
+fn write_record(path: &Path, record: &InstalledState) -> Result<(), String> {
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent).map_err(|err| format!("cannot create {}: {err}", parent.display()))?;
     }
-    write_atomic_json(&path, &record).map_err(|err| format!("cannot write {}: {err}", path.display()))?;
-    Ok(SeedOutcome::Written(Box::new(record)))
+    write_atomic_json(path, record).map_err(|err| format!("cannot write {}: {err}", path.display()))
+}
+
+/// Make `installed-state.json` describe `running`, whatever record is already there.
+///
+/// For the AppImage self-install (`self_install.rs`): the app has just copied itself to a new path,
+/// so an AppImage record naming the old path must be replaced, though `reconcile_installed_state`
+/// leaves AppImage records to the verifier.
+pub fn overwrite_installed_state(config_dir: &Path, running: &RunningInstall) -> Result<InstalledState, String> {
+    let record = build_record(running, detect_install_kind(running));
+    write_record(&config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME), &record)?;
+    Ok(record)
 }
 
 /// Gather the running build's identity. `appimage_env` is `$APPIMAGE`; when present it is the
@@ -150,7 +165,7 @@ pub fn gather_running_install(
 }
 
 /// Channel this build publishes to. Overridable at compile time for a beta/stable lane.
-const BUILD_CHANNEL: &str = match option_env!("CODEX_UPDATE_CHANNEL") {
+pub(super) const BUILD_CHANNEL: &str = match option_env!("CODEX_UPDATE_CHANNEL") {
     Some(channel) => channel,
     None => "alpha",
 };
@@ -319,6 +334,25 @@ mod tests {
         let outcome = reconcile_installed_state(&config, &r).unwrap();
         assert_eq!(outcome, SeedOutcome::Unchanged);
         assert_eq!(read_record(&config).artifact_sha256, "sha-a");
+    }
+
+    #[test]
+    fn overwrite_replaces_an_appimage_record_that_names_another_path() {
+        let config = temp_config("overwrite");
+        let mut download = deb_running("sha-download", "0.16.140");
+        download.managed_executable_path = PathBuf::from("/home/u/Downloads/Codex_0.16.140_amd64.AppImage");
+        download.appimage_path = Some(download.managed_executable_path.clone());
+        reconcile_installed_state(&config, &download).unwrap();
+        let mut installed = download.clone();
+        installed.managed_executable_path = PathBuf::from("/home/u/Codex/Codex.AppImage");
+        installed.appimage_path = Some(installed.managed_executable_path.clone());
+        installed.artifact_sha256 = "sha-copy".into();
+        let record = overwrite_installed_state(&config, &installed).unwrap();
+        assert_eq!(read_record(&config), record);
+        assert_eq!(record.managed_executable_path, PathBuf::from("/home/u/Codex/Codex.AppImage"));
+        assert_eq!(record.artifact_sha256, "sha-copy");
+        assert_eq!(record.install_kind, InstallKind::AppImage);
+        assert!(record.update_eligible);
     }
 
     #[test]

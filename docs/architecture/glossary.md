@@ -400,8 +400,9 @@ strict lattice, highest-bar-wins), or `Ambiguous` — determined once, corpus-wi
 
 The GM's grants and house-rule records for one character, saved as `custom.json` beside it. An
 ability grant is applied to the saved ability score; hit point and skill point grants are added by
-the sheet; custom feats, equipment, spells and magic devices are listed and printed but not computed
-from. See [desktop-app.md](./desktop-app.md).
+the sheet; custom feats, spells and magic devices are listed and printed but not computed from.
+Custom equipment may state bonuses and a slot, and a worn one's bonuses reach the sheet's numbers;
+the file also holds the Overrides flags. See [desktop-app.md](./desktop-app.md).
 
 ## Manage dialog
 

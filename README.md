@@ -1,292 +1,221 @@
 # Codex
 
-Codex is a Rust + Tauri replacement effort for PCGen. PCGen is the heritage application and oracle substrate; Codex is the new program and implementation surface.
+Codex (Campaign Codex) is a desktop app that builds tabletop RPG characters and prints their
+character sheets. It is a Rust + Tauri app with a React front end.
 
-> Last verified: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5 closure pass; figures from `class_census --json`, `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`).
+- Game systems: Pathfinder 1e (the full product), Starfinder 1e and Cyberpunk RED.
+- It creates, levels up, equips and saves characters, and prints a PDF sheet.
+- It also has a DM toolkit, an encounter builder and a campaign manager.
 
-**Architecture and design documentation** for anyone — human or agent — working in this repo lives at [`docs/architecture/`](docs/architecture/README.md). Start there for the system map, module boundaries, design conventions, and the current real-vs-stubbed capability status. First stop for setup: [`docs/architecture/README.md`](docs/architecture/README.md) (doc-set index and reading paths) and [`docs/architecture/getting-started.md`](docs/architecture/getting-started.md) (toolchain setup, the full build/test/run command set, and `scripts/verify.sh`).
+PCGen data is converted ahead of time into Codex's own format, and PCGen is used as a test
+oracle. The app itself does not run PCGen code.
 
-## Current state
+What works today, and what does not, is in
+[`docs/architecture/status.md`](docs/architecture/status.md). That file is kept up to date at
+every release. This README does not repeat its figures.
 
-**Current truthful posture:** Codex's PF1e compute engine is not a single-class proof slice; it covers the whole corpus it has ingested — all 37 books of the converted sheet-rule package (49,450 records, 0 refused). The class census merges every engine registry into 137 distinct class ids corpus-wide: every one of the 63 non-prestige ids reaches a fully `Computed` sheet at every level of its own sweep (63 of 63 non-prestige, 0 blocked — Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Pathfinder Unchained, Ultimate Combat, the occult, intrigue, magic, psionic and wilderness classes, and the CRB NPC classes alike); the 74 prestige ids are Blocked alone by the game rule and 68 of 74 reach `Computed` in a carrier mix; the multiclass mix panel is 185 of 185 `Computed` (`cargo run --locked -j 8 --bin class_census -- --json <path>`, 2026-09-26; the census holds race fixed to one Human fixture, so it proves every level, not every race — see status.md for the exact scope). The desktop app is a real, wired, end-to-end character-creation/leveling/equipment/DM-toolkit/encounter-builder/campaign-manager product; its Create picker offers 59 classes from the engine's own roster and its level-up offers every prestige class with the entry requirements printed, verified by 76 automated UI-smoke rows (66 of the first 69 green, 3 native file dialogs manual; the 7 class-roster/prestige rows 7 of 7 green). **Separately** — this is a different measurement and must not be conflated with the compute claim above (status.md says so explicitly) — the corpus's ingestion/classification state is a frozen snapshot at 100% of 49,450 catalogued units as of 2026-09-15 (see status.md's "Corpus coverage"): that figure answers "is every corpus unit present and classified," not "does the compute engine produce a value for it today." See [`docs/architecture/status.md`](docs/architecture/status.md) for the evidence-backed capability matrix and the named exceptions: 6 of 74 prestige carrier mixes stay Blocked on an oracle save formula that states no PF1 save (closable only by a book-cited override, FS-15), and 4 of the 63 Computed non-prestige ids — the Ex-* states ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin — are census-only and never offered at creation, by ruling; the Create picker offers the other 59 of 63.
+## Install the app
 
-The maintained, closure-updated statement of what is real vs stubbed today is
-[`docs/architecture/status.md`](docs/architecture/status.md) — it supersedes any
-snapshot list this README used to carry. The full verification command set is
-[`docs/architecture/testing.md`](docs/architecture/testing.md) and
-[`docs/architecture/getting-started.md`](docs/architecture/getting-started.md). This README does
-not grant implementation authority by itself; use the bounded handoff or source
-STC for scoped work.
+Download the newest release from the
+[Releases page](https://github.com/electricm0nk/codex/releases). All releases so far are
+**alpha** pre-releases (`gh release list` shows the tags as `alpha-v<version>-<sha>`).
 
-## Repository layout
+Each release has one file per platform:
 
-```text
-codex/
-  src/
-    rules_core/          # PF1e compute engine: rule-data tables, pilot compute chassis, boundary contract
-    homebrew_authoring/  # homebrew package authoring + preview surfaces (e.g. the Guard Stance proof package)
-    saved_character/     # saved-character on-disk persistence
-    campaign/             # campaign on-disk persistence
-  crates/codex-ingest/    # PCGen .pcc/.lst corpus ingest + oracle-parity comparator — dev-dependency of the desktop shell only, never a runtime dependency of the live sheet engine
-  tests/                  # integration test suite (`cargo test --locked`)
-  apps/desktop/           # React + Tauri desktop app — the real, wired character-sheet product surface
-  docs/release/           # every SD-NN bundle's full docs, including release-notes.md — see below
-  AGENTS.md               # repo-root conduct surface for coding harnesses
-  README.md               # first-contact onboarding surface
+| Platform | File | Notes |
+|---|---|---|
+| Linux (Debian/Ubuntu, x86-64) | `Codex_<version>_amd64.deb` | Recommended for Linux. |
+| Linux (any distro, x86-64) | `Codex_<version>_amd64.AppImage` | Rename it before first launch (see below). |
+| macOS (Apple Silicon only) | `Codex_<version>_aarch64.dmg` | Not signed. There is no Intel Mac build. |
+| Windows (x64) | `Codex_<version>_x64-setup.exe` | Not signed. |
+
+`checksums.sha256` in the same release lists the SHA-256 of every file.
+
+### Linux (.deb)
+
+```bash
+sudo apt install ./Codex_<version>_amd64.deb
 ```
 
-### Documentation structure
+Then open **Codex** from your app menu.
 
-`programs/` does not exist in this repo (removed 2026-07-20). Every "SD-NN" (spec-domain) work bundle's documentation — including SD-13/16/17's legacy pre-`docs/release/`-convention artifacts and every bundle's CI-contracted `release-notes.md` — lives in one place:
+### Linux (AppImage, any distro: Arch, Fedora, ...)
 
-- **`docs/release/SD-NN/`** — the canonical home for a bundle's full planning and execution documentation: `scope-draft.md`, `decisions.md`, `epic-breakdown.md`, `loop-instruction.md`, `progress.md`, `receipts.md`, per-cycle `artifacts/`, and `release-notes.md`. One folder per bundle, named exactly `SD-NN`. Copy `docs/release/template/template.md` when starting a new bundle; see `docs/release/README.md` for the full layout rule.
-- **`docs/release/SD-NN/release-notes.md` is also a regex-locked CI/schema contract** (`^docs/release/[^/]+/release-notes\.md$`) consumed by `tools/release/`, `scripts/release/`, `publish-tester-release.yml`, and the desktop app's auto-update pipeline. Required section headers: `Summary`, `User-Visible Changes`, `Defects Fixed`, `Operational Notes`, `Verification Evidence`, `Known Issues`, `Update Eligibility` (enforced by `tools/release/check_release_manifest.py`). Note: ~25 already-published `update-manifest.json` files on the live `update-index` branch still reference the pre-2026-07-20 `programs/codex/requirements/` path with a locked content hash — those are not retroactively rewritten (a CI-only-write surface), so their "view release notes" binding is permanently stale by design.
-- **`docs/release/SD-13/`, `SD-16/`, `SD-17/`** hold only the legacy `artifacts/` (and, for SD-16, `tranche-2.5/manifest.yaml`) that used to live under `programs/codex/requirements/` — relocated 2026-07-20, kept as-is otherwise (no retroactive full 10-file mirror for these pre-`docs/release/`-convention bundles).
-- **`docs/doctrine-external/`** — a deliberate stub mirror of operator-side governance docs (`spec-domain-lifecycle.md`, `identifier-discipline.md`) so relative links from `docs/release/SD-NN/*.md` resolve in a cold clone. Not for new content.
-- **The operator's separate, out-of-repo `/home/workspace/programs/codex/requirements/` planning-intake path** referenced in `docs/release/README.md` is unrelated to this repo's directory structure — it lives entirely on the operator's machine, outside any git clone. See that file's Cross-reference section for the full distinction.
+Rename the file **before** the first launch. The in-app updater writes each new version over the
+same file, so a version number in the name would soon be wrong.
 
-## Getting started
+```bash
+mkdir -p ~/Codex
+mv Codex_<version>_amd64.AppImage ~/Codex/Codex.AppImage
+chmod +x ~/Codex/Codex.AppImage
+~/Codex/Codex.AppImage
+```
 
-These steps are grounded for the currently verified Linux desktop path (Ubuntu 24.04-style Tauri prerequisites). If you are onboarding on another platform, do not assume parity until you have repeated the proof there.
+If it fails with a FUSE error, install FUSE 2: `sudo pacman -S fuse2` (Arch),
+`sudo apt install libfuse2t64` (Ubuntu 24.04+) or `sudo dnf install fuse-libs` (Fedora).
+If the window opens blank, start it with
+`WEBKIT_DISABLE_DMABUF_RENDERER=1 ~/Codex/Codex.AppImage`.
 
-### 1. Install Linux system dependencies
+### macOS
+
+1. Open the `.dmg` and drag **Codex** to **Applications**.
+2. The app is not signed, so macOS blocks the first launch. Clear the block with:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/Codex.app
+   ```
+
+   Or open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
+
+### Windows
+
+1. Run `Codex_<version>_x64-setup.exe`.
+2. The installer is not signed. If SmartScreen shows "Windows protected your PC", click
+   **More info**, then **Run anyway**.
+
+### Updates
+
+The app checks for updates itself. It reads the release feed on the `update-index` branch (see
+[Long-lived infrastructure branches](#long-lived-infrastructure-branches)). The update panel
+lets you pick a channel (`alpha`, `beta`, `stable`) and install a newer build. Today only `alpha`
+has builds.
+
+## Build from source
+
+This path is verified on Ubuntu 24.04. Other platforms build in CI
+(`.github/workflows/publish-tester-release.yml`) but are not verified for local development.
+The full guide, with every gotcha, is
+[`docs/architecture/getting-started.md`](docs/architecture/getting-started.md).
+
+### 1. System packages
 
 ```bash
 sudo apt update
-sudo apt install libwebkit2gtk-4.1-dev \
-  build-essential \
-  curl \
-  wget \
-  file \
-  libxdo-dev \
-  libssl-dev \
-  libayatana-appindicator3-dev \
-  librsvg2-dev \
-  pkg-config
+sudo apt install -y libwebkit2gtk-4.1-dev build-essential curl wget file \
+  libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev pkg-config
 ```
 
-### 2. Install Rust
+### 2. Rust (stable, via rustup)
 
 ```bash
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 . "$HOME/.cargo/env"
-```
-
-Verify:
-
-```bash
 cargo --version
-rustc --version
 ```
 
-### 3. Install Node.js LTS and verify npm
+Keep `~/.cargo/bin` first on your `PATH`, so a system `cargo` does not shadow rustup's.
 
-Install Node.js LTS using your normal machine bootstrap path, then verify:
+### 3. Node.js 22 LTS
+
+Install Node.js 22 (CI uses `node-version: '22'`), then check:
 
 ```bash
 node --version
 npm --version
 ```
 
-GE-10 was verified with:
-- `node v22.23.1`
-- `npm 10.9.8`
-
-### 4. Install repo-local desktop dependencies
+### 4. Front-end dependencies
 
 ```bash
 cd apps/desktop
 npm ci
 ```
 
-No separate global Tauri CLI install is required for the repo walkthrough; use the repo-local CLI via `npx tauri ...`.
+Use `npm ci`, not `npm install`, so you get the exact locked versions. The Tauri CLI comes with
+these dependencies; run it as `npx tauri ...`. You do not need a global install.
 
-Why `npm ci` here:
-- this is the correct clean-checkout command for a lockfile-governed repo
-- it reproduces the committed dependency set instead of opportunistically updating it
-- use `npm install` only when you intentionally mean to change or refresh dependencies
+### 5. Run the app
 
-### 5. Build the desktop shell up front
-
-Run this before later demo steps so you do not pause to install or build mid-walkthrough:
-
-```bash
-cd apps/desktop
-npm run typecheck
-npm run build
-npm run tauri:check
-npx tauri build --debug
-```
-
-Expected build artifact:
-
-```text
-apps/desktop/src-tauri/target/debug/codex
-```
-
-## Build and verification surfaces
-
-### Root crate test suite
-
-From the repo root:
-
-```bash
-cargo test
-```
-
-### Focused test slices, by grand-epic origin
-
-```bash
-cargo test ge06_    # rules-engine / pilot-compute tests
-cargo test ge08_    # homebrew-authoring (Guard Stance) tests
-```
-
-`scripts/verify.sh` is the one gate this repo trusts for a full pass (root suite, `crates/codex-ingest`,
-the desktop Rust crate, lint, and the frontend) — see
-[`docs/architecture/getting-started.md`](docs/architecture/getting-started.md) §"`scripts/verify.sh`"
-for the full stage list and the nohup-and-poll pattern a full run needs (it takes roughly 1-2 hours).
-
-### Desktop/frontend verification
-
-```bash
-cd apps/desktop
-npm run typecheck
-npm test
-npm run build
-npm run tauri:check
-npx tauri build --debug
-```
-
-## Run the app
-
-### Headless test walkthrough
-
-1. Complete the getting-started steps above.
-2. Run `cargo test` from the repo root.
-3. Run `cargo test ge06_` to verify the rules-engine / pilot-compute tests.
-4. Run `cargo test ge08_` to verify the homebrew-authoring (Guard Stance) tests.
-
-### GUI walkthrough
-
-From a **graphical Linux desktop session**:
+From a graphical desktop session:
 
 ```bash
 cd apps/desktop
 npx tauri dev
 ```
 
-Or run the built binary directly:
+### 6. Build an installer (optional)
 
 ```bash
-apps/desktop/src-tauri/target/debug/codex
+cd apps/desktop
+npx tauri build
 ```
 
-Expected current behavior:
-- the app opens on the real Character Hub — create, load, clone, and level up a character; the
-  create-flow's picker reads the engine's class roster (`list_class_creation_roster`): it offers every
-  non-prestige class the class census measures `Computed` at every level of its own sweep and that
-  states a hit die — 59 classes (63 of 63 non-prestige Computed, less the 4 census-only Ex-* states;
-  `class_census --json`, `roster_offered=59`, 2026-09-26). Prestige classes are offered at level-up
-  with their entry requirements printed met/unmet, never blocked. See
-  [`docs/architecture/status.md`](docs/architecture/status.md)'s capability matrix for the classes that
-  do **not** reach a fully computed sheet (every prestige class taken alone; 6 of 74 prestige carrier mixes)
-- the DM Toolkit, encounter builder, campaign manager, and equipment/spell/class/race/monster
-  catalogs are all real, wired features reachable from here, not stubs or placeholders
-- the GE-08 homebrew authoring workbench (the Guard Stance proof package's validate/persist/preview
-  round trip) is one real feature within this surface, not the whole app
+The installers land in `apps/desktop/src-tauri/target/release/bundle/`. A release build takes a
+long time and a lot of disk space.
 
-For driving the app without a graphical session, see
-[`docs/architecture/getting-started.md`](docs/architecture/getting-started.md) §"Running the desktop
-app" — the `run-desktop` skill launches and drives it under a virtual (Xvfb) display, and is how the
-76-row UI-smoke regression suite cited in
-[`docs/architecture/status.md`](docs/architecture/status.md) is produced.
+`npm run build` (which `tauri build` calls) first runs `scripts/gen-corpus-bundle.mjs`. That
+script copies the git-tracked game data in `data/corpus/` into the app bundle.
 
-## Known limitations
+## Test
 
-- the 4 Ex-* states (ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin) are Computed but
-  census-only — never offered at creation, by operator ruling (0 of the other 59 Computed
-  non-prestige classes are missing from the Create picker)
-- no prestige class reaches `Computed` taken alone (74 of 74 Blocked on
-  `prestige_class.requires_base_class_levels`, the game rule); 68 of 74 reach `Computed` in a carrier
-  mix, and the other 6 are Blocked on an unrecognized source save formula (FS-15) — see
-  [`docs/architecture/status.md`](docs/architecture/status.md)'s class-coverage table for the exact
-  figures and evidence
-- the desktop app offers 59 classes and reads their class facts from the engine (SD-36 F6): 0 of 59
-  print HP `Unknown`; weapon proficiency and caster level answered for 59 of 59; class skills for 50
-  of 59 (the other 9, the ACG classes, print `Class skills Unknown` with the engine's reason — an
-  unresolved `Class|<Class>` edge in the converted package); 0 hand-kept class tables in the desktop
-  — see `docs/architecture/status.md` §"Known gaps and stubs"
-- multiclass joins any class with a chassis (mix panel 185 of 185 `Computed`); a member that cannot
-  join is named (`multiclass.class_unsupported`, `multiclass.save_shape.*`)
-- character level is capped at 20, matching PF1's own rule; the engine refuses level 21+ rather
-  than silently accepting it
-- only the Linux desktop onboarding/build path has been verified; do not assume parity on another
-  platform until you have repeated the proof there
+```bash
+cargo test --locked                                  # root crate, from the repo root
+(cd apps/desktop/src-tauri && cargo test --locked)   # desktop Rust crate
+(cd apps/desktop && npm run typecheck && npm test)   # front end
+```
 
-See [`docs/architecture/status.md`](docs/architecture/status.md) for the full evidence-backed
-capability matrix and every limitation's citation.
+The PCGen oracle checkout is **not** needed for these. Tests that need it skip themselves.
+To fetch it for ingest work, run `scripts/fetch-pcgen-oracle.sh`.
+
+`scripts/verify.sh` is the one full gate (all crates, lint and the front end). A full run takes
+hours. See [`docs/architecture/getting-started.md`](docs/architecture/getting-started.md)
+§"`scripts/verify.sh`" for how to run it, and
+[`docs/architecture/testing.md`](docs/architecture/testing.md) for the test layout.
+
+## Repository layout
+
+```text
+codex/
+  src/                  # rules engine (rules_core), saved characters, campaigns, homebrew authoring
+  crates/codex-ingest/  # PCGen converter + oracle-parity harness (tool side only, never in the app)
+  apps/desktop/         # the desktop app: React front end + Tauri shell (src-tauri/)
+  data/                 # converted game data (corpus, sheet_rules, starfinder-1e, cyberpunk-red, ...)
+  tests/                # root integration tests
+  scripts/              # verify.sh, oracle fetch, corpus bundle and other tooling
+  tools/release/        # release-manifest tooling used by CI
+  schemas/              # JSON schemas (rules, update feed)
+  site/                 # public status site
+  docs/architecture/    # current-state docs: start here
+  docs/release/         # one folder per work bundle (SD-NN-<slug>), with release notes
+  AGENTS.md             # rules for coding agents in this repo
+```
+
+Docs to read first:
+
+- [`docs/architecture/README.md`](docs/architecture/README.md): the doc index and reading paths.
+- [`docs/architecture/status.md`](docs/architecture/status.md): what is real, and the known gaps.
+- [`docs/release/README.md`](docs/release/README.md): how the work-bundle folders are laid out.
+
+Each bundle's `docs/release/<bundle>/release-notes.md` is also a CI contract.
+`tools/release/check_release_manifest.py` checks its required section headers.
 
 ## Troubleshooting
 
 ### `npm run typecheck` fails with `sh: 1: tsc: not found`
 
-Root cause:
-- the desktop package expects `typescript` from the local project install
-- `typescript` is declared in `apps/desktop/package.json` as a devDependency
-- during `npm run`, npm automatically exposes `node_modules/.bin/tsc`
-- if `tsc` is missing, the usual cause is that `npm install` was never run in `apps/desktop`, or devDependencies were omitted during install
-
-Recovery:
+The local dev dependencies are missing. Reinstall them:
 
 ```bash
 cd apps/desktop
 rm -rf node_modules
 npm ci
-npm run typecheck
 ```
 
-If your environment omitted devDependencies, force them back in:
+### Desktop Rust tests fail with `resolved to /usr/lib/Codex/...`
+
+The installed `.deb` puts game data in `/usr/lib/Codex`, and the tests find it before your
+checkout. Point the tests at your checkout:
 
 ```bash
-cd apps/desktop
-npm install --include=dev
-npm run typecheck
+cd apps/desktop/src-tauri
+CODEX_REPO_ROOT=/path/to/your/codex/checkout cargo test --no-fail-fast
 ```
 
-### `npx tauri dev` keeps waiting for `http://localhost:1420/`
+### Build errors that look like a compiler bug
 
-Root cause:
-- `src-tauri/tauri.conf.json` expects the frontend dev server at `http://localhost:1420`
-- if Vite starts on its default port instead, Tauri waits forever for the wrong URL
-
-Repo fix:
-- `apps/desktop/vite.config.ts` must explicitly set the dev server port to `1420`
-
-Expected working behavior after the fix:
-
-```text
-VITE ... ready
-➜  Local:   http://localhost:1420/
-```
-
-If your local checkout still starts Vite on `5173`, pull the latest repo changes or update `vite.config.ts` to pin:
-
-```ts
-server: { port: 1420, strictPort: true }
-```
-
-### App window shows `package root does not exist` for `tests/fixtures/ge08/guard-stance-package`
-
-Root cause:
-- the GE-08 workbench request passes a repo-root-relative fixture path
-- if the Tauri command resolves that path from the process current directory instead of the Codex repo root, the app looks under `apps/desktop/src-tauri/` and fails
-
-Repo fix:
-- `apps/desktop/src-tauri/src/main.rs` must resolve repo-relative package roots from `CARGO_MANIFEST_DIR` back to the Codex repo root, not from `std::env::current_dir()`
-
-Expected working behavior after the fix:
-- the app window loads the Guard Stance package successfully
-- the workbench shows package state, preview state, and the snapshot payload instead of a missing-path error
+Errors like `ld terminated with signal 7 [Bus error]` or "couldn't create a temp dir" usually
+mean the disk is full or `CARGO_TARGET_DIR` is stale. Check `df -h` and `unset CARGO_TARGET_DIR`
+first.
 
 ## Long-lived infrastructure branches
 
@@ -297,20 +226,6 @@ Expected working behavior after the fix:
 ## Onboarding and contribution rules
 
 - read `AGENTS.md` before taking implementation work
-- treat this repo as the implementation surface and `docs/release/SD-NN/` as the per-bundle planning/control plane (see "Documentation structure" above)
+- treat this repo as the implementation surface and `docs/release/<bundle>/` as the per-bundle planning/control plane (see [Repository layout](#repository-layout))
 - do not implement from a spec domain or README alone; use a bounded handoff or source STC
 - prefer the smallest compliant change and verify it with real commands
-
-## Related authority surfaces
-
-The broader program-level governance and demo/onboarding packet live in the lab
-workspace outside this repository. Only the artifacts a bounded slice needs are
-mirrored here, under `docs/release/SD-NN/` — every bundle, current-convention
-(SD-18 onward) and legacy (SD-13, SD-16, SD-17) alike:
-
-```text
-docs/release/SD-22/  # current-convention example
-docs/release/SD-13/  # legacy example (artifacts/ only, relocated 2026-07-20 from programs/codex/requirements/)
-```
-
-Those surfaces are the planning and onboarding control plane. This repo is the implementation and proof surface.

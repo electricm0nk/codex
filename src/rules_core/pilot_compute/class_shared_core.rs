@@ -43,16 +43,41 @@ impl PilotBaseChassisComputation {
         package: &crate::rules_core::sheet_rule::SheetRulePackage,
         extra_race_traits: &[String],
     ) -> Self {
-        use crate::rules_core::sheet_rule::{render_sheet, CharacterFacts, HeldSeed};
-        let mut seed = HeldSeed::from_character(input, &self);
-        seed.race_traits.extend(extra_race_traits.iter().cloned());
-        // SD-36 F3c4: the character's Path-A picks linked to the converted options they name.
-        let facts = CharacterFacts::from_character(input, &self).with_linked_picks(package, &seed);
-        self.sheet_lines = render_sheet(package, &seed, &facts);
+        let (seed, facts) = self.sheet_rule_seed(input, package, extra_race_traits);
+        self.sheet_lines = crate::rules_core::sheet_rule::render_sheet(package, &seed, &facts);
         drop_the_bonus_of_an_item_not_worn(&mut self.sheet_lines, input, package);
         // SD-36 F6b: a class line's hit die is the one its hit points are computed from.
         super::hit_die_source::print_hit_die_lines(&mut self.sheet_lines);
         self
+    }
+
+    /// SD-40 E2.28: the lines of the held `print: false` rules over the same held set as
+    /// [`with_sheet_rules`](Self::with_sheet_rules) (`sheet_rule::render_held_unprinted`): never
+    /// printed, read only for their conditional words (`conditional_notes`).
+    pub fn held_unprinted_lines(
+        &self,
+        input: &CharacterInput,
+        package: &crate::rules_core::sheet_rule::SheetRulePackage,
+        extra_race_traits: &[String],
+    ) -> Vec<crate::rules_core::sheet_rule::SheetLine> {
+        let (seed, facts) = self.sheet_rule_seed(input, package, extra_race_traits);
+        crate::rules_core::sheet_rule::render_held_unprinted(package, &seed, &facts)
+    }
+
+    /// The held-set seed and facts for this computation: the character's own selections plus the
+    /// class-feature records this computation grounded, plus `extra_race_traits`.
+    fn sheet_rule_seed(
+        &self,
+        input: &CharacterInput,
+        package: &crate::rules_core::sheet_rule::SheetRulePackage,
+        extra_race_traits: &[String],
+    ) -> (crate::rules_core::sheet_rule::HeldSeed, crate::rules_core::sheet_rule::CharacterFacts) {
+        use crate::rules_core::sheet_rule::{CharacterFacts, HeldSeed};
+        let mut seed = HeldSeed::from_character(input, self);
+        seed.race_traits.extend(extra_race_traits.iter().cloned());
+        // SD-36 F3c4: the character's Path-A picks linked to the converted options they name.
+        let facts = CharacterFacts::from_character(input, self).with_linked_picks(package, &seed);
+        (seed, facts)
     }
 }
 

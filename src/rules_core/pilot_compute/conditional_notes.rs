@@ -34,9 +34,14 @@
 //!    or "against" a maneuver, -> combat maneuver defense; the rest -> combat maneuver bonus; a
 //!    note lands in one of the two, never both.
 //!
+//! 4. **Held `print: false` rules** (SD-40 E2.28). A held rule whose value folds into a total and
+//!    prints no line (ACG Vermin Focus centipede) is evaluated with the same gate and slot fill
+//!    (`sheet_rule::render_held_unprinted`) and its Aspect entries are gathered by rules 2 and 3;
+//!    rule 1 reads printed lines only.
+//!
 //! Not gathered (named remainder): Aspect `CombatBonus` entries naming no combat maneuver (attack
 //! and AC against a named foe, e.g. Defensive Training); encumbrance (`BonusTarget` has no
-//! carrying-capacity target); a held rule with `print: false` (it renders no sheet line).
+//! carrying-capacity target).
 
 use crate::rules_core::sheet_rule::{BonusTarget, ProseFamily, Save, SheetLine, SheetRulePackage};
 
@@ -176,14 +181,16 @@ fn gathered_aspect(family: &str) -> bool {
     SAVE_ASPECTS.contains(&family) || [REFLEX_ASPECT, WILL_ASPECT, AC_ASPECT, COMBAT_ASPECT].contains(&family)
 }
 
-/// The conditional notes over a character's rendered `lines` (see the module doc).
-pub fn conditional_notes(package: &SheetRulePackage, lines: &[SheetLine]) -> ConditionalNotes {
+/// The conditional notes over a character's rendered `lines` and the lines of its held
+/// `print: false` rules, `unprinted` (`sheet_rule::render_held_unprinted`; see the module doc).
+pub fn conditional_notes(package: &SheetRulePackage, lines: &[SheetLine], unprinted: &[SheetLine]) -> ConditionalNotes {
     let mut out = ConditionalNotes::default();
-    for line in lines {
+    let printed = lines.iter().map(|line| (line, true));
+    for (line, is_printed) in printed.chain(unprinted.iter().map(|line| (line, false))) {
         let Some(rule) = package.rule(&line.id) else { continue };
-        // Rule 1: a situational bonus line on one of the eight totals.
+        // Rule 1: a situational bonus line on one of the eight totals (printed lines only).
         let situational_list = match (&line.condition, target_list(rule.target.as_ref())) {
-            (Some(condition), Some(list)) => {
+            (Some(condition), Some(list)) if is_printed => {
                 out.push(
                     list,
                     ConditionalNote {
@@ -252,7 +259,8 @@ mod tests {
         let race_traits: Vec<String> = race_traits.iter().map(|t| (*t).to_owned()).collect();
         let computed =
             crate::rules_core::pilot_compute::compute_pilot_base_chassis(input).with_sheet_rules(input, package(), &race_traits);
-        conditional_notes(package(), &computed.sheet_lines)
+        let unprinted = computed.held_unprinted_lines(input, package(), &race_traits);
+        conditional_notes(package(), &computed.sheet_lines, &unprinted)
     }
 
     const HARDY_WORDS: &str = "+2 racial bonus on saving throws against poison, spells, and spell-like abilities.";
@@ -361,6 +369,42 @@ mod tests {
         assert_eq!(combat_maneuver_list("+1 on combat maneuver checks against dragons"), Some(List::CombatManeuverBonus), "'dragons' is not 'drag'");
     }
 
+    const CENTIPEDE: &str = "advanced_class_guide:class_feature:verminous_hunter_vermin_focus_centipede";
+
+    /// SD-40 E2.28: a held `print: false` rule's gathered Aspect entries. ACG p.130, Verminous
+    /// Hunter, Vermin Focus (centipede): "+2 bonus to CMD against pull, push, reposition, and trip
+    /// combat maneuvers". The converted record is `print: false` (its Climb bonus folds into the
+    /// skill total), so it renders no sheet line; its `CombatBonus` entry still lands in
+    /// `combat_maneuver_defense`, once, with the slot filled at hunter level 1.
+    #[test]
+    fn conditional_notes_gather_held_unprinted_rules() {
+        use crate::rules_core::character_input::SelectedChoice;
+        use crate::rules_core::sheet_rule::{render_held_unprinted, render_sheet, CharacterFacts, HeldSeed};
+        let mut hunter = census("hunter", 1);
+        hunter.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: "choice:verminous_hunter_vermin_focus".to_owned(),
+            selection_id: "class_feature:verminous_hunter_vermin_focus_centipede".to_owned(),
+        });
+        let computed = crate::rules_core::pilot_compute::compute_pilot_base_chassis(&hunter);
+        let mut seed = HeldSeed::from_character(&hunter, &computed);
+        // No character-record pick holds an archetype's sheet rule today (`choice:archetype` feeds
+        // the archetype resolver, not the held set): the test holds Verminous Hunter by id.
+        seed.rule_ids.push("advanced_class_guide:class_feature:hunter_archetype_verminous_hunter".to_owned());
+        let facts = CharacterFacts::from_character(&hunter, &computed).with_linked_picks(package(), &seed);
+        let printed = render_sheet(package(), &seed, &facts);
+        assert!(printed.iter().all(|l| l.id != CENTIPEDE), "print: false renders no sheet line");
+        let unprinted = render_held_unprinted(package(), &seed, &facts);
+        let notes = conditional_notes(package(), &printed, &unprinted);
+        let centipede = ConditionalNote {
+            label: "Centipede".to_owned(),
+            value: String::new(),
+            condition: "+2 on CMD against pull, push, reposition, and trip combat maneuvers".to_owned(),
+            rule_id: CENTIPEDE.to_owned(),
+        };
+        assert_eq!(notes.combat_maneuver_defense, vec![centipede], "{notes:#?}");
+        assert!(notes.combat_maneuver_bonus.iter().all(|n| n.rule_id != CENTIPEDE), "{notes:#?}");
+    }
+
     /// The save an Aspect entry's words name picks its list; no name means all three.
     #[test]
     fn conditional_notes_route_save_aspects_by_the_words() {
@@ -407,9 +451,17 @@ mod tests {
                             segment.pieces.iter().filter_map(|p| if let ProsePiece::Text(t) = p { Some(t.as_str()) } else { None }).collect();
                         if combat_maneuver_list(&words).is_some() {
                             *by_target.entry("combat maneuver entries").or_default() += 1;
+                            if !rule.print {
+                                *by_target.entry("combat maneuver entries on print: false rules").or_default() += 1;
+                            }
                         }
                     }
-                    ProseFamily::Aspect(name) if gathered_aspect(name) => *by_target.entry("aspect entries").or_default() += 1,
+                    ProseFamily::Aspect(name) if gathered_aspect(name) => {
+                        *by_target.entry("aspect entries").or_default() += 1;
+                        if !rule.print {
+                            *by_target.entry("aspect entries on print: false rules").or_default() += 1;
+                        }
+                    }
                     _ => {}
                 }
             }
@@ -426,6 +478,10 @@ mod tests {
             // replan-r2/census.py (c): "of the 314 CombatBonus aspects 22 name CMB, CMD or combat
             // maneuver"; situational Cmb 0, Cmd 0 (no entry).
             ("combat maneuver entries", 22),
+            // SD-40 E2.28: the entries only `render_held_unprinted` reaches (the five ACG Vermin
+            // Focus CombatBonus records; eight SaveBonus records), E2.19's receipt "Figures".
+            ("combat maneuver entries on print: false rules", 5),
+            ("aspect entries on print: false rules", 8),
         ]
         .into_iter()
         .collect();

@@ -1812,7 +1812,7 @@ pub(super) fn explain_fighter_level1_hit_points(
     // hit-point interplay" as its documented gap. Reads effective feats
     // so a class-granted Toughness would count too.
     let toughness_hit_points =
-        crate::rules_core::feat_effects::hp_bonus_from_feats(&effective_character_feats(input));
+        crate::rules_core::feat_effects::hp_bonus_from_feats(&effective_character_feats(input), 1); // this record is level 1 only: 1 Hit Die
     let hit_points =
         FIGHTER_LEVEL_1_MAX_HIT_DIE_HIT_POINTS + constitution_modifier + toughness_hit_points;
     explanations.push(ComputationExplanation {

@@ -162,7 +162,7 @@ Grouped by the Rust file that defines each command:
 | `sf_level_up.rs` | `preview_starfinder_level_up`, `level_up_starfinder_character` | Starfinder level-up: classes, the 5/10/15/20 increase, skill ranks, owed picks and every `sf.*` total the level changes (`compute_sheet` at both levels); accept saves | `StarfinderLevelUpDialog.tsx` via `boundary/starfinderLevelUp.ts` |
 | `sf_choices.rs` | `preview_starfinder_choices`, `save_starfinder_choices`, `list_starfinder_equipment_options` | The one set of feats, spells known and gear the creation form, the level-up dialog and the sheet's "Feats, spells and gear" dialog all edit; prerequisite verdicts from the engine | `StarfinderChoicesDialog.tsx`, `StarfinderChoicesPanel.tsx` via `boundary/starfinderChoices.ts` |
 | `sf_catalog.rs` | `list_starfinder_catalog` | The six Starfinder catalogs (races, themes, classes, feats, spells, equipment) read from `data/starfinder-1e/sheet_rules` | `starfinderCatalog/StarfinderCatalogScreen.tsx` via `boundary/loadStarfinderCatalog.ts` |
-| `character_hub.rs` (SD-39 additions) | `list_held_equipment`, `list_progression_ledger`, `list_feat_levels`, `import_pcg` | What the character holds, one row per owned copy (worn by slot, carried or left behind), for the Market's Sell list and the Equipment control; the level ledger (`character_ledger.rs`, `ledger.json` beside the character: at what level each feat, spell, skill rank and ability increase was taken); the character levels that grant a feat; a PCGen 6 `.pcg` imported by running the `pcg_import` sidecar (`async`, see [pcg-import.md](./pcg-import.md)) | `EquipmentPanel.tsx`, `ProgressionDrawer.tsx`, `LoadCharacterScreen.tsx` via `boundary/listHeldEquipment.ts`, `boundary/listProgressionLedger.ts`, `boundary/importPcg.ts` |
+| `character_hub.rs` (SD-39 additions) | `list_held_equipment`, `list_progression_ledger`, `list_feat_levels`, `import_pcg` | What the character holds, one row per owned copy (worn by slot, carried or left behind), for the Market's Sell list and the Equipment control; the level ledger (`character_ledger.rs`, `ledger.json` beside the character: at what level each feat, spell, skill rank and ability increase was taken); the character levels that grant a feat; a PCGen 6 `.pcg` imported by running the `pcg_import` sidecar (`async`, see [pcg-import.md](./pcg-import.md)) | `EquipmentPanel.tsx` (and both Market dialogs), `ProgressionDrawer.tsx`, `LoadCharacterScreen.tsx` via `boundary/listHeldEquipment.ts`, `boundary/listProgressionLedger.ts`, `boundary/importPcg.ts`; `list_feat_levels` is invoked directly by `characterHub/classRoster.ts` (no boundary file) |
 | `equipment_catalog.rs` (Market) | `list_market` | One Market category with the `+N` each row can be bought at and its price; which rows exist and what they cost are the backend's answer | `MarketDialog.tsx` via `boundary/listMarket.ts` |
 | `sf_adapter.rs`, `sf_catalog.rs` (Market) | `starfinder_market_state`, `list_starfinder_market`, `buy_starfinder_market`, `sell_starfinder_market` | The Starfinder Market over the system's own catalog and currency | `SystemMarketDialog.tsx` via `boundary/systemMarket.ts` |
 | `cpr_adapter.rs`, `cpr_catalog.rs` (Market) | `cyberpunk_market_state`, `list_cyberpunk_market`, `buy_cyberpunk_market`, `sell_cyberpunk_market` | The Cyberpunk RED Market over the system's own catalog and currency | `SystemMarketDialog.tsx` via `boundary/systemMarket.ts` |
@@ -609,9 +609,17 @@ The window opens maximized (`tauri.conf.json`) and the Create screen uses the wh
 - **Custom** (`character_custom.rs`, `customModel.ts`, `CustomDialog.tsx`, `CustomTab.tsx`): grants
   and house-rule records in `custom.json`. An *ability* grant is baked into the saved ability score
   (new revision), so every derived number stays the engine's. *Hit point* and *skill point* grants
-  are added by the sheet to the HP total and the skill pool. Custom feats, equipment, spells and
-  magic devices are raw objects (name, stat lines, description) that are listed and printed; the
-  engine does not compute from them. AC, saves and attack grants are not modelled.
+  are added by the sheet to the HP total and the skill pool. Custom feats, spells and magic devices
+  are raw objects (name, stat lines, description) that are listed and printed; the engine does not
+  compute from them. Custom **equipment** may also state `bonuses` (target from a fixed list:
+  attack, damage, ac, each save, each ability, each skill, speed, initiative, hit_points, cmb, cmd;
+  `bonus_target_is_known`) and a body `slot`, and be `worn` or `leftBehind`; a worn item's bonuses
+  are stacked by the engine's type rule (`WornItemBonuses`) and its slot counts against stock items'
+  (`list_held_equipment_at_root`). A text-only record is unchanged. `custom.json` also holds the
+  **Overrides** group (`Overrides`: feats without prerequisites, weapons and armor without
+  proficiency, spells outside the class list, ignore slot limits, feat budget, alignment
+  restrictions, encumbrance), each flag read by the command that enforces the rule it names; what a
+  flag let in is recorded in `ledger.json`'s `admitted` list and tagged on the sheet and the print.
 - **Print** (`PrintDialog.tsx`, `boundary/saveSheetPdf.ts`, `print/`): the sheet's "Print" opens a dialog with the paper (A4 or US Letter, starting from Settings, Print) and three stacking option boxes (spellbook, show the math, bio and campaign notes). **Save PDF** asks where with the native save-as dialog; **Print** has the backend write the same PDF to a temp file and open it in the system PDF viewer. Rust makes the PDF (`save_sheet_pdf`, `print_sheet_pdf`); there is no `@media print` path and no `window.print()`.
 
 Class facts come from the engine, not desktop tables (SD-36 F6a/F6b,

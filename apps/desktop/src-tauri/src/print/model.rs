@@ -162,12 +162,58 @@ pub enum Look {
     /// The Resistances block (SD-40 E2.22): five energy boxes, Damage Reduction, Spell Resistance and
     /// Immunities, each empty when the character has none.
     Resistances,
+    /// A section's title (SD-40 E2.23, `decisions.md §24.3.7`): full width, larger and bolder than any
+    /// block heading, a rule under it; it opens each section after page 1.
+    SectionTitle,
+    /// The Feats (SD-40 E3.1): the budget as one line, then each feat's name, target and whole text
+    /// in two columns, then two blank rows.
+    Feats,
+    /// The Class Features (SD-40 E3.1): a line per held class (level, hit die, ranks per level),
+    /// then each feature line with its value and condition in two columns.
+    ClassFeatures,
+    /// The Actions (SD-40 E3.1): the Actions tab's lines as a table of name, kind and value.
+    Actions,
+    /// The armor and shield table (SD-40 E3.2): a line per worn piece under its captions, one blank
+    /// row, then the worn totals.
+    Defense,
+    /// The Gear (SD-40 E3.2): Worn, Carried and Left behind, each its items and two blank rows, then
+    /// the carried weight, the load and the three limits.
+    Gear,
+    /// The Money (SD-40 E3.2): four coin boxes (PP, GP, SP, CP) and a four-line write-in ledger.
+    Money,
+    /// The Spells (SD-40 E3.3): per class its caster level, then per spell level the save DC, spells
+    /// per day, known / prepared and one used write-in box per spell per day; the names by level in
+    /// two columns.
+    Spells,
+    /// The Spellbook (SD-40 E3.3): one card per spell (name, school, level, casting time, range,
+    /// duration, save, spell resistance, text), two to a line.
+    Spellbook,
+    /// The Custom tab's grants and records as a compact table (SD-40 E3.3).
+    Custom,
+    /// The companion's line, its stats as a strip of small boxes and its notes (SD-40 E3.3).
+    Pets,
+    /// The Bio section's page (SD-40 E3.4): the details as a two-column form, the Biography and the
+    /// campaign notes as paragraphs, then blank ruled lines to the page's foot.
+    Bio,
+    /// A breakdown table on the Math pages (SD-40 E3.5): a caption header over a line per figure,
+    /// each the cells page 1 leaves out (`decisions.md §23.1` item 4).
+    Breakdown,
+    /// The derivation lines on the Math pages (SD-40 E3.5): each printed number's label and value,
+    /// then the engine's rows behind it, in two columns at 8 pt.
+    Math,
+    /// The Progression pages (SD-40 E3.7): one entry per character level, `Level <n>` and the class
+    /// and class level in bold over the drawer's lines (feats, spells, ranks, ability increase ...),
+    /// then the rows placed at no level.
+    Progression,
+    /// The Notes pages (SD-40 E4.1): the Notes tab's text as paragraphs, then blank ruled lines to the
+    /// page's foot.
+    Notes,
 }
 
 impl Look {
     /// Every look, each with its template.
     #[cfg(test)]
-    pub const ALL: [Look; 14] = [
+    pub const ALL: [Look; 30] = [
         Look::Table,
         Look::Abilities,
         Look::SquareBlock,
@@ -182,6 +228,22 @@ impl Look {
         Look::Languages,
         Look::ConditionalBonuses,
         Look::Resistances,
+        Look::SectionTitle,
+        Look::Feats,
+        Look::ClassFeatures,
+        Look::Actions,
+        Look::Defense,
+        Look::Gear,
+        Look::Money,
+        Look::Spells,
+        Look::Spellbook,
+        Look::Custom,
+        Look::Pets,
+        Look::Bio,
+        Look::Breakdown,
+        Look::Math,
+        Look::Progression,
+        Look::Notes,
     ];
 
     /// The template's name, as the sheet's JSON and `LOOKS` give it.
@@ -201,6 +263,22 @@ impl Look {
             Look::Languages => "languages",
             Look::ConditionalBonuses => "conditional-bonuses",
             Look::Resistances => "resistances",
+            Look::SectionTitle => "section-title",
+            Look::Feats => "feats",
+            Look::ClassFeatures => "class-features",
+            Look::Actions => "actions",
+            Look::Defense => "defense",
+            Look::Gear => "gear",
+            Look::Money => "money",
+            Look::Spells => "spells",
+            Look::Spellbook => "spellbook",
+            Look::Custom => "custom",
+            Look::Pets => "pets",
+            Look::Bio => "bio",
+            Look::Breakdown => "breakdown",
+            Look::Math => "math",
+            Look::Progression => "progression",
+            Look::Notes => "notes",
         }
     }
 }
@@ -321,6 +399,11 @@ pub struct SheetRow {
     pub label: String,
     pub values: Vec<String>,
     pub notes: Vec<String>,
+    /// What kind of line it is, for a look that prints its kinds apart (SD-40 E3.1: `class`, a held
+    /// class's line; `budget`, the feat budget; an Actions line's kind as its table prints it). Empty:
+    /// a plain row, left out of the sheet's JSON.
+    #[serde(skip_serializing_if = "str::is_empty")]
+    pub kind: &'static str,
     /// For a line that prints a computed number: the engine's rows behind it, which "Show the math"
     /// prints (empty: the engine recorded none). `None` for a line of words or of the player's own
     /// choices (ranks, scores), which no derivation is behind. Not sent to Typst.
@@ -330,13 +413,18 @@ pub struct SheetRow {
 
 impl SheetRow {
     pub fn new(label: impl Into<String>, values: impl IntoIterator<Item = String>) -> Self {
-        Self { label: label.into(), values: values.into_iter().collect(), notes: Vec::new(), derivation: None }
+        Self { label: label.into(), values: values.into_iter().collect(), notes: Vec::new(), kind: "", derivation: None }
     }
 
     /// The same line, with `notes` printed under it.
     pub fn with_notes(mut self, notes: impl IntoIterator<Item = String>) -> Self {
         self.notes.extend(notes.into_iter().filter(|note| !note.trim().is_empty()));
         self
+    }
+
+    /// The same line, of `kind`.
+    pub fn of_kind(self, kind: &'static str) -> Self {
+        Self { kind, ..self }
     }
 
     /// The same line, marked as a computed number with these rows behind it.

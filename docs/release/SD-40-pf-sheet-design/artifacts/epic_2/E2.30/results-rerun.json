@@ -1,0 +1,30 @@
+[
+  {
+    "id": "landing-campaign-gate",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd40-main/e230-run2/landing-campaign-gate.png",
+    "rendered_excerpt": "☰ Menu\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nNeon dystopia\n\nS1\nStarfinder 1e\nSci-fi fantasy\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ☰ → Options → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-EZsz9S/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "settings-tab-update",
+    "status": "red",
+    "screenshot": "/home/ubuntu/cargo-target/sd40-main/e230-run2/settings-tab-update.FAILED.png",
+    "rendered_excerpt": "",
+    "reason": "target not found: 'Update (no probe report acknowledged command 'cmd-4070672-1794535446505-9' within 2000ms)' at row step 1/1 (click \"Update\")",
+    "app_data_root": "/tmp/codex-ui-smoke-sd40-e2_30-EZsz9S/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]

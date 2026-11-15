@@ -67,13 +67,13 @@ use campaign_drive::{
     write_campaign_drive_artifacts,
 };
 use character_hub::{
-    add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_hp,
+    add_equipment_selection, add_feat_selection, add_spell_selection,
     adjust_character_money, attach_equipment_modifier, clone_character, create_character,
     delete_character, delete_character_portrait, export_character, export_character_json,
     import_character, import_pcg, level_up_character, list_feats_for_character, list_saved_characters,
     load_character_bio,
     load_character_hit_points,
-    load_character_durability, load_character_money, load_character_portrait,
+    load_character_money, load_character_portrait,
     list_class_creation_roster, draft_level_up_preview, draft_sheet_preview, draft_spell_options, list_feats_for_draft, list_feat_levels, starting_wealth_for_class, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     list_held_equipment, list_progression_ledger, record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
@@ -192,6 +192,11 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
+            // A Linux AppImage started from anywhere but ~/Codex/Codex.AppImage offers to install
+            // itself there (once per file); an installed one refreshes its menu entry and icon.
+            // Runs before the installed-state seed below. Not an AppImage: does nothing.
+            update::self_install::run_at_startup(app.handle(), &app.package_info().version.to_string());
+
             // SD-36: hand the Tauri-resolved resource directory to
             // `codex_repo_root()` before anything else runs, so every corpus
             // loader (race/equipment/spell catalogs, character creation,
@@ -310,8 +315,6 @@ fn main() {
             load_character_hit_points,
             load_character_money,
             adjust_character_money,
-            load_character_durability,
-            adjust_character_hp,
             delete_character,
             export_character_json,
             print::save_sheet_pdf,

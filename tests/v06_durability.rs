@@ -15,7 +15,7 @@
 //! (`tests/sd26_pilot_case_verification.rs`'s `durability.max_hp = 12`).
 
 use codex::rules_core::character_input::CharacterClassLevel;
-use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
+use codex::rules_core::durability::compute_max_hp;
 
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 const WIZARD_CLASS_ID: &str = "class:wizard";
@@ -177,52 +177,4 @@ fn compute_max_hp_returns_none_for_a_class_id_no_book_recognizes() {
         max_hp, None,
         "an unrecognized class id must resolve no hit die rather than a fabricated one"
     );
-}
-
-// ----- classify_durability: the full threshold spectrum, different values than inline -----
-
-#[test]
-fn classify_durability_normal_at_low_but_positive_hp() {
-    // A character down to their last few real hit points is still Normal, not
-    // Staggered -- Staggered requires nonlethal damage to have caught up to
-    // current HP, not merely a low HP total. Different concrete values than
-    // the module's own inline "normal when healthy" test (20/0/14).
-    assert_eq!(classify_durability(3, 0, 12), DurabilityStatus::Normal);
-}
-
-#[test]
-fn classify_durability_staggered_with_a_different_constitution_score() {
-    assert_eq!(classify_durability(6, 6, 10), DurabilityStatus::Staggered);
-}
-
-#[test]
-fn classify_durability_unconscious_when_nonlethal_exceeds_current_hp_by_more_than_one() {
-    // The module's own inline test exercises nonlethal exceeding current HP by
-    // exactly 1 (10/11/14) -- this checks a larger excess still classifies the
-    // same way, not a boundary-adjacent coincidence.
-    assert_eq!(classify_durability(5, 20, 12), DurabilityStatus::Unconscious);
-}
-
-#[test]
-fn classify_durability_dying_at_the_boundary_just_short_of_the_constitution_score() {
-    // Constitution 16: dead at current_hp <= -16. -15 is one short of that --
-    // still Dying, not yet Dead. A tighter boundary check than the module's own
-    // inline test (-3 with Constitution 14, far from the death threshold).
-    assert_eq!(classify_durability(-15, 0, 16), DurabilityStatus::Dying);
-}
-
-#[test]
-fn classify_durability_dead_exactly_at_the_negative_constitution_boundary() {
-    // Constitution 16: current_hp == -16 is the exact boundary (<=), must be Dead,
-    // not Dying -- the off-by-one case the module's own inline test (-14 and -20
-    // with Constitution 14) doesn't isolate as a single exact-boundary value.
-    assert_eq!(classify_durability(-16, 0, 16), DurabilityStatus::Dead);
-}
-
-#[test]
-fn classify_durability_disabled_regardless_of_accumulated_nonlethal_damage() {
-    // At exactly 0 current HP, the character is Disabled per the lethal-damage
-    // rule, even if nonlethal damage happens to also be present -- Disabled takes
-    // priority in the threshold ordering (checked before the nonlethal branches).
-    assert_eq!(classify_durability(0, 5, 12), DurabilityStatus::Disabled);
 }

@@ -126,8 +126,10 @@
     }
   }
   grid-run(columns, cut(keep))
+  // Page 1's continuations take page 2 for themselves: the next run opens a section under its title
+  // (E2.23), and no page holds blocks of two sections.
   if continued.len() > 0 {
-    if rest.len() > 0 { rest.at(0) = continued + rest.at(0) } else { rest.push(continued) }
+    rest.insert(0, continued)
   }
   for run in rest {
     pagebreak(weak: true)
@@ -148,8 +150,9 @@
   set par(justify: false)
 
   // A sheet whose page 1 opens with the Character Name field (Pathfinder, SD-40 E2.5) prints the
-  // name there, once; every other sheet opens with the name as its title.
-  if not doc.blocks.any(b => b.id == "nameCampaign") {
+  // name there, once; a sheet that opens with a section on a page of its own (page 1 not ticked,
+  // E4.1) prints it in the footer only; every other sheet opens with the name as its title.
+  if not doc.blocks.any(b => b.id == "nameCampaign") and not doc.blocks.at(0, default: (new_page: false)).new_page {
     align(left, text(size: 18pt, weight: "bold", doc.title))
     v(0.4em)
   }

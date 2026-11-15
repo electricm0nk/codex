@@ -18,5 +18,6 @@ pub mod appimage_install;
 pub mod deb_install;
 pub mod download;
 pub mod seed;
+pub mod self_install;
 pub mod transaction;
 pub mod windows_install;

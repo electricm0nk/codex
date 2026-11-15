@@ -16,6 +16,8 @@ mod extras;
 mod feats;
 mod gear;
 mod math;
+mod notes;
+mod progression;
 mod skills;
 mod spells;
 
@@ -24,14 +26,16 @@ pub use core::{abilities, armor_class, attack, character_details, conditional_bo
 pub use extras::{custom, pets};
 pub use feats::{actions, class_features, feats};
 pub(crate) use feats::line_row;
-pub use gear::{armor, inventory, weapons};
-pub use math::math;
+pub use gear::{armor, inventory, money, weapons};
+pub use math::{breakdowns, math};
+pub use notes::notes;
+pub use progression::progression;
 pub use skills::skills;
 pub use spells::{spellbook, spells};
 
 use crate::character_custom::CharacterCustomDto;
 use crate::character_hub::{CharacterBioDto, CharacterMoneyDto, ExplanationDto, HeldEquipmentCopyDto, LoadSavedCharacterResponse};
-use crate::character_ledger::{AdmittedKind, OverrideFlag};
+use crate::character_ledger::{AdmittedKind, OverrideFlag, ProgressionLedgerDto};
 use crate::print::model::{Derivation, SheetImage};
 use crate::print::PrintRequest;
 
@@ -47,6 +51,9 @@ pub struct SheetSources<'a> {
     /// The character's saved portrait (`portrait.png`, as `load_character_portrait` reads it):
     /// Pathfinder only, `None` when there is none or on the other sheets.
     pub portrait: Option<SheetImage>,
+    /// The Show Progression drawer's rows (`list_progression_ledger_at_root`): Pathfinder only, and
+    /// only when the Progression section prints; `None` otherwise.
+    pub progression: Option<ProgressionLedgerDto>,
     pub request: &'a PrintRequest,
 }
 

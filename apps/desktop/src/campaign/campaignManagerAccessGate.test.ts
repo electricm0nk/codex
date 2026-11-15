@@ -15,5 +15,10 @@ assert(
   /local .*folder/i.test(notConfigured.disabledHint),
   'E2.11: hint should name the local-folder picker directly'
 );
+assertEqual(
+  notConfigured.disabledHint,
+  'Choose a local Drive-synced folder under ☰ → Options → Google Drive to enable the Campaign Manager.',
+  'E2.30: the hint names the ☰ menu path (the ⚙ button is gone, decisions.md §24.10)'
+);
 
 console.log('campaignManagerAccessGate.test.ts OK');
