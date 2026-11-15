@@ -1001,3 +1001,24 @@ text; it is **not modelled** — no `climb_ft` for a Skinwalker, no ingest of th
 choice. `climb_speed_skinwalker_alternates` is dropped from the plan (not written). E1.14's acceptance changes from
 `climb_speed → 4 passed` to `→ 3 passed` (`epic-breakdown.md`, `kanban.md`). The Open blockers entry is closed;
 E1.14 is `complete`. E1.MC's "E1.1–E1.14" re-verify uses the 3-test acceptance.
+
+## §37 — Operator report: a moved AppImage breaks every update; the fix routes to SD-41 (2026-11-15)
+
+**Report (operator, 2026-11-15, verbatim):** "Install failed: running executable path `/home/todd/Codex/Codex.AppImage`
+does not match installed-state managed_executable_path `/home/todd/Downloads/Codex_0.19.148_amd64.AppImage`." The operator
+worked around it by moving `~/.config/codex/update/installed-state.json` aside and restarting (the next startup seeds a
+fresh record from the running build).
+
+**Cause (read on `origin/tranche-21` @ `424634c76b`):** `apps/desktop/src-tauri/src/update/seed.rs:114`
+(`reconcile_installed_state_for`) treats every existing AppImage record as verifier-owned and returns `Unchanged`, whatever
+path it names; `apps/desktop/src-tauri/src/update/transaction.rs:954` (`verify_current_executable_identity`) then aborts
+with `CurrentExecutableIdentityMismatch` because the record's path is not `$APPIMAGE`. Once the `.AppImage` file is moved
+(by hand, or by a build older than the self-install's `overwrite_installed_state`, seed.rs:139) no update ever runs again
+and nothing repairs the record.
+
+**Ruling:** the updater fix routes to **SD-41, the open bundle** (`stc-lifecycle-routing`: closed bundles are not
+reopened), as the discovered card **E3.6** (`§19`; `kanban.md`, `epic-breakdown.md`; the card count 48 → 49 re-counted in
+`kanban.md`, G-8, `README.md`, `progress.md` in the same commit, R18). E3.6 depends on E2.MC and runs in the main lane
+before E3.MC (R8). Rule after E3.6: an AppImage record is verifier-owned **only while it names the running path**; a
+same-path record with another sha stays with the verifier (the foreign-binary guard, transaction.rs:962–973). Deb,
+DevLocal and Windows behaviour unchanged.
