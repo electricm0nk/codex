@@ -29,7 +29,7 @@ import {
   type RacialTraitsSurface,
 } from './racialTraitsModel';
 import type { RaceSelectionResponse } from '../boundary/loadAlternateRacialTraits';
-import { buildWeaponsTabSurface, ABSENT as ABSENT_FACET } from './weaponsTabModel';
+import { buildWeaponsTabSurface, ABSENT as ABSENT_FACET, type WeaponRow } from './weaponsTabModel';
 import { buildSpellsPerDaySurface } from './spellsPerDayModel';
 import type {
   AbilityScoresDto,
@@ -772,10 +772,10 @@ function WeaponsTab(props: {
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   /**
-   * Drops one carried copy of the item, with any equipmods attached to it, and sells it back
-   * under the current price mode; the caption below states it.
+   * Drop: moves the row's own copy to Not Carried, kept with its equipmods and no money moved
+   * (`decisions.md §27`); the caption below states it.
    */
-  onRemoveWeapon: (itemId: string) => void;
+  onDropWeapon: (drop: NonNullable<WeaponRow['drop']>) => void;
 }) {
   const categories = props.proficiency.tiers;
   const mark = (verdict: 'yes' | 'no' | 'unknown') => (verdict === 'yes' ? '✓' : verdict === 'no' ? '✗' : '?');
@@ -910,12 +910,12 @@ function WeaponsTab(props: {
                 ) : null}
               </div>
             ) : null}
-            {row.group === 'unarmed' ? null : (
+            {row.drop === null ? null : (
               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
                 <button
                   type="button"
                   aria-label={`Drop ${row.name}`}
-                  onClick={() => props.onRemoveWeapon(row.itemId)}
+                  onClick={() => row.drop && props.onDropWeapon(row.drop)}
                   style={removeItemButtonStyle}
                 >
                   Drop
@@ -926,7 +926,7 @@ function WeaponsTab(props: {
         ))
       )}
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0', textAlign: 'center' }}>
-        Dropping an item sells it back under the pricing chosen above.
+        Drop keeps the item and marks it Not Carried; sell it from the Market.
       </p>
 
       {/*
@@ -1575,7 +1575,7 @@ function GearTab(props: {
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
-  /** See `WeaponsTab.onRemoveWeapon` — the same command. */
+  /** Sells the copy back (`handleRemoveEquipment`). */
   onRemoveItem: (itemId: string) => void;
   loadHeldEquipment: () => Promise<PlacedEquipmentCopyDto[]>;
   /** A new value re-reads the Equipment control: any saved change arrives as a new detail. */
@@ -3752,6 +3752,22 @@ export function CharacterSheet(props: {
     }
   }
 
+  /** The Weapons tab's Drop: that copy to Not Carried in the active set, kept, no money (`decisions.md §27`). */
+  async function handleDropWeapon(drop: NonNullable<WeaponRow['drop']>) {
+    setMutationError(null);
+    try {
+      const outcome = await setEquipmentActiveState({ characterId: props.row.characterId, ...drop, savedAt: new Date().toISOString() });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
   /** A Market buy, and what to tell the player about it. */
   async function handleMarketBuy(row: MarketRow, bonus: number): Promise<string | null> {
     const before = money.totalCopper;
@@ -4453,7 +4469,7 @@ export function CharacterSheet(props: {
                     onPrint={handlePrint}
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
-                    onRemoveWeapon={(itemId) => void handleRemoveEquipment(itemId)}
+                    onDropWeapon={(drop) => void handleDropWeapon(drop)}
                   />
                 ) : name === 'Defense' ? (
                   <DefenseTab

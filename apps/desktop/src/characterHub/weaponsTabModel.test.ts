@@ -152,7 +152,19 @@ function verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons() {
   assertEqual(empty.ammunition?.boxes, AMMUNITION_BOXES, 'the boxes stay');
 }
 
+/** `decisions.md §27`: Drop moves the row's own copy to Not Carried (never a sale); the Unarmed row has none. */
+function verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried() {
+  const carriedPlusOne = longsword({ weaponItemId: 'item:dagger', inHand: false, enhancementAttackBonus: 1, enhancementDamageBonus: 1 });
+  const masterwork = longsword({ enhancementAttackBonus: 1, enhancementDamageBonus: null });
+  const unarmed = longsword({ weaponItemId: 'item:unarmed_strike', unarmed: true, nonlethal: true });
+  const [inHand, carried, last] = buildWeaponsTabSurface([unarmed, carriedPlusOne, masterwork], null).rows;
+  assertEqual(JSON.stringify(inHand.drop), JSON.stringify({ itemId: 'item:longsword', bonus: 0, fromState: 'EquippedActive', activeState: 'Absent' }), 'in hand: a masterwork attack bonus is not a +N');
+  assertEqual(JSON.stringify(carried.drop), JSON.stringify({ itemId: 'item:dagger', bonus: 1, fromState: 'SelectedInactive', activeState: 'Absent' }), 'carried: the +1 copy that is carried');
+  assertEqual(last.drop, null, 'nothing to drop on the Unarmed row');
+}
+
 async function main() {
+  verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried();
   verifiesInHandThenCarriedThenUnarmedLast();
   verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons();
   verifiesAnEquippedLongswordProducesAPopulatedRow();

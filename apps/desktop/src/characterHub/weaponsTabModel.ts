@@ -1,5 +1,6 @@
 import type { WeaponDamageDto } from '../boundary/loadSavedCharacterDetail';
 import type { CorpusDerivedDto } from '../boundary/loadCreateCharacter';
+import type { ActiveStateDto } from '../boundary/setEquipmentActiveState';
 
 /**
  * Projects the engine's per-weapon damage breakdown
@@ -63,6 +64,11 @@ export interface WeaponRow {
   mark: string | null;
   /** The ammunition boxes and the engine's count, or `null` for a weapon that fires none. */
   ammunition: { boxes: number; carried: string | null } | null;
+  /**
+   * The `set_equipment_active_state` request Drop sends: this row's own copy (its `+N`, the state
+   * the row shows it in) to Not Carried (`decisions.md §27`); `null` on the Unarmed row.
+   */
+  drop: { itemId: string; bonus: number; fromState: ActiveStateDto; activeState: 'Absent' } | null;
 }
 
 export interface WeaponsTabSurface {
@@ -161,6 +167,15 @@ export function buildWeaponsTabSurface(
     group: groupOf(weapon),
     mark: markOf(weapon),
     ammunition: ammunitionOf(weapon),
+    drop: weapon.unarmed
+      ? null
+      : {
+          itemId: weapon.weaponItemId,
+          // The copy's `+N` is its enhancement to damage; masterwork adds to attack only, so it never reads as a `+1`.
+          bonus: weapon.enhancementDamageBonus ?? 0,
+          fromState: (weapon.inHand ? 'EquippedActive' : 'SelectedInactive') as ActiveStateDto,
+          activeState: 'Absent' as const,
+        },
   }));
 
   return { rows, isEmpty: rows.length === 0 };
