@@ -734,6 +734,10 @@ fn market_category_of(entry: &EquipmentCatalogEntryDto) -> Option<MarketCategory
 /// buyer could recognize. The name alone does not make a template: `Holy Avenger` is also named
 /// `Longsword (Base)`, and it is an item of its own.
 fn hidden_from_market(entry: &EquipmentCatalogEntryDto) -> bool {
+    // A removal directive, not an item: no price any source can give.
+    if entry.key.ends_with(".FORGET") {
+        return true;
+    }
     let is_template = entry.cost_gp.is_none() && entry.name == format!("{} (Base)", entry.key);
     is_template || entry.name.starts_with("Codex-Named Unit")
 }
@@ -967,6 +971,19 @@ mod tests {
     use super::*;
     use codex::rules_core::equipment_resolver::equipment_catalog_row_by_key;
     use std::collections::{BTreeMap, BTreeSet};
+
+    /// A PCGen removal directive (`Dust Knuckles.FORGET`) is not an item: the Market never lists one.
+    #[test]
+    fn market_hides_retirement_rows() {
+        let mut rows = 0;
+        for category in [MarketCategory::Weapon, MarketCategory::Armor, MarketCategory::Shield, MarketCategory::Gear, MarketCategory::MagicItem] {
+            for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                rows += 1;
+                assert!(!row.entry.key.ends_with(".FORGET"), "{}", row.entry.key);
+            }
+        }
+        assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
+    }
 
     /// SD-41 E2.5 (`decisions.md §26` (e)): every catalog row carries the slot a copy of it takes,
     /// the read the held list makes of a copy ([`body_slot_of_item`] on the row's key), and the
@@ -2401,9 +2418,9 @@ mod tests {
         println!("distinct item keys {}; listed {}; hidden by a named rule {}", all_keys.len(), listed_keys.len(), lost.len());
         assert!(unexplained.is_empty(), "rows lost without a named rule: {unexplained:?}");
 
-        // A hidden template names its twin, and the twin is on sale. An item of its own that only
+        // A hidden template names its twin, and the twin is on sale (a retirement row has none). An item of its own that only
         // shares the base's name stays on the shelf.
-        for key in lost.iter().filter(|key| !key.starts_with("Codex-Named Unit")) {
+        for key in lost.iter().filter(|key| !key.starts_with("Codex-Named Unit") && !key.ends_with(".FORGET")) {
             let twin = format!("{key} (Base)");
             assert!(listed_keys.contains(twin.as_str()), "{key}'s twin {twin} is not listed");
         }

@@ -2,7 +2,7 @@
   "ambiguous_corpus_keys": 2,
   "by_book": {
     "ACG": {
-      "none": 3,
+      "none": 1,
       "zero": 1
     },
     "AG": {
@@ -80,7 +80,7 @@
       "zero": 9
     },
     "gear": {
-      "none": 33,
+      "none": 31,
       "zero": 71
     },
     "magicItem": {
@@ -461,10 +461,6 @@
       "Dissonance",
       "Severis",
       "Glabrezu Claw"
-    ],
-    "retirement_directive_row": [
-      "Dust Knuckles.FORGET",
-      "False Face.FORGET"
     ]
   },
   "by_eqmod_cost_kind": {
@@ -486,43 +482,42 @@
       "cost_offset_by_eqmod": 4,
       "no_cost_token": 47,
       "no_raw_tokens": 6,
-      "price_in_eqmods": 49,
-      "retirement_directive_row": 2
+      "price_in_eqmods": 49
     },
     "negative": 0,
-    "none": 77,
+    "none": 75,
     "zero": 279
   },
   "d20pfsrd_bound": {
     "every_unpriced": {
       "armor": 9,
-      "gear": 104,
+      "gear": 102,
       "magicItem": 156,
       "shield": 4,
       "weapon": 83
     },
-    "every_unpriced_total": 356,
+    "every_unpriced_total": 354,
     "if_converter_evaluates_e19_listed_kinds_only": {
       "armor": 6,
-      "gear": 80,
+      "gear": 78,
       "magicItem": 139,
       "shield": 4,
       "weapon": 51
     },
-    "if_converter_evaluates_e19_listed_kinds_only_total": 280,
+    "if_converter_evaluates_e19_listed_kinds_only_total": 278,
     "if_converter_evaluates_every_in_record_kind": {
       "armor": 6,
-      "gear": 80,
+      "gear": 78,
       "magicItem": 136,
       "shield": 4,
       "weapon": 51
     },
-    "if_converter_evaluates_every_in_record_kind_total": 277,
+    "if_converter_evaluates_every_in_record_kind_total": 275,
     "predicate": "a row is left for the lookup unless its cause is a converter cause and (it is a composite resolved to its base, whose eqmods are unknown until E1.9 restores them, or every eqmod it names states a cost of an evaluated kind); in_record kinds = numeric, WT/BASECOST, +N, and the spell-effect, charges and choice-argument formulas whose inputs are the EQMOD token arguments; e19_listed = numeric, WT/BASECOST, +N"
   },
   "market_rows": {
     "armor": 63,
-    "gear": 1626,
+    "gear": 1624,
     "magicItem": 3680,
     "shield": 31,
     "weapon": 480
@@ -1096,34 +1091,6 @@
       "key": "Holy Symbol (Flask)",
       "market_category": "gear",
       "name": "Holy Symbol, Flask"
-    },
-    {
-      "book": "ACG",
-      "catalog_category": "General",
-      "catalog_name": "Dust Knuckles.FORGET",
-      "cause": "retirement_directive_row",
-      "corpus": null,
-      "cost_gp": null,
-      "cost_token": null,
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "Dust Knuckles.FORGET",
-      "market_category": "gear",
-      "name": "Dust Knuckles.FORGET"
-    },
-    {
-      "book": "ACG",
-      "catalog_category": "General",
-      "catalog_name": "False Face.FORGET",
-      "cause": "retirement_directive_row",
-      "corpus": null,
-      "cost_gp": null,
-      "cost_token": null,
-      "eqmod_cost_kinds": {},
-      "eqmods": [],
-      "key": "False Face.FORGET",
-      "market_category": "gear",
-      "name": "False Face.FORGET"
     },
     {
       "book": "UPSI",

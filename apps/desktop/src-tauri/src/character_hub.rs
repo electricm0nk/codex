@@ -13455,8 +13455,7 @@ mod tests {
         }
         no_record.sort();
         assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
-        // Every row that reads as unresolved when held, by why. The `.FORGET` pair are PCGen
-        // removal rows; the two `Shield (...)` are the Quickdraw Shield rows' twins, which would
+        // Every row that reads as unresolved when held, by why. The two `Shield (...)` are the Quickdraw Shield rows' twins, which would
         // answer the seeds' `item:shield`; the rest have a sheet rule and no corpus record. (The
         // Ranged Cannon, whose identity has a modifier's `~` shape, resolves since E2.6 let every
         // modifier in.)
@@ -13464,8 +13463,6 @@ mod tests {
             no_record,
             [
                 "Apprentice Chapbook of Rul Thaven",
-                "Dust Knuckles.FORGET",
-                "False Face.FORGET",
                 "Insights of Far-Seeing Taernis",
                 "Journeyman Book of Rul Thaven",
                 "Lab Journal of Constance Inflix",
@@ -18902,7 +18899,7 @@ mod tests {
             }
         }
         eprintln!("market rows: {rows}; no record: {no_record:?}");
-        assert_eq!(no_record, ["Dust Knuckles.FORGET", "False Face.FORGET"], "the two rows a later book retires");
+        assert!(no_record.is_empty(), "every Market row finds its record: {no_record:?}");
     }
 
     fn slot_conflict_buy(root: &Path, item_id: &str) -> PurchaseEquipmentResponse {
