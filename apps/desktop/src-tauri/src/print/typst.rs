@@ -45,6 +45,21 @@ pub(crate) const LOOKS: &[(&str, &str)] = &[
     ("conditional-bonuses", include_str!("../../resources/print/looks/conditional-bonuses.typ")),
     ("resistances", include_str!("../../resources/print/looks/resistances.typ")),
     ("section-title", include_str!("../../resources/print/looks/section-title.typ")),
+    ("feats", include_str!("../../resources/print/looks/feats.typ")),
+    ("class-features", include_str!("../../resources/print/looks/class-features.typ")),
+    ("actions", include_str!("../../resources/print/looks/actions.typ")),
+    ("defense", include_str!("../../resources/print/looks/defense.typ")),
+    ("gear", include_str!("../../resources/print/looks/gear.typ")),
+    ("money", include_str!("../../resources/print/looks/money.typ")),
+    ("spells", include_str!("../../resources/print/looks/spells.typ")),
+    ("spellbook", include_str!("../../resources/print/looks/spellbook.typ")),
+    ("custom", include_str!("../../resources/print/looks/custom.typ")),
+    ("pets", include_str!("../../resources/print/looks/pets.typ")),
+    ("bio", include_str!("../../resources/print/looks/bio.typ")),
+    ("breakdown", include_str!("../../resources/print/looks/breakdown.typ")),
+    ("math", include_str!("../../resources/print/looks/math.typ")),
+    ("progression", include_str!("../../resources/print/looks/progression.typ")),
+    ("notes", include_str!("../../resources/print/looks/notes.typ")),
 ];
 
 /// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).

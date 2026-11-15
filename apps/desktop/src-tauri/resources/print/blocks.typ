@@ -18,6 +18,21 @@
 #import "/looks/conditional-bonuses.typ": look as conditional-bonuses-look, fit as conditional-bonuses-fit
 #import "/looks/resistances.typ": look as resistances-look
 #import "/looks/section-title.typ": look as section-title-look
+#import "/looks/feats.typ": look as feats-look
+#import "/looks/class-features.typ": look as class-features-look
+#import "/looks/actions.typ": look as actions-look
+#import "/looks/defense.typ": look as defense-look
+#import "/looks/gear.typ": look as gear-look
+#import "/looks/money.typ": look as money-look
+#import "/looks/spells.typ": look as spells-look
+#import "/looks/spellbook.typ": look as spellbook-look
+#import "/looks/custom.typ": look as custom-look
+#import "/looks/pets.typ": look as pets-look
+#import "/looks/bio.typ": look as bio-look
+#import "/looks/breakdown.typ": look as breakdown-look
+#import "/looks/math.typ": look as math-look
+#import "/looks/progression.typ": look as progression-look
+#import "/looks/notes.typ": look as notes-look
 
 #let looks = (
   table: table-look,
@@ -35,6 +50,21 @@
   "conditional-bonuses": conditional-bonuses-look,
   resistances: resistances-look,
   "section-title": section-title-look,
+  feats: feats-look,
+  "class-features": class-features-look,
+  actions: actions-look,
+  defense: defense-look,
+  gear: gear-look,
+  money: money-look,
+  spells: spells-look,
+  spellbook: spellbook-look,
+  custom: custom-look,
+  pets: pets-look,
+  bio: bio-look,
+  breakdown: breakdown-look,
+  math: math-look,
+  progression: progression-look,
+  notes: notes-look,
 )
 
 // The looks whose list page 1's overflow rule may shrink and split (E2.4, decisions.md §23.2

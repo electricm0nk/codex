@@ -32,5 +32,7 @@ export function composeCreationBio(fields: CreationBioFields): CharacterBioDto {
     hair: fields.hair,
     eyes: fields.eyes,
     languages: [],
+    biography: '',
+    notes: '',
   };
 }

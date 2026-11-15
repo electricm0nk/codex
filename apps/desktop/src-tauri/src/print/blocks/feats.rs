@@ -6,13 +6,13 @@ use super::core::{class_name, rule_label};
 use super::{derivation, words_of, SheetSources};
 use crate::character_hub::SheetLineDto;
 use crate::character_ledger::AdmittedKind;
-use crate::print::model::{SheetBlock, SheetRow};
+use crate::print::model::{Look, SheetBlock, SheetRow};
 
 const BUDGET_PREFIX: &str = "feats.budget.";
 
 /// `feat:power_attack` reads `Power Attack` (the converted record's label); a name saved bare
 /// (`Improved Two-Weapon Fighting`) reads as itself.
-fn feat_label(feat: &str) -> String {
+pub(super) fn feat_label(feat: &str) -> String {
     match feat.strip_prefix("feat:") {
         Some(slug) => rule_label("feat", slug).unwrap_or_else(|| words_of(slug)),
         None => feat.to_owned(),
@@ -71,15 +71,25 @@ pub fn feats(sources: &SheetSources) -> SheetBlock {
     if rows.is_empty() {
         rows.push(SheetRow::new("No feat is held.", Vec::<String>::new()));
     }
-    for row in loaded.explanations.iter().filter(|row| row.id.starts_with(BUDGET_PREFIX)) {
+    // The budget as one line (E3.1): `<pool> <spent> of <granted>` per pool, in the engine's order;
+    // Show the math keeps every row behind it.
+    let budget: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with(BUDGET_PREFIX)).collect();
+    let mut pools: Vec<&str> = Vec::new();
+    for row in &budget {
         let rest = &row.id[BUDGET_PREFIX.len()..];
-        let (pool, field) = rest.rsplit_once('.').unwrap_or((rest, ""));
-        rows.push(
-            SheetRow::new(format!("Feat slots: {} {field}", pool.replace('_', " ")), [row.value.to_string()])
-                .derived(vec![derivation(row)]),
-        );
+        let pool = rest.rsplit_once('.').map_or(rest, |(pool, _)| pool);
+        if !pools.contains(&pool) {
+            pools.push(pool);
+        }
     }
-    SheetBlock::new("Feats", rows)
+    if !pools.is_empty() {
+        let field = |pool: &str, field: &str| {
+            budget.iter().find(|row| row.id == format!("{BUDGET_PREFIX}{pool}.{field}")).map_or_else(|| "?".to_owned(), |row| row.value.to_string())
+        };
+        let line = pools.iter().map(|pool| format!("{} {} of {}", pool.replace('_', " "), field(pool, "spent"), field(pool, "granted"))).collect::<Vec<_>>().join(" · ");
+        rows.insert(0, SheetRow::new("Feat slots", [line]).of_kind("budget").derived(budget.iter().map(|row| derivation(row)).collect()));
+    }
+    SheetBlock::new("Feats", rows).in_look(Look::Feats)
 }
 
 /// The record families the Class Features panel lists (`classFeaturesModel.ts`), and the suffix of
@@ -122,23 +132,43 @@ fn split_class_record<'a>(id: &'a str, held: &[(String, String)]) -> (Option<&'a
     (None, humanise(&after))
 }
 
-/// Every row the Class Features panel lists, as it lists it: the held class's name (`Chassis` for a
-/// record naming none), the label and the engine's value, in the engine's order. The value is the
-/// row's own; Show the math prints the row behind it.
-fn class_record_rows(sources: &SheetSources) -> Vec<SheetRow> {
-    let held: Vec<(String, String)> = sources
+/// Each held class's id and level, from the summary's `class:fighter:3,class:wizard:1`.
+fn held_classes<'a>(sources: &'a SheetSources) -> impl Iterator<Item = (&'a str, &'a str)> {
+    sources
         .loaded
         .summary
         .class_summary
         .split(',')
         .map(str::trim)
         .filter(|segment| !segment.is_empty())
-        .map(|segment| {
-            let class_id = segment.rsplit_once(':').map_or(segment, |(class_id, _)| class_id);
-            let token = class_id.rsplit(':').next().unwrap_or(class_id);
-            (token.to_owned(), class_name(class_id))
+        .map(|segment| segment.rsplit_once(':').unwrap_or((segment, "")))
+}
+
+/// A line per held class (E3.1): its name and level, then the words of the class's own "Rules and
+/// features" line (`Hit die: d10`, `Skill ranks per level: 2`), which it replaces in the list; and the
+/// ids of the lines it took.
+fn class_lines<'a>(sources: &'a SheetSources) -> (Vec<SheetRow>, Vec<&'a str>) {
+    let mut taken = Vec::new();
+    let rows = held_classes(sources)
+        .map(|(class_id, level)| {
+            let name = class_name(class_id);
+            let line = sources.loaded.sheet_lines.iter().find(|line| line.kind == "class" && line.form == "words" && line.label == name);
+            let words: Vec<String> = line.map(|line| line.prose.split('\n').filter(|said| !said.trim().is_empty()).map(str::to_owned).collect()).unwrap_or_default();
+            taken.extend(line.map(|line| line.id.as_str()));
+            SheetRow::new(format!("{name} level {level}"), words).of_kind("class")
         })
         .collect();
+    (rows, taken)
+}
+
+/// Every row the Class Features panel lists, as it lists it: the held class's name (`Chassis` for a
+/// record naming none), the label and the engine's value, in the engine's order. The value is the
+/// row's own; Show the math prints the row behind it.
+fn class_record_rows(sources: &SheetSources) -> Vec<SheetRow> {
+    let held: Vec<(String, String)> = held_classes(sources).map(|(class_id, _)| {
+        let token = class_id.rsplit(':').next().unwrap_or(class_id);
+        (token.to_owned(), class_name(class_id))
+    }).collect();
     sources
         .loaded
         .explanations
@@ -155,24 +185,25 @@ fn class_record_rows(sources: &SheetSources) -> Vec<SheetRow> {
 }
 
 pub fn class_features(sources: &SheetSources) -> SheetBlock {
-    let mut rows = class_record_rows(sources);
+    let (mut rows, taken) = class_lines(sources);
+    rows.extend(class_record_rows(sources));
     rows.extend(
         sources
             .loaded
             .sheet_lines
             .iter()
-            .filter(|line| line.kind == "class" || line.kind == "class_feature")
+            .filter(|line| (line.kind == "class" || line.kind == "class_feature") && !taken.contains(&line.id.as_str()))
             .map(line_row),
     );
     // The levels an override let in: no tab lists a level, so the Custom tab and this block do.
     for row in sources.loaded.admitted_under_override.iter().filter(|row| row.kind == AdmittedKind::ClassLevel) {
         rows.push(SheetRow::new(format!("A level of {}", row.id), Vec::<String>::new()).with_notes([super::override_tag(row.override_flag)]));
     }
-    if rows.is_empty() {
+    if rows.iter().all(|row| row.kind == "class") {
         let reason = sources.loaded.sheet_rules_unavailable_reason.clone().unwrap_or_else(|| "No class feature is held.".to_owned());
         rows.push(SheetRow::new(reason, Vec::<String>::new()));
     }
-    SheetBlock::new("Class Features", rows)
+    SheetBlock::new("Class Features", rows).in_look(Look::ClassFeatures)
 }
 
 /// What the character's race lets it do, and the race's rule lines: the Actions tab's Racial
@@ -182,7 +213,7 @@ pub fn actions(sources: &SheetSources) -> SheetBlock {
     let mut rows: Vec<SheetRow> = racial
         .applied_traits
         .iter()
-        .map(|applied| SheetRow::new(applied.name.clone(), Vec::<String>::new()).with_notes([applied.description.clone()]))
+        .map(|applied| SheetRow::new(applied.name.clone(), Vec::<String>::new()).with_notes([applied.description.clone()]).of_kind("Racial trait"))
         .collect();
     rows.extend(
         sources
@@ -190,10 +221,12 @@ pub fn actions(sources: &SheetSources) -> SheetBlock {
             .sheet_lines
             .iter()
             .filter(|line| line.kind == "race" || line.kind == "race_trait")
-            .map(line_row),
+            .map(|line| line_row(line).of_kind(if line.kind == "race" { "Race" } else { "Racial trait" })),
     );
     if rows.is_empty() {
         rows.push(SheetRow::new("No racial trait is held.", Vec::<String>::new()));
     }
-    SheetBlock::new("Actions", rows)
+    // The table's column captions (E3.1), its first row, as the Weapons table's are.
+    rows.insert(0, SheetRow::new("Name", ["Kind".to_owned(), "Value".to_owned()]).of_kind("captions"));
+    SheetBlock::new("Actions", rows).in_look(Look::Actions)
 }

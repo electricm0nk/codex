@@ -6010,6 +6010,12 @@ pub struct CharacterBioDto {
     /// SD-40 E2.27: the languages the player recorded, in their order; the source of `languages.known`.
     #[serde(default)]
     pub languages: Vec<String>,
+    /// SD-40 E3.6: the Biography tab's free text (the character's story). Not a rules input.
+    #[serde(default)]
+    pub biography: String,
+    /// SD-40 E3.6: the Notes tab's free text (notes to self, table rulings). Not a rules input.
+    #[serde(default)]
+    pub notes: String,
 }
 
 /// Writes `bio` as `bio.json` in the character's root directory. Requires
@@ -16083,6 +16089,8 @@ mod tests {
             hair: "Auburn".to_owned(),
             eyes: "Green".to_owned(),
             languages: vec!["Common".to_owned(), "Celestial".to_owned()],
+            biography: "Raised in a temple of Iomedae.".to_owned(),
+            notes: "Ask the GM about the Crusade.".to_owned(),
         }
     }
 
@@ -20721,6 +20729,41 @@ mod starter_seed_tests {
             .expect("write pre-field bio");
         assert!(load_character_bio_at_root(&elowen).expect("pre-field bio loads").languages.is_empty());
         assert_eq!(known(&elowen), ["Common"], "a pre-field bio.json knows Common");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// SD-40 E3.6: the Biography and Notes tabs' text is stored with the bio: both round-trip
+    /// save → load, a clone keeps both, and a `bio.json` from before the fields loads with both empty.
+    #[test]
+    fn biography_and_notes_round_trip_clone_and_old_file() {
+        let app_data_dir = temp_app_data_dir("biography-and-notes");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let aldric = character_root(&app_data_dir, DEFAULT_CHARACTER_ID);
+        let bio = CharacterBioDto {
+            biography: "Born in Absalom.\n\nOnce a sellsword.".to_owned(),
+            notes: "Take Whirlwind next.".to_owned(),
+            ..load_character_bio_at_root(&aldric).expect("Aldric's bio loads")
+        };
+        save_character_bio_at_root(&aldric, &bio).expect("save");
+        assert_eq!(load_character_bio_at_root(&aldric).expect("reload"), bio, "both fields round-trip");
+
+        let clone = character_root(&app_data_dir, "char-biography-clone");
+        let request = CloneCharacterRequest {
+            character_id: DEFAULT_CHARACTER_ID.to_owned(),
+            new_character_id: "char-biography-clone".to_owned(),
+            new_display_label: "Aldric (Copy)".to_owned(),
+            saved_at: "2026-11-13T00:00:00Z".to_owned(),
+        };
+        let outcome = clone_character_at_roots(&aldric, &clone, &request, "test-version").expect("clone");
+        assert!(matches!(outcome, CreateCharacterResponse::Saved { .. }), "{outcome:?}");
+        let cloned = load_character_bio_at_root(&clone).expect("clone bio");
+        assert_eq!((cloned.biography, cloned.notes), (bio.biography.clone(), bio.notes.clone()), "a clone keeps both");
+
+        let elowen = character_root(&app_data_dir, SECOND_SEED_CHARACTER_ID);
+        std::fs::write(elowen.join(BIO_FILE_NAME), r#"{"alignment":"Neutral Good","deity":"","sex":"","age":"","height":"","weight":"","hair":"","eyes":""}"#)
+            .expect("write pre-field bio");
+        let old = load_character_bio_at_root(&elowen).expect("pre-field bio loads");
+        assert_eq!((old.biography.as_str(), old.notes.as_str(), old.alignment.as_str()), ("", "", "Neutral Good"));
         std::fs::remove_dir_all(&app_data_dir).ok();
     }
 

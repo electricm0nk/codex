@@ -25,6 +25,10 @@ export interface CharacterBioDto {
   eyes: string;
   /** SD-40 E2.27: the languages the player recorded, in order; the engine's `languages.known` reads it (none → Common). */
   languages: string[];
+  /** SD-40 E3.6: the Biography tab's free text (story); printed with the Bio section. */
+  biography: string;
+  /** SD-40 E3.6: the Notes tab's free text (notes to self, table rulings). */
+  notes: string;
 }
 
 export const BLANK_CHARACTER_BIO: CharacterBioDto = {
@@ -38,6 +42,8 @@ export const BLANK_CHARACTER_BIO: CharacterBioDto = {
   hair: '',
   eyes: '',
   languages: [],
+  biography: '',
+  notes: '',
 };
 
 /** The Languages field's comma list as the stored list: trimmed names, blanks dropped. */

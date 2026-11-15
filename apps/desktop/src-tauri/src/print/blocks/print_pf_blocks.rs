@@ -13,7 +13,7 @@ use crate::character_hub::{
     add_feat_selection_enforcing_prerequisites_at_root, load_character_bio_at_root, save_character_bio_at_root, CharacterBioDto, list_held_equipment_at_root, load_saved_character_at_root,
     seed_default_characters_at, set_equipment_active_state_at_root, ActiveStateDto,
 };
-use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, CampaignNote, Paper, PrintRequest};
+use crate::print::{render_sheet_pdf_at_root, sheet_document_at_root, CampaignNote, Paper, PrintRequest, PrintSections, Section};
 use codex::rules_core::character_input::ActiveState;
 use std::path::{Path, PathBuf};
 
@@ -28,8 +28,9 @@ const AT: &str = "2026-11-05T00:00:00Z";
 /// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Languages
 /// under the portrait (E2.13), the Conditional Bonuses box under the Saving Throws (E2.20), the
 /// Resistances block under it (E2.22); then the sections, each under its title (E2.23,
-/// `decisions.md §24.3.7`): Abilities and Feats, Inventory, Bio (the Identity block).
-const BASE_HEADINGS: [&str; 25] = [
+/// `decisions.md §24.3.7`): Abilities and Feats, Inventory (Armor and Shields, Gear, Money, E3.2): the
+/// first-time sections, 1 + 2 + 3 (E4.1, `decisions.md §23.4`; Bio is its own box since E4.1).
+const BASE_HEADINGS: [&str; 24] = [
     "Portrait",
     "Languages",
     "Character Name",
@@ -51,14 +52,12 @@ const BASE_HEADINGS: [&str; 25] = [
     "Custom",
     "Pets",
     "Inventory",
-    "Armor",
-    "Inventory",
-    "Bio",
-    "Identity",
+    "Armor and Shields",
+    "Gear",
+    "Money",
 ];
 const SPELLBOOK: &str = "Spellbook";
 const MATH: &str = "Show the Math";
-const BIO: &str = "Bio and Campaign Notes";
 const NO_DERIVATION: &str = "(no derivation recorded)";
 
 /// A fresh app-data directory holding the starter seeds; returns the named seed's character root.
@@ -72,8 +71,28 @@ fn seeded(tag: &str, character_id: &str) -> PathBuf {
     root
 }
 
+/// An old option set as the golden cases name it, as sections (`decisions.md §23.4`, §24.3.7):
+/// Primary, Abilities and Feats and Inventory, plus the Spellbook, Math and Bio each names; all
+/// three is sections 1-7.
 fn request(spellbook: bool, math: bool, bio: bool) -> PrintRequest {
-    PrintRequest { paper: Paper::A4, spellbook, math, bio, campaigns: Vec::new() }
+    let progression = spellbook && math && bio;
+    let sections = PrintSections { spellbook, bio, progression, math, ..PrintSections::FIRST_TIME };
+    PrintRequest { paper: Paper::A4, sections: Some(sections), campaigns: Vec::new() }
+}
+
+/// The one section `section` ticked alone.
+fn only(section: Section) -> PrintSections {
+    let none = PrintSections::default();
+    match section {
+        Section::Main => PrintSections { main: true, ..none },
+        Section::Feats => PrintSections { feats: true, ..none },
+        Section::Inventory => PrintSections { inventory: true, ..none },
+        Section::Spellbook => PrintSections { spellbook: true, ..none },
+        Section::Bio => PrintSections { bio: true, ..none },
+        Section::Progression => PrintSections { progression: true, ..none },
+        Section::Math => PrintSections { math: true, ..none },
+        Section::Notes => PrintSections { notes: true, ..none },
+    }
 }
 
 fn pdf_text(bytes: &[u8]) -> String {
@@ -108,10 +127,10 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let all = request(true, true, true);
         let document = sheet_document_at_root(&root, &all).expect("the document builds");
         let headings: Vec<&str> = document.blocks.iter().map(|block| block.heading.as_str()).collect();
-        // Every option: the Spellbook section before Bio, the Bio notes in Bio, the Math section last.
-        let mut expected: Vec<&str> = BASE_HEADINGS[..BASE_HEADINGS.len() - 2].to_vec();
-        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Identity", BIO, "Math", MATH]);
-        assert_eq!(headings, expected, "{tag}: the 32 blocks and titles, in the layout file's order");
+        // Every option: the Spellbook section before Bio, the Bio notes inside its details (E3.4), the Math section last.
+        let mut expected: Vec<&str> = BASE_HEADINGS.to_vec();
+        expected.extend(["Spellbook", SPELLBOOK, "Bio", "Details", "Progression", "", "Math", "Initiative Breakdown", "Saving Throw Breakdown", "Skill Breakdown", "Weapon Breakdown", MATH]);
+        assert_eq!(headings, expected, "{tag}: the 38 blocks and titles, in the layout file's order (E3.5: the Math section's four breakdowns; E3.7: the Progression section, its block untitled under its title)");
         let full = render(&root, &all);
         // The PDF's text reads the portrait's two-row cell after the name row (E2.18, `print_order`).
         let printed: Vec<&str> = crate::print::print_golden::print_order(&document).iter().map(|block| block.heading.as_str()).collect();
@@ -128,7 +147,7 @@ fn print_pf_blocks_every_block_heading_prints_in_layout_order() {
         let text = pdf_text(&render(&root, &request(false, false, false)));
         let printed: Vec<&str> = crate::print::print_golden::print_order(&none).iter().map(|block| block.heading.as_str()).collect();
         assert_in_order(&text, &printed);
-        for option in [SPELLBOOK, MATH, BIO, NO_DERIVATION] {
+        for option in [SPELLBOOK, MATH, NO_DERIVATION] {
             assert!(!text.contains(option), "{tag}: basic prints no `{option}`: {text}");
         }
     }
@@ -147,8 +166,10 @@ fn print_pf_blocks_each_option_adds_pages() {
         eprintln!("{tag}: pages basic {basic}, spellbook {spellbook}, math {math}, bio {bio}, full {full}");
         assert!(spellbook > basic, "{tag}: Spellbook on adds a page ({basic} -> {spellbook})");
         assert!(math > basic, "{tag}: Show the math on adds a page ({basic} -> {math})");
-        // The Bio section prints on every sheet (E2.23); its notes join it, on its pages, when asked.
-        assert!(bio >= basic && pdf_text(&bio_pdf).contains(BIO), "{tag}: Bio and campaign notes on prints them in the Bio section ({basic} -> {bio})");
+        // The Bio section prints on every sheet (E2.23); its notes join its details, on its pages, when
+        // asked (E3.4: the seeds hold no Biography and the request no campaign, so nothing joins here;
+        // `print_pf_blocks_bio_prints_every_detail_then_notes_then_ruled_lines` prints both).
+        assert!(bio >= basic && pdf_text(&bio_pdf).contains("Bio Details"), "{tag}: Bio on prints the Bio section ({basic} -> {bio})");
         assert!(full > spellbook && full > math && full > bio, "{tag}: full is longer than any one option ({full})");
     }
 }
@@ -174,11 +195,14 @@ fn print_pf_blocks_the_blocks_print_the_values_the_response_holds() {
         "Chain Shirt +4".to_owned(),
         // Inventory: the encumbrance the engine computed.
         "Load Medium".to_owned(),
-        // Feats: the engine's budget rows.
-        format!("Feat slots: level granted {}", explained("feats.budget.level.granted")),
-        // Spells: the save DC and spells per day rows.
-        format!("Wizard: spell save DC, level 3 {}", explained("class_chassis.wizard.spell_save_dc.spell_level_3")),
-        format!("Wizard: spells per day, level 3 {}", explained("class_spell.wizard.total_spells_per_day.spell_level_3")),
+        // Feats: the engine's budget rows, one line `<pool> <spent> of <granted>` (E3.1).
+        format!("Feat slots: level {} of {}", explained("feats.budget.level.spent"), explained("feats.budget.level.granted")),
+        // Spells (E3.3): level 3's line, its save DC then its spells per day.
+        format!(
+            "Level 3 {} {}",
+            explained("class_chassis.wizard.spell_save_dc.spell_level_3"),
+            explained("class_spell.wizard.total_spells_per_day.spell_level_3")
+        ),
         "Fireball".to_owned(),
         // Actions: the race's own traits.
         "Skilled".to_owned(),
@@ -221,9 +245,9 @@ fn print_pf_blocks_every_ranked_skill_prints_the_load_responses_total() {
     for (tag, id) in [("skills-aldric", ALDRIC_ID), ("skills-elowen", ELOWEN_ID)] {
         let root = seeded(tag, id);
         let loaded = load_saved_character_at_root(&root).expect("the seed loads");
-        let text = pdf_text(&render(&root, &request(false, false, false)));
-        // E2.18: the Skills close page 1's right column; the Identity opens page 2.
-        let skills = &text[text.find("Skills").expect("Skills")..text.find("Identity").expect("Identity")];
+        let text = pdf_text(&render(&root, &request(false, false, true)));
+        // E2.18: the Skills close page 1's right column; the Bio details print after them (E3.4), Bio ticked (E4.1).
+        let skills = &text[text.find("Skills").expect("Skills")..text.find("Bio Details").expect("Bio Details")];
         let ranked: Vec<_> = loaded.skill_allocations.iter().filter(|allocation| allocation.ranks > 0).collect();
         assert!(ranked.len() >= 7, "{tag}: the seed holds ranks in at least 7 skills: {ranked:?}");
         for allocation in ranked {
@@ -252,8 +276,8 @@ fn print_pf_blocks_every_skills_panel_total_prints_ranked_or_not() {
     for (tag, id) in [("all-skills-aldric", ALDRIC_ID), ("all-skills-elowen", ELOWEN_ID), ("all-skills-tomas", TOMAS_ID)] {
         let root = seeded(tag, id);
         let loaded = load_saved_character_at_root(&root).expect("the seed loads");
-        let text = pdf_text(&render(&root, &request(false, false, false)));
-        let skills = &text[text.find("Skills").expect("Skills")..text.find("Identity").expect("Identity")];
+        let text = pdf_text(&render(&root, &request(false, false, true)));
+        let skills = &text[text.find("Skills").expect("Skills")..text.find("Bio Details").expect("Bio Details")];
         let totals: Vec<_> = loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")).collect();
         assert_eq!(totals.len(), 35, "{tag}: one total per Skills panel row");
         for row in totals {
@@ -263,8 +287,9 @@ fn print_pf_blocks_every_skills_panel_total_prints_ranked_or_not() {
     }
 }
 
-/// The Gear tab's money tiles (PP, GP, SP, CP, `load_character_money`) and the Details panel's Size
-/// and Vision (the race roster's, `deriveRaceTraits`) print on the basic sheet as the screen shows them.
+/// The Gear tab's money tiles (PP, GP, SP, CP, `load_character_money`; the Money block's, E3.2) and the
+/// Details panel's Size and Vision (the race roster's, `deriveRaceTraits`) print on the basic sheet as
+/// the screen shows them.
 #[test]
 fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let root = seeded("money-size", ALDRIC_ID);
@@ -274,14 +299,15 @@ fn print_pf_blocks_money_size_and_vision_print_as_the_sheet_shows_them() {
     let loaded = load_saved_character_at_root(&root).expect("the seed loads");
     let roster = crate::character_hub::list_race_creation_roster();
     let race = roster.races.iter().find(|race| race.race_id == loaded.summary.race_id).expect("the seed's race is on the roster");
-    let text = pdf_text(&render(&root, &request(false, false, false)));
-    // The Identity block is the Bio section's, the sheet's last on the basic sheet (E2.23).
-    let identity = &text[text.find("Bio Identity").expect("the Bio section opens with the Identity block")..];
+    let text = pdf_text(&render(&root, &request(false, false, true)));
+    // The details are the Bio section's, the sheet's last with Bio ticked (E2.23, E3.4, E4.1).
+    let identity = &text[text.find("Bio Details").expect("the Bio section opens with the details")..];
     assert!(identity.contains(&format!("Size {}", race.size)), "Size {}: {identity}", race.size);
     assert!(identity.contains(&format!("Vision {}", race.vision)), "Vision {}: {identity}", race.vision);
-    let inventory = gear_text(&text);
+    // Each coin's label is over its value in its box; the text extraction runs the two together.
+    let coins: String = text_between(&text, "Money PP", "Bio Details").split_whitespace().collect();
     for (label, value) in [("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)] {
-        assert!(inventory.contains(&format!("{label} {value}")), "{label} {value}: {inventory}");
+        assert!(coins.contains(&format!("{label}{value}")), "{label} {value}: {coins}");
     }
 }
 
@@ -321,9 +347,15 @@ fn print_pf_blocks_spellbook_prints_each_known_spells_full_text() {
         // Compared with every space removed: the text's own line breaks print as separate lines,
         // which the extraction joins with no space ("level.Casting time").
         let bare = |text: &str| text.split_whitespace().collect::<String>();
-        let words = bare(&line.prose);
+        // E3.3: the stat-block lines (`Casting time: ...`) print as the card's fields; the rest of the
+        // rule's words print whole as its text.
+        let is_stat = |l: &str| l.split_once(": ").is_some_and(|(label, _)| ["School", "Subschool", "Descriptor", "Casting time", "Components", "Range", "Target or area", "Duration", "Saving throw", "Spell resistance"].contains(&label));
+        let words = bare(&line.prose.lines().filter(|l| !is_stat(l)).collect::<Vec<_>>().join(" "));
         assert!(words.len() > 200, "{name}: the rules hold its full text ({} chars)", words.len());
         assert!(bare(spellbook).contains(&words), "the Spellbook prints {name}'s whole text: {spellbook}");
+        for stat in line.prose.lines().filter(|l| is_stat(l) && !l.starts_with("School") && !l.starts_with("Descriptor")) {
+            assert!(bare(spellbook).contains(&bare(stat)), "the Spellbook prints {name}'s `{stat}`: {spellbook}");
+        }
     }
     // A character with no spell says so rather than printing an empty page.
     let aldric = seeded("spellbook-aldric", ALDRIC_ID);
@@ -346,8 +378,22 @@ fn print_pf_blocks_bio_prints_the_bio_and_the_campaigns_description() {
     for line in ["Player Todd", "Alignment Lawful Good", "Deity Iomedae", "Eyes Grey", "Rise of the Runelords", "Sandpoint, autumn 4707."] {
         assert!(text.contains(line), "the bio page prints `{line}`: {text}");
     }
+    // No campaign prints no campaign notes (E3.4: none → nothing).
     let text = pdf_text(&render(&root, &request(false, false, true)));
-    assert!(text.contains("No campaign lists this character."), "{text}");
+    assert!(!text.contains("Rise of the Runelords") && !text.contains("No campaign lists this character."), "{text}");
+}
+
+#[test]
+fn print_pf_blocks_page_one_names_the_campaign_without_the_bio_section() {
+    // The dialog sends the campaigns on every print (E4.MC): page 1's Campaign cell prints their
+    // names; their descriptions print only in the Bio section, which the first-time set leaves out.
+    let root = seeded("campaign-page-one-aldric", ALDRIC_ID);
+    let mut first_time = request(false, false, false);
+    first_time.campaigns = vec![CampaignNote { name: "Rise of the Runelords".to_owned(), description: "Sandpoint, autumn 4707.".to_owned() }];
+    let text = pdf_text(&render(&root, &first_time));
+    let page_one = text.split("Abilities and Feats").next().unwrap_or_default();
+    assert!(page_one.contains("Rise of the Runelords"), "page 1 names the campaign: {page_one}");
+    assert!(!text.contains("Sandpoint, autumn 4707."), "no Bio section, no description: {text}");
 }
 
 #[test]
@@ -365,12 +411,11 @@ fn print_pf_blocks_an_override_tag_prints_on_what_it_let_in() {
     assert!(text.contains("Override: Feats without prerequisites"), "the tag prints on the feat: {text}");
 }
 
-/// The Inventory block's text: in the Inventory section (its title, then the Armor block), up to the
-/// Bio section's title over the Identity block (E2.23).
+/// The Gear block's text: in the Inventory section (its title, then the Armor and Shields block), up
+/// to the Money block after it (E3.2).
 fn gear_text(text: &str) -> &str {
-    let section = &text[text.find("Inventory Armor").expect("the Inventory section opens with the Armor block") + "Inventory".len()..];
-    let gear = &section[section.find("Inventory").expect("the Inventory block")..];
-    &gear[..gear.find("Bio Identity").expect("the Bio section follows the Inventory")]
+    let section = &text[text.find("Inventory Armor and Shields").expect("the Inventory section opens with the Armor and Shields block")..];
+    text_between(section, "Gear Item", "Money PP")
 }
 
 #[test]
@@ -381,8 +426,9 @@ fn print_pf_blocks_a_left_behind_item_is_owned_with_no_weight() {
     assert!(held.iter().any(|copy| copy.item_id == "item:chain_shirt" && copy.active_state == ActiveStateDto::Absent));
     let text = pdf_text(&render(&root, &request(false, false, false)));
     let inventory = gear_text(&text);
-    assert!(inventory.contains("Chain Shirt Left behind"), "listed as owned: {inventory}");
-    assert!(inventory.contains("Left behind no weight"), "with no weight: {inventory}");
+    // A section's title and its first line are two table rows, which the text extraction runs together.
+    let bare: String = inventory.split_whitespace().collect();
+    assert!(bare.contains("LeftbehindChainShirtnoweight"), "listed as owned, left behind, with no weight: {inventory}");
     // The loadout's `item:shield` row and the Power Attack toggle are not things the character owns.
     assert!(!inventory.contains("power_attack") && !inventory.contains("shield"), "{inventory}");
 }
@@ -443,7 +489,9 @@ fn print_pf_blocks_every_class_features_panel_row_prints_its_label_and_value() {
                 .iter()
                 .find(|printed| printed.label == label)
                 .unwrap_or_else(|| panic!("{tag}: the Class Features block holds `{label}`: {:?}", block.rows));
-            assert_eq!(printed.values, vec![value.clone()], "{tag}: `{label}` prints its value");
+            // E3.1: the block's class lines carry two cells, so a feature row's value is its first.
+            assert_eq!(printed.values.first(), Some(&value), "{tag}: `{label}` prints its value");
+            assert!(printed.values[1..].iter().all(String::is_empty), "{tag}: `{label}` prints one value");
             let line = format!("{label} {value}");
             assert!(features.contains(&line), "{tag}: the PDF's Class Features prints `{line}`: {features}");
         }
@@ -466,6 +514,7 @@ fn print_pf_blocks_damage_reduction_prints_as_the_defense_tab_shows_it() {
             bio: crate::character_hub::load_character_bio_at_root(&root).expect("bio loads"),
             money: Some(crate::character_hub::load_character_money_at_root(&root).expect("money loads")),
             portrait: None,
+            progression: None,
             request: &basic,
         };
         let document = crate::print::layout::pf1e::layout(&sources);
@@ -1051,7 +1100,7 @@ fn print_pf_blocks_page_one_lists_continue_on_page_two_and_no_block_leaves() {
                     "weapons" => block.rows.iter().skip(1).map(|row| row.label.clone()).collect(),
                     "conditionalBonuses" => block.rows.iter().map(|row| format!("{}: {}", row.label, row.values[0])).collect(),
                     // Each skill line by its name, then each line under the column.
-                    "skills" => block.rows.iter().flat_map(|row| if row.values.is_empty() { row.notes.clone() } else { vec![row.label.clone()] }).collect(),
+                    "skills" => block.rows.iter().flat_map(|row| if row.values.iter().all(|value| value.is_empty()) { row.notes.clone() } else { vec![row.label.clone()] }).collect(),
                     "nameCampaign" => block.rows.iter().flat_map(|row| row.values.clone()).filter(|value| !value.is_empty()).collect(),
                     _ => continue,
                 };
@@ -1133,8 +1182,7 @@ fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
         let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
         assert_eq!(&ids[..3], ["portrait", "languages", "nameCampaign"], "{paper:?}: the top band's blocks lead the sheet (the Languages line under the portrait, E2.13)");
         let next = document.blocks.iter().position(|block| block.new_page).expect("a block opens page 2");
-        let identity = document.blocks.iter().position(|block| block.id == "characterDetails").expect("the Identity block still prints");
-        assert!(identity > next, "{paper:?}: the Identity block prints after page 1, in the Bio section");
+        assert!(document.blocks[..next].iter().all(|block| block.id != "characterDetails"), "{paper:?}: the details print in the Bio section only, never on page 1");
     }
 }
 
@@ -1811,6 +1859,7 @@ fn print_pf_blocks_conditional_bonuses_box_lists_every_conditional() {
             bio: CharacterBioDto::default(),
             money: None,
             portrait: None,
+            progression: None,
             request: &request,
         };
         let document = crate::print::layout::pf1e::layout(&sources);
@@ -1946,8 +1995,8 @@ fn print_pf_blocks_resistances_print_boxes_and_values() {
 }
 
 /// The section titles after Primary, in the operator's order (E2.23, `decisions.md §24.3.7`;
-/// Progression's arrives with E3.7).
-const SECTION_TITLES: [&str; 5] = ["Abilities and Feats", "Inventory", "Spellbook", "Bio", "Math"];
+/// Progression's with E3.7, printed with every option until E4.1).
+const SECTION_TITLES: [&str; 6] = ["Abilities and Feats", "Inventory", "Spellbook", "Bio", "Progression", "Math"];
 
 /// The PDF's text page by page: each page's words before its footer (`<title> · page <n> of <pages>`).
 fn pages_text(text: &str, title: &str, pages: usize) -> Vec<String> {
@@ -1987,10 +2036,11 @@ fn print_pf_blocks_each_section_starts_a_page_under_its_title() {
         }
         let expected: Vec<(&str, Vec<&str>)> = vec![
             ("Abilities and Feats", vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
-            ("Inventory", vec!["defense", "gear"]),
+            ("Inventory", vec!["defense", "gear", "money"]),
             ("Spellbook", vec!["spellbook"]),
-            ("Bio", vec!["characterDetails", "bioNotes"]),
-            ("Math", vec!["math"]),
+            ("Bio", vec!["characterDetails"]),
+            ("Progression", vec!["showProgression"]),
+            ("Math", vec!["initiativeMath", "savesMath", "skillsMath", "weaponsMath", "math"]),
         ];
         assert_eq!(sections, expected, "{tag}: the sections, their titles and their blocks, in the operator's order");
 
@@ -2026,7 +2076,7 @@ fn print_pf_blocks_page_one_carries_no_section_title() {
             let printed = PrintRequest { paper, ..request(all, all, all) };
             let document = sheet_document_at_root(&root, &printed).expect("the document builds");
             let titles: Vec<&str> = document.blocks.iter().filter(|block| block.look.name() == "section-title").map(|block| block.heading.as_str()).collect();
-            let expected: Vec<&str> = if all { SECTION_TITLES.to_vec() } else { vec!["Abilities and Feats", "Inventory", "Bio"] };
+            let expected: Vec<&str> = if all { SECTION_TITLES.to_vec() } else { vec!["Abilities and Feats", "Inventory"] };
             assert_eq!(titles, expected, "{tag}: a title per section printed");
             let page_one_run = document.blocks.iter().skip(1).position(|block| block.new_page).map_or(document.blocks.len(), |at| at + 1);
             assert!(
@@ -2040,4 +2090,938 @@ fn print_pf_blocks_page_one_carries_no_section_title() {
             assert!(!one.contains("Abilities and Feats"), "{tag}: page 1 prints no section title: {one}");
         }
     }
+}
+
+/// A look's one stated fact about itself (`look_metadata` under `label`): one per block printed in it.
+fn look_fact(document: &crate::print::model::SheetDocument, label: &str) -> serde_json::Value {
+    let facts = crate::print::typst::look_metadata(document, label).expect("the sheet typesets");
+    assert_eq!(facts.len(), 1, "one block states `{label}`: {facts:?}");
+    facts[0].clone()
+}
+
+/// The PDF's text from `from` up to the next `to` after it.
+fn text_between<'a>(text: &'a str, from: &str, to: &str) -> &'a str {
+    let start = text.find(from).unwrap_or_else(|| panic!("`{from}` prints: {text}"));
+    let rest = &text[start..];
+    &rest[..rest[from.len()..].find(to).map_or(rest.len(), |at| at + from.len())]
+}
+
+/// E3.1 (`decisions.md §23.4`, section 2 "Abilities and Feats"): the Feats block prints in its own
+/// look, two columns: each feat's name, its chosen target in brackets and its rule's whole text
+/// (the "Rules and features" words the Feats tab shows); the budget rows as one line, `<pool>
+/// <spent> of <granted>` per pool, from the engine's `feats.budget.*` rows; then two blank rows.
+/// Aldric (Weapon Focus (longsword)) and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_feats_print_name_target_and_text() {
+    for (tag, id) in [("aldric", ALDRIC_ID), ("elowen", ELOWEN_ID)] {
+        let root = seeded(&format!("feats-look-{tag}"), id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let row_value = |id: &str| loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value).unwrap_or_else(|| panic!("{tag}: {id}"));
+        let mut pools: Vec<&str> = Vec::new();
+        for row in loaded.explanations.iter().filter(|row| row.id.starts_with("feats.budget.")) {
+            let pool = row.id["feats.budget.".len()..].rsplit_once('.').map_or("", |(pool, _)| pool);
+            if !pools.contains(&pool) {
+                pools.push(pool);
+            }
+        }
+        assert!(!pools.is_empty(), "{tag}: the engine states a feat budget");
+        let budget: Vec<String> = pools
+            .iter()
+            .map(|pool| {
+                let field = |name: &str| row_value(&format!("feats.budget.{pool}.{name}"));
+                format!("{} {} of {}", pool.replace('_', " "), field("spent"), field("granted"))
+            })
+            .collect();
+        let budget = budget.join(" · ");
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let block = document.blocks.iter().find(|block| block.id == "feats").expect("the Feats block");
+            assert_eq!(block.look.name(), "feats", "{tag} {paper:?}: the Feats block prints in the feats look");
+            let slots = block.rows.iter().filter(|row| row.label == "Feat slots").collect::<Vec<_>>();
+            assert_eq!(slots.len(), 1, "{tag} {paper:?}: the budget is one line: {:?}", block.rows);
+            assert_eq!(slots[0].values.first().map(String::as_str), Some(budget.as_str()), "{tag} {paper:?}: `<pool> <spent> of <granted>` per pool");
+            assert!(slots[0].derivation.as_ref().is_some_and(|rows| rows.len() == pools.len() * 3), "{tag} {paper:?}: Show the math keeps every budget row");
+            let fact = look_fact(&document, "feats-look");
+            assert_eq!((fact["columns"].as_u64(), fact["blank"].as_u64()), (Some(2), Some(2)), "{tag} {paper:?}: two columns, two blank rows: {fact}");
+
+            let text = pdf_text(&render(&root, &printed));
+            let feats = text_between(&text, "Feats", "Class Features");
+            assert!(feats.contains(&format!("Feat slots: {budget}")), "{tag} {paper:?}: the budget line prints: {feats}");
+            for feat in &loaded.selected_feats {
+                let label = super::feats::feat_label(feat);
+                let target = loaded
+                    .chosen_feat_targets
+                    .iter()
+                    .find(|chosen| &chosen.feat_id == feat && !chosen.targets.is_empty())
+                    .map(|chosen| format!(" ({})", chosen.targets.join(", ")))
+                    .unwrap_or_default();
+                let name = format!("{label}{target}");
+                let row = block.rows.iter().find(|row| row.label == name).unwrap_or_else(|| panic!("{tag}: `{name}` is a row: {:?}", block.rows));
+                assert!(feats.contains(&name), "{tag} {paper:?}: `{name}` prints: {feats}");
+                let words = loaded.sheet_lines.iter().find(|line| line.kind == "feat" && line.label == label).map(|line| line.prose.clone()).unwrap_or_default();
+                for line in words.split('\n').filter(|line| !line.trim().is_empty()) {
+                    assert!(row.notes.iter().any(|note| note == line), "{tag}: `{name}` holds its rule's words `{line}`");
+                    let flat = line.split_whitespace().collect::<Vec<_>>().join(" ");
+                    assert!(feats.contains(&flat), "{tag} {paper:?}: `{name}`'s whole text prints `{flat}`: {feats}");
+                }
+            }
+            if tag == "aldric" {
+                assert!(feats.contains("Weapon Focus (longsword)"), "{tag} {paper:?}: the target prints in brackets: {feats}");
+            }
+        }
+    }
+}
+
+/// E3.1 (`decisions.md §23.4`, section 2): the Class Features block prints in its own look: per held
+/// class, its name and level, its hit die and its skill ranks per level (the class's own "Rules and
+/// features" words, held here to the engine's `class_hit_die_for` and the converted record's `Skill
+/// ranks per level`), then every feature line
+/// with its value and condition, in two columns; the Actions block prints the Actions tab's lines as
+/// a table under `Name`, `Kind`, `Value`. Aldric (Fighter), Elowen (Wizard), Letter and A4.
+#[test]
+fn print_pf_blocks_class_features_print_in_two_columns() {
+    use codex::rules_core::pilot_compute::class_chassis_sheet_rules::skill_ranks_per_level_from_package;
+    for (tag, id, class_id, name) in [("aldric", ALDRIC_ID, "class:fighter", "Fighter"), ("elowen", ELOWEN_ID, "class:wizard", "Wizard")] {
+        let root = seeded(&format!("class-look-{tag}"), id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let level = loaded
+            .summary
+            .class_summary
+            .split(',')
+            .find_map(|segment| segment.trim().strip_prefix(&format!("{class_id}:")).map(str::to_owned))
+            .unwrap_or_else(|| panic!("{tag}: holds {class_id}: {}", loaded.summary.class_summary));
+        let die = crate::character_hub::class_hit_die_for(class_id).expect("the engine states the hit die");
+        let ranks = skill_ranks_per_level_from_package(&class_id["class:".len()..]).expect("the record states skill ranks").0;
+        let header = format!("{name} level {level}");
+        let facts = [format!("Hit die: d{die}"), format!("Skill ranks per level: {ranks}")];
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let block = document.blocks.iter().find(|block| block.id == "classFeatures").expect("the Class Features block");
+            assert_eq!(block.look.name(), "class-features", "{tag} {paper:?}: Class Features prints in its own look");
+            let first = block.rows.first().expect("a row");
+            assert_eq!((first.label.as_str(), &first.values[..2]), (header.as_str(), &facts[..]), "{tag} {paper:?}: the class line opens the block");
+            let fact = look_fact(&document, "class-features-look");
+            assert_eq!(fact["columns"].as_u64(), Some(2), "{tag} {paper:?}: the feature lines print in two columns: {fact}");
+            let actions = document.blocks.iter().find(|block| block.id == "actions").expect("the Actions block");
+            assert_eq!(actions.look.name(), "actions", "{tag} {paper:?}: Actions prints in its own look");
+
+            let text = pdf_text(&render(&root, &printed));
+            let features = text_between(&text, "Class Features", "Actions");
+            assert!(features.contains(&format!("{header} {} {}", facts[0], facts[1])), "{tag} {paper:?}: the class line prints: {features}");
+            assert_eq!(features.matches(&facts[0]).count(), 1, "{tag} {paper:?}: the hit die prints once, on the class line: {features}");
+            let table = text_between(&text, "Actions", "Spells");
+            assert!(table.starts_with("Actions Name Kind Value"), "{tag} {paper:?}: the Actions table's columns: {table}");
+            for applied in &loaded.resolved_racial_traits.applied_traits {
+                assert!(table.contains(&format!("{} Racial trait", applied.name)), "{tag} {paper:?}: `{}` prints with its kind: {table}", applied.name);
+            }
+        }
+    }
+}
+
+/// The Inventory section's blocks (E3.2, `decisions.md §23.1` item 5, §24.3.7): Defense, Gear, Money.
+const INVENTORY_BLOCKS: [&str; 3] = ["defense", "gear", "money"];
+
+/// E3.2 (`decisions.md §23.1` item 5 "Inventory: its own page(s), starts on a new page"): the
+/// Inventory section opens a page under its title, then the armor and shield table (`defense`, in
+/// its own look, a Weight column and one blank row), then `gear`, then `money`; nothing else is in
+/// it. Aldric with no option and with every option, Letter and A4.
+#[test]
+fn print_pf_blocks_inventory_starts_on_a_new_page() {
+    let root = seeded("inventory-page", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        for all in [false, true] {
+            let tag = format!("aldric all={all} {paper:?}");
+            let printed = PrintRequest { paper, ..request(all, all, all) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let title = document.blocks.iter().position(|block| block.id == "inventoryTitle").expect("the Inventory title");
+            assert!(document.blocks[title].new_page, "{tag}: the Inventory title starts a page");
+            let ids: Vec<&str> = document.blocks[title + 1..].iter().take_while(|block| block.look.name() != "section-title").map(|block| block.id).collect();
+            assert_eq!(ids, INVENTORY_BLOCKS.to_vec(), "{tag}: the Inventory section holds Defense, Gear, Money");
+            let looks: Vec<&str> = document.blocks[title + 1..title + 4].iter().map(|block| block.look.name()).collect();
+            assert_eq!(looks, vec!["defense", "gear", "money"], "{tag}: each prints in its own look");
+            let defense = &document.blocks[title + 1];
+            assert_eq!(defense.rows[0].values.last().map(String::as_str), Some("Weight"), "{tag}: the armor table has a Weight column: {:?}", defense.rows[0]);
+            assert_eq!(look_fact(&document, "defense-look")["blank"].as_u64(), Some(1), "{tag}: one blank row");
+
+            let pdf = render(&root, &printed);
+            let text = pdf_text(&pdf);
+            let pages = pages_text(&text, &document.title, page_count(&pdf));
+            let opening = format!("Inventory {}", defense.heading);
+            assert!(
+                pages.iter().any(|page| page.starts_with(&opening)),
+                "{tag}: a page opens `{opening}`; pages open: {:?}",
+                pages.iter().map(|p| p.chars().take(40).collect::<String>()).collect::<Vec<_>>()
+            );
+        }
+    }
+}
+
+/// E3.2: the Gear block prints every owned copy under one of three sections, Worn (by slot, its slot
+/// beside it), Carried, Left behind, each with its weight (a copy left behind weighs nothing), then
+/// the carried weight, the load and the three limits; two blank rows per section. Aldric with a
+/// Dagger and then a Ring of Protection +1 bought and worn (the ring's slot comes first), his chain
+/// shirt left behind and his longsword carried, Letter and A4.
+#[test]
+fn print_pf_blocks_gear_prints_worn_carried_and_left_behind_sections() {
+    use crate::character_hub::{adjust_character_money_at_root, purchase_equipment_priced_at_root, PriceMode, PurchaseEquipmentResponse};
+    use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+    let root = seeded("gear-sections", ALDRIC_ID);
+    adjust_character_money_at_root(&root, 1_000_000).expect("funds for the Market");
+    for (category, name) in [(MarketCategory::Weapon, "Dagger"), (MarketCategory::MagicItem, "Ring of Protection +1")] {
+        let shelf = list_market(MarketFilter { category, name_contains: Some(name.to_owned()), book: None }).entries;
+        let row = shelf.iter().find(|row| row.entry.name == name && row.entry.cost_gp.is_some()).unwrap_or_else(|| panic!("the Market sells {name}"));
+        let response = purchase_equipment_priced_at_root(&root, &row.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{name} is bought: {response:?}");
+    }
+    set_equipment_active_state_at_root(&root, "item:chain_shirt", ActiveState::Absent, AT).expect("left behind");
+    set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, AT).expect("carried");
+    let held = list_held_equipment_at_root(&root).expect("held");
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let encumbrance = &loaded.corpus_derived.encumbrance;
+    let section_of = |state: ActiveStateDto| match state {
+        ActiveStateDto::EquippedActive => "Worn",
+        ActiveStateDto::SelectedInactive => "Carried",
+        ActiveStateDto::Absent => "Left behind",
+    };
+    for state in [ActiveStateDto::EquippedActive, ActiveStateDto::SelectedInactive, ActiveStateDto::Absent] {
+        assert!(held.iter().any(|copy| copy.active_state == state), "Aldric holds a {} copy: {held:?}", section_of(state));
+    }
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("aldric {paper:?}");
+        let printed = PrintRequest { paper, ..request(false, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let gear = document.blocks.iter().find(|block| block.id == "gear").expect("the Gear block");
+        assert_eq!(gear.look.name(), "gear", "{tag}: Gear prints in its own look");
+        // The rows section by section: each section's heading row, then its items.
+        let mut sections: Vec<(&str, Vec<&crate::print::model::SheetRow>)> = Vec::new();
+        for row in &gear.rows {
+            match row.kind {
+                "section" => sections.push((row.label.as_str(), Vec::new())),
+                "item" => sections.last_mut().expect("an item under a section").1.push(row),
+                _ => {}
+            }
+        }
+        let titles: Vec<&str> = sections.iter().map(|(title, _)| *title).collect();
+        assert_eq!(titles, vec!["Worn", "Carried", "Left behind"], "{tag}: the three sections, in order");
+        for (title, rows) in &sections {
+            let owned: Vec<&str> = held.iter().filter(|copy| section_of(copy.active_state) == *title).map(|copy| copy.name.as_str()).collect();
+            let mut printed: Vec<&str> = rows.iter().map(|row| row.label.as_str()).collect();
+            let mut expected = owned.clone();
+            printed.sort_unstable();
+            expected.sort_unstable();
+            assert_eq!(printed, expected, "{tag}: `{title}` lists every copy in that state");
+        }
+        // Worn by slot: in the body-slot order, each with its slot's words.
+        let worn: Vec<&crate::character_hub::HeldEquipmentCopyDto> = {
+            let mut worn: Vec<_> = held.iter().filter(|copy| copy.active_state == ActiveStateDto::EquippedActive).collect();
+            worn.sort_by_key(|copy| copy.slot);
+            worn
+        };
+        let printed_worn: Vec<&str> = sections[0].1.iter().map(|row| row.label.as_str()).collect();
+        assert_eq!(printed_worn, worn.iter().map(|copy| copy.name.as_str()).collect::<Vec<_>>(), "{tag}: Worn is in slot order");
+        assert!(worn.len() >= 2 && worn[0].slot < worn[1].slot, "{tag}: two worn copies in two slots: {worn:?}");
+        for left in &sections[2].1 {
+            assert_eq!(left.values.last().map(String::as_str), Some("no weight"), "{tag}: a copy left behind weighs nothing: {left:?}");
+        }
+        // A worn or carried copy prints the weight the engine carries it at; none stated: the no-value mark.
+        for carried in sections[0].1.iter().chain(&sections[1].1) {
+            let copy = held.iter().find(|copy| copy.name == carried.label).expect("a held copy");
+            let stated = encumbrance.per_item.iter().find(|item| item.item_id == copy.item_id);
+            let expected = stated.map_or_else(|| crate::print::layout::NO_VALUE.to_owned(), |item| super::pounds(item.weight_lbs));
+            assert_eq!(carried.values.last(), Some(&expected), "{tag}: `{}` prints its weight", carried.label);
+        }
+        assert!(sections[0].1.iter().chain(&sections[1].1).any(|row| row.values.last().is_some_and(|weight| weight.ends_with(" lb"))), "{tag}: a weighed copy prints in pounds");
+        let fact = look_fact(&document, "gear-look");
+        assert_eq!((fact["sections"].as_u64(), fact["blank"].as_u64()), (Some(3), Some(2)), "{tag}: three sections, two blank rows each: {fact}");
+
+        let text = pdf_text(&render(&root, &printed));
+        let block = text_between(&text, "Gear Item", "Money PP");
+        let bare: String = block.split_whitespace().collect();
+        assert_in_order(&bare, &["Worn", "Carried", "Longsword", "Leftbehind", "ChainShirtnoweight"]);
+        for (label, value) in [
+            ("Carried weight", super::pounds(encumbrance.total_carried_weight_lbs)),
+            ("Load", encumbrance.level.clone()),
+            ("Light load up to", super::pounds(encumbrance.light_max_lbs)),
+            ("Medium load up to", super::pounds(encumbrance.medium_max_lbs)),
+            ("Heavy load up to", super::pounds(encumbrance.heavy_max_lbs)),
+        ] {
+            let pair: String = format!("{label}{value}").split_whitespace().collect();
+            assert!(bare.contains(&pair), "{tag}: `{label} {value}` prints: {block}");
+        }
+    }
+}
+
+/// E3.2: Money is a block of its own: four coin boxes, PP, GP, SP and CP, each holding the Gear
+/// tab's value (`load_character_money`), then a write-in ledger of four lines. Aldric, Letter and A4.
+#[test]
+fn print_pf_blocks_money_prints_four_coin_boxes() {
+    let root = seeded("money-boxes", ALDRIC_ID);
+    crate::character_hub::adjust_character_money_at_root(&root, 1_234_567).expect("money adjusts");
+    let money = crate::character_hub::load_character_money_at_root(&root).expect("money loads");
+    let coins = [("PP", money.platinum), ("GP", money.gold), ("SP", money.silver), ("CP", money.copper)];
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("aldric {paper:?}");
+        let printed = PrintRequest { paper, ..request(false, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let block = document.blocks.iter().find(|block| block.id == "money").expect("the Money block");
+        assert_eq!(block.look.name(), "money", "{tag}: Money prints in its own look");
+        let rows: Vec<(&str, &str)> = block.rows.iter().map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
+        let values: Vec<String> = coins.iter().map(|(_, value)| value.to_string()).collect();
+        let expected: Vec<(&str, &str)> = coins.iter().zip(&values).map(|((label, _), value)| (*label, value.as_str())).collect();
+        assert_eq!(rows, expected, "{tag}: four coin boxes with the Gear tab's values");
+        let fact = look_fact(&document, "money-look");
+        assert_eq!((fact["boxes"].as_u64(), fact["ledger"].as_u64()), (Some(4), Some(4)), "{tag}: four boxes, a four-line ledger: {fact}");
+        let gear = document.blocks.iter().find(|block| block.id == "gear").expect("the Gear block");
+        assert!(gear.rows.iter().all(|row| !["PP", "GP", "SP", "CP"].contains(&row.label.as_str())), "{tag}: the coins left the Gear block");
+
+        let text = pdf_text(&render(&root, &printed));
+        let printed_money = &text[text.find("Money PP").unwrap_or_else(|| panic!("{tag}: the Money block opens with PP: {text}"))..];
+        // Each coin's label is over its value in its box; the text extraction runs the two together.
+        let bare: String = printed_money.split_whitespace().collect();
+        let boxes: String = coins.iter().map(|(label, value)| format!("{label}{value}")).collect();
+        assert!(bare.starts_with(&format!("Money{boxes}Ledger")), "{tag}: the four boxes in order, then the ledger: {printed_money}");
+        assert!(printed_money.contains("Ledger"), "{tag}: the ledger prints: {printed_money}");
+    }
+}
+
+/// E3.3 (`decisions.md §23.4`, §23.7 Q3: section 2's daily spells list, custom and pets): the Spells
+/// block prints in its own look, per class: the class and its caster level, then per spell level a
+/// line of the save DC, the spells per day, the known / prepared counts and one **used** write-in box
+/// per spell per day; then the spell names by level in two columns. Every number is the engine's
+/// `explanations` row (`class_chassis.<class>.caster_level`, `.spell_save_dc.spell_level_<n>`,
+/// `class_spell.<class>.total_spells_per_day.spell_level_<n>`). Custom and Pets print as compact
+/// tables in looks of their own. Elowen (Wizard 5: Light, Fireball) and Aldric (no spell), Letter and A4.
+#[test]
+fn print_pf_blocks_spells_print_used_boxes_per_level() {
+    let root = seeded("spells-look-elowen", ELOWEN_ID);
+    let loaded = load_saved_character_at_root(&root).expect("Elowen loads");
+    let value_of = |id: String| loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value.to_string());
+    // The levels the engine grounds a per-day count for, from its own rows.
+    let mut per_day: Vec<(u8, String)> = loaded
+        .explanations
+        .iter()
+        .filter_map(|row| row.id.strip_prefix("class_spell.wizard.total_spells_per_day.spell_level_").map(|level| (level.parse::<u8>().expect("a level"), row.value.to_string())))
+        .collect();
+    per_day.sort();
+    assert!(per_day.iter().any(|(level, _)| *level == 3), "Elowen has third-level slots: {per_day:?}");
+    let boxes: u64 = per_day.iter().map(|(_, count)| count.parse::<u64>().expect("a count")).sum();
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("elowen {paper:?}");
+        let printed = PrintRequest { paper, ..request(false, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let spells = document.blocks.iter().find(|block| block.id == "spells").expect("the Spells block");
+        assert_eq!(spells.look.name(), "spells", "{tag}: Spells prints in its own look");
+        let class = spells.rows.iter().find(|row| row.kind == "class").unwrap_or_else(|| panic!("{tag}: a class line: {:?}", spells.rows));
+        assert_eq!(class.label, "Wizard", "{tag}");
+        assert_eq!(class.values.first().cloned(), value_of("class_chassis.wizard.caster_level".to_owned()), "{tag}: the caster level");
+        let levels: Vec<&crate::print::model::SheetRow> = spells.rows.iter().filter(|row| row.kind == "level").collect();
+        assert_eq!(levels.len(), per_day.len(), "{tag}: one line per level with slots: {levels:?}");
+        for ((level, count), row) in per_day.iter().zip(&levels) {
+            assert_eq!(row.label, format!("Level {level}"), "{tag}");
+            let dc = value_of(format!("class_chassis.wizard.spell_save_dc.spell_level_{level}")).unwrap_or_else(|| crate::print::layout::NO_VALUE.to_owned());
+            assert_eq!(row.values[0], dc, "{tag}: level {level}'s save DC");
+            assert_eq!(&row.values[1], count, "{tag}: level {level}'s spells per day");
+            let held = match level {
+                0 => "1 / 1",
+                3 => "1 / 1",
+                _ => "0 / 0",
+            };
+            assert_eq!(row.values[2], held, "{tag}: level {level}'s known / prepared (Light at 0, Fireball at 3)");
+        }
+        let names: Vec<(&str, &str)> = spells.rows.iter().filter(|row| row.kind == "spell").map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
+        assert!(spells.rows.iter().filter(|row| row.kind == "spell").all(|row| row.values.len() == 1 || row.values[1..].iter().all(String::is_empty)), "{tag}: a spell line holds its level only: {:?}", spells.rows);
+        assert_eq!(names, vec![("Light", "0"), ("Fireball", "3")], "{tag}: the spell names by level");
+        let fact = look_fact(&document, "spells-look");
+        assert_eq!((fact["boxes"].as_u64(), fact["columns"].as_u64()), (Some(boxes), Some(2)), "{tag}: one used box per spell per day, names in two columns: {fact}");
+
+        let text = pdf_text(&render(&root, &printed));
+        let block = text_between(&text, "Spells Wizard", "Custom");
+        let bare: String = block.split_whitespace().collect();
+        let caster = class.values[0].clone();
+        assert!(bare.contains(&format!("Casterlevel{caster}")), "{tag}: the caster level prints: {block}");
+        let third = levels.iter().find(|row| row.label == "Level 3").expect("level 3");
+        let line: String = format!("Level3{}{}", third.values[0], third.values[1]);
+        assert!(bare.contains(&line), "{tag}: level 3's DC and per day print on its line: {block}");
+        assert_in_order(&bare, &["Light", "Fireball"]);
+
+        // Custom and Pets (section 2): compact tables in looks of their own.
+        for (id, look) in [("custom", "custom"), ("pets", "pets")] {
+            let block = document.blocks.iter().find(|block| block.id == id).unwrap_or_else(|| panic!("{tag}: the {id} block"));
+            assert_eq!(block.look.name(), look, "{tag}: {id} prints in its own look");
+        }
+        assert!(text.contains("No animal companion or mount."), "{tag}: Pets says so when there is none");
+    }
+    // No seed holds a companion: the `pets` look typesets one built as `blocks::pets` builds it.
+    {
+        use crate::print::model::{Look, SheetBlock, SheetDocument, SheetRow};
+        let rows = vec![
+            SheetRow::new("Animal companion", ["Wolf".to_owned()]).of_kind("companion").with_notes(["From Druid".to_owned()]),
+            SheetRow::new("Bite", ["+3".to_owned()]).of_kind("stat"),
+            SheetRow::new("AC", ["+4".to_owned()]).of_kind("stat"),
+            SheetRow::new("Notes", Vec::<String>::new()).of_kind("notes").with_notes(["Trip on a bite.".to_owned()]),
+        ];
+        let document = SheetDocument { title: "Pets probe".to_owned(), paper: "us-letter", blocks: vec![SheetBlock::new("Pets", rows).in_look(Look::Pets)] };
+        let typeset = crate::print::typst::typeset(&document).expect("the companion typesets");
+        assert!(typeset.warnings.is_empty(), "{:?}", typeset.warnings);
+        let bare: String = pdf_text(&typeset.pdf).split_whitespace().collect();
+        assert_in_order(&bare, &["AnimalcompanionWolf", "FromDruid", "Bite+3", "AC+4", "Notes", "Triponabite."]);
+    }
+    // A character with no spell prints the block's one line and no class.
+    let aldric = seeded("spells-look-aldric", ALDRIC_ID);
+    let document = sheet_document_at_root(&aldric, &request(false, false, false)).expect("the document builds");
+    let spells = document.blocks.iter().find(|block| block.id == "spells").expect("the Spells block");
+    assert_eq!(spells.look.name(), "spells", "aldric: Spells prints in its own look");
+    assert!(spells.rows.iter().all(|row| row.kind != "class"), "aldric: no class line: {:?}", spells.rows);
+    assert!(pdf_text(&render(&aldric, &request(false, false, false))).contains("No spell is known."));
+}
+
+/// E3.3 (`decisions.md §22` "2: A": the Spellbook prints spells only; R3: PCGen's 3x5 cards as the
+/// picture): one entry per held spell, its name, school, level for the class that holds it, casting
+/// time, range, duration, saving throw, spell resistance and its text, the entries two to a line.
+/// Each field is the spell rule's own words (its stat-block lines), never re-derived. Elowen's
+/// Fireball and Light, Letter and A4.
+#[test]
+fn print_pf_blocks_spellbook_prints_card_entries() {
+    let root = seeded("spellbook-cards-elowen", ELOWEN_ID);
+    let loaded = load_saved_character_at_root(&root).expect("Elowen loads");
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("elowen {paper:?}");
+        let printed = PrintRequest { paper, ..request(true, false, false) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let book = document.blocks.iter().find(|block| block.id == "spellbook").expect("the Spellbook block");
+        assert_eq!(book.look.name(), "spellbook", "{tag}: the Spellbook prints in its own look");
+        let captions = book.rows.iter().find(|row| row.kind == "captions").expect("the field captions");
+        let expected_captions = ["School", "Level", "Casting time", "Components", "Range", "Target or area", "Duration", "Saving throw", "Spell resistance"];
+        assert_eq!(captions.values, expected_captions.map(str::to_owned).to_vec(), "{tag}: the card's fields");
+        let field = |row: &crate::print::model::SheetRow, caption: &str| row.values[expected_captions.iter().position(|c| *c == caption).expect("a caption")].clone();
+        let entries: Vec<&crate::print::model::SheetRow> = book.rows.iter().filter(|row| row.kind == "spell").collect();
+        assert_eq!(entries.iter().map(|row| row.label.as_str()).collect::<Vec<_>>(), vec!["Light", "Fireball"], "{tag}: one entry per held spell");
+        let fireball = entries[1];
+        // The school with its descriptor, the way the books print it; the record's later
+        // `School: FireSchool` line (its elemental-school tag) is not the spell's school.
+        assert_eq!(field(fireball, "School"), "Evocation [Fire]", "{tag}: {fireball:?}");
+        assert_eq!(field(fireball, "Level"), "Wizard 3", "{tag}");
+        assert_eq!(field(fireball, "Casting time"), "1 standard action", "{tag}");
+        let line = loaded.sheet_lines.iter().find(|line| line.kind == "spell" && line.label == "Fireball").expect("Fireball's line");
+        let range = line.prose.lines().find_map(|l| l.strip_prefix("Range: ")).expect("the rule states a range");
+        assert_eq!(field(fireball, "Range"), range, "{tag}: the range is the rule's own words");
+        assert_eq!(field(fireball, "Duration"), "Instantaneous", "{tag}");
+        assert_eq!(field(fireball, "Saving throw"), "Reflex half", "{tag}");
+        assert_eq!(field(fireball, "Spell resistance"), "Yes", "{tag}");
+        assert_eq!(field(entries[0], "Level"), "Wizard 0", "{tag}: Light is a cantrip");
+        // The text is the rule's words with the stat-block lines lifted out into the fields.
+        let text_lines: Vec<&str> = line.prose.lines().filter(|l| !l.starts_with("Casting time: ") && !l.starts_with("Duration: ")).collect();
+        assert!(fireball.notes.iter().any(|note| text_lines.contains(&note.as_str())), "{tag}: the rule's text: {fireball:?}");
+        assert!(fireball.notes.iter().all(|note| !note.starts_with("Casting time: ")), "{tag}: no stat-block line left in the text: {fireball:?}");
+        let fact = look_fact(&document, "spellbook-look");
+        assert_eq!((fact["entries"].as_u64(), fact["columns"].as_u64()), (Some(2), Some(2)), "{tag}: two entries, two to a line: {fact}");
+
+        let text = pdf_text(&render(&root, &printed));
+        let spellbook = &text[text.find("Spellbook Spellbook").unwrap_or_else(|| panic!("{tag}: the Spellbook section: {text}"))..];
+        let bare: String = spellbook.split_whitespace().collect();
+        for pair in ["Fireball", "Level:Wizard3", "Castingtime:1standardaction", "Duration:Instantaneous", "Savingthrow:Reflexhalf", "Spellresistance:Yes"] {
+            assert!(bare.contains(pair), "{tag}: the Fireball card prints `{pair}`: {spellbook}");
+        }
+    }
+}
+
+/// The thirteen labels of the Bio section's details form (E3.4, `decisions.md §23.1` item 5), in order.
+const BIO_LABELS: [&str; 13] = ["Alignment", "Deity", "Sex", "Age", "Height", "Weight", "Hair", "Eyes", "Size", "Vision", "Race", "Class and level", "Player"];
+
+/// E3.4 (`decisions.md §23.1` item 5, §24.9): the Bio section opens its page with the details form
+/// (the thirteen labels in order, an empty field its label and a blank line), then the Biography
+/// as paragraphs, then each campaign's name and description, then blank ruled lines to the page's
+/// foot (the look's own measure: the room left under the last line is less than one line).
+/// Aldric with a saved bio (Hair left empty), a Biography of two paragraphs and one campaign,
+/// Letter and A4.
+#[test]
+fn print_pf_blocks_bio_prints_every_detail_then_notes_then_ruled_lines() {
+    let root = seeded("bio-page", ALDRIC_ID);
+    let bio = CharacterBioDto {
+        player_name: "Todd".to_owned(),
+        alignment: "Lawful Good".to_owned(),
+        deity: "Iomedae".to_owned(),
+        sex: "Male".to_owned(),
+        age: "27".to_owned(),
+        height: "6 ft. 1 in.".to_owned(),
+        weight: "190 lb".to_owned(),
+        eyes: "Grey".to_owned(),
+        biography: "Born in Sandpoint to a family of smiths.\nSworn to the Inheritor at sixteen.".to_owned(),
+        ..load_character_bio_at_root(&root).expect("the bio loads")
+    };
+    save_character_bio_at_root(&root, &bio).expect("the bio saves");
+    let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+    let campaign = CampaignNote { name: "Rise of the Runelords".to_owned(), description: "Sandpoint, autumn 4707.".to_owned() };
+    for paper in [Paper::Letter, Paper::A4] {
+        let tag = format!("aldric bio {paper:?}");
+        let printed = PrintRequest { paper, campaigns: vec![campaign.clone()], ..request(false, false, true) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        let at = document.blocks.iter().position(|block| block.id == "characterDetails").expect("the details print");
+        assert_eq!(document.blocks[at - 1].id, "bioTitle", "{tag}: the details open the Bio section");
+        assert_eq!(document.blocks[at].look.name(), "bio", "{tag}: the details print in the bio look");
+        let pdf = render(&root, &printed);
+        let pages = page_count(&pdf);
+        let on_pages = pages_text(&pdf_text(&pdf), &document.title, pages);
+        let page = on_pages.last().expect("a page");
+        assert!(page.starts_with("Bio Details"), "{tag}: the Bio section is the last page, opening with the details: {page}");
+        let values = [
+            "Lawful Good",
+            "Iomedae",
+            "Male",
+            "27",
+            "6 ft. 1 in.",
+            "190 lb",
+            "",
+            "Grey",
+            "",
+            "",
+            "",
+            "",
+            "Todd",
+        ];
+        let mut order: Vec<&str> = Vec::new();
+        for (label, value) in BIO_LABELS.iter().zip(values) {
+            order.push(label);
+            if !value.is_empty() {
+                order.push(value);
+            }
+        }
+        order.extend(["Biography", "Born in Sandpoint to a family of smiths.", "Sworn to the Inheritor at sixteen.", "Rise of the Runelords", "Sandpoint, autumn 4707."]);
+        assert_in_order(page, &order);
+        assert!(page.contains("Hair Eyes Grey"), "{tag}: the empty Hair prints its label and a blank line: {page}");
+        assert!(page.contains(&format!("Race {}", super::core::race_label(&loaded.summary.race_id))), "{tag}: {page}");
+        assert!(page.contains(&format!("Class and level {}", super::core::class_label(&loaded.summary.class_summary))), "{tag}: {page}");
+        let ruled = look_fact(&document, "bio-look");
+        let lines = ruled["lines"].as_u64().expect("the look states its lines");
+        let left = ruled["left"].as_f64().expect("the look states the room left");
+        let slot = ruled["slot"].as_f64().expect("the look states a line's height");
+        assert!(lines >= 10, "{tag}: blank ruled lines follow the notes: {ruled}");
+        assert!((0.0..slot).contains(&left), "{tag}: the ruled lines run to the page's foot: {ruled}");
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("bio-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+        }
+    }
+}
+
+/// E3.4: the interim Identity block is gone: no block is headed Identity, the details print once,
+/// as the Bio section's first block, and page 1 and the sections before Bio print none of the
+/// details' labels. Aldric with Bio ticked and with every option, Letter.
+#[test]
+fn print_pf_blocks_no_identity_block_before_the_bio() {
+    let root = seeded("no-identity", ALDRIC_ID);
+    for (options, all) in [("bio", false), ("all", true)] {
+        let tag = format!("aldric {options}");
+        let printed = PrintRequest { paper: Paper::Letter, ..request(all, all, true) };
+        let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+        assert!(document.blocks.iter().all(|block| block.heading != "Identity" && block.id != "bioNotes"), "{tag}: no Identity or bioNotes block");
+        let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+        let title = ids.iter().position(|id| *id == "bioTitle").expect("the Bio section prints");
+        assert_eq!(ids.iter().position(|id| *id == "characterDetails"), Some(title + 1), "{tag}: the details are the Bio section's first block: {ids:?}");
+        assert_eq!(ids.iter().filter(|id| **id == "characterDetails").count(), 1, "{tag}: the details print once");
+        let text = pdf_text(&render(&root, &printed));
+        assert!(!text.contains("Identity"), "{tag}: no Identity heading prints: {text}");
+        let before = &text[..text.find("Bio Details").expect("the Bio section opens with the details")];
+        for label in ["Alignment", "Deity", "Player", "Vision"] {
+            assert!(!before.contains(label), "{tag}: `{label}` prints only on the Bio page");
+        }
+    }
+}
+
+/// The breakdown lines the E2.MC tree's page-1 builders printed (`git show
+/// f5e4c781b2:apps/desktop/src-tauri/src/print/blocks/{core,skills,gear}.rs`), the list fixed here
+/// from the load response the way those builders read it: each line its label, then each non-empty
+/// cell in the old column order. Initiative: total, Dex modifier. Saves: total, base, ability
+/// modifier. Skills (every `skill.total.<skill>` row): the class-skill mark, the total, the key
+/// ability and its modifier, the ranks, the armor-check mark. Weapons (every weapon in hand): attack,
+/// dice, Str, Enh., damage bonus, threat range from, critical, wield; then each feat's damage note.
+fn page_one_breakdown_lines(loaded: &crate::character_hub::LoadSavedCharacterResponse) -> Vec<String> {
+    use crate::print::layout::{signed, NO_VALUE};
+    let sign = |value: Option<i16>| value.map_or_else(|| NO_VALUE.to_owned(), signed);
+    let row = |id: &str| loaded.explanations.iter().find(|row| row.id == id);
+    let snapshot = loaded.snapshot.as_ref().expect("the seed computes");
+    let modifiers = &snapshot.ability_modifiers;
+    let line = |label: &str, cells: Vec<String>| {
+        std::iter::once(label.to_owned()).chain(cells.into_iter().filter(|cell| !cell.is_empty())).collect::<Vec<_>>().join(" ")
+    };
+    let mut lines = vec![line("Initiative", vec![sign(row("initiative.total").map(|r| r.value)), signed(modifiers.dexterity)])];
+    for (label, total, base, ability) in [
+        ("Fortitude", snapshot.total_saves.fortitude, snapshot.base_saves.fortitude, modifiers.constitution),
+        ("Reflex", snapshot.total_saves.reflex, snapshot.base_saves.reflex, modifiers.dexterity),
+        ("Will", snapshot.total_saves.will, snapshot.base_saves.will, modifiers.wisdom),
+    ] {
+        lines.push(line(label, vec![signed(total), signed(base), signed(ability)]));
+    }
+    let package = codex::rules_core::sheet_rule_package::package().as_ref().expect("the sheet-rule package loads");
+    for total in loaded.explanations.iter().filter(|row| row.id.starts_with("skill.total.")) {
+        let slug = total.id.trim_start_matches("skill.total.");
+        let id = format!("skill:{slug}");
+        let ability = [("Str", modifiers.strength), ("Dex", modifiers.dexterity), ("Int", modifiers.intelligence), ("Wis", modifiers.wisdom), ("Cha", modifiers.charisma)]
+            .into_iter()
+            .zip(["strength", "dexterity", "intelligence", "wisdom", "charisma"])
+            .find(|(_, field)| codex::rules_core::equipment_effects::skill_set_rows(field).contains(&id))
+            .map_or_else(|| NO_VALUE.to_owned(), |((abbreviation, modifier), _)| format!("{abbreviation} {}", signed(modifier)));
+        let ranks: u32 = loaded.skill_allocations.iter().filter(|a| a.skill_id == id).map(|a| u32::from(a.ranks)).sum();
+        let armor_check = package.find("skill", slug).and_then(|rule| package.rule(rule)).is_some_and(|rule| rule.tags.iter().any(|tag| tag == "ACHECK"));
+        lines.push(line(
+            &super::skills::skill_name(slug),
+            vec![
+                if total.detail.contains("class skill +3") { "X".to_owned() } else { String::new() },
+                signed(total.value),
+                ability,
+                ranks.to_string(),
+                if armor_check { "*".to_owned() } else { String::new() },
+            ],
+        ));
+    }
+    for weapon in &loaded.weapon_damage {
+        let name = loaded
+            .corpus_derived
+            .equipped_items
+            .iter()
+            .find(|item| item.item_id == weapon.weapon_item_id)
+            .map(|item| item.equipment_record_name.clone())
+            .or_else(|| weapon.weapon_record_key.clone())
+            .unwrap_or_else(|| weapon.weapon_item_id.clone());
+        let record = weapon.weapon_record_key.clone().unwrap_or_else(|| name.clone());
+        let record = record.strip_prefix("item:").unwrap_or(&record);
+        let key: String = record.strip_suffix(" (Base)").unwrap_or(record).chars().filter(char::is_ascii_alphanumeric).map(|c| c.to_ascii_lowercase()).collect();
+        let per_weapon = |prefix: &str| row(&format!("{prefix}{key}"));
+        let critical = match (
+            weapon.critical_threat_range.map(|[low, high]| if low == high { low.to_string() } else { format!("{low}-{high}") }),
+            weapon.critical_multiplier.map(|m| format!("x{m}")),
+        ) {
+            (Some(range), Some(multiplier)) => format!("{range}/{multiplier}"),
+            (Some(one), None) | (None, Some(one)) => one,
+            (None, None) => NO_VALUE.to_owned(),
+        };
+        let wield = weapon.wield_category.as_deref().map_or_else(
+            || NO_VALUE.to_owned(),
+            |raw| raw.chars().enumerate().flat_map(|(i, c)| if i > 0 && c.is_uppercase() { vec![' ', c] } else { vec![c] }).collect(),
+        );
+        lines.push(line(
+            &name,
+            vec![
+                sign(per_weapon("combat.weapon_attack_bonus.").map(|r| r.value)),
+                weapon.base_dice.as_ref().map_or_else(|| NO_VALUE.to_owned(), |dice| format!("{}d{}", dice.count, dice.die_size)),
+                sign(weapon.str_damage_modifier),
+                sign(weapon.enhancement_damage_bonus),
+                sign(per_weapon("combat.weapon_damage_bonus.").map(|r| r.value)),
+                per_weapon("combat.weapon_threat_range_low.").map_or_else(|| NO_VALUE.to_owned(), |r| r.value.to_string()),
+                critical,
+                wield,
+            ],
+        ));
+        lines.extend(weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus))));
+    }
+    lines
+}
+
+/// The Math section's pages as text: from the page its title opens to the sheet's end.
+fn math_pages(document: &crate::print::model::SheetDocument, pdf: &[u8]) -> String {
+    let on_pages = pages_text(&pdf_text(pdf), &document.title, page_count(pdf));
+    let at = on_pages.iter().position(|page| page.starts_with("Math")).expect("the Math section opens a page");
+    on_pages[at..].join(" ")
+}
+
+/// E3.5 (`decisions.md §23.1` item 4, §24.3.7): the Math section's pages carry every breakdown page 1
+/// dropped at E2.9–E2.11: each line the E2.MC tree printed in a page-1 breakdown cell (the list
+/// above) prints on the math pages, then the derivation lines. Aldric and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_math_pages_print_every_page_one_breakdown() {
+    for (tag, id) in [("breakdown-aldric", ALDRIC_ID), ("breakdown-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let expected = page_one_breakdown_lines(&loaded);
+        assert!(expected.len() > 4 + loaded.weapon_damage.len(), "{tag}: initiative, three saves and the skills at least: {expected:?}");
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, true, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let pdf = render(&root, &printed);
+            let math = math_pages(&document, &pdf);
+            for line in &expected {
+                assert!(math.contains(line.as_str()), "{tag} {paper:?}: the math pages print `{line}`: {math}");
+            }
+            let derivations = math.find(MATH).unwrap_or_else(|| panic!("{tag} {paper:?}: the derivation lines print: {math}"));
+            assert!(math.find(expected.last().expect("a line").as_str()).is_some_and(|at| at < derivations), "{tag} {paper:?}: the breakdowns, then the derivation lines");
+            assert_eq!(document.blocks.iter().find(|block| block.heading == MATH).map(|block| block.look.name()), Some("math"), "{tag}: the derivation lines print in the math look");
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("math-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            }
+        }
+    }
+}
+
+/// E3.5: the Math section is built from what page 1 is built from, not from page 1's printed blocks:
+/// typeset alone (its title and blocks, no page 1 and no other section), it prints every breakdown
+/// line and the derivation lines. Aldric and Elowen, Letter.
+#[test]
+fn print_pf_blocks_math_pages_print_without_the_main_sheet() {
+    for (tag, id) in [("math-alone-aldric", ALDRIC_ID), ("math-alone-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let mut document = sheet_document_at_root(&root, &PrintRequest { paper: Paper::Letter, ..request(false, true, false) }).expect("the document builds");
+        let at = document.blocks.iter().position(|block| block.id == "mathTitle").expect("the Math section prints");
+        document.blocks.drain(..at);
+        let typeset = crate::print::typst::typeset(&document).expect("the Math section typesets alone");
+        assert!(typeset.warnings.is_empty(), "{tag}: no diagnostics: {:?}", typeset.warnings);
+        let text = pdf_text(&typeset.pdf);
+        let lines = page_one_breakdown_lines(&loaded);
+        assert_in_order(&text, &["Math", lines[0].as_str()]);
+        for line in lines {
+            assert!(text.contains(line.as_str()), "{tag}: the Math section alone prints `{line}`: {text}");
+        }
+        assert!(text.contains(MATH) && text.contains("initiative.total"), "{tag}: then the derivation lines: {text}");
+    }
+}
+
+/// E3.7 (`decisions.md §24.3.7`): the Progression section prints the Show Progression drawer's
+/// content (`list_progression_ledger_at_root`, read as the drawer reads it) level by level, on pages
+/// of its own under the title `Progression`, between Bio and Math: one entry per character level,
+/// `Level <n> · <class> <class level>` (the drawer's heading), then the feats and spells the ledger holds at that
+/// level, by the ledger's names. Elowen (Wizard 5) prints five entries, Aldric (Fighter 3) three.
+/// Every option (until E4.1 the section prints with the `all` set only), Letter and A4.
+#[test]
+fn print_pf_blocks_progression_prints_each_level() {
+    for (tag, id, levels) in [("progression-elowen", ELOWEN_ID, 5), ("progression-aldric", ALDRIC_ID, 3)] {
+        let root = seeded(tag, id);
+        let ledger = crate::character_ledger::list_progression_ledger_at_root(&root).expect("the seed's ledger lists");
+        assert_eq!(ledger.levels.len(), levels, "{tag}: the ledger holds {levels} levels");
+        let feats: usize = ledger.levels.iter().map(|level| level.taken.feats.len()).sum();
+        assert!(feats > 0, "{tag}: the ledger places a feat at some level, so the check below checks something: {ledger:?}");
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(true, true, true) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let titles: Vec<&str> = document.blocks.iter().filter(|block| block.look.name() == "section-title").map(|block| block.heading.as_str()).collect();
+            assert_eq!(titles, ["Abilities and Feats", "Inventory", "Spellbook", "Bio", "Progression", "Math"], "{tag} {paper:?}: Progression sits between Bio and Math");
+
+            let pdf = render(&root, &printed);
+            let on_pages = pages_text(&pdf_text(&pdf), &document.title, page_count(&pdf));
+            let opens = |title: &str| on_pages.iter().position(|page| page.starts_with(title)).unwrap_or_else(|| panic!("{tag} {paper:?}: `{title}` opens a page"));
+            let (bio, progression, math) = (opens("Bio"), opens("Progression"), opens("Math"));
+            assert!(bio < progression && progression < math, "{tag} {paper:?}: Bio (page {}), Progression (page {}), Math (page {})", bio + 1, progression + 1, math + 1);
+            let text = on_pages[progression..math].join(" ");
+
+            let entries: Vec<String> =
+                ledger.levels.iter().map(|level| format!("Level {} · {} {}", level.character_level, super::core::class_name(&level.class_id), level.class_level)).collect();
+            let mut starts = Vec::new();
+            let mut from = 0;
+            for entry in &entries {
+                let at = text[from..].find(entry.as_str()).unwrap_or_else(|| panic!("{tag} {paper:?}: `{entry}` prints, after the level before it: {text}"));
+                from += at + entry.len();
+                starts.push(from);
+            }
+            for (at, level) in ledger.levels.iter().enumerate() {
+                let end = starts.get(at + 1).map_or(text.len(), |next| next - entries[at + 1].len());
+                let held = &text[starts[at]..end];
+                for feat in &level.taken.feats {
+                    assert!(held.contains(feat.name.as_str()), "{tag} {paper:?}: level {} prints its feat `{}`: {held}", level.character_level, feat.name);
+                }
+                for spell in &level.taken.spells {
+                    assert!(held.contains(spell.id.as_str()), "{tag} {paper:?}: level {} prints its spell `{}`: {held}", level.character_level, spell.id);
+                }
+            }
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("progression-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            }
+        }
+    }
+}
+
+/// A table line prints whole (E3.MC): the Actions table's line with words under it (a racial trait's
+/// text) keeps its name, kind, value and first words as one run on one page, so a page break never
+/// parts a line from its words and no words print against the captions repeated on the next page.
+/// Elowen's A4 Actions table crosses page 3 to 4 at the Languages trait.
+#[test]
+fn print_pf_blocks_a_table_line_keeps_its_words_on_its_page() {
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    for (tag, id) in [("aldric", ALDRIC_ID), ("elowen", ELOWEN_ID)] {
+        let root = seeded(&format!("line-whole-{tag}"), id);
+        for paper in [Paper::Letter, Paper::A4] {
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let text = unspaced(&pdf_text(&render(&root, &printed)));
+            let block = document.blocks.iter().find(|block| block.id == "actions").expect("the Actions block");
+            let mut lines = 0;
+            for row in block.rows.iter().filter(|row| row.kind != "captions" && !row.notes.is_empty()) {
+                let value = row.values.iter().filter(|value| !value.is_empty()).cloned().collect::<Vec<_>>().join(", ");
+                let line = unspaced(&format!("{}{}{}{}", row.label, row.kind, value, row.notes[0]));
+                assert!(text.contains(&line), "{tag} {paper:?}: `{}` prints with its words on one page: {line}", row.label);
+                lines += 1;
+            }
+            assert!(lines > 0, "{tag} {paper:?}: the Actions table holds a line with words");
+        }
+    }
+}
+
+/// The ranks with no Skills panel total print their words on page 1 (E3.MC; found by the `.pcg`
+/// population probe: PCGen's CodeMonkey and 35e_Bard hold Craft (Pottery) ranks). `skills.rs` sends
+/// the line with no total; `SheetBlock::new` pads every row to one value, so the look must not take
+/// the padded line for a skill line, which prints no words.
+#[test]
+fn print_pf_blocks_ranks_with_no_panel_total_print_their_words() {
+    use crate::print::model::{SheetBlock, SheetRow};
+    const WORDS: &str = "Craft (Pottery): 1 ranks, total —";
+    let unspaced = |text: &str| text.chars().filter(|c| !c.is_whitespace()).collect::<String>();
+    let root = seeded("no-panel-total", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let mut document = sheet_document_at_root(&root, &PrintRequest { paper, ..request(false, false, false) }).expect("the document builds");
+        let at = document.blocks.iter().position(|block| block.id == "skills").expect("the Skills block");
+        let mut rows = document.blocks[at].rows.clone();
+        rows.push(SheetRow::new("Ranks with no Skills panel total:", Vec::<String>::new()).with_notes([WORDS.to_owned()]));
+        let padded = SheetBlock::new("Skills", rows).rows;
+        document.blocks[at].rows = padded;
+        let typeset = crate::print::typst::typeset(&document).expect("the sheet typesets");
+        assert!(typeset.warnings.is_empty(), "{paper:?}: Typst reports no diagnostics: {:?}", typeset.warnings);
+        let text = unspaced(&pdf_text(&typeset.pdf));
+        assert!(text.contains(&unspaced(WORDS)), "{paper:?}: the line's words print: {text}");
+    }
+}
+
+/// The ids of the blocks under each section title, in print order, and the blocks before the first
+/// title (Primary's).
+fn sections_of(document: &crate::print::model::SheetDocument) -> (Vec<&str>, Vec<(&str, Vec<&str>)>) {
+    let mut primary = Vec::new();
+    let mut sections: Vec<(&str, Vec<&str>)> = Vec::new();
+    for block in &document.blocks {
+        if block.look.name() == "section-title" {
+            sections.push((block.heading.as_str(), Vec::new()));
+        } else if let Some((_, ids)) = sections.last_mut() {
+            ids.push(block.id);
+        } else {
+            primary.push(block.id);
+        }
+    }
+    (primary, sections)
+}
+
+/// Aldric's Notes tab text, stored through the bio save path (E3.6) in the test's own copy.
+const ALDRIC_NOTES: &str = "Remember to take Whirlwind as the next feat.\nThe DM ruled a wand of cure light wounds recharges for 500 gp.";
+
+fn with_notes(root: &Path, notes: &str) {
+    let bio = CharacterBioDto { notes: notes.to_owned(), ..load_character_bio_at_root(root).expect("the bio loads") };
+    save_character_bio_at_root(root, &bio).expect("the notes save");
+}
+
+/// E4.1 (`decisions.md §23.4`, §24.3.7, §24.9): each of the eight section boxes, ticked alone, prints
+/// its own list and nothing else: Primary is page 1's blocks with no title; every other section is
+/// its title (a page of its own) over its blocks. The eight come in box order. Aldric with a Notes
+/// text, Letter and A4.
+#[test]
+fn print_pf_blocks_each_section_is_a_list() {
+    let root = seeded("section-lists", ALDRIC_ID);
+    with_notes(&root, ALDRIC_NOTES);
+    let page_one = ["portrait", "languages", "nameCampaign", "armorClass", "speed", "squareBlock", "weapons", "attack", "saves", "conditionalBonuses", "resistances", "abilities", "skills"];
+    let expected: [(Section, Option<&str>, Vec<&str>); 8] = [
+        (Section::Main, None, page_one.to_vec()),
+        (Section::Feats, Some("Abilities and Feats"), vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
+        (Section::Inventory, Some("Inventory"), vec!["defense", "gear", "money"]),
+        (Section::Spellbook, Some("Spellbook"), vec!["spellbook"]),
+        (Section::Bio, Some("Bio"), vec!["characterDetails"]),
+        (Section::Progression, Some("Progression"), vec!["showProgression"]),
+        (Section::Math, Some("Math"), vec!["initiativeMath", "savesMath", "skillsMath", "weaponsMath", "math"]),
+        (Section::Notes, Some("Notes"), vec!["notes"]),
+    ];
+    for paper in [Paper::Letter, Paper::A4] {
+        for (section, title, ids) in &expected {
+            let tag = format!("aldric {section:?} alone {paper:?}");
+            let printed = PrintRequest { paper, sections: Some(only(*section)), ..PrintRequest::default() };
+            let document = sheet_document_at_root(&root, &printed).unwrap_or_else(|err| panic!("{tag}: the document builds: {err}"));
+            let (primary, sections) = sections_of(&document);
+            match title {
+                None => assert_eq!((primary, sections), (ids.clone(), Vec::new()), "{tag}: page 1's blocks, no section title"),
+                Some(title) => {
+                    assert_eq!((primary, sections), (Vec::new(), vec![(*title, ids.clone())]), "{tag}: its title over its list, nothing else");
+                    let pdf = render(&root, &printed);
+                    let on_pages = pages_text(&pdf_text(&pdf), &document.title, page_count(&pdf));
+                    assert!(on_pages[0].starts_with(title), "{tag}: `{title}` is the first text of page 1: {:?}", on_pages[0].chars().take(80).collect::<String>());
+                }
+            }
+        }
+        // Every box ticked: the eight in box order, each from a new page.
+        let tag = format!("aldric every section {paper:?}");
+        let every = PrintSections { main: true, feats: true, inventory: true, spellbook: true, bio: true, progression: true, math: true, notes: true };
+        let document = sheet_document_at_root(&root, &PrintRequest { paper, sections: Some(every), ..PrintRequest::default() }).expect("the document builds");
+        let (primary, sections) = sections_of(&document);
+        assert_eq!(primary, page_one.to_vec(), "{tag}: page 1 first");
+        let got: Vec<(Option<&str>, Vec<&str>)> = sections.into_iter().map(|(title, ids)| (Some(title), ids)).collect();
+        let want: Vec<(Option<&str>, Vec<&str>)> = expected[1..].iter().map(|(_, title, ids)| (*title, ids.clone())).collect();
+        assert_eq!(got, want, "{tag}: the sections in box order");
+        for block in document.blocks.iter().filter(|block| block.look.name() == "section-title") {
+            assert!(block.new_page, "{tag}: the {} title starts a page", block.heading);
+        }
+    }
+}
+
+/// E4.2 (`decisions.md §23.4`): the three option booleans are gone from `PrintRequest`. A request
+/// without `sections` (one naming only the paper) prints the first-time ticks, Primary + Abilities
+/// and Feats + Inventory; the old wire's `spellbook`/`math`/`bio` keys are ignored, never mapped.
+#[test]
+fn print_pf_blocks_absent_sections_print_the_first_time_three() {
+    let root = seeded("absent-sections", ALDRIC_ID);
+    let first_time = PrintSections { main: true, feats: true, inventory: true, ..PrintSections::default() };
+    assert_eq!(PrintSections::FIRST_TIME, first_time, "the first-time ticks are 1+2+3");
+    let paper_only = PrintRequest { paper: Paper::Letter, ..PrintRequest::default() };
+    assert_eq!(paper_only.sections(), first_time, "a request naming only the paper");
+    let document = sheet_document_at_root(&root, &paper_only).expect("the document builds");
+    let titles: Vec<&str> = sections_of(&document).1.into_iter().map(|(title, _)| title).collect();
+    assert_eq!(titles, vec!["Abilities and Feats", "Inventory"], "Primary, then sections 2 and 3");
+    let wire: PrintRequest = serde_json::from_str(r#"{"paper":"letter","spellbook":true,"math":true,"bio":true}"#).expect("an old request still parses");
+    assert_eq!((wire.sections, wire.sections()), (None, first_time), "the old boxes are ignored, not mapped");
+    let wire: PrintRequest = serde_json::from_str(r#"{"paper":"a4","sections":{"main":true,"notes":true}}"#).expect("a sectioned request parses");
+    assert_eq!(wire.sections(), PrintSections { main: true, notes: true, ..PrintSections::default() }, "the sections the dialog sent");
+}
+
+/// E4.1 (`decisions.md §23.4`): nothing ticked prints nothing; the request is refused by name.
+#[test]
+fn print_pf_blocks_no_section_is_refused() {
+    let root = seeded("no-section", ALDRIC_ID);
+    let nothing = PrintRequest { sections: Some(PrintSections::default()), ..PrintRequest::default() };
+    let err = sheet_document_at_root(&root, &nothing).expect_err("nothing ticked is refused");
+    assert!(err.starts_with("print.no_sections"), "refused by name: {err}");
+    let err = render_sheet_pdf_at_root(&root, &nothing).expect_err("and no PDF is made");
+    assert!(err.starts_with("print.no_sections"), "refused by name: {err}");
+}
+
+/// E4.1 (`decisions.md §24.9`): the Notes section prints only when its box is ticked: Aldric with a
+/// stored Notes text, ticked: a page whose first text is `Notes`, then the text, then ruled lines;
+/// unticked (and the first-time default, a request naming only the paper): no `Notes` title
+/// anywhere. An empty Notes field, ticked, prints the title over a page to write on. Letter and A4.
+#[test]
+fn print_pf_blocks_notes_section_prints_only_when_ticked() {
+    let root = seeded("notes-section", ALDRIC_ID);
+    with_notes(&root, ALDRIC_NOTES);
+    let first_time = PrintSections { main: true, feats: true, inventory: true, ..PrintSections::default() };
+    for paper in [Paper::Letter, Paper::A4] {
+        let ticked = PrintRequest { paper, sections: Some(PrintSections { notes: true, ..first_time }), ..PrintRequest::default() };
+        let document = sheet_document_at_root(&root, &ticked).expect("the document builds");
+        let pdf = render(&root, &ticked);
+        let on_pages = pages_text(&pdf_text(&pdf), &document.title, page_count(&pdf));
+        let at = on_pages.iter().position(|page| page.starts_with("Notes")).unwrap_or_else(|| panic!("{paper:?}: `Notes` opens a page"));
+        assert_eq!(at + 1, on_pages.len(), "{paper:?}: Notes is the last section, on the last page");
+        let after = on_pages[at]["Notes".len()..].trim_start();
+        assert!(after.starts_with("Remember to take Whirlwind as the next feat."), "{paper:?}: the text follows the title: {after}");
+        assert!(after.contains("The DM ruled a wand of cure light wounds recharges for 500 gp."), "{paper:?}: every paragraph prints: {after}");
+
+        for (tag, unticked) in [("first time", PrintRequest { paper, sections: Some(first_time), ..PrintRequest::default() }), ("paper only", PrintRequest { paper, ..PrintRequest::default() })] {
+            let document = sheet_document_at_root(&root, &unticked).expect("the document builds");
+            assert!(document.blocks.iter().all(|block| block.id != "notesTitle" && block.id != "notes"), "{tag} {paper:?}: no Notes section");
+            let pdf = render(&root, &unticked);
+            let text = pdf_text(&pdf);
+            assert!(!text.contains("Remember to take Whirlwind"), "{tag} {paper:?}: the Notes text does not print");
+            let on_pages = pages_text(&text, &document.title, page_count(&pdf));
+            assert!(on_pages.iter().all(|page| !page.starts_with("Notes")), "{tag} {paper:?}: no page opens with `Notes`");
+        }
+    }
+    let empty = seeded("notes-empty", ALDRIC_ID);
+    let ticked = PrintRequest { paper: Paper::Letter, sections: Some(only(Section::Notes)), ..PrintRequest::default() };
+    let document = sheet_document_at_root(&empty, &ticked).expect("the document builds");
+    let pdf = render(&empty, &ticked);
+    let on_pages = pages_text(&pdf_text(&pdf), &document.title, page_count(&pdf));
+    assert_eq!(on_pages.len(), 1, "an empty Notes field prints one page to write on");
+    assert!(on_pages[0].trim() == "Notes", "the page holds the title and its ruled lines only: {:?}", on_pages[0]);
 }

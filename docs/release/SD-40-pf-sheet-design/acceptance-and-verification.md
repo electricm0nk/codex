@@ -31,9 +31,10 @@ python3 - <dir>/base <dir>/head <<'PY'                 # after it: pass = prints
 import json, sys, pathlib
 NEW_KEYS = {'conditionalNotes', 'languages', 'remainingLbs', 'rangeIncrement', 'biography', 'notes', 'resistances', 'flyManeuverability'}   # E2.6, E2.8, E2.14, E3.6, E2.21, E2.17 (the card names any other)
 NEW_ROWS = ('defense.armor_class.', 'combat.weapon_damage_total.', 'speed.swim', 'speed.fly')   # E2.7, E2.14, E2.17
+NAMED_PROSE = {'core_rulebook:spell:fireball', 'core_rulebook:spell:light', 'core_rulebook:spell:spiritual_weapon'}   # E3.8: Range/Duration slots now read the caster level (Elowen 400 -> 600 ft., 0 -> 50 minutes; Tomas 0 -> 3 rounds, 100 -> 130 ft.)
 def strip(node):
     if isinstance(node, dict):
-        return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS}
+        return {k: strip(v) for k, v in node.items() if k not in NEW_KEYS and not (k == 'prose' and node.get('id') in NAMED_PROSE)}
     if isinstance(node, list):
         return [strip(v) for v in node if not (isinstance(v, dict) and str(v.get('id', '')).startswith(NEW_ROWS))]
     return node
@@ -87,7 +88,7 @@ grep -c '^- Aldric .* — usable: yes' docs/release/SD-40-pf-sheet-design/artifa
 ```bash
 cd apps/desktop/src-tauri && cargo test --locked -j 8 print_pf_blocks_each_section_is_a_list -- --test-threads=8    # 1 passed
 grep -c 'SECTIONS' apps/desktop/src-tauri/src/print/layout/pf1e.rs                               # >= 1
-grep -rn 'PRINT_OPTION_BOXES\|spellbook: bool\|math: bool' apps/desktop/src apps/desktop/src-tauri/src/print | awk 'END{print NR}'   # 0 after E4.2
+{ grep -rn 'PRINT_OPTION_BOXES' apps/desktop/src apps/desktop/src-tauri/src/print; awk '/^pub struct PrintRequest/,/^}/' apps/desktop/src-tauri/src/print/mod.rs | grep -E '(spellbook|math|bio): bool'; awk '/^export interface PrintOptions(Dto)? /,/^}/' apps/desktop/src/boundary/saveSheetPdf.ts apps/desktop/src/characterHub/PrintDialog.tsx | grep -E '(spellbook|math|bio)\??: boolean'; } | awk 'END{print NR}'   # 0 after E4.2 (13 on E4.2's base 93f49262c7; corrected at E4.2: the unscoped grep also matched PrintSections' own spellbook/math fields, Rust and TS, and three test helpers, so it could never read 0)
 cd apps/desktop && npx tsx src/characterHub/PrintDialog.test.ts && grep -c 'print-section-' src/characterHub/PrintDialog.test.ts   # exit 0; >= 8 (eight sections, decisions.md §24.3.7, §24.9)
 npx tsx src/settings/printSections.test.ts                                                       # exit 0 (first time 1+2+3; remembered per character)
 ```
@@ -118,7 +119,7 @@ grep -rniE 'xsl|pcgen' apps/desktop/src-tauri/resources/print/ | awk 'END{print 
 ```bash
 cd docs/release/SD-40-pf-sheet-design
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 59) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 61) print "ROW_COUNT " n }' kanban.md
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[3-5] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- Aldric .* — usable: yes' artifacts/epic_2/E2.G_cycle_receipt.md        # 2 (anchored, decisions.md §24.5)
 grep -c 'usable: yes' artifacts/epic_5/E5.2_cycle_receipt.md        # 5 (E5.2 must anchor this as G-4 now is: its receipt's own instructions must not match, decisions.md §24.5)

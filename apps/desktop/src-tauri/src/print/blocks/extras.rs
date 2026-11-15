@@ -1,10 +1,11 @@
 //! Custom (the Custom tab's grants, records, conditions and override flags, as `custom.json` saves
-//! them) and Pets (the companion stat block the engine computed; `snapshot.companion`).
+//! them) and Pets (the companion stat block the engine computed; `snapshot.companion`): section 2's
+//! compact tables, each in its own look (SD-40 E3.3).
 
 use super::SheetSources;
 use crate::character_custom::CustomRecordDto;
 use crate::print::layout::signed;
-use crate::print::model::{Derivation, SheetBlock, SheetRow};
+use crate::print::model::{Derivation, Look, SheetBlock, SheetRow};
 
 fn record_row(kind: &str, record: &CustomRecordDto) -> SheetRow {
     let stats = record.stats.iter().map(|stat| format!("{}: {}", stat.label, stat.value));
@@ -28,7 +29,7 @@ pub fn custom(sources: &SheetSources) -> SheetBlock {
     let mut rows: Vec<SheetRow> = custom
         .grants
         .iter()
-        .map(|grant| SheetRow::new(grant.label.clone(), [grant.target.clone(), signed_i32(grant.value)]).with_notes([grant.reason.clone()]))
+        .map(|grant| SheetRow::new(grant.label.clone(), [grant.target.clone(), signed_i32(grant.value)]).of_kind("grant").with_notes([grant.reason.clone()]))
         .collect();
     for (kind, records) in [("Feat", &custom.feats), ("Item", &custom.equipment), ("Spell", &custom.spells), ("Device", &custom.devices)] {
         rows.extend(records.iter().map(|record| record_row(kind, record)));
@@ -53,27 +54,30 @@ pub fn custom(sources: &SheetSources) -> SheetBlock {
     if !on.is_empty() {
         rows.push(SheetRow::new("Overrides on", Vec::<String>::new()).with_notes(on));
     }
-    SheetBlock::new("Custom", rows)
+    SheetBlock::new("Custom", rows).in_look(Look::Custom)
 }
 
 pub fn pets(sources: &SheetSources) -> SheetBlock {
     let Some(companion) = sources.loaded.snapshot.as_ref().and_then(|snapshot| snapshot.companion.as_ref()) else {
-        return SheetBlock::new("Pets", vec![SheetRow::new("No animal companion or mount.", Vec::<String>::new())]);
+        return SheetBlock::new("Pets", vec![SheetRow::new("No animal companion or mount.", Vec::<String>::new())]).in_look(Look::Pets);
     };
     let mut rows = vec![
         SheetRow::new(companion.role_label.clone(), [companion.species.clone()])
+            .of_kind("companion")
             .with_notes([format!("From {}", companion.owner_class_label), companion.summary_detail.clone()]),
     ];
     rows.extend(companion.stats.iter().map(|stat| {
         SheetRow::new(stat.label.clone(), [signed(stat.value)])
+            .of_kind("stat")
             .derived(vec![Derivation { source: format!("companion: {} = {}", stat.label, stat.value), detail: stat.detail.clone() }])
     }));
     if !companion.notes.is_empty() || companion.advancement_note.is_some() {
         rows.push(
             SheetRow::new("Notes", Vec::<String>::new())
+                .of_kind("notes")
                 .with_notes(companion.notes.iter().cloned())
                 .with_notes(companion.advancement_note.iter().cloned()),
         );
     }
-    SheetBlock::new("Pets", rows)
+    SheetBlock::new("Pets", rows).in_look(Look::Pets)
 }

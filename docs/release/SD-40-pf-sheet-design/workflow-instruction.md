@@ -359,7 +359,7 @@ before launch. The author's run is recorded in `progress.md`.
 ## 11. Bundle closure epilogue (corrected order — `decisions.md §15`)
 
 1. **E5.3 final-acceptance scan** — the fenced commands in `acceptance-and-verification.md` G-8. Pass =
-   no output from the two `awk`s, `usable: yes` 1 (E2.G) and 5 (E5.2), every DEF/FSR revisit command
+   no output from the two `awk`s, `usable: yes` 2 (E2.G, anchored, `decisions.md §24.5`) and 5 (E5.2), every DEF/FSR revisit command
    pasted. **If anything is short, stop here:** no retrospective, no sweep, **no PR**. That is a correct
    outcome.
 2. **E5.3 retrospective:** `scripts/retro.py summary --since 2026-11-07 --json`; write
