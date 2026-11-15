@@ -58,3 +58,17 @@ before the run.
   relative_link_check: pass
   release_notes_changes: none after the critic  # two draft errors were fixed before the notes commit 2fd74a5c15 (probe population 37 -> 39)
   receipt_note: "Opus claims critic over every line the truth-up added and over release-notes.md; each claim checked against a command or the code. Refuted and fixed: the inventory was missing 3 registered commands; a cited path was not repo-rooted; a glossary line claimed print presets had shipped (they never did). Listed in artifacts/epic_5/E5.4_cycle_receipt.md 'Claims critic'."
+
+- cycle_id: 2026-11-15T00:54:09Z
+  row_or_kind: graphify:update
+  bundle: SD-40
+  branch: 2103767aa7fb0c974e6d88be211ae73a7114c303
+  integration_target: develop
+  branch_tip: 2103767a
+  graphify_exit_code: -1
+  outcome: failed
+  wall_clock_seconds: 7200.8
+  log_path: graphify-out/.truth-up-run-2026-11-15T00:54:09Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: "graphify cluster-only killed by the wrapper's 7200 s cap (exit -1; prior bundles ~1400 s): the community-labelling stage (claude -p child calls, plus llamacpp provider at llamacpp.trantor.internal) never finished; graph.json NOT rewritten, no force flag used. First attempt (exit 1, 0.2 s, no graph.json in a fresh worktree) was seeded by copy from the lead checkout graphify-out per SD-39 precedent and its failure receipt discarded as a setup error. Indexed SHA 2103767aa7 = origin/tranche-20, unfiltered git status --porcelain empty before the run. Not retried: the graphify-update skill's operator-pinned completion criterion (2026-07-22) accepts partial state and says stop retrying. Operator decides a later re-index."
