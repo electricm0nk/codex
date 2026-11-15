@@ -134,6 +134,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E2.3 | 2026-11-14 | `ee8fa1b73c` + `acec4b43e9` + this commit | complete | `artifacts/epic_2/E2.3_cycle_receipt.md` (`create_custom_item` registered: record written, price > 0 charged at the mode, refused short of funds, lands Carried; every custom equipment record held; created items weighed as `extra` and as containers in `containerLoads`; `ignoreContainerCapacity` toggle + load response; clone copies the sets file; Custom dialog Weight / Price / Container; G-1 byte-identical; desktop bin 1328 tests, known E2.10/E2.11 failures only after the re-pin) |
 | E2.9 | 2026-11-14 | this commit | complete | `artifacts/epic_2/E2.9_cycle_receipt.md` (fixture regenerated: 41 `Projectile` weapons gain `uses_ammunition` + `ammunition_family`, nothing else moved; `--check` `drifted=0 PASS`; G-1 byte-identical) |
 | E2.10 | 2026-11-15 | this commit | complete | `artifacts/epic_2/E2.10_cycle_receipt.md` (one test re-pinned to `[("UE", "Masterwork Tool")]`; RED `left: [("UE", "Masterwork Tool")]`; GREEN 1 passed; clippy clean) |
+| E2.11 | 2026-11-15 | `04db00302d` + this commit | complete | `artifacts/epic_2/E2.11_cycle_receipt.md` (`market_variants` refuses a row whose converted record states `Aura:`; RED `Holy Avenger (no price: already magic) has offers: [… 122930.0 …]`; GREEN in both binaries; 333 → 310 rows with offers, 23 named magic weapons; desktop full run 0 failed) |
 
 ## Epic reports
 
