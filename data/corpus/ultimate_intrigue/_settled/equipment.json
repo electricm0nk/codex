@@ -1152,6 +1152,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "LIBERATING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1197,6 +1200,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "PEACEFUL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1242,6 +1248,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "SILENCING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1281,6 +1290,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "SLITHERING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1320,6 +1332,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Liberating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1365,6 +1380,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Peaceful",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1410,6 +1428,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Silencing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1449,6 +1470,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Slithering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1488,6 +1512,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Truthful",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1527,6 +1554,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Umbral",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1566,6 +1596,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Unseen",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1605,6 +1638,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "TRUTHFUL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1644,6 +1680,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "UMBRAL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1683,6 +1722,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "UNSEEN",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

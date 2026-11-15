@@ -90,7 +90,7 @@ use codex::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use codex::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use codex::rules_core::equipment_effects::EquipmentStatEffect;
 use codex::rules_core::equipment_effects::skill_set_rows;
-use codex::rules_core::equipment_record::{ContainerCapacity, CorpusEquipmentRecord, StatedBonus};
+use codex::rules_core::equipment_record::{ContainerCapacity, CorpusEquipmentRecord, ModifierPrice, PriceTerm, StatedBonus};
 use codex::rules_core::spell_record::CorpusSpellRecord;
 use crate::pcgen_import::ir_content_payload::{
     record_to_live, IrContentPayload, IrContentRecord, IrPackageContent,
@@ -529,7 +529,91 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         ammunition_family: if uses_ammunition_of(record) { ammunition_family_of(record) } else { None },
         ammunition_kinds: ammunition_kinds_of(record),
         base_quantity: base_quantity_of(record),
+        modifier_price: modifier_price_of(record),
     }
+}
+
+/// The record's price as an equipment modifier on another item (SD-41 E2.6, `decisions.md §24`):
+/// its `PLUS`, `ITYPE` words and masterwork quality, and each `COST` formula and `ITEMCOST` chain as
+/// a [`PriceTerm`] linear in the host's base price, weight and enhancement total squared -- the
+/// variables [`equipment_price_gp`] gives them. A formula with any other variable (`%CHOICE`,
+/// `%CHARGES`, `SIZE`) or a prerequisite other than one type word marks the record `unpriced`.
+/// `None` for a record stating none of the four (an item, or a modifier with a flat `COST` only).
+fn modifier_price_of(record: &EquipmentRecord) -> Option<ModifierPrice> {
+    let tokens: Vec<(String, String)> = record.tokens.iter().map(|t| (t.key.clone(), t.value.clone())).collect();
+    let chains: Vec<Vec<String>> = record.bonus_chains.iter().map(|b| b.qualifiers.clone()).collect();
+    let price = EqmodPrice::from_tokens(&tokens, &chains);
+    let grants: Vec<String> =
+        equipment_token_value(record, "ITYPE").map_or(Vec::new(), |v| v.split('.').filter(|w| !w.is_empty()).map(str::to_string).collect());
+    let formula_cost = price.cost.iter().any(|c| c.trim().parse::<f64>().is_err());
+    if price.plus == 0 && grants.is_empty() && price.item_costs.is_empty() && !formula_cost {
+        return None;
+    }
+    let mut settled = ModifierPrice {
+        plus: i16::try_from(price.plus).unwrap_or(0),
+        masterwork_quality: price.masterwork_quality,
+        grants,
+        ..ModifierPrice::default()
+    };
+    for formula in &price.cost {
+        match linear_price_term(formula) {
+            Some(term) => settled.terms.push(term),
+            None => settled.unpriced = true,
+        }
+    }
+    for chain in &price.item_costs {
+        let (Some(target), Some(formula)) = (chain.first(), chain.get(1)) else { continue };
+        let hosts: Vec<String> = target
+            .split(',')
+            .filter_map(|t| t.split_once('.'))
+            .filter(|(kind, _)| kind.eq_ignore_ascii_case("TYPE"))
+            .map(|(_, word)| word.to_string())
+            .collect();
+        // A target `equipment_price_gp` never applies (`TYPE=Instrument`) adds nothing here either.
+        if hosts.is_empty() {
+            continue;
+        }
+        let Some(mut term) = linear_price_term(formula) else {
+            settled.unpriced = true;
+            continue;
+        };
+        term.hosts = hosts;
+        for prereq in &chain[2..] {
+            let one_word = |prefix: &str| prereq.strip_prefix(prefix).filter(|w| !w.contains([',', '='])).map(str::to_string);
+            if prereq == NOT_ALREADY_MASTERWORK {
+                term.unless_masterwork_quality = true;
+            } else if let Some(word) = one_word("PRETYPE:1,") {
+                term.requires.push(word);
+            } else if let Some(word) = one_word("!PRETYPE:1,") {
+                term.excludes.push(word);
+            } else {
+                settled.unpriced = true;
+            }
+        }
+        settled.terms.push(term);
+    }
+    Some(settled)
+}
+
+/// `formula` as `flat + per_base × BASECOST + per_lb × WT + per_plus_squared × PLUSTOTAL²`, read off
+/// four evaluations and checked at a fifth; `None` when it is not that shape or uses another variable.
+fn linear_price_term(formula: &str) -> Option<PriceTerm> {
+    let at = |base: f64, lb: f64, plus: f64| {
+        let vars = std::collections::BTreeMap::from([
+            ("BASECOST".to_string(), base),
+            ("WT".to_string(), lb),
+            ("PLUSTOTAL".to_string(), plus),
+            ("HEADPLUSTOTAL".to_string(), plus),
+            ("SPELLXPCOST".to_string(), 0.0),
+        ]);
+        evaluate_price_formula(formula, &vars).ok()
+    };
+    let flat_gp = at(0.0, 0.0, 0.0)?;
+    let per_base_gp = at(1.0, 0.0, 0.0)? - flat_gp;
+    let per_lb_gp = at(0.0, 1.0, 0.0)? - flat_gp;
+    let per_plus_squared_gp = at(0.0, 0.0, 1.0)? - flat_gp;
+    let linear = flat_gp + 3.0 * per_base_gp + 5.0 * per_lb_gp + 4.0 * per_plus_squared_gp;
+    ((linear - at(3.0, 5.0, 2.0)?).abs() < 1e-6).then_some(PriceTerm { flat_gp, per_base_gp, per_lb_gp, per_plus_squared_gp, ..PriceTerm::default() })
 }
 
 /// The record's `TYPE` words.
@@ -1145,6 +1229,11 @@ fn weapon_enhancement_of(record: &EquipmentRecord) -> Option<WeaponEnhancementBo
                 "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE"
             );
 
+        // A chain gated to ammunition is not the weapon's roll: mithral states one `TOHIT` for a
+        // weapon and one for ammunition, and summing them read +2 (SD-41 E2.6).
+        if qualifiers.iter().any(|q| q.eq_ignore_ascii_case("PRETYPE:1,AMMUNITION")) {
+            continue;
+        }
         if (subject == Some("WEAPON") || this_natural_attack_only) && is_roll_shape {
             if crate::pcgen_import::equipment_bonus_reader::roll_bonus_carries_enhancement_type(
                 bonus,
@@ -2305,6 +2394,7 @@ mod tests {
 #[cfg(test)]
 mod price_tests {
     use super::*;
+    use crate::pcgen_import::lst_parser::equipment::EquipmentToken;
 
     fn tokens(pairs: &[(&str, &str)]) -> Vec<(String, String)> {
         pairs.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect()
@@ -2354,6 +2444,62 @@ mod price_tests {
 
     const BREASTPLATE_BASE: &[(&str, &str)] =
         &[("KEY", "Breastplate (Base)"), ("TYPE", "Armor.Medium.ArmorProfMedium.Suit"), ("COST", "200"), ("WT", "30")];
+
+    /// An eqmod record with these tokens and `BONUS:` chains, as the converter sees one.
+    fn eqmod_record(pairs: &[(&str, &str)], chains: &[&[&str]]) -> EquipmentRecord {
+        EquipmentRecord {
+            kind: EquipmentRecordKind::EquipMod,
+            name: "EqMod".to_string(),
+            header_line_number: 1,
+            header_raw_line: String::new(),
+            tokens: pairs
+                .iter()
+                .map(|(key, value)| EquipmentToken { key: key.to_string(), value: value.to_string(), line_number: 1, raw_pair: format!("{key}:{value}") })
+                .collect(),
+            bonus_chains: chains
+                .iter()
+                .map(|q| crate::pcgen_import::lst_parser::equipment::BonusToken { line_number: 1, raw_bonus: String::new(), qualifiers: chain(q) })
+                .collect(),
+            is_record_start: true,
+            diagnostics: Vec::new(),
+        }
+    }
+
+    /// SD-41 E2.6: the settled terms price an item as [`equipment_price_gp`] does from the tokens
+    /// (two implementations of one sum), and a formula with any other variable is unpriced.
+    #[test]
+    fn modifier_price_settles_terms_that_agree_with_the_token_price() {
+        let adamantine = equipment_record_to_corpus(&eqmod_record(
+            &[("KEY", "Material ~ Adamantine ~ Armor / Medium"), ("TYPE", "BaseMaterial.MasterworkQuality.Armor"), ("COST", "10000"), ("ITYPE", "Metal.Adamantine.Masterwork")],
+            &[],
+        ));
+        let plus3 = equipment_record_to_corpus(&eqmod_record(
+            &[("KEY", "Special Ability ~ +3 ~ Armor"), ("TYPE", "Armor"), ("PLUS", "3")],
+            &[&["ITEMCOST", "TYPE.ARMOR", "1000*PLUSTOTAL*PLUSTOTAL"], &["ITEMCOST", "TYPE.ARMOR", "150", NOT_ALREADY_MASTERWORK]],
+        ));
+        let types: Vec<String> = ["Armor", "Medium", "ArmorProfMedium", "Suit"].iter().map(|t| t.to_string()).collect();
+        let settled = |modifiers: &[&CorpusEquipmentRecord]| codex::rules_core::equipment_record::modified_price_gp(200.0, 30.0, &types, modifiers);
+        assert_eq!(settled(&[&adamantine, &plus3]), Ok(200.0 + 10_000.0 + 9_000.0));
+        let own = [("EQMOD", "Material ~ Adamantine ~ Armor / Medium.Special Ability ~ +3 ~ Armor")];
+        assert_eq!(price(&own, Some(BREASTPLATE_BASE)), Ok(200.0 + 10_000.0 + 9_000.0), "the token price agrees");
+        assert_eq!(settled(&[&plus3]), Ok(200.0 + 150.0 + 9_000.0), "no masterwork quality: masterwork is charged");
+
+        let mithral = equipment_record_to_corpus(&eqmod_record(
+            &[("KEY", "Material ~ Mithril ~ Weapon / Item"), ("TYPE", "BaseMaterial.MasterworkQuality.Ammunition.Weapon"), ("COST", "WT*500"), ("ITYPE", "Metal.Mithral.Masterwork")],
+            &[&["WEAPON", "TOHIT", "1", "TYPE=Enhancement", "PRETYPE:1,WEAPON"], &["WEAPON", "TOHIT", "1", "TYPE=Enhancement", "PRETYPE:1,AMMUNITION"]],
+        ));
+        let price = mithral.modifier_price.as_ref().expect("a COST formula settles a price");
+        assert!(price.masterwork_quality && !price.unpriced);
+        assert_eq!(price.terms[0].per_lb_gp, 500.0);
+        assert_eq!(mithral.weapon_enhancement.as_ref().and_then(|w| w.tohit_bonus), Some(1), "the ammunition chain is not the weapon's");
+
+        let flaming = equipment_record_to_corpus(&eqmod_record(&[("KEY", "Special Ability ~ Flaming ~ Weapon"), ("TYPE", "Ammunition.Weapon"), ("PLUS", "1")], &[]));
+        assert_eq!(flaming.modifier_price.as_ref().map(|p| (p.plus, p.terms.len())), Some((1, 0)));
+        let choice = equipment_record_to_corpus(&eqmod_record(&[("KEY", "Special Ability ~ Enhancement Cost"), ("COST", "%CHOICE")], &[]));
+        assert!(choice.modifier_price.is_some_and(|p| p.unpriced));
+        let flat = equipment_record_to_corpus(&eqmod_record(&[("KEY", "Material ~ Whipwood"), ("COST", "500")], &[]));
+        assert_eq!(flat.modifier_price, None, "a flat COST stays `cost_gp`");
+    }
 
     #[test]
     fn equipment_price_adamantine_breastplate_is_base_plus_material() {

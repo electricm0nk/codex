@@ -114,6 +114,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "BLEED",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -192,6 +195,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Bleed",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

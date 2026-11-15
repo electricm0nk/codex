@@ -9870,6 +9870,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ArmorEnhancement",
+            "Magic",
+            "Plus1"
+          ],
+          "plus": 1,
+          "terms": [
+            {
+              "hosts": [
+                "ARMOR"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "ARMOR"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+1 (Enhancement to Armor)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9909,6 +9933,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ShieldEnhancement",
+            "Magic",
+            "Plus1"
+          ],
+          "plus": 1,
+          "terms": [
+            {
+              "hosts": [
+                "SHIELD"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "SHIELD"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+1 (Enhancement to Shield)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9948,6 +9996,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "WeaponEnhancement",
+            "Magic",
+            "Plus1"
+          ],
+          "plus": 1,
+          "terms": [
+            {
+              "hosts": [
+                "WEAPON"
+              ],
+              "per_plus_squared_gp": 2000.0
+            },
+            {
+              "flat_gp": 300.0,
+              "hosts": [
+                "WEAPON"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+1 (Enhancement to Weapon)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9992,6 +10064,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ArmorEnhancement",
+            "Magic",
+            "Plus2"
+          ],
+          "plus": 2,
+          "terms": [
+            {
+              "hosts": [
+                "ARMOR"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "ARMOR"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+2 (Enhancement to Armor)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10031,6 +10127,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ShieldEnhancement",
+            "Magic",
+            "Plus2"
+          ],
+          "plus": 2,
+          "terms": [
+            {
+              "hosts": [
+                "SHIELD"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "SHIELD"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+2 (Enhancement to Shield)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10070,6 +10190,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "WeaponEnhancement",
+            "Magic",
+            "Plus2"
+          ],
+          "plus": 2,
+          "terms": [
+            {
+              "hosts": [
+                "WEAPON"
+              ],
+              "per_plus_squared_gp": 2000.0
+            },
+            {
+              "flat_gp": 300.0,
+              "hosts": [
+                "WEAPON"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+2 (Enhancement to Weapon)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10114,6 +10258,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ArmorEnhancement",
+            "Magic",
+            "Plus3"
+          ],
+          "plus": 3,
+          "terms": [
+            {
+              "hosts": [
+                "ARMOR"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "ARMOR"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+3 (Enhancement to Armor)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10153,6 +10321,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ShieldEnhancement",
+            "Magic",
+            "Plus3"
+          ],
+          "plus": 3,
+          "terms": [
+            {
+              "hosts": [
+                "SHIELD"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "SHIELD"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+3 (Enhancement to Shield)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10192,6 +10384,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "WeaponEnhancement",
+            "Magic",
+            "Plus3"
+          ],
+          "plus": 3,
+          "terms": [
+            {
+              "hosts": [
+                "WEAPON"
+              ],
+              "per_plus_squared_gp": 2000.0
+            },
+            {
+              "flat_gp": 300.0,
+              "hosts": [
+                "WEAPON"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+3 (Enhancement to Weapon)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10236,6 +10452,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ArmorEnhancement",
+            "Magic",
+            "Plus4"
+          ],
+          "plus": 4,
+          "terms": [
+            {
+              "hosts": [
+                "ARMOR"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "ARMOR"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+4 (Enhancement to Armor)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10275,6 +10515,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ShieldEnhancement",
+            "Magic",
+            "Plus4"
+          ],
+          "plus": 4,
+          "terms": [
+            {
+              "hosts": [
+                "SHIELD"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "SHIELD"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+4 (Enhancement to Shield)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10314,6 +10578,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "WeaponEnhancement",
+            "Magic",
+            "Plus4"
+          ],
+          "plus": 4,
+          "terms": [
+            {
+              "hosts": [
+                "WEAPON"
+              ],
+              "per_plus_squared_gp": 2000.0
+            },
+            {
+              "flat_gp": 300.0,
+              "hosts": [
+                "WEAPON"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+4 (Enhancement to Weapon)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10358,6 +10646,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ArmorEnhancement",
+            "Magic",
+            "Plus5"
+          ],
+          "plus": 5,
+          "terms": [
+            {
+              "hosts": [
+                "ARMOR"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "ARMOR"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+5 (Enhancement to Armor)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10397,6 +10709,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "ShieldEnhancement",
+            "Magic",
+            "Plus5"
+          ],
+          "plus": 5,
+          "terms": [
+            {
+              "hosts": [
+                "SHIELD"
+              ],
+              "per_plus_squared_gp": 1000.0
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "SHIELD"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+5 (Enhancement to Shield)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10436,6 +10772,30 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Masterwork",
+            "WeaponEnhancement",
+            "Magic",
+            "Plus5"
+          ],
+          "plus": 5,
+          "terms": [
+            {
+              "hosts": [
+                "WEAPON"
+              ],
+              "per_plus_squared_gp": 2000.0
+            },
+            {
+              "flat_gp": 300.0,
+              "hosts": [
+                "WEAPON"
+              ],
+              "unless_masterwork_quality": true
+            }
+          ]
+        },
         "name": "+5 (Enhancement to Weapon)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

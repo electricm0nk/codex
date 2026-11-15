@@ -18291,6 +18291,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "CraftToolsTattoos"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Tattoos",
         "skill_check_bonus": {
           "bonus": 2,
@@ -18489,6 +18497,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Angelskin"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Angelskin",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18528,6 +18547,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Angelskin"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "Angelskin",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18571,6 +18601,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "BloodCrystal"
+          ],
+          "terms": [
+            {
+              "flat_gp": 30.0
+            }
+          ]
+        },
         "name": "Blood Crystal",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18610,6 +18650,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "BloodCrystal"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "Blood Crystal",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18660,6 +18710,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bone"
+          ],
+          "terms": [
+            {
+              "per_base_gp": -0.5
+            }
+          ]
+        },
         "name": "Bone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18710,6 +18770,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bronze"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18749,6 +18817,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 750.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18788,6 +18867,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18827,6 +18917,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18866,6 +18967,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "per_lb_gp": 375.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18905,6 +19017,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "EelHide"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1200.0
+            }
+          ]
+        },
         "name": "Eel Hide",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18944,6 +19067,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "EelHide"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1800.0
+            }
+          ]
+        },
         "name": "Eel Hide",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18987,6 +19121,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 20.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19026,6 +19170,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 3000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19065,6 +19219,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19104,6 +19268,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19143,6 +19317,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19187,6 +19371,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 15.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19226,6 +19421,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 3000.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19270,6 +19476,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19314,6 +19531,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 2500.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19358,6 +19586,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 600.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19402,6 +19641,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 15.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19441,6 +19691,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 3000.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19485,6 +19746,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19529,6 +19801,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 2500.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19573,6 +19856,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 600.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19623,6 +19917,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Gold"
+          ],
+          "terms": [
+            {
+              "per_base_gp": 9.0
+            }
+          ]
+        },
         "name": "Gold",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19669,6 +19973,38 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Greenwood"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "per_lb_gp": 50.0
+            },
+            {
+              "flat_gp": 6.0,
+              "hosts": [
+                "AMMUNITION"
+              ]
+            },
+            {
+              "excludes": [
+                "Shield"
+              ],
+              "flat_gp": 300.0,
+              "hosts": [
+                "WEAPON"
+              ]
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "SHIELD"
+              ]
+            }
+          ]
+        },
         "name": "Greenwood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19708,6 +20044,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GriffonMane"
+          ],
+          "terms": [
+            {
+              "flat_gp": 200.0
+            }
+          ]
+        },
         "name": "Griffon Mane",
         "skill_check_bonus": {
           "bonus": 2,
@@ -19756,6 +20102,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GriffonMane"
+          ],
+          "terms": [
+            {
+              "per_lb_gp": 50.0
+            }
+          ]
+        },
         "name": "Griffon Mane",
         "skill_check_bonus": {
           "bonus": 2,
@@ -19808,6 +20164,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 10.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19847,6 +20213,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19886,6 +20262,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19925,6 +20311,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19964,6 +20360,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "per_lb_gp": 250.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20003,6 +20409,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 100.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20042,6 +20458,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20092,6 +20518,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Obsidian"
+          ],
+          "terms": [
+            {
+              "per_base_gp": -0.5
+            }
+          ]
+        },
         "name": "Obsidian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20131,6 +20567,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Stone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20170,6 +20614,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {
+              "per_base_gp": -0.75
+            }
+          ]
+        },
         "name": "Stone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20213,6 +20667,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Viridium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 20.0
+            }
+          ]
+        },
         "name": "Viridium",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20256,6 +20720,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ViridiumStrengthened"
+          ],
+          "terms": [
+            {
+              "flat_gp": 20.0
+            }
+          ]
+        },
         "name": "Viridium (Strengthened)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20295,6 +20769,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ViridiumStrengthened"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Viridium (Strengthened)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20334,6 +20818,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Viridium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 200.0
+            }
+          ]
+        },
         "name": "Viridium",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20373,6 +20867,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Whipwood"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Whipwood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20417,6 +20921,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Wyroot (1 Life Point)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20456,6 +20970,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "Wyroot (2 Life Points)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20495,6 +21019,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 4000.0
+            }
+          ]
+        },
         "name": "Wyroot (3 Life Points)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20534,6 +21068,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMinor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (1st)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20573,6 +21117,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMinor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 4000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (2nd)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20612,6 +21166,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMedium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 9000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (3rd)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20651,6 +21215,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMedium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 16000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (4th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20690,6 +21264,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMedium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 25000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (5th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20729,6 +21313,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 36000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (6th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20768,6 +21362,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 49000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (7th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20807,6 +21411,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 64000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (8th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20846,6 +21460,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 81000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (9th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20885,6 +21509,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Adaptive"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Adaptive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20963,6 +21597,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Advancing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21002,6 +21639,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Anchoring",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21041,6 +21681,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Balanced",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21080,6 +21723,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Benevolent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21119,6 +21765,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Benevolent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21158,6 +21807,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Benevolent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21197,6 +21849,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bitter",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21236,6 +21891,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bolstering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21275,6 +21933,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Brawling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21319,6 +21980,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Called",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21358,6 +22022,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Clangorous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21397,6 +22064,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Conductive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21436,6 +22106,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Conserving",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21475,6 +22148,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Corrosive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21514,6 +22190,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Corrosive Burst",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21553,6 +22232,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Countering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21592,6 +22274,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Courageous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21670,6 +22355,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cruel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21715,6 +22403,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cruel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21754,6 +22445,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cunning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21793,6 +22487,12 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Deadly"
+          ],
+          "plus": 1
+        },
         "name": "Deadly",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21832,6 +22532,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Deathless",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21871,6 +22574,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Defiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21910,6 +22616,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Defiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21993,6 +22702,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "Designating (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22037,6 +22749,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Designating (Lesser)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22076,6 +22791,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Dispelling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22115,6 +22833,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Dispelling Burst",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22154,6 +22875,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Dispelling Burst",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22193,6 +22917,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Dispelling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22276,6 +23003,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Endless Ammunition",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22354,6 +23084,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Furious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22393,6 +23126,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Furyborn",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22432,6 +23168,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Furyborn",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22510,6 +23249,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Glorious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22549,6 +23291,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Glorious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22588,6 +23333,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grayflame",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22627,6 +23375,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grinding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22666,6 +23417,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grounding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22705,6 +23459,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grounding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22744,6 +23501,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Guardian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22783,6 +23543,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Guardian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22861,6 +23624,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Heartseeker",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22900,6 +23666,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Heartseeker",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22978,6 +23747,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Huntsman",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23017,6 +23789,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Igniting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23062,6 +23837,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Igniting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23101,6 +23879,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Impact",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23140,6 +23921,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Impervious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23218,6 +24002,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Invigorating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23257,6 +24044,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Invigorating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23296,6 +24086,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Jurist",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23335,6 +24128,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Ki Intensifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23374,6 +24170,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Ki Intensifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23413,6 +24212,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Lifesurge",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23452,6 +24254,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Lifesurge",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23491,6 +24296,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Limning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23536,6 +24344,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Limning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23575,6 +24386,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Lucky",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23614,6 +24428,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Lucky (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23692,6 +24509,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Menacing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23731,6 +24551,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Merging",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23770,6 +24593,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Mimetic",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23809,6 +24635,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Mimetic",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23848,6 +24677,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Mirrored",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23887,6 +24719,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Negating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23926,6 +24761,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Negating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23965,6 +24803,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Neutralizing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24004,6 +24845,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Neutralizing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24043,6 +24887,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "Nimble Shot",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24082,6 +24929,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Nullifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24121,6 +24971,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Nullifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24160,6 +25013,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Ominous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24199,6 +25055,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Phase locking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24244,6 +25103,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Phase Locking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24283,6 +25145,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Planar",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24328,6 +25193,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Planar",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24445,6 +25313,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Quenching",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24484,6 +25355,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Quenching",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24523,6 +25397,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Light Source"
+          ],
+          "terms": [
+            {
+              "flat_gp": 7500.0
+            }
+          ]
+        },
         "name": "Radiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24601,6 +25485,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Ramming",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24640,6 +25527,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Reliable",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24679,6 +25569,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Reliable (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24718,6 +25611,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Repositioning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24757,6 +25653,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Repositioning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24796,6 +25695,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Seaborne",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24835,6 +25737,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Seaborne",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24874,6 +25779,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "Second Chance",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24913,6 +25821,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Spell Storing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24952,6 +25863,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Spellstealing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24991,6 +25905,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Spellstealing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25030,6 +25947,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Stalking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25069,6 +25989,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Stalking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25108,6 +26031,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Stanching",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25147,6 +26073,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Thawing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25186,6 +26115,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Thawing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25225,6 +26157,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Titanic",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25303,6 +26238,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Valiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25342,6 +26280,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Valiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25420,6 +26361,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Warding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25654,6 +26598,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Fragile"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Fragile",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25693,6 +26645,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Performance"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Performance",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25776,6 +26736,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Scatter"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Scatter",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

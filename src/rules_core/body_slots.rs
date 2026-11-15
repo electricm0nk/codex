@@ -428,6 +428,15 @@ impl Enhanceable {
         };
         format!("Special Ability ~ +{bonus} ~ {family}")
     }
+
+    /// The catalog key of the masterwork `equipment_modifier` of this kind, which a `+N` replaces
+    /// (Buy Custom, SD-41 `decisions.md §24`): its `ITEMCOST` is the masterwork price.
+    pub fn masterwork_key(self) -> &'static str {
+        match self {
+            Self::Armor | Self::Shield => "Special Quality ~ Masterwork ~ Armor",
+            Self::Weapon => "Special Quality ~ Masterwork ~ Weapon",
+        }
+    }
 }
 
 #[cfg(test)]

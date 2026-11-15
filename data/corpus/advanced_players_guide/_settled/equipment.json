@@ -5273,6 +5273,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "ALLYING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5312,6 +5315,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "CHAMP",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5351,6 +5357,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "CNNING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5394,6 +5403,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "CONDUCTVE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5437,6 +5449,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "CRRSVE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5554,6 +5569,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "DSTRD",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5671,6 +5689,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "FURIOUS",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5710,6 +5731,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "GRAYFLM",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5753,6 +5777,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "HUNTSMAN",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5844,6 +5871,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "JURIST",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5883,6 +5913,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "MENACING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5965,6 +5998,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Allying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6004,6 +6040,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Champion",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6047,6 +6086,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Conductive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6090,6 +6132,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Corrosive Burst",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6133,6 +6178,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Corrosive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6172,6 +6220,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cunning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6211,6 +6262,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Dastard",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6328,6 +6382,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Furious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6367,6 +6424,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grayflame",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6410,6 +6470,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Huntsman",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6501,6 +6564,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Jurist",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6540,6 +6606,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Menacing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

@@ -1749,6 +1749,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "DEFLECTING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1788,6 +1791,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "DENYING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1827,6 +1833,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "DISJOINING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1866,6 +1875,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "HARVESTING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2783,6 +2795,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Mythic",
+            "Intelligent"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "LEGEND_INTELLIGENT",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3350,6 +3373,11 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Legendary"
+          ]
+        },
         "name": "LEGENDARY",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3428,6 +3456,11 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Legendary"
+          ]
+        },
         "name": "Legendary",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3506,6 +3539,12 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Major",
+            "Artifact"
+          ]
+        },
         "name": "MajorArtifact",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3545,6 +3584,12 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Minor",
+            "Artifact"
+          ]
+        },
         "name": "MinorArtifact",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3785,6 +3830,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Mythic",
+            "Intelligent"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Intelligent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5623,6 +5679,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Chaotic Evil"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (CE)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5673,6 +5738,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Chaotic Good"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (CG)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5723,6 +5797,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Chaotic Neutral"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (CN)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5773,6 +5856,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Lawful Evil"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (LE)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5823,6 +5915,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Lawful Good"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (LG)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5873,6 +5974,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Lawful Neutral"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (LN)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5923,6 +6033,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Neutral Evil"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (NE)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -5973,6 +6092,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "Neutral Good"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (NG)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -6023,6 +6151,15 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Item Has Alignment",
+            "True Neutral"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Legendary Intelligent Item / Align (TN)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8163,6 +8300,12 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Major",
+            "Artifact"
+          ]
+        },
         "name": "MajorArtifact",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8202,6 +8345,12 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Minor",
+            "Artifact"
+          ]
+        },
         "name": "MinorArtifact",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8241,6 +8390,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "MYTHIC_BANE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8280,6 +8432,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "POTENT",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8319,6 +8474,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "RESONATING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8397,6 +8555,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Deflecting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8436,6 +8597,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "Denying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8475,6 +8639,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Disjoining",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8514,6 +8681,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Harvesting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8553,6 +8723,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Mythic Bane",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8592,6 +8765,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Potent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -8631,6 +8807,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Resonating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

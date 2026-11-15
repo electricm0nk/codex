@@ -767,6 +767,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Leaf"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "LEAF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -817,6 +825,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Leaf"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Leaf",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -863,6 +879,37 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wooden",
+            "Paueliel",
+            "Masterwork"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "per_lb_gp": 15.0
+            },
+            {
+              "flat_gp": 6.0,
+              "hosts": [
+                "Ammunition"
+              ]
+            },
+            {
+              "flat_gp": 300.0,
+              "hosts": [
+                "Weapon"
+              ]
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "Shield"
+              ]
+            }
+          ]
+        },
         "name": "Paueliel Wood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -907,6 +954,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Stone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -953,6 +1008,37 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wooden",
+            "Paueliel",
+            "Masterwork"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "per_lb_gp": 15.0
+            },
+            {
+              "flat_gp": 6.0,
+              "hosts": [
+                "Ammunition"
+              ]
+            },
+            {
+              "flat_gp": 300.0,
+              "hosts": [
+                "Weapon"
+              ]
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "Shield"
+              ]
+            }
+          ]
+        },
         "name": "PAUELIEL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -997,6 +1083,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "STONE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

@@ -2963,10 +2963,10 @@ pub(crate) fn load_saved_character_at_root(
         })
         .collect();
     corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra);
-    let held_by_key: Vec<(CopyKey, &str)> = copy_keys
+    let held_by_key: Vec<(CopyKey, &str, &[String])> = copy_keys
         .iter()
         .zip(&envelope.character_input.chosen.equipment_selections)
-        .map(|(copy, selection)| (copy.clone(), selection.item_id.as_str()))
+        .map(|(copy, selection)| (copy.clone(), selection.item_id.as_str(), selection.applied_modifiers.as_slice()))
         .collect();
     let containers: Vec<(CopyKey, f64)> =
         created_copies.iter().filter_map(|(copy, record)| record.container_capacity_lbs.map(|lbs| (copy.clone(), lbs))).collect();
@@ -3938,7 +3938,7 @@ fn copy_price_gp(item_id: &str, bonus: u8, offers: &[crate::equipment_catalog::M
 fn add_purchased_copy_at_root(
     root: &Path,
     (item_id, bonus): (&str, u8),
-    modifier_key: Option<&str>,
+    modifiers: &[String],
     active_state: ActiveState,
     lines: u32,
     saved_at: &str,
@@ -3950,8 +3950,8 @@ fn add_purchased_copy_at_root(
         |character_input| {
             for _ in 0..lines {
                 crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
-                if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
-                    copy.applied_modifiers.push(key.to_owned());
+                if let Some(copy) = character_input.chosen.equipment_selections.last_mut() {
+                    copy.applied_modifiers.extend(modifiers.iter().cloned());
                 }
             }
         },
@@ -4142,8 +4142,9 @@ fn add_purchased_pieces_at_root(
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
     let per_bundle = bundle_pieces(item_id);
+    let modifiers: Vec<String> = modifier_key.map(str::to_owned).into_iter().collect();
     if per_bundle == 1 {
-        return add_purchased_copy_at_root(root, (item_id, bonus), modifier_key, active_state, bundles, saved_at);
+        return add_purchased_copy_at_root(root, (item_id, bonus), &modifiers, active_state, bundles, saved_at);
     }
     let pieces = bundles.saturating_mul(per_bundle);
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
@@ -4159,7 +4160,7 @@ fn add_purchased_pieces_at_root(
         }
         return Ok(response);
     }
-    let response = add_purchased_copy_at_root(root, (item_id, bonus), modifier_key, active_state, 1, saved_at)?;
+    let response = add_purchased_copy_at_root(root, (item_id, bonus), &modifiers, active_state, 1, saved_at)?;
     if matches!(response, CreateCharacterResponse::Saved { .. }) && pieces != per_bundle {
         let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
         let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
@@ -4168,6 +4169,228 @@ fn add_purchased_pieces_at_root(
         equipment_sets::save(root, &sets).map_err(|err| err.message)?;
     }
     Ok(response)
+}
+
+/// What a Buy Custom names (`decisions.md §24`): a Market row as the base, a custom name, and the
+/// masterwork, `+N`, special abilities, material and size the copy is made with.
+#[derive(Debug, Clone, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomEquipmentBuild {
+    pub base_item_id: String,
+    #[serde(default)]
+    pub name: Option<String>,
+    #[serde(default)]
+    pub masterwork: bool,
+    /// The `+N`, 0 to 5.
+    #[serde(default)]
+    pub enhancement: u8,
+    #[serde(default)]
+    pub special_abilities: Vec<String>,
+    #[serde(default)]
+    pub material: Option<String>,
+    #[serde(default)]
+    pub size: Option<String>,
+}
+
+/// One custom copy's price and weight, as a purchase would charge and the engine weigh it.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomEquipmentQuoteDto {
+    /// The modifiers the copy holds, in order: the `+N` (or masterwork), abilities, material, size.
+    pub modifiers: Vec<String>,
+    /// One copy's price in gp; `None` when a part has no price, and the buy is priced by Negotiate.
+    pub price_gp: Option<f64>,
+    /// The parts with no price, by key (`decisions.md §30` Q6): the quote says which.
+    pub unpriced: Vec<String>,
+    /// One copy's weight: the base's, divided by a material that lightens it.
+    pub weight_lbs: Option<f64>,
+}
+
+/// The quote for `build`, or why it cannot be made: an unknown base, a `+N` or masterwork on a base
+/// that takes none, a bonus past +5, a part the base is not offered, or a `+N`-equivalent ability
+/// with no enhancement bonus under it.
+pub(crate) fn custom_equipment_quote(build: &CustomEquipmentBuild) -> Result<CustomEquipmentQuoteDto, String> {
+    use crate::equipment_catalog::{catalog_row, custom_equipment_options};
+    let base_id = build.base_item_id.as_str();
+    let base = catalog_row(base_id).ok_or_else(|| format!("'{base_id}' is not a Market item"))?;
+    let tags: Vec<&str> = base.types.iter().map(String::as_str).collect();
+    let kind = codex::rules_core::body_slots::enhanceable_tags(&tags);
+    if build.enhancement > 5 {
+        return Err(format!("+{} is past +5", build.enhancement));
+    }
+    if (build.enhancement > 0 || build.masterwork) && kind.is_none() {
+        return Err(format!("'{base_id}' takes no masterwork or enhancement"));
+    }
+    let offered = custom_equipment_options(base_id);
+    let offers = |list: &[crate::equipment_catalog::CustomOptionDto], key: &str| list.iter().any(|option| option.key == key);
+    let mut parts: Vec<String> = Vec::new();
+    for key in &build.special_abilities {
+        if !offers(&offered.abilities, key) {
+            return Err(format!("'{key}' is not a special ability offered on '{base_id}'"));
+        }
+        parts.push(key.clone());
+    }
+    for (choice, list, what) in [(&build.material, &offered.materials, "material"), (&build.size, &offered.sizes, "size")] {
+        if let Some(key) = choice {
+            if !offers(list, key) {
+                return Err(format!("'{key}' is not a {what} offered on '{base_id}'"));
+            }
+            parts.push(key.clone());
+        }
+    }
+    let corpus = corpus_fixture_bundle();
+    let resolve = |key: &str| {
+        codex::rules_core::equipment_resolver::equipment_converted_resolve(key, corpus).ok_or_else(|| format!("'{key}' has no record on the sheet"))
+    };
+    let part_records = parts.iter().map(|key| resolve(key)).collect::<Result<Vec<_>, String>>()?;
+    let quality = |record: &codex::rules_core::equipment_record::CorpusEquipmentRecord| record.modifier_price.as_ref().is_some_and(|p| p.masterwork_quality);
+    let plus: i16 = part_records.iter().filter_map(|record| record.modifier_price.as_ref()).map(|p| p.plus).sum();
+    if plus > 0 && build.enhancement == 0 {
+        return Err("a special ability needs an enhancement bonus of at least +1".to_owned());
+    }
+    // The `+N` includes masterwork, and so does a masterwork-quality material (mithral).
+    let mut modifiers: Vec<String> = Vec::new();
+    match kind {
+        Some(kind) if build.enhancement > 0 => modifiers.push(kind.modifier_key(build.enhancement)),
+        Some(kind) if build.masterwork && !part_records.iter().any(|record| quality(record)) => modifiers.push(kind.masterwork_key().to_owned()),
+        _ => {}
+    }
+    modifiers.extend(parts);
+    let records = modifiers.iter().map(|key| resolve(key)).collect::<Result<Vec<_>, String>>()?;
+    let weight_lbs = base.weight_lbs.map(|lbs| lbs / codex::rules_core::encumbrance::modifier_weight_divisor(&modifiers, corpus));
+    let (price_gp, unpriced) = match base.cost_gp {
+        None => (None, vec![base_id.to_owned()]),
+        Some(base_gp) => match codex::rules_core::equipment_record::modified_price_gp(base_gp, base.weight_lbs.unwrap_or(0.0), &base.types, &records) {
+            Ok(price) => (Some(price), Vec::new()),
+            Err(unpriced) => (None, unpriced),
+        },
+    };
+    Ok(CustomEquipmentQuoteDto { modifiers, price_gp, unpriced, weight_lbs })
+}
+
+/// Buys `quantity` (absent: one) custom copies of `build` (`decisions.md §24`): each a line of the
+/// base holding the quote's modifiers, Carried (`§10`), named `build.name` in the sets file. The
+/// charge is quantity × the quote's price, or the negotiated total; a quote with no price buys
+/// only at a negotiated price (`§30` Q6), and a build the quote refuses buys nothing. `Cashless`
+/// moves no money.
+pub(crate) fn purchase_custom_equipment_at_root(
+    root: &Path,
+    build: &CustomEquipmentBuild,
+    deal: Deal,
+    saved_at: &str,
+    mode: PriceMode,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let blocked = |id: &str, message: String| Ok(PurchaseEquipmentResponse::Blocked { diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }] });
+    let quote = match custom_equipment_quote(build) {
+        Ok(quote) => quote,
+        Err(why) => return blocked("equipment.buy_custom.refused", format!("{why}. Nothing was bought and no funds were charged.")),
+    };
+    let copies = deal.quantity.unwrap_or(1);
+    if copies == 0 {
+        return Err(format!("cannot buy 0 of '{}'", build.base_item_id));
+    }
+    let cost_copper = if mode == PriceMode::Cashless {
+        0
+    } else if let Some(negotiated) = deal.negotiated_copper {
+        negotiated
+    } else if let Some(price_gp) = quote.price_gp {
+        money::gp_to_copper(price_gp).saturating_mul(u64::from(copies))
+    } else {
+        return blocked(
+            "money.equipment_purchase.unknown_cost",
+            format!("no listed price: negotiate. {} has no price the rules state. Nothing was bought and no funds were charged.", quote.unpriced.join(", ")),
+        );
+    };
+    let balance_copper = load_character_money_at_root(root)?.total_copper;
+    if balance_copper < cost_copper {
+        return blocked(
+            "money.equipment_purchase.insufficient_funds",
+            format!("the custom '{}' costs {cost_copper} cp but the balance is only {balance_copper} cp. Nothing was bought and no funds were charged.", build.base_item_id),
+        );
+    }
+    let bonus = build.enhancement;
+    match add_purchased_copy_at_root(root, (&build.base_item_id, bonus), &quote.modifiers, ActiveState::SelectedInactive, copies, saved_at)? {
+        CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
+            if let Some(name) = build.name.as_deref().map(str::trim).filter(|name| !name.is_empty()) {
+                let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+                let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+                let keys = selection_copy_keys(&envelope.character_input.chosen.equipment_selections);
+                for key in &keys[keys.len().saturating_sub(copies as usize)..] {
+                    sets.copies.entry(key.map_key()).or_default().name = Some(name.to_owned());
+                }
+                equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+            }
+            let cost_signed = i64::try_from(cost_copper).map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
+            let money = if cost_signed > 0 { adjust_character_money_at_root(root, -cost_signed)? } else { load_character_money_at_root(root)? };
+            Ok(PurchaseEquipmentResponse::Purchased {
+                summary,
+                snapshot,
+                corpus_derived,
+                money,
+                active_state: ActiveStateDto::from(ActiveState::SelectedInactive),
+                carried_reason: None,
+            })
+        }
+    }
+}
+
+/// A held copy's Buy Custom parts as printed text: each applied ability, material or size,
+/// `<name>: <its record's words>` (the name alone when it states none).
+fn copy_abilities(selection: &EquipmentSelection) -> Vec<String> {
+    use crate::equipment_catalog::{catalog_row, custom_part};
+    selection
+        .applied_modifiers
+        .iter()
+        .filter(|key| custom_part(key).is_some())
+        .filter_map(|key| catalog_row(key))
+        .map(|row| match &row.description {
+            Some(words) => format!("{}: {words}", row.name),
+            None => row.name.clone(),
+        })
+        .collect()
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PurchaseCustomEquipmentRequest {
+    pub character_id: String,
+    #[serde(flatten)]
+    pub build: CustomEquipmentBuild,
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    #[serde(default)]
+    pub negotiated_price_copper: Option<u64>,
+    pub saved_at: String,
+    #[serde(default)]
+    pub price_mode: PriceMode,
+}
+
+/// Buys custom copies: see [`purchase_custom_equipment_at_root`].
+#[tauri::command]
+pub fn purchase_custom_equipment(app: tauri::AppHandle, request: PurchaseCustomEquipmentRequest) -> Result<PurchaseEquipmentResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let deal = Deal { bonus: None, quantity: request.quantity, negotiated_copper: request.negotiated_price_copper };
+    purchase_custom_equipment_at_root(&root, &request.build, deal, &request.saved_at, request.price_mode)
+}
+
+/// The dry run of a Buy Custom: the price and weight one copy would have (the builder's running
+/// total). `Err` says why the build cannot be bought.
+#[tauri::command]
+pub fn quote_custom_equipment(build: CustomEquipmentBuild) -> Result<CustomEquipmentQuoteDto, String> {
+    custom_equipment_quote(&build)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListCustomEquipmentOptionsRequest {
+    pub base_item_id: String,
+}
+
+/// The abilities, materials and sizes Buy Custom offers on one Market row.
+#[tauri::command]
+pub fn list_custom_equipment_options(request: ListCustomEquipmentOptionsRequest) -> crate::equipment_catalog::CustomOptionsDto {
+    crate::equipment_catalog::custom_equipment_options(&request.base_item_id)
 }
 
 /// Same wire shape as `PurchaseEquipmentResponse` (`Attached`/`Blocked`,
@@ -5285,6 +5508,10 @@ pub struct HeldEquipmentCopyDto {
     pub copies: Vec<CopyKey>,
     /// Pieces in one bundle of the record as the book sells it; 1 for a single item.
     pub base_quantity: u32,
+    /// The copy's special abilities, material and size (Buy Custom, `decisions.md §24`), each as
+    /// `<name>: <the record's words>`, printed as text.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub abilities: Vec<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5326,7 +5553,8 @@ pub(crate) fn list_held_equipment_stacks_at_root(root: &Path) -> Result<Vec<Held
     let mut stacks: Vec<HeldEquipmentCopyDto> = Vec::new();
     for row in list_held_equipment_at_root(root)? {
         let same = |stack: &&mut HeldEquipmentCopyDto| {
-            (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag) == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag)
+            (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag, &stack.abilities)
+                == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag, &row.abilities)
         };
         match stacks.iter_mut().find(same) {
             Some(stack) => {
@@ -5489,6 +5717,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
                 quantity: pieces,
                 copies: vec![held_keys[index].clone()],
                 base_quantity: pieces,
+                abilities: copy_abilities(selection),
             }
         })
         .collect();
@@ -5513,6 +5742,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
             quantity: 1,
             copies: vec![copy],
             base_quantity: 1,
+            abilities: Vec::new(),
         }
     }));
     tag_admitted_copies(&mut rows, &admitted_records_at_root(root, input));
@@ -15095,13 +15325,11 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// End-to-end proof that an attached-but-corpus-unresolvable modifier
-    /// (the desktop app's bundled demo corpus holds only the `+N` equipmods)
-    /// surfaces honestly through the real `corpusDerived` response rather
-    /// than silently vanishing -- closes the loop this sub-task's
-    /// `unresolved_equipment_item_ids` extension exists for.
+    /// An attached special ability resolves against the sheet's corpus (SD-41 E2.6: every modifier
+    /// comes in), so it is not listed unresolved. Before E2.6 the bundle held only the `+N`
+    /// equipmods and this test pinned Anarchic as unresolved.
     #[test]
-    fn attach_equipment_modifier_at_root_surfaces_the_real_corpus_resolution_gap() {
+    fn attach_equipment_modifier_at_root_resolves_a_special_ability() {
         let root = tempdir("attach-modifier-corpus-gap");
         let envelope = level_up_test_envelope("race:human", 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
@@ -15117,16 +15345,11 @@ mod tests {
         match response {
             AttachEquipmentModifierResponse::Attached { corpus_derived, .. } => {
                 assert!(
-                    corpus_derived
-                        .unresolved_equipment_item_ids
-                        .contains(&"Special Ability ~ Anarchic ~ Weapon".to_string()),
-                    "the bundled demo corpus has no Anarchic record, so the attached modifier \
-                     must be traceable as unresolved rather than silently inert: {corpus_derived:?}"
+                    !corpus_derived.unresolved_equipment_item_ids.contains(&"Special Ability ~ Anarchic ~ Weapon".to_string()),
+                    "{corpus_derived:?}"
                 );
             }
-            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
-                panic!("the attach itself must succeed even though the modifier won't resolve, got Blocked: {diagnostics:?}")
-            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => panic!("the attach must succeed, got Blocked: {diagnostics:?}"),
         }
 
         std::fs::remove_dir_all(&root).ok();
@@ -21894,6 +22117,144 @@ mod tests {
         assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{key}: {response:?}");
         assert_eq!(copper(&root), 9_500);
         assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == key).count(), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Buy Custom (SD-41 E2.6, `decisions.md §24`) -----
+
+    const FLAMING: &str = "Special Ability ~ Flaming ~ Weapon";
+    const MITHRAL: &str = "Material ~ Mithril ~ Weapon / Item";
+
+    /// "Dawn", a +1 flaming mithral longsword.
+    fn dawn() -> CustomEquipmentBuild {
+        CustomEquipmentBuild {
+            base_item_id: "Longsword (Base)".to_owned(),
+            name: Some("Dawn".to_owned()),
+            enhancement: 1,
+            special_abilities: vec![FLAMING.to_owned()],
+            material: Some(MITHRAL.to_owned()),
+            ..CustomEquipmentBuild::default()
+        }
+    }
+
+    fn bought_custom(root: &Path, build: &CustomEquipmentBuild, deal: Deal) -> PurchaseEquipmentResponse {
+        purchase_custom_equipment_at_root(root, build, deal, MOVED_AT, PriceMode::Standard).expect("the purchase runs")
+    }
+
+    /// The price is the rules': base 15 + mithral's 500 gp a pound × 4 lb (masterwork is in the
+    /// material) + (+1 and Flaming's +1)² × 2,000 = 10,015 gp, and the copy weighs half the 4 lb.
+    /// Without mithral the masterwork 300 is charged; a plain +1 is the Market's +1 offer; a
+    /// masterwork sword is 315. The purchase charges what the quote says.
+    #[test]
+    fn buy_custom_prices_from_the_rules() {
+        let quote = custom_equipment_quote(&dawn()).unwrap();
+        assert_eq!(quote.price_gp, Some(15.0 + 2_000.0 + 8_000.0), "{quote:?}");
+        assert_eq!(quote.weight_lbs, Some(2.0));
+        assert_eq!(quote.modifiers, ["Special Ability ~ +1 ~ Weapon", FLAMING, MITHRAL]);
+        let steel = CustomEquipmentBuild { material: None, ..dawn() };
+        assert_eq!(custom_equipment_quote(&steel).unwrap().price_gp, Some(15.0 + 300.0 + 8_000.0));
+        let plus_one = CustomEquipmentBuild { special_abilities: Vec::new(), material: None, ..dawn() };
+        let offer = market_offers("Longsword (Base)").into_iter().find(|offer| offer.bonus == 1).expect("the Market's +1");
+        assert_eq!(custom_equipment_quote(&plus_one).unwrap().price_gp, Some(offer.price_gp));
+        let masterwork = CustomEquipmentBuild { masterwork: true, enhancement: 0, ..plus_one.clone() };
+        let quote = custom_equipment_quote(&masterwork).unwrap();
+        assert_eq!((quote.price_gp, quote.modifiers), (Some(315.0), vec!["Special Quality ~ Masterwork ~ Weapon".to_owned()]));
+
+        assert!(custom_equipment_quote(&CustomEquipmentBuild { enhancement: 0, material: None, ..dawn() }).is_err(), "Flaming needs a +1 under it");
+        assert!(custom_equipment_quote(&CustomEquipmentBuild { enhancement: 6, ..dawn() }).is_err(), "past +5");
+        assert!(custom_equipment_quote(&CustomEquipmentBuild { base_item_id: "Pouch (Belt)".to_owned(), ..plus_one }).is_err(), "a pouch takes no +1");
+
+        let root = fund_and_seed("buy-custom-price", 2_000_000);
+        let weight = worn_vs_carried_weight(&root);
+        let response = bought_custom(&root, &dawn(), Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 2_000_000 - 1_001_500);
+        assert_eq!(worn_vs_carried_weight(&root), weight + 2.0, "the engine weighs the mithral copy at 2 lb");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Dawn wielded adds +1 to attack and damage (mithral's own masterwork +1 does not stack on
+    /// it), and its row carries Flaming's text; a Buy Custom +2 heavy steel shield moves AC exactly
+    /// as the Market's +2 does.
+    #[test]
+    fn buy_custom_enhancement_reaches_attack_and_ac() {
+        let (dir, root) = enhancement_rows_aldric("buy-custom-attack");
+        let response = bought_custom(&root, &dawn(), Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert!(!loaded.corpus_derived.unresolved_equipment_item_ids.iter().any(|id| id == FLAMING || id == MITHRAL), "{:?}", loaded.corpus_derived.unresolved_equipment_item_ids);
+        let worn = set_equipment_copy_state_at_root(&root, "Longsword (Base)", Some(1), ActiveState::EquippedActive, MOVED_AT).unwrap();
+        assert!(matches!(worn, CreateCharacterResponse::Saved { .. }), "{worn:?}");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let dawn_row = loaded.weapon_damage.iter().find(|w| w.in_hand && w.enhancement_attack_bonus == Some(1)).unwrap_or_else(|| panic!("{:#?}", loaded.weapon_damage));
+        assert_eq!(dawn_row.enhancement_damage_bonus, Some(1));
+        let row = stacks_of(&root, "Longsword (Base)").into_iter().find(|row| row.bonus == 1).expect("Dawn is held");
+        assert!(row.abilities.iter().any(|text| text.starts_with("Flaming") && text.contains("fire")), "{:?}", row.abilities);
+        assert!(row.abilities.iter().any(|text| text.to_lowercase().contains("mithral")), "{:?}", row.abilities);
+        std::fs::remove_dir_all(&dir).ok();
+
+        let shield = |label: &str, custom: bool| {
+            let (dir, root) = enhancement_rows_aldric(label);
+            let before = enhancement_read(&root);
+            if custom {
+                let build = CustomEquipmentBuild { base_item_id: "Heavy Steel Shield (Base)".to_owned(), enhancement: 2, ..CustomEquipmentBuild::default() };
+                assert!(matches!(bought_custom(&root, &build, Deal::default()), PurchaseEquipmentResponse::Purchased { .. }));
+            } else {
+                enhancement_buy(&root, "Heavy Steel Shield (Base)", ActiveState::SelectedInactive, 2);
+            }
+            set_equipment_copy_state_at_root(&root, "Heavy Steel Shield (Base)", Some(2), ActiveState::EquippedActive, MOVED_AT).unwrap();
+            let after = enhancement_read(&root);
+            std::fs::remove_dir_all(&dir).ok();
+            (before.armor_class, after.armor_class)
+        };
+        let (before, custom) = shield("buy-custom-shield", true);
+        assert_eq!(custom, before + 2 + 2, "the shield's 2 and its +2");
+        assert_eq!(shield("buy-custom-shield-market", false), (before, custom), "Buy Custom and the Market's +2 agree");
+    }
+
+    /// An offered ability whose price the rules state as a choice (`Bonus Spell Resistance`) is
+    /// listed unpriced; a build holding it buys only at a negotiated price (`decisions.md §30` Q6).
+    #[test]
+    fn buy_custom_unpriced_eqmod_needs_negotiate() {
+        let options = crate::equipment_catalog::custom_equipment_options("Longsword (Base)");
+        assert!(options.abilities.iter().any(|o| o.key == FLAMING && o.plus == 1 && !o.unpriced));
+        let mithral = options.materials.iter().find(|o| o.key == MITHRAL).expect("mithral is offered");
+        assert_eq!(mithral.prerequisite.as_deref(), Some("Metal"), "the base's types do not say Metal");
+        let unpriced = options.abilities.iter().find(|o| o.unpriced && o.plus == 0).expect("an unpriced ability");
+        let build = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), special_abilities: vec![unpriced.key.clone()], ..CustomEquipmentBuild::default() };
+        let quote = custom_equipment_quote(&build).unwrap();
+        assert_eq!((quote.price_gp, quote.unpriced.clone()), (None, vec![unpriced.key.clone()]), "{quote:?}");
+
+        let root = fund_and_seed("buy-custom-unpriced", 10_000);
+        match bought_custom(&root, &build, Deal::default()) {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(diagnostics.iter().any(|d| d.message.starts_with("no listed price: negotiate") && d.message.contains(&unpriced.key)), "{diagnostics:?}");
+            }
+            other => panic!("an unpriced build is never free: {other:?}"),
+        }
+        assert_eq!(copper(&root), 10_000);
+        let response = bought_custom(&root, &build, Deal { negotiated_copper: Some(5_000), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 5_000);
+        let line = held_selections(&root).into_iter().find(|s| s.item_id == "Longsword (Base)").expect("bought");
+        assert_eq!(line.applied_modifiers, vec![unpriced.key.clone()]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The custom name lands on the held row ("Dawn"); a belt pouch bought custom and named
+    /// "Food" is a container the load weighs, Carried.
+    #[test]
+    fn buy_custom_name_and_container_base() {
+        let root = fund_and_seed("buy-custom-name", 2_000_000);
+        bought_custom(&root, &dawn(), Deal::default());
+        let food = CustomEquipmentBuild { base_item_id: "Pouch (Belt)".to_owned(), name: Some("Food".to_owned()), ..CustomEquipmentBuild::default() };
+        let response = bought_custom(&root, &food, Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        let names: Vec<(String, Location)> = list_held_equipment_stacks_at_root(&root).unwrap().into_iter().map(|row| (row.name, row.location)).collect();
+        assert!(names.contains(&("Dawn".to_owned(), Location::Carried)), "{names:?}");
+        assert!(names.contains(&("Food".to_owned(), Location::Carried)), "{names:?}");
+        let loads = load_saved_character_at_root(&root).unwrap().container_loads;
+        assert!(loads.iter().any(|load| load.copy == sets_key("Pouch (Belt)", 0)), "Food is a container: {loads:?}");
         std::fs::remove_dir_all(&root).ok();
     }
 

@@ -2591,6 +2591,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Blocking"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "BLOCKING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2641,6 +2649,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "BONE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2691,6 +2707,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bronze"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "BRONZE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2730,6 +2754,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Deadly"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "DEADLY",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2769,6 +2801,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Distracting"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "DISTRACTING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2847,6 +2887,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "FIREARM_LUCKY",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2886,6 +2929,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "FIREARM_LUCKY_GRT",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2925,6 +2971,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "FIREARM_RELIABLE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2964,6 +3013,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "FIREARM_RELIABLE_GRT",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3003,6 +3055,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Scatter"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "FIREARM_SCATTER",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3042,6 +3102,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Fragile"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "FRAGILE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3120,6 +3188,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Grapple"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "GRAPPLE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3170,6 +3246,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Bone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3220,6 +3304,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bronze"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3270,6 +3362,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Gold"
+          ],
+          "terms": [
+            {
+              "per_base_gp": 9.0
+            }
+          ]
+        },
         "name": "Gold",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3320,6 +3422,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Obsidian"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Obsidian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3370,6 +3480,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Stone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3420,6 +3538,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Obsidian"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "OBSIDIAN",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3459,6 +3585,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Performance"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "PERFORMANCE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3576,6 +3710,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Lucky",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3615,6 +3752,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Lucky (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3654,6 +3794,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Reliable",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3693,6 +3836,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Reliable (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3732,6 +3878,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Blocking"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Blocking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3771,6 +3925,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Deadly"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Deadly",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3810,6 +3972,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Distracting"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Distracting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3849,6 +4019,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Fragile"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Fragile",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3888,6 +4066,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Grapple"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Grapple",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3927,6 +4113,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Performance"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Performance",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3966,6 +4160,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Scatter"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Scatter",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4044,6 +4246,11 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Thrown"
+          ]
+        },
         "name": "Thrown",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4094,6 +4301,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "STONE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4133,6 +4348,11 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Thrown"
+          ]
+        },
         "name": "THROWN",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

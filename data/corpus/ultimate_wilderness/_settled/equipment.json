@@ -1957,6 +1957,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Ambushing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1996,6 +1999,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Jawbreaker",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2035,6 +2041,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Plummeting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

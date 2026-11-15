@@ -146,6 +146,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wood"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Ironwood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

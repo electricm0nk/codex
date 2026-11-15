@@ -838,6 +838,130 @@ pub fn list_market(filter: MarketFilter) -> MarketResponse {
     market_from_catalog(built_catalog(), &filter)
 }
 
+/// The catalog row `key` names, the first of that key (as `market_from_catalog` reads it).
+pub(crate) fn catalog_row(key: &str) -> Option<&'static EquipmentCatalogEntryDto> {
+    built_catalog().entries.iter().find(|entry| entry.key == key)
+}
+
+/// Which part of a Buy Custom a modifier is, by its catalog key's family (`decisions.md §24`):
+/// the `+N` and the bonus-cost helpers are the enhancement field, not abilities, and of the
+/// special qualities only the size ones are offered.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum CustomPart {
+    Ability,
+    Material,
+    Size,
+}
+
+pub(crate) fn custom_part(key: &str) -> Option<CustomPart> {
+    if let Some(rest) = key.strip_prefix("Special Ability ~ ") {
+        let enhancement = rest.starts_with('+') || rest.starts_with("ABP") || rest.starts_with("Enhancement Cost");
+        (!enhancement).then_some(CustomPart::Ability)
+    } else if key.starts_with("Material ~ ") {
+        Some(CustomPart::Material)
+    } else {
+        (key.starts_with("Special Quality ~ ") && key.contains("Size")).then_some(CustomPart::Size)
+    }
+}
+
+/// One modifier Buy Custom offers on a base item.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomOptionDto {
+    pub key: String,
+    pub name: String,
+    pub description: Option<String>,
+    /// The enhancement it counts as (`Flaming` is +1); 0 for a material or a size.
+    pub plus: i16,
+    /// Its price cannot be read from the record: a purchase holding it is priced by Negotiate.
+    pub unpriced: bool,
+    /// What the item must also be, in the record's words, when the base's own types do not show
+    /// it (`Metal`; `WeaponEnhancement`, which a `+1` gives).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub prerequisite: Option<String>,
+}
+
+/// What Buy Custom offers on one base: every ability, material and size whose types name one of
+/// the base's (an eqmod's `TYPE` lists the items it goes on).
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomOptionsDto {
+    pub abilities: Vec<CustomOptionDto>,
+    pub materials: Vec<CustomOptionDto>,
+    pub sizes: Vec<CustomOptionDto>,
+}
+
+/// [`CustomOptionsDto`] for the catalog row `base_key`; empty when no row holds the key.
+pub(crate) fn custom_equipment_options(base_key: &str) -> CustomOptionsDto {
+    let mut options = CustomOptionsDto::default();
+    let Some(base) = catalog_row(base_key) else { return options };
+    let corpus = crate::corpus_fixtures::corpus_fixture_bundle();
+    let rules = codex::rules_core::corpus_loader::live_sheet_rules();
+    let mut seen = std::collections::HashSet::new();
+    for entry in built_catalog().entries.iter().filter(|entry| entry.category == "Equipmods") {
+        let Some(part) = custom_part(&entry.key) else { continue };
+        let fits = entry.types.iter().any(|t| base.types.iter().any(|b| b.eq_ignore_ascii_case(t)));
+        if !fits || !seen.insert(entry.key.as_str()) {
+            continue;
+        }
+        let Some(record) = equipment_converted_resolve(&entry.key, corpus) else { continue };
+        let price = record.modifier_price.as_ref();
+        let applies = rules
+            .and_then(|package| package.rule(package.find("equipment_modifier", &codex::rules_core::sheet_rule::slug(&entry.key))?))
+            .map(|rule| &rule.applies);
+        let option = CustomOptionDto {
+            key: entry.key.clone(),
+            name: entry.name.clone(),
+            description: entry.description.clone(),
+            plus: price.map_or(0, |p| p.plus),
+            unpriced: price.is_some_and(|p| p.unpriced),
+            prerequisite: applies.and_then(|gate| unmet_item_gate(gate, &base.types)),
+        };
+        match part {
+            CustomPart::Ability => options.abilities.push(option),
+            CustomPart::Material => options.materials.push(option),
+            CustomPart::Size => options.sizes.push(option),
+        }
+    }
+    options
+}
+
+/// A modifier's gate in its record's tag words, when the base's types do not meet it; `None` when
+/// they do. A gate on anything but the item cannot be checked here, and reads as unmet.
+fn unmet_item_gate(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> Option<String> {
+    (item_gate_met(gate, types) != Some(true)).then(|| item_gate_words(gate))
+}
+
+fn item_gate_met(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> Option<bool> {
+    use codex::rules_core::sheet_rule::Applies;
+    Some(match gate {
+        Applies::Always => true,
+        Applies::Never => false,
+        Applies::ItemHas { tags, n } => tags.iter().filter(|tag| types.iter().any(|t| t.eq_ignore_ascii_case(tag))).count() >= usize::from(*n),
+        Applies::All(parts) => parts.iter().map(|part| item_gate_met(part, types)).collect::<Option<Vec<bool>>>()?.into_iter().all(|met| met),
+        Applies::AtLeast { n, of } => {
+            of.iter().map(|part| item_gate_met(part, types)).collect::<Option<Vec<bool>>>()?.into_iter().filter(|met| *met).count() >= usize::from(*n)
+        }
+        Applies::Not(inner) => !item_gate_met(inner, types)?,
+        _ => return None,
+    })
+}
+
+fn item_gate_words(gate: &codex::rules_core::sheet_rule::Applies) -> String {
+    use codex::rules_core::sheet_rule::Applies;
+    match gate {
+        Applies::Always => "always".to_owned(),
+        Applies::Never => "never".to_owned(),
+        Applies::ItemHas { tags, n } if *n <= 1 => tags.join(" or "),
+        Applies::ItemHas { tags, n } => format!("{n} of {}", tags.join(", ")),
+        Applies::All(parts) => parts.iter().map(item_gate_words).collect::<Vec<_>>().join(" and "),
+        Applies::AtLeast { n, of } if usize::from(*n) >= of.len() => of.iter().map(item_gate_words).collect::<Vec<_>>().join(" and "),
+        Applies::AtLeast { n, of } => format!("{n} of: {}", of.iter().map(item_gate_words).collect::<Vec<_>>().join("; ")),
+        Applies::Not(inner) => format!("not {}", item_gate_words(inner)),
+        _ => "a condition this screen cannot check".to_owned(),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

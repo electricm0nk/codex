@@ -236,6 +236,102 @@ pub struct CorpusEquipmentRecord {
     /// `None` when the record states none.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub base_quantity: Option<u32>,
+    /// What the record adds to another item's price as an equipment modifier (SD-41
+    /// `decisions.md §24`, Buy Custom). `None` when it states no `PLUS`, `ITYPE`, `ITEMCOST` or
+    /// `COST` formula: such a modifier costs its flat [`Self::cost_gp`], or nothing.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub modifier_price: Option<ModifierPrice>,
+}
+
+/// An equipment modifier's price on a host item, settled from its `COST`, `PLUS`, `ITYPE` and
+/// `BONUS:ITEMCOST` chains: every term is linear in the host's base price, its weight and the
+/// square of the host's enhancement total, so no formula is read at run time.
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct ModifierPrice {
+    /// The enhancement the modifier counts as (`Flaming` is a `+1`-equivalent).
+    #[serde(default, skip_serializing_if = "is_zero_i16")]
+    pub plus: i16,
+    /// Whether it is a masterwork quality (mithral, darkwood): masterwork is in its price.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub masterwork_quality: bool,
+    /// Type words the modifier gives its host (`+1`: `WeaponEnhancement`, `Magic`).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub grants: Vec<String>,
+    /// The price terms, summed where each applies.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub terms: Vec<PriceTerm>,
+    /// A term's formula or prerequisite was one the converter cannot state as a term: the
+    /// modifier has no price, and a purchase that holds it is priced by Negotiate (`§30` Q6).
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub unpriced: bool,
+}
+
+/// One price term: `flat + per_base × base price + per_lb × weight + per_plus_squared × total²`.
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct PriceTerm {
+    /// Host type words, one of which the host must hold; empty for every host.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub hosts: Vec<String>,
+    /// Type words the host must hold (`PRETYPE`).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub requires: Vec<String>,
+    /// Type words the host must not hold (`!PRETYPE`).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub excludes: Vec<String>,
+    /// Not charged when another modifier on the host is a masterwork quality.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub unless_masterwork_quality: bool,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub flat_gp: f64,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub per_base_gp: f64,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub per_lb_gp: f64,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub per_plus_squared_gp: f64,
+}
+
+fn is_zero_i16(n: &i16) -> bool {
+    *n == 0
+}
+
+fn is_zero_f64(n: &f64) -> bool {
+    *n == 0.0
+}
+
+/// A host item's price with `modifiers` on it, as PCGen's data prices it: the base, plus each
+/// modifier's flat cost or its terms. `host_types` are the base's type words; the modifiers'
+/// `grants` join them, and the enhancement total is the modifiers' summed `plus`. `Err` names
+/// every modifier whose price is unknown (Negotiate, `decisions.md §30` Q6).
+pub fn modified_price_gp(base_gp: f64, base_lb: f64, host_types: &[String], modifiers: &[&CorpusEquipmentRecord]) -> Result<f64, Vec<String>> {
+    let prices: Vec<Option<&ModifierPrice>> = modifiers.iter().map(|m| m.modifier_price.as_ref()).collect();
+    let mut types: Vec<String> = host_types.iter().map(|t| t.to_ascii_uppercase()).collect();
+    types.extend(prices.iter().flatten().flat_map(|p| p.grants.iter().map(|t| t.to_ascii_uppercase())));
+    let holds = |word: &String| types.contains(&word.to_ascii_uppercase());
+    let plus_total = f64::from(prices.iter().flatten().map(|p| p.plus).sum::<i16>());
+    let mut total = base_gp;
+    let mut unpriced = Vec::new();
+    for (index, (modifier, price)) in modifiers.iter().zip(&prices).enumerate() {
+        let Some(price) = price else {
+            total += modifier.cost_gp.unwrap_or(0.0);
+            continue;
+        };
+        if price.unpriced {
+            unpriced.push(modifier.identity.clone());
+            continue;
+        }
+        let other_masterwork = prices.iter().enumerate().any(|(i, p)| i != index && p.is_some_and(|p| p.masterwork_quality));
+        for term in &price.terms {
+            let applies = (term.hosts.is_empty() || term.hosts.iter().any(holds))
+                && term.requires.iter().all(holds)
+                && !term.excludes.iter().any(holds)
+                && !(term.unless_masterwork_quality && other_masterwork);
+            if applies {
+                total += term.flat_gp + term.per_base_gp * base_gp + term.per_lb_gp * base_lb + term.per_plus_squared_gp * plus_total * plus_total;
+            }
+        }
+    }
+    if unpriced.is_empty() { Ok(total) } else { Err(unpriced) }
 }
 
 /// A container's stated capacity (SD-41 `decisions.md §7`). `Unstated` covers a container that

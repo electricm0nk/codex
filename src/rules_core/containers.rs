@@ -3,7 +3,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use crate::rules_core::encumbrance::copy_bundles;
+use crate::rules_core::encumbrance::{copy_bundles, modifier_weight_divisor};
 use crate::rules_core::equipment_effects::stand_in_record;
 use crate::rules_core::equipment_record::ContainerCapacity;
 use crate::rules_core::equipment_resolver::equipment_converted_resolve;
@@ -28,7 +28,8 @@ impl ContainerLoad {
     }
 }
 
-/// The load of every container copy in `set`: each of `held` (a copy and its item id) whose
+/// The load of every container copy in `set`: each of `held` (a copy, its item id and its applied
+/// modifiers, which can lighten it) whose
 /// settled record is a container, in `held` order, then each Create item container (§25) with
 /// its capacity in lb. Contents are summed recursively over `Inside` locations (a pouch in a
 /// backpack adds to both), each copy weighing what `compute_encumbrance` weighs it: the
@@ -36,7 +37,7 @@ impl ContainerLoad {
 /// Create item of `weighed` its own stated lb (§25); an unweighed or unresolved copy adds nothing (SD-b).
 pub fn container_loads(
     set: &EquipmentSet,
-    held: &[(CopyKey, &str)],
+    held: &[(CopyKey, &str, &[String])],
     corpus: &SourcePackageContent,
     created: &[(CopyKey, f64)],
     weighed: &[(CopyKey, f64)],
@@ -44,11 +45,12 @@ pub fn container_loads(
 ) -> Vec<ContainerLoad> {
     let mut weights: BTreeMap<&CopyKey, f64> = BTreeMap::new();
     let mut containers: Vec<(CopyKey, ContainerCapacity)> = Vec::new();
-    for (copy, item_id) in held {
+    for (copy, item_id, modifiers) in held {
         let Some(record) = equipment_converted_resolve(item_id, corpus) else { continue };
         let stand_in = stand_in_record(record, corpus);
         let weight = record.weight_and_cost().0.or_else(|| stand_in.and_then(|base| base.weight_lbs));
-        weights.insert(copy, weight.map_or(0.0, |lbs| lbs * copy_bundles(record, stand_in, copy, quantities)));
+        let divisor = modifier_weight_divisor(modifiers, corpus);
+        weights.insert(copy, weight.map_or(0.0, |lbs| lbs * copy_bundles(record, stand_in, copy, quantities) / divisor));
         if record.is_container() {
             containers.push((copy.clone(), record.capacity()));
         }
@@ -104,8 +106,8 @@ mod tests {
         copies.iter().map(|copy| SetEntry { copy: copy.clone(), location: Location::Inside { container: container.clone() } }).collect()
     }
 
-    fn held(keys: &[CopyKey]) -> Vec<(CopyKey, &str)> {
-        keys.iter().map(|copy| (copy.clone(), copy.item_id.as_str())).collect()
+    fn held(keys: &[CopyKey]) -> Vec<(CopyKey, &str, &[String])> {
+        keys.iter().map(|copy| (copy.clone(), copy.item_id.as_str(), &[][..])).collect()
     }
 
     fn load_of<'a>(loads: &'a [ContainerLoad], copy: &CopyKey) -> &'a ContainerLoad {
@@ -220,5 +222,25 @@ mod tests {
         let encumbrance = compute_encumbrance(&[selection], &corpus, 10, SizeCategory::Medium, &[food_copy], &quantities);
         assert_eq!(encumbrance.total_carried_weight_lbs, 14.0, "{encumbrance:#?}");
         assert_eq!(load_of(&loads, &sack).contents_lbs, encumbrance.total_carried_weight_lbs, "one weight rule, two sums");
+    }
+
+    /// A mithral longsword (SD-41 E2.6) weighs half its 4 lb in a sack and on the character: the
+    /// copy's applied mithral divides it in both sums.
+    #[test]
+    fn containers_weigh_a_lightened_copy_as_encumbrance_does() {
+        use crate::rules_core::encumbrance::compute_encumbrance;
+        use crate::rules_core::size::SizeCategory;
+        use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
+        let corpus = core_rulebook();
+        let sack = key(SACK, 0);
+        let sword = key("Longsword (Base)", 0);
+        let mithral = vec!["Material ~ Mithril ~ Weapon / Item".to_owned()];
+        let set = EquipmentSet { name: "Default".to_owned(), locations: inside(std::slice::from_ref(&sword), &sack) };
+        let held = [(sword.clone(), sword.item_id.as_str(), mithral.as_slice()), (sack.clone(), SACK, &[][..])];
+        let loads = container_loads(&set, &held, &corpus, &[], &[], &[]);
+        let selection = EquipmentSelection { item_id: sword.item_id.clone(), equipped_or_active: false, active_state: ActiveState::SelectedInactive, applied_modifiers: mithral.clone() };
+        let encumbrance = compute_encumbrance(&[selection], &corpus, 10, SizeCategory::Medium, &[], &[]);
+        assert_eq!(encumbrance.total_carried_weight_lbs, 2.0, "{encumbrance:#?}");
+        assert_eq!(load_of(&loads, &sack).contents_lbs, 2.0, "one weight rule, two sums");
     }
 }

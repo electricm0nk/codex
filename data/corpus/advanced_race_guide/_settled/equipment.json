@@ -1321,6 +1321,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Purifier Celestial"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "AAPURIFIER_CELESTIAL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1403,6 +1411,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "CRUEL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1442,6 +1453,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 750.0
+            }
+          ]
+        },
         "name": "DLEAF_ARMR_LGT",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1481,6 +1503,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "DLEAF_ARMR_MED",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1520,6 +1553,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "DLEAF_CLOTH",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1598,6 +1642,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "GGUARD",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1637,6 +1684,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "GUARD",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1676,6 +1726,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 750.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1715,6 +1776,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1754,6 +1826,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1793,6 +1876,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "per_lb_gp": 375.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1832,6 +1926,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Whipwood"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Whipwood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1876,6 +1980,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Wyroot(1 Life Point)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1915,6 +2029,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "Wyroot(2 Life Points)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1954,6 +2078,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 4000.0
+            }
+          ]
+        },
         "name": "Wyroot(3 Life Points)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2036,6 +2170,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cruel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2079,6 +2216,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Deadly",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2118,6 +2258,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Guarding (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2157,6 +2300,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Guarding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2196,6 +2342,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Purifier Celestial"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Purifier Celestial",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2313,6 +2467,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "WROOT_1",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2352,6 +2516,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "WROOT_2",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2391,6 +2565,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 4000.0
+            }
+          ]
+        },
         "name": "WROOT_3",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2430,6 +2614,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Whipwood"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "WWOOD",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

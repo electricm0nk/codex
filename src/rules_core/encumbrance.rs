@@ -447,7 +447,7 @@ pub fn compute_encumbrance(
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let weight_lbs = weight_lbs * bundles;
+        let weight_lbs = weight_lbs * bundles / modifier_weight_divisor(&selection.applied_modifiers, corpus);
         let cost_gp = cost.map(|cost| cost * bundles);
 
         total_carried_weight_lbs += weight_lbs;
@@ -474,6 +474,17 @@ pub fn compute_encumbrance(
         load_max_dex_cap: level.max_dex_cap(),
         load_armor_check_penalty: level.armor_check_penalty(),
     }
+}
+
+/// What a copy's own `applied_modifiers` divide its weight by (`BONUS:EQM|WEIGHTDIV`: mithral
+/// halves it), 1 when none does (SD-41 E2.6). Shared with `containers::container_loads`.
+pub fn modifier_weight_divisor(applied_modifiers: &[String], corpus: &SourcePackageContent) -> f64 {
+    applied_modifiers
+        .iter()
+        .filter_map(|id| equipment_converted_resolve(id, corpus)?.weight_divisor)
+        .filter(|divisor| *divisor > 0.0)
+        .map(f64::from)
+        .product()
 }
 
 /// The bundles one copy weighs (`decisions.md §30`): its stated pieces over the record's (or its
