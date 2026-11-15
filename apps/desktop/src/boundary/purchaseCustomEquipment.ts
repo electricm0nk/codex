@@ -2,12 +2,13 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 import type { PurchaseEquipmentOutcome } from './purchaseEquipment';
 import type { PriceMode } from '../characterHub/priceMode';
+import type { SizeCategory } from './listCustomEquipmentOptions';
 
 /**
  * Write desktop boundary for Buy Custom (SD-41 `decisions.md §24`).
  *
  * Invokes the `purchase_custom_equipment` Tauri command: the backend prices the build from the
- * rules (base + masterwork + enhancement + the special abilities', material's and size's costs),
+ * rules (the base at its size + masterwork + enhancement + the special abilities' and material's costs),
  * charges it (or the negotiated total), and lands each copy Carried with its modifiers and its
  * custom name. A build with an unpriced part buys only at a negotiated price.
  */
@@ -24,7 +25,8 @@ export interface CustomEquipmentBuild {
   /** Special-ability modifier keys, from `listCustomEquipmentOptions`. */
   specialAbilities?: string[];
   material?: string;
-  size?: string;
+  /** The wielder size the copy is made for, from `listCustomEquipmentOptions`; absent is Medium. */
+  size?: SizeCategory;
 }
 
 export interface PurchaseCustomEquipmentRequest extends CustomEquipmentBuild {

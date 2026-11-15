@@ -71,14 +71,17 @@ pub struct EquipmentSet {
     pub locations: Vec<SetEntry>,
 }
 
-/// What the sidecar records about one copy across every set (§24, §30): its custom name and its
-/// piece count. An absent `quantity` is one bundle of the record (`base_quantity` pieces).
+/// What the sidecar records about one copy across every set (§24, §30): its custom name, its
+/// piece count and the size it was made for. An absent `quantity` is one bundle of the record
+/// (`base_quantity` pieces); an absent `size` is Medium (SD-41 E2.12, Buy Custom).
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CopyFacts {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub quantity: Option<u32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub size: Option<crate::rules_core::size::SizeCategory>,
 }
 
 /// The whole `equipment_sets.json`.
@@ -310,7 +313,8 @@ mod tests {
             (key("item:rations", 0), Location::Inside { container: key("custom:food", 0) }),
             (key("item:ring_of_protection", 0), Location::Equipped),
         ]));
-        sets.copies.insert(key("item:arrow_flight", 0).map_key(), CopyFacts { name: Some("Lucky arrows".to_owned()), quantity: Some(60) });
+        sets.copies.insert(key("item:arrow_flight", 0).map_key(), CopyFacts { name: Some("Lucky arrows".to_owned()), quantity: Some(60), size: None });
+        sets.copies.insert(key("item:longsword", 0).map_key(), CopyFacts { size: Some(crate::rules_core::size::SizeCategory::Large), ..CopyFacts::default() });
         save(&root, &sets).expect("saves");
         assert_eq!(load(&root).expect("reads"), Some(sets.clone()));
         let text = std::fs::read_to_string(root.join(EQUIPMENT_SETS_FILE)).expect("file");
@@ -322,6 +326,7 @@ mod tests {
         assert_eq!(json["sets"][0]["locations"][1]["location"], serde_json::json!({ "kind": "notCarried" }));
         assert_eq!(json["sets"][0]["locations"][2]["location"]["container"]["itemId"], "custom:food");
         assert_eq!(json["copies"]["item:arrow_flight|0|0"], serde_json::json!({ "name": "Lucky arrows", "quantity": 60 }));
+        assert_eq!(json["copies"]["item:longsword|0|0"], serde_json::json!({ "size": "Large" }), "a copy made for a Large wielder (E2.12)");
         let leftovers: Vec<_> = std::fs::read_dir(&root).expect("dir").flatten().map(|e| e.file_name().to_string_lossy().into_owned()).collect();
         assert_eq!(leftovers, vec![EQUIPMENT_SETS_FILE.to_owned()], "atomic write leaves no .tmp");
         std::fs::write(root.join(EQUIPMENT_SETS_FILE), text.replace("\"schema\": 1", "\"schema\": 2")).expect("write");

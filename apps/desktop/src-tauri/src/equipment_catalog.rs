@@ -849,12 +849,12 @@ pub(crate) fn catalog_row(key: &str) -> Option<&'static EquipmentCatalogEntryDto
 
 /// Which part of a Buy Custom a modifier is, by its catalog key's family (`decisions.md §24`):
 /// the `+N` and the bonus-cost helpers are the enhancement field, not abilities, and of the
-/// special qualities only the size ones are offered.
+/// special qualities only the `Wield Size` ones are offered, as abilities: they change how the
+/// weapon is wielded, not the size it is made in (E2.12; that is the build's `size`).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum CustomPart {
     Ability,
     Material,
-    Size,
 }
 
 pub(crate) fn custom_part(key: &str) -> Option<CustomPart> {
@@ -864,7 +864,7 @@ pub(crate) fn custom_part(key: &str) -> Option<CustomPart> {
     } else if key.starts_with("Material ~ ") {
         Some(CustomPart::Material)
     } else {
-        (key.starts_with("Special Quality ~ ") && key.contains("Size")).then_some(CustomPart::Size)
+        (key.starts_with("Special Quality ~ ") && key.contains("Size")).then_some(CustomPart::Ability)
     }
 }
 
@@ -875,7 +875,7 @@ pub struct CustomOptionDto {
     pub key: String,
     pub name: String,
     pub description: Option<String>,
-    /// The enhancement it counts as (`Flaming` is +1); 0 for a material or a size.
+    /// The enhancement it counts as (`Flaming` is +1); 0 for a material or a quality.
     pub plus: i16,
     /// Its price cannot be read from the record: a purchase holding it is priced by Negotiate.
     pub unpriced: bool,
@@ -885,20 +885,26 @@ pub struct CustomOptionDto {
     pub prerequisite: Option<String>,
 }
 
-/// What Buy Custom offers on one base: every ability, material and size whose types name one of
-/// the base's (an eqmod's `TYPE` lists the items it goes on).
+/// What Buy Custom offers on one base: every ability and material whose types name one of the
+/// base's (an eqmod's `TYPE` lists the items it goes on), and the wielder sizes it can be made
+/// for: Small and Large on the types the size rule prices (`size::RESIZED_ITEM_TYPES`), else none.
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomOptionsDto {
     pub abilities: Vec<CustomOptionDto>,
     pub materials: Vec<CustomOptionDto>,
-    pub sizes: Vec<CustomOptionDto>,
+    pub sizes: Vec<codex::rules_core::size::SizeCategory>,
 }
 
 /// [`CustomOptionsDto`] for the catalog row `base_key`; empty when no row holds the key.
 pub(crate) fn custom_equipment_options(base_key: &str) -> CustomOptionsDto {
     let mut options = CustomOptionsDto::default();
     let Some(base) = catalog_row(base_key) else { return options };
+    use codex::rules_core::size::{SizeCategory, RESIZED_ITEM_TYPES};
+    // shortcut: Small and Large only (one damage step); a Tiny or Huge copy needs the multi-step die progression.
+    if base.types.iter().any(|t| RESIZED_ITEM_TYPES.iter().any(|r| r.eq_ignore_ascii_case(t))) {
+        options.sizes = vec![SizeCategory::Small, SizeCategory::Large];
+    }
     let corpus = crate::corpus_fixtures::corpus_fixture_bundle();
     let rules = codex::rules_core::corpus_loader::live_sheet_rules();
     let mut seen = std::collections::HashSet::new();
@@ -924,7 +930,6 @@ pub(crate) fn custom_equipment_options(base_key: &str) -> CustomOptionsDto {
         match part {
             CustomPart::Ability => options.abilities.push(option),
             CustomPart::Material => options.materials.push(option),
-            CustomPart::Size => options.sizes.push(option),
         }
     }
     options

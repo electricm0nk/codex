@@ -27,10 +27,10 @@
 //!    race had a size modifier to AC, touch AC, CMB or CMD, so a Small
 //!    character's sheet showed a Medium character's arithmetic.
 //!
-//! PF1 also scales weapon damage dice and Fly checks by size. Neither is
-//! applied anywhere, and this module deliberately offers no helper that
-//! would make them look available -- they are named as deferred rather than
-//! half-built.
+//! SD-41 E2.12 adds what an **item's** size multiplies its cost and weight by
+//! (`item_cost_and_weight_multipliers`), for a copy bought for a Small or Large
+//! wielder; its damage die is stepped by `damage_total::weapon_damage_for_size`.
+//! Fly checks are not scaled anywhere.
 //!
 //! # Sources
 //!
@@ -244,6 +244,32 @@ impl SizeCategory {
         }
     }
 
+    /// What an item made for a creature of this size costs and weighs, as multiples of the Medium
+    /// item's: `(cost, weight)`. Applies only to the [`RESIZED_ITEM_TYPES`] (SD-41 E2.12, Buy
+    /// Custom item size); the multiple is of the base item, before masterwork and enhancement.
+    ///
+    /// PF1 Core Rulebook, "Armor for Unusual Creatures" (humanoid column) and "Weapon Size", the
+    /// same values the pinned PCGen data states per size as `BONUS:ITEMCOST|TYPE=Ammunition,
+    /// TYPE=Armor,TYPE=Shield,TYPE=Weapon|<cost>` and `BONUS:ITEMWEIGHT|…|<weight>`:
+    ///
+    /// ```text
+    /// Fine, Diminutive, Tiny  x1/2 cost  x1/10 weight   Small  x1 cost   x1/2 weight
+    /// Medium                  x1         x1             Large  x2        x2
+    /// Huge                    x4         x5             Gargantuan x8    x8
+    /// Colossal                x16        x12
+    /// ```
+    pub fn item_cost_and_weight_multipliers(self) -> (f64, f64) {
+        match self {
+            SizeCategory::Fine | SizeCategory::Diminutive | SizeCategory::Tiny => (0.5, 0.1),
+            SizeCategory::Small => (1.0, 0.5),
+            SizeCategory::Medium => (1.0, 1.0),
+            SizeCategory::Large => (2.0, 2.0),
+            SizeCategory::Huge => (4.0, 5.0),
+            SizeCategory::Gargantuan => (8.0, 8.0),
+            SizeCategory::Colossal => (16.0, 12.0),
+        }
+    }
+
     /// Parses a race record's `FACT:BaseSize|<code>` payload.
     ///
     /// Codes are PCGen's own single letters. `None` for anything else,
@@ -266,9 +292,25 @@ impl SizeCategory {
     }
 }
 
+/// The item types an item's size changes the cost and weight of
+/// ([`SizeCategory::item_cost_and_weight_multipliers`]); other gear is the same at every size here.
+pub const RESIZED_ITEM_TYPES: [&str; 4] = ["Ammunition", "Armor", "Shield", "Weapon"];
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The size rule for items: a Large longsword costs and weighs twice a Medium one, a Small
+    /// one weighs half at the same price, Huge armor weighs five times.
+    #[test]
+    fn item_cost_and_weight_multipliers_follow_the_size_rule() {
+        assert_eq!(SizeCategory::Large.item_cost_and_weight_multipliers(), (2.0, 2.0));
+        assert_eq!(SizeCategory::Small.item_cost_and_weight_multipliers(), (1.0, 0.5));
+        assert_eq!(SizeCategory::Medium.item_cost_and_weight_multipliers(), (1.0, 1.0));
+        assert_eq!(SizeCategory::Tiny.item_cost_and_weight_multipliers(), (0.5, 0.1));
+        assert_eq!(SizeCategory::Huge.item_cost_and_weight_multipliers(), (4.0, 5.0));
+        assert_eq!(SizeCategory::Colossal.item_cost_and_weight_multipliers(), (16.0, 12.0));
+    }
 
     /// Every `SIZEMULT:` row of `load.lst`, as the decimal the file
     /// actually prints, cross-checked against the exact rational this

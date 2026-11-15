@@ -3,10 +3,11 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use crate::rules_core::encumbrance::{copy_bundles, modifier_weight_divisor};
+use crate::rules_core::encumbrance::{copy_bundles, copy_size_multipliers, modifier_weight_divisor};
 use crate::rules_core::equipment_effects::stand_in_record;
 use crate::rules_core::equipment_record::ContainerCapacity;
 use crate::rules_core::equipment_resolver::equipment_converted_resolve;
+use crate::rules_core::size::SizeCategory;
 use crate::rules_core::source_content::SourcePackageContent;
 use crate::saved_character::equipment_sets::{location_of, CopyKey, EquipmentSet, Location};
 
@@ -34,7 +35,8 @@ impl ContainerLoad {
 /// its capacity in lb. Contents are summed recursively over `Inside` locations (a pouch in a
 /// backpack adds to both), each copy weighing what `compute_encumbrance` weighs it: the
 /// `weight_and_cost()` (or stand-in) weight times its bundles from `quantities` (§30), and each
-/// Create item of `weighed` its own stated lb (§25); an unweighed or unresolved copy adds nothing (SD-b).
+/// Create item of `weighed` its own stated lb (§25), times its size's weight for a copy `item_sizes`
+/// names (E2.12); an unweighed or unresolved copy adds nothing (SD-b).
 pub fn container_loads(
     set: &EquipmentSet,
     held: &[(CopyKey, &str, &[String])],
@@ -42,6 +44,7 @@ pub fn container_loads(
     created: &[(CopyKey, f64)],
     weighed: &[(CopyKey, f64)],
     quantities: &[(CopyKey, u32)],
+    item_sizes: &[(CopyKey, SizeCategory)],
 ) -> Vec<ContainerLoad> {
     let mut weights: BTreeMap<&CopyKey, f64> = BTreeMap::new();
     let mut containers: Vec<(CopyKey, ContainerCapacity)> = Vec::new();
@@ -50,7 +53,8 @@ pub fn container_loads(
         let stand_in = stand_in_record(record, corpus);
         let weight = record.weight_and_cost().0.or_else(|| stand_in.and_then(|base| base.weight_lbs));
         let divisor = modifier_weight_divisor(modifiers, corpus);
-        weights.insert(copy, weight.map_or(0.0, |lbs| lbs * copy_bundles(record, stand_in, copy, quantities) / divisor));
+        let size_times = copy_size_multipliers(copy, item_sizes).1;
+        weights.insert(copy, weight.map_or(0.0, |lbs| lbs * copy_bundles(record, stand_in, copy, quantities) * size_times / divisor));
         if record.is_container() {
             containers.push((copy.clone(), record.capacity()));
         }
@@ -138,7 +142,7 @@ mod tests {
         let set = EquipmentSet { name: "Default".to_owned(), locations };
         let created = [(backpack.clone(), 60.0)];
 
-        let loads = container_loads(&set, &held(&keys), &corpus, &created, &[], &[]);
+        let loads = container_loads(&set, &held(&keys), &corpus, &created, &[], &[], &[]);
         assert_eq!(loads.iter().map(|load| load.copy.clone()).collect::<Vec<_>>(), vec![sled.clone(), pouch.clone(), backpack.clone()], "copies in held order, then Create items");
         assert_eq!(load_of(&loads, &pouch).contents_lbs, 10.0);
         assert_eq!(load_of(&loads, &pouch).capacity, ContainerCapacity::Unlimited);
@@ -149,7 +153,7 @@ mod tests {
         assert!(loads.iter().all(|load| !load.over));
 
         let reversed = EquipmentSet { name: set.name.clone(), locations: set.locations.iter().rev().cloned().collect() };
-        assert_eq!(container_loads(&reversed, &held(&keys), &corpus, &created, &[], &[]), loads, "deterministic in the set's order");
+        assert_eq!(container_loads(&reversed, &held(&keys), &corpus, &created, &[], &[], &[]), loads, "deterministic in the set's order");
     }
 
     /// `over` is contents above a `Pounds` capacity: 60 lb in a 60 lb backpack is not over, 61 is.
@@ -160,7 +164,7 @@ mod tests {
         for (rations_lbs, over) in [(60, false), (61, true)] {
             let rations = copies(RATIONS, rations_lbs);
             let set = EquipmentSet { name: "Default".to_owned(), locations: inside(&rations, &backpack) };
-            let loads = container_loads(&set, &held(&rations), &corpus, &[(backpack.clone(), 60.0)], &[], &[]);
+            let loads = container_loads(&set, &held(&rations), &corpus, &[(backpack.clone(), 60.0)], &[], &[], &[]);
             assert_eq!(loads.len(), 1, "{loads:#?}");
             assert_eq!((loads[0].contents_lbs, loads[0].over), (f64::from(rations_lbs), over));
         }
@@ -175,7 +179,7 @@ mod tests {
         let mut keys = vec![sack.clone()];
         keys.extend(rations.clone());
         let set = EquipmentSet { name: "Default".to_owned(), locations: inside(&rations, &sack) };
-        let loads = container_loads(&set, &held(&keys), &corpus, &[], &[], &[]);
+        let loads = container_loads(&set, &held(&keys), &corpus, &[], &[], &[], &[]);
         assert_eq!(loads, vec![ContainerLoad { copy: sack, contents_lbs: 500.0, capacity: ContainerCapacity::Unlimited, over: false }]);
 
         let unstated = ContainerLoad::new(key("custom:x", 0), 500.0, ContainerCapacity::Unstated);
@@ -195,7 +199,7 @@ mod tests {
         let mut locations = inside(&[waterskin.clone(), unknown], &sack);
         locations.extend(inside(&[ration], &waterskin));
         let set = EquipmentSet { name: "Default".to_owned(), locations };
-        let loads = container_loads(&set, &held(&keys), &corpus, &[], &[], &[]);
+        let loads = container_loads(&set, &held(&keys), &corpus, &[], &[], &[], &[]);
         assert_eq!(load_of(&loads, &waterskin).contents_lbs, 1.0, "the ration inside the waterskin");
         assert_eq!(load_of(&loads, &waterskin).capacity, ContainerCapacity::Pounds(4.0));
         assert_eq!(load_of(&loads, &sack).contents_lbs, 1.0, "the ration only: the waterskin and the unknown id weigh nothing");
@@ -215,7 +219,7 @@ mod tests {
         let food = key("custom:food", 0);
         let set = EquipmentSet { name: "Default".to_owned(), locations: inside(&[arrows.clone(), food.clone()], &sack) };
         let quantities = [(arrows.clone(), 60)];
-        let loads = container_loads(&set, &held(&[sack.clone(), arrows.clone()]), &corpus, &[], &[(food, 5.0)], &quantities);
+        let loads = container_loads(&set, &held(&[sack.clone(), arrows.clone()]), &corpus, &[], &[(food, 5.0)], &quantities, &[]);
 
         let selection = EquipmentSelection { item_id: ARROWS.to_owned(), equipped_or_active: false, active_state: ActiveState::SelectedInactive, applied_modifiers: Vec::new() };
         let food_copy = WeighedCopy { id: "custom:food".to_owned(), weight_lbs: 5.0, active_state: ActiveState::SelectedInactive };
@@ -237,10 +241,30 @@ mod tests {
         let mithral = vec!["Material ~ Mithril ~ Weapon / Item".to_owned()];
         let set = EquipmentSet { name: "Default".to_owned(), locations: inside(std::slice::from_ref(&sword), &sack) };
         let held = [(sword.clone(), sword.item_id.as_str(), mithral.as_slice()), (sack.clone(), SACK, &[][..])];
-        let loads = container_loads(&set, &held, &corpus, &[], &[], &[]);
+        let loads = container_loads(&set, &held, &corpus, &[], &[], &[], &[]);
         let selection = EquipmentSelection { item_id: sword.item_id.clone(), equipped_or_active: false, active_state: ActiveState::SelectedInactive, applied_modifiers: mithral.clone() };
         let encumbrance = compute_encumbrance(&[selection], &corpus, 10, SizeCategory::Medium, &[], &[]);
         assert_eq!(encumbrance.total_carried_weight_lbs, 2.0, "{encumbrance:#?}");
         assert_eq!(load_of(&loads, &sack).contents_lbs, 2.0, "one weight rule, two sums");
+    }
+
+    /// A longsword made for a Large wielder (SD-41 E2.12) weighs twice its 4 lb in a sack and on
+    /// the character: the copy's size multiplies it in both sums.
+    #[test]
+    fn containers_weigh_a_sized_copy_as_encumbrance_does() {
+        use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
+        use crate::rules_core::encumbrance::compute_encumbrance_sized;
+        let corpus = core_rulebook();
+        let sack = key(SACK, 0);
+        let sword = key("Longsword (Base)", 0);
+        let set = EquipmentSet { name: "Default".to_owned(), locations: inside(std::slice::from_ref(&sword), &sack) };
+        let held = [(sword.clone(), sword.item_id.as_str(), &[][..]), (sack.clone(), SACK, &[][..])];
+        let sizes = [(sword.clone(), SizeCategory::Large)];
+        let loads = container_loads(&set, &held, &corpus, &[], &[], &[], &sizes);
+        let selection = EquipmentSelection { item_id: sword.item_id.clone(), equipped_or_active: false, active_state: ActiveState::SelectedInactive, applied_modifiers: Vec::new() };
+        let encumbrance = compute_encumbrance_sized(&[selection], &corpus, 10, SizeCategory::Medium, &[], &[], &sizes);
+        assert_eq!(encumbrance.total_carried_weight_lbs, 8.0, "{encumbrance:#?}");
+        assert_eq!(encumbrance.total_carried_cost_gp, 30.0, "the Large copy costs twice the 15 gp");
+        assert_eq!(load_of(&loads, &sack).contents_lbs, 8.0, "one weight rule, two sums");
     }
 }

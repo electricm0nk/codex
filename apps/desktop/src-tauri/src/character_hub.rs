@@ -2945,6 +2945,7 @@ pub(crate) fn load_saved_character_at_root(
     let sets = equipment_sets_at_root(root, &envelope.character_input, &held_rows)?;
     let copy_keys = selection_copy_keys(&envelope.character_input.chosen.equipment_selections);
     let quantities = copy_quantities(&sets, &copy_keys);
+    let item_sizes = copy_sizes(&sets, &copy_keys);
     let saved_input = envelope.character_input.clone();
     // This copy is what the sheet computes from, and is never saved.
     let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
@@ -2977,7 +2978,7 @@ pub(crate) fn load_saved_character_at_root(
             active_state: equipment_sets::project(sets.active_set(), std::slice::from_ref(copy))[0],
         })
         .collect();
-    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra);
+    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra, &item_sizes);
     let held_by_key: Vec<(CopyKey, &str, &[String])> = copy_keys
         .iter()
         .zip(&envelope.character_input.chosen.equipment_selections)
@@ -2985,7 +2986,7 @@ pub(crate) fn load_saved_character_at_root(
         .collect();
     let containers: Vec<(CopyKey, f64)> =
         created_copies.iter().filter_map(|(copy, record)| record.container_capacity_lbs.map(|lbs| (copy.clone(), lbs))).collect();
-    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &containers, &weighed, &quantities)
+    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &containers, &weighed, &quantities, &item_sizes)
         .into_iter()
         .map(|load| ContainerLoadDto { copy: load.copy, contents_lbs: load.contents_lbs, capacity: load.capacity.into(), over: load.over })
         .collect();
@@ -3009,6 +3010,7 @@ pub(crate) fn load_saved_character_at_root(
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
         &quantities,
+        &item_sizes,
     ));
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
         sheet_lines_for(&sheet_input, &corpus_receipt.base);
@@ -4169,7 +4171,7 @@ fn add_purchased_pieces_at_root(
     let (rows, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
     let target = location_from_state(active_state, BodySlot::None);
     let unnamed = |copy: &CopyKey| sets.copies.get(&copy.map_key()).is_none_or(|facts| facts.name.is_none());
-    let joins = rows.iter().find(|row| row.item_id == item_id && row.bonus == bonus && row.location == target && unnamed(&row.copies[0]));
+    let joins = rows.iter().find(|row| row.item_id == item_id && row.bonus == bonus && row.location == target && unnamed(&row.copies[0]) && row.size.is_none());
     if let Some(row) = joins {
         sets.copies.entry(row.copies[0].map_key()).or_default().quantity = Some(row.quantity.saturating_add(pieces));
         let response = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, |_| {})?;
@@ -4183,7 +4185,7 @@ fn add_purchased_pieces_at_root(
         let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
         let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
         let new = selection_copy_keys(&envelope.character_input.chosen.equipment_selections).pop().ok_or("the bought line was not saved")?;
-        sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { name: None, quantity: Some(pieces) });
+        sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { quantity: Some(pieces), ..equipment_sets::CopyFacts::default() });
         save_sets(root, &sets)?;
     }
     Ok(response)
@@ -4206,27 +4208,30 @@ pub struct CustomEquipmentBuild {
     pub special_abilities: Vec<String>,
     #[serde(default)]
     pub material: Option<String>,
+    /// The wielder size the copy is made for (`Small`, `Large`); absent (or `Medium`) is Medium.
     #[serde(default)]
-    pub size: Option<String>,
+    pub size: Option<codex::rules_core::size::SizeCategory>,
 }
 
 /// One custom copy's price and weight, as a purchase would charge and the engine weigh it.
 #[derive(Debug, Clone, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomEquipmentQuoteDto {
-    /// The modifiers the copy holds, in order: the `+N` (or masterwork), abilities, material, size.
+    /// The modifiers the copy holds, in order: the `+N` (or masterwork), abilities, material. A
+    /// size is not a modifier: the sets file keeps it per copy (E2.12).
     pub modifiers: Vec<String>,
     /// One copy's price in gp; `None` when a part has no price, and the buy is priced by Negotiate.
     pub price_gp: Option<f64>,
     /// The parts with no price, by key (`decisions.md §30` Q6): the quote says which.
     pub unpriced: Vec<String>,
-    /// One copy's weight: the base's, divided by a material that lightens it.
+    /// One copy's weight: the base's at its size, divided by a material that lightens it.
     pub weight_lbs: Option<f64>,
 }
 
 /// The quote for `build`, or why it cannot be made: an unknown base, a `+N` or masterwork on a base
-/// that takes none, a bonus past +5, a part the base is not offered, or a `+N`-equivalent ability
-/// with no enhancement bonus under it.
+/// that takes none, a bonus past +5, a part or size the base is not offered, or a `+N`-equivalent
+/// ability with no enhancement bonus under it. A size multiplies the base's price and weight
+/// (`SizeCategory::item_cost_and_weight_multipliers`) before the modifiers are priced on it.
 pub(crate) fn custom_equipment_quote(build: &CustomEquipmentBuild) -> Result<CustomEquipmentQuoteDto, String> {
     use crate::equipment_catalog::{catalog_row, custom_equipment_options};
     let base_id = build.base_item_id.as_str();
@@ -4248,14 +4253,17 @@ pub(crate) fn custom_equipment_quote(build: &CustomEquipmentBuild) -> Result<Cus
         }
         parts.push(key.clone());
     }
-    for (choice, list, what) in [(&build.material, &offered.materials, "material"), (&build.size, &offered.sizes, "size")] {
-        if let Some(key) = choice {
-            if !offers(list, key) {
-                return Err(format!("'{key}' is not a {what} offered on '{base_id}'"));
-            }
-            parts.push(key.clone());
+    if let Some(key) = &build.material {
+        if !offers(&offered.materials, key) {
+            return Err(format!("'{key}' is not a material offered on '{base_id}'"));
         }
+        parts.push(key.clone());
     }
+    let size = build.size.filter(|size| *size != codex::rules_core::size::SizeCategory::Medium);
+    if let Some(size) = size.filter(|size| !offered.sizes.contains(size)) {
+        return Err(format!("'{base_id}' is not made in size {size:?}"));
+    }
+    let (cost_times, weight_times) = size.map_or((1.0, 1.0), |size| size.item_cost_and_weight_multipliers());
     let corpus = corpus_fixture_bundle();
     let resolve = |key: &str| {
         codex::rules_core::equipment_resolver::equipment_converted_resolve(key, corpus).ok_or_else(|| format!("'{key}' has no record on the sheet"))
@@ -4275,10 +4283,11 @@ pub(crate) fn custom_equipment_quote(build: &CustomEquipmentBuild) -> Result<Cus
     }
     modifiers.extend(parts);
     let records = modifiers.iter().map(|key| resolve(key)).collect::<Result<Vec<_>, String>>()?;
-    let weight_lbs = base.weight_lbs.map(|lbs| lbs / codex::rules_core::encumbrance::modifier_weight_divisor(&modifiers, corpus));
+    let sized_lbs = base.weight_lbs.map(|lbs| lbs * weight_times);
+    let weight_lbs = sized_lbs.map(|lbs| lbs / codex::rules_core::encumbrance::modifier_weight_divisor(&modifiers, corpus));
     let (price_gp, unpriced) = match base.cost_gp {
         None => (None, vec![base_id.to_owned()]),
-        Some(base_gp) => match codex::rules_core::equipment_record::modified_price_gp(base_gp, base.weight_lbs.unwrap_or(0.0), &base.types, &records) {
+        Some(base_gp) => match codex::rules_core::equipment_record::modified_price_gp(base_gp * cost_times, sized_lbs.unwrap_or(0.0), &base.types, &records) {
             Ok(price) => (Some(price), Vec::new()),
             Err(unpriced) => (None, unpriced),
         },
@@ -4287,7 +4296,8 @@ pub(crate) fn custom_equipment_quote(build: &CustomEquipmentBuild) -> Result<Cus
 }
 
 /// Buys `quantity` (absent: one) custom copies of `build` (`decisions.md §24`): each a line of the
-/// base holding the quote's modifiers, Carried (`§10`), named `build.name` in the sets file. The
+/// base holding the quote's modifiers, Carried (`§10`), named `build.name` and of `build.size` in
+/// the sets file. The
 /// charge is quantity × the quote's price, or the negotiated total; a quote with no price buys
 /// only at a negotiated price (`§30` Q6), and a build the quote refuses buys nothing. `Cashless`
 /// moves no money.
@@ -4330,15 +4340,23 @@ pub(crate) fn purchase_custom_equipment_at_root(
     match add_purchased_copy_at_root(root, (&build.base_item_id, bonus), &quote.modifiers, ActiveState::SelectedInactive, copies, saved_at)? {
         CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
         CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
-            if let Some(name) = build.name.as_deref().map(str::trim).filter(|name| !name.is_empty()) {
+            let name = build.name.as_deref().map(str::trim).filter(|name| !name.is_empty());
+            let size = build.size.filter(|size| *size != codex::rules_core::size::SizeCategory::Medium);
+            if name.is_some() || size.is_some() {
                 let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
                 let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
                 let keys = selection_copy_keys(&envelope.character_input.chosen.equipment_selections);
                 for key in &keys[keys.len().saturating_sub(copies as usize)..] {
-                    sets.copies.entry(key.map_key()).or_default().name = Some(name.to_owned());
+                    let facts = sets.copies.entry(key.map_key()).or_default();
+                    if let Some(name) = name {
+                        facts.name = Some(name.to_owned());
+                    }
+                    facts.size = size;
                 }
                 save_sets(root, &sets)?;
             }
+            // The save weighed the new copies at Medium, before the sets file named their size.
+            let corpus_derived = if size.is_some() { Box::new(load_saved_character_at_root(root)?.corpus_derived) } else { corpus_derived };
             let cost_signed = i64::try_from(cost_copper).map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
             let money = if cost_signed > 0 { adjust_character_money_at_root(root, -cost_signed)? } else { load_character_money_at_root(root)? };
             Ok(PurchaseEquipmentResponse::Purchased {
@@ -5530,6 +5548,9 @@ pub struct HeldEquipmentCopyDto {
     /// `<name>: <the record's words>`, printed as text.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub abilities: Vec<String>,
+    /// The wielder size the copy was made for (Buy Custom, E2.12); absent for Medium.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub size: Option<codex::rules_core::size::SizeCategory>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5566,13 +5587,14 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
 }
 
 /// The held copies with identical copies stacked (`decisions.md §28`): copies with one `item_id`,
-/// `bonus`, name, location and override flag are one row, its `quantity` their pieces summed.
+/// `bonus`, name, location, override flag, abilities and size are one row, its `quantity` their
+/// pieces summed.
 pub(crate) fn list_held_equipment_stacks_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let mut stacks: Vec<HeldEquipmentCopyDto> = Vec::new();
     for row in list_held_equipment_at_root(root)? {
         let same = |stack: &&mut HeldEquipmentCopyDto| {
-            (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag, &stack.abilities)
-                == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag, &row.abilities)
+            (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag, &stack.abilities, stack.size)
+                == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag, &row.abilities, row.size)
         };
         match stacks.iter_mut().find(same) {
             Some(stack) => {
@@ -5663,16 +5685,24 @@ fn copy_quantities(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, u32)
     keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(|facts| facts.quantity).map(|pieces| (copy.clone(), pieces))).collect()
 }
 
+/// Each copy's size the sets file states (Buy Custom, E2.12), for the load, the containers and the
+/// weapon rows.
+fn copy_sizes(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, codex::rules_core::size::SizeCategory)> {
+    keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(|facts| facts.size).map(|size| (copy.clone(), size))).collect()
+}
+
 /// What the character carries, weighed with each copy's pieces and the created items' weights:
-/// the same call `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `extra` and `quantities`.
+/// the same call `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `extra`, `quantities`
+/// and the copies' own sizes.
 fn carried_load(
     input: &CharacterInput,
     quantities: &[(CopyKey, u32)],
     extra: &[codex::rules_core::encumbrance::WeighedCopy],
+    item_sizes: &[(CopyKey, codex::rules_core::size::SizeCategory)],
 ) -> codex::rules_core::encumbrance::EncumbranceComputation {
     let strength = apply_human_ability_bonus(input, &mut Vec::new()).strength;
     let (size, _) = codex::rules_core::contract::encumbrance_size_for_race(&input.chosen.race_id);
-    codex::rules_core::encumbrance::compute_encumbrance(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities)
+    codex::rules_core::encumbrance::compute_encumbrance_sized(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities, item_sizes)
 }
 
 /// The rows with each copy's location, custom name and pieces from the active set. A copy whose
@@ -5692,6 +5722,7 @@ fn placed_in(mut rows: Vec<HeldEquipmentCopyDto>, sets: &EquipmentSets) -> Vec<H
             if let Some(pieces) = facts.quantity {
                 row.quantity = pieces;
             }
+            row.size = facts.size;
         }
     }
     rows
@@ -5736,6 +5767,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
                 copies: vec![held_keys[index].clone()],
                 base_quantity: pieces,
                 abilities: copy_abilities(selection),
+                size: None,
             }
         })
         .collect();
@@ -5761,6 +5793,7 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
             copies: vec![copy],
             base_quantity: 1,
             abilities: Vec::new(),
+            size: None,
         }
     }));
     tag_admitted_copies(&mut rows, &admitted_records_at_root(root, input));
@@ -6299,8 +6332,8 @@ fn move_copies_at_root(
     }
     if let Some((from, kept, pieces)) = split {
         let moving = |row: &HeldEquipmentCopyDto| stack.iter().any(|held| held.copies[0] == row.copies[0]);
-        let joins = rows.iter().find(|row| !moving(row) && row.location == location && (&row.item_id, row.bonus, &row.name) == (&source.item_id, source.bonus, &source.name));
-        let name = sets.copies.get(&from.map_key()).and_then(|facts| facts.name.clone());
+        let joins = rows.iter().find(|row| !moving(row) && row.location == location && (&row.item_id, row.bonus, &row.name, row.size) == (&source.item_id, source.bonus, &source.name, source.size));
+        let facts = sets.copies.get(&from.map_key()).cloned().unwrap_or_default();
         sets.copies.entry(from.map_key()).or_default().quantity = Some(kept);
         match joins {
             Some(row) => sets.copies.entry(row.copies[0].map_key()).or_default().quantity = Some(row.quantity + pieces),
@@ -6312,7 +6345,7 @@ fn move_copies_at_root(
                     set.locations.retain(|entry| entry.copy != new);
                 }
                 place(active_set_mut(&mut sets), &new, location.clone());
-                sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { name, quantity: Some(pieces) });
+                sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { quantity: Some(pieces), ..facts });
             }
         }
     }
@@ -11747,7 +11780,7 @@ mod tests {
         assert_eq!(receipt.corpus_derived.equipment_effects.attack_bonus_delta, None, "no weapon in hand");
         // SD-41 E2.4: the stowed sword has one row, marked carried, with its own +1.
         let rows: Vec<WeaponDamageBreakdown> =
-            resolve_weapon_damage_breakdown_with_carried(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3, &[])
+            resolve_weapon_damage_breakdown_with_carried(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3, &[], &[])
                 .into_iter()
                 .filter(|row| !row.unarmed)
                 .collect();
@@ -22365,6 +22398,85 @@ mod tests {
         let loads = load_saved_character_at_root(&root).unwrap().container_loads;
         assert!(loads.iter().any(|load| load.copy == sets_key("Pouch (Belt)", 0)), "Food is a container: {loads:?}");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Buy Custom item size (SD-41 E2.12, `decisions.md §20`) -----
+
+    /// Each Longsword row's damage die on the load response, as `(count, die_size)`.
+    fn longsword_dice(root: &Path) -> Vec<(u8, u8)> {
+        load_saved_character_at_root(root)
+            .unwrap()
+            .weapon_damage
+            .iter()
+            .filter(|row| row.weapon_item_id == "Longsword (Base)")
+            .filter_map(|row| row.base_dice.as_ref().map(|dice| (dice.count, dice.die_size)))
+            .collect()
+    }
+
+    /// A longsword made for a Large wielder costs and weighs twice the Medium one (15 -> 30 gp,
+    /// 4 -> 8 lb; the size doubles the base, not the masterwork or the `+N`) and rolls 2d6 (1d8
+    /// one size up). Bought, it keeps its size: the held row says Large, the engine weighs it at
+    /// 8 lb and its carried row rolls 2d6.
+    #[test]
+    fn buy_custom_size_large_longsword_prices_weighs_and_rolls() {
+        use codex::rules_core::size::SizeCategory;
+        let large = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), size: Some(SizeCategory::Large), ..CustomEquipmentBuild::default() };
+        let quote = custom_equipment_quote(&large).unwrap();
+        assert_eq!((quote.price_gp, quote.weight_lbs), (Some(30.0), Some(8.0)), "{quote:?}");
+        assert!(quote.modifiers.is_empty(), "a size is not a modifier: {quote:?}");
+        let plus_one = CustomEquipmentBuild { enhancement: 1, ..large.clone() };
+        assert_eq!(custom_equipment_quote(&plus_one).unwrap().price_gp, Some(30.0 + 300.0 + 2_000.0));
+
+        let root = fund_and_seed("buy-custom-size-large", 100_000);
+        let weight = worn_vs_carried_weight(&root);
+        let before = longsword_dice(&root);
+        let response = bought_custom(&root, &large, Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 100_000 - 3_000);
+        assert_eq!(worn_vs_carried_weight(&root), weight + 8.0, "the engine weighs the Large copy at 8 lb");
+        let rows = stacks_of(&root, "Longsword (Base)");
+        assert!(rows.iter().any(|row| row.size == Some(SizeCategory::Large)), "{rows:?}");
+        let after = longsword_dice(&root);
+        assert_eq!(after.len(), before.len() + 1, "{after:?}");
+        assert!(after.contains(&(2, 6)), "the Large longsword rolls 2d6: {after:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A longsword made for a Small wielder weighs half (2 lb) at the Medium price and rolls 1d6;
+    /// bought, the engine weighs it at 2 lb and a plain Market longsword beside it does not stack
+    /// with it.
+    #[test]
+    fn buy_custom_size_small_longsword_weighs_half() {
+        use codex::rules_core::size::SizeCategory;
+        let small = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), size: Some(SizeCategory::Small), ..CustomEquipmentBuild::default() };
+        let quote = custom_equipment_quote(&small).unwrap();
+        assert_eq!((quote.price_gp, quote.weight_lbs), (Some(15.0), Some(2.0)), "{quote:?}");
+        let root = fund_and_seed("buy-custom-size-small", 100_000);
+        let weight = worn_vs_carried_weight(&root);
+        assert!(matches!(bought_custom(&root, &small, Deal::default()), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(worn_vs_carried_weight(&root), weight + 2.0, "the engine weighs the Small copy at 2 lb");
+        assert!(longsword_dice(&root).contains(&(1, 6)), "{:?}", longsword_dice(&root));
+        assert!(matches!(bought(&root, "Longsword (Base)", Deal::default()), PurchaseEquipmentResponse::Purchased { .. }));
+        let sizes: Vec<Option<SizeCategory>> = stacks_of(&root, "Longsword (Base)").iter().filter(|row| row.location == Location::Carried).map(|row| row.size).collect();
+        assert_eq!(sizes.len(), 2, "a Small and a Medium longsword are two rows: {sizes:?}");
+        assert!(sizes.contains(&Some(SizeCategory::Small)) && sizes.contains(&None), "{sizes:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Buy Custom offers Small and Large on arms, armor, shields and ammunition (what the size rule
+    /// prices), none on a belt pouch; the `Wield Size` qualities are special abilities, not sizes.
+    #[test]
+    fn buy_custom_size_offers_small_and_large_on_arms_and_armor() {
+        use codex::rules_core::size::SizeCategory;
+        let options = crate::equipment_catalog::custom_equipment_options("Longsword (Base)");
+        assert_eq!(options.sizes, vec![SizeCategory::Small, SizeCategory::Large]);
+        assert!(options.abilities.iter().any(|o| o.key.starts_with("Special Quality ~ Wield Size")), "{:?}", options.abilities);
+        assert_eq!(crate::equipment_catalog::custom_equipment_options("Breastplate (Base)").sizes, vec![SizeCategory::Small, SizeCategory::Large]);
+        assert!(crate::equipment_catalog::custom_equipment_options("Pouch (Belt)").sizes.is_empty());
+        let pouch = CustomEquipmentBuild { base_item_id: "Pouch (Belt)".to_owned(), size: Some(SizeCategory::Large), ..CustomEquipmentBuild::default() };
+        assert!(custom_equipment_quote(&pouch).is_err(), "a pouch is not made by size");
+        let huge = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), size: Some(SizeCategory::Huge), ..CustomEquipmentBuild::default() };
+        assert!(custom_equipment_quote(&huge).is_err(), "only Small and Large are offered");
     }
 
     /// A copy's custom name is kept in the sets file's copies map and read by the held list; an

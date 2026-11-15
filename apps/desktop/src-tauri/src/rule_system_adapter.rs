@@ -438,6 +438,7 @@ pub(crate) mod tests {
                     &corpus_receipt.corpus_derived.equipment_effects,
                     corpus_receipt.base.ability_modifiers.strength,
                     &[],
+                    &[],
                 )),
                 selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
                 selected_traits: envelope.character_input.chosen.selected_traits.clone(),

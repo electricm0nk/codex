@@ -416,6 +416,20 @@ pub fn compute_encumbrance(
     extra: &[WeighedCopy],
     quantities: &[(CopyKey, u32)],
 ) -> EncumbranceComputation {
+    compute_encumbrance_sized(equipment_selections, corpus, strength_score, size, extra, quantities, &[])
+}
+
+/// [`compute_encumbrance`] with `item_sizes`, the copies made for another size than Medium (SD-41
+/// E2.12): each weighs and costs its record × [`copy_size_multipliers`]. `size` is the wearer's.
+pub fn compute_encumbrance_sized(
+    equipment_selections: &[EquipmentSelection],
+    corpus: &SourcePackageContent,
+    strength_score: i16,
+    size: SizeCategory,
+    extra: &[WeighedCopy],
+    quantities: &[(CopyKey, u32)],
+    item_sizes: &[(CopyKey, SizeCategory)],
+) -> EncumbranceComputation {
     let mut per_item = Vec::new();
     let mut unresolved_item_ids = Vec::new();
     let mut total_carried_weight_lbs = 0.0_f64;
@@ -447,8 +461,9 @@ pub fn compute_encumbrance(
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let weight_lbs = weight_lbs * bundles / modifier_weight_divisor(&selection.applied_modifiers, corpus);
-        let cost_gp = cost.map(|cost| cost * bundles);
+        let (cost_times, weight_times) = copy_size_multipliers(key, item_sizes);
+        let weight_lbs = weight_lbs * bundles * weight_times / modifier_weight_divisor(&selection.applied_modifiers, corpus);
+        let cost_gp = cost.map(|cost| cost * bundles * cost_times);
 
         total_carried_weight_lbs += weight_lbs;
         total_carried_cost_gp += cost_gp.unwrap_or(0.0);
@@ -499,6 +514,12 @@ pub(crate) fn copy_bundles(
     quantities.iter().find(|(copy, _)| copy == key).map_or(1.0, |(_, pieces)| {
         f64::from(*pieces) / f64::from(record.base_quantity.or(stand_in.and_then(|base| base.base_quantity)).unwrap_or(1).max(1))
     })
+}
+
+/// What a copy's size multiplies its record's `(cost, weight)` by (SD-41 E2.12); `(1, 1)` for a
+/// copy `item_sizes` does not name (Medium). Shared with `containers::container_loads`.
+pub(crate) fn copy_size_multipliers(key: &CopyKey, item_sizes: &[(CopyKey, SizeCategory)]) -> (f64, f64) {
+    item_sizes.iter().find(|(copy, _)| copy == key).map_or((1.0, 1.0), |(_, size)| size.item_cost_and_weight_multipliers())
 }
 
 /// A copy's `+N`, as the equipment-sets file keys it: the highest `Special Ability ~ +N ~ …` it holds.
