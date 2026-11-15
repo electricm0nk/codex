@@ -459,6 +459,8 @@ pub(crate) mod tests {
                 languages: crate::character_hub::known_languages(),
                 fly_maneuverability: None,
                 resistances: Default::default(),
+                equipment_sets: None,
+                container_loads: Vec::new(),
             })
         }
     }

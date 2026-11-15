@@ -650,6 +650,8 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             languages: Default::default(),
             fly_maneuverability: None,
             resistances: Default::default(),
+            equipment_sets: None,
+            container_loads: Vec::new(),
         })
     }
 }

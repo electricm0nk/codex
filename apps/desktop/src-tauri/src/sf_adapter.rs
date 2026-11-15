@@ -872,6 +872,8 @@ impl RuleSystemAdapter for StarfinderAdapter {
             languages: Default::default(),
             fly_maneuverability: None,
             resistances: Default::default(),
+            equipment_sets: None,
+            container_loads: Vec::new(),
         })
     }
 }

@@ -7,6 +7,7 @@ import type { RaceSelectionResponse } from './loadAlternateRacialTraits';
 import type { AbilityScoresDto } from './loadCreateCharacter';
 import type { SkillAllocationEntryDto } from './setSkillAllocations';
 import type { CustomOverrides } from '../characterHub/customModel';
+import type { CopyKeyDto } from './listHeldEquipment';
 
 /** Mirrors `SpellSelectionImportDto` in `character_hub.rs` — a general-purpose round-trip shape, not import-only despite the name. */
 export interface SpellSelectionDto {
@@ -175,6 +176,13 @@ export interface LoadSavedCharacterResponse {
    */
   resistances?: ResistancesDto;
   /**
+   * SD-41 E2.1: the active equipment set and every set's name (`equipment_sets.json`). Absent for a
+   * system with no sets, and on a mutation refresh until the sheet re-reads.
+   */
+  equipmentSets?: EquipmentSetsSummaryDto;
+  /** SD-41 E2.1: each container copy's load in the active set; absent when none is held. */
+  containerLoads?: ContainerLoadDto[];
+  /**
    * SD-36 F7a: the engine's effective ability scores (`effective_ability_scores_dto`: the stored
    * score with the Human +2 applied) -- what the Abilities panel prints. Absent on a mutation
    * refresh (`toCharacterMutationRefresh`) until the sheet re-reads the character.
@@ -242,6 +250,23 @@ export interface ConditionalNotesDto {
   /** SD-40 E2.19: CMB and CMD notes (combat maneuver words; "against" a maneuver is CMD). */
   combatManeuverBonus: ConditionalNoteDto[];
   combatManeuverDefense: ConditionalNoteDto[];
+}
+
+/** The active equipment set and every set's name, in file order. */
+export interface EquipmentSetsSummaryDto {
+  active: string;
+  names: string[];
+}
+
+/** What a container holds: stated pounds, unlimited, or unstated (contents weigh in full). */
+export type ContainerCapacityDto = { kind: 'pounds'; lbs: number } | { kind: 'unlimited' } | { kind: 'unstated' };
+
+/** One container copy's load (`containers::container_loads`): `over` only against stated pounds. */
+export interface ContainerLoadDto {
+  copy: CopyKeyDto;
+  contentsLbs: number;
+  capacity: ContainerCapacityDto;
+  over: boolean;
 }
 
 /** Mirrors `Resistances` (engine `pilot_compute::resistances`). */

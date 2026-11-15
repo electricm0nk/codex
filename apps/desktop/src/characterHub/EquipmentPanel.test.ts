@@ -5,7 +5,9 @@ import { assert, assertEqual } from '../testSupport/asserts';
 import { EquipmentPanelView, equipmentPanelLists, equipmentRowActions, wornLabel } from './EquipmentPanel';
 
 function copy(name: string, activeState: PlacedEquipmentCopyDto['activeState'], slot: PlacedEquipmentCopyDto['slot'], bonus = 0): PlacedEquipmentCopyDto {
-  return { itemId: name, name, bonus, activeState, slot };
+  const location: PlacedEquipmentCopyDto['location'] =
+    activeState === 'EquippedActive' ? (slot === 'none' ? { kind: 'equipped' } : { kind: 'slot', slot }) : activeState === 'Absent' ? { kind: 'notCarried' } : { kind: 'carried' };
+  return { itemId: name, name, bonus, activeState, slot, location, ordinal: 0, quantity: 1, copies: [{ itemId: name, bonus, ordinal: 0 }], baseQuantity: 1 };
 }
 
 const HELD: PlacedEquipmentCopyDto[] = [

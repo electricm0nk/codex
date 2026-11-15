@@ -49,6 +49,7 @@ use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
+use codex::saved_character::equipment_sets::{self, CopyKey, EquipmentSets, HeldCopy, Location};
 use codex::saved_character::{
     SavedCharacterEnvelope, SavedCharacterRevisionKind, SavedCharacterSummary,
     CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
@@ -737,6 +738,52 @@ pub struct LoadSavedCharacterResponse {
     /// block and the Defense tab read this one field. Four empty lists when none.
     #[serde(default)]
     pub resistances: codex::rules_core::pilot_compute::resistances::Resistances,
+    /// SD-41 E2.1 (`decisions.md §5.3`): the active equipment set and every set's name, from
+    /// `equipment_sets.json`. Left out for a system with no sets.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub equipment_sets: Option<EquipmentSetsSummaryDto>,
+    /// SD-41 E2.1 (`decisions.md §7`): each container copy's load in the active set
+    /// (`containers::container_loads`). Left out when the character holds no container.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub container_loads: Vec<ContainerLoadDto>,
+}
+
+/// The active set's name and every set's, in file order.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquipmentSetsSummaryDto {
+    pub active: String,
+    pub names: Vec<String>,
+}
+
+/// One container copy's load: what its contents weigh, what it holds, and whether that is over.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ContainerLoadDto {
+    pub copy: CopyKey,
+    pub contents_lbs: f64,
+    pub capacity: ContainerCapacityDto,
+    pub over: bool,
+}
+
+/// `ContainerCapacity` on the wire: `{ kind: 'pounds', lbs }`, `{ kind: 'unlimited' }`, `{ kind: 'unstated' }`.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "camelCase")]
+pub enum ContainerCapacityDto {
+    Pounds { lbs: f64 },
+    Unlimited,
+    Unstated,
+}
+
+impl From<codex::rules_core::equipment_record::ContainerCapacity> for ContainerCapacityDto {
+    fn from(capacity: codex::rules_core::equipment_record::ContainerCapacity) -> Self {
+        use codex::rules_core::equipment_record::ContainerCapacity;
+        match capacity {
+            ContainerCapacity::Pounds(lbs) => Self::Pounds { lbs },
+            ContainerCapacity::Unlimited => Self::Unlimited,
+            ContainerCapacity::Unstated => Self::Unstated,
+        }
+    }
 }
 
 /// The languages a character knows, as the sheet lists them.
@@ -2848,6 +2895,11 @@ pub(crate) fn load_saved_character_at_root(
 ) -> Result<LoadSavedCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     build_character_ledger_on_first_load(root, &envelope.character_input);
+    // Before anything computes: an old save gets its Default set and its bundle pieces (§8, §30).
+    let held_rows = held_copy_rows(root, &envelope.character_input)?;
+    let sets = equipment_sets_at_root(root, &envelope.character_input, &held_rows)?;
+    let copy_keys = selection_copy_keys(&envelope.character_input.chosen.equipment_selections);
+    let quantities = copy_quantities(&sets, &copy_keys);
     let saved_input = envelope.character_input.clone();
     // This copy is what the sheet computes from, and is never saved.
     let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
@@ -2857,7 +2909,7 @@ pub(crate) fn load_saved_character_at_root(
     let sheet_input = worn_item_stated_bonuses(&envelope.character_input.chosen.equipment_selections, corpus_fixture_bundle())
         .raised(&envelope.character_input);
 
-    let (mut snapshot, diagnostics, corpus_receipt) =
+    let (mut snapshot, diagnostics, mut corpus_receipt) =
         match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
             Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
             Err(diagnostics) => (
@@ -2866,6 +2918,17 @@ pub(crate) fn load_saved_character_at_root(
                 compute_pilot_with_corpus(&sheet_input, corpus_fixture_bundle()),
             ),
         };
+    // Both branches computed the load from `sheet_input` with no pieces; weigh it again with them.
+    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities);
+    let held_by_key: Vec<(CopyKey, &str)> = copy_keys
+        .iter()
+        .zip(&envelope.character_input.chosen.equipment_selections)
+        .map(|(copy, selection)| (copy.clone(), selection.item_id.as_str()))
+        .collect();
+    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &[], &[], &quantities)
+        .into_iter()
+        .map(|load| ContainerLoadDto { copy: load.copy, contents_lbs: load.contents_lbs, capacity: load.capacity.into(), over: load.over })
+        .collect();
 
     // Both already computed above — `corpus_receipt.base` IS the
     // `compute_pilot_base_chassis` output (explanations included), and
@@ -2915,6 +2978,8 @@ pub(crate) fn load_saved_character_at_root(
         languages: stored_known_languages(&load_character_bio_at_root(root)?.languages),
         fly_maneuverability: None,
         resistances: Default::default(),
+        equipment_sets: Some(EquipmentSetsSummaryDto { active: sets.active.clone(), names: sets.sets.iter().map(|set| set.name.clone()).collect() }),
+        container_loads,
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_weapon_damage_total_rows(&mut sheet);
@@ -4985,6 +5050,16 @@ pub struct HeldEquipmentCopyDto {
     /// The override that let this copy in, when one did.
     #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
     pub override_flag: Option<OverrideFlag>,
+    /// Where the copy is in the active set (`decisions.md §5.1`).
+    pub location: Location,
+    /// The first copy's ordinal (`decisions.md §5.2`).
+    pub ordinal: u32,
+    /// Pieces in the row: each copy's stated pieces, or one bundle's when it states none (§30).
+    pub quantity: u32,
+    /// Every copy the row stands for, in saved order.
+    pub copies: Vec<CopyKey>,
+    /// Pieces in one bundle of the record as the book sells it; 1 for a single item.
+    pub base_quantity: u32,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5009,15 +5084,150 @@ fn is_owned_copy(selection: &EquipmentSelection) -> bool {
 /// Every copy the character owns, worn, carried or left behind, read off the saved selections. Not `corpus_derived`'s
 /// `equipped_items`, which resolves against the bundled demo corpus and so leaves out most of what a
 /// character can buy, and every enhancement eqmod.
+///
+/// One row per copy, each with where it is in the active set, its custom name and its pieces
+/// (`equipment_sets.json`, written here first when the root has none). The print reads this list;
+/// the Market and the Gear tab read [`list_held_equipment_stacks_at_root`].
 pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    let held: Vec<&EquipmentSelection> = envelope
-        .character_input
-        .chosen
-        .equipment_selections
-        .iter()
-        .filter(|selection| is_owned_copy(selection))
-        .collect();
+    let rows = held_copy_rows(root, &envelope.character_input)?;
+    let sets = equipment_sets_at_root(root, &envelope.character_input, &rows)?;
+    Ok(placed_in(rows, &sets))
+}
+
+/// The held copies with identical copies stacked (`decisions.md §28`): copies with one `item_id`,
+/// `bonus`, name, location and override flag are one row, its `quantity` their pieces summed.
+pub(crate) fn list_held_equipment_stacks_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let mut stacks: Vec<HeldEquipmentCopyDto> = Vec::new();
+    for row in list_held_equipment_at_root(root)? {
+        let same = |stack: &&mut HeldEquipmentCopyDto| {
+            (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag) == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag)
+        };
+        match stacks.iter_mut().find(same) {
+            Some(stack) => {
+                stack.quantity += row.quantity;
+                stack.copies.extend(row.copies);
+            }
+            None => stacks.push(row),
+        }
+    }
+    Ok(stacks)
+}
+
+/// The highest `+N` armor, shield or weapon modifier a selection holds: its `bonus` as
+/// `equipment_sets.json` and `compute_encumbrance` key a copy (`decisions.md §5.2`).
+// shortcut: the rule of the root crate's private `encumbrance::copy_bonus`; call it once it is exported.
+fn engine_copy_bonus(selection: &EquipmentSelection) -> u8 {
+    use codex::rules_core::body_slots::Enhanceable;
+    (1..=10u8)
+        .filter(|n| [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon].iter().any(|kind| selection.applied_modifiers.contains(&kind.modifier_key(*n))))
+        .max()
+        .unwrap_or(0)
+}
+
+/// Every saved selection's `CopyKey`, in saved order.
+pub(crate) fn selection_copy_keys(selections: &[EquipmentSelection]) -> Vec<CopyKey> {
+    equipment_sets::copy_keys(selections.iter().map(|selection| (selection.item_id.as_str(), engine_copy_bonus(selection))))
+}
+
+/// Pieces in one bundle of `item_id` as the book sells it (`BASEQTY`, the record's or its
+/// stand-in's); 1 for a single item, a custom item or a record the corpus does not hold.
+fn bundle_pieces(item_id: &str) -> u32 {
+    let corpus = corpus_fixture_bundle();
+    codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus).map_or(1, |record| {
+        let stand_in = codex::rules_core::equipment_effects::stand_in_record(record, corpus);
+        record.base_quantity.or(stand_in.and_then(|base| base.base_quantity)).unwrap_or(1).max(1)
+    })
+}
+
+/// Where the saved state puts a copy (`decisions.md §8`): worn in its slot (or slotless), carried, or left behind.
+fn location_from_state(active_state: ActiveState, slot: BodySlot) -> Location {
+    match (active_state, slot) {
+        (ActiveState::EquippedActive, BodySlot::None) => Location::Equipped,
+        (ActiveState::EquippedActive, slot) => Location::Slot { slot },
+        (ActiveState::SelectedInactive, _) => Location::Carried,
+        (ActiveState::Absent, _) => Location::NotCarried,
+    }
+}
+
+/// The root's equipment sets. A root with none gets the Default set built from the saved states
+/// (`decisions.md §8`), and every bundle copy with no stated pieces gets one bundle's
+/// (`decisions.md §30` Q8: weight unchanged); the file is written only when one of those changed it.
+fn equipment_sets_at_root(root: &Path, input: &CharacterInput, rows: &[HeldEquipmentCopyDto]) -> Result<EquipmentSets, String> {
+    let selections = &input.chosen.equipment_selections;
+    let keys = selection_copy_keys(selections);
+    let (mut sets, mut changed) = match equipment_sets::load(root).map_err(|err| err.message)? {
+        Some(sets) => (sets, false),
+        None => {
+            // Every selection, owned or not, so the set projects back to each saved state.
+            let slot_of = |copy: &CopyKey| rows.iter().find(|row| row.copies.first() == Some(copy)).map_or(BodySlot::None, |row| row.slot);
+            let held: Vec<HeldCopy> = keys
+                .iter()
+                .zip(selections)
+                .map(|(copy, selection)| HeldCopy { copy: copy.clone(), active_state: selection.active_state, slot: slot_of(copy) })
+                .chain(rows.iter().filter(|row| row.item_id.starts_with(CUSTOM_ITEM_PREFIX)).map(|row| HeldCopy {
+                    copy: row.copies[0].clone(),
+                    active_state: row.active_state.into(),
+                    slot: row.slot,
+                }))
+                .collect();
+            (equipment_sets::default_from(&held), true)
+        }
+    };
+    for row in rows.iter().filter(|row| row.base_quantity > 1) {
+        let facts = sets.copies.entry(row.copies[0].map_key()).or_default();
+        if facts.quantity.is_none() {
+            facts.quantity = Some(row.base_quantity);
+            changed = true;
+        }
+    }
+    if changed {
+        equipment_sets::save(root, &sets).map_err(|err| err.message)?;
+    }
+    Ok(sets)
+}
+
+/// Each copy's pieces the sets file states, for `compute_encumbrance` and `container_loads`.
+fn copy_quantities(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, u32)> {
+    keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(|facts| facts.quantity).map(|pieces| (copy.clone(), pieces))).collect()
+}
+
+/// What the character carries, weighed with each copy's pieces: the same call
+/// `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `quantities`.
+fn carried_load(input: &CharacterInput, quantities: &[(CopyKey, u32)]) -> codex::rules_core::encumbrance::EncumbranceComputation {
+    let strength = apply_human_ability_bonus(input, &mut Vec::new()).strength;
+    let (size, _) = codex::rules_core::contract::encumbrance_size_for_race(&input.chosen.race_id);
+    codex::rules_core::encumbrance::compute_encumbrance(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, &[], quantities)
+}
+
+/// The rows with each copy's location, custom name and pieces from the active set. A copy whose
+/// set location projects to another state than the saved one keeps the saved state's location:
+/// the saved input is the active set's picture (`decisions.md §6`), so the file is the stale one.
+fn placed_in(mut rows: Vec<HeldEquipmentCopyDto>, sets: &EquipmentSets) -> Vec<HeldEquipmentCopyDto> {
+    let active = sets.active_set();
+    for row in &mut rows {
+        let copy = row.copies[0].clone();
+        if equipment_sets::project(active, std::slice::from_ref(&copy)) == [ActiveState::from(row.active_state)] {
+            row.location = equipment_sets::location_of(active, &copy);
+        }
+        if let Some(facts) = sets.copies.get(&copy.map_key()) {
+            if let Some(name) = &facts.name {
+                row.name = name.clone();
+            }
+            if let Some(pieces) = facts.quantity {
+                row.quantity = pieces;
+            }
+        }
+    }
+    rows
+}
+
+/// One row per owned copy, read off the saved selections and the custom records, each located by
+/// its saved state and counting one bundle; [`placed_in`] reads the sets file over them.
+fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let keys = selection_copy_keys(&input.chosen.equipment_selections);
+    let (held, held_keys): (Vec<&EquipmentSelection>, Vec<&CopyKey>) =
+        input.chosen.equipment_selections.iter().zip(&keys).filter(|(selection, _)| is_owned_copy(selection)).unzip();
     let slots = held.iter().map(|selection| body_slot_of_item(&selection.item_id)).collect::<Result<Vec<_>, String>>()?;
     let is_worn = |index: &usize| held[*index].active_state == ActiveState::EquippedActive;
     let worn: Vec<usize> = (0..held.len()).filter(is_worn).collect();
@@ -5037,7 +5247,20 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         .map(|(index, selection)| {
             let (name, bonus) = copy_name_and_bonus(selection);
             let slot = if is_worn(&index) { places.next().unwrap_or(slots[index]) } else { slots[index] };
-            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus, active_state: selection.active_state.into(), slot, override_flag: None }
+            let pieces = bundle_pieces(&selection.item_id);
+            HeldEquipmentCopyDto {
+                item_id: selection.item_id.clone(),
+                name,
+                bonus,
+                active_state: selection.active_state.into(),
+                slot,
+                override_flag: None,
+                location: location_from_state(selection.active_state, slot),
+                ordinal: held_keys[index].ordinal,
+                quantity: pieces,
+                copies: vec![held_keys[index].clone()],
+                base_quantity: pieces,
+            }
         })
         .collect();
     rows.extend(custom_items.iter().enumerate().map(|(index, record)| {
@@ -5048,16 +5271,23 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         } else {
             (ActiveState::SelectedInactive, custom_slot(index))
         };
+        let item_id = format!("{CUSTOM_ITEM_PREFIX}{}", record.id);
+        let copy = CopyKey { item_id: item_id.clone(), bonus: 0, ordinal: 0 };
         HeldEquipmentCopyDto {
-            item_id: format!("{CUSTOM_ITEM_PREFIX}{}", record.id),
+            item_id,
             name: record.name.clone(),
             bonus: 0,
             active_state: active_state.into(),
             slot,
             override_flag: None,
+            location: location_from_state(active_state, slot),
+            ordinal: 0,
+            quantity: 1,
+            copies: vec![copy],
+            base_quantity: 1,
         }
     }));
-    tag_admitted_copies(&mut rows, &admitted_records_at_root(root, &envelope.character_input));
+    tag_admitted_copies(&mut rows, &admitted_records_at_root(root, input));
     Ok(rows)
 }
 
@@ -5104,7 +5334,7 @@ fn copy_name_and_bonus(selection: &EquipmentSelection) -> (String, u8) {
 #[tauri::command]
 pub fn list_held_equipment(app: tauri::AppHandle, request: ListHeldEquipmentRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    list_held_equipment_at_root(&root)
+    list_held_equipment_stacks_at_root(&root)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -11351,6 +11581,7 @@ mod tests {
         let mut after = ledger_migration_digests(&root);
         let first = std::fs::read(root.join("ledger.json")).expect("the first load wrote it");
         assert!(after.remove("ledger.json").is_some());
+        assert!(after.remove(equipment_sets::EQUIPMENT_SETS_FILE).is_some(), "the first load writes the Default set (SD-41 `decisions.md §8`)");
         assert_eq!(after, before, "every file the character already had is byte for byte what it was");
 
         load_saved_character_at_root(&root).expect("loads");
@@ -20451,6 +20682,137 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
         std::fs::remove_dir_all(&imported).ok();
         std::fs::remove_dir_all(&plain).ok();
+    }
+
+    // ----- SD-41 E2.1: the load response and the Default file (`decisions.md §8, §28, §30`) -----
+
+    fn sets_root(label: &str, items: &[(&str, ActiveState)]) -> PathBuf {
+        let root = tempdir(label);
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 1), &root).expect("seed save");
+        for (item, state) in items {
+            worn_vs_carried_hold(&root, item, *state);
+        }
+        root
+    }
+
+    fn stacks_of(root: &Path, item_id: &str) -> Vec<HeldEquipmentCopyDto> {
+        list_held_equipment_stacks_at_root(root).unwrap().into_iter().filter(|row| row.item_id == item_id).collect()
+    }
+
+    fn sets_key(item_id: &str, ordinal: u32) -> CopyKey {
+        CopyKey { item_id: item_id.to_owned(), bonus: 0, ordinal }
+    }
+
+    /// Each PF starter seed: the first load writes the Default set, once; the second load leaves
+    /// the file as it is; and the Default set projects back to every saved `active_state`
+    /// (`decisions.md §8`, the starter-seed half of E1.2's theorem, §20).
+    #[test]
+    fn equipment_sets_on_load_writes_default_once() {
+        let app_data_dir = tempdir("sets-on-load-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding");
+        let characters = characters_root_from_app_data_dir(&app_data_dir);
+        for id in [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID] {
+            let root = characters.join(id);
+            let file = root.join(equipment_sets::EQUIPMENT_SETS_FILE);
+            assert!(!file.exists(), "{id}: a seed starts with no sets file");
+            load_saved_character_at_root(&root).expect("first load");
+            let written = std::fs::read(&file).unwrap_or_else(|err| panic!("{id}: the first load writes the file: {err}"));
+            let modified = std::fs::metadata(&file).unwrap().modified().unwrap();
+            let sets = equipment_sets::load(&root).unwrap().expect("the file reads back");
+            assert_eq!((sets.active.as_str(), sets.sets.len()), ("Default", 1), "{id}");
+            load_saved_character_at_root(&root).expect("second load");
+            assert_eq!(std::fs::read(&file).unwrap(), written, "{id}: the second load rewrites nothing");
+            assert_eq!(std::fs::metadata(&file).unwrap().modified().unwrap(), modified, "{id}: written once");
+
+            let selections = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections;
+            let keys = selection_copy_keys(&selections);
+            let saved: Vec<ActiveState> = selections.iter().map(|selection| selection.active_state).collect();
+            assert!(!saved.is_empty(), "{id}: a seed holds equipment");
+            assert_eq!(equipment_sets::project(sets.active_set(), &keys), saved, "{id}: project(default_from(x), x) == x");
+        }
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// The load response names the sets and carries each container copy's load (E1.3): a Dagger
+    /// put in a carried Backpack weighs 1 lb of the Backpack's 60 (`decisions.md §32`).
+    #[test]
+    fn equipment_sets_on_load_response_carries_sets_and_container_loads() {
+        let root = sets_root("sets-on-load-response", &[("Backpack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        let first = load_saved_character_at_root(&root).unwrap();
+        let summary = first.equipment_sets.expect("a PF load names its sets");
+        assert_eq!((summary.active.as_str(), summary.names), ("Default", vec!["Default".to_owned()]));
+        let backpack = sets_key("Backpack", 0);
+        assert_eq!(first.container_loads.len(), 1, "one container copy: {:?}", first.container_loads);
+        assert_eq!(first.container_loads[0].copy, backpack);
+        assert_eq!(first.container_loads[0].contents_lbs, 0.0);
+
+        let mut sets = equipment_sets::load(&root).unwrap().unwrap();
+        sets.sets[0].locations.push(equipment_sets::SetEntry { copy: sets_key("item:dagger", 0), location: Location::Inside { container: backpack.clone() } });
+        equipment_sets::save(&root, &sets).unwrap();
+        let loads = load_saved_character_at_root(&root).unwrap().container_loads;
+        assert_eq!(loads.len(), 1);
+        assert_eq!((loads[0].contents_lbs, loads[0].over), (1.0, false), "{loads:?}");
+        assert_eq!(serde_json::to_value(loads[0].capacity).unwrap(), serde_json::json!({ "kind": "pounds", "lbs": 60.0 }));
+        let dagger = stacks_of(&root, "item:dagger");
+        assert_eq!(dagger[0].location, Location::Inside { container: backpack });
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Two plain Daggers, both Carried, are one row of 2 (`decisions.md §28`).
+    #[test]
+    fn held_list_stacks_identical_copies() {
+        let root = sets_root("held-stacks", &[("item:dagger", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        load_saved_character_at_root(&root).unwrap();
+        let rows = stacks_of(&root, "item:dagger");
+        assert_eq!(rows.len(), 1, "{rows:?}");
+        assert_eq!((rows[0].quantity, rows[0].base_quantity, rows[0].ordinal), (2, 1, 0));
+        assert_eq!(rows[0].copies, vec![sets_key("item:dagger", 0), sets_key("item:dagger", 1)]);
+        assert_eq!(rows[0].location, Location::Carried);
+        let value = serde_json::to_value(&rows[0]).unwrap();
+        assert_eq!(value["location"], serde_json::json!({ "kind": "carried" }));
+        assert_eq!(value["copies"][1], serde_json::json!({ "itemId": "item:dagger", "bonus": 0, "ordinal": 1 }));
+        assert_eq!(list_held_equipment_at_root(&root).unwrap().iter().filter(|row| row.item_id == "item:dagger").count(), 2, "the per-copy list keeps both");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// One Dagger Carried and one Not Carried stay two rows.
+    #[test]
+    fn held_list_keeps_different_locations_apart() {
+        let root = sets_root("held-apart", &[("item:dagger", ActiveState::SelectedInactive), ("item:dagger", ActiveState::Absent)]);
+        load_saved_character_at_root(&root).unwrap();
+        let rows = stacks_of(&root, "item:dagger");
+        let seen: Vec<(Location, u32, u32)> = rows.iter().map(|row| (row.location.clone(), row.quantity, row.ordinal)).collect();
+        assert_eq!(seen, vec![(Location::Carried, 1, 0), (Location::NotCarried, 1, 1)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An old save's one "Arrows (20)" line is 20 pieces after the first load, and weighs what the
+    /// base weighed it (`decisions.md §30` Q8); a stated 40 pieces weighs two bundles, so the load
+    /// passes the pieces to `compute_encumbrance`.
+    #[test]
+    fn held_list_bundle_migration_keeps_weight() {
+        let root = sets_root("held-bundle", &[("Arrows (20)", ActiveState::SelectedInactive)]);
+        let envelope = SavedCharacterStore::load(&root).unwrap();
+        let before = codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle())
+            .corpus_derived
+            .encumbrance
+            .total_carried_weight_lbs;
+        let after = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs;
+        assert_eq!(after, before, "the migration moves no weight");
+        let arrows = sets_key("Arrows (20)", 0);
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        assert_eq!(sets.copies.get(&arrows.map_key()).and_then(|facts| facts.quantity), Some(20));
+        let rows = stacks_of(&root, "Arrows (20)");
+        assert_eq!((rows.len(), rows[0].quantity, rows[0].base_quantity), (1, 20, 20), "{rows:?}");
+
+        let mut sets = sets;
+        sets.copies.get_mut(&arrows.map_key()).unwrap().quantity = Some(40);
+        equipment_sets::save(&root, &sets).unwrap();
+        let doubled = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs;
+        let bundle = codex::rules_core::equipment_resolver::equipment_converted_resolve("Arrows (20)", corpus_fixture_bundle()).unwrap().weight_lbs.unwrap();
+        assert_eq!(doubled, before + bundle, "40 pieces are two bundles");
+        assert_eq!(stacks_of(&root, "Arrows (20)")[0].quantity, 40);
+        std::fs::remove_dir_all(&root).ok();
     }
 }
 

@@ -4,9 +4,9 @@ import type { OverrideFlagDto } from './loadSavedCharacterDetail';
 import type { ActiveStateDto } from './setEquipmentActiveState';
 
 /**
- * Read-only desktop boundary over what a character owns, one row per copy, for the Market's Sell
- * list and the Gear tab's Equipment control. Invokes `list_held_equipment`, which reads the saved
- * selections.
+ * Read-only desktop boundary over what a character owns, one row per stack of identical copies,
+ * for the Market's Sell list and the Gear tab's Equipment control. Invokes `list_held_equipment`,
+ * which reads the saved selections and `equipment_sets.json`.
  */
 
 export interface HeldEquipmentCopyDto {
@@ -40,13 +40,41 @@ export type BodySlotDto =
   | 'wield_two_handed'
   | 'none';
 
-/** A held copy with where it is. The Sell list needs only {@link HeldEquipmentCopyDto}. */
+/** One owned copy (`CopyKey`): the `ordinal`-th copy of `itemId` at `bonus` in saved order. */
+export interface CopyKeyDto {
+  itemId: string;
+  bonus: number;
+  ordinal: number;
+}
+
+/** Where a copy is in the active equipment set (`Location` in `equipment_sets.rs`). */
+export type LocationDto =
+  | { kind: 'slot'; slot: BodySlotDto }
+  | { kind: 'equipped' }
+  | { kind: 'carried' }
+  | { kind: 'notCarried' }
+  | { kind: 'inside'; container: CopyKeyDto };
+
+/**
+ * A held stack with where it is: identical copies (one `itemId`, `bonus`, name and location) are
+ * one row. The Sell list needs only {@link HeldEquipmentCopyDto}.
+ */
 export interface PlacedEquipmentCopyDto extends HeldEquipmentCopyDto {
   activeState: ActiveStateDto;
   /** Where a worn copy sits, and what a carried one would take. */
   slot: BodySlotDto;
   /** The override that let this copy in; left out when the rules allowed it. */
   override?: OverrideFlagDto;
+  /** Where the stack is in the active set. */
+  location: LocationDto;
+  /** The first copy's ordinal. */
+  ordinal: number;
+  /** Pieces in the stack (60 arrows, not 3 bundles). */
+  quantity: number;
+  /** Every copy the row stands for, in saved order. */
+  copies: CopyKeyDto[];
+  /** Pieces in one bundle as the book sells it; 1 for a single item. */
+  baseQuantity: number;
 }
 
 /** What the Market can buy back: a custom item is the GM's, and has no price. */
