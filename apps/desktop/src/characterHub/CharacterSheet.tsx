@@ -99,12 +99,12 @@ import { DESKTOP_EXPORT_DEPS, runCharacterExport } from './characterExport';
 import { resolveSelectedTraits } from './traitsTabModel';
 import { resolveAddSpellAffordance } from './addSpellAffordanceModel';
 import { loadCharacterTraits, type CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
-import type { BaseSavesDto, PilotSnapshotDto } from '../boundary/loadCreateCharacter';
+import type { BaseSavesDto, CreateCharacterOutcome, PilotSnapshotDto } from '../boundary/loadCreateCharacter';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
 import { MarketDialog } from './MarketDialog';
-import { EquipmentPanel } from './EquipmentPanel';
+import { GearScreen } from './GearScreen';
 import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
 import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
@@ -1575,13 +1575,14 @@ function GearTab(props: {
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
-  /** Sells the copy back (`handleRemoveEquipment`). */
-  onRemoveItem: (itemId: string) => void;
+  characterId: string;
   loadHeldEquipment: () => Promise<PlacedEquipmentCopyDto[]>;
-  /** A new value re-reads the Equipment control: any saved change arrives as a new detail. */
-  detail: unknown;
-  /** Moves one copy between worn, carried and left behind; resolves to the refusal, word for word, or null when it saved. */
-  onSetActiveState: (copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto) => Promise<string | null>;
+  /** A new value re-reads the gear screen: any saved change arrives as a new detail. */
+  detail: LoadSavedCharacterResponse | null;
+  /** The Armor Class the Defense block shows. */
+  armorClass: number;
+  onGearChange: (write: (savedAt: string) => Promise<unknown>) => Promise<string | null>;
+  onGearSell: (held: PlacedEquipmentCopyDto, quantity?: number, negotiatedGp?: number) => Promise<string | null>;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -1607,7 +1608,21 @@ function GearTab(props: {
           Market
         </button>
       </div>
-      <EquipmentPanel load={props.loadHeldEquipment} refreshKey={props.detail} onSetState={props.onSetActiveState} />
+      <GearScreen
+        characterId={props.characterId}
+        load={props.loadHeldEquipment}
+        refreshKey={props.detail}
+        context={{
+          perItem: encumbrance?.perItem ?? [],
+          containerLoads: props.detail?.containerLoads ?? [],
+          ignoreContainerCapacity: props.detail?.ignoreContainerCapacity,
+        }}
+        armorClass={props.armorClass}
+        carriedLbs={encumbrance?.totalCarriedWeightLbs ?? null}
+        sets={props.detail?.equipmentSets}
+        onChange={props.onGearChange}
+        onSell={props.onGearSell}
+      />
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
       {items.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
@@ -1644,14 +1659,6 @@ function GearTab(props: {
                   style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
                 >
                   Attach Modifier
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Drop ${item.equipmentRecordName}`}
-                  onClick={() => props.onRemoveItem(item.itemId)}
-                  style={removeItemButtonStyle}
-                >
-                  Drop
                 </button>
               </span>
             </div>
@@ -3669,29 +3676,44 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * Moves one owned copy between worn, carried and left behind. Unlike `handleRemoveEquipment` this does not drop the item or
-   * its modifiers. Resolves to the refusal for the Equipment control to show, word for word, or null
-   * when the change saved.
+   * The gear screen's writes (a move, Drop, Discard, a set change): runs one with its `savedAt`,
+   * re-reads the sheet, and resolves to the refusal, word for word, or null when it saved.
    */
-  async function handleSetEquipmentActiveState(copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto): Promise<string | null> {
+  async function handleGearChange(write: (savedAt: string) => Promise<unknown>): Promise<string | null> {
     try {
-      const outcome = await setEquipmentActiveState({
+      const outcome = (await write(new Date().toISOString())) as CreateCharacterOutcome | { kind?: undefined };
+      if (outcome.kind === 'Blocked') {
+        return blockedMessageFromDiagnostics(outcome.diagnostics);
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+      // The Custom tab and dialog read a custom record's `worn`; a stale one would save it back.
+      setCustom(await loadCharacterCustom(props.row.characterId));
+      return null;
+    } catch (cause: unknown) {
+      return cause instanceof Error ? cause.message : String(cause);
+    }
+  }
+
+  /** The gear screen's Sell: pieces of a stack at the pricing above, or the negotiated total (`decisions.md §26–§28`). */
+  async function handleGearSell(held: PlacedEquipmentCopyDto, quantity?: number, negotiatedGp?: number): Promise<string | null> {
+    try {
+      const outcome = await removeEquipmentSelection({
         characterId: props.row.characterId,
-        itemId: copy.itemId,
-        bonus: copy.bonus,
-        fromState: copy.activeState,
-        activeState,
+        itemId: held.itemId,
         savedAt: new Date().toISOString(),
+        priceMode,
+        bonus: held.bonus,
+        fromState: held.activeState,
+        ...(quantity === undefined ? {} : { quantity }),
+        ...(negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(negotiatedGp) }),
       });
       if (outcome.kind === 'Blocked') {
         return blockedMessageFromDiagnostics(outcome.diagnostics);
       }
       await republishFromDisk();
       await refreshEngineRecords();
-      // The Custom tab and dialog read the record's `worn`; a stale one would save it back.
-      if (copy.itemId.startsWith('custom:')) {
-        setCustom(await loadCharacterCustom(props.row.characterId));
-      }
+      setMoney(await loadCharacterMoney(props.row.characterId));
       return null;
     } catch (cause: unknown) {
       return cause instanceof Error ? cause.message : String(cause);
@@ -4501,10 +4523,12 @@ export function CharacterSheet(props: {
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
                     onAttachModifier={handleAttachModifier}
-                    onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
+                    characterId={props.row.characterId}
                     loadHeldEquipment={() => listHeldEquipment(props.row.characterId)}
                     detail={props.detail}
-                    onSetActiveState={handleSetEquipmentActiveState}
+                    armorClass={ac}
+                    onGearChange={handleGearChange}
+                    onGearSell={handleGearSell}
                     money={money}
                     moneyBusy={moneyBusy}
                     moneyError={moneyError}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { chipStyle, selectedChipKey } from './customChip';
-import { WORN_SLOTS } from './EquipmentPanel';
+import { WORN_SLOTS } from './gearScreenModel';
 import {
   BONUS_TARGETS,
   BONUS_TYPES,

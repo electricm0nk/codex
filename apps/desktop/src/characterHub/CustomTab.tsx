@@ -1,5 +1,5 @@
 import type { OverrideFlagDto } from '../boundary/loadSavedCharacterDetail';
-import { wornLabel } from './EquipmentPanel';
+import { wornLabel } from './gearScreenModel';
 import { OverrideTag } from './OverrideTag';
 import { CUSTOM_RECORD_KINDS, OVERRIDE_TOGGLES, bonusLine, customIsEmpty, customItemPlace, customOverrides, grantTargetLabel, type CharacterCustom, type CustomOverrides, type CustomRecord, type CustomRecordKind } from './customModel';
 

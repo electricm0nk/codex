@@ -183,6 +183,8 @@ export interface LoadSavedCharacterResponse {
   equipmentSets?: EquipmentSetsSummaryDto;
   /** SD-41 E2.1: each container copy's load in the active set; absent when none is held. */
   containerLoads?: ContainerLoadDto[];
+  /** SD-41 E2.3: the character's "Ignore container capacity limits" override; absent when off. */
+  ignoreContainerCapacity?: boolean;
   /** SD-41 E2.7: the campaigns the character belongs to; absent when none. */
   campaigns?: CampaignMembershipDto[];
   /** SD-41 E2.7: each campaign copy the latest write could not make ("<dir>: <reason>"); absent when all were written. */
