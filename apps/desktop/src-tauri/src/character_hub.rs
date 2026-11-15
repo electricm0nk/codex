@@ -15110,13 +15110,10 @@ mod tests {
         divergent.dedup();
         assert_eq!(
             divergent,
-            vec![
-                ("CRB", "Holy Symbol (Silver)"),
-                ("CRB", "Holy Symbol (Wooden)"),
-                ("UE", "Masterwork Tool"),
-            ],
-            "the display-vs-charge divergence set must stay exactly these three same-book \
-             same-key rows -- named explicitly so a fourth arriving silently fails here"
+            vec![("UE", "Masterwork Tool")],
+            "the display-vs-charge divergence set must stay exactly this one same-book \
+             same-key row (the two CRB Holy Symbol rows were priced from their corpus \
+             records and now agree) -- named explicitly so a second arriving silently fails here"
         );
         assert!(
             divergent.iter().all(|(book, _)| *book == "CRB" || *book == "UE"),
