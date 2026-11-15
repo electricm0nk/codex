@@ -228,7 +228,7 @@ The printed sheet's tests are `#[cfg(test)]` modules of the desktop binary under
   papers with each of eight section sets, plus Aldric with seven languages: 34 PDFs. With the variable unset it writes
   nothing and passes. `bash scripts/print/rasterize.sh <pdf-dir> <png-dir>` turns them into 60 dpi PNGs (`pdftoppm`) for
   a person or an agent to read. This is the look-at-your-own-output step a look or layout change takes. It is not a gate.
-- **`tests/packaged_resources.rs`** asserts that `print/typst.rs` compiles in exactly the fonts, templates and looks on disk (four faces + `frame.typ` + `blocks.typ` + the looks).
+- **`apps/desktop/src-tauri/tests/packaged_resources.rs`** asserts that `print/typst.rs` compiles in exactly the fonts, templates and looks on disk (four faces + `frame.typ` + `blocks.typ` + the looks).
 
 Starfinder's and Cyberpunk RED's golden text and page counts are a regression net for Pathfinder-only print changes:
 a diff there is a defect, not a re-baseline.
