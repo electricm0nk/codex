@@ -3932,25 +3932,27 @@ fn copy_price_gp(item_id: &str, bonus: u8, offers: &[crate::equipment_catalog::M
         .or_else(|| catalog_cost_gp(item_id))
 }
 
-/// Saves one new copy of `item_id`, holding `modifier_key` when it is a `+N`, in one save. The
-/// bonus goes on the new copy: `apply_attach_equipment_modifier` takes the first copy of an id,
-/// which would make an older plain item the one that was paid for.
+/// Saves `lines` new copies of `item_id`, each holding `modifier_key` when it is a `+N`, in one
+/// save. The bonus goes on the new copies: `apply_attach_equipment_modifier` takes the first copy
+/// of an id, which would make an older plain item the one that was paid for.
 fn add_purchased_copy_at_root(
     root: &Path,
     (item_id, bonus): (&str, u8),
     modifier_key: Option<&str>,
     active_state: ActiveState,
-    wear_flags: Vec<OverrideFlag>,
+    lines: u32,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    let gate = load_gate_at_root(root, item_id, bonus, wear_flags);
+    let gate = load_gate_at_root(root, item_id, bonus, Vec::new());
     crate::pf1_adapter::mutate_saved_character_gated_at_root(
         root,
         saved_at,
         |character_input| {
-            crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
-            if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
-                copy.applied_modifiers.push(key.to_owned());
+            for _ in 0..lines {
+                crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
+                if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
+                    copy.applied_modifiers.push(key.to_owned());
+                }
             }
         },
         gate,
@@ -4070,7 +4072,6 @@ pub(crate) fn purchase_equipment_deal_at_root(
     let active_state = if active_state == ActiveState::Absent { ActiveState::Absent } else { ActiveState::SelectedInactive };
     let copy_bonus = offer.as_ref().map_or(0, |offer| offer.bonus);
     let placed = ActiveStateDto::from(active_state);
-    let pieces = bundles.saturating_mul(bundle_pieces(item_id));
 
     // SD-27: the Add Weapon / Add Armor picker hands this command a catalog
     // `key` straight off `build_equipment_catalog()`, so the by-key lookup
@@ -4117,7 +4118,7 @@ pub(crate) fn purchase_equipment_deal_at_root(
         });
     }
 
-    match add_purchased_pieces_at_root(root, (item_id, copy_bonus), modifier_key, active_state, pieces, saved_at)? {
+    match add_purchased_pieces_at_root(root, (item_id, copy_bonus), modifier_key, active_state, bundles, saved_at)? {
         CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
         CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
             let cost_signed = i64::try_from(cost_copper).map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
@@ -4127,17 +4128,24 @@ pub(crate) fn purchase_equipment_deal_at_root(
     }
 }
 
-/// Saves `pieces` more of `item_id` at `bonus`: onto the first line of that item, bonus and no
-/// custom name already at the purchase's location (Carried, or Not Carried for `Absent`), or as a
-/// new line stating its pieces (`decisions.md §30`). The sets file is written after the character saved.
+/// Saves `bundles` more of `item_id` at `bonus`. A bundle record (`BASEQTY` > 1) adds its pieces
+/// onto the first line of that item, bonus and no custom name already at the purchase's location
+/// (Carried, or Not Carried for `Absent`), or a new line stating its pieces (`decisions.md §30`); the
+/// sets file is written after the character saved. A single item adds one line per copy, so wearing,
+/// leaving behind or enchanting one copy never takes the others with it (the held list stacks them).
 fn add_purchased_pieces_at_root(
     root: &Path,
     (item_id, bonus): (&str, u8),
     modifier_key: Option<&str>,
     active_state: ActiveState,
-    pieces: u32,
+    bundles: u32,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
+    let per_bundle = bundle_pieces(item_id);
+    if per_bundle == 1 {
+        return add_purchased_copy_at_root(root, (item_id, bonus), modifier_key, active_state, bundles, saved_at);
+    }
+    let pieces = bundles.saturating_mul(per_bundle);
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let (rows, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
     let target = location_from_state(active_state, BodySlot::None);
@@ -4151,8 +4159,8 @@ fn add_purchased_pieces_at_root(
         }
         return Ok(response);
     }
-    let response = add_purchased_copy_at_root(root, (item_id, bonus), modifier_key, active_state, Vec::new(), saved_at)?;
-    if matches!(response, CreateCharacterResponse::Saved { .. }) && pieces != bundle_pieces(item_id) {
+    let response = add_purchased_copy_at_root(root, (item_id, bonus), modifier_key, active_state, 1, saved_at)?;
+    if matches!(response, CreateCharacterResponse::Saved { .. }) && pieces != per_bundle {
         let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
         let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
         let new = selection_copy_keys(&envelope.character_input.chosen.equipment_selections).pop().ok_or("the bought line was not saved")?;
@@ -21793,6 +21801,12 @@ mod tests {
         assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 80, "one more bundle joins the stack");
         assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == FLIGHT_ARROWS).count(), 1, "still one line");
         assert!(purchase_equipment_deal_at_root(&root, FLIGHT_ARROWS, ActiveState::SelectedInactive, MOVED_AT, PriceMode::Standard, Deal { quantity: Some(0), ..Deal::default() }).is_err());
+
+        // A single item is one line per copy, so one can be worn or enchanted alone; the list stacks them.
+        bought(&root, "Dagger (Base)", Deal { quantity: Some(2), ..Deal::default() });
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == "Dagger (Base)").count(), 2);
+        assert_eq!(stacks_of(&root, "Dagger (Base)").iter().map(|row| row.quantity).collect::<Vec<_>>(), vec![2]);
+        assert_eq!(copper(&root), 10_000 - 800 - 400, "2 × 2 gp");
         std::fs::remove_dir_all(&root).ok();
     }
 
