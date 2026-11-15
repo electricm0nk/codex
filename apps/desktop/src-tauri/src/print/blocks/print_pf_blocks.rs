@@ -979,6 +979,8 @@ fn print_pf_blocks_page_one_stays_whole_with_a_bought_weapon_and_ring_with_no_ra
         let row = shelf.iter().find(|row| row.entry.name == name && row.entry.cost_gp.is_some()).unwrap_or_else(|| panic!("the Market sells {name}"));
         let response = purchase_equipment_priced_at_root(&bought, &row.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
         assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{name} is bought: {response:?}");
+        // A purchase lands Carried (SD-41 `decisions.md §10`); worn by a move.
+        crate::character_hub::set_equipment_active_state_at_root(&bought, &row.entry.key, ActiveState::EquippedActive, AT).expect("worn");
     }
     let after = load_saved_character_at_root(&bought).expect("the bought character loads");
     assert_eq!(after.weapon_damage.len(), before.weapon_damage.len() + 1, "the dagger is a second weapon in hand");
@@ -1554,6 +1556,8 @@ fn print_pf_blocks_armor_class_prints_every_part_from_the_engine() {
     let ring = shelf.iter().find(|row| row.entry.name == "Ring of Protection +1" && row.entry.cost_gp.is_some()).expect("the Market sells the ring");
     let bought = purchase_equipment_priced_at_root(&ringed, &ring.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
     assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "the ring is bought: {bought:?}");
+    // A purchase lands Carried (SD-41 `decisions.md §10`); worn by a move.
+    crate::character_hub::set_equipment_active_state_at_root(&ringed, &ring.entry.key, ActiveState::EquippedActive, AT).expect("worn");
 
     let mut printed_acs = Vec::new();
     for (tag, root) in [("aldric", &aldric), ("aldric + ring", &ringed)] {
@@ -2274,6 +2278,8 @@ fn print_pf_blocks_gear_prints_worn_carried_and_left_behind_sections() {
         let row = shelf.iter().find(|row| row.entry.name == name && row.entry.cost_gp.is_some()).unwrap_or_else(|| panic!("the Market sells {name}"));
         let response = purchase_equipment_priced_at_root(&root, &row.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
         assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{name} is bought: {response:?}");
+        // A purchase lands Carried (SD-41 `decisions.md §10`); worn by a move.
+        crate::character_hub::set_equipment_active_state_at_root(&root, &row.entry.key, ActiveState::EquippedActive, AT).expect("worn");
     }
     set_equipment_active_state_at_root(&root, "item:chain_shirt", ActiveState::Absent, AT).expect("left behind");
     set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, AT).expect("carried");

@@ -3196,8 +3196,8 @@ export function CharacterSheet(props: {
       const outcome = await purchaseEquipment({
         characterId: props.row.characterId,
         itemId,
-        // Worn if its slot is free. The backend decides, and says where the copy went.
-        activeState: 'EquippedActive',
+        // Carried (SD-41 `decisions.md §10`): wearing it is a move on the gear screen.
+        activeState: 'SelectedInactive',
         savedAt: new Date().toISOString(),
         priceMode,
         ...(bonus > 0 ? { bonus } : {}),

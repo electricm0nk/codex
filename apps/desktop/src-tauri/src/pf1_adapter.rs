@@ -1643,6 +1643,8 @@ mod tests {
         let bought = purchase_equipment_priced_at_root(&ringed, &row.entry.key, ActiveState::EquippedActive, "2026-11-11T00:00:00Z", PriceMode::Standard)
             .expect("the purchase runs");
         assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "{bought:?}");
+        // A purchase lands Carried (SD-41 `decisions.md §10`); worn by a move.
+        crate::character_hub::set_equipment_active_state_at_root(&ringed, &row.entry.key, ActiveState::EquippedActive, "2026-11-11T00:00:01Z").expect("worn");
         let (ring_ac, ring) = armor_class_parts_hold("aldric + Ring of Protection +1", &load_saved_character_at_root(&ringed).expect("loads"));
         assert_eq!((ring_ac, part(&ring, "deflection"), part(&ring, "armor")), (aldric_ac + 1, 1, 4), "{ring:?}");
 
