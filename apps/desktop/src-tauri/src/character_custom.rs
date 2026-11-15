@@ -23,7 +23,7 @@ use std::path::Path;
 
 use crate::character_ledger::{ledger_after_custom_change_at_root, write_character_ledger_at_root, AdmittedRecordDto, OverrideFlag};
 use crate::character_hub::{
-    worn_stock_slots, CreateCharacterResponse, DiagnosticDto, ExplanationDto, LoadSavedCharacterResponse, ResolvedEquipmentEffectDto,
+    adjust_character_money_at_root, load_character_money_at_root, worn_stock_slots, CharacterMoneyDto, CreateCharacterResponse, DiagnosticDto, PriceMode, ExplanationDto, LoadSavedCharacterResponse, ResolvedEquipmentEffectDto,
     WeaponFeatEffectDto,
 };
 use codex::rules_core::body_slots::{slot_conflict, BodySlot};
@@ -34,6 +34,7 @@ use codex::rules_core::pilot_compute::feat_skill_bonus_sheet_rules::FeatSkillNot
 use codex::rules_core::equipment_effects::{bonus_always_counts, worn_item_stated_bonuses, WornItemStatedBonuses, NOT_AGAINST_TOUCH};
 use codex::rules_core::source_content::SourcePackageContent;
 use codex::rules_core::skill_allocation::SHEET_SKILL_IDS;
+use codex::saved_character::equipment_sets::CopyKey;
 use codex::saved_character::local_store::SavedCharacterStore;
 
 const CUSTOM_FILE_NAME: &str = "custom.json";
@@ -93,7 +94,7 @@ pub struct CustomBonusDto {
 /// A custom feat, item, spell or device: a raw object the GM gives stats and a description. Custom
 /// equipment may also state `bonuses` and a `slot`, and is `worn`, carried or `left_behind`; a record with none of
 /// the three is saved as the text record it always was.
-#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomRecordDto {
     pub id: String,
@@ -111,6 +112,16 @@ pub struct CustomRecordDto {
     /// Owned and not on the character: on the ground, at an inn. Never with `worn`.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub left_behind: bool,
+    /// SD-41 `decisions.md §25`, custom equipment only: what it weighs, counted while carried
+    /// (`compute_encumbrance`'s `extra`). Left out: it weighs nothing, as before.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub weight_lbs: Option<f64>,
+    /// What it cost when created, in gp; above 0 it was deducted then.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub price_gp: Option<f64>,
+    /// Set: the item is a container holding this many lb (`containers::container_loads`' `created`).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub container_capacity_lbs: Option<f64>,
 }
 
 /// What the GM lets this character do without qualifying. Each flag is read by the command that
@@ -126,9 +137,12 @@ pub struct Overrides {
     pub ignore_feat_budget: bool,
     pub ignore_alignment_restrictions: bool,
     pub ignore_encumbrance: bool,
+    /// SD-41 `decisions.md §32` (b): no container is flagged over its capacity (the screen and the
+    /// print read it off the load response; the load figure stays the engine's).
+    pub ignore_container_capacity: bool,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CharacterCustomDto {
     #[serde(default)]
@@ -193,8 +207,12 @@ fn validate_records(kind: &str, records: &[CustomRecordDto], seen: &mut BTreeSet
                 return Err(format!("{:?} has a stat line over {MAX_STAT_TEXT} characters", record.name));
             }
         }
-        if kind != "equipment" && (!record.bonuses.is_empty() || record.slot.is_some() || record.worn || record.left_behind) {
-            return Err(format!("{:?}: only custom equipment can state bonuses, take a slot or be worn", record.name));
+        let amounts = [("weight", record.weight_lbs), ("price", record.price_gp), ("container capacity", record.container_capacity_lbs)];
+        if kind != "equipment" && (!record.bonuses.is_empty() || record.slot.is_some() || record.worn || record.left_behind || amounts.iter().any(|(_, amount)| amount.is_some())) {
+            return Err(format!("{:?}: only custom equipment can state bonuses, a weight, a price or a capacity, take a slot or be worn", record.name));
+        }
+        if let Some((what, amount)) = amounts.iter().find_map(|(what, amount)| amount.filter(|lbs| !(lbs.is_finite() && *lbs >= 0.0)).map(|amount| (what, amount))) {
+            return Err(format!("the {what} of {:?} is {amount}, which must be a number, 0 or more", record.name));
         }
         if record.worn && record.left_behind {
             return Err(format!("{:?} cannot be both worn and left behind", record.name));
@@ -742,6 +760,97 @@ pub(crate) fn save_character_custom_at_root(root: &Path, custom: &CharacterCusto
     let newly_worn = (0..custom.equipment.len()).filter(|index| newly_placed(&previous, &custom.equipment[*index]));
     let admitted = slot_override_rows(&existing.character_input, custom, newly_worn)?;
     write_custom_and_ledger(root, &previous, custom, admitted)
+}
+
+/// The copy key a custom item is held under (`list_held_equipment`, `equipment_sets.json`).
+pub(crate) fn custom_copy(record: &CustomRecordDto) -> CopyKey {
+    CopyKey { item_id: format!("{CUSTOM_ITEM_PREFIX}{}", record.id), bonus: 0, ordinal: 0 }
+}
+
+/// The capacity of the custom container `item_id` names (`custom:<id>`), if it is one.
+pub(crate) fn custom_container_capacity(custom: &CharacterCustomDto, item_id: &str) -> Option<f64> {
+    let id = item_id.strip_prefix(CUSTOM_ITEM_PREFIX)?;
+    custom.equipment.iter().find(|record| record.id == id)?.container_capacity_lbs
+}
+
+/// SD-41 E2.3 (`decisions.md §25`): an item made at the table, with no corpus base.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateCustomItemRequest {
+    pub character_id: String,
+    pub name: String,
+    #[serde(default)]
+    pub description: String,
+    #[serde(default)]
+    pub weight_lbs: Option<f64>,
+    #[serde(default)]
+    pub price_gp: Option<f64>,
+    #[serde(default)]
+    pub container_capacity_lbs: Option<f64>,
+    #[serde(default)]
+    pub slot: Option<BodySlot>,
+    pub saved_at: String,
+    #[serde(default)]
+    pub price_mode: PriceMode,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag = "kind")]
+pub enum CreateCustomItemResponse {
+    /// `custom` with the new record last, the balance after the price, and the new copy.
+    Created { custom: Box<CharacterCustomDto>, money: CharacterMoneyDto, copy: CopyKey },
+    Blocked { diagnostics: Vec<DiagnosticDto> },
+}
+
+/// Writes a new custom equipment record and charges its price (above 0) at `price_mode`, through
+/// the money path a purchase takes: `Cashless` charges nothing, the other two 100%; short of funds
+/// it is `Blocked` and nothing is written. The item is named in no set, so it is Carried in every
+/// one (`decisions.md §5.3, §10`). An invalid record (no name, a negative weight) is an error.
+pub(crate) fn create_custom_item_at_root(root: &Path, request: &CreateCustomItemRequest) -> Result<CreateCustomItemResponse, String> {
+    let mut custom = load_character_custom_at_root(root)?;
+    let record = CustomRecordDto {
+        id: uuid::Uuid::new_v4().to_string(),
+        name: request.name.trim().to_owned(),
+        description: request.description.clone(),
+        slot: request.slot,
+        weight_lbs: request.weight_lbs,
+        price_gp: request.price_gp,
+        container_capacity_lbs: request.container_capacity_lbs,
+        ..Default::default()
+    };
+    let copy = custom_copy(&record);
+    custom.equipment.push(record);
+    validate_custom(&custom)?;
+    let cost_copper = match request.price_mode {
+        PriceMode::Cashless => 0,
+        PriceMode::Standard | PriceMode::CharacterBuild => request.price_gp.filter(|gp| *gp > 0.0).map_or(0, codex::rules_core::money::gp_to_copper),
+    };
+    let balance_copper = load_character_money_at_root(root)?.total_copper;
+    if balance_copper < cost_copper {
+        return Ok(CreateCustomItemResponse::Blocked {
+            diagnostics: vec![DiagnosticDto {
+                id: "money.equipment_purchase.insufficient_funds".to_owned(),
+                message: format!(
+                    "{:?} costs {cost_copper} cp but the character's balance is only {balance_copper} cp. The item was not made and no funds were charged.",
+                    request.name.trim()
+                ),
+                claim_blocking: true,
+            }],
+        });
+    }
+    save_character_custom_at_root(root, &custom, &request.saved_at)?;
+    let money = if cost_copper > 0 {
+        adjust_character_money_at_root(root, -i64::try_from(cost_copper).map_err(|_| "the price overflows a signed 64-bit total".to_owned())?)?
+    } else {
+        load_character_money_at_root(root)?
+    };
+    Ok(CreateCustomItemResponse::Created { custom: Box::new(custom), money, copy })
+}
+
+#[tauri::command]
+pub fn create_custom_item(app: tauri::AppHandle, request: CreateCustomItemRequest) -> Result<CreateCustomItemResponse, String> {
+    let root = crate::character_hub::resolve_character_root(&app, &request.character_id)?;
+    create_custom_item_at_root(&root, &request)
 }
 
 #[derive(Debug, Clone, Deserialize)]

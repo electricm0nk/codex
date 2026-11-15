@@ -107,7 +107,7 @@ export function CustomDialog(props: {
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>
           GM grants and house rules. An ability grant changes the saved score, so AC, saves, attacks, skills and hit points follow. Hit point
           and skill point grants are added to those totals. Custom feats, equipment, spells and devices are listed and printed on the sheet.
-          Custom equipment may also state bonuses and a slot: worn from the Gear tab's Equipment control, its bonuses apply; carried, they add nothing.
+          Custom equipment may also state a weight (counted while carried), a price, a container capacity, bonuses and a slot: worn from the Gear tab's Equipment control, its bonuses apply; carried, they add nothing.
         </p>
         <div role="tablist" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
           {([{ key: 'grants' as Section, label: 'Grants' }, ...CUSTOM_RECORD_KINDS.map((entry) => ({ key: entry.kind as Section, label: entry.plural }))]).map((tab) => (
@@ -168,6 +168,26 @@ export function CustomDialog(props: {
                   ))}
                   {kind.kind === 'equipment' ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: '0.4rem' }}>
+                      <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', fontSize: '0.8rem', gap: '0.8rem' }}>
+                        <label style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
+                          Weight (lb)
+                          <input aria-label="Custom equipment weight" type="number" min={0} step="any" value={record.weightLbs ?? ''} onChange={(event) => setRecord('equipment', index, { weightLbs: amountOrNull(event.target.value) })} style={{ ...inputStyle, width: '5.5rem' }} />
+                        </label>
+                        <label style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
+                          Price (gp)
+                          <input aria-label="Custom equipment price" type="number" min={0} step="any" value={record.priceGp ?? ''} onChange={(event) => setRecord('equipment', index, { priceGp: amountOrNull(event.target.value) })} style={{ ...inputStyle, width: '5.5rem' }} />
+                        </label>
+                        <label style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
+                          <input type="checkbox" aria-label="Custom equipment is a container" checked={record.containerCapacityLbs !== null && record.containerCapacityLbs !== undefined} onChange={(event) => setRecord('equipment', index, { containerCapacityLbs: event.target.checked ? 0 : null })} />
+                          Container
+                        </label>
+                        {record.containerCapacityLbs !== null && record.containerCapacityLbs !== undefined ? (
+                          <label style={{ alignItems: 'center', display: 'flex', gap: '0.4rem' }}>
+                            Holds (lb)
+                            <input aria-label="Custom container capacity" type="number" min={0} step="any" value={record.containerCapacityLbs} onChange={(event) => setRecord('equipment', index, { containerCapacityLbs: amountOrNull(event.target.value) ?? 0 })} style={{ ...inputStyle, width: '5.5rem' }} />
+                          </label>
+                        ) : null}
+                      </div>
                       <label style={{ alignItems: 'center', display: 'flex', fontSize: '0.8rem', gap: '0.4rem' }}>
                         Slot
                         <select aria-label="Custom equipment slot" value={record.slot ?? 'none'} onChange={(event) => setRecord('equipment', index, { slot: event.target.value === 'none' ? null : (event.target.value as CustomRecord['slot']) })} style={inputStyle}>
@@ -236,6 +256,11 @@ export function CustomDialog(props: {
     </div>,
     document.body
   );
+}
+
+/** A number field's value: empty is no value (the backend's `None`). */
+function amountOrNull(text: string): number | null {
+  return text.trim() === '' ? null : Number(text);
 }
 
 const buttonStyle = {

@@ -27,6 +27,7 @@ import {
   sheetFlySpeed,
   withCustomSkillPoints,
   type CharacterCustom,
+  type CustomRecord,
 } from './customModel';
 
 const withGrants = (...grants: CharacterCustom['grants']): CharacterCustom => ({ ...EMPTY_CUSTOM, grants });
@@ -96,7 +97,8 @@ function verifiesABonusReadsAsThePlayerSaysIt() {
 
 function verifiesWhereACustomItemIs() {
   const blank = newRecord('a');
-  assertEqual(customItemPlace(blank), null, 'a text-only record has no place: it is unchanged');
+  // SD-41 E2.3 (decisions.md §25 (c)): every custom equipment record is held, so a text-only one is carried.
+  assertEqual(customItemPlace(blank), 'carried', 'a text-only record is held, carried');
   assertEqual(customItemPlace({ ...blank, bonuses: [newBonus()] }), 'carried', 'it starts carried');
   assertEqual(customItemPlace({ ...blank, slot: 'head' }), 'carried', 'a slot alone is held');
   assertEqual(customItemPlace({ ...blank, slot: 'head', worn: true }), 'worn', 'worn says worn');
@@ -109,6 +111,16 @@ function verifiesTheBonusProblemsMatchTheBackend() {
   assert(customProblems(item({ target: 'ac', bonusType: 'Deflection', value: 0 }))[0].includes('Hat'), 'a zero is named');
   assertEqual(customProblems(item({ target: 'ac', bonusType: 'Deflection', value: 101 })).length, 1, 'past the range');
   assertEqual(customProblems(item({ target: 'ac', bonusType: 'Deflection', value: 1.5 })).length, 1, 'not whole');
+}
+
+function verifiesTheCreatedItemFieldsMatchTheBackend() {
+  // SD-41 E2.3 (decisions.md §25 (a)): weight, price and capacity are optional and never negative.
+  const item = (patch: Partial<CustomRecord>) => ({ ...EMPTY_CUSTOM, equipment: [{ ...newRecord('a'), name: 'Food', ...patch }] });
+  assertEqual(customProblems(item({ weightLbs: 0.5, priceGp: 0, containerCapacityLbs: 10 })).length, 0, 'the card\'s Food pouch saves');
+  assertEqual(customProblems(item({ weightLbs: null, priceGp: null, containerCapacityLbs: null })).length, 0, 'all three left out');
+  assert(customProblems(item({ weightLbs: -1 }))[0].includes('Food'), 'a negative weight is named');
+  assertEqual(customProblems(item({ priceGp: Number.NaN })).length, 1, 'a price that is not a number');
+  assertEqual(customProblems(item({ containerCapacityLbs: -5 })).length, 1, 'a negative capacity');
 }
 
 function verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow() {
@@ -149,9 +161,11 @@ function verifiesTheMarketCannotSellACustomItem() {
   assertEqual(sellableCopies([copy('item:longsword'), copy('custom:a')]).map((row) => row.itemId).join(), 'item:longsword', 'the custom row is off the Sell list');
 }
 
-function verifiesTheOverridesGroupHoldsTheBackendsEightFlags() {
-  assertEqual(OVERRIDE_TOGGLES.length, 8, 'eight toggles');
-  assertEqual(new Set(OVERRIDE_TOGGLES.map((toggle) => toggle.key)).size, 8, 'each flag once');
+function verifiesTheOverridesGroupHoldsTheBackendsNineFlags() {
+  assertEqual(OVERRIDE_TOGGLES.length, 9, 'nine toggles');
+  assertEqual(new Set(OVERRIDE_TOGGLES.map((toggle) => toggle.key)).size, 9, 'each flag once');
+  assertEqual(OVERRIDE_TOGGLES.find((toggle) => toggle.key === 'ignoreContainerCapacity')?.label, 'Ignore container capacity limits', 'decisions.md §32 (b)');
+  assertEqual(customOverrides(EMPTY_CUSTOM).ignoreContainerCapacity, false, 'off for data saved before it');
   assertEqual(OVERRIDE_TOGGLES.map((toggle) => toggle.key).sort().join(), Object.keys(NO_OVERRIDES).sort().join(), 'every flag has its toggle');
   assertEqual(customOverrides(EMPTY_CUSTOM).ignoreSlotLimits, false, 'data saved before the flags reads all off');
   const on = withOverride(EMPTY_CUSTOM, 'ignoreSlotLimits', true);
@@ -172,5 +186,6 @@ verifiesTheBonusProblemsMatchTheBackend();
 verifiesTheTwoTotalsTheSheetHoldsTakeTheEngineRow();
 verifiesSwimAndFlyReadTheEngineRows();
 verifiesTheMarketCannotSellACustomItem();
-verifiesTheOverridesGroupHoldsTheBackendsEightFlags();
+verifiesTheOverridesGroupHoldsTheBackendsNineFlags();
+verifiesTheCreatedItemFieldsMatchTheBackend();
 console.log('customModel.test.ts: all assertions passed');

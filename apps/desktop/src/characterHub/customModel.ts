@@ -47,6 +47,12 @@ export interface CustomRecord {
   worn?: boolean;
   /** Owned and not on the character; never with `worn`. */
   leftBehind?: boolean;
+  /** Custom equipment only (SD-41 `decisions.md §25`): what it weighs, carried, in lb. */
+  weightLbs?: number | null;
+  /** What it cost, in gp; above 0 it was paid for when created. */
+  priceGp?: number | null;
+  /** Set: it is a container holding this many lb. */
+  containerCapacityLbs?: number | null;
 }
 
 export type CustomRecordKind = 'feats' | 'equipment' | 'spells' | 'devices';
@@ -59,7 +65,7 @@ export interface CharacterCustom {
   devices: CustomRecord[];
   /** Conditions the character is under (`'Shaken'`); empty means the sheet shows `Normal`. */
   conditions: string[];
-  /** What the GM lets this character do without qualifying; the backend sends all eight. */
+  /** What the GM lets this character do without qualifying; the backend sends all nine. */
   overrides?: CustomOverrides;
 }
 
@@ -73,6 +79,7 @@ export interface CustomOverrides {
   ignoreFeatBudget: boolean;
   ignoreAlignmentRestrictions: boolean;
   ignoreEncumbrance: boolean;
+  ignoreContainerCapacity: boolean;
 }
 
 export const NO_OVERRIDES: CustomOverrides = {
@@ -84,6 +91,7 @@ export const NO_OVERRIDES: CustomOverrides = {
   ignoreFeatBudget: false,
   ignoreAlignmentRestrictions: false,
   ignoreEncumbrance: false,
+  ignoreContainerCapacity: false,
 };
 
 /** The Custom tab's Overrides group, one checkbox each. */
@@ -96,6 +104,7 @@ export const OVERRIDE_TOGGLES: ReadonlyArray<{ key: keyof CustomOverrides; label
   { key: 'ignoreFeatBudget', label: 'Ignore the feat budget' },
   { key: 'ignoreAlignmentRestrictions', label: 'Ignore alignment restrictions' },
   { key: 'ignoreEncumbrance', label: 'Ignore encumbrance' },
+  { key: 'ignoreContainerCapacity', label: 'Ignore container capacity limits' },
 ];
 
 /** The character's flags, all off for data saved before they existed. */
@@ -172,11 +181,8 @@ export function bonusLine(bonus: CustomBonus): string {
   return `${bonus.value >= 0 ? '+' : ''}${bonus.value} ${type}to ${target}`;
 }
 
-/** Where a custom item is, or `null` for a text-only record, which is on no one's body. */
-export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | 'left_behind' | null {
-  if (!record.slot && (record.bonuses ?? []).length === 0) {
-    return null;
-  }
+/** Where a custom equipment record is: every one is held (SD-41 `decisions.md §25` (c)). */
+export function customItemPlace(record: CustomRecord): 'worn' | 'carried' | 'left_behind' {
   return record.worn ? 'worn' : record.leftBehind ? 'left_behind' : 'carried';
 }
 
@@ -310,6 +316,12 @@ export function customProblems(custom: CharacterCustom): string[] {
       }
       if (record.stats.some((stat) => stat.label.trim() === '' || stat.value.trim() === '')) {
         problems.push(`"${record.name || 'A custom ' + singular}" has a stat line with no label or no value.`);
+      }
+      const amounts: Array<[string, number | null | undefined]> = [['weight', record.weightLbs], ['price', record.priceGp], ['container capacity', record.containerCapacityLbs]];
+      for (const [what, amount] of amounts) {
+        if (amount !== null && amount !== undefined && !(Number.isFinite(amount) && amount >= 0)) {
+          problems.push(`The ${what} of "${record.name}" must be a number, 0 or more.`);
+        }
       }
       for (const bonus of record.bonuses ?? []) {
         if (!Number.isInteger(bonus.value) || bonus.value === 0 || Math.abs(bonus.value) > MAX_BONUS_VALUE) {

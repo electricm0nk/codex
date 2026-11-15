@@ -388,6 +388,7 @@ fn main() {
             starting_wealth_for_class,
             character_custom::load_character_custom,
             character_custom::save_character_custom,
+            character_custom::create_custom_item,
             list_weapon_targets,
             list_class_catalog,
             list_class_spell_levels,

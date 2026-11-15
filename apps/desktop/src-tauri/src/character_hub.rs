@@ -746,6 +746,10 @@ pub struct LoadSavedCharacterResponse {
     /// (`containers::container_loads`). Left out when the character holds no container.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub container_loads: Vec<ContainerLoadDto>,
+    /// SD-41 E2.3 (`decisions.md §32` (b)): the Custom tab's "Ignore container capacity limits",
+    /// for the gear screen and the print, which then flag no container over. Left out when off.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub ignore_container_capacity: bool,
 }
 
 /// The active set's name and every set's, in file order.
@@ -2334,6 +2338,11 @@ fn clone_character_at_roots(
     SavedCharacterStore::save(&envelope, new_root).map_err(|err| err.message)?;
 
     copy_character_custom(source_root, new_root)?;
+    // The clone holds the same lines, so the source's sets (what is inside a created container) still name them.
+    let sets_file = source_root.join(equipment_sets::EQUIPMENT_SETS_FILE);
+    if sets_file.exists() {
+        std::fs::copy(&sets_file, new_root.join(equipment_sets::EQUIPMENT_SETS_FILE)).map_err(|err| format!("{}: {err}", sets_file.display()))?;
+    }
     copy_character_ledger(source_root, new_root)?;
     copy_character_hit_points(source_root, new_root)?;
     copy_character_bio(source_root, new_root)?;
@@ -2918,14 +2927,29 @@ pub(crate) fn load_saved_character_at_root(
                 compute_pilot_with_corpus(&sheet_input, corpus_fixture_bundle()),
             ),
         };
-    // Both branches computed the load from `sheet_input` with no pieces; weigh it again with them.
-    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities);
+    // Both branches computed the load from `sheet_input` with no pieces and no created items'
+    // weights (`decisions.md §25`); weigh it again with them, each created item where the active set puts it.
+    let custom = custom_or_empty(root);
+    let created_copies: Vec<(CopyKey, &crate::character_custom::CustomRecordDto)> =
+        custom.equipment.iter().map(|record| (crate::character_custom::custom_copy(record), record)).collect();
+    let weighed: Vec<(CopyKey, f64)> = created_copies.iter().filter_map(|(copy, record)| record.weight_lbs.map(|lbs| (copy.clone(), lbs))).collect();
+    let extra: Vec<codex::rules_core::encumbrance::WeighedCopy> = weighed
+        .iter()
+        .map(|(copy, lbs)| codex::rules_core::encumbrance::WeighedCopy {
+            id: copy.item_id.clone(),
+            weight_lbs: *lbs,
+            active_state: equipment_sets::project(sets.active_set(), std::slice::from_ref(copy))[0],
+        })
+        .collect();
+    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra);
     let held_by_key: Vec<(CopyKey, &str)> = copy_keys
         .iter()
         .zip(&envelope.character_input.chosen.equipment_selections)
         .map(|(copy, selection)| (copy.clone(), selection.item_id.as_str()))
         .collect();
-    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &[], &[], &quantities)
+    let containers: Vec<(CopyKey, f64)> =
+        created_copies.iter().filter_map(|(copy, record)| record.container_capacity_lbs.map(|lbs| (copy.clone(), lbs))).collect();
+    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &containers, &weighed, &quantities)
         .into_iter()
         .map(|load| ContainerLoadDto { copy: load.copy, contents_lbs: load.contents_lbs, capacity: load.capacity.into(), over: load.over })
         .collect();
@@ -2980,6 +3004,7 @@ pub(crate) fn load_saved_character_at_root(
         resistances: Default::default(),
         equipment_sets: Some(EquipmentSetsSummaryDto { active: sets.active.clone(), names: sets.sets.iter().map(|set| set.name.clone()).collect() }),
         container_loads,
+        ignore_container_capacity: custom.overrides.ignore_container_capacity,
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_weapon_damage_total_rows(&mut sheet);
@@ -5189,12 +5214,16 @@ fn copy_quantities(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, u32)
     keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(|facts| facts.quantity).map(|pieces| (copy.clone(), pieces))).collect()
 }
 
-/// What the character carries, weighed with each copy's pieces: the same call
-/// `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `quantities`.
-fn carried_load(input: &CharacterInput, quantities: &[(CopyKey, u32)]) -> codex::rules_core::encumbrance::EncumbranceComputation {
+/// What the character carries, weighed with each copy's pieces and the created items' weights:
+/// the same call `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `extra` and `quantities`.
+fn carried_load(
+    input: &CharacterInput,
+    quantities: &[(CopyKey, u32)],
+    extra: &[codex::rules_core::encumbrance::WeighedCopy],
+) -> codex::rules_core::encumbrance::EncumbranceComputation {
     let strength = apply_human_ability_bonus(input, &mut Vec::new()).strength;
     let (size, _) = codex::rules_core::contract::encumbrance_size_for_race(&input.chosen.race_id);
-    codex::rules_core::encumbrance::compute_encumbrance(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, &[], quantities)
+    codex::rules_core::encumbrance::compute_encumbrance(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities)
 }
 
 /// The rows with each copy's location, custom name and pieces from the active set. A copy whose
@@ -5228,9 +5257,9 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
     let slots = held.iter().map(|selection| body_slot_of_item(&selection.item_id)).collect::<Result<Vec<_>, String>>()?;
     let is_worn = |index: &usize| held[*index].active_state == ActiveState::EquippedActive;
     let worn: Vec<usize> = (0..held.len()).filter(is_worn).collect();
-    // A text-only custom record is a note on the Custom tab, not something held on the body.
+    // Every custom equipment record is held (`decisions.md §25` (c)): a created item may state only a weight.
     let custom = custom_or_empty(root);
-    let custom_items: Vec<_> = custom.equipment.iter().filter(|record| record.slot.is_some() || !record.bonuses.is_empty()).collect();
+    let custom_items: Vec<_> = custom.equipment.iter().collect();
     let custom_slot = |index: usize| custom_items[index].slot.unwrap_or(BodySlot::None);
     let worn_slots: Vec<BodySlot> = worn
         .iter()
@@ -5268,10 +5297,9 @@ fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipme
         } else {
             (ActiveState::SelectedInactive, custom_slot(index))
         };
-        let item_id = format!("{CUSTOM_ITEM_PREFIX}{}", record.id);
-        let copy = CopyKey { item_id: item_id.clone(), bonus: 0, ordinal: 0 };
+        let copy = crate::character_custom::custom_copy(record);
         HeldEquipmentCopyDto {
-            item_id,
+            item_id: copy.item_id.clone(),
             name: record.name.clone(),
             bonus: 0,
             active_state: active_state.into(),
@@ -5837,7 +5865,9 @@ fn move_copies_at_root(
     }
 
     if let Location::Inside { container } = &location {
-        let Some(holder) = rows.iter().find(|row| &row.copies[0] == container).filter(|row| is_container_item(&row.item_id)) else {
+        let custom = custom_or_empty(root);
+        let holds = |item_id: &str| is_container_item(item_id) || crate::character_custom::custom_container_capacity(&custom, item_id).is_some();
+        let Some(holder) = rows.iter().find(|row| &row.copies[0] == container).filter(|row| holds(&row.item_id)) else {
             return Ok(refusal("equipment.not_a_container", format!("{} cannot go inside {}: it is not a container this character holds", source.name, container.map_key())));
         };
         if whole.iter().any(|moving| moving == container || is_inside(sets.active_set(), container, moving)) {
@@ -21300,6 +21330,154 @@ mod tests {
         let daggers: Vec<ActiveState> = selections.iter().filter(|s| s.item_id == DAGGER).map(|s| s.active_state).collect();
         assert_eq!(daggers.len(), 2);
         assert_eq!(daggers.iter().filter(|state| **state == ActiveState::Absent).count(), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-41 E2.3: created items (`decisions.md §25`) and the capacity override (§32) -----
+
+    const CREATED_AT: &str = "2026-11-14T01:00:00Z";
+
+    fn new_item(name: &str, weight_lbs: Option<f64>, price_gp: Option<f64>, container_capacity_lbs: Option<f64>, price_mode: PriceMode) -> crate::character_custom::CreateCustomItemRequest {
+        crate::character_custom::CreateCustomItemRequest {
+            character_id: String::new(),
+            name: name.to_owned(),
+            description: format!("{name}, made at the table"),
+            weight_lbs,
+            price_gp,
+            container_capacity_lbs,
+            slot: None,
+            saved_at: CREATED_AT.to_owned(),
+            price_mode,
+        }
+    }
+
+    /// The new copy, or the refusal's diagnostic id.
+    fn created(root: &Path, request: &crate::character_custom::CreateCustomItemRequest) -> Result<CopyKey, String> {
+        match crate::character_custom::create_custom_item_at_root(root, request).expect("the call runs") {
+            crate::character_custom::CreateCustomItemResponse::Created { copy, .. } => Ok(copy),
+            crate::character_custom::CreateCustomItemResponse::Blocked { diagnostics } => Err(diagnostics[0].id.clone()),
+        }
+    }
+
+    /// A created "Food" pouch (0.5 lb) lands Carried, named in no set, and weighs 0.5 lb in the
+    /// load's total and `per_item` while carried; Not Carried it weighs nothing. A text-only custom
+    /// record is held too (the held list lists every custom equipment record, `decisions.md §25` (c)).
+    #[test]
+    fn create_custom_item_is_carried_and_weighs() {
+        let root = sets_root("create-carried", &[]);
+        let before = worn_vs_carried_weight(&root);
+        let food = created(&root, &new_item("Food", Some(0.5), None, Some(10.0), PriceMode::Standard)).expect("created");
+        assert_eq!((food.item_id.starts_with(CUSTOM_ITEM_PREFIX), food.bonus, food.ordinal), (true, 0, 0), "{food:?}");
+        let row = list_held_equipment_stacks_at_root(&root).unwrap().into_iter().find(|row| row.copies[0] == food).expect("Food is held");
+        assert_eq!((row.name.as_str(), &row.location, row.quantity), ("Food", &Location::Carried, 1));
+        let sets = equipment_sets::load(&root).unwrap().expect("the load wrote the Default set");
+        assert!(sets.sets.iter().all(|set| set.locations.iter().all(|entry| entry.copy != food)), "unnamed in every set: {:?}", sets.sets);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, before + 0.5);
+        assert!(loaded.corpus_derived.encumbrance.per_item.iter().any(|item| item.item_id == food.item_id && item.weight_lbs == 0.5), "{:?}", loaded.corpus_derived.encumbrance.per_item);
+        move_saved(&root, &food, Location::NotCarried, None);
+        assert_eq!(worn_vs_carried_weight(&root), before, "Not Carried, it weighs nothing");
+
+        let mut custom = crate::character_custom::load_character_custom_at_root(&root).unwrap();
+        custom.equipment.push(crate::character_custom::CustomRecordDto { id: "note".to_owned(), name: "Lucky Stone".to_owned(), ..Default::default() });
+        crate::character_custom::save_character_custom_at_root(&root, &custom, CREATED_AT).unwrap();
+        assert!(list_held_equipment_at_root(&root).unwrap().iter().any(|row| row.item_id == "custom:note" && row.location == Location::Carried), "a text-only record is held");
+        assert_eq!(worn_vs_carried_weight(&root), before, "and it states no weight");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A created container holds a 10 lb rope: its load reads 10 of 10 lb; the rope counts toward
+    /// the load until Food is Not Carried, and back when it is carried again. A clone keeps the
+    /// item and what it holds.
+    #[test]
+    fn create_custom_item_container_holds_and_follows_location() {
+        const ROPE: &str = "Rope (50 ft.)";
+        let root = sets_root("create-container", &[(ROPE, ActiveState::SelectedInactive)]);
+        let food = created(&root, &new_item("Food", Some(0.5), None, Some(10.0), PriceMode::Standard)).expect("created");
+        let carried = worn_vs_carried_weight(&root);
+        move_saved(&root, &sets_key(ROPE, 0), Location::Inside { container: food.clone() }, None);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let load = loaded.container_loads.iter().find(|load| load.copy == food).expect("Food's load");
+        assert_eq!((load.contents_lbs, load.capacity, load.over), (10.0, ContainerCapacityDto::Pounds { lbs: 10.0 }, false));
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, carried, "inside the pouch, the rope still counts");
+        move_saved(&root, &food, Location::NotCarried, None);
+        assert_eq!(worn_vs_carried_weight(&root), carried - 10.5, "the rope and the pouch leave together");
+        let rope_state = held_selections(&root).iter().find(|s| s.item_id == ROPE).unwrap().active_state;
+        assert_eq!(rope_state, ActiveState::Absent);
+        move_saved(&root, &food, Location::Carried, None);
+        assert_eq!(worn_vs_carried_weight(&root), carried);
+
+        let clone = tempdir("create-container-clone");
+        let request = CloneCharacterRequest {
+            character_id: String::new(),
+            new_character_id: "clone-e23".to_owned(),
+            new_display_label: "Clone".to_owned(),
+            saved_at: CREATED_AT.to_owned(),
+        };
+        clone_character_at_roots(&root, &clone, &request, "test-version").unwrap();
+        let cloned = load_saved_character_at_root(&clone).unwrap();
+        assert_eq!(cloned.container_loads, load_saved_character_at_root(&root).unwrap().container_loads, "the clone's pouch holds the rope");
+        assert_eq!(cloned.corpus_derived.encumbrance.total_carried_weight_lbs, carried);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&clone).ok();
+    }
+
+    /// A created item priced 5 gp costs 5 gp Standard and at Character Build, nothing Cashless;
+    /// short of funds it is refused and nothing is written.
+    #[test]
+    fn create_custom_item_price_follows_the_mode() {
+        let root = fund_and_seed("create-price", 1_000);
+        let money = || load_character_money_at_root(&root).unwrap().total_copper;
+        created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::Standard)).expect("standard");
+        assert_eq!(money(), 500, "5 gp deducted");
+        created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::Cashless)).expect("cashless");
+        assert_eq!(money(), 500, "cashless charges nothing");
+        created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::CharacterBuild)).expect("character build");
+        assert_eq!(money(), 0, "character build buys at 100%");
+        created(&root, &new_item("Pebble", None, Some(0.0), None, PriceMode::Standard)).expect("a price of 0 needs no funds");
+        let file = std::fs::read(root.join("custom.json")).unwrap();
+        assert_eq!(created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::Standard)), Err("money.equipment_purchase.insufficient_funds".to_owned()));
+        assert_eq!((std::fs::read(root.join("custom.json")).unwrap(), money()), (file, 0), "a refusal writes nothing");
+        let negative = crate::character_custom::create_custom_item_at_root(&root, &new_item("Debt", Some(-1.0), None, None, PriceMode::Standard));
+        assert!(negative.is_err_and(|err| err.contains("weight")), "a negative weight is refused");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A `custom.json` written before the three fields and the ninth flag loads unchanged, and a
+    /// record with none of them serializes without them.
+    #[test]
+    fn create_custom_item_old_custom_json_loads() {
+        let root = sets_root("create-old-custom", &[]);
+        let old = r#"{"grants":[],"feats":[],"equipment":[{"id":"r1","name":"Ring of Hats","description":"","stats":[],"slot":"ring"}],"spells":[],"devices":[],"conditions":[],"overrides":{"featsWithoutPrerequisites":false,"weaponsWithoutProficiency":false,"spellsOutsideClassList":false,"armorWithoutProficiency":false,"ignoreSlotLimits":true,"ignoreFeatBudget":false,"ignoreAlignmentRestrictions":false,"ignoreEncumbrance":false}}"#;
+        std::fs::write(root.join("custom.json"), old).unwrap();
+        let custom = crate::character_custom::load_character_custom_at_root(&root).expect("the old file loads");
+        let ring = &custom.equipment[0];
+        assert_eq!((ring.weight_lbs, ring.price_gp, ring.container_capacity_lbs), (None, None, None));
+        assert_eq!((custom.overrides.ignore_slot_limits, custom.overrides.ignore_container_capacity), (true, false));
+        let written = serde_json::to_value(ring).unwrap();
+        assert!(["weightLbs", "priceGp", "containerCapacityLbs"].iter().all(|key| written.get(key).is_none()), "{written}");
+        let before = worn_vs_carried_weight(&root);
+        load_saved_character_at_root(&root).expect("the character loads");
+        assert_eq!(worn_vs_carried_weight(&root), before, "an unweighed custom item adds nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// "Ignore container capacity limits" (`decisions.md §32` (b)): saved in `custom.json`, read
+    /// back, off for a file saved before it, and on the load response beside the other overrides.
+    #[test]
+    fn custom_overrides_ignore_container_capacity_round_trips() {
+        let root = sets_root("override-container-capacity", &[]);
+        assert!(!load_saved_character_at_root(&root).unwrap().ignore_container_capacity, "off by default");
+        let mut custom = crate::character_custom::load_character_custom_at_root(&root).unwrap();
+        assert!(!custom.overrides.ignore_container_capacity);
+        custom.overrides.ignore_container_capacity = true;
+        crate::character_custom::save_character_custom_at_root(&root, &custom, CREATED_AT).unwrap();
+        let file: serde_json::Value = serde_json::from_slice(&std::fs::read(root.join("custom.json")).unwrap()).unwrap();
+        assert_eq!(file["overrides"]["ignoreContainerCapacity"], serde_json::Value::Bool(true), "{file}");
+        assert!(crate::character_custom::load_character_custom_at_root(&root).unwrap().overrides.ignore_container_capacity, "read back");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert!(loaded.ignore_container_capacity, "the load response carries it");
+        assert_eq!(serde_json::to_value(&loaded).unwrap()["ignoreContainerCapacity"], serde_json::Value::Bool(true));
         std::fs::remove_dir_all(&root).ok();
     }
 }

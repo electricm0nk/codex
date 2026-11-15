@@ -874,6 +874,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
             resistances: Default::default(),
             equipment_sets: None,
             container_loads: Vec::new(),
+            ignore_container_capacity: false,
         })
     }
 }
