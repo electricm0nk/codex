@@ -83,12 +83,16 @@ export interface GearModel {
   warnings: GearWarning[];
   /** The override is on: the screen tags it beside the containers. */
   capacityOverride: boolean;
+  /** "Ignore body slot limits" is on: Move to and drag offer a full slot too. */
+  slotOverride: boolean;
 }
 
 export interface GearContext {
   perItem: ReadonlyArray<{ itemId: string; weightLbs: number }>;
   containerLoads: ReadonlyArray<ContainerLoadDto>;
   ignoreContainerCapacity?: boolean;
+  /** The Custom tab's "Ignore body slot limits" (`customOverrides(custom).ignoreSlotLimits`). */
+  ignoreSlotLimits?: boolean;
 }
 
 export interface MoveTarget {
@@ -233,7 +237,7 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
           text: `${containerName(load.copy)} holds ${lb(load.contentsLbs)} lb, over its ${lb(load.capacity.kind === 'pounds' ? load.capacity.lbs : 0)} lb.`,
         }));
 
-  return { rows, tree, warnings, capacityOverride: ignore };
+  return { rows, tree, warnings, capacityOverride: ignore, slotOverride: context.ignoreSlotLimits === true };
 }
 
 /** Copies in a slot: a count of what is there, one per copy of each row (a container row is one node per copy). */
@@ -246,7 +250,7 @@ export function filterGearRows(rows: GearRow[], filter: GearFilter): GearRow[] {
   return filter === 'all' ? rows : rows.filter((row) => equipped(row) === (filter === 'equipped'));
 }
 
-/** Every place a row can go: free slots, Equipped, Carried, Not Carried, every container not it or in it. */
+/** Every place a row can go: free slots (any slot under the slot override), Equipped, Carried, Not Carried, every container not it or in it. */
 export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
   const own = row.held.location;
   const inside = new Set(row.held.copies.map(copyId));
@@ -272,10 +276,8 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
     if (isOwn) {
       continue;
     }
-    if (location.kind === 'slot') {
-      if (copiesIn(section.items) >= placesOf(location.slot)) {
-        continue;
-      }
+    if (location.kind === 'slot' && !model.slotOverride && copiesIn(section.items) >= placesOf(location.slot)) {
+      continue;
     }
     targets.push({ id: section.id, label: section.label, location });
   }
@@ -298,7 +300,7 @@ export const DRAG_FORMAT = 'application/x-codex-gear-row';
 /**
  * Where a drop of the dragged row onto `targetId` (a tree section's id or a Move to target's
  * `inside-<copy>`) moves it: the same location the Move to menu would, or null where the menu offers
- * nothing (itself, inside itself, a full slot, a non-container, its own place) (`decisions.md §14`).
+ * nothing (itself, inside itself, a full slot without the slot override, a non-container, its own place) (`decisions.md §14`).
  */
 export function dropTarget(dataTransfer: Pick<DataTransfer, 'getData'>, targetId: string, model: GearModel): LocationDto | null {
   const row = model.rows.find((candidate) => candidate.id === dataTransfer.getData(DRAG_FORMAT));

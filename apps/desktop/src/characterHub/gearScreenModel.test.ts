@@ -220,4 +220,12 @@ assertEqual(dropTarget(dragging('item:backpack-0-0'), 'inside-item:dagger-0-0', 
 assertEqual(dropTarget(dragging('item:dagger-0-0'), 'carried', model), null, 'drop: null onto its own place');
 assertEqual(dropTarget(dragging(''), 'carried', model), null, 'drop: null without a gear row in the drag');
 
-console.log('gearScreenModel.test.ts: 13 cases passed');
+// 14. "Ignore body slot limits" on (`decisions.md §14`, SD-39 E6.2): Move to and drag offer a full slot too.
+const overridden = gearScreenModel(HELD, { perItem: PER_ITEM, containerLoads: LOADS, ignoreSlotLimits: true });
+const overriddenTargets = moveTargets(overridden, overridden.rows.find((candidate) => candidate.held.name === 'Dagger')!).map((target) => target.id);
+assert(overriddenTargets.includes('slot-wield_main'), 'override: a full slot is offered');
+assert(overriddenTargets.includes('slot-armor'), 'override: every full slot is offered');
+assert(!moveTargets(overridden, overridden.rows.find((candidate) => candidate.held.name === 'Longsword')!).some((target) => target.id === 'slot-wield_main'), 'override: still not its own slot');
+assertEqual(JSON.stringify(dropTarget(dragging('item:dagger-0-0'), 'slot-wield_main', overridden)), JSON.stringify({ kind: 'slot', slot: 'wield_main' }), 'override: a drop onto a full slot moves there');
+
+console.log('gearScreenModel.test.ts: 14 cases passed');

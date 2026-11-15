@@ -1599,6 +1599,8 @@ function GearTab(props: {
   moneyBusy: boolean;
   moneyError: string | null;
   onAdjustMoney: (gpAmount: number) => void;
+  /** The Custom tab's "Ignore body slot limits": Move to and drag offer a full slot. */
+  ignoreSlotLimits: boolean;
 }) {
   const items = props.corpusDerived?.equippedItems ?? [];
   const unresolved = props.corpusDerived?.unresolvedEquipmentItemIds ?? [];
@@ -1628,6 +1630,7 @@ function GearTab(props: {
           perItem: encumbrance?.perItem ?? [],
           containerLoads: props.detail?.containerLoads ?? [],
           ignoreContainerCapacity: props.detail?.ignoreContainerCapacity,
+          ignoreSlotLimits: props.ignoreSlotLimits,
         }}
         armorClass={props.armorClass}
         carriedLbs={encumbrance?.totalCarriedWeightLbs ?? null}
@@ -4623,6 +4626,7 @@ export function CharacterSheet(props: {
                     moneyBusy={moneyBusy}
                     moneyError={moneyError}
                     onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
+                    ignoreSlotLimits={customOverrides(custom).ignoreSlotLimits}
                   />
                 ) : name === 'Feats' ? (
                   <FeatsTab
