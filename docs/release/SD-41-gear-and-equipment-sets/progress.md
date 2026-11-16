@@ -154,6 +154,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E3.6 | 2026-11-15 | `b3a239b589` + this commit | complete | `artifacts/epic_3/E3.6_cycle_receipt.md` (`owned_by_verifier` now also requires the record to name the running path; moved AppImage record → `Written`; same-path stays `Unchanged`; `--bins reconcile_` 3 passed; desktop full 5 targets 0 failed; package command `--lib` → `--bins`, retro correction) |
 | E3.7 | 2026-11-15 | this commit | complete | `artifacts/epic_3/E3.7_cycle_receipt.md` (`app.windows[0].dragDropEnabled: false`; command printed `None` on the base, `False` after; desktop `cargo build --locked -j 8` finished) |
 | E3.8 | 2026-11-15 | this commit | complete | `artifacts/epic_3/E3.8_cycle_receipt.md` (Market buy, modifier attach and override toggle re-read the detail via `republishFromDisk`; outcome-built details and `refreshAfterPurchase` removed; `grep -c` 12 → 14; typecheck 0, `npm test` 198/198; E3.3's 28 rows with the 4 reopen-free variants 28/28 green vs 25/28 on the base) |
+| E3.9 | 2026-11-15 | `5bb2052de7` + this commit | complete | `artifacts/epic_3/E3.9_cycle_receipt.md` (`#[serde(default)]` on `CampaignMember.invited`; RED `missing field invited` in root and desktop; root lib 3137 / ingest 717 / sd24 5 / desktop full 0 failed) |
 
 ## Epic reports
 
