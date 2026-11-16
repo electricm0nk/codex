@@ -927,8 +927,14 @@ pub fn unarmed_strike_combat_rows(base: &PilotBaseChassisComputation, input: &Ch
         active_state: ActiveState::EquippedActive,
         applied_modifiers: Vec::new(),
     }];
+    per_weapon_combat_rows(base, &unarmed)
+}
+
+/// The per-weapon melee path's rows ([`ground_per_weapon_combat_totals`]) for the `EquippedActive`
+/// weapons of `input`, alone: the pilot's own rows are not touched.
+pub fn per_weapon_combat_rows(base: &PilotBaseChassisComputation, input: &CharacterInput) -> Vec<ComputationExplanation> {
     let mut rows = Vec::new();
-    ground_per_weapon_combat_totals(&unarmed, &base.ability_modifiers, base.base_attack_bonus, &mut rows, &mut Vec::new());
+    ground_per_weapon_combat_totals(input, &base.ability_modifiers, base.base_attack_bonus, &mut rows, &mut Vec::new());
     rows
 }
 

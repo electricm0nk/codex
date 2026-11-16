@@ -35,7 +35,7 @@ use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, character_is_proficient_with, choice_selection,
     combat_maneuver_bonus, combat_maneuver_defense, compute_pilot_base_chassis,
-    equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
+    equipped_weapon_stat_block, feat_derived_pillar_contributions, per_weapon_combat_rows, fighter_armor_training,
     fighter_level_in_mix, flat_footed_armor_class, touch_armor_class,
     attack_ability_modifier_for, has_supported_class_chassis, melee_attack_ability_modifier, normalize_weapon_identity, require_active_state,
     ArmorClassPart, ArmorClassParts, ComputationExplanation, FeatDerivedPillarContributions,
@@ -871,6 +871,42 @@ pub fn corpus_weapon_attack_rows(
     rows
 }
 
+/// The words closing every row of [`carried_weapon_combat_rows`].
+pub const CARRIED_WEAPON_ROW_NOTE: &str = " Carried, not in hand: the total as if wielded in the main hand.";
+
+/// SD-41 E4.5 (`decisions.md §9`, `§21` Q2): the attack rows of every carried weapon
+/// (`SelectedInactive`), as if wielded in the main hand: the carried weapons alone, each taken as in
+/// hand, through the same two producers a weapon in hand reads (the CRB table's
+/// [`per_weapon_combat_rows`], then [`corpus_weapon_attack_rows`]). Additive: a caller keeps any row
+/// the weapons in hand already hold under the same id.
+pub fn carried_weapon_combat_rows(
+    base: &PilotBaseChassisComputation,
+    input: &CharacterInput,
+    corpus: &SourcePackageContent,
+) -> Vec<ComputationExplanation> {
+    let mut carried = input.clone();
+    carried.chosen.equipment_selections = input
+        .chosen
+        .equipment_selections
+        .iter()
+        .filter(|selection| selection.active_state == ActiveState::SelectedInactive)
+        .map(|selection| EquipmentSelection {
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            ..selection.clone()
+        })
+        .collect();
+    if carried.chosen.equipment_selections.is_empty() {
+        return Vec::new();
+    }
+    let mut rows = per_weapon_combat_rows(base, &carried);
+    rows.extend(corpus_weapon_attack_rows(base, &carried, corpus));
+    for row in &mut rows {
+        row.detail.push_str(CARRIED_WEAPON_ROW_NOTE);
+    }
+    rows
+}
+
 /// v0.6 alpha swarm items 1+27 sub-task 4: real, corpus-resolved
 /// Climb/Intimidate/Swim selected-skill modifiers, replacing
 /// `pilot_compute::compute_selected_skill_modifiers`'s hardcoded Chain
@@ -972,3 +1008,72 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     Ok(CorpusAwareSelectedSkillModifiers { climb, intimidate, swim })
 }
 
+
+/// SD-41 E4.5 (`decisions.md §9`, `§21` Q2): a carried weapon (`SelectedInactive`) gets its attack row
+/// as if wielded in the main hand, by the same two producers as a weapon in hand; the rows of the
+/// weapons in hand are not this function's.
+#[cfg(test)]
+mod carried_weapon_attack_row_tests {
+    use super::*;
+    use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+    use std::path::Path;
+
+    /// A Human Fighter 3 (base attack +3), Strength 19 (+4), Dexterity 13 (+1).
+    fn fighter(selections: &[(&str, ActiveState)]) -> CharacterInput {
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:3\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.equipment_selections = selections
+            .iter()
+            .map(|(item, state)| EquipmentSelection {
+                item_id: (*item).to_owned(),
+                equipped_or_active: *state == ActiveState::EquippedActive,
+                active_state: *state,
+                applied_modifiers: Vec::new(),
+            })
+            .collect();
+        input
+    }
+
+    fn attack(input: &CharacterInput, weapon: &str) -> Option<ComputationExplanation> {
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }]);
+        carried_weapon_combat_rows(&compute_pilot_base_chassis(input), input, &corpus)
+            .into_iter()
+            .find(|row| row.id == format!("combat.weapon_attack_bonus.{weapon}"))
+    }
+
+    #[test]
+    fn carried_weapon_attack_row_longbow_reads_dexterity() {
+        let input = fighter(&[("Longsword (Base)", ActiveState::EquippedActive), ("Longbow (Base)", ActiveState::SelectedInactive)]);
+        let row = attack(&input, "longbow").expect("the carried longbow's attack row");
+        assert_eq!(row.value, 4, "base attack +3, Dexterity +1: {}", row.detail);
+        assert!(row.detail.contains("as if wielded in the main hand"), "{}", row.detail);
+        assert!(attack(&input, "longsword").is_none(), "the sword in hand is the pilot's row, not this one");
+    }
+
+    #[test]
+    fn carried_weapon_attack_row_dagger_reads_strength() {
+        let input = fighter(&[("Dagger (Base)", ActiveState::SelectedInactive)]);
+        let row = attack(&input, "dagger").expect("the carried dagger's attack row");
+        assert_eq!(row.value, 7, "base attack +3, Strength +4: {}", row.detail);
+    }
+
+    /// A weapon the CRB table does not hold by its name takes the corpus path, carried as in hand.
+    #[test]
+    fn carried_weapon_attack_row_variant_takes_the_corpus_path() {
+        let input = fighter(&[("Dagger (Adamantine)", ActiveState::SelectedInactive)]);
+        let row = attack(&input, "daggeradamantine").expect("the carried variant's attack row");
+        assert_eq!(row.value, 7, "base attack +3, Strength +4: {}", row.detail);
+    }
+
+    #[test]
+    fn carried_weapon_attack_row_absent_for_not_carried() {
+        let input = fighter(&[("Dagger (Base)", ActiveState::Absent)]);
+        assert!(attack(&input, "dagger").is_none());
+    }
+}

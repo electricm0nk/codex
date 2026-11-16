@@ -3001,9 +3001,14 @@ pub(crate) fn load_saved_character_at_root(
     explanations.extend(feat_budget_rows(&sheet_input, &corpus_receipt.base));
     budget_from_the_saved_intelligence(&mut explanations, &saved_input, &sheet_input);
     // In hand, then carried, then the Unarmed row (`decisions.md §9, §22`); its attack rows beside.
-    let unarmed_rows = codex::rules_core::pilot_compute::unarmed_strike_combat_rows(&corpus_receipt.base, &sheet_input);
-    let unarmed_rows: Vec<_> = unarmed_rows.into_iter().filter(|row| !explanations.iter().any(|held| held.id == row.id)).collect();
-    explanations.extend(map_explanations_dto(&unarmed_rows));
+    // A carried weapon's rows as if wielded in the main hand (`decisions.md §9`); a row in hand wins.
+    for rows in [
+        codex::rules_core::pilot_compute_corpus::carried_weapon_combat_rows(&corpus_receipt.base, &sheet_input, corpus_fixture_bundle()),
+        codex::rules_core::pilot_compute::unarmed_strike_combat_rows(&corpus_receipt.base, &sheet_input),
+    ] {
+        let rows: Vec<_> = rows.into_iter().filter(|row| !explanations.iter().any(|held| held.id == row.id)).collect();
+        explanations.extend(map_explanations_dto(&rows));
+    }
     let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown_with_carried(
         &sheet_input,
         corpus_fixture_bundle(),
@@ -11839,8 +11844,10 @@ mod tests {
             .map(|key| codex::rules_core::damage_total::weapon_feat_damage_row_id(key).replacen("combat.weapon_damage_bonus.", "combat.weapon_damage_total.", 1))
             .collect();
         object.get_mut("weaponDamage").and_then(|w| w.as_array_mut()).unwrap().retain(|weapon| weapon["inHand"] != false);
+        // E4.5: nor are its attack rows, as if wielded in the main hand.
+        let carried_row = |row: &serde_json::Value| row["detail"].as_str().is_some_and(|detail| detail.ends_with(codex::rules_core::pilot_compute_corpus::CARRIED_WEAPON_ROW_NOTE));
         object.get_mut("explanations").and_then(|e| e.as_array_mut()).unwrap().retain(|row| {
-            !carried_totals.iter().any(|id| row["id"] == id.as_str())
+            !carried_totals.iter().any(|id| row["id"] == id.as_str()) && !carried_row(row)
         });
         let derived = object.get_mut("corpusDerived").and_then(|d| d.as_object_mut()).unwrap();
         for held in ["equippedItems", "unresolvedEquipmentItemIds", "encumbrance"] {
@@ -13640,12 +13647,14 @@ mod tests {
     }
 
     /// The attack rows of the weapons in hand: the Unarmed row every character has (SD-41
-    /// `decisions.md §22`, `weapons_in_hand_first_then_carried_then_unarmed`) is not one.
+    /// `decisions.md §22`, `weapons_in_hand_first_then_carried_then_unarmed`) and a carried weapon's
+    /// (E4.5) are not.
     fn no_required_gear_attack_rows(loaded: &LoadSavedCharacterResponse) -> Vec<String> {
         loaded
             .explanations
             .iter()
             .filter(|row| row.id.starts_with("combat.weapon_attack_bonus.") && !row.id.ends_with(".unarmedstrike"))
+            .filter(|row| !row.detail.ends_with(codex::rules_core::pilot_compute_corpus::CARRIED_WEAPON_ROW_NOTE))
             .map(|row| row.id.clone())
             .collect()
     }

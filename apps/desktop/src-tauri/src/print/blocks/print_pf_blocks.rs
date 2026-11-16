@@ -2548,6 +2548,8 @@ fn print_pf_blocks_gear_ammunition_boxes_only_under_projectile_weapons() {
     let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
     let bow = loaded.weapon_damage.iter().find(|weapon| weapon.weapon_record_key.as_deref() == Some("Longbow (Base)")).expect("the longbow's row");
     assert!(bow.uses_ammunition && bow.ammunition_carried == 60, "three bundles of 20: {bow:?}");
+    // E4.5 (`decisions.md §9`): the carried bow's attack total, as if wielded in the main hand.
+    let bow_attack = loaded.explanations.iter().find(|row| row.id == "combat.weapon_attack_bonus.longbow").expect("the carried bow's attack row");
     let words = format!("{}: 60 carried", bow.ammunition_family.as_deref().unwrap_or("Ammunition"));
     let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
     let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
@@ -2555,6 +2557,7 @@ fn print_pf_blocks_gear_ammunition_boxes_only_under_projectile_weapons() {
     for (line, weapon) in lines.iter().zip(&loaded.weapon_damage) {
         if weapon.uses_ammunition {
             assert_eq!((line.kind, line.values.get(4)), ("ammunition", Some(&words)), "the bow's boxes and count: {line:?}");
+            assert_eq!(line.values[0], format!("{:+}", bow_attack.value), "the bow's Attack cell is the engine's signed total: {line:?}");
         } else {
             // `SheetBlock::new` pads every row to the widest; a padded cell is empty.
             assert_eq!((line.kind, line.values.get(4).map_or("", String::as_str)), ("", ""), "no boxes under `{}`", line.label);
