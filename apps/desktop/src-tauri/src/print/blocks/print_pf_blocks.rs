@@ -590,7 +590,12 @@ fn print_pf_blocks_every_look_has_its_template() {
         let typeset = crate::print::typst::typeset(&document).unwrap_or_else(|err| panic!("{name}: typesets: {err}"));
         assert!(typeset.warnings.is_empty(), "{name}: Typst reports no diagnostics: {:?}", typeset.warnings);
         let text = pdf_text(&typeset.pdf);
-        assert!(text.contains("Look Probe") && text.contains("Probe label") && text.contains("probe value"), "{name}: prints the block: {text}");
+        if look == Look::Portrait {
+            // SD-41 E4.4 (`decisions.md §34` (7)): the portrait box prints its image only, never a word.
+            assert!(!text.contains("Look Probe") && !text.contains("Probe label"), "{name}: prints no words: {text}");
+        } else {
+            assert!(text.contains("Look Probe") && text.contains("Probe label") && text.contains("probe value"), "{name}: prints the block: {text}");
+        }
     }
 }
 

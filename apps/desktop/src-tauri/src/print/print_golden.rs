@@ -306,7 +306,8 @@ fn assert_blocks_print_in_order(document: &SheetDocument, text: &str, case: &str
             .filter(|piece| !piece.is_empty())
             .collect()
     };
-    let blocks = print_order(document);
+    // A block that prints no words (page 1's portrait box, SD-41 E4.4) has nothing to find in the text.
+    let blocks: Vec<_> = print_order(document).into_iter().filter(|block| !block_anchor(block).is_empty()).collect();
     let mut starts = Vec::with_capacity(blocks.len());
     let mut from = 0;
     for block in &blocks {
