@@ -718,9 +718,11 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             ("attack", "Attack", "attack", "CMB", vec![signed(row("combat.combat_maneuver_bonus").value)], Some("combat.combat_maneuver_bonus")),
             ("attack", "Attack", "attack", "CMD", vec![row("defense.combat_maneuver_defense").value.to_string()], Some("defense.combat_maneuver_defense")),
             ("speed", "Speed", "speed", "Land", vec![format!("{} ft.", row("speed.land").value)], Some("speed.land")),
-            // E2.18: Swim and Fly boxes, empty for the pencil: no seed states either mode.
-            ("speed", "Speed", "speed", "Swim", vec![w()], None),
+            // E2.18: Fly and Swim boxes, empty for the pencil: no seed states either mode; SD-41
+            // E4.3: Climb, "—" with no `speed.climb` row (`decisions.md §34` (6)).
             ("speed", "Speed", "speed", "Fly", vec![w()], None),
+            ("speed", "Speed", "speed", "Swim", vec![w()], None),
+            ("speed", "Speed", "speed", "Climb", vec!["—".to_owned()], None),
         ];
         let mut numbers = 0;
         for (id, heading, look, label, cells, source) in &expected {
@@ -1677,7 +1679,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
             assert_eq!(one.matches("Armor Class").count(), 1, "{tag} {paper:?}: `Armor Class` prints once, as the AC box's label: {one}");
             assert_in_order(
                 &one,
-                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Resistances", "Conditional Bonuses", "Abilities", "Skills"],
+                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Fly", "Swim", "Climb", "Hit Points", "Weapons", "Attack", "Saving Throws", "Resistances", "Conditional Bonuses", "Abilities", "Skills"],
             );
         }
     }
@@ -1687,7 +1689,9 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
 /// `speed.land` / `speed.swim` / `speed.fly` as `<n> ft.`, the fly value followed by
 /// `(<maneuverability>)` from `flyManeuverability`; a mode the character lacks prints an empty box
 /// (no dash, no 0) with no engine row behind it. Aldric (Human: land only), Aldric saved as an
-/// Undine (swim 30) and as a Strix (fly 60, average); Letter and A4.
+/// Undine (swim 30) and as a Strix (fly 60, average); Letter and A4. SD-41 E4.3 re-pins the order
+/// to the 2×2 reading order (Land, Fly, Swim, then Climb, which
+/// `print_pf_blocks_page1_speed_is_a_2x2_with_climb_dash` covers).
 #[test]
 fn print_pf_blocks_speed_prints_land_swim_fly_boxes() {
     use codex::saved_character::local_store::SavedCharacterStore;
@@ -1700,23 +1704,23 @@ fn print_pf_blocks_speed_prints_land_swim_fly_boxes() {
     };
     let cases = [
         ("aldric", seeded("speed-aldric", ALDRIC_ID), ["30 ft.", "", ""]),
-        ("undine", as_race("speed-undine", "race:undine"), ["30 ft.", "30 ft.", ""]),
-        ("strix", as_race("speed-strix", "race:strix"), ["30 ft.", "", "60 ft. (average)"]),
+        ("undine", as_race("speed-undine", "race:undine"), ["30 ft.", "", "30 ft."]),
+        ("strix", as_race("speed-strix", "race:strix"), ["30 ft.", "60 ft. (average)", ""]),
     ];
     for (tag, root, expected) in &cases {
         let loaded = load_saved_character_at_root(root).expect("the character loads");
         for paper in [Paper::Letter, Paper::A4] {
             let (document, one, pdf) = page_one_text(root, paper, Vec::new());
             let speed = document.blocks.iter().find(|block| block.id == "speed").expect("the Speed block");
-            let lines: Vec<(&str, Vec<String>)> = speed.rows.iter().map(|row| (row.label.as_str(), row.values.clone())).collect();
-            let want: Vec<(&str, Vec<String>)> = ["Land", "Swim", "Fly"].into_iter().zip(expected.iter().map(|v| vec![(*v).to_owned()])).collect();
-            assert_eq!(lines, want, "{tag} {paper:?}: Land, Swim, Fly boxes");
-            for (row, id) in speed.rows.iter().zip(["speed.land", "speed.swim", "speed.fly"]) {
+            let lines: Vec<(&str, Vec<String>)> = speed.rows.iter().take(3).map(|row| (row.label.as_str(), row.values.clone())).collect();
+            let want: Vec<(&str, Vec<String>)> = ["Land", "Fly", "Swim"].into_iter().zip(expected.iter().map(|v| vec![(*v).to_owned()])).collect();
+            assert_eq!(lines, want, "{tag} {paper:?}: Land, Fly, Swim boxes");
+            for (row, id) in speed.rows.iter().zip(["speed.land", "speed.fly", "speed.swim"]) {
                 let held = loaded.explanations.iter().any(|row| row.id == id);
                 assert_eq!(row.derivation.is_some(), held, "{tag} {paper:?}: `{}` has the {id} row behind it only when the engine states one", row.label);
                 assert!(!row.values.iter().any(|value| value.contains('—') || value == "0"), "{tag} {paper:?}: no dash, no 0: {:?}", row.values);
             }
-            for (label, value) in ["Land", "Swim", "Fly"].into_iter().zip(expected) {
+            for (label, value) in ["Land", "Fly", "Swim"].into_iter().zip(expected) {
                 if !value.is_empty() {
                     assert!(one.contains(&format!("{label} {value}")), "{tag} {paper:?}: page 1 prints `{label} {value}`: {one}");
                 }
@@ -3321,5 +3325,85 @@ fn print_pf_blocks_page1_conditional_box_has_no_ruled_lines() {
         let ten = 10.0 * 0.4 / 2.54 * 72.0;
         assert!((height - ten).abs() < 0.5, "{paper:?}: the box is {ten} pt tall, {height} printed");
         assert!(one.contains("Bravery"), "{paper:?}: the printed bonus stays: {one}");
+    }
+}
+
+/// SD-41 E4.3 (`decisions.md §34` (4)): the Skills print as a table whose alternate rows are filled
+/// a light grey (`luma` ≥ 230, so a monochrome printer still reads the words on it): every second
+/// skill line shaded, the others not. The look states its shade and its line counts
+/// (`skills-look`). Aldric and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_page1_skills_alternate_rows_shaded() {
+    for (tag, id) in [("skills-shade-aldric", ALDRIC_ID), ("skills-shade-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, _, _) = page_one_text(&root, paper, Vec::new());
+            let skills = document.blocks.iter().find(|block| block.id == "skills").expect("the Skills block");
+            let lines = skills.rows.iter().filter(|row| row.values.first().is_some_and(|total| !total.is_empty())).count() as u64;
+            let facts = crate::print::typst::look_metadata(&document, "skills-look").expect("the sheet typesets");
+            let fact = facts.first().unwrap_or_else(|| panic!("{tag} {paper:?}: the skills look states its shading"));
+            let shade = fact["shade"].as_u64().expect("a luma level");
+            assert!((230..255).contains(&shade), "{tag} {paper:?}: a light grey that prints in black and white: {fact}");
+            assert_eq!(fact["lines"].as_u64(), Some(lines), "{tag} {paper:?}: every skill line prints: {fact}");
+            assert_eq!(fact["shaded"].as_u64(), Some(lines / 2), "{tag} {paper:?}: every second line is shaded: {fact}");
+        }
+    }
+}
+
+/// SD-41 E4.3 (`decisions.md §34` (5)): the Weapons print only real lines: no blank write-in line
+/// and no empty box. The block is one header plus one line per engine weapon row (in hand →
+/// carried → Unarmed), and the look prints exactly those lines (`weapons-look`). Aldric and
+/// Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_page1_weapons_has_no_blank_rows() {
+    let (_, source) = crate::print::typst::LOOKS.iter().find(|(name, _)| *name == "weapons").expect("the look exists");
+    assert!(!source.contains("write-line"), "no ruled write-in line in the Weapons look");
+    for (tag, id) in [("weapons-blank-aldric", ALDRIC_ID), ("weapons-blank-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, _, _) = page_one_text(&root, paper, Vec::new());
+            let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+            assert_eq!(weapons.rows.len(), loaded.weapon_damage.len() + 1, "{tag} {paper:?}: one header and a line per engine weapon: {:?}", weapons.rows);
+            let facts = crate::print::typst::look_metadata(&document, "weapons-look").expect("the sheet typesets");
+            let fact = facts.first().unwrap_or_else(|| panic!("{tag} {paper:?}: the weapons look states its lines"));
+            assert_eq!(fact["lines"].as_u64(), Some(loaded.weapon_damage.len() as u64), "{tag} {paper:?}: only the real lines print: {fact}");
+            assert_eq!(fact["empty"].as_u64(), Some(0), "{tag} {paper:?}: no empty box: {fact}");
+        }
+    }
+}
+
+/// SD-41 E4.3 (`decisions.md §34` (6), §35 Q11): the Speed prints as a 2×2 grid, Land and Fly over
+/// Swim and Climb; Climb prints the engine's `speed.climb` row when the response holds one (a
+/// Vanara: 20 ft.), else "—" with no row behind it (Aldric, Human), never a made-up value.
+/// Letter and A4.
+#[test]
+fn print_pf_blocks_page1_speed_is_a_2x2_with_climb_dash() {
+    use codex::saved_character::local_store::SavedCharacterStore;
+    let vanara = seeded("speed-climb-vanara", ALDRIC_ID);
+    let mut envelope = SavedCharacterStore::load(&vanara).expect("the seed's envelope loads");
+    envelope.character_input.chosen.race_id = "race:vanara".to_owned();
+    SavedCharacterStore::save(&envelope, &vanara).expect("the race saves");
+    for (tag, root, climb) in [("vanara", vanara, "20 ft."), ("aldric", seeded("speed-climb-aldric", ALDRIC_ID), "—")] {
+        let loaded = load_saved_character_at_root(&root).expect("the character loads");
+        let held = loaded.explanations.iter().find(|row| row.id == "speed.climb");
+        assert_eq!(held.map(|row| row.value), (climb != "—").then_some(20), "{tag}: the engine's speed.climb row");
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, one, pdf) = page_one_text(&root, paper, Vec::new());
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("climb-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            }
+            let speed = document.blocks.iter().find(|block| block.id == "speed").expect("the Speed block");
+            let labels: Vec<&str> = speed.rows.iter().map(|row| row.label.as_str()).collect();
+            assert_eq!(labels, ["Land", "Fly", "Swim", "Climb"], "{tag} {paper:?}: Land and Fly over Swim and Climb");
+            let row = &speed.rows[3];
+            assert_eq!(row.values, vec![climb.to_owned()], "{tag} {paper:?}: Climb");
+            assert_eq!(row.derivation.is_some(), held.is_some(), "{tag} {paper:?}: the speed.climb row is behind Climb only when the engine states one");
+            assert!(one.contains(&format!("Climb {climb}")), "{tag} {paper:?}: page 1 prints `Climb {climb}`: {one}");
+            let facts = crate::print::typst::look_metadata(&document, "speed-look").expect("the sheet typesets");
+            let fact = facts.first().unwrap_or_else(|| panic!("{tag} {paper:?}: the speed look states its grid"));
+            assert_eq!((fact["columns"].as_u64(), fact["rows"].as_u64()), (Some(2), Some(2)), "{tag} {paper:?}: a 2×2 grid: {fact}");
+        }
     }
 }

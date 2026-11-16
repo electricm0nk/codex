@@ -91,7 +91,7 @@ fn critical(weapon: &WeaponDamageDto) -> String {
 /// orders the lines: in hand, then carried "(carried)", then the Unarmed strike last (SD-41
 /// `decisions.md §9, §22`). A weapon that fires ammunition is a line of kind `ammunition` with a
 /// fifth value, its count's words (`decisions.md §23`); the `weapons` look prints its 20 tick boxes
-/// under it and adds the blank lines.
+/// under it. Only these lines print: no blank line, no empty box (SD-41 `decisions.md §34` (5)).
 pub fn weapons(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![SheetRow::new("Weapon", ["Attack", "Damage", "Critical", "Range"].map(str::to_owned))];
     let mut placed: Vec<&str> = Vec::new();

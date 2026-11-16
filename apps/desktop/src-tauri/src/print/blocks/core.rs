@@ -317,17 +317,28 @@ pub fn attack(sources: &SheetSources) -> SheetBlock {
     .in_look(Look::Attack)
 }
 
-/// The Speed box (`speed`, E2.18, `decisions.md §24.3.2`): Land, Swim and Fly, each `<n> ft.` from the
-/// engine's `speed.land` / `speed.swim` / `speed.fly` row, the fly value followed by the load
-/// response's `flyManeuverability` words (§24.6 Q3); a mode the engine states no row for is an empty
-/// box for the pencil (never a dash, never 0) with no row behind it.
+/// The Speed box (`speed`, E2.18, `decisions.md §24.3.2`; SD-41 `decisions.md §34` (6)): Land, Fly,
+/// Swim and Climb (the look's 2×2 reading order), each `<n> ft.` from the engine's `speed.land` /
+/// `speed.fly` / `speed.swim` / `speed.climb` row, the fly value followed by the load response's
+/// `flyManeuverability` words (§24.6 Q3); a Land, Fly or Swim the engine states no row for is an
+/// empty box for the pencil (never 0), a Climb with no row prints "—" (`§35` Q11), with no row behind
+/// either.
 pub fn speed(sources: &SheetSources) -> SheetBlock {
-    let mode = |label: &str, id: &str, words: Option<&str>| match row_value(sources, id) {
+    let mode = |label: &str, id: &str, words: Option<&str>, absent: String| match row_value(sources, id) {
         Some(feet) => line(sources, label, vec![words.map_or_else(|| format!("{feet} ft."), |words| format!("{feet} ft. ({words})"))], id),
-        None => SheetRow::new(label, [write_in()]),
+        None => SheetRow::new(label, [absent]),
     };
     let fly = sources.loaded.fly_maneuverability.as_deref();
-    SheetBlock::new("Speed", vec![mode("Land", "speed.land", None), mode("Swim", "speed.swim", None), mode("Fly", "speed.fly", fly)]).in_look(Look::Speed)
+    SheetBlock::new(
+        "Speed",
+        vec![
+            mode("Land", "speed.land", None, write_in()),
+            mode("Fly", "speed.fly", fly, write_in()),
+            mode("Swim", "speed.swim", None, write_in()),
+            mode("Climb", "speed.climb", None, NO_VALUE.to_owned()),
+        ],
+    )
+    .in_look(Look::Speed)
 }
 
 /// The Skills panel's Languages line (`languages`, SD-40 E2.13; E2.16, `decisions.md §24.3.3`): the

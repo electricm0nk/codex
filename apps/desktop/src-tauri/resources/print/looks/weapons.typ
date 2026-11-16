@@ -1,8 +1,7 @@
 // The `weapons` look (SD-40 E2.3; E2.10 totals only, decisions.md §23.1 item 4): one table of the
 // weapons in hand. The first row names the columns; each weapon prints on one line its name, its
-// attack total, its damage total (`1d8+4`), its critical and its range, then its feat notes. Blank
-// lines follow for the pencil (a rule for the name, the four boxes) until the table holds three
-// lines (E2.22: so one to three weapons take one height and Letter's page 1 holds the Resistances).
+// attack total, its damage total (`1d8+4`), its critical and its range, then its feat notes. Only
+// the engine's lines print: no blank write-in line and no empty box (SD-41 decisions.md §34 (5)).
 // A weapon that fires ammunition (a row of kind `ammunition`, SD-41 decisions.md §23) prints 20 tick
 // boxes under its line, after the words of its fifth value (`Arrow: 60 carried`, or none); the
 // others print none, and there is no ammunition row for the whole block. Any other row (a per-weapon engine row no weapon in hand matches, "No weapon is
@@ -14,7 +13,7 @@
 //
 // Page 1's overflow rule (E2.4, decisions.md §23.2 SD-b): the frame may mark the block `compact`
 // (the lines at the 8 pt floor), then hand it a shorter `list` and `more` (the rest continues on
-// page 2: the write-in lines go with it); the rest prints as a `continued` block of its own.
+// page 2); the rest prints as a `continued` block of its own.
 
 #import "/looks/section-title.typ": section-title
 
@@ -22,15 +21,11 @@
 
 #let caption(t) = text(size: 8pt, fill: luma(60), t)
 
-// A value the engine filled, or (an empty string) a ruled write-in box the player fills; smaller
-// at the 8 pt floor (`compact`).
+// A value the engine filled, in its box; smaller at the 8 pt floor (`compact`).
 #let value-box(v, compact: false) = box(
   width: 100%, height: if compact { 0.45cm } else { 0.55cm }, stroke: 0.5pt + luma(60),
   align(center + horizon, text(size: if compact { 8pt } else { 8.5pt }, weight: "bold", v)),
 )
-
-// A ruled line the player writes on.
-#let write-line = box(width: 100%, height: 0.45cm, stroke: (bottom: 0.5pt + luma(60)))
 
 #let boxes = 4
 
@@ -90,11 +85,6 @@
         ..if r.at("kind", default: "") == "ammunition" { (ammunition(r, compact: compact),) },
         ..r.notes.map(n => text(size: 8pt, fill: luma(40), n)),
       )),
-      // Blank weapons up to three lines, for what the character picks up at the table (the name on
-      // the rule); when the list continues on page 2, they print there, after the last line.
-      ..if not more { (
-        ..range(calc.max(0, 3 - items(b).filter(is-weapon).len())).map(_ => line-of(write-line, ("",) * boxes, compact: compact)),
-      ) },
       ..others.map(r => {
         text(size: if compact { 8pt } else { 8.5pt }, weight: "bold", r.label)
         for v in r.values.filter(v => v != "") { h(0.4em); text(size: if compact { 8pt } else { 8.5pt }, v) }
@@ -105,6 +95,11 @@
       }),
       ..if more { (caption[continued on page 2],) },
     )
-    #metadata((ammunition: weapons.filter(r => r.at("kind", default: "") == "ammunition").len(), boxes: ticks)) <weapons-look>
+    #metadata((
+      ammunition: weapons.filter(r => r.at("kind", default: "") == "ammunition").len(),
+      boxes: ticks,
+      lines: weapons.len(),
+      empty: weapons.map(r => r.values.slice(0, boxes).filter(v => v == "").len()).sum(default: 0),
+    )) <weapons-look>
   ]
 }

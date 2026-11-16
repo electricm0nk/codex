@@ -140,13 +140,13 @@ pub enum Look {
     Attack,
     /// The three saves, each its total, three to a line (E2.20).
     Saves,
-    /// The land speed box.
+    /// The speed boxes, a 2×2 grid: Land and Fly over Swim and Climb (SD-41 `decisions.md §34` (6)).
     Speed,
-    /// The skills in two narrow columns: the class-skill box, the name with its armor-check mark,
-    /// the total, the key ability, the ranks and the misc write-in.
+    /// The skills as one table, a line per skill with its total, alternate lines shaded (SD-41
+    /// `decisions.md §34` (4)).
     Skills,
-    /// The weapons table: a line per weapon in hand (attack, damage dice, Str, enhancement, damage
-    /// bonus, threat, critical, wield), two blank lines and the ammunition write-in.
+    /// The weapons table: a line per engine weapon row (attack, damage, critical, range), ammunition
+    /// tick boxes under a weapon that fires it; no blank line (SD-41 `decisions.md §34` (5)).
     Weapons,
     /// The portrait box (SD-40 E2.5): the saved portrait scaled into a frame, or the empty frame,
     /// with its small "Portrait" caption.

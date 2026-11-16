@@ -22,6 +22,8 @@
 #let name-size = 8pt
 #let total-width = 0.95cm
 #let gutter = 0cm
+// The words sit this far in from a shaded band's edges.
+#let pad = 2pt
 
 // A skill line has its total; `SheetBlock::new` pads every row to one value, so a line of words alone
 // (the ranks with no panel total) arrives with one empty value and is not a skill line (E3.MC).
@@ -37,19 +39,26 @@
   }
 }
 
-// One ruled line per skill: the rule under the row carries the eye from the name to its total.
+// Every second skill line is filled a light grey (SD-41 decisions.md §34 (4)): the band carries the
+// eye from the name to its total, and a grey this light still reads on a monochrome printer.
+#let shade-level = 235
+#let is-shaded(y) = calc.odd(y)
+
+// The skills as a table: one line per skill, alternate lines shaded. It states its shade and how
+// many lines it printed and shaded (`skills-look`), so a test reads what printed.
 #let column-of(rows) = layout(size => grid(
   columns: (1fr, total-width),
   column-gutter: gutter,
   rows: (0.32cm,) * rows.len() + (auto,),
+  inset: (x: pad, y: 0pt),
   align: (x, y) => if x == 0 { left + horizon } else { right + horizon },
-  stroke: (x, y) => if y < rows.len() { (bottom: 0.3pt + luma(170)) },
+  fill: (x, y) => if y < rows.len() and is-shaded(y) { luma(shade-level) },
   ..rows.map(r => (
-    fitted(r.label, size.width - total-width - gutter),
+    fitted(r.label, size.width - total-width - gutter - 2 * pad),
     text(size: name-size, weight: "bold", r.values.at(0)),
   )).flatten(),
   [], caption[Total],
-))
+)) + [#metadata((shade: shade-level, lines: rows.len(), shaded: range(rows.len()).filter(is-shaded).len())) <skills-look>]
 
 // The list the overflow rule may split: each skill line, as `(row: <the row>)`; then each line under
 // the column, as `(label: <its row's label>, note: <the note, or none for a row of words alone>)`.
