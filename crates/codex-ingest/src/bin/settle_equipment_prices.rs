@@ -32,10 +32,10 @@
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 
-use codex_ingest::pcgen_import::ir_converter::{equipment_price_gp, EqmodPrice, Unpriced};
+use codex_ingest::pcgen_import::equipment_price_settle::{
+    json_files, load_kind, parse_d20pfsrd_prices, ConverterPrice, Oracle, PriceContext, Record,
+};
 use serde_json::Value;
-
-type Tokens = Vec<(String, String)>;
 
 const D20PFSRD_PRICES: &str = "data/price_overrides/d20pfsrd-prices.json";
 
@@ -43,158 +43,6 @@ fn pcgen_corpus_root() -> PathBuf {
     match std::env::var("PCGEN_CORPUS_ROOT") {
         Ok(root) => PathBuf::from(root),
         Err(_) => PathBuf::from(std::env::var("HOME").expect("HOME must be set")).join("workspace/repos/pcgen/data"),
-    }
-}
-
-fn json_files(dir: &Path, out: &mut Vec<PathBuf>) {
-    let Ok(entries) = std::fs::read_dir(dir) else { return };
-    let mut paths: Vec<PathBuf> = entries.flatten().map(|e| e.path()).collect();
-    paths.sort();
-    for path in paths {
-        if path.is_dir() {
-            json_files(&path, out);
-        } else if path.extension().is_some_and(|e| e == "json") {
-            out.push(path);
-        }
-    }
-}
-
-struct Record {
-    path: PathBuf,
-    book: String,
-    text: String,
-    doc: Value,
-}
-
-impl Record {
-    fn data(&self) -> &Value {
-        &self.doc["data"]
-    }
-    fn key(&self) -> &str {
-        self.data()["key"].as_str().unwrap_or("")
-    }
-    fn is_eqmod(&self) -> bool {
-        self.data()["category"].as_str().is_some_and(|c| c.eq_ignore_ascii_case("equipmods"))
-    }
-}
-
-fn load_kind(kind: &str) -> Vec<Record> {
-    let mut books: Vec<PathBuf> = std::fs::read_dir("data/corpus")
-        .expect("run from the repo root: data/corpus must exist")
-        .flatten()
-        .map(|e| e.path())
-        .filter(|p| p.is_dir())
-        .collect();
-    books.sort();
-    let mut out = Vec::new();
-    for book in books {
-        let mut files = Vec::new();
-        json_files(&book.join(kind), &mut files);
-        for path in files {
-            let text = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
-            let doc: Value = serde_json::from_str(&text).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
-            let name = book.file_name().unwrap().to_string_lossy().to_string();
-            out.push(Record { path, book: name, text, doc });
-        }
-    }
-    out
-}
-
-fn raw_tokens(data: &Value) -> Tokens {
-    data["raw_tokens"]
-        .as_array()
-        .map(|ts| {
-            ts.iter()
-                .filter_map(|t| Some((t["key"].as_str()?.to_string(), t["value"].as_str()?.to_string())))
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-fn bonus_chains(data: &Value) -> Vec<Vec<String>> {
-    data["raw_bonus_chains"]
-        .as_array()
-        .map(|cs| {
-            cs.iter()
-                .filter_map(|c| c["qualifiers"].as_array())
-                .map(|q| q.iter().filter_map(|s| s.as_str().map(str::to_string)).collect())
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-/// The `KEY:VALUE` fields of one raw LST row, after its first (name) column.
-fn line_tokens(line: &str) -> Tokens {
-    line.split('\t')
-        .skip(1)
-        .filter_map(|field| field.trim().split_once(':'))
-        .map(|(k, v)| (k.to_string(), v.to_string()))
-        .collect()
-}
-
-/// The pinned oracle's equipment LST files, read once each.
-struct Oracle {
-    root: PathBuf,
-    files: Vec<String>,
-    lines: HashMap<String, Vec<String>>,
-}
-
-impl Oracle {
-    fn new(root: PathBuf) -> Self {
-        fn walk(dir: &Path, root: &Path, out: &mut Vec<String>) {
-            let Ok(entries) = std::fs::read_dir(dir) else { return };
-            for entry in entries.flatten() {
-                let path = entry.path();
-                if path.is_dir() {
-                    walk(&path, root, out);
-                } else if path.file_name().and_then(|n| n.to_str()).is_some_and(|n| n.contains("equip") && n.ends_with(".lst")) {
-                    out.push(path.strip_prefix(root).unwrap().to_string_lossy().to_string());
-                }
-            }
-        }
-        let mut files = Vec::new();
-        walk(&root.join("pathfinder"), &root, &mut files);
-        files.sort();
-        Oracle { root, files, lines: HashMap::new() }
-    }
-
-    fn lines(&mut self, rel: &str) -> Option<&Vec<String>> {
-        if !self.lines.contains_key(rel) {
-            let bytes = std::fs::read(self.root.join(rel)).ok()?;
-            let text = String::from_utf8_lossy(&bytes);
-            self.lines.insert(rel.to_string(), text.lines().map(str::to_string).collect());
-        }
-        self.lines.get(rel)
-    }
-
-    /// The plain (not `.COPY=` / `.MOD` / `.FORGET`) row whose `KEY` (else first column) is
-    /// `identity`: the citing file first, then its directory, then every other equipment file.
-    fn base_row(&mut self, cited: &str, identity: &str) -> Option<Tokens> {
-        let dir = Path::new(cited).parent().map(Path::to_path_buf);
-        let mut order = vec![cited.to_string()];
-        let (same, other): (Vec<String>, Vec<String>) = self
-            .files
-            .iter()
-            .filter(|f| f.as_str() != cited)
-            .cloned()
-            .partition(|f| Path::new(f).parent().map(Path::to_path_buf) == dir);
-        order.extend(same);
-        order.extend(other);
-        for file in order {
-            let Some(lines) = self.lines(&file) else { continue };
-            for line in lines {
-                let first = line.split('\t').next().unwrap_or("").trim();
-                if first.is_empty() || first.starts_with('#') || first.contains(".COPY=") || first.contains(".MOD") || first.contains(".FORGET") {
-                    continue;
-                }
-                let tokens = line_tokens(line);
-                let id = tokens.iter().find(|(k, _)| k == "KEY").map_or(first, |(_, v)| v.as_str());
-                if id == identity {
-                    return Some(tokens);
-                }
-            }
-        }
-        None
     }
 }
 
@@ -216,24 +64,6 @@ fn d20pfsrd_prices() -> BTreeMap<String, f64> {
         panic!("{D20PFSRD_PRICES} must exist (an empty list is `[]`)")
     };
     parse_d20pfsrd_prices(&text).unwrap_or_else(|e| panic!("{D20PFSRD_PRICES}: {e}"))
-}
-
-fn parse_d20pfsrd_prices(text: &str) -> Result<BTreeMap<String, f64>, String> {
-    let rows: Vec<Value> = serde_json::from_str(text).map_err(|e| e.to_string())?;
-    let mut out = BTreeMap::new();
-    for row in rows {
-        let key = row["key"].as_str().ok_or_else(|| format!("a row has no key: {row}"))?;
-        let price = row["price_gp"].as_f64().filter(|p| *p > 0.0);
-        let url_ok = row["url"].as_str().is_some_and(|u| u.starts_with("https://www.d20pfsrd.com/"));
-        let fetched = row["fetched_at"].as_str().is_some_and(|f| !f.trim().is_empty());
-        match price {
-            Some(price) if url_ok && fetched => {
-                out.insert(key.to_string(), price);
-            }
-            _ => return Err(format!("row {key:?} needs a positive price_gp, a d20pfsrd url and fetched_at: {row}")),
-        }
-    }
-    Ok(out)
 }
 
 fn positive(cost: Option<f64>) -> bool {
@@ -425,23 +255,9 @@ fn main() {
     let mut oracle = Oracle::new(pcgen_corpus_root());
     let cited = d20pfsrd_prices();
 
-    let mut equipment = load_kind("equipment");
-    let mut eqmods_by_book: HashMap<(String, String), EqmodPrice> = HashMap::new();
-    let mut eqmods: HashMap<String, EqmodPrice> = HashMap::new();
-    for r in equipment.iter().filter(|r| r.is_eqmod()) {
-        let price = EqmodPrice::from_tokens(&raw_tokens(r.data()), &bonus_chains(r.data()));
-        eqmods_by_book.entry((r.book.clone(), r.key().to_string())).or_insert_with(|| price.clone());
-        eqmods.entry(r.key().to_string()).or_insert(price);
-    }
-    let mut spell_costs: HashMap<String, f64> = HashMap::new();
-    for s in load_kind("spell") {
-        let tokens = raw_tokens(&s.doc["data"]);
-        if let Some(cost) = tokens.iter().find(|(k, _)| k == "COST").and_then(|(_, v)| v.trim().parse::<f64>().ok()) {
-            for name in [&s.doc["data"]["key"], &s.doc["data"]["name"]].into_iter().filter_map(Value::as_str) {
-                spell_costs.entry(name.to_string()).or_insert(cost);
-            }
-        }
-    }
+    let corpus = Path::new("data/corpus");
+    let mut equipment = load_kind(corpus, "equipment").unwrap_or_else(|e| panic!("run from the repo root: {e}"));
+    let prices = PriceContext::new(&equipment, &load_kind(corpus, "spell").unwrap_or_else(|e| panic!("{e}")));
 
     let mut report = Report::default();
     let mut writes = 0usize;
@@ -454,51 +270,28 @@ fn main() {
         }
         let key = record.key().to_string();
         let source = &record.doc["source"];
-        let mut new = None;
-        match (source["path"].as_str(), source["line"].as_u64()) {
-            (Some(rel), Some(line)) => {
-                let rel = rel.to_string();
-                let row = oracle.lines(&rel).and_then(|ls| ls.get(line as usize - 1)).cloned();
-                match row {
-                    None => report.count("citation_miss"),
-                    Some(row) => {
-                        let first = row.split('\t').next().unwrap_or("").trim().to_string();
-                        let base = first.split_once(".COPY=").map(|(b, _)| b.to_string());
-                        // `None`: the `.COPY=` base is outside the oracle's files, so the converter
-                        // cannot price the row; the cited list below still can.
-                        let base_tokens = match &base {
-                            Some(identity) => match oracle.base_row(&rel, identity) {
-                                Some(t) => Some(Some(t)),
-                                None => {
-                                    report.count("copy_base_missing");
-                                    *report.unpriced.entry("copy_base_missing".to_string()).or_default() += 1;
-                                    None
-                                }
-                            },
-                            None => Some(None),
-                        };
-                        let book = record.book.clone();
-                        let lookup = |k: &str| eqmods_by_book.get(&(book.clone(), k.to_string())).or_else(|| eqmods.get(k)).cloned();
-                        let spell = |name: &str| spell_costs.get(name).copied().unwrap_or(0.0);
-                        if let Some(base_tokens) = base_tokens {
-                            match equipment_price_gp(&line_tokens(&row), base_tokens.as_deref(), &lookup, &spell) {
-                                Ok(price) => new = Some(price),
-                                Err(why) => {
-                                    let class = match why {
-                                        Unpriced::ItemCostFormula(_) => "item_cost_formula",
-                                        Unpriced::EqmodMissing(_) => "eqmod_missing",
-                                        Unpriced::Formula(_) => "formula_not_evaluated",
-                                        Unpriced::Prerequisite(_) => "itemcost_prerequisite_not_evaluated",
-                                    };
-                                    *report.unpriced.entry(class.to_string()).or_default() += 1;
-                                }
-                            }
-                        }
-                    }
-                }
+        let new = match prices.converter_price(&mut oracle, &record.book, source["path"].as_str(), source["line"].as_u64()) {
+            ConverterPrice::Priced(price) => Some(price),
+            ConverterPrice::NoLstCitation => {
+                report.count("no_lst_citation");
+                None
             }
-            _ => report.count("no_lst_citation"),
-        }
+            ConverterPrice::CitationMiss => {
+                report.count("citation_miss");
+                None
+            }
+            // The `.COPY=` base is outside the oracle's files, so the converter cannot price the
+            // row; the cited list below still can.
+            ConverterPrice::CopyBaseMissing => {
+                report.count("copy_base_missing");
+                *report.unpriced.entry("copy_base_missing".to_string()).or_default() += 1;
+                None
+            }
+            ConverterPrice::Unpriced(class) => {
+                *report.unpriced.entry(class.to_string()).or_default() += 1;
+                None
+            }
+        };
         let mut chosen = new.filter(|p| replaces(old, *p));
         if !chosen.is_some_and(|p| p > 0.0)
             && let Some(price) = cited.get(&key)
@@ -590,20 +383,6 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn d20pfsrd_list_reads_cited_rows_and_refuses_uncited_ones() {
-        assert_eq!(parse_d20pfsrd_prices("[]"), Ok(BTreeMap::new()));
-        let row = r#"[{"key":"Bomb","price_gp":150,"url":"https://www.d20pfsrd.com/x/bomb/","fetched_at":"2026-11-13"}]"#;
-        assert_eq!(parse_d20pfsrd_prices(row), Ok(BTreeMap::from([("Bomb".to_string(), 150.0)])));
-        for bad in [
-            r#"[{"key":"Bomb","price_gp":150,"url":"https://example.com/bomb","fetched_at":"2026-11-13"}]"#,
-            r#"[{"key":"Bomb","price_gp":0,"url":"https://www.d20pfsrd.com/x/","fetched_at":"2026-11-13"}]"#,
-            r#"[{"key":"Bomb","price_gp":150,"url":"https://www.d20pfsrd.com/x/"}]"#,
-        ] {
-            assert!(parse_d20pfsrd_prices(bad).is_err(), "{bad}");
-        }
-    }
 
     #[test]
     fn a_price_replaces_only_a_missing_zero_or_negative_one() {

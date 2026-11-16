@@ -127,6 +127,13 @@ pub struct ShippedRecord {
     /// comment for why this field is checked against the corpus closure
     /// at all (`OPEN-ISSUES.md` row 91).
     pub cost_gp: Option<f64>,
+    /// The price the converter itself re-derives for this record's cited row
+    /// (`equipment_price_settle::PriceContext::converter_price`, else the cited d20pfsrd list),
+    /// set by the bin and `None` from [`parse_document`]. A `cost_gp` equal to it is derivable
+    /// without a flat `COST:` token: SD-41 E1.9 settles formula and eqmod-sum prices into
+    /// `cost_gp`, and the sweep proves them by re-running the same derivation, not by exempting
+    /// the field.
+    pub settled_cost_gp: Option<f64>,
     /// `data.weight_lbs`, the `WT:` sibling of [`Self::cost_gp`].
     pub weight_lbs: Option<f64>,
 }
@@ -226,6 +233,9 @@ pub struct SweepTally {
     /// check cannot be misread as one that exercised it and found nothing
     /// (`OPEN-ISSUES.md` row 91's own fix).
     pub typed_fields_compared: usize,
+    /// Of those, the `cost_gp` values with no flat `COST:` token that equal the converter's own
+    /// re-derived price ([`ShippedRecord::settled_cost_gp`]); reported so the widening is visible.
+    pub typed_cost_rederived: usize,
     /// `raw_tokens` entries excused from the byte-match check because they
     /// belong to a `codex_generated_name: true` record (`decisions.md §24`)
     /// and carry EXACTLY [`REDACTED_PI_MARKER`] -- the `§24b`-2 redaction
@@ -324,6 +334,7 @@ fn compare_typed_numeric_field(
     field: &'static str,
     lst_key: &'static str,
     shipped: Option<f64>,
+    rederived: Option<f64>,
     closure: &BTreeSet<String>,
     tally: &mut SweepTally,
 ) -> Option<Finding> {
@@ -333,11 +344,23 @@ fn compare_typed_numeric_field(
     if candidates.iter().any(|c| (*c - shipped).abs() < f64::EPSILON) {
         return None;
     }
+    if rederived.is_some_and(|r| (r - shipped).abs() < f64::EPSILON) {
+        tally.typed_cost_rederived += 1;
+        return None;
+    }
     Some(Finding::TypedFieldNotInClosure {
         record: record_path.to_string(),
         field,
         shipped_value: format_lst_number(shipped),
         lst_key,
+    })
+}
+
+/// `true` when `record` states a `cost_gp` that no flat `COST:` entry in `closure` carries: the
+/// only records whose price the bin must re-derive ([`ShippedRecord::settled_cost_gp`]).
+pub fn cost_needs_rederivation(record: &ShippedRecord, closure: &BTreeSet<String>) -> bool {
+    record.cost_gp.is_some_and(|shipped| {
+        !closure_numeric_values(closure, "COST").iter().any(|c| (*c - shipped).abs() < f64::EPSILON)
     })
 }
 
@@ -604,6 +627,7 @@ pub fn compare_tokens(
         "cost_gp",
         "COST",
         record.cost_gp,
+        record.settled_cost_gp,
         closure,
         tally,
     ));
@@ -612,6 +636,7 @@ pub fn compare_tokens(
         "weight_lbs",
         "WT",
         record.weight_lbs,
+        None,
         closure,
         tally,
     ));
@@ -773,6 +798,7 @@ fn parse_transcription(
         pi_redacted_description,
         codex_generated_name,
         cost_gp,
+        settled_cost_gp: None,
         weight_lbs,
     }))
 }
@@ -795,6 +821,7 @@ mod tests {
             pi_redacted_description: false,
             codex_generated_name: false,
             cost_gp: None,
+            settled_cost_gp: None,
             weight_lbs: None,
         }
     }
@@ -1312,6 +1339,24 @@ mod tests {
             }]
         );
         assert_eq!(tally.typed_fields_compared, 1, "weight_lbs is None and must not count");
+    }
+
+    /// SD-41 E1.9: a price the converter derives from the cited row (a formula or an eqmod
+    /// sum, no flat `COST:` of that value anywhere in the closure) is settled into `cost_gp`.
+    /// The bin re-derives it and hands the result in as `settled_cost_gp`: a shipped cost equal
+    /// to it is derivable, one that differs is still a finding, and none stays one.
+    #[test]
+    fn a_cost_gp_the_converter_rederives_is_derivable_and_a_different_one_is_not() {
+        let rows = ["Thing\tKEY:Thing"]; // no COST: token anywhere
+        for (settled, finds) in [(Some(300.0), false), (Some(299.0), true), (None, true)] {
+            let mut rec = record(&[]);
+            rec.cost_gp = Some(300.0);
+            rec.settled_cost_gp = settled;
+            let mut tally = SweepTally::default();
+            let findings = compare_tokens(&rec, &closure_of(&rows, &rec.identities), &BTreeSet::new(), &mut tally);
+            assert_eq!(!findings.is_empty(), finds, "settled {settled:?}");
+            assert_eq!(tally.typed_cost_rederived, usize::from(!finds), "settled {settled:?}");
+        }
     }
 
     /// The real row 90 shape, precisely: `cost_gp` is real (800) but the
