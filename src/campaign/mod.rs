@@ -27,6 +27,7 @@ fn default_schema_version() -> u16 {
 #[serde(rename_all = "camelCase")]
 pub struct CampaignMember {
     pub email: String,
+    #[serde(default)]
     pub invited: bool,
 }
 
@@ -222,5 +223,12 @@ mod tests {
         let parsed: CampaignSnapshot = serde_json::from_str(legacy_json).expect("deserializes");
         assert_eq!(parsed.schema_version, CURRENT_CAMPAIGN_SCHEMA_VERSION);
         assert_eq!(parsed.assets, CampaignAssets::default());
+    }
+
+    #[test]
+    fn campaign_member_without_invited_deserializes_as_not_invited() {
+        let json = r#"{"id":"c","name":"N","ruleSetId":"crb","ruleSetLabel":"Core","description":"","members":[{"email":"a@b.c"}],"partyCharacterIds":[],"createdAt":"t","updatedAt":"t"}"#;
+        let parsed: CampaignSnapshot = serde_json::from_str(json).expect("deserializes");
+        assert_eq!(parsed.members, vec![CampaignMember { email: "a@b.c".to_owned(), invited: false }]);
     }
 }
