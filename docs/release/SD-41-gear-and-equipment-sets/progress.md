@@ -160,6 +160,7 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 | E4.1 | 2026-11-16 | `3c4f000e5e` + this commit | complete | `artifacts/epic_4/E4.1_cycle_receipt.md` (Gear by location: Worn / Carried with nested containers and their loads / Not Carried names only; stacks `Arrows ×60` with the engine's per-copy weights; weapons carried and nonlethal marks; 20 tick boxes per ammunition weapon, global row gone; `print_pf_blocks_gear_` 6 passed; desktop full 0 failed; G-2 SF/CPR ×10 no diff, PF pages unchanged; looked at 2 PNGs; E4.5 discovered: carried weapons have no attack row) |
 | E4.2 | 2026-11-16 | `c9b0ff762a` + this commit | complete | `artifacts/epic_4/E4.2_cycle_receipt.md` (page-1 titles: one near-black `#222222` bar, white bold, 0.5 cm, from `looks/section-title.typ` in 9 looks; Resistances under Saving Throws, Conditional Bonuses under it; the box keeps 10 lines' height with no ruled line; `print_pf_blocks_page1_` 3 passed; desktop 1360 + 1 + 138 + 1 + 2 passed, 0 failed; G-2 SF/CPR byte-identical, PF pages unchanged) |
 | E4.3 | 2026-11-16 | `73b96357b9` + this commit | complete | `artifacts/epic_4/E4.3_cycle_receipt.md` (Skills table, alternate lines `luma(235)`; Weapons: the blank write-in lines and empty boxes gone, lines = engine weapons; Speed 2×2 Land, Fly / Swim, Climb: `speed.climb` else "—", maneuverability under Fly; `print_pf_blocks_page1_` 6 passed (base 3 new FAILED); desktop 1363 + 1 + 138 + 2 passed, 0 failed; G-2 SF/CPR byte-identical, PF pages unchanged) |
+| E4.4 | 2026-11-16 | `b863c88947` + `98fe8a6b50` + this commit | blocked-escalated | `artifacts/epic_4/E4.4_cycle_receipt.md` (portrait box: the saved portrait, else the system logo, never the word; `pf1e.png` + `sf1e.png` fetched from paizo.com and cited in `logos/SOURCES.md`, compiled in like the fonts; `cpr.png` not landed: rtalsoriangames.com answered 429 → `LEAD_WEB_FETCH`; the 2 card tests pass; G-2 SF/CPR 20/20 byte-identical, PF pages unchanged) |
 
 ## Epic reports
 
@@ -203,6 +204,14 @@ data, Vanara 20 ft cited, the constant removed); the `speed.climb` row push is d
 the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --format=%s`)
 
 ## Open blockers
+
+- **E4.4 `LEAD_WEB_FETCH: cpr, https://rtalsoriangames.com/cyberpunk-red/`** (sd41-e4.4, 2026-11-16): the Cyberpunk RED logo
+  could not be fetched — the publisher's site answered HTTP 429 twice (`curl -sS -L -A 'Mozilla/5.0 …' -w '%{http_code}'
+  https://rtalsoriangames.com/cyberpunk-red/` → `429`, 09:25Z). Needed: the lead's web-fetch agent (or the operator) supplies
+  R. Talsorian's official Cyberpunk RED logo URL/file; then the change is `resources/print/logos/cpr.png` + its `SOURCES.md` row,
+  a `("cyberpunk-red", "/logos/cpr.png", include_bytes!(…))` entry in `typst.rs` `LOGOS` (game system id
+  `GameSystem::CyberpunkRed.id()`), and `packaged_resources.rs`'s logo list gaining it. No CPR layout prints a portrait
+  box today, so no sheet changes. Everything else in E4.4 landed.
 
 - ~~E3.10 / E3.3 `sheet-override-tag-slot` expect string~~ **closed 2026-11-15 by sd41-e3.3 re-attempt 3 (`56024f4336`): expect[0] changed per the lead action; row green; E3.3 and E3.10 complete.** Original: E3.10's code is in (`31c39ce10b`); the row now runs all 47 steps and fails only `expected string missing: 'Eyes of the Eagle0 lb · Eyes'` because the gear row renders the `OverrideTag` between the name and the weight. Needs one lead action: E3.3's re-attempt sets `spec.json` row `sheet-override-tag-slot` `expect[0]` to `Eyes of the EagleOverride: Ignore body slot limits0 lb · Eyes` and re-runs the row (or grant E3.10 that fence exit). Tried: the in-fence path (no E3.10 file decides that string). Blocks E3.3, E3.10, E3.MC. Receipt: `artifacts/epic_3/E3.10_cycle_receipt.md`.
 
