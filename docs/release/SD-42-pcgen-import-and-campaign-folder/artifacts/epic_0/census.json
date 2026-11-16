@@ -1,0 +1,255 @@
+{
+  "operator_file": {
+    "EQUIPNAME": 89,
+    "EQUIPNAME_with_CUSTOMIZATION": 38,
+    "EQUIPNAME_quantity_gt_1": 21,
+    "EQUIPNAME_quantity_0": 1,
+    "EQUIPNAME_max_quantity": 84.0,
+    "EQUIPSET": 87,
+    "EQUIPSET_depth_by_id_components": {
+      "2": 1,
+      "3": 33,
+      "4": 17,
+      "5": 36
+    },
+    "DATA_field_keys": {
+      "ALTEQMOD": 1,
+      "EQMOD": 11,
+      "KEY": 13,
+      "NAME": 36,
+      "SPROP": 17
+    },
+    "GAMEMODE": "Pathfinder_RPG",
+    "CLASS": [
+      "Swashbuckler",
+      "Gunslinger"
+    ]
+  },
+  "oracle_sha": "7f818006e371188e5717fd18d74d18a420747fc6",
+  "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
+  "samples": {
+    "pf_Cleric": {
+      "EQUIPNAME": 20,
+      "EQUIPNAME_with_CUSTOMIZATION": 5,
+      "EQUIPNAME_quantity_gt_1": 6,
+      "EQUIPNAME_quantity_0": 0,
+      "EQUIPNAME_max_quantity": 10.0,
+      "EQUIPSET": 22,
+      "EQUIPSET_depth_by_id_components": {
+        "2": 1,
+        "3": 7,
+        "4": 14
+      },
+      "DATA_field_keys": {
+        "EQMOD": 5,
+        "NAME": 1
+      },
+      "GAMEMODE": "Pathfinder_RPG",
+      "CLASS": [
+        "Cleric"
+      ]
+    },
+    "pf_Paladin": {
+      "EQUIPNAME": 29,
+      "EQUIPNAME_with_CUSTOMIZATION": 12,
+      "EQUIPNAME_quantity_gt_1": 6,
+      "EQUIPNAME_quantity_0": 0,
+      "EQUIPNAME_max_quantity": 5.0,
+      "EQUIPSET": 29,
+      "EQUIPSET_depth_by_id_components": {
+        "2": 1,
+        "3": 11,
+        "4": 12,
+        "5": 5
+      },
+      "DATA_field_keys": {
+        "COSTMOD": 1,
+        "EQMOD": 10,
+        "KEY": 6,
+        "NAME": 10
+      },
+      "GAMEMODE": "Pathfinder_RPG",
+      "CLASS": [
+        "Paladin"
+      ]
+    },
+    "pf_Rogue": {
+      "EQUIPNAME": 41,
+      "EQUIPNAME_with_CUSTOMIZATION": 14,
+      "EQUIPNAME_quantity_gt_1": 6,
+      "EQUIPNAME_quantity_0": 0,
+      "EQUIPNAME_max_quantity": 6.0,
+      "EQUIPSET": 44,
+      "EQUIPSET_depth_by_id_components": {
+        "2": 1,
+        "3": 18,
+        "4": 18,
+        "5": 7
+      },
+      "DATA_field_keys": {
+        "COSTMOD": 1,
+        "EQMOD": 11,
+        "KEY": 3,
+        "NAME": 14,
+        "SIZE": 10,
+        "SPROP": 1
+      },
+      "GAMEMODE": "Pathfinder_RPG",
+      "CLASS": [
+        "Rogue"
+      ]
+    },
+    "pf_goldielocks": {
+      "EQUIPNAME": 4,
+      "EQUIPNAME_with_CUSTOMIZATION": 4,
+      "EQUIPNAME_quantity_gt_1": 0,
+      "EQUIPNAME_quantity_0": 0,
+      "EQUIPNAME_max_quantity": 1.0,
+      "EQUIPSET": 5,
+      "EQUIPSET_depth_by_id_components": {
+        "2": 1,
+        "3": 4
+      },
+      "DATA_field_keys": {
+        "KEY": 4
+      },
+      "GAMEMODE": "Pathfinder_RPG",
+      "CLASS": [
+        "Sorcerer/Cleric (Arcane)",
+        "Dragon"
+      ]
+    },
+    "sf_mechanic": {
+      "EQUIPNAME": 22,
+      "EQUIPNAME_with_CUSTOMIZATION": 6,
+      "EQUIPNAME_quantity_gt_1": 2,
+      "EQUIPNAME_quantity_0": 0,
+      "EQUIPNAME_max_quantity": 100050.0,
+      "EQUIPSET": 23,
+      "EQUIPSET_depth_by_id_components": {
+        "2": 1,
+        "3": 22
+      },
+      "DATA_field_keys": {
+        "EQMOD": 1,
+        "KEY": 6,
+        "NAME": 6,
+        "SIZE": 2
+      },
+      "GAMEMODE": "Starfinder",
+      "CLASS": [
+        "Mechanic"
+      ]
+    },
+    "sf_mechanic_drone": {
+      "EQUIPNAME": 0,
+      "EQUIPNAME_with_CUSTOMIZATION": 0,
+      "EQUIPNAME_quantity_gt_1": 0,
+      "EQUIPNAME_quantity_0": 0,
+      "EQUIPNAME_max_quantity": 0,
+      "EQUIPSET": 1,
+      "EQUIPSET_depth_by_id_components": {
+        "2": 1
+      },
+      "DATA_field_keys": {},
+      "GAMEMODE": "Starfinder",
+      "CLASS": [
+        "Drone"
+      ]
+    },
+    "sf_soldier": {
+      "EQUIPNAME": 4,
+      "EQUIPNAME_with_CUSTOMIZATION": 4,
+      "EQUIPNAME_quantity_gt_1": 0,
+      "EQUIPNAME_quantity_0": 0,
+      "EQUIPNAME_max_quantity": 1.0,
+      "EQUIPSET": 5,
+      "EQUIPSET_depth_by_id_components": {
+        "2": 1,
+        "3": 4
+      },
+      "DATA_field_keys": {
+        "KEY": 4,
+        "NAME": 4
+      },
+      "GAMEMODE": "Starfinder",
+      "CLASS": [
+        "Soldier"
+      ]
+    }
+  },
+  "lines": {
+    "crates/codex-ingest/src/pcg_import/map.rs": 1033,
+    "crates/codex-ingest/src/pcg_import/catalog.rs": 158,
+    "crates/codex-ingest/src/pcg_import/wire.rs": 172,
+    "crates/codex-ingest/src/pcg_import/parse.rs": 136,
+    "crates/codex-ingest/src/pcg_import/fixtures_tests.rs": 422,
+    "apps/desktop/src-tauri/src/character_hub.rs": 23869,
+    "apps/desktop/src-tauri/src/campaign_drive.rs": 446,
+    "apps/desktop/src-tauri/src/main.rs": 435,
+    "src/campaign/mod.rs": 234,
+    "src/campaign/local_store.rs": 721,
+    "src/saved_character/campaign_mirror.rs": 273,
+    "src/saved_character/equipment_sets.rs": 519,
+    "apps/desktop/src/campaign/CampaignManagerScreen.tsx": 180,
+    "apps/desktop/src/campaign/CampaignSheet.tsx": 423,
+    "apps/desktop/src/campaign/CreateCampaignScreen.tsx": 190,
+    "apps/desktop/src/campaign/EditCampaignScreen.tsx": 346,
+    "apps/desktop/src/campaign/campaignModel.ts": 232,
+    "apps/desktop/src/campaign/campaignManagerAccessGate.ts": 27,
+    "apps/desktop/src/settings/GoogleDrivePanel.tsx": 192,
+    "apps/desktop/src/settings/googleDrive.ts": 49,
+    "apps/desktop/src/characterHub/CampaignMembershipDialog.tsx": 179,
+    "apps/desktop/src/characterHub/campaignMembershipModel.ts": 102,
+    "apps/desktop/src/boundary/listDriveCampaigns.ts": 35,
+    "apps/desktop/src/boundary/writeCampaignLocalFolderArtifacts.ts": 49,
+    "apps/desktop/src/boundary/setCharacterCampaigns.ts": 38,
+    "apps/desktop/src/characterHub/gearScreenModel.ts": 362,
+    "apps/desktop/src/characterHub/GearScreen.tsx": 591,
+    "apps/desktop/src/characterHub/LoadCharacterScreen.tsx": 606,
+    "apps/desktop/src/boundary/importPcg.ts": 63,
+    "apps/desktop/src/dmToolkit/encounterBuilderModel.ts": 57,
+    "apps/desktop/src-tauri/src/encounter_rating.rs": 579
+  },
+  "importer": {
+    "MAX_COPIES": "99;",
+    "per_copy_row_lines": "534,535",
+    "base_item_first_lookup_line": "510",
+    "enhancement_only_eqmods_line": "960",
+    "custom_item_fn_line": "603",
+    "quantity_fn_line": "920",
+    "game_mode_warning_line": "635",
+    "fighter_longsword_literal_line": "139",
+    "sf_soldier_refusal_test_line": "386",
+    "repo_eqm_fixtures": 13,
+    "wire_EquipmentWire_fields": "4"
+  },
+  "campaign": {
+    "members_length_line": "61",
+    "drive_commands_registered": "7",
+    "campaign_drive_tauri_commands": "5",
+    "campaign_smoke_rows": "8 of 203",
+    "campaign_smoke_row_ids": "landing-campaign-gate,campaign-manager-list,campaign-create,campaign-edit,campaign-sheet-tabs,sheet-campaign-add-from-identity,sheet-campaign-button-under-skills,sheet-campaign-remove-keeps-folder",
+    "ts_files_naming_drive": 13,
+    "mirror_target_literal": "80\n190\n191\n212\n215\n245\n261",
+    "markdown_dependency_in_package_json": "0",
+    "market_buy_merges_into_stack_line": "4181",
+    "tauri_capabilities": "['core:default', 'dialog:default']"
+  },
+  "version_surfaces_sd41_c1": 14,
+  "sd41_open_cards": [
+    "E3.12",
+    "E4.MC",
+    "E4.G",
+    "E5.1",
+    "E5.2",
+    "E5.3",
+    "E5.4"
+  ],
+  "sd41_cards_total": 56,
+  "base": {
+    "branch": "tranche-22",
+    "head": "1046daefc0",
+    "merge_base_tranche_21": "1046daefc0"
+  }
+}
