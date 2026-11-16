@@ -3266,34 +3266,9 @@ export function CharacterSheet(props: {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
         return null;
       }
-      props.onDetailRefreshed({
-        summary: outcome.summary,
-        snapshot: outcome.snapshot,
-        diagnostics: [],
-        corpusDerived: outcome.corpusDerived,
-        // The mutation did not touch racial traits, so the character's
-        // existing choices carry through unchanged rather than being reset.
-        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
-        // Nor character traits (AT-34-E4-002) — same carry-forward reasoning.
-        selectedTraits: props.detail?.selectedTraits ?? [],
-        selectedFeats: props.detail?.selectedFeats ?? [],
-        spellsSelected: props.detail?.spellsSelected ?? [],
-        chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
-        // `purchase_equipment` returns no engine records; the Weapons tab
-        // reads them from `engineRecords`, re-read immediately below.
-        explanations: [],
-        weaponDamage: [],
-        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
-        resolvedRacialTraits: null,
-        // Nor the sheet-rule lines (SD-35 AT-35-E2-002): a purchase changes
-        // what the character holds; absent until re-read, never stale.
-        sheetLines: [],
-        sheetRulesUnavailableReason: null,
-        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
-      });
       setMoney(outcome.money);
-      // Buying a weapon is exactly what makes a new Weapons row appear.
-      await refreshAfterPurchase();
+      // The outcome carries no sets, container loads, overrides or campaigns, and weighs a stack as one bundle.
+      await republishFromDisk();
       return { money: outcome.money, activeState: outcome.activeState, carriedReason: outcome.carriedReason };
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -3333,33 +3308,9 @@ export function CharacterSheet(props: {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
         return;
       }
-      props.onDetailRefreshed({
-        summary: outcome.summary,
-        snapshot: outcome.snapshot,
-        diagnostics: [],
-        corpusDerived: outcome.corpusDerived,
-        // The mutation did not touch racial traits, so the character's
-        // existing choices carry through unchanged rather than being reset.
-        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
-        // Nor character traits (AT-34-E4-002) — same carry-forward reasoning.
-        selectedTraits: props.detail?.selectedTraits ?? [],
-        selectedFeats: props.detail?.selectedFeats ?? [],
-        spellsSelected: props.detail?.spellsSelected ?? [],
-        chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
-        // See `handleAddEquipment` — no engine records on this response.
-        explanations: [],
-        weaponDamage: [],
-        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
-        resolvedRacialTraits: null,
-        // Nor the sheet-rule lines (SD-35 AT-35-E2-002): a purchase changes
-        // what the character holds; absent until re-read, never stale.
-        sheetLines: [],
-        sheetRulesUnavailableReason: null,
-        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
-      });
       setMoney(outcome.money);
-      // Attaching a +1 enhancement changes that weapon's Enh. columns.
-      await refreshAfterPurchase();
+      // Attaching a +1 enhancement changes that weapon's Enh. columns; re-read as a buy does.
+      await republishFromDisk();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -3579,11 +3530,12 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * The shared tail of all three removals: re-read the character straight
-   * off disk and publish that.
+   * The shared tail of the removals, the Market's buys, a modifier attach,
+   * an override toggle and the gear screen's writes: re-read the character
+   * straight off disk and publish that.
    *
-   * Deliberately NOT the optimistic list-patching the add paths use. An add
-   * knows exactly what it appended, so mirroring it locally is faithful; a
+   * Deliberately NOT a detail rebuilt from a mutation's outcome, which lacks
+   * the sets, container loads and campaigns the load carries. A
    * removal's consequences are not local — dropping a weapon changes the
    * Weapons table, the encumbrance totals and the AC-by-source rows, and
    * removing a feat can move max HP, weapon damage and class-feature
@@ -3592,18 +3544,6 @@ export function CharacterSheet(props: {
    * and it is the same read a reload of the app would do — which is exactly
    * the property a removal has to survive.
    */
-  /**
-   * A purchase's response carries the engine's snapshot with no worn custom item on it, so with one
-   * worn the tiles must come from the load, or a buy would take its bonus off them.
-   */
-  async function refreshAfterPurchase() {
-    if (custom.equipment.some((record) => record.worn)) {
-      await republishFromDisk();
-    } else {
-      await refreshEngineRecords();
-    }
-  }
-
   async function republishFromDisk() {
     const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
     props.onDetailRefreshed(loaded);
@@ -4091,7 +4031,8 @@ export function CharacterSheet(props: {
     setCustomError(null);
     try {
       setCustom(await saveCharacterCustom(props.row.characterId, withOverride(custom, key, on), new Date().toISOString()));
-      await refreshEngineRecords();
+      // The detail carries `ignoreContainerCapacity` and the loads it changes, not only the engine records.
+      await republishFromDisk();
     } catch (cause: unknown) {
       setCustomError(`The override was not saved: ${cause instanceof Error ? cause.message : String(cause)}`);
     }
