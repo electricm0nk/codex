@@ -335,7 +335,11 @@ fn the_sidecar_and_the_print_assets_reach_every_installer() {
     let looks = on_disk.iter().filter(|path| path.starts_with("resources/print/looks/")).count();
     assert!(looks >= 1, "the block looks (SD-40): at least the table look is compiled in");
     let logos: Vec<&str> = on_disk.iter().filter(|path| path.starts_with("resources/print/logos/")).map(String::as_str).collect();
-    assert_eq!(logos, ["resources/print/logos/pf1e.png", "resources/print/logos/sf1e.png"], "the Pathfinder and Starfinder logos are compiled in");
+    assert_eq!(
+        logos,
+        ["resources/print/logos/cpr.png", "resources/print/logos/pf1e.png", "resources/print/logos/sf1e.png"],
+        "the Cyberpunk RED, Pathfinder and Starfinder logos are compiled in"
+    );
     assert!(src_tauri().join("resources/print/logos/SOURCES.md").is_file(), "the logos' sources are cited beside them");
     assert_eq!(on_disk.len(), 6 + logos.len() + looks, "four Liberation Sans faces, the frame and the dispatcher, the logos and the {looks} looks");
 }

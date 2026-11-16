@@ -66,9 +66,10 @@ pub(crate) const LOOKS: &[(&str, &str)] = &[
 /// The game systems' logos (SD-41 `decisions.md §34` (7), §35 Q10; sources in
 /// `resources/print/logos/SOURCES.md`), by `game_system`: page 1's portrait box prints one when no
 /// portrait is saved. Compiled in, like the fonts, so the world still never reads the disk.
-const LOGOS: [(&str, &str, &[u8]); 2] = [
+const LOGOS: [(&str, &str, &[u8]); 3] = [
     ("pf1", "/logos/pf1e.png", include_bytes!("../../resources/print/logos/pf1e.png")),
     (crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID, "/logos/sf1e.png", include_bytes!("../../resources/print/logos/sf1e.png")),
+    (codex::rules_core::game_system::GameSystem::CyberpunkRed.id(), "/logos/cpr.png", include_bytes!("../../resources/print/logos/cpr.png")),
 ];
 
 /// The logo of `game_system` as an image a block prints; `None` for a system with no logo file.
