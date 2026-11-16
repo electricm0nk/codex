@@ -244,3 +244,7 @@ the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --f
 ### E4.G (2026-11-16)
 
 - Print set re-rendered fresh after E4.6 on `472bd0901e` (PDFs byte-identical to E4.MC's); copied to `/home/ubuntu/sd41-print/`; receipt `artifacts/epic_4/E4.G_cycle_receipt.md` holds three `usable: pending` lines. E4.G `partial`: the operator signs; then `START=E5.1`.
+
+### E4.G signed (2026-11-16)
+
+- Operator signed all three lines in `artifacts/epic_4/E4.G_cycle_receipt.md` (PDFs only; gear screen accepted without screen review, to be reviewed in the release build). E4.G `complete`; next `START=E5.1`.
