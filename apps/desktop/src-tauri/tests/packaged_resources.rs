@@ -309,7 +309,8 @@ fn the_sidecar_and_the_print_assets_reach_every_installer() {
         .count();
     assert_eq!(copies, builds.len(), "a release job bundles without placing the pcg_import-<triple> binary");
 
-    // Every font face and template on disk is compiled in, and every compiled-in path exists.
+    // Every font face, template and game-system logo (SD-41 `decisions.md §35` Q10) on disk is
+    // compiled in, and every compiled-in path exists.
     let typst = read("src/print/typst.rs");
     let compiled: Vec<String> = typst
         .split("include_")
@@ -319,7 +320,7 @@ fn the_sidecar_and_the_print_assets_reach_every_installer() {
         .map(str::to_owned)
         .collect();
     let mut on_disk: Vec<String> = Vec::new();
-    for (dir, extension) in [("resources/fonts", "ttf"), ("resources/print", "typ"), ("resources/print/looks", "typ")] {
+    for (dir, extension) in [("resources/fonts", "ttf"), ("resources/print", "typ"), ("resources/print/looks", "typ"), ("resources/print/logos", "png")] {
         for entry in fs::read_dir(src_tauri().join(dir)).unwrap_or_else(|e| panic!("cannot list {dir}: {e}")) {
             let path = entry.expect("entry").path();
             if path.extension().and_then(|e| e.to_str()) == Some(extension) {
@@ -330,8 +331,11 @@ fn the_sidecar_and_the_print_assets_reach_every_installer() {
     on_disk.sort();
     let mut compiled_sorted = compiled.clone();
     compiled_sorted.sort();
-    assert_eq!(compiled_sorted, on_disk, "print/typst.rs does not compile in exactly the fonts and templates on disk");
+    assert_eq!(compiled_sorted, on_disk, "print/typst.rs does not compile in exactly the fonts, templates and logos on disk");
     let looks = on_disk.iter().filter(|path| path.starts_with("resources/print/looks/")).count();
     assert!(looks >= 1, "the block looks (SD-40): at least the table look is compiled in");
-    assert_eq!(on_disk.len(), 6 + looks, "four Liberation Sans faces, the frame and the dispatcher, and the {looks} looks");
+    let logos: Vec<&str> = on_disk.iter().filter(|path| path.starts_with("resources/print/logos/")).map(String::as_str).collect();
+    assert_eq!(logos, ["resources/print/logos/pf1e.png", "resources/print/logos/sf1e.png"], "the Pathfinder and Starfinder logos are compiled in");
+    assert!(src_tauri().join("resources/print/logos/SOURCES.md").is_file(), "the logos' sources are cited beside them");
+    assert_eq!(on_disk.len(), 6 + logos.len() + looks, "four Liberation Sans faces, the frame and the dispatcher, the logos and the {looks} looks");
 }

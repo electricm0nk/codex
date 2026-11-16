@@ -31,7 +31,7 @@ const AT: &str = "2026-11-05T00:00:00Z";
 /// `decisions.md §24.3.7`): Abilities and Feats, Inventory (Armor and Shields, Gear, Money, E3.2): the
 /// first-time sections, 1 + 2 + 3 (E4.1, `decisions.md §23.4`; Bio is its own box since E4.1).
 const BASE_HEADINGS: [&str; 24] = [
-    "Portrait",
+    "",
     "Languages",
     "Character Name",
     "",
@@ -1175,14 +1175,13 @@ fn page_one_text(root: &Path, paper: Paper, campaigns: Vec<CampaignNote>) -> (cr
 fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
     let root = seeded("header-no-portrait", ALDRIC_ID);
     for paper in [Paper::Letter, Paper::A4] {
-        let (document, one, pdf) = page_one_text(&root, paper, Vec::new());
+        let (document, one, _) = page_one_text(&root, paper, Vec::new());
         let name = document.title.clone();
         // E2.18: the portrait's cell is two rows tall, so the PDF's text reads it after the name row.
         assert!(one.starts_with("Character Name"), "{paper:?}: page 1's text opens with the name row: {one}");
-        assert_in_order(&one, &["Character Name", &name, "Campaign", "Portrait", "Languages"]);
+        assert_in_order(&one, &["Character Name", &name, "Campaign", "Languages"]);
         assert_eq!(one.matches(name.as_str()).count(), 1, "{paper:?}: the name prints once on page 1: {one}");
         assert!(!one.contains("Identity"), "{paper:?}: page 1 holds no Identity block: {one}");
-        assert_eq!(image_objects(&pdf), 0, "{paper:?}: no portrait saved, no image printed");
         let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
         assert_eq!(&ids[..3], ["portrait", "languages", "nameCampaign"], "{paper:?}: the top band's blocks lead the sheet (the Languages line under the portrait, E2.13)");
         let next = document.blocks.iter().position(|block| block.new_page).expect("a block opens page 2");
@@ -1190,31 +1189,73 @@ fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
     }
 }
 
-/// E2.5 (`decisions.md §23.1` item 1): a saved `portrait.png` prints inside page 1's portrait box
-/// (one image object in the PDF); an unreadable one never fails the print: the empty box prints
-/// and the render's warnings name the file.
+/// The width and height of every image the PDF holds (each stream whose `/Subtype` is `/Image`).
+fn image_sizes(pdf: &[u8]) -> Vec<(i64, i64)> {
+    let document = lopdf::Document::load_mem(pdf).expect("the PDF parses");
+    let int = |dict: &lopdf::Dictionary, key: &[u8]| dict.get(key).and_then(|value| value.as_i64()).expect("an image states its size");
+    document
+        .objects
+        .values()
+        .filter_map(|object| match object {
+            lopdf::Object::Stream(stream) if matches!(stream.dict.get(b"Subtype"), Ok(lopdf::Object::Name(name)) if name == b"Image") => {
+                Some((int(&stream.dict, b"Width"), int(&stream.dict, b"Height")))
+            }
+            _ => None,
+        })
+        .collect()
+}
+
+/// A PNG file's width and height, from its IHDR header.
+fn png_size(png: &[u8]) -> (i64, i64) {
+    assert_eq!(&png[..8], b"\x89PNG\r\n\x1a\n", "a PNG file");
+    let be = |at: usize| i64::from(u32::from_be_bytes([png[at], png[at + 1], png[at + 2], png[at + 3]]));
+    (be(16), be(20))
+}
+
+/// SD-41 E4.4 (`decisions.md §34` (7)): a saved `portrait.png` prints inside page 1's portrait box
+/// (the one image in the PDF is the portrait's 2 x 1 pixels, not the logo) and the word "portrait"
+/// prints nowhere on page 1; an unreadable one never fails the print: the box prints without it
+/// and the render's warnings name the file. Letter and A4.
 #[test]
-fn print_pf_blocks_a_saved_portrait_prints_on_page_one() {
-    let root = seeded("header-portrait", ALDRIC_ID);
+fn print_pf_blocks_page1_portrait_prints_the_stored_image() {
+    let root = seeded("page1-portrait", ALDRIC_ID);
     std::fs::write(root.join("portrait.png"), TEST_PORTRAIT_PNG).expect("the portrait saves");
     for paper in [Paper::Letter, Paper::A4] {
         let (_, one, pdf) = page_one_text(&root, paper, Vec::new());
-        assert_eq!(image_objects(&pdf), 1, "{paper:?}: the saved portrait prints as one image");
-        let caption = one.find("Campaign").map(|at| &one[at..]).unwrap_or_default();
-        assert!(caption.contains("Portrait"), "{paper:?}: the box keeps its caption (read after the name row, E2.18): {one}");
+        assert_eq!(image_sizes(&pdf), vec![png_size(&TEST_PORTRAIT_PNG)], "{paper:?}: the saved portrait is the one image printed");
+        assert!(!one.to_lowercase().contains("portrait"), "{paper:?}: the word never prints on page 1: {one}");
         if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
             std::fs::create_dir_all(&out).expect("the output dir is creatable");
-            std::fs::write(Path::new(&out).join(format!("aldric-portrait-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            std::fs::write(Path::new(&out).join(format!("aldric-portrait-page1-{paper:?}.pdf")), &pdf).expect("the PDF writes");
         }
     }
     std::fs::write(root.join("portrait.png"), b"not a png").expect("the broken portrait writes");
     let rendered = render_sheet_pdf_at_root(&root, &request(false, false, false)).expect("an unreadable portrait never fails the print");
-    assert_eq!(image_objects(&rendered.pdf), 0, "the unreadable portrait prints the empty box");
+    assert_eq!(image_objects(&rendered.pdf), 0, "the unreadable portrait is left out");
     assert!(
         rendered.warnings.iter().any(|warning| warning.contains("portrait.png")),
         "the warnings name the unreadable file: {:?}",
         rendered.warnings
     );
+}
+
+/// SD-41 E4.4 (`decisions.md §34` (7), §35 Q10): with no portrait saved, page 1's portrait box
+/// prints the Pathfinder logo (`resources/print/logos/pf1e.png`, the one image in the PDF) and
+/// never the word "portrait". Letter and A4.
+#[test]
+fn print_pf_blocks_page1_no_portrait_prints_the_system_logo_never_the_word() {
+    let root = seeded("page1-no-portrait", ALDRIC_ID);
+    let logo = std::fs::read(Path::new(env!("CARGO_MANIFEST_DIR")).join("resources/print/logos/pf1e.png")).unwrap_or_default();
+    assert!(!logo.is_empty(), "the Pathfinder logo is bundled at resources/print/logos/pf1e.png");
+    for paper in [Paper::Letter, Paper::A4] {
+        let (_, one, pdf) = page_one_text(&root, paper, Vec::new());
+        assert_eq!(image_sizes(&pdf), vec![png_size(&logo)], "{paper:?}: the system logo is the one image printed");
+        assert!(!one.to_lowercase().contains("portrait"), "{paper:?}: the word never prints on page 1: {one}");
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("aldric-no-portrait-page1-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+        }
+    }
 }
 
 /// E2.5 (`decisions.md §23.1` item 2): the Campaign field prints the names of the campaigns the
@@ -1679,7 +1720,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
             assert_eq!(one.matches("Armor Class").count(), 1, "{tag} {paper:?}: `Armor Class` prints once, as the AC box's label: {one}");
             assert_in_order(
                 &one,
-                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Fly", "Swim", "Climb", "Hit Points", "Weapons", "Attack", "Saving Throws", "Resistances", "Conditional Bonuses", "Abilities", "Skills"],
+                &["Character Name", "Campaign", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Fly", "Swim", "Climb", "Hit Points", "Weapons", "Attack", "Saving Throws", "Resistances", "Conditional Bonuses", "Abilities", "Skills"],
             );
         }
     }

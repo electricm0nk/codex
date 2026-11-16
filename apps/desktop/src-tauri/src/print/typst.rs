@@ -3,7 +3,8 @@
 //! The Typst world here is closed: its only files are the shared frame and blocks templates and
 //! the block looks (`resources/print/*.typ`, `resources/print/looks/*.typ`, compiled into the
 //! binary), the sheet's own JSON and the generated main
-//! file, and the images the sheet's blocks carry (the saved portrait, read by the caller); its only fonts are the bundled OFL Liberation Sans faces (`resources/fonts/`, compiled
+//! file, and the images the sheet's blocks carry (the saved portrait, read by the caller, or a game
+//! system's logo, compiled in); its only fonts are the bundled OFL Liberation Sans faces (`resources/fonts/`, compiled
 //! in). It never searches the system's fonts, never reads the disk and never asks for the date,
 //! so one sheet prints the same bytes on every machine (NR-3).
 
@@ -61,6 +62,23 @@ pub(crate) const LOOKS: &[(&str, &str)] = &[
     ("progression", include_str!("../../resources/print/looks/progression.typ")),
     ("notes", include_str!("../../resources/print/looks/notes.typ")),
 ];
+
+/// The game systems' logos (SD-41 `decisions.md §34` (7), §35 Q10; sources in
+/// `resources/print/logos/SOURCES.md`), by `game_system`: page 1's portrait box prints one when no
+/// portrait is saved. Compiled in, like the fonts, so the world still never reads the disk.
+const LOGOS: [(&str, &str, &[u8]); 2] = [
+    ("pf1", "/logos/pf1e.png", include_bytes!("../../resources/print/logos/pf1e.png")),
+    (crate::sf_adapter::STARFINDER_RULE_SYSTEM_ID, "/logos/sf1e.png", include_bytes!("../../resources/print/logos/sf1e.png")),
+];
+
+/// The logo of `game_system` as an image a block prints; `None` for a system with no logo file.
+pub fn logo(game_system: &str) -> Option<crate::print::model::SheetImage> {
+    LOGOS.iter().find(|(system, _, _)| *system == game_system).map(|(_, path, bytes)| crate::print::model::SheetImage {
+        path: (*path).to_owned(),
+        source: format!("resources/print{path}"),
+        bytes: bytes.to_vec(),
+    })
+}
 
 /// The bundled fonts, and nothing else: Liberation Sans 2.1.5, SIL OFL 1.1 (`resources/fonts/OFL.txt`).
 const FONT_FILES: [&[u8]; 4] = [

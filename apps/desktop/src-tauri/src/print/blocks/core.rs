@@ -11,10 +11,11 @@ use crate::print::model::{Look, SheetBlock, SheetRow};
 use codex::rules_core::pilot_compute::conditional_notes::ConditionalNote;
 use codex::rules_core::pilot_compute::ArmorClassPart;
 
-/// The portrait box (`portrait`, SD-40 E2.5): the saved portrait when the character has one (the
-/// frame scales it to fit), else the empty box; its caption is the heading.
+/// The portrait box (`portrait`, SD-40 E2.5): the image `sources.portrait` carries (the saved
+/// portrait, else the game system's logo; the frame scales it to fit). No heading: the word
+/// "portrait" never prints (SD-41 `decisions.md §34` (7)).
 pub fn portrait(sources: &SheetSources) -> SheetBlock {
-    SheetBlock::new("Portrait", Vec::new()).in_look(Look::Portrait).with_image(sources.portrait.clone())
+    SheetBlock::new("", Vec::new()).in_look(Look::Portrait).with_image(sources.portrait.clone())
 }
 
 /// The screen's IdentityPanel (`nameCampaign`, SD-40 E2.5): "Character Name" (the heading) over

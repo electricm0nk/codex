@@ -148,8 +148,8 @@ pub enum Look {
     /// The weapons table: a line per engine weapon row (attack, damage, critical, range), ammunition
     /// tick boxes under a weapon that fires it; no blank line (SD-41 `decisions.md §34` (5)).
     Weapons,
-    /// The portrait box (SD-40 E2.5): the saved portrait scaled into a frame, or the empty frame,
-    /// with its small "Portrait" caption.
+    /// The portrait box (SD-40 E2.5): the saved portrait, else the game system's logo, scaled into
+    /// a frame with no caption (SD-41 E4.4).
     Portrait,
     /// The Character Name and Campaign fields (the screen's IdentityPanel): each label over its
     /// value, a write-in line where there is none.

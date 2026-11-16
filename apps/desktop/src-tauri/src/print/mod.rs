@@ -147,7 +147,8 @@ pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<mod
     let (held, custom) =
         if system == "pf1" { (list_held_equipment_stacks_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
     let money = if system == "pf1" { Some(crate::character_hub::load_character_money_at_root(root)?) } else { None };
-    let portrait = if system == "pf1" { saved_portrait(root) } else { None };
+    // No saved portrait: the box prints the game system's logo, never the word (SD-41 `decisions.md §34` (7)).
+    let portrait = if system == "pf1" { saved_portrait(root).or_else(|| typst::logo(system)) } else { None };
     // Read as the Show Progression drawer reads it, and only when the section prints: it runs the engine once per level.
     let progression = if system == "pf1" && request.sections().progression { Some(list_progression_ledger_at_root(root)?) } else { None };
     let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, progression, request };
