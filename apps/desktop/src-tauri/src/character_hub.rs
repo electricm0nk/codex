@@ -5577,8 +5577,8 @@ fn is_owned_copy(selection: &EquipmentSelection) -> bool {
 /// character can buy, and every enhancement eqmod.
 ///
 /// One row per copy, each with where it is in the active set, its custom name and its pieces
-/// (`equipment_sets.json`, written here first when the root has none). The print reads this list;
-/// the Market and the Gear tab read [`list_held_equipment_stacks_at_root`].
+/// (`equipment_sets.json`, written here first when the root has none). The print, the Market and
+/// the Gear tab read [`list_held_equipment_stacks_at_root`].
 pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let rows = held_copy_rows(root, &envelope.character_input)?;

@@ -2,13 +2,15 @@
 // weapons in hand. The first row names the columns; each weapon prints on one line its name, its
 // attack total, its damage total (`1d8+4`), its critical and its range, then its feat notes. Blank
 // lines follow for the pencil (a rule for the name, the four boxes) until the table holds three
-// lines (E2.22: so one to three weapons take one height and Letter's page 1 holds the Resistances),
-// then the ammunition write-in. Any other row (a per-weapon engine row no weapon in hand matches, "No weapon is
+// lines (E2.22: so one to three weapons take one height and Letter's page 1 holds the Resistances).
+// A weapon that fires ammunition (a row of kind `ammunition`, SD-41 decisions.md §23) prints 20 tick
+// boxes under its line, after the words of its fifth value (`Arrow: 60 carried`, or none); the
+// others print none, and there is no ammunition row for the whole block. Any other row (a per-weapon engine row no weapon in hand matches, "No weapon is
 // wielded.") prints its label and values under the table. It formats strings it is given; it adds
 // nothing up (NR-2).
 //
 // A weapon row's values, as `print/blocks/gear.rs` sends them: 0 attack, 1 damage, 2 critical,
-// 3 range.
+// 3 range, and for a row of kind `ammunition` 4 the count's words.
 //
 // Page 1's overflow rule (E2.4, decisions.md §23.2 SD-b): the frame may mark the block `compact`
 // (the lines at the 8 pt floor), then hand it a shorter `list` and `more` (the rest continues on
@@ -45,7 +47,21 @@
   ..values.map(v => value-box(v, compact: compact)),
 )
 
-#let is-weapon(r) = r.values.len() == boxes and r.values.at(1) != ""
+#let is-weapon(r) = r.values.len() >= boxes and r.values.at(1) != ""
+
+// Tick boxes under a weapon that fires ammunition (decisions.md §23): the player marks what is shot.
+#let ticks = 20
+
+#let ammunition(r, compact: false) = grid(
+  columns: (auto, 1fr),
+  column-gutter: 0.15cm,
+  align(bottom, text(size: if compact { 7.5pt } else { 8pt }, r.values.at(4, default: ""))),
+  grid(
+    columns: (1fr,) * ticks,
+    column-gutter: 0.06cm,
+    ..range(ticks).map(_ => box(width: 100%, height: 0.32cm, stroke: 0.5pt + luma(60))),
+  ),
+)
 
 // The list the overflow rule may split: every row under the captions, weapons first.
 #let items(b) = {
@@ -74,24 +90,13 @@
       ..weapons.map(r => stack(
         spacing: 0.06cm,
         line-of(align(left + horizon, text(size: size, weight: "bold", r.label)), r.values.slice(0, boxes), compact: compact),
+        ..if r.at("kind", default: "") == "ammunition" { (ammunition(r, compact: compact),) },
         ..r.notes.map(n => text(size: 8pt, fill: luma(40), n)),
       )),
       // Blank weapons up to three lines, for what the character picks up at the table (the name on
-      // the rule), and the ammunition; when the list continues on page 2, they print there, after
-      // the last line.
+      // the rule); when the list continues on page 2, they print there, after the last line.
       ..if not more { (
         ..range(calc.max(0, 3 - items(b).filter(is-weapon).len())).map(_ => line-of(write-line, ("",) * boxes, compact: compact)),
-        v(0.05cm),
-        grid(
-          columns: (auto, 1fr),
-          column-gutter: 0.15cm,
-          align(bottom, text(size: 8pt, weight: "bold", "Ammunition")),
-          grid(
-            columns: (1fr,) * 10,
-            column-gutter: 0.06cm,
-            ..range(10).map(_ => box(width: 100%, height: 0.32cm, stroke: 0.5pt + luma(60))),
-          ),
-        ),
       ) },
       ..others.map(r => {
         text(size: if compact { 8pt } else { 8.5pt }, weight: "bold", r.label)
@@ -103,5 +108,6 @@
       }),
       ..if more { (caption[continued on page 2],) },
     )
+    #metadata((ammunition: weapons.filter(r => r.at("kind", default: "") == "ammunition").len(), boxes: ticks)) <weapons-look>
   ]
 }

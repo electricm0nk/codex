@@ -37,7 +37,7 @@ pub fn custom(sources: &SheetSources) -> SheetBlock {
     let conditions = if custom.conditions.is_empty() { "Normal".to_owned() } else { custom.conditions.join(", ") };
     rows.push(SheetRow::new("Conditions", [conditions]));
     let flags = custom.overrides;
-    let on: Vec<String> = [
+    let mut on: Vec<String> = [
         (flags.feats_without_prerequisites, crate::character_ledger::OverrideFlag::FeatsWithoutPrerequisites),
         (flags.weapons_without_proficiency, crate::character_ledger::OverrideFlag::WeaponsWithoutProficiency),
         (flags.spells_outside_class_list, crate::character_ledger::OverrideFlag::SpellsOutsideClassList),
@@ -51,6 +51,10 @@ pub fn custom(sources: &SheetSources) -> SheetBlock {
     .filter(|(set, _)| *set)
     .map(|(_, flag)| super::override_tag(flag))
     .collect();
+    // SD-41 `decisions.md §32`: no admitted record stands behind it, so it is no `OverrideFlag`.
+    if flags.ignore_container_capacity {
+        on.push("Override: Ignore container capacity limits".to_owned());
+    }
     if !on.is_empty() {
         rows.push(SheetRow::new("Overrides on", Vec::<String>::new()).with_notes(on));
     }

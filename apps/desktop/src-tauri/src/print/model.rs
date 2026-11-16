@@ -176,8 +176,9 @@ pub enum Look {
     /// The armor and shield table (SD-40 E3.2): a line per worn piece under its captions, one blank
     /// row, then the worn totals.
     Defense,
-    /// The Gear (SD-40 E3.2): Worn, Carried and Left behind, each its items and two blank rows, then
-    /// the carried weight, the load and the three limits.
+    /// The Gear (SD-40 E3.2; SD-41 E4.1): Worn, Carried and Not Carried, each its items (a
+    /// container's contents nested under it) and two blank rows, then the carried weight, the load
+    /// and the three limits.
     Gear,
     /// The Money (SD-40 E3.2): four coin boxes (PP, GP, SP, CP) and a four-line write-in ledger.
     Money,

@@ -1,11 +1,13 @@
 //! Weapons, and section 3's Defense, Gear and Money (SD-40 E3.2). Weapons print page 1's totals (SD-40 E2.10): the attack total and
 //! the engine's damage total (`1d8+4`, E2.14), the dice literal, nothing summed here. The
-//! Inventory lists every owned copy off `list_held_equipment_at_root` -- worn, carried or left
-//! behind (E7.5, operator ruling R21) -- and a copy left behind weighs nothing.
+//! Inventory lists every owned stack off `list_held_equipment_stacks_at_root` where the active set
+//! puts it -- worn, carried, in a container or Not Carried (SD-41 E4.1) -- and a copy not carried
+//! is not weighed.
 
 use super::{derivation, override_tag, pounds, trim_number, words_of, SheetSources};
-use crate::character_hub::{ActiveStateDto, WeaponDamageDto};
+use crate::character_hub::{ActiveStateDto, ContainerCapacityDto, ContainerLoadDto, HeldEquipmentCopyDto, WeaponDamageDto};
 use codex::rules_core::body_slots::BodySlot;
+use codex::saved_character::equipment_sets::Location;
 use crate::print::layout::{signed, NO_VALUE};
 use crate::print::model::{Look, SheetBlock, SheetRow};
 
@@ -54,9 +56,21 @@ fn item_name(sources: &SheetSources, item_id: &str, record_key: Option<&str>) ->
         .unwrap_or_else(|| item_id.to_owned())
 }
 
-/// A carried weapon's line says so (SD-41 `decisions.md §9, §33`: never an unmarked carried weapon).
+/// A carried weapon's line says so (SD-41 `decisions.md §9, §33`: never an unmarked carried
+/// weapon), and a nonlethal strike's (the Unarmed row, `decisions.md §22`).
 fn marked(name: String, weapon: &WeaponDamageDto) -> String {
-    if weapon.in_hand { name } else { format!("{name} (carried)") }
+    let carried = if weapon.in_hand { "" } else { " (carried)" };
+    let nonlethal = if weapon.nonlethal { " (nonlethal)" } else { "" };
+    format!("{name}{carried}{nonlethal}")
+}
+
+/// What a weapon that fires ammunition prints beside its tick boxes: `Arrow: 60 carried`, the
+/// engine's count of matching pieces carried (`decisions.md §23, §28`); empty when it counts none.
+fn ammunition_words(weapon: &WeaponDamageDto) -> String {
+    if weapon.ammunition_carried == 0 {
+        return String::new();
+    }
+    format!("{}: {} carried", weapon.ammunition_family.as_deref().unwrap_or("Ammunition"), weapon.ammunition_carried)
 }
 
 fn critical(weapon: &WeaponDamageDto) -> String {
@@ -73,8 +87,11 @@ fn critical(weapon: &WeaponDamageDto) -> String {
 /// weapon in hand, its cells the attack total (`combat.weapon_attack_bonus.<weapon>`), the damage
 /// total (`combat.weapon_damage_total.<weapon>`), the critical and the range increment, then its feat
 /// notes; the engine's four per-weapon rows are behind that line (Show the math), not lines of their
-/// own. A per-weapon row no weapon in hand matches still prints, as a line of its own. The `weapons`
-/// look adds the blank lines and the ammunition write-in.
+/// own. A per-weapon row no weapon in hand matches still prints, as a line of its own. The engine
+/// orders the lines: in hand, then carried "(carried)", then the Unarmed strike last (SD-41
+/// `decisions.md §9, §22`). A weapon that fires ammunition is a line of kind `ammunition` with a
+/// fifth value, its count's words (`decisions.md §23`); the `weapons` look prints its 20 tick boxes
+/// under it and adds the blank lines.
 pub fn weapons(sources: &SheetSources) -> SheetBlock {
     let mut rows = vec![SheetRow::new("Weapon", ["Attack", "Damage", "Critical", "Range"].map(str::to_owned))];
     let mut placed: Vec<&str> = Vec::new();
@@ -89,11 +106,12 @@ pub fn weapons(sources: &SheetSources) -> SheetBlock {
         let range = weapon.range_increment.map_or_else(|| NO_VALUE.to_owned(), |feet| format!("{feet} ft."));
         let notes = weapon.feat_effects.iter().map(|effect| format!("{}: {} damage", effect.feat_key, signed(effect.damage_bonus)));
         let [attack, damage] = [0, 1].map(|index| weapon_cell(found[index].0, found[index].1));
-        rows.push(
-            SheetRow::new(marked(name, weapon), [attack, damage, critical(weapon), range])
-                .with_notes(notes)
-                .derived(found.iter().filter_map(|(_, row)| row.map(derivation)).collect()),
-        );
+        let mut values = vec![attack, damage, critical(weapon), range];
+        if weapon.uses_ammunition {
+            values.push(ammunition_words(weapon));
+        }
+        let line = SheetRow::new(marked(name, weapon), values).with_notes(notes).derived(found.iter().filter_map(|(_, row)| row.map(derivation)).collect());
+        rows.push(if weapon.uses_ammunition { line.of_kind("ammunition") } else { line });
     }
     for row in &sources.loaded.explanations {
         if placed.contains(&row.id.as_str()) {
@@ -196,39 +214,152 @@ pub fn armor(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Armor and Shields", rows).in_look(Look::Defense)
 }
 
-/// The Gear block (SD-40 E3.2, section 3 Inventory): every owned copy off `list_held_equipment_at_root`
-/// under one of three sections, Worn (in body-slot order, its slot beside it), Carried and Left
-/// behind, each with the weight the engine carries it at (a copy left behind weighs nothing); then
-/// the carried weight, the load and the three limits. The `gear` look adds two blank rows per section.
-pub fn inventory(sources: &SheetSources) -> SheetBlock {
-    let encumbrance = &sources.loaded.corpus_derived.encumbrance;
-    // The engine weighs each copy it carries, in selection order; a copy left behind is not weighed.
-    let mut weighed: Vec<Option<&crate::character_hub::CarriedItemDto>> = encumbrance.per_item.iter().map(Some).collect();
-    let mut sections: [(&str, Vec<(BodySlot, SheetRow)>); 3] = [("Worn", Vec::new()), ("Carried", Vec::new()), ("Left behind", Vec::new())];
-    for copy in &sources.held {
-        let (section, slot, weight) = match copy.active_state {
-            ActiveStateDto::Absent => (2, String::new(), "no weight".to_owned()),
-            ActiveStateDto::EquippedActive | ActiveStateDto::SelectedInactive => {
-                let weight = weighed
-                    .iter_mut()
-                    .find(|slot| slot.is_some_and(|item| item.item_id == copy.item_id))
-                    .and_then(Option::take)
-                    .map_or_else(|| NO_VALUE.to_owned(), |item| pounds(item.weight_lbs));
-                if copy.active_state == ActiveStateDto::EquippedActive {
-                    (0, slot_words(copy).unwrap_or_default(), weight)
-                } else {
-                    (1, String::new(), weight)
+/// An item line's kind by how deep it sits under containers: `item` at the top of its section,
+/// `in-<n>` under `n` containers (the `gear` look indents by `n`).
+// shortcut: a line nested deeper than 5 prints at depth 5; add kinds if sets ever nest deeper.
+const NESTING: [&str; 6] = ["item", "in-1", "in-2", "in-3", "in-4", "in-5"];
+
+/// `"<name> ×<n>"` in pieces; a bundle's `(20)` is dropped once bought (`gearScreenModel.ts`'s
+/// `stackLabel`, SD-41 `decisions.md §28, §30`).
+fn stack_label(copy: &HeldEquipmentCopyDto, quantity: u32) -> String {
+    let name = match copy.name.trim_end().strip_suffix(')').and_then(|rest| rest.rsplit_once('(')) {
+        Some((name, count)) if copy.base_quantity > 1 && !count.is_empty() && count.chars().all(|c| c.is_ascii_digit()) => name.trim_end(),
+        _ => copy.name.as_str(),
+    };
+    if quantity > 1 { format!("{name} ×{quantity}") } else { name.to_owned() }
+}
+
+/// A row's weight as the engine weighs each copy: `3 lb`, `3 × 3 lb` for a stack of like copies,
+/// `2 lb + 3 lb` for unlike ones; the no-value mark when the engine weighed not every copy. Nothing
+/// is summed here (NR-2).
+fn weight_words(weights: &[f64], copies: usize) -> String {
+    match weights {
+        _ if weights.len() != copies || weights.is_empty() => NO_VALUE.to_owned(),
+        [one] => pounds(*one),
+        [first, ..] if weights.iter().all(|weight| weight == first) => format!("{copies} × {}", pounds(*first)),
+        _ => weights.iter().map(|weight| pounds(*weight)).collect::<Vec<_>>().join(" + "),
+    }
+}
+
+/// A container copy's load as the engine states it (`gearScreenModel.ts`'s `capacityLabel`), with the
+/// over-capacity flag unless the character ignores container capacity limits (`decisions.md §32`).
+fn load_note(load: &ContainerLoadDto, ignore_capacity: bool) -> String {
+    let contents = trim_number(load.contents_lbs);
+    let holds = match load.capacity {
+        ContainerCapacityDto::Pounds { lbs } => format!("Holds {contents} of {} lb", trim_number(lbs)),
+        ContainerCapacityDto::Unlimited => format!("Holds {contents} lb, no limit"),
+        ContainerCapacityDto::Unstated => format!("Holds {contents} lb"),
+    };
+    if load.over && !ignore_capacity { format!("{holds}, over capacity") } else { holds }
+}
+
+/// The Gear block's lines, located as the active set places each stack (SD-41 `decisions.md §9`).
+struct Lines<'a> {
+    held: &'a [HeldEquipmentCopyDto],
+    /// Each stack's copies' weights, as the engine weighs them.
+    weights: Vec<Vec<f64>>,
+    loads: &'a [ContainerLoadDto],
+    ignore_capacity: bool,
+    placed: Vec<bool>,
+}
+
+impl<'a> Lines<'a> {
+    /// The stack `index` (its slot's words in `slot`) and, under each container copy of it, what that
+    /// copy holds one level deeper. `weighed` is false under Not Carried: names only.
+    fn push(&mut self, index: usize, slot: String, depth: usize, weighed: bool, out: &mut Vec<SheetRow>) {
+        self.placed[index] = true;
+        let (held, loads): (&'a [HeldEquipmentCopyDto], &'a [ContainerLoadDto]) = (self.held, self.loads);
+        let row = &held[index];
+        let kind = NESTING[depth.min(NESTING.len() - 1)];
+        let containers: Vec<(usize, &ContainerLoadDto)> =
+            row.copies.iter().enumerate().filter_map(|(at, copy)| loads.iter().find(|load| &load.copy == copy).map(|load| (at, load))).collect();
+        if containers.is_empty() {
+            let line = if weighed {
+                SheetRow::new(stack_label(row, row.quantity), [slot, weight_words(&self.weights[index], row.copies.len())]).with_notes(row.override_flag.map(override_tag))
+            } else {
+                SheetRow::new(stack_label(row, row.quantity), Vec::<String>::new())
+            };
+            out.push(line.of_kind(kind));
+            return;
+        }
+        // A container prints one line per copy, so each holds its own contents (`decisions.md §38`).
+        for (at, load) in containers {
+            let name = stack_label(row, 1);
+            let label = if row.copies.len() > 1 { format!("{name} #{}", at + 1) } else { name };
+            let line = if weighed {
+                let weight = self.weights[index].get(at).filter(|_| self.weights[index].len() == row.copies.len()).map_or_else(|| NO_VALUE.to_owned(), |lbs| pounds(*lbs));
+                SheetRow::new(label, [slot.clone(), weight]).with_notes(row.override_flag.map(override_tag).into_iter().chain([load_note(load, self.ignore_capacity)]))
+            } else {
+                SheetRow::new(label, Vec::<String>::new())
+            };
+            out.push(line.of_kind(kind));
+            let contents: Vec<usize> = (0..self.held.len())
+                .filter(|other| !self.placed[*other] && matches!(&self.held[*other].location, Location::Inside { container } if *container == load.copy))
+                .collect();
+            for other in contents {
+                if !self.placed[other] {
+                    self.push(other, String::new(), depth + 1, weighed, out);
                 }
             }
-        };
-        let row = SheetRow::new(copy.name.clone(), [slot, weight]).of_kind("item").with_notes(copy.override_flag.map(override_tag));
-        sections[section].1.push((copy.slot, row));
+        }
     }
-    sections[0].1.sort_by_key(|(slot, _)| *slot);
+}
+
+/// The Gear block (SD-40 E3.2; SD-41 E4.1, `decisions.md §9` A7): the active set by location. Worn:
+/// each slot in use in body-slot order, the slot's words beside the copy (a slotless worn copy reads
+/// `Equipped`); then Carried; each container's contents under it, one level deeper per nesting,
+/// the container's load beside it; then Not Carried, names only. Identical copies print as one
+/// stack (`<name> ×<pieces>`), each line with the weight the engine weighs its copies at. Then the
+/// carried weight, the load and the three limits, the engine's rows. The `gear` look indents the
+/// nested lines and adds two blank rows per section.
+pub fn inventory(sources: &SheetSources) -> SheetBlock {
+    let encumbrance = &sources.loaded.corpus_derived.encumbrance;
+    let held = &sources.held;
+    // The engine weighs each copy it carries, in saved order; a copy not carried is not weighed.
+    let mut weighed: Vec<Option<&crate::character_hub::CarriedItemDto>> = encumbrance.per_item.iter().map(Some).collect();
+    let weights = held
+        .iter()
+        .map(|stack| {
+            if stack.active_state == ActiveStateDto::Absent {
+                return Vec::new();
+            }
+            stack
+                .copies
+                .iter()
+                .filter_map(|_| weighed.iter_mut().find(|slot| slot.is_some_and(|item| item.item_id == stack.item_id)).and_then(Option::take).map(|item| item.weight_lbs))
+                .collect()
+        })
+        .collect();
+    let mut lines = Lines { held, weights, loads: &sources.loaded.container_loads, ignore_capacity: sources.loaded.ignore_container_capacity, placed: vec![false; held.len()] };
+    let worn_slot = |stack: &HeldEquipmentCopyDto| match stack.location {
+        Location::Slot { slot } => Some(slot),
+        Location::Equipped => Some(BodySlot::None),
+        _ => None,
+    };
+    let mut worn: Vec<(BodySlot, usize)> = held.iter().enumerate().filter_map(|(index, stack)| worn_slot(stack).map(|slot| (slot, index))).collect();
+    worn.sort_by_key(|(slot, _)| *slot);
+    let mut sections: [(&str, Vec<SheetRow>); 3] = [("Worn", Vec::new()), ("Carried", Vec::new()), ("Not Carried", Vec::new())];
+    for (slot, index) in worn {
+        let words = if slot == BodySlot::None { "Equipped".to_owned() } else { slot_words(slot) };
+        lines.push(index, words, 0, true, &mut sections[0].1);
+    }
+    for (section, location, weighs) in [(1, Location::Carried, true), (2, Location::NotCarried, false)] {
+        for (index, stack) in held.iter().enumerate() {
+            if !lines.placed[index] && stack.location == location {
+                lines.push(index, String::new(), 0, weighs, &mut sections[section].1);
+            }
+        }
+    }
+    // A copy inside a container no stack holds still prints, under Carried.
+    for (index, stack) in held.iter().enumerate() {
+        if !lines.placed[index] {
+            lines.push(index, String::new(), 0, stack.active_state != ActiveStateDto::Absent, &mut sections[1].1);
+        }
+    }
     let mut rows = vec![SheetRow::new("Item", ["Slot".to_owned(), "Weight".to_owned()]).of_kind("captions")];
     for (title, items) in sections {
         rows.push(SheetRow::new(title, Vec::<String>::new()).of_kind("section"));
-        rows.extend(items.into_iter().map(|(_, row)| row));
+        rows.extend(items);
     }
     rows.extend(
         [
@@ -256,9 +387,7 @@ pub fn money(sources: &SheetSources) -> SheetBlock {
     SheetBlock::new("Money", rows).in_look(Look::Money)
 }
 
-/// Where a worn copy sits, in words (`wield_main` reads `Wield main`); none for a slotless item.
-fn slot_words(copy: &crate::character_hub::HeldEquipmentCopyDto) -> Option<String> {
-    let slot = serde_json::to_value(copy.slot).ok()?;
-    let slot = slot.as_str()?;
-    (slot != "none").then(|| words_of(slot))
+/// A body slot in words (`wield_main` reads `Wield main`).
+fn slot_words(slot: BodySlot) -> String {
+    serde_json::to_value(slot).ok().and_then(|slot| slot.as_str().map(words_of)).unwrap_or_default()
 }
