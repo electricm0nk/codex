@@ -1445,8 +1445,23 @@ pub(crate) fn map_resolved_equipment_dto(item: &ResolvedEquipment) -> ResolvedEq
     }
 }
 
+/// The ids of `ids` that are items: a selection that is not an owned copy (`is_owned_copy`: the
+/// feat toggle, the loadout's no-shield row) is neither unweighed nor unshown. An id no selection
+/// names stays.
+fn only_item_ids(ids: &[String], selections: &[EquipmentSelection]) -> Vec<String> {
+    ids.iter()
+        .filter(|id| {
+            let mut rows = selections.iter().filter(|selection| &selection.item_id == *id).peekable();
+            rows.peek().is_none() || rows.any(is_owned_copy)
+        })
+        .cloned()
+        .collect()
+}
+
 // `pub(crate)` — same reason as `map_snapshot_dto` above.
-pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDerivedDto {
+pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection, selections: &[EquipmentSelection]) -> CorpusDerivedDto {
+    let mut encumbrance = map_encumbrance_dto(&section.encumbrance);
+    encumbrance.unresolved_item_ids = only_item_ids(&encumbrance.unresolved_item_ids, selections);
     CorpusDerivedDto {
         school_coverage: section
             .school_coverage
@@ -1486,9 +1501,9 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
             attack_bonus_delta: section.equipment_effects.attack_bonus_delta,
             spell_resistance_total: section.equipment_effects.spell_resistance_total,
         },
-        encumbrance: map_encumbrance_dto(&section.encumbrance),
+        encumbrance,
         unresolved_spell_ids: section.unresolved_spell_ids.clone(),
-        unresolved_equipment_item_ids: section.unresolved_equipment_item_ids.clone(),
+        unresolved_equipment_item_ids: only_item_ids(&section.unresolved_equipment_item_ids, selections),
     }
 }
 
@@ -2295,7 +2310,7 @@ pub(crate) fn create_character_at_root(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note,
         mirror_warnings: mirror_warnings_at_root(root),
     })
@@ -2392,7 +2407,7 @@ fn clone_character_at_roots(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note: None,
         mirror_warnings: mirror_warnings_at_root(new_root),
     })
@@ -3032,7 +3047,7 @@ pub(crate) fn load_saved_character_at_root(
         summary: summarize_envelope(&envelope),
         snapshot: snapshot.as_ref().map(map_snapshot_dto),
         diagnostics: map_diagnostics_dto(&diagnostics),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections),
         selected_feats: envelope.character_input.chosen.selected_feats.clone(),
         spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
         chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
@@ -7847,7 +7862,7 @@ fn import_character_from_json(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note: None,
         mirror_warnings: mirror_warnings_at_root(root),
     })
@@ -11874,6 +11889,30 @@ mod tests {
 
     fn worn_vs_carried_weight(root: &Path) -> f64 {
         load_saved_character_at_root(root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs
+    }
+
+    /// The Gear tab's "no corpus weight" and "not shown" lists name only items: the feat-toggle
+    /// row and the loadout's no-shield row are not things the character holds, while a held item
+    /// with no record still reports.
+    #[test]
+    fn unresolved_lists_hold_only_items() {
+        let (dir, root) = enhancement_rows_aldric("unresolved-only-items");
+        let bare = load_saved_character_at_root(&root).unwrap().corpus_derived;
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.equipment_selections.push(EquipmentSelection {
+            item_id: "Mystery Item".to_owned(),
+            equipped_or_active: false,
+            active_state: ActiveState::SelectedInactive,
+            applied_modifiers: Vec::new(),
+        });
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        let mystery = load_saved_character_at_root(&root).unwrap().corpus_derived;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(bare.encumbrance.unresolved_item_ids, Vec::<String>::new());
+        assert_eq!(bare.unresolved_equipment_item_ids, Vec::<String>::new());
+        assert_eq!(mystery.encumbrance.unresolved_item_ids, vec!["Mystery Item".to_owned()]);
+        assert_eq!(mystery.unresolved_equipment_item_ids, vec!["Mystery Item".to_owned()]);
     }
 
     /// Aldric's Armor Class with his Chain Shirt stowed is his Armor Class with no armor at all:
