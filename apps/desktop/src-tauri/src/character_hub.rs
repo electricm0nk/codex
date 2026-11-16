@@ -2199,9 +2199,11 @@ fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftShe
         .into_iter()
         .find(|row| row.id == codex::rules_core::pilot_compute::INITIATIVE_TOTAL_ID)
         .ok_or_else(|| "the engine computed no initiative total for this draft".to_owned())?;
+    let mut encumbrance = map_encumbrance_dto(&receipt.corpus_derived.encumbrance);
+    encumbrance.unresolved_item_ids = only_item_ids(&encumbrance.unresolved_item_ids, &input.chosen.equipment_selections);
     Ok(DraftSheetPreviewDto {
         initiative,
-        encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance),
+        encumbrance,
         feat_budget: feat_budget_rows(&input, &receipt.base),
     })
 }
