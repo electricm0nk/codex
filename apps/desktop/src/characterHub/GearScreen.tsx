@@ -6,6 +6,7 @@ import { moveEquipmentCopy } from '../boundary/moveEquipmentCopy';
 import type { EquipmentSetsSummaryDto } from '../boundary/loadSavedCharacterDetail';
 import { OverrideTag } from './OverrideTag';
 import {
+  containerTables,
   copyId,
   DRAG_FORMAT,
   dropTarget,
@@ -379,6 +380,37 @@ export function GearPanels(props: GearPanelsProps) {
     );
   };
 
+  // One held row with its buttons: the top-level list and every container table render the same row.
+  const gearRow = (row: GearRow, at: string) => (
+    <div {...dragSource(row)} {...(row.isContainer ? dropZone(`inside-${row.id}`, at) : {})} style={rowStyle}>
+      <span>
+        {row.label}
+        {tag(row)}
+        <span style={{ ...quiet, marginLeft: '0.5rem' }}>
+          {`${row.weightLabel} · ${row.locationLabel}`}
+          {row.capacityLabel ? ` · ${row.capacityLabel}` : ''}
+        </span>
+      </span>
+      <span style={{ display: 'flex', flexShrink: 0, gap: '0.3rem' }}>
+        <MoveToMenu model={model} row={row} busy={props.busy} onChoose={(location, label) => run({ kind: 'move', row, location, targetLabel: label }, at)} />
+        {row.held.location.kind !== 'notCarried' ? (
+          <button type="button" data-testid="gear-drop" aria-label={`Drop ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'drop', row }, at)} style={button}>
+            Drop
+          </button>
+        ) : null}
+        {row.held.itemId.startsWith('custom:') ? null : (
+          <button type="button" data-testid="gear-sell" aria-label={`Sell ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'sell', row }, at)} style={button}>
+            Sell
+          </button>
+        )}
+        <button type="button" data-testid="gear-discard" aria-label={`Discard ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'discard', row }, at)} style={button}>
+          Discard
+        </button>
+      </span>
+    </div>
+  );
+  const tables = containerTables(model);
+
   return (
     <section aria-label="Gear" className="no-print" style={{ marginBottom: '1.25rem' }}>
       <h3 style={{ fontSize: '0.95rem', margin: '0 0 0.25rem' }}>Gear</h3>
@@ -404,40 +436,45 @@ export function GearPanels(props: GearPanelsProps) {
             </select>
           </label>
           {model.rows.length === 0 ? <p style={quiet}>Nothing held yet.</p> : null}
-          {filterGearRows(model.rows, filter).map((row) => {
-            const at = `row:${row.id}`;
-            return (
-              <div key={at} data-testid={`gear-row-${row.id}`}>
-                <div {...dragSource(row)} {...(row.isContainer ? dropZone(`inside-${row.id}`, at) : {})} style={rowStyle}>
-                  <span>
-                    {row.label}
-                    {tag(row)}
-                    <span style={{ ...quiet, marginLeft: '0.5rem' }}>
-                      {`${row.weightLabel} · ${row.locationLabel}`}
-                      {row.capacityLabel ? ` · ${row.capacityLabel}` : ''}
-                    </span>
-                  </span>
-                  <span style={{ display: 'flex', flexShrink: 0, gap: '0.3rem' }}>
-                    <MoveToMenu model={model} row={row} busy={props.busy} onChoose={(location, label) => run({ kind: 'move', row, location, targetLabel: label }, at)} />
-                    {row.held.location.kind !== 'notCarried' ? (
-                      <button type="button" data-testid="gear-drop" aria-label={`Drop ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'drop', row }, at)} style={button}>
-                        Drop
-                      </button>
-                    ) : null}
-                    {row.held.itemId.startsWith('custom:') ? null : (
-                      <button type="button" data-testid="gear-sell" aria-label={`Sell ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'sell', row }, at)} style={button}>
-                        Sell
-                      </button>
-                    )}
-                    <button type="button" data-testid="gear-discard" aria-label={`Discard ${row.label}`} disabled={props.busy} onClick={() => run({ kind: 'discard', row }, at)} style={button}>
-                      Discard
-                    </button>
-                  </span>
+          {filterGearRows(model.rows, filter)
+            .filter((row) => row.held.location.kind !== 'inside')
+            .map((row) => {
+              const at = `row:${row.id}`;
+              return (
+                <div key={at} data-testid={`gear-row-${row.id}`}>
+                  {gearRow(row, at)}
+                  {formAt(at)}
                 </div>
-                {formAt(at)}
-              </div>
-            );
-          })}
+              );
+            })}
+          {tables.length > 0 ? (
+            <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', marginTop: '0.5rem' }}>
+              {tables.map((table) => (
+                <table key={copyId(table.copy)} data-testid={`gear-container-${copyId(table.copy)}`} style={{ ...panel, borderCollapse: 'collapse', width: '100%' }}>
+                  <caption style={{ fontSize: '0.8rem', fontWeight: 700, textAlign: 'left' }}>{table.loadLabel ? `${table.title} · ${table.loadLabel}` : table.title}</caption>
+                  <tbody>
+                    {table.rows.length === 0 ? (
+                      <tr>
+                        <td style={quiet}>Empty</td>
+                      </tr>
+                    ) : (
+                      table.rows.map((row) => {
+                        const at = `row:${row.id}`;
+                        return (
+                          <tr key={at} data-testid={`gear-row-${row.id}`}>
+                            <td>
+                              {gearRow(row, at)}
+                              {formAt(at)}
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              ))}
+            </div>
+          ) : null}
           <p style={{ ...quiet, marginTop: '0.5rem' }}>{DROP_SELL_DISCARD_CAPTION}</p>
         </div>
         <div style={panel}>

@@ -85,6 +85,8 @@ export interface GearModel {
   capacityOverride: boolean;
   /** "Ignore body slot limits" is on: Move to and drag offer a full slot too. */
   slotOverride: boolean;
+  /** The engine's per-container loads, as passed in: the container tables' captions read them. */
+  containerLoads: ReadonlyArray<ContainerLoadDto>;
 }
 
 export interface GearContext {
@@ -237,7 +239,7 @@ export function gearScreenModel(held: PlacedEquipmentCopyDto[], context: GearCon
           text: `${containerName(load.copy)} holds ${lb(load.contentsLbs)} lb, over its ${lb(load.capacity.kind === 'pounds' ? load.capacity.lbs : 0)} lb.`,
         }));
 
-  return { rows, tree, warnings, capacityOverride: ignore, slotOverride: context.ignoreSlotLimits === true };
+  return { rows, tree, warnings, capacityOverride: ignore, slotOverride: context.ignoreSlotLimits === true, containerLoads: context.containerLoads };
 }
 
 /** Copies in a slot: a count of what is there, one per copy of each row (a container row is one node per copy). */
@@ -287,11 +289,39 @@ export function moveTargets(model: GearModel, row: GearRow): MoveTarget[] {
       if (inside.has(copyId(copy)) || here) {
         return;
       }
-      const label = candidate.held.copies.length > 1 ? `${stackLabel({ ...candidate.held, quantity: 1 })} #${index + 1}` : stackLabel({ ...candidate.held, quantity: 1 });
-      targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${label}`, location: { kind: 'inside', container: copy } });
+      targets.push({ id: `inside-${copyId(copy)}`, label: `Into ${copyTitle(candidate, index)}`, location: { kind: 'inside', container: copy } });
     });
   }
   return targets;
+}
+
+/** A container copy's name: `Pouch, Belt #2` in a stack, the plain name for one copy. */
+function copyTitle(row: GearRow, index: number): string {
+  const name = stackLabel({ ...row.held, quantity: 1 });
+  return row.held.copies.length > 1 ? `${name} #${index + 1}` : name;
+}
+
+export interface ContainerTable {
+  copy: CopyKeyDto;
+  title: string;
+  /** The copy's `containerLoads` figure as the engine gave it; null when the engine sent none. */
+  loadLabel: string | null;
+  /** The rows directly inside this copy, one level deep. */
+  rows: GearRow[];
+}
+
+/** One table per container copy, in row then copy order (`decisions.md §38`); no weight is summed here. */
+export function containerTables(model: GearModel): ContainerTable[] {
+  return model.rows
+    .filter((row) => row.isContainer)
+    .flatMap((row) =>
+      row.held.copies.map((copy, index) => ({
+        copy,
+        title: copyTitle(row, index),
+        loadLabel: capacityLabel(model.containerLoads.find((load) => sameCopy(load.copy, copy))),
+        rows: model.rows.filter((candidate) => candidate.held.location.kind === 'inside' && sameCopy(candidate.held.location.container, copy)),
+      })),
+    );
 }
 
 /** The drag data's format: the dragged row's id (`GearRow.id`). */

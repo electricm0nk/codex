@@ -5,6 +5,7 @@ import type { ContainerLoadDto } from '../boundary/loadSavedCharacterDetail';
 import { assert, assertEqual } from '../testSupport/asserts';
 import { GearPanels } from './GearScreen';
 import {
+  containerTables,
   DRAG_FORMAT,
   dropTarget,
   filterGearRows,
@@ -228,4 +229,57 @@ assert(overriddenTargets.includes('slot-armor'), 'override: every full slot is o
 assert(!moveTargets(overridden, overridden.rows.find((candidate) => candidate.held.name === 'Longsword')!).some((target) => target.id === 'slot-wield_main'), 'override: still not its own slot');
 assertEqual(JSON.stringify(dropTarget(dragging('item:dagger-0-0'), 'slot-wield_main', overridden)), JSON.stringify({ kind: 'slot', slot: 'wield_main' }), 'override: a drop onto a full slot moves there');
 
-console.log('gearScreenModel.test.ts: 14 cases passed');
+// 15. One table per container copy (`decisions.md §38`): a backpack holding 4 belt pouches and chalk, pouch #1 a whetstone → 5 tables.
+const PACK = key('item:backpack');
+const POUCHES = [0, 1, 2, 3].map((ordinal) => key('item:pouch_belt', ordinal));
+const NEST: PlacedEquipmentCopyDto[] = [
+  held('Backpack', { kind: 'carried' }),
+  held('Pouch, Belt', { kind: 'inside', container: PACK }, { itemId: 'item:pouch_belt', copies: POUCHES }),
+  held('Chalk', { kind: 'inside', container: PACK }),
+  held('Whetstone', { kind: 'inside', container: POUCHES[0] }),
+  held('Dagger', { kind: 'carried' }),
+];
+const NEST_LOADS: ContainerLoadDto[] = [
+  { copy: PACK, contentsLbs: 3, capacity: { kind: 'pounds', lbs: 60 }, over: false },
+  ...POUCHES.map((copy, index): ContainerLoadDto => ({ copy, contentsLbs: index === 0 ? 1 : 0, capacity: { kind: 'unlimited' }, over: false })),
+];
+const nest = gearScreenModel(NEST, { perItem: [], containerLoads: NEST_LOADS });
+const tables = containerTables(nest);
+assertEqual(tables.length, 5, 'tables: backpack + 4 pouches');
+assertEqual(tables.map((table) => table.title).join(' | '), 'Backpack | Pouch, Belt #1 | Pouch, Belt #2 | Pouch, Belt #3 | Pouch, Belt #4', 'tables: titled as Move to titles them');
+assertEqual(tables.map((table) => table.rows.length).join(','), '2,1,0,0,0', 'tables: direct contents per copy');
+assertEqual(tables[0].rows.map((candidate) => candidate.label).join(', '), 'Pouch, Belt ×4, Chalk', 'tables: the backpack holds the pouch stack and the chalk');
+assertEqual(tables[1].rows[0].label, 'Whetstone', 'tables: pouch #1 holds the whetstone');
+assertEqual(tables.map((table) => table.loadLabel).join(' | '), '3 of 60 lb | 1 lb, no limit | 0 lb, no limit | 0 lb, no limit | 0 lb, no limit', 'tables: the load labels as containerLoads gives them');
+assertEqual(nest.rows.length, NEST.length, 'tables: GearModel.rows unchanged');
+
+// 16. A nested container is a row in its parent's table and has its own table; one level deep only.
+assert(!tables[0].rows.some((candidate) => candidate.label === 'Whetstone'), 'tables: one level deep, the whetstone is not in the backpack\'s table');
+assert(tables[0].rows.some((candidate) => candidate.isContainer) && tables.some((table) => table.copy.itemId === 'item:pouch_belt'), 'tables: the pouch is a row and a table');
+const nestedTables = containerTables(model);
+assertEqual(nestedTables.map((table) => `${table.title}: ${table.rows.map((candidate) => candidate.label).join(', ')}`).join(' | '), 'Backpack: Belt Pouch, Arrows ×40 | Belt Pouch: Trail Rations ×2', 'tables: the fixture\'s backpack and pouch');
+
+// 17. The view: one table per container copy, each content row with Move to, Sell and Discard inside it; the top level keeps the rest.
+const nestHtml = renderToStaticMarkup(
+  createElement(GearPanels, {
+    model: nest,
+    armorClass: null,
+    carriedLbs: null,
+    busy: false,
+    refusal: null,
+    onMove: noop,
+    onDrop: noop,
+    onSell: noop,
+    onDiscard: noop,
+    onSets: { activate: noop, create: noop, rename: noop, remove: noop },
+  }),
+);
+assertEqual(nestHtml.split('data-testid="gear-container-').length - 1, 5, 'view: one table per container copy');
+const pouchTable = nestHtml.slice(nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-0"'), nestHtml.indexOf('data-testid="gear-container-item:pouch_belt-0-1"'));
+assert(pouchTable.includes('Pouch, Belt #1 · 1 lb, no limit'), 'view: the caption reads title · load');
+assert(pouchTable.includes('Whetstone') && pouchTable.includes('data-testid="gear-discard"') && pouchTable.includes('data-testid="gear-sell"') && pouchTable.includes('data-testid="gear-move-to"'), 'view: a content row keeps its buttons inside the table');
+assert(nestHtml.includes('>Empty<'), 'view: an empty container reads Empty');
+const topLevel = nestHtml.slice(0, nestHtml.indexOf('data-testid="gear-container-'));
+assert(topLevel.includes('gear-row-item:dagger-0-0') && !topLevel.includes('gear-row-item:chalk-0-0'), 'view: the top level keeps only rows not inside a container');
+
+console.log('gearScreenModel.test.ts: 17 cases passed');
