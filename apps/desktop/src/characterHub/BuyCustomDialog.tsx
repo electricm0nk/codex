@@ -120,7 +120,7 @@ export function BuyCustomDialogView(props: BuyCustomDialogViewProps) {
       {props.options && props.options.materials.length > 0 ? (
         <label>
           Material{' '}
-          <select aria-label="Material" value={draft.material} onChange={(event) => set({ material: event.target.value })} style={field}>
+          <select aria-label="Material" value={draft.material} onChange={(event) => set({ material: event.target.value })} style={{ ...field, maxWidth: '100%' }}>
             <option value="">None</option>
             {props.options.materials.map((option) => (
               <option key={option.key} value={option.key}>

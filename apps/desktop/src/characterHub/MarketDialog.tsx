@@ -235,7 +235,7 @@ export function MarketDialogView(props: MarketDialogViewProps) {
         ) : null}
       </div>
 
-      <div style={{ display: 'flex', flex: 1, flexWrap: 'wrap', minHeight: 0, overflowY: 'auto' }}>
+      <div data-testid="market-body" style={{ display: 'flex', flex: 1, minHeight: 0 }}>
         <div style={{ display: 'flex', flex: '2 1 480px', flexDirection: 'column', minHeight: 0 }}>
           <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
             {props.loadError ? <p role="alert" style={{ color: 'var(--color-error, #c0392b)', fontSize: '0.85rem', padding: '1rem' }}>{props.loadError}</p> : null}

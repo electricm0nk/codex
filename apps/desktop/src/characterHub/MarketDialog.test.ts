@@ -204,6 +204,12 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   assert(html.includes('Price<!-- --> ▼') || html.includes('Price ▼'), 'the sorted column says which way');
   assert(html.includes('4 lb') && html.includes('Main hand'), 'weight and slot cells');
   assert(html.includes('A heavy blade.'), 'the description box shows the highlighted row');
+  // The box stays in view under the table: the table column and the inventory sit in one single-line
+  // row, so the column takes the dialog's height and only the table's own list scrolls. A wrapping
+  // row grew to the 200 rows' height and put the box below them, out of sight (sd41-e3.mc screenshot).
+  const body = /<div data-testid="market-body" style="([^"]*)"/.exec(html);
+  assert(body !== null, 'the table and inventory row is marked');
+  assert(!body![1].includes('flex-wrap:wrap'), 'the table and inventory row does not wrap');
   assert(html.includes('checked=""'), 'Only Show Affordable reflects its state');
   assert(html.includes('3 × 15 gp = 45 gp'), 'the price beside Buy is the quantity total');
   assert(html.includes('>Negotiate</button>'), 'Negotiate on the inventory rows too');
@@ -231,6 +237,8 @@ assertEqual(marketPlacementWords('SelectedInactive', null), 'carried', 'an item 
   const base = { baseName: 'Longsword', currency: 'gp', options, draft: { ...EMPTY_BUY_CUSTOM, quantity: '2' }, onDraft: () => {}, error: null, busy: false, onBuy: () => {}, onClose: () => {} };
   const priced = renderToStaticMarkup(createElement(BuyCustomDialogView, { ...base, quote: { modifiers: [], priceGp: 10015, unpriced: [], weightLbs: 2 } }));
   assert(priced.includes('Total: 2 × 10,015 gp = 20,030 gp'), 'the running total is the quote times the quantity');
+  // A long material label (a requirement list) must not widen the select past the dialog (sd41-e3.mc screenshot).
+  assert(/<select aria-label="Material"[^>]*style="[^"]*max-width:100%/.test(priced), 'the Material select fits the dialog');
   assert(priced.includes('Flaming (+1 equivalent)') && priced.includes('Odd (price: negotiate)') && priced.includes('Mithral') && priced.includes('Large'), 'abilities, materials and sizes from the options');
   const unpriced = renderToStaticMarkup(createElement(BuyCustomDialogView, { ...base, quote: { modifiers: [], priceGp: null, unpriced: ['ODD'], weightLbs: 4 } }));
   assert(unpriced.includes('price: negotiate (no price for ODD)'), 'an unpriced quote says so, and which part');
