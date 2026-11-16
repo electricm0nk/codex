@@ -16,12 +16,9 @@
 // (the lines at the 8 pt floor), then hand it a shorter `list` and `more` (the rest continues on
 // page 2: the write-in lines go with it); the rest prints as a `continued` block of its own.
 
-#let heading-of(b) = {
-  text(size: 12pt, weight: "bold", b.heading)
-  v(-0.4em)
-  line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+#import "/looks/section-title.typ": section-title
+
+#let heading-of(b) = section-title(b.heading)
 
 #let caption(t) = text(size: 8pt, fill: luma(60), t)
 

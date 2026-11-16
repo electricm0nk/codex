@@ -2,12 +2,9 @@
 // Fortitude, Reflex, Will, each its total, side by side. The save notes print in the Conditional
 // Bonuses box (E2.20, decisions.md §24.3.4). The look adds nothing up (NR-2).
 
-#let heading-of(b) = {
-  text(size: 12pt, weight: "bold", b.heading)
-  v(-0.4em)
-  line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+#import "/looks/section-title.typ": section-title
+
+#let heading-of(b) = section-title(b.heading)
 
 // A value the engine filled, or (an empty string) a ruled write-in box the player fills.
 #let value-box(v, width: 100%, height: 0.75cm, size: 11pt) = box(

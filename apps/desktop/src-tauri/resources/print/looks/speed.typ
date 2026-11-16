@@ -2,12 +2,9 @@
 // its label beside a box holding what the engine states ("30 ft.", "60 ft. (average)"), or an empty
 // box for the pencil. It formats; it computes nothing (NR-2).
 
-#let heading-of(b) = {
-  text(size: 12pt, weight: "bold", b.heading)
-  v(-0.4em)
-  line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+#import "/looks/section-title.typ": section-title
+
+#let heading-of(b) = section-title(b.heading)
 
 // A value the engine filled, or (an empty string) a ruled write-in box the player fills.
 #let value-box(v, width: 100%, height: 0.75cm, size: 11pt) = box(

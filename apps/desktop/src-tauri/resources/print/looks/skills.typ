@@ -13,12 +13,9 @@
 // names are at the floor already) and cut from its end (`list`, `more`: the rest continues on page
 // 2); a `continued` block prints the rest the same way under its heading.
 
-#let heading-of(b) = {
-  text(size: 12pt, weight: "bold", b.heading)
-  v(-0.4em)
-  line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+#import "/looks/section-title.typ": section-title
+
+#let heading-of(b) = section-title(b.heading)
 
 #let caption(t) = text(size: 8pt, fill: luma(60), t)
 

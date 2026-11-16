@@ -156,8 +156,8 @@ pub enum Look {
     NameCampaign,
     /// The languages (SD-40 E2.13): the known list as one comma list, then one blank write-in line.
     Languages,
-    /// The Conditional Bonuses box (SD-40 E2.20): an outlined box of fixed height, a ruled line per
-    /// conditional, then blank write-in lines to its foot.
+    /// The Conditional Bonuses box (SD-40 E2.20): an outlined box of fixed height, a line per
+    /// conditional, then empty room to its foot, no ruled line (SD-41 `decisions.md §34` (3)).
     ConditionalBonuses,
     /// The Resistances block (SD-40 E2.22): five energy boxes, Damage Reduction, Spell Resistance and
     /// Immunities, each empty when the character has none.

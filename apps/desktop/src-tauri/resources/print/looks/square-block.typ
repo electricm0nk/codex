@@ -10,12 +10,9 @@
 // Nonlethal, Initiative, Encumbrance (light, medium, heavy,
 // carried, remaining, gear value, load), Conditions.
 
-#let title(t) = {
-  text(size: 12pt, weight: "bold", t)
-  v(-0.4em)
-  line(length: 100%, stroke: 0.6pt + luma(60))
-  v(0.05cm)
-}
+#import "/looks/section-title.typ": section-title
+
+#let title(t) = section-title(t)
 
 #let caption(t) = text(size: 8pt, weight: "bold", t)
 

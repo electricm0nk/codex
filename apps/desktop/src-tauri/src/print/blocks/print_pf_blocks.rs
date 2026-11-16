@@ -26,8 +26,8 @@ const AT: &str = "2026-11-05T00:00:00Z";
 /// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the round-2 grid (E2.18,
 /// `decisions.md §24.3.1`: the AC boxes with no heading, then Speed; the left column, then the
 /// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Languages
-/// under the portrait (E2.13), the Conditional Bonuses box under the Saving Throws (E2.20), the
-/// Resistances block under it (E2.22); then the sections, each under its title (E2.23,
+/// under the portrait (E2.13), the Resistances block under the Saving Throws (E2.22), the
+/// Conditional Bonuses box under it (E2.20; swapped by SD-41 `decisions.md §34` (2)); then the sections, each under its title (E2.23,
 /// `decisions.md §24.3.7`): Abilities and Feats, Inventory (Armor and Shields, Gear, Money, E3.2): the
 /// first-time sections, 1 + 2 + 3 (E4.1, `decisions.md §23.4`; Bio is its own box since E4.1).
 const BASE_HEADINGS: [&str; 24] = [
@@ -40,8 +40,8 @@ const BASE_HEADINGS: [&str; 24] = [
     "Weapons",
     "Attack",
     "Saving Throws",
-    "Conditional Bonuses",
     "Resistances",
+    "Conditional Bonuses",
     "Abilities",
     "Skills",
     "Abilities and Feats",
@@ -608,7 +608,7 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     assert_eq!(place("abilities"), Place::at(7, 5), "the Abilities sit beside it, on the right");
     assert_eq!(place("attack"), Place::under(0, 7), "the Attack is stacked in the left column, under the Weapons (E2.18)");
     let abilities = document.blocks.iter().position(|block| block.id == "abilities").expect("the Abilities");
-    assert_eq!(document.blocks[abilities - 1].id, "resistances", "one row: the left column's cell, then the Abilities beside it");
+    assert_eq!(document.blocks[abilities - 1].id, "conditionalBonuses", "one row: the left column's cell, then the Abilities beside it");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
 
     document.blocks[abilities].place = Place::at(8, 5);
@@ -1660,8 +1660,8 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
         ("weapons", place(0, 7, true, 1)),
         ("attack", place(0, 7, true, 1)),
         ("saves", place(0, 7, true, 1)),
-        ("conditionalBonuses", place(0, 7, true, 1)),
         ("resistances", place(0, 7, true, 1)),
+        ("conditionalBonuses", place(0, 7, true, 1)),
         ("abilities", place(7, 5, false, 1)),
         ("skills", place(7, 5, true, 1)),
     ];
@@ -1677,7 +1677,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
             assert_eq!(one.matches("Armor Class").count(), 1, "{tag} {paper:?}: `Armor Class` prints once, as the AC box's label: {one}");
             assert_in_order(
                 &one,
-                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Conditional Bonuses", "Resistances", "Abilities", "Skills"],
+                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Resistances", "Conditional Bonuses", "Abilities", "Skills"],
             );
         }
     }
@@ -1745,7 +1745,7 @@ fn box_words(note: &codex::rules_core::pilot_compute::conditional_notes::Conditi
     format!("{}: {}", note.label, said.join(" "))
 }
 
-/// E2.20 (`decisions.md §24.3.4–5`, §24.6 Q1): the Conditional Bonuses box, under the Saving Throws
+/// E2.20 (`decisions.md §24.3.4–5`, §24.6 Q1): the Conditional Bonuses box, under the Resistances (SD-41 E4.2; under the Saving Throws before)
 /// in the left column, lists every conditional the engine states, in order HP, Initiative,
 /// Fortitude, Reflex, Will (a note on several saves once), AC, CMB, CMD, Skills, each line
 /// `<what>: <label>: <value> <condition>`, in an outlined box of 10 lines of which at least 4 are
@@ -1775,7 +1775,7 @@ fn print_pf_blocks_conditional_bonuses_box_lists_every_conditional() {
         let block = document.blocks.iter().find(|block| block.id == "conditionalBonuses").unwrap_or_else(|| panic!("the conditionalBonuses block: {:?}", document.blocks.iter().map(|b| b.id).collect::<Vec<_>>()));
         assert_eq!((block.heading.as_str(), block.look.name()), ("Conditional Bonuses", "conditional-bonuses"), "the box's heading and look");
         let at = document.blocks.iter().position(|b| b.id == "conditionalBonuses").expect("placed");
-        assert_eq!(document.blocks[at - 1].id, "saves", "the box sits under the Saving Throws");
+        assert_eq!(document.blocks[at - 1].id, "resistances", "the box sits under the Resistances (SD-41 `decisions.md §34` (2))");
         assert_eq!((block.place.x, block.place.span, block.place.under), (0, 7, true), "in the left column");
         block.rows.iter().map(|row| format!("{}: {}", row.label, row.values.join(" "))).collect()
     };
@@ -1928,7 +1928,7 @@ fn print_pf_blocks_conditional_bonuses_overflow_continues_on_page_two() {
     }
 }
 
-/// E2.22 (`decisions.md §24.3.6`): the Resistances block, under the Conditional Bonuses box in the
+/// E2.22 (`decisions.md §24.3.6`): the Resistances block, under the Saving Throws (SD-41 E4.2) in the
 /// left column, prints the five energy boxes (Acid, Cold, Electricity, Fire, Sonic), Damage
 /// Reduction, Spell Resistance and Immunities from the load response's `resistances` (E2.21), each
 /// box empty when the character has none; the Hit Points print no Damage Reduction; page 1 stays
@@ -1968,7 +1968,7 @@ fn print_pf_blocks_resistances_print_boxes_and_values() {
             let at = document.blocks.iter().position(|block| block.id == "resistances").unwrap_or_else(|| panic!("{tag}: the resistances block: {:?}", document.blocks.iter().map(|b| b.id).collect::<Vec<_>>()));
             let block = &document.blocks[at];
             assert_eq!((block.heading.as_str(), block.look.name()), ("Resistances", "resistances"), "{tag}: heading and look");
-            assert_eq!(document.blocks[at - 1].id, "conditionalBonuses", "{tag}: under the Conditional Bonuses box");
+            assert_eq!(document.blocks[at - 1].id, "saves", "{tag}: under the Saving Throws (SD-41 `decisions.md §34` (2))");
             assert_eq!((block.place.x, block.place.span, block.place.under), (0, 7, true), "{tag}: in the left column");
             let rows: Vec<(&str, &str)> = block.rows.iter().map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
             let want: Vec<(&str, &str)> = LABELS.iter().map(|label| (*label, filled.iter().find(|(l, _)| l == label).map_or("", |(_, v)| *v))).collect();
@@ -3145,7 +3145,7 @@ fn with_notes(root: &Path, notes: &str) {
 fn print_pf_blocks_each_section_is_a_list() {
     let root = seeded("section-lists", ALDRIC_ID);
     with_notes(&root, ALDRIC_NOTES);
-    let page_one = ["portrait", "languages", "nameCampaign", "armorClass", "speed", "squareBlock", "weapons", "attack", "saves", "conditionalBonuses", "resistances", "abilities", "skills"];
+    let page_one = ["portrait", "languages", "nameCampaign", "armorClass", "speed", "squareBlock", "weapons", "attack", "saves", "resistances", "conditionalBonuses", "abilities", "skills"];
     let expected: [(Section, Option<&str>, Vec<&str>); 8] = [
         (Section::Main, None, page_one.to_vec()),
         (Section::Feats, Some("Abilities and Feats"), vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
@@ -3254,4 +3254,72 @@ fn print_pf_blocks_notes_section_prints_only_when_ticked() {
     let on_pages = pages_text(&pdf_text(&pdf), &document.title, page_count(&pdf));
     assert_eq!(on_pages.len(), 1, "an empty Notes field prints one page to write on");
     assert!(on_pages[0].trim() == "Notes", "the page holds the title and its ruled lines only: {:?}", on_pages[0]);
+}
+
+/// The page-1 looks whose block titles print in the shared title box (SD-41 `decisions.md §34` (1)):
+/// the 11 sections the operator named, in 9 look files (`square-block` holds Hit Points,
+/// Initiative and Encumbrance, and its Conditions box, in the same style).
+const TITLE_BOX_LOOKS: [&str; 9] = ["speed", "square-block", "abilities", "skills", "weapons", "attack", "saves", "conditional-bonuses", "resistances"];
+
+/// SD-41 E4.2 (`decisions.md §34` (1)): every page-1 section title prints as one filled box with
+/// white bold letters, the same fill and height for all 11 (Speed, Hit Points, Initiative,
+/// Encumbrance, Abilities, Skills, Weapons, Attack, Saving Throws, Conditional Bonuses,
+/// Resistances); no page-1 look keeps the old underline. Aldric and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_page1_every_section_title_is_a_filled_box() {
+    const ELEVEN: [&str; 11] = ["Speed", "Hit Points", "Initiative", "Encumbrance", "Abilities", "Skills", "Weapons", "Attack", "Saving Throws", "Conditional Bonuses", "Resistances"];
+    for look in TITLE_BOX_LOOKS {
+        let (_, source) = crate::print::typst::LOOKS.iter().find(|(name, _)| *name == look).unwrap_or_else(|| panic!("the `{look}` look exists"));
+        assert!(!source.contains("line(length") && !source.contains("underline"), "`{look}`: no underline under a title");
+        assert!(source.contains("section-title("), "`{look}`: its titles call the shared `section-title`");
+    }
+    for (tag, id) in [("titles-aldric", ALDRIC_ID), ("titles-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, _, _) = page_one_text(&root, paper, Vec::new());
+            let boxes = crate::print::typst::look_metadata(&document, "section-title-box").expect("the sheet typesets");
+            let titles: Vec<&str> = boxes.iter().filter_map(|fact| fact["title"].as_str()).collect();
+            for title in ELEVEN {
+                assert!(titles.contains(&title), "{tag} {paper:?}: `{title}` prints in the title box: {titles:?}");
+            }
+            let first = boxes.first().expect("a title box");
+            for fact in &boxes {
+                assert_eq!(fact["fill"], first["fill"], "{tag} {paper:?}: one fill for every title: {fact}");
+                assert_eq!(fact["height"], first["height"], "{tag} {paper:?}: one height for every title: {fact}");
+                assert_eq!(fact["text"], "white bold", "{tag} {paper:?}: white bold letters: {fact}");
+            }
+        }
+    }
+}
+
+/// SD-41 E4.2 (`decisions.md §34` (2)): Resistances and Conditional Bonuses swap places on page 1:
+/// the Resistances block sits under the Saving Throws, the Conditional Bonuses box under it.
+#[test]
+fn print_pf_blocks_page1_resistances_precede_conditional_bonuses() {
+    let root = seeded("swap-aldric", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let (document, one, _) = page_one_text(&root, paper, Vec::new());
+        let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+        let at = |id: &str| ids.iter().position(|b| *b == id).unwrap_or_else(|| panic!("{paper:?}: `{id}` on page 1: {ids:?}"));
+        assert_eq!((at("saves") + 1, at("resistances") + 1), (at("resistances"), at("conditionalBonuses")), "{paper:?}: Saving Throws, Resistances, Conditional Bonuses: {ids:?}");
+        assert_in_order(&one, &["Saving Throws", "Resistances", "Conditional Bonuses", "Abilities"]);
+    }
+}
+
+/// SD-41 E4.2 (`decisions.md §34` (3)): the Conditional Bonuses box is an empty bordered box: the
+/// bonuses the engine states print in it, no ruled write-in line is drawn, and the box keeps its
+/// height (10 lines of 0.4 cm). Aldric (Bravery), Letter and A4.
+#[test]
+fn print_pf_blocks_page1_conditional_box_has_no_ruled_lines() {
+    let (_, source) = crate::print::typst::LOOKS.iter().find(|(name, _)| *name == "conditional-bonuses").expect("the look exists");
+    assert!(!source.contains("bottom:"), "no ruled line (a bottom stroke) inside the box");
+    let root = seeded("box-unruled", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let (document, one, _) = page_one_text(&root, paper, Vec::new());
+        let (lines, _, height) = conditional_box(&document);
+        assert_eq!(lines, 10, "{paper:?}: the box keeps its 10 lines' height");
+        let ten = 10.0 * 0.4 / 2.54 * 72.0;
+        assert!((height - ten).abs() < 0.5, "{paper:?}: the box is {ten} pt tall, {height} printed");
+        assert!(one.contains("Bravery"), "{paper:?}: the printed bonus stays: {one}");
+    }
 }
