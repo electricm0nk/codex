@@ -233,4 +233,4 @@ UI: IdentityPanel's Campaign label → CampaignMembershipDialog (drive_list_camp
 | E3.1, E3.2 | `gearScreenModel.test.ts` | ≥ 8 model cases + ≥ 4 drop cases |
 | E3.4 | `marketModel.test.ts`, `MarketDialog.test.ts` | ≥ 6 model cases |
 | E3.3 | ui-smoke | 18 new + 9 rewritten rows |
-| E4.1 | desktop `print_pf_blocks` | `print_pf_blocks_gear_*` (5) |
+| E4.1 | desktop `print_pf_blocks` | `print_pf_blocks_gear_*` (6) |
