@@ -1,0 +1,225 @@
+{
+  "corrections": {
+    "by_corrector": {
+      "sd41-e3.1": 1,
+      "sd41-e3.10": 1,
+      "sd41-e3.11": 1,
+      "sd41-e3.2": 1,
+      "sd41-e3.3": 2,
+      "sd41-e3.5": 2,
+      "sd41-e3.6": 1,
+      "sd41-e3.9": 1
+    },
+    "by_subject": {
+      "E3.9 receipt (6b3afbc628)": 1,
+      "SD-41 E3.3 row (epic-breakdown.md, kanban.md, G-6)": 1,
+      "SD-41 E3.6 acceptance command (kanban.md, epic-breakdown.md)": 1,
+      "SD-41 decisions.md \u00a729 census + epic-breakdown E3.5 row": 1,
+      "SD-41 epic-breakdown E3.5 row": 1,
+      "SD-41 epic-breakdown.md E3.2 acceptance": 1,
+      "epic-breakdown.md E3.11 smoke design + acceptance command": 1,
+      "epic-breakdown.md E3.3 R21 RED": 1,
+      "epic-breakdown.md E3.3 summary row": 1,
+      "sd41-e3.3": 1
+    },
+    "by_verification_method": {
+      "RUN_DESKTOP_AGENT=sd41-e3.10 npm run ui-smoke -- --only sheet-override-tag-slot with a temporary uncommitted bodyText dump in run.mjs (reverted): body.txt line 156": 1,
+      "RUN_DESKTOP_AGENT=sd41-e3.3 node scripts/ui-smoke/run.mjs --only sheet-gear-filter-equipped on base 9645b140d1": 1,
+      "cat docs/retro/events/sd41-e3.9.jsonl; awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'": 1,
+      "cd apps/desktop/src-tauri && cargo test --locked -j 8 --lib reconcile_": 1,
+      "git grep -n 'drive_save_campaign' -- apps/desktop/src | awk 'END{print NR}' -> 0; sed -n 95,125p apps/desktop/src/campaign/EditCampaignScreen.tsx": 1,
+      "git show 4c2b9f5ba5:apps/desktop/src/characterHub/GearScreen.tsx | grep -c onDrop -> 4": 1,
+      "grep -n 'setSettingsOpen\\|<CharacterHubPage' apps/desktop/src/App.tsx": 1,
+      "npm run ui-smoke -- --only <the 7-row list>: 0/7 green; artifacts screenshot sheet-gear-container-table-discard.FAILED showed 'Backpack \u00d73', 'Whetstone \u00d73'": 1,
+      "python3 -I scan of apps/desktop/scripts/ui-smoke/spec.json rows for 'Equip <name>'/'Stow <name>'/'Leave \u2026 behind' targets \u2192 8 sheet rows; grep -rn '`Equip \\|`Stow ' apps/desktop/src --include=*.tsx \u2192 only StarfinderChoicesPanel": 1,
+      "spec.json rows 182 -> 201 after the 19 ids in the E3.3 detail row were added: python3 -c \"import json;print(len(json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']))\"": 1
+    },
+    "caught_before": {},
+    "recent": [
+      {
+        "actor": "sd41-e3.1",
+        "id": "1794770184271-sd41-e3.1-648830",
+        "summary": "SD-41 E3.3 row (epic-breakdown.md, kanban.md, G-6) claimed 6 ui-smoke rows rewritten when the gear screen replaces the Equipment panel; acceptance 25 []; actual 9: sheet-custom-item-worn, sheet-custom-item-stowed, sheet-override-tag-slot also click the deleted panel's Equip/Stow buttons; acceptance 28 []",
+        "ts": "2026-11-15T19:16:24Z"
+      },
+      {
+        "actor": "sd41-e3.2",
+        "id": "1794770613130-sd41-e3.2-c843d7",
+        "summary": "SD-41 epic-breakdown.md E3.2 acceptance claimed grep -c 'onDrop' GearScreen.tsx >= 2 proves drop handlers; actual base 4c2b9f5ba5 already counts 4 (Drop button prop); check is vacuous; replaced with onDragStart|onDragOver >= 2",
+        "ts": "2026-11-15T19:23:33Z"
+      },
+      {
+        "actor": "sd41-e3.5",
+        "id": "1794772346998-sd41-e3.5-ca090f",
+        "summary": "SD-41 decisions.md \u00a729 census + epic-breakdown E3.5 row claimed partyCharacterIds is written only by EditCampaignScreen.tsx through drive_save_campaign (with its nonce); E3.5 Save updates the party through that path; actual EditCampaignScreen.handleSave writes the party with updateCampaign (localStorage, what the Campaign Manager reads) + writeCampaignLocalFolderArtifacts (write_campaign_drive_artifacts); drive_save_campaign has 0 TS callers; E3.5 uses the Manager's own path",
+        "ts": "2026-11-15T19:52:26Z"
+      },
+      {
+        "actor": "sd41-e3.5",
+        "id": "1794772347126-sd41-e3.5-e5936f",
+        "summary": "SD-41 epic-breakdown E3.5 row claimed without a folder the dialog says so and links Settings; actual the Settings modal is App.tsx state (settingsOpen) with no hook reachable from the sheet; the dialog prints the existing menu path (computeCampaignManagerAccessGate hint: \u2630 \u2192 Options \u2192 Google Drive)",
+        "ts": "2026-11-15T19:52:27Z"
+      },
+      {
+        "actor": "sd41-e3.3",
+        "id": "1794777705320-sd41-e3.3-6fb2fd",
+        "summary": "epic-breakdown.md E3.3 summary row claimed 18 new rows; actual 19 new rows",
+        "ts": "2026-11-15T21:21:45Z"
+      },
+      {
+        "actor": "sd41-e3.3",
+        "id": "1794777705440-sd41-e3.3-2d0327",
+        "summary": "epic-breakdown.md E3.3 R21 RED claimed the nineteen new ids -> unknown row; actual Error: --only <id>: no such row id in spec.json, exit 1; 20 ids absent (19 new + renamed sheet-market-buy-carried)",
+        "ts": "2026-11-15T21:21:45Z"
+      },
+      {
+        "actor": "sd41-e3.10",
+        "id": "1794781118103-sd41-e3.10-8fe3d8",
+        "summary": "sd41-e3.3 claimed sheet-override-tag-slot is red only until E3.10; no spec.json change is needed (E3.3 receipt Remainder); actual with E3.10's change the move lands (Eyes 2 of 1) and the tag shows, but the row's expect 'Eyes of the Eagle0 lb \u00b7 Eyes' never matches: the OverrideTag renders between the name and the weight ('Eyes of the EagleOverride: Ignore body slot limits0 lb \u00b7 Eyes')",
+        "ts": "2026-11-15T22:18:38Z"
+      },
+      {
+        "actor": "sd41-e3.6",
+        "id": "1794783649155-sd41-e3.6-1c456b",
+        "summary": "SD-41 E3.6 acceptance command (kanban.md, epic-breakdown.md) claimed cargo test --locked -j 8 --lib reconcile_ in apps/desktop/src-tauri; actual error: no library targets found in package codex-desktop; the command is --bins reconcile_ (3 passed after the fix)",
+        "ts": "2026-11-15T23:00:49Z"
+      },
+      {
+        "actor": "sd41-e3.9",
+        "id": "1794794417707-sd41-e3.9-1e3cad",
+        "summary": "E3.9 receipt (6b3afbc628) claimed Retro events emitted 0; Cards complete 41 of 54; actual 1 rework event; 42 of 54",
+        "ts": "2026-11-16T02:00:17Z"
+      },
+      {
+        "actor": "sd41-e3.11",
+        "id": "1794799420394-sd41-e3.11-b9d5fc",
+        "summary": "epic-breakdown.md E3.11 smoke design + acceptance command claimed 7-row --only list with the two new rows first, each row re-buying Backpack, Pouch, Belt \u2192 7 []; actual rows share one store per run: a second buy stacks Backpack \u00d72 (no 'Into Backpack'); E3.3 rows pass only in E3.3's order; corrected to E3.3's 28 ids + 2 after sheet-gear-container-nest \u2192 30 []",
+        "ts": "2026-11-16T03:23:40Z"
+      }
+    ],
+    "repeat_subjects": [],
+    "total": 10,
+    "with_blast_radius": 0
+  },
+  "deferrals": {
+    "open": 0,
+    "open_items": [],
+    "recent": [],
+    "resolved": 0,
+    "total": 0
+  },
+  "events": {
+    "by_actor": {
+      "sd41-e3.1": 1,
+      "sd41-e3.10": 2,
+      "sd41-e3.11": 2,
+      "sd41-e3.2": 1,
+      "sd41-e3.3": 3,
+      "sd41-e3.4": 1,
+      "sd41-e3.5": 2,
+      "sd41-e3.6": 2,
+      "sd41-e3.9": 2
+    },
+    "by_origin": {
+      "agent": 15,
+      "derived": 1
+    },
+    "by_type": {
+      "correction": 10,
+      "incident": 2,
+      "rework": 3,
+      "verification": 1
+    },
+    "total": 16
+  },
+  "generated_at": "2026-11-16T03:55:58Z",
+  "generated_by": "scripts/retro.py summary",
+  "git_join": {
+    "authors": 1,
+    "available": true,
+    "commits": 29,
+    "events_per_commit": 0.5517,
+    "top_authors": [
+      [
+        "Todd Hintzmann",
+        29
+      ]
+    ]
+  },
+  "incidents": {
+    "by_recurrence_key": {
+      "orphaned-smoke-run-after-agent-kill": 1,
+      "tauri-dev-watcher-restart": 1
+    },
+    "recent": [
+      {
+        "actor": "sd41-e3.3",
+        "id": "1794777705575-sd41-e3.3-a53084",
+        "summary": "a temporary probe test edited under apps/desktop/src-tauri/src made the live tauri dev session rebuild and restart the app twice (about 10 min each) (detected by probe snapshot went stale; tauri-dev log showed a rebuild)",
+        "ts": "2026-11-15T21:21:45Z"
+      },
+      {
+        "actor": "sd41-e3.11",
+        "id": "1794795415231-sd41-e3.11-ba4de8",
+        "summary": "the killed first E3.11 agent left its ui-smoke run (npm pid 3546696, same RUN_DESKTOP_AGENT and --out) orphaned to init; the re-dispatched E3.11 run reused/raced its app and failed sheet-gear-container-tables at step 3 with 'no probe report acknowledged command' (detected by ps -eo pid,ppid,etime,args | grep run.mjs showed two run.mjs processes, one 1 min older than this agent's)",
+        "ts": "2026-11-16T02:16:55Z"
+      }
+    ],
+    "recurring": [],
+    "silent": 0,
+    "time_lost_minutes": 35,
+    "total": 2
+  },
+  "log": {
+    "invalid_lines": 0,
+    "path": "/home/ubuntu/workspace/repos/codex/.worktrees/sd41-main/docs/retro/events",
+    "problems": [],
+    "shards": 9
+  },
+  "near_misses": {
+    "by_caught_by": {},
+    "escaped": 0,
+    "recent": [],
+    "total": 0
+  },
+  "rework": {
+    "by_cause": {
+      "operator killed the running task by accident, 2026-11-15; uncommitted edits survived in the tree": 1,
+      "the \u00a76 token grep matches the HTML placeholder attribute; moving an existing line re-adds it in the diff": 1,
+      "ui-smoke runs tauri dev with a live vite server over the working tree; the card's frontend edits landed while the RED run was launching, so it would not have measured the base": 1
+    },
+    "recent": [
+      {
+        "actor": "sd41-e3.4",
+        "id": "1794771704757-sd41-e3.4-7911d1",
+        "summary": "redid E3.4 MarketDialog/BuyCustomDialog: re-indented search input and a new placeholder= attribute tripped the wired-integration token audit (\\bplaceholder\\b): the \u00a76 token grep matches the HTML placeholder attribute; moving an existing line re-adds it in the diff",
+        "ts": "2026-11-15T19:41:44Z"
+      },
+      {
+        "actor": "sd41-e3.10",
+        "id": "1794781118237-sd41-e3.10-d7c20a",
+        "summary": "redid E3.10 R21 RED smoke run aborted and re-run: ui-smoke runs tauri dev with a live vite server over the working tree; the card's frontend edits landed while the RED run was launching, so it would not have measured the base",
+        "ts": "2026-11-15T22:18:38Z"
+      },
+      {
+        "actor": "sd41-e3.9",
+        "id": "1794794215905-sd41-e3.9-249e52",
+        "summary": "redid E3.9 verification re-run (clippy, desktop full sweep, root --lib) after the first attempt was killed mid root cargo test: operator killed the running task by accident, 2026-11-15; uncommitted edits survived in the tree",
+        "ts": "2026-11-16T01:56:55Z"
+      }
+    ],
+    "total": 3
+  },
+  "schema_version": 1,
+  "verification": {
+    "by_failing_stage": {},
+    "fail_rate": 0.0,
+    "failed_runs": 0,
+    "runs": 1
+  },
+  "window": {
+    "since": "2026-11-15T13:53:10-05:00",
+    "spec": "2026-11-15T13:53:10-05:00",
+    "until": null
+  }
+}

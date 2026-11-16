@@ -1,0 +1,86 @@
+[
+  {
+    "id": "sheet-market-sort-by-price",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3mc/smoke2/sheet-market-sort-by-price.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_mc-WPydwq/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-only-affordable",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3mc/smoke2/sheet-market-only-affordable.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_mc-WPydwq/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-description-box",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3mc/smoke2/sheet-market-description-box.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_mc-WPydwq/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-buy-quantity-stack",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3mc/smoke2/sheet-market-buy-quantity-stack.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_mc-WPydwq/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-negotiate-buy",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3mc/smoke2/sheet-market-negotiate-buy.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_mc-WPydwq/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  },
+  {
+    "id": "sheet-market-create-item-carried",
+    "status": "green",
+    "screenshot": "/home/ubuntu/cargo-target/sd41-main-logs/e3mc/smoke2/sheet-market-create-item-carried.png",
+    "rendered_excerpt": "☰ Menu\n✕\nAldric Ironhand — Fighter 3\nCHARACTER DETAILS\n«\n\nLevel\n3\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 3\nCHARACTER DETAILS\n\nALIGNMENT\n\nDEITY\n\nSEX\n\nAGE\n\nHEIGHT\n\nWEIGHT\n\nHAIR\n\nEYES\n\nVISION\nNormal\nSIZE\nMedium\nVision and Size are calculated from race and aren't editable — a race this build has no profile for reads \"Unknown\" rather than a guessed value. The other fields save automatically when you",
+    "reason": null,
+    "app_data_root": "/tmp/codex-ui-smoke-sd41-e3_mc-WPydwq/data/io.electricm0nk.codex",
+    "cleanup": {
+      "created": [],
+      "deleted": [],
+      "leftover": [],
+      "errors": {}
+    }
+  }
+]
