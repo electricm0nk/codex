@@ -32,7 +32,7 @@ E5.4 is anything but `complete`. **One operator gate:** E5.G stays `partial` unt
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 47: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E1.9 (discovered by E1.5) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 48: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E1.9 (discovered by E1.5) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27) + E4.12 (issue #409, operator 2026-11-17, decisions.md §28)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -78,9 +78,10 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 47: 37 at 
 | E4.4 | ui-smoke rows: import + campaign (new + 8 rewritten) + E2.12/E2.13's two rows + E4.7–E4.11's six rows; inventory | opus | waiting | E4.11 | the only `spec.json` writer (R24); `decisions.md §26.4, §27.6` |
 | E4.5 | Proof runs: 7 samples (CI shape) + the operator's file (local, counts) | opus | waiting | E4.4 | `decisions.md §10`; P-8 |
 | E4.6 | Linux AppImage writes its own menu entry + icon on every start; re-points after a move or update; never for .deb/.rpm/Windows/macOS | opus | waiting | E4.5 | operator LNX-1 / Q27 2026-11-17; `decisions.md §26.3`; `desktop/update/self_install.rs` only |
-| E4.MC | E4 merge check + Epic report + E5.G's screenshots | opus | waiting | E4.5, E4.6, E4.7, E4.8, E4.9, E4.10, E4.11 | adversarial |
+| E4.12 | Linux release builds against glibc 2.35 (`container: ubuntu:22.04`; fallback `runs-on: ubuntu-22.04`); `tools/release/check_glibc_floor.py` gates every shipped Linux ELF (`.deb` + AppImage) at the one stated floor, with a self-test; `linux-build-check.yml` proves it on the branch before release | opus | waiting | E4.6 | GitHub issue #409, operator 2026-11-17; `decisions.md §28`; the only SD-42 card touching `.github/workflows/`; no cargo slot |
+| E4.MC | E4 merge check + Epic report + E5.G's screenshots | opus | waiting | E4.5, E4.6, E4.7, E4.8, E4.9, E4.10, E4.11, E4.12 | adversarial |
 | E5.G | OPERATOR GATE: import + Campaign Manager + editor, `usable: yes` ×3 | sonnet | waiting | E4.MC | the run ends here until the operator signs |
 | E5.1 | Widest verify + clean build + packaged resources + fresh-install check | sonnet | waiting | E5.G | |
 | E5.2 | Final-acceptance scan → retrospective → sweep | opus | waiting | E5.1 | |
 | E5.3 | Release notes → architecture truth-up → claims critic | sonnet + opus | waiting | E5.2 | |
-| E5.4 | Graphify LAST → PR tranche-22 → develop (final action) | sonnet | waiting | E5.3 | |
+| E5.4 | Graphify LAST → PR tranche-22 → develop (final action) | sonnet | waiting | E5.3 | the PR body carries `Fixes #409` (`decisions.md §28`) |

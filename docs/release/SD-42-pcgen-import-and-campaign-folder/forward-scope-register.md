@@ -40,6 +40,7 @@ authoring; its campaign write-through (§29), stacks (§28, §30) and Buy Custom
 | COM-18 | Editor extras: toolbar, auto-save, disk-change warning, drag-in images | Q25 | E3.3 |
 | COM-19 | ui-smoke rows for import and every campaign flow; the 8 old rows rewritten | `decisions.md §12.1` SD-h | E4.4 |
 | COM-20 | Operator gate; closure in the standing order | §12, §23 | E5.G, E5.1–E5.4 |
+| COM-21 | The Linux `.deb` and AppImage run on Ubuntu 24.04 again: the publish job builds against glibc 2.35 and a gate with one stated floor fails the release on any shipped Linux ELF above it; `Fixes #409` in the PR | GitHub issue #409; `decisions.md §28` | E4.12, E5.3, E5.4 |
 
 ## 2. Structurally implied
 

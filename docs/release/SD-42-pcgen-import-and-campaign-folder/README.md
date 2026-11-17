@@ -50,11 +50,11 @@ reading the party from it, and a CodeMirror 6 live-preview editor that never rew
 | Slug | `pcgen-import-and-campaign-folder` |
 | Canonical branch | `tranche-22`, cut 2026-11-16 from `origin/tranche-21` @ `1046daefc0` (`git merge-base HEAD origin/tranche-21`); catches up to `develop` after SD-41 merges (`decisions.md §4`, SD-m) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E1–E5 / **46 cards** (2 + 9 + 14 + 4 + 12 + 5: 37 at authoring + E1.8 discovered by E1.2 + E2.12, E2.13, E4.6 added by the operator on 2026-11-17, `decisions.md §26` + E4.7–E4.11 added by the operator later that day, `decisions.md §27`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 46) |
+| Epics / cards | C, E1–E5 / **48 cards** (2 + 10 + 14 + 4 + 13 + 5: 37 at authoring + E1.8 discovered by E1.2 + E1.9 discovered by E1.5 + E2.12, E2.13, E4.6 added by the operator on 2026-11-17, `decisions.md §26` + E4.7–E4.11 added by the operator later that day, `decisions.md §27` + E4.12 for GitHub issue #409, `decisions.md §28`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 48) |
 | Target version | `0.22.0`, stamped by C1's single commit on the 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run per phase (`decisions.md §12.2`); Phase 1 = three parallel lanes; ends cleanly at E5.G |
 | Cadence | N/A |
-| Closure gate | 46 cards `complete` (E5.G needs the operator's three `usable: yes` lines; E4.5's receipt holds the local proof run's counts, Q9) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 48 cards `complete` (E5.G needs the operator's three `usable: yes` lines; E4.5's receipt holds the local proof run's counts, Q9) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's intake and rulings (`artifacts/cycle_0/operator-brief-2026-11-16.md`); the census (`artifacts/epic_0/census.json`); PCGen's sample files and engine as a test oracle only (`decisions.md §22`) |
 
 ## 2. Files in this folder
@@ -62,7 +62,7 @@ reading the party from it, and a CodeMirror 6 live-preview editor that never rew
 | File | Job |
 |---|---|
 | `scope-draft.md` | The request in the operator's words, the Definition of Done (A import, B Campaign Manager), epic order, the one-bundle call |
-| `decisions.md` | §3 every ruling verbatim with its cards; §4 the SD-41 partition; §5–§10 the import (stacks, properties, nothing dropped, Starfinder, parity, the local test file); §11–§18 the campaign folder (layout, run protocol with safe defaults SD-a…SD-s, members/Drive removal/help, migration, the four tabs, `Characters/` two-master, DM toolkit, the editor and its packages); §19 fences; §20 corrections; §21 the operator questions with defaults; §22–§25 standing rules and the one-bundle decision; §26 the three cards the operator added mid-run (2026-11-17); §27 the five gear cards (bag of holding / haversack weight, slot kinds, Customize = rename + modifiers with the redundant list dropped, detail panel, stacks as one row + split by moving) added later that day |
+| `decisions.md` | §3 every ruling verbatim with its cards; §4 the SD-41 partition; §5–§10 the import (stacks, properties, nothing dropped, Starfinder, parity, the local test file); §11–§18 the campaign folder (layout, run protocol with safe defaults SD-a…SD-s, members/Drive removal/help, migration, the four tabs, `Characters/` two-master, DM toolkit, the editor and its packages); §19 fences; §20 corrections; §21 the operator questions with defaults; §22–§25 standing rules and the one-bundle decision; §26 the three cards the operator added mid-run (2026-11-17); §27 the five gear cards (bag of holding / haversack weight, slot kinds, Customize = rename + modifiers with the redundant list dropped, detail panel, stacks as one row + split by moving) added later that day; §28 the issue #409 card (Linux glibc floor 2.35, gated) |
 | `forward-scope-register.md` | Committed COM-1…COM-20, implied IMP-1…IMP-9, candidates FSR-C1…C8, deferrals DEF-1…DEF-5 |
 | `technical-design.md` | Today's module map with line counts; **§1 the root-cause hypotheses H1–H7 with file:line**; the import after SD-42; Starfinder; parity; the folder commands; the editor; the tests the bundle adds |
 | `technical-requirements.md` | Prerequisites P-1…P-12, normative requirements NR-1…NR-18, out of scope |
@@ -72,7 +72,7 @@ reading the party from it, and a CodeMirror 6 live-preview editor that never rew
 | `content-unit-inventory.md` | Figures F-1…F-33 with their `census.json` keys and commands |
 | `workflow-instruction.md` | The *how*: the prefix (with the PII check and the unique `RUN_DESKTOP_AGENT`), per-cycle procedure, receipt schema, closure order, rules R2–R28 |
 | `progress.md` | Live log; Cycle 0 receipt; epic reports; open blockers |
-| `kanban.md` | One row per card (46) |
+| `kanban.md` | One row per card (48) |
 | `release-notes.md` | Interim body (sentinel `SD-42 INTERIM NOTES`); replaced at E5.3 |
 | `artifacts/`, `artifacts/README.md` | Per-epic receipts and evidence; `cycle_0/` holds the brief and the C0 receipt; `epic_0/` the census script and its output |
 | `references/`, `references/README.md` | Doctrine, skills, sibling bundles, retrospectives, the oracle, the third-party packages |

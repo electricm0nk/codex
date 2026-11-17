@@ -20,3 +20,5 @@ resolver passes from C1 on (`decisions.md §2`). Nothing publishes from `tranche
 - Campaign Manager: a campaign is a folder of Markdown files you sync however you like; the creator is member
   #1; Party Resources, Adventure Log, Maps with pins, Wiki with backlinks and search; a shared `Characters/`
   backup that never overwrites another device's save; a live-preview Markdown editor.
+- Linux: the `.deb` and AppImage start on Ubuntu 24.04 again (0.21.x was built against glibc 2.43; the release
+  build now targets glibc 2.35 and a release gate fails on anything above it). Fixes #409.

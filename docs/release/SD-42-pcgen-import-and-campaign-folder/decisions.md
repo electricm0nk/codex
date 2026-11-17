@@ -59,6 +59,7 @@ Board: `./kanban.md`. Version `0.22.0`: C1 sets it in one commit on the 14 surfa
 | Q25 | "editor extras: ALL — toolbar (bold, italic, heading, list, link, table); auto-save + warn if file changed on disk during edit; drag-in images saved to `Attachments/` and linked." | §18; E3.3 |
 | UI-1 (2026-11-17, relayed by the lead while run wf_141acf96-f25 was live) | "the app menu's FIRST option is 'Main menu' on every screen that shows the menu." | §26.1; E2.12, E4.4 |
 | UI-2 (2026-11-17) | "the button that opens a campaign must be much larger: full column width, same colour/style as the main screen's Campaign Manager button." | §26.2; E2.13, E4.4 |
+| LNX-2 / #409 (2026-11-17, GitHub issue by an external reporter 2026-11-16; operator ruling relayed by the lead) | Issue title: "Requires glibc-2.43 on Ubuntu 24". Operator: "add an SD-42 card. post now that this has been assigned to relase v0.22.x." (the lead posted the public comment on #409 the same day) | §28; E4.12, E5.3, E5.4 |
 | LNX-1 / Q27 (2026-11-17) | "no app icon after installing the AppImage on Arch." / "Codex itself writes its menu entry + icon (~/.local/share/applications, icon dir) on first start when running as an AppImage on Linux, and re-points the path after an update. No extra tool required." | §26.3; E4.6 |
 | BAG-1 / HVS-1 (2026-11-17, bug) | "a bag of holding is treating it's contents as cummulative from a weight perspective instead of treating them as weightless" / "the same goes for handy haversack" | §27.1; E4.7, E4.4 |
 | SLOT-1 (2026-11-17, bug) | "bug: you can put anything into any slot. I added a backpack to a shield slot." | §27.2; E4.8, E4.4 |
@@ -721,3 +722,71 @@ As §26.5: the live script's §2.1 prefix predates these rows; the card rows' FI
 lead dispatches each card on its row's Tier (`opus`) when its `Depends on` is `complete`. Nothing in Phase 1 is
 touched: the import lane's E1.2 already places imported copies where PCGen's `EQUIPSET` says, and a PCGen file
 that put an item in a wrong slot loads under E4.8's warning like any other save.
+
+## §28 — Issue #409: the Linux build needs glibc 2.43; the floor is 2.35, stated once and gated (OPERATOR, 2026-11-17; placement DEFAULT)
+
+Added on 2026-11-17 by a planning session in its own worktree (`.worktrees/sd42-cards3`, detached from
+`origin/tranche-22`), without touching the lanes' trees. The operator's words are the §3 row LNX-2 / #409. Card count
+47 → **48** (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`); every count constant in this package was re-stated in the same commit (R18).
+
+**Verified facts (2026-11-17, this box).** `gh release download alpha-v0.21.153-d6890a6c -R electricm0nk/codex -p
+'Codex_0.21.153_amd64.deb'`, `dpkg-deb -x Codex_0.21.153_amd64.deb x`, then
+`objdump -T x/usr/bin/codex-desktop | grep -oE 'GLIBC_[0-9.]+' | sort -Vu | tail -1` → **`GLIBC_2.43`** (the symbols above
+2.35: `acosf`, `atan2f`, `log10f` @ 2.43; `pidfd_getpid`, `pidfd_spawnp` @ 2.39); the same on `x/usr/bin/pcg_import` →
+`GLIBC_2.34`. The AppImage (`-p '*.AppImage'`, `./Codex_0.21.153_amd64.AppImage --appimage-extract`) holds the same two
+binaries under `squashfs-root/usr/bin/` with the same maxima (`xdg-open` there is a script). Ubuntu 24.04 ships glibc
+**2.39** (`curl -sL https://packages.ubuntu.com/noble/libc6 | grep -oE 'libc6 \([^)]*\)'` → `2.39-0ubuntu8.9`), so the app
+cannot start there — the reporter's defect reproduces by inspection. Ubuntu 22.04 ships **2.35** (`…/jammy/libc6` →
+`2.35-0ubuntu3.15`); `libwebkit2gtk-4.1-dev`, `libappindicator3-dev`, `librsvg2-dev` and `patchelf` all exist in jammy
+(`curl -sL https://packages.ubuntu.com/jammy/<pkg> | grep -oE '<title>[^<]*</title>'` names each).
+
+**Cause.** `.github/workflows/publish-tester-release.yml` builds the Linux artifact set (`npx tauri build … --bundles
+deb,appimage`, `:333`, after the sidecar at `:327`) in the job at `:238` on `runs-on: ubuntu-latest` (`:240`). The run that
+published 0.21.153 (`gh run list -w publish-tester-release.yml -b develop` → run 153, id 44078215972; its Linux job
+134045908897) logs `Runner Image … Image: ubuntu-26.04` (`gh api repos/electricm0nk/codex/actions/jobs/134045908897/logs
+| grep -A3 'Runner Image'`): GitHub moved `ubuntu-latest` to Ubuntu 26.04 in November 2026 (`actions/runner-images#14748`),
+and a Rust binary linked on 26.04 takes the newest symbol versions its host offers. The other jobs (`stamp`, `test`,
+`finalize`, the macOS and Windows publish jobs) build no Linux ELF that ships; `pr-tests.yml` runs `cargo test` only; no
+other workflow produces a shipped Linux artifact (`grep -lE 'tauri build|appimage|\.deb' .github/workflows/*.yml` → one file).
+No other SD-42 card owns anything under `.github/workflows/` (`grep -rn '\.github' *.md` → only C1's `grep -rln` path list).
+
+**The fix and the mechanism (AGENTS.md rule 8: a warning is not a control).** (a) The Linux publish job builds against
+glibc 2.35. **Default: `container: ubuntu:22.04` on `runs-on: ubuntu-latest`**, not a runner pin, because the
+`ubuntu-22.04` runner image is being retired — "Deprecation: September 17th, 2026 / Retirement: April 17th, 2027", with
+brownouts on 2027-03-23, 03-30, 04-06, 04-13 (`gh api repos/actions/runner-images/issues/14254 --jq .body`); the image
+is still offered today (`actions/runner-images` README, "Ubuntu 22.04 | x64 | `ubuntu-22.04`", and
+`images/ubuntu/Ubuntu2204-Readme.md` → `Image Version: 20261111.360.2`). The container's glibc is the floor for as
+long as the `ubuntu:22.04` Docker image exists (jammy standard support to 2027-04, ESM after), independent of the host
+runner. **Fallback: `runs-on: ubuntu-22.04`** only if Tauri's AppImage step cannot run inside the container (its
+`linuxdeploy` is itself an AppImage; without FUSE it needs `APPIMAGE_EXTRACT_AND_RUN=1` — the executor reads the bundler's
+`appimage.sh` for it and sets it in the job `env:` if absent; this box could not check the bundler source); the
+fallback is written up as a `§20` correction row naming 2027-04-17 and R-24 is re-ranked. (b) **The gate**:
+`tools/release/check_glibc_floor.py` — `GLIBC_FLOOR = "2.35"` is the **one** place the floor lives (no `--floor` option;
+the YAML names the image, never the number); inputs are ELF paths and/or `--deb <file>` / `--appimage <file>` (unpacked with
+`dpkg-deb -x` / `--appimage-extract` into a temp dir, every ELF under `usr/bin/` scanned by `objdump -T`); one line per
+binary `<name> max GLIBC_<v> floor 2.35 OK|ABOVE`; exit 1 on any `ABOVE`, exit 2 on a missing input or no ELF found (never
+silent). The publish job runs it on the staged `.deb` and AppImage after `Stage release artifacts`; a red gate stops the
+release before any upload. (c) **The self-test** `tools/release/test_check_glibc_floor.py` (pytest; `release-tooling-tests.yml`
+already runs `pytest tools/release` on `tools/release/**` changes, and E5.1 runs it): the parser on a fixture holding
+0.21.153's `objdump -T` symbol lines → `ABOVE`, exit 1; a fixture whose maximum is `GLIBC_2.34` → `OK`; `/bin/true` on the
+test host → `OK` with its maximum printed; a missing path → exit 2. (d) **Proof before release**: a new
+`.github/workflows/linux-build-check.yml` (`on: workflow_dispatch` + `pull_request` on `paths:
+['.github/workflows/publish-tester-release.yml', '.github/workflows/linux-build-check.yml', 'tools/release/check_glibc_floor.py']`) repeats
+the publish job's build steps in the same `container:` (checkout, apt, rust, node, `npm ci`, sidecar, `tauri build
+--bundles deb,appimage`, the gate) and uploads nothing; a pytest asserts the two files name the same `image:` and the same
+apt package list (so the proof build cannot drift from the shipping one). The executor runs it on `tranche-22`'s head
+(`gh workflow run linux-build-check.yml --ref tranche-22`), waits for it, and puts the run URL and the gate's `OK` lines in
+the receipt. `publish-tester-release.yml` itself gains no `workflow_dispatch`: it publishes an alpha from any ref it runs
+on, and nothing publishes from `tranche-22`.
+
+**Placement.** Phase 2, lane `main`, **E4.12** (the next free id), `opus`, `waiting`, **depends on E4.6** — the last card
+in the Phase-2 serial chain before E4.MC — so the one-writer rule holds in `.worktrees/sd42-main` even though the card
+touches no file any other card owns; E4.MC's `Depends on` gains E4.12 and quotes the check-workflow run URL. The card
+runs no cargo locally (the builds run on GitHub Actions; the pytest is seconds), so it holds no cargo slot. E5.3's release
+notes name the fix and the floor; E5.4's PR body carries `Fixes #409` so the issue closes on merge (the §3 row).
+
+**What this does not change.** macOS and Windows builds; the `test`, `stamp` and `finalize` jobs and `pr-tests.yml`
+(they ship nothing); users below glibc 2.35 (Ubuntu 20.04) — stated, not supported; the already-published 0.21.x
+assets, which are not rebuilt (the reporter gets the next `0.22.<run>` from `develop`, as the lead's comment on #409
+says); the Phase-1 lanes. As §26.5 / §27.7: the live script's §2.1 prefix predates this row; the card's FILES YOU OWN
+is the grant (§19).
