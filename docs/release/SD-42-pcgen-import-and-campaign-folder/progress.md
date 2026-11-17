@@ -61,6 +61,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E2.2 | complete | 2c4fed1ad0 | `artifacts/epic_2/E2.2_cycle_receipt.md` | creator = member #1; typed member list; Manager over known folders; Edit saves via new `save_campaign_json`; `npm test` 204/204 |
 | 2026-11-17 | E3.3 | complete | the commit adding the E3.3 receipt (code 084394b746) | `artifacts/epic_3/E3.3_cycle_receipt.md` | toolbar 6 + autosave 4 + imageDrop 3 cases; `save_attachment` 1 passed; desktop full 0 failed; npm test 207/207; SD-k append-only conflict in campaign_folder.rs kept both (retro incident) |
 | 2026-11-17 | E3.MC | complete | the commit adding the E3.MC receipt (fix 05aa922dcd) | `artifacts/epic_3/E3.MC_cycle_receipt.md` | adversarial: reading view rendered `[t](<java\tscript:…>)` as a live `javascript:` link — fixed in `safeUrl`, 5th reading-view case; fixture `party-resources.md` ≠ E2.1 starter — replaced; licences MIT 11 of 11; npm test 207/207; no screenshot (no tab mounts the editor) |
+| 2026-11-17 | E2.3 | complete | the commit adding the E2.3 receipt (code 80692e2ac0) | `artifacts/epic_2/E2.3_cycle_receipt.md` | Drive path deleted (NR-6 grep 70 → 0, `DRIVE_GONE`); Manager: Open folder…, Forget, not-a-campaign offer; sheet reads the folder; membership dialog over known folders; desktop 1373 → 1366; npm test 206/206; discovered E2.14 |
 
 ## Epic reports
 

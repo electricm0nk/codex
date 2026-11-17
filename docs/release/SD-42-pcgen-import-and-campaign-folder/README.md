@@ -50,11 +50,11 @@ reading the party from it, and a CodeMirror 6 live-preview editor that never rew
 | Slug | `pcgen-import-and-campaign-folder` |
 | Canonical branch | `tranche-22`, cut 2026-11-16 from `origin/tranche-21` @ `1046daefc0` (`git merge-base HEAD origin/tranche-21`); catches up to `develop` after SD-41 merges (`decisions.md §4`, SD-m) |
 | Kanban board | local file `./kanban.md` |
-| Epics / cards | C, E1–E5 / **48 cards** (2 + 10 + 14 + 4 + 13 + 5: 37 at authoring + E1.8 discovered by E1.2 + E1.9 discovered by E1.5 + E2.12, E2.13, E4.6 added by the operator on 2026-11-17, `decisions.md §26` + E4.7–E4.11 added by the operator later that day, `decisions.md §27` + E4.12 for GitHub issue #409, `decisions.md §28`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 48) |
+| Epics / cards | C, E1–E5 / **49 cards** (2 + 10 + 15 + 4 + 13 + 5: 37 at authoring + E1.8 discovered by E1.2 + E1.9 discovered by E1.5 + E2.14 discovered by E2.3 + E2.12, E2.13, E4.6 added by the operator on 2026-11-17, `decisions.md §26` + E4.7–E4.11 added by the operator later that day, `decisions.md §27` + E4.12 for GitHub issue #409, `decisions.md §28`), one criterion each (`awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` → 49) |
 | Target version | `0.22.0`, stamped by C1's single commit on the 14 surfaces + `current-release.json` (`decisions.md §2`) |
 | Dispatch mechanism | `Workflow` tool, one long run per phase (`decisions.md §12.2`); Phase 1 = three parallel lanes; ends cleanly at E5.G |
 | Cadence | N/A |
-| Closure gate | 48 cards `complete` (E5.G needs the operator's three `usable: yes` lines; E4.5's receipt holds the local proof run's counts, Q9) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
+| Closure gate | 49 cards `complete` (E5.G needs the operator's three `usable: yes` lines; E4.5's receipt holds the local proof run's counts, Q9) → retrospective + cite → sweep → release notes → architecture truth-up + critic → **graphify LAST** → **PR last**; the operator merges (`workflow-instruction.md §11`) |
 | Source | the operator's intake and rulings (`artifacts/cycle_0/operator-brief-2026-11-16.md`); the census (`artifacts/epic_0/census.json`); PCGen's sample files and engine as a test oracle only (`decisions.md §22`) |
 
 ## 2. Files in this folder
@@ -72,7 +72,7 @@ reading the party from it, and a CodeMirror 6 live-preview editor that never rew
 | `content-unit-inventory.md` | Figures F-1…F-33 with their `census.json` keys and commands |
 | `workflow-instruction.md` | The *how*: the prefix (with the PII check and the unique `RUN_DESKTOP_AGENT`), per-cycle procedure, receipt schema, closure order, rules R2–R28 |
 | `progress.md` | Live log; Cycle 0 receipt; epic reports; open blockers |
-| `kanban.md` | One row per card (48) |
+| `kanban.md` | One row per card (49) |
 | `release-notes.md` | Interim body (sentinel `SD-42 INTERIM NOTES`); replaced at E5.3 |
 | `artifacts/`, `artifacts/README.md` | Per-epic receipts and evidence; `cycle_0/` holds the brief and the C0 receipt; `epic_0/` the census script and its output |
 | `references/`, `references/README.md` | Doctrine, skills, sibling bundles, retrospectives, the oracle, the third-party packages |
