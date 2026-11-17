@@ -293,12 +293,26 @@ fn codex_view(file: &ImportFile) -> BTreeMap<String, String> {
         *gear.entry(format!("gear.{}@{place}", name_of(&key))).or_insert(0) += u64::from(facts.quantity.unwrap_or(1) / record_base_quantity(&key.item_id));
     }
     out.extend(gear.into_iter().map(|(k, v)| (k, v.to_string())));
-    if starfinder { starfinder_totals(&input, &mut out) } else { pathfinder_totals(&input, &mut out) }
+    if starfinder {
+        // A weapon is named as its gear line is: a copy's custom name (`Cavitation pistol,
+        // thermodynamic (Small)`), else its record.
+        let named: BTreeMap<String, String> = file
+            .equipment_sets
+            .copies
+            .iter()
+            .filter_map(|(map_key, facts)| Some((map_key.rsplitn(3, '|').nth(2)?.to_owned(), gear_key(catalog, facts.name.as_deref()?))))
+            .collect();
+        starfinder_totals(&input, &named, &mut out)
+    } else {
+        pathfinder_totals(&input, &mut out)
+    }
     out
 }
 
-/// The Starfinder engine's totals (`map::starfinder_verdict`'s pipeline; the app's `compute_sheet`).
-fn starfinder_totals(input: &CharacterInput, out: &mut BTreeMap<String, String>) {
+/// The Starfinder engine's totals (`map::starfinder_verdict`'s pipeline; the app's `compute_sheet`),
+/// and every feat the engine holds (a pick's granted feat, as PCGen lists it); `named` is a weapon
+/// record's copy name, keyed as its gear line.
+fn starfinder_totals(input: &CharacterInput, named: &BTreeMap<String, String>, out: &mut BTreeMap<String, String>) {
     let package = catalog().for_game_mode("Starfinder").unwrap().starfinder_package().unwrap();
     let (build, loadout) = starfinder_build(package, input);
     let chassis = sf_chassis::compute(package, &build.chassis).expect("the chassis computes");
@@ -308,6 +322,9 @@ fn starfinder_totals(input: &CharacterInput, out: &mut BTreeMap<String, String>)
     let spells = sf_spells::compute_with(package, &build, &held).expect("spells");
     let carried = sf_loadout::compute(package, &build, &loadout).expect("loadout");
     let attacks = sf_attack::compute_with(package, &held, &chassis.base_attack_bonus, &loadout.carried);
+    for id in held.held.rules.keys().filter(|id| !held.held.removed.contains(*id) && package.rule(id).is_some_and(|rule| rule.pool == "feat")) {
+        out.insert(format!("feat.{}", id_tail(id)), "held".into());
+    }
     for (name, score) in ["STR", "DEX", "CON", "INT", "WIS", "CHA"].iter().zip(build.chassis.ability_scores) {
         out.insert(format!("stat.{name}"), score.to_string());
     }
@@ -340,7 +357,8 @@ fn starfinder_totals(input: &CharacterInput, out: &mut BTreeMap<String, String>)
         }
     }
     for weapon in &attacks.weapons {
-        out.insert(format!("weapon.{}.attack", gear_name(weapon.item.rsplit(':').next().unwrap_or(&weapon.item))), weapon.attack.total.to_string());
+        let name = named.get(&weapon.item).cloned().unwrap_or_else(|| gear_name(weapon.item.rsplit(':').next().unwrap_or(&weapon.item)));
+        out.insert(format!("weapon.{name}.attack"), weapon.attack.total.to_string());
     }
     let _ = carried;
 }

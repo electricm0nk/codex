@@ -213,6 +213,29 @@ fn stacks_samples_emit_one_copy_per_line() {
     }
 }
 
+/// Pieces no entry of the imported set places are outside the set, which is PCGen's Not Carried
+/// (its export lists only the set's entries): pf_Paladin's three `Gauntlet` lines (two of them
+/// `Gauntlet (Part of Armor Suit)`) are in no `EQUIPSET` entry (E1.10).
+#[test]
+fn stacks_pieces_no_entry_places_are_not_carried() {
+    let path = oracle_repo().join("code/testsuite/PCGfiles/pf_Paladin.pcg");
+    let Ok(bytes) = std::fs::read(&path) else {
+        println!("SKIPPED: the oracle's pf_Paladin.pcg is absent at {} (decisions.md §22)", path.display());
+        return;
+    };
+    let file = convert(&String::from_utf8_lossy(&bytes), "pf_Paladin.pcg", catalog()).expect("converts");
+    let sets = &file.equipment_sets;
+    let gauntlets: Vec<CopyKey> = sets.copies.keys().filter(|key| key.contains("auntlet") && !key.to_lowercase().contains("spiked")).map(|key| {
+        let mut parts = key.rsplitn(3, '|');
+        let (ordinal, bonus, item_id) = (parts.next().unwrap(), parts.next().unwrap(), parts.next().unwrap());
+        CopyKey { item_id: item_id.to_owned(), bonus: bonus.parse().unwrap(), ordinal: ordinal.parse().unwrap() }
+    }).collect();
+    assert_eq!(gauntlets.len(), 3, "{:?}", sets.copies.keys().collect::<Vec<_>>());
+    for key in &gauntlets {
+        assert_eq!(location_of(sets.active_set(), key), Location::NotCarried, "{key:?}");
+    }
+}
+
 const BUNDLE_PCG: &str = "PCGVERSION:2.0
 GAMEMODE:Pathfinder_RPG
 CHARACTERNAME:Bundle Tester

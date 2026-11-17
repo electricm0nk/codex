@@ -35,12 +35,12 @@ use codex::rules_core::pilot_compute::sf_chassis::{self, SfChassisBuild};
 use codex::rules_core::pilot_compute::sf_defense::{self, SfBuild};
 use codex::rules_core::pilot_compute::sf_loadout::{self, SfLoadout};
 use codex::rules_core::pilot_compute::{sf_attack, sf_skills, sf_spells};
-use codex::rules_core::sheet_rule::{Ability, SheetRulePackage};
+use codex::rules_core::sheet_rule::{Ability, SheetRulePackage, offer_selects, split_rule_id};
 use codex::saved_character::equipment_sets::{
     CopyFacts, CopyKey, DEFAULT_SET_NAME, EquipmentSet, EquipmentSets, Location, SetEntry, copy_keys, eqmod_option_key, project,
 };
 
-use super::catalog::{Catalog, fold};
+use super::catalog::{Catalog, fold, slug};
 use super::parse::{Line, Tag, looks_like_a_character, parse};
 use super::wire::*;
 
@@ -269,7 +269,7 @@ pub fn convert(text: &str, source_file: &str, catalog: &Catalog) -> Result<Impor
 
 /// Some of an `EQUIPNAME` line's pieces in one place of the imported set: one stack.
 struct Placement {
-    /// The `EQUIPSET` entry's `ID`; `None` for pieces no entry places (Carried).
+    /// The `EQUIPSET` entry's `ID`; `None` for pieces no entry places (Not Carried).
     entry: Option<String>,
     /// The top-level location word (`Armor`, `Carried`, …); empty inside a container.
     word: String,
@@ -363,6 +363,9 @@ struct Importer<'a> {
     notes: Vec<(NoteKind, usize, String)>,
     /// Starfinder's ability increases as the file states them: (ability, the +n PCGen applied).
     increases: Vec<(&'static str, i16)>,
+    /// Starfinder picks read from selection lines, until the engine has had its say: the pick, its
+    /// line and the report line it wrote.
+    picks: Vec<(ChoiceWire, Line, usize)>,
 }
 
 impl<'a> Importer<'a> {
@@ -391,13 +394,14 @@ impl<'a> Importer<'a> {
             set_name: DEFAULT_SET_NAME.to_owned(),
             notes: Vec::new(),
             increases: Vec::new(),
+            picks: Vec::new(),
         }
     }
 
     /// EQUIPSET lines may sit before or after what they name, so they are read first. Each entry of
     /// the imported set (`CALCEQUIPSET`) is matched to the `EQUIPNAME` line it names (by name, then
     /// by the line's `KEY` or `BASEITEM`) and takes up to that line's pieces; what no entry places
-    /// is Carried. One line in two places is two stacks (`decisions.md` SD-c).
+    /// is Not Carried (Carried in a file with no set). One line in two places is two stacks (`decisions.md` SD-c).
     fn read_equipment_sets(&mut self, lines: &[Line]) {
         let worn_set = lines
             .iter()
@@ -459,9 +463,13 @@ impl<'a> Importer<'a> {
                 facts: CopyFacts::default(),
             });
         }
+        // PCGen counts only the set's entries as carried (its export lists nothing else): pieces no
+        // entry places are Not Carried, unless the file states no set at all.
+        let has_set = lines.iter().any(|line| line.key() == "EQUIPSET" && line.get("ID").is_some_and(|id| id.starts_with(&format!("{worn_set}."))));
+        let unplaced = if has_set { "Not Carried" } else { "Carried" };
         for ((places, rest), weight_lbs) in self.placements.iter_mut().zip(left).zip(weights) {
             if rest > 0 {
-                places.push(Placement { entry: None, word: "Carried".to_owned(), parent: None, pieces: rest, weight_lbs, held: None, facts: CopyFacts::default() });
+                places.push(Placement { entry: None, word: unplaced.to_owned(), parent: None, pieces: rest, weight_lbs, held: None, facts: CopyFacts::default() });
             }
         }
     }
@@ -590,7 +598,7 @@ impl<'a> Importer<'a> {
             self.read_feat(line, &name, &targets);
             return;
         }
-        if self.catalog.starfinder_package().is_some() && self.read_starfinder_ability(line, &name, &category) {
+        if self.catalog.starfinder_package().is_some() && (self.read_starfinder_ability(line, &name, &category) || self.read_starfinder_pick(line, &name)) {
             return;
         }
         if let Some(ability) = floating_bonus_ability(&name) {
@@ -633,6 +641,53 @@ impl<'a> Importer<'a> {
             return true;
         }
         false
+    }
+
+    /// A Starfinder selection line (`PRIMARY FIGHTING STYLE ~ Blitz`; `Opening Volley Choice` keyed
+    /// `Choose Combat Feat`) is the pick the app's choices dialog makes: the option record the key
+    /// names (alone, or after the line's own name) under the first rule that offers it. False when
+    /// no record or no offer matches.
+    fn read_starfinder_pick(&mut self, line: &Line, key: &str) -> bool {
+        let Some(package) = self.catalog.starfinder_package() else { return false };
+        let wanted = [slug(key), slug(&format!("{} {key}", line.value()))];
+        let Some(option) = package
+            .rules
+            .values()
+            .filter(|rule| !rule.id.contains('#') && wanted.iter().any(|w| split_rule_id(&rule.id).2 == w))
+            .min_by_key(|rule| !rule.id.starts_with("core:"))
+        else {
+            return false;
+        };
+        let Some(slot) = package.rules.values().find(|rule| rule.offers.as_ref().is_some_and(|offer| offer_selects(offer, option))) else {
+            return false;
+        };
+        let pick = ChoiceWire { choice_set_id: slot.id.clone(), selection_id: option.id.clone() };
+        self.mapped(line, &format!("selectedChoices {} {}", pick.choice_set_id, pick.selection_id));
+        self.picks.push((pick.clone(), line.clone(), self.report.lines.len() - 1));
+        self.choices.push(pick);
+        true
+    }
+
+    /// A pick the Starfinder engine refuses would refuse the whole character, so picks are undone,
+    /// last first, until its verdict is the one it gives without them (the credits the file states
+    /// are held after this); each undone line is a custom feat, as before picks were read.
+    fn keep_the_picks_the_engine_takes(&mut self, package: &SheetRulePackage, race_id: &str, class_levels: &[ClassLevelWire], scores: &AbilitiesWire) {
+        let verdict = |this: &Self| starfinder_verdict(package, &engine_input(&this.chosen_so_far(race_id, class_levels, scores)));
+        let mut without = self.chosen_so_far(race_id, class_levels, scores);
+        without.selected_choices.retain(|choice| !self.picks.iter().any(|(pick, _, _)| pick == choice));
+        let unpicked = starfinder_verdict(package, &engine_input(&without));
+        for (pick, line, report_line) in std::mem::take(&mut self.picks).into_iter().rev() {
+            if verdict(self) == unpicked {
+                break;
+            }
+            self.choices.retain(|choice| *choice != pick);
+            let name = line.get("KEY").unwrap_or(line.value()).to_owned();
+            self.custom_named_feat(&line, &name, line.get("DESC").unwrap_or("Imported from PCGen."));
+            // The custom feat wrote a new report line; it replaces the pick's own.
+            let written = self.report.lines.pop().expect("the custom feat's report line");
+            self.report.lines[report_line] = written;
+            self.report.warnings.push(format!("{name}: the Starfinder engine refuses the pick, so it is a custom feat"));
+        }
     }
 
     /// The older form: `FEAT:Weapon Focus (Longsword)|...`, or a separate `APPLIEDTO`.
@@ -1056,6 +1111,7 @@ impl<'a> Importer<'a> {
         let (source_package_id, game_system) = match starfinder {
             Some(package) => {
                 ability_scores = self.starfinder_scores(package, &race_id, &class_levels, ability_scores);
+                self.keep_the_picks_the_engine_takes(package, &race_id, &class_levels, &ability_scores);
                 (SF_SOURCE_PACKAGE_ID, SF_SOURCE_PACKAGE_ID)
             }
             None => {

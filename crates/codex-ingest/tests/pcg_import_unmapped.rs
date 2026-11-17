@@ -67,7 +67,8 @@ fn unmapped_item_is_a_create_item_at_its_location() {
     assert!(!trinket.stats.iter().any(|stat| stat.label == "Worn" || stat.label == "Carried"), "no text-only place: {:?}", trinket.stats);
     let copy = the_copy(&format!("custom:{}", trinket.id));
     assert_eq!(pieces(&copy), Some(3));
-    assert_eq!(location(&copy), Location::Carried);
+    // In no entry of the file's set: outside the set, PCGen's Not Carried (`decisions.md §20`, E1.10).
+    assert_eq!(location(&copy), Location::NotCarried);
     assert!(
         fixture().report.warnings.iter().any(|warning| warning == "SD42 Unknown Trinket: no Codex record for SD42 Unknown Trinket"),
         "{:?}",

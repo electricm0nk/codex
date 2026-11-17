@@ -3,8 +3,8 @@
 //! Starfinder engine computes it; a companion file (the drone) is refused by name.
 //!
 //! **Does not cover:** whether each imported total equals PCGen's (E1.7's parity harness); Starfinder
-//! spells (none of the 3 Starfinder samples casts; a spell line becomes a custom spell), class-feature
-//! picks (fighting styles, gear boosts, mechanic tricks: custom feats, not engine choices), a human's
+//! spells (none of the 3 Starfinder samples casts; a spell line becomes a custom spell), a pick whose
+//! option record two choosers offer (the first chooser takes it: a mechanic's second AI), a human's
 //! `+2 Racial Stat Bonus` pick (no sample is human); the app's own write of `gameSystem` (E4.1); any
 //! Starfinder `.pcg` outside the 3 samples of the pinned oracle.
 
@@ -99,6 +99,33 @@ fn sf_mechanic_imports_with_its_gear() {
     assert_eq!(state("core:equipment:abadarcorp_travel_suit_silver"), Some("EquippedActive"));
     assert_eq!(state("armory:equipment:travel_treads_mk_2"), Some("SelectedInactive"));
     assert!(file.equipment_sets.active_set().locations.iter().all(|entry| entry.location == Location::Equipped), "no Pathfinder body slot");
+}
+
+/// A Starfinder selection line (`PRIMARY FIGHTING STYLE ~ Blitz`; `Opening Volley Choice` keyed
+/// `Choose Combat Feat`) is the pick the app's choices dialog makes -- the option record the line's key
+/// names, under the rule that offers it -- so the engine holds what the pick grants: Blitz's Rapid
+/// Response (+4 initiative, PCGen's 9) and Hit-and-Run's Opening Volley feat (E1.10).
+#[test]
+fn sf_selection_lines_are_engine_picks() {
+    let Some(text) = sample("sf_soldier") else { return };
+    let file = convert(&text, "sf_soldier.pcg", catalog()).expect("converts");
+    let chosen = &file.character_input.chosen;
+    for (slot, option) in [
+        ("core:ability:soldier_class_feature_primary_fighting_style", "core:ability:primary_fighting_style_blitz"),
+        ("core:ability:soldier_class_feature_secondary_fighting_style", "core:ability:secondary_fighting_style_hit_and_run"),
+        ("core:ability:hit_and_run_fighting_style_opening_volley", "core:pool_option:opening_volley_choice_choose_combat_feat"),
+        ("core:ability:soldier_class_feature_gear_boost", "core:ability:gear_boost_brutal_blast"),
+    ] {
+        assert!(chosen.selected_choices.iter().any(|c| c.choice_set_id == slot && c.selection_id == option), "{slot} -> {option}: {:?}", chosen.selected_choices);
+    }
+    assert!(!file.custom.feats.iter().any(|feat| feat.name.contains("FIGHTING STYLE")), "a pick is no custom feat: {:?}", file.custom.feats);
+    verdict(&file).expect("the Starfinder engine computes the soldier with its picks");
+    let package = catalog().for_game_mode("Starfinder").unwrap().starfinder_package().unwrap();
+    let (build, _) = starfinder_build(package, &character_input_of(&file));
+    let held = codex::rules_core::pilot_compute::sf_defense::held(package, &build).expect("held");
+    let defense = codex::rules_core::pilot_compute::sf_defense::compute_with(package, &build, &held).expect("defense");
+    assert_eq!(defense.initiative.total, 9, "Dex 5 + Rapid Response 4: {:?}", defense.initiative.terms);
+    assert!(held.held.rules.contains_key("core:feat:opening_volley"), "Hit-and-Run grants Opening Volley");
 }
 
 #[test]
