@@ -5,8 +5,12 @@ import { Marked, type Tokens } from 'marked';
 const escapeHtml = (text: string) =>
   text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// Allowed: http(s), mailto and scheme-less (relative) URLs.
-const safeUrl = (href: string) => /^(https?:|mailto:)/i.test(href) || !/^[a-z][a-z0-9+.-]*:/i.test(href.trim());
+// Allowed: http(s), mailto and scheme-less (relative) URLs. The scheme is read as a browser reads it:
+// a URL parser drops tab/LF/CR anywhere and C0 controls or spaces at the ends (`java<TAB>script:`).
+const safeUrl = (href: string) => {
+  const url = href.replace(/[\t\n\r]/g, '').replace(/^[\u0000-\u0020]+/, '');
+  return /^(https?:|mailto:)/i.test(url) || !/^[a-z][a-z0-9+.-]*:/i.test(url);
+};
 
 const reader = new Marked({
   gfm: true,

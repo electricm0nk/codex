@@ -16,9 +16,13 @@ function main() {
   assert(link.includes('href="https://obsidian.md"'), 'https links keep their href');
   assert(link.includes('href="Wiki/Old%20Tam.md"'), 'relative links keep their href');
 
+  // A URL parser strips tab, LF and CR anywhere and C0/space at the ends, so `java<TAB>script:` is `javascript:`.
+  const hidden = renderReading('[t](<java\tscript:alert(1)>) [n](<\u0001javascript:alert(2)>) ![i](<java\tscript:alert(3)>)');
+  assert(!/<a |<img /.test(hidden), `scheme hidden by a tab or control char is dropped: ${JSON.stringify(hidden)}`);
+
   const table = renderReading('| a | b |\n|---|---|\n| 1 | 2 |\n');
   assert(table.includes('<table>'), 'GFM tables render');
-  console.log('readingView: 4 cases passed');
+  console.log('readingView: 5 cases passed');
 }
 
 main();
