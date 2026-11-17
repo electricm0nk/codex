@@ -447,6 +447,7 @@ with `ownedBy:<card>` (R4).
 | 2026-11-17 | E1.2 | fixture `tests/fixtures/sd42_stacks.pcg` | `tests/fixtures/pcg_stacks.pcg` (the §6 identifier audit refuses `sd42_`) | E1.2 |
 | 2026-11-17 | E1.3 | tests on the synthetic fixture `pcg_stacks.pcg`; "a test re-reads SD-41's fixture `equipment_sets.json`" | E1.3's own fixture `tests/fixtures/pcg_custom.pcg` (a second Longsword line breaks `pcg_import_stacks`' one-Longsword assertion); no `equipment_sets.json` fixture is committed (`git ls-files \| grep equipment_sets.json` → 0), so `copy_facts_old_file_reads_byte_identical` loads and saves a literal in SD-41's written shape | E1.3 |
 | 2026-11-17 | §6, E1.3 | `COSTMOD` folds into `cost_override_copper` | PCGen's line `COST` already includes `COSTMOD` (pf_Paladin: `Outfit (Explorer's)` `COST:0`, `COSTMOD=-10`); the override is the line's `COST` when it differs from the record's price; `eqmods` ride on the `equipmentSelections` row (`EquipmentWire.eqmods`), beside `applied_modifiers` | E1.3 |
+| 2026-11-17 | `epic-breakdown.md` E2.1 desktop acceptance | `cargo test … campaign_folder_` | `cargo test … campaign_folder::` (the named tests are `campaign_folder::tests::known_folders_round_trip` etc.; `campaign_folder_` matched 0 of 1372) | E2.1 |
 
 ## §21 — Questions only the operator can settle (defaults taken; the run does not wait)
 

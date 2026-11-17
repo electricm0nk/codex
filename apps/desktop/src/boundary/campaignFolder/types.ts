@@ -1,0 +1,55 @@
+/**
+ * Wire types of the campaign-folder commands (`campaign_folder.rs`, SD-42 `decisions.md §11`).
+ * Paths inside a campaign are `/`-separated and relative to the campaign folder.
+ */
+
+export interface FolderMember {
+  name: string;
+  addedAt: string;
+}
+
+/** `campaign.json` at the campaign folder's root (schema 2). */
+export interface CampaignFolderSnapshot {
+  schemaVersion: 2;
+  name: string;
+  ruleSetId: string;
+  ruleSetLabel: string;
+  description: string;
+  members: FolderMember[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OpenedCampaign {
+  campaignDir: string;
+  campaign: CampaignFolderSnapshot;
+  /** Pass back as `expectedNonce` when saving `campaign.json`. */
+  nonce: number;
+}
+
+/** One entry of `<app data>/campaign-folders.json`: `name` when it opens, else `error`. */
+export interface KnownCampaign {
+  path: string;
+  lastOpenedMs: number;
+  name: string | null;
+  error: string | null;
+}
+
+export interface CampaignFile {
+  bytes: Uint8Array;
+  modifiedMs: number;
+}
+
+export interface CampaignFileStat {
+  exists: boolean;
+  isDir: boolean;
+  size: number;
+  modifiedMs: number;
+}
+
+export interface CampaignTreeEntry {
+  name: string;
+  path: string;
+  isDir: boolean;
+  children: CampaignTreeEntry[];
+}
