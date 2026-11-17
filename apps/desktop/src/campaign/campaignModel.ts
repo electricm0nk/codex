@@ -1,5 +1,8 @@
 /**
- * Campaign data model and local persistence.
+ * The pre-SD-42 localStorage campaign model. New campaigns are folders: the Create, Edit and
+ * Manager screens use `boundary/campaignFolder/*` and `campaignMembersModel.ts`, so nothing here
+ * creates a campaign any more. What remains is read by the screens SD-42 E2.3 moves to the folder
+ * (the campaign sheet, the membership dialog) and, after E2.3, by E2.4's migration detection.
  *
  * The campaign record itself, its party, and its resources/adventure-log/
  * maps/wiki assets are the source of truth in localStorage (this module) —
@@ -77,43 +80,6 @@ function saveCampaigns(campaigns: Campaign[]): void {
 
 export function getCampaign(id: string): Campaign | null {
   return getCampaigns().find((campaign) => campaign.id === id) ?? null;
-}
-
-export interface CreateCampaignInput {
-  name: string;
-  ruleSetId: string;
-  ruleSetLabel: string;
-  description: string;
-  memberEmails: string[];
-}
-
-/**
- * Creates the campaign record (localStorage) and immediately writes its
- * local-folder artifacts to disk — nothing here (or anywhere in this app)
- * sends an email, invite, or notification of any kind. Sharing a campaign
- * means handing someone its folder or files directly. `syncResult` reports
- * whether the local-folder write succeeded; the campaign record itself is
- * always created regardless of `syncResult.ok`, since localStorage is the
- * actual source of truth.
- */
-export async function createCampaign(
-  input: CreateCampaignInput
-): Promise<{ campaign: Campaign; syncResult: WriteCampaignLocalFolderArtifactsResult }> {
-  const now = new Date().toISOString();
-  const campaign: Campaign = {
-    id: crypto.randomUUID(),
-    name: input.name,
-    ruleSetId: input.ruleSetId,
-    ruleSetLabel: input.ruleSetLabel,
-    description: input.description,
-    members: input.memberEmails.map((email) => ({ email })),
-    partyCharacterIds: [],
-    createdAt: now,
-    updatedAt: now,
-  };
-  saveCampaigns([...getCampaigns(), campaign]);
-  const syncResult = await writeCampaignLocalFolderArtifacts(campaign.id);
-  return { campaign, syncResult };
 }
 
 export function updateCampaign(id: string, changes: Partial<Omit<Campaign, 'id' | 'createdAt'>>): Campaign | null {

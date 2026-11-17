@@ -65,7 +65,7 @@ use serde::Serialize;
 
 use campaign_folder::{
     add_known_campaign_folder, create_campaign_folder, forget_known_campaign_folder, list_campaign_tree,
-    list_known_campaigns, open_campaign_folder, read_campaign_file, stat_campaign_file, write_campaign_file,
+    list_known_campaigns, open_campaign_folder, read_campaign_file, save_campaign_json, stat_campaign_file, write_campaign_file,
 };
 use campaign_drive::{
     drive_delete_campaign, drive_list_campaigns, drive_load_campaign, drive_save_campaign,
@@ -348,6 +348,7 @@ fn main() {
             forget_known_campaign_folder,
             create_campaign_folder,
             open_campaign_folder,
+            save_campaign_json,
             read_campaign_file,
             write_campaign_file,
             stat_campaign_file,

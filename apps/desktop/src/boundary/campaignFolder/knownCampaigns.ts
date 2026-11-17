@@ -1,5 +1,5 @@
 import { invokeCampaignFolder } from './invokeCampaignFolder';
-import type { CampaignFolderSnapshot, KnownCampaign, OpenedCampaign } from './types';
+import type { CampaignFolderSnapshot, KnownCampaign, OpenedCampaign, SavedCampaignJson } from './types';
 
 /** The known campaign folders, most recently opened first (`list_known_campaigns`). */
 export function listKnownCampaigns(): Promise<KnownCampaign[]> {
@@ -28,4 +28,17 @@ export function createCampaignFolder(parentDir: string, campaign: CampaignFolder
 /** Opens a known campaign folder and marks it most recently opened. */
 export function openCampaignFolder(campaignDir: string): Promise<OpenedCampaign> {
   return invokeCampaignFolder('open_campaign_folder', { campaignDir }, 'opening a campaign folder');
+}
+
+/** Saves an edited `campaign.json` through the conflict-detecting nonce path (`save_campaign_json`). */
+export function saveCampaignJson(
+  campaignDir: string,
+  campaign: CampaignFolderSnapshot,
+  expectedNonce: number
+): Promise<SavedCampaignJson> {
+  return invokeCampaignFolder(
+    'save_campaign_json',
+    { request: { campaignDir, campaign, expectedNonce } },
+    'saving campaign.json'
+  );
 }

@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
 use codex::campaign::folder;
-use codex::campaign::local_store::CAMPAIGN_JSON;
+use codex::campaign::local_store::{CampaignStore, CAMPAIGN_JSON};
 use codex::campaign::CampaignFolderSnapshot;
 
 const KNOWN_FOLDERS_FILE: &str = "campaign-folders.json";
@@ -48,6 +48,23 @@ pub struct CreateCampaignFolderRequest {
     /// The folder the user picked; the campaign is created in `<parentDir>/<campaign name>/`.
     pub parent_dir: String,
     pub campaign: CampaignFolderSnapshot,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveCampaignJsonRequest {
+    pub campaign_dir: String,
+    pub campaign: CampaignFolderSnapshot,
+    /// The nonce the screen read when it opened the campaign.
+    pub expected_nonce: Option<u64>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SavedCampaignJsonDto {
+    pub nonce: u64,
+    /// Set when another writer saved since `expected_nonce`: their `campaign.json` was kept here.
+    pub conflict_dir: Option<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -198,6 +215,20 @@ pub fn open_campaign_folder_at(app_data_dir: &Path, campaign_dir: &str) -> Resul
     })
 }
 
+/// Saves an edited `campaign.json` through the nonce path (`decisions.md §11`, §13.1).
+pub fn save_campaign_json_impl(request: &SaveCampaignJsonRequest) -> Result<SavedCampaignJsonDto, String> {
+    let dir = require_absolute(&request.campaign_dir)?;
+    if request.campaign.members.first().is_none_or(|m| m.name.trim().is_empty()) {
+        return Err("a campaign keeps its creator as member #1".to_owned());
+    }
+    let outcome = CampaignStore::save_campaign_json_with_conflict_detection(&request.campaign, &dir, request.expected_nonce)
+        .map_err(|err| err.message)?;
+    Ok(SavedCampaignJsonDto {
+        nonce: outcome.nonce,
+        conflict_dir: outcome.conflict_dir.map(|path| path.to_string_lossy().into_owned()),
+    })
+}
+
 // --- files ---
 
 fn resolve(campaign_dir: &str, rel: &str) -> Result<PathBuf, String> {
@@ -317,6 +348,11 @@ pub fn create_campaign_folder(
 #[tauri::command]
 pub fn open_campaign_folder(app: tauri::AppHandle, campaign_dir: String) -> Result<OpenedCampaignDto, String> {
     open_campaign_folder_at(&app_data_dir(&app)?, &campaign_dir)
+}
+
+#[tauri::command]
+pub fn save_campaign_json(request: SaveCampaignJsonRequest) -> Result<SavedCampaignJsonDto, String> {
+    save_campaign_json_impl(&request)
 }
 
 #[tauri::command]
@@ -462,6 +498,47 @@ mod tests {
         assert!(write_campaign_file_impl(&write("campaign.json", b"{}")).is_err());
         assert!(write_campaign_file_impl(&write(".codex/nonce", b"9")).is_err());
         assert!(stat_campaign_file_impl(&file("Wiki/../../x")).is_err());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn save_campaign_json_bumps_the_nonce_and_reports_a_conflict() {
+        let root = temp_dir("save");
+        let opened = create_campaign_folder_at(&root.join("app-data"), &create_request(&root, "Save")).unwrap();
+        let mut edited = opened.campaign.clone();
+        edited.members.push(FolderMember { name: "Eli".to_owned(), added_at: "2026-11-17T01:00:00Z".to_owned() });
+        edited.description = "Edited".to_owned();
+        let save = |campaign: &CampaignFolderSnapshot, nonce: u64| {
+            save_campaign_json_impl(&SaveCampaignJsonRequest {
+                campaign_dir: opened.campaign_dir.clone(),
+                campaign: campaign.clone(),
+                expected_nonce: Some(nonce),
+            })
+        };
+
+        let first = save(&edited, opened.nonce).unwrap();
+        assert_eq!(first.nonce, opened.nonce + 1);
+        assert!(first.conflict_dir.is_none());
+        let reopened = folder::open(Path::new(&opened.campaign_dir)).unwrap();
+        let names: Vec<_> = reopened.snapshot.members.iter().map(|m| m.name.as_str()).collect();
+        assert_eq!(names, vec!["Dana", "Eli"]);
+        assert_eq!(reopened.snapshot.description, "Edited");
+
+        // A save from a stale nonce still writes (local wins) and names where the other copy went.
+        let stale = save(&opened.campaign, opened.nonce).unwrap();
+        let kept = stale.conflict_dir.expect("a stale nonce reports the kept copy");
+        assert!(Path::new(&kept).join(CAMPAIGN_JSON).is_file());
+
+        // A save with no member, or outside an absolute folder, is refused.
+        let mut empty = opened.campaign.clone();
+        empty.members.clear();
+        assert!(save(&empty, stale.nonce).is_err());
+        assert!(save_campaign_json_impl(&SaveCampaignJsonRequest {
+            campaign_dir: "relative".to_owned(),
+            campaign: opened.campaign.clone(),
+            expected_nonce: None,
+        })
+        .is_err());
         let _ = fs::remove_dir_all(&root);
     }
 }

@@ -1,10 +1,8 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { RULE_SETS } from '../characterHub/LandingScreen';
-import { getCampaign, writeCampaignLocalFolderArtifacts, updateCampaign, type Campaign } from './campaignModel';
-import { loadCharacterHubListSurfaceRuntime } from '../characterHub/characterHubRuntime';
-import type { CharacterHubListRowSurface } from '../characterHub/buildCharacterHubListSurface';
-import { formatHeldClasses } from '../characterHub/characterProgression';
-import { getFriends } from '../settings/friends';
+import { openCampaignFolder, saveCampaignJson } from '../boundary/campaignFolder/knownCampaigns';
+import type { FolderMember, OpenedCampaign } from '../boundary/campaignFolder/types';
+import { addMember, membersForSave, removeMember, renameMember } from './campaignMembersModel';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -24,39 +22,49 @@ const INPUT_STYLE: CSSProperties = {
 };
 const FIELD_STYLE: CSSProperties = { marginBottom: '1rem' };
 
+const SMALL_BUTTON: CSSProperties = {
+  background: 'none',
+  border: '1px solid var(--color-border)',
+  borderRadius: 8,
+  color: 'var(--color-text-muted)',
+  flexShrink: 0,
+  padding: '0.3rem 0.6rem',
+};
+
 /**
- * Edit Campaign: campaign details (name / rule set / description / members)
- * plus party building — selecting from saved characters to add or remove
- * them from the campaign's party.
- *
- * By design there's no automatic character sync — this app never talks to
- * a network. Building a party from another player's character means they
- * hand you their saved-character files directly (or you both point your
- * saved-characters folder at the same synced location). Until then, this
- * lists the app's own saved characters (the same source Load Character
- * uses) as the pool to build a party from.
+ * Edit Campaign over its folder (SD-42 `decisions.md §13.1`): name, rule set, description and the
+ * typed member list (add, rename, remove any but the first — the creator). Saving writes
+ * `campaign.json` through the conflict-detecting nonce path. The party is the folder's
+ * `Characters/` (E2.10), not a list kept here.
  */
 export function EditCampaignScreen(props: { campaignId: string; onCancel: () => void; onSaved: () => void }) {
-  const [campaign, setCampaign] = useState<Campaign | null>(() => getCampaign(props.campaignId));
-  const [name, setName] = useState(campaign?.name ?? '');
-  const [ruleSetId, setRuleSetId] = useState(campaign?.ruleSetId ?? RULE_SETS[0].id);
-  const [description, setDescription] = useState(campaign?.description ?? '');
-  const [memberEmails, setMemberEmails] = useState<string[]>(campaign?.members.map((member) => member.email) ?? ['']);
-  const [partyIds, setPartyIds] = useState<string[]>(campaign?.partyCharacterIds ?? []);
-  const [availableCharacters, setAvailableCharacters] = useState<CharacterHubListRowSurface[]>([]);
+  // The hub's campaign id is the campaign folder's path (SD-42 E2.2).
+  const campaignDir = props.campaignId;
+  const [opened, setOpened] = useState<OpenedCampaign | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [name, setName] = useState('');
+  const [ruleSetId, setRuleSetId] = useState<string>(RULE_SETS[0].id);
+  const [description, setDescription] = useState('');
+  const [members, setMembers] = useState<FolderMember[]>([]);
+  const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
-  const friends = getFriends();
 
   useEffect(() => {
-    loadCharacterHubListSurfaceRuntime()
-      .then((surface) => setAvailableCharacters(surface.rows))
-      .catch(() => setAvailableCharacters([]));
-  }, []);
+    openCampaignFolder(campaignDir)
+      .then((result) => {
+        setOpened(result);
+        setName(result.campaign.name);
+        setRuleSetId(result.campaign.ruleSetId);
+        setDescription(result.campaign.description);
+        setMembers(result.campaign.members);
+      })
+      .catch((cause: unknown) => setLoadError(cause instanceof Error ? cause.message : String(cause)));
+  }, [campaignDir]);
 
-  if (!campaign) {
+  if (!opened) {
     return (
       <section style={{ marginTop: '2rem' }}>
-        <p style={{ color: 'var(--color-error)' }}>Campaign not found.</p>
+        <p style={{ color: loadError ? 'var(--color-error)' : 'var(--color-text-muted)' }}>{loadError ?? 'Opening the campaign folder…'}</p>
         <button
           type="button"
           onClick={props.onCancel}
@@ -68,60 +76,38 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
     );
   }
 
-  function updateMember(index: number, value: string) {
-    setMemberEmails((prev) => prev.map((email, i) => (i === index ? value : email)));
-  }
-
-  function addMemberRow() {
-    setMemberEmails((prev) => [...prev, '']);
-  }
-
-  function removeMemberRow(index: number) {
-    setMemberEmails((prev) => (prev.length > 1 ? prev.filter((_, i) => i !== index) : prev));
-  }
-
-  function addFriendAsMember(gmailAddress: string) {
-    setMemberEmails((prev) => {
-      if (prev.includes(gmailAddress)) {
-        return prev;
-      }
-      const firstEmptyIndex = prev.findIndex((email) => email.trim() === '');
-      if (firstEmptyIndex !== -1) {
-        return prev.map((email, i) => (i === firstEmptyIndex ? gmailAddress : email));
-      }
-      return [...prev, gmailAddress];
-    });
-  }
-
-  function toggleParty(characterId: string) {
-    setPartyIds((prev) => (prev.includes(characterId) ? prev.filter((id) => id !== characterId) : [...prev, characterId]));
-  }
-
   async function handleSave() {
-    if (!campaign) {
+    if (!opened) {
       return;
     }
+    const now = new Date().toISOString();
     const selectedRuleSet = RULE_SETS.find((ruleSet) => ruleSet.id === ruleSetId) ?? RULE_SETS[0];
-    const cleanedEmails = memberEmails.map((email) => email.trim()).filter(Boolean);
-    const updated = updateCampaign(campaign.id, {
-      name: name.trim(),
-      ruleSetId: selectedRuleSet.id,
-      ruleSetLabel: selectedRuleSet.name,
-      description: description.trim(),
-      members: cleanedEmails.map((email) => ({ email })),
-      partyCharacterIds: partyIds,
-    });
-    if (updated) {
-      setCampaign(updated);
+    setSaving(true);
+    try {
+      const campaign = {
+        ...opened.campaign,
+        name: name.trim(),
+        ruleSetId: selectedRuleSet.id,
+        ruleSetLabel: selectedRuleSet.name,
+        description: description.trim(),
+        members: membersForSave(members, now),
+        updatedAt: now,
+      };
+      const saved = await saveCampaignJson(opened.campaignDir, campaign, opened.nonce);
+      setOpened({ ...opened, campaign, nonce: saved.nonce });
+      setMembers(campaign.members);
+      if (saved.conflictDir) {
+        setStatus(
+          `Saved. Someone else changed this campaign since you opened it; their version of campaign.json is kept in ${saved.conflictDir}.`
+        );
+        return;
+      }
+      props.onSaved();
+    } catch (cause: unknown) {
+      setStatus(cause instanceof Error ? cause.message : String(cause));
+    } finally {
+      setSaving(false);
     }
-    setStatus('Saving…');
-    const result = await writeCampaignLocalFolderArtifacts(campaign.id);
-    setStatus(
-      result.ok
-        ? `Saved. Wrote .config/${name.trim()}.json to ${result.campaignFolderPath}.`
-        : `Saved, but the local folder could not be written: ${result.error}`
-    );
-    props.onSaved();
   }
 
   return (
@@ -137,21 +123,21 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
         </button>
       </div>
 
-      <div style={{ display: 'flex', gap: '1.5rem' }}>
-        {/* Left: campaign details */}
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            handleSave();
-          }}
-          style={{ border: '1px solid var(--color-border)', borderRadius: 12, flex: '1 1 380px', padding: '1.25rem' }}
-        >
-          <div style={FIELD_STYLE}>
-            <label style={LABEL_STYLE} htmlFor="campaign-name">
-              Campaign name
-            </label>
-            <input id="campaign-name" style={INPUT_STYLE} value={name} onChange={(event) => setName(event.target.value)} required />
-          </div>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSave();
+        }}
+        style={{ border: '1px solid var(--color-border)', borderRadius: 12, maxWidth: 560, padding: '1.25rem' }}
+      >
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0 0 1rem', overflowWrap: 'anywhere' }}>{opened.campaignDir}</p>
+
+        <div style={FIELD_STYLE}>
+          <label style={LABEL_STYLE} htmlFor="campaign-name">
+            Campaign name
+          </label>
+          <input id="campaign-name" style={INPUT_STYLE} value={name} onChange={(event) => setName(event.target.value)} required />
+        </div>
 
           <div style={FIELD_STYLE}>
             <label style={LABEL_STYLE} htmlFor="campaign-rule-set">
@@ -180,68 +166,25 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
           </div>
 
           <div style={FIELD_STYLE}>
-            <p style={LABEL_STYLE}>Campaign members</p>
-
-            {friends.length ? (
-              <div style={{ marginBottom: '0.75rem' }}>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0 0 0.4rem' }}>
-                  Add from your friends list:
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                  {friends.map((friend) => {
-                    const alreadyAdded = memberEmails.includes(friend.gmailAddress);
-                    return (
-                      <button
-                        key={friend.id}
-                        type="button"
-                        onClick={() => addFriendAsMember(friend.gmailAddress)}
-                        disabled={alreadyAdded}
-                        title={friend.gmailAddress}
-                        style={{
-                          backgroundColor: alreadyAdded ? 'var(--color-surface-2)' : 'transparent',
-                          border: '1px solid var(--color-border)',
-                          borderRadius: 999,
-                          color: alreadyAdded ? 'var(--color-text-muted)' : 'var(--color-text)',
-                          cursor: alreadyAdded ? 'not-allowed' : 'pointer',
-                          fontSize: '0.8rem',
-                          opacity: alreadyAdded ? 0.6 : 1,
-                          padding: '0.3rem 0.7rem',
-                        }}
-                      >
-                        {alreadyAdded ? '✓ ' : '+ '}
-                        {friend.name}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : null}
-
+            <p style={LABEL_STYLE}>Campaign members ({members.length})</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {memberEmails.map((email, index) => (
+              {members.map((member, index) => (
                 <div key={index} style={{ display: 'flex', gap: '0.5rem' }}>
                   <input
-                    type="email"
-                    placeholder="player@example.com"
-                    value={email}
-                    onChange={(event) => updateMember(index, event.target.value)}
+                    aria-label={index === 0 ? 'Creator name' : `Member ${index + 1} name`}
+                    placeholder="Player name"
+                    value={member.name}
+                    onChange={(event) => setMembers((prev) => renameMember(prev, index, event.target.value))}
+                    required={index === 0}
                     style={INPUT_STYLE}
                   />
                   <button
                     type="button"
-                    onClick={() => removeMemberRow(index)}
-                    disabled={memberEmails.length === 1}
+                    onClick={() => setMembers((prev) => removeMember(prev, index))}
+                    disabled={index === 0}
                     aria-label="Remove member"
-                    style={{
-                      background: 'none',
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 8,
-                      color: 'var(--color-text-muted)',
-                      cursor: memberEmails.length === 1 ? 'not-allowed' : 'pointer',
-                      flexShrink: 0,
-                      opacity: memberEmails.length === 1 ? 0.5 : 1,
-                      padding: '0.3rem 0.6rem',
-                    }}
+                    title={index === 0 ? 'The campaign creator stays member #1' : undefined}
+                    style={{ ...SMALL_BUTTON, cursor: index === 0 ? 'not-allowed' : 'pointer', opacity: index === 0 ? 0.5 : 1 }}
                   >
                     ×
                   </button>
@@ -250,11 +193,10 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
             </div>
             <button
               type="button"
-              onClick={addMemberRow}
+              onClick={() => setMembers((prev) => addMember(prev, new Date().toISOString()))}
               style={{
-                background: 'none',
+                ...SMALL_BUTTON,
                 border: '1px dashed var(--color-border)',
-                borderRadius: 8,
                 color: 'var(--color-text-secondary)',
                 cursor: 'pointer',
                 fontSize: '0.85rem',
@@ -268,79 +210,22 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
 
           <button
             type="submit"
+            disabled={saving}
             style={{
               backgroundColor: 'var(--color-accent)',
               border: 'none',
               borderRadius: 8,
               color: 'var(--color-on-accent)',
-              cursor: 'pointer',
+              cursor: saving ? 'not-allowed' : 'pointer',
+              opacity: saving ? 0.6 : 1,
               padding: '0.6rem 1.25rem',
             }}
           >
-            Save
+            {saving ? 'Saving…' : 'Save'}
           </button>
 
           {status ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.6, marginTop: '0.9rem' }}>{status}</p> : null}
-        </form>
-
-        {/* Right: party builder */}
-        <div style={{ border: '1px solid var(--color-border)', borderRadius: 12, flex: '1 1 320px', padding: '1.25rem' }}>
-          <p style={LABEL_STYLE}>Party ({partyIds.length})</p>
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', lineHeight: 1.5, margin: '0 0 1rem' }}>
-            Characters from your saved list — Drive-synced character sync and format validation aren't wired yet, so
-            this uses the same characters Load Character does.
-          </p>
-
-          {availableCharacters.length === 0 ? (
-            <p style={{ color: 'var(--color-text-secondary)' }}>No saved characters yet.</p>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {availableCharacters.map((row) => {
-                const inParty = partyIds.includes(row.characterId);
-                return (
-                  <div
-                    key={row.characterId}
-                    style={{
-                      alignItems: 'center',
-                      backgroundColor: inParty ? 'var(--color-surface-2)' : 'transparent',
-                      border: `1px solid ${inParty ? 'var(--color-accent)' : 'var(--color-border)'}`,
-                      borderRadius: 8,
-                      display: 'flex',
-                      gap: '0.75rem',
-                      justifyContent: 'space-between',
-                      padding: '0.6rem 0.8rem',
-                    }}
-                  >
-                    <div style={{ minWidth: 0 }}>
-                      <p style={{ fontWeight: 700, margin: 0 }}>{row.displayLabel}</p>
-                      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', margin: '0.15rem 0 0' }}>
-                        {row.raceLabel} {formatHeldClasses(row.classSummary)}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => toggleParty(row.characterId)}
-                      style={{
-                        backgroundColor: inParty ? 'var(--color-surface)' : 'var(--color-accent)',
-                        border: '1px solid var(--color-border)',
-                        borderRadius: 6,
-                        color: inParty ? 'var(--color-text)' : 'var(--color-on-accent)',
-                        cursor: 'pointer',
-                        flexShrink: 0,
-                        fontSize: '0.8rem',
-                        fontWeight: 600,
-                        padding: '0.3rem 0.7rem',
-                      }}
-                    >
-                      {inParty ? 'Remove' : 'Add'}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
+      </form>
     </section>
   );
 }

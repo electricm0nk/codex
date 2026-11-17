@@ -53,3 +53,9 @@ export interface CampaignTreeEntry {
   isDir: boolean;
   children: CampaignTreeEntry[];
 }
+
+export interface SavedCampaignJson {
+  nonce: number;
+  /** Set when someone else saved since the campaign was opened: their copy was kept here. */
+  conflictDir: string | null;
+}

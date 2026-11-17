@@ -1,4 +1,4 @@
-import { createCampaignFolder, listKnownCampaigns, openCampaignFolder } from './knownCampaigns';
+import { createCampaignFolder, listKnownCampaigns, openCampaignFolder, saveCampaignJson } from './knownCampaigns';
 import { listCampaignTree, readCampaignFile, writeCampaignFile } from './campaignFiles';
 import { assertEqual } from '../../testSupport/asserts';
 
@@ -41,6 +41,26 @@ async function main() {
     ),
     'Tauri runtime not available for creating a campaign folder',
     'create'
+  );
+  assertEqual(
+    await messageOf(() =>
+      saveCampaignJson(
+        '/x',
+        {
+          schemaVersion: 2,
+          name: 'N',
+          ruleSetId: 'crb',
+          ruleSetLabel: 'Core',
+          description: '',
+          members: [{ name: 'Gwen', addedAt: 't' }],
+          createdAt: 't',
+          updatedAt: 't',
+        },
+        0
+      )
+    ),
+    'Tauri runtime not available for saving campaign.json',
+    'save'
   );
   assertEqual(
     await messageOf(() => readCampaignFile('/x', 'Party Resources.md')),

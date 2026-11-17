@@ -1,59 +1,16 @@
-import { createCampaign, writeCampaignLocalFolderArtifacts } from './campaignModel';
+import * as campaignModel from './campaignModel';
+import { writeCampaignLocalFolderArtifacts } from './campaignModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /**
- * SD-23 Epic 4 (Campaign Manager Simplification): `createCampaign` no longer
- * returns a `driveActionSummary` string (Criterion 12), `CampaignMember` no
- * longer carries an `invited` field (Criterion 13), and the local-folder
- * write helper is exported as `writeCampaignLocalFolderArtifacts` rather
- * than `syncCampaignDriveArtifacts` (Criterion 14).
+ * SD-42 E2.2: a campaign is created as a folder (`create_campaign_folder`, the creator as
+ * member #1), never as a localStorage record with invited emails, so the old `createCampaign`
+ * and its `memberEmails` input are gone. The local-folder write helper keeps its SD-23 name
+ * until E2.3 removes the Drive path.
  */
 
-async function main() {
-  await testCreateCampaignReturnsSyncResultNotDriveActionSummary();
-  await testCreateCampaignMembersHaveNoInvitedField();
-  testWriteCampaignLocalFolderArtifactsExportedUnderNewName();
-}
-
-async function testCreateCampaignReturnsSyncResultNotDriveActionSummary() {
-  const result = await createCampaign({
-    name: 'Test Campaign',
-    ruleSetId: 'core',
-    ruleSetLabel: 'Core',
-    description: '',
-    memberEmails: [],
-  });
-
-  assert('campaign' in result, 'createCampaign result must carry campaign');
-  assert('syncResult' in result, 'createCampaign result must carry syncResult');
-  assert(!('driveActionSummary' in result), 'driveActionSummary must not be present on the createCampaign result');
-
-  assertEqual(typeof result.syncResult.ok, 'boolean', 'syncResult.ok is a boolean');
-  // No Tauri runtime exists in this test environment, so the local-folder
-  // write is expected to fail deterministically — exercising the
-  // ok:false/error branch of syncResult.
-  assertEqual(result.syncResult.ok, false, 'no Tauri runtime in test env, so the local-folder write fails');
-  assert(
-    typeof result.syncResult.error === 'string' && result.syncResult.error.length > 0,
-    'syncResult.error is populated when ok is false'
-  );
-  assertEqual(result.syncResult.campaignFolderPath, undefined, 'campaignFolderPath is absent when ok is false');
-}
-
-async function testCreateCampaignMembersHaveNoInvitedField() {
-  const result = await createCampaign({
-    name: 'Membership Test',
-    ruleSetId: 'core',
-    ruleSetLabel: 'Core',
-    description: '',
-    memberEmails: ['player@example.com'],
-  });
-
-  assertEqual(result.campaign.members.length, 1, 'one member created from one email');
-  const member = result.campaign.members[0];
-  assertEqual(member.email, 'player@example.com', 'member email is preserved');
-  assert(!('invited' in member), 'CampaignMember must not carry an invited field');
-  assertEqual(Object.keys(member).join(','), 'email', 'persisted member shape is {email} only');
+function testCreateCampaignIsGone() {
+  assert(!('createCampaign' in campaignModel), 'campaignModel no longer creates a localStorage campaign');
 }
 
 function testWriteCampaignLocalFolderArtifactsExportedUnderNewName() {
@@ -64,9 +21,6 @@ function testWriteCampaignLocalFolderArtifactsExportedUnderNewName() {
   );
 }
 
-main()
-  .then(() => console.log('campaignModel.test.ts OK'))
-  .catch((error: unknown) => {
-    console.error(error);
-    throw error;
-  });
+testCreateCampaignIsGone();
+testWriteCampaignLocalFolderArtifactsExportedUnderNewName();
+console.log('campaignModel.test.ts OK');
