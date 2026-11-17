@@ -172,7 +172,6 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
                 <div key={index} style={{ display: 'flex', gap: '0.5rem' }}>
                   <input
                     aria-label={index === 0 ? 'Creator name' : `Member ${index + 1} name`}
-                    placeholder="Player name"
                     value={member.name}
                     onChange={(event) => setMembers((prev) => renameMember(prev, index, event.target.value))}
                     required={index === 0}

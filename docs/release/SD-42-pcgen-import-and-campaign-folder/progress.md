@@ -58,6 +58,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E2.1 | complete | 039dd404a5 | `artifacts/epic_2/E2.1_cycle_receipt.md` | folder model + 9 commands + known folders; desktop filter fixed to `campaign_folder::` (§20) |
 | 2026-11-17 | E1.4 | complete | the commit adding the E1.4 receipt (code d7cacc4343) | `artifacts/epic_1/E1.4_cycle_receipt.md` | unmapped line → Create item (weightLbs/priceGp from WT/COST; containerCapacityLbs = what the file puts inside) held at its place; text-only Worn/Carried stats removed; Camel = gear; 3/3 `pcg_import_unmapped`, codex-ingest `--lib` 720 passed |
 | 2026-11-17 | E1.5 | complete | the commit adding the E1.5 receipt (code f4b23af04b) | `artifacts/epic_1/E1.5_cycle_receipt.md` | `BioWire.notes`: `## Imported from PCGen (<file>, <ISO date>)` + 9 kinds, once each, file order; 3/3 `pcg_import_notes`, codex-ingest `--lib` 721 passed; discovered E1.9 (diagnosis test rewrites E1.1 artifacts, 3rd time) |
+| 2026-11-17 | E2.2 | complete | 2c4fed1ad0 | `artifacts/epic_2/E2.2_cycle_receipt.md` | creator = member #1; typed member list; Manager over known folders; Edit saves via new `save_campaign_json`; `npm test` 204/204 |
 
 ## Epic reports
 

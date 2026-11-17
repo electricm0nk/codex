@@ -153,7 +153,7 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
             {otherNames.map((memberName, index) => (
               <div key={index} style={{ display: 'flex', gap: '0.5rem' }}>
                 <input
-                  placeholder="Player name"
+                  aria-label="Member name"
                   value={memberName}
                   onChange={(event) => setOtherNames((prev) => prev.map((n, i) => (i === index ? event.target.value : n)))}
                   style={INPUT_STYLE}

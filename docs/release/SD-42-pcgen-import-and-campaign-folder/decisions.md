@@ -455,6 +455,7 @@ with `ownedBy:<card>` (R4).
 | 2026-11-17 | §6, E1.3 | `COSTMOD` folds into `cost_override_copper` | PCGen's line `COST` already includes `COSTMOD` (pf_Paladin: `Outfit (Explorer's)` `COST:0`, `COSTMOD=-10`); the override is the line's `COST` when it differs from the record's price; `eqmods` ride on the `equipmentSelections` row (`EquipmentWire.eqmods`), beside `applied_modifiers` | E1.3 |
 | 2026-11-17 | `epic-breakdown.md` E2.1 desktop acceptance | `cargo test … campaign_folder_` | `cargo test … campaign_folder::` (the named tests are `campaign_folder::tests::known_folders_round_trip` etc.; `campaign_folder_` matched 0 of 1372) | E2.1 |
 | 2026-11-17 | `epic-breakdown.md` E1.5 RED | `error[E0560]: … no field notes` | `error[E0609]: no field 'notes' on type 'BioWire'` — the test reads `bio.notes`, it never builds a `BioWire` literal | E1.5 |
+| 2026-11-17 | `epic-breakdown.md` E2.2 | Edit saves via "`write_campaign_file` of `campaign.json` through the nonce path"; "a conflict shows the existing message"; FILES YOU OWN = the three screens + two models | `write_campaign_file` refuses `campaign.json` (E2.1); E2.2 adds `save_campaign_json` (`campaign_folder.rs`, `main.rs`, boundary `knownCampaigns.ts`/`types.ts`) over `save_campaign_json_with_conflict_detection`; no conflict message existed in the UI (`git grep -n conflictDir -- apps/desktop/src` → 0), so the Edit screen states the kept copy's path | E2.2 |
 
 ## §21 — Questions only the operator can settle (defaults taken; the run does not wait)
 

@@ -50,7 +50,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 47: 37 at 
 | E1.9 | `pcg_import_diagnosis` stops rewriting E1.1's committed artifacts on every run | sonnet | waiting | E1.5 | discovered by E1.5 (3rd occurrence: E1.3, E1.4, E1.5); `epic-breakdown.md` E1.9 |
 | E1.MC | E1 merge check + Epic report | opus | waiting | E1.7, E1.8, E1.9 | adversarial; the import lane ends |
 | E2.1 | Folder model (root) + `campaign_folder.rs` commands + known folders | opus | complete | C1 | code `039dd404a5`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; root 5 + desktop 3 tests |
-| E2.2 | Member #1; typed members; Create / Edit / Manager over the folder | opus | waiting | E2.1 | `decisions.md §13.1` |
+| E2.2 | Member #1; typed members; Create / Edit / Manager over the folder | opus | complete | E2.1 | code `2c4fed1ad0`; receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; 4 member cases + desktop `campaign_folder::` 4; `save_campaign_json` fence exit (§20) |
 | E2.3 | Drive removal; folder-backed Manager; hub modes carry a folder | opus | waiting | E2.2 | `decisions.md §13.2`; NR-6 |
 | E2.4 | Migration screen + command + backup | opus | waiting | E2.3 | `decisions.md §14` |
 | E2.5 | Help screen; `opener:default`; Obsidian link; live tree | opus | waiting | E2.4 | `decisions.md §13.3` |
