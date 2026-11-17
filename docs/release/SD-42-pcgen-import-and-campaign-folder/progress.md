@@ -67,6 +67,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E2.4 | complete | the commit adding the E2.4 receipt (code bef3e6c2c8) | `artifacts/epic_2/E2.4_cycle_receipt.md` | `migrate_campaign` + `src/campaign/migrate.rs` (localStorage record or `.config/` folder → new folder; backup first; `.json.bak`; idempotent); migration screen from the Manager + Open folder…; root lib 3155 → 3159; desktop 1508 passed; npm test 207/207 |
 | 2026-11-17 | E1.8 | complete | the commit adding the E1.8 receipt (code d3546f488b) | `artifacts/epic_1/E1.8_cycle_receipt.md` | `place_copies`: a mapped stack holds `QUANTITY × record_base_quantity` pieces (the engine's `copy_bundles` divisor); `stacks_bundle` 2/2 (synthetic 2×10 bullets = 20 pieces, 10 lb = WT × QUANTITY; pf_Rogue, pf_Cleric 20 pieces); parity compares gear in PCGen's bundles, 257/258 unchanged |
 | 2026-11-17 | E1.9 | complete | the commit adding the E1.9 receipt (code ea52e721f4) | `artifacts/epic_1/E1.9_cycle_receipt.md` | diagnosis test writes to CARGO_TARGET_TMPDIR unless PCG_DIAGNOSIS_REFRESH=1; 2 passed; E1.1 dir status 4 → 0 |
+| 2026-11-17 | E2.5 | complete | the commit adding the E2.5 receipt (code 20257d121c) | `artifacts/epic_2/E2.5_cycle_receipt.md` | help dialog (7 sections, live tree via `list_campaign_tree`, template otherwise, Obsidian link via `openUrl`); `opener:default`; Help button on Manager, sheet, Create, Edit, Migration; npm 208/208; desktop 1508 passed 0 failed |
 
 ## Epic reports
 
