@@ -15,7 +15,7 @@ status: planning-ready
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
-| E1 import converter (lane `import`) | 11 | 7 (E1.1–E1.7) | E1.7 complete; E1.8, E1.9, E1.10 next; E1.10 discovered by E1.7 |
+| E1 import converter (lane `import`) | 11 | 8 (E1.1–E1.8) | E1.8 complete; E1.9, E1.10 next; E1.10 discovered by E1.7 |
 | E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
 | E4 desktop wiring (Phase 2) | 13 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
@@ -65,6 +65,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E1.6 | complete | the commit adding the E1.6 receipt (code 826b421762) | `artifacts/epic_1/E1.6_cycle_receipt.md` | `GAMEMODE:Starfinder` → `Catalog::load_sf` (load_sheet_rules), `gameSystem` starfinder-1e; sf_soldier + sf_mechanic compute (SF engine), drone refused by name (Q-A); 3/3 `pcg_import_sf`, codex-ingest full 1903 passed / 0 failed |
 | 2026-11-17 | E1.7 | complete | the commit adding the E1.7 receipt (code 75f26c7ebb) | `artifacts/epic_1/E1.7_cycle_receipt.md` | parity harness `scripts/oracle_harness/pcg_import_parity/` (run.sh, compare.py, pcg-gear.txt.ftl, 7 exports, explained.tsv 39 rows) + `pcg_import_parity` 1/1: 7 of 7 samples, 515 fields, 257 equal, 258 explained; operator file 159 fields, 102 equal, 57 explained (local ledger); PF totals desktop-only → discovered E4.13; converter-side rows → discovered E1.10 |
 | 2026-11-17 | E2.4 | complete | the commit adding the E2.4 receipt (code bef3e6c2c8) | `artifacts/epic_2/E2.4_cycle_receipt.md` | `migrate_campaign` + `src/campaign/migrate.rs` (localStorage record or `.config/` folder → new folder; backup first; `.json.bak`; idempotent); migration screen from the Manager + Open folder…; root lib 3155 → 3159; desktop 1508 passed; npm test 207/207 |
+| 2026-11-17 | E1.8 | complete | the commit adding the E1.8 receipt (code d3546f488b) | `artifacts/epic_1/E1.8_cycle_receipt.md` | `place_copies`: a mapped stack holds `QUANTITY × record_base_quantity` pieces (the engine's `copy_bundles` divisor); `stacks_bundle` 2/2 (synthetic 2×10 bullets = 20 pieces, 10 lb = WT × QUANTITY; pf_Rogue, pf_Cleric 20 pieces); parity compares gear in PCGen's bundles, 257/258 unchanged |
 
 ## Epic reports
 
