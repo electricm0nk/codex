@@ -55,7 +55,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51: 37 at 
 | E2.3 | Drive removal; folder-backed Manager; hub modes carry a folder | opus | complete | E2.2 | commit: the one adding the E2.3 receipt (code 80692e2ac0); receipt `artifacts/epic_2/E2.3_cycle_receipt.md`; NR-6 grep 70 → 0; desktop 1373 → 1366 (−7 `campaign_drive`); discovered E2.14 |
 | E2.4 | Migration screen + command + backup | opus | complete | E2.3 | commit: the one adding the E2.4 receipt (code `bef3e6c2c8`); receipt `artifacts/epic_2/E2.4_cycle_receipt.md`; root `campaign_migrate_` 4 passed; desktop `campaign_folder::` 6; TS 3 cases; `§20` test names |
 | E2.5 | Help screen; `opener:default`; Obsidian link; live tree | opus | complete | E2.4 | commit: the one adding the E2.5 receipt (code `20257d121c`); receipt `artifacts/epic_2/E2.5_cycle_receipt.md`; `campaignHelpModel.test.ts` 11 cases; `@tauri-apps/plugin-opener` 2.5.3 (package.json fence exit); desktop 1508 passed |
-| E2.6 | Party Resources tab | opus | waiting | E2.5, E3.1 | `decisions.md §15.1` |
+| E2.6 | Party Resources tab | opus | complete | E2.5, E3.1 | commit: the one adding the E2.6 receipt (code `fad0509fa6`); receipt `artifacts/epic_2/E2.6_cycle_receipt.md`; root `party_resources_` 2 passed; desktop 1509 passed; npm 209/209; 4 screenshots looked at; fence exit `create_party_resources_starter` |
 | E2.7 | Adventure Log tab + frontmatter parser | opus | waiting | E2.6 | `decisions.md §15.2` |
 | E2.8 | Maps tab with pins | opus | waiting | E2.7 | `decisions.md §15.3` |
 | E2.9 | Wiki tab: folders, pages, links, backlinks, search | opus | waiting | E2.8 | `decisions.md §15.4` |
