@@ -59,7 +59,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E1.4 | complete | the commit adding the E1.4 receipt (code d7cacc4343) | `artifacts/epic_1/E1.4_cycle_receipt.md` | unmapped line → Create item (weightLbs/priceGp from WT/COST; containerCapacityLbs = what the file puts inside) held at its place; text-only Worn/Carried stats removed; Camel = gear; 3/3 `pcg_import_unmapped`, codex-ingest `--lib` 720 passed |
 | 2026-11-17 | E1.5 | complete | the commit adding the E1.5 receipt (code f4b23af04b) | `artifacts/epic_1/E1.5_cycle_receipt.md` | `BioWire.notes`: `## Imported from PCGen (<file>, <ISO date>)` + 9 kinds, once each, file order; 3/3 `pcg_import_notes`, codex-ingest `--lib` 721 passed; discovered E1.9 (diagnosis test rewrites E1.1 artifacts, 3rd time) |
 | 2026-11-17 | E2.2 | complete | 2c4fed1ad0 | `artifacts/epic_2/E2.2_cycle_receipt.md` | creator = member #1; typed member list; Manager over known folders; Edit saves via new `save_campaign_json`; `npm test` 204/204 |
-| 2026-11-17 | E3.3 | complete | the commit adding the E3.3 receipt (code 34e62e2d94) | `artifacts/epic_3/E3.3_cycle_receipt.md` | toolbar 6 + autosave 4 + imageDrop 3 cases; `save_attachment` 1 passed; desktop full 0 failed; npm test 207/207; SD-k append-only conflict in campaign_folder.rs kept both (retro incident) |
+| 2026-11-17 | E3.3 | complete | the commit adding the E3.3 receipt (code 084394b746) | `artifacts/epic_3/E3.3_cycle_receipt.md` | toolbar 6 + autosave 4 + imageDrop 3 cases; `save_attachment` 1 passed; desktop full 0 failed; npm test 207/207; SD-k append-only conflict in campaign_folder.rs kept both (retro incident) |
 
 ## Epic reports
 
