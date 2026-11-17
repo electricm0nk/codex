@@ -66,6 +66,19 @@ pub fn create_layout(dir: &Path, snapshot: &CampaignFolderSnapshot) -> Result<Sa
     CampaignStore::save_campaign_json_with_conflict_detection(&snapshot, dir, None)
 }
 
+/// Writes the `§15.1` starter into a campaign folder that has no `Party Resources.md` (a folder
+/// made by hand). An existing file is never overwritten.
+pub fn create_party_resources_starter(dir: &Path) -> Result<(), CampaignStoreError> {
+    open(dir)?;
+    let path = dir.join(PARTY_RESOURCES_FILE);
+    if path.exists() {
+        return Err(CampaignStoreError {
+            message: format!("{} already exists; Codex never overwrites it", path.display()),
+        });
+    }
+    write_atomic(&path, PARTY_RESOURCES_STARTER.as_bytes())
+}
+
 /// Opens a schema-2 campaign folder. A folder with no `campaign.json` (a schema-1 `.config/`
 /// campaign, or not a campaign at all) or a `campaign.json` of another schema is refused.
 pub fn open(dir: &Path) -> Result<LoadedCampaignFolder, CampaignStoreError> {
@@ -308,5 +321,72 @@ mod tests {
         assert!(open(&wrong).is_err());
         let _ = fs::remove_dir_all(&old);
         let _ = fs::remove_dir_all(&wrong);
+    }
+
+    #[test]
+    fn party_resources_starter_has_the_two_tables() {
+        // decisions.md §15.1: a heading, one sentence, the items table with one example row, then
+        // a `## Party gold` table with its header only.
+        let lines: Vec<&str> = PARTY_RESOURCES_STARTER.lines().collect();
+        assert_eq!(lines[0], "# Party Resources");
+        let items = lines.iter().position(|l| *l == "| Item | Qty | Value (gp) | Held by | Notes |").expect("items table");
+        let gold = lines.iter().position(|l| *l == "## Party gold").expect("party gold heading");
+        let gold_header = lines.iter().position(|l| *l == "| Date | Change | Balance | Note |").expect("gold table");
+        assert!(items < gold && gold < gold_header);
+        let sentences = lines[1..items].iter().filter(|l| !l.trim().is_empty()).count();
+        assert_eq!(sentences, 1, "one sentence between the heading and the table");
+        let item_rows = lines[items + 1..gold].iter().filter(|l| l.starts_with('|')).count();
+        assert_eq!(item_rows, 2, "separator + one example row");
+        let gold_rows = lines[gold_header + 1..].iter().filter(|l| l.starts_with('|')).count();
+        assert_eq!(gold_rows, 1, "separator only: the party fills the gold ledger");
+    }
+
+    #[test]
+    fn party_resources_is_never_parsed_by_any_reader() {
+        // Q14: nothing parses the file. Every non-test line in src/campaign that names it must be a
+        // write, never a read.
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("src/campaign");
+        let mut scanned = 0;
+        for entry in fs::read_dir(&root).unwrap() {
+            let path = entry.unwrap().path();
+            if path.extension().is_none_or(|ext| ext != "rs") {
+                continue;
+            }
+            let source = fs::read_to_string(&path).unwrap();
+            let live = source.split("#[cfg(test)]").next().unwrap();
+            for (n, line) in live.lines().enumerate() {
+                if line.contains("PARTY_RESOURCES_FILE") || line.contains("Party Resources.md") {
+                    let lower = line.to_lowercase();
+                    assert!(
+                        !lower.contains("read") && !lower.contains("open(") && !lower.contains("parse"),
+                        "{}:{} reads Party Resources.md: {line}",
+                        path.display(),
+                        n + 1
+                    );
+                }
+            }
+            scanned += 1;
+        }
+        assert!(scanned >= 4, "scanned {scanned} files under {}", root.display());
+    }
+
+    #[test]
+    fn campaign_folder_starter_file_is_created_only_when_missing() {
+        // A folder made by hand (no Party Resources.md) gets the starter; an existing file is never overwritten.
+        let dir = temp_dir("starter");
+        create_layout(&dir, &sample()).expect("layout created");
+        let path = dir.join(PARTY_RESOURCES_FILE);
+        fs::remove_file(&path).unwrap();
+        create_party_resources_starter(&dir).expect("starter created");
+        assert_eq!(fs::read_to_string(&path).unwrap(), PARTY_RESOURCES_STARTER);
+        fs::write(&path, "# Ours\n").unwrap();
+        let err = create_party_resources_starter(&dir).expect_err("existing file kept");
+        assert!(err.message.contains("already exists"), "{}", err.message);
+        assert_eq!(fs::read_to_string(&path).unwrap(), "# Ours\n");
+        let not_campaign = temp_dir("starter-not-campaign");
+        fs::create_dir_all(&not_campaign).unwrap();
+        assert!(create_party_resources_starter(&not_campaign).is_err(), "not a campaign folder");
+        let _ = fs::remove_dir_all(&dir);
+        let _ = fs::remove_dir_all(&not_campaign);
     }
 }

@@ -63,7 +63,7 @@ mod update;
 use serde::Serialize;
 
 use campaign_folder::{
-    add_known_campaign_folder, create_campaign_folder, forget_known_campaign_folder, list_campaign_tree,
+    add_known_campaign_folder, create_campaign_folder, create_party_resources_starter, forget_known_campaign_folder, list_campaign_tree,
     list_known_campaigns, migrate_campaign, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
     stat_campaign_file, write_campaign_file,
 };
@@ -344,6 +344,7 @@ fn main() {
             read_campaign_file,
             write_campaign_file,
             stat_campaign_file,
+            create_party_resources_starter,
             list_campaign_tree,
             save_attachment,
             list_equipment_catalog,

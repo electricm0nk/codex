@@ -11,13 +11,15 @@ import { buildPreviewDetail } from '../characterHub/previewData';
 import { formatHeldClasses } from '../characterHub/characterProgression';
 import { AppMenu } from '../layout/AppMenu';
 import { CampaignHelpButton } from './CampaignHelpScreen';
+import { PartyResourcesTab } from './tabs/PartyResourcesTab';
 
 /**
  * Post-load campaign screen, styled like the Character Sheet: a full-bleed header, a left party
  * list, and a tabbed panel for the campaign folder's files (Party Resources / Adventure Log / Maps /
  * Wiki). Everything is read from the folder (SD-42 `decisions.md §11`): `campaign.json`, and the
  * tree for the tabs and the party (the characters copied into `Characters/` that this install
- * holds). Each tab lists its files read-only; editing them in Codex is the tab's own card.
+ * holds). Party Resources opens its file in the editor (E2.6); each other tab lists its files
+ * read-only until its own card lands.
  */
 
 const panel: CSSProperties = {
@@ -145,6 +147,12 @@ export function CampaignSheet(props: {
       live = false;
     };
   }, [props.campaignDir]);
+
+  const reloadTree = () => {
+    listCampaignTree(props.campaignDir)
+      .then((fresh) => setLoaded((prev) => (prev.kind === 'open' ? { ...prev, tree: fresh } : prev)))
+      .catch((cause: unknown) => setLoaded({ kind: 'failed', message: cause instanceof Error ? cause.message : String(cause) }));
+  };
 
   const tree = loaded.kind === 'open' ? loaded.tree : null;
   const partyRows = useMemo(() => {
@@ -285,7 +293,11 @@ export function CampaignSheet(props: {
             </div>
 
             <div style={{ ...panel, padding: '1.25rem' }}>
-              <FileList files={tabFiles(loaded.tree, tab)} />
+              {tab === 'resources' ? (
+                <PartyResourcesTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} />
+              ) : (
+                <FileList files={tabFiles(loaded.tree, tab)} />
+              )}
             </div>
             <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.6rem 0 0', overflowWrap: 'anywhere' }}>
               The files in {props.campaignDir}. Open the folder in Obsidian or any Markdown editor to edit them.

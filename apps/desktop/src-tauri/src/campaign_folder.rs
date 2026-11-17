@@ -339,6 +339,17 @@ pub fn write_campaign_file_impl(request: &WriteCampaignFileRequest) -> Result<Ca
     })
 }
 
+/// "Create starter file" on the Party Resources tab: writes the `§15.1` starter into a campaign
+/// folder that has none; an existing file is refused, never overwritten.
+pub fn create_party_resources_starter_impl(campaign_dir: &str) -> Result<CampaignFileStatDto, String> {
+    let dir = require_absolute(campaign_dir)?;
+    folder::create_party_resources_starter(&dir).map_err(|err| err.message)?;
+    stat_campaign_file_impl(&CampaignFileRequest {
+        campaign_dir: campaign_dir.to_owned(),
+        path: folder::PARTY_RESOURCES_FILE.to_owned(),
+    })
+}
+
 pub fn stat_campaign_file_impl(request: &CampaignFileRequest) -> Result<CampaignFileStatDto, String> {
     let path = resolve(&request.campaign_dir, &request.path)?;
     match fs::metadata(&path) {
@@ -485,6 +496,11 @@ pub fn stat_campaign_file(request: CampaignFileRequest) -> Result<CampaignFileSt
 }
 
 #[tauri::command]
+pub fn create_party_resources_starter(campaign_dir: String) -> Result<CampaignFileStatDto, String> {
+    create_party_resources_starter_impl(&campaign_dir)
+}
+
+#[tauri::command]
 pub fn save_attachment(request: SaveAttachmentRequest) -> Result<String, String> {
     save_attachment_impl(&request)
 }
@@ -626,6 +642,21 @@ mod tests {
         let wiki = tree.iter().find(|e| e.name == "Wiki").unwrap();
         let wiki_paths: Vec<_> = wiki.children.iter().map(|e| e.path.as_str()).collect();
         assert_eq!(wiki_paths, vec!["Wiki/Factions", "Wiki/Items", "Wiki/NPCs", "Wiki/Places"]);
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn party_resources_starter_is_written_only_when_missing() {
+        let root = temp_dir("starter");
+        let opened = create_campaign_folder_at(&root.join("app-data"), &create_request(&root, "Starter")).unwrap();
+        let dir = opened.campaign_dir.clone();
+        let path = Path::new(&dir).join(folder::PARTY_RESOURCES_FILE);
+        assert!(create_party_resources_starter_impl(&dir).is_err(), "the starter E2.1 wrote is kept");
+        fs::remove_file(&path).unwrap();
+        let stat = create_party_resources_starter_impl(&dir).unwrap();
+        assert!(stat.exists && !stat.is_dir);
+        assert_eq!(fs::read_to_string(&path).unwrap(), folder::PARTY_RESOURCES_STARTER);
+        assert!(create_party_resources_starter_impl("relative/dir").is_err());
         let _ = fs::remove_dir_all(&root);
     }
 

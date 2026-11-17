@@ -28,3 +28,8 @@ export function statCampaignFile(campaignDir: string, path: string): Promise<Cam
 export function listCampaignTree(campaignDir: string): Promise<CampaignTreeEntry[]> {
   return invokeCampaignFolder('list_campaign_tree', { campaignDir }, 'listing the campaign folder');
 }
+
+/** "Create starter file": writes the Party Resources starter into a folder that has none (`create_party_resources_starter`). */
+export function createPartyResourcesStarter(campaignDir: string): Promise<CampaignFileStat> {
+  return invokeCampaignFolder('create_party_resources_starter', { campaignDir }, 'creating Party Resources.md');
+}
