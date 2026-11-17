@@ -38,7 +38,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 37 at auth
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
 |---|---|---|---|---|---|
 | C0 | Package committed + Cycle 0 receipt + census | lead | complete | — | this commit; branch cut by the lead 2026-11-16 from `origin/tranche-21` @ `1046daefc0` |
-| C1 | 0.22.0 on 14 surfaces + notes pointer | haiku | ready | C0 | Phase 1, first |
+| C1 | 0.22.0 on 14 surfaces + notes pointer | haiku | complete | C0 | commit `589815b65f`; receipt `artifacts/cycle_0/C1_cycle_receipt.md`; Phase 1, first |
 | E1.1 | Diagnosis run over the 8 files; H1–H7 proved or refuted | opus | waiting | C1 | lane `import`; the operator's table stays local |
 | E1.2 | One stack per line; `equipmentSets` on the wire; locations from the set tree; `QUANTITY:0` noted; no cap | opus | waiting | E1.1 | `decisions.md §5` |
 | E1.3 | Custom names and every property; `CopyFacts` gains four fields | opus | waiting | E1.2 | `decisions.md §6` |

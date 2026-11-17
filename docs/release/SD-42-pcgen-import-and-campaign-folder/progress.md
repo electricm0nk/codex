@@ -14,7 +14,7 @@ status: planning-ready
 
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
-| C | 2 | 1 (C0) | C1 ready |
+| C | 2 | 2 (C0, C1) | C complete |
 | E1 import converter (lane `import`) | 8 | 0 | waiting on C1 |
 | E2 campaign folder (lane `campaign`) | 12 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 0 | waiting on C1 |
@@ -49,6 +49,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | Date | Card | Status | SHA | Receipt | Notes |
 |---|---|---|---|---|---|
 | 2026-11-16 | C0 | complete | this commit | `artifacts/cycle_0/C0_cycle_receipt.md` | package authored |
+| 2026-11-17 | C1 | complete | 589815b65f | `artifacts/cycle_0/C1_cycle_receipt.md` | 0.22.0 on the 14 surfaces; current-release points at SD-42 notes |
 
 ## Epic reports
 
