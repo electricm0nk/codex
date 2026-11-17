@@ -324,9 +324,16 @@
             <thead>
               <tr>
                 <th scope="col"><span class="sr-only">Platform</span></th>
-                <th scope="col">Linux</th>
-                <th scope="col">macOS</th>
-                <th scope="col">Windows</th>
+                <th scope="col">Linux
+                  <p><a class="btn btn-primary" href="https://github.com/electricm0nk/codex/releases" data-asset-suffix=".AppImage">Download latest for Linux (.AppImage)</a></p>
+                  <p><a href="https://github.com/electricm0nk/codex/releases" data-asset-suffix=".deb">Or the .deb (Debian/Ubuntu)</a></p>
+                </th>
+                <th scope="col">macOS
+                  <p><a class="btn btn-primary" href="https://github.com/electricm0nk/codex/releases" data-asset-suffix=".dmg">Download latest for macOS (Apple Silicon only)</a></p>
+                </th>
+                <th scope="col">Windows
+                  <p><a class="btn btn-primary" href="https://github.com/electricm0nk/codex/releases" data-asset-suffix="-setup.exe">Download latest for Windows (.exe)</a></p>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -340,7 +347,7 @@
                   <p><strong>Apple Silicon (M-series) only for now</strong> — Intel Mac builds haven't landed yet.</p>
                 </td>
                 <td>
-                  <p>Grab the <code>.msi</code> or the <code>.exe</code> installer.</p>
+                  <p>Grab the <code>-setup.exe</code> installer.</p>
                 </td>
               </tr>
               <tr>
@@ -355,7 +362,7 @@
                   <p>Open the <code>.dmg</code> and drag Codex into Applications, same as any Mac app.</p>
                 </td>
                 <td>
-                  <p>Run the <code>.msi</code> or <code>.exe</code> and follow the installer.</p>
+                  <p>Run the <code>-setup.exe</code> and follow the installer.</p>
                 </td>
               </tr>
             </tbody>
@@ -516,5 +523,6 @@ npx tauri dev</code></pre>
       });
     })();
   </script>
+  <script src="/download-latest.js"></script>
 </body>
 </html>

@@ -6,8 +6,9 @@
 # X-Frame-Options: deny framing (defense against clickjacking).
 # Referrer-Policy: send origin only — no path leak to outbound links.
 # Permissions-Policy: disable sensors/mic/camera/geolocation on a static site.
-# Content-Security-Policy: tight policy. No scripts, no remote fonts, no third-party
-# loads. Inline styles are restricted to the data: SVG favicon only.
+# Content-Security-Policy: tight policy. Same-origin scripts only (download-latest.js);
+# the one third-party load is the GitHub releases API for the "Download latest" links.
+# No remote fonts. Inline styles are restricted to the data: SVG favicon only.
 
 /
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
@@ -15,7 +16,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
-  Content-Security-Policy: default-src 'none'; img-src 'self' data:; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'self'; connect-src https://api.github.com; img-src 'self' data:; style-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   Cache-Control: public, max-age=300
 
 # ---------------------------------------------------------------------------
