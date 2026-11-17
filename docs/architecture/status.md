@@ -1,7 +1,7 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)**: the Tauri command count is 118 and the Real today table gains the printed-PDF, Market and `.pcg` import rows (`apps/desktop/src-tauri/src/print/`, `main.rs` `generate_handler!`). Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**: Cyberpunk RED rows added (Posture, Real today,
+> Last verified: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)**: the Tauri command count is 116 (the two hit-point tracking commands removed), the Printed sheet row (Pathfinder grid layout, 30 looks, eight sections) and the Character Hub row (no HP tracking; Languages, Biography and Notes). Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)**: the Tauri command count is 118 and the Real today table gains the printed-PDF, Market and `.pcg` import rows (`apps/desktop/src-tauri/src/print/`, `main.rs` `generate_handler!`). Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)**: Cyberpunk RED rows added (Posture, Real today,
 > Known gaps); the Tauri command count was 103; the Cyberpunk corpus, licence and ui-smoke figures are release-notes `R-n` figures (R-4 to R-7), re-derived by
 > `python3 -I docs/release/SD-38-cyberpunk-red/artifacts/epic_7/E7.8_check.py --plant` (run on this tree, see the SD-38 `receipts.md`), and the starter row counts are the SD-38 E7.1 receipt's.
 > Claims critic (SD-38 E7.9 part 2, 2026-10-15): the command-count arithmetic and the Starfinder ui-smoke figure below were corrected. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)**: Starfinder 1e rows added
@@ -112,7 +112,7 @@ F3c5 — and a bracketed digit keeps the command from matching its own line):
 **What has changed since the last full pass**: several desktop-facing actions
 this doc used to describe as session-local or inert are now real, persisted
 mutations — see "Corrections since the last pass" below. Character *creation*
-coverage and character *editing* coverage (money, HP, bio, equipment
+coverage and character *editing* coverage (money, bio, equipment
 purchase, feats, traits, skills) are now both wide, not one narrow and one
 broad as an earlier pass of this doc stated (that "Fighter-1-3 only" claim
 was false — see the capability matrix and evidence below).
@@ -367,11 +367,11 @@ same test-pinned standard as the rows above).
   `Recompute`, `Clone`, `Export`, `Print` are all wired to real handlers.
 - **`StubScreen.tsx` is unreferenced dead code**, not a live placeholder for
   any current screen.
-- **The Tauri command count is 118** (103 on `origin/develop` @ `2b14020bc7`, plus SD-39's fifteen: Market x9, held equipment, progression ledger, feat levels, `.pcg` import and the two print sinks; all listed in
+- **The Tauri command count is 116** (118 at SD-39's tip `cd873a6d0d`, less `adjust_character_hp` and `load_character_durability`; all listed in
   [desktop-app.md](./desktop-app.md)), re-derived directly from
   `generate_handler![...]` (see [desktop-app.md](./desktop-app.md)); a saved
-  character's on-disk bundle can now hold up to six files, not two (four new
-  sidecar files: bio/money/HP/portrait — see [persistence.md](./persistence.md)).
+  character's on-disk bundle holds the record plus its sidecar files (bio, money, portrait, ledger, custom,
+  hit-point results — see [persistence.md](./persistence.md)).
 - **The PCGen converter now lives behind a real crate boundary.** SD-36 Epic
   A moved the code formerly at *src/pcgen_import/* and *src/oracle_validation/* (neither path exists
   at that location any more) into
@@ -428,7 +428,7 @@ Anyone who needs it can read the superseded commits under `docs/release/SD-29-*`
 
 | Area | What works | Where |
 |---|---|---|
-| Printed sheet (PDF) | Save PDF and Print on the Pathfinder, Starfinder and Cyberpunk RED sheets: the sheet's own `LoadSavedCharacterResponse` goes through `print/layout/` into Typst, typeset with the bundled Liberation Sans faces, A4 or US Letter, with spellbook, show-the-math and bio/notes boxes; no number is computed on the print path | [desktop-app.md](./desktop-app.md) |
+| Printed sheet (PDF) | Save PDF and Print on the Pathfinder, Starfinder and Cyberpunk RED sheets: the sheet's own `LoadSavedCharacterResponse` goes through `print/layout/` into Typst, typeset with the bundled Liberation Sans faces, A4 or US Letter. Pathfinder prints on a 12-column page grid, one look per block (30 looks in `resources/print/looks/`), in eight sections chosen by checkbox and remembered per character (Primary page 1, Abilities and Feats, Inventory, Spellbook, Bio, Progression, Math, Notes). Starfinder and Cyberpunk RED keep the table look and read Primary, Spellbook, Bio and Math. No number is computed on the print path | [desktop-app.md](./desktop-app.md) |
 | Market and held equipment | Buy and sell on the Pathfinder, Starfinder and Cyberpunk RED sheets (`list_market`, `*_market` commands). Body slots are Pathfinder only (`body_slots.rs`; R15 gives Starfinder and Cyberpunk RED a Market shell): the Pathfinder sheet lists one row per owned copy, worn by slot, carried or left behind | [desktop-app.md](./desktop-app.md) |
 | `.pcg` import | A PCGen 6 character converted by the `pcg_import` sidecar and read by `import_pcg`; the app parses no `.pcg` | [pcg-import.md](./pcg-import.md) |
 | Corpus-ingest pipeline | `.pcc`/`.lst` parsing through canonical `SourcePackageContent` projection, now behind the `crates/codex-ingest` crate boundary (dev-dependency only from the desktop shell) | [corpus-ingest.md](./corpus-ingest.md) |
@@ -436,7 +436,7 @@ Anyone who needs it can read the superseded commits under `docs/release/SD-29-*`
 | Per-domain engines | Spellbook, skill allocation, feat prerequisites, equipment effects, damage total, level-up | [rules-engine.md](./rules-engine.md) |
 | Pathfinder rules-table package | `data/rules_tables/` (281 files, 24,583 rows) loaded through `src/rules_core/rules_catalog/`; no compiled copy exists; 429 golden digests pin every table and lookup; canonical form, stamp and file ownership are gated in `root-lib` by `rules_data_package`'s round-trip and ownership tests (`verify.sh` does not run the `rules_tables_package --check` binary, which checks the same by hand; see [rules-data-tables.md](./rules-data-tables.md)) | [rules-data-tables.md](./rules-data-tables.md) |
 | Rule-table catalogs | **37** `RuleSetId` variants spanning the 38-book tracked corpus (see "Capability matrix: content kinds, corpus-wide" above, this same file, for the re-derived denominator and reconciliation) — see [rules-data-tables.md](./rules-data-tables.md) for per-book ceiling detail | [rules-data-tables.md](./rules-data-tables.md) |
-| Character Hub | Create, load, clone, portrait upload/load/delete, JSON export, recompute, plus (new since the last full pass) equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP tracking, plus the Create screen's Levels column and Manage dialogs (feats, skills, spells, equipment), maximum starting money with three pricing modes, GM grants and custom records (Custom), and printing — real engine compute + real persistence; see desktop-app.md §"The Create screen's columns and Manage dialogs" for what is not modelled | [desktop-app.md](./desktop-app.md) |
+| Character Hub | Create, load, clone, portrait upload/load/delete, JSON export, recompute, plus (new since the last full pass) equipment purchase/attach, feat/trait selection, skill allocation, bio (with Languages, Biography and Notes) and money, plus the Create screen's Levels column and Manage dialogs (feats, skills, spells, equipment), maximum starting money with three pricing modes, GM grants and custom records (Custom), and printing — real engine compute + real persistence; see desktop-app.md §"The Create screen's columns and Manage dialogs" for what is not modelled | [desktop-app.md](./desktop-app.md) |
 | DM Toolkit | Real encounter builder + DM console export (`rate_encounter`, `export_dm_console`), consuming the real `Encounter`/party-CR compute below | [desktop-app.md](./desktop-app.md) |
 | Rule-system adapter seam (hub-of-hubs) | `RuleSystemAdapter` trait is the object-safe seam three commands (`append_to_character`/`recompute_character`/`re_save_character`) dispatch through on a `rule_system_id`: `"pf1"` resolves to the real `Pf1Adapter`, `"starfinder-1e"` to the real `StarfinderAdapter`, `"cyberpunk-red"` to the real `CyberpunkAdapter`; any other id resolves to the governed `StubAdapter` (registered exception 0002, `docs/governance/wired-integration-stubs-registry.md`). `list_saved_characters` dispatches on the selected system and `load_saved_character` on the envelope's `game_system`. The other Pathfinder character-mutation commands call PF1 free functions directly and do not go through this seam | [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam" |
 | Starfinder 1e engine | Generic chassis over the converted package, no per-class/race/skill table: BAB, saves, HP/Stamina/Resolve (`sf_chassis`), EAC/KAC and initiative (`sf_defense`), skills (`sf_skills`), spells per day/known/DCs for levels 0-6 (`sf_spells`), credits and bulk (`sf_loadout`), ability scores with the 5/10/15/20 increases (`sf_abilities`), melee/ranged attack and per-weapon attack/damage (`sf_attack`); each total is an `sf.*` explanation row listing every term | [rules-engine.md](./rules-engine.md) §"Starfinder 1e: the generic chassis" |
