@@ -240,6 +240,62 @@ pub fn save_campaign_json_impl(request: &SaveCampaignJsonRequest) -> Result<Save
     })
 }
 
+// --- migration (decisions.md §14) ---
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MigrateCampaignRequest {
+    /// One old `codex.campaigns` record, as the UI read it from localStorage…
+    pub record_json: Option<String>,
+    /// …and its `codex.campaign.assets.<id>` value, if it had one.
+    pub assets_json: Option<String>,
+    /// Or: an old folder holding `.config/<name>.json`.
+    pub config_dir: Option<String>,
+    /// The new campaign is created in `<parentDir>/<campaign name>/`, as "New campaign…" does.
+    pub parent_dir: String,
+    /// Member #1.
+    pub your_name: String,
+    /// ISO timestamp from the UI's clock: member `addedAt`, the backup's date.
+    pub now: String,
+}
+
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MigratedCampaignDto {
+    pub campaign_dir: String,
+    pub backup_file: String,
+    /// Markdown files written besides `Party Resources.md`.
+    pub files: usize,
+}
+
+/// Migrates one old campaign into a new folder, writes the backup under app data, and makes the
+/// new folder a known campaign (an old `.config/` folder is forgotten: it no longer opens).
+pub fn migrate_campaign_at(app_data_dir: &Path, request: &MigrateCampaignRequest) -> Result<MigratedCampaignDto, String> {
+    use codex::campaign::migrate;
+    let parent = require_absolute(&request.parent_dir)?;
+    let old = match (&request.record_json, &request.config_dir) {
+        (Some(record), None) => migrate::from_local_storage(record, request.assets_json.as_deref()).map_err(|err| err.message)?,
+        (None, Some(dir)) => {
+            let dir = require_absolute(dir)?;
+            migrate::from_config_folder(&dir)
+                .map_err(|err| err.message)?
+                .ok_or_else(|| format!("{} has nothing to migrate (no .config/<name>.json)", dir.display()))?
+        }
+        _ => return Err("migrate one campaign: an old record or an old folder, not both or neither".to_owned()),
+    };
+    let target = parent.join(codex::campaign::local_store::sanitize_filename(&old.record.name));
+    let out = migrate::migrate(&old, &target, &request.your_name, app_data_dir, &request.now).map_err(|err| err.message)?;
+    if let Some(dir) = &request.config_dir {
+        forget_known_campaign_folder_at(app_data_dir, dir)?;
+    }
+    remember(app_data_dir, &out.campaign_dir)?;
+    Ok(MigratedCampaignDto {
+        campaign_dir: out.campaign_dir.to_string_lossy().into_owned(),
+        backup_file: out.backup_file.to_string_lossy().into_owned(),
+        files: out.files.len(),
+    })
+}
+
 // --- files ---
 
 fn resolve(campaign_dir: &str, rel: &str) -> Result<PathBuf, String> {
@@ -404,6 +460,11 @@ pub fn open_campaign_folder(app: tauri::AppHandle, campaign_dir: String) -> Resu
 }
 
 #[tauri::command]
+pub fn migrate_campaign(app: tauri::AppHandle, request: MigrateCampaignRequest) -> Result<MigratedCampaignDto, String> {
+    migrate_campaign_at(&app_data_dir(&app)?, &request)
+}
+
+#[tauri::command]
 pub fn save_campaign_json(request: SaveCampaignJsonRequest) -> Result<SavedCampaignJsonDto, String> {
     save_campaign_json_impl(&request)
 }
@@ -498,6 +559,49 @@ mod tests {
 
         // A second create with the same name is refused (SD-f), never suffixed.
         assert!(create_campaign_folder_at(&app_data, &create_request(&campaigns, "First")).is_err());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn migrate_campaign_writes_a_folder_and_remembers_it() {
+        let root = temp_dir("migrate");
+        let app_data = root.join("app-data");
+        let record = r#"{"id":"c1","name":"Old One","ruleSetId":"crb","ruleSetLabel":"Core","description":"",
+            "members":[{"email":"ana@example.com"}],"partyCharacterIds":[],"createdAt":"2025-01-01T00:00:00Z",
+            "updatedAt":"2025-01-02T00:00:00Z"}"#;
+        let request = MigrateCampaignRequest {
+            record_json: Some(record.to_owned()),
+            assets_json: Some(r#"{"wiki":[{"id":"w","title":"Ameiko","body":"Innkeeper.","updatedAt":"x"}]}"#.to_owned()),
+            config_dir: None,
+            parent_dir: root.join("campaigns").to_string_lossy().into_owned(),
+            your_name: "Gwen".to_owned(),
+            now: "2026-11-17T10:00:00.000Z".to_owned(),
+        };
+        let out = migrate_campaign_at(&app_data, &request).unwrap();
+        assert_eq!(out.campaign_dir, root.join("campaigns/Old One").to_string_lossy());
+        assert_eq!(out.files, 1);
+        assert!(app_data.join("campaign-migration-backup-2026-11-17.json").is_file());
+        let known = list_known_campaigns_at(&app_data).unwrap();
+        assert_eq!((known.len(), known[0].name.as_deref()), (1, Some("Old One")));
+
+        // A .config/ folder: "Open folder…" refuses it (the Manager then offers migration), and it migrates.
+        let old_dir = root.join("drive/Old Two");
+        let snapshot: codex::campaign::CampaignSnapshot =
+            serde_json::from_str(&record.replace("Old One", "Old Two")).unwrap();
+        CampaignStore::save(&snapshot, &old_dir).unwrap();
+        assert!(add_known_campaign_folder_at(&app_data, &old_dir.to_string_lossy()).is_err());
+        assert!(codex::campaign::migrate::legacy_config_file(&old_dir).is_some());
+        let from_folder = MigrateCampaignRequest {
+            record_json: None,
+            assets_json: None,
+            config_dir: Some(old_dir.to_string_lossy().into_owned()),
+            ..request
+        };
+        let out = migrate_campaign_at(&app_data, &from_folder).unwrap();
+        assert_eq!(out.campaign_dir, root.join("campaigns/Old Two").to_string_lossy());
+        assert!(codex::campaign::migrate::legacy_config_file(&old_dir).is_none());
+        // Nothing left there: a second run is refused, not repeated.
+        assert!(migrate_campaign_at(&app_data, &from_folder).unwrap_err().contains("nothing to migrate"));
         let _ = fs::remove_dir_all(&root);
     }
 

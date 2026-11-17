@@ -8,12 +8,23 @@ import {
 } from '../boundary/campaignFolder/knownCampaigns';
 import type { KnownCampaign, OpenedCampaign } from '../boundary/campaignFolder/types';
 import { notACampaignFolder } from './campaignFolderModel';
+import { CampaignMigrationScreen } from './CampaignMigrationScreen';
+import { legacyMigrationRows, olderCampaignFolder } from './campaignMigrationModel';
+
+function hasLegacyCampaigns(): boolean {
+  try {
+    return legacyMigrationRows(localStorage).length > 0;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Campaign Manager: the known campaign folders (`<app data>/campaign-folders.json`) on the left,
  * each with Forget, the selected folder's `campaign.json` on the right (its typed members, the
  * creator first), and a bottom action bar (Load / New campaign… / Open folder… / Edit / Cancel) —
- * patterned after the Load Character screen. A campaign is identified by its folder path.
+ * patterned after the Load Character screen. A campaign is identified by its folder path. Older
+ * (pre-folder) campaigns open the migration screen first (`decisions.md §14`).
  */
 
 const barButton = (variant: 'primary' | 'default', enabled: boolean): CSSProperties => ({
@@ -101,6 +112,10 @@ export function CampaignManagerScreen(props: {
   /** "Open folder…" picked a folder with no campaign.json: offer New instead. */
   const [pickedNotCampaign, setPickedNotCampaign] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  /** The migration screen (decisions.md §14): opens by itself while older campaigns exist; "Later" closes it. */
+  const [migration, setMigration] = useState<{ configDir: string | null } | null>(() =>
+    hasLegacyCampaigns() ? { configDir: null } : null
+  );
 
   function refreshList() {
     listKnownCampaigns()
@@ -134,6 +149,8 @@ export function CampaignManagerScreen(props: {
       const message = cause instanceof Error ? cause.message : String(cause);
       if (notACampaignFolder(message)) {
         setPickedNotCampaign(picked);
+      } else if (olderCampaignFolder(message)) {
+        setMigration({ configDir: picked });
       } else {
         setActionError(message);
       }
@@ -171,6 +188,18 @@ export function CampaignManagerScreen(props: {
 
   const selected = opened && opened.campaignDir === selectedId ? opened : null;
 
+  if (migration) {
+    return (
+      <CampaignMigrationScreen
+        configDir={migration.configDir}
+        onClose={() => {
+          setMigration(null);
+          refreshList();
+        }}
+      />
+    );
+  }
+
   return (
     <section style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 8rem)', marginTop: '1rem' }}>
       <h2 style={{ margin: '0 0 1rem' }}>Campaign Manager</h2>
@@ -183,6 +212,14 @@ export function CampaignManagerScreen(props: {
         </div>
       ) : null}
       {actionError ? <p role="alert" style={{ color: 'var(--color-error)', margin: '0 0 1rem' }}>{actionError}</p> : null}
+      {hasLegacyCampaigns() ? (
+        <div data-testid="campaign-migration-pending" style={{ alignItems: 'center', display: 'flex', gap: '0.8rem', margin: '0 0 1rem' }}>
+          <span style={{ color: 'var(--color-text-secondary)' }}>Older campaigns from before campaign folders are waiting to be migrated.</span>
+          <button type="button" onClick={() => setMigration({ configDir: null })} style={barButton('default', true)}>
+            Migrate…
+          </button>
+        </div>
+      ) : null}
 
       <div style={{ display: 'flex', flex: 1, gap: '1rem', minHeight: 0 }}>
         {/* Campaign list */}

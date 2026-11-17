@@ -9,6 +9,7 @@
 
 pub mod folder;
 pub mod local_store;
+pub mod migrate;
 
 use serde::{Deserialize, Serialize};
 
