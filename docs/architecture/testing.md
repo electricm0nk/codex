@@ -4,7 +4,7 @@
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60` (PR #396)** (SD-37 E7.9a): `packaged_resources.rs` and `no_baked_manifest_dir_in_production.rs` added below; floors as recorded in `scripts/verify-baselines.env`.
-> Last verified: **2026-11-07 against `tranche-19` (SD-39 E9.9)** for the test-count floors, file counts and floors line (re-derived from `scripts/verify-baselines.env` and `ls`); earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the test-count floors (re-recorded by SD-38 E7.4
+> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for the test-count floors (re-recorded by SD-41 E5.1 from one `verify.sh --full` run on `34d8e7f593`: 53 stages passed, 0 `test result: FAILED`), the `codex-ingest` suite and bin counts, the desktop `tests/*.rs` targets, the frontend test-file count, the ui-smoke spec counts and the corpus-sweep's price re-derivation. Earlier: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the test-count floors (re-recorded by SD-40 E5.1 from one `verify.sh --full` run on `cc3cc92fde`: 53 stages passed, 0 `test result: FAILED`), the desktop `#[cfg(test)]` file count, `packaged_resources.rs`, the frontend test-file count, the ui-smoke spec counts and §"Print tests" (new). Earlier: **2026-11-07 against `tranche-19` (SD-39 E9.9)** for the test-count floors, file counts and floors line (re-derived from `scripts/verify-baselines.env` and `ls`); earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the test-count floors (re-recorded by SD-38 E7.4
 > from one full `verify.sh` run on `efe5e27a0a`: 53 stages passed, 0 failed), the root test-file count, the frontend test-file counts, the
 > ui-smoke spec size and the Cyberpunk RED gates below. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §"The three crates" counts,
 > §"`scripts/verify.sh`" stage counts, the Starfinder gates and the ui-smoke spec size, each re-derived by the command beside
@@ -137,8 +137,8 @@ that it is dev-only.*
   integration test file under `tests/*.rs`. There are **292** files matching `tests/*.rs`
   (`ls tests/*.rs | wc -l`, current). The last full-run floors recorded in
   `scripts/verify-baselines.env` (`grep -E '^[A-Z_]+=' scripts/verify-baselines.env | tail -n 20`,
-  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=3067`,
-  `BASELINE_ROOT_FULL_TESTS=6771`, `BASELINE_ROOT_TEST_BINARIES=300` (re-recorded by SD-39 E9.3). The post-Epic-A
+  read with last-assignment-wins semantics — see below): `BASELINE_ROOT_LIB_TESTS=3141`,
+  `BASELINE_ROOT_FULL_TESTS=6839`, `BASELINE_ROOT_TEST_BINARIES=300` (re-recorded by SD-41 E5.1). The post-Epic-A
   drop in root's counts was sharp (from `3402`/`7876`/`414` pre-Epic-A) because ~821 unit
   tests and ~859 integration-test entries that used to live under root src/pcgen_import and
   src/oracle_validation (former paths, no longer valid — both are now
@@ -147,8 +147,8 @@ that it is dev-only.*
   comment block for the full reconciliation).
 - **`codex-ingest` (`crates/codex-ingest`)** — `cargo test --locked -p codex-ingest` (from repo
   root; it's a workspace member) or `cd crates/codex-ingest && cargo test --locked`. Recorded
-  floors: `BASELINE_INGEST_FULL_TESTS=1858`, `BASELINE_INGEST_TEST_BINARIES=177` (`ls crates/codex-ingest/tests/*.rs | wc -l` → 126
-  `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | wc -l` → 50 `src/bin/*.rs` unit-test targets, plus the lib target: 126 + 50 + 1 = 177). Its `#[ignore]`-gated
+  floors: `BASELINE_INGEST_FULL_TESTS=1880`, `BASELINE_INGEST_TEST_BINARIES=179` (`ls crates/codex-ingest/tests/*.rs | awk 'END{print NR}'` → 127
+  `tests/*.rs` suites, `ls crates/codex-ingest/src/bin/*.rs | awk 'END{print NR}'` → 51 `src/bin/*.rs` unit-test targets, plus the lib target: 127 + 51 + 1 = 179). Its `#[ignore]`-gated
   suites are the oracle-parity tier (see [Corpus-gated tests](#corpus-gated-tests)); they need a
   real, pinned local PCGen checkout and do not run in a plain `cargo test`.
 - **`codex-desktop` (`apps/desktop/src-tauri`)** — `cd apps/desktop/src-tauri && cargo test --locked`.
@@ -156,13 +156,13 @@ that it is dev-only.*
   `codex` and dev-depends **only** on `codex-ingest` (never a normal dependency — the `crate-wall`
   verify stage checks this structurally: `cargo tree --locked -e normal,build` must show zero
   `codex-ingest` lines). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs`
-  files. As of this verification, **53** source files under `apps/desktop/src-tauri/src/` carry
+  files. As of this verification, **62** source files under `apps/desktop/src-tauri/src/` carry
   one (`grep -rl '#\[cfg(test)\]' apps/desktop/src-tauri/src/ | wc -l`), including
   `corpus_bundle_parity_test.rs` (added for the corpus-bundle work — see
   [The corpus bundle](#the-corpus-bundle-and-its-parity-test) below), `spell_catalog.rs`,
   `race_catalog.rs`, `equipment_catalog.rs`, `character_hub.rs`, `update/transaction.rs`,
   `characterHub/appendToCharacter.rs`, `rule_system_adapter.rs`, `pf1_adapter.rs`, and
-  `corpus_ingest_diagnostic.rs`, plus `update/seed.rs` and `update/deb_install.rs` (installed-state seeding and the `.deb` self-update verification, tested through injected `DebSystem`/config-dir seams). The one exception to "inline modules only" is `apps/desktop/src-tauri/tests/packaged_resources.rs`, an integration test that lays out only what `tauri.conf.json` bundles and asserts the rules engine can build the class roster from it; it must stay a single `#[test]` because the data root it installs is process-wide (see [desktop-app.md](./desktop-app.md) §How the rules crate finds its data). The root crate gained `tests/no_baked_manifest_dir_in_production.rs` for the same defect class. Recorded floor: `BASELINE_DESKTOP_TESTS=1240` (frontend: `BASELINE_FRONTEND_TEST_FILES=191`) (re-derive: the
+  `corpus_ingest_diagnostic.rs`, plus `update/seed.rs` and `update/deb_install.rs` (installed-state seeding and the `.deb` self-update verification, tested through injected `DebSystem`/config-dir seams). Four integration targets sit under `apps/desktop/src-tauri/tests/` (`ls apps/desktop/src-tauri/tests/*.rs | awk 'END{print NR}'` → 4). Because the crate has no lib target, two of them compile the modules they test by `#[path]`: `market_price_census.rs` (the Market price gate: every Market row is priced positive or listed in `data/price_overrides/price-unknown.json` with the sources tried; the included modules' own `#[cfg(test)]` suites build into this binary as well) and `old_save_loads_unchanged.rs` (declared `harness = false` in `Cargo.toml`, so `cfg(test)` is off, the module suites are not compiled a second time, and `main` runs one check: an old save keeps its AC and carried weight when it gains its `Default` set). `every_character_root_writer_mirrors.rs` is a source scan: every function that writes under a character root must call the campaign write-through. The fourth is `apps/desktop/src-tauri/tests/packaged_resources.rs`, an integration test that lays out only what `tauri.conf.json` bundles and asserts the rules engine can build the class roster from it (one `#[test]`, which must keep all its data-root checks because the data root it installs is process-wide), plus a second `#[test]` that the `pcg_import` sidecar and every print asset (fonts, `resources/print/*.typ`, `resources/print/looks/*.typ`) reach every installer (see [desktop-app.md](./desktop-app.md) §How the rules crate finds its data). The root crate gained `tests/no_baked_manifest_dir_in_production.rs` for the same defect class. Recorded floor: `BASELINE_DESKTOP_TESTS=1507` (frontend: `BASELINE_FRONTEND_TEST_FILES=198`) (re-derive: the
   desktop test-count line `scripts/verify.sh`'s `desktop` stage prints).
 
 ```
@@ -189,8 +189,8 @@ Runs `node scripts/run-tests.mjs` (`apps/desktop/package.json` `scripts.test`) �
 `apps/desktop/scripts/run-tests.mjs` recursively globs every `src/**/*.test.ts` file, then
 `spawnSync`s each one individually through `tsx`. Each test file is a self-executing script (no
 `describe`/`it` wrapper); it asserts directly and exits non-zero on the first failed assertion.
-There are currently **169** `*.test.ts` files (`find apps/desktop/src -iname "*.test.ts" | wc -l`);
-the last recorded floor, `BASELINE_FRONTEND_TEST_FILES`, is `191` (the `frontend-test` stage printed `191/191 files` in the SD-39 E9.3 full run; the runner globs more than the `*.test.ts` pattern this line counts, so the two numbers are not expected to match). The runner
+There are currently **194** `*.test.ts` files (`find apps/desktop/src -iname "*.test.ts" | awk 'END{print NR}'`);
+the last recorded floor, `BASELINE_FRONTEND_TEST_FILES`, is `198` (the `frontend-test` stage printed `198/198 files` in the SD-41 E5.1 full run; the runner globs more than the `*.test.ts` pattern this line counts, so the two numbers are not expected to match). The runner
 prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files passed.` summary line.
 
 ### Standalone scripts
@@ -208,6 +208,30 @@ prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files pass
 | `python3 scripts/release/check_promotion_evidence.py --self-test` | The promotion-evidence gate's own built-in RED-GREEN harness; also the first step `promotion-gates.yml` runs on every PR. |
 
 All `jsonschema`-based validators need the `jsonschema` pip package; CI pins `jsonschema==4.21.1`.
+
+## Print tests
+
+The printed sheet's tests are `#[cfg(test)]` modules of the desktop binary under
+`apps/desktop/src-tauri/src/print/`, run from `apps/desktop/src-tauri` with
+`cargo test --locked -j 8 <filter> -- --test-threads=8`:
+
+- **`print_golden`** (`print/print_golden.rs`, fixture `print/golden/print_golden.json`): one character per system
+  (Pathfinder's Elowen, Starfinder's SF-Mystic-5, Cyberpunk RED's cpr-netrunner-decked) on A4 and Letter with five
+  section sets (none = Primary + Abilities and Feats + Inventory, spellbook, math, all = sections 1-7, and Spellbook
+  alone). That is 30 cases, one test each (`python3 -c "import json;print(len(json.load(open('apps/desktop/src-tauri/src/print/golden/print_golden.json'))))"` → `30`).
+  Each case asserts on the PDF: 0 Typst diagnostics, every page the paper's size, the fixture's page count, the
+  layout's headings in order, every label, value and note inside its block, and a byte-equal second render. It does
+  not compare pixels: a word in the wrong place on the page passes as long as it stays in its block.
+- **`print_pf_blocks`** (`print/blocks/print_pf_blocks.rs`): Pathfinder block and section tests over the seeds.
+- **`print_smoke`** (`print/print_smoke.rs`): the Aldric seed through the real print path, as a real PDF.
+- **`print_proof`** (`print/print_proof.rs`): with `PRINT_PROOF_OUT=<dir>` set, the Aldric and Elowen seeds print on both
+  papers with each of eight section sets, plus Aldric with seven languages: 34 PDFs. With the variable unset it writes
+  nothing and passes. `bash scripts/print/rasterize.sh <pdf-dir> <png-dir>` turns them into 60 dpi PNGs (`pdftoppm`) for
+  a person or an agent to read. This is the look-at-your-own-output step a look or layout change takes. It is not a gate.
+- **`apps/desktop/src-tauri/tests/packaged_resources.rs`** asserts that `print/typst.rs` compiles in exactly the fonts, templates and looks on disk (four faces + `frame.typ` + `blocks.typ` + the looks).
+
+Starfinder's and Cyberpunk RED's golden text and page counts are a regression net for Pathfinder-only print changes:
+a diff there is a defect, not a re-baseline.
 
 ## Cyberpunk RED gates
 
@@ -388,8 +412,8 @@ the fold's `multiclass.<class>.` re-scope stripped, equals the class-alone set; 
 loads at least two classes. Their fixtures are Blocked alone, so asserting `Computed` would fabricate a
 success; the Computed proof for mixes is the census mix panel (`decisions.md` §14.2).
 
-**The ui-smoke harness** (`apps/desktop/scripts/ui-smoke/`: `spec.json` 127 rows across 18 screens, 3
-manual, 14 of them Starfinder and 23 Cyberpunk RED (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));r=d['rows'];print(len(r),sum(1 for x in r if 'starfinder' in x['id']),sum(1 for x in r if 'cyberpunk' in x['id']))"` → `127 14 23`); `run.mjs`; the DEV-only `ui_probe` DOM snapshot, see [desktop-app.md](./desktop-app.md)). Run with
+**The ui-smoke harness** (`apps/desktop/scripts/ui-smoke/`: `spec.json` 203 rows across 18 screens, 3
+manual, 21 of them Starfinder and 29 Cyberpunk RED (`python3 -c "import json;d=json.load(open('apps/desktop/scripts/ui-smoke/spec.json'));r=d['rows'];print(len(r),sum(1 for x in r if 'starfinder' in x['id']),sum(1 for x in r if 'cyberpunk' in x['id']))"` → `203 21 29`); `run.mjs`; the DEV-only `ui_probe` DOM snapshot, see [desktop-app.md](./desktop-app.md)). Run with
 `npm run ui-smoke` against one launched app; `results.json` is written as a `not-run` skeleton first, so a
 killed run keeps its denominator. `docs/testing/ui-smoke-inventory.md` is generated by
 `render-inventory.mjs` (`npm run ui-smoke:doc`). Receipts live under

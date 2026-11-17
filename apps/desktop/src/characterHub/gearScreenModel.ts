@@ -139,7 +139,8 @@ function capacityLabel(load: ContainerLoadDto | undefined): string | null {
 /**
  * Each row's weight from the engine's per-line rows. `perItem` names only the item, in saved order
  * over the lines the engine weighs (not Not Carried, not unresolved); a row is matched when every
- * weighed copy of its item shares one bonus, so saved order is the ordinal order. Else "—".
+ * weighed copy of its item shares one bonus, so saved order is the ordinal order; a stack of bundles reads
+ * `<bundles> × <lb> lb`. Else "—".
  */
 function weightLabels(held: PlacedEquipmentCopyDto[], perItem: GearContext['perItem']): Map<PlacedEquipmentCopyDto, string> {
   const labels = new Map<PlacedEquipmentCopyDto, string>();
@@ -159,6 +160,9 @@ function weightLabels(held: PlacedEquipmentCopyDto[], perItem: GearContext['perI
         labels.set(row, `${lb(weights[0])} lb`);
       } else if (one && row.quantity === weights.length) {
         labels.set(row, `${lb(weights[0])} lb each`);
+      } else if (one) {
+        // Bundles of pieces (three Arrows (20) = 60 pieces): the engine's weight per bundle, as the print words it.
+        labels.set(row, `${weights.length} × ${lb(weights[0])} lb`);
       }
     }
   }

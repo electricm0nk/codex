@@ -153,6 +153,14 @@ assertEqual(row('Trail Rations').weightLabel, '1 lb each', 'weight: two lines of
 assertEqual(row('Shield').weightLabel, '—', 'weight: not carried is not weighed');
 const unweighed = gearScreenModel([held('Mystery', { kind: 'carried' })], { perItem: [], containerLoads: [] });
 assertEqual(unweighed.rows[0].weightLabel, '—', 'weight: no engine row');
+// E4.MC: three bundles of 20 bought one at a time stack as one row of 60 pieces; the engine weighs three
+// lines of 3 lb, and the row says so as the print does (`3 × 3 lb`), not "—".
+const bundles = [key('item:arrows_flight', 0), key('item:arrows_flight', 1), key('item:arrows_flight', 2)];
+const bundled = gearScreenModel([held('Arrow, Flight (20)', { kind: 'carried' }, { itemId: 'item:arrows_flight', copies: bundles, quantity: 60, baseQuantity: 20 })], {
+  perItem: [3, 3, 3].map((weightLbs) => ({ itemId: 'item:arrows_flight', weightLbs })),
+  containerLoads: [],
+});
+assertEqual(bundled.rows[0].weightLabel, '3 × 3 lb', 'weight: a stack of bundles, the engine weight per bundle');
 
 // 11. The Move to menu's keys.
 assertEqual(menuKeyStep(0, 'ArrowDown', 3), 1, 'menu: down');

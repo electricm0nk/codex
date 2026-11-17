@@ -38,6 +38,8 @@ pub mod wiring_class;
 // `src/pcgen_import/cache_gen/`); it reads the ingest record's token array, which is converter
 // business. Behaviour-identical here, and KEPT for Starfinder.
 pub mod corpus_literal_sweep;
+// SD-41 E1.9/E5.1: the equipment-price derivation `settle_equipment_prices` writes and the literal sweep re-derives.
+pub mod equipment_price_settle;
 // SD-35 `AT-35-E6-003-RULED` cycle 13: the ingest-format reader for an
 // already-converted `data/corpus/` equipment record. `rules_core::corpus_loader`
 // used to do this itself, reading the ingest token and bonus-chain arrays and

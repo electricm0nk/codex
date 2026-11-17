@@ -40,7 +40,7 @@
 - `../../../retro/sd39-retrospective.md` — the five "Changes for SD-40" → R21–R24.
 - `../../../retro/sd40-retrospective.md` — written at SD-40's E5.3 (after this package); the lead reads its
   changes before dispatching E2.1 (`workflow-instruction.md §12.2`).
-- `../../../retro/sd41-retrospective.md` — SD-41's own, written and cited here at E5.2.
+- `../../../retro/sd41-retrospective.md` — SD-41's own, written and cited here at E5.2; its "Changes for SD-42" (four).
 
 ## Operator rulings
 

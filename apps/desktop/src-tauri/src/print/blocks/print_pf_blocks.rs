@@ -2351,9 +2351,14 @@ fn inside(item: &str) -> codex::saved_character::equipment_sets::Location {
 
 /// Creates an item (the Market's Create) on the root; returns its copy.
 fn create_item(root: &Path, name: &str, weight_lbs: f64, capacity_lbs: Option<f64>) -> codex::saved_character::equipment_sets::CopyKey {
+    create_item_for(root, ALDRIC_ID, name, weight_lbs, capacity_lbs)
+}
+
+/// [`create_item`] for any seed.
+fn create_item_for(root: &Path, character_id: &str, name: &str, weight_lbs: f64, capacity_lbs: Option<f64>) -> codex::saved_character::equipment_sets::CopyKey {
     use crate::character_custom::{create_custom_item_at_root, CreateCustomItemRequest, CreateCustomItemResponse};
     let request = CreateCustomItemRequest {
-        character_id: ALDRIC_ID.to_owned(),
+        character_id: character_id.to_owned(),
         name: name.to_owned(),
         description: String::new(),
         weight_lbs: Some(weight_lbs),
@@ -2632,6 +2637,63 @@ fn print_pf_blocks_gear_capacity_override_hides_the_flag() {
     assert!(!notes.iter().any(|note| note.contains("over capacity")), "no flag under the override: {notes:?}");
     assert!(notes.iter().any(|note| note.starts_with("Holds ")), "the load still prints: {notes:?}");
     assert!(overrides.contains(&"Override: Ignore container capacity limits".to_owned()), "the override line names it: {overrides:?}");
+}
+
+/// SD-41 E4.MC (the E4.G gate's proof): Aldric and Elowen each carry a stocked set — a Backpack
+/// holding a Pouch (Belt) holding Trail Rations, a Heavy Wooden Shield Not Carried, three
+/// Arrow, Flight (20) and a Longbow, a created "Camping" container — with a "Formalwear" set made
+/// and left inactive. The first-time print (page 1 + Feats + Inventory) lists the active set only:
+/// the pack nests two deep, the shield under Not Carried, the arrows as one stack of 60 with 20 boxes
+/// under the bow, Camping with its load. A4 and Letter; with `PRINT_PF_BLOCKS_OUT` set the four PDFs
+/// are kept as `<seed>-stocked-<paper>.pdf` for the operator gate.
+#[test]
+fn print_pf_blocks_gate_stocked_set_prints_by_location() {
+    use crate::character_hub::{create_equipment_set_at_root, list_held_equipment_stacks_at_root};
+    use codex::saved_character::equipment_sets::Location;
+    for (seed, id) in [("aldric", ALDRIC_ID), ("elowen", ELOWEN_ID)] {
+        let root = seeded(&format!("gate-stocked-{seed}"), id);
+        for item in ["Backpack", "Pouch (Belt)", "Rations (Trail/Per Day)", "Heavy Wooden Shield (Base)", "Longbow (Base)"] {
+            hold(&root, item, ActiveState::SelectedInactive);
+        }
+        for _ in 0..3 {
+            hold(&root, "Arrows (Flight/20)", ActiveState::SelectedInactive);
+        }
+        move_to(&root, "Pouch (Belt)", 0, inside("Backpack"));
+        move_to(&root, "Rations (Trail/Per Day)", 0, inside("Pouch (Belt)"));
+        move_to(&root, "Heavy Wooden Shield (Base)", 0, Location::NotCarried);
+        create_item_for(&root, id, "Camping", 2.0, Some(30.0));
+        let sets = create_equipment_set_at_root(&root, "Formalwear", false).expect("the set is made");
+        assert_eq!((sets.active.as_str(), sets.names.len()), ("Default", 2), "{seed}: Formalwear made, Default still active: {sets:?}");
+        let held = list_held_equipment_stacks_at_root(&root).expect("held");
+        let name_of = |item: &str| held.iter().find(|copy| copy.item_id == item).unwrap_or_else(|| panic!("{seed} holds {item}: {held:?}")).name.clone();
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let bow = loaded.weapon_damage.iter().find(|weapon| weapon.weapon_record_key.as_deref() == Some("Longbow (Base)")).expect("the longbow's row");
+        assert!(bow.uses_ammunition && bow.ammunition_carried == 60, "{seed}: three bundles of 20 flight arrows count for the bow: {bow:?}");
+        for (paper, paper_name) in [(Paper::A4, "a4"), (Paper::Letter, "letter")] {
+            let tag = format!("{seed} {paper_name}");
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let sections = gear_sections(gear_block(&document));
+            let section = |title: &str| &sections.iter().find(|(name, _)| *name == title).unwrap_or_else(|| panic!("{tag}: `{title}`: {sections:?}")).1;
+            let carried = section("Carried");
+            let at = |label: &str| carried.iter().position(|row| row.label == label).unwrap_or_else(|| panic!("{tag}: `{label}` under Carried: {carried:?}"));
+            let (pack, pouch, rations) = (at(&name_of("Backpack")), at(&name_of("Pouch (Belt)")), at(&name_of("Rations (Trail/Per Day)")));
+            assert_eq!((pouch, rations), (pack + 1, pack + 2), "{tag}: pack, pouch in it, rations in that: {carried:?}");
+            assert_eq!([carried[pack].kind, carried[pouch].kind, carried[rations].kind], ["item", "in-1", "in-2"], "{tag}: one level deeper per nesting");
+            let arrows: Vec<_> = carried.iter().filter(|row| row.label.contains("Flight")).collect();
+            assert_eq!(arrows.len(), 1, "{tag}: one stack: {arrows:?}");
+            assert!(arrows[0].label.ends_with("×60"), "{tag}: pieces counted: {:?}", arrows[0]);
+            let camping = &carried[at("Camping")];
+            assert!(camping.notes.iter().any(|note| note.starts_with("Holds ")), "{tag}: Camping states its load: {camping:?}");
+            let left: Vec<&str> = section("Not Carried").iter().map(|row| row.label.as_str()).collect();
+            assert!(left.contains(&name_of("Heavy Wooden Shield (Base)").as_str()), "{tag}: the shield is Not Carried: {left:?}");
+            let pdf = render(&root, &printed);
+            keep_pdf(&format!("{seed}-stocked-{paper_name}"), &pdf);
+            let bare: String = text_between(&pdf_text(&pdf), "Gear Item", "Money PP").split_whitespace().collect();
+            assert_in_order(&bare, &["Carried", "Backpack", "Holds", "Camping", "NotCarried", "Carriedweight"]);
+            assert!(!bare.contains("Formalwear"), "{tag}: an inactive set does not print: {bare}");
+        }
+    }
 }
 
 /// E3.2: Money is a block of its own: four coin boxes, PP, GP, SP and CP, each holding the Gear

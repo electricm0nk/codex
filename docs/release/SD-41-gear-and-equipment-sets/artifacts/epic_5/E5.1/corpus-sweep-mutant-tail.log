@@ -1,0 +1,4 @@
+corpus-literal-sweep: 48706 records examined of 51523 read, 413314 tokens compared (9 synthesized), 51463 digests checked, 1 findings
+corpus-literal-sweep: 1239 of 10825 typed fields compared were cost_gp values re-derived by the converter, not read from a flat COST: token
+corpus-literal-sweep: 3138 tokens exempted under decisions.md §24 redaction across 1058 codex_generated_name records
+corpus-literal-sweep: 1 findings across 1 records

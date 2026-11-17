@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless rules-computation spine for Pathfinder 1e, Starfinder 1e and Cyberpunk RED — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for `body_slots.rs` and `feat_budget.rs`. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
+> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for `damage_total.rs`'s carried entry point and Unarmed row, `containers.rs`, the encumbrance arguments (pieces, created items, sizes, modifier divisors), the settled equipment fields and `climb_ft`. Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for `body_slots.rs` and `feat_budget.rs`. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for §3f (the Cyberpunk RED `cpr`
 > engine), the `GameSystem` description and the module-map note. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`, SD-37 closure truth-up)** for §3e (the Starfinder 1e
 > generic chassis: the `sf_*` readers, `game_system.rs`, the engine master link) and for every reference to the
 > Pathfinder rules tables, now a data package read through `src/rules_core/rules_catalog/` (the compiled `rules_tables`
@@ -1162,7 +1162,26 @@ PCGen-formula-over-BAB feats like Power Attack), `resolve_critical_threat_range`
 `resolve_critical_multiplier`, composed by the entry point `resolve_weapon_damage_breakdown(input,
 corpus, equipment_effects, str_modifier) -> Vec<WeaponDamageBreakdown>`. One `WeaponDamageBreakdown`
 per equipped item identified as a weapon; a non-weapon equipped item is silently absent from the
-`Vec`, never represented with `None` fields.
+`Vec`, never represented with `None` fields. That entry point is unchanged since SD-41; the desktop's load
+response and the print call the additive **`resolve_weapon_damage_breakdown_with_carried(character, corpus,
+equipment_effects, str_modifier, quantities, sizes)`**, which returns the in-hand rows, then one row per carried
+(`SelectedInactive`) weapon (`in_hand: false`), then an Unarmed strike row built from the corpus record
+`item:unarmed_strike` (`unarmed: true`, `nonlethal` unless the character has Improved Unarmed Strike; a monk rolls its level's die,
+anyone else 1d3 Medium or one die step down when Small). Each row also carries `uses_ammunition`, `ammunition_family` and `ammunition_carried` (the
+piece count of the carried ammunition stacks that match the weapon's family). The matching attack rows come from
+`pilot_compute::unarmed_strike_combat_rows` and `pilot_compute_corpus::carried_weapon_combat_rows` (each carried
+weapon taken as wielded in the main hand). `weapon_damage_for_size` moves a weapon die one size step (Small and
+Large only).
+
+**`src/rules_core/containers.rs`** (SD-41) — `container_loads(set, held, corpus, created, weighed, quantities,
+item_sizes) -> Vec<ContainerLoad>`: for each container copy in an equipment set, the weight of what is inside it,
+summed recursively over `Inside` locations (a pouch in a backpack adds to both), against its settled
+`container_capacity` (`Pounds`, `Unlimited`, `Unstated`); `over` is set only for a stated pound capacity and is
+a warning, never a block. Each copy weighs what `encumbrance::compute_encumbrance` weighs it: both sums share
+`encumbrance::copy_bundles` (pieces over the record's `base_quantity`), `modifier_weight_divisor` (e.g. mithral)
+and `copy_size_multipliers`, so a container load and the carried total cannot disagree. `compute_encumbrance`
+itself takes the created items (`extra: &[WeighedCopy]`) and the piece `quantities`;
+`compute_encumbrance_sized` also takes the copies' sizes.
 
 **`src/rules_core/level_up.rs`** (Epic 7) + 11 per-class submodules — `compute_level_up_grants(character:
 &CharacterInput, from_level: u8, to_level: u8) -> LevelUpPlan`, with one submodule per core class
@@ -1226,6 +1245,8 @@ See [testing.md](./testing.md) for the full test-organization convention.
 | Feat prerequisites or feat-granted effects | `src/rules_core/feat_prereqs.rs` + the category submodule under `feat_prereqs/` matching the feat's `FeatCategory`; a computed feat *effect* (not just prerequisites) goes in `src/rules_core/feat_effects.rs` |
 | Equipment-derived AC/skill/ability/weapon bonuses | `src/rules_core/equipment_effects.rs` + the category submodule under `equipment_effects/` |
 | Weapon damage rolls (base dice, STR, enhancement, feats, crits) | `src/rules_core/damage_total.rs` |
+| A race's swim, fly or climb speed | `src/rules_core/race_record.rs` (`DeclaredMoveModes`: `swim_ft`, `fly_ft`, `climb_ft`, settled from the race trait's `MOVE:` data); the desktop turns them into `speed.swim` / `speed.fly` / `speed.climb` rows (`character_hub.rs::push_swim_and_fly_rows`) |
+| What a container holds, or how a stack of pieces weighs | `src/rules_core/containers.rs` + `src/rules_core/encumbrance.rs` (`copy_bundles`); where a copy is lives in `src/saved_character/equipment_sets.rs` (see [persistence.md](./persistence.md)) |
 | What grants happen on level-up for a class | `src/rules_core/level_up.rs` + the per-class submodule under `level_up/` |
 | Encounter difficulty or party CR | `src/rules_core/encounters.rs` / `src/rules_core/party_cr.rs` |
 | What the GUI is allowed to render, or a new sheet cell | `src/rules_core/contract.rs`: `PilotReceipt`, `to_pilot_receipt`, `printed_sheet_cell_map` |

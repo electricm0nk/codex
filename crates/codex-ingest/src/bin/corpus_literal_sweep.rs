@@ -29,8 +29,12 @@
 //! absolute other-user path is not).
 
 use codex_ingest::pcgen_import::corpus_literal_sweep::{
-    compare_digest, compare_tokens, parse_document, tab_tokens, token_closure, Finding,
+    compare_digest, compare_tokens, cost_needs_rederivation, parse_document, tab_tokens, token_closure,
+    Finding,
     ProvenanceClaim, ShippedRecord, SweepTally, SYNTHESIZED_TOKEN_KEYS,
+};
+use codex_ingest::pcgen_import::equipment_price_settle::{
+    load_kind, parse_d20pfsrd_prices, ConverterPrice, Oracle, PriceContext,
 };
 use codex_ingest::pcgen_import::wiring_class::build_mod_index;
 use sha2::{Digest, Sha256};
@@ -99,7 +103,7 @@ fn main() -> ExitCode {
         return fatal(&format!("shipped records not found at {}", records_dir.display()));
     }
 
-    let mut sweep = Sweep::new(corpus_root);
+    let mut sweep = Sweep::new(corpus_root.clone());
     let json_files = find_json_files(&records_dir);
     if json_files.is_empty() {
         return fatal(&format!("no JSON records under {}", records_dir.display()));
@@ -155,6 +159,7 @@ fn main() -> ExitCode {
     }
 
     // Pass 2b: the transcribed tokens, book by book.
+    let mut pricing: Option<Pricing> = None;
     for (book, records) in &by_book {
         let mod_index = sweep.mod_index(book);
         // Only built for a book that really carries a synthesized token —
@@ -209,7 +214,16 @@ fn main() -> ExitCode {
                 .and_then(|identity| sweep.copy_base_row(book, &corpus_file, identity));
             let closure =
                 token_closure(&base_row, &record.identities, &mod_index, resolved_copy_base.as_deref());
-            findings.extend(compare_tokens(record, &closure, &book_tokens, &mut sweep.tally));
+            // SD-41 E1.9 settles formula and eqmod-sum prices into `cost_gp`; one with no flat
+            // `COST:` token in the closure is proven by re-running the converter's derivation.
+            let mut record = record.clone();
+            if cost_needs_rederivation(&record, &closure) {
+                record.settled_cost_gp = match rederived_cost(&mut pricing, &repo_root, &corpus_root, &record) {
+                    Ok(price) => price,
+                    Err(e) => return fatal(&e),
+                };
+            }
+            findings.extend(compare_tokens(&record, &closure, &book_tokens, &mut sweep.tally));
         }
     }
 
@@ -230,6 +244,12 @@ fn main() -> ExitCode {
             tally.synthesized_tokens_compared,
             tally.digests_checked,
             findings.len(),
+        );
+        // SD-41 E1.9: reported unconditionally, zero included, so a run that stopped re-deriving
+        // settled prices cannot read as one that found nothing to re-derive.
+        println!(
+            "{LABEL}: {} of {} typed fields compared were cost_gp values re-derived by the converter, not read from a flat COST: token",
+            tally.typed_cost_rederived, tally.typed_fields_compared,
         );
         // decisions.md §24 / §22: the §24-redaction exemption
         // (`corpus_literal_sweep::compare_tokens`'s third exemption) is
@@ -643,6 +663,55 @@ fn find_json_files(dir: &Path) -> Vec<PathBuf> {
 }
 
 /// Caches the corpus reads the two passes share.
+/// The converter's price derivation, built on first use: it loads every converted equipment and
+/// spell record, which only a record whose `cost_gp` has no flat `COST:` token needs.
+struct Pricing {
+    oracle: Oracle,
+    context: PriceContext,
+    cited: BTreeMap<String, f64>,
+}
+
+/// The price `settle_equipment_prices` would have written for `record`: the converter's positive
+/// price for its cited row, else the cited d20pfsrd list's, else the converter's zero (an
+/// eqmod-offset literal settles at 0). `None` when neither states one.
+fn rederived_cost(
+    pricing: &mut Option<Pricing>,
+    repo_root: &Path,
+    corpus_root: &Path,
+    record: &ShippedRecord,
+) -> Result<Option<f64>, String> {
+    if pricing.is_none() {
+        let records_dir = repo_root.join(CORPUS_RECORDS_REL);
+        let equipment = load_kind(&records_dir, "equipment")?;
+        let spells = load_kind(&records_dir, "spell")?;
+        let list = repo_root.join("data/price_overrides/d20pfsrd-prices.json");
+        let text = std::fs::read_to_string(&list).map_err(|e| format!("{}: {e}", list.display()))?;
+        *pricing = Some(Pricing {
+            oracle: Oracle::new(corpus_root.to_path_buf()),
+            context: PriceContext::new(&equipment, &spells),
+            cited: parse_d20pfsrd_prices(&text).map_err(|e| format!("{}: {e}", list.display()))?,
+        });
+    }
+    let p = pricing.as_mut().expect("just built");
+    // `data/corpus/<book>/equipment/...`: the book directory name keys the eqmod lookup.
+    let book = record.record_path.strip_prefix("data/corpus/").and_then(|r| r.split('/').next()).unwrap_or("");
+    let converter = p.context.converter_price(
+        &mut p.oracle,
+        book,
+        Some(record.source_path.as_str()),
+        Some(record.source_line as u64),
+    );
+    let derived = match converter {
+        ConverterPrice::Priced(price) if price > 0.0 => Some(price),
+        other => record
+            .identities
+            .iter()
+            .find_map(|id| p.cited.get(id).copied())
+            .or(if let ConverterPrice::Priced(zero) = other { Some(zero) } else { None }),
+    };
+    Ok(derived)
+}
+
 struct Sweep {
     corpus_root: PathBuf,
     lines: BTreeMap<PathBuf, Option<Vec<String>>>,

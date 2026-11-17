@@ -1161,7 +1161,7 @@ pub(crate) fn mutate_saved_character_gated_at_root(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note: None,
         mirror_warnings: crate::character_hub::mirror_warnings_at_root(root),
     })

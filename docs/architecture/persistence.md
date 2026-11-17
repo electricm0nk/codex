@@ -1,7 +1,7 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the `ledger.json` sidecar. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the Cyberpunk RED routing note, the
+> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for `equipment_sets.json`, `campaigns.json`, the campaign write-through and `custom.json`'s Create-item fields. Earlier pass: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the sidecar table (no `hp.json` writer; `bio.json`'s Languages, Biography and Notes). Earlier pass: **2026-11-07 against `tranche-19` (`e5c7415d7f`)** for the `ledger.json` sidecar. Earlier pass: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the Cyberpunk RED routing note, the
 > store-ownership rule and the six-seed list below. Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the `game_system` routing note below. The rest was last verified
 > 2026-09-29 against `tranche/16`. Earlier: **2026-09-29 against `tranche/16` (`165cc205e7`)** — added the SD-36 F6e starter-seeds
 > section (`starter_seeds()` is a list, each entry with its own marker; `character_hub.rs`,
@@ -79,8 +79,10 @@ erDiagram
     SavedCharacterEnvelope ||--o| StoredMoney : "money.json (sidecar)"
     SavedCharacterEnvelope ||--o| StoredHp : "hp.json (sidecar)"
     SavedCharacterEnvelope ||--o| Portrait : "portrait.png (sidecar)"
+    SavedCharacterEnvelope ||--o| EquipmentSets : "equipment_sets.json (sidecar)"
+    SavedCharacterEnvelope ||--o{ Membership : "campaigns.json (sidecar)"
 ```
-*The envelope wraps one `CharacterInput`; four further sidecar files hang off the same bundle directory but carry no `CharacterInput`/envelope relationship of their own — see "On-disk bundle layout" below.*
+*The envelope wraps one `CharacterInput`; further sidecar files hang off the same bundle directory but carry no `CharacterInput`/envelope relationship of their own — see "On-disk bundle layout" below.*
 
 ### On-disk bundle layout
 
@@ -117,27 +119,41 @@ once for that character:
 | `portrait.png` | `PORTRAIT_FILE_NAME` | `save_character_portrait` | no portrait uploaded yet — `load_character_portrait` returns `None`, not an error |
 | `bio.json` | `BIO_FILE_NAME` | `update_character_bio` | no bio saved yet — `load_character_bio` returns `CharacterBioDto::default()` (all-empty), not an error |
 | `money.json` | `MONEY_FILE_NAME` | `adjust_character_money` | zero balance — `load_character_money` returns a zero `CharacterMoneyDto`, not an error |
-| `hp.json` | `HP_FILE_NAME` | `adjust_character_hp` | current HP defaults to computed max HP — `load_character_durability` derives a default rather than erroring |
 | `ledger.json` | `LEDGER_FILE_NAME` (`character_ledger.rs`) | every Pathfinder change through `mutate_saved_character_at_root`, and an ability grant on the Custom tab | no ledger yet — the first load (or first change) builds one from what the character holds, each thing in the earliest slot of its kind, marked as worked out afterwards; `list_progression_ledger` reads it. The engine never reads it and no number depends on it. It also holds `admitted`: each record an Overrides flag let in, with that flag |
-| `custom.json` | `CUSTOM_FILE_NAME` (`character_custom.rs`) | `save_character_custom`; an import restores it (`import_character_from_json`, behind `import_character` and `import_pcg`); `clone_character` copies it | nothing custom — `load_character_custom_at_root` returns `CharacterCustomDto::default()` (no grants, records, conditions, and every Overrides flag off), not an error |
+| `custom.json` | `CUSTOM_FILE_NAME` (`character_custom.rs`) | `save_character_custom`, `create_custom_item` (the Market's Create); an import restores it (`import_character_from_json`, behind `import_character` and `import_pcg`); `clone_character` copies it | nothing custom — `load_character_custom_at_root` returns `CharacterCustomDto::default()` (no grants, records, conditions, and every Overrides flag off), not an error. An equipment record may carry `weight_lbs`, `price_gp` and `container_capacity_lbs`, and the overrides `ignore_container_capacity`; all are serde-defaulted, so an older file loads unchanged |
+| `equipment_sets.json` | `EQUIPMENT_SETS_FILE` (`src/saved_character/equipment_sets.rs`) | `equipment_sets::save` (temp file + rename), called from the desktop through `save_sets` (`character_hub.rs`): the first load of a save without one (the `Default` set, `default_from`), the move / set / buy / sell / discard / rename commands; `clone_character` copies it | the first load writes one active `Default` set from the saved `active_state`s. The file holds `schema`, the `active` set's name, every named set's `locations` (a copy a set does not name is Carried) and the `copies` map (`"<itemId>\|<bonus>\|<ordinal>"` → custom `name`, piece `quantity`, `size`). The engine never reads it: `equipment_sets::project` turns the active set into the `equipment=` lines' `active_state`s, which stay the only input the engine reads |
+| `campaigns.json` | `MEMBERSHIPS_FILE` (`src/saved_character/campaign_mirror.rs`) | `set_character_campaigns` (the sheet's Campaign dialog) | no campaigns — nothing is copied anywhere. Each entry is `{ campaignId, campaignName, campaignDir, active }`; `active: false` keeps the old copy and stops new ones. `clone_character` does not copy it, and it is never copied into a campaign folder |
 | `hit_points.json` | `HIT_POINTS_FILE_NAME` | `create_character` (the per-level hit point results), an import (`import_character_from_json`); `clone_character` copies it | no saved results — `load_character_hit_points_at_root` returns an empty list, not an error |
 
-The first four (`portrait.png`, `bio.json`, `money.json`, `hp.json`) share one design rationale, stated directly in `character_hub.rs`'s
+The first three (`portrait.png`, `bio.json`, `money.json`) share one design rationale, stated directly in `character_hub.rs`'s
 own comments: each is data the rules engine does not need to compute a
-character (money and HP tracking, narrative bio fields, a portrait image),
+character (money, narrative bio fields, a portrait image),
 so none of it belongs in `CharacterInput` — putting it there would make it
 rules-engine-visible and force every consumer of `CharacterInput` to handle
 fields with no mechanical meaning. Each sidecar's write function requires the
 character to already exist (checked via `SavedCharacterStore::load` for
-bio, `root.exists()` for the portrait) — none of the four is ever the first
+bio, `root.exists()` for the portrait) — none of the three is ever the first
 write to a character's directory. `money.json` persists only the canonical
 `total_copper` integer; the platinum/gold/silver/copper breakdown in the wire
 DTO is always derived fresh via `money::copper_to_denominations`, never
-stored redundantly. `hp.json` persists current HP and accumulated nonlethal
-damage; `adjust_character_hp_at_root` clamps healing at computed max HP and
-floors nonlethal recovery at zero. Portraits are capped at
+stored redundantly. The app does not track hit points: an older save may
+still hold an `hp.json` sidecar, which loads and is ignored. `bio.json` also holds the
+Languages list (the load response's `languages.known` reads it; none means Common), the Biography
+text and the Notes text (`CharacterBioDto`). Portraits are capped at
 `MAX_PORTRAIT_BYTES = 3 * 1024 * 1024` bytes as a defensive backstop (the
 frontend crops/resizes before sending bytes — see [desktop-app.md](./desktop-app.md)).
+
+**Campaign write-through.** Every write of a file under a character root ends with
+`after_write(root)` (`character_hub.rs`): for each active entry in `campaigns.json` it calls
+`campaign_mirror::mirror`, which copies the whole root (except `campaigns.json`) to
+`<campaignDir>/characters/<slug>-<characterId>/` by writing `<folder>.tmp-<pid>` and renaming it over
+the old copy. The app is the master; the copy is never read back. A missing or unwritable campaign
+folder is a warning, not an error — the local save has already succeeded. The desktop keeps the latest
+warnings per root in memory and the load response returns them as `mirrorWarnings`. Envelope saves go
+through `save_and_mirror` (`SavedCharacterStore::save_with_warnings`; the plain `save` mirrors and
+drops the warnings). A Cyberpunk RED root is identified through `CprCharacterStore::load`. The
+source-scanning test `apps/desktop/src-tauri/tests/every_character_root_writer_mirrors.rs` fails when
+a writer under a character root does not call `after_write`.
 
 `SavedCharacterStore::save` refuses to write a record it cannot honestly read
 back: `validate_character_input` rejects any field containing a newline (the
@@ -146,7 +162,7 @@ exact colon-segment shape the loader expects (`choice_set_id` = exactly two
 segments, `selection_id` = at least two) — see the doc comment directly above
 `validate_character_input` in `local_store.rs`. `SavedCharacterStore::save`
 also validates the envelope fields are single-line before writing
-`envelope.txt`. The four sidecar writers above do not share this validation
+`envelope.txt`. The sidecar writers above do not share this validation
 path — each does its own narrow shape check (e.g. bio field values just need
 to serialize as JSON; there is no line-based grammar to protect there).
 
@@ -272,8 +288,10 @@ submodule) wraps `SavedCharacterStore` behind the character mutation
 commands catalogued in full in [desktop-app.md](./desktop-app.md)'s command
 inventory table: `create_character`, `clone_character`, `list_saved_characters`,
 `load_saved_character`, `level_up_character`, `preview_level_up`, the
-equipment/spell/feat/trait/skill mutation commands, the four sidecar
-commands (bio/money/HP/portrait), `delete_character`, `export_character(_json)`,
+equipment/spell/feat/trait/skill mutation commands, the equipment-set
+commands (`move_equipment_copy`, `create_equipment_set`, `rename_equipment_set`,
+`delete_equipment_set`, `activate_equipment_set`), the sidecar commands
+(bio/money/portrait, `set_character_campaigns`), `delete_character`, `export_character(_json)`,
 `import_character`, plus `append_to_character` / `recompute_character` /
 `re_save_character` over the `RuleSystemAdapter` seam. `campaign_drive.rs`
 wraps `CampaignStore` behind `write_campaign_drive_artifacts`,
@@ -399,8 +417,10 @@ introducing trait-object indirection.
 - **A sidecar file is not part of `CharacterInput` or the envelope, and will
   not appear in an exported character JSON** unless `export_character`'s
   payload builder is explicitly extended to read it — `export_character`
-  builds its payload from the real on-disk envelope, and the four sidecar
-  files sit outside that envelope by design. Adding a fifth sidecar file
+  builds its payload from the real on-disk envelope, and the sidecar
+  files sit outside that envelope by design. `equipment_sets.json` and
+  `campaigns.json` are not exported: an imported character gets a fresh
+  `Default` set on its first load and belongs to no campaign. Adding a sidecar file
   without checking whether export/import needs to carry it is an easy way to
   ship a feature that silently disappears on export/import round-trip.
 - **`SavedCharacterStore::list_all` never reads the sidecar files** — a

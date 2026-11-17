@@ -6,7 +6,8 @@ E1.MC's acceptance_filter_counts.py: R-W control for the recurring "package said
 python3 -I docs/release/SD-41-gear-and-equipment-sets/artifacts/epic_2/E2.MC/desktop_filter_counts.py <desktop-log>
 A filter matches a test when it is a substring of the test path (cargo's rule); `--bins`/`--bin` count the bin
 suite only, an unqualified filter counts every libtest suite. `→ ≥ N` claims pass at N or more.
-Exit 1 on any mismatch or on a filter that matches 0 tests."""
+Exit 1 on any mismatch or on a filter that matches 0 tests.
+An optional second argument names the epic's rows to check (default `E2.`; E4.MC runs it with `E4.`)."""
 import re, sys
 
 suites, current = {}, None
@@ -22,7 +23,8 @@ for line in open(sys.argv[1]):
 bin_suite = [s for s in suites if s.startswith("unittests src/main.rs")]
 if not bin_suite:
     sys.exit("NO_BIN_SUITE in the log")
-rows = [r for r in open("docs/release/SD-41-gear-and-equipment-sets/epic-breakdown.md") if r.startswith("| E2.")]
+epic = sys.argv[2] if len(sys.argv) > 2 else "E2."
+rows = [r for r in open("docs/release/SD-41-gear-and-equipment-sets/epic-breakdown.md") if r.startswith(f"| {epic}")]
 claims = set()
 for row in rows:
     for scope, flt, ge, n in re.findall(r"cargo test --locked -j 8 (--bins |--bin codex-desktop )?(?!--)(\S+) -- --test-threads=8` → (≥ )?(\d+) passed", row):
