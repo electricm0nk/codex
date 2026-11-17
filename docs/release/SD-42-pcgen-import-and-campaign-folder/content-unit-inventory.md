@@ -67,7 +67,8 @@ line of the file). Denominators are stated with each figure.
 |---|---|---|---|
 | F-30 | version surfaces SD-41's C1 bumped (excluding docs) | 14 | `version_surfaces_sd41_c1` (`git show --name-only --format= c817ad502f \| awk 'NF' \| grep -v '^docs/' \| awk 'END{print NR}'`) |
 | F-31 | base | `tranche-22` @ `1046daefc0` = `merge-base origin/tranche-21` | `base.*` |
-| F-32 | cards | 41 (2 + 9 + 14 + 4 + 7 + 5; 37 at authoring + E1.8 + E2.12, E2.13, E4.6 — `decisions.md §26`) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` |
+| F-32 | cards | 46 (2 + 9 + 14 + 4 + 12 + 5; 37 at authoring + E1.8 + E2.12, E2.13, E4.6 — `decisions.md §26` + E4.7, E4.8, E4.9, E4.10, E4.11 — `decisions.md §27`) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` |
+| F-34 | PF records whose `CONTAINS:` first field carries the constant-weight `*` flag at the pin | 61 (and 1 with the `N%` form: Versatile Vest) | `cd $PCGEN_REPO_DIR/data/pathfinder && grep -rhE 'CONTAINS:\*' --include=*.lst . \| awk -F'\t' '{print $1}' \| sort -u \| awk 'END{print NR}'`; `%`: `grep -rhE 'CONTAINS:[^\t]*%' --include=*.lst . \| awk -F'\t' '{print $1}' \| sort -u \| awk 'END{print NR}'` |
 | F-33 | editor packages and licences (npm registry, 2026-11-16) | 11, all MIT; versions in `decisions.md §18` | `for p in @codemirror/state @codemirror/view @codemirror/language @codemirror/commands @codemirror/autocomplete @codemirror/search @codemirror/lang-markdown @lezer/markdown @lezer/highlight @lezer/common marked; do npm view $p version license; done` |
 
 ## §5 What the census does not count

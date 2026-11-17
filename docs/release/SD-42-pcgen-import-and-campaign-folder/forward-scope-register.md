@@ -75,6 +75,7 @@ author's default or the operator's silence, named here.
 
 | ID | Capability | Ruling | Revisit condition (a command, checked at E5.2) | Accepted cost |
 |---|---|---|---|---|
+| FSR-C9 | Remove an attached modifier from a held copy (the Customize dialog, E4.9, lists them and attaches; no remove action has ever existed: `git grep -n 'detach\|removeEquipmentModifier' apps/desktop/src` → 0) | operator REN-1 / CUS-1, `decisions.md §27.3` | the operator asks | sell or discard the copy and buy it plain |
 | DEF-1 | Eqmod price formulas the converter does not evaluate (SD-41 DEF-5) | SD-41 §24, Q6 | `python3 -I -c "import json;print(len(json.load(open('data/price_overrides/price-unknown.json'))))"` — the operator asks | an imported copy with such an eqmod is priced by its line's `COST` (`cost_override_copper`) |
 | DEF-2 | Drag in ui-smoke (map pins by click are covered; drag-in images are not) | the harness has no drag op (SD-41 DEF-2) | `python3 -I -c "import json;print('drag' in {s['op'] for r in json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows'] for s in r['steps']})"` → `True` | drag-in is proven by a unit test of the drop handler and the operator's eye at E5.G |
 | DEF-3 | Live preview of tables as rendered grids inside the editor | `decisions.md §18` (monospace alignment; the Reading view renders the grid) | the operator asks | tables read as aligned text while editing |

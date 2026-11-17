@@ -87,12 +87,28 @@ git log <C1 sha>..HEAD -p -S"$SD42_CHAR" -- . ':!docs/release/SD-42-pcgen-import
 git log <C1 sha>..HEAD -p -S"$SD42_PII" -- . | awk 'END{print NR}'   # 0 (the player name appears nowhere, this package included)
 ```
 
+## G-10 The gear screen's five operator items of 2026-11-17 (`decisions.md §27`) — E4.7–E4.11, E4.4, E4.MC
+
+```bash
+cargo test --locked -j 8 --lib weightless_ -- --test-threads=8                          # E4.7: ≥ 5 passed
+cargo run --locked --bin gen_settled_corpus -- --check                                  # E4.7: exit 0 (30 settled bundles regenerated, no drift)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 slot_kind -- --test-threads=8     # E4.8: ≥ 5 passed; equipment.wrong_slot refused with words
+cd apps/desktop/src-tauri && cargo test --locked -j 8 rename_copy_ -- --test-threads=8  # E4.9: ≥ 4 passed; print block reads "Camping Gear (Sack)"
+cd apps/desktop/src-tauri && cargo test --locked -j 8 attach_modifier_to_copy -- --test-threads=8   # E4.9: ≥ 2 passed; the pick lands on the chosen copy
+grep -c 'Attach Modifier' apps/desktop/src/characterHub/CharacterSheet.tsx                 # 0: the redundant list is gone (E4.9)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 describe_held_ -- --test-threads=8 # E4.10: ≥ 5 passed; unstated values null
+grep -cE '(weightLbs|costGp|quantity|acBonus|maxDex) *[-+*/]' apps/desktop/src/characterHub/GearDetail.tsx   # 0: the panel derives nothing (NR-2)
+cd apps/desktop/src-tauri && cargo test --locked -j 8 stack_rows_ -- --test-threads=8     # E4.11: ≥ 5 passed; four sacks one row; a filled one its own; split 50/50 and rejoin; no weight moves
+cd apps/desktop && npx tsx src/characterHub/gearScreenModel.test.ts && npx tsx src/characterHub/CustomizeCopyDialog.test.tsx && npx tsx src/characterHub/GearDetail.test.tsx   # E4.8 ≥ 5, E4.9 ≥ 4, E4.10 ≥ 3 new cases
+python3 -I -c "import json;ids={x['id'] for x in json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']};print(sum(i in ids for i in ['sheet-gear-bag-of-holding-weightless','sheet-gear-move-to-slot-kinds','sheet-gear-customize','sheet-gear-detail-panel','sheet-gear-sacks-one-row','sheet-gear-arrows-split-quiver-backpack']))"   # 6 (E4.4)
+```
+
 ## G-9 Closure (DoD 18–20) — E5.G, E5.1–E5.4
 
 ```bash
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 41) print "ROW_COUNT " n }' kanban.md   # 41: 37 + E1.8 + E2.12, E2.13, E4.6 (decisions.md §26)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 46) print "ROW_COUNT " n }' kanban.md   # 46: 37 + E1.8 + E2.12, E2.13, E4.6 (decisions.md §26) + E4.7–E4.11 (decisions.md §27)
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Import ([^)]*)\|Campaign Manager ([^)]*)\|Editor\) — usable: yes' artifacts/epic_5/E5.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match)
 test -s artifacts/epic_4/E4.5_cycle_receipt.md && grep -c 'copies_emitted' artifacts/epic_4/E4.5_cycle_receipt.md   # ≥ 1: the local proof run's counts are in the receipt (Q9)
@@ -138,6 +154,12 @@ recorded in E5.1's receipt.
 | UI-1 (2026-11-17) "Main menu" first on every screen that shows the menu; hidden on the main screen | E2.12, E4.4 | G-6 `AppMenu.test.ts` ≥ 4 new cases; `grep -rl "layout/AppMenu"` → 3; ui-smoke `main-menu-first` |
 | UI-2 (2026-11-17) the open-campaign button: full column width, the main screen's Campaign Manager style | E2.13, E4.4 | G-6 `campaignManagerScreen.test.ts` ≥ 3; `linear-gradient` grep → 0 in the Manager; ui-smoke `campaign-open-button` |
 | LNX-1 / Q27 (2026-11-17) the AppImage writes its own menu entry + icon; re-points after an update; never for .deb/.rpm/Windows/macOS | E4.6 | `cargo test self_install` 14 + ≥ 4 passed; E4.MC names the four tests |
+| BAG-1 / HVS-1 (2026-11-17) a bag of holding's (and a handy haversack's) contents are weightless, not cumulative | E4.7, E4.4 | G-10 `weightless_` ≥ 5 (bag + haversack + nested backpack + flag parse + plain sack); `gen_settled_corpus --check` 0; ui-smoke `sheet-gear-bag-of-holding-weightless` |
+| SLOT-1 (2026-11-17) anything can go in any slot (a backpack in Shield) | E4.8, E4.4 | G-10 `slot_kind` ≥ 5 (menu, drag, backend refusal with words, override, saved wrong slot loads with a warning); ui-smoke `sheet-gear-move-to-slot-kinds` |
+| REN-1 (2026-11-17) rename an object in inventory (Sack #1 → Camping Gear) | E4.9, E4.4 | G-10 `rename_copy_` ≥ 4; print `Camping Gear (Sack)`; ui-smoke `sheet-gear-customize` |
+| CUS-1 (2026-11-17) a Customize button on the equip rows (naming + modifiers); the redundant list with the modifier buttons dropped | E4.9, E4.4 | G-10 `attach_modifier_to_copy` ≥ 2; `CustomizeCopyDialog.test.tsx` ≥ 4; `grep -c 'Attach Modifier' CharacterSheet.tsx` → 0; ui-smoke `sheet-gear-customize` |
+| DET-1 (2026-11-17) selecting gear shows all its information (weight / cost / stats / description / slots) | E4.10, E4.4 | G-10 `describe_held_` ≥ 5; `GearDetail.test.tsx` ≥ 3; the no-arithmetic grep → 0; ui-smoke `sheet-gear-detail-panel` |
+| STK-1 (2026-11-17) four sacks read as one `Sack ×4`, a filled one as its own row; stacks split (50/50 into quiver and backpack) and rejoin | E4.11, E4.4 | G-10 `stack_rows_` ≥ 5; `print_pf_blocks_gear_stacks` ≥ 2; model test one node per stack; ui-smoke `sheet-gear-sacks-one-row`, `sheet-gear-arrows-split-quiver-backpack` |
 
 ## Artifact map
 
@@ -151,6 +173,7 @@ recorded in E5.1's receipt.
 | G-6 | E2.1–E2.13, E2.MC, E4.3, E4.6 | receipts; `artifacts/epic_2/E2.MC/*.png`; E4.6's receipt (the code path the operator's build took) |
 | G-7 | E3.1–E3.3, E3.MC | receipts; the licence loop output |
 | G-8 | every MC, E5.1 | receipts |
+| G-10 | E4.7–E4.11, E4.4, E4.MC | receipts; `artifacts/epic_4/E4.MC/*.png` (the bag's table, a Backpack's Move to menu, a renamed Sack, the detail panel, four Sacks as one node) |
 | E5.G | E4.MC, E5.G | `artifacts/epic_5/E5.G/` (≥ 12 PNGs, 1 PDF, the signed receipt with three lines) |
 | G-9 | E5.1–E5.4 | `artifacts/epic_5/`, `receipts.md`, `docs/retro/sd42-retrospective.md` |
 

@@ -60,6 +60,12 @@ Board: `./kanban.md`. Version `0.22.0`: C1 sets it in one commit on the 14 surfa
 | UI-1 (2026-11-17, relayed by the lead while run wf_141acf96-f25 was live) | "the app menu's FIRST option is 'Main menu' on every screen that shows the menu." | §26.1; E2.12, E4.4 |
 | UI-2 (2026-11-17) | "the button that opens a campaign must be much larger: full column width, same colour/style as the main screen's Campaign Manager button." | §26.2; E2.13, E4.4 |
 | LNX-1 / Q27 (2026-11-17) | "no app icon after installing the AppImage on Arch." / "Codex itself writes its menu entry + icon (~/.local/share/applications, icon dir) on first start when running as an AppImage on Linux, and re-points the path after an update. No extra tool required." | §26.3; E4.6 |
+| BAG-1 / HVS-1 (2026-11-17, bug) | "a bag of holding is treating it's contents as cummulative from a weight perspective instead of treating them as weightless" / "the same goes for handy haversack" | §27.1; E4.7, E4.4 |
+| SLOT-1 (2026-11-17, bug) | "bug: you can put anything into any slot. I added a backpack to a shield slot." | §27.2; E4.8, E4.4 |
+| REN-1 (2026-11-17, enhancement) | "enhancement: we need the ability to rename an object in inventory. ie: Sack #1 could be renamed to Camping Gear" | §27.3; E4.9, E4.4 |
+| CUS-1 (2026-11-17, enhancement) | "the gear screen shows the equip view with move/drop/sell/discard. And then the same list again with attach modifier. On the equip section, add a customize button which allows custom naming or adding modifiers. Then you can drop the redunant view below the equip section with the modifier buttons." | §27.3; E4.9, E4.4 |
+| STK-1 (2026-11-17, bug) | "i purchased four sacks. This was listed as Sack x 4, four distinct times in the equip section as carried. In the second view it just shows Sack, Sack, Sack, Sack. It's ok to list an empty container as Sack x 4. But do not list Sack x 4, 4 times - leading one to believe there are 16 sacks. If one of the sacks has something inside, you would show Sack, and Sack x 3. Stacked items also should be able to be split: Sack x 2, Sack x 2. Or Arrows x 50, Arrows x 50 instead of Arrows x 100. That way some arrows could be put in a quiver and others in a backpack." | §27.5; E4.11, E4.4 |
+| DET-1 (2026-11-17, enhancement) | "enhancement: when selecting a peice of gear, we need to display all the information about that gear. Weight/Cost/Stats/Description/Slots/etc" | §27.4; E4.10, E4.4 |
 
 Q10 and Q23 do not appear in the intake file (its numbering runs Q2–Q9, Q11–Q22, Q24, Q25). The author
 treats them as never asked; the operator confirms at `§21` Q-L that nothing was lost.
@@ -557,3 +563,159 @@ card rows' FILES YOU OWN are the grant (`§19`: a file no other open card owns).
 cards on their rows' Tier (`opus`) when their `Depends on` are `complete`; no script edit is required. The
 SD-41 partition no longer binds (PR #410 merged 2026-11-17), but E4.1's `SD-41 merged` token is still the
 lead's to clear by hand (R25).
+
+## §27 — Five gear cards the operator added mid-run (OPERATOR, 2026-11-17; placement DEFAULT)
+
+Added on 2026-11-17, later the same day as §26, by a planning session in its own worktree
+(`.worktrees/sd42-cards2`, detached from `origin/tranche-22`), without touching the lanes' trees. The operator's
+words are the §3 rows BAG-1 / HVS-1, SLOT-1, REN-1 + CUS-1, DET-1, STK-1 (relayed by the lead the same day; REN-1 and
+CUS-1 arrived separately and are one card, E4.9, because CUS-1's "custom naming" is REN-1's rename). Card count
+41 → **46** (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`); every count constant in this
+package was re-stated in the same commit (R18). All five touch `character_hub.rs`, `GearScreen.tsx` and
+`gearScreenModel.ts`, which E4.2 owns in Phase 2, so all five are Phase 2, lane `main`, and run **serially
+after E4.3** (the last writer of `character_hub.rs` among E4.1–E4.3): E4.3 → E4.7 → E4.8 → E4.9 → E4.10 → E4.11 → E4.4.
+Every repo figure below was derived on `tranche-22` @ `c58b8c47ec`; the PCGen figures at the pin
+`7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/pcgen-oracle-pin.env`), resolved via `$PCGEN_REPO_DIR`.
+
+### §27.1 E4.7 — weightless container contents (BAG-1 / HVS-1)
+
+Operator: "a bag of holding is treating it's contents as cummulative from a weight perspective instead of treating
+them as weightless" and "the same goes for handy haversack". **Verified mechanism.** PCGen's `CONTAINS:` token
+(`code/src/java/plugin/lsttokens/equipment/ContainsToken.java:55-117` at the pin) reads its first `|` field as
+`[*|N%]<UNLIM|pounds>`: a leading `*` sets `CONTAINER_CONSTANT_WEIGHT` ("the contents weigh nothing"), a leading
+`N%` sets `CONTAINER_REDUCE_WEIGHT` (the contents weigh N % less); both at once is a parse failure. The PF data
+carries the `*` flag on **61** distinct records (`cd $PCGEN_REPO_DIR/data/pathfinder && grep -rhE 'CONTAINS:\*'
+--include=*.lst . | awk -F'\t' '{print $1}' | sort -u | awk 'END{print NR}'`): Bag of Holding (Minor, Type I–IV,
+`*50`/`*250`/`*500`/`*1000`/`*1500`; the Looter's Satchel copy), **Handy Haversack `*120`**, Portable Hole
+`*UNLIM`, Efficient Quiver `*UNLIM|Arrow=60|…`, the Bags of Concealment and Devouring, the bandoliers, Glove of
+Storing, the three Carpets of Flying, and the mounts and pack animals (`*600|Any` on a Heavy Horse: a ridden
+animal's load is not the rider's). The `%` form is on **1** record (Versatile Vest, `40%26|Any`). Codex's
+converter (`crates/codex-ingest/src/pcgen_import/ir_converter.rs:700`, `container_capacity_of`) tests
+`starts_with("UNLIM")` and then `f64::parse` on the first field, so `*250` and `*UNLIM` both fall to
+`ContainerCapacity::Unstated`: the `*` is dropped **and the bag's own capacity is lost** — the settled bundle
+(`data/corpus/core_rulebook/_settled/equipment.json`) holds `container: true` and no `container_capacity` for
+either item, so no over-capacity warning fires for a bag today. SD-41 recorded this as deferred (`DEF-1`, its
+decisions.md Q4: "weight-reduction kinds … contents weigh in full"). `rules_core::encumbrance::compute_encumbrance_sized`
+(`src/rules_core/encumbrance.rs:424`) sums every non-absent copy's weight with no knowledge of the set tree;
+`containers::container_loads` (`src/rules_core/containers.rs:40`) walks the tree for the capacity check and must
+keep doing so.
+
+**The rule (paper-sheet rule, §24):** the carried total is a number on the sheet, so it is computed right: the
+contents of a `*` container — and everything nested inside them — add nothing to the carried total; the container's
+own weight counts; the capacity check still counts the contents against the container's own capacity. The `%` form
+is carried by the same number (`contents_weight_pct`: `*` → 0, `N%` → 100 − N, default 100) because it costs one
+field and leaves no carve-out. **Placement:** E4.7, Phase 2, `main`, after E4.3; the first of the four. The record
+field means the 30 settled bundles are regenerated (`cargo run --locked --bin gen_settled_corpus`, `--check` clean)
+in the card's commit. **Does not change:** the Weight column's per-copy words (what the thing weighs), the capacity
+warning, Starfinder bulk (no PF-style flag in SF data), a Create item's contents (no flag in `custom.json`; stated).
+
+### §27.2 E4.8 — slot kinds (SLOT-1)
+
+Operator: "bug: you can put anything into any slot. I added a backpack to a shield slot." **Verified mechanism.**
+`moveTargets` (`apps/desktop/src/characterHub/gearScreenModel.ts:260`) offers every slot section that has a free
+place, testing only `placesOf` and `slotOverride`, never the row's item; `dropTarget` (`:339`) reuses it. The
+backend `move_copies_at_root` (`apps/desktop/src-tauri/src/character_hub.rs:6303`) runs `wear_check_in` only when
+the copy is not already worn (`putting_on`, `:6337`), and that check (`item_slot_conflict` → `body_slots::slot_conflict`,
+`src/rules_core/body_slots.rs:350`) answers only "is the **target** slot taken" — so the write boundary also accepts a
+backpack in Shield, and a worn item moved slot → slot is never checked at all. The item's own kind is already on
+the wire (`HeldEquipmentCopyDto.slot`, `:5555`; `PlacedEquipmentCopyDto.slot`, `ui/boundary/listHeldEquipment.ts:65`),
+derived by `body_slot_of_item` (`apps/desktop/src-tauri/src/equipment_catalog.rs:262`) from the same slot table the
+import parses (`crates/codex-ingest/src/pcgen_import/equipment_types.rs:118`, `EQSLOT … CONTAINS:<type>,…=<n>`).
+**The rule**, in one engine place (`body_slots::slot_kinds_allowed`): own slot only; the `wield_*` family
+interchangeable (as `slot_conflict` already treats it); a `none` copy takes no slot; the Custom tab's "Ignore body
+slot limits" lifts it at both ends and is recorded as a flag, as a full slot is today. The backend refuses with a
+readable reason (`equipment.wrong_slot`: "Backpack cannot go in the Shield slot: it is worn in no slot").
+**Existing saves (DEFAULT, the lead's recommendation):** a copy already saved in a wrong slot **stays where it is
+and the row carries a warning**; nothing is moved on load (a load that rewrites a player's set is a silent data
+change; §16's two-master rule exists because silent rewrites are the trap). The operator may choose "move it to
+Carried on load" instead; the card then changes one branch. **Placement:** E4.8 after E4.7 (same tree and files).
+
+### §27.3 E4.9 — Customize a held copy: rename + modifiers; the redundant list goes (REN-1 + CUS-1)
+
+Operator: "enhancement: we need the ability to rename an object in inventory. ie: Sack #1 could be renamed to
+Camping Gear" and, later: "the gear screen shows the equip view with move/drop/sell/discard. And then the same list
+again with attach modifier. On the equip section, add a customize button which allows custom naming or adding
+modifiers. Then you can drop the redunant view below the equip section with the modifier buttons."
+**Verified.** Rename: SD-41 E2.5 shipped the backend — `rename_equipment_copy` (`character_hub.rs:6767`, `_at_root`
+`:5533`, registered `main.rs:85`, tested `:22544`) writes `CopyFacts.name` (`equipment_sets.rs:86`; blank clears)
+and `ui/boundary/renameEquipmentCopy.ts` wraps it — but no component imports that boundary (`grep -rln
+renameEquipmentCopy apps/desktop/src` → the boundary and one unrelated test); the gear screen's "Rename"
+(`GearScreen.tsx:229`) renames the equipment **set**; E1.3 fills the same field for imported custom names. The
+redundant view: `GearTab` (`CharacterSheet.tsx:1584`) renders `GearScreen` and then its own `items.map(...)` over
+`corpusDerived.resolvedEquipment` (`:1647-1700`) — name, id, "✓ grounded", weight · cost, an **Attach Modifier**
+button per row and the applied modifiers as a list. That button is the only entry to the modifier flow
+(`handleAttachModifier` `:3280` → `pendingModifierAttachment` `:2851` → the Equipmods `ItemPickerModal`, config
+`'modifier'` at `:318` → `handleModifierPicked` `:3291` → `attachEquipmentModifier`), and the flow targets a
+**selection by `itemId`**, not a copy — with two Longswords the pick lands on the first. No remove-modifier action
+exists (`git grep -n 'detach\|removeEquipmentModifier\|remove_equipment_modifier' apps/desktop/src` → 0), so the
+modifier actions reachable today are exactly *attach* and *see the applied list*.
+
+**The card (one, not two):** one **Customize** button on every equip row and every container-table title opens one
+dialog with the name (rename, per copy) and the modifiers (the applied list + Attach modifier through the **same**
+picker and boundary, now carrying the copy so it lands on that copy); then the second list and everything that only
+served it is **deleted** — the `items.map` block, the `onAttachModifier` prop, the `ResolvedEquipmentDto`-typed
+pending state and handler — with no empty handler or unused symbol left (no-stub doctrine; the receipt lists every
+deleted symbol with a `git grep` → 0). **Defaults (the operator may change each):** rename is **per copy**
+(`CopyFacts` is keyed by copy; "Sack #1" is one copy's title in a container table, and renaming it makes it its own
+row, leaving "Sack" for the other); the name shows everywhere `held.name` is already read (rows, container titles,
+"Into …" targets) and the printed Inventory reads **"Camping Gear (Sack)"** so the base item stays visible (the DTO
+gains `baseName`); blank restores the base name; weight, capacity, slot and price never change with the name;
+removing a modifier stays out (it never existed; `forward-scope-register.md` FSR-C9). **Placement:** E4.9 after
+E4.8; E4.10 (the detail panel, which also edits `GearScreen.tsx` and `CharacterSheet.tsx`) is chained after it, so
+the two never hold the same file at once.
+
+### §27.4 E4.10 — the gear detail panel (DET-1)
+
+Operator: "enhancement: when selecting a peice of gear, we need to display all the information about that gear.
+Weight/Cost/Stats/Description/Slots/etc". **Verified:** no command describes a held copy today. The pieces exist:
+`EquipmentCatalogEntryDto` (`equipment_catalog.rs:113`: key, category, name, cost, weight, book, types,
+description, slot), `WeaponDamageDto` (`character_hub.rs:1118`), the settled record's `stat_effect`
+(AC bonus, max Dex, ACP, spell failure), `is_shield`, `container`, and after E4.7 `container_capacity` and
+`contents_weight_pct`; the catalog screen's `hasDescription` (`EquipmentCatalogScreen.tsx:65`) is the one honest
+description test (null = "states none"). **Defaults (the operator may change each):** selecting a gear row or a
+container-table row opens a panel under the tables with two blocks — the record (weight, cost, type, slot,
+weapon stats, armor/shield stats, container capacity and the weightless words, description, source book) and
+this copy (custom name beside the base name, size, material and modifiers, the E4.2 overrides, quantity,
+location); every value is the engine's settled record or the copy's facts through one new `describe_held_equipment`
+command that **reuses** the existing DTOs; an unstated value is `null` on the wire and `—` on the screen, never 0;
+the panel does no arithmetic (NR-2; AGENTS.md's twin rule). **Placement:** E4.10 after E4.9 (it shows E4.7's flag
+and E4.9's names).
+
+### §27.5 E4.11 — stacks: one row per stack, split by moving (STK-1)
+
+Operator: "i purchased four sacks. This was listed as Sack x 4, four distinct times in the equip section as carried.
+In the second view it just shows Sack, Sack, Sack, Sack. It's ok to list an empty container as Sack x 4. But do not
+list Sack x 4, 4 times - leading one to believe there are 16 sacks. If one of the sacks has something inside, you
+would show Sack, and Sack x 3. Stacked items also should be able to be split: Sack x 2, Sack x 2. Or Arrows x 50,
+Arrows x 50 instead of Arrows x 100. That way some arrows could be put in a quiver and others in a backpack."
+**Verified mechanism.** The backend builder already folds the four bought lines into one row (`quantity 4`, four
+`copies`; `character_hub.rs:5614`). The screen undoes it: `nodesOf` (`gearScreenModel.ts:207`) emits one tree node
+**per copy** of a container stack so that each sack can hold things, and every node renders the **stack's** label
+("Sack ×4", `GearScreen.tsx:370`) — four nodes each reading ×4. The second view is `GearTab`'s per-selection list,
+deleted by E4.9 (§27.3); E4.11 lands the rule in what survives (the tree, the container tables, the printed
+Inventory, which today prints "Sack #1 … #4"). Splitting already exists as a move: `move_equipment_copy` takes a
+piece count (SD-41 §30, Q8 "stacks split to any count"), the screen asks "how many?" on any stack, and a part moved
+back beside an identical stack rejoins through the same grouping. **Binding rules (the lead, 2026-11-17):** (1)
+identical copies at one place are one row with the count, in every surviving view and on print; (2) a container
+copy holding anything is its own row ("Sack" + "Sack ×3"), as is a renamed copy; (3) a stack splits into parts
+that move on their own; (4) parts put back together display merged. **DEFAULT (the lead's recommendation, the
+operator may change it):** a deliberate same-place split is **not kept** — a split is a step before a move, so there
+is no Split button and no new saved state; "Sack ×2, Sack ×2" at one place reads "Sack ×4" until one part moves.
+Weight and totals never change from regrouping (a test pins them). **Placement:** E4.11 after E4.10 (it edits
+`gearScreenModel.ts`, `character_hub.rs` and `print/blocks/gear.rs`, which E4.9/E4.10 also hold).
+
+### §27.6 ui-smoke rows: folded into E4.4 (R24); E4.4 moves after E4.11
+
+E4.4 is `waiting` on `origin/tranche-22` (`awk -F'|' '$2 ~ /^ E4\.4 / {print $5}' kanban.md` → ` waiting `), so its
+row gains `sheet-gear-bag-of-holding-weightless`, `sheet-gear-move-to-slot-kinds`, `sheet-gear-customize`, `sheet-gear-detail-panel`, `sheet-gear-sacks-one-row` and
+`sheet-gear-arrows-split-quiver-backpack`, and **E4.4 stays the only `spec.json` writer**. Because those rows exercise E4.7–E4.11,
+E4.4's `Depends on` becomes **E4.11** (it was E4.3): the Phase-2 chain is E4.1 → E4.2 → E4.3 → E4.7 → E4.8 → E4.9
+→ E4.10 → E4.11 → E4.4 → E4.5 → E4.6 → E4.MC, and E4.MC depends on E4.5, E4.6, E4.7, E4.8, E4.9, E4.10, E4.11. E4.5 and E4.6 are
+unchanged.
+
+### §27.7 What this placement does not change
+
+As §26.5: the live script's §2.1 prefix predates these rows; the card rows' FILES YOU OWN are the grant (§19). The
+lead dispatches each card on its row's Tier (`opus`) when its `Depends on` is `complete`. Nothing in Phase 1 is
+touched: the import lane's E1.2 already places imported copies where PCGen's `EQUIPSET` says, and a PCGen file
+that put an item in a wrong slot loads under E4.8's warning like any other save.
