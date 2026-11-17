@@ -358,7 +358,10 @@ fn pcg_import_fixtures_an_item_codex_does_not_hold_is_custom_with_its_place() {
     let dir = repo_root().join("scripts/oracle_harness/eqm-fixtures");
     let file = converted(&dir.join("sd33r6_eqm_combo.pcg"));
     let leather = file.custom.equipment.iter().find(|record| record.name == "SD33R6 ~ Leather Dragonhide").expect("custom item");
-    assert!(leather.stats.iter().any(|stat| stat.label == "Worn" && stat.value == "1"), "{leather:?}");
+    // A Create item (`decisions.md §7`): weighed and priced from the line, held where the set puts it.
+    assert_eq!((leather.weight_lbs, leather.price_gp, leather.container_capacity_lbs), (Some(0.0), Some(0.0), None), "{leather:?}");
+    let copy = codex::saved_character::equipment_sets::CopyKey { item_id: format!("custom:{}", leather.id), bonus: 0, ordinal: 0 };
+    assert_eq!(codex::saved_character::equipment_sets::location_of(file.equipment_sets.active_set(), &copy), codex::saved_character::equipment_sets::Location::Equipped);
     assert!(file.report.lines.iter().any(|line| line.outcome == Outcome::Custom && line.to == "SD33R6 ~ Leather Dragonhide"));
 }
 

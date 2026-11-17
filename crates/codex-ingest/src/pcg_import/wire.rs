@@ -113,7 +113,7 @@ pub struct MoneyWire {
     pub total_copper: u64,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomWire {
     pub feats: Vec<CustomRecord>,
@@ -121,13 +121,21 @@ pub struct CustomWire {
     pub spells: Vec<CustomRecord>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+/// `custom.json`'s record (`CustomRecordDto`). An equipment record is a Create item (SD-41 §25): the
+/// three amounts are the line's `WT` and `COST` per piece and, for a container, its capacity.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomRecord {
     pub id: String,
     pub name: String,
     pub description: String,
     pub stats: Vec<CustomStat>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub weight_lbs: Option<f64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub price_gp: Option<f64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub container_capacity_lbs: Option<f64>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

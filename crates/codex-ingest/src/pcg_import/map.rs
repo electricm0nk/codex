@@ -246,6 +246,8 @@ struct Placement {
     /// The entry this one is inside.
     parent: Option<String>,
     pieces: u32,
+    /// One piece's weight, the line's `WT`; what a Create item container holds is summed from it.
+    weight_lbs: f64,
     /// The stack once the line is read: a row of `equipment`, or a custom record's id.
     held: Option<Held>,
     /// The line's custom name and properties, the same in every place it is in.
@@ -363,6 +365,7 @@ impl<'a> Importer<'a> {
             })
             .collect();
         let mut left: Vec<u32> = lines.iter().filter(|line| line.key() == "EQUIPNAME").map(|line| quantity(line.get("QUANTITY"))).collect();
+        let weights: Vec<f64> = lines.iter().filter(|line| line.key() == "EQUIPNAME").map(|line| amount(line.get("WT")).unwrap_or(0.0)).collect();
         self.placements = items.iter().map(|_| Vec::new()).collect();
         let top_level = worn_set.split('.').count() + 1;
         for line in lines.iter().filter(|line| line.key() == "EQUIPSET") {
@@ -385,13 +388,14 @@ impl<'a> Importer<'a> {
                 word: if depth == top_level { line.value().trim().to_owned() } else { String::new() },
                 parent: (depth > top_level).then(|| id.rsplit_once('.').map_or_else(String::new, |(parent, _)| parent.to_owned())),
                 pieces,
+                weight_lbs: weights[at],
                 held: None,
                 facts: CopyFacts::default(),
             });
         }
-        for (places, rest) in self.placements.iter_mut().zip(left) {
+        for ((places, rest), weight_lbs) in self.placements.iter_mut().zip(left).zip(weights) {
             if rest > 0 {
-                places.push(Placement { entry: None, word: "Carried".to_owned(), parent: None, pieces: rest, held: None, facts: CopyFacts::default() });
+                places.push(Placement { entry: None, word: "Carried".to_owned(), parent: None, pieces: rest, weight_lbs, held: None, facts: CopyFacts::default() });
             }
         }
     }
@@ -654,7 +658,7 @@ impl<'a> Importer<'a> {
             .map(str::to_owned);
         let Some(item_key) = item_key else {
             let before = self.custom.equipment.len();
-            self.custom_item(line, &name, worn, carried);
+            self.custom_item(line, &name, base_item.as_deref().unwrap_or(&name));
             if self.custom.equipment.len() > before {
                 let id = self.custom.equipment[before].id.clone();
                 for place in self.placements.get_mut(index).into_iter().flatten() {
@@ -762,6 +766,22 @@ impl<'a> Importer<'a> {
             keyed.push((place, key));
         }
         let by_entry: BTreeMap<&str, &CopyKey> = keyed.iter().filter_map(|(place, key)| Some((place.entry.as_deref()?, key))).collect();
+        // What each entry holds, in lb, over every entry nested below it.
+        let mut contents: BTreeMap<&str, f64> = BTreeMap::new();
+        for (place, _) in &keyed {
+            let mut parent = place.parent.as_deref();
+            while let Some(entry) = parent {
+                *contents.entry(entry).or_insert(0.0) += f64::from(place.pieces) * place.weight_lbs;
+                parent = keyed.iter().find(|(above, _)| above.entry.as_deref() == Some(entry)).and_then(|(above, _)| above.parent.as_deref());
+            }
+        }
+        // The file states no capacity, so a Create item container holds what the file puts in it.
+        for (place, _) in &keyed {
+            let (Some(Held::Custom(id)), Some(lbs)) = (&place.held, place.entry.as_deref().and_then(|entry| contents.get(entry))) else { continue };
+            if let Some(record) = self.custom.equipment.iter_mut().find(|record| record.id == *id) {
+                record.container_capacity_lbs = Some(record.container_capacity_lbs.unwrap_or(0.0).max(*lbs));
+            }
+        }
         let mut unknown_words: Vec<String> = Vec::new();
         let mut locations = Vec::new();
         let mut copies = BTreeMap::new();
@@ -841,17 +861,21 @@ impl<'a> Importer<'a> {
         self.push_custom(line, record, |custom| &mut custom.spells);
     }
 
-    fn custom_item(&mut self, line: &Line, name: &str, worn: u32, carried: u32) {
-        let mut stats = vec![
-            CustomStat { label: "Worn".to_owned(), value: worn.to_string() },
-            CustomStat { label: "Carried".to_owned(), value: carried.to_string() },
-        ];
-        for (label, key) in [("Cost (gp)", "COST"), ("Weight (lb.)", "WT"), ("Note", "NOTE")] {
-            if let Some(value) = line.get(key).filter(|value| !value.trim().is_empty()) {
-                stats.push(CustomStat { label: label.to_owned(), value: value.to_owned() });
-            }
-        }
-        let record = custom_record("equipment", self.custom.equipment.len(), name, "An item Codex has no record of.", stats);
+    /// A line no record maps is a Create item (`decisions.md §7`): weighed and priced per piece from
+    /// the line, held at its places by `place_copies`, which also makes it a container when the set
+    /// puts anything inside it.
+    fn custom_item(&mut self, line: &Line, name: &str, base: &str) {
+        let stats = line
+            .get("NOTE")
+            .filter(|value| !value.trim().is_empty())
+            .map(|value| CustomStat { label: "Note".to_owned(), value: value.to_owned() })
+            .into_iter()
+            .collect();
+        let reason = format!("no Codex record for {base}");
+        let mut record = custom_record("equipment", self.custom.equipment.len(), name, &format!("Imported from PCGen: {reason}."), stats);
+        record.weight_lbs = amount(line.get("WT"));
+        record.price_gp = amount(line.get("COST"));
+        self.report.warnings.push(format!("{name}: {reason}"));
         self.push_custom(line, record, |custom| &mut custom.equipment);
     }
 
@@ -1146,6 +1170,9 @@ fn custom_record(kind: &str, index: usize, name: &str, description: &str, stats:
             .into_iter()
             .map(|stat| CustomStat { label: clipped(&stat.label, MAX_STAT_TEXT), value: clipped(&stat.value, MAX_STAT_TEXT) })
             .collect(),
+        weight_lbs: None,
+        price_gp: None,
+        container_capacity_lbs: None,
     }
 }
 
@@ -1165,6 +1192,11 @@ fn quantity(value: Option<&str>) -> u32 {
     value
         .and_then(|value| value.trim().parse::<f64>().ok())
         .map_or(1, |value| value.round().clamp(0.0, f64::from(u32::MAX)) as u32)
+}
+
+/// A line's `WT` or `COST`: a number, 0 or more (`custom.json` refuses any other).
+fn amount(value: Option<&str>) -> Option<f64> {
+    value.and_then(|value| value.trim().parse::<f64>().ok()).filter(|value| value.is_finite() && *value >= 0.0)
 }
 
 /// The record's own weight (lb) and price (gp) for one piece, from the settled record the engine
