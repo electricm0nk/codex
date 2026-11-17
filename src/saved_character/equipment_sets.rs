@@ -74,7 +74,13 @@ pub struct EquipmentSet {
 /// What the sidecar records about one copy across every set (§24, §30): its custom name, its
 /// piece count and the size it was made for. An absent `quantity` is one bundle of the record
 /// (`base_quantity` pieces); an absent `size` is Medium (SD-41 E2.12, Buy Custom).
-#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+///
+/// An imported copy (SD-42 `decisions.md §6`) may also carry the damage die, per-piece weight and
+/// per-piece price its file states where they differ from the record's, and properties kept as
+/// printed text. Each is left out of the file when absent, so an SD-41 file reads and writes
+/// unchanged.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CopyFacts {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -82,10 +88,187 @@ pub struct CopyFacts {
     pub quantity: Option<u32>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub size: Option<crate::rules_core::size::SizeCategory>,
+    /// The die this copy deals instead of the record's, as written (`2d4`).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub damage_override: Option<String>,
+    /// One piece's weight in pounds, when it differs from the record's.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub weight_override_lbs: Option<f64>,
+    /// One piece's price in copper, when it differs from the record's.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub cost_override_copper: Option<u64>,
+    /// Lines printed under the item; nothing is computed from them.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub properties: Vec<String>,
+}
+
+/// PCGen's short equipment-modifier keys, as older `.pcg` files write them, and the catalog key
+/// each one is: the Core Rulebook's alias records
+/// (`data/corpus/core_rulebook/equipment/equipmods/*.json` whose `data.key` is the short key and
+/// whose `KEY` token is the catalog key), kept to the families Buy Custom takes — materials,
+/// special abilities, weapon and armour masterwork, wield sizes.
+pub const PCGEN_EQMOD_KEYS: &[(&str, &str)] = &[
+    ("ADAMANT_AMMO", "Material ~ Adamantine ~ Ammunition"),
+    ("ADAMANT_ARMR_HVY", "Material ~ Adamantine ~ Armor / Heavy"),
+    ("ADAMANT_ARMR_LT", "Material ~ Adamantine ~ Armor / Light"),
+    ("ADAMANT_ARMR_MED", "Material ~ Adamantine ~ Armor / Medium"),
+    ("ADAMANT_WEAP", "Material ~ Adamantine ~ Weapon"),
+    ("ALCHM", "Material ~ Alchemical Silver"),
+    ("ANARCH", "Special Ability ~ Anarchic ~ Weapon"),
+    ("ANARCH_AMF", "Special Ability ~ Anarchic ~ Amulet of Mighty Fists"),
+    ("ANMATD", "Special Ability ~ Animated ~ Shield"),
+    ("ARW_CAT", "Special Ability ~ Arrow Catching ~ Shield"),
+    ("ARW_DEF", "Special Ability ~ Arrow Deflection ~ Shield"),
+    ("AXIOM", "Special Ability ~ Axiomatic ~ Weapon"),
+    ("AXIOM_AMF", "Special Ability ~ Axiomatic ~ Amulet of Mighty Fists"),
+    ("BANE", "Special Ability ~ Bane ~ Weapon"),
+    ("BANE_AMF", "Special Ability ~ Bane ~ Amulet of Mighty Fists"),
+    ("BASH_H", "Special Ability ~ Bashing ~ Shield / Heavy"),
+    ("BASH_L", "Special Ability ~ Bashing ~ Shield / Light"),
+    ("BLIND", "Special Ability ~ Blinding ~ Shield"),
+    ("BNS_AC_DEFL", "Special Ability ~ Bonus AC / Deflection"),
+    ("BNS_AC_INSI", "Special Ability ~ Bonus AC / Insight"),
+    ("BNS_AC_LUCK", "Special Ability ~ Bonus AC / Luck"),
+    ("BNS_AC_OTHE", "Special Ability ~ Bonus AC / Other"),
+    ("BNS_AC_PROF", "Special Ability ~ Bonus AC / Profane"),
+    ("BNS_AC_SCRD", "Special Ability ~ Bonus AC / Sacred"),
+    ("BNS_ENHC_AB", "Special Ability ~ Bonus Ability / Enhancement"),
+    ("BNS_ENHC_AC", "Special Ability ~ Bonus AC / Enhancement"),
+    ("BNS_ENHC_NAT", "Special Ability ~ Bonus AC / Natural Armor"),
+    ("BNS_SAV_INS", "Special Ability ~ Bonus Save / Insight"),
+    ("BNS_SAV_LUC", "Special Ability ~ Bonus Save / Luck"),
+    ("BNS_SAV_OTH", "Special Ability ~ Bonus Save / Other"),
+    ("BNS_SAV_PRO", "Special Ability ~ Bonus Save / Profane"),
+    ("BNS_SAV_RES", "Special Ability ~ Bonus Save / Resistance"),
+    ("BNS_SAV_SAC", "Special Ability ~ Bonus Save / Sacred"),
+    ("BNS_SKL_CMP", "Special Ability ~ Bonus Skill / Competence"),
+    ("BNS_SPELL", "Special Ability ~ Bonus Spell"),
+    ("BNS_SPL_RST", "Special Ability ~ Bonus Spell Resistance"),
+    ("BRILL", "Special Ability ~ Brilliant Energy ~ Weapon"),
+    ("BRILL_AMF", "Special Ability ~ Brilliant Energy ~ Amulet of Mighty Fists"),
+    ("CHARGED_STAFF", "Special Ability ~ Staff Charges"),
+    ("CLEAVE", "Special Ability ~ Mighty Cleaving ~ Melee"),
+    ("CLEAVE_AMF", "Special Ability ~ Mighty Cleaving ~ Amulet of Mighty Fists"),
+    ("CLOTH", "Material ~ Cloth"),
+    ("C_IRON", "Material ~ Cold Iron"),
+    ("DANCE", "Special Ability ~ Dancing ~ Melee"),
+    ("DARK", "Material ~ Darkwood"),
+    ("DEFEND", "Special Ability ~ Defending ~ Melee"),
+    ("DEFEND_AMF", "Special Ability ~ Defending ~ Amulet of Mighty Fists"),
+    ("DISRPT", "Special Ability ~ Disruption ~ Weapon"),
+    ("DISRPT_AMF", "Special Ability ~ Disruption ~ Amulet of Mighty Fists"),
+    ("DISTNC", "Special Ability ~ Distance ~ Ranged"),
+    ("DRACO", "Material ~ Dragonhide"),
+    ("ETHERE", "Special Ability ~ Etherealness ~ Armor"),
+    ("FLAME", "Special Ability ~ Flaming ~ Weapon"),
+    ("FLAME_AMF", "Special Ability ~ Flaming ~ Amulet of Mighty Fists"),
+    ("FLM_BRST", "Special Ability ~ Flaming Burst ~ Weapon"),
+    ("FLM_BRST_AMF", "Special Ability ~ Flaming Burst ~ Amulet of Mighty Fists"),
+    ("FROST", "Special Ability ~ Frost ~ Weapon"),
+    ("FROST_AMF", "Special Ability ~ Frost ~ Amulet of Mighty Fists"),
+    ("FRT_HVY", "Special Ability ~ Fortification / Heavy ~ Armor"),
+    ("FRT_LGHT", "Special Ability ~ Fortification / Light ~ Armor"),
+    ("FRT_MOD", "Special Ability ~ Fortification / Moderate ~ Armor"),
+    ("GHOST", "Special Ability ~ Ghost Touch ~ Weapon"),
+    ("GHOST_A", "Special Ability ~ Ghost Touch ~ Armor"),
+    ("GHOST_AMF", "Special Ability ~ Ghost Touch ~ Amulet of Mighty Fists"),
+    ("GLAM", "Special Ability ~ Glamered ~ Armor"),
+    ("HOLY", "Special Ability ~ Holy ~ Weapon"),
+    ("HOLY_AMF", "Special Ability ~ Holy ~ Amulet of Mighty Fists"),
+    ("ICY_BRST", "Special Ability ~ Icy Burst ~ Weapon"),
+    ("ICY_BRST_AMF", "Special Ability ~ Icy Burst ~ Amulet of Mighty Fists"),
+    ("INVULN", "Special Ability ~ Invulnerability ~ Armor"),
+    ("KEEN", "Special Ability ~ Keen ~ Weapon"),
+    ("KI", "Special Ability ~ Ki Focus ~ Melee"),
+    ("KI_AMF", "Special Ability ~ Ki Focus ~ Amulet of Mighty Fists"),
+    ("LEATHER", "Material ~ Leather"),
+    ("MAX_GNL", "Special Ability ~ Bonus Skill / Maximize Any Skill"),
+    ("MAX_KNW", "Special Ability ~ Bonus Skill / Maximize Knowledge"),
+    ("MERCY", "Special Ability ~ Merciful ~ Weapon"),
+    ("MERCY_AMF", "Special Ability ~ Merciful ~ Amulet of Mighty Fists"),
+    ("MITHRAL_ARMR_HVY", "Material ~ Mithril ~ Armor / Heavy"),
+    ("MITHRAL_ARMR_LT", "Material ~ Mithril ~ Armor / Light"),
+    ("MITHRAL_ARMR_MED", "Material ~ Mithril ~ Armor / Medium"),
+    ("MITHRAL_ITEM", "Material ~ Mithril ~ Weapon / Item"),
+    ("MITHRAL_SHLD", "Material ~ Mithril ~ Shield"),
+    ("MWORKA", "Special Quality ~ Masterwork ~ Armor"),
+    ("MWORKW", "Special Quality ~ Masterwork ~ Weapon"),
+    ("REFLC", "Special Ability ~ Reflecting ~ Shield"),
+    ("RES_ACD_GRT", "Special Ability ~ Energy Resistance / Acid / Greater ~ Armor"),
+    ("RES_CLD_GRT", "Special Ability ~ Energy Resistance / Cold / Greater ~ Armor"),
+    ("RES_ELC_GRT", "Special Ability ~ Energy Resistance / Electricity / Greater ~ Armor"),
+    ("RES_FIR_GRT", "Special Ability ~ Energy Resistance / Fire / Greater ~ Armor"),
+    ("RES_SNC_GRT", "Special Ability ~ Energy Resistance / Sonic / Greater ~ Armor"),
+    ("RETURN", "Special Ability ~ Returning ~ Thrown"),
+    ("ROPE", "Material ~ Rope"),
+    ("RST_ACD", "Special Ability ~ Energy Resistance / Acid ~ Armor"),
+    ("RST_ACD_IMP", "Special Ability ~ Energy Resistance / Acid / Improved ~ Armor"),
+    ("RST_CLD", "Special Ability ~ Energy Resistance / Cold ~ Armor"),
+    ("RST_CLD_IMP", "Special Ability ~ Energy Resistance / Cold / Improved ~ Armor"),
+    ("RST_ELC", "Special Ability ~ Energy Resistance / Electricity ~ Armor"),
+    ("RST_ELC_IMP", "Special Ability ~ Energy Resistance / Electricity / Improved ~ Armor"),
+    ("RST_FIR", "Special Ability ~ Energy Resistance / Fire ~ Armor"),
+    ("RST_FIR_IMP", "Special Ability ~ Energy Resistance / Fire / Improved ~ Armor"),
+    ("RST_SNC", "Special Ability ~ Energy Resistance / Sonic ~ Armor"),
+    ("RST_SNC_IMP", "Special Ability ~ Energy Resistance / Sonic / Improved ~ Armor"),
+    ("SEEK", "Special Ability ~ Seeking ~ Ranged"),
+    ("SHDW", "Special Ability ~ Shadow ~ Armor"),
+    ("SHDW_GRT", "Special Ability ~ Shadow / Greater ~ Armor"),
+    ("SHDW_IMP", "Special Ability ~ Shadow / Improved ~ Armor"),
+    ("SHK_BRST", "Special Ability ~ Shocking Burst ~ Weapon"),
+    ("SHK_BRST_AMF", "Special Ability ~ Shocking Burst ~ Amulet of Mighty Fists"),
+    ("SHOCK", "Special Ability ~ Shock ~ Weapon"),
+    ("SHOCK_AMF", "Special Ability ~ Shock ~ Amulet of Mighty Fists"),
+    ("SLK", "Special Ability ~ Slick ~ Armor"),
+    ("SLK_GRT", "Special Ability ~ Slick / Greater ~ Armor"),
+    ("SLK_IMP", "Special Ability ~ Slick / Improved ~ Armor"),
+    ("SPEED", "Special Ability ~ Speed ~ Weapon"),
+    ("SPEED_AMF", "Special Ability ~ Speed ~ Amulet of Mighty Fists"),
+    ("SPELL_RES_13", "Special Ability ~ Spell Resistance / 13 ~ Armor"),
+    ("SPELL_RES_15", "Special Ability ~ Spell Resistance / 15 ~ Armor"),
+    ("SPELL_RES_17", "Special Ability ~ Spell Resistance / 17 ~ Armor"),
+    ("SPELL_RES_19", "Special Ability ~ Spell Resistance / 19 ~ Armor"),
+    ("STEEL", "Material ~ Steel"),
+    ("STORE", "Special Ability ~ Spell Storing ~ Melee"),
+    ("STORE_AMF", "Special Ability ~ Spell Storing ~ Amulet of Mighty Fists"),
+    ("THROW", "Special Ability ~ Throwing ~ Melee"),
+    ("THUNDER", "Special Ability ~ Thundering ~ Weapon"),
+    ("THUNDER_AMF", "Special Ability ~ Thundering ~ Amulet of Mighty Fists"),
+    ("UNDEAD", "Special Ability ~ Undead Controlling ~ Armor"),
+    ("UNHOLY", "Special Ability ~ Unholy ~ Weapon"),
+    ("UNHOLY_AMF", "Special Ability ~ Unholy ~ Amulet of Mighty Fists"),
+    ("VICIOUS", "Special Ability ~ Vicious ~ Melee"),
+    ("VICIOUS_AMF", "Special Ability ~ Vicious ~ Amulet of Mighty Fists"),
+    ("VORPAL", "Special Ability ~ Vorpal ~ Melee"),
+    ("WILD_A", "Special Ability ~ Wild ~ Armor"),
+    ("WILD_S", "Special Ability ~ Wild ~ Shield"),
+    ("WOOD", "Material ~ Wood"),
+    ("WOUND", "Special Ability ~ Wounding ~ Weapon"),
+    ("WOUND_AMF", "Special Ability ~ Wounding ~ Amulet of Mighty Fists"),
+];
+
+/// The Buy Custom option key (`list_custom_equipment_options`' keys, plus the masterwork key Buy
+/// Custom's masterwork box adds) a PCGen eqmod is, or `None` when Buy Custom has no such option.
+/// A key already written in catalog form (newer PCGen) passes through; a short key goes through
+/// [`PCGEN_EQMOD_KEYS`]; a parameter after `|` is not part of the key. A `+N` is not an option
+/// (it is the copy's applied enhancement).
+pub fn eqmod_option_key(pcgen_eqmod: &str) -> Option<String> {
+    let key = pcgen_eqmod.split('|').next().unwrap_or_default().trim();
+    let key = PCGEN_EQMOD_KEYS.iter().find(|(short, _)| *short == key).map_or(key, |(_, long)| *long);
+    let option = match key.strip_prefix("Special Ability ~ ") {
+        Some(rest) => !(rest.starts_with('+') || rest.starts_with("ABP") || rest.starts_with("Enhancement Cost")),
+        None => {
+            key.starts_with("Material ~ ")
+                || key == "Special Quality ~ Masterwork ~ Weapon"
+                || key == "Special Quality ~ Masterwork ~ Armor"
+                || (key.starts_with("Special Quality ~ ") && key.contains("Size"))
+        }
+    };
+    (option && crate::rules_core::equipment_resolver::equipment_catalog_row_by_key(key).is_some()).then(|| key.to_owned())
 }
 
 /// The whole `equipment_sets.json`.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct EquipmentSets {
     pub schema: u32,
     pub active: String,
@@ -313,7 +496,7 @@ mod tests {
             (key("item:rations", 0), Location::Inside { container: key("custom:food", 0) }),
             (key("item:ring_of_protection", 0), Location::Equipped),
         ]));
-        sets.copies.insert(key("item:arrow_flight", 0).map_key(), CopyFacts { name: Some("Lucky arrows".to_owned()), quantity: Some(60), size: None });
+        sets.copies.insert(key("item:arrow_flight", 0).map_key(), CopyFacts { name: Some("Lucky arrows".to_owned()), quantity: Some(60), ..CopyFacts::default() });
         sets.copies.insert(key("item:longsword", 0).map_key(), CopyFacts { size: Some(crate::rules_core::size::SizeCategory::Large), ..CopyFacts::default() });
         save(&root, &sets).expect("saves");
         assert_eq!(load(&root).expect("reads"), Some(sets.clone()));
@@ -332,6 +515,106 @@ mod tests {
         std::fs::write(root.join(EQUIPMENT_SETS_FILE), text.replace("\"schema\": 1", "\"schema\": 2")).expect("write");
         assert!(load(&root).unwrap_err().message.contains("schema 2"), "an unknown schema is refused, not guessed");
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-42 E1.3: a copy's four imported facts default to nothing and are left out of the file
+    /// when absent, so a copy with none of them writes exactly what SD-41 wrote.
+    #[test]
+    fn copy_facts_new_fields_default_and_skip() {
+        let facts = CopyFacts::default();
+        assert_eq!((facts.damage_override.clone(), facts.weight_override_lbs, facts.cost_override_copper), (None, None, None));
+        assert!(facts.properties.is_empty());
+        assert_eq!(serde_json::to_value(&facts).expect("json"), serde_json::json!({}));
+        let read: CopyFacts = serde_json::from_str(r#"{"quantity": 3}"#).expect("an SD-41 entry reads");
+        assert_eq!(read, CopyFacts { quantity: Some(3), ..CopyFacts::default() });
+        let full = CopyFacts {
+            name: Some("Mourn".to_owned()),
+            damage_override: Some("2d4".to_owned()),
+            weight_override_lbs: Some(0.5),
+            cost_override_copper: Some(31_500),
+            properties: vec!["Keen edge".to_owned(), "Glows faintly".to_owned()],
+            ..CopyFacts::default()
+        };
+        let json = serde_json::to_value(&full).expect("json");
+        assert_eq!(
+            json,
+            serde_json::json!({ "name": "Mourn", "damageOverride": "2d4", "weightOverrideLbs": 0.5, "costOverrideCopper": 31500, "properties": ["Keen edge", "Glows faintly"] })
+        );
+        assert_eq!(serde_json::from_value::<CopyFacts>(json).expect("reads back"), full);
+    }
+
+    /// SD-42 E1.3: a file in SD-41's written shape loads and saves back byte for byte.
+    #[test]
+    fn copy_facts_old_file_reads_byte_identical() {
+        let old = r#"{
+  "schema": 1,
+  "active": "Default",
+  "sets": [
+    {
+      "name": "Default",
+      "locations": [
+        {
+          "copy": {
+            "itemId": "item:chain_shirt",
+            "bonus": 0,
+            "ordinal": 0
+          },
+          "location": {
+            "kind": "slot",
+            "slot": "armor"
+          }
+        },
+        {
+          "copy": {
+            "itemId": "item:rations",
+            "bonus": 0,
+            "ordinal": 0
+          },
+          "location": {
+            "kind": "inside",
+            "container": {
+              "itemId": "custom:food",
+              "bonus": 0,
+              "ordinal": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "copies": {
+    "item:arrow_flight|0|0": {
+      "name": "Lucky arrows",
+      "quantity": 60
+    },
+    "item:longsword|0|0": {
+      "size": "Large"
+    }
+  }
+}"#;
+        let root = tempdir("old-file");
+        std::fs::write(root.join(EQUIPMENT_SETS_FILE), old).expect("write");
+        let sets = load(&root).expect("reads").expect("present");
+        assert!(sets.copies.values().all(|facts| facts.damage_override.is_none() && facts.properties.is_empty()));
+        save(&root, &sets).expect("saves");
+        assert_eq!(std::fs::read_to_string(root.join(EQUIPMENT_SETS_FILE)).expect("file"), old, "load + save leaves an SD-41 file byte-identical");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-42 E1.3: every key the PCGen eqmod table names is a catalog key Buy Custom takes, and a
+    /// key already written in that form passes through.
+    #[test]
+    fn eqmod_option_key_maps_codes_and_long_keys() {
+        assert_eq!(eqmod_option_key("MWORKW").as_deref(), Some("Special Quality ~ Masterwork ~ Weapon"));
+        assert_eq!(eqmod_option_key("DARK").as_deref(), Some("Material ~ Darkwood"));
+        assert_eq!(eqmod_option_key("Material ~ Darkwood").as_deref(), Some("Material ~ Darkwood"));
+        assert_eq!(eqmod_option_key("Special Ability ~ Spell Effect / Single Use|SPELLNAME[Cure Light Wounds]").as_deref(), Some("Special Ability ~ Spell Effect / Single Use"));
+        assert_eq!(eqmod_option_key("PLUS1W"), None, "a +N is an applied modifier, not an option");
+        assert_eq!(eqmod_option_key("DISARM"), None, "a weapon quality Buy Custom does not offer");
+        assert_eq!(eqmod_option_key("Material ~ Unobtainium"), None, "a key the catalog lacks");
+        for (code, key) in PCGEN_EQMOD_KEYS {
+            assert_eq!(eqmod_option_key(code).as_deref(), Some(*key), "{code}");
+        }
     }
 
     #[test]

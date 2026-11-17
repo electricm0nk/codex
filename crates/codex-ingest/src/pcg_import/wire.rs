@@ -5,7 +5,7 @@
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ImportFile {
     pub display_label: String,
@@ -71,6 +71,10 @@ pub struct EquipmentWire {
     pub active_state: String,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub applied_modifiers: Vec<String>,
+    /// The Buy Custom option keys (materials, masterwork, special abilities) the line's eqmods
+    /// are (`equipment_sets::eqmod_option_key`); applying them to the copy is the app's (E4.1).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub eqmods: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

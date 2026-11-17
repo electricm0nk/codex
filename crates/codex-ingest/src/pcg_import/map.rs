@@ -11,9 +11,18 @@
 //! the engine's class list refuses would refuse the whole character, so it becomes a custom spell.
 
 use std::collections::BTreeMap;
+use std::sync::OnceLock;
 
 use codex::rules_core::body_slots::{BodySlot, Enhanceable};
 use codex::rules_core::class_seeds::canonical_seeds_for;
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
+use codex::rules_core::equipment_effects::stand_in_record;
+use codex::rules_core::equipment_resolver::equipment_converted_resolve;
+use codex::rules_core::game_system::runtime_repo_root;
+use codex::rules_core::money::gp_to_copper;
+use codex::rules_core::settled_corpus::corpus_book_dirs;
+use codex::rules_core::size::SizeCategory;
+use codex::rules_core::source_content::SourcePackageContent;
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, ChosenCharacterState, EquipmentSelection,
     SelectedChoice, SkillAllocation, SpellSelection,
@@ -22,7 +31,7 @@ use codex::rules_core::feat_effects::chooser_contract_for_feat;
 use codex::rules_core::feat_identity;
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
 use codex::saved_character::equipment_sets::{
-    CopyFacts, CopyKey, DEFAULT_SET_NAME, EquipmentSet, EquipmentSets, Location, SetEntry, copy_keys, project,
+    CopyFacts, CopyKey, DEFAULT_SET_NAME, EquipmentSet, EquipmentSets, Location, SetEntry, copy_keys, eqmod_option_key, project,
 };
 
 use super::catalog::{Catalog, fold};
@@ -51,7 +60,7 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
     ("FEAT", KeyRule::Field("selectedFeats + a target choice (the older form of ABILITY)")),
     ("SKILL", KeyRule::Field("skillAllocations, ranks summed over CLASSBOUGHT")),
     ("SPELLNAME", KeyRule::Field("spellsSelected")),
-    ("EQUIPNAME", KeyRule::Field("one equipmentSelections row and one equipmentSets stack per place the line is in, its QUANTITY the stack's pieces; BASEITEM first, PLUSnW/A/S to an applied +n modifier")),
+    ("EQUIPNAME", KeyRule::Field("one equipmentSelections row and one equipmentSets stack per place the line is in, its QUANTITY the stack's pieces; BASEITEM first, PLUSnW/A/S to an applied +n modifier; the custom name and every DATA property per CUSTOM_PROPERTIES")),
     ("EQUIPSET", KeyRule::Field("equipmentSets: a slot word to a Slot (PCGEN_SLOTS), Equipped, Carried, Not Carried, or inside the entry above it; activeState is the set's projection")),
     ("CALCEQUIPSET", KeyRule::Field("which EQUIPSET is the set imported, and its name")),
     ("MONEY", KeyRule::Field("money.totalCopper, gp x 100")),
@@ -198,6 +207,20 @@ pub const PCGEN_SLOTS: &[(&str, BodySlot)] = &[
     ("Natural-Secondary", BodySlot::None),
 ];
 
+/// What an `EQUIPNAME` line's customisation becomes (`decisions.md` §6). A `DATA` key in no row, and
+/// an eqmod Buy Custom has no option for, is a property line and a warning (SD-e).
+pub const CUSTOM_PROPERTIES: &[(&str, &str)] = &[
+    ("NAME", "CopyFacts.name, when it is not the record's own name"),
+    ("EQMOD PLUSnW/A/S", "applied_modifiers, the copy's +n"),
+    ("EQMOD material, masterwork, special ability", "eqmods: the Buy Custom option key (equipment_sets::eqmod_option_key)"),
+    ("EQMOD / ALTEQMOD _DAMAGE|<die>", "CopyFacts.damage_override, the die as written"),
+    ("SIZE", "CopyFacts.size (Medium is no size)"),
+    ("SPROP", "CopyFacts.properties, one line per '; '-separated part"),
+    ("COST (line)", "CopyFacts.cost_override_copper, when it differs from the record's price; COSTMOD is already in it"),
+    ("WT (line)", "CopyFacts.weight_override_lbs, when it differs from the record's weight"),
+    ("KEY", "a lookup candidate for the record"),
+];
+
 /// Converts the text of one `.pcg`. Refuses only a file that is not a PCGen character.
 pub fn convert(text: &str, source_file: &str, catalog: &Catalog) -> Result<ImportFile, String> {
     let lines = parse(text);
@@ -225,11 +248,21 @@ struct Placement {
     pieces: u32,
     /// The stack once the line is read: a row of `equipment`, or a custom record's id.
     held: Option<Held>,
+    /// The line's custom name and properties, the same in every place it is in.
+    facts: CopyFacts,
 }
 
 enum Held {
     Row(usize),
     Custom(String),
+}
+
+/// What [`Importer::customised`] reads from one mapped line.
+#[derive(Default)]
+struct Customised {
+    facts: CopyFacts,
+    modifiers: Vec<String>,
+    eqmods: Vec<String>,
 }
 
 /// A spell the file names and Codex holds, until the engine has had its say.
@@ -353,11 +386,12 @@ impl<'a> Importer<'a> {
                 parent: (depth > top_level).then(|| id.rsplit_once('.').map_or_else(String::new, |(parent, _)| parent.to_owned())),
                 pieces,
                 held: None,
+                facts: CopyFacts::default(),
             });
         }
         for (places, rest) in self.placements.iter_mut().zip(left) {
             if rest > 0 {
-                places.push(Placement { entry: None, word: "Carried".to_owned(), parent: None, pieces: rest, held: None });
+                places.push(Placement { entry: None, word: "Carried".to_owned(), parent: None, pieces: rest, held: None, facts: CopyFacts::default() });
             }
         }
     }
@@ -630,16 +664,83 @@ impl<'a> Importer<'a> {
             return;
         };
 
-        let (modifiers, other_mods) = equipment_modifiers(data.get("EQMOD").map_or("", String::as_str));
-        if !other_mods.is_empty() {
-            self.report.warnings.push(format!("{name}: its modifiers {} are not applied", other_mods.join(", ")));
-        }
+        let custom = self.customised(line, &name, base_item.as_deref(), &data, &item_key);
         for place in self.placements.get_mut(index).into_iter().flatten() {
             place.held = Some(Held::Row(self.equipment.len()));
+            place.facts = custom.facts.clone();
             // The state is the set's projection, set in `place_copies`.
-            self.equipment.push(EquipmentWire { item_id: item_key.clone(), active_state: CARRIED.to_owned(), applied_modifiers: modifiers.clone() });
+            self.equipment.push(EquipmentWire {
+                item_id: item_key.clone(),
+                active_state: CARRIED.to_owned(),
+                applied_modifiers: custom.modifiers.clone(),
+                eqmods: custom.eqmods.clone(),
+            });
         }
         self.mapped(line, &format!("equipmentSelections {item_key}: {worn} worn, {carried} carried"));
+    }
+
+    /// A mapped line's customisation under [`CUSTOM_PROPERTIES`]; a property Codex has no field
+    /// for is kept as a property line, with a warning naming it (SD-e).
+    fn customised(&mut self, line: &Line, name: &str, base_item: Option<&str>, data: &BTreeMap<String, String>, item_key: &str) -> Customised {
+        let mut out = Customised::default();
+        let mut kept_as_text: Vec<String> = Vec::new();
+        let custom_name = data.get("NAME").map_or(name, String::as_str).trim();
+        let record_names = [Some(item_key), base_item].into_iter().flatten().map(fold).collect::<Vec<_>>();
+        if !custom_name.is_empty() && !record_names.contains(&fold(custom_name)) {
+            out.facts.name = Some(custom_name.to_owned());
+        }
+        let eqmods = ["EQMOD", "ALTEQMOD"].into_iter().filter_map(|field| data.get(field)).flat_map(|mods| mods.split('.'));
+        for eqmod in eqmods.map(|eqmod| eqmod.trim().replace("&pipe;", "|")).filter(|eqmod| !eqmod.is_empty()) {
+            if let Some(die) = eqmod.strip_prefix("_DAMAGE|") {
+                out.facts.damage_override.get_or_insert_with(|| die.trim().to_owned());
+            } else if let Some(modifier) = enhancement_key(&eqmod) {
+                if !out.modifiers.contains(&modifier) {
+                    out.modifiers.push(modifier);
+                }
+            } else if let Some(option) = eqmod_option_key(&eqmod) {
+                if !out.eqmods.contains(&option) {
+                    out.eqmods.push(option);
+                }
+                // The option key drops a parameter (`|SPELLNAME[...]`); the line keeps it as text.
+                if eqmod.contains('|') {
+                    out.facts.properties.push(eqmod);
+                }
+            } else {
+                kept_as_text.push(format!("EQMOD {eqmod}"));
+            }
+        }
+        out.facts.properties.extend(kept_as_text.iter().cloned());
+        if let Some(sprop) = data.get("SPROP") {
+            out.facts.properties.extend(sprop.split("; ").map(str::trim).filter(|part| !part.is_empty()).map(str::to_owned));
+        }
+        if let Some(code) = data.get("SIZE") {
+            match SizeCategory::from_base_size_code(code) {
+                Some(SizeCategory::Medium) => {}
+                Some(size) => out.facts.size = Some(size),
+                None => {
+                    out.facts.properties.push(format!("SIZE {code}"));
+                    kept_as_text.push("SIZE".to_owned());
+                }
+            }
+        }
+        for (key, value) in data.iter().filter(|(key, _)| !matches!(key.as_str(), "NAME" | "EQMOD" | "ALTEQMOD" | "SPROP" | "SIZE" | "COSTMOD" | "KEY")) {
+            out.facts.properties.push(format!("{key} {value}"));
+            kept_as_text.push(key.clone());
+        }
+        for field in kept_as_text {
+            self.report.warnings.push(format!("{name}: {field} kept as text"));
+        }
+        // A record the converter cannot resolve states nothing to differ from.
+        if let Some((weight, cost)) = record_weight_and_cost(item_key) {
+            let differs = |line_value: f64, record: Option<f64>| record.is_none_or(|record| (record - line_value).abs() > 1e-6);
+            if let Some(wt) = line.get("WT").and_then(|wt| wt.trim().parse::<f64>().ok()).filter(|wt| differs(*wt, weight)) {
+                out.facts.weight_override_lbs = Some(wt);
+            }
+            if let Some(gp) = line.get("COST").and_then(|gp| gp.trim().parse::<f64>().ok()).filter(|gp| differs(*gp, cost)) {
+                out.facts.cost_override_copper = Some(gp_to_copper(gp));
+            }
+        }
+        out
     }
 
     /// The imported set and each stack's pieces, from the places the lines were read into. Every
@@ -677,7 +778,7 @@ impl<'a> Importer<'a> {
             if location != Location::Carried {
                 locations.push(SetEntry { copy: key.clone(), location });
             }
-            copies.insert(key.map_key(), CopyFacts { quantity: Some(place.pieces), ..CopyFacts::default() });
+            copies.insert(key.map_key(), CopyFacts { quantity: Some(place.pieces), ..place.facts.clone() });
         }
         for word in unknown_words {
             self.report.warnings.push(format!("{word}: a PCGen location Codex has no slot for; read as Equipped"));
@@ -897,7 +998,7 @@ impl<'a> Importer<'a> {
             self.feats.push(WEAPON_FOCUS_FEAT.to_owned());
             self.added(&format!("selectedFeats {WEAPON_FOCUS_FEAT}"), WHY);
         }
-        self.equipment.push(EquipmentWire { item_id: POWER_ATTACK_ROW.to_owned(), active_state: CARRIED.to_owned(), applied_modifiers: Vec::new() });
+        self.equipment.push(EquipmentWire { item_id: POWER_ATTACK_ROW.to_owned(), active_state: CARRIED.to_owned(), applied_modifiers: Vec::new(), eqmods: Vec::new() });
         self.added(&format!("equipmentSelections {POWER_ATTACK_ROW}"), WHY);
     }
 
@@ -1066,6 +1167,23 @@ fn quantity(value: Option<&str>) -> u32 {
         .map_or(1, |value| value.round().clamp(0.0, f64::from(u32::MAX)) as u32)
 }
 
+/// The record's own weight (lb) and price (gp) for one piece, from the settled record the engine
+/// resolves `item_key` to; `None` when no record resolves.
+fn record_weight_and_cost(item_key: &str) -> Option<(Option<f64>, Option<f64>)> {
+    static CORPUS: OnceLock<SourcePackageContent<'static>> = OnceLock::new();
+    let corpus = CORPUS.get_or_init(|| {
+        let dirs = corpus_book_dirs(&runtime_repo_root().join("data/corpus"));
+        let ids: Vec<String> = dirs.iter().map(|dir| dir.file_name().map(|name| name.to_string_lossy().into_owned()).unwrap_or_default()).collect();
+        let roots: Vec<BookCorpusRoot<'_>> = ids.iter().zip(&dirs).map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() }).collect();
+        load_equipment_corpus(&roots)
+    });
+    let record = equipment_converted_resolve(item_key, corpus)?;
+    // A derived record stating neither reads the record it is made from, as the engine weighs it.
+    let base = stand_in_record(record, corpus);
+    let (weight, cost) = record.weight_and_cost();
+    Some((weight.or_else(|| base.and_then(|base| base.weight_lbs)), cost.or_else(|| base.and_then(|base| base.cost_gp))))
+}
+
 /// A line's `CUSTOMIZATION`: its `BASEITEM` and its `DATA` fields.
 fn customization(line: &Line) -> (Option<String>, BTreeMap<String, String>) {
     let customization = line.tags.iter().find(|tag| tag.key == "CUSTOMIZATION").map(Tag::nested).unwrap_or_default();
@@ -1127,21 +1245,13 @@ fn data_fields(data: &str) -> BTreeMap<String, String> {
         .collect()
 }
 
-/// The `+N` eqmods as the keys `attach_equipment_modifier` takes, and every other eqmod apart.
-/// Materials and special abilities are later work (`decisions.md` R14), so they are reported.
-fn equipment_modifiers(eqmods: &str) -> (Vec<String>, Vec<String>) {
-    let mut modifiers = Vec::new();
-    let mut others = Vec::new();
-    for eqmod in eqmods.split('.').map(str::trim).filter(|eqmod| !eqmod.is_empty()) {
-        match enhancement_key(eqmod) {
-            Some(key) => modifiers.push(key),
-            None => others.push(eqmod.to_owned()),
-        }
-    }
-    (modifiers, others)
-}
-
+/// A `+N` eqmod as the key `attach_equipment_modifier` takes: PCGen's `PLUS1W`, or the key itself
+/// as newer files write it (`Special Ability ~ +1 ~ Weapon`).
 fn enhancement_key(eqmod: &str) -> Option<String> {
+    let is_key = (1..=5u8).any(|n| [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon].iter().any(|kind| kind.modifier_key(n) == eqmod));
+    if is_key {
+        return Some(eqmod.to_owned());
+    }
     let rest = eqmod.strip_prefix("PLUS")?;
     let mut chars = rest.chars();
     let bonus = chars.next()?.to_digit(10).filter(|bonus| (1..=5).contains(bonus))?;
