@@ -32,7 +32,7 @@ E5.4 is anything but `complete`. **One operator gate:** E5.G stays `partial` unt
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 46: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 47: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E1.9 (discovered by E1.5) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -43,11 +43,12 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 46: 37 at 
 | E1.2 | One stack per line; `equipmentSets` on the wire; locations from the set tree; `QUANTITY:0` noted; no cap | opus | complete | E1.1 | commit: the one adding the E1.2 receipt; receipt `artifacts/epic_1/E1.2_cycle_receipt.md`; 6/6 `pcg_import_stacks`; discovered E1.8 |
 | E1.3 | Custom names and every property; `CopyFacts` gains four fields | opus | complete | E1.2 | commit: the one adding the E1.3 receipt (code `0b494a0bfe`); receipt `artifacts/epic_1/E1.3_cycle_receipt.md`; 6/6 `pcg_import_custom`, 2/2 `copy_facts_` |
 | E1.4 | Unmappable items → Create items at their location | opus | complete | E1.3 | commit: the one adding the E1.4 receipt (code `d7cacc4343`); receipt `artifacts/epic_1/E1.4_cycle_receipt.md`; 3/3 `pcg_import_unmapped` |
-| E1.5 | The Notes block in `bio.notes` | opus | waiting | E1.4 | `decisions.md §7` |
+| E1.5 | The Notes block in `bio.notes` | opus | complete | E1.4 | commit: the one adding the E1.5 receipt (code `9e0940a250`); receipt `artifacts/epic_1/E1.5_cycle_receipt.md`; 3/3 `pcg_import_notes`; discovered E1.9 |
 | E1.6 | Starfinder import; the drone per Q-A | opus | waiting | E1.5 | `decisions.md §8` |
 | E1.7 | Whole-character parity harness + gate; `explained.tsv` | opus | waiting | E1.6 | `decisions.md §9`; P-9 |
 | E1.8 | Bundle items: PCGen `QUANTITY` counts bundles; pieces = × `base_quantity` | opus | waiting | E1.7 | discovered by E1.2; `epic-breakdown.md` E1.8 |
-| E1.MC | E1 merge check + Epic report | opus | waiting | E1.7, E1.8 | adversarial; the import lane ends |
+| E1.9 | `pcg_import_diagnosis` stops rewriting E1.1's committed artifacts on every run | sonnet | waiting | E1.5 | discovered by E1.5 (3rd occurrence: E1.3, E1.4, E1.5); `epic-breakdown.md` E1.9 |
+| E1.MC | E1 merge check + Epic report | opus | waiting | E1.7, E1.8, E1.9 | adversarial; the import lane ends |
 | E2.1 | Folder model (root) + `campaign_folder.rs` commands + known folders | opus | complete | C1 | code `039dd404a5`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; root 5 + desktop 3 tests |
 | E2.2 | Member #1; typed members; Create / Edit / Manager over the folder | opus | waiting | E2.1 | `decisions.md §13.1` |
 | E2.3 | Drive removal; folder-backed Manager; hub modes carry a folder | opus | waiting | E2.2 | `decisions.md §13.2`; NR-6 |

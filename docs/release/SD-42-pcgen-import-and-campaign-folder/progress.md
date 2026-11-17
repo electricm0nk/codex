@@ -15,7 +15,7 @@ status: planning-ready
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
-| E1 import converter (lane `import`) | 9 | 4 (E1.1–E1.4) | E1.4 complete; E1.5 next |
+| E1 import converter (lane `import`) | 10 | 5 (E1.1–E1.5) | E1.5 complete; E1.6 next; E1.9 discovered |
 | E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 0 | waiting on C1 |
 | E4 desktop wiring (Phase 2) | 12 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
@@ -57,6 +57,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E1.3 | complete | the commit adding the E1.3 receipt (code 0b494a0bfe) | `artifacts/epic_1/E1.3_cycle_receipt.md` | `CopyFacts` + 4 fields (SD-41 file byte-identical); `eqmod_option_key` (137 CRB aliases + catalog-form pass-through); name/SIZE/_DAMAGE/SPROP/COST/WT read; unknown → property + warning; 6/6 `pcg_import_custom`, 2/2 `copy_facts_`, root `--lib` 3144 passed |
 | 2026-11-17 | E2.1 | complete | 039dd404a5 | `artifacts/epic_2/E2.1_cycle_receipt.md` | folder model + 9 commands + known folders; desktop filter fixed to `campaign_folder::` (§20) |
 | 2026-11-17 | E1.4 | complete | the commit adding the E1.4 receipt (code d7cacc4343) | `artifacts/epic_1/E1.4_cycle_receipt.md` | unmapped line → Create item (weightLbs/priceGp from WT/COST; containerCapacityLbs = what the file puts inside) held at its place; text-only Worn/Carried stats removed; Camel = gear; 3/3 `pcg_import_unmapped`, codex-ingest `--lib` 720 passed |
+| 2026-11-17 | E1.5 | complete | the commit adding the E1.5 receipt (code 9e0940a250) | `artifacts/epic_1/E1.5_cycle_receipt.md` | `BioWire.notes`: `## Imported from PCGen (<file>, <ISO date>)` + 9 kinds, once each, file order; 3/3 `pcg_import_notes`, codex-ingest `--lib` 721 passed; discovered E1.9 (diagnosis test rewrites E1.1 artifacts, 3rd time) |
 
 ## Epic reports
 

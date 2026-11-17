@@ -108,7 +108,7 @@ python3 -I -c "import json;ids={x['id'] for x in json.load(open('apps/desktop/sc
 ```bash
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 46) print "ROW_COUNT " n }' kanban.md   # 46: 37 + E1.8 + E2.12, E2.13, E4.6 (decisions.md §26) + E4.7–E4.11 (decisions.md §27)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 47) print "ROW_COUNT " n }' kanban.md   # 47: 37 + E1.8 + E1.9 + E2.12, E2.13, E4.6 (decisions.md §26) + E4.7–E4.11 (decisions.md §27)
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Import ([^)]*)\|Campaign Manager ([^)]*)\|Editor\) — usable: yes' artifacts/epic_5/E5.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match)
 test -s artifacts/epic_4/E4.5_cycle_receipt.md && grep -c 'copies_emitted' artifacts/epic_4/E4.5_cycle_receipt.md   # ≥ 1: the local proof run's counts are in the receipt (Q9)
