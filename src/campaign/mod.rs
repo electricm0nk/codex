@@ -11,6 +11,7 @@ pub mod adventure_log;
 pub mod folder;
 pub mod frontmatter;
 pub mod local_store;
+pub mod maps;
 pub mod migrate;
 
 use serde::{Deserialize, Serialize};

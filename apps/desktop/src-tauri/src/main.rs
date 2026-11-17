@@ -63,9 +63,9 @@ mod update;
 use serde::Serialize;
 
 use campaign_folder::{
-    add_known_campaign_folder, create_campaign_folder, create_party_resources_starter, forget_known_campaign_folder, list_adventure_log, list_campaign_tree,
-    list_known_campaigns, migrate_campaign, new_adventure_log_entry, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
-    stat_campaign_file, write_campaign_file,
+    add_known_campaign_folder, add_map, create_campaign_folder, create_party_resources_starter, forget_known_campaign_folder, list_adventure_log, list_campaign_tree,
+    list_known_campaigns, list_maps, migrate_campaign, new_adventure_log_entry, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
+    set_map_pins, stat_campaign_file, write_campaign_file,
 };
 use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection,
@@ -348,6 +348,9 @@ fn main() {
             list_campaign_tree,
             list_adventure_log,
             new_adventure_log_entry,
+            list_maps,
+            set_map_pins,
+            add_map,
             save_attachment,
             list_equipment_catalog,
             list_spell_catalog,

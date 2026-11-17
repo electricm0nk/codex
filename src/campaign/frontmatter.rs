@@ -115,6 +115,10 @@ fn scalar(raw: &str) -> String {
     if raw.len() >= 2 && raw.starts_with('\'') && raw.ends_with('\'') {
         return raw[1..raw.len() - 1].replace("''", "'");
     }
+    // A flow collection is kept raw for its reader (`maps::pins`): a ` #` inside its quoted strings is text.
+    if raw.starts_with(['[', '{']) {
+        return raw.to_owned();
+    }
     match raw.find(" #") {
         Some(i) => raw[..i].trim_end().to_owned(),
         None if raw.starts_with('#') => String::new(),

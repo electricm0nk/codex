@@ -10,7 +10,7 @@ use std::time::UNIX_EPOCH;
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
-use codex::campaign::{adventure_log, folder};
+use codex::campaign::{adventure_log, folder, maps};
 use codex::campaign::local_store::{CampaignStore, CAMPAIGN_JSON};
 use codex::campaign::CampaignFolderSnapshot;
 
@@ -458,6 +458,48 @@ pub fn new_adventure_log_entry_impl(request: &NewAdventureLogEntryRequest) -> Re
     adventure_log::new_entry(&dir, &name, &request.author, &request.title, &request.today).map_err(|err| err.message)
 }
 
+// --- Maps (decisions.md §15.3) ---
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SetMapPinsRequest {
+    pub campaign_dir: String,
+    /// The map's notes file, `Maps/<name>.md`.
+    pub notes: String,
+    pub pins: Vec<maps::Pin>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AddMapRequest {
+    pub campaign_dir: String,
+    /// The picked image, an absolute path anywhere on disk.
+    pub source: String,
+}
+
+pub fn list_maps_impl(campaign_dir: &str) -> Result<Vec<maps::MapEntry>, String> {
+    let dir = require_absolute(campaign_dir)?;
+    maps::list(&dir).map_err(|err| err.message)
+}
+
+/// Writes a map's pins into its notes file's frontmatter; only a `.md` directly under `Maps/`.
+pub fn set_map_pins_impl(request: &SetMapPinsRequest) -> Result<(), String> {
+    let rel = Path::new(&request.notes);
+    let in_maps = rel.parent() == Some(Path::new(maps::MAPS_DIR)) && rel.extension().is_some_and(|ext| ext.eq_ignore_ascii_case("md"));
+    if !in_maps {
+        return Err(format!("{:?} is not a map's notes file (Maps/<name>.md)", request.notes));
+    }
+    let path = resolve(&request.campaign_dir, &request.notes)?;
+    maps::set_pins(&path, &request.pins).map_err(|err| err.message)
+}
+
+/// "Add map…": the copied image's path inside the campaign.
+pub fn add_map_impl(request: &AddMapRequest) -> Result<String, String> {
+    let dir = require_absolute(&request.campaign_dir)?;
+    let source = require_absolute(&request.source)?;
+    maps::add_map(&dir, &source).map_err(|err| err.message)
+}
+
 // --- commands ---
 
 fn app_data_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
@@ -542,6 +584,21 @@ pub fn list_adventure_log(campaign_dir: String) -> Result<Vec<adventure_log::Ent
 #[tauri::command]
 pub fn new_adventure_log_entry(request: NewAdventureLogEntryRequest) -> Result<String, String> {
     new_adventure_log_entry_impl(&request)
+}
+
+#[tauri::command]
+pub fn list_maps(campaign_dir: String) -> Result<Vec<maps::MapEntry>, String> {
+    list_maps_impl(&campaign_dir)
+}
+
+#[tauri::command]
+pub fn set_map_pins(request: SetMapPinsRequest) -> Result<(), String> {
+    set_map_pins_impl(&request)
+}
+
+#[tauri::command]
+pub fn add_map(request: AddMapRequest) -> Result<String, String> {
+    add_map_impl(&request)
 }
 
 #[cfg(test)]
@@ -815,6 +872,34 @@ mod tests {
         assert_eq!(listed.iter().map(|e| e.path.as_str()).collect::<Vec<_>>(), [rel.as_str()]);
         assert!(new_adventure_log_entry_impl(&request("Session 1")).is_err(), "a taken name is refused");
         assert!(list_adventure_log_impl("relative").is_err());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn maps_commands_add_pin_and_list() {
+        let root = temp_dir("maps");
+        let opened = create_campaign_folder_at(&root.join("app-data"), &create_request(&root, "Maps")).unwrap();
+        let picked = root.join("Sandpoint.png");
+        fs::write(&picked, b"png bytes").unwrap();
+        let add = |source: &Path| add_map_impl(&AddMapRequest { campaign_dir: opened.campaign_dir.clone(), source: source.to_string_lossy().into_owned() });
+        assert_eq!(add(&picked).unwrap(), "Maps/Sandpoint.png");
+        assert!(add(&picked).is_err(), "a taken name is refused");
+        assert!(add(Path::new("relative.png")).is_err(), "the picked image must be an absolute path");
+        let set = |notes: &str, pins: Vec<maps::Pin>| {
+            set_map_pins_impl(&SetMapPinsRequest { campaign_dir: opened.campaign_dir.clone(), notes: notes.to_owned(), pins })
+        };
+        let two = vec![
+            maps::Pin { x: 0.25, y: 0.5, label: "Ferry".to_owned(), page: "Riverside Ferry".to_owned() },
+            maps::Pin { x: 0.75, y: 0.1, label: "Tower".to_owned(), page: "Old Light".to_owned() },
+        ];
+        set("Maps/Sandpoint.md", two.clone()).unwrap();
+        let listed = list_maps_impl(&opened.campaign_dir).unwrap();
+        assert_eq!(listed.len(), 1);
+        assert_eq!((listed[0].image.as_deref(), listed[0].pins.clone()), (Some("Maps/Sandpoint.png"), two));
+        // Pins are written only into a notes file under Maps/.
+        assert!(set("Party Resources.md", vec![]).is_err());
+        assert!(set("Maps/../campaign.json", vec![]).is_err());
+        assert!(set("Maps/Sandpoint.png", vec![]).is_err());
         let _ = fs::remove_dir_all(&root);
     }
 }

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { openCampaignFolder } from '../boundary/campaignFolder/knownCampaigns';
-import { listCampaignTree } from '../boundary/campaignFolder/campaignFiles';
 import type { CampaignFolderSnapshot, CampaignTreeEntry } from '../boundary/campaignFolder/types';
 import { CAMPAIGN_TABS, partyCharacterIds, tabFiles, type CampaignTab } from './campaignFolderModel';
 import { loadCharacterHubListSurfaceRuntime } from '../characterHub/characterHubRuntime';
@@ -12,6 +11,11 @@ import { formatHeldClasses } from '../characterHub/characterProgression';
 import { AppMenu } from '../layout/AppMenu';
 import { CampaignHelpButton } from './CampaignHelpScreen';
 import { AdventureLogTab } from './tabs/AdventureLogTab';
+import { MapsTab } from './tabs/MapsTab';
+import { MarkdownEditor } from '../editor/MarkdownEditor';
+import { campaignImageUrl, listCampaignTree, readCampaignFile, statCampaignFile, writeCampaignFile } from '../boundary/campaignFolder/campaignFiles';
+import { saveAttachment } from '../boundary/campaignFolder/attachments';
+import { linkTarget, markdownStems } from './tabs/partyResourcesModel';
 import { PartyResourcesTab } from './tabs/PartyResourcesTab';
 
 /**
@@ -20,7 +24,8 @@ import { PartyResourcesTab } from './tabs/PartyResourcesTab';
  * Wiki). Everything is read from the folder (SD-42 `decisions.md §11`): `campaign.json`, and the
  * tree for the tabs and the party (the characters copied into `Characters/` that this install
  * holds). Party Resources opens its file in the editor (E2.6); the Adventure Log lists its sessions
- * and opens one in the editor (E2.7); Maps and Wiki list their files read-only until their cards land.
+ * and opens one in the editor (E2.7); Maps shows each map with its pins (E2.8), and a pin opens its
+ * page on the Wiki tab, which lists its files read-only until E2.9 lands.
  */
 
 const panel: CSSProperties = {
@@ -132,6 +137,8 @@ export function CampaignSheet(props: {
   const [savedCharacters, setSavedCharacters] = useState<CharacterHubListRowSurface[]>([]);
   const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
   const [tab, setTab] = useState<CampaignTab>('resources');
+  // The page a map pin opened on the Wiki tab.
+  const [wikiPage, setWikiPage] = useState<string | null>(null);
 
   useEffect(() => {
     loadCharacterHubListSurfaceRuntime()
@@ -298,8 +305,40 @@ export function CampaignSheet(props: {
                 <PartyResourcesTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} />
               ) : tab === 'adventureLog' ? (
                 <AdventureLogTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} />
+              ) : tab === 'maps' ? (
+                <MapsTab
+                  campaignDir={props.campaignDir}
+                  tree={loaded.tree}
+                  onTreeChanged={reloadTree}
+                  onOpenPage={(path) => {
+                    setWikiPage(path);
+                    setTab('wiki');
+                  }}
+                />
               ) : (
-                <FileList files={tabFiles(loaded.tree, tab)} />
+                <>
+                  {tab === 'wiki' && wikiPage && (
+                    <div data-testid="wiki-open-page" style={{ marginBottom: '1rem' }}>
+                      <p style={{ fontWeight: 700, margin: '0 0 0.5rem' }}>{wikiPage}</p>
+                      <MarkdownEditor
+                        key={wikiPage}
+                        campaignDir={props.campaignDir}
+                        path={wikiPage}
+                        readFile={readCampaignFile}
+                        writeFile={writeCampaignFile}
+                        statFile={statCampaignFile}
+                        saveAttachment={saveAttachment}
+                        resolveImage={(image) => campaignImageUrl(props.campaignDir, image)}
+                        pages={async () => markdownStems(loaded.tree)}
+                        onOpenLink={(target) => {
+                          const found = linkTarget(loaded.tree, target);
+                          if (found) setWikiPage(found);
+                        }}
+                      />
+                    </div>
+                  )}
+                  <FileList files={tabFiles(loaded.tree, tab)} />
+                </>
               )}
             </div>
             <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.6rem 0 0', overflowWrap: 'anywhere' }}>
