@@ -267,6 +267,36 @@ struct Customised {
     eqmods: Vec<String>,
 }
 
+/// The Notes block's sub-headings, in the order the block prints them (`decisions.md §7`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+enum NoteKind {
+    Item,
+    Property,
+    NoCopies,
+    UnknownKey,
+    Class,
+    Race,
+    Spell,
+    Eqmod,
+    Location,
+}
+
+impl NoteKind {
+    fn heading(self) -> &'static str {
+        match self {
+            NoteKind::Item => "Items with no Codex record",
+            NoteKind::Property => "Properties kept as text",
+            NoteKind::NoCopies => "Lines with 0 copies",
+            NoteKind::UnknownKey => "PCGen keys with no mapping",
+            NoteKind::Class => "Classes with no Codex record",
+            NoteKind::Race => "Race with no Codex record",
+            NoteKind::Spell => "Spells not kept",
+            NoteKind::Eqmod => "Eqmods kept as text",
+            NoteKind::Location => "Locations read as Equipped",
+        }
+    }
+}
+
 /// A spell the file names and Codex holds, until the engine has had its say.
 struct FileSpell {
     wire: SpellWire,
@@ -299,6 +329,8 @@ struct Importer<'a> {
     placements: Vec<Vec<Placement>>,
     next_item: usize,
     set_name: String,
+    /// The Notes block's lines: kind, the report line they come from (file order), text.
+    notes: Vec<(NoteKind, usize, String)>,
 }
 
 impl<'a> Importer<'a> {
@@ -325,6 +357,7 @@ impl<'a> Importer<'a> {
             placements: Vec::new(),
             next_item: 0,
             set_name: DEFAULT_SET_NAME.to_owned(),
+            notes: Vec::new(),
         }
     }
 
@@ -460,6 +493,7 @@ impl<'a> Importer<'a> {
                 if !self.report.unknown_keys.iter().any(|known| known == key) {
                     self.report.unknown_keys.push(key.to_owned());
                 }
+                self.unmapped(NoteKind::UnknownKey, format!("{key}: kept as a custom feat"));
                 self.custom_feat(line, "A PCGen line Codex has no mapping for.");
             }
         }
@@ -485,6 +519,7 @@ impl<'a> Importer<'a> {
             }
             None => {
                 self.report.unmapped_classes.push(format!("{name} {level}"));
+                self.unmapped(NoteKind::Class, format!("{name} {level}: kept as a custom feat"));
                 self.custom_feat(line, "A class Codex has no record of.");
             }
         }
@@ -496,6 +531,7 @@ impl<'a> Importer<'a> {
             Some(id) => self.mapped(line, &id),
             None => {
                 self.report.unmapped_race = Some(self.race_name.clone());
+                self.unmapped(NoteKind::Race, format!("{}: kept as a custom feat; no racial ability adjustment applied", self.race_name));
                 self.custom_feat(line, "A race Codex has no record of; no racial ability adjustment was applied.");
             }
         }
@@ -609,6 +645,8 @@ impl<'a> Importer<'a> {
         let class = line.get("CLASS").unwrap_or_default();
         let class_id = self.catalog.class_id(class).map(str::to_owned);
         let (true, Some(source_class_id)) = (self.catalog.holds_spell(&name), class_id) else {
+            let why = if self.catalog.holds_spell(&name) { "no Codex class to cast it" } else { "no Codex record" };
+            self.unmapped(NoteKind::Spell, format!("{name} ({class}): {why}; kept as a custom spell"));
             self.custom_spell(line, &name, class);
             return;
         };
@@ -643,6 +681,7 @@ impl<'a> Importer<'a> {
         if quantity(line.get("QUANTITY")) == 0 {
             // `decisions.md` SD-d: nothing is held, and the player is told.
             self.report.warnings.push(format!("{name}: 0 copies in the file"));
+            self.unmapped(NoteKind::NoCopies, format!("{name}: 0 copies in the file"));
             self.mapped(line, "not held: 0 copies in the file");
             return;
         }
@@ -732,6 +771,8 @@ impl<'a> Importer<'a> {
             kept_as_text.push(key.clone());
         }
         for field in kept_as_text {
+            let kind = if field.starts_with("EQMOD ") { NoteKind::Eqmod } else { NoteKind::Property };
+            self.unmapped(kind, format!("{name}: {field} kept as text"));
             self.report.warnings.push(format!("{name}: {field} kept as text"));
         }
         // A record the converter cannot resolve states nothing to differ from.
@@ -800,8 +841,10 @@ impl<'a> Importer<'a> {
             }
             copies.insert(key.map_key(), CopyFacts { quantity: Some(place.pieces), ..place.facts.clone() });
         }
-        for word in unknown_words {
-            self.report.warnings.push(format!("{word}: a PCGen location Codex has no slot for; read as Equipped"));
+        for (at, word) in unknown_words.into_iter().enumerate() {
+            let text = format!("{word}: a PCGen location Codex has no slot for; read as Equipped");
+            self.notes.push((NoteKind::Location, at, text.clone()));
+            self.report.warnings.push(text);
         }
         let set = EquipmentSet { name: self.set_name.clone(), locations };
         let states = project(&set, &row_keys);
@@ -809,6 +852,33 @@ impl<'a> Importer<'a> {
             row.active_state = format!("{state:?}");
         }
         EquipmentSets { copies, ..EquipmentSets::new(set) }
+    }
+
+    /// Records a line the import could not map directly, at the report line being written (file order).
+    fn unmapped(&mut self, kind: NoteKind, text: String) {
+        self.notes.push((kind, self.report.lines.len(), text));
+    }
+
+    /// `## Imported from PCGen (<file>, <date>)`, then each kind's lines once, in file order.
+    fn notes_block(&mut self) -> String {
+        let days = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |since| since.as_secs() / 86_400);
+        let mut block = format!("## Imported from PCGen ({}, {})\n", self.report.source_file, iso_date(days));
+        self.notes.sort_by_key(|(kind, at, _)| (*kind, *at));
+        let mut written: Vec<(NoteKind, &str)> = Vec::new();
+        for (kind, _, text) in &self.notes {
+            if written.contains(&(*kind, text.as_str())) {
+                continue;
+            }
+            if !written.iter().any(|(seen, _)| seen == kind) {
+                block.push_str(&format!("\n### {}\n", kind.heading()));
+            }
+            block.push_str(&format!("- {text}\n"));
+            written.push((*kind, text));
+        }
+        if written.is_empty() {
+            block.push_str("\nEverything in the file was mapped.\n");
+        }
+        block
     }
 
     fn read_money(&mut self, line: &Line) {
@@ -876,6 +946,7 @@ impl<'a> Importer<'a> {
         record.weight_lbs = amount(line.get("WT"));
         record.price_gp = amount(line.get("COST"));
         self.report.warnings.push(format!("{name}: {reason}"));
+        self.unmapped(NoteKind::Item, format!("{name}: {reason}"));
         self.push_custom(line, record, |custom| &mut custom.equipment);
     }
 
@@ -911,6 +982,7 @@ impl<'a> Importer<'a> {
         self.add_engine_rows(&class_levels, &race_id);
         self.keep_the_spells_the_engine_takes(&race_id, &class_levels, &ability_scores);
         self.close_biography();
+        self.bio.notes = self.notes_block();
 
         let display_label = if self.label.trim().is_empty() { "Imported character".to_owned() } else { self.label.trim().to_owned() };
         ImportFile {
@@ -1052,7 +1124,9 @@ impl<'a> Importer<'a> {
             }
             self.spells.pop();
             let name = spell.wire.spell_id.clone();
-            self.report.warnings.push(format!("{name}: Codex's {} spell list does not take it, so it is a custom spell", spell.class));
+            let text = format!("{name}: Codex's {} spell list does not take it, so it is a custom spell", spell.class);
+            self.notes.push((NoteKind::Spell, spell.report_line, text.clone()));
+            self.report.warnings.push(text);
             let stats = spell_stats(&spell.class, spell.level.as_deref(), spell.book.as_deref());
             let record = custom_record("spell", self.custom.spells.len(), &name, "A spell Codex's class list does not take yet.", stats);
             if self.custom.spells.len() < MAX_RECORDS {
@@ -1185,6 +1259,20 @@ fn clipped(text: &str, limit: usize) -> String {
 
 fn short(text: &str) -> String {
     clipped(text.trim(), 200)
+}
+
+/// Days since 1970-01-01 as `YYYY-MM-DD` (the proleptic Gregorian calendar, Hinnant's civil_from_days).
+fn iso_date(days: u64) -> String {
+    let z = days as i64 + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = z.rem_euclid(146_097);
+    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let day = doy - (153 * mp + 2) / 5 + 1;
+    let month = if mp < 10 { mp + 3 } else { mp - 9 };
+    let year = yoe + era * 400 + i64::from(month <= 2);
+    format!("{year:04}-{month:02}-{day:02}")
 }
 
 /// A `QUANTITY` as whole pieces; `0` is zero (SD-d), an absent or unreadable one is 1.
@@ -1343,5 +1431,15 @@ fn bio_label(key: &str) -> &'static str {
         "CATCHPHRASE" => "Catch phrase",
         "REGION" => "Region",
         _ => "Note",
+    }
+}
+
+#[cfg(test)]
+mod iso_date_tests {
+    #[test]
+    fn iso_date_reads_known_days() {
+        assert_eq!(super::iso_date(0), "1970-01-01");
+        assert_eq!(super::iso_date(11_016), "2000-02-29");
+        assert_eq!(super::iso_date(20_774), "2026-11-17");
     }
 }

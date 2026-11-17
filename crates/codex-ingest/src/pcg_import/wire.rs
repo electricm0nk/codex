@@ -105,6 +105,9 @@ pub struct BioWire {
     pub weight: String,
     pub hair: String,
     pub eyes: String,
+    /// The Notes block (`decisions.md §7`): every line the import could not map directly, once.
+    #[serde(default)]
+    pub notes: String,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
