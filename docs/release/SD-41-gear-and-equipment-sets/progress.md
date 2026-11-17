@@ -274,3 +274,7 @@ the R25 line before E2.1: the SD-40 merge SHA and `git log origin/develop -1 --f
 ### E5.3 complete (2026-11-16)
 
 - **E5.3 complete** (`be27ecc83d` + `006f314abd` + this commit; receipt `artifacts/epic_5/E5.3_cycle_receipt.md`). Final `release-notes.md` (sentinel 0; R-1 to R-10 with commands); `resolve_release_notes.py` exit 0; `validate-tranche-notes.py` `ok`. origin/develop's seven SD-40 E5.4 architecture docs were taken byte-for-byte as the base (they were not on `tranche-21`), then SD-41's truth-up edited 7 docs (`persistence.md` now names `equipment_sets.json` 4 times). The script mapped 0 docs (stale local `develop`, `||` index regex): hand-mapped block in `receipts.md`. Claims critic: 4 claims refuted and fixed. Next: `START=E5.4` (graphify LAST over a clean tree at `origin/tranche-21`, then the PR).
+
+### E5.4 complete (2026-11-17)
+
+- **E5.4 complete** (this commit; receipt `artifacts/epic_5/E5.4_cycle_receipt.md`). Graphify exited 1 (`no graph found` in the worktree; not the node-count guard; no force flag), failure receipt filed in `receipts.md`; the graph was not refreshed. G-8 scan clean with E5.4 exempt. PR tranche-21 → develop opened; the operator merges.

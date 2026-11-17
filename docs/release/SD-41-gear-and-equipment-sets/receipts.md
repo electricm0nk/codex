@@ -57,3 +57,17 @@ before the run.
   relative_link_check: pass
   release_notes_changes: "Defects Fixed: Astral Armor is not priced as base + eqmods (0.0 gp, listed price-unknown); R-5 now carries its two counting commands; R-10 added"
   receipt_note: "Opus claims critic over every line the truth-up added (git diff -U0 be27ecc83d..006f314abd -- docs/architecture | awk '/^\\+[^+]/') and over release-notes.md; each claim checked against the code or a command. Refuted and fixed: (1) release notes said Astral Armor is priced as base plus eqmods; (2)+(3) the stack key in glossary.md and desktop-app.md omitted abilities and the override flag (character_hub.rs list_held_equipment_stacks_at_root `same`); (4) desktop-app.md said Only Show Affordable reads load_character_money (MarketDialog reads props.balance). Listed in artifacts/epic_5/E5.3_cycle_receipt.md 'Claims critic'."
+
+- cycle_id: 2026-11-17T04:56:29Z
+  row_or_kind: graphify:update
+  bundle: SD-41
+  branch: cfef4404df274ba0cc3229a1e58ce7b69498aded
+  integration_target: develop
+  branch_tip: cfef4404
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 0.2
+  log_path: graphify-out/.truth-up-run-2026-11-17T04:56:29Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: "graphify cluster-only exited 1: error: no graph found at <worktree>/graphify-out/graph.json. graphify-out is gitignored and the only graph lives in the main checkout; this is not the node-count guard and no force flag was used. Same shape as the SD-40 E5.5 failure receipt; operator decides the re-index (open item since SD-37)."
