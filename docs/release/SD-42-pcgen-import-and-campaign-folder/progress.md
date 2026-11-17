@@ -53,6 +53,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E3.1 | complete | 75e9feca1d | `artifacts/epic_3/E3.1_cycle_receipt.md` | 11 MIT packages pinned; 9 fixtures byte-stable; 10 live-preview + 4 reading-view cases; npm test 201/201 |
 | 2026-11-17 | E3.2 | complete | 931098912b | `artifacts/epic_3/E3.2_cycle_receipt.md` | `[[` completion + link clicks/Ctrl-Enter; 4 wikilinks cases; npm test 202/202 |
 | 2026-11-17 | E1.1 | complete | the commit adding the E1.1 receipt | `artifacts/epic_1/E1.1_cycle_receipt.md` | diagnosis test 1 passed; 7 TSVs + summary.json; H1 H3 H4 H7 proved, H2 proved (narrower), H5 refuted, H6 not exercised; no discovered card |
+| 2026-11-17 | E1.2 | complete | the commit adding the E1.2 receipt (code d148cb1378, 2e17cc889b) | `artifacts/epic_1/E1.2_cycle_receipt.md` | one stack per place; `equipmentSets` on the wire; 6/6 `pcg_import_stacks`, 15/15 `pcg_import`; samples 20→21, 29→31, 41→43 stacks, pieces conserved; discovered E1.8 (bundle pieces) |
 
 ## Epic reports
 

@@ -438,6 +438,10 @@ with `ownedBy:<card>` (R4).
 | Date | Where | Was | Is | Found by |
 |---|---|---|---|---|
 | — | — | — | — | (the lead fills this table as corrections land; `§20` wins over older text) |
+| 2026-11-17 | §5, E1.2 | one `CopyWire` per `EQUIPNAME` line; samples `copies_emitted == lines - zero_lines` | one stack (one row, one copy) per **place** a line is in: PCGen splits a line over `EQUIPSET` entries (pf_Paladin Javelin 3 Carried + 2 on the horse; 29 lines → 31 stacks); the invariant is stacks ≥ held lines and pieces conserved | E1.2 (`pcg_import_stacks`) |
+| 2026-11-17 | §5, E1.2 | row `activeState` `EquippedActive` iff a depth-3 worn entry, else `SelectedInactive` | the row's state is `equipment_sets::project` of the imported set (Not Carried → `Absent`), because the app's `placed_in` drops a location whose projection differs from the saved state | E1.2 |
+| 2026-11-17 | §5, E1.2 | `quantity` = the line's `QUANTITY` | for a bundle record PCGen's `QUANTITY` counts bundles; pieces = `QUANTITY × base_quantity` — discovered card E1.8 | E1.2 |
+| 2026-11-17 | E1.2 | fixture `tests/fixtures/sd42_stacks.pcg` | `tests/fixtures/pcg_stacks.pcg` (the §6 identifier audit refuses `sd42_`) | E1.2 |
 
 ## §21 — Questions only the operator can settle (defaults taken; the run does not wait)
 
