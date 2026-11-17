@@ -53,7 +53,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51: 37 at 
 | E2.1 | Folder model (root) + `campaign_folder.rs` commands + known folders | opus | complete | C1 | code `039dd404a5`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; root 5 + desktop 3 tests |
 | E2.2 | Member #1; typed members; Create / Edit / Manager over the folder | opus | complete | E2.1 | code `2c4fed1ad0`; receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; 4 member cases + desktop `campaign_folder::` 4; `save_campaign_json` fence exit (§20) |
 | E2.3 | Drive removal; folder-backed Manager; hub modes carry a folder | opus | complete | E2.2 | commit: the one adding the E2.3 receipt (code 80692e2ac0); receipt `artifacts/epic_2/E2.3_cycle_receipt.md`; NR-6 grep 70 → 0; desktop 1373 → 1366 (−7 `campaign_drive`); discovered E2.14 |
-| E2.4 | Migration screen + command + backup | opus | waiting | E2.3 | `decisions.md §14` |
+| E2.4 | Migration screen + command + backup | opus | complete | E2.3 | commit: the one adding the E2.4 receipt (code `bef3e6c2c8`); receipt `artifacts/epic_2/E2.4_cycle_receipt.md`; root `campaign_migrate_` 4 passed; desktop `campaign_folder::` 6; TS 3 cases; `§20` test names |
 | E2.5 | Help screen; `opener:default`; Obsidian link; live tree | opus | waiting | E2.4 | `decisions.md §13.3` |
 | E2.6 | Party Resources tab | opus | waiting | E2.5, E3.1 | `decisions.md §15.1` |
 | E2.7 | Adventure Log tab + frontmatter parser | opus | waiting | E2.6 | `decisions.md §15.2` |
