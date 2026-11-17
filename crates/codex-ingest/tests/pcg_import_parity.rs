@@ -9,7 +9,8 @@
 //! field is compared: classes and levels, race, the six ability scores, HP (and Stamina, Resolve),
 //! the saves, AC (EAC, KAC), initiative, base, melee and ranged attack, every skill total, every
 //! feat (a Starfinder theme with them), every chosen spell, spells per day and DC, every weapon's
-//! attack, every gear line's pieces at its place, and the money.
+//! attack, every gear line's pieces at its place (in PCGen's bundles: a stack's pieces over its
+//! record's `base_quantity`, E1.8), and the money.
 //!
 //! A difference is a row of `explained.tsv` (`build, field, pcgen, codex, why, decision`); a field
 //! ending `*` covers every field with that prefix, and a `*` value matches any value. A ledger row
@@ -36,7 +37,7 @@ use codex::rules_core::character_input::CharacterInput;
 use codex::rules_core::pilot_compute::{sf_attack, sf_chassis, sf_defense, sf_loadout, sf_skills, sf_spells};
 use codex::saved_character::equipment_sets::{CopyKey, Location, location_of};
 use codex_ingest::pcg_import::catalog::{Catalog, fold};
-use codex_ingest::pcg_import::map::{character_input_of, convert, starfinder_build};
+use codex_ingest::pcg_import::map::{character_input_of, convert, record_base_quantity, starfinder_build};
 use codex_ingest::pcg_import::parse::parse;
 use codex_ingest::pcg_import::wire::ImportFile;
 
@@ -288,7 +289,8 @@ fn codex_view(file: &ImportFile) -> BTreeMap<String, String> {
             Location::NotCarried => "notcarried".to_owned(),
             Location::Inside { container } => name_of(&container),
         };
-        *gear.entry(format!("gear.{}@{place}", name_of(&key))).or_insert(0) += u64::from(facts.quantity.unwrap_or(1));
+        // PCGen's QTY counts bundles; a stack counts pieces (E1.8), so compare in bundles.
+        *gear.entry(format!("gear.{}@{place}", name_of(&key))).or_insert(0) += u64::from(facts.quantity.unwrap_or(1) / record_base_quantity(&key.item_id));
     }
     out.extend(gear.into_iter().map(|(k, v)| (k, v.to_string())));
     if starfinder { starfinder_totals(&input, &mut out) } else { pathfinder_totals(&input, &mut out) }

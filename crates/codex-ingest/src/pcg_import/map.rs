@@ -907,7 +907,12 @@ impl<'a> Importer<'a> {
             if location != Location::Carried {
                 locations.push(SetEntry { copy: key.clone(), location });
             }
-            copies.insert(key.map_key(), CopyFacts { quantity: Some(place.pieces), ..place.facts.clone() });
+            // PCGen's `QUANTITY` counts bundles; a stack counts pieces (`decisions.md §20`, E1.8).
+            let pieces = match place.held {
+                Some(Held::Row(_)) => place.pieces.saturating_mul(record_base_quantity(&key.item_id)),
+                _ => place.pieces,
+            };
+            copies.insert(key.map_key(), CopyFacts { quantity: Some(pieces), ..place.facts.clone() });
         }
         for (at, word) in unknown_words.into_iter().enumerate() {
             let text = format!("{word}: a PCGen location Codex has no slot for; read as Equipped");
@@ -1512,14 +1517,27 @@ fn amount(value: Option<&str>) -> Option<f64> {
 
 /// The record's own weight (lb) and price (gp) for one piece, from the settled record the engine
 /// resolves `item_key` to; `None` when no record resolves.
-fn record_weight_and_cost(item_key: &str) -> Option<(Option<f64>, Option<f64>)> {
+/// The settled equipment corpus the engine weighs a copy by, read once.
+pub fn equipment_corpus() -> &'static SourcePackageContent<'static> {
     static CORPUS: OnceLock<SourcePackageContent<'static>> = OnceLock::new();
-    let corpus = CORPUS.get_or_init(|| {
+    CORPUS.get_or_init(|| {
         let dirs = corpus_book_dirs(&runtime_repo_root().join("data/corpus"));
         let ids: Vec<String> = dirs.iter().map(|dir| dir.file_name().map(|name| name.to_string_lossy().into_owned()).unwrap_or_default()).collect();
         let roots: Vec<BookCorpusRoot<'_>> = ids.iter().zip(&dirs).map(|(book_id, dir)| BookCorpusRoot { book_id, dir: dir.as_path() }).collect();
         load_equipment_corpus(&roots)
-    });
+    })
+}
+
+/// The pieces one bundle of `item_key` holds, as the engine divides by (`encumbrance::copy_bundles`):
+/// the record's `base_quantity`, else its stand-in's, else 1 (also for a key the corpus lacks).
+pub fn record_base_quantity(item_key: &str) -> u32 {
+    let corpus = equipment_corpus();
+    let Some(record) = equipment_converted_resolve(item_key, corpus) else { return 1 };
+    record.base_quantity.or_else(|| stand_in_record(record, corpus).and_then(|base| base.base_quantity)).unwrap_or(1).max(1)
+}
+
+fn record_weight_and_cost(item_key: &str) -> Option<(Option<f64>, Option<f64>)> {
+    let corpus = equipment_corpus();
     let record = equipment_converted_resolve(item_key, corpus)?;
     // A derived record stating neither reads the record it is made from, as the engine weighs it.
     let base = stand_in_record(record, corpus);

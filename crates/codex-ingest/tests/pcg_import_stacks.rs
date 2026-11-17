@@ -5,17 +5,24 @@
 //! pouch in a backpack, a worn armour, a wielded sword, a Torso outfit, a Not Carried bedroll, a
 //! `QUANTITY:0` torch, a `QUANTITY:100050` line, and one javelin line split over two places.
 //!
-//! **Does not cover:** sets other than `CALCEQUIPSET`; PCGen's bundle items, whose `QUANTITY` counts
-//! bundles while `CopyFacts.quantity` counts pieces (discovered card E1.8); custom records past the
-//! 200 a character holds (no copy is made for them); any `.pcg` outside the fixture and the 7 samples.
+//! A bundle record (`Bullets (Sling/10)`, `base_quantity` 10): PCGen's `QUANTITY` counts bundles,
+//! `CopyFacts.quantity` counts pieces, so a stack holds `QUANTITY × base_quantity` pieces (E1.8).
+//!
+//! **Does not cover:** sets other than `CALCEQUIPSET`; a bundle line with no Codex record (a Create
+//! item keeps the file's `QUANTITY`, E1.4); a fractional bundle `QUANTITY` (rounded, as every line);
+//! custom records past the 200 a character holds (no copy is made for them); any `.pcg` outside the
+//! fixtures and the 7 samples.
 
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use codex::rules_core::body_slots::BodySlot;
+use codex::rules_core::character_input::{ActiveState, EquipmentSelection};
+use codex::rules_core::encumbrance::compute_encumbrance;
+use codex::rules_core::size::SizeCategory;
 use codex::saved_character::equipment_sets::{CopyKey, EquipmentSets, Location, location_of, project};
 use codex_ingest::pcg_import::catalog::Catalog;
-use codex_ingest::pcg_import::map::{PCGEN_SLOTS, convert};
+use codex_ingest::pcg_import::map::{PCGEN_SLOTS, convert, equipment_corpus, record_base_quantity};
 use codex_ingest::pcg_import::parse::parse;
 use codex_ingest::pcg_import::wire::ImportFile;
 
@@ -178,7 +185,17 @@ fn stacks_samples_emit_one_copy_per_line() {
         let held_lines = quantities.iter().filter(|q| **q > 0).count();
         let pieces: u64 = quantities.iter().sum();
         let copies = sets.copies.len();
-        let stacked: u64 = sets.copies.values().map(|facts| u64::from(facts.quantity.expect("every stack states its pieces"))).sum();
+        // A bundle record's stack holds `QUANTITY × base_quantity` pieces (E1.8); count it back in bundles.
+        let stacked: u64 = sets
+            .copies
+            .iter()
+            .map(|(key, facts)| {
+                let pieces = facts.quantity.expect("every stack states its pieces");
+                let per_bundle = record_base_quantity(key.rsplitn(3, '|').nth(2).unwrap_or(""));
+                assert_eq!(pieces % per_bundle, 0, "{sample}: {key} holds whole bundles of {per_bundle}");
+                u64::from(pieces / per_bundle)
+            })
+            .sum();
         println!("{sample}: lines {} zero {} copies {copies} pieces {pieces} stacked {stacked}", quantities.len(), quantities.len() - held_lines);
         assert!(copies >= held_lines, "{sample}: {copies} stacks for {held_lines} held lines");
         assert_eq!(stacked, pieces, "{sample}: pieces conserved");
@@ -193,5 +210,59 @@ fn stacks_samples_emit_one_copy_per_line() {
             let projected = format!("{:?}", project(set, std::slice::from_ref(key))[0]);
             assert_eq!(row.active_state, projected, "{sample}: {}", key.map_key());
         }
+    }
+}
+
+const BUNDLE_PCG: &str = "PCGVERSION:2.0
+GAMEMODE:Pathfinder_RPG
+CHARACTERNAME:Bundle Tester
+RACE:Human
+CLASS:Rogue|LEVEL:1|SKILLPOOL:0|SPELLBASE:None|CANCASTPERDAY:0
+EQUIPNAME:Bullets (Sling/10)|OUTPUTORDER:1|COST:0.1|WT:5.0|QUANTITY:2.0
+EQUIPNAME:Backpack|OUTPUTORDER:2|COST:2|WT:2.0|QUANTITY:1.0
+EQUIPSET:Default Set|ID:0.1|USETEMPMODS:Y
+EQUIPSET:Carried|ID:0.1.01|VALUE:Bullets (Sling/10)|QUANTITY:2.0|USETEMPMODS:Y
+EQUIPSET:Carried|ID:0.1.02|VALUE:Backpack|QUANTITY:1.0|USETEMPMODS:Y
+CALCEQUIPSET:0.1
+";
+
+/// Two bundles of 10 sling bullets (`WT:5.0` a bundle) are 20 pieces, and the engine weighs them as
+/// PCGen does: `WT × QUANTITY` = 10 lb, not the 1 lb two pieces weigh.
+#[test]
+fn stacks_bundle_quantity_counts_pieces() {
+    let file = convert(BUNDLE_PCG, "pcg_bundle.pcg", catalog()).expect("converts");
+    let sets = &file.equipment_sets;
+    let rows = &file.character_input.chosen.equipment_selections;
+    let bullets_id = rows.iter().map(|row| row.item_id.clone()).find(|id| record_base_quantity(id) == 10).expect("the bullets map to a 10-piece record");
+    let bullets = the_copy(sets, &bullets_id);
+    assert_eq!(quantity(sets, &bullets), Some(20), "2 bundles of 10");
+    assert_eq!(quantity(sets, &the_copy(sets, "Backpack")), Some(1), "a one-piece record is unchanged");
+
+    let selections: Vec<EquipmentSelection> = rows
+        .iter()
+        .map(|row| EquipmentSelection { item_id: row.item_id.clone(), active_state: ActiveState::SelectedInactive, equipped_or_active: false, applied_modifiers: row.applied_modifiers.clone() })
+        .collect();
+    let quantities: Vec<(CopyKey, u32)> = [bullets.clone(), the_copy(sets, "Backpack")].into_iter().map(|key| { let q = quantity(sets, &key).unwrap(); (key, q) }).collect();
+    let weighed = compute_encumbrance(&selections, equipment_corpus(), 10, SizeCategory::Medium, &[], &quantities);
+    let bullets_lbs: f64 = weighed.per_item.iter().filter(|item| item.item_id == bullets_id).map(|item| item.weight_lbs).sum();
+    assert!((bullets_lbs - 5.0 * 2.0).abs() < 1e-9, "PCGen's WT × QUANTITY = 10 lb; the engine weighs {bullets_lbs}");
+}
+
+/// The samples' bundle lines (pf_Rogue's sling bullets, pf_Cleric's crossbow bolts: 2 bundles of 10
+/// each) hold their pieces.
+#[test]
+fn stacks_bundle_samples_hold_pieces() {
+    let dir = oracle_repo().join("code/testsuite/PCGfiles");
+    if !dir.is_dir() {
+        println!("SKIPPED: the oracle's PCGfiles are absent at {} (decisions.md §22)", dir.display());
+        return;
+    }
+    for (sample, base) in [("pf_Rogue", "Bullets (Sling/10)"), ("pf_Cleric", "Bolts (Crossbow/10)")] {
+        let text = String::from_utf8_lossy(&std::fs::read(dir.join(format!("{sample}.pcg"))).expect("sample")).into_owned();
+        let file = convert(&text, &format!("{sample}.pcg"), catalog()).expect("converts");
+        let key = catalog().equipment_key(base).expect("a Codex record").to_owned();
+        let pieces: u32 = copies_of(&file.equipment_sets, &key).iter().filter_map(|copy| quantity(&file.equipment_sets, copy)).sum();
+        println!("{sample}: {base} -> {key}: {pieces} pieces");
+        assert_eq!(pieces, 20, "{sample}: QUANTITY 2 bundles × base_quantity 10");
     }
 }
