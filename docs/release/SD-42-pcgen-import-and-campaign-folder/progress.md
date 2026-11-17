@@ -15,7 +15,7 @@ status: planning-ready
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
-| E1 import converter (lane `import`) | 10 | 5 (E1.1–E1.5) | E1.5 complete; E1.6 next; E1.9 discovered |
+| E1 import converter (lane `import`) | 10 | 6 (E1.1–E1.6) | E1.6 complete; E1.7 next; E1.9 discovered |
 | E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
 | E4 desktop wiring (Phase 2) | 12 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
@@ -62,6 +62,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E3.3 | complete | the commit adding the E3.3 receipt (code 084394b746) | `artifacts/epic_3/E3.3_cycle_receipt.md` | toolbar 6 + autosave 4 + imageDrop 3 cases; `save_attachment` 1 passed; desktop full 0 failed; npm test 207/207; SD-k append-only conflict in campaign_folder.rs kept both (retro incident) |
 | 2026-11-17 | E3.MC | complete | the commit adding the E3.MC receipt (fix 05aa922dcd) | `artifacts/epic_3/E3.MC_cycle_receipt.md` | adversarial: reading view rendered `[t](<java\tscript:…>)` as a live `javascript:` link — fixed in `safeUrl`, 5th reading-view case; fixture `party-resources.md` ≠ E2.1 starter — replaced; licences MIT 11 of 11; npm test 207/207; no screenshot (no tab mounts the editor) |
 | 2026-11-17 | E2.3 | complete | the commit adding the E2.3 receipt (code 80692e2ac0) | `artifacts/epic_2/E2.3_cycle_receipt.md` | Drive path deleted (NR-6 grep 70 → 0, `DRIVE_GONE`); Manager: Open folder…, Forget, not-a-campaign offer; sheet reads the folder; membership dialog over known folders; desktop 1373 → 1366; npm test 206/206; discovered E2.14 |
+| 2026-11-17 | E1.6 | complete | the commit adding the E1.6 receipt (code 826b421762) | `artifacts/epic_1/E1.6_cycle_receipt.md` | `GAMEMODE:Starfinder` → `Catalog::load_sf` (load_sheet_rules), `gameSystem` starfinder-1e; sf_soldier + sf_mechanic compute (SF engine), drone refused by name (Q-A); 3/3 `pcg_import_sf`, codex-ingest full 1903 passed / 0 failed |
 
 ## Epic reports
 

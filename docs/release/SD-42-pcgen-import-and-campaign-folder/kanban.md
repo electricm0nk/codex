@@ -44,7 +44,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 49: 37 at 
 | E1.3 | Custom names and every property; `CopyFacts` gains four fields | opus | complete | E1.2 | commit: the one adding the E1.3 receipt (code `0b494a0bfe`); receipt `artifacts/epic_1/E1.3_cycle_receipt.md`; 6/6 `pcg_import_custom`, 2/2 `copy_facts_` |
 | E1.4 | Unmappable items → Create items at their location | opus | complete | E1.3 | commit: the one adding the E1.4 receipt (code `d7cacc4343`); receipt `artifacts/epic_1/E1.4_cycle_receipt.md`; 3/3 `pcg_import_unmapped` |
 | E1.5 | The Notes block in `bio.notes` | opus | complete | E1.4 | commit: the one adding the E1.5 receipt (code `f4b23af04b`); receipt `artifacts/epic_1/E1.5_cycle_receipt.md`; 3/3 `pcg_import_notes`; discovered E1.9 |
-| E1.6 | Starfinder import; the drone per Q-A | opus | waiting | E1.5 | `decisions.md §8` |
+| E1.6 | Starfinder import; the drone per Q-A | opus | complete | E1.5 | commit: the one adding the E1.6 receipt (code `826b421762`); receipt `artifacts/epic_1/E1.6_cycle_receipt.md`; 3/3 `pcg_import_sf`, 1/1 `pcg_import_fixtures_a_starfinder`; drone refused (Q-A second branch) |
 | E1.7 | Whole-character parity harness + gate; `explained.tsv` | opus | waiting | E1.6 | `decisions.md §9`; P-9 |
 | E1.8 | Bundle items: PCGen `QUANTITY` counts bundles; pieces = × `base_quantity` | opus | waiting | E1.7 | discovered by E1.2; `epic-breakdown.md` E1.8 |
 | E1.9 | `pcg_import_diagnosis` stops rewriting E1.1's committed artifacts on every run | sonnet | waiting | E1.5 | discovered by E1.5 (3rd occurrence: E1.3, E1.4, E1.5); `epic-breakdown.md` E1.9 |
