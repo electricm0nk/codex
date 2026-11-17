@@ -32,7 +32,7 @@ E5.4 is anything but `complete`. **One operator gate:** E5.G stays `partial` unt
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 48: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E1.9 (discovered by E1.5) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27) + E4.12 (issue #409, operator 2026-11-17, decisions.md §28)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 49: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E1.9 (discovered by E1.5) + E2.14 (discovered by E2.3) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27) + E4.12 (issue #409, operator 2026-11-17, decisions.md §28)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -51,7 +51,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 48: 37 at 
 | E1.MC | E1 merge check + Epic report | opus | waiting | E1.7, E1.8, E1.9 | adversarial; the import lane ends |
 | E2.1 | Folder model (root) + `campaign_folder.rs` commands + known folders | opus | complete | C1 | code `039dd404a5`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; root 5 + desktop 3 tests |
 | E2.2 | Member #1; typed members; Create / Edit / Manager over the folder | opus | complete | E2.1 | code `2c4fed1ad0`; receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; 4 member cases + desktop `campaign_folder::` 4; `save_campaign_json` fence exit (§20) |
-| E2.3 | Drive removal; folder-backed Manager; hub modes carry a folder | opus | waiting | E2.2 | `decisions.md §13.2`; NR-6 |
+| E2.3 | Drive removal; folder-backed Manager; hub modes carry a folder | opus | complete | E2.2 | commit: the one adding the E2.3 receipt (code CODE_SHA); receipt `artifacts/epic_2/E2.3_cycle_receipt.md`; NR-6 grep 70 → 0; desktop 1373 → 1366 (−7 `campaign_drive`); discovered E2.14 |
 | E2.4 | Migration screen + command + backup | opus | waiting | E2.3 | `decisions.md §14` |
 | E2.5 | Help screen; `opener:default`; Obsidian link; live tree | opus | waiting | E2.4 | `decisions.md §13.3` |
 | E2.6 | Party Resources tab | opus | waiting | E2.5, E3.1 | `decisions.md §15.1` |
@@ -62,7 +62,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 48: 37 at 
 | E2.11 | DM toolkit party from the folder | opus | waiting | E2.10 | `decisions.md §17` |
 | E2.12 | "Main menu" is the first ☰ entry on every screen but the main one | opus | waiting | E2.11 | operator UI-1 2026-11-17; `decisions.md §26.1`; owns `ui/layout/AppMenu.{tsx,test.ts}` |
 | E2.13 | The Manager's open-campaign button: full column width, the main screen's Campaign Manager style | opus | waiting | E2.12 | operator UI-2 2026-11-17; `decisions.md §26.2`; owns `ui/characterHub/LandingScreen.tsx` (export only) |
-| E2.MC | E2 merge check + Epic report (≥ 10 screenshots, looked at) | opus | waiting | E2.13 | adversarial; the campaign lane ends |
+| E2.14 | Print dialog and DM console read the campaign folders, not the legacy localStorage campaigns | opus | waiting | E2.13 | discovered by E2.3; `epic-breakdown.md` E2.14 |
+| E2.MC | E2 merge check + Epic report (≥ 10 screenshots, looked at) | opus | waiting | E2.14 | adversarial; the campaign lane ends |
 | E3.1 | Editor core: packages, byte-stable round trip, live preview, reading view | opus | complete | C1 | lane `editor`; `decisions.md §18`; commit `75e9feca1d`; receipt `artifacts/epic_3/E3.1_cycle_receipt.md` |
 | E3.2 | `[[` completion; link clicks | opus | complete | E3.1 | commit `931098912b`; receipt `artifacts/epic_3/E3.2_cycle_receipt.md` |
 | E3.3 | Toolbar, auto-save, disk-change warning, drag-in images | opus | complete | E3.2 | code `084394b746`; receipt `artifacts/epic_3/E3.3_cycle_receipt.md`; fence exit `save_attachment` (campaign_folder.rs + main.rs) |
