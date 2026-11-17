@@ -64,7 +64,7 @@ export function AdventureLogTab(props: { campaignDir: string; tree: readonly Cam
         </button>
         {draft && (
           <>
-            <input aria-label="Author" placeholder="Your name" style={input} value={draft.author} onChange={(e) => setDraft({ ...draft, author: e.target.value })} />
+            <input aria-label="Author (your name)" style={input} value={draft.author} onChange={(e) => setDraft({ ...draft, author: e.target.value })} />
             <input aria-label="Title" style={input} value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value })} />
             <button type="button" style={button} disabled={!draft.author.trim() || !draft.title.trim()} onClick={create}>
               Create
