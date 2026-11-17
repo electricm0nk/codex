@@ -9,6 +9,9 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase")]
 pub struct ImportFile {
     pub display_label: String,
+    /// The rule system the character is saved under: `"pf1"`, or `GameSystem::Starfinder1e.id()`
+    /// for a file of PCGen's `Starfinder` game mode (`decisions.md §8`).
+    pub game_system: String,
     pub character_input: CharacterInputWire,
     pub bio: BioWire,
     pub money: MoneyWire,

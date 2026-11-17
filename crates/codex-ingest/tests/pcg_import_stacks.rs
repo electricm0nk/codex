@@ -160,7 +160,12 @@ fn stacks_samples_emit_one_copy_per_line() {
     for sample in SAMPLES {
         let path = dir.join(format!("{sample}.pcg"));
         let text = String::from_utf8_lossy(&std::fs::read(&path).expect("sample")).into_owned();
-        let file = convert(&text, &format!("{sample}.pcg"), catalog()).expect("converts");
+        let file = match convert(&text, &format!("{sample}.pcg"), catalog()) {
+            Ok(file) => file,
+            // `decisions.md §21` Q-A: the drone (0 EQUIPNAME lines) is a companion, refused by name.
+            Err(err) if sample == "sf_mechanic_drone" && err.contains("a companion of") => continue,
+            Err(err) => panic!("{sample}: {err}"),
+        };
         let serialised = serde_json::to_value(&file).expect("serialises");
         let sets: EquipmentSets = serde_json::from_value(serialised["equipmentSets"].clone()).expect("reads as equipment_sets.json");
 

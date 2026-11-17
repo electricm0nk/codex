@@ -18,7 +18,7 @@ use codex::rules_core::pilot_compute_corpus::{compute_combat_baseline_from_corpu
 use codex::rules_core::source_content::SourcePackageContent;
 
 use super::catalog::Catalog;
-use super::map::{KeyRule, MAPPING, convert};
+use super::map::{KeyRule, MAPPING, SF_SOURCE_PACKAGE_ID, character_input_of, convert, starfinder_verdict};
 use super::parse::parse;
 use super::wire::{ImportFile, Outcome};
 
@@ -68,6 +68,18 @@ fn fixtures() -> Vec<PathBuf> {
 fn is_older_than_the_format(path: &Path) -> bool {
     let text = String::from_utf8_lossy(&std::fs::read(path).expect("fixture")).into_owned();
     !text.lines().any(|line| line.starts_with("PCGVERSION:") || line.starts_with("CHARACTERNAME:"))
+}
+
+/// A Starfinder companion file (`sf_mechanic_drone`): refused by name (`decisions.md §21` Q-A).
+fn is_a_starfinder_companion(path: &Path) -> bool {
+    let text = String::from_utf8_lossy(&std::fs::read(path).expect("fixture")).into_owned();
+    text.lines().any(|line| line == "GAMEMODE:Starfinder") && text.lines().any(|line| line.starts_with("MASTER:"))
+}
+
+/// The Starfinder engine's verdict through the import's own catalog (`map::starfinder_verdict`).
+fn sf_verdict(file: &ImportFile) -> Result<(), Vec<String>> {
+    let package = catalog().for_game_mode("Starfinder").expect("the Starfinder catalog").starfinder_package().expect("its package");
+    starfinder_verdict(package, &character_input_of(file)).map_err(|reason| vec![reason])
 }
 
 fn converted(path: &Path) -> ImportFile {
@@ -198,6 +210,12 @@ fn pcg_import_fixtures_every_file_converts_and_every_line_is_reported() {
             refused += 1;
             continue;
         }
+        if is_a_starfinder_companion(path) {
+            let err = convert(&text, "companion.pcg", catalog()).unwrap_err();
+            assert!(err.contains("companion.pcg is a Drone file, a companion of"), "{err}");
+            refused += 1;
+            continue;
+        }
         let file = converted(path);
         let data_lines = parse(&text).len();
         lines_total += data_lines;
@@ -206,7 +224,8 @@ fn pcg_import_fixtures_every_file_converts_and_every_line_is_reported() {
         assert!(!file.display_label.trim().is_empty(), "{}", path.display());
         assert!(!file.character_input.chosen.class_levels.is_empty(), "{}", path.display());
         let input = character_input(&file);
-        assert_eq!(input.source_package_id, "pf1.core_rulebook");
+        let expected = if file.report.game_mode == "Starfinder" { SF_SOURCE_PACKAGE_ID } else { "pf1.core_rulebook" };
+        assert_eq!(input.source_package_id, expected, "{}", path.display());
         let custom = [&file.custom.feats, &file.custom.equipment, &file.custom.spells];
         let mut ids = std::collections::BTreeSet::new();
         for record in custom.iter().flat_map(|records| records.iter()) {
@@ -231,10 +250,10 @@ fn pcg_import_fixtures_a_file_of_held_classes_computes() {
     let mut computed = 0usize;
     let mut refused_by_class = Vec::new();
     let mut wrong = Vec::new();
-    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path)) {
+    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path) && !is_a_starfinder_companion(path)) {
         let file = converted(&path);
         let name = path.file_name().unwrap().to_string_lossy().into_owned();
-        let verdict = engine_verdict(&character_input(&file));
+        let verdict = if file.game_system == SF_SOURCE_PACKAGE_ID { sf_verdict(&file) } else { engine_verdict(&character_input(&file)) };
         println!("{name}: mode={} classes={:?} race={:?} verdict={:?}", file.report.game_mode, file.report.unmapped_classes, file.report.unmapped_race, verdict);
         match (file.report.unmapped_classes.is_empty() && file.report.unmapped_race.is_none(), verdict) {
             (true, Ok(())) => computed += 1,
@@ -252,7 +271,7 @@ fn pcg_import_fixtures_a_file_of_held_classes_computes() {
 #[test]
 fn pcg_import_fixtures_a_spell_is_kept_or_custom_and_most_are_kept() {
     let (mut kept, mut custom) = (0usize, 0usize);
-    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path)) {
+    for path in fixtures().into_iter().filter(|path| !is_older_than_the_format(path) && !is_a_starfinder_companion(path)) {
         let file = converted(&path);
         for line in file.report.lines.iter().filter(|line| line.key == "SPELLNAME") {
             match line.outcome {
@@ -381,15 +400,16 @@ fn pcg_import_fixtures_a_file_that_is_no_character_is_refused_by_name() {
     assert!(err.contains("notes.txt is not a PCGen 6 character"), "{err}");
 }
 
-/// A class Codex does not hold stays visible twice: a custom record, and in the report's own list.
+/// `decisions.md §8`: a Starfinder file reads Starfinder records, and the Starfinder engine computes it.
 #[test]
-fn pcg_import_fixtures_a_class_codex_does_not_hold_is_named() {
+fn pcg_import_fixtures_a_starfinder_soldier_computes() {
     let file = oracle_fixture("sf_soldier.pcg");
     assert_eq!(file.report.game_mode, "Starfinder");
-    assert_eq!(file.report.unmapped_classes, ["Soldier 10"]);
-    assert!(file.custom.feats.iter().any(|record| record.name == "Soldier"));
-    assert_eq!(file.character_input.chosen.class_levels[0].class_id, "class:soldier");
-    assert!(engine_verdict(&character_input(&file)).is_err(), "no Pathfinder engine row can compute a Starfinder soldier");
+    assert_eq!(file.game_system, "starfinder-1e");
+    assert!(file.report.unmapped_classes.is_empty(), "{:?}", file.report.unmapped_classes);
+    assert!(!file.custom.feats.iter().any(|record| record.name == "Soldier"));
+    assert_eq!(file.character_input.chosen.class_levels[0].class_id, "core:class:soldier");
+    sf_verdict(&file).expect("the Starfinder engine computes the imported soldier");
 }
 
 /// The mapping table doc prints every row of the table it documents.

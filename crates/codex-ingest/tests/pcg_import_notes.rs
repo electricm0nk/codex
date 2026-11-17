@@ -82,10 +82,10 @@ EQUIPNAME:Longsword|OUTPUTORDER:1|COST:15|WT:4.0|QUANTITY:1.0\n";
     assert_eq!(body(&file.bio.notes, "mapped.pcg"), "\nEverything in the file was mapped.\n", "{}", file.bio.notes);
 }
 
-/// Before E1.6 Codex reads a Starfinder file against Pathfinder records, so its class is listed.
-/// E1.6 maps the SF classes and re-pins this test. Skips loudly when the oracle is absent.
+/// Since E1.6 a Starfinder file reads Starfinder records (`decisions.md §8`), so the soldier's class is
+/// mapped and no longer listed. Skips loudly when the oracle is absent.
 #[test]
-fn notes_block_names_sf_soldiers_class() {
+fn notes_block_maps_sf_soldiers_class() {
     let dir = std::env::var("PCGEN_REPO_DIR")
         .ok()
         .filter(|dir| !dir.is_empty())
@@ -96,5 +96,6 @@ fn notes_block_names_sf_soldiers_class() {
         return;
     };
     let file = import(&String::from_utf8_lossy(&bytes), "sf_soldier.pcg");
-    assert!(file.bio.notes.contains("### Classes with no Codex record\n- Soldier 10: kept as a custom feat\n"), "{}", file.bio.notes);
+    assert!(file.bio.notes.starts_with("## Imported from PCGen (sf_soldier.pcg, "), "{}", file.bio.notes);
+    assert!(!file.bio.notes.contains("Classes with no Codex record") && !file.bio.notes.contains("Soldier 10"), "{}", file.bio.notes);
 }

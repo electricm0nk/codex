@@ -2,14 +2,18 @@
 //! catalog does not hold becomes a custom record, so this is the line between "mapped" and "custom".
 
 use std::collections::{BTreeMap, BTreeSet};
-use std::path::Path;
+use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use codex::rules_core::class_census::census;
-use codex::rules_core::corpus_loader::BookCorpusRoot;
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_sheet_rules};
+use codex::rules_core::game_system::GameSystem;
+use codex::rules_core::pilot_compute::sf_loadout::is_buyable;
 use codex::rules_core::equipment_resolver::equipment_catalog_rows;
 use codex::rules_core::race_creation::race_creation_chassis;
 use codex::rules_core::race_resolver::load_race_corpus;
 use codex::rules_core::rules_catalog::feats_all::all_feat_tables;
+use codex::rules_core::sheet_rule::{SheetRulePackage, split_rule_id};
 
 /// One race's ability numbers, as creation applies them.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -26,7 +30,15 @@ pub struct Catalog {
     feats: BTreeMap<String, String>,
     equipment: BTreeMap<String, String>,
     spells: BTreeSet<String>,
-    skills: BTreeSet<String>,
+    /// A skill's slug -> the id a skill allocation names (`skill:climb`; Starfinder's bare `climb`).
+    skills: BTreeMap<String, String>,
+    /// Starfinder's theme records (`core:ability:ace_pilot`, package pool `theme`).
+    themes: BTreeMap<String, String>,
+    /// The Starfinder package this catalog was read from; `None` for Pathfinder's.
+    starfinder_package: Option<SheetRulePackage>,
+    /// Where `data/` is, so a Starfinder file can read its own catalog ([`Catalog::for_game_mode`]).
+    data_root: PathBuf,
+    starfinder: OnceLock<Result<Box<Catalog>, String>>,
 }
 
 /// Case and punctuation are not part of a name's identity: `Rope (Silk/50 ft.)` is
@@ -58,11 +70,11 @@ impl Catalog {
             return Err(format!("no converted rules under {}", sheet_rules.display()));
         }
 
-        let mut catalog = Catalog::default();
+        let mut catalog = Catalog { data_root: data_root.to_owned(), ..Catalog::default() };
         for book in &books {
             let book_dir = sheet_rules.join(book);
             catalog.spells.extend(record_stems(&book_dir.join("spell")));
-            catalog.skills.extend(record_stems(&book_dir.join("skill")));
+            catalog.skills.extend(record_stems(&book_dir.join("skill")).into_iter().map(|stem| (stem.clone(), format!("skill:{stem}"))));
         }
         // The engine's own merged class census, so a class here is a class the app can compute.
         for class_id in census().into_keys() {
@@ -83,6 +95,71 @@ impl Catalog {
         }
         catalog.load_races(&data_root.join("data/corpus"));
         Ok(catalog)
+    }
+
+    /// The Starfinder catalog: the records of the converted Starfinder package under `data_root`
+    /// (`data/starfinder-1e/sheet_rules`), read by the same loader the app's Starfinder adapter
+    /// reads it with (`corpus_loader::load_sheet_rules`). A name is a record's slug or its label;
+    /// a core record wins a name two books share. Races carry no adjustments here: the Starfinder
+    /// engine folds the race's own ability rows (`sf_abilities`).
+    pub fn load_sf(data_root: &Path) -> Result<Catalog, String> {
+        let dir = GameSystem::Starfinder1e.package_roots(data_root).sheet_rules.ok_or("Starfinder has no sheet-rule package")?;
+        let package = load_sheet_rules(&dir).package;
+        if package.rules.is_empty() {
+            return Err(format!("no converted Starfinder rules under {}", dir.display()));
+        }
+        let mut catalog = Catalog { data_root: data_root.to_owned(), ..Catalog::default() };
+        for (id, rule) in package.rules.iter().filter(|(id, _)| !id.contains('#')) {
+            let (book, kind, slug) = split_rule_id(id);
+            let names = [fold(slug), fold(&rule.label)];
+            let map = match kind {
+                "class" => &mut catalog.classes,
+                "feat" => &mut catalog.feats,
+                // A record the engine cannot carry (no price: the configurable Computer) is no
+                // record to hold; its line becomes a Create item (`decisions.md §7`).
+                "equipment" if is_buyable(rule) => &mut catalog.equipment,
+                "ability" if rule.pool == "theme" => &mut catalog.themes,
+                "race" => {
+                    let entry = RaceEntry { id: id.clone(), adjustments: BTreeMap::new(), floating_bonus_points: 0 };
+                    for name in names {
+                        if book == "core" || !catalog.races.contains_key(&name) {
+                            catalog.races.insert(name, entry.clone());
+                        }
+                    }
+                    continue;
+                }
+                "skill" => {
+                    catalog.skills.entry(slug.to_owned()).or_insert_with(|| slug.to_owned());
+                    continue;
+                }
+                _ => continue,
+            };
+            for name in names {
+                if book == "core" || !map.contains_key(&name) {
+                    map.insert(name, id.clone());
+                }
+            }
+        }
+        catalog.starfinder_package = Some(package);
+        Ok(catalog)
+    }
+
+    /// The catalog a file of PCGen's `game_mode` reads: Starfinder's for `Starfinder`, read once
+    /// from this catalog's `data_root`; this one for every other mode.
+    pub fn for_game_mode(&self, game_mode: &str) -> Result<&Catalog, String> {
+        if game_mode != "Starfinder" || self.starfinder_package.is_some() {
+            return Ok(self);
+        }
+        self.starfinder.get_or_init(|| Catalog::load_sf(&self.data_root).map(Box::new)).as_deref().map_err(String::clone)
+    }
+
+    /// The Starfinder package, when this is the Starfinder catalog.
+    pub fn starfinder_package(&self) -> Option<&SheetRulePackage> {
+        self.starfinder_package.as_ref()
+    }
+
+    pub fn theme_id(&self, name: &str) -> Option<&str> {
+        self.themes.get(&fold(name)).map(String::as_str)
     }
 
     fn load_races(&mut self, corpus_root: &Path) {
@@ -129,8 +206,7 @@ impl Catalog {
     }
 
     pub fn skill_id(&self, name: &str) -> Option<String> {
-        let slug = slug(name);
-        self.skills.contains(&slug).then(|| format!("skill:{slug}"))
+        self.skills.get(&slug(name)).cloned()
     }
 }
 

@@ -412,7 +412,9 @@ fn diagnosis_tables_for_the_proof_set() {
     let out = out_dir();
     std::fs::create_dir_all(&out).expect("artifacts dir");
     let mut summaries = BTreeMap::new();
-    for sample in SAMPLES {
+    // `decisions.md §21` Q-A (E1.6): the drone file is a companion the sidecar refuses by name, so
+    // its table is E1.1's, unchanged.
+    for sample in SAMPLES.into_iter().filter(|sample| *sample != "sf_mechanic_drone") {
         let (tsv, summary) = diagnose(&samples.join(format!("{sample}.pcg")), &scratch);
         std::fs::write(out.join(format!("{sample}.tsv")), tsv).expect("table");
         summaries.insert(sample.to_owned(), summary);

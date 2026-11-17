@@ -18,7 +18,7 @@ use codex::rules_core::class_seeds::canonical_seeds_for;
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use codex::rules_core::equipment_effects::stand_in_record;
 use codex::rules_core::equipment_resolver::equipment_converted_resolve;
-use codex::rules_core::game_system::runtime_repo_root;
+use codex::rules_core::game_system::{GameSystem, runtime_repo_root};
 use codex::rules_core::money::gp_to_copper;
 use codex::rules_core::settled_corpus::corpus_book_dirs;
 use codex::rules_core::size::SizeCategory;
@@ -30,6 +30,12 @@ use codex::rules_core::character_input::{
 use codex::rules_core::feat_effects::chooser_contract_for_feat;
 use codex::rules_core::feat_identity;
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
+use codex::rules_core::pilot_compute::sf_abilities::{self, SfAbilityBuild};
+use codex::rules_core::pilot_compute::sf_chassis::{self, SfChassisBuild};
+use codex::rules_core::pilot_compute::sf_defense::{self, SfBuild};
+use codex::rules_core::pilot_compute::sf_loadout::{self, SfLoadout};
+use codex::rules_core::pilot_compute::{sf_attack, sf_skills, sf_spells};
+use codex::rules_core::sheet_rule::{Ability, SheetRulePackage};
 use codex::saved_character::equipment_sets::{
     CopyFacts, CopyKey, DEFAULT_SET_NAME, EquipmentSet, EquipmentSets, Location, SetEntry, copy_keys, eqmod_option_key, project,
 };
@@ -144,6 +150,13 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
 ];
 
 const SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
+/// A Starfinder character's `sourcePackageId` and `gameSystem`: the id the app's Starfinder
+/// adapter is routed by (`rule_system_adapter.rs`).
+pub const SF_SOURCE_PACKAGE_ID: &str = GameSystem::Starfinder1e.id();
+const PF_GAME_SYSTEM: &str = "pf1";
+/// The app's Starfinder credits row (`sf_adapter.rs` `MARKET_CREDITS_CHOICE`): credits beyond what
+/// the held items' prices explain.
+const SF_CREDITS_CHOICE: &str = "market.credits_adjustment";
 const WORN: &str = "EquippedActive";
 const CARRIED: &str = "SelectedInactive";
 const POWER_ATTACK_ROW: &str = "power_attack";
@@ -229,12 +242,29 @@ pub fn convert(text: &str, source_file: &str, catalog: &Catalog) -> Result<Impor
             "{source_file} is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)"
         ));
     }
+    // `decisions.md §8`: the game mode picks the catalog, so a Starfinder file reads Starfinder records.
+    let game_mode = lines.iter().find(|line| line.key() == "GAMEMODE").map(|line| line.value().to_owned()).unwrap_or_default();
+    let catalog = catalog.for_game_mode(&game_mode)?;
     let mut importer = Importer::new(source_file, catalog);
     importer.read_equipment_sets(&lines);
     for line in &lines {
         importer.read(line);
     }
-    Ok(importer.finish(&lines))
+    let file = importer.finish(&lines);
+    // `decisions.md §21` Q-A: a companion file (a `MASTER` line: `sf_mechanic_drone`'s drone) imports
+    // as its own character only when the Starfinder engine computes it as one; Codex computes a drone
+    // on its master's sheet (`sf_drone_print`), so otherwise the file is refused by name.
+    if let (Some(package), Some(master)) = (catalog.starfinder_package(), lines.iter().find(|line| line.key() == "MASTER"))
+        && let Err(reason) = starfinder_verdict(package, &character_input_of(&file))
+    {
+        let kind = master.get("TYPE").unwrap_or("companion");
+        let master_file = master.get("FILE").unwrap_or("its master's file");
+        return Err(format!(
+            "{source_file} is a {kind} file, a companion of {}: Codex computes a {kind} on its master's sheet, so import the master ({master_file}). The Starfinder engine does not compute it alone: {reason}",
+            master.value()
+        ));
+    }
+    Ok(file)
 }
 
 /// Some of an `EQUIPNAME` line's pieces in one place of the imported set: one stack.
@@ -331,6 +361,8 @@ struct Importer<'a> {
     set_name: String,
     /// The Notes block's lines: kind, the report line they come from (file order), text.
     notes: Vec<(NoteKind, usize, String)>,
+    /// Starfinder's ability increases as the file states them: (ability, the +n PCGen applied).
+    increases: Vec<(&'static str, i16)>,
 }
 
 impl<'a> Importer<'a> {
@@ -358,6 +390,7 @@ impl<'a> Importer<'a> {
             next_item: 0,
             set_name: DEFAULT_SET_NAME.to_owned(),
             notes: Vec::new(),
+            increases: Vec::new(),
         }
     }
 
@@ -557,6 +590,9 @@ impl<'a> Importer<'a> {
             self.read_feat(line, &name, &targets);
             return;
         }
+        if self.catalog.starfinder_package().is_some() && self.read_starfinder_ability(line, &name, &category) {
+            return;
+        }
         if let Some(ability) = floating_bonus_ability(&name) {
             self.floating.push(ability);
             self.mapped(line, &format!("abilityScores.{ability} +2"));
@@ -568,6 +604,35 @@ impl<'a> Importer<'a> {
         }
         let description = line.get("DESC").unwrap_or("Imported from PCGen.").to_owned();
         self.custom_named_feat(line, &name, &description);
+    }
+
+    /// A Starfinder theme, a class's key-ability choice (`Soldier Key Ability ~ DEX`) or an ability
+    /// increase (`PC Level 5 Stat Boost ~ CON +2`). False for any other line.
+    fn read_starfinder_ability(&mut self, line: &Line, name: &str, category: &str) -> bool {
+        if category == "Theme" {
+            let Some(id) = self.catalog.theme_id(name).map(str::to_owned) else { return false };
+            self.feats.push(id.clone());
+            self.mapped(line, &format!("selectedFeats {id} (theme)"));
+            return true;
+        }
+        let Some((left, right)) = name.split_once(" ~ ") else { return false };
+        let ability = |word: &str| ABILITY_NAMES.iter().find(|(short, _)| short.eq_ignore_ascii_case(word)).map(|(short, long)| (*short, *long));
+        if let Some(class) = left.strip_suffix(" Key Ability") {
+            let (Some(class_id), Some((short, _))) = (self.catalog.class_id(class).map(str::to_owned), ability(right.trim())) else { return false };
+            self.choices.push(ChoiceWire { choice_set_id: class_id.clone(), selection_id: short.to_owned() });
+            self.mapped(line, &format!("selectedChoices {class_id} {short}"));
+            return true;
+        }
+        if left.starts_with("PC Level ") && left.ends_with(" Stat Boost") {
+            let mut words = right.split_whitespace();
+            let (Some((_, long)), Some(Ok(plus))) = (words.next().and_then(ability), words.next().map(|n| n.trim_start_matches('+').parse::<i16>())) else {
+                return false;
+            };
+            self.increases.push((long, plus));
+            self.mapped(line, &format!("abilityScores.{long} +{plus}"));
+            return true;
+        }
+        false
     }
 
     /// The older form: `FEAT:Weapon Focus (Longsword)|...`, or a separate `APPLIEDTO`.
@@ -823,12 +888,15 @@ impl<'a> Importer<'a> {
                 record.container_capacity_lbs = Some(record.container_capacity_lbs.unwrap_or(0.0).max(*lbs));
             }
         }
+        let starfinder = self.catalog.starfinder_package().is_some();
         let mut unknown_words: Vec<String> = Vec::new();
         let mut locations = Vec::new();
         let mut copies = BTreeMap::new();
         for (place, key) in &keyed {
             let location = match &place.parent {
                 Some(parent) => by_entry.get(parent.as_str()).map_or(Location::Carried, |container| Location::Inside { container: (*container).clone() }),
+                // Starfinder has no Pathfinder body slots: a worn line is Equipped (`decisions.md §8`).
+                None if starfinder && !matches!(place.word.as_str(), "Carried" | "Not Carried") => Location::Equipped,
                 None => location_word(&place.word).unwrap_or_else(|| {
                     if !unknown_words.contains(&place.word) {
                         unknown_words.push(place.word.clone());
@@ -969,26 +1037,37 @@ impl<'a> Importer<'a> {
             .find(|line| line.key() == "GAMEMODE")
             .map(|line| line.value().to_owned())
             .unwrap_or_default();
-        if self.report.game_mode != "Pathfinder_RPG" {
+        let starfinder = self.catalog.starfinder_package();
+        if self.report.game_mode != "Pathfinder_RPG" && starfinder.is_none() {
             self.report.warnings.push(format!(
                 "This character was made in PCGen's {} game mode. Codex reads it against its Pathfinder 1e records.",
                 if self.report.game_mode.is_empty() { "(unnamed)" } else { &self.report.game_mode }
             ));
         }
         let race = self.catalog.race(&self.race_name).cloned();
-        let ability_scores = self.final_scores(race.as_ref());
+        let mut ability_scores = self.final_scores(race.as_ref());
         let race_id = race.as_ref().map_or_else(|| format!("race:{}", self.race_name.to_lowercase()), |race| race.id.clone());
         let class_levels = self.class_levels();
-        self.add_engine_rows(&class_levels, &race_id);
-        self.keep_the_spells_the_engine_takes(&race_id, &class_levels, &ability_scores);
+        let (source_package_id, game_system) = match starfinder {
+            Some(package) => {
+                ability_scores = self.starfinder_scores(package, &race_id, &class_levels, ability_scores);
+                (SF_SOURCE_PACKAGE_ID, SF_SOURCE_PACKAGE_ID)
+            }
+            None => {
+                self.add_engine_rows(&class_levels, &race_id);
+                self.keep_the_spells_the_engine_takes(&race_id, &class_levels, &ability_scores);
+                (SOURCE_PACKAGE_ID, PF_GAME_SYSTEM)
+            }
+        };
         self.close_biography();
         self.bio.notes = self.notes_block();
 
         let display_label = if self.label.trim().is_empty() { "Imported character".to_owned() } else { self.label.trim().to_owned() };
-        ImportFile {
+        let mut file = ImportFile {
             display_label,
+            game_system: game_system.to_owned(),
             character_input: CharacterInputWire {
-                source_package_id: SOURCE_PACKAGE_ID.to_owned(),
+                source_package_id: source_package_id.to_owned(),
                 chosen: ChosenWire {
                     race_id,
                     class_levels,
@@ -1006,7 +1085,11 @@ impl<'a> Importer<'a> {
             custom: self.custom,
             equipment_sets,
             report: self.report,
+        };
+        if let Some(package) = starfinder {
+            hold_the_files_credits(package, &mut file);
         }
+        file
     }
 
     /// PCGen saves the score before the race's adjustment; Codex saves it after, as Create does.
@@ -1035,6 +1118,39 @@ impl<'a> Importer<'a> {
             self.report.warnings.push(format!("{}'s +2 to one ability is not stated in the file, so it is not applied", self.race_name));
         }
         scores
+    }
+
+    /// Starfinder's final scores (`decisions.md §8`): PCGen's `STAT` score is the score before the
+    /// race and the theme, so the engine's own race and theme rows (`sf_abilities`, over a level-1
+    /// build with no point buy) are added to it, then each increase the file states, as PCGen applied it.
+    fn starfinder_scores(&mut self, package: &SheetRulePackage, race_id: &str, class_levels: &[ClassLevelWire], file: AbilitiesWire) -> AbilitiesWire {
+        let theme = self.feats.iter().find(|id| package.rule(id).is_some_and(|rule| rule.pool == "theme")).cloned();
+        let build = SfBuild {
+            chassis: SfChassisBuild {
+                classes: class_levels.first().map(|class| (class.class_id.clone(), 1)).into_iter().collect(),
+                race: race_id.to_owned(),
+                ability_scores: [10; 6],
+                key_ability_choice: None,
+            },
+            theme,
+            armor: None,
+            picks: Vec::new(),
+            skill_ranks: BTreeMap::new(),
+            choices: BTreeMap::new(),
+        };
+        let adjustment = match sf_abilities::compute(package, &build, &SfAbilityBuild::default()) {
+            Ok(scores) => scores.finals().map(|score| (score - 10) as i16),
+            Err(refusal) => {
+                self.report.warnings.push(format!("the race and theme ability adjustments are not applied: {}", refusal.message));
+                [0; 6]
+            }
+        };
+        let mut scores = [file.strength, file.dexterity, file.constitution, file.intelligence, file.wisdom, file.charisma];
+        for (index, (_, long)) in ABILITY_NAMES.iter().enumerate() {
+            scores[index] += adjustment[index] + self.increases.iter().filter(|(ability, _)| ability == long).map(|(_, plus)| plus).sum::<i16>();
+        }
+        let [strength, dexterity, constitution, intelligence, wisdom, charisma] = scores;
+        AbilitiesWire { strength, dexterity, constitution, intelligence, wisdom, charisma }
     }
 
     /// A class Codex holds is the class; a file with none keeps its first class's name, so the
@@ -1169,6 +1285,109 @@ impl<'a> Importer<'a> {
     }
 }
 
+/// The Starfinder build and carried loadout of `input`: the table of the app's Starfinder adapter
+/// (`sf_adapter.rs` `build_from_input`, retyped here because the sidecar does not link the app).
+pub fn starfinder_build(package: &SheetRulePackage, input: &CharacterInput) -> (SfBuild, SfLoadout) {
+    let chosen = &input.chosen;
+    let classes: Vec<(String, u8)> = chosen.class_levels.iter().map(|class| (class.class_id.clone(), class.level)).collect();
+    let scores = &chosen.ability_scores;
+    let ability_scores = [scores.strength, scores.dexterity, scores.constitution, scores.intelligence, scores.wisdom, scores.charisma].map(i64::from);
+    let mut key_ability_choice = None;
+    let mut choices: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    let mut credits_adjustment = 0_i64;
+    for choice in &chosen.selected_choices {
+        if choice.choice_set_id == SF_CREDITS_CHOICE {
+            credits_adjustment += choice.selection_id.parse::<i64>().unwrap_or(0);
+        } else if classes.iter().any(|(class, _)| *class == choice.choice_set_id) {
+            key_ability_choice = match choice.selection_id.as_str() {
+                "STR" => Some(Ability::Str),
+                "DEX" => Some(Ability::Dex),
+                "CON" => Some(Ability::Con),
+                "INT" => Some(Ability::Int),
+                "WIS" => Some(Ability::Wis),
+                "CHA" => Some(Ability::Cha),
+                _ => key_ability_choice,
+            };
+        } else {
+            choices.entry(choice.choice_set_id.clone()).or_default().push(choice.selection_id.clone());
+        }
+    }
+    let (themes, mut picks): (Vec<String>, Vec<String>) =
+        chosen.selected_feats.iter().cloned().partition(|id| package.rule(id).is_some_and(|rule| rule.pool == "theme"));
+    let is_armor = |id: &str| package.rule(id).is_some_and(|rule| rule.tags.iter().any(|tag| tag == "ARMOR"));
+    let mut armor = None;
+    let mut carried: Vec<(String, u32)> = Vec::new();
+    let mut applied = Vec::new();
+    for selection in chosen.equipment_selections.iter().filter(|selection| selection.active_state != ActiveState::Absent) {
+        applied.extend(selection.applied_modifiers.iter().cloned());
+        let worn = selection.active_state == ActiveState::EquippedActive;
+        if worn && armor.is_none() && is_armor(&selection.item_id) {
+            armor = Some(selection.item_id.clone());
+            continue;
+        }
+        if worn && !picks.contains(&selection.item_id) {
+            picks.push(selection.item_id.clone());
+        }
+        match carried.iter_mut().find(|(id, _)| *id == selection.item_id) {
+            Some((_, quantity)) => *quantity += 1,
+            None => carried.push((selection.item_id.clone(), 1)),
+        }
+    }
+    let build = SfBuild {
+        chassis: SfChassisBuild { classes, race: chosen.race_id.clone(), ability_scores, key_ability_choice },
+        theme: themes.into_iter().next(),
+        armor,
+        picks,
+        skill_ranks: chosen.skill_allocations.iter().map(|skill| (skill.skill_id.clone(), i64::from(skill.ranks))).collect(),
+        choices,
+    };
+    (build, SfLoadout { starting_credits: None, carried, applied, credits_adjustment })
+}
+
+/// The Starfinder engine's verdict on `input`: every total the app's Starfinder sheet computes
+/// (`sf_adapter.rs` `compute_sheet`: chassis, defense, skills, spells, carried, attacks), or the
+/// first refusal by its id and message. The sheet's printed lines are the app's and not run here.
+pub fn starfinder_verdict(package: &SheetRulePackage, input: &CharacterInput) -> Result<(), String> {
+    let refused = |refusal: sf_chassis::SfChassisRefusal| format!("{}: {}", refusal.id, refusal.message);
+    let (build, loadout) = starfinder_build(package, input);
+    let chassis = sf_chassis::compute(package, &build.chassis).map_err(refused)?;
+    let held = sf_defense::held(package, &build).map_err(refused)?;
+    sf_defense::compute_with(package, &build, &held).map_err(refused)?;
+    sf_skills::compute_with(package, &build, &held).map_err(refused)?;
+    sf_spells::compute_with(package, &build, &held).map_err(refused)?;
+    sf_loadout::compute(package, &build, &loadout).map_err(refused)?;
+    sf_attack::compute_with(package, &held, &chassis.base_attack_bonus, &loadout.carried);
+    Ok(())
+}
+
+/// A Starfinder character's credits are what its file says it has left (`MONEY`), not the level's
+/// wealth less the gear's prices (`sf_loadout`): the difference is the app's credits row, the one
+/// the Market writes ([`SF_CREDITS_CHOICE`]).
+fn hold_the_files_credits(package: &SheetRulePackage, file: &mut ImportFile) {
+    let left = i64::try_from(file.money.total_copper / 100).unwrap_or(i64::MAX);
+    let (build, mut loadout) = starfinder_build(package, &character_input_of(file));
+    // Any amount that clears the budget check; the row is then what makes the remainder `left`.
+    loadout.credits_adjustment = i64::MAX / 4;
+    let Ok(carried) = sf_loadout::compute(package, &build, &loadout) else { return };
+    let adjustment = left - (carried.starting_credits.total - carried.credits_spent.total);
+    if adjustment != 0 {
+        file.character_input.chosen.selected_choices.push(ChoiceWire { choice_set_id: SF_CREDITS_CHOICE.to_owned(), selection_id: adjustment.to_string() });
+        file.report.lines.push(ReportLine {
+            key: String::new(),
+            from: format!("the file's {left} credits left"),
+            outcome: Outcome::Added,
+            to: format!("selectedChoices {SF_CREDITS_CHOICE} {adjustment}"),
+        });
+    }
+}
+
+/// The engine's input for an import, as the app's `character_input_from_dto` reads the wire.
+pub fn character_input_of(file: &ImportFile) -> CharacterInput {
+    let mut input = engine_input(&file.character_input.chosen);
+    input.source_package_id = file.character_input.source_package_id.clone();
+    input
+}
+
 fn spell_stats(class: &str, level: Option<&str>, book: Option<&str>) -> Vec<CustomStat> {
     [("Class", Some(class)), ("Level", level), ("Book", book)]
         .into_iter()
@@ -1201,7 +1420,11 @@ fn engine_input(chosen: &ChosenWire) -> CharacterInput {
                 .equipment_selections
                 .iter()
                 .map(|row| {
-                    let active_state = if row.active_state == WORN { ActiveState::EquippedActive } else { ActiveState::SelectedInactive };
+                    let active_state = match row.active_state.as_str() {
+                        WORN => ActiveState::EquippedActive,
+                        "Absent" => ActiveState::Absent,
+                        _ => ActiveState::SelectedInactive,
+                    };
                     EquipmentSelection {
                         item_id: row.item_id.clone(),
                         equipped_or_active: active_state == ActiveState::EquippedActive,
