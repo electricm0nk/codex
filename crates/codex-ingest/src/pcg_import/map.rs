@@ -12,6 +12,7 @@
 
 use std::collections::BTreeMap;
 
+use codex::rules_core::body_slots::{BodySlot, Enhanceable};
 use codex::rules_core::class_seeds::canonical_seeds_for;
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, ChosenCharacterState, EquipmentSelection,
@@ -20,6 +21,9 @@ use codex::rules_core::character_input::{
 use codex::rules_core::feat_effects::chooser_contract_for_feat;
 use codex::rules_core::feat_identity;
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
+use codex::saved_character::equipment_sets::{
+    CopyFacts, CopyKey, DEFAULT_SET_NAME, EquipmentSet, EquipmentSets, Location, SetEntry, copy_keys, project,
+};
 
 use super::catalog::{Catalog, fold};
 use super::parse::{Line, Tag, looks_like_a_character, parse};
@@ -47,9 +51,9 @@ pub const MAPPING: &[(&str, KeyRule)] = &[
     ("FEAT", KeyRule::Field("selectedFeats + a target choice (the older form of ABILITY)")),
     ("SKILL", KeyRule::Field("skillAllocations, ranks summed over CLASSBOUGHT")),
     ("SPELLNAME", KeyRule::Field("spellsSelected")),
-    ("EQUIPNAME", KeyRule::Field("equipmentSelections, BASEITEM first, PLUSnW/A/S to an applied +n modifier")),
-    ("EQUIPSET", KeyRule::Field("activeState: a location at the set's top level is worn; Carried, Not Carried and anything inside a container are carried")),
-    ("CALCEQUIPSET", KeyRule::Field("which EQUIPSET is the worn one")),
+    ("EQUIPNAME", KeyRule::Field("one equipmentSelections row and one equipmentSets stack per place the line is in, its QUANTITY the stack's pieces; BASEITEM first, PLUSnW/A/S to an applied +n modifier")),
+    ("EQUIPSET", KeyRule::Field("equipmentSets: a slot word to a Slot (PCGEN_SLOTS), Equipped, Carried, Not Carried, or inside the entry above it; activeState is the set's projection")),
+    ("CALCEQUIPSET", KeyRule::Field("which EQUIPSET is the set imported, and its name")),
     ("MONEY", KeyRule::Field("money.totalCopper, gp x 100")),
     ("LANGUAGE", KeyRule::Field("the Languages custom feat (the Pathfinder sheet has no language list to fill)")),
     ("ALIGN", KeyRule::Field("bio.alignment")),
@@ -152,8 +156,47 @@ const MAX_NAME: usize = 120;
 const MAX_DESCRIPTION: usize = 10_000;
 const MAX_STATS: usize = 40;
 const MAX_STAT_TEXT: usize = 400;
-/// One selection row per copy, so a stack of ammunition stays a bounded list.
-const MAX_COPIES: u32 = 99;
+
+/// PCGen's location words with a place on the body: the 26 `EQSLOT` names of the pinned oracle's
+/// `system/gameModes/Pathfinder/equipmentslots.lst` (as `data/equipment_types.json` maps them), then
+/// the hand and natural-weapon words of PCGen's `Constants.java`. `BodySlot::None` reads as
+/// Equipped; a word in no row reads as Equipped with one warning per import (`decisions.md` SD-a).
+pub const PCGEN_SLOTS: &[(&str, BodySlot)] = &[
+    ("Armor", BodySlot::Armor),
+    ("Belt", BodySlot::Belt),
+    ("Body", BodySlot::Body),
+    ("Chest", BodySlot::Chest),
+    ("Eyes", BodySlot::Eyes),
+    ("Feet", BodySlot::Feet),
+    ("Hands", BodySlot::Hands),
+    ("Head", BodySlot::Head),
+    ("Headband", BodySlot::Headband),
+    ("Neck", BodySlot::Neck),
+    ("Ring", BodySlot::Ring),
+    ("Shield", BodySlot::Shield),
+    ("Shoulders", BodySlot::Shoulders),
+    ("Wrist", BodySlot::Wrist),
+    ("Torso", BodySlot::None),
+    ("Weapon", BodySlot::WieldMain),
+    ("Tattoo Head", BodySlot::None),
+    ("Tattoo Shoulders", BodySlot::None),
+    ("Tattoo Neck", BodySlot::None),
+    ("Tattoo Chest", BodySlot::None),
+    ("Tattoo Body", BodySlot::None),
+    ("Tattoo Belt", BodySlot::None),
+    ("Tattoo Wrist", BodySlot::None),
+    ("Tattoo Hands", BodySlot::None),
+    ("Tattoo Ring", BodySlot::None),
+    ("Tattoo Feet", BodySlot::None),
+    ("Primary Hand", BodySlot::WieldMain),
+    ("Secondary Hand", BodySlot::WieldOff),
+    ("Both Hands", BodySlot::WieldTwoHanded),
+    ("Double Weapon", BodySlot::WieldTwoHanded),
+    ("Two Weapons", BodySlot::WieldMain),
+    ("Unarmed", BodySlot::None),
+    ("Natural-Primary", BodySlot::None),
+    ("Natural-Secondary", BodySlot::None),
+];
 
 /// Converts the text of one `.pcg`. Refuses only a file that is not a PCGen character.
 pub fn convert(text: &str, source_file: &str, catalog: &Catalog) -> Result<ImportFile, String> {
@@ -169,6 +212,24 @@ pub fn convert(text: &str, source_file: &str, catalog: &Catalog) -> Result<Impor
         importer.read(line);
     }
     Ok(importer.finish(&lines))
+}
+
+/// Some of an `EQUIPNAME` line's pieces in one place of the imported set: one stack.
+struct Placement {
+    /// The `EQUIPSET` entry's `ID`; `None` for pieces no entry places (Carried).
+    entry: Option<String>,
+    /// The top-level location word (`Armor`, `Carried`, …); empty inside a container.
+    word: String,
+    /// The entry this one is inside.
+    parent: Option<String>,
+    pieces: u32,
+    /// The stack once the line is read: a row of `equipment`, or a custom record's id.
+    held: Option<Held>,
+}
+
+enum Held {
+    Row(usize),
+    Custom(String),
 }
 
 /// A spell the file names and Codex holds, until the engine has had its say.
@@ -199,9 +260,10 @@ struct Importer<'a> {
     money: MoneyWire,
     biography: Vec<(String, String)>,
     custom: CustomWire,
-    /// Worn and carried counts left to hand out, by the folded EQUIPSET value.
-    worn: BTreeMap<String, u32>,
-    carried: BTreeMap<String, u32>,
+    /// Each `EQUIPNAME` line's places, in file order, and the next line's index.
+    placements: Vec<Vec<Placement>>,
+    next_item: usize,
+    set_name: String,
 }
 
 impl<'a> Importer<'a> {
@@ -225,14 +287,16 @@ impl<'a> Importer<'a> {
             money: MoneyWire::default(),
             biography: Vec::new(),
             custom: CustomWire::default(),
-            worn: BTreeMap::new(),
-            carried: BTreeMap::new(),
+            placements: Vec::new(),
+            next_item: 0,
+            set_name: DEFAULT_SET_NAME.to_owned(),
         }
     }
 
-    /// EQUIPSET lines may sit before or after what they name, so they are read first. A location at
-    /// the top level of the worn set is worn; `Carried` and `Not Carried` are not, and an item in a
-    /// container is in the container.
+    /// EQUIPSET lines may sit before or after what they name, so they are read first. Each entry of
+    /// the imported set (`CALCEQUIPSET`) is matched to the `EQUIPNAME` line it names (by name, then
+    /// by the line's `KEY` or `BASEITEM`) and takes up to that line's pieces; what no entry places
+    /// is Carried. One line in two places is two stacks (`decisions.md` SD-c).
     fn read_equipment_sets(&mut self, lines: &[Line]) {
         let worn_set = lines
             .iter()
@@ -248,16 +312,53 @@ impl<'a> Importer<'a> {
                     .map(str::to_owned)
             })
             .unwrap_or_default();
+        if let Some(name) = lines
+            .iter()
+            .filter(|line| line.key() == "EQUIPSET" && line.get("ID") == Some(worn_set.as_str()))
+            .map(|line| line.value().trim())
+            .find(|name| !name.is_empty())
+        {
+            self.set_name = name.chars().take(codex::saved_character::equipment_sets::SET_NAME_MAX_CHARS).collect();
+        }
+        let items: Vec<(String, Vec<String>)> = lines
+            .iter()
+            .filter(|line| line.key() == "EQUIPNAME")
+            .map(|line| {
+                let (base_item, data) = customization(line);
+                let others = [data.get("KEY").cloned(), base_item].into_iter().flatten().map(|name| fold(&name)).collect();
+                (fold(line.value()), others)
+            })
+            .collect();
+        let mut left: Vec<u32> = lines.iter().filter(|line| line.key() == "EQUIPNAME").map(|line| quantity(line.get("QUANTITY"))).collect();
+        self.placements = items.iter().map(|_| Vec::new()).collect();
         let top_level = worn_set.split('.').count() + 1;
         for line in lines.iter().filter(|line| line.key() == "EQUIPSET") {
             let (Some(id), Some(value)) = (line.get("ID"), line.get("VALUE")) else { continue };
             if !id.starts_with(&format!("{worn_set}.")) {
                 continue;
             }
-            let copies = quantity(line.get("QUANTITY"));
-            let is_worn = id.split('.').count() == top_level && !matches!(line.value(), "Carried" | "Not Carried");
-            let target = if is_worn { &mut self.worn } else { &mut self.carried };
-            *target.entry(fold(value)).or_default() += copies;
+            let value = fold(value);
+            let by_name = items.iter().enumerate().position(|(at, (name, _))| *name == value && left[at] > 0);
+            let by_key = || items.iter().enumerate().position(|(at, (_, others))| others.contains(&value) && left[at] > 0);
+            let Some(at) = by_name.or_else(by_key) else {
+                self.report.warnings.push(format!("EQUIPSET {id} ({}) names no line with pieces left; not read", line.get("VALUE").unwrap_or_default()));
+                continue;
+            };
+            let pieces = quantity(line.get("QUANTITY")).min(left[at]);
+            left[at] -= pieces;
+            let depth = id.split('.').count();
+            self.placements[at].push(Placement {
+                entry: Some(id.to_owned()),
+                word: if depth == top_level { line.value().trim().to_owned() } else { String::new() },
+                parent: (depth > top_level).then(|| id.rsplit_once('.').map_or_else(String::new, |(parent, _)| parent.to_owned())),
+                pieces,
+                held: None,
+            });
+        }
+        for (places, rest) in self.placements.iter_mut().zip(left) {
+            if rest > 0 {
+                places.push(Placement { entry: None, word: "Carried".to_owned(), parent: None, pieces: rest, held: None });
+            }
         }
     }
 
@@ -498,22 +599,34 @@ impl<'a> Importer<'a> {
     }
 
     fn read_item(&mut self, line: &Line) {
+        let index = self.next_item;
+        self.next_item += 1;
         let name = line.value().to_owned();
-        let customization = line.tags.iter().find(|tag| tag.key == "CUSTOMIZATION").map(Tag::nested).unwrap_or_default();
-        let base_item = customization.iter().find(|tag| tag.key == "BASEITEM").map(|tag| tag.value.clone());
-        let data = customization.iter().find(|tag| tag.key == "DATA").map(|tag| data_fields(&tag.value)).unwrap_or_default();
-        let data_key = data.get("KEY").cloned();
-        let copies = quantity(line.get("QUANTITY"));
-        let names_it = [Some(name.clone()), data_key, base_item.clone()];
-
-        let (worn, carried) = self.split_copies(&names_it, copies);
+        if quantity(line.get("QUANTITY")) == 0 {
+            // `decisions.md` SD-d: nothing is held, and the player is told.
+            self.report.warnings.push(format!("{name}: 0 copies in the file"));
+            self.mapped(line, "not held: 0 copies in the file");
+            return;
+        }
+        let (base_item, data) = customization(line);
+        // Worn: a top-level place that is neither Carried nor Not Carried.
+        let places = self.placements.get(index).map_or(&[][..], Vec::as_slice);
+        let worn: u32 = places.iter().filter(|place| !matches!(place.word.as_str(), "" | "Carried" | "Not Carried")).map(|place| place.pieces).sum();
+        let carried = places.iter().map(|place| place.pieces).sum::<u32>() - worn;
         let item_key = [base_item.as_deref(), data.get("KEY").map(String::as_str), Some(name.as_str())]
             .into_iter()
             .flatten()
             .find_map(|candidate| self.catalog.equipment_key(candidate))
             .map(str::to_owned);
         let Some(item_key) = item_key else {
+            let before = self.custom.equipment.len();
             self.custom_item(line, &name, worn, carried);
+            if self.custom.equipment.len() > before {
+                let id = self.custom.equipment[before].id.clone();
+                for place in self.placements.get_mut(index).into_iter().flatten() {
+                    place.held = Some(Held::Custom(id.clone()));
+                }
+            }
             return;
         };
 
@@ -521,33 +634,60 @@ impl<'a> Importer<'a> {
         if !other_mods.is_empty() {
             self.report.warnings.push(format!("{name}: its modifiers {} are not applied", other_mods.join(", ")));
         }
-        if worn + carried > MAX_COPIES {
-            self.report.warnings.push(format!("{name}: {} copies listed as {MAX_COPIES}", worn + carried));
+        for place in self.placements.get_mut(index).into_iter().flatten() {
+            place.held = Some(Held::Row(self.equipment.len()));
+            // The state is the set's projection, set in `place_copies`.
+            self.equipment.push(EquipmentWire { item_id: item_key.clone(), active_state: CARRIED.to_owned(), applied_modifiers: modifiers.clone() });
         }
-        let worn = worn.min(MAX_COPIES);
-        let carried = carried.min(MAX_COPIES - worn);
-        let row = |active_state: &str| EquipmentWire {
-            item_id: item_key.clone(),
-            active_state: active_state.to_owned(),
-            applied_modifiers: modifiers.clone(),
-        };
-        self.equipment.extend((0..worn).map(|_| row(WORN)));
-        self.equipment.extend((0..carried).map(|_| row(CARRIED)));
         self.mapped(line, &format!("equipmentSelections {item_key}: {worn} worn, {carried} carried"));
     }
 
-    /// Hands out this line's copies from what the sets say. Whatever no set names is carried.
-    fn split_copies(&mut self, names: &[Option<String>], copies: u32) -> (u32, u32) {
-        let keys: Vec<String> = names.iter().flatten().map(|name| fold(name)).collect();
-        let mut worn = 0;
-        for key in &keys {
-            if let Some(left) = self.worn.get_mut(key) {
-                let taken = (*left).min(copies - worn);
-                *left -= taken;
-                worn += taken;
-            }
+    /// The imported set and each stack's pieces, from the places the lines were read into. Every
+    /// row's `activeState` becomes the set's projection, the state the app's load keeps.
+    fn place_copies(&mut self) -> EquipmentSets {
+        let row_keys = copy_keys(self.equipment.iter().map(|row| (row.item_id.as_str(), copy_bonus(&row.applied_modifiers))));
+        let mut custom_ordinals: BTreeMap<String, u32> = BTreeMap::new();
+        let mut keyed: Vec<(&Placement, CopyKey)> = Vec::new();
+        for place in self.placements.iter().flatten() {
+            let key = match &place.held {
+                Some(Held::Row(row)) => row_keys[*row].clone(),
+                Some(Held::Custom(id)) => {
+                    let ordinal = custom_ordinals.entry(id.clone()).or_insert(0);
+                    *ordinal += 1;
+                    CopyKey { item_id: format!("custom:{id}"), bonus: 0, ordinal: *ordinal - 1 }
+                }
+                None => continue,
+            };
+            keyed.push((place, key));
         }
-        (worn, copies - worn)
+        let by_entry: BTreeMap<&str, &CopyKey> = keyed.iter().filter_map(|(place, key)| Some((place.entry.as_deref()?, key))).collect();
+        let mut unknown_words: Vec<String> = Vec::new();
+        let mut locations = Vec::new();
+        let mut copies = BTreeMap::new();
+        for (place, key) in &keyed {
+            let location = match &place.parent {
+                Some(parent) => by_entry.get(parent.as_str()).map_or(Location::Carried, |container| Location::Inside { container: (*container).clone() }),
+                None => location_word(&place.word).unwrap_or_else(|| {
+                    if !unknown_words.contains(&place.word) {
+                        unknown_words.push(place.word.clone());
+                    }
+                    Location::Equipped
+                }),
+            };
+            if location != Location::Carried {
+                locations.push(SetEntry { copy: key.clone(), location });
+            }
+            copies.insert(key.map_key(), CopyFacts { quantity: Some(place.pieces), ..CopyFacts::default() });
+        }
+        for word in unknown_words {
+            self.report.warnings.push(format!("{word}: a PCGen location Codex has no slot for; read as Equipped"));
+        }
+        let set = EquipmentSet { name: self.set_name.clone(), locations };
+        let states = project(&set, &row_keys);
+        for (row, state) in self.equipment.iter_mut().zip(states) {
+            row.active_state = format!("{state:?}");
+        }
+        EquipmentSets { copies, ..EquipmentSets::new(set) }
     }
 
     fn read_money(&mut self, line: &Line) {
@@ -627,6 +767,7 @@ impl<'a> Importer<'a> {
     }
 
     fn finish(mut self, lines: &[Line]) -> ImportFile {
+        let equipment_sets = self.place_copies();
         self.report.game_mode = lines
             .iter()
             .find(|line| line.key() == "GAMEMODE")
@@ -666,6 +807,7 @@ impl<'a> Importer<'a> {
             bio: self.bio,
             money: self.money,
             custom: self.custom,
+            equipment_sets,
             report: self.report,
         }
     }
@@ -917,10 +1059,40 @@ fn short(text: &str) -> String {
     clipped(text.trim(), 200)
 }
 
+/// A `QUANTITY` as whole pieces; `0` is zero (SD-d), an absent or unreadable one is 1.
 fn quantity(value: Option<&str>) -> u32 {
     value
         .and_then(|value| value.trim().parse::<f64>().ok())
-        .map_or(1, |value| value.round().max(1.0).min(f64::from(u32::MAX)) as u32)
+        .map_or(1, |value| value.round().clamp(0.0, f64::from(u32::MAX)) as u32)
+}
+
+/// A line's `CUSTOMIZATION`: its `BASEITEM` and its `DATA` fields.
+fn customization(line: &Line) -> (Option<String>, BTreeMap<String, String>) {
+    let customization = line.tags.iter().find(|tag| tag.key == "CUSTOMIZATION").map(Tag::nested).unwrap_or_default();
+    let base_item = customization.iter().find(|tag| tag.key == "BASEITEM").map(|tag| tag.value.clone());
+    let data = customization.iter().find(|tag| tag.key == "DATA").map(|tag| data_fields(&tag.value)).unwrap_or_default();
+    (base_item, data)
+}
+
+/// The `+N` a row's modifiers give its copy key, as the engine reads it (`encumbrance::copy_bonus`).
+fn copy_bonus(modifiers: &[String]) -> u8 {
+    (1..=10u8)
+        .filter(|n| [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon].iter().any(|kind| modifiers.contains(&kind.modifier_key(*n))))
+        .max()
+        .unwrap_or(0)
+}
+
+/// A top-level location word: Carried, Not Carried, Equipped, or a [`PCGEN_SLOTS`] row.
+fn location_word(word: &str) -> Option<Location> {
+    match word {
+        "Carried" => Some(Location::Carried),
+        "Not Carried" => Some(Location::NotCarried),
+        "Equipped" => Some(Location::Equipped),
+        _ => PCGEN_SLOTS.iter().find(|(name, _)| name.eq_ignore_ascii_case(word)).map(|(_, slot)| match slot {
+            BodySlot::None => Location::Equipped,
+            slot => Location::Slot { slot: *slot },
+        }),
+    }
 }
 
 fn applied_to(line: &Line) -> Vec<String> {

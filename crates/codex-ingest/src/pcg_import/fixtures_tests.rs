@@ -310,9 +310,12 @@ fn pcg_import_fixtures_paladin_reads_what_the_file_says() {
     assert_eq!(flail[0].active_state, "EquippedActive", "EQUIPSET:Both Hands");
     assert_eq!(flail[0].applied_modifiers, ["Special Ability ~ +1 ~ Weapon"]);
     assert_eq!(rows("Dagger")[0].active_state, "SelectedInactive", "EQUIPSET:Carried");
-    assert_eq!(rows("Bedroll")[0].active_state, "SelectedInactive", "inside the saddlebags on the horse");
-    assert_eq!(rows("Javelin").len(), 5, "QUANTITY:5.0");
-    assert!(rows("Javelin").iter().all(|row| row.active_state == "SelectedInactive"));
+    assert_eq!(rows("Bedroll")[0].active_state, "Absent", "inside the saddlebags on the Not Carried horse");
+    // QUANTITY:5.0 in two places: 3 Carried, 2 on the horse, so two stacks, one row each (SD-42 §5).
+    let javelins: Vec<&str> = rows("Javelin").iter().map(|row| row.active_state.as_str()).collect();
+    assert_eq!(javelins, ["SelectedInactive", "Absent"]);
+    let pieces: Vec<Option<u32>> = ["Javelin|0|0", "Javelin|0|1"].iter().map(|key| file.equipment_sets.copies.get(*key).and_then(|facts| facts.quantity)).collect();
+    assert_eq!(pieces, [Some(3), Some(2)]);
 
     // Ultimate Combat's Compel Hostility is on the file's list and not on the engine's paladin list,
     // and one refused spell would refuse the character.

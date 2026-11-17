@@ -1,6 +1,7 @@
 //! The JSON `pcg_import` writes. `displayLabel` and `characterInput` are the file `import_character`
 //! reads, field for field; serde ignores the rest there. `bio`, `money` and `custom` are the shapes of
-//! the character's own `bio.json`, `money.json` and `custom.json`, and `report` is shown to the player.
+//! the character's own `bio.json`, `money.json` and `custom.json`, `equipmentSets` is the character's
+//! `equipment_sets.json` (one stack per placement of an `EQUIPNAME` line), and `report` is shown to the player.
 
 use serde::{Deserialize, Serialize};
 
@@ -12,6 +13,7 @@ pub struct ImportFile {
     pub bio: BioWire,
     pub money: MoneyWire,
     pub custom: CustomWire,
+    pub equipment_sets: codex::saved_character::equipment_sets::EquipmentSets,
     pub report: Report,
 }
 
