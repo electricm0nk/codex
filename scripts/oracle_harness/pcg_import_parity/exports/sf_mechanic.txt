@@ -1,0 +1,74 @@
+name=Yo-yo
+race=Ysoki
+class=Mechanic
+level=20
+stat.STR=12
+stat.DEX=20
+stat.CON=18
+stat.INT=26
+stat.WIS=19
+stat.CHA=14
+hp=122
+stamina=220
+resolve=20
+eac=21
+kac=22
+initiative=+9
+bab=+15
+save.Fortitude=+16
+save.Reflex=+17
+save.Will=+10
+attack.melee=+16
+attack.ranged=+20
+skill.Acrobatics=5|ranks=0.0|untrained=Y
+skill.Athletics=24|ranks=20.0|untrained=Y
+skill.Bluff=2|ranks=0.0|untrained=Y
+skill.Computers=37|ranks=20.0|untrained=NO
+skill.Diplomacy=2|ranks=0.0|untrained=Y
+skill.Disguise=2|ranks=0.0|untrained=Y
+skill.Engineering=39|ranks=20.0|untrained=NO
+skill.Intimidate=2|ranks=0.0|untrained=Y
+skill.Life Science=28|ranks=20.0|untrained=NO
+skill.Medicine=32|ranks=20.0|untrained=NO
+skill.Perception=27|ranks=20.0|untrained=Y
+skill.Physical Science=31|ranks=20.0|untrained=NO
+skill.Piloting=28|ranks=20.0|untrained=Y
+skill.Profession (Maintenance Worker)=27|ranks=20.0|untrained=NO
+skill.Sense Motive=24|ranks=20.0|untrained=Y
+skill.Stealth=27|ranks=20.0|untrained=Y
+skill.Survival=26|ranks=20.0|untrained=Y
+weapon.*Cavitation pistol, thermodynamic (Small)=+20|damage=3d12+10|category=Non-Standard-Ranged
+bulk=0.5 lbs.
+credits=1,000
+credits.spent=2495502 cr
+acp=+0
+abilities.feat=Enhanced Resistance, Extra Resolve, Fleet, Improved Initiative, Jet Dash, Lunge, Master Crafter, Nimble Moves, Skill Focus (Engineering), Stand Still, Toughness
+abilities.theme=Biotechnician, THEME KNOWLEDGE, INDUSTRY CONNECTIONS, TEST SUBJECT, ADAPTIVE BIOTECH
+abilities.class_feature=Advanced Rig, Artificial Intelligence, Bypass, Combat Maintenance, Combat Tracking, Control Net, Coordinated Assault, Custom Rig, Drone, Exocortex, Exocortex Mods, Expert Rig, Favored Augmentation, Ghost In The Machine, Improved Resistant Energy, Mechanic Trick, Memory Module, Miracle Worker, Mod Tinkerer, Nested Augmentations, Neural Shunt, Overclocked Systems, Overclocking, Overload, Override, Quick Patch, Quick Repair, Remote Hack, Repair Drone, Saboteur, Scoutbot, Superior Rig, Sustained by Science, Tech Master, Twin Tracking, Weapon Specialization, Wireless Hack
+abilities.racial_trait=SIZE AND TYPE, CHEEK POUCHES, DARKVISION, MOXIE, SCROUNGER
+pcg.classes=1
+pcg.class.Mechanic=20
+pcg.gold=1,000
+pcg.gear=22
+pcg.gear.0=Cavitation pistol, thermodynamic (Small)|long=Cavitation pistol, thermodynamic (Small)|qty=1|location=Equipped
+pcg.gear.1=AbadarCorp travel suit, silver (Small)|long=AbadarCorp travel suit, silver (Small)|qty=1|location=Equipped
+pcg.gear.2=Aeon Stone (Dark Blue Rhomboid)|long=Aeon Stone (Dark Blue Rhomboid)|qty=1|location=Equipped
+pcg.gear.3=Amulet of Camouflage|long=Amulet of Camouflage|qty=1|location=Equipped
+pcg.gear.4=Ratfolk belt|long=Ratfolk belt|qty=1|location=Equipped
+pcg.gear.5=Diffraction cloak Mk 3|long=Diffraction cloak Mk 3|qty=1|location=Equipped
+pcg.gear.6=Computer (Alarm/Fake shell/Firewall/Lockout/Control, complex/Secure data, specific/Tier 10/Artificial personality/Hardened/Miniaturization/Security IV/Self-charging)|long=Computer (Alarm/Fake shell/Firewall/Lockout/Control, complex/Secure data, specific/Tier 10/Artificial personality/Hardened/Miniaturization/Security IV/Self-charging)|qty=1|location=Equipped
+pcg.gear.7=Optical laser, zenith|long=Optical laser, zenith|qty=1|location=Equipped
+pcg.gear.8=Dermal plating, mk 7|long=Dermal plating, mk 7|qty=1|location=Equipped
+pcg.gear.9=Adaptive Serum Mk 2|long=Adaptive Serum Mk 2|qty=2|location=Equipped
+pcg.gear.10=Spell Gem (Erase)|long=Spell Gem (Erase)|qty=1|location=Equipped
+pcg.gear.11=Spell Gem (Flight (Level 4))|long=Spell Gem (Flight (Level 4))|qty=1|location=Equipped
+pcg.gear.12=Holographic eyes, mk 1|long=Holographic eyes, mk 1|qty=1|location=Equipped
+pcg.gear.13=Cred Stick|long=Cred Stick|qty=1|location=Equipped
+pcg.gear.14=Credit|long=Credit|qty=100050|location=Equipped
+pcg.gear.15=Personal Upgrade Mk 3|long=Personal Upgrade Mk 3|qty=1|location=Equipped
+pcg.gear.16=Travel treads Mk 2|long=Travel treads Mk 2|qty=1|location=Carried
+pcg.gear.17=Prescient Lenses Mk 2|long=Prescient Lenses Mk 2|qty=1|location=Carried
+pcg.gear.18=Telekinetic gloves|long=Telekinetic gloves|qty=1|location=Carried
+pcg.gear.19=Mind Guardian|long=Mind Guardian|qty=1|location=Carried
+pcg.gear.20=Ring of Resistance Mk 4|long=Ring of Resistance Mk 4|qty=1|location=Carried
+pcg.gear.21=Efficient Bandolier|long=Efficient Bandolier|qty=1|location=Carried
