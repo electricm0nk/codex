@@ -65,7 +65,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 48: 37 at 
 | E2.MC | E2 merge check + Epic report (≥ 10 screenshots, looked at) | opus | waiting | E2.13 | adversarial; the campaign lane ends |
 | E3.1 | Editor core: packages, byte-stable round trip, live preview, reading view | opus | complete | C1 | lane `editor`; `decisions.md §18`; commit `75e9feca1d`; receipt `artifacts/epic_3/E3.1_cycle_receipt.md` |
 | E3.2 | `[[` completion; link clicks | opus | complete | E3.1 | commit `931098912b`; receipt `artifacts/epic_3/E3.2_cycle_receipt.md` |
-| E3.3 | Toolbar, auto-save, disk-change warning, drag-in images | opus | waiting | E3.2 | `save_attachment` fence exit rule in the row |
+| E3.3 | Toolbar, auto-save, disk-change warning, drag-in images | opus | complete | E3.2 | code `34e62e2d94`; receipt `artifacts/epic_3/E3.3_cycle_receipt.md`; fence exit `save_attachment` (campaign_folder.rs + main.rs) |
 | E3.MC | E3 merge check + Epic report | opus | waiting | E3.3 | adversarial; the editor lane ends |
 | E4.1 | Import writes `equipment_sets.json`, Create items, Notes, `game_system`; a new root every import | opus | waiting | E1.MC, E2.MC, E3.MC, SD-41 merged | Phase 2; first write to `character_hub.rs` (R25) |
 | E4.2 | Copy overrides end to end (engine, DTOs, screen, Weapons tab, print) | opus | waiting | E4.1 | G-1 `NEW_KEYS`; G-2 |
