@@ -40,8 +40,26 @@ fn repo_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")
 }
 
-fn out_dir() -> PathBuf {
+fn committed_dir() -> PathBuf {
     repo_root().join("docs/release/SD-42-pcgen-import-and-campaign-folder/artifacts/epic_1/E1.1")
+}
+
+/// E1.1's committed tables are frozen evidence: a run writes them only when `PCG_DIAGNOSIS_REFRESH=1`,
+/// otherwise under the cargo target tmp dir (outside the repo).
+fn out_dir_for(refresh: bool) -> PathBuf {
+    if refresh { committed_dir() } else { Path::new(env!("CARGO_TARGET_TMPDIR")).join("pcg-diagnosis-e1.1") }
+}
+
+fn out_dir() -> PathBuf {
+    out_dir_for(std::env::var("PCG_DIAGNOSIS_REFRESH").is_ok_and(|v| v == "1"))
+}
+
+#[test]
+fn default_output_dir_is_outside_the_repo() {
+    let repo = repo_root().canonicalize().expect("repo root");
+    let default = out_dir_for(false);
+    assert!(!default.starts_with(&repo) && !default.starts_with(repo_root()), "default {default:?} is inside the repo");
+    assert_eq!(out_dir_for(true), committed_dir());
 }
 
 fn oracle_files() -> PathBuf {
