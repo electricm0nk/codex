@@ -48,7 +48,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 41: 37 at 
 | E1.7 | Whole-character parity harness + gate; `explained.tsv` | opus | waiting | E1.6 | `decisions.md §9`; P-9 |
 | E1.8 | Bundle items: PCGen `QUANTITY` counts bundles; pieces = × `base_quantity` | opus | waiting | E1.7 | discovered by E1.2; `epic-breakdown.md` E1.8 |
 | E1.MC | E1 merge check + Epic report | opus | waiting | E1.7, E1.8 | adversarial; the import lane ends |
-| E2.1 | Folder model (root) + `campaign_folder.rs` commands + known folders | opus | waiting | C1 | lane `campaign`; `decisions.md §11` |
+| E2.1 | Folder model (root) + `campaign_folder.rs` commands + known folders | opus | complete | C1 | code `039dd404a5`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; root 5 + desktop 3 tests |
 | E2.2 | Member #1; typed members; Create / Edit / Manager over the folder | opus | waiting | E2.1 | `decisions.md §13.1` |
 | E2.3 | Drive removal; folder-backed Manager; hub modes carry a folder | opus | waiting | E2.2 | `decisions.md §13.2`; NR-6 |
 | E2.4 | Migration screen + command + backup | opus | waiting | E2.3 | `decisions.md §14` |

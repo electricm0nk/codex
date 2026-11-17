@@ -112,7 +112,7 @@ ENVIRONMENT (SD-42, binding — every rule here applies to you):
   `nohup <cmd> > <log> 2>&1 & echo $! > <pidfile>` and poll inside this turn.
 - FRONTEND: in apps/desktop run `npm run typecheck && npm test && npm run ui-smoke:doc` for any frontend or
   spec.json change; `npm run ui-smoke -- --only <row>` for a card that adds or rewrites a ui-smoke row; in a
-  fresh tree run `node scripts/gen-corpus-bundle.mjs` once before. New npm packages: only those decisions.md
+  fresh tree run `node scripts/gen-corpus-bundle.mjs` from the repo root once before. New npm packages: only those decisions.md
   §18 and §13.3 name; quote `npm view <pkg> version license` in the receipt.
 - CAMPAIGN FOLDERS IN TESTS: every test and smoke row makes its campaign folder under a temp dir or
   `{XDG_DATA_HOME}`; never under the repo, never under the operator's home outside those.
