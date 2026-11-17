@@ -277,10 +277,10 @@ export function MapsTab(props: {
                 </label>
               )}
               <label style={{ fontSize: '0.85rem' }}>
-                Or a new page <input style={input} value={pending.newPage} placeholder="Page name" onChange={(e) => setPending({ ...pending, newPage: e.target.value })} />
+                Or a new page <input style={input} value={pending.newPage} onChange={(e) => setPending({ ...pending, newPage: e.target.value })} />
               </label>
               <label style={{ fontSize: '0.85rem' }}>
-                Label <input style={input} value={pending.label} placeholder={pending.newPage.trim() || pending.page} onChange={(e) => setPending({ ...pending, label: e.target.value })} />
+                Label (default: the page) <input style={input} value={pending.label} onChange={(e) => setPending({ ...pending, label: e.target.value })} />
               </label>
               <button type="button" style={button} disabled={!pending.newPage.trim() && !pending.page} onClick={() => void addPin()}>
                 {pending.newPage.trim() ? 'Create page and pin' : 'Add pin'}
