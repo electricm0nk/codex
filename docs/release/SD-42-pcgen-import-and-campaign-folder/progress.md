@@ -15,7 +15,7 @@ status: planning-ready
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
-| E1 import converter (lane `import`) | 8 | 1 (E1.1) | E1.1 complete; E1.2 next |
+| E1 import converter (lane `import`) | 9 | 3 (E1.1–E1.3) | E1.3 complete; E1.4 next |
 | E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 0 | waiting on C1 |
 | E4 desktop wiring (Phase 2) | 7 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
@@ -54,6 +54,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E3.2 | complete | 931098912b | `artifacts/epic_3/E3.2_cycle_receipt.md` | `[[` completion + link clicks/Ctrl-Enter; 4 wikilinks cases; npm test 202/202 |
 | 2026-11-17 | E1.1 | complete | the commit adding the E1.1 receipt | `artifacts/epic_1/E1.1_cycle_receipt.md` | diagnosis test 1 passed; 7 TSVs + summary.json; H1 H3 H4 H7 proved, H2 proved (narrower), H5 refuted, H6 not exercised; no discovered card |
 | 2026-11-17 | E1.2 | complete | the commit adding the E1.2 receipt (code d148cb1378, 2e17cc889b) | `artifacts/epic_1/E1.2_cycle_receipt.md` | one stack per place; `equipmentSets` on the wire; 6/6 `pcg_import_stacks`, 15/15 `pcg_import`; samples 20→21, 29→31, 41→43 stacks, pieces conserved; discovered E1.8 (bundle pieces) |
+| 2026-11-17 | E1.3 | complete | the commit adding the E1.3 receipt (code 0b494a0bfe) | `artifacts/epic_1/E1.3_cycle_receipt.md` | `CopyFacts` + 4 fields (SD-41 file byte-identical); `eqmod_option_key` (137 CRB aliases + catalog-form pass-through); name/SIZE/_DAMAGE/SPROP/COST/WT read; unknown → property + warning; 6/6 `pcg_import_custom`, 2/2 `copy_facts_`, root `--lib` 3144 passed |
 
 ## Epic reports
 

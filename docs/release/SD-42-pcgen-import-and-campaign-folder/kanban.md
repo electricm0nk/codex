@@ -41,7 +41,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 41: 37 at 
 | C1 | 0.22.0 on 14 surfaces + notes pointer | haiku | complete | C0 | commit `589815b65f`; receipt `artifacts/cycle_0/C1_cycle_receipt.md`; Phase 1, first |
 | E1.1 | Diagnosis run over the 8 files; H1–H7 proved or refuted | opus | complete | C1 | receipt `artifacts/epic_1/E1.1_cycle_receipt.md`; H1 H3 H4 H7 proved, H2 proved (a narrower: 1 slot conflict, not 3), H5 refuted, H6 not exercised; operator table local |
 | E1.2 | One stack per line; `equipmentSets` on the wire; locations from the set tree; `QUANTITY:0` noted; no cap | opus | complete | E1.1 | commit: the one adding the E1.2 receipt; receipt `artifacts/epic_1/E1.2_cycle_receipt.md`; 6/6 `pcg_import_stacks`; discovered E1.8 |
-| E1.3 | Custom names and every property; `CopyFacts` gains four fields | opus | waiting | E1.2 | `decisions.md §6` |
+| E1.3 | Custom names and every property; `CopyFacts` gains four fields | opus | complete | E1.2 | commit: the one adding the E1.3 receipt (code `0b494a0bfe`); receipt `artifacts/epic_1/E1.3_cycle_receipt.md`; 6/6 `pcg_import_custom`, 2/2 `copy_facts_` |
 | E1.4 | Unmappable items → Create items at their location | opus | waiting | E1.3 | `decisions.md §7` |
 | E1.5 | The Notes block in `bio.notes` | opus | waiting | E1.4 | `decisions.md §7` |
 | E1.6 | Starfinder import; the drone per Q-A | opus | waiting | E1.5 | `decisions.md §8` |
