@@ -1,7 +1,7 @@
 //! One stack per placement of an `EQUIPNAME` line, located from the `CALCEQUIPSET` set's tree
 //! (SD-42 `decisions.md §5`, SD-a, SD-c, SD-d).
 //!
-//! The synthetic `fixtures/sd42_stacks.pcg` is written by hand in the samples' syntax: 84 rations in a
+//! The synthetic `fixtures/pcg_stacks.pcg` is written by hand in the samples' syntax: 84 rations in a
 //! pouch in a backpack, a worn armour, a wielded sword, a Torso outfit, a Not Carried bedroll, a
 //! `QUANTITY:0` torch, a `QUANTITY:100050` line, and one javelin line split over two places.
 //!
@@ -40,8 +40,8 @@ fn oracle_repo() -> PathBuf {
 fn fixture() -> &'static ImportFile {
     static FILE: OnceLock<ImportFile> = OnceLock::new();
     FILE.get_or_init(|| {
-        let text = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/sd42_stacks.pcg")).expect("fixture");
-        convert(&text, "sd42_stacks.pcg", catalog()).expect("converts")
+        let text = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/pcg_stacks.pcg")).expect("fixture");
+        convert(&text, "pcg_stacks.pcg", catalog()).expect("converts")
     })
 }
 
