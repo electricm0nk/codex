@@ -46,3 +46,14 @@ before the run.
   evidence_tier_before: the seven docs last verified at tranche-20 (116 commands, 75 boundary files, 0.20, no equipment sets)
   evidence_tier_after: verified at tranche-21 for the rows each touched doc's new Last verified line names; corpus-ingest.md, overview.md, homebrew-and-oracle.md, getting-started.md, pcg-import.md, rules-data-tables.md, conventions.md not re-read (E5.3 receipt, Does not cover)
   receipt_note: "Hand-mapped as in SD-39 E9.9 and SD-40 E5.4: the script's index parser (|| row pattern) reads 0 rows of the single-pipe README table, so it reports 'none'. Its two one-liners pass, run through the script (--dry-run --force on the edited tree)."
+
+- cycle_id: 2026-11-17T-claims-critic
+  row_or_kind: architecture:claims_critic
+  bundle: SD-41
+  branch: tranche-21
+  branch_tip_before: 006f314abd
+  docs_touched: [desktop-app.md, glossary.md]
+  cited_path_check: pass
+  relative_link_check: pass
+  release_notes_changes: "Defects Fixed: Astral Armor is not priced as base + eqmods (0.0 gp, listed price-unknown); R-5 now carries its two counting commands; R-10 added"
+  receipt_note: "Opus claims critic over every line the truth-up added (git diff -U0 be27ecc83d..006f314abd -- docs/architecture | awk '/^\\+[^+]/') and over release-notes.md; each claim checked against the code or a command. Refuted and fixed: (1) release notes said Astral Armor is priced as base plus eqmods; (2)+(3) the stack key in glossary.md and desktop-app.md omitted abilities and the override flag (character_hub.rs list_held_equipment_stacks_at_root `same`); (4) desktop-app.md said Only Show Affordable reads load_character_money (MarketDialog reads props.balance). Listed in artifacts/epic_5/E5.3_cycle_receipt.md 'Claims critic'."

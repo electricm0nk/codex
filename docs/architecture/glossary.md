@@ -406,8 +406,9 @@ Regenerate-and-diff (`gen_settled_corpus --check`) is its own idempotency proof.
 
 ## Stack (equipment)
 
-A view, not a stored thing: held copies with the same item, bonus, custom name, size and location are
-one row with a piece `quantity` (`list_held_equipment_stacks_at_root`). Bought bundles become pieces
+A view, not a stored thing: held copies with the same item, bonus, custom name, location, size,
+special abilities and override flag are one row with a piece `quantity`
+(`list_held_equipment_stacks_at_root`). Bought bundles become pieces
 (3 × "Arrows (20)" = 60); the piece count lives in `equipment_sets.json`'s `copies` map.
 
 ## Status parity

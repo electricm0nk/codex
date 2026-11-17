@@ -109,8 +109,11 @@ unchanged.
 - **Drop made the item disappear (`decisions.md §27`).** Drop now moves the item to Not Carried. On the
   Weapons tab, Drop on a carried row used to sell the copy in hand. It now moves that row's own copy
   (E2.MC).
-- **Missing and negative Market prices (`decisions.md §26`).** For example, Adamantine Breastplate had no
-  price and Astral Armor was −150 gp. Both are now priced as base plus their eqmods (E1.9).
+- **Missing and negative Market prices (`decisions.md §26`).** Adamantine Breastplate had no price; it is
+  now priced as its base plus its eqmods, 10,200 gp (E1.9). The four negative rows, such as Astral Armor at
+  −150 gp, now read 0 gp, which is PCGen's own sum of the literal and the eqmod offset. All four are listed
+  in `price-unknown.json` with a reason, because none is a purchasable item (an aegis astral suit, a
+  demon armor's claw attack). R-10 gives the command.
 - **Two weight sums disagreed.** A container's load and the character's encumbrance weighed stacks and
   created items differently: in the same case, the container read 3.0 lb and the character 14.0 lb. Both
   sums now share one bundle rule (E1.MC).
@@ -212,9 +215,12 @@ unchanged.
   `purchase_custom_equipment`, `quote_custom_equipment`, `rename_equipment_copy`,
   `rename_equipment_set` and `set_character_campaigns`; none were removed. These come from `comm` over
   the two sorted lists.
-- **R-5** Corpus records settled as containers: **130**. The
-  `container_capacity_population_is_210_88_73_49` pin and its tally of (130, 33, 49, 48) are quoted in
-  `decisions.md §20`, E1.12 row.
+- **R-5** Corpus records settled as containers: **130**.
+  `grep -c '"container": true' data/corpus/*/_settled/equipment.json | awk -F: '{s+=$2} END{print s}'`.
+  A second count, in Python over the same bundles (`record.container` true), also gives 130, split
+  by capacity as 33 `Pounds`, 49 `Unlimited` and 48 unstated (`null`). This matches the
+  `container_capacity_population_is_210_88_73_49` tally (130, 33, 49, 48) quoted in `decisions.md §20`,
+  E1.12 row.
 - **R-6** Unpriced Market rows listed in `price-unknown.json`, and rows with a `tried` list: **356 356**.
   `python3 -c "import json;u=json.load(open('data/price_overrides/price-unknown.json'));print(len(u),sum(1 for r in u if r.get('tried')))"`.
   A second count: `awk '/"tried"/{n++} END{print n}' data/price_overrides/price-unknown.json` gives
@@ -230,6 +236,10 @@ unchanged.
 - **R-9** ui-smoke spec rows: **203**.
   `python3 -c "import json;print(len(json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']))"`.
   The count was 182 before E3.3 (`decisions.md §20`, E3.3 row).
+- **R-10** The settled `cost_gp` of the named rows:
+  `python3 -c "import json;[print(p, json.load(open(p))['data']['cost_gp']) for p in ['data/corpus/core_rulebook/equipment/arms_armor/adamantine_breastplate.json','data/corpus/ultimate_psionics/equipment/astral_armor.json']]"`
+  prints `10200.0` and `0.0`. `grep -c '"key": "Astral Armor"' data/price_overrides/price-unknown.json`
+  prints 1.
 
 ## Update Eligibility
 
