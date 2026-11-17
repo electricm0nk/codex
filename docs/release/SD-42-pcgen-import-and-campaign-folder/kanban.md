@@ -32,7 +32,7 @@ E5.4 is anything but `complete`. **One operator gate:** E5.G stays `partial` unt
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E1.9 (discovered by E1.5) + E2.14 (discovered by E2.3) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27) + E4.12 (issue #409, operator 2026-11-17, decisions.md §28) + E1.10, E4.13 (discovered by E1.7)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 52: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E1.9 (discovered by E1.5) + E2.14 (discovered by E2.3) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26) + E4.7, E4.8, E4.9, E4.10, E4.11 (operator, 2026-11-17, decisions.md §27) + E4.12 (issue #409, operator 2026-11-17, decisions.md §28) + E1.10, E4.13 (discovered by E1.7) + E4.14 (discovered by E1.10)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -48,7 +48,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51: 37 at 
 | E1.7 | Whole-character parity harness + gate; `explained.tsv` | opus | complete | E1.6 | commit: the one adding the E1.7 receipt (code `75f26c7ebb`); receipt `artifacts/epic_1/E1.7_cycle_receipt.md`; 1/1 `pcg_import_parity` (7 of 7 samples + operator file, 39 ledger rows); discovered E1.10, E4.13 |
 | E1.8 | Bundle items: PCGen `QUANTITY` counts bundles; pieces = × `base_quantity` | opus | complete | E1.7 | commit: the one adding the E1.8 receipt (code `d3546f488b`); receipt `artifacts/epic_1/E1.8_cycle_receipt.md`; 2/2 `stacks_bundle` (pf_Rogue bullets, pf_Cleric bolts: 20 pieces each); parity unchanged 257 equal / 258 explained |
 | E1.9 | `pcg_import_diagnosis` stops rewriting E1.1's committed artifacts on every run | sonnet | complete | E1.5 | commit: the one adding the E1.9 receipt (code `ea52e721f4`); receipt `artifacts/epic_1/E1.9_cycle_receipt.md`; 2/2 `pcg_import_diagnosis`, E1.1 dir status count 4 → 0 |
-| E1.10 | The parity ledger's `fixable` rows naming E1.10: diagnose each, fix converter-side or re-classify with evidence | opus | waiting | E1.7 | discovered by E1.7; `epic-breakdown.md` E1.10 |
+| E1.10 | The parity ledger's `fixable` rows naming E1.10: diagnose each, fix converter-side or re-classify with evidence | opus | complete | E1.7 | commit: the one adding the E1.10 receipt; receipt `artifacts/epic_1/E1.10_cycle_receipt.md`; `E1.10` rows 22 → 0 (4 fixed and deleted, 1 codex-rule, 5 oracle-departs, 12 → E4.14); 1/1 `pcg_import_parity`; discovered E4.14 |
 | E1.MC | E1 merge check + Epic report | opus | waiting | E1.7, E1.8, E1.9, E1.10 | adversarial; the import lane ends |
 | E2.1 | Folder model (root) + `campaign_folder.rs` commands + known folders | opus | complete | C1 | code `039dd404a5`; receipt `artifacts/epic_2/E2.1_cycle_receipt.md`; root 5 + desktop 3 tests |
 | E2.2 | Member #1; typed members; Create / Edit / Manager over the folder | opus | complete | E2.1 | code `2c4fed1ad0`; receipt `artifacts/epic_2/E2.2_cycle_receipt.md`; 4 member cases + desktop `campaign_folder::` 4; `save_campaign_json` fence exit (§20) |
@@ -82,7 +82,8 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 51: 37 at 
 | E4.6 | Linux AppImage writes its own menu entry + icon on every start; re-points after a move or update; never for .deb/.rpm/Windows/macOS | opus | waiting | E4.5 | operator LNX-1 / Q27 2026-11-17; `decisions.md §26.3`; `desktop/update/self_install.rs` only |
 | E4.12 | Linux release builds against glibc 2.35 (`container: ubuntu:22.04`; fallback `runs-on: ubuntu-22.04`); `tools/release/check_glibc_floor.py` gates every shipped Linux ELF (`.deb` + AppImage) at the one stated floor, with a self-test; `linux-build-check.yml` proves it on the branch before release | opus | waiting | E4.6 | GitHub issue #409, operator 2026-11-17; `decisions.md §28`; the only SD-42 card touching `.github/workflows/`; no cargo slot |
 | E4.13 | Pathfinder whole-character parity at the desktop: every `not-computed` / E4.13 ledger row compared against the desktop's own totals | opus | waiting | E4.1, E1.MC | discovered by E1.7; `epic-breakdown.md` E4.13 |
-| E4.MC | E4 merge check + Epic report + E5.G's screenshots | opus | waiting | E4.5, E4.6, E4.7, E4.8, E4.9, E4.10, E4.11, E4.12, E4.13 | adversarial |
+| E4.14 | Engine rows the import ledger names: Starfinder Toughness/Extra Resolve/personal upgrades, Armory melee weapons' `Melee` tag, the paladin's Ultimate Combat spells | opus | waiting | E4.1, E1.MC | discovered by E1.10; `epic-breakdown.md` E4.14 |
+| E4.MC | E4 merge check + Epic report + E5.G's screenshots | opus | waiting | E4.5, E4.6, E4.7, E4.8, E4.9, E4.10, E4.11, E4.12, E4.13, E4.14 | adversarial |
 | E5.G | OPERATOR GATE: import + Campaign Manager + editor, `usable: yes` ×3 | sonnet | waiting | E4.MC | the run ends here until the operator signs |
 | E5.1 | Widest verify + clean build + packaged resources + fresh-install check | sonnet | waiting | E5.G | |
 | E5.2 | Final-acceptance scan → retrospective → sweep | opus | waiting | E5.1 | |

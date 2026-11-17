@@ -15,10 +15,10 @@ status: planning-ready
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
-| E1 import converter (lane `import`) | 11 | 9 (E1.1–E1.9) | E1.9 complete; E1.10 next; E1.10 discovered by E1.7 |
+| E1 import converter (lane `import`) | 11 | 10 (E1.1–E1.10) | E1.10 complete; E1.MC next; E1.10 discovered E4.14 |
 | E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
-| E4 desktop wiring (Phase 2) | 13 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
+| E4 desktop wiring (Phase 2) | 15 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
 | E5 gate + closure | 5 | 0 | waiting on E4.MC |
 
 Re-derive: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); n[a[1]]++; if ($5 ~ /complete/) c[a[1]]++} END {for (e in n) print e, n[e], c[e]+0}' kanban.md`.
@@ -69,6 +69,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E1.9 | complete | the commit adding the E1.9 receipt (code ea52e721f4) | `artifacts/epic_1/E1.9_cycle_receipt.md` | diagnosis test writes to CARGO_TARGET_TMPDIR unless PCG_DIAGNOSIS_REFRESH=1; 2 passed; E1.1 dir status 4 → 0 |
 | 2026-11-17 | E2.5 | complete | the commit adding the E2.5 receipt (code 20257d121c) | `artifacts/epic_2/E2.5_cycle_receipt.md` | help dialog (7 sections, live tree via `list_campaign_tree`, template otherwise, Obsidian link via `openUrl`); `opener:default`; Help button on Manager, sheet, Create, Edit, Migration; npm 208/208; desktop 1508 passed 0 failed |
 | 2026-11-17 | E2.6 | complete | the commit adding the E2.6 receipt (code fad0509fa6) | `artifacts/epic_2/E2.6_cycle_receipt.md` | Party Resources tab mounts `MarkdownEditor` on `Party Resources.md`; "Create starter file" via `create_party_resources_starter` (never overwrites); `[[links]]` open in the tab; root `party_resources_` 2 passed; desktop 1509 passed 0 failed; npm 209/209 |
+| 2026-11-17 | E1.10 | complete | the commit adding the E1.10 receipt | `artifacts/epic_1/E1.10_cycle_receipt.md` | `E1.10` ledger rows 22 → 0: SF selection lines become engine picks (Rapid Response, Opening Volley), pieces in no `EQUIPSET` entry Not Carried, the harness names a weapon by its copy and lists engine-held feats (4 rows deleted); 1 codex-rule, 5 oracle-departs (3 oracle runs), 12 → discovered E4.14 (engine/data); operator's local ledger 9 rows re-classified (counts only); codex-ingest 187 suites, 1907 passed |
 
 ## Epic reports
 
