@@ -1,0 +1,54 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "deb_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "any",
+    "windows_install": true
+  },
+  "linux_appimage": {
+    "name": "Codex_0.21.153_amd64.AppImage",
+    "sha256": "55e2b4e128ad26570ed1329bd704c0e2489c3f1ac7381a3eda8e061446cbd4ad",
+    "size_bytes": 122599928,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.21.153-d6890a6c/Codex_0.21.153_amd64.AppImage"
+  },
+  "linux_deb": {
+    "name": "Codex_0.21.153_amd64.deb",
+    "sha256": "155eb2c2af682565505db94a11789b92857722b749830bc32f1d3e5fde4469fb",
+    "size_bytes": 51775624,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.21.153-d6890a6c/Codex_0.21.153_amd64.deb"
+  },
+  "macos_dmg": {
+    "name": "Codex_0.21.153_aarch64.dmg",
+    "sha256": "0d9cdf6926718750b76b2e3ec60d4561497e83bdee71847c0d1a7cd498aa9de4",
+    "size_bytes": 50181587,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.21.153-d6890a6c/Codex_0.21.153_aarch64.dmg"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-11-17T13:18:25Z",
+    "source_branch": "develop",
+    "source_commit": "d6890a6c733de5af53248b0bb49eabb8c0e0f933"
+  },
+  "release_notes_hash": "9f562b8d7f2074eedaf197958212f12fabed5a32512d5def0a555561f0a7427e",
+  "release_notes_path": "docs/release/SD-41-gear-and-equipment-sets/release-notes.md",
+  "release_notes_url": "https://raw.githubusercontent.com/electricm0nk/codex/d6890a6c733de5af53248b0bb49eabb8c0e0f933/docs/release/SD-41-gear-and-equipment-sets/release-notes.md",
+  "schema_version": "1.3.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "d6890a6c733de5af53248b0bb49eabb8c0e0f933",
+  "tag": "alpha/v0.21.153-d6890a6c",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.21.153",
+  "windows_nsis": {
+    "name": "Codex_0.21.153_x64-setup.exe",
+    "sha256": "2df4cf481b5c5970fbe0dfe3545e1eaa84af954d94e35f06785ef9a65b6c9704",
+    "size_bytes": 29699762,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.21.153-d6890a6c/Codex_0.21.153_x64-setup.exe"
+  },
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "44078215972",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
