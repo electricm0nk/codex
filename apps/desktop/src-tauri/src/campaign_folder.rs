@@ -15,6 +15,8 @@ use codex::campaign::local_store::{CampaignStore, CAMPAIGN_JSON};
 use codex::campaign::CampaignFolderSnapshot;
 
 const KNOWN_FOLDERS_FILE: &str = "campaign-folders.json";
+/// Where dragged-in images go (one of `folder::LAYOUT_DIRS`).
+const ATTACHMENTS_DIR: &str = "Attachments";
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -80,6 +82,15 @@ pub struct CampaignFileRequest {
 pub struct WriteCampaignFileRequest {
     pub campaign_dir: String,
     pub path: String,
+    pub bytes: Vec<u8>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SaveAttachmentRequest {
+    pub campaign_dir: String,
+    /// The dropped file's name; only its last path component is used.
+    pub name: String,
     pub bytes: Vec<u8>,
 }
 
@@ -291,6 +302,48 @@ pub fn stat_campaign_file_impl(request: &CampaignFileRequest) -> Result<Campaign
     }
 }
 
+/// Characters that would break the `![](Attachments/<name>)` link become `-`.
+fn attachment_stem(raw: &str) -> String {
+    raw.chars()
+        .map(|c| if c.is_whitespace() || "()[]<>#%?\\".contains(c) { '-' } else { c })
+        .collect()
+}
+
+/// Copies a dragged-in image to `Attachments/<name>` (decisions.md §18, Q-F). A taken name gets
+/// `-2`, `-3`…; the file is created with `create_new`, so an existing file is never overwritten.
+/// Returns the path inside the campaign, e.g. `Attachments/map-2.png`.
+pub fn save_attachment_impl(request: &SaveAttachmentRequest) -> Result<String, String> {
+    let base = request.name.rsplit(['/', '\\']).next().unwrap_or_default();
+    let (stem, ext) = match base.rfind('.') {
+        Some(dot) if dot > 0 => (&base[..dot], &base[dot..]),
+        _ => (base, ""),
+    };
+    let stem = attachment_stem(stem);
+    let ext = attachment_stem(ext);
+    if stem.trim_matches('-').is_empty() || stem == "." || stem == ".." {
+        return Err(format!("{:?} is not a file name", request.name));
+    }
+    let dir = resolve(&request.campaign_dir, ATTACHMENTS_DIR)?;
+    fs::create_dir_all(&dir).map_err(|err| format!("{}: {err}", dir.display()))?;
+    for n in 1u32.. {
+        let name = if n == 1 { format!("{stem}{ext}") } else { format!("{stem}-{n}{ext}") };
+        let path = dir.join(&name);
+        match fs::OpenOptions::new().write(true).create_new(true).open(&path) {
+            Ok(mut file) => {
+                use std::io::Write;
+                if let Err(err) = file.write_all(&request.bytes) {
+                    let _ = fs::remove_file(&path);
+                    return Err(format!("{}: {err}", path.display()));
+                }
+                return Ok(format!("{}/{name}", ATTACHMENTS_DIR));
+            }
+            Err(err) if err.kind() == std::io::ErrorKind::AlreadyExists => continue,
+            Err(err) => return Err(format!("{}: {err}", path.display())),
+        }
+    }
+    unreachable!("u32 names run out before a folder does")
+}
+
 fn tree_of(dir: &Path, prefix: &str) -> Result<Vec<CampaignTreeEntryDto>, String> {
     let mut entries: Vec<_> = fs::read_dir(dir)
         .map_err(|err| format!("{}: {err}", dir.display()))?
@@ -368,6 +421,11 @@ pub fn write_campaign_file(request: WriteCampaignFileRequest) -> Result<Campaign
 #[tauri::command]
 pub fn stat_campaign_file(request: CampaignFileRequest) -> Result<CampaignFileStatDto, String> {
     stat_campaign_file_impl(&request)
+}
+
+#[tauri::command]
+pub fn save_attachment(request: SaveAttachmentRequest) -> Result<String, String> {
+    save_attachment_impl(&request)
 }
 
 #[tauri::command]
@@ -539,6 +597,34 @@ mod tests {
             expected_nonce: None,
         })
         .is_err());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn save_attachment_copies_and_suffixes() {
+        let root = temp_dir("attach");
+        let opened = create_campaign_folder_at(&root.join("app-data"), &create_request(&root, "Attach")).unwrap();
+        let dir = opened.campaign_dir.clone();
+        let save = |name: &str, bytes: &[u8]| {
+            save_attachment_impl(&SaveAttachmentRequest {
+                campaign_dir: dir.clone(),
+                name: name.to_owned(),
+                bytes: bytes.to_vec(),
+            })
+        };
+
+        assert_eq!(save("map.png", b"one").unwrap(), "Attachments/map.png");
+        // A collision adds -2, then -3; the first file is never overwritten.
+        assert_eq!(save("map.png", b"two").unwrap(), "Attachments/map-2.png");
+        assert_eq!(save("map.png", b"three").unwrap(), "Attachments/map-3.png");
+        let read = |rel: &str| read_campaign_file_impl(&CampaignFileRequest { campaign_dir: dir.clone(), path: rel.to_owned() });
+        assert_eq!(read("Attachments/map.png").unwrap().bytes, b"one".to_vec());
+        assert_eq!(read("Attachments/map-2.png").unwrap().bytes, b"two".to_vec());
+        // Characters that break a Markdown link become `-`; a path in the name never leaves Attachments/.
+        assert_eq!(save("Old Tam (sketch).jpg", b"x").unwrap(), "Attachments/Old-Tam--sketch-.jpg");
+        assert_eq!(save("../../escape.png", b"x").unwrap(), "Attachments/escape.png");
+        assert_eq!(save("noext", b"x").unwrap(), "Attachments/noext");
+        assert!(save("", b"x").is_err());
         let _ = fs::remove_dir_all(&root);
     }
 }
