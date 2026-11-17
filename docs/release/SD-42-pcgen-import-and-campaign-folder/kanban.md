@@ -59,7 +59,7 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 37 at auth
 | E2.10 | `Characters/` backup model: master.json, counter, stand-in, move master, diff | opus | waiting | E2.9 | `decisions.md §16` |
 | E2.11 | DM toolkit party from the folder | opus | waiting | E2.10 | `decisions.md §17` |
 | E2.MC | E2 merge check + Epic report (≥ 10 screenshots, looked at) | opus | waiting | E2.11 | adversarial; the campaign lane ends |
-| E3.1 | Editor core: packages, byte-stable round trip, live preview, reading view | opus | waiting | C1 | lane `editor`; `decisions.md §18` |
+| E3.1 | Editor core: packages, byte-stable round trip, live preview, reading view | opus | complete | C1 | lane `editor`; `decisions.md §18`; commit `75e9feca1d`; receipt `artifacts/epic_3/E3.1_cycle_receipt.md` |
 | E3.2 | `[[` completion; link clicks | opus | waiting | E3.1 | |
 | E3.3 | Toolbar, auto-save, disk-change warning, drag-in images | opus | waiting | E3.2 | `save_attachment` fence exit rule in the row |
 | E3.MC | E3 merge check + Epic report | opus | waiting | E3.3 | adversarial; the editor lane ends |

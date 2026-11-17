@@ -50,6 +50,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 |---|---|---|---|---|---|
 | 2026-11-16 | C0 | complete | this commit | `artifacts/cycle_0/C0_cycle_receipt.md` | package authored |
 | 2026-11-17 | C1 | complete | 589815b65f | `artifacts/cycle_0/C1_cycle_receipt.md` | 0.22.0 on the 14 surfaces; current-release points at SD-42 notes |
+| 2026-11-17 | E3.1 | complete | 75e9feca1d | `artifacts/epic_3/E3.1_cycle_receipt.md` | 11 MIT packages pinned; 9 fixtures byte-stable; 10 live-preview + 4 reading-view cases; npm test 201/201 |
 
 ## Epic reports
 
