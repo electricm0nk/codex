@@ -16,9 +16,9 @@ status: planning-ready
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
 | E1 import converter (lane `import`) | 8 | 1 (E1.1) | E1.1 complete; E1.2 next |
-| E2 campaign folder (lane `campaign`) | 12 | 0 | waiting on C1 |
+| E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 0 | waiting on C1 |
-| E4 desktop wiring (Phase 2) | 6 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
+| E4 desktop wiring (Phase 2) | 7 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
 | E5 gate + closure | 5 | 0 | waiting on E4.MC |
 
 Re-derive: `awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); split($2,a,"."); n[a[1]]++; if ($5 ~ /complete/) c[a[1]]++} END {for (e in n) print e, n[e], c[e]+0}' kanban.md`.

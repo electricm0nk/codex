@@ -57,6 +57,9 @@ Board: `./kanban.md`. Version `0.22.0`: C1 sets it in one commit on the 14 surfa
 | Q21/Q22 | "local copy is the ONE master; every save writes BOTH local and `Characters/` backup in the campaign folder (auto, not manual). Others/GM read the backup; it can be re-imported. Two-master trap, BOTH checks: (1) backup records master device (per-install ID + readable name); importing on another device asks 'Play as stand-in' (default; never writes backup) or 'Move the master here'; (2) save counter in the backup — before writing, Codex checks the counter matches what it last wrote; mismatch → do NOT overwrite backup, warn who/when changed it, local save still succeeds. Reuse campaign `save_with_conflict_detection` (src/campaign/local_store.rs) pattern. Stand-in changes are merged back by hand (Codex may show a diff, no merge)." | §16; E2.10, E4.3 |
 | Q24 | "in-app editor: LIVE PREVIEW like Obsidian (CodeMirror 6, MIT; same lib as Obsidian). Must not rewrite the user's Markdown on save (byte-stable round-trip). `[[` suggests wiki page names. App has NO markdown lib today (checked package.json 2026-11-16)." | §18; E3.1, E3.2 |
 | Q25 | "editor extras: ALL — toolbar (bold, italic, heading, list, link, table); auto-save + warn if file changed on disk during edit; drag-in images saved to `Attachments/` and linked." | §18; E3.3 |
+| UI-1 (2026-11-17, relayed by the lead while run wf_141acf96-f25 was live) | "the app menu's FIRST option is 'Main menu' on every screen that shows the menu." | §26.1; E2.12, E4.4 |
+| UI-2 (2026-11-17) | "the button that opens a campaign must be much larger: full column width, same colour/style as the main screen's Campaign Manager button." | §26.2; E2.13, E4.4 |
+| LNX-1 / Q27 (2026-11-17) | "no app icon after installing the AppImage on Arch." / "Codex itself writes its menu entry + icon (~/.local/share/applications, icon dir) on first start when running as an AppImage on Linux, and re-points the path after an update. No extra tool required." | §26.3; E4.6 |
 
 Q10 and Q23 do not appear in the intake file (its numbering runs Q2–Q9, Q11–Q22, Q24, Q25). The author
 treats them as never asked; the operator confirms at `§21` Q-L that nothing was lost.
@@ -489,3 +492,65 @@ The import lane (E1, E4.1–E4.2) and the campaign lane (E2, E3, E4.3) are file-
 parallel in Phase 1, so the bundle's wall time is the longer lane. Splitting would cost a second C1, a second
 closure epic and a second SD-41-style catch-up with no saving in agent-hours. The split point, if the operator
 wants two bundles, is `risks-and-open-questions.md §4`.
+
+## §26 — Three cards the operator added mid-run (OPERATOR, 2026-11-17; placement DEFAULT)
+
+Added on 2026-11-17 while the Phase-1 run was live, by a planning session in its own worktree
+(`.worktrees/sd42-cards`), without touching the lanes' trees. The operator's words are the §3 rows UI-1, UI-2,
+LNX-1 / Q27 (relayed via the lead's memory note of the same day). Card count 37 + E1.8 → **41**
+(`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'`); every count constant in this package was
+re-stated in the same commit (R18).
+
+### §26.1 E2.12 — "Main menu" first (UI-1)
+
+Every ☰ menu is drawn by one component, `apps/desktop/src/layout/AppMenu.tsx` (`withOptions` appends Options);
+its users are exactly `App.tsx` (the fixed copy on screens without a bar), `campaign/CampaignSheet.tsx` and
+`characterHub/CharacterSheet.tsx` (`grep -rl "layout/AppMenu" apps/desktop/src --include=*.tsx` → 3 on
+`3547882dee`). The main screen is `CharacterHubPage`'s `mode === 'landing'`; every other mode reaches it
+by a Close/Cancel/Back chain today. The entry is therefore composed **inside `AppMenu`** from a host claim
+(`claimMain`, the existing `claimMenu` pattern) that the hub makes whenever `mode !== 'landing'`, so the
+three users need no edit and the entry is absent on the main screen by construction.
+
+**Placement:** lane `campaign` as **E2.12**, because that lane owns `ui/characterHub/CharacterHubPage.tsx` and
+`ui/App.tsx`. `ui/layout/AppMenu.tsx` and `AppMenu.test.ts` are owned by no card: **granted to E2.12 here** and
+added to the §2.1 fence list and `workflow-instruction.md §3`. **Depends on E2.11**, not E2.3: E2.3 is the last
+card that writes `CharacterHubPage.tsx`/`App.tsx`, but E2.4 and E2.5 still write `CampaignManagerScreen.tsx`
+and the lane runs in **one** worktree — a row that became ready beside E2.4 could be dispatched into the same
+tree (two writers). Hanging it after E2.11 costs nothing in a serial lane and keeps it before E2.MC, whose
+`Depends on` becomes E2.13.
+
+### §26.2 E2.13 — the open-campaign button (UI-2)
+
+The main screen's Campaign Manager button is `LandingScreen.tsx`'s `ActionBanner` with `CAMPAIGN_MANAGER_ART`
+(`:158`, `:254`, both module-private). The Manager's open button is the bar's primary `Load`
+(`CampaignManagerScreen.tsx:164`) as E2.3–E2.5 leave it. **Reuse, not a new style:** the two names are exported
+and the Manager renders the same component at full column width. `LandingScreen.tsx` is owned by no card:
+granted to E2.13 for the two `export` keywords only. **Depends on E2.12** (same tree; E2.5 was the last writer
+of `CampaignManagerScreen.tsx`).
+
+### §26.3 E4.6 — the Linux AppImage's menu entry and icon (LNX-1 / Q27)
+
+`apps/desktop/src-tauri/src/update/self_install.rs` (develop `183659ec70` + `b3a239b589`, in `tranche-22`
+since the 2026-11-17 catch-up merge) already writes the XDG entry and the hicolor icon — but only when running
+from `~/Codex/Codex.AppImage` or after an accepted install. A download answered "Just run this time" (or
+started before the dialog is answered) gets neither, which is the one way this box can explain the operator's
+Arch report; E4.6 makes the integration unconditional for every AppImage start, naming the running `$APPIMAGE`
+(the path the updater replaces in place and `seed.rs` re-records after a move), so a moved or updated file
+re-points its own `Exec`/`TryExec` on its next start. **Placement:** Phase 2, lane `main`, **E4.6** (the next
+free id), **depends on E4.5**: no E4 card touches `update/`, but Phase 2 is one serial tree and E4.MC's
+`Depends on` becomes `E4.5, E4.6`. The file is not SD-41-owned; nothing in Phase 1 needs it, and the card is
+small enough that waiting for the merged base costs one cycle at most.
+
+### §26.4 ui-smoke rows: folded into E4.4 (R24)
+
+E4.4 is `waiting` on `origin/tranche-22` (`awk -F'|' '$2 ~ /^ E4\.4 / {print $5}' kanban.md` → ` waiting `),
+so its row gains `main-menu-first` and `campaign-open-button`; **E4.4 stays the only `spec.json` writer**. No
+new card writes `spec.json`. E4.6 has no ui-smoke row (Rust-only; the app under ui-smoke is not an AppImage).
+
+### §26.5 What this placement does not change
+
+The live Workflow script's §2.1 prefix was written at launch and predates the fence additions above; the
+card rows' FILES YOU OWN are the grant (`§19`: a file no other open card owns). The lead dispatches the three
+cards on their rows' Tier (`opus`) when their `Depends on` are `complete`; no script edit is required. The
+SD-41 partition no longer binds (PR #410 merged 2026-11-17), but E4.1's `SD-41 merged` token is still the
+lead's to clear by hand (R25).

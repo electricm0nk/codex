@@ -67,7 +67,7 @@ line of the file). Denominators are stated with each figure.
 |---|---|---|---|
 | F-30 | version surfaces SD-41's C1 bumped (excluding docs) | 14 | `version_surfaces_sd41_c1` (`git show --name-only --format= c817ad502f \| awk 'NF' \| grep -v '^docs/' \| awk 'END{print NR}'`) |
 | F-31 | base | `tranche-22` @ `1046daefc0` = `merge-base origin/tranche-21` | `base.*` |
-| F-32 | cards | 37 (2 + 8 + 12 + 4 + 6 + 5) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` |
+| F-32 | cards | 41 (2 + 9 + 14 + 4 + 7 + 5; 37 at authoring + E1.8 + E2.12, E2.13, E4.6 — `decisions.md §26`) | `awk -F'\|' '$2 ~ /^ (C\|E)[0-9]/' kanban.md \| awk 'END{print NR}'` |
 | F-33 | editor packages and licences (npm registry, 2026-11-16) | 11, all MIT; versions in `decisions.md §18` | `for p in @codemirror/state @codemirror/view @codemirror/language @codemirror/commands @codemirror/autocomplete @codemirror/search @codemirror/lang-markdown @lezer/markdown @lezer/highlight @lezer/common marked; do npm view $p version license; done` |
 
 ## §5 What the census does not count

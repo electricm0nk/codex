@@ -32,7 +32,7 @@ E5.4 is anything but `complete`. **One operator gate:** E5.G stays `partial` unt
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 diff <(awk -F'|' '$2 ~ /^ (C|E)[0-9]/ {gsub(/ /,"",$2); print $2}' kanban.md | sort) \
      <(grep -oE '^\| (C|E)[0-9][0-9.A-Za-z]*' epic-breakdown.md | sed 's/^| //' | sort -u) && echo SAME_IDS
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 38: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2)
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 41: 37 at authoring (2 + 8 + 12 + 4 + 6 + 5) + E1.8 (discovered by E1.2) + E2.12, E2.13, E4.6 (operator, 2026-11-17, decisions.md §26)
 ```
 
 | ID | Title | Tier | Status | Depends on | Receipt / notes |
@@ -59,7 +59,9 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 38: 37 at 
 | E2.9 | Wiki tab: folders, pages, links, backlinks, search | opus | waiting | E2.8 | `decisions.md §15.4` |
 | E2.10 | `Characters/` backup model: master.json, counter, stand-in, move master, diff | opus | waiting | E2.9 | `decisions.md §16` |
 | E2.11 | DM toolkit party from the folder | opus | waiting | E2.10 | `decisions.md §17` |
-| E2.MC | E2 merge check + Epic report (≥ 10 screenshots, looked at) | opus | waiting | E2.11 | adversarial; the campaign lane ends |
+| E2.12 | "Main menu" is the first ☰ entry on every screen but the main one | opus | waiting | E2.11 | operator UI-1 2026-11-17; `decisions.md §26.1`; owns `ui/layout/AppMenu.{tsx,test.ts}` |
+| E2.13 | The Manager's open-campaign button: full column width, the main screen's Campaign Manager style | opus | waiting | E2.12 | operator UI-2 2026-11-17; `decisions.md §26.2`; owns `ui/characterHub/LandingScreen.tsx` (export only) |
+| E2.MC | E2 merge check + Epic report (≥ 10 screenshots, looked at) | opus | waiting | E2.13 | adversarial; the campaign lane ends |
 | E3.1 | Editor core: packages, byte-stable round trip, live preview, reading view | opus | complete | C1 | lane `editor`; `decisions.md §18`; commit `75e9feca1d`; receipt `artifacts/epic_3/E3.1_cycle_receipt.md` |
 | E3.2 | `[[` completion; link clicks | opus | complete | E3.1 | commit `931098912b`; receipt `artifacts/epic_3/E3.2_cycle_receipt.md` |
 | E3.3 | Toolbar, auto-save, disk-change warning, drag-in images | opus | waiting | E3.2 | `save_attachment` fence exit rule in the row |
@@ -67,9 +69,10 @@ awk -F'|' '$2 ~ /^ (C|E)[0-9]/' kanban.md | awk 'END{print NR}'     # 38: 37 at 
 | E4.1 | Import writes `equipment_sets.json`, Create items, Notes, `game_system`; a new root every import | opus | waiting | E1.MC, E2.MC, E3.MC, SD-41 merged | Phase 2; first write to `character_hub.rs` (R25) |
 | E4.2 | Copy overrides end to end (engine, DTOs, screen, Weapons tab, print) | opus | waiting | E4.1 | G-1 `NEW_KEYS`; G-2 |
 | E4.3 | Mirror hooks: `after_write` with stand-in + counter; membership dialog over folders; import choice | opus | waiting | E4.2 | `decisions.md §16` |
-| E4.4 | ui-smoke rows: import + campaign (new + 8 rewritten); inventory | opus | waiting | E4.3 | the only `spec.json` writer (R24) |
+| E4.4 | ui-smoke rows: import + campaign (new + 8 rewritten) + E2.12/E2.13's two rows; inventory | opus | waiting | E4.3 | the only `spec.json` writer (R24); `decisions.md §26.4` |
 | E4.5 | Proof runs: 7 samples (CI shape) + the operator's file (local, counts) | opus | waiting | E4.4 | `decisions.md §10`; P-8 |
-| E4.MC | E4 merge check + Epic report + E5.G's screenshots | opus | waiting | E4.5 | adversarial |
+| E4.6 | Linux AppImage writes its own menu entry + icon on every start; re-points after a move or update; never for .deb/.rpm/Windows/macOS | opus | waiting | E4.5 | operator LNX-1 / Q27 2026-11-17; `decisions.md §26.3`; `desktop/update/self_install.rs` only |
+| E4.MC | E4 merge check + Epic report + E5.G's screenshots | opus | waiting | E4.5, E4.6 | adversarial |
 | E5.G | OPERATOR GATE: import + Campaign Manager + editor, `usable: yes` ×3 | sonnet | waiting | E4.MC | the run ends here until the operator signs |
 | E5.1 | Widest verify + clean build + packaged resources + fresh-install check | sonnet | waiting | E5.G | |
 | E5.2 | Final-acceptance scan → retrospective → sweep | opus | waiting | E5.1 | |

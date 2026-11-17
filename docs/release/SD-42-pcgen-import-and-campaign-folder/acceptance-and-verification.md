@@ -53,7 +53,7 @@ awk -F'\t' 'NR>1 && NF!=6' ../../scripts/oracle_harness/pcg_import_parity/explai
 grep -c 'cannot compute a Starfinder soldier' src/pcg_import/fixtures_tests.rs            # 0
 ```
 
-## G-6 The campaign folder (DoD 7–16) — E2.1–E2.11, E2.MC, E4.3
+## G-6 The campaign folder (DoD 7–16) — E2.1–E2.13, E2.MC, E4.3
 
 ```bash
 cargo test --locked -j 8 --lib campaign -- --test-threads=8                              # root: every campaign_folder_/campaign_migrate_/adventure_log_/frontmatter_/maps_/wiki_/characters_backup_ test passed, counts quoted
@@ -62,6 +62,8 @@ grep -rn 'codex\.campaigns\|drive_list_campaigns\|drive_save_campaign\|drive_loa
 test ! -f apps/desktop/src-tauri/src/campaign_drive.rs && echo DRIVE_GONE
 python3 -I -c "import json;p=json.load(open('apps/desktop/src-tauri/capabilities/default.json'))['permissions'];assert 'opener:default' in p and len(p)==3,p"   # core, dialog, opener only
 cd apps/desktop && npx tsx src/campaign/campaignHelpModel.test.ts                           # ≥ 7 cases (the required sentences)
+cd apps/desktop && npx tsx src/layout/AppMenu.test.ts && npx tsx src/campaign/campaignManagerScreen.test.ts   # E2.12 (≥ 4 new cases), E2.13 (≥ 3 cases); decisions.md §26
+cd apps/desktop/src-tauri && cargo test --locked -j 8 self_install -- --test-threads=8       # E4.6: 14 + ≥ 4 passed (the Linux AppImage menu entry + icon; decisions.md §26.3)
 ```
 
 ## G-7 The editor (DoD 17) — E3.1–E3.3, E3.MC
@@ -90,7 +92,7 @@ git log <C1 sha>..HEAD -p -S"$SD42_PII" -- . | awk 'END{print NR}'   # 0 (the pl
 ```bash
 cd docs/release/SD-42-pcgen-import-and-campaign-folder
 test -s kanban.md || { echo NO_KANBAN; exit 2; }
-awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 38) print "ROW_COUNT " n }' kanban.md
+awk -F'|' '$2 ~ /^ (C|E)[0-9]/ { n++ } END { if (n != 41) print "ROW_COUNT " n }' kanban.md   # 41: 37 + E1.8 + E2.12, E2.13, E4.6 (decisions.md §26)
 awk -F'|' '$2 ~ /^ (C|E)[0-9]/ && $2 !~ /^ E5\.[2-4] / && $5 !~ /^ complete *$/ { print $2 "|" $5 }' kanban.md
 grep -c '^- \(Import ([^)]*)\|Campaign Manager ([^)]*)\|Editor\) — usable: yes' artifacts/epic_5/E5.G_cycle_receipt.md   # 3 (anchored; the receipt's own instructions must not match)
 test -s artifacts/epic_4/E4.5_cycle_receipt.md && grep -c 'copies_emitted' artifacts/epic_4/E4.5_cycle_receipt.md   # ≥ 1: the local proof run's counts are in the receipt (Q9)
@@ -133,6 +135,9 @@ recorded in E5.1's receipt.
 | Q21/Q22 two-master checks; stand-in default; counter; local save succeeds; diff no merge | E2.10, E4.3 | G-6 `characters_backup_counter_mismatch_does_not_overwrite_and_warns`, `…stand_in_never_writes`, `…move_master_takes_over`, `…diff_lists_changed_files`; `mirror_two_master` ≥ 3 |
 | Q24 CodeMirror 6 live preview; byte-stable; `[[` suggests | E3.1, E3.2 | G-7 `roundTrip.test.ts` sha256 equal; `livePreview.test.ts` ≥ 8; `wikilinks.test.ts` ≥ 4; licences MIT ×11 |
 | Q25 toolbar; auto-save + disk warning; drag-in images | E3.3 | G-7 `toolbar.test.ts` 6, `autosave.test.ts` ≥ 3, `imageDrop.test.ts` ≥ 2 |
+| UI-1 (2026-11-17) "Main menu" first on every screen that shows the menu; hidden on the main screen | E2.12, E4.4 | G-6 `AppMenu.test.ts` ≥ 4 new cases; `grep -rl "layout/AppMenu"` → 3; ui-smoke `main-menu-first` |
+| UI-2 (2026-11-17) the open-campaign button: full column width, the main screen's Campaign Manager style | E2.13, E4.4 | G-6 `campaignManagerScreen.test.ts` ≥ 3; `linear-gradient` grep → 0 in the Manager; ui-smoke `campaign-open-button` |
+| LNX-1 / Q27 (2026-11-17) the AppImage writes its own menu entry + icon; re-points after an update; never for .deb/.rpm/Windows/macOS | E4.6 | `cargo test self_install` 14 + ≥ 4 passed; E4.MC names the four tests |
 
 ## Artifact map
 
@@ -143,7 +148,7 @@ recorded in E5.1's receipt.
 | G-3 | E1.MC, E2.MC, E3.MC | the receipt's partition line |
 | G-4 | E1.1–E1.5, E1.MC, E4.1 | `artifacts/epic_1/E1.1/*.tsv`, `summary.json`; `artifacts/epic_1/E1.MC/summary.json` |
 | G-5 | E1.6, E1.7 | `scripts/oracle_harness/pcg_import_parity/{exports,explained.tsv}`; the receipt's per-build counts |
-| G-6 | E2.1–E2.11, E2.MC, E4.3 | receipts; `artifacts/epic_2/E2.MC/*.png` |
+| G-6 | E2.1–E2.13, E2.MC, E4.3, E4.6 | receipts; `artifacts/epic_2/E2.MC/*.png`; E4.6's receipt (the code path the operator's build took) |
 | G-7 | E3.1–E3.3, E3.MC | receipts; the licence loop output |
 | G-8 | every MC, E5.1 | receipts |
 | E5.G | E4.MC, E5.G | `artifacts/epic_5/E5.G/` (≥ 12 PNGs, 1 PDF, the signed receipt with three lines) |

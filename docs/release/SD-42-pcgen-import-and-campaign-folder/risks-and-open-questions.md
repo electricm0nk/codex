@@ -36,7 +36,7 @@ status: planning-ready
 | R-19 | **FILES YOU OWN misses a second call site** (`after_write` has many callers; `PartyMemberInput` has a TS twin) | medium | low | R22 pre-dispatch `git grep`; E2.10 changes `mirror`'s inside so the callers need no edit; E2.11 names both sides | yes |
 | R-20 | **The drone file's ruling (Q-A) is wrong and the operator wanted it imported as a companion** | low | low | the default is logged; the parity ledger explains it; FSR-C4 names the follow-up | n/a |
 | R-21 | **`Characters/` vs `characters/` on a case-insensitive sync target** (Windows, macOS Drive clients) | medium | medium | the rename is `characters/` → `Characters/` through a temp name (`.characters-tmp`) so a case-insensitive filesystem completes it; a test on a case-insensitive temp FS when available, else stated | yes |
-| R-22 | **The bundle is large (37 cards) and the operator sees no result for days** | medium | low | three parallel lanes; each MC leaves screenshots and an Epic report in `progress.md`; the import lane's E1.MC is the first operator-readable result | n/a |
+| R-22 | **The bundle is large (41 cards on 2026-11-17) and the operator sees no result for days** | medium | low | three parallel lanes; each MC leaves screenshots and an Epic report in `progress.md`; the import lane's E1.MC is the first operator-readable result | n/a |
 | R-23 | **SD-41's retrospective lands after this package and names a change SD-42 ignores** | medium | low | `workflow-instruction.md §12.2`: the lead reads it before E4.1 and records each change | yes — lead action |
 
 ## 2. Open questions → defaults taken
@@ -70,7 +70,7 @@ card); the PCGen engine not runnable after P-9's exact missing piece is named; t
 
 ## 4. Bundle size and the split the author did not take (`decisions.md §25`)
 
-37 cards against SD-41's 56 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' ../SD-41-gear-and-equipment-sets/kanban.md | awk 'END{print NR}'`).
+37 cards at authoring, 41 on 2026-11-17 (E1.8 discovered; E2.12, E2.13, E4.6 added by the operator, `decisions.md §26`), against SD-41's 56 (`awk -F'|' '$2 ~ /^ (C|E)[0-9]/' ../SD-41-gear-and-equipment-sets/kanban.md | awk 'END{print NR}'`).
 The import lane (8 cards) and the campaign + editor lanes (16 cards) are file-disjoint (F-20) and run at the
 same time, so the wall time is the longer lane plus Phase 2 (6 cards) and closure (5). The author keeps one
 bundle. **If the operator prefers two:** SD-42 = C + E1 + E2.1–E2.5 + E2.10–E2.11 + E3.1 + E4 + E5 (import,
