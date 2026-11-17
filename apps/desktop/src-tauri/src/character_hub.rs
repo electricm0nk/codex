@@ -22420,7 +22420,7 @@ mod tests {
         let options = crate::equipment_catalog::custom_equipment_options("Longsword (Base)");
         assert!(options.abilities.iter().any(|o| o.key == FLAMING && o.plus == 1 && !o.unpriced));
         let mithral = options.materials.iter().find(|o| o.key == MITHRAL).expect("mithral is offered");
-        assert_eq!(mithral.prerequisite.as_deref(), Some("Metal"), "the base's types do not say Metal");
+        assert_eq!(mithral.prerequisite.as_deref(), Some("metal"), "the base's types do not say Metal");
         let unpriced = options.abilities.iter().find(|o| o.unpriced && o.plus == 0).expect("an unpriced ability");
         let build = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), special_abilities: vec![unpriced.key.clone()], ..CustomEquipmentBuild::default() };
         let quote = custom_equipment_quote(&build).unwrap();

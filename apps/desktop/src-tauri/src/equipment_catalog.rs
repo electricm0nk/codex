@@ -921,7 +921,8 @@ pub(crate) fn custom_equipment_options(base_key: &str) -> CustomOptionsDto {
             .map(|rule| &rule.applies);
         let option = CustomOptionDto {
             key: entry.key.clone(),
-            name: entry.name.clone(),
+            // The corpus keeps PCGen's leading `|` on some names (`|Spell Effect (Command Word)`); the key keeps it.
+            name: entry.name.trim_start_matches('|').to_owned(),
             description: entry.description.clone(),
             plus: price.map_or(0, |p| p.plus),
             unpriced: price.is_some_and(|p| p.unpriced),
@@ -935,10 +936,16 @@ pub(crate) fn custom_equipment_options(base_key: &str) -> CustomOptionsDto {
     options
 }
 
-/// A modifier's gate in its record's tag words, when the base's types do not meet it; `None` when
-/// they do. A gate on anything but the item cannot be checked here, and reads as unmet.
+/// What a modifier's gate still needs of the base, in player words (`metal`, `an enhancement
+/// bonus`); `None` when the base's types meet it. A gate on anything but the item cannot be checked
+/// here, and reads as such.
 fn unmet_item_gate(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> Option<String> {
-    (item_gate_met(gate, types) != Some(true)).then(|| item_gate_words(gate))
+    (item_gate_met(gate, types) != Some(true)).then(|| missing_words(gate, types))
+}
+
+/// A gate tag is held when the base has every `.`-joined part of it (`WeaponEnhancement.Weapon`).
+fn tag_held(tag: &str, types: &[String]) -> bool {
+    tag.split('.').all(|part| types.iter().any(|t| t.eq_ignore_ascii_case(part)))
 }
 
 fn item_gate_met(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> Option<bool> {
@@ -946,7 +953,7 @@ fn item_gate_met(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]
     Some(match gate {
         Applies::Always => true,
         Applies::Never => false,
-        Applies::ItemHas { tags, n } => tags.iter().filter(|tag| types.iter().any(|t| t.eq_ignore_ascii_case(tag))).count() >= usize::from(*n),
+        Applies::ItemHas { tags, n } => tags.iter().filter(|tag| tag_held(tag, types)).count() >= usize::from(*n),
         Applies::All(parts) => parts.iter().map(|part| item_gate_met(part, types)).collect::<Option<Vec<bool>>>()?.into_iter().all(|met| met),
         Applies::AtLeast { n, of } => {
             of.iter().map(|part| item_gate_met(part, types)).collect::<Option<Vec<bool>>>()?.into_iter().filter(|met| *met).count() >= usize::from(*n)
@@ -956,17 +963,66 @@ fn item_gate_met(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]
     })
 }
 
-fn item_gate_words(gate: &codex::rules_core::sheet_rule::Applies) -> String {
+/// One gate tag as a player reads it: every `…Enhancement` is an enhancement bonus, an `EQMOD`
+/// tag names the ability, and a run-together tag splits into lower-case words (`ColdIron`).
+fn tag_words(tag: &str) -> String {
+    if let Some(eqmod) = tag.strip_prefix("EQMOD ") {
+        return format!("the {} ability", eqmod.split(" ~ ").nth(1).unwrap_or(eqmod).trim());
+    }
+    let words: Vec<String> = tag.split('.').map(|part| {
+        if part.ends_with("Enhancement") {
+            return "an enhancement bonus".to_owned();
+        }
+        let mut out = String::new();
+        for (i, c) in part.chars().enumerate() {
+            if i > 0 && c.is_uppercase() && part.chars().nth(i - 1).is_some_and(char::is_lowercase) {
+                out.push(' ');
+            }
+            out.extend(c.to_lowercase());
+        }
+        out
+    }).collect();
+    words.join(" and ")
+}
+
+/// The words for the tags in `tags` (deduplicated, in order), joined by `sep`.
+fn tags_words<'a>(tags: impl Iterator<Item = &'a String>, sep: &str) -> String {
+    let mut words: Vec<String> = Vec::new();
+    for word in tags.map(|tag| tag_words(tag)) {
+        if !words.contains(&word) {
+            words.push(word);
+        }
+    }
+    words.join(sep)
+}
+
+/// What `gate` still needs of a base with `types`: only its unmet parts, and of alternatives the
+/// one needing least (a weapon's Spell Effect needs `an enhancement bonus`, not a list of slots).
+fn missing_words(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> String {
     use codex::rules_core::sheet_rule::Applies;
+    let unmet = |part: &&Applies| item_gate_met(part, types) != Some(true);
     match gate {
-        Applies::Always => "always".to_owned(),
-        Applies::Never => "never".to_owned(),
-        Applies::ItemHas { tags, n } if *n <= 1 => tags.join(" or "),
-        Applies::ItemHas { tags, n } => format!("{n} of {}", tags.join(", ")),
-        Applies::All(parts) => parts.iter().map(item_gate_words).collect::<Vec<_>>().join(" and "),
-        Applies::AtLeast { n, of } if usize::from(*n) >= of.len() => of.iter().map(item_gate_words).collect::<Vec<_>>().join(" and "),
-        Applies::AtLeast { n, of } => format!("{n} of: {}", of.iter().map(item_gate_words).collect::<Vec<_>>().join("; ")),
-        Applies::Not(inner) => format!("not {}", item_gate_words(inner)),
+        Applies::Never => "nothing it can be made on".to_owned(),
+        Applies::ItemHas { tags, n } => {
+            // Of a `.`-joined tag only the parts the base lacks are missing.
+            let missing: Vec<String> = tags.iter().filter(|tag| !tag_held(tag, types))
+                .map(|tag| tag.split('.').filter(|part| !tag_held(part, types)).collect::<Vec<_>>().join(".")).collect();
+            let still = usize::from(*n).saturating_sub(tags.len() - missing.len());
+            if still <= 1 {
+                tags_words(missing.iter(), " or ")
+            } else if still >= missing.len() {
+                tags_words(missing.iter(), " and ")
+            } else {
+                format!("{still} of {}", tags_words(missing.iter(), ", "))
+            }
+        }
+        Applies::All(parts) => parts.iter().filter(unmet).map(|part| missing_words(part, types)).collect::<Vec<_>>().join(" and "),
+        Applies::AtLeast { n, of } if usize::from(*n) >= of.len() => of.iter().filter(unmet).map(|part| missing_words(part, types)).collect::<Vec<_>>().join(" and "),
+        Applies::AtLeast { of, .. } => of.iter().filter(unmet).map(|part| missing_words(part, types)).min_by_key(String::len).unwrap_or_default(),
+        Applies::Not(inner) => match inner.as_ref() {
+            Applies::ItemHas { tags, .. } => format!("not {}", tags_words(tags.iter().filter(|tag| tag_held(tag, types)), " or ")),
+            other => format!("not {}", missing_words(other, types)),
+        },
         _ => "a condition this screen cannot check".to_owned(),
     }
 }
@@ -976,6 +1032,30 @@ mod tests {
     use super::*;
     use codex::rules_core::equipment_resolver::equipment_catalog_row_by_key;
     use std::collections::{BTreeMap, BTreeSet};
+
+    /// SD-41 E3.12: Buy Custom's option names drop the corpus's leading `|` (the key keeps it), and a
+    /// prerequisite reads as player words: no run-together tag (`WeaponEnhancement`), no `of:` list.
+    #[test]
+    fn custom_options_names_read_as_words() {
+        let options = custom_equipment_options("Dagger");
+        let all: Vec<&CustomOptionDto> = options.abilities.iter().chain(&options.materials).collect();
+        let needs = |name: &str| all.iter().find(|o| o.name == name).unwrap_or_else(|| panic!("{name} is offered")).prerequisite.clone();
+        assert_eq!(needs("Spell Effect (Command Word)").as_deref(), Some("an enhancement bonus"), "the weapon route, not the slot list");
+        assert_eq!(needs("Mithral").as_deref(), Some("metal"));
+        assert_eq!(needs("Bleed").as_deref(), Some("an enhancement bonus"), "WeaponEnhancement.Weapon: the dagger is a weapon");
+        assert_eq!(needs("Catalytic").as_deref(), Some("the Corrosive ability or the Corrosive Burst ability"));
+        let longsword = custom_equipment_options("Longsword (Base)");
+        let breastplate = custom_equipment_options("Breastplate (Base)");
+        let wider: Vec<&CustomOptionDto> = [&longsword, &breastplate].into_iter().flat_map(|o| o.abilities.iter().chain(&o.materials)).collect();
+        assert!(!wider.is_empty());
+        for option in all.iter().chain(&wider) {
+            assert!(!option.name.starts_with('|'), "{}", option.name);
+            if let Some(words) = &option.prerequisite {
+                let tag = words.split(|c: char| !c.is_alphanumeric()).find(|w| w.chars().skip(1).any(char::is_uppercase));
+                assert!(tag.is_none() && !words.contains("of:"), "{}: {words}", option.name);
+            }
+        }
+    }
 
     /// A PCGen removal directive (`Dust Knuckles.FORGET`) is not an item: the Market never lists one.
     #[test]
