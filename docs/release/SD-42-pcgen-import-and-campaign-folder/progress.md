@@ -15,7 +15,7 @@ status: planning-ready
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
-| E1 import converter (lane `import`) | 8 | 0 | waiting on C1 |
+| E1 import converter (lane `import`) | 8 | 1 (E1.1) | E1.1 complete; E1.2 next |
 | E2 campaign folder (lane `campaign`) | 12 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 0 | waiting on C1 |
 | E4 desktop wiring (Phase 2) | 6 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
@@ -52,6 +52,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | C1 | complete | 589815b65f | `artifacts/cycle_0/C1_cycle_receipt.md` | 0.22.0 on the 14 surfaces; current-release points at SD-42 notes |
 | 2026-11-17 | E3.1 | complete | 75e9feca1d | `artifacts/epic_3/E3.1_cycle_receipt.md` | 11 MIT packages pinned; 9 fixtures byte-stable; 10 live-preview + 4 reading-view cases; npm test 201/201 |
 | 2026-11-17 | E3.2 | complete | 931098912b | `artifacts/epic_3/E3.2_cycle_receipt.md` | `[[` completion + link clicks/Ctrl-Enter; 4 wikilinks cases; npm test 202/202 |
+| 2026-11-17 | E1.1 | complete | the commit adding the E1.1 receipt | `artifacts/epic_1/E1.1_cycle_receipt.md` | diagnosis test 1 passed; 7 TSVs + summary.json; H1 H3 H4 H7 proved, H2 proved (narrower), H5 refuted, H6 not exercised; no discovered card |
 
 ## Epic reports
 

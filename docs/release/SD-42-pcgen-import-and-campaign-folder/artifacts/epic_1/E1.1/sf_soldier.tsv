@@ -1,0 +1,5 @@
+line	name	base	custom_name	outcome	codex_key	sheet_record	worn	carried	copies_emitted	file_quantity	pcgen_location	codex_slot	slot_collision	eqmods_not_applied	data_fields_not_read
+1	Aegis Series, Squad	Aegis Series (Squad)	no	custom			1	0	0	1.0	Armor x1.0				NAME
+2	Core hammer, fusion	Core hammer (fusion)	no	custom			0	1	0	1.0	Carried x1.0				NAME
+3	Cryospike, residential	Cryospike (residential)	no	custom			1	0	0	1.0	Primary Hand x1.0				NAME
+4	Freeze ray, glacial	Freeze ray (glacial)	no	custom			0	1	0	1.0	Carried x1.0				NAME
