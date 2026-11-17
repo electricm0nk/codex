@@ -3,6 +3,7 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { migrateCampaign, type MigratedCampaign } from '../boundary/campaignFolder/migrateCampaign';
 import { clearMigrated, legacyMigrationRows } from './campaignMigrationModel';
 import { readYourName, rememberYourName } from './campaignMembersModel';
+import { CampaignHelpButton } from './CampaignHelpScreen';
 
 /**
  * Migration of pre-SD-42 campaigns (`decisions.md §14`, OPERATOR Q13). One row per old campaign
@@ -83,7 +84,10 @@ export function CampaignMigrationScreen(props: { configDir: string | null; onClo
 
   return (
     <section data-testid="campaign-migration" style={{ marginTop: '1rem', maxWidth: 900 }}>
-      <h2 style={{ margin: '0 0 0.5rem' }}>Migrate older campaigns</h2>
+      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', margin: '0 0 0.5rem' }}>
+        <h2 style={{ margin: 0 }}>Migrate older campaigns</h2>
+        <CampaignHelpButton campaignDir={null} />
+      </div>
       <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: '0 0 1rem' }}>
         A campaign is now a folder of Markdown files. Each older campaign below becomes a folder: pick where it
         goes and press Migrate. Every entry becomes its own file, and the old data is kept in a backup file in

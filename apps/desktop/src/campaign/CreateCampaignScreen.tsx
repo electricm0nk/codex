@@ -4,6 +4,7 @@ import { RULE_SETS } from '../characterHub/LandingScreen';
 import { hasTauriRuntime } from '../boundary/runtime';
 import { createCampaignFolder } from '../boundary/campaignFolder/knownCampaigns';
 import { membersForCreate, readYourName, rememberYourName } from './campaignMembersModel';
+import { CampaignHelpButton } from './CampaignHelpScreen';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -89,8 +90,10 @@ export function CreateCampaignScreen(props: { onCancel: () => void; onCreated: (
 
   return (
     <section style={{ marginTop: '2rem' }}>
-      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+      <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h2 style={{ margin: 0 }}>Create a campaign</h2>
+        <div style={{ flex: 1 }} />
+        <CampaignHelpButton campaignDir={null} />
         <button
           type="button"
           onClick={props.onCancel}

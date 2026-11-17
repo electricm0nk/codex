@@ -3,6 +3,7 @@ import { RULE_SETS } from '../characterHub/LandingScreen';
 import { openCampaignFolder, saveCampaignJson } from '../boundary/campaignFolder/knownCampaigns';
 import type { FolderMember, OpenedCampaign } from '../boundary/campaignFolder/types';
 import { addMember, membersForSave, removeMember, renameMember } from './campaignMembersModel';
+import { CampaignHelpButton } from './CampaignHelpScreen';
 
 const LABEL_STYLE: CSSProperties = {
   color: 'var(--color-text-secondary)',
@@ -112,8 +113,10 @@ export function EditCampaignScreen(props: { campaignId: string; onCancel: () => 
 
   return (
     <section style={{ marginTop: '2rem' }}>
-      <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+      <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h2 style={{ margin: 0 }}>Edit campaign</h2>
+        <div style={{ flex: 1 }} />
+        <CampaignHelpButton campaignDir={campaignDir} />
         <button
           type="button"
           onClick={props.onCancel}

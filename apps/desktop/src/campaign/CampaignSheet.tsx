@@ -10,6 +10,7 @@ import { hasTauriRuntime } from '../boundary/runtime';
 import { buildPreviewDetail } from '../characterHub/previewData';
 import { formatHeldClasses } from '../characterHub/characterProgression';
 import { AppMenu } from '../layout/AppMenu';
+import { CampaignHelpButton } from './CampaignHelpScreen';
 
 /**
  * Post-load campaign screen, styled like the Character Sheet: a full-bleed header, a left party
@@ -198,6 +199,8 @@ export function CampaignSheet(props: {
         <span style={{ fontWeight: 600 }}>
           {campaign.name} — {campaign.ruleSetLabel}
         </span>
+        <div style={{ flex: 1 }} />
+        <CampaignHelpButton campaignDir={props.campaignDir} />
       </div>
 
       <div style={{ display: 'flex', gap: '0.75rem', padding: '1rem 1.5rem' }}>

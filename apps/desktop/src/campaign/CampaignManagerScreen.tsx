@@ -9,6 +9,7 @@ import {
 import type { KnownCampaign, OpenedCampaign } from '../boundary/campaignFolder/types';
 import { notACampaignFolder } from './campaignFolderModel';
 import { CampaignMigrationScreen } from './CampaignMigrationScreen';
+import { CampaignHelpButton } from './CampaignHelpScreen';
 import { legacyMigrationRows, olderCampaignFolder } from './campaignMigrationModel';
 
 function hasLegacyCampaigns(): boolean {
@@ -292,6 +293,7 @@ export function CampaignManagerScreen(props: {
         <button type="button" onClick={() => selected && props.onEdit(selected.campaignDir)} disabled={!selected} style={barButton('default', Boolean(selected))}>
           Edit
         </button>
+        <CampaignHelpButton campaignDir={selected?.campaignDir ?? null} style={barButton('default', true)} />
         <div style={{ flex: 1 }} />
         <button type="button" onClick={props.onCancel} style={barButton('default', true)}>
           Cancel
