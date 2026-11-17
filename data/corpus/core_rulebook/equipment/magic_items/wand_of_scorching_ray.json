@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "You blast your enemies with up to 1-3 searing beams of fire dealing 4d6 points of fire damage.",
     "key": "Wand of Scorching Ray",
     "name": "Wand",

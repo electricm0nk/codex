@@ -2,10 +2,10 @@
 //! sheet prints, in which order, and where on the 12-column page grid. Page 1 (`technical-design.md
 //! §4`, Letter first) is the operator's round-2 grid (`decisions.md §24.3.1`, E2.18): the portrait box,
 //! two rows tall with the Languages under it, beside the Character Name and Campaign fields (one
-//! row, no title above them), then the Armor Class boxes (no heading) and the Speed (Land, Swim, Fly)
-//! beside it; then a left column of the square block (Hit Points, Initiative, Encumbrance,
-//! Conditions, E2.9), the Weapons, the Attack, the Saving Throws and the Conditional Bonuses box
-//! (E2.20), and a right column of one width
+//! row, no title above them), then the Armor Class boxes (no heading) and the Speed (Land, Fly, Swim, Climb, 2×2;
+//! SD-41 `decisions.md §34` (6)) beside it; then a left column of the square block (Hit Points, Initiative, Encumbrance,
+//! Conditions, E2.9), the Weapons, the Attack, the Saving Throws, the Resistances (E2.22) and the
+//! Conditional Bonuses box (E2.20; the two swapped by SD-41 `decisions.md §34` (2)), and a right column of one width
 //! holding the Abilities over the Skills (one column, name + total, E2.11). Then the sections
 //! (`decisions.md §24.3.7`, E2.23), each from a new page under its title: Abilities and Feats,
 //! Inventory (Defense, Gear, Money, E3.2), Spellbook, Bio (the details, then the Biography and campaign notes, then
@@ -34,8 +34,9 @@ const SHEET: &[Placed] = &[
     Placed::under("weapons", blocks::weapons, 0, 7),
     Placed::under("attack", blocks::attack, 0, 7),
     Placed::under("saves", blocks::saves, 0, 7),
-    Placed::under("conditionalBonuses", blocks::conditional_bonuses, 0, 7),
+    // Resistances above the Conditional Bonuses box (SD-41 `decisions.md §34` (2)).
     Placed::under("resistances", blocks::resistances, 0, 7),
+    Placed::under("conditionalBonuses", blocks::conditional_bonuses, 0, 7),
     Placed::at("abilities", blocks::abilities, 7, 5),
     Placed::under("skills", blocks::skills, 7, 5),
 ];

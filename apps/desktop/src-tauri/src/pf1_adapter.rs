@@ -1153,7 +1153,7 @@ pub(crate) fn mutate_saved_character_gated_at_root(
     envelope.saved_at = saved_at.to_owned();
 
     let ledger = ledger_after_change_at_root(root, &before, &envelope.character_input, admitted)?;
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     if let Some(ledger) = ledger {
         write_character_ledger_at_root(root, &ledger)?;
     }
@@ -1161,8 +1161,9 @@ pub(crate) fn mutate_saved_character_gated_at_root(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note: None,
+        mirror_warnings: crate::character_hub::mirror_warnings_at_root(root),
     })
 }
 
@@ -1643,6 +1644,8 @@ mod tests {
         let bought = purchase_equipment_priced_at_root(&ringed, &row.entry.key, ActiveState::EquippedActive, "2026-11-11T00:00:00Z", PriceMode::Standard)
             .expect("the purchase runs");
         assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "{bought:?}");
+        // A purchase lands Carried (SD-41 `decisions.md §10`); worn by a move.
+        crate::character_hub::set_equipment_active_state_at_root(&ringed, &row.entry.key, ActiveState::EquippedActive, "2026-11-11T00:00:01Z").expect("worn");
         let (ring_ac, ring) = armor_class_parts_hold("aldric + Ring of Protection +1", &load_saved_character_at_root(&ringed).expect("loads"));
         assert_eq!((ring_ac, part(&ring, "deflection"), part(&ring, "armor")), (aldric_ac + 1, 1, 4), "{ring:?}");
 

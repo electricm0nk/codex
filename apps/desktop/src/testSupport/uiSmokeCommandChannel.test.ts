@@ -16,7 +16,7 @@
 import { assert, assertEqual } from './asserts';
 import { __testables } from './uiProbe';
 
-const { matchCommandTarget, executeCommand } = __testables;
+const { matchCommandTarget, executeCommand, labelOf } = __testables;
 
 function verifiesExactMatchWinsOverPrefixAndContains() {
   const names = ['Back to landing', 'Back', 'Go Back'];
@@ -54,17 +54,48 @@ function verifiesAnOutOfRangeIndexFallsBackToTheFirstMatchInTier() {
   assertEqual(matchCommandTarget(names, 'Add', 5), 0, 'an index past the end of the matched tier does not report -1');
 }
 
+function verifiesANegativeIndexCountsFromTheEndOfTheTier() {
+  // SD-41 E3.3: the Market's Buy-side "Negotiate" is the last of a list whose length is the inventory's.
+  const names = ['Negotiate', 'Sell', 'Negotiate', 'Negotiate'];
+  assertEqual(matchCommandTarget(names, 'Negotiate', -1), 3, 'index -1 is the last exact match');
+  assertEqual(matchCommandTarget(names, 'Negotiate', -2), 2, 'index -2 is the one before it');
+}
+
 function verifiesEmptyNamesListReportsNoMatch() {
   assert(matchCommandTarget([], 'anything') === -1, 'an empty candidate list can never match');
 }
 
+// `by: 'label'` steps (SD-41 E3.3): a row of buttons all reading "Move to" / "Drop" is told apart by
+// each one's aria-label, and a checkbox has no name but the <label> around it.
+function fakeControl(ariaLabel: string | null, labelText: string | null, groupLabel: string | null = null): Element {
+  return {
+    getAttribute: (name: string) => (name === 'aria-label' ? ariaLabel : null),
+    closest: (selector: string) =>
+      selector === 'label' && labelText !== null
+        ? { textContent: labelText }
+        : selector === '[role="group"][aria-label]' && groupLabel !== null
+          ? { getAttribute: () => groupLabel }
+          : null,
+  } as unknown as Element;
+}
+
+function verifiesLabelOfReadsTheAriaLabelThenTheEnclosingLabel() {
+  assertEqual(labelOf(fakeControl('Move Dagger to', 'ignored')), 'Move Dagger to', 'the aria-label wins');
+  assertEqual(labelOf(fakeControl(null, ' Only Show Affordable')), 'Only Show Affordable', 'a checkbox reads its <label>, trimmed');
+  assertEqual(labelOf(fakeControl('  ', 'Container')), 'Container', 'a blank aria-label falls through to the <label>');
+  assertEqual(labelOf(fakeControl(null, null, 'Discard Dagger')), 'Discard Dagger', 'a bare button reads the labelled group it sits in');
+  assertEqual(labelOf(fakeControl(null, null)), '', 'no label at all reads empty');
+}
+
 const cases: [string, () => void][] = [
+  ['labelOf reads the aria-label, then the enclosing <label>', verifiesLabelOfReadsTheAriaLabelThenTheEnclosingLabel],
   ['exact match wins over prefix and contains', verifiesExactMatchWinsOverPrefixAndContains],
   ['prefix wins over contains when no exact match exists', verifiesPrefixWinsOverContainsWhenNoExactMatchExists],
   ['contains is the last-resort tier', verifiesContainsIsTheLastResortTier],
   ['no match returns -1', verifiesNoMatchReturnsNegativeOne],
   ['index selects within the matched tier', verifiesIndexSelectsWithinTheMatchedTier],
   ['an out-of-range index falls back to the first match in tier', verifiesAnOutOfRangeIndexFallsBackToTheFirstMatchInTier],
+  ['a negative index counts from the end of the tier', verifiesANegativeIndexCountsFromTheEndOfTheTier],
   ['an empty names list reports no match', verifiesEmptyNamesListReportsNoMatch],
 ];
 

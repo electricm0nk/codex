@@ -37,6 +37,7 @@ use codex::rules_core::pilot_compute::sf_chassis::SfChassisRefusal;
 use codex::rules_core::pilot_compute::sf_defense::{self, SfHeld};
 use codex::rules_core::pilot_compute::sf_spells;
 use codex::rules_core::sheet_rule::{evaluate_applies, split_rule_id, EvalContext, SheetRule, SheetRulePackage};
+#[cfg(test)]
 use codex::saved_character::local_store::SavedCharacterStore;
 
 use crate::character_hub::{DiagnosticDto, ExplanationDto};
@@ -500,7 +501,7 @@ pub fn save_at_root(package: &SheetRulePackage, root: &Path, request: &SfChoices
     envelope.latest_authoritative_revision_ref = next;
     envelope.saved_at = request.saved_at.clone();
     envelope.character_input = input;
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     Ok(SfCreateResponse::Saved {
         summary: Box::new(sf_adapter::summary_dto(&envelope)),
         explanations: sheet.explanations().into_iter().map(|e| ExplanationDto { id: e.id, value: e.value, detail: e.detail }).collect(),

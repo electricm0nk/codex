@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "This spell summons to your side a natural creature (typically an animal, fey, magical beast, outsider with the elemental subtype, or a giant).",
     "key": "Wand of Summon Nature's Ally I",
     "name": "Wand",

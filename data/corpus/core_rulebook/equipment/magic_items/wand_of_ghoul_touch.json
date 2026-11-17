@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "Imbuing you with negative energy, this spell allows you to paralyze a single living humanoid for the duration of the spell with a successful melee touch attack.",
     "key": "Wand of Ghoul Touch",
     "name": "Wand",

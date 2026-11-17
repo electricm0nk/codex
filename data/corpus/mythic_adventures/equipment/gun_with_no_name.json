@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "General",
-    "cost_gp": null,
+    "cost_gp": 3000.0,
     "description": null,
     "key": "Gun with no Name",
     "name": "Gun with no Name",

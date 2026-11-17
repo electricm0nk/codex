@@ -511,7 +511,9 @@ mod tests {
         assert!(record.skill_check_bonus.is_none());
         assert!(record.ability_score_bonus.is_none());
         assert_eq!(record.weight_lbs, Some(0.1), "Arrow (Slaying)'s real ingested weight_lbs");
-        assert_eq!(record.cost_gp, Some(0.0), "Arrow (Slaying)'s real ingested cost_gp");
+        // `COST:0` plus its eqmods (+1 arrow, bane, the slaying choice), settled by the converter
+        // (SD-41 E1.9): CRB p.471's 2,282 gp.
+        assert_eq!(record.cost_gp, Some(2_282.0), "Arrow (Slaying)'s settled cost_gp");
 
         assert!(
             crate::rules_core::encumbrance::equipment_key_resolves_a_carried_weight(
@@ -577,7 +579,7 @@ mod tests {
             active_state: ActiveState::EquippedActive,
             applied_modifiers: Vec::new(),
         }];
-        let computation = compute_encumbrance(&equipped, &package, 10, SizeCategory::Medium);
+        let computation = compute_encumbrance(&equipped, &package, 10, SizeCategory::Medium, &[], &[]);
         assert_eq!(computation.total_carried_weight_lbs, 1.0, "ARG Dogslicer's real WT:1 through the real loader");
         assert!(computation.unresolved_item_ids.is_empty());
     }

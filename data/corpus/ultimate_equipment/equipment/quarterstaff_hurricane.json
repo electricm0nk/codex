@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 7840.0,
     "description": null,
     "key": "Quarterstaff (Hurricane)",
     "name": "Quarterstaff (Hurricane)",

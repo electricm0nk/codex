@@ -6,7 +6,7 @@
     "key": "Morningstar",
     "category": "arms_armor",
     "name": "Morningstar (Base)",
-    "cost_gp": null,
+    "cost_gp": 8.0,
     "weight_lbs": null,
     "description": "A morningstar is a spiked metal ball, affixed to the top of a long handle."
   },

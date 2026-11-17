@@ -3035,6 +3035,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Answering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3074,6 +3077,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Answering_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3113,6 +3119,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "BloodHunting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3152,6 +3161,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "BloodHunting_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3191,6 +3203,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bloodsong",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3230,6 +3245,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bloodsong_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3269,6 +3287,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Brawling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3308,6 +3329,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Brawling_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3386,6 +3410,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Calming",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3425,6 +3452,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Confounding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3464,6 +3494,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Confounding_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3503,6 +3536,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Distracting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3542,6 +3578,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Distracting_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3581,6 +3620,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Distracting_Greater",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3620,6 +3662,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Distracting_Greater_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3737,6 +3782,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Exhausting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3776,6 +3824,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Exhausting_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3815,6 +3866,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "FateStealing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3854,6 +3908,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "FateStealing_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3893,6 +3950,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Flamboyant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3932,6 +3992,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Flamboyant_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3971,6 +4034,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Flamboyant_Greater",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4010,6 +4076,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Flamboyant_Greater_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4049,6 +4118,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 5
+        },
         "name": "Flying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4088,6 +4160,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 5
+        },
         "name": "Flying_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4127,6 +4202,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Fortuitous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4166,6 +4244,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Fortuitous_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4205,6 +4286,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Inspired",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4244,6 +4328,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Inspired_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4283,6 +4370,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Jarring",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4308,6 +4398,10 @@
     "equipmods/phantom_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -4439,6 +4533,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Sacred",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4478,6 +4575,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Sacred_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4517,6 +4617,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Sensing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4634,6 +4737,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Spell_Dodging",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4673,6 +4779,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "SpiritHunting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4712,6 +4821,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "SpiritHunting_AMF",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4834,6 +4946,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Vouchsafing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9124,6 +9239,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Answering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9163,6 +9281,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Answering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9202,6 +9323,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Blood-Hunting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9241,6 +9365,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Blood-Hunting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9280,6 +9407,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bloodsong",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9319,6 +9449,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bloodsong",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9358,6 +9491,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Brawling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9397,6 +9533,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Brawling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9475,6 +9614,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Calming",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9514,6 +9656,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Confounding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9553,6 +9698,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Confounding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9592,6 +9740,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Distracting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9631,6 +9782,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Distracting (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9670,6 +9824,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Distracting (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9709,6 +9866,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Distracting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9826,6 +9986,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Exhausting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9865,6 +10028,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Exhausting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9904,6 +10070,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Fate-Stealing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9943,6 +10112,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Fate-Stealing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -9982,6 +10154,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Flamboyant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10021,6 +10196,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Flamboyant (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10060,6 +10238,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Flamboyant (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10099,6 +10280,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Flamboyant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10138,6 +10322,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 5
+        },
         "name": "Flying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10177,6 +10364,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 5
+        },
         "name": "Flying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10216,6 +10406,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Fortuitous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10255,6 +10448,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Fortuitous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10294,6 +10490,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Inspired",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10333,6 +10532,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Inspired",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10372,6 +10574,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Jarring",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10397,6 +10602,10 @@
     "special_ability_phantom_ammunition_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -10528,6 +10737,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Sacred",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10567,6 +10779,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Sacred",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10606,6 +10821,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Sensing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10723,6 +10941,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Spell Dodging",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10762,6 +10983,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Spirit-Hunting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10801,6 +11025,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Spirit-Hunting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -10923,6 +11150,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Vouchsafing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

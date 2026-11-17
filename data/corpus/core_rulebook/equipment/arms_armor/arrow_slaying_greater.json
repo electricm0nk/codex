@@ -6,7 +6,7 @@
     "key": "Arrow (Slaying/Greater)",
     "category": "arms_armor",
     "name": "Arrow (Base)",
-    "cost_gp": 0.0,
+    "cost_gp": 4057.0,
     "weight_lbs": 0.1,
     "description": "This +1 arrow is keyed to a particular type or subtype of creature. If it strikes such a creature, the target must make a DC 23 Fortitude save or take 100 points of damage. Note that even creatures normally exempt from Fortitude saves (undead and constructs) are subject to this attack. When keyed to a living creature, this is a death effect (and thus death ward protects a target)."
   },

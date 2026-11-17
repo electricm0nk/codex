@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 150.0,
     "description": "Creates disembodied glowing hand to deliver touch attacks.",
     "key": "Scroll of Spectral Hand",
     "name": "Scroll",

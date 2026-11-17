@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1125.0,
     "description": "Subjects in fog get -10 to Wis and Will checks.",
     "key": "Scroll of Mind Fog",
     "name": "Scroll",

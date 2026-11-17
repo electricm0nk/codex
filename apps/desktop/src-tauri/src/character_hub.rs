@@ -24,12 +24,13 @@ use uuid::Uuid;
 use codex::rules_core::equipment_effects::worn_item_stated_bonuses;
 use crate::character_ledger::{admitted_records_at_root, AdmittedKind, AdmittedRecordDto, OverrideFlag, build_character_ledger_on_first_load, copy_character_ledger, ledger_of_a_new_character, list_progression_ledger_at_root, load_character_ledger_at_root, restore_character_ledger_at_root, write_character_ledger_at_root, CharacterLedgerDto, ProgressionLedgerDto};
 use crate::character_custom::{copy_character_custom, custom_or_empty, load_character_custom_at_root, restore_character_custom_at_root, set_custom_item_state_at_root, CharacterCustomDto, worn_custom_slots, WornItemBonuses, CUSTOM_ITEM_PREFIX};
-use codex::rules_core::body_slots::{slot_conflict, worn_places, worn_slot, BodySlot};
+use codex::rules_core::body_slots::{slot_conflict, worn_places, BodySlot};
+use crate::equipment_catalog::body_slot_of_item;
 use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
-use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
+use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown_with_carried, WeaponDamageBreakdown};
 use codex::rules_core::feat_effects;
 use codex::rules_core::game_system::GameSystem;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
@@ -49,6 +50,8 @@ use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
+use codex::saved_character::equipment_sets::{self, CopyKey, EquipmentSets, HeldCopy, Location};
+use codex::saved_character::campaign_mirror::{self, Membership, MirrorWarning};
 use codex::saved_character::{
     SavedCharacterEnvelope, SavedCharacterRevisionKind, SavedCharacterSummary,
     CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
@@ -633,9 +636,10 @@ pub struct LoadSavedCharacterResponse {
     /// did ground, and hiding them would flatten `Blocked` into "nothing
     /// computed."
     pub explanations: Vec<ExplanationDto>,
-    /// One entry per `EquippedActive` item the engine identifies as a
-    /// weapon (`damage_total::resolve_weapon_damage_breakdown`), carrying
-    /// that weapon's corpus-cited damage facets.
+    /// One entry per `EquippedActive` weapon, then per carried
+    /// (`SelectedInactive`, `inHand: false`) weapon, then the Unarmed row
+    /// (`damage_total::resolve_weapon_damage_breakdown_with_carried`),
+    /// carrying each weapon's corpus-cited damage facets.
     ///
     /// Each facet stays its own field. The one summed figure, the damage
     /// the sheet prints (`1d8+4`), is the engine's
@@ -737,6 +741,64 @@ pub struct LoadSavedCharacterResponse {
     /// block and the Defense tab read this one field. Four empty lists when none.
     #[serde(default)]
     pub resistances: codex::rules_core::pilot_compute::resistances::Resistances,
+    /// SD-41 E2.1 (`decisions.md §5.3`): the active equipment set and every set's name, from
+    /// `equipment_sets.json`. Left out for a system with no sets.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub equipment_sets: Option<EquipmentSetsSummaryDto>,
+    /// SD-41 E2.1 (`decisions.md §7`): each container copy's load in the active set
+    /// (`containers::container_loads`). Left out when the character holds no container.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub container_loads: Vec<ContainerLoadDto>,
+    /// SD-41 E2.7 (`decisions.md §29`): the campaigns the character belongs to (`campaigns.json`),
+    /// for the sheet's Campaign dialog and its buttons. Left out when there is none.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub campaigns: Vec<Membership>,
+    /// SD-41 E2.7: each campaign copy the latest write could not make ("<dir>: <reason>"). Left out
+    /// when every copy was written.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub mirror_warnings: Vec<String>,
+    /// SD-41 E2.3 (`decisions.md §32` (b)): the Custom tab's "Ignore container capacity limits",
+    /// for the gear screen and the print, which then flag no container over. Left out when off.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub ignore_container_capacity: bool,
+}
+
+/// The active set's name and every set's, in file order.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquipmentSetsSummaryDto {
+    pub active: String,
+    pub names: Vec<String>,
+}
+
+/// One container copy's load: what its contents weigh, what it holds, and whether that is over.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ContainerLoadDto {
+    pub copy: CopyKey,
+    pub contents_lbs: f64,
+    pub capacity: ContainerCapacityDto,
+    pub over: bool,
+}
+
+/// `ContainerCapacity` on the wire: `{ kind: 'pounds', lbs }`, `{ kind: 'unlimited' }`, `{ kind: 'unstated' }`.
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "camelCase")]
+pub enum ContainerCapacityDto {
+    Pounds { lbs: f64 },
+    Unlimited,
+    Unstated,
+}
+
+impl From<codex::rules_core::equipment_record::ContainerCapacity> for ContainerCapacityDto {
+    fn from(capacity: codex::rules_core::equipment_record::ContainerCapacity) -> Self {
+        use codex::rules_core::equipment_record::ContainerCapacity;
+        match capacity {
+            ContainerCapacity::Pounds(lbs) => Self::Pounds { lbs },
+            ContainerCapacity::Unlimited => Self::Unlimited,
+            ContainerCapacity::Unstated => Self::Unstated,
+        }
+    }
 }
 
 /// The languages a character knows, as the sheet lists them.
@@ -1083,6 +1145,19 @@ pub struct WeaponDamageDto {
     /// per character, not per weapon — this bounded slice does not model
     /// per-weapon feat targeting.
     pub feat_effects: Vec<WeaponFeatEffectDto>,
+    /// `false` for a carried (stowed) weapon: the row is the engine's as if wielded, marked carried.
+    pub in_hand: bool,
+    /// The Unarmed strike row every character ends with (`decisions.md §22`).
+    pub unarmed: bool,
+    /// The strike deals nonlethal damage (Unarmed without Improved Unarmed Strike).
+    pub nonlethal: bool,
+    /// The weapon fires ammunition (`decisions.md §23`).
+    pub uses_ammunition: bool,
+    /// Pieces of matching ammunition carried; 0 when the weapon uses none.
+    pub ammunition_carried: u32,
+    /// The ammunition family the record names (`Arrow`); left out when it names none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ammunition_family: Option<String>,
 }
 
 /// Projects the engine's per-weapon damage breakdown onto the wire.
@@ -1146,6 +1221,12 @@ pub(crate) fn map_weapon_damage_dto(
                     damage_bonus: effect.damage_bonus,
                 })
                 .collect(),
+            in_hand: breakdown.in_hand,
+            unarmed: breakdown.unarmed,
+            nonlethal: breakdown.nonlethal,
+            uses_ammunition: breakdown.uses_ammunition,
+            ammunition_carried: breakdown.ammunition_carried,
+            ammunition_family: breakdown.ammunition_family.clone(),
         })
         .collect()
 }
@@ -1215,6 +1296,10 @@ pub enum CreateCharacterResponse {
         /// says that the character starts with 0 gp and why.
         #[serde(rename = "startingWealthNote")]
         starting_wealth_note: Option<String>,
+
+        /// Each campaign copy the save could not write (`decisions.md §29`); empty when all were written.
+        #[serde(rename = "mirrorWarnings")]
+        mirror_warnings: Vec<String>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
@@ -1360,8 +1445,23 @@ pub(crate) fn map_resolved_equipment_dto(item: &ResolvedEquipment) -> ResolvedEq
     }
 }
 
+/// The ids of `ids` that are items: a selection that is not an owned copy (`is_owned_copy`: the
+/// feat toggle, the loadout's no-shield row) is neither unweighed nor unshown. An id no selection
+/// names stays.
+fn only_item_ids(ids: &[String], selections: &[EquipmentSelection]) -> Vec<String> {
+    ids.iter()
+        .filter(|id| {
+            let mut rows = selections.iter().filter(|selection| &selection.item_id == *id).peekable();
+            rows.peek().is_none() || rows.any(is_owned_copy)
+        })
+        .cloned()
+        .collect()
+}
+
 // `pub(crate)` — same reason as `map_snapshot_dto` above.
-pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDerivedDto {
+pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection, selections: &[EquipmentSelection]) -> CorpusDerivedDto {
+    let mut encumbrance = map_encumbrance_dto(&section.encumbrance);
+    encumbrance.unresolved_item_ids = only_item_ids(&encumbrance.unresolved_item_ids, selections);
     CorpusDerivedDto {
         school_coverage: section
             .school_coverage
@@ -1401,9 +1501,9 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
             attack_bonus_delta: section.equipment_effects.attack_bonus_delta,
             spell_resistance_total: section.equipment_effects.spell_resistance_total,
         },
-        encumbrance: map_encumbrance_dto(&section.encumbrance),
+        encumbrance,
         unresolved_spell_ids: section.unresolved_spell_ids.clone(),
-        unresolved_equipment_item_ids: section.unresolved_equipment_item_ids.clone(),
+        unresolved_equipment_item_ids: only_item_ids(&section.unresolved_equipment_item_ids, selections),
     }
 }
 
@@ -2099,9 +2199,11 @@ fn draft_sheet_preview_impl(request: &CreateCharacterRequest) -> Result<DraftShe
         .into_iter()
         .find(|row| row.id == codex::rules_core::pilot_compute::INITIATIVE_TOTAL_ID)
         .ok_or_else(|| "the engine computed no initiative total for this draft".to_owned())?;
+    let mut encumbrance = map_encumbrance_dto(&receipt.corpus_derived.encumbrance);
+    encumbrance.unresolved_item_ids = only_item_ids(&encumbrance.unresolved_item_ids, &input.chosen.equipment_selections);
     Ok(DraftSheetPreviewDto {
         initiative,
-        encumbrance: map_encumbrance_dto(&receipt.corpus_derived.encumbrance),
+        encumbrance,
         feat_budget: feat_budget_rows(&input, &receipt.base),
     })
 }
@@ -2189,7 +2291,7 @@ pub(crate) fn create_character_at_root(
     };
 
     let ledger = ledger_of_a_new_character(root, &envelope.character_input)?;
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     if let Some(ledger) = ledger {
         write_character_ledger_at_root(root, &ledger)?;
     }
@@ -2210,8 +2312,9 @@ pub(crate) fn create_character_at_root(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note,
+        mirror_warnings: mirror_warnings_at_root(root),
     })
 }
 
@@ -2284,9 +2387,14 @@ fn clone_character_at_roots(
         character_input,
     };
 
-    SavedCharacterStore::save(&envelope, new_root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, new_root)?;
 
     copy_character_custom(source_root, new_root)?;
+    // The clone holds the same lines, so the source's sets (what is inside a created container) still name them.
+    let sets_file = source_root.join(equipment_sets::EQUIPMENT_SETS_FILE);
+    if sets_file.exists() {
+        std::fs::copy(&sets_file, new_root.join(equipment_sets::EQUIPMENT_SETS_FILE)).map_err(|err| format!("{}: {err}", sets_file.display()))?;
+    }
     copy_character_ledger(source_root, new_root)?;
     copy_character_hit_points(source_root, new_root)?;
     copy_character_bio(source_root, new_root)?;
@@ -2301,8 +2409,9 @@ fn clone_character_at_roots(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note: None,
+        mirror_warnings: mirror_warnings_at_root(new_root),
     })
 }
 
@@ -2723,7 +2832,7 @@ fn save_pathfinder_starter(root: &Path, app_version: &str, seed: PathfinderStart
         display_label: request.display_label.clone(),
         character_input,
     };
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)
+    crate::character_hub::save_and_mirror(&envelope, root).map(|_warnings| ())
 }
 
 /// The errors of the latest starter seeding pass (the launch, or the last Restore), held as
@@ -2848,6 +2957,12 @@ pub(crate) fn load_saved_character_at_root(
 ) -> Result<LoadSavedCharacterResponse, String> {
     let mut envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     build_character_ledger_on_first_load(root, &envelope.character_input);
+    // Before anything computes: an old save gets its Default set and its bundle pieces (§8, §30).
+    let held_rows = held_copy_rows(root, &envelope.character_input)?;
+    let sets = equipment_sets_at_root(root, &envelope.character_input, &held_rows)?;
+    let copy_keys = selection_copy_keys(&envelope.character_input.chosen.equipment_selections);
+    let quantities = copy_quantities(&sets, &copy_keys);
+    let item_sizes = copy_sizes(&sets, &copy_keys);
     let saved_input = envelope.character_input.clone();
     // This copy is what the sheet computes from, and is never saved.
     let worn_custom_items = WornItemBonuses::at_root(root, &envelope.character_input, corpus_fixture_bundle());
@@ -2857,7 +2972,7 @@ pub(crate) fn load_saved_character_at_root(
     let sheet_input = worn_item_stated_bonuses(&envelope.character_input.chosen.equipment_selections, corpus_fixture_bundle())
         .raised(&envelope.character_input);
 
-    let (mut snapshot, diagnostics, corpus_receipt) =
+    let (mut snapshot, diagnostics, mut corpus_receipt) =
         match resolve_unified_pilot_snapshot(&envelope.character_input, corpus_fixture_bundle()) {
             Ok((snapshot, corpus_receipt)) => (Some(snapshot), Vec::new(), corpus_receipt),
             Err(diagnostics) => (
@@ -2866,6 +2981,32 @@ pub(crate) fn load_saved_character_at_root(
                 compute_pilot_with_corpus(&sheet_input, corpus_fixture_bundle()),
             ),
         };
+    // Both branches computed the load from `sheet_input` with no pieces and no created items'
+    // weights (`decisions.md §25`); weigh it again with them, each created item where the active set puts it.
+    let custom = custom_or_empty(root);
+    let created_copies: Vec<(CopyKey, &crate::character_custom::CustomRecordDto)> =
+        custom.equipment.iter().map(|record| (crate::character_custom::custom_copy(record), record)).collect();
+    let weighed: Vec<(CopyKey, f64)> = created_copies.iter().filter_map(|(copy, record)| record.weight_lbs.map(|lbs| (copy.clone(), lbs))).collect();
+    let extra: Vec<codex::rules_core::encumbrance::WeighedCopy> = weighed
+        .iter()
+        .map(|(copy, lbs)| codex::rules_core::encumbrance::WeighedCopy {
+            id: copy.item_id.clone(),
+            weight_lbs: *lbs,
+            active_state: equipment_sets::project(sets.active_set(), std::slice::from_ref(copy))[0],
+        })
+        .collect();
+    corpus_receipt.corpus_derived.encumbrance = carried_load(&sheet_input, &quantities, &extra, &item_sizes);
+    let held_by_key: Vec<(CopyKey, &str, &[String])> = copy_keys
+        .iter()
+        .zip(&envelope.character_input.chosen.equipment_selections)
+        .map(|(copy, selection)| (copy.clone(), selection.item_id.as_str(), selection.applied_modifiers.as_slice()))
+        .collect();
+    let containers: Vec<(CopyKey, f64)> =
+        created_copies.iter().filter_map(|(copy, record)| record.container_capacity_lbs.map(|lbs| (copy.clone(), lbs))).collect();
+    let container_loads = codex::rules_core::containers::container_loads(sets.active_set(), &held_by_key, corpus_fixture_bundle(), &containers, &weighed, &quantities, &item_sizes)
+        .into_iter()
+        .map(|load| ContainerLoadDto { copy: load.copy, contents_lbs: load.contents_lbs, capacity: load.capacity.into(), over: load.over })
+        .collect();
 
     // Both already computed above — `corpus_receipt.base` IS the
     // `compute_pilot_base_chassis` output (explanations included), and
@@ -2876,11 +3017,22 @@ pub(crate) fn load_saved_character_at_root(
     explanations.extend(sheet_skill_trait_modifier_rows(&sheet_input));
     explanations.extend(feat_budget_rows(&sheet_input, &corpus_receipt.base));
     budget_from_the_saved_intelligence(&mut explanations, &saved_input, &sheet_input);
-    let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown(
+    // In hand, then carried, then the Unarmed row (`decisions.md §9, §22`); its attack rows beside.
+    // A carried weapon's rows as if wielded in the main hand (`decisions.md §9`); a row in hand wins.
+    for rows in [
+        codex::rules_core::pilot_compute_corpus::carried_weapon_combat_rows(&corpus_receipt.base, &sheet_input, corpus_fixture_bundle()),
+        codex::rules_core::pilot_compute::unarmed_strike_combat_rows(&corpus_receipt.base, &sheet_input),
+    ] {
+        let rows: Vec<_> = rows.into_iter().filter(|row| !explanations.iter().any(|held| held.id == row.id)).collect();
+        explanations.extend(map_explanations_dto(&rows));
+    }
+    let weapon_damage = map_weapon_damage_dto(&resolve_weapon_damage_breakdown_with_carried(
         &sheet_input,
         corpus_fixture_bundle(),
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
+        &quantities,
+        &item_sizes,
     ));
     let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses, conditional_notes) =
         sheet_lines_for(&sheet_input, &corpus_receipt.base);
@@ -2891,12 +3043,13 @@ pub(crate) fn load_saved_character_at_root(
         .as_ref()
         .map_or(corpus_receipt.base.ability_modifiers.constitution, |snapshot| snapshot.ability_modifiers.constitution);
 
+    let (campaigns, mirror_warnings) = campaign_state_at_root(root);
     let mut sheet = LoadSavedCharacterResponse {
         admitted_under_override: admitted_records_at_root(root, &envelope.character_input),
         summary: summarize_envelope(&envelope),
         snapshot: snapshot.as_ref().map(map_snapshot_dto),
         diagnostics: map_diagnostics_dto(&diagnostics),
-        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived),
+        corpus_derived: map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections),
         selected_feats: envelope.character_input.chosen.selected_feats.clone(),
         spells_selected: map_spells_selected_dto(&envelope.character_input.chosen.spells_selected),
         chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
@@ -2915,6 +3068,11 @@ pub(crate) fn load_saved_character_at_root(
         languages: stored_known_languages(&load_character_bio_at_root(root)?.languages),
         fly_maneuverability: None,
         resistances: Default::default(),
+        equipment_sets: Some(EquipmentSetsSummaryDto { active: sets.active.clone(), names: sets.sets.iter().map(|set| set.name.clone()).collect() }),
+        container_loads,
+        campaigns,
+        mirror_warnings,
+        ignore_container_capacity: custom.overrides.ignore_container_capacity,
     };
     worn_custom_items.apply_to_sheet(&mut sheet);
     push_weapon_damage_total_rows(&mut sheet);
@@ -3166,7 +3324,7 @@ fn land_speed_row(race_id: &str, worn_feet: Option<i16>, worn_percent: Option<i1
     Some(ExplanationDto { id: "speed.land".to_owned(), value, detail })
 }
 
-/// SD-40 E2.17: `speed.swim` and `speed.fly` (feet), each only when a racial trait the character
+/// SD-40 E2.17: `speed.swim` and `speed.fly` (and SD-41's `speed.climb`, `decisions.md §35`) (feet), each only when a racial trait the character
 /// holds states that mode (its `MOVE:` token; a selected alternate replaces it as it replaces the
 /// land speed's trait), plus the feat increase the engine already states for it
 /// (`feat.arg_standalone.aquatic_ancestry_swim_speed`, `…stretched_wings_fly_speed`). Returns the
@@ -3179,14 +3337,15 @@ fn push_swim_and_fly_rows(input: &CharacterInput, explanations: &mut Vec<Explana
     let race = corpus.resolve(race_key, &alternates.iter().map(String::as_str).collect::<Vec<_>>())?;
     let feat_row = |id: &str| explanations.iter().find(|row| row.id == id).map(|row| (row.id.clone(), row.value));
     let modes = [
-        ("swim", race.declared_mode_speed(|m| m.swim_ft), "feat.arg_standalone.aquatic_ancestry_swim_speed"),
-        ("fly", race.declared_mode_speed(|m| m.fly_ft), "feat.arg_standalone.stretched_wings_fly_speed"),
+        ("swim", race.declared_mode_speed(|m| m.swim_ft), Some("feat.arg_standalone.aquatic_ancestry_swim_speed")),
+        ("fly", race.declared_mode_speed(|m| m.fly_ft), Some("feat.arg_standalone.stretched_wings_fly_speed")),
+        ("climb", race.declared_mode_speed(|m| m.climb_ft), None),
     ];
     let mut maneuverability = None;
     let mut rows = Vec::new();
     for (mode, declared, feat_id) in modes {
         let Some((base, source)) = declared else { continue };
-        let feat = feat_row(feat_id);
+        let feat = feat_id.and_then(feat_row);
         let Ok(value) = i16::try_from(base + i32::from(feat.as_ref().map_or(0, |(_, v)| *v))) else { continue };
         let mut detail = format!("{race_key} {mode} speed {base} ft. ({})", source.key);
         if let Some((feat_id, feet)) = &feat {
@@ -3667,33 +3826,18 @@ pub enum PurchaseEquipmentResponse {
         #[serde(rename = "corpusDerived")]
         corpus_derived: Box<CorpusDerivedDto>,
         money: CharacterMoneyDto,
-        /// Where the new copy went: `EquippedActive` when it was asked for and its slot was free.
+        /// Where the new copy went: `SelectedInactive` (Carried), or `Absent` when that was asked
+        /// for. A purchase never wears (SD-41 `decisions.md §10`); wearing is a move.
         #[serde(rename = "activeState")]
         active_state: ActiveStateDto,
-        /// Why a copy asked to be worn is carried: the slot refusal's words. `None` for one worn, and
-        /// for one with no slot, which is carried with nothing refused (R18).
+        /// Why a copy asked to be worn is carried. Nothing refuses a purchase's placement since a
+        /// purchase lands Carried, so this is `None`; the Market's placement words read it.
         #[serde(rename = "carriedReason")]
         carried_reason: Option<String>,
     },
     Blocked {
         diagnostics: Vec<DiagnosticDto>,
     },
-}
-
-/// Where a bought copy goes (R18). Asked to be worn, it is worn if its slot is free, and otherwise
-/// carried with the reason; an item with no slot is carried. A buy asking for carried stays carried.
-fn bought_copy_placement(root: &Path, item_id: &str, requested: ActiveState) -> Result<(ActiveState, Option<String>, Vec<OverrideFlag>), String> {
-    if requested != ActiveState::EquippedActive {
-        return Ok((requested, None, Vec::new()));
-    }
-    if body_slot_of_item(item_id)? == BodySlot::None {
-        return Ok((ActiveState::SelectedInactive, None, Vec::new()));
-    }
-    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    Ok(match wear_check(root, &envelope.character_input, item_id)? {
-        Err((_, reason)) => (ActiveState::SelectedInactive, Some(reason), Vec::new()),
-        Ok(flags) => (ActiveState::EquippedActive, None, flags),
-    })
 }
 
 /// `purchase_equipment`'s real implementation: real correctness fix for
@@ -3830,25 +3974,27 @@ fn copy_price_gp(item_id: &str, bonus: u8, offers: &[crate::equipment_catalog::M
         .or_else(|| catalog_cost_gp(item_id))
 }
 
-/// Saves one new copy of `item_id`, holding `modifier_key` when it is a `+N`, in one save. The
-/// bonus goes on the new copy: `apply_attach_equipment_modifier` takes the first copy of an id,
-/// which would make an older plain item the one that was paid for.
+/// Saves `lines` new copies of `item_id`, each holding `modifier_key` when it is a `+N`, in one
+/// save. The bonus goes on the new copies: `apply_attach_equipment_modifier` takes the first copy
+/// of an id, which would make an older plain item the one that was paid for.
 fn add_purchased_copy_at_root(
     root: &Path,
     (item_id, bonus): (&str, u8),
-    modifier_key: Option<&str>,
+    modifiers: &[String],
     active_state: ActiveState,
-    wear_flags: Vec<OverrideFlag>,
+    lines: u32,
     saved_at: &str,
 ) -> Result<CreateCharacterResponse, String> {
-    let gate = load_gate_at_root(root, item_id, bonus, wear_flags);
+    let gate = load_gate_at_root(root, item_id, bonus, Vec::new());
     crate::pf1_adapter::mutate_saved_character_gated_at_root(
         root,
         saved_at,
         |character_input| {
-            crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
-            if let (Some(key), Some(copy)) = (modifier_key, character_input.chosen.equipment_selections.last_mut()) {
-                copy.applied_modifiers.push(key.to_owned());
+            for _ in 0..lines {
+                crate::pf1_adapter::apply_add_equipment_selection(character_input, item_id, active_state);
+                if let Some(copy) = character_input.chosen.equipment_selections.last_mut() {
+                    copy.applied_modifiers.extend(modifiers.iter().cloned());
+                }
             }
         },
         gate,
@@ -3896,12 +4042,13 @@ pub(crate) fn purchase_equipment_priced_at_root(
     saved_at: &str,
     mode: PriceMode,
 ) -> Result<PurchaseEquipmentResponse, String> {
-    purchase_equipment_offer_at_root(root, item_id, active_state, saved_at, mode, None)
+    purchase_equipment_deal_at_root(root, item_id, active_state, saved_at, mode, Deal::default())
 }
 
 /// [`purchase_equipment_priced_at_root`], optionally as a `+N`: the whole offer price replaces the
 /// catalog price, and the copy holds the offer's eqmod from the save that adds it. A bonus the row
 /// does not offer is refused in every mode, before anything is read from the balance.
+#[cfg(test)]
 pub(crate) fn purchase_equipment_offer_at_root(
     root: &Path,
     item_id: &str,
@@ -3910,7 +4057,41 @@ pub(crate) fn purchase_equipment_offer_at_root(
     mode: PriceMode,
     bonus: Option<u8>,
 ) -> Result<PurchaseEquipmentResponse, String> {
-    let offer = match bonus {
+    purchase_equipment_deal_at_root(root, item_id, active_state, saved_at, mode, Deal { bonus, ..Deal::default() })
+}
+
+/// What a Market buy, sale or discard names beyond the item (`decisions.md §26, §28, §30`).
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub(crate) struct Deal {
+    /// The `+N` to buy, one the row offers; absent buys the plain item.
+    pub(crate) bonus: Option<u8>,
+    /// A buy: bundles as the book sells them (absent: one). A sale or discard: pieces (absent: the
+    /// named line, or the whole stack for a discard).
+    pub(crate) quantity: Option<u32>,
+    /// The total the user agreed, in copper, in place of the listed price at the price mode.
+    /// `Cashless` moves no money either way.
+    pub(crate) negotiated_copper: Option<u64>,
+}
+
+/// [`purchase_equipment_offer_at_root`] of `deal.quantity` bundles: charged quantity × the price
+/// (the offer's, else the catalog's) or the negotiated total, and landed as quantity × the bundle's
+/// pieces on the Carried (or, asked `Absent`, Not Carried) stack of the same item, bonus and no
+/// custom name, or on a new line when there is none (`decisions.md §30`). A row with no price from
+/// any source is bought only at a negotiated price (`decisions.md §30.1`); without one it is
+/// `Blocked` and nothing changes.
+pub(crate) fn purchase_equipment_deal_at_root(
+    root: &Path,
+    item_id: &str,
+    active_state: ActiveState,
+    saved_at: &str,
+    mode: PriceMode,
+    deal: Deal,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let bundles = deal.quantity.unwrap_or(1);
+    if bundles == 0 {
+        return Err(format!("cannot buy 0 of '{item_id}'"));
+    }
+    let offer = match deal.bonus {
         None => None,
         Some(bonus) => {
             let Some(offer) = market_offers(item_id).into_iter().find(|offer| offer.bonus == bonus) else {
@@ -3929,19 +4110,11 @@ pub(crate) fn purchase_equipment_offer_at_root(
         }
     };
     let modifier_key = offer.as_ref().map(|offer| offer.modifier_key.as_str());
-    let (active_state, carried_reason, wear_flags) = bought_copy_placement(root, item_id, active_state)?;
+    // A purchase lands Carried (`decisions.md §10`), or left behind when asked: wearing it is a move.
+    let active_state = if active_state == ActiveState::Absent { ActiveState::Absent } else { ActiveState::SelectedInactive };
     let copy_bonus = offer.as_ref().map_or(0, |offer| offer.bonus);
     let placed = ActiveStateDto::from(active_state);
 
-    if mode == PriceMode::Cashless {
-        return match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
-            CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
-            CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
-                let money = load_character_money_at_root(root)?;
-                Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
-            }
-        };
-    }
     // SD-27: the Add Weapon / Add Armor picker hands this command a catalog
     // `key` straight off `build_equipment_catalog()`, so the by-key lookup
     // is tried first -- it names the exact row the user picked, including
@@ -3950,22 +4123,28 @@ pub(crate) fn purchase_equipment_offer_at_root(
     // resolver remains the fallback for ids that are not catalog keys at
     // all, notably the legacy `"item:longsword"` fixture namespace that
     // seeded characters still carry.
-    let Some(cost_gp) = offer.as_ref().map(|offer| offer.price_gp).or_else(|| catalog_cost_gp(item_id)) else {
-        return Ok(PurchaseEquipmentResponse::Blocked {
-            diagnostics: vec![DiagnosticDto {
-                id: "money.equipment_purchase.unknown_cost".to_owned(),
-                message: format!(
-                    "'{item_id}' has no known gold-piece cost in the equipment catalog (a \
-                     template/base record with no independent price, or a formula-priced \
-                     equipment modifier), so affordability cannot be verified. The purchase \
-                     was not applied and no funds were charged."
-                ),
-                claim_blocking: true,
-            }],
-        });
+    let cost_copper = if mode == PriceMode::Cashless {
+        0
+    } else if let Some(negotiated) = deal.negotiated_copper {
+        negotiated
+    } else {
+        let Some(cost_gp) = offer.as_ref().map(|offer| offer.price_gp).or_else(|| catalog_cost_gp(item_id)) else {
+            return Ok(PurchaseEquipmentResponse::Blocked {
+                diagnostics: vec![DiagnosticDto {
+                    id: "money.equipment_purchase.unknown_cost".to_owned(),
+                    message: format!(
+                        "no listed price: negotiate. '{item_id}' has no known gold-piece cost (a \
+                         template/base record with no independent price, or a formula-priced \
+                         equipment modifier); buy it at a negotiated price. The purchase was not \
+                         applied and no funds were charged."
+                    ),
+                    claim_blocking: true,
+                }],
+            });
+        };
+        money::gp_to_copper(cost_gp).saturating_mul(u64::from(bundles))
     };
 
-    let cost_copper = money::gp_to_copper(cost_gp);
     let balance_copper = load_character_money_at_root(root)?.total_copper;
     if balance_copper < cost_copper {
         return Ok(PurchaseEquipmentResponse::Blocked {
@@ -3981,17 +4160,295 @@ pub(crate) fn purchase_equipment_offer_at_root(
         });
     }
 
-    match add_purchased_copy_at_root(root, (item_id, copy_bonus), modifier_key, active_state, wear_flags, saved_at)? {
-        CreateCharacterResponse::Blocked { diagnostics } => {
-            Ok(PurchaseEquipmentResponse::Blocked { diagnostics })
-        }
+    match add_purchased_pieces_at_root(root, (item_id, copy_bonus), modifier_key, active_state, bundles, saved_at)? {
+        CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
         CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
-            let cost_signed = i64::try_from(cost_copper)
-                .map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
-            let money = adjust_character_money_at_root(root, -cost_signed)?;
-            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason })
+            let cost_signed = i64::try_from(cost_copper).map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
+            let money = if cost_signed > 0 { adjust_character_money_at_root(root, -cost_signed)? } else { load_character_money_at_root(root)? };
+            Ok(PurchaseEquipmentResponse::Purchased { summary, snapshot, corpus_derived, money, active_state: placed, carried_reason: None })
         }
     }
+}
+
+/// Saves `bundles` more of `item_id` at `bonus`. A bundle record (`BASEQTY` > 1) adds its pieces
+/// onto the first line of that item, bonus and no custom name already at the purchase's location
+/// (Carried, or Not Carried for `Absent`), or a new line stating its pieces (`decisions.md §30`); the
+/// sets file is written after the character saved. A single item adds one line per copy, so wearing,
+/// leaving behind or enchanting one copy never takes the others with it (the held list stacks them).
+fn add_purchased_pieces_at_root(
+    root: &Path,
+    (item_id, bonus): (&str, u8),
+    modifier_key: Option<&str>,
+    active_state: ActiveState,
+    bundles: u32,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let per_bundle = bundle_pieces(item_id);
+    let modifiers: Vec<String> = modifier_key.map(str::to_owned).into_iter().collect();
+    if per_bundle == 1 {
+        return add_purchased_copy_at_root(root, (item_id, bonus), &modifiers, active_state, bundles, saved_at);
+    }
+    let pieces = bundles.saturating_mul(per_bundle);
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let (rows, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+    let target = location_from_state(active_state, BodySlot::None);
+    let unnamed = |copy: &CopyKey| sets.copies.get(&copy.map_key()).is_none_or(|facts| facts.name.is_none());
+    let joins = rows.iter().find(|row| row.item_id == item_id && row.bonus == bonus && row.location == target && unnamed(&row.copies[0]) && row.size.is_none());
+    if let Some(row) = joins {
+        sets.copies.entry(row.copies[0].map_key()).or_default().quantity = Some(row.quantity.saturating_add(pieces));
+        let response = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, |_| {})?;
+        if matches!(response, CreateCharacterResponse::Saved { .. }) {
+            save_sets(root, &sets)?;
+        }
+        return Ok(response);
+    }
+    let response = add_purchased_copy_at_root(root, (item_id, bonus), &modifiers, active_state, 1, saved_at)?;
+    if matches!(response, CreateCharacterResponse::Saved { .. }) && pieces != per_bundle {
+        let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+        let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+        let new = selection_copy_keys(&envelope.character_input.chosen.equipment_selections).pop().ok_or("the bought line was not saved")?;
+        sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { quantity: Some(pieces), ..equipment_sets::CopyFacts::default() });
+        save_sets(root, &sets)?;
+    }
+    Ok(response)
+}
+
+/// What a Buy Custom names (`decisions.md §24`): a Market row as the base, a custom name, and the
+/// masterwork, `+N`, special abilities, material and size the copy is made with.
+#[derive(Debug, Clone, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomEquipmentBuild {
+    pub base_item_id: String,
+    #[serde(default)]
+    pub name: Option<String>,
+    #[serde(default)]
+    pub masterwork: bool,
+    /// The `+N`, 0 to 5.
+    #[serde(default)]
+    pub enhancement: u8,
+    #[serde(default)]
+    pub special_abilities: Vec<String>,
+    #[serde(default)]
+    pub material: Option<String>,
+    /// The wielder size the copy is made for (`Small`, `Large`); absent (or `Medium`) is Medium.
+    #[serde(default)]
+    pub size: Option<codex::rules_core::size::SizeCategory>,
+}
+
+/// One custom copy's price and weight, as a purchase would charge and the engine weigh it.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomEquipmentQuoteDto {
+    /// The modifiers the copy holds, in order: the `+N` (or masterwork), abilities, material. A
+    /// size is not a modifier: the sets file keeps it per copy (E2.12).
+    pub modifiers: Vec<String>,
+    /// One copy's price in gp; `None` when a part has no price, and the buy is priced by Negotiate.
+    pub price_gp: Option<f64>,
+    /// The parts with no price, by key (`decisions.md §30` Q6): the quote says which.
+    pub unpriced: Vec<String>,
+    /// One copy's weight: the base's at its size, divided by a material that lightens it.
+    pub weight_lbs: Option<f64>,
+}
+
+/// The quote for `build`, or why it cannot be made: an unknown base, a `+N` or masterwork on a base
+/// that takes none, a bonus past +5, a part or size the base is not offered, or a `+N`-equivalent
+/// ability with no enhancement bonus under it. A size multiplies the base's price and weight
+/// (`SizeCategory::item_cost_and_weight_multipliers`) before the modifiers are priced on it.
+pub(crate) fn custom_equipment_quote(build: &CustomEquipmentBuild) -> Result<CustomEquipmentQuoteDto, String> {
+    use crate::equipment_catalog::{catalog_row, custom_equipment_options};
+    let base_id = build.base_item_id.as_str();
+    let base = catalog_row(base_id).ok_or_else(|| format!("'{base_id}' is not a Market item"))?;
+    let tags: Vec<&str> = base.types.iter().map(String::as_str).collect();
+    let kind = codex::rules_core::body_slots::enhanceable_tags(&tags);
+    if build.enhancement > 5 {
+        return Err(format!("+{} is past +5", build.enhancement));
+    }
+    if (build.enhancement > 0 || build.masterwork) && kind.is_none() {
+        return Err(format!("'{base_id}' takes no masterwork or enhancement"));
+    }
+    let offered = custom_equipment_options(base_id);
+    let offers = |list: &[crate::equipment_catalog::CustomOptionDto], key: &str| list.iter().any(|option| option.key == key);
+    let mut parts: Vec<String> = Vec::new();
+    for key in &build.special_abilities {
+        if !offers(&offered.abilities, key) {
+            return Err(format!("'{key}' is not a special ability offered on '{base_id}'"));
+        }
+        parts.push(key.clone());
+    }
+    if let Some(key) = &build.material {
+        if !offers(&offered.materials, key) {
+            return Err(format!("'{key}' is not a material offered on '{base_id}'"));
+        }
+        parts.push(key.clone());
+    }
+    let size = build.size.filter(|size| *size != codex::rules_core::size::SizeCategory::Medium);
+    if let Some(size) = size.filter(|size| !offered.sizes.contains(size)) {
+        return Err(format!("'{base_id}' is not made in size {size:?}"));
+    }
+    let (cost_times, weight_times) = size.map_or((1.0, 1.0), |size| size.item_cost_and_weight_multipliers());
+    let corpus = corpus_fixture_bundle();
+    let resolve = |key: &str| {
+        codex::rules_core::equipment_resolver::equipment_converted_resolve(key, corpus).ok_or_else(|| format!("'{key}' has no record on the sheet"))
+    };
+    let part_records = parts.iter().map(|key| resolve(key)).collect::<Result<Vec<_>, String>>()?;
+    let quality = |record: &codex::rules_core::equipment_record::CorpusEquipmentRecord| record.modifier_price.as_ref().is_some_and(|p| p.masterwork_quality);
+    let plus: i16 = part_records.iter().filter_map(|record| record.modifier_price.as_ref()).map(|p| p.plus).sum();
+    if plus > 0 && build.enhancement == 0 {
+        return Err("a special ability needs an enhancement bonus of at least +1".to_owned());
+    }
+    // The `+N` includes masterwork, and so does a masterwork-quality material (mithral).
+    let mut modifiers: Vec<String> = Vec::new();
+    match kind {
+        Some(kind) if build.enhancement > 0 => modifiers.push(kind.modifier_key(build.enhancement)),
+        Some(kind) if build.masterwork && !part_records.iter().any(|record| quality(record)) => modifiers.push(kind.masterwork_key().to_owned()),
+        _ => {}
+    }
+    modifiers.extend(parts);
+    let records = modifiers.iter().map(|key| resolve(key)).collect::<Result<Vec<_>, String>>()?;
+    let sized_lbs = base.weight_lbs.map(|lbs| lbs * weight_times);
+    let weight_lbs = sized_lbs.map(|lbs| lbs / codex::rules_core::encumbrance::modifier_weight_divisor(&modifiers, corpus));
+    let (price_gp, unpriced) = match base.cost_gp {
+        None => (None, vec![base_id.to_owned()]),
+        Some(base_gp) => match codex::rules_core::equipment_record::modified_price_gp(base_gp * cost_times, sized_lbs.unwrap_or(0.0), &base.types, &records) {
+            Ok(price) => (Some(price), Vec::new()),
+            Err(unpriced) => (None, unpriced),
+        },
+    };
+    Ok(CustomEquipmentQuoteDto { modifiers, price_gp, unpriced, weight_lbs })
+}
+
+/// Buys `quantity` (absent: one) custom copies of `build` (`decisions.md §24`): each a line of the
+/// base holding the quote's modifiers, Carried (`§10`), named `build.name` and of `build.size` in
+/// the sets file. The
+/// charge is quantity × the quote's price, or the negotiated total; a quote with no price buys
+/// only at a negotiated price (`§30` Q6), and a build the quote refuses buys nothing. `Cashless`
+/// moves no money.
+pub(crate) fn purchase_custom_equipment_at_root(
+    root: &Path,
+    build: &CustomEquipmentBuild,
+    deal: Deal,
+    saved_at: &str,
+    mode: PriceMode,
+) -> Result<PurchaseEquipmentResponse, String> {
+    let blocked = |id: &str, message: String| Ok(PurchaseEquipmentResponse::Blocked { diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }] });
+    let quote = match custom_equipment_quote(build) {
+        Ok(quote) => quote,
+        Err(why) => return blocked("equipment.buy_custom.refused", format!("{why}. Nothing was bought and no funds were charged.")),
+    };
+    let copies = deal.quantity.unwrap_or(1);
+    if copies == 0 {
+        return Err(format!("cannot buy 0 of '{}'", build.base_item_id));
+    }
+    let cost_copper = if mode == PriceMode::Cashless {
+        0
+    } else if let Some(negotiated) = deal.negotiated_copper {
+        negotiated
+    } else if let Some(price_gp) = quote.price_gp {
+        money::gp_to_copper(price_gp).saturating_mul(u64::from(copies))
+    } else {
+        return blocked(
+            "money.equipment_purchase.unknown_cost",
+            format!("no listed price: negotiate. {} has no price the rules state. Nothing was bought and no funds were charged.", quote.unpriced.join(", ")),
+        );
+    };
+    let balance_copper = load_character_money_at_root(root)?.total_copper;
+    if balance_copper < cost_copper {
+        return blocked(
+            "money.equipment_purchase.insufficient_funds",
+            format!("the custom '{}' costs {cost_copper} cp but the balance is only {balance_copper} cp. Nothing was bought and no funds were charged.", build.base_item_id),
+        );
+    }
+    let bonus = build.enhancement;
+    match add_purchased_copy_at_root(root, (&build.base_item_id, bonus), &quote.modifiers, ActiveState::SelectedInactive, copies, saved_at)? {
+        CreateCharacterResponse::Blocked { diagnostics } => Ok(PurchaseEquipmentResponse::Blocked { diagnostics }),
+        CreateCharacterResponse::Saved { summary, snapshot, corpus_derived, .. } => {
+            let name = build.name.as_deref().map(str::trim).filter(|name| !name.is_empty());
+            let size = build.size.filter(|size| *size != codex::rules_core::size::SizeCategory::Medium);
+            if name.is_some() || size.is_some() {
+                let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+                let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+                let keys = selection_copy_keys(&envelope.character_input.chosen.equipment_selections);
+                for key in &keys[keys.len().saturating_sub(copies as usize)..] {
+                    let facts = sets.copies.entry(key.map_key()).or_default();
+                    if let Some(name) = name {
+                        facts.name = Some(name.to_owned());
+                    }
+                    facts.size = size;
+                }
+                save_sets(root, &sets)?;
+            }
+            // The save weighed the new copies at Medium, before the sets file named their size.
+            let corpus_derived = if size.is_some() { Box::new(load_saved_character_at_root(root)?.corpus_derived) } else { corpus_derived };
+            let cost_signed = i64::try_from(cost_copper).map_err(|_| "purchase cost overflows a signed 64-bit total".to_owned())?;
+            let money = if cost_signed > 0 { adjust_character_money_at_root(root, -cost_signed)? } else { load_character_money_at_root(root)? };
+            Ok(PurchaseEquipmentResponse::Purchased {
+                summary,
+                snapshot,
+                corpus_derived,
+                money,
+                active_state: ActiveStateDto::from(ActiveState::SelectedInactive),
+                carried_reason: None,
+            })
+        }
+    }
+}
+
+/// A held copy's Buy Custom parts as printed text: each applied ability, material or size,
+/// `<name>: <its record's words>` (the name alone when it states none).
+fn copy_abilities(selection: &EquipmentSelection) -> Vec<String> {
+    use crate::equipment_catalog::{catalog_row, custom_part};
+    selection
+        .applied_modifiers
+        .iter()
+        .filter(|key| custom_part(key).is_some())
+        .filter_map(|key| catalog_row(key))
+        .map(|row| match &row.description {
+            Some(words) => format!("{}: {words}", row.name),
+            None => row.name.clone(),
+        })
+        .collect()
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PurchaseCustomEquipmentRequest {
+    pub character_id: String,
+    #[serde(flatten)]
+    pub build: CustomEquipmentBuild,
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    #[serde(default)]
+    pub negotiated_price_copper: Option<u64>,
+    pub saved_at: String,
+    #[serde(default)]
+    pub price_mode: PriceMode,
+}
+
+/// Buys custom copies: see [`purchase_custom_equipment_at_root`].
+#[tauri::command]
+pub fn purchase_custom_equipment(app: tauri::AppHandle, request: PurchaseCustomEquipmentRequest) -> Result<PurchaseEquipmentResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let deal = Deal { bonus: None, quantity: request.quantity, negotiated_copper: request.negotiated_price_copper };
+    purchase_custom_equipment_at_root(&root, &request.build, deal, &request.saved_at, request.price_mode)
+}
+
+/// The dry run of a Buy Custom: the price and weight one copy would have (the builder's running
+/// total). `Err` says why the build cannot be bought.
+#[tauri::command]
+pub fn quote_custom_equipment(build: CustomEquipmentBuild) -> Result<CustomEquipmentQuoteDto, String> {
+    custom_equipment_quote(&build)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListCustomEquipmentOptionsRequest {
+    pub base_item_id: String,
+}
+
+/// The abilities, materials and sizes Buy Custom offers on one Market row.
+#[tauri::command]
+pub fn list_custom_equipment_options(request: ListCustomEquipmentOptionsRequest) -> crate::equipment_catalog::CustomOptionsDto {
+    crate::equipment_catalog::custom_equipment_options(&request.base_item_id)
 }
 
 /// Same wire shape as `PurchaseEquipmentResponse` (`Attached`/`Blocked`,
@@ -4221,6 +4678,13 @@ pub struct PurchaseEquipmentRequest {
     /// The `+N` to buy, one the Market row offers. Absent buys the plain item.
     #[serde(default)]
     pub bonus: Option<u8>,
+    /// Bundles as the book sells them (`decisions.md §28`). Absent buys one.
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    /// The total agreed with the seller, in copper, charged in place of the listed price
+    /// (`decisions.md §26`); the only way to buy a row with no price (`§30.1`).
+    #[serde(default)]
+    pub negotiated_price_copper: Option<u64>,
 }
 
 /// Atomically resolves `item_id`'s real catalog cost, verifies the
@@ -4234,14 +4698,8 @@ pub fn purchase_equipment(
     request: PurchaseEquipmentRequest,
 ) -> Result<PurchaseEquipmentResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    purchase_equipment_offer_at_root(
-        &root,
-        &request.item_id,
-        request.active_state.into(),
-        &request.saved_at,
-        request.price_mode,
-        request.bonus,
-    )
+    let deal = Deal { bonus: request.bonus, quantity: request.quantity, negotiated_copper: request.negotiated_price_copper };
+    purchase_equipment_deal_at_root(&root, &request.item_id, request.active_state.into(), &request.saved_at, request.price_mode, deal)
 }
 
 /// The wire-level projection of `AcquisitionMode` for the
@@ -4887,9 +5345,15 @@ pub(crate) fn remove_equipment_selection_at_root(
         ));
     }
 
-    mutate_saved_character_at_root(root, saved_at, |character_input| {
+    let selections = &envelope.character_input.chosen.equipment_selections;
+    let removed = crate::pf1_adapter::first_copy_in_hand(selections, |selection| selection.item_id.eq_ignore_ascii_case(item_id)).map(|index| selection_copy_keys(selections).swap_remove(index));
+    let response = mutate_saved_character_at_root(root, saved_at, |character_input| {
         apply_remove_equipment_selection(character_input, item_id);
-    })
+    })?;
+    if let (CreateCharacterResponse::Saved { .. }, Some(removed)) = (&response, removed) {
+        forget_copy_in_sets(root, &removed)?;
+    }
+    Ok(response)
 }
 
 /// [`remove_equipment_selection_at_root`] that also sells the item back under `mode`, taking the
@@ -4925,17 +5389,32 @@ pub(crate) fn sell_equipment_copy_at_root(
     mode: PriceMode,
     bonus: Option<u8>,
 ) -> Result<CreateCharacterResponse, String> {
-    sell_held_copy_at_root(root, item_id, saved_at, mode, CopyNamed { bonus, from_state: None })
+    sell_held_pieces_at_root(root, item_id, saved_at, mode, CopyNamed { bonus, from_state: None }, Deal::default())
 }
 
 /// [`sell_equipment_copy_at_root`] of the copy a row names. Named by no state, a copy the character
 /// has with them goes before one left behind.
+#[cfg(test)]
 pub(crate) fn sell_held_copy_at_root(
     root: &Path,
     item_id: &str,
     saved_at: &str,
     mode: PriceMode,
+    named: CopyNamed,
+) -> Result<CreateCharacterResponse, String> {
+    sell_held_pieces_at_root(root, item_id, saved_at, mode, named, Deal::default())
+}
+
+/// [`sell_held_copy_at_root`] of `deal.quantity` pieces of the named copy's stack (absent: that
+/// copy's own line), returning `refund_copper(pieces / bundle pieces × the bundle's price)` floored
+/// to a copper, or the negotiated total; `Cashless` returns nothing (`decisions.md §26, §30`).
+pub(crate) fn sell_held_pieces_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+    mode: PriceMode,
     CopyNamed { bonus, from_state }: CopyNamed,
+    deal: Deal,
 ) -> Result<CreateCharacterResponse, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let held = &envelope.character_input.chosen.equipment_selections;
@@ -4956,19 +5435,111 @@ pub(crate) fn sell_held_copy_at_root(
         });
     };
     let sold_bonus = copy_bonus(&held[index], &offers);
-    let cost_gp = copy_price_gp(item_id, sold_bonus, &offers);
+    let cost_gp = copy_price_gp(&held[index].item_id, sold_bonus, &offers);
+    let sold = selection_copy_keys(held).swap_remove(index);
 
-    let response = mutate_saved_character_at_root(root, saved_at, |character_input| {
-        character_input.chosen.equipment_selections.remove(index);
-    })?;
-    if let (CreateCharacterResponse::Saved { .. }, Some(cost_gp)) = (&response, cost_gp) {
-        let refund = refund_copper(money::gp_to_copper(cost_gp), mode);
+    let taken = take_pieces_at_root(root, &sold, deal.quantity, deal.quantity.is_none(), saved_at)?;
+    if let CreateCharacterResponse::Saved { .. } = &taken.response {
+        let listed = cost_gp.map_or(0, |gp| money::gp_to_copper(gp).saturating_mul(u64::from(taken.pieces)) / u64::from(taken.bundle_pieces));
+        let refund = match (mode, deal.negotiated_copper) {
+            (PriceMode::Cashless, _) => 0,
+            (_, Some(negotiated)) => negotiated,
+            (_, None) => refund_copper(listed, mode),
+        };
         if refund > 0 {
             let refund_signed = i64::try_from(refund).map_err(|_| "refund overflows a signed 64-bit total".to_owned())?;
             adjust_character_money_at_root(root, refund_signed)?;
         }
     }
-    Ok(response)
+    Ok(taken.response)
+}
+
+/// What [`take_pieces_at_root`] took.
+struct TakenPieces {
+    response: CreateCharacterResponse,
+    pieces: u32,
+    bundle_pieces: u32,
+}
+
+/// Which lines of `stack` (in order) `wanted` pieces take: whole lines first, then the line the
+/// count ends inside, as `(copy, pieces kept, pieces taken)`.
+fn split_stack(stack: &[&HeldEquipmentCopyDto], wanted: u32) -> (Vec<CopyKey>, Option<(CopyKey, u32, u32)>) {
+    let (mut whole, mut split, mut left) = (Vec::new(), None, wanted);
+    for row in stack {
+        if left == 0 {
+            break;
+        }
+        if left >= row.quantity {
+            whole.push(row.copies[0].clone());
+            left -= row.quantity;
+        } else {
+            split = Some((row.copies[0].clone(), row.quantity - left, left));
+            left = 0;
+        }
+    }
+    (whole, split)
+}
+
+/// Takes `quantity` pieces (absent: all) of the stack `copy` is in, from `copy` on (`line_only`:
+/// `copy`'s own line alone), for no money: whole lines leave the saved input and every set (what
+/// they held becomes Carried), and a line taken in part keeps the rest. An unknown copy, a created
+/// item, or more pieces than the stack holds is an error.
+fn take_pieces_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, line_only: bool, saved_at: &str) -> Result<TakenPieces, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let input = &envelope.character_input;
+    let (rows, mut sets) = synced_rows_and_sets(root, input)?;
+    let Some(source) = rows.iter().find(|row| &row.copies[0] == copy && !row.item_id.starts_with(CUSTOM_ITEM_PREFIX)) else {
+        return Err(format!("'{}' cannot be removed: this character does not hold that copy", copy.map_key()));
+    };
+    let stack: Vec<&HeldEquipmentCopyDto> =
+        std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(row, source))).collect();
+    let total: u32 = stack.iter().map(|row| row.quantity).sum();
+    let wanted = quantity.unwrap_or(total);
+    if wanted == 0 || wanted > total {
+        return Err(format!("cannot remove {wanted} of {}: the stack holds {total}", source.name));
+    }
+    let (mut whole, split) = split_stack(&stack, wanted);
+    let keys = selection_copy_keys(&input.chosen.equipment_selections);
+    let gone: Vec<bool> = keys.iter().map(|key| whole.contains(key)).collect();
+    let response = crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, move |character_input| {
+        let mut index = 0;
+        character_input.chosen.equipment_selections.retain(|_| {
+            index += 1;
+            !gone[index - 1]
+        });
+    })?;
+    if matches!(response, CreateCharacterResponse::Saved { .. }) {
+        if let Some((from, kept, _)) = split {
+            sets.copies.entry(from.map_key()).or_default().quantity = Some(kept);
+        }
+        save_sets(root, &sets)?;
+        // Highest ordinal first, so each removal renumbers only copies still held.
+        whole.sort_by_key(|copy| std::cmp::Reverse(copy.ordinal));
+        for removed in &whole {
+            forget_copy_in_sets(root, removed)?;
+        }
+    }
+    Ok(TakenPieces { response, pieces: wanted, bundle_pieces: source.base_quantity.max(1) })
+}
+
+/// Discards `quantity` pieces (absent: the whole stack) of the stack `copy` is in, for no money
+/// (`decisions.md §27`); see [`take_pieces_at_root`].
+pub(crate) fn discard_equipment_copy_at_root(root: &Path, copy: &CopyKey, quantity: Option<u32>, saved_at: &str) -> Result<CreateCharacterResponse, String> {
+    take_pieces_at_root(root, copy, quantity, false, saved_at).map(|taken| taken.response)
+}
+
+/// Names one copy (`decisions.md §24` (b)): kept in the sets file's copies map, shown wherever the
+/// held list names the copy; a blank name clears it. Returns the held stacks.
+pub(crate) fn rename_equipment_copy_at_root(root: &Path, copy: &CopyKey, name: &str) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let (rows, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+    if !rows.iter().any(|row| &row.copies[0] == copy) {
+        return Err(format!("'{}' cannot be renamed: this character does not hold that copy", copy.map_key()));
+    }
+    let name = name.trim();
+    sets.copies.entry(copy.map_key()).or_default().name = (!name.is_empty()).then(|| name.to_owned());
+    save_sets(root, &sets)?;
+    list_held_equipment_stacks_at_root(root)
 }
 
 /// One held copy, as the Market's Sell list and the Gear tab's Equipment control show it. `bonus` is
@@ -4985,6 +5556,23 @@ pub struct HeldEquipmentCopyDto {
     /// The override that let this copy in, when one did.
     #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
     pub override_flag: Option<OverrideFlag>,
+    /// Where the copy is in the active set (`decisions.md §5.1`).
+    pub location: Location,
+    /// The first copy's ordinal (`decisions.md §5.2`).
+    pub ordinal: u32,
+    /// Pieces in the row: each copy's stated pieces, or one bundle's when it states none (§30).
+    pub quantity: u32,
+    /// Every copy the row stands for, in saved order.
+    pub copies: Vec<CopyKey>,
+    /// Pieces in one bundle of the record as the book sells it; 1 for a single item.
+    pub base_quantity: u32,
+    /// The copy's special abilities, material and size (Buy Custom, `decisions.md §24`), each as
+    /// `<name>: <the record's words>`, printed as text.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub abilities: Vec<String>,
+    /// The wielder size the copy was made for (Buy Custom, E2.12); absent for Medium.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub size: Option<codex::rules_core::size::SizeCategory>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5009,21 +5597,171 @@ fn is_owned_copy(selection: &EquipmentSelection) -> bool {
 /// Every copy the character owns, worn, carried or left behind, read off the saved selections. Not `corpus_derived`'s
 /// `equipped_items`, which resolves against the bundled demo corpus and so leaves out most of what a
 /// character can buy, and every enhancement eqmod.
+///
+/// One row per copy, each with where it is in the active set, its custom name and its pieces
+/// (`equipment_sets.json`, written here first when the root has none). The print, the Market and
+/// the Gear tab read [`list_held_equipment_stacks_at_root`].
 pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
-    let held: Vec<&EquipmentSelection> = envelope
-        .character_input
-        .chosen
-        .equipment_selections
-        .iter()
-        .filter(|selection| is_owned_copy(selection))
-        .collect();
+    let rows = held_copy_rows(root, &envelope.character_input)?;
+    let sets = equipment_sets_at_root(root, &envelope.character_input, &rows)?;
+    Ok(placed_in(rows, &sets))
+}
+
+/// The held copies with identical copies stacked (`decisions.md §28`): copies with one `item_id`,
+/// `bonus`, name, location, override flag, abilities and size are one row, its `quantity` their
+/// pieces summed.
+pub(crate) fn list_held_equipment_stacks_at_root(root: &Path) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let mut stacks: Vec<HeldEquipmentCopyDto> = Vec::new();
+    for row in list_held_equipment_at_root(root)? {
+        let same = |stack: &&mut HeldEquipmentCopyDto| {
+            (&stack.item_id, stack.bonus, &stack.name, &stack.location, stack.override_flag, &stack.abilities, stack.size)
+                == (&row.item_id, row.bonus, &row.name, &row.location, row.override_flag, &row.abilities, row.size)
+        };
+        match stacks.iter_mut().find(same) {
+            Some(stack) => {
+                stack.quantity += row.quantity;
+                stack.copies.extend(row.copies);
+            }
+            None => stacks.push(row),
+        }
+    }
+    Ok(stacks)
+}
+
+/// The highest `+N` armor, shield or weapon modifier a selection holds: its `bonus` as
+/// `equipment_sets.json` and `compute_encumbrance` key a copy (`decisions.md §5.2`).
+// shortcut: the rule of the root crate's private `encumbrance::copy_bonus`; call it once it is exported.
+fn engine_copy_bonus(selection: &EquipmentSelection) -> u8 {
+    use codex::rules_core::body_slots::Enhanceable;
+    (1..=10u8)
+        .filter(|n| [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon].iter().any(|kind| selection.applied_modifiers.contains(&kind.modifier_key(*n))))
+        .max()
+        .unwrap_or(0)
+}
+
+/// Every saved selection's `CopyKey`, in saved order.
+pub(crate) fn selection_copy_keys(selections: &[EquipmentSelection]) -> Vec<CopyKey> {
+    equipment_sets::copy_keys(selections.iter().map(|selection| (selection.item_id.as_str(), engine_copy_bonus(selection))))
+}
+
+/// Pieces in one bundle of `item_id` as the book sells it (`BASEQTY`, the record's or its
+/// stand-in's); 1 for a single item, a custom item or a record the corpus does not hold.
+fn bundle_pieces(item_id: &str) -> u32 {
+    let corpus = corpus_fixture_bundle();
+    codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus).map_or(1, |record| {
+        let stand_in = codex::rules_core::equipment_effects::stand_in_record(record, corpus);
+        record.base_quantity.or(stand_in.and_then(|base| base.base_quantity)).unwrap_or(1).max(1)
+    })
+}
+
+/// Where the saved state puts a copy (`decisions.md §8`): worn in its slot (or slotless), carried, or left behind.
+fn location_from_state(active_state: ActiveState, slot: BodySlot) -> Location {
+    match (active_state, slot) {
+        (ActiveState::EquippedActive, BodySlot::None) => Location::Equipped,
+        (ActiveState::EquippedActive, slot) => Location::Slot { slot },
+        (ActiveState::SelectedInactive, _) => Location::Carried,
+        (ActiveState::Absent, _) => Location::NotCarried,
+    }
+}
+
+/// The root's equipment sets. A root with none gets the Default set built from the saved states
+/// (`decisions.md §8`), and every bundle copy with no stated pieces gets one bundle's
+/// (`decisions.md §30` Q8: weight unchanged); the file is written only when one of those changed it.
+fn equipment_sets_at_root(root: &Path, input: &CharacterInput, rows: &[HeldEquipmentCopyDto]) -> Result<EquipmentSets, String> {
+    let selections = &input.chosen.equipment_selections;
+    let keys = selection_copy_keys(selections);
+    let (mut sets, mut changed) = match equipment_sets::load(root).map_err(|err| err.message)? {
+        Some(sets) => (sets, false),
+        None => {
+            // Every selection, owned or not, so the set projects back to each saved state.
+            let slot_of = |copy: &CopyKey| rows.iter().find(|row| row.copies.first() == Some(copy)).map_or(BodySlot::None, |row| row.slot);
+            let held: Vec<HeldCopy> = keys
+                .iter()
+                .zip(selections)
+                .map(|(copy, selection)| HeldCopy { copy: copy.clone(), active_state: selection.active_state, slot: slot_of(copy) })
+                .chain(rows.iter().filter(|row| row.item_id.starts_with(CUSTOM_ITEM_PREFIX)).map(|row| HeldCopy {
+                    copy: row.copies[0].clone(),
+                    active_state: row.active_state.into(),
+                    slot: row.slot,
+                }))
+                .collect();
+            (equipment_sets::default_from(&held), true)
+        }
+    };
+    for row in rows.iter().filter(|row| row.base_quantity > 1) {
+        let facts = sets.copies.entry(row.copies[0].map_key()).or_default();
+        if facts.quantity.is_none() {
+            facts.quantity = Some(row.base_quantity);
+            changed = true;
+        }
+    }
+    if changed {
+        save_sets(root, &sets)?;
+    }
+    Ok(sets)
+}
+
+/// Each copy's pieces the sets file states, for `compute_encumbrance` and `container_loads`.
+fn copy_quantities(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, u32)> {
+    keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(|facts| facts.quantity).map(|pieces| (copy.clone(), pieces))).collect()
+}
+
+/// Each copy's size the sets file states (Buy Custom, E2.12), for the load, the containers and the
+/// weapon rows.
+fn copy_sizes(sets: &EquipmentSets, keys: &[CopyKey]) -> Vec<(CopyKey, codex::rules_core::size::SizeCategory)> {
+    keys.iter().filter_map(|copy| sets.copies.get(&copy.map_key()).and_then(|facts| facts.size).map(|size| (copy.clone(), size))).collect()
+}
+
+/// What the character carries, weighed with each copy's pieces and the created items' weights:
+/// the same call `compute_pilot_with_corpus` makes (effective Strength, the race's size), plus `extra`, `quantities`
+/// and the copies' own sizes.
+fn carried_load(
+    input: &CharacterInput,
+    quantities: &[(CopyKey, u32)],
+    extra: &[codex::rules_core::encumbrance::WeighedCopy],
+    item_sizes: &[(CopyKey, codex::rules_core::size::SizeCategory)],
+) -> codex::rules_core::encumbrance::EncumbranceComputation {
+    let strength = apply_human_ability_bonus(input, &mut Vec::new()).strength;
+    let (size, _) = codex::rules_core::contract::encumbrance_size_for_race(&input.chosen.race_id);
+    codex::rules_core::encumbrance::compute_encumbrance_sized(&input.chosen.equipment_selections, corpus_fixture_bundle(), strength, size, extra, quantities, item_sizes)
+}
+
+/// The rows with each copy's location, custom name and pieces from the active set. A copy whose
+/// set location projects to another state than the saved one keeps the saved state's location:
+/// the saved input is the active set's picture (`decisions.md §6`), so the file is the stale one.
+fn placed_in(mut rows: Vec<HeldEquipmentCopyDto>, sets: &EquipmentSets) -> Vec<HeldEquipmentCopyDto> {
+    let active = sets.active_set();
+    for row in &mut rows {
+        let copy = row.copies[0].clone();
+        if equipment_sets::project(active, std::slice::from_ref(&copy)) == [ActiveState::from(row.active_state)] {
+            row.location = equipment_sets::location_of(active, &copy);
+        }
+        if let Some(facts) = sets.copies.get(&copy.map_key()) {
+            if let Some(name) = &facts.name {
+                row.name = name.clone();
+            }
+            if let Some(pieces) = facts.quantity {
+                row.quantity = pieces;
+            }
+            row.size = facts.size;
+        }
+    }
+    rows
+}
+
+/// One row per owned copy, read off the saved selections and the custom records, each located by
+/// its saved state and counting one bundle; [`placed_in`] reads the sets file over them.
+fn held_copy_rows(root: &Path, input: &CharacterInput) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let keys = selection_copy_keys(&input.chosen.equipment_selections);
+    let (held, held_keys): (Vec<&EquipmentSelection>, Vec<&CopyKey>) =
+        input.chosen.equipment_selections.iter().zip(&keys).filter(|(selection, _)| is_owned_copy(selection)).unzip();
     let slots = held.iter().map(|selection| body_slot_of_item(&selection.item_id)).collect::<Result<Vec<_>, String>>()?;
     let is_worn = |index: &usize| held[*index].active_state == ActiveState::EquippedActive;
     let worn: Vec<usize> = (0..held.len()).filter(is_worn).collect();
-    // A text-only custom record is a note on the Custom tab, not something held on the body.
+    // Every custom equipment record is held (`decisions.md §25` (c)): a created item may state only a weight.
     let custom = custom_or_empty(root);
-    let custom_items: Vec<_> = custom.equipment.iter().filter(|record| record.slot.is_some() || !record.bonuses.is_empty()).collect();
+    let custom_items: Vec<_> = custom.equipment.iter().collect();
     let custom_slot = |index: usize| custom_items[index].slot.unwrap_or(BodySlot::None);
     let worn_slots: Vec<BodySlot> = worn
         .iter()
@@ -5037,7 +5775,22 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         .map(|(index, selection)| {
             let (name, bonus) = copy_name_and_bonus(selection);
             let slot = if is_worn(&index) { places.next().unwrap_or(slots[index]) } else { slots[index] };
-            HeldEquipmentCopyDto { item_id: selection.item_id.clone(), name, bonus, active_state: selection.active_state.into(), slot, override_flag: None }
+            let pieces = bundle_pieces(&selection.item_id);
+            HeldEquipmentCopyDto {
+                item_id: selection.item_id.clone(),
+                name,
+                bonus,
+                active_state: selection.active_state.into(),
+                slot,
+                override_flag: None,
+                location: location_from_state(selection.active_state, slot),
+                ordinal: held_keys[index].ordinal,
+                quantity: pieces,
+                copies: vec![held_keys[index].clone()],
+                base_quantity: pieces,
+                abilities: copy_abilities(selection),
+                size: None,
+            }
         })
         .collect();
     rows.extend(custom_items.iter().enumerate().map(|(index, record)| {
@@ -5048,16 +5801,24 @@ pub(crate) fn list_held_equipment_at_root(root: &Path) -> Result<Vec<HeldEquipme
         } else {
             (ActiveState::SelectedInactive, custom_slot(index))
         };
+        let copy = crate::character_custom::custom_copy(record);
         HeldEquipmentCopyDto {
-            item_id: format!("{CUSTOM_ITEM_PREFIX}{}", record.id),
+            item_id: copy.item_id.clone(),
             name: record.name.clone(),
             bonus: 0,
             active_state: active_state.into(),
             slot,
             override_flag: None,
+            location: location_from_state(active_state, slot),
+            ordinal: 0,
+            quantity: 1,
+            copies: vec![copy],
+            base_quantity: 1,
+            abilities: Vec::new(),
+            size: None,
         }
     }));
-    tag_admitted_copies(&mut rows, &admitted_records_at_root(root, &envelope.character_input));
+    tag_admitted_copies(&mut rows, &admitted_records_at_root(root, input));
     Ok(rows)
 }
 
@@ -5104,7 +5865,7 @@ fn copy_name_and_bonus(selection: &EquipmentSelection) -> (String, u8) {
 #[tauri::command]
 pub fn list_held_equipment(app: tauri::AppHandle, request: ListHeldEquipmentRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    list_held_equipment_at_root(&root)
+    list_held_equipment_stacks_at_root(&root)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5223,58 +5984,6 @@ fn state_change_target(selections: &[EquipmentSelection], item_id: &str, CopyNam
     copies().find(|(_, selection)| selection.active_state != active_state).or_else(|| copies().next()).map(|(index, _)| index)
 }
 
-/// Sets `active_state` on the copy [`state_change_target`] names, keeping the derived
-/// `equipped_or_active` flag in step with it exactly as `EquipmentSelection`'s own doc comment
-/// requires. Returns `false` without mutating when the item is not carried.
-pub(crate) fn apply_set_equipment_active_state(
-    character_input: &mut CharacterInput,
-    item_id: &str,
-    copy: CopyNamed,
-    active_state: ActiveState,
-) -> bool {
-    let selections = &mut character_input.chosen.equipment_selections;
-    let Some(index) = state_change_target(selections, item_id, copy, active_state) else {
-        return false;
-    };
-    selections[index].active_state = active_state;
-    selections[index].equipped_or_active = active_state == ActiveState::EquippedActive;
-    true
-}
-
-/// The body slot `item_id` fills, read off its converted record. `None` when no record holds the
-/// id, which has no slot for the check to enforce. `Err` when the data itself cannot be read: that
-/// must not read as "this item has no slot" (`body_slots::slot_of`).
-fn body_slot_of_item(item_id: &str) -> Result<BodySlot, String> {
-    let package = codex::rules_core::corpus_loader::live_sheet_rules()
-        .ok_or_else(|| "the equipment records could not be read, so the body slots cannot be checked".to_owned())?;
-    let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
-    let Some(record) = package
-        .find("equipment", &codex::rules_core::sheet_rule::slug(needle))
-        .and_then(|id| package.rule(id))
-    else {
-        return Ok(BodySlot::None);
-    };
-    let types = codex::rules_core::equipment_types::equipment_types()
-        .as_ref()
-        .map_err(Clone::clone)?
-        .get(needle)
-        .map_or(&[][..], Vec::as_slice);
-    worn_slot(record, types, settled_wield_category(item_id))
-}
-
-/// A weapon's settled wield category, off its own record or the record it names as its stand-in
-/// (`Battleaxe` states none, and names `Battleaxe (Base)`). Off `full_corpus_bundle`, where a name
-/// answers by its own book's record and not by the fixture's.
-fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_total::WieldCategory> {
-    use codex::rules_core::equipment_resolver::equipment_converted_resolve;
-    let corpus = crate::corpus_full::full_corpus_bundle();
-    let record = equipment_converted_resolve(item_id, corpus)?;
-    record.wield_category.or_else(|| {
-        let base = record.base_item.as_deref()?;
-        equipment_converted_resolve(base, corpus)?.wield_category
-    })
-}
-
 /// Every worn selection on `character_input`, as `(name, slot)` in saved order.
 pub(crate) fn worn_stock_slots(character_input: &CharacterInput) -> Result<Vec<(String, BodySlot)>, String> {
     character_input
@@ -5288,8 +5997,7 @@ pub(crate) fn worn_stock_slots(character_input: &CharacterInput) -> Result<Vec<(
 
 /// What stops one more copy of `item_id` being worn over what `character_input` and the custom items
 /// beside it at `root` already wear, worded for the sheet.
-fn item_slot_conflict(character_input: &CharacterInput, item_id: &str, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
-    let slot = body_slot_of_item(item_id)?;
+fn item_slot_conflict(character_input: &CharacterInput, slot: BodySlot, custom: &CharacterCustomDto) -> Result<Option<String>, String> {
     let mut worn = worn_stock_slots(character_input)?;
     worn.extend(worn_custom_slots(custom));
     let worn: Vec<(&str, BodySlot)> = worn.iter().map(|(name, slot)| (name.as_str(), *slot)).collect();
@@ -5302,11 +6010,17 @@ type WearRefusal = (&'static str, String);
 /// Whether this character can put one more copy of `item_id` on: the flags it goes on under, none if
 /// the rules allow it, or a diagnostic id and the sheet's words for what stops it. The slot, then the
 /// proficiency. Each one yields to its override.
+#[cfg(test)]
 fn wear_check(root: &Path, character_input: &CharacterInput, item_id: &str) -> Result<Result<Vec<OverrideFlag>, WearRefusal>, String> {
+    wear_check_in(root, character_input, item_id, body_slot_of_item(item_id)?)
+}
+
+/// [`wear_check`] with the copy going into `slot` (`BodySlot::None`: worn, taking no slot).
+fn wear_check_in(root: &Path, character_input: &CharacterInput, item_id: &str, slot: BodySlot) -> Result<Result<Vec<OverrideFlag>, WearRefusal>, String> {
     use codex::rules_core::equipment_resolver::{character_lacks_proficiency_with, ItemProficiencyGap};
     let custom = custom_or_empty(root);
     let mut admitted = Vec::new();
-    if let Some(message) = item_slot_conflict(character_input, item_id, &custom)? {
+    if let Some(message) = item_slot_conflict(character_input, slot, &custom)? {
         if !custom.overrides.ignore_slot_limits {
             return Ok(Err(("equipment.slot_taken", message)));
         }
@@ -5352,8 +6066,10 @@ pub(crate) fn set_equipment_copy_state_at_root(
     set_held_copy_state_at_root(root, item_id, CopyNamed { bonus, from_state: None }, active_state, saved_at)
 }
 
-/// [`set_equipment_copy_state_at_root`] of the copy a row names. A copy coming back from being left
-/// behind is one more thing to carry, so it meets the check a purchase does.
+/// [`set_equipment_copy_state_at_root`] of the copy a row names, as a move of that one line
+/// (`decisions.md §6`): worn goes to the item's own slot (or Equipped when it takes none), stowed to
+/// Carried, absent to Not Carried. A copy coming back from being left behind is one more thing to
+/// carry, so it meets the check a purchase does.
 pub(crate) fn set_held_copy_state_at_root(
     root: &Path,
     item_id: &str,
@@ -5366,34 +6082,393 @@ pub(crate) fn set_held_copy_state_at_root(
     }
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let selections = &envelope.character_input.chosen.equipment_selections;
-    let Some(target) = state_change_target(selections, item_id, copy, active_state).map(|index| &selections[index]) else {
+    let Some(index) = state_change_target(selections, item_id, copy, active_state) else {
         return Err(match copy.bonus {
             Some(bonus) if bonus > 0 => format!("'{item_id}' cannot change state: this character does not carry a +{bonus} one"),
             Some(_) => format!("'{item_id}' cannot change state: this character does not carry a plain one"),
             None => format!("'{item_id}' cannot change state: this character does not carry it"),
         });
     };
-    let copy_bonus = copy_name_and_bonus(target).1;
+    let line = selection_copy_keys(selections).swap_remove(index);
+    let location = match active_state {
+        ActiveState::EquippedActive => match body_slot_of_item(item_id)? {
+            BodySlot::None => Location::Equipped,
+            slot => Location::Slot { slot },
+        },
+        ActiveState::SelectedInactive => Location::Carried,
+        ActiveState::Absent => Location::NotCarried,
+    };
+    move_copies_at_root(root, &line, location, None, true, saved_at)
+}
+
+// ----- SD-41 E2.2: moves and equipment sets (`decisions.md §5–§7, §10, §14, §27, §28, §30`) -----
+//
+// Every write that changes where a copy is updates the active set, projects it onto the saved
+// selections' `active_state`s (`equipment_sets::project`, the one bridge to the engine), and saves
+// through the same recompute-before-persist path every other mutation takes; the sets file is
+// written after the character saved.
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MoveEquipmentCopyRequest {
+    pub character_id: String,
+    pub copy: CopyKey,
+    pub location: Location,
+    /// Pieces to move (`decisions.md §30`); absent moves the whole stack `copy` is in.
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    pub saved_at: String,
+}
+
+/// Moves a copy (or `quantity` pieces of its stack) to `location` in the active set; see
+/// [`move_equipment_copy_at_root`].
+#[tauri::command]
+pub fn move_equipment_copy(app: tauri::AppHandle, request: MoveEquipmentCopyRequest) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    move_equipment_copy_at_root(&root, &request.copy, request.location, request.quantity, &request.saved_at)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateEquipmentSetRequest {
+    pub character_id: String,
+    pub name: String,
+    /// Start as a copy of the active set's locations; otherwise everything is Carried.
+    #[serde(default)]
+    pub copy_active: bool,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RenameEquipmentSetRequest {
+    pub character_id: String,
+    pub from: String,
+    pub to: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EquipmentSetRequest {
+    pub character_id: String,
+    pub name: String,
+    pub saved_at: String,
+}
+
+#[tauri::command]
+pub fn create_equipment_set(app: tauri::AppHandle, request: CreateEquipmentSetRequest) -> Result<EquipmentSetsSummaryDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    create_equipment_set_at_root(&root, &request.name, request.copy_active)
+}
+
+#[tauri::command]
+pub fn rename_equipment_set(app: tauri::AppHandle, request: RenameEquipmentSetRequest) -> Result<EquipmentSetsSummaryDto, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    rename_equipment_set_at_root(&root, &request.from, &request.to)
+}
+
+#[tauri::command]
+pub fn delete_equipment_set(app: tauri::AppHandle, request: EquipmentSetRequest) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    delete_equipment_set_at_root(&root, &request.name, &request.saved_at)
+}
+
+#[tauri::command]
+pub fn activate_equipment_set(app: tauri::AppHandle, request: EquipmentSetRequest) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    activate_equipment_set_at_root(&root, &request.name, &request.saved_at)
+}
+
+fn sets_summary(sets: &EquipmentSets) -> EquipmentSetsSummaryDto {
+    EquipmentSetsSummaryDto { active: sets.active.clone(), names: sets.sets.iter().map(|set| set.name.clone()).collect() }
+}
+
+fn refusal(id: &str, message: String) -> CreateCharacterResponse {
+    CreateCharacterResponse::Blocked { diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }] }
+}
+
+fn active_set_mut(sets: &mut EquipmentSets) -> &mut equipment_sets::EquipmentSet {
+    let index = sets.sets.iter().position(|set| set.name == sets.active).unwrap_or(0);
+    &mut sets.sets[index]
+}
+
+/// Puts `copy` at `location` in `set`; Carried is written as no entry (`decisions.md §5.3`).
+fn place(set: &mut equipment_sets::EquipmentSet, copy: &CopyKey, location: Location) {
+    set.locations.retain(|entry| &entry.copy != copy);
+    if location != Location::Carried {
+        set.locations.push(equipment_sets::SetEntry { copy: copy.clone(), location });
+    }
+}
+
+/// Whether `copy` sits, at any depth, inside `holder` in `set`.
+fn is_inside(set: &equipment_sets::EquipmentSet, copy: &CopyKey, holder: &CopyKey) -> bool {
+    let mut seen = std::collections::BTreeSet::new();
+    let mut current = copy.clone();
+    while seen.insert(current.clone()) {
+        match equipment_sets::location_of(set, &current) {
+            Location::Inside { container } if &container == holder => return true,
+            Location::Inside { container } => current = container,
+            _ => return false,
+        }
+    }
+    false
+}
+
+/// Whether other copies can go inside `item_id`'s copies: the settled record's `container`
+/// (`decisions.md §7`). A custom item is none until it states a capacity (E2.3).
+fn is_container_item(item_id: &str) -> bool {
+    codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus_fixture_bundle()).is_some_and(|record| record.is_container())
+}
+
+/// Whether two held rows are one stack (`decisions.md §28`).
+fn same_stack(a: &HeldEquipmentCopyDto, b: &HeldEquipmentCopyDto) -> bool {
+    (&a.item_id, a.bonus, &a.name, &a.location, a.override_flag) == (&b.item_id, b.bonus, &b.name, &b.location, b.override_flag)
+}
+
+/// The root's held rows and sets, the active set first brought into line with the saved input: a
+/// copy whose set location projects to another state than its saved one takes the saved state's
+/// location (the saved input is the active set's picture, §6), so a move projects only what it moved.
+fn synced_rows_and_sets(root: &Path, input: &CharacterInput) -> Result<(Vec<HeldEquipmentCopyDto>, EquipmentSets), String> {
+    let rows = held_copy_rows(root, input)?;
+    let mut sets = equipment_sets_at_root(root, input, &rows)?;
+    let active = active_set_mut(&mut sets);
+    for row in &rows {
+        let state = ActiveState::from(row.active_state);
+        if equipment_sets::project(active, std::slice::from_ref(&row.copies[0])) != [state] {
+            place(active, &row.copies[0], location_from_state(state, row.slot));
+        }
+    }
+    let rows = placed_in(rows, &sets);
+    Ok((rows, sets))
+}
+
+/// The active set's picture saved (`decisions.md §6`): each owned line of `selections` takes its
+/// projected state and the character is recomputed and saved through `save`; then the sets file is
+/// written last, after each custom item whose projected state moved went through its own setter.
+fn save_projected(
+    root: &Path,
+    mut selections: Vec<EquipmentSelection>,
+    rows: &[HeldEquipmentCopyDto],
+    sets: &EquipmentSets,
+    saved_at: &str,
+    save: impl FnOnce(Box<dyn FnOnce(&mut CharacterInput)>) -> Result<CreateCharacterResponse, String>,
+) -> Result<CreateCharacterResponse, String> {
+    let active = sets.active_set();
+    let keys = selection_copy_keys(&selections);
+    for (selection, state) in selections.iter_mut().zip(equipment_sets::project(active, &keys)) {
+        if is_owned_copy(selection) {
+            selection.active_state = state;
+            selection.equipped_or_active = state == ActiveState::EquippedActive;
+        }
+    }
+    let custom_moves: Vec<(String, ActiveState)> = rows
+        .iter()
+        .filter_map(|row| {
+            let id = row.item_id.strip_prefix(CUSTOM_ITEM_PREFIX)?;
+            let state = equipment_sets::project(active, std::slice::from_ref(&row.copies[0]))[0];
+            (state != ActiveState::from(row.active_state)).then(|| (id.to_owned(), state))
+        })
+        .collect();
+    let mut response = save(Box::new(move |input: &mut CharacterInput| input.chosen.equipment_selections = selections))?;
+    if !matches!(response, CreateCharacterResponse::Saved { .. }) {
+        return Ok(response);
+    }
+    for (id, state) in custom_moves {
+        response = crate::character_custom::set_custom_item_state_at_root(root, &id, state, saved_at)?;
+        if !matches!(response, CreateCharacterResponse::Saved { .. }) {
+            return Ok(response);
+        }
+    }
+    save_sets(root, sets)?;
+    Ok(response)
+}
+
+/// Moves `quantity` pieces (absent: the whole stack) of the stack `copy` is in to `location` in
+/// the active set (`decisions.md §14, §30`). Whole lines move as they are, from `copy` on; a line
+/// moved in part keeps the rest, and the moved pieces join a stack of the same item, bonus and name
+/// at `location`, or a new `equipment=` line. Refused (`Blocked`, nothing saved): a target that is
+/// not a container or would hold itself (`decisions.md §7`); wearing what the slot or proficiency
+/// rules refuse (the existing checks, each under its override). An unknown copy, or more pieces than
+/// the stack holds, is an error.
+pub(crate) fn move_equipment_copy_at_root(
+    root: &Path,
+    copy: &CopyKey,
+    location: Location,
+    quantity: Option<u32>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    move_copies_at_root(root, copy, location, quantity, false, saved_at)
+}
+
+/// [`move_equipment_copy_at_root`]; `line_only` moves `copy`'s own line and nothing else of its stack.
+fn move_copies_at_root(
+    root: &Path,
+    copy: &CopyKey,
+    location: Location,
+    quantity: Option<u32>,
+    line_only: bool,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let input = &envelope.character_input;
+    let (rows, mut sets) = synced_rows_and_sets(root, input)?;
+    let Some(source) = rows.iter().find(|row| &row.copies[0] == copy) else {
+        return Err(format!("'{}' cannot move: this character does not hold that copy", copy.map_key()));
+    };
+    let stack: Vec<&HeldEquipmentCopyDto> =
+        std::iter::once(source).chain(rows.iter().filter(|row| !line_only && &row.copies[0] != copy && same_stack(row, source))).collect();
+    let total: u32 = stack.iter().map(|row| row.quantity).sum();
+    let wanted = quantity.unwrap_or(total);
+    if wanted == 0 || wanted > total {
+        return Err(format!("cannot move {wanted} of {}: the stack holds {total}", source.name));
+    }
+    let (whole, split) = split_stack(&stack, wanted);
+
+    if let Location::Inside { container } = &location {
+        let custom = custom_or_empty(root);
+        let holds = |item_id: &str| is_container_item(item_id) || crate::character_custom::custom_container_capacity(&custom, item_id).is_some();
+        let Some(holder) = rows.iter().find(|row| &row.copies[0] == container).filter(|row| holds(&row.item_id)) else {
+            return Ok(refusal("equipment.not_a_container", format!("{} cannot go inside {}: it is not a container this character holds", source.name, container.map_key())));
+        };
+        if whole.iter().any(|moving| moving == container || is_inside(sets.active_set(), container, moving)) {
+            return Ok(refusal("equipment.container_cycle", format!("{} cannot go inside {}: it would end up inside itself", source.name, holder.name)));
+        }
+    }
     let mut wear_flags = Vec::new();
-    if active_state == ActiveState::EquippedActive && target.active_state != active_state {
-        match wear_check(root, &envelope.character_input, item_id)? {
-            Err((id, message)) => {
-                return Ok(CreateCharacterResponse::Blocked {
-                    diagnostics: vec![DiagnosticDto { id: id.to_owned(), message, claim_blocking: true }],
-                });
-            }
+    let putting_on = matches!(location, Location::Slot { .. } | Location::Equipped) && source.active_state != ActiveStateDto::EquippedActive;
+    if putting_on && !source.item_id.starts_with(CUSTOM_ITEM_PREFIX) {
+        let slot = match location {
+            Location::Slot { slot } => slot,
+            _ => BodySlot::None,
+        };
+        match wear_check_in(root, input, &source.item_id, slot)? {
+            Err((id, message)) => return Ok(refusal(id, message)),
             Ok(flags) => wear_flags = flags,
         }
     }
-    let mutate = |character_input: &mut CharacterInput| {
-        apply_set_equipment_active_state(character_input, item_id, copy, active_state);
-    };
-    if target.active_state == ActiveState::Absent && active_state != ActiveState::Absent {
-        let gate = load_gate_at_root(root, item_id, copy_bonus, wear_flags);
-        return crate::pf1_adapter::mutate_saved_character_gated_at_root(root, saved_at, mutate, gate);
+
+    let mut selections = input.chosen.equipment_selections.clone();
+    let keys = selection_copy_keys(&selections);
+    let active = active_set_mut(&mut sets);
+    for moving in &whole {
+        place(active, moving, location.clone());
     }
-    let admitted = wear_flags.into_iter().map(|flag| AdmittedRecordDto::copy(item_id, copy_bonus, flag)).collect();
-    crate::pf1_adapter::mutate_saved_character_admitting_at_root(root, saved_at, admitted, mutate)
+    if let Some((from, kept, pieces)) = split {
+        let moving = |row: &HeldEquipmentCopyDto| stack.iter().any(|held| held.copies[0] == row.copies[0]);
+        let joins = rows.iter().find(|row| !moving(row) && row.location == location && (&row.item_id, row.bonus, &row.name, row.size) == (&source.item_id, source.bonus, &source.name, source.size));
+        let facts = sets.copies.get(&from.map_key()).cloned().unwrap_or_default();
+        sets.copies.entry(from.map_key()).or_default().quantity = Some(kept);
+        match joins {
+            Some(row) => sets.copies.entry(row.copies[0].map_key()).or_default().quantity = Some(row.quantity + pieces),
+            None => {
+                let index = keys.iter().position(|key| key == &from).ok_or_else(|| format!("'{}' cannot be split: it is not a saved line", from.map_key()))?;
+                selections.push(selections[index].clone());
+                let new = CopyKey { item_id: from.item_id.clone(), bonus: from.bonus, ordinal: keys.iter().filter(|key| key.item_id == from.item_id && key.bonus == from.bonus).count() as u32 };
+                for set in &mut sets.sets {
+                    set.locations.retain(|entry| entry.copy != new);
+                }
+                place(active_set_mut(&mut sets), &new, location.clone());
+                sets.copies.insert(new.map_key(), equipment_sets::CopyFacts { quantity: Some(pieces), ..facts });
+            }
+        }
+    }
+
+    let projected = equipment_sets::project(sets.active_set(), &whole);
+    let came_back = whole.iter().zip(&projected).any(|(moving, state)| {
+        *state != ActiveState::Absent && rows.iter().any(|row| &row.copies[0] == moving && row.active_state == ActiveStateDto::Absent)
+    });
+    let (item_id, bonus) = (source.item_id.clone(), source.bonus);
+    save_projected(root, selections, &rows, &sets, saved_at, |mutate| {
+        if came_back && !item_id.starts_with(CUSTOM_ITEM_PREFIX) {
+            crate::pf1_adapter::mutate_saved_character_gated_at_root(root, saved_at, mutate, load_gate_at_root(root, &item_id, bonus, wear_flags))
+        } else {
+            let admitted = wear_flags.into_iter().map(|flag| AdmittedRecordDto::copy(&item_id, bonus, flag)).collect();
+            crate::pf1_adapter::mutate_saved_character_admitting_at_root(root, saved_at, admitted, mutate)
+        }
+    })
+}
+
+/// Adds a set (`equipment_sets::EquipmentSets::add_set`): everything Carried, or a copy of the
+/// active set. Nothing projects: the active set is unchanged.
+pub(crate) fn create_equipment_set_at_root(root: &Path, name: &str, copy_active: bool) -> Result<EquipmentSetsSummaryDto, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+    sets.add_set(name, copy_active)?;
+    save_sets(root, &sets)?;
+    Ok(sets_summary(&sets))
+}
+
+/// Renames a set; the active set stays active under its new name.
+pub(crate) fn rename_equipment_set_at_root(root: &Path, from: &str, to: &str) -> Result<EquipmentSetsSummaryDto, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let (_, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+    sets.rename_set(from, to)?;
+    save_sets(root, &sets)?;
+    Ok(sets_summary(&sets))
+}
+
+/// Deletes a set (the last one cannot be); deleting the active set activates `Default` or the
+/// first remaining, and the active set is projected and saved.
+pub(crate) fn delete_equipment_set_at_root(root: &Path, name: &str, saved_at: &str) -> Result<CreateCharacterResponse, String> {
+    switch_sets_at_root(root, saved_at, |sets| sets.delete_set(name))
+}
+
+/// Makes `name` the active set, projects it and saves (`decisions.md §6`).
+pub(crate) fn activate_equipment_set_at_root(root: &Path, name: &str, saved_at: &str) -> Result<CreateCharacterResponse, String> {
+    switch_sets_at_root(root, saved_at, |sets| {
+        if !sets.sets.iter().any(|set| set.name == name) {
+            return Err(format!("there is no set named \"{name}\""));
+        }
+        sets.active = name.to_owned();
+        Ok(())
+    })
+}
+
+fn switch_sets_at_root(root: &Path, saved_at: &str, edit: impl FnOnce(&mut EquipmentSets) -> Result<(), String>) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let (rows, mut sets) = synced_rows_and_sets(root, &envelope.character_input)?;
+    edit(&mut sets)?;
+    let selections = envelope.character_input.chosen.equipment_selections.clone();
+    save_projected(root, selections, &rows, &sets, saved_at, |mutate| crate::pf1_adapter::mutate_saved_character_at_root(root, saved_at, mutate))
+}
+
+/// After a saved line is removed: drops `removed` from every set (what it held becomes Carried)
+/// and from the copies map, and numbers the later copies of its item and bonus down by one, the
+/// way their lines moved up (`decisions.md §5.2`). A root with no sets file has nothing to change.
+fn forget_copy_in_sets(root: &Path, removed: &CopyKey) -> Result<(), String> {
+    let Some(mut sets) = equipment_sets::load(root).map_err(|err| err.message)? else {
+        return Ok(());
+    };
+    let renumber = |copy: &mut CopyKey| {
+        if copy.item_id == removed.item_id && copy.bonus == removed.bonus && copy.ordinal > removed.ordinal {
+            copy.ordinal -= 1;
+        }
+    };
+    for set in &mut sets.sets {
+        set.locations.retain(|entry| &entry.copy != removed && !matches!(&entry.location, Location::Inside { container } if container == removed));
+        for entry in &mut set.locations {
+            renumber(&mut entry.copy);
+            if let Location::Inside { container } = &mut entry.location {
+                renumber(container);
+            }
+        }
+    }
+    let mut copies = std::collections::BTreeMap::new();
+    for (key, facts) in std::mem::take(&mut sets.copies) {
+        let mut parts = key.rsplitn(3, '|');
+        let parsed = (|| Some(CopyKey { ordinal: parts.next()?.parse().ok()?, bonus: parts.next()?.parse().ok()?, item_id: parts.next()?.to_owned() }))();
+        match parsed {
+            Some(copy) if &copy == removed => {}
+            Some(mut copy) => {
+                renumber(&mut copy);
+                copies.insert(copy.map_key(), facts);
+            }
+            None => {
+                copies.insert(key, facts);
+            }
+        }
+    }
+    sets.copies = copies;
+    save_sets(root, &sets)
 }
 
 // ----- v0.8 B-4: `add_trait_selection` / `remove_trait_selection` -----
@@ -5634,6 +6709,13 @@ pub struct RemoveEquipmentSelectionRequest {
     /// The state the row selling this shows its copy in, as on `set_equipment_active_state`.
     #[serde(default)]
     pub from_state: Option<ActiveStateDto>,
+    /// Pieces to sell from the copy's stack (`decisions.md §28, §30`). Absent sells the copy's line.
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    /// The total agreed with the buyer, in copper, returned in place of the price mode's refund
+    /// (`decisions.md §26`).
+    #[serde(default)]
+    pub negotiated_price_copper: Option<u64>,
 }
 
 /// Loads the saved character, drops one carried copy of the requested item
@@ -5647,7 +6729,44 @@ pub fn remove_equipment_selection(
     request: RemoveEquipmentSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    sell_held_copy_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) })
+    let named = CopyNamed { bonus: request.bonus, from_state: request.from_state.map(Into::into) };
+    let deal = Deal { bonus: None, quantity: request.quantity, negotiated_copper: request.negotiated_price_copper };
+    sell_held_pieces_at_root(&root, &request.item_id, &request.saved_at, request.price_mode, named, deal)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DiscardEquipmentCopyRequest {
+    pub character_id: String,
+    pub copy: CopyKey,
+    /// Pieces to discard; absent discards the whole stack `copy` is in.
+    #[serde(default)]
+    pub quantity: Option<u32>,
+    pub saved_at: String,
+}
+
+/// Discards pieces of a held stack for no money (`decisions.md §27`); see
+/// [`discard_equipment_copy_at_root`].
+#[tauri::command]
+pub fn discard_equipment_copy(app: tauri::AppHandle, request: DiscardEquipmentCopyRequest) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    discard_equipment_copy_at_root(&root, &request.copy, request.quantity, &request.saved_at)
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RenameEquipmentCopyRequest {
+    pub character_id: String,
+    pub copy: CopyKey,
+    /// The copy's name; blank clears it.
+    pub name: String,
+}
+
+/// Names one held copy; see [`rename_equipment_copy_at_root`].
+#[tauri::command]
+pub fn rename_equipment_copy(app: tauri::AppHandle, request: RenameEquipmentCopyRequest) -> Result<Vec<HeldEquipmentCopyDto>, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    rename_equipment_copy_at_root(&root, &request.copy, &request.name)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5775,7 +6894,9 @@ pub fn save_character_portrait(
     }
 
     let path = root.join(PORTRAIT_FILE_NAME);
-    std::fs::write(&path, &bytes).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::write(&path, &bytes).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(&root);
+    Ok(())
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5848,8 +6969,103 @@ pub fn delete_character_portrait(
     let path = root.join(PORTRAIT_FILE_NAME);
     if path.exists() {
         std::fs::remove_file(&path).map_err(|err| format!("{}: {err}", path.display()))?;
+        after_write(&root);
     }
     Ok(())
+}
+
+// ----- Campaign write-through (SD-41 `decisions.md §29`) -----
+//
+// The app is master; each campaign folder the character belongs to gets a fresh copy of the whole
+// character folder after every write. A copy that fails is a warning, never an error: the local
+// write has already happened. The last attempt's warnings per character are kept here so the load
+// response can show them whichever command did the write.
+
+static MIRROR_WARNINGS: std::sync::Mutex<BTreeMap<PathBuf, Vec<String>>> = std::sync::Mutex::new(BTreeMap::new());
+
+/// Keeps `warnings` as the character's latest campaign-copy outcome and returns them as lines.
+fn record_mirror_warnings(root: &Path, warnings: Vec<MirrorWarning>) -> Vec<String> {
+    let lines: Vec<String> = warnings.iter().map(|warning| format!("{}: {}", warning.campaign_dir.display(), warning.reason)).collect();
+    let mut store = MIRROR_WARNINGS.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    if lines.is_empty() {
+        store.remove(root);
+    } else {
+        store.insert(root.to_path_buf(), lines.clone());
+    }
+    lines
+}
+
+/// Called by every writer of a file under a character root, after its write: copies the root to
+/// each active campaign and returns the warnings (the scanning test
+/// `tests/every_character_root_writer_mirrors.rs` holds every writer to it).
+pub(crate) fn after_write(root: &Path) -> Vec<String> {
+    let warnings = match campaign_mirror::load_memberships(root) {
+        Ok(memberships) if !memberships.iter().any(|membership| membership.active) => Vec::new(),
+        Ok(memberships) => match character_identity(root) {
+            Ok((label, id)) => campaign_mirror::mirror(root, &label, &id, &memberships),
+            Err(reason) => vec![MirrorWarning { campaign_dir: root.to_path_buf(), reason }],
+        },
+        Err(err) => vec![MirrorWarning { campaign_dir: root.join(campaign_mirror::MEMBERSHIPS_FILE), reason: err.message }],
+    };
+    record_mirror_warnings(root, warnings)
+}
+
+/// The display label and id of the character at `root`: a Pathfinder or Starfinder envelope, else a
+/// Cyberpunk RED one (its store keeps no `authoritative_character_input.txt`).
+fn character_identity(root: &Path) -> Result<(String, String), String> {
+    match SavedCharacterStore::load(root) {
+        Ok(envelope) => Ok((envelope.display_label, envelope.character_id)),
+        Err(err) => codex::rules_core::cpr::store::CprCharacterStore::load(root).map(|c| (c.display_label, c.character_id)).map_err(|_| err.message),
+    }
+}
+
+/// `SavedCharacterStore::save` for the desktop: the same save, with the campaign copies' warnings kept.
+pub(crate) fn save_and_mirror(envelope: &SavedCharacterEnvelope, root: &Path) -> Result<Vec<String>, String> {
+    let warnings = SavedCharacterStore::save_with_warnings(envelope, root).map_err(|err| err.message)?;
+    Ok(record_mirror_warnings(root, warnings))
+}
+
+/// `equipment_sets::save`, then the campaign copies.
+fn save_sets(root: &Path, sets: &EquipmentSets) -> Result<(), String> {
+    equipment_sets::save(root, sets).map_err(|err| err.message)?;
+    after_write(root);
+    Ok(())
+}
+
+/// The latest campaign-copy warnings for the character at `root` (none when every copy was written).
+pub(crate) fn mirror_warnings_at_root(root: &Path) -> Vec<String> {
+    MIRROR_WARNINGS.lock().unwrap_or_else(std::sync::PoisonError::into_inner).get(root).cloned().unwrap_or_default()
+}
+
+/// The character's campaigns and the latest copy warnings, for the load response. A campaigns file
+/// that does not read is shown as a warning, not a failed load.
+pub(crate) fn campaign_state_at_root(root: &Path) -> (Vec<Membership>, Vec<String>) {
+    let kept = mirror_warnings_at_root(root);
+    match campaign_mirror::load_memberships(root) {
+        Ok(memberships) => (memberships, kept),
+        Err(err) => (Vec::new(), [vec![err.message], kept].concat()),
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SetCharacterCampaignsRequest {
+    pub character_id: String,
+    pub memberships: Vec<Membership>,
+}
+
+/// Writes `campaigns.json` and copies the character to its active campaigns at once; the warnings
+/// name each copy that failed.
+pub(crate) fn set_character_campaigns_at_root(root: &Path, memberships: &[Membership]) -> Result<Vec<String>, String> {
+    character_identity(root)?;
+    campaign_mirror::save_memberships(root, memberships).map_err(|err| err.message)?;
+    Ok(after_write(root))
+}
+
+#[tauri::command]
+pub fn set_character_campaigns(app: tauri::AppHandle, request: SetCharacterCampaignsRequest) -> Result<Vec<String>, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    set_character_campaigns_at_root(&root, &request.memberships)
 }
 
 // ----- `update_character_bio` / `load_character_bio` (v0.6 alpha swarm) -----
@@ -5949,7 +7165,9 @@ fn save_character_hit_points_at_root(root: &Path, levels: &[HitPointLevelDto]) -
     let path = root.join(HIT_POINTS_FILE_NAME);
     let json = serde_json::to_string_pretty(&CharacterHitPointsDto { levels: levels.to_vec() })
         .map_err(|err| format!("failed to serialize hit points: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(root);
+    Ok(())
 }
 
 /// The saved hit point results, or an empty list when the character has none (created before the
@@ -6052,7 +7270,9 @@ pub(crate) fn save_character_bio_at_root(root: &Path, bio: &CharacterBioDto) -> 
     let path = root.join(BIO_FILE_NAME);
     let json = serde_json::to_string_pretty(bio)
         .map_err(|err| format!("failed to serialize character bio: {err}"))?;
-    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(root);
+    Ok(())
 }
 
 /// Reads `bio.json` from the character's root directory, or an all-empty
@@ -6199,6 +7419,7 @@ pub(crate) fn adjust_character_money_at_root(root: &Path, delta_copper: i64) -> 
     let json = serde_json::to_string_pretty(&StoredMoney { total_copper: new_total_copper })
         .map_err(|err| format!("failed to serialize character money: {err}"))?;
     std::fs::write(&path, json).map_err(|err| format!("{}: {err}", path.display()))?;
+    after_write(root);
 
     Ok(money_dto_from_total(new_total_copper))
 }
@@ -6621,7 +7842,7 @@ fn import_character_from_json(
         character_input,
     };
 
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     if let Some(bio) = &parsed.bio {
         save_character_bio_at_root(root, bio)?;
     }
@@ -6643,8 +7864,9 @@ fn import_character_from_json(
     Ok(CreateCharacterResponse::Saved {
         summary: Box::new(summarize_envelope(&envelope)),
         snapshot: Box::new(map_snapshot_dto(&snapshot)),
-        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived)),
+        corpus_derived: Box::new(map_corpus_derived_dto(&corpus_receipt.corpus_derived, &envelope.character_input.chosen.equipment_selections)),
         starting_wealth_note: None,
+        mirror_warnings: mirror_warnings_at_root(root),
     })
 }
 
@@ -9630,7 +10852,9 @@ mod tests {
         for key in ["bonuses", "slot", "worn"] {
             assert!(!raw.contains(&format!("\"{key}\"")), "{key} is not written for a text record: {raw}");
         }
-        assert!(held.iter().all(|copy| !copy.item_id.starts_with("custom:")), "a text record is listed on the Custom tab only: {held:?}");
+        // SD-41 E2.3 (`decisions.md §25` (c)): every custom equipment record is held, a text one Carried.
+        let pipe: Vec<_> = held.iter().filter(|copy| copy.item_id.starts_with("custom:")).map(|copy| (copy.item_id.as_str(), &copy.location)).collect();
+        assert_eq!(pipe, vec![("custom:t1", &Location::Carried)], "a text record is held, carried: {held:?}");
     }
 
     #[test]
@@ -9812,19 +11036,6 @@ mod tests {
         assert!(matches!(custom_item_set(&root, "h", ActiveState::SelectedInactive), CreateCharacterResponse::Saved { .. }));
         custom_item_wear(&root, "i");
         std::fs::remove_dir_all(&dir).ok();
-    }
-
-    #[test]
-    fn custom_item_bonuses_a_bought_item_is_carried_with_the_reason_when_a_custom_item_holds_its_slot() {
-        let (dir, root) = enhancement_rows_aldric("custom-bonus-buy");
-        custom_items_saved(&root, vec![custom_item("h", "Hat of Hats", Some(BodySlot::Head), vec![])]);
-        custom_item_wear(&root, "h");
-        let response = purchase_equipment_offer_at_root(&root, "Hat of Disguise", ActiveState::EquippedActive, "2026-11-03T00:00:02Z", PriceMode::Cashless, None)
-            .expect("purchase call should not error");
-        std::fs::remove_dir_all(&dir).ok();
-        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = response else { panic!("{response:?}") };
-        assert!(matches!(active_state, ActiveStateDto::SelectedInactive), "{active_state:?}");
-        assert_eq!(carried_reason.as_deref(), Some("head slot is taken by Hat of Hats"));
     }
 
     #[test]
@@ -10537,7 +11748,7 @@ mod tests {
         let row = |id: &str| {
             loaded.explanations.iter().find(|e| e.id == id).unwrap_or_else(|| panic!("no {id} row")).value
         };
-        let sword = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longsword (Base)"));
+        let sword = loaded.weapon_damage.iter().find(|w| w.in_hand && w.weapon_record_key.as_deref() == Some("Longsword (Base)"));
         EnhancementRead {
             melee: snapshot.baseline_melee_attack_bonus,
             armor_class: snapshot.baseline_armor_class,
@@ -10554,10 +11765,15 @@ mod tests {
         assert!(matches!(response, AttachEquipmentModifierResponse::Attached { .. }), "{response:?}");
     }
 
+    /// Buys a `+bonus` copy, and wears it when `state` asks: a purchase lands Carried (SD-41 `decisions.md §10`).
     fn enhancement_buy(root: &Path, item: &str, state: ActiveState, bonus: u8) {
         let response = purchase_equipment_offer_at_root(root, item, state, "2026-11-02T00:00:00Z", PriceMode::Standard, Some(bonus))
             .expect("purchase call should not error");
         assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        if state == ActiveState::EquippedActive {
+            let worn = set_equipment_copy_state_at_root(root, item, Some(bonus), state, "2026-11-02T00:00:01Z").expect("the wear runs");
+            assert!(matches!(worn, CreateCharacterResponse::Saved { .. }), "{worn:?}");
+        }
     }
 
     /// The card's own case: Aldric with a `+1` on the sword he wields.
@@ -10593,10 +11809,15 @@ mod tests {
         sword.active_state = ActiveState::SelectedInactive;
         let receipt = compute_pilot_with_corpus(&input, corpus_fixture_bundle());
         assert_eq!(receipt.corpus_derived.equipment_effects.attack_bonus_delta, None, "no weapon in hand");
-        assert!(
-            resolve_weapon_damage_breakdown(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3).is_empty(),
-            "a stowed sword has no damage row"
-        );
+        // SD-41 E2.4: the stowed sword has one row, marked carried, with its own +1.
+        let rows: Vec<WeaponDamageBreakdown> =
+            resolve_weapon_damage_breakdown_with_carried(&input, corpus_fixture_bundle(), &receipt.corpus_derived.equipment_effects, 3, &[], &[])
+                .into_iter()
+                .filter(|row| !row.unarmed)
+                .collect();
+        assert_eq!(rows.len(), 1, "{rows:?}");
+        assert!(!rows[0].in_hand, "marked carried");
+        assert_eq!(rows[0].weapon_enhancement.as_ref().map(|e| e.attack_bonus), Some(1), "its own +1");
     }
 
     /// A worn `+N` armor adds to Armor Class and to flat-footed, and not to touch, which ignores armor.
@@ -10631,6 +11852,20 @@ mod tests {
         for held in ["summary", "equipmentSelections"] {
             object.remove(held);
         }
+        // SD-41 E2.4: a carried weapon has its own row, marked carried, and its damage total; neither is a number it moves.
+        let carried_totals: Vec<String> = loaded
+            .weapon_damage
+            .iter()
+            .filter(|weapon| !weapon.in_hand)
+            .filter_map(|weapon| weapon.weapon_record_key.as_deref())
+            .map(|key| codex::rules_core::damage_total::weapon_feat_damage_row_id(key).replacen("combat.weapon_damage_bonus.", "combat.weapon_damage_total.", 1))
+            .collect();
+        object.get_mut("weaponDamage").and_then(|w| w.as_array_mut()).unwrap().retain(|weapon| weapon["inHand"] != false);
+        // E4.5: nor are its attack rows, as if wielded in the main hand.
+        let carried_row = |row: &serde_json::Value| row["detail"].as_str().is_some_and(|detail| detail.ends_with(codex::rules_core::pilot_compute_corpus::CARRIED_WEAPON_ROW_NOTE));
+        object.get_mut("explanations").and_then(|e| e.as_array_mut()).unwrap().retain(|row| {
+            !carried_totals.iter().any(|id| row["id"] == id.as_str()) && !carried_row(row)
+        });
         let derived = object.get_mut("corpusDerived").and_then(|d| d.as_object_mut()).unwrap();
         for held in ["equippedItems", "unresolvedEquipmentItemIds", "encumbrance"] {
             derived.remove(held);
@@ -10656,6 +11891,30 @@ mod tests {
 
     fn worn_vs_carried_weight(root: &Path) -> f64 {
         load_saved_character_at_root(root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs
+    }
+
+    /// The Gear tab's "no corpus weight" and "not shown" lists name only items: the feat-toggle
+    /// row and the loadout's no-shield row are not things the character holds, while a held item
+    /// with no record still reports.
+    #[test]
+    fn unresolved_lists_hold_only_items() {
+        let (dir, root) = enhancement_rows_aldric("unresolved-only-items");
+        let bare = load_saved_character_at_root(&root).unwrap().corpus_derived;
+        let mut envelope = SavedCharacterStore::load(&root).unwrap();
+        envelope.character_input.chosen.equipment_selections.push(EquipmentSelection {
+            item_id: "Mystery Item".to_owned(),
+            equipped_or_active: false,
+            active_state: ActiveState::SelectedInactive,
+            applied_modifiers: Vec::new(),
+        });
+        SavedCharacterStore::save(&envelope, &root).unwrap();
+        let mystery = load_saved_character_at_root(&root).unwrap().corpus_derived;
+        std::fs::remove_dir_all(&dir).ok();
+
+        assert_eq!(bare.encumbrance.unresolved_item_ids, Vec::<String>::new());
+        assert_eq!(bare.unresolved_equipment_item_ids, Vec::<String>::new());
+        assert_eq!(mystery.encumbrance.unresolved_item_ids, vec!["Mystery Item".to_owned()]);
+        assert_eq!(mystery.unresolved_equipment_item_ids, vec!["Mystery Item".to_owned()]);
     }
 
     /// Aldric's Armor Class with his Chain Shirt stowed is his Armor Class with no armor at all:
@@ -11351,6 +12610,7 @@ mod tests {
         let mut after = ledger_migration_digests(&root);
         let first = std::fs::read(root.join("ledger.json")).expect("the first load wrote it");
         assert!(after.remove("ledger.json").is_some());
+        assert!(after.remove(equipment_sets::EQUIPMENT_SETS_FILE).is_some(), "the first load writes the Default set (SD-41 `decisions.md §8`)");
         assert_eq!(after, before, "every file the character already had is byte for byte what it was");
 
         load_saved_character_at_root(&root).expect("loads");
@@ -12285,16 +13545,14 @@ mod tests {
         }
         no_record.sort();
         assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
-        // Every row that reads as unresolved when held, by why. The `.FORGET` pair are PCGen
-        // removal rows; the two `Shield (...)` are the Quickdraw Shield rows' twins, which would
-        // answer the seeds' `item:shield`; the Ranged Cannon's identity has the shape of a modifier,
-        // which stays out; the rest have a sheet rule and no corpus record.
+        // Every row that reads as unresolved when held, by why. The two `Shield (...)` are the Quickdraw Shield rows' twins, which would
+        // answer the seeds' `item:shield`; the rest have a sheet rule and no corpus record. (The
+        // Ranged Cannon, whose identity has a modifier's `~` shape, resolves since E2.6 let every
+        // modifier in.)
         assert_eq!(
             no_record,
             [
                 "Apprentice Chapbook of Rul Thaven",
-                "Dust Knuckles.FORGET",
-                "False Face.FORGET",
                 "Insights of Far-Seeing Taernis",
                 "Journeyman Book of Rul Thaven",
                 "Lab Journal of Constance Inflix",
@@ -12302,7 +13560,6 @@ mod tests {
                 "Manuscript of Jack Were-Son",
                 "Master Books of Rul Thaven",
                 "Otyugh Hide",
-                "Ranged Cannon ~ Clockwork Goliath",
                 "Shield (Light/Steel/Quickdraw)",
                 "Shield (Light/Wooden/Quickdraw)",
                 "The Formulae of Master Gebr",
@@ -12430,8 +13687,22 @@ mod tests {
         loaded.explanations.iter().find(|row| row.id == id).map(|row| row.value)
     }
 
+    /// The attack rows of the weapons in hand: the Unarmed row every character has (SD-41
+    /// `decisions.md §22`, `weapons_in_hand_first_then_carried_then_unarmed`) and a carried weapon's
+    /// (E4.5) are not.
     fn no_required_gear_attack_rows(loaded: &LoadSavedCharacterResponse) -> Vec<String> {
-        loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_attack_bonus.")).map(|row| row.id.clone()).collect()
+        loaded
+            .explanations
+            .iter()
+            .filter(|row| row.id.starts_with("combat.weapon_attack_bonus.") && !row.id.ends_with(".unarmedstrike"))
+            .filter(|row| !row.detail.ends_with(codex::rules_core::pilot_compute_corpus::CARRIED_WEAPON_ROW_NOTE))
+            .map(|row| row.id.clone())
+            .collect()
+    }
+
+    /// The weapons in hand, without the carried ones and the Unarmed row (SD-41 E2.4).
+    fn in_hand_weapons(loaded: &LoadSavedCharacterResponse) -> Vec<&WeaponDamageDto> {
+        loaded.weapon_damage.iter().filter(|weapon| weapon.in_hand && !weapon.unarmed).collect()
     }
 
     /// Hand-derived from Aldric's sheet (Str +4, Dex +1, Con +2, Wis +1, Cha -1, base attack +3, Dodge,
@@ -12459,7 +13730,7 @@ mod tests {
         let skills = &snapshot.selected_skill_modifiers;
         assert_eq!((skills.climb, skills.intimidate, skills.swim), (8, 3, 8), "no armor, no check penalty");
 
-        assert!(loaded.weapon_damage.is_empty(), "{:?}", loaded.weapon_damage);
+        assert!(in_hand_weapons(&loaded).is_empty(), "{:?}", loaded.weapon_damage);
         assert_eq!(no_required_gear_attack_rows(&loaded), Vec::<String>::new());
         let melee = loaded.explanations.iter().find(|row| row.id == "combat.baseline_melee_attack_bonus").expect("the row");
         assert_eq!(melee.value, 7);
@@ -12484,6 +13755,7 @@ mod tests {
             ("Dagger (Base)", "combat.weapon_attack_bonus.dagger", 7),
         ] {
             purchase_equipment_priced_at_root(&root, item, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+            set_equipment_active_state_at_root(&root, item, ActiveState::EquippedActive, OVERRIDES_AT).unwrap();
             let loaded = load_saved_character_at_root(&root).unwrap();
             let row = loaded.explanations.iter().find(|row| row.id == id).unwrap_or_else(|| panic!("{item}: no row"));
             assert_eq!(row.value, value, "{item}: {}", row.detail);
@@ -12536,7 +13808,7 @@ mod tests {
 
         let snapshot = loaded.snapshot.as_ref().unwrap_or_else(|| panic!("a blocked sheet: {:?}", loaded.diagnostics));
         assert_eq!((snapshot.baseline_melee_attack_bonus, snapshot.baseline_armor_class), (7, 12));
-        assert!(loaded.weapon_damage.is_empty());
+        assert!(in_hand_weapons(&loaded).is_empty());
         assert_eq!(build_pilot_headless_receipt(&envelope.character_input).status, HeadlessReceiptStatus::Computed);
     }
 
@@ -12557,9 +13829,9 @@ mod tests {
         assert_eq!(snapshot.baseline_melee_attack_bonus, 8, "base attack +3, Strength +4, its +1");
         assert_eq!(no_required_gear_attack_rows(&loaded), ["combat.weapon_attack_bonus.greatsword"]);
         assert_eq!(no_required_gear_row(&loaded, "combat.weapon_attack_bonus.greatsword"), Some(7));
-        assert_eq!(loaded.weapon_damage.len(), 1, "{:?}", loaded.weapon_damage);
-        assert_eq!(loaded.weapon_damage[0].weapon_record_key.as_deref(), Some(greatsword));
-        assert_eq!(loaded.weapon_damage[0].enhancement_attack_bonus, Some(1));
+        assert_eq!(in_hand_weapons(&loaded).len(), 1, "{:?}", loaded.weapon_damage);
+        assert_eq!(in_hand_weapons(&loaded)[0].weapon_record_key.as_deref(), Some(greatsword));
+        assert_eq!(in_hand_weapons(&loaded)[0].enhancement_attack_bonus, Some(1));
     }
 
     /// Each loadout through both twins: the corpus path the sheet reads and the headless one. They
@@ -12668,7 +13940,7 @@ mod tests {
         assert_eq!(row.value, 0, "+3, Dex +1, -4: {}", row.detail);
         assert!(row.detail.contains("nonproficiency penalty (-4)"), "{}", row.detail);
         assert_eq!(net.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(7), "a Net is not swung");
-        assert!(net.weapon_damage.is_empty(), "a Net deals no damage: {:?}", net.weapon_damage);
+        assert!(in_hand_weapons(&net).is_empty(), "a Net deals no damage: {:?}", net.weapon_damage);
 
         assert_eq!(no_required_gear_row(&swung, "combat.weapon_attack_bonus.crimsonbluff"), Some(3), "+3, Str +4, -4");
         assert_eq!(swung.snapshot.as_ref().map(|s| s.baseline_melee_attack_bonus), Some(3), "{:?}", swung.diagnostics);
@@ -12681,9 +13953,8 @@ mod tests {
     }
 
     /// The whole Weapons shelf, held at once: every row whose type tags name a weapon has its attack
-    /// row, and the 64 that do not (ammunition, and packs of it) have none. 480 rows: 416 and 64. The
-    /// one weapon with no row is the Ranged Cannon, which has no record on the sheet's corpus
-    /// (`worn_vs_carried_every_market_row_resolves_on_the_sheet_corpus` names it and why).
+    /// row, and the 64 that do not (ammunition, and packs of it) have none. 480 rows: 416 and 64.
+    /// The Ranged Cannon, kept off the sheet's corpus by its `~` identity until E2.6, has its row.
     #[test]
     fn no_required_gear_every_market_weapon_has_an_attack_row_and_ammunition_none() {
         use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
@@ -12699,13 +13970,15 @@ mod tests {
         let loaded = no_required_gear_hold_alone(&root, &keys);
         std::fs::remove_dir_all(&dir).ok();
         assert!(loaded.snapshot.is_some(), "{:?}", loaded.diagnostics);
-        let ids: std::collections::BTreeSet<String> = no_required_gear_attack_rows(&loaded).into_iter().collect();
+        // Every attack row, the Unarmed Strike's among them (the shelf sells it).
+        let ids: std::collections::BTreeSet<String> =
+            loaded.explanations.iter().filter(|row| row.id.starts_with("combat.weapon_attack_bonus.")).map(|row| row.id.clone()).collect();
         let missing: Vec<&str> = weapons
             .iter()
             .map(|row| row.entry.key.as_str())
             .filter(|key| !ids.contains(&format!("combat.weapon_attack_bonus.{}", slug(key))))
             .collect();
-        assert_eq!(missing, ["Ranged Cannon ~ Clockwork Goliath"]);
+        assert_eq!(missing, Vec::<&str>::new());
         let ammunition: Vec<&str> = others
             .iter()
             .map(|row| row.entry.key.as_str())
@@ -12728,7 +14001,7 @@ mod tests {
             std::fs::remove_dir_all(&dir).ok();
             assert_eq!(no_required_gear_attack_rows(&loaded), [row], "{weapon}");
             assert_eq!(no_required_gear_row(&loaded, row), Some(value), "{weapon}");
-            assert_eq!(loaded.weapon_damage.len(), 1, "{weapon}: {:?}", loaded.weapon_damage);
+            assert_eq!(in_hand_weapons(&loaded).len(), 1, "{weapon}: {:?}", loaded.weapon_damage);
         }
     }
 
@@ -12851,7 +14124,7 @@ mod tests {
                 applied_modifiers: vec![top.modifier_key.clone()],
             });
             let effects = compute_pilot_with_corpus(&input, corpus).corpus_derived.equipment_effects;
-            let rows = resolve_weapon_damage_breakdown(&input, corpus, &effects, 3);
+            let rows = codex::rules_core::damage_total::resolve_weapon_damage_breakdown(&input, corpus, &effects, 3);
             let bonus = rows.last().filter(|r| r.weapon_item_id == key).and_then(|r| r.weapon_enhancement.as_ref());
             let want = i16::from(top.bonus);
             if bonus.map(|b| (b.attack_bonus, b.damage_bonus)) != Some((want, want)) {
@@ -14252,13 +15525,11 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
-    /// End-to-end proof that an attached-but-corpus-unresolvable modifier
-    /// (the desktop app's bundled demo corpus holds only the `+N` equipmods)
-    /// surfaces honestly through the real `corpusDerived` response rather
-    /// than silently vanishing -- closes the loop this sub-task's
-    /// `unresolved_equipment_item_ids` extension exists for.
+    /// An attached special ability resolves against the sheet's corpus (SD-41 E2.6: every modifier
+    /// comes in), so it is not listed unresolved. Before E2.6 the bundle held only the `+N`
+    /// equipmods and this test pinned Anarchic as unresolved.
     #[test]
-    fn attach_equipment_modifier_at_root_surfaces_the_real_corpus_resolution_gap() {
+    fn attach_equipment_modifier_at_root_resolves_a_special_ability() {
         let root = tempdir("attach-modifier-corpus-gap");
         let envelope = level_up_test_envelope("race:human", 1);
         SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
@@ -14274,16 +15545,11 @@ mod tests {
         match response {
             AttachEquipmentModifierResponse::Attached { corpus_derived, .. } => {
                 assert!(
-                    corpus_derived
-                        .unresolved_equipment_item_ids
-                        .contains(&"Special Ability ~ Anarchic ~ Weapon".to_string()),
-                    "the bundled demo corpus has no Anarchic record, so the attached modifier \
-                     must be traceable as unresolved rather than silently inert: {corpus_derived:?}"
+                    !corpus_derived.unresolved_equipment_item_ids.contains(&"Special Ability ~ Anarchic ~ Weapon".to_string()),
+                    "{corpus_derived:?}"
                 );
             }
-            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
-                panic!("the attach itself must succeed even though the modifier won't resolve, got Blocked: {diagnostics:?}")
-            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => panic!("the attach must succeed, got Blocked: {diagnostics:?}"),
         }
 
         std::fs::remove_dir_all(&root).ok();
@@ -14498,13 +15764,10 @@ mod tests {
         divergent.dedup();
         assert_eq!(
             divergent,
-            vec![
-                ("CRB", "Holy Symbol (Silver)"),
-                ("CRB", "Holy Symbol (Wooden)"),
-                ("UE", "Masterwork Tool"),
-            ],
-            "the display-vs-charge divergence set must stay exactly these three same-book \
-             same-key rows -- named explicitly so a fourth arriving silently fails here"
+            vec![("UE", "Masterwork Tool")],
+            "the display-vs-charge divergence set must stay exactly this one same-book \
+             same-key row (the two CRB Holy Symbol rows were priced from their corpus \
+             records and now agree) -- named explicitly so a second arriving silently fails here"
         );
         assert!(
             divergent.iter().all(|(book, _)| *book == "CRB" || *book == "UE"),
@@ -16844,19 +18107,6 @@ mod tests {
     }
 
     #[test]
-    fn admitted_tag_a_buy_says_so_when_it_goes_on_under_the_flag_and_not_when_it_stays_carried() {
-        let (dir, root) = overrides_wizard("admitted-tag-buy", "Rope (Hemp/50 ft.)");
-        let buy = |root: &Path| purchase_equipment_priced_at_root(root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
-        assert!(matches!(buy(&root), PurchaseEquipmentResponse::Purchased { .. }));
-        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None], "refused, carried with the reason");
-
-        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
-        assert!(matches!(buy(&root), PurchaseEquipmentResponse::Purchased { .. }));
-        assert_eq!(admitted_tag_on_copy(&root, "Rapier"), [None, Some(OverrideFlag::WeaponsWithoutProficiency)], "the worn copy, not the one in the pack");
-        std::fs::remove_dir_all(&dir).ok();
-    }
-
-    #[test]
     fn admitted_tag_a_load_past_capacity_says_so_and_stays_while_the_copy_is_carried() {
         let root = overrides_weak_fighter("admitted-tag-load");
         overrides_set(&root, |flags| flags.ignore_encumbrance = true);
@@ -16959,33 +18209,21 @@ mod tests {
         }
     }
 
-    /// A weapon bought from the Market is held as `Rapier (Base)`. Its attack row and the penalty a
-    /// Wizard owes are the ones a `Rapier` gets: the flag let it on, and the sheet still says -4.
+    /// A weapon bought from the Market is held as `Rapier (Base)`, and put on under the flag. Its attack
+    /// row and the penalty a Wizard owes are the ones a `Rapier` gets: the flag let it on, and the
+    /// sheet still says -4.
     #[test]
     fn override_a_market_weapon_worn_under_the_flag_has_its_attack_row_and_owes_the_penalty() {
         let (dir, root) = overrides_wizard("override-market-attack", "Rope (Hemp/50 ft.)");
         overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
-        let bought = purchase_equipment_priced_at_root(&root, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
-        let PurchaseEquipmentResponse::Purchased { active_state, .. } = bought else { panic!("the buy goes through") };
-        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
+        let bought = purchase_equipment_priced_at_root(&root, "Rapier (Base)", ActiveState::SelectedInactive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "the buy goes through");
+        assert_worn(&set_equipment_active_state_at_root(&root, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
         assert_eq!(admitted_tag_on_copy(&root, "Rapier (Base)"), [Some(OverrideFlag::WeaponsWithoutProficiency)]);
         let loaded = load_saved_character_at_root(&root).expect("loads");
         let row = loaded.explanations.iter().find(|row| row.id == "combat.weapon_attack_bonus.rapier").expect("the attack row");
         assert_eq!(row.value, -3, "{}", row.detail);
         assert!(row.detail.contains("nonproficiency penalty (-4)"), "{}", row.detail);
-        std::fs::remove_dir_all(&dir).ok();
-    }
-
-    #[test]
-    fn override_a_market_rapier_stays_carried_and_the_reason_names_it_plainly() {
-        let (dir, root) = overrides_wizard("override-market-key", "Rope (Hemp/50 ft.)");
-        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
-            purchase_equipment_priced_at_root(&root, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
-        else {
-            panic!("the buy goes through");
-        };
-        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
-        assert_eq!(carried_reason.as_deref(), Some("this character is not proficient with Rapier"));
         std::fs::remove_dir_all(&dir).ok();
     }
 
@@ -17178,20 +18416,6 @@ mod tests {
         std::fs::remove_dir_all(&imported).ok();
     }
 
-    /// The Market's buy reads the same answer: worn, where a human Wizard's goes carried.
-    #[test]
-    fn race_weapon_proficiency_the_market_buys_it_worn() {
-        let (dir, elf) = override_wizard_of_race("race-prof-market", "race:elf", "Dagger");
-        set_equipment_active_state_at_root(&elf, "item:longsword", ActiveState::SelectedInactive, OVERRIDES_AT).unwrap();
-        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
-            purchase_equipment_priced_at_root(&elf, "Rapier (Base)", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
-        else {
-            panic!("the buy goes through");
-        };
-        assert!(matches!(active_state, ActiveStateDto::EquippedActive), "{carried_reason:?}");
-        std::fs::remove_dir_all(&dir).ok();
-    }
-
     /// The deity moves a number, so a clone keeps it as Export then Import does. The store rewrites the
     /// row from `bio.json` on every load, so a clone with no bio read -4 on its source's own weapon.
     #[test]
@@ -17230,6 +18454,7 @@ mod tests {
         let (dir, fighter) = enhancement_rows_aldric("race-prof-shield-fighter");
         worn_vs_carried_set(&fighter, "item:longsword", ActiveState::SelectedInactive);
         purchase_equipment_priced_at_root(&fighter, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert_worn(&set_equipment_active_state_at_root(&fighter, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
         assert_eq!(race_weapon_proficiency_gap(&fighter, SHIELD), Known);
         let bash = row(&fighter);
         assert_eq!(bash.value, 7, "base attack +3, Strength +4: {}", bash.detail);
@@ -17239,6 +18464,7 @@ mod tests {
         let (dir, wizard) = overrides_wizard("race-prof-shield-wizard", "Dagger");
         overrides_set(&wizard, |flags| flags.armor_without_proficiency = true);
         purchase_equipment_priced_at_root(&wizard, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap();
+        assert_worn(&set_equipment_active_state_at_root(&wizard, SHIELD, ActiveState::EquippedActive, OVERRIDES_AT).unwrap());
         assert_eq!(race_weapon_proficiency_gap(&wizard, SHIELD), Armor);
         let bash = row(&wizard);
         assert!(bash.detail.contains("nonproficiency penalty:"), "{}", bash.detail);
@@ -17359,29 +18585,6 @@ mod tests {
         assert_worn(&stowed);
         assert_slot_refused(&slot_conflict_wear(&root, "Helm of Brilliance"), "head slot is taken by GM Helm");
         std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn override_a_bought_weapon_stays_carried_with_the_reason_until_the_flag_is_on() {
-        let (dir, root) = overrides_wizard("override-buy-weapon", "Rope (Hemp/50 ft.)");
-        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
-            purchase_equipment_priced_at_root(&root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
-        else {
-            panic!("the buy goes through");
-        };
-        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
-        assert_eq!(carried_reason.as_deref(), Some("this character is not proficient with Rapier"));
-        assert_eq!(slot_conflict_worn_count(&root, "Rapier"), 0);
-
-        overrides_set(&root, |flags| flags.weapons_without_proficiency = true);
-        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } =
-            purchase_equipment_priced_at_root(&root, "Rapier", ActiveState::EquippedActive, OVERRIDES_AT, PriceMode::Cashless).unwrap()
-        else {
-            panic!("the buy goes through");
-        };
-        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
-        assert_eq!(carried_reason, None);
-        std::fs::remove_dir_all(&dir).ok();
     }
 
     #[test]
@@ -17788,37 +18991,12 @@ mod tests {
             }
         }
         eprintln!("market rows: {rows}; no record: {no_record:?}");
-        assert_eq!(no_record, ["Dust Knuckles.FORGET", "False Face.FORGET"], "the two rows a later book retires");
+        assert!(no_record.is_empty(), "every Market row finds its record: {no_record:?}");
     }
 
     fn slot_conflict_buy(root: &Path, item_id: &str) -> PurchaseEquipmentResponse {
         purchase_equipment_offer_at_root(root, item_id, ActiveState::EquippedActive, "2026-11-02T00:00:00Z", PriceMode::Cashless, None)
             .expect("the purchase should not error")
-    }
-
-    #[test]
-    fn slot_conflict_a_bought_helmet_is_worn_when_the_head_is_free() {
-        let root = slot_conflict_character("slot-conflict-buy-free", &[]);
-        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Hat of Disguise") else {
-            panic!("the buy should go through");
-        };
-        assert!(matches!(active_state, ActiveStateDto::EquippedActive));
-        assert_eq!(carried_reason, None);
-        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 1);
-        std::fs::remove_dir_all(&root).ok();
-    }
-
-    #[test]
-    fn slot_conflict_a_bought_helmet_stays_carried_when_the_head_is_held() {
-        let root = slot_conflict_character("slot-conflict-buy-held", &["Helm of Brilliance"]);
-        assert_worn(&slot_conflict_wear(&root, "Helm of Brilliance"));
-        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = slot_conflict_buy(&root, "Hat of Disguise") else {
-            panic!("the buy should go through");
-        };
-        assert!(matches!(active_state, ActiveStateDto::SelectedInactive));
-        assert_eq!(carried_reason.as_deref(), Some("head slot is taken by Helm of Brilliance"));
-        assert_eq!(slot_conflict_worn_count(&root, "Hat of Disguise"), 0, "bought, and carried");
-        std::fs::remove_dir_all(&root).ok();
     }
 
     /// R18: an item with no slot is carried, even when the buy asks for worn.
@@ -18374,6 +19552,7 @@ mod tests {
     ) {
         let response = CreateCharacterResponse::Saved {
             starting_wealth_note: None,
+            mirror_warnings: Vec::new(),
             summary: Box::new(CharacterSummaryDto {
                 character_id: "c".to_owned(),
                 display_label: "d".to_owned(),
@@ -20032,6 +21211,7 @@ mod tests {
             row.id.starts_with("feats.budget.")
                 || row.id.starts_with("skill.total.")
                 || row.id.starts_with("combat.weapon_damage_total.")
+                || (row.id.starts_with("combat.weapon_") && row.id.ends_with(".unarmedstrike"))
                 || sheet_totals.contains(&row.id.as_str())
         });
         let damage_totals = appended.iter().filter(|row| row.id.starts_with("combat.weapon_damage_total.")).count();
@@ -20452,6 +21632,1017 @@ mod tests {
         std::fs::remove_dir_all(&imported).ok();
         std::fs::remove_dir_all(&plain).ok();
     }
+
+    // ----- SD-41 E2.1: the load response and the Default file (`decisions.md §8, §28, §30`) -----
+
+    fn sets_root(label: &str, items: &[(&str, ActiveState)]) -> PathBuf {
+        let root = tempdir(label);
+        SavedCharacterStore::save(&level_up_test_envelope("race:human", 1), &root).expect("seed save");
+        for (item, state) in items {
+            worn_vs_carried_hold(&root, item, *state);
+        }
+        root
+    }
+
+    fn stacks_of(root: &Path, item_id: &str) -> Vec<HeldEquipmentCopyDto> {
+        list_held_equipment_stacks_at_root(root).unwrap().into_iter().filter(|row| row.item_id == item_id).collect()
+    }
+
+    fn sets_key(item_id: &str, ordinal: u32) -> CopyKey {
+        CopyKey { item_id: item_id.to_owned(), bonus: 0, ordinal }
+    }
+
+    /// SD-41 E2.4 (`decisions.md §9, §22`): the Weapons rows are the in-hand weapons, then the
+    /// carried ones (`inHand: false`), then one Unarmed row, nonlethal for a character without
+    /// Improved Unarmed Strike; the carried weapon and the Unarmed row each get their total rows.
+    #[test]
+    fn weapons_in_hand_first_then_carried_then_unarmed() {
+        let root = sets_root("weapons-order", &[("Dagger (Base)", ActiveState::SelectedInactive)]);
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        std::fs::remove_dir_all(&root).ok();
+        let rows: Vec<(Option<&str>, bool, bool)> =
+            loaded.weapon_damage.iter().map(|w| (w.weapon_record_key.as_deref(), w.in_hand, w.unarmed)).collect();
+        assert_eq!(rows.first(), Some(&(Some("Longsword (Base)"), true, false)), "{rows:?}");
+        assert_eq!(rows.iter().filter(|(_, in_hand, _)| !in_hand).collect::<Vec<_>>(), [&(Some("Dagger (Base)"), false, false)], "{rows:?}");
+        let first_carried = rows.iter().position(|(_, in_hand, _)| !in_hand).unwrap();
+        assert!(rows[..first_carried].iter().all(|(_, in_hand, unarmed)| *in_hand && !unarmed), "in hand first: {rows:?}");
+        let last = loaded.weapon_damage.last().unwrap();
+        assert!(last.unarmed && last.in_hand && last.nonlethal, "Unarmed last, nonlethal: {last:?}");
+        assert_eq!(loaded.weapon_damage.iter().filter(|w| w.unarmed).count(), 1);
+        let ids: Vec<&str> = loaded.explanations.iter().map(|row| row.id.as_str()).collect();
+        for id in ["combat.weapon_attack_bonus.unarmedstrike", "combat.weapon_damage_total.unarmedstrike", "combat.weapon_damage_total.dagger"] {
+            assert!(ids.contains(&id), "{id} missing: {ids:?}");
+        }
+    }
+
+    /// A weapon left Not Carried has no Weapons row (`decisions.md §9`).
+    #[test]
+    fn weapons_not_carried_has_no_row() {
+        let root = sets_root("weapons-not-carried", &[("Dagger (Base)", ActiveState::Absent)]);
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        std::fs::remove_dir_all(&root).ok();
+        let keys: Vec<Option<&str>> = loaded.weapon_damage.iter().map(|w| w.weapon_record_key.as_deref()).collect();
+        assert!(!keys.contains(&Some("Dagger (Base)")), "{keys:?}");
+        assert!(loaded.weapon_damage.last().is_some_and(|w| w.unarmed), "{keys:?}");
+    }
+
+    /// `usesAmmunition` / `ammunitionCarried` cross the wire (`decisions.md §23, §30`): a carried
+    /// Longbow counts the 20 pieces of one carried "Arrows (20)"; a Longsword and the Unarmed row
+    /// use none.
+    #[test]
+    fn weapons_ammunition_flags_reach_the_dto() {
+        let root = sets_root("weapons-ammunition", &[("Longbow (Base)", ActiveState::SelectedInactive), ("Arrows (20)", ActiveState::SelectedInactive)]);
+        let loaded = load_saved_character_at_root(&root).expect("load");
+        std::fs::remove_dir_all(&root).ok();
+        let flags = |key: &str| {
+            let w = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some(key)).unwrap_or_else(|| panic!("no {key} row"));
+            (w.uses_ammunition, w.ammunition_carried)
+        };
+        assert_eq!(flags("Longbow (Base)"), (true, 20));
+        let bow = loaded.weapon_damage.iter().find(|w| w.weapon_record_key.as_deref() == Some("Longbow (Base)")).unwrap();
+        assert_eq!(bow.ammunition_family.as_deref(), Some("Arrow"));
+        assert_eq!(flags("Longsword (Base)"), (false, 0));
+        let unarmed = loaded.weapon_damage.last().unwrap();
+        assert_eq!((unarmed.unarmed, unarmed.uses_ammunition, unarmed.ammunition_carried), (true, false, 0));
+        let wire = serde_json::to_value(&loaded.weapon_damage[0]).unwrap();
+        for key in ["inHand", "unarmed", "nonlethal", "usesAmmunition", "ammunitionCarried"] {
+            assert!(wire.get(key).is_some(), "{key} on the wire: {wire}");
+        }
+    }
+
+    /// Each PF starter seed: the first load writes the Default set, once; the second load leaves
+    /// the file as it is; and the Default set projects back to every saved `active_state`
+    /// (`decisions.md §8`, the starter-seed half of E1.2's theorem, §20).
+    #[test]
+    fn equipment_sets_on_load_writes_default_once() {
+        let app_data_dir = tempdir("sets-on-load-seeds");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding");
+        let characters = characters_root_from_app_data_dir(&app_data_dir);
+        for id in [DEFAULT_CHARACTER_ID, SECOND_SEED_CHARACTER_ID, THIRD_SEED_CHARACTER_ID] {
+            let root = characters.join(id);
+            let file = root.join(equipment_sets::EQUIPMENT_SETS_FILE);
+            assert!(!file.exists(), "{id}: a seed starts with no sets file");
+            load_saved_character_at_root(&root).expect("first load");
+            let written = std::fs::read(&file).unwrap_or_else(|err| panic!("{id}: the first load writes the file: {err}"));
+            let modified = std::fs::metadata(&file).unwrap().modified().unwrap();
+            let sets = equipment_sets::load(&root).unwrap().expect("the file reads back");
+            assert_eq!((sets.active.as_str(), sets.sets.len()), ("Default", 1), "{id}");
+            load_saved_character_at_root(&root).expect("second load");
+            assert_eq!(std::fs::read(&file).unwrap(), written, "{id}: the second load rewrites nothing");
+            assert_eq!(std::fs::metadata(&file).unwrap().modified().unwrap(), modified, "{id}: written once");
+
+            let selections = SavedCharacterStore::load(&root).unwrap().character_input.chosen.equipment_selections;
+            let keys = selection_copy_keys(&selections);
+            let saved: Vec<ActiveState> = selections.iter().map(|selection| selection.active_state).collect();
+            assert!(!saved.is_empty(), "{id}: a seed holds equipment");
+            assert_eq!(equipment_sets::project(sets.active_set(), &keys), saved, "{id}: project(default_from(x), x) == x");
+        }
+        std::fs::remove_dir_all(&app_data_dir).ok();
+    }
+
+    /// The load response names the sets and carries each container copy's load (E1.3): a Dagger
+    /// put in a carried Backpack weighs 1 lb of the Backpack's 60 (`decisions.md §32`).
+    #[test]
+    fn equipment_sets_on_load_response_carries_sets_and_container_loads() {
+        let root = sets_root("sets-on-load-response", &[("Backpack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        let first = load_saved_character_at_root(&root).unwrap();
+        let summary = first.equipment_sets.expect("a PF load names its sets");
+        assert_eq!((summary.active.as_str(), summary.names), ("Default", vec!["Default".to_owned()]));
+        let backpack = sets_key("Backpack", 0);
+        assert_eq!(first.container_loads.len(), 1, "one container copy: {:?}", first.container_loads);
+        assert_eq!(first.container_loads[0].copy, backpack);
+        assert_eq!(first.container_loads[0].contents_lbs, 0.0);
+
+        let mut sets = equipment_sets::load(&root).unwrap().unwrap();
+        sets.sets[0].locations.push(equipment_sets::SetEntry { copy: sets_key("item:dagger", 0), location: Location::Inside { container: backpack.clone() } });
+        equipment_sets::save(&root, &sets).unwrap();
+        let loads = load_saved_character_at_root(&root).unwrap().container_loads;
+        assert_eq!(loads.len(), 1);
+        assert_eq!((loads[0].contents_lbs, loads[0].over), (1.0, false), "{loads:?}");
+        assert_eq!(serde_json::to_value(loads[0].capacity).unwrap(), serde_json::json!({ "kind": "pounds", "lbs": 60.0 }));
+        let dagger = stacks_of(&root, "item:dagger");
+        assert_eq!(dagger[0].location, Location::Inside { container: backpack });
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Two plain Daggers, both Carried, are one row of 2 (`decisions.md §28`).
+    #[test]
+    fn held_list_stacks_identical_copies() {
+        let root = sets_root("held-stacks", &[("item:dagger", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        load_saved_character_at_root(&root).unwrap();
+        let rows = stacks_of(&root, "item:dagger");
+        assert_eq!(rows.len(), 1, "{rows:?}");
+        assert_eq!((rows[0].quantity, rows[0].base_quantity, rows[0].ordinal), (2, 1, 0));
+        assert_eq!(rows[0].copies, vec![sets_key("item:dagger", 0), sets_key("item:dagger", 1)]);
+        assert_eq!(rows[0].location, Location::Carried);
+        let value = serde_json::to_value(&rows[0]).unwrap();
+        assert_eq!(value["location"], serde_json::json!({ "kind": "carried" }));
+        assert_eq!(value["copies"][1], serde_json::json!({ "itemId": "item:dagger", "bonus": 0, "ordinal": 1 }));
+        assert_eq!(list_held_equipment_at_root(&root).unwrap().iter().filter(|row| row.item_id == "item:dagger").count(), 2, "the per-copy list keeps both");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// One Dagger Carried and one Not Carried stay two rows.
+    #[test]
+    fn held_list_keeps_different_locations_apart() {
+        let root = sets_root("held-apart", &[("item:dagger", ActiveState::SelectedInactive), ("item:dagger", ActiveState::Absent)]);
+        load_saved_character_at_root(&root).unwrap();
+        let rows = stacks_of(&root, "item:dagger");
+        let seen: Vec<(Location, u32, u32)> = rows.iter().map(|row| (row.location.clone(), row.quantity, row.ordinal)).collect();
+        assert_eq!(seen, vec![(Location::Carried, 1, 0), (Location::NotCarried, 1, 1)]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// An old save's one "Arrows (20)" line is 20 pieces after the first load, and weighs what the
+    /// base weighed it (`decisions.md §30` Q8); a stated 40 pieces weighs two bundles, so the load
+    /// passes the pieces to `compute_encumbrance`.
+    #[test]
+    fn held_list_bundle_migration_keeps_weight() {
+        let root = sets_root("held-bundle", &[("Arrows (20)", ActiveState::SelectedInactive)]);
+        let envelope = SavedCharacterStore::load(&root).unwrap();
+        let before = codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle())
+            .corpus_derived
+            .encumbrance
+            .total_carried_weight_lbs;
+        let after = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs;
+        assert_eq!(after, before, "the migration moves no weight");
+        let arrows = sets_key("Arrows (20)", 0);
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        assert_eq!(sets.copies.get(&arrows.map_key()).and_then(|facts| facts.quantity), Some(20));
+        let rows = stacks_of(&root, "Arrows (20)");
+        assert_eq!((rows.len(), rows[0].quantity, rows[0].base_quantity), (1, 20, 20), "{rows:?}");
+
+        let mut sets = sets;
+        sets.copies.get_mut(&arrows.map_key()).unwrap().quantity = Some(40);
+        equipment_sets::save(&root, &sets).unwrap();
+        let doubled = load_saved_character_at_root(&root).unwrap().corpus_derived.encumbrance.total_carried_weight_lbs;
+        let bundle = codex::rules_core::equipment_resolver::equipment_converted_resolve("Arrows (20)", corpus_fixture_bundle()).unwrap().weight_lbs.unwrap();
+        assert_eq!(doubled, before + bundle, "40 pieces are two bundles");
+        assert_eq!(stacks_of(&root, "Arrows (20)")[0].quantity, 40);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-41 E2.2: moves, sets, purchases (`decisions.md §6, §7, §10, §27, §28, §30`) -----
+
+    const MOVED_AT: &str = "2026-11-14T00:00:00Z";
+
+    fn moved(root: &Path, copy: &CopyKey, location: Location, quantity: Option<u32>) -> CreateCharacterResponse {
+        move_equipment_copy_at_root(root, copy, location, quantity, MOVED_AT).expect("the move runs")
+    }
+
+    fn move_saved(root: &Path, copy: &CopyKey, location: Location, quantity: Option<u32>) {
+        let response = moved(root, copy, location, quantity);
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    fn move_refused(root: &Path, copy: &CopyKey, location: Location) -> (String, String) {
+        match moved(root, copy, location, None) {
+            CreateCharacterResponse::Blocked { diagnostics } => (diagnostics[0].id.clone(), diagnostics[0].message.clone()),
+            other => panic!("expected a refusal: {other:?}"),
+        }
+    }
+
+    fn saved_ok(response: Result<CreateCharacterResponse, String>) {
+        let response = response.expect("the call runs");
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+    }
+
+    /// The printed Armor Class and its shield part.
+    fn ac_and_shield(root: &Path) -> (i16, i16) {
+        let loaded = load_saved_character_at_root(root).unwrap();
+        let shield = loaded.explanations.iter().find(|row| row.id == "defense.armor_class.shield").expect("the shield part").value;
+        (loaded.snapshot.as_ref().unwrap().baseline_armor_class, shield)
+    }
+
+    fn active_location(root: &Path, copy: &CopyKey) -> Location {
+        let sets = equipment_sets::load(root).unwrap().expect("a sets file");
+        equipment_sets::location_of(sets.active_set(), copy)
+    }
+
+    fn fixture_weight(item_id: &str) -> f64 {
+        codex::rules_core::equipment_resolver::equipment_converted_resolve(item_id, corpus_fixture_bundle()).and_then(|record| record.weight_lbs).expect("a weighed record")
+    }
+
+    /// A carried shield moved to the Shield slot raises the printed AC by its bonus, and moved back
+    /// lowers it; `set_equipment_active_state` is a move too, so the set names the slot it wears.
+    #[test]
+    fn move_equipment_shield_into_slot_moves_the_ac_row() {
+        const SHIELD: &str = "Heavy Steel Shield (Base)";
+        let (dir, root) = enhancement_rows_aldric("move-shield");
+        worn_vs_carried_hold(&root, SHIELD, ActiveState::SelectedInactive);
+        let (ac, shield) = ac_and_shield(&root);
+        assert_eq!(shield, 0, "carried, the shield adds nothing");
+        let copy = sets_key(SHIELD, 0);
+        move_saved(&root, &copy, Location::Slot { slot: BodySlot::Shield }, None);
+        assert_eq!(ac_and_shield(&root), (ac + 2, 2), "a heavy steel shield is +2");
+        assert_eq!(active_location(&root, &copy), Location::Slot { slot: BodySlot::Shield });
+        move_saved(&root, &copy, Location::Carried, None);
+        assert_eq!(ac_and_shield(&root), (ac, 0));
+        assert_eq!(active_location(&root, &copy), Location::Carried);
+        worn_vs_carried_set(&root, SHIELD, ActiveState::EquippedActive);
+        assert_eq!(ac_and_shield(&root), (ac + 2, 2));
+        assert_eq!(active_location(&root, &copy), Location::Slot { slot: BodySlot::Shield });
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A carried Backpack holding 10 lb, moved to Not Carried, takes 10 lb + its own 2 lb off the
+    /// load (its contents project `Absent`, `decisions.md §6`); carried again, it puts them back.
+    #[test]
+    fn move_equipment_not_carried_container_drops_contents_weight() {
+        const ROPE: &str = "Rope (50 ft.)";
+        let root = sets_root("move-pack-away", &[("Backpack", ActiveState::SelectedInactive), (ROPE, ActiveState::SelectedInactive)]);
+        assert_eq!((fixture_weight("Backpack"), fixture_weight(ROPE)), (2.0, 10.0));
+        let pack = sets_key("Backpack", 0);
+        move_saved(&root, &sets_key(ROPE, 0), Location::Inside { container: pack.clone() }, None);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(loaded.container_loads[0].contents_lbs, 10.0, "{:?}", loaded.container_loads);
+        let before = loaded.corpus_derived.encumbrance.total_carried_weight_lbs;
+        move_saved(&root, &pack, Location::NotCarried, None);
+        assert_eq!(worn_vs_carried_weight(&root), before - 12.0, "10 lb inside + the pack's 2");
+        let states: Vec<ActiveState> = held_selections(&root).iter().filter(|s| s.item_id == ROPE || s.item_id == "Backpack").map(|s| s.active_state).collect();
+        assert_eq!(states, vec![ActiveState::Absent, ActiveState::Absent]);
+        assert_eq!(active_location(&root, &sets_key(ROPE, 0)), Location::Inside { container: pack.clone() }, "the rope stays in the pack");
+        move_saved(&root, &pack, Location::Carried, None);
+        assert_eq!(worn_vs_carried_weight(&root), before);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A container cannot go inside itself or inside what it holds, nor anything inside a
+    /// non-container; an unknown copy is an error; a refusal writes nothing (`decisions.md §7`).
+    #[test]
+    fn move_equipment_refuses_a_cycle() {
+        let root = sets_root(
+            "move-cycle",
+            &[("Backpack", ActiveState::SelectedInactive), ("Sack", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)],
+        );
+        let (pack, sack) = (sets_key("Backpack", 0), sets_key("Sack", 0));
+        move_saved(&root, &sack, Location::Inside { container: pack.clone() }, None);
+        let file = root.join(equipment_sets::EQUIPMENT_SETS_FILE);
+        let before = (std::fs::read(&file).unwrap(), held_selections(&root));
+        assert_eq!(move_refused(&root, &pack, Location::Inside { container: sack.clone() }).0, "equipment.container_cycle");
+        assert_eq!(move_refused(&root, &pack, Location::Inside { container: pack.clone() }).0, "equipment.container_cycle");
+        assert_eq!(move_refused(&root, &pack, Location::Inside { container: sets_key("item:dagger", 0) }).0, "equipment.not_a_container");
+        assert_eq!((std::fs::read(&file).unwrap(), held_selections(&root)), before, "a refusal writes nothing");
+        let unknown = move_equipment_copy_at_root(&root, &sets_key("Backpack", 3), Location::NotCarried, None, MOVED_AT).expect_err("no fourth backpack");
+        assert!(unknown.contains("does not hold"), "{unknown}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Aldric wears his Chain Shirt: Chainmail moved to the Armor slot is refused with the slot
+    /// diagnostic, and nothing is saved.
+    #[test]
+    fn move_equipment_refuses_a_full_slot() {
+        let (dir, root) = enhancement_rows_aldric("move-full-slot");
+        worn_vs_carried_hold(&root, "Chainmail", ActiveState::SelectedInactive);
+        let before = held_selections(&root);
+        let (id, message) = move_refused(&root, &sets_key("Chainmail", 0), Location::Slot { slot: BodySlot::Armor });
+        assert_eq!(id, "equipment.slot_taken");
+        assert!(message.contains("is taken by Chain Shirt"), "{message}");
+        assert_eq!(held_selections(&root), before);
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// Create (a copy of the active set), rename, activate (projects), delete; the last set stays.
+    #[test]
+    fn move_equipment_sets_crud_and_last_set_rule() {
+        let (dir, root) = enhancement_rows_aldric("move-sets");
+        let ac = |root: &Path| load_saved_character_at_root(root).unwrap().snapshot.unwrap().baseline_armor_class;
+        let worn_ac = ac(&root);
+        let shirt = sets_key("item:chain_shirt", 0);
+        let summary = create_equipment_set_at_root(&root, "Camp", true).unwrap();
+        assert_eq!((summary.active.as_str(), summary.names), ("Default", vec!["Default".to_owned(), "Camp".to_owned()]));
+        assert!(create_equipment_set_at_root(&root, " camp ", false).unwrap_err().contains("already a set named"));
+        assert_eq!(rename_equipment_set_at_root(&root, "Camp", "Sleeping").unwrap().names, vec!["Default".to_owned(), "Sleeping".to_owned()]);
+        saved_ok(activate_equipment_set_at_root(&root, "Sleeping", MOVED_AT));
+        assert!(matches!(active_location(&root, &shirt), Location::Slot { slot: BodySlot::Armor }), "copied from Default");
+        move_saved(&root, &shirt, Location::NotCarried, None);
+        assert_eq!(ac(&root), worn_ac - 4, "the Chain Shirt's +4 is gone");
+        saved_ok(activate_equipment_set_at_root(&root, "Default", MOVED_AT));
+        assert_eq!(ac(&root), worn_ac, "Default still wears it");
+        saved_ok(activate_equipment_set_at_root(&root, "Sleeping", MOVED_AT));
+        assert_eq!(ac(&root), worn_ac - 4);
+        saved_ok(delete_equipment_set_at_root(&root, "Sleeping", MOVED_AT));
+        assert_eq!(ac(&root), worn_ac, "deleting the active set activates Default and projects it");
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        assert_eq!((sets.active.as_str(), sets.sets.len()), ("Default", 1));
+        assert!(delete_equipment_set_at_root(&root, "Default", MOVED_AT).unwrap_err().contains("last set"));
+        assert!(activate_equipment_set_at_root(&root, "Nowhere", MOVED_AT).is_err());
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// A Market purchase lands Carried, asked to be worn or not, and writes no set entry: unnamed
+    /// is Carried in every set (`decisions.md §10`, `§21` Q1).
+    #[test]
+    fn move_equipment_purchase_is_carried_everywhere() {
+        const SHIELD: &str = "Heavy Steel Shield (Base)";
+        let (dir, root) = enhancement_rows_aldric("move-buy");
+        create_equipment_set_at_root(&root, "Camp", false).unwrap();
+        let before = equipment_sets::load(&root).unwrap().unwrap();
+        let bought = purchase_equipment_offer_at_root(&root, SHIELD, ActiveState::EquippedActive, MOVED_AT, PriceMode::Cashless, None).unwrap();
+        let PurchaseEquipmentResponse::Purchased { active_state, carried_reason, .. } = bought else { panic!("{bought:?}") };
+        assert!(matches!(active_state, ActiveStateDto::SelectedInactive), "{active_state:?}");
+        assert_eq!(carried_reason, None);
+        assert!(held_selections(&root).iter().any(|s| s.item_id == SHIELD && s.active_state == ActiveState::SelectedInactive));
+        let after = equipment_sets::load(&root).unwrap().unwrap();
+        assert_eq!(after, before, "a purchase writes no set entry");
+        assert!(after.sets.iter().all(|set| equipment_sets::location_of(set, &sets_key(SHIELD, 0)) == Location::Carried));
+        std::fs::remove_dir_all(&dir).ok();
+    }
+
+    /// 20 of 60 arrows go into the pack and 40 stay (a new `equipment=` line for the 20); 10 more
+    /// join the 20 (no third line); the rest moves the line; more than the stack is an error.
+    #[test]
+    fn move_quantity_splits_a_stack() {
+        const ARROWS: &str = "Arrows (20)";
+        let root = sets_root("move-split", &[("Backpack", ActiveState::SelectedInactive), (ARROWS, ActiveState::SelectedInactive)]);
+        load_saved_character_at_root(&root).unwrap();
+        let mut sets = equipment_sets::load(&root).unwrap().unwrap();
+        sets.copies.get_mut(&sets_key(ARROWS, 0).map_key()).unwrap().quantity = Some(60);
+        equipment_sets::save(&root, &sets).unwrap();
+        let weight = worn_vs_carried_weight(&root);
+        let pack = Location::Inside { container: sets_key("Backpack", 0) };
+        let rows = |root: &Path| stacks_of(root, ARROWS).into_iter().map(|row| (row.location, row.quantity)).collect::<Vec<_>>();
+        let lines = |root: &Path| held_selections(root).iter().filter(|s| s.item_id == ARROWS).count();
+
+        move_saved(&root, &sets_key(ARROWS, 0), pack.clone(), Some(20));
+        assert_eq!(rows(&root), vec![(Location::Carried, 40), (pack.clone(), 20)]);
+        assert_eq!(lines(&root), 2, "a new line for the 20");
+        assert_eq!(worn_vs_carried_weight(&root), weight, "pieces moved, weight kept");
+        assert_eq!(load_saved_character_at_root(&root).unwrap().container_loads[0].contents_lbs, fixture_weight(ARROWS), "20 arrows are one bundle");
+
+        move_saved(&root, &sets_key(ARROWS, 0), pack.clone(), Some(10));
+        assert_eq!(rows(&root), vec![(Location::Carried, 30), (pack.clone(), 30)]);
+        assert_eq!(lines(&root), 2, "the 10 join the stack in the pack");
+
+        move_saved(&root, &sets_key(ARROWS, 0), pack.clone(), None);
+        assert_eq!(rows(&root), vec![(pack.clone(), 60)]);
+        assert_eq!(worn_vs_carried_weight(&root), weight);
+        assert!(move_equipment_copy_at_root(&root, &sets_key(ARROWS, 0), Location::NotCarried, Some(61), MOVED_AT).is_err());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Selling a copy drops it from every set and numbers the later copies of its item down, so
+    /// each set still projects to the saved states (`decisions.md §5.2`).
+    #[test]
+    fn move_equipment_sell_drops_the_copy_from_every_set() {
+        const DAGGER: &str = "item:dagger";
+        let root = sets_root("move-sell", &[(DAGGER, ActiveState::SelectedInactive), (DAGGER, ActiveState::SelectedInactive), (DAGGER, ActiveState::SelectedInactive)]);
+        move_saved(&root, &sets_key(DAGGER, 0), Location::NotCarried, Some(1));
+        move_saved(&root, &sets_key(DAGGER, 2), Location::NotCarried, Some(1));
+        create_equipment_set_at_root(&root, "Camp", true).unwrap();
+        let sold = sell_held_copy_at_root(&root, DAGGER, MOVED_AT, PriceMode::Cashless, CopyNamed { bonus: Some(0), from_state: Some(ActiveState::Absent) }).unwrap();
+        assert!(matches!(sold, CreateCharacterResponse::Saved { .. }), "{sold:?}");
+        let selections = held_selections(&root);
+        let keys = selection_copy_keys(&selections);
+        let saved: Vec<ActiveState> = selections.iter().map(|s| s.active_state).collect();
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        for set in &sets.sets {
+            assert_eq!(equipment_sets::project(set, &keys), saved, "{}", set.name);
+            assert!(set.locations.iter().all(|entry| entry.copy.item_id != DAGGER || entry.copy.ordinal < 2), "{:?}", set.locations);
+        }
+        let daggers: Vec<ActiveState> = selections.iter().filter(|s| s.item_id == DAGGER).map(|s| s.active_state).collect();
+        assert_eq!(daggers.len(), 2);
+        assert_eq!(daggers.iter().filter(|state| **state == ActiveState::Absent).count(), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-41 E2.3: created items (`decisions.md §25`) and the capacity override (§32) -----
+
+    const CREATED_AT: &str = "2026-11-14T01:00:00Z";
+
+    fn new_item(name: &str, weight_lbs: Option<f64>, price_gp: Option<f64>, container_capacity_lbs: Option<f64>, price_mode: PriceMode) -> crate::character_custom::CreateCustomItemRequest {
+        crate::character_custom::CreateCustomItemRequest {
+            character_id: String::new(),
+            name: name.to_owned(),
+            description: format!("{name}, made at the table"),
+            weight_lbs,
+            price_gp,
+            container_capacity_lbs,
+            slot: None,
+            saved_at: CREATED_AT.to_owned(),
+            price_mode,
+        }
+    }
+
+    /// The new copy, or the refusal's diagnostic id.
+    fn created(root: &Path, request: &crate::character_custom::CreateCustomItemRequest) -> Result<CopyKey, String> {
+        match crate::character_custom::create_custom_item_at_root(root, request).expect("the call runs") {
+            crate::character_custom::CreateCustomItemResponse::Created { copy, .. } => Ok(copy),
+            crate::character_custom::CreateCustomItemResponse::Blocked { diagnostics } => Err(diagnostics[0].id.clone()),
+        }
+    }
+
+    /// A created "Food" pouch (0.5 lb) lands Carried, named in no set, and weighs 0.5 lb in the
+    /// load's total and `per_item` while carried; Not Carried it weighs nothing. A text-only custom
+    /// record is held too (the held list lists every custom equipment record, `decisions.md §25` (c)).
+    #[test]
+    fn create_custom_item_is_carried_and_weighs() {
+        let root = sets_root("create-carried", &[]);
+        let before = worn_vs_carried_weight(&root);
+        let food = created(&root, &new_item("Food", Some(0.5), None, Some(10.0), PriceMode::Standard)).expect("created");
+        assert_eq!((food.item_id.starts_with(CUSTOM_ITEM_PREFIX), food.bonus, food.ordinal), (true, 0, 0), "{food:?}");
+        let row = list_held_equipment_stacks_at_root(&root).unwrap().into_iter().find(|row| row.copies[0] == food).expect("Food is held");
+        assert_eq!((row.name.as_str(), &row.location, row.quantity), ("Food", &Location::Carried, 1));
+        let sets = equipment_sets::load(&root).unwrap().expect("the load wrote the Default set");
+        assert!(sets.sets.iter().all(|set| set.locations.iter().all(|entry| entry.copy != food)), "unnamed in every set: {:?}", sets.sets);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, before + 0.5);
+        assert!(loaded.corpus_derived.encumbrance.per_item.iter().any(|item| item.item_id == food.item_id && item.weight_lbs == 0.5), "{:?}", loaded.corpus_derived.encumbrance.per_item);
+        move_saved(&root, &food, Location::NotCarried, None);
+        assert_eq!(worn_vs_carried_weight(&root), before, "Not Carried, it weighs nothing");
+
+        let mut custom = crate::character_custom::load_character_custom_at_root(&root).unwrap();
+        custom.equipment.push(crate::character_custom::CustomRecordDto { id: "note".to_owned(), name: "Lucky Stone".to_owned(), ..Default::default() });
+        crate::character_custom::save_character_custom_at_root(&root, &custom, CREATED_AT).unwrap();
+        assert!(list_held_equipment_at_root(&root).unwrap().iter().any(|row| row.item_id == "custom:note" && row.location == Location::Carried), "a text-only record is held");
+        assert_eq!(worn_vs_carried_weight(&root), before, "and it states no weight");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A created container holds a 10 lb rope: its load reads 10 of 10 lb; the rope counts toward
+    /// the load until Food is Not Carried, and back when it is carried again. A clone keeps the
+    /// item and what it holds.
+    #[test]
+    fn create_custom_item_container_holds_and_follows_location() {
+        const ROPE: &str = "Rope (50 ft.)";
+        let root = sets_root("create-container", &[(ROPE, ActiveState::SelectedInactive)]);
+        let food = created(&root, &new_item("Food", Some(0.5), None, Some(10.0), PriceMode::Standard)).expect("created");
+        let carried = worn_vs_carried_weight(&root);
+        move_saved(&root, &sets_key(ROPE, 0), Location::Inside { container: food.clone() }, None);
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let load = loaded.container_loads.iter().find(|load| load.copy == food).expect("Food's load");
+        assert_eq!((load.contents_lbs, load.capacity, load.over), (10.0, ContainerCapacityDto::Pounds { lbs: 10.0 }, false));
+        assert_eq!(loaded.corpus_derived.encumbrance.total_carried_weight_lbs, carried, "inside the pouch, the rope still counts");
+        move_saved(&root, &food, Location::NotCarried, None);
+        assert_eq!(worn_vs_carried_weight(&root), carried - 10.5, "the rope and the pouch leave together");
+        let rope_state = held_selections(&root).iter().find(|s| s.item_id == ROPE).unwrap().active_state;
+        assert_eq!(rope_state, ActiveState::Absent);
+        move_saved(&root, &food, Location::Carried, None);
+        assert_eq!(worn_vs_carried_weight(&root), carried);
+
+        let clone = tempdir("create-container-clone");
+        let request = CloneCharacterRequest {
+            character_id: String::new(),
+            new_character_id: "clone-e23".to_owned(),
+            new_display_label: "Clone".to_owned(),
+            saved_at: CREATED_AT.to_owned(),
+        };
+        clone_character_at_roots(&root, &clone, &request, "test-version").unwrap();
+        let cloned = load_saved_character_at_root(&clone).unwrap();
+        assert_eq!(cloned.container_loads, load_saved_character_at_root(&root).unwrap().container_loads, "the clone's pouch holds the rope");
+        assert_eq!(cloned.corpus_derived.encumbrance.total_carried_weight_lbs, carried);
+        std::fs::remove_dir_all(&root).ok();
+        std::fs::remove_dir_all(&clone).ok();
+    }
+
+    /// A created item priced 5 gp costs 5 gp Standard and at Character Build, nothing Cashless;
+    /// short of funds it is refused and nothing is written.
+    #[test]
+    fn create_custom_item_price_follows_the_mode() {
+        let root = fund_and_seed("create-price", 1_000);
+        let money = || load_character_money_at_root(&root).unwrap().total_copper;
+        created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::Standard)).expect("standard");
+        assert_eq!(money(), 500, "5 gp deducted");
+        created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::Cashless)).expect("cashless");
+        assert_eq!(money(), 500, "cashless charges nothing");
+        created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::CharacterBuild)).expect("character build");
+        assert_eq!(money(), 0, "character build buys at 100%");
+        created(&root, &new_item("Pebble", None, Some(0.0), None, PriceMode::Standard)).expect("a price of 0 needs no funds");
+        let file = std::fs::read(root.join("custom.json")).unwrap();
+        assert_eq!(created(&root, &new_item("Lantern", Some(1.0), Some(5.0), None, PriceMode::Standard)), Err("money.equipment_purchase.insufficient_funds".to_owned()));
+        assert_eq!((std::fs::read(root.join("custom.json")).unwrap(), money()), (file, 0), "a refusal writes nothing");
+        let negative = crate::character_custom::create_custom_item_at_root(&root, &new_item("Debt", Some(-1.0), None, None, PriceMode::Standard));
+        assert!(negative.is_err_and(|err| err.contains("weight")), "a negative weight is refused");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A `custom.json` written before the three fields and the ninth flag loads unchanged, and a
+    /// record with none of them serializes without them.
+    #[test]
+    fn create_custom_item_old_custom_json_loads() {
+        let root = sets_root("create-old-custom", &[]);
+        let old = r#"{"grants":[],"feats":[],"equipment":[{"id":"r1","name":"Ring of Hats","description":"","stats":[],"slot":"ring"}],"spells":[],"devices":[],"conditions":[],"overrides":{"featsWithoutPrerequisites":false,"weaponsWithoutProficiency":false,"spellsOutsideClassList":false,"armorWithoutProficiency":false,"ignoreSlotLimits":true,"ignoreFeatBudget":false,"ignoreAlignmentRestrictions":false,"ignoreEncumbrance":false}}"#;
+        std::fs::write(root.join("custom.json"), old).unwrap();
+        let custom = crate::character_custom::load_character_custom_at_root(&root).expect("the old file loads");
+        let ring = &custom.equipment[0];
+        assert_eq!((ring.weight_lbs, ring.price_gp, ring.container_capacity_lbs), (None, None, None));
+        assert_eq!((custom.overrides.ignore_slot_limits, custom.overrides.ignore_container_capacity), (true, false));
+        let written = serde_json::to_value(ring).unwrap();
+        assert!(["weightLbs", "priceGp", "containerCapacityLbs"].iter().all(|key| written.get(key).is_none()), "{written}");
+        let before = worn_vs_carried_weight(&root);
+        load_saved_character_at_root(&root).expect("the character loads");
+        assert_eq!(worn_vs_carried_weight(&root), before, "an unweighed custom item adds nothing");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// "Ignore container capacity limits" (`decisions.md §32` (b)): saved in `custom.json`, read
+    /// back, off for a file saved before it, and on the load response beside the other overrides.
+    #[test]
+    fn custom_overrides_ignore_container_capacity_round_trips() {
+        let root = sets_root("override-container-capacity", &[]);
+        assert!(!load_saved_character_at_root(&root).unwrap().ignore_container_capacity, "off by default");
+        let mut custom = crate::character_custom::load_character_custom_at_root(&root).unwrap();
+        assert!(!custom.overrides.ignore_container_capacity);
+        custom.overrides.ignore_container_capacity = true;
+        crate::character_custom::save_character_custom_at_root(&root, &custom, CREATED_AT).unwrap();
+        let file: serde_json::Value = serde_json::from_slice(&std::fs::read(root.join("custom.json")).unwrap()).unwrap();
+        assert_eq!(file["overrides"]["ignoreContainerCapacity"], serde_json::Value::Bool(true), "{file}");
+        assert!(crate::character_custom::load_character_custom_at_root(&root).unwrap().overrides.ignore_container_capacity, "read back");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert!(loaded.ignore_container_capacity, "the load response carries it");
+        assert_eq!(serde_json::to_value(&loaded).unwrap()["ignoreContainerCapacity"], serde_json::Value::Bool(true));
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-41 E2.5: the Market backend (`decisions.md §26, §27, §28, §30, §30.1`) -----
+
+    const FLIGHT_ARROWS: &str = "Arrows (Flight/20)";
+
+    fn bought(root: &Path, item_id: &str, deal: Deal) -> PurchaseEquipmentResponse {
+        purchase_equipment_deal_at_root(root, item_id, ActiveState::SelectedInactive, MOVED_AT, PriceMode::Standard, deal).expect("the purchase runs")
+    }
+
+    fn copper(root: &Path) -> u64 {
+        load_character_money_at_root(root).unwrap().total_copper
+    }
+
+    /// 3 × "Arrow, Flight (20)" at standard costs 3 × 2 gp and lands as one Carried stack of 60
+    /// pieces weighing three bundles (9 lb); one more bundle joins that stack, no new line.
+    #[test]
+    fn market_backend_purchase_quantity_buys_n_copies_at_n_times_price() {
+        let root = fund_and_seed("market-backend-quantity", 10_000);
+        let weight = worn_vs_carried_weight(&root);
+        let response = bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 10_000 - 600, "3 × 2 gp");
+        let rows = stacks_of(&root, FLIGHT_ARROWS);
+        assert_eq!(rows.iter().map(|row| (row.location.clone(), row.quantity)).collect::<Vec<_>>(), vec![(Location::Carried, 60)]);
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == FLIGHT_ARROWS).count(), 1, "one line");
+        assert_eq!(worn_vs_carried_weight(&root), weight + 9.0, "three bundles of 3 lb");
+
+        bought(&root, FLIGHT_ARROWS, Deal::default());
+        assert_eq!(copper(&root), 10_000 - 800);
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 80, "one more bundle joins the stack");
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == FLIGHT_ARROWS).count(), 1, "still one line");
+        assert!(purchase_equipment_deal_at_root(&root, FLIGHT_ARROWS, ActiveState::SelectedInactive, MOVED_AT, PriceMode::Standard, Deal { quantity: Some(0), ..Deal::default() }).is_err());
+
+        // A single item is one line per copy, so one can be worn or enchanted alone; the list stacks them.
+        bought(&root, "Dagger (Base)", Deal { quantity: Some(2), ..Deal::default() });
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == "Dagger (Base)").count(), 2);
+        assert_eq!(stacks_of(&root, "Dagger (Base)").iter().map(|row| row.quantity).collect::<Vec<_>>(), vec![2]);
+        assert_eq!(copper(&root), 10_000 - 800 - 400, "2 × 2 gp");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A negotiated total is charged in place of quantity × the listed price.
+    #[test]
+    fn market_backend_negotiated_price_replaces_the_list() {
+        let root = fund_and_seed("market-backend-negotiated", 10_000);
+        let response = bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), negotiated_copper: Some(100), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 10_000 - 100, "1 gp, not 6");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 60);
+        let short = bought(&root, FLIGHT_ARROWS, Deal { negotiated_copper: Some(1_000_000), ..Deal::default() });
+        assert!(matches!(short, PurchaseEquipmentResponse::Blocked { .. }), "a negotiated total past the balance is refused: {short:?}");
+        assert_eq!(copper(&root), 9_900);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Selling 30 of 60 pieces at standard returns half of 1.5 bundles' price (1 gp 5 sp) and
+    /// leaves 30; a negotiated sale returns what was agreed.
+    #[test]
+    fn market_backend_sell_quantity_and_negotiated() {
+        let root = fund_and_seed("market-backend-sell", 10_000);
+        bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), ..Deal::default() });
+        let before = copper(&root);
+        let sold = sell_held_pieces_at_root(&root, FLIGHT_ARROWS, MOVED_AT, PriceMode::Standard, CopyNamed::default(), Deal { quantity: Some(30), ..Deal::default() }).unwrap();
+        assert!(matches!(sold, CreateCharacterResponse::Saved { .. }), "{sold:?}");
+        assert_eq!(copper(&root), before + 150, "30 / 20 × 2 gp × 50 %");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 30);
+
+        sell_held_pieces_at_root(&root, FLIGHT_ARROWS, MOVED_AT, PriceMode::Standard, CopyNamed::default(), Deal { quantity: Some(10), negotiated_copper: Some(7), ..Deal::default() }).unwrap();
+        assert_eq!(copper(&root), before + 157, "the negotiated 7 cp");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 20);
+
+        sell_held_pieces_at_root(&root, FLIGHT_ARROWS, MOVED_AT, PriceMode::Standard, CopyNamed::default(), Deal::default()).unwrap();
+        assert_eq!(copper(&root), before + 257, "the rest: one bundle at 50 %");
+        assert!(stacks_of(&root, FLIGHT_ARROWS).is_empty(), "the line is gone");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Discarding returns nothing: part of a stack lowers it; the whole stack leaves the saved
+    /// lines and every set entry naming it.
+    #[test]
+    fn market_backend_discard_refunds_nothing() {
+        let root = fund_and_seed("market-backend-discard", 10_000);
+        bought(&root, FLIGHT_ARROWS, Deal { quantity: Some(3), ..Deal::default() });
+        let arrows = sets_key(FLIGHT_ARROWS, 0);
+        move_saved(&root, &arrows, Location::NotCarried, None);
+        create_equipment_set_at_root(&root, "Camp", true).unwrap();
+        let before = copper(&root);
+
+        let response = discard_equipment_copy_at_root(&root, &arrows, Some(20), MOVED_AT).unwrap();
+        assert!(matches!(response, CreateCharacterResponse::Saved { .. }), "{response:?}");
+        assert_eq!(stacks_of(&root, FLIGHT_ARROWS)[0].quantity, 40);
+        discard_equipment_copy_at_root(&root, &arrows, None, MOVED_AT).unwrap();
+        assert_eq!(copper(&root), before, "a discard refunds nothing");
+        assert!(stacks_of(&root, FLIGHT_ARROWS).is_empty());
+        assert!(held_selections(&root).iter().all(|s| s.item_id != FLIGHT_ARROWS), "the line is gone");
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        assert!(sets.sets.iter().all(|set| set.locations.iter().all(|entry| entry.copy.item_id != FLIGHT_ARROWS)), "{sets:?}");
+        assert!(!sets.copies.contains_key(&arrows.map_key()));
+        assert!(discard_equipment_copy_at_root(&root, &arrows, None, MOVED_AT).is_err(), "nothing left to discard");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A Market row with no price from any source buys only at a negotiated price (`decisions.md
+    /// §30.1`); without one it is refused and nothing is charged.
+    #[test]
+    fn market_backend_unpriced_item_buys_through_negotiate() {
+        use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
+        let unpriced = list_market(MarketFilter { category: MarketCategory::Gear, name_contains: None, book: None })
+            .entries
+            .into_iter()
+            .find(|row| row.entry.cost_gp.is_none() && row.variants.is_empty() && catalog_cost_gp(&row.entry.key).is_none())
+            .expect("an unpriced Market row");
+        let key = unpriced.entry.key;
+        let root = fund_and_seed("market-backend-unpriced", 10_000);
+        match bought(&root, &key, Deal::default()) {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(diagnostics.iter().any(|d| d.message.starts_with("no listed price: negotiate")), "{key}: {diagnostics:?}");
+            }
+            other => panic!("{key}: an unpriced row is never free: {other:?}"),
+        }
+        assert_eq!(copper(&root), 10_000);
+        let response = bought(&root, &key, Deal { negotiated_copper: Some(500), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{key}: {response:?}");
+        assert_eq!(copper(&root), 9_500);
+        assert_eq!(held_selections(&root).iter().filter(|s| s.item_id == key).count(), 1);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Buy Custom (SD-41 E2.6, `decisions.md §24`) -----
+
+    const FLAMING: &str = "Special Ability ~ Flaming ~ Weapon";
+    const MITHRAL: &str = "Material ~ Mithril ~ Weapon / Item";
+
+    /// "Dawn", a +1 flaming mithral longsword.
+    fn dawn() -> CustomEquipmentBuild {
+        CustomEquipmentBuild {
+            base_item_id: "Longsword (Base)".to_owned(),
+            name: Some("Dawn".to_owned()),
+            enhancement: 1,
+            special_abilities: vec![FLAMING.to_owned()],
+            material: Some(MITHRAL.to_owned()),
+            ..CustomEquipmentBuild::default()
+        }
+    }
+
+    fn bought_custom(root: &Path, build: &CustomEquipmentBuild, deal: Deal) -> PurchaseEquipmentResponse {
+        purchase_custom_equipment_at_root(root, build, deal, MOVED_AT, PriceMode::Standard).expect("the purchase runs")
+    }
+
+    /// The price is the rules': base 15 + mithral's 500 gp a pound × 4 lb (masterwork is in the
+    /// material) + (+1 and Flaming's +1)² × 2,000 = 10,015 gp, and the copy weighs half the 4 lb.
+    /// Without mithral the masterwork 300 is charged; a plain +1 is the Market's +1 offer; a
+    /// masterwork sword is 315. The purchase charges what the quote says.
+    #[test]
+    fn buy_custom_prices_from_the_rules() {
+        let quote = custom_equipment_quote(&dawn()).unwrap();
+        assert_eq!(quote.price_gp, Some(15.0 + 2_000.0 + 8_000.0), "{quote:?}");
+        assert_eq!(quote.weight_lbs, Some(2.0));
+        assert_eq!(quote.modifiers, ["Special Ability ~ +1 ~ Weapon", FLAMING, MITHRAL]);
+        let steel = CustomEquipmentBuild { material: None, ..dawn() };
+        assert_eq!(custom_equipment_quote(&steel).unwrap().price_gp, Some(15.0 + 300.0 + 8_000.0));
+        let plus_one = CustomEquipmentBuild { special_abilities: Vec::new(), material: None, ..dawn() };
+        let offer = market_offers("Longsword (Base)").into_iter().find(|offer| offer.bonus == 1).expect("the Market's +1");
+        assert_eq!(custom_equipment_quote(&plus_one).unwrap().price_gp, Some(offer.price_gp));
+        let masterwork = CustomEquipmentBuild { masterwork: true, enhancement: 0, ..plus_one.clone() };
+        let quote = custom_equipment_quote(&masterwork).unwrap();
+        assert_eq!((quote.price_gp, quote.modifiers), (Some(315.0), vec!["Special Quality ~ Masterwork ~ Weapon".to_owned()]));
+
+        assert!(custom_equipment_quote(&CustomEquipmentBuild { enhancement: 0, material: None, ..dawn() }).is_err(), "Flaming needs a +1 under it");
+        assert!(custom_equipment_quote(&CustomEquipmentBuild { enhancement: 6, ..dawn() }).is_err(), "past +5");
+        assert!(custom_equipment_quote(&CustomEquipmentBuild { base_item_id: "Pouch (Belt)".to_owned(), ..plus_one }).is_err(), "a pouch takes no +1");
+
+        let root = fund_and_seed("buy-custom-price", 2_000_000);
+        let weight = worn_vs_carried_weight(&root);
+        let response = bought_custom(&root, &dawn(), Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 2_000_000 - 1_001_500);
+        assert_eq!(worn_vs_carried_weight(&root), weight + 2.0, "the engine weighs the mithral copy at 2 lb");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Dawn wielded adds +1 to attack and damage (mithral's own masterwork +1 does not stack on
+    /// it), and its row carries Flaming's text; a Buy Custom +2 heavy steel shield moves AC exactly
+    /// as the Market's +2 does.
+    #[test]
+    fn buy_custom_enhancement_reaches_attack_and_ac() {
+        let (dir, root) = enhancement_rows_aldric("buy-custom-attack");
+        let response = bought_custom(&root, &dawn(), Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        assert!(!loaded.corpus_derived.unresolved_equipment_item_ids.iter().any(|id| id == FLAMING || id == MITHRAL), "{:?}", loaded.corpus_derived.unresolved_equipment_item_ids);
+        let worn = set_equipment_copy_state_at_root(&root, "Longsword (Base)", Some(1), ActiveState::EquippedActive, MOVED_AT).unwrap();
+        assert!(matches!(worn, CreateCharacterResponse::Saved { .. }), "{worn:?}");
+        let loaded = load_saved_character_at_root(&root).unwrap();
+        let dawn_row = loaded.weapon_damage.iter().find(|w| w.in_hand && w.enhancement_attack_bonus == Some(1)).unwrap_or_else(|| panic!("{:#?}", loaded.weapon_damage));
+        assert_eq!(dawn_row.enhancement_damage_bonus, Some(1));
+        let row = stacks_of(&root, "Longsword (Base)").into_iter().find(|row| row.bonus == 1).expect("Dawn is held");
+        assert!(row.abilities.iter().any(|text| text.starts_with("Flaming") && text.contains("fire")), "{:?}", row.abilities);
+        assert!(row.abilities.iter().any(|text| text.to_lowercase().contains("mithral")), "{:?}", row.abilities);
+        std::fs::remove_dir_all(&dir).ok();
+
+        let shield = |label: &str, custom: bool| {
+            let (dir, root) = enhancement_rows_aldric(label);
+            let before = enhancement_read(&root);
+            if custom {
+                let build = CustomEquipmentBuild { base_item_id: "Heavy Steel Shield (Base)".to_owned(), enhancement: 2, ..CustomEquipmentBuild::default() };
+                assert!(matches!(bought_custom(&root, &build, Deal::default()), PurchaseEquipmentResponse::Purchased { .. }));
+            } else {
+                enhancement_buy(&root, "Heavy Steel Shield (Base)", ActiveState::SelectedInactive, 2);
+            }
+            set_equipment_copy_state_at_root(&root, "Heavy Steel Shield (Base)", Some(2), ActiveState::EquippedActive, MOVED_AT).unwrap();
+            let after = enhancement_read(&root);
+            std::fs::remove_dir_all(&dir).ok();
+            (before.armor_class, after.armor_class)
+        };
+        let (before, custom) = shield("buy-custom-shield", true);
+        assert_eq!(custom, before + 2 + 2, "the shield's 2 and its +2");
+        assert_eq!(shield("buy-custom-shield-market", false), (before, custom), "Buy Custom and the Market's +2 agree");
+    }
+
+    /// An offered ability whose price the rules state as a choice (`Bonus Spell Resistance`) is
+    /// listed unpriced; a build holding it buys only at a negotiated price (`decisions.md §30` Q6).
+    #[test]
+    fn buy_custom_unpriced_eqmod_needs_negotiate() {
+        let options = crate::equipment_catalog::custom_equipment_options("Longsword (Base)");
+        assert!(options.abilities.iter().any(|o| o.key == FLAMING && o.plus == 1 && !o.unpriced));
+        let mithral = options.materials.iter().find(|o| o.key == MITHRAL).expect("mithral is offered");
+        assert_eq!(mithral.prerequisite.as_deref(), Some("metal"), "the base's types do not say Metal");
+        let unpriced = options.abilities.iter().find(|o| o.unpriced && o.plus == 0).expect("an unpriced ability");
+        let build = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), special_abilities: vec![unpriced.key.clone()], ..CustomEquipmentBuild::default() };
+        let quote = custom_equipment_quote(&build).unwrap();
+        assert_eq!((quote.price_gp, quote.unpriced.clone()), (None, vec![unpriced.key.clone()]), "{quote:?}");
+
+        let root = fund_and_seed("buy-custom-unpriced", 10_000);
+        match bought_custom(&root, &build, Deal::default()) {
+            PurchaseEquipmentResponse::Blocked { diagnostics } => {
+                assert!(diagnostics.iter().any(|d| d.message.starts_with("no listed price: negotiate") && d.message.contains(&unpriced.key)), "{diagnostics:?}");
+            }
+            other => panic!("an unpriced build is never free: {other:?}"),
+        }
+        assert_eq!(copper(&root), 10_000);
+        let response = bought_custom(&root, &build, Deal { negotiated_copper: Some(5_000), ..Deal::default() });
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 5_000);
+        let line = held_selections(&root).into_iter().find(|s| s.item_id == "Longsword (Base)").expect("bought");
+        assert_eq!(line.applied_modifiers, vec![unpriced.key.clone()]);
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The custom name lands on the held row ("Dawn"); a belt pouch bought custom and named
+    /// "Food" is a container the load weighs, Carried.
+    #[test]
+    fn buy_custom_name_and_container_base() {
+        let root = fund_and_seed("buy-custom-name", 2_000_000);
+        bought_custom(&root, &dawn(), Deal::default());
+        let food = CustomEquipmentBuild { base_item_id: "Pouch (Belt)".to_owned(), name: Some("Food".to_owned()), ..CustomEquipmentBuild::default() };
+        let response = bought_custom(&root, &food, Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        let names: Vec<(String, Location)> = list_held_equipment_stacks_at_root(&root).unwrap().into_iter().map(|row| (row.name, row.location)).collect();
+        assert!(names.contains(&("Dawn".to_owned(), Location::Carried)), "{names:?}");
+        assert!(names.contains(&("Food".to_owned(), Location::Carried)), "{names:?}");
+        let loads = load_saved_character_at_root(&root).unwrap().container_loads;
+        assert!(loads.iter().any(|load| load.copy == sets_key("Pouch (Belt)", 0)), "Food is a container: {loads:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Buy Custom item size (SD-41 E2.12, `decisions.md §20`) -----
+
+    /// Each Longsword row's damage die on the load response, as `(count, die_size)`.
+    fn longsword_dice(root: &Path) -> Vec<(u8, u8)> {
+        load_saved_character_at_root(root)
+            .unwrap()
+            .weapon_damage
+            .iter()
+            .filter(|row| row.weapon_item_id == "Longsword (Base)")
+            .filter_map(|row| row.base_dice.as_ref().map(|dice| (dice.count, dice.die_size)))
+            .collect()
+    }
+
+    /// A longsword made for a Large wielder costs and weighs twice the Medium one (15 -> 30 gp,
+    /// 4 -> 8 lb; the size doubles the base, not the masterwork or the `+N`) and rolls 2d6 (1d8
+    /// one size up). Bought, it keeps its size: the held row says Large, the engine weighs it at
+    /// 8 lb and its carried row rolls 2d6.
+    #[test]
+    fn buy_custom_size_large_longsword_prices_weighs_and_rolls() {
+        use codex::rules_core::size::SizeCategory;
+        let large = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), size: Some(SizeCategory::Large), ..CustomEquipmentBuild::default() };
+        let quote = custom_equipment_quote(&large).unwrap();
+        assert_eq!((quote.price_gp, quote.weight_lbs), (Some(30.0), Some(8.0)), "{quote:?}");
+        assert!(quote.modifiers.is_empty(), "a size is not a modifier: {quote:?}");
+        let plus_one = CustomEquipmentBuild { enhancement: 1, ..large.clone() };
+        assert_eq!(custom_equipment_quote(&plus_one).unwrap().price_gp, Some(30.0 + 300.0 + 2_000.0));
+
+        let root = fund_and_seed("buy-custom-size-large", 100_000);
+        let weight = worn_vs_carried_weight(&root);
+        let before = longsword_dice(&root);
+        let response = bought_custom(&root, &large, Deal::default());
+        assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{response:?}");
+        assert_eq!(copper(&root), 100_000 - 3_000);
+        assert_eq!(worn_vs_carried_weight(&root), weight + 8.0, "the engine weighs the Large copy at 8 lb");
+        let rows = stacks_of(&root, "Longsword (Base)");
+        assert!(rows.iter().any(|row| row.size == Some(SizeCategory::Large)), "{rows:?}");
+        let after = longsword_dice(&root);
+        assert_eq!(after.len(), before.len() + 1, "{after:?}");
+        assert!(after.contains(&(2, 6)), "the Large longsword rolls 2d6: {after:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A longsword made for a Small wielder weighs half (2 lb) at the Medium price and rolls 1d6;
+    /// bought, the engine weighs it at 2 lb and a plain Market longsword beside it does not stack
+    /// with it.
+    #[test]
+    fn buy_custom_size_small_longsword_weighs_half() {
+        use codex::rules_core::size::SizeCategory;
+        let small = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), size: Some(SizeCategory::Small), ..CustomEquipmentBuild::default() };
+        let quote = custom_equipment_quote(&small).unwrap();
+        assert_eq!((quote.price_gp, quote.weight_lbs), (Some(15.0), Some(2.0)), "{quote:?}");
+        let root = fund_and_seed("buy-custom-size-small", 100_000);
+        let weight = worn_vs_carried_weight(&root);
+        assert!(matches!(bought_custom(&root, &small, Deal::default()), PurchaseEquipmentResponse::Purchased { .. }));
+        assert_eq!(worn_vs_carried_weight(&root), weight + 2.0, "the engine weighs the Small copy at 2 lb");
+        assert!(longsword_dice(&root).contains(&(1, 6)), "{:?}", longsword_dice(&root));
+        assert!(matches!(bought(&root, "Longsword (Base)", Deal::default()), PurchaseEquipmentResponse::Purchased { .. }));
+        let sizes: Vec<Option<SizeCategory>> = stacks_of(&root, "Longsword (Base)").iter().filter(|row| row.location == Location::Carried).map(|row| row.size).collect();
+        assert_eq!(sizes.len(), 2, "a Small and a Medium longsword are two rows: {sizes:?}");
+        assert!(sizes.contains(&Some(SizeCategory::Small)) && sizes.contains(&None), "{sizes:?}");
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Buy Custom offers Small and Large on arms, armor, shields and ammunition (what the size rule
+    /// prices), none on a belt pouch; the `Wield Size` qualities are special abilities, not sizes.
+    #[test]
+    fn buy_custom_size_offers_small_and_large_on_arms_and_armor() {
+        use codex::rules_core::size::SizeCategory;
+        let options = crate::equipment_catalog::custom_equipment_options("Longsword (Base)");
+        assert_eq!(options.sizes, vec![SizeCategory::Small, SizeCategory::Large]);
+        assert!(options.abilities.iter().any(|o| o.key.starts_with("Special Quality ~ Wield Size")), "{:?}", options.abilities);
+        assert_eq!(crate::equipment_catalog::custom_equipment_options("Breastplate (Base)").sizes, vec![SizeCategory::Small, SizeCategory::Large]);
+        assert!(crate::equipment_catalog::custom_equipment_options("Pouch (Belt)").sizes.is_empty());
+        let pouch = CustomEquipmentBuild { base_item_id: "Pouch (Belt)".to_owned(), size: Some(SizeCategory::Large), ..CustomEquipmentBuild::default() };
+        assert!(custom_equipment_quote(&pouch).is_err(), "a pouch is not made by size");
+        let huge = CustomEquipmentBuild { base_item_id: "Longsword (Base)".to_owned(), size: Some(SizeCategory::Huge), ..CustomEquipmentBuild::default() };
+        assert!(custom_equipment_quote(&huge).is_err(), "only Small and Large are offered");
+    }
+
+    /// A copy's custom name is kept in the sets file's copies map and read by the held list; an
+    /// empty name clears it.
+    #[test]
+    fn rename_equipment_copy_names_the_held_row() {
+        let root = sets_root("rename-copy", &[("item:dagger", ActiveState::SelectedInactive), ("item:dagger", ActiveState::SelectedInactive)]);
+        let dagger = sets_key("item:dagger", 1);
+        let rows = rename_equipment_copy_at_root(&root, &dagger, "  Grandpa's Dagger ").unwrap();
+        let named: Vec<(&str, u32)> = rows.iter().filter(|row| row.item_id == "item:dagger").map(|row| (row.name.as_str(), row.quantity)).collect();
+        assert_eq!(named, vec![("Dagger", 1), ("Grandpa's Dagger", 1)]);
+        let sets = equipment_sets::load(&root).unwrap().unwrap();
+        assert_eq!(sets.copies.get(&dagger.map_key()).and_then(|facts| facts.name.as_deref()), Some("Grandpa's Dagger"));
+        rename_equipment_copy_at_root(&root, &dagger, " ").unwrap();
+        assert_eq!(stacks_of(&root, "item:dagger").len(), 1, "unnamed, the two stack again");
+        assert!(rename_equipment_copy_at_root(&root, &sets_key("item:dagger", 5), "x").is_err());
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-41 E2.7: campaign write-through (decisions.md §29) -----
+
+    fn campaign_membership(dir: &Path, active: bool) -> campaign_mirror::Membership {
+        campaign_mirror::Membership { campaign_id: "camp-1".to_owned(), campaign_name: "Rise of the Runelords".to_owned(), campaign_dir: dir.to_path_buf(), active }
+    }
+
+    /// The one character folder in a campaign's `characters/`.
+    fn campaign_copy(campaign: &Path) -> PathBuf {
+        let folders: Vec<PathBuf> = std::fs::read_dir(campaign.join("characters")).expect("the campaign has a characters folder").map(|entry| entry.unwrap().path()).collect();
+        assert_eq!(folders.len(), 1, "{folders:?}");
+        folders[0].clone()
+    }
+
+    #[test]
+    fn campaign_write_through_custom_save_reaches_the_copy() {
+        let root = created_character("campaign-through");
+        let campaign = tempdir("campaign-through-dir");
+        let warnings = set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, true)]).expect("membership saved");
+        assert!(warnings.is_empty(), "{warnings:?}");
+        let copy = campaign_copy(&campaign);
+        let id = SavedCharacterStore::load(&root).unwrap().character_id;
+        assert!(copy.file_name().unwrap().to_string_lossy().ends_with(&id), "{copy:?} names the character id");
+        assert!(!copy.join(campaign_mirror::MEMBERSHIPS_FILE).exists(), "the membership file stays with the character");
+
+        let custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &custom, "2026-11-15T00:00:00Z").expect("custom saves");
+        assert_eq!(std::fs::read(copy.join("custom.json")).unwrap(), std::fs::read(root.join("custom.json")).unwrap(), "the campaign copy holds the new custom.json");
+        assert_eq!(std::fs::read(copy.join("authoritative_character_input.txt")).unwrap(), std::fs::read(root.join("authoritative_character_input.txt")).unwrap(), "and the re-saved input");
+
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(loaded.campaigns, vec![campaign_membership(&campaign, true)]);
+        assert!(loaded.mirror_warnings.is_empty(), "{:?}", loaded.mirror_warnings);
+
+        // A clone is a new character: it joins no campaign.
+        let clone_root = tempdir("campaign-through-clone");
+        let request = CloneCharacterRequest { character_id: id, new_character_id: "clone-of-campaign-character".to_owned(), new_display_label: "Clone".to_owned(), saved_at: "2026-11-15T00:00:01Z".to_owned() };
+        let cloned = clone_character_at_roots(&root, &clone_root, &request, "test-version").expect("clones");
+        assert!(matches!(cloned, CreateCharacterResponse::Saved { .. }), "{cloned:?}");
+        assert!(!clone_root.join(campaign_mirror::MEMBERSHIPS_FILE).exists(), "clone_character copies no campaigns.json");
+        assert_eq!(std::fs::read_dir(campaign.join("characters")).unwrap().count(), 1, "the clone wrote nothing to the campaign");
+        for dir in [&root, &campaign, &clone_root] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn campaign_write_through_inactive_stops_updating() {
+        let root = created_character("campaign-inactive");
+        let campaign = tempdir("campaign-inactive-dir");
+        set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, true)]).expect("joined");
+        let first = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &first, "2026-11-15T00:00:00Z").expect("first save");
+        let copy = campaign_copy(&campaign);
+        let copied = std::fs::read(copy.join("custom.json")).unwrap();
+
+        set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, false)]).expect("removed");
+        let second = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 2)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &second, "2026-11-15T00:00:01Z").expect("second save");
+        save_character_bio_at_root(&root, &CharacterBioDto { alignment: "Lawful Good".to_owned(), ..Default::default() }).expect("bio saves");
+
+        assert_ne!(std::fs::read(root.join("custom.json")).unwrap(), copied, "the local file changed");
+        assert_eq!(std::fs::read(copy.join("custom.json")).unwrap(), copied, "the copy kept what it had: removed = keep it, stop updating");
+        assert!(!copy.join("bio.json").exists(), "no later file reaches the copy");
+        for dir in [&root, &campaign] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
+
+    #[test]
+    fn campaign_write_through_unwritable_dir_warns_and_keeps_local() {
+        let root = created_character("campaign-unwritable");
+        let campaign = tempdir("campaign-unwritable-dir");
+        // `characters` is a file, so no copy can be written under it (whoever runs the test).
+        std::fs::write(campaign.join("characters"), "not a folder").unwrap();
+        let warnings = set_character_campaigns_at_root(&root, &[campaign_membership(&campaign, true)]).expect("the membership saves anyway");
+        assert_eq!(warnings.len(), 1, "{warnings:?}");
+
+        let custom = CharacterCustomDto { grants: vec![grant("g1", "ability:wisdom", 1)], ..Default::default() };
+        crate::character_custom::save_character_custom_at_root(&root, &custom, "2026-11-15T00:00:00Z").expect("the command succeeds");
+        assert_eq!(load_character_custom_at_root(&root).unwrap(), custom, "the local file changed");
+
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert_eq!(loaded.mirror_warnings.len(), 1, "{:?}", loaded.mirror_warnings);
+        assert!(loaded.mirror_warnings[0].starts_with(&campaign.display().to_string()), "the warning names the campaign folder: {:?}", loaded.mirror_warnings);
+        for dir in [&root, &campaign] {
+            std::fs::remove_dir_all(dir).ok();
+        }
+    }
 }
 
 
@@ -20806,6 +22997,23 @@ mod starter_seed_tests {
         std::fs::remove_dir_all(&app_data_dir).ok();
     }
 
+    /// SD-41 E2.4 (`decisions.md §35`): `speed.climb` (feet) when a held race trait declares a climb
+    /// speed: the Vanara's `MOVE:Walk,30,Climb,20` → 20; Aldric (Human) has no row.
+    #[test]
+    fn speed_climb_row_for_a_vanara_none_for_aldric() {
+        let row = |wire: &serde_json::Value, id: &str| {
+            wire["explanations"].as_array().expect("explanations").iter().find(|row| row["id"] == id).map(|row| row["value"].clone())
+        };
+        let input = compose_character_input(&super::tests::request_for_class("race:vanara", "class:fighter", 1));
+        let vanara = serde_json::to_value(load_saved_character_at_root(&super::tests::saved_root_for("speed-climb-vanara", input)).expect("load")).expect("json");
+        assert_eq!(row(&vanara, "speed.climb"), Some(serde_json::json!(20)), "{}", vanara["explanations"]);
+        let app_data_dir = temp_app_data_dir("speed-climb-aldric");
+        seed_default_characters_at(&app_data_dir, "0.0.0-test").expect("seeding succeeds");
+        let aldric = serde_json::to_value(load_saved_character_at_root(&character_root(&app_data_dir, DEFAULT_CHARACTER_ID)).expect("load")).expect("json");
+        std::fs::remove_dir_all(&app_data_dir).ok();
+        assert_eq!(row(&aldric, "speed.climb"), None);
+    }
+
     /// SD-40 E2.21: the load response carries `resistances` (energy, damage reduction, spell
     /// resistance, immunities) from what the character holds. Bestiary 2: an Ifrit has fire
     /// resistance 5, an Undine cold resistance 5; an Ifrit who takes ARG's Wildfire Heart gives
@@ -20899,6 +23107,8 @@ mod starter_seed_tests {
         let mut printed = Vec::new();
         for wire in &loaded {
             let weapons = wire["weaponDamage"].as_array().expect("weaponDamage");
+            assert_eq!(weapons.last().map(|w| &w["unarmed"]), Some(&serde_json::json!(true)), "the Unarmed row ends the list (SD-41 E2.4)");
+            let weapons: Vec<&serde_json::Value> = weapons.iter().filter(|w| w["unarmed"] == false).collect();
             assert!(!weapons.is_empty(), "every seed holds a weapon");
             for weapon in weapons {
                 let key = weapon["weaponRecordKey"].as_str().expect("record key");

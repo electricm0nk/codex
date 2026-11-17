@@ -29,7 +29,7 @@ import {
   type RacialTraitsSurface,
 } from './racialTraitsModel';
 import type { RaceSelectionResponse } from '../boundary/loadAlternateRacialTraits';
-import { buildWeaponsTabSurface, ABSENT as ABSENT_FACET } from './weaponsTabModel';
+import { buildWeaponsTabSurface, ABSENT as ABSENT_FACET, type WeaponRow } from './weaponsTabModel';
 import { buildSpellsPerDaySurface } from './spellsPerDayModel';
 import type {
   AbilityScoresDto,
@@ -77,7 +77,6 @@ import {
   formatMarketPrice,
   mapEquipmentCatalogEntries,
   mapFeatCatalogEntries,
-  mapMarketEntries,
   mapSpellCatalogEntries,
   marketPlacementWords,
   marketMoneyMoved,
@@ -99,12 +98,16 @@ import { DESKTOP_EXPORT_DEPS, runCharacterExport } from './characterExport';
 import { resolveSelectedTraits } from './traitsTabModel';
 import { resolveAddSpellAffordance } from './addSpellAffordanceModel';
 import { loadCharacterTraits, type CharacterTraitOptionDto } from '../boundary/loadCharacterTraits';
-import type { BaseSavesDto, PilotSnapshotDto } from '../boundary/loadCreateCharacter';
+import type { BaseSavesDto, CreateCharacterOutcome, PilotSnapshotDto } from '../boundary/loadCreateCharacter';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import { loadClassSpellLevels, type ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import { ItemPickerModal, type ItemPickerEntry } from './ItemPickerModal';
-import { MarketDialog } from './MarketDialog';
-import { EquipmentPanel } from './EquipmentPanel';
+import { MarketDialog, type MarketDeal, type MarketHeldCopy, type MarketOutcome } from './MarketDialog';
+import { mapMarketTableRows } from './marketModel';
+import type { CreateItemFields } from './CreateItemDialog';
+import { purchaseCustomEquipment, type CustomEquipmentBuild } from '../boundary/purchaseCustomEquipment';
+import { createCustomItem } from '../boundary/createCustomItem';
+import { GearScreen } from './GearScreen';
 import { OverrideTag, classLevelsAdmitted, flagsOf } from './OverrideTag';
 import { listHeldEquipment, sellableCopies, type HeldEquipmentCopyDto, type PlacedEquipmentCopyDto } from '../boundary/listHeldEquipment';
 import { listMarket, type MarketCategory } from '../boundary/listMarket';
@@ -174,6 +177,9 @@ import { setSkillAllocations, type SkillAllocationEntryDto } from '../boundary/s
 import { loadCharacterBio, parseLanguages, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, copperToGp, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
 import type { ActiveStateDto } from '../boundary/addEquipmentSelection';
+import type { CampaignMembershipDto } from '../boundary/setCharacterCampaigns';
+import { CampaignMembershipDialog } from './CampaignMembershipDialog';
+import { activeCampaigns, campaignFieldText } from './campaignMembershipModel';
 
 /**
  * Pathfinder 1e character sheet, patterned after Pathbuilder 2e's three-column
@@ -403,17 +409,23 @@ function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number | nu
 
 // ---------- center column ----------
 
-function IdentityPanel(props: { name: string; campaign: string }) {
+function IdentityPanel(props: { name: string; campaign: string; onEditCampaigns: () => void }) {
   return (
     <div style={{ ...panel, alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', padding: '0.6rem 0.75rem' }}>
       <div style={{ minWidth: 0 }}>
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Character Name</p>
         <p style={{ fontWeight: 700, margin: '0.1rem 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.name}</p>
       </div>
-      <div style={{ minWidth: 0, textAlign: 'right' }}>
+      <button
+        type="button"
+        data-testid="sheet-campaign-field"
+        title="Add this character to campaigns, or remove it"
+        onClick={props.onEditCampaigns}
+        style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', font: 'inherit', minWidth: 0, padding: 0, textAlign: 'right' }}
+      >
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.6rem', margin: 0 }}>Campaign</p>
         <p style={{ fontWeight: 700, margin: '0.1rem 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{props.campaign}</p>
-      </div>
+      </button>
     </div>
   );
 }
@@ -772,10 +784,10 @@ function WeaponsTab(props: {
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   /**
-   * Drops one carried copy of the item, with any equipmods attached to it, and sells it back
-   * under the current price mode; the caption below states it.
+   * Drop: moves the row's own copy to Not Carried, kept with its equipmods and no money moved
+   * (`decisions.md §27`); the caption below states it.
    */
-  onRemoveWeapon: (itemId: string) => void;
+  onDropWeapon: (drop: NonNullable<WeaponRow['drop']>) => void;
 }) {
   const categories = props.proficiency.tiers;
   const mark = (verdict: 'yes' | 'no' | 'unknown') => (verdict === 'yes' ? '✓' : verdict === 'no' ? '✗' : '?');
@@ -867,8 +879,13 @@ function WeaponsTab(props: {
           No weapons equipped.
         </p>
       ) : (
-        surface.rows.map((row) => (
-          <div key={row.itemId} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.45rem 0' }}>
+        surface.rows.map((row, index) => (
+          <div key={`${row.itemId}:${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.45rem 0' }}>
+            {row.group === 'carried' && surface.rows[index - 1]?.group !== 'carried' ? (
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', letterSpacing: '0.04em', margin: '0 0 0.3rem', textTransform: 'uppercase' }}>
+                Carried
+              </p>
+            ) : null}
             <div
               style={{
                 display: 'grid',
@@ -877,7 +894,12 @@ function WeaponsTab(props: {
                 gridTemplateColumns: WEAPON_GRID_COLUMNS,
               }}
             >
-              <span style={{ color: 'var(--color-text)', fontWeight: 700 }}>{row.name}</span>
+              <span style={{ color: 'var(--color-text)', fontWeight: 700 }}>
+                {row.name}
+                {row.mark ? (
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 400 }}> {row.mark}</span>
+                ) : null}
+              </span>
               <span style={{ color: 'var(--color-text)' }}>{row.baseDice}</span>
               <span style={{ color: 'var(--color-text)' }}>{row.strDamage}</span>
               <span style={{ color: 'var(--color-text)' }}>{row.enhancementDamage}</span>
@@ -890,21 +912,33 @@ function WeaponsTab(props: {
                 Feat damage: {row.featEffects.join(', ')}
               </p>
             ) : null}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
-              <button
-                type="button"
-                aria-label={`Drop ${row.name}`}
-                onClick={() => props.onRemoveWeapon(row.itemId)}
-                style={removeItemButtonStyle}
-              >
-                Drop
-              </button>
-            </div>
+            {row.ammunition ? (
+              <div aria-label={`${row.name} ammunition`} style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.2rem', marginTop: '0.3rem' }}>
+                {Array.from({ length: row.ammunition.boxes }, (_, box) => (
+                  <span key={box} aria-hidden="true" style={{ border: '1px solid var(--color-border)', display: 'inline-block', height: '0.7rem', width: '0.7rem' }} />
+                ))}
+                {row.ammunition.carried ? (
+                  <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', marginLeft: '0.4rem' }}>{row.ammunition.carried}</span>
+                ) : null}
+              </div>
+            ) : null}
+            {row.drop === null ? null : (
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
+                <button
+                  type="button"
+                  aria-label={`Drop ${row.name}`}
+                  onClick={() => row.drop && props.onDropWeapon(row.drop)}
+                  style={removeItemButtonStyle}
+                >
+                  Drop
+                </button>
+              </div>
+            )}
           </div>
         ))
       )}
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0', textAlign: 'center' }}>
-        Dropping an item sells it back under the pricing chosen above.
+        Drop keeps the item and marks it Not Carried; sell it from the Market.
       </p>
 
       {/*
@@ -1553,17 +1587,20 @@ function GearTab(props: {
   priceMode: PriceMode;
   onPriceModeChange: (mode: PriceMode) => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
-  /** See `WeaponsTab.onRemoveWeapon` — the same command. */
-  onRemoveItem: (itemId: string) => void;
+  characterId: string;
   loadHeldEquipment: () => Promise<PlacedEquipmentCopyDto[]>;
-  /** A new value re-reads the Equipment control: any saved change arrives as a new detail. */
-  detail: unknown;
-  /** Moves one copy between worn, carried and left behind; resolves to the refusal, word for word, or null when it saved. */
-  onSetActiveState: (copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto) => Promise<string | null>;
+  /** A new value re-reads the gear screen: any saved change arrives as a new detail. */
+  detail: LoadSavedCharacterResponse | null;
+  /** The Armor Class the Defense block shows. */
+  armorClass: number;
+  onGearChange: (write: (savedAt: string) => Promise<unknown>) => Promise<string | null>;
+  onGearSell: (held: PlacedEquipmentCopyDto, quantity?: number, negotiatedGp?: number) => Promise<string | null>;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
   onAdjustMoney: (gpAmount: number) => void;
+  /** The Custom tab's "Ignore body slot limits": Move to and drag offer a full slot. */
+  ignoreSlotLimits: boolean;
 }) {
   const items = props.corpusDerived?.equippedItems ?? [];
   const unresolved = props.corpusDerived?.unresolvedEquipmentItemIds ?? [];
@@ -1585,7 +1622,22 @@ function GearTab(props: {
           Market
         </button>
       </div>
-      <EquipmentPanel load={props.loadHeldEquipment} refreshKey={props.detail} onSetState={props.onSetActiveState} />
+      <GearScreen
+        characterId={props.characterId}
+        load={props.loadHeldEquipment}
+        refreshKey={props.detail}
+        context={{
+          perItem: encumbrance?.perItem ?? [],
+          containerLoads: props.detail?.containerLoads ?? [],
+          ignoreContainerCapacity: props.detail?.ignoreContainerCapacity,
+          ignoreSlotLimits: props.ignoreSlotLimits,
+        }}
+        armorClass={props.armorClass}
+        carriedLbs={encumbrance?.totalCarriedWeightLbs ?? null}
+        sets={props.detail?.equipmentSets}
+        onChange={props.onGearChange}
+        onSell={props.onGearSell}
+      />
       {unresolved.length > 0 ? <UnresolvedNotice ids={unresolved} kind="item" /> : null}
       {items.length === 0 ? (
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
@@ -1622,14 +1674,6 @@ function GearTab(props: {
                   style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
                 >
                   Attach Modifier
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Drop ${item.equipmentRecordName}`}
-                  onClick={() => props.onRemoveItem(item.itemId)}
-                  style={removeItemButtonStyle}
-                >
-                  Drop
                 </button>
               </span>
             </div>
@@ -2730,6 +2774,8 @@ export function CharacterSheet(props: {
   onOpen: () => void;
   /** Top-menu "Clone": called after a successful clone so the parent can refresh its saved-character list; the sheet stays open on the original (un-cloned) character. */
   onCloned: () => void;
+  /** SD-41 E3.5: an "Open <name>" button under Skills opens that campaign's sheet. */
+  onOpenCampaign: (campaignId: string) => void;
 }) {
   // SD-36 F4c: class labels, hit dice and skill ranks read the engine's served class roster;
   // re-render when it (or the announced fallback) is installed.
@@ -2861,6 +2907,17 @@ export function CharacterSheet(props: {
   const [customLoading, setCustomLoading] = useState(true);
   const [customError, setCustomError] = useState<string | null>(null);
   const [customDialogOpen, setCustomDialogOpen] = useState(false);
+  // SD-41 E3.5: the character's campaigns (from the load response, then the dialog's save) and the
+  // campaign copies the latest write could not make. A refresh without them keeps what the sheet has.
+  const [campaignDialogOpen, setCampaignDialogOpen] = useState(false);
+  const [campaignMemberships, setCampaignMemberships] = useState<CampaignMembershipDto[]>(() => props.detail?.campaigns ?? []);
+  const [mirrorWarnings, setMirrorWarnings] = useState<string[]>(() => props.detail?.mirrorWarnings ?? []);
+  useEffect(() => {
+    if (props.detail?.campaigns) setCampaignMemberships(props.detail.campaigns);
+  }, [props.detail?.campaigns]);
+  useEffect(() => {
+    if (props.detail?.mirrorWarnings?.length) setMirrorWarnings(props.detail.mirrorWarnings);
+  }, [props.detail?.mirrorWarnings]);
   const [customSaving, setCustomSaving] = useState(false);
   const [customSaveError, setCustomSaveError] = useState<string | null>(null);
   useEffect(() => {
@@ -3190,50 +3247,28 @@ export function CharacterSheet(props: {
   async function handleAddEquipment(
     itemId: string,
     bonus: number,
+    deal?: MarketDeal,
   ): Promise<{ money: CharacterMoneyDto; activeState: ActiveStateDto; carriedReason: string | null } | null> {
     setMutationError(null);
     try {
       const outcome = await purchaseEquipment({
         characterId: props.row.characterId,
         itemId,
-        // Worn if its slot is free. The backend decides, and says where the copy went.
-        activeState: 'EquippedActive',
+        // Carried (SD-41 `decisions.md §10`): wearing it is a move on the gear screen.
+        activeState: 'SelectedInactive',
         savedAt: new Date().toISOString(),
         priceMode,
         ...(bonus > 0 ? { bonus } : {}),
+        ...(deal && deal.quantity > 1 ? { quantity: deal.quantity } : {}),
+        ...(deal?.negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(deal.negotiatedGp) }),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
         return null;
       }
-      props.onDetailRefreshed({
-        summary: outcome.summary,
-        snapshot: outcome.snapshot,
-        diagnostics: [],
-        corpusDerived: outcome.corpusDerived,
-        // The mutation did not touch racial traits, so the character's
-        // existing choices carry through unchanged rather than being reset.
-        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
-        // Nor character traits (AT-34-E4-002) — same carry-forward reasoning.
-        selectedTraits: props.detail?.selectedTraits ?? [],
-        selectedFeats: props.detail?.selectedFeats ?? [],
-        spellsSelected: props.detail?.spellsSelected ?? [],
-        chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
-        // `purchase_equipment` returns no engine records; the Weapons tab
-        // reads them from `engineRecords`, re-read immediately below.
-        explanations: [],
-        weaponDamage: [],
-        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
-        resolvedRacialTraits: null,
-        // Nor the sheet-rule lines (SD-35 AT-35-E2-002): a purchase changes
-        // what the character holds; absent until re-read, never stale.
-        sheetLines: [],
-        sheetRulesUnavailableReason: null,
-        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
-      });
       setMoney(outcome.money);
-      // Buying a weapon is exactly what makes a new Weapons row appear.
-      await refreshAfterPurchase();
+      // The outcome carries no sets, container loads, overrides or campaigns, and weighs a stack as one bundle.
+      await republishFromDisk();
       return { money: outcome.money, activeState: outcome.activeState, carriedReason: outcome.carriedReason };
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -3273,33 +3308,9 @@ export function CharacterSheet(props: {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
         return;
       }
-      props.onDetailRefreshed({
-        summary: outcome.summary,
-        snapshot: outcome.snapshot,
-        diagnostics: [],
-        corpusDerived: outcome.corpusDerived,
-        // The mutation did not touch racial traits, so the character's
-        // existing choices carry through unchanged rather than being reset.
-        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
-        // Nor character traits (AT-34-E4-002) — same carry-forward reasoning.
-        selectedTraits: props.detail?.selectedTraits ?? [],
-        selectedFeats: props.detail?.selectedFeats ?? [],
-        spellsSelected: props.detail?.spellsSelected ?? [],
-        chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
-        // See `handleAddEquipment` — no engine records on this response.
-        explanations: [],
-        weaponDamage: [],
-        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
-        resolvedRacialTraits: null,
-        // Nor the sheet-rule lines (SD-35 AT-35-E2-002): a purchase changes
-        // what the character holds; absent until re-read, never stale.
-        sheetLines: [],
-        sheetRulesUnavailableReason: null,
-        featSkillBonuses: NO_FEAT_SKILL_BONUSES,
-      });
       setMoney(outcome.money);
-      // Attaching a +1 enhancement changes that weapon's Enh. columns.
-      await refreshAfterPurchase();
+      // Attaching a +1 enhancement changes that weapon's Enh. columns; re-read as a buy does.
+      await republishFromDisk();
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
@@ -3519,11 +3530,12 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * The shared tail of all three removals: re-read the character straight
-   * off disk and publish that.
+   * The shared tail of the removals, the Market's buys, a modifier attach,
+   * an override toggle and the gear screen's writes: re-read the character
+   * straight off disk and publish that.
    *
-   * Deliberately NOT the optimistic list-patching the add paths use. An add
-   * knows exactly what it appended, so mirroring it locally is faithful; a
+   * Deliberately NOT a detail rebuilt from a mutation's outcome, which lacks
+   * the sets, container loads and campaigns the load carries. A
    * removal's consequences are not local — dropping a weapon changes the
    * Weapons table, the encumbrance totals and the AC-by-source rows, and
    * removing a feat can move max HP, weapon damage and class-feature
@@ -3532,18 +3544,6 @@ export function CharacterSheet(props: {
    * and it is the same read a reload of the app would do — which is exactly
    * the property a removal has to survive.
    */
-  /**
-   * A purchase's response carries the engine's snapshot with no worn custom item on it, so with one
-   * worn the tiles must come from the load, or a buy would take its bonus off them.
-   */
-  async function refreshAfterPurchase() {
-    if (custom.equipment.some((record) => record.worn)) {
-      await republishFromDisk();
-    } else {
-      await refreshEngineRecords();
-    }
-  }
-
   async function republishFromDisk() {
     const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
     props.onDetailRefreshed(loaded);
@@ -3647,29 +3647,44 @@ export function CharacterSheet(props: {
   }
 
   /**
-   * Moves one owned copy between worn, carried and left behind. Unlike `handleRemoveEquipment` this does not drop the item or
-   * its modifiers. Resolves to the refusal for the Equipment control to show, word for word, or null
-   * when the change saved.
+   * The gear screen's writes (a move, Drop, Discard, a set change): runs one with its `savedAt`,
+   * re-reads the sheet, and resolves to the refusal, word for word, or null when it saved.
    */
-  async function handleSetEquipmentActiveState(copy: PlacedEquipmentCopyDto, activeState: ActiveStateDto): Promise<string | null> {
+  async function handleGearChange(write: (savedAt: string) => Promise<unknown>): Promise<string | null> {
     try {
-      const outcome = await setEquipmentActiveState({
+      const outcome = (await write(new Date().toISOString())) as CreateCharacterOutcome | { kind?: undefined };
+      if (outcome.kind === 'Blocked') {
+        return blockedMessageFromDiagnostics(outcome.diagnostics);
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+      // The Custom tab and dialog read a custom record's `worn`; a stale one would save it back.
+      setCustom(await loadCharacterCustom(props.row.characterId));
+      return null;
+    } catch (cause: unknown) {
+      return cause instanceof Error ? cause.message : String(cause);
+    }
+  }
+
+  /** The gear screen's Sell: pieces of a stack at the pricing above, or the negotiated total (`decisions.md §26–§28`). */
+  async function handleGearSell(held: PlacedEquipmentCopyDto, quantity?: number, negotiatedGp?: number): Promise<string | null> {
+    try {
+      const outcome = await removeEquipmentSelection({
         characterId: props.row.characterId,
-        itemId: copy.itemId,
-        bonus: copy.bonus,
-        fromState: copy.activeState,
-        activeState,
+        itemId: held.itemId,
         savedAt: new Date().toISOString(),
+        priceMode,
+        bonus: held.bonus,
+        fromState: held.activeState,
+        ...(quantity === undefined ? {} : { quantity }),
+        ...(negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(negotiatedGp) }),
       });
       if (outcome.kind === 'Blocked') {
         return blockedMessageFromDiagnostics(outcome.diagnostics);
       }
       await republishFromDisk();
       await refreshEngineRecords();
-      // The Custom tab and dialog read the record's `worn`; a stale one would save it back.
-      if (copy.itemId.startsWith('custom:')) {
-        setCustom(await loadCharacterCustom(props.row.characterId));
-      }
+      setMoney(await loadCharacterMoney(props.row.characterId));
       return null;
     } catch (cause: unknown) {
       return cause instanceof Error ? cause.message : String(cause);
@@ -3703,7 +3718,7 @@ export function CharacterSheet(props: {
    * is reloaded afterwards because a sale can change it. `bonus` names the copy when there are
    * several. Resolves to the new balance, or null when nothing was sold and `mutationError` says why.
    */
-  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto): Promise<CharacterMoneyDto | null> {
+  async function handleRemoveEquipment(itemId: string, bonus?: number, fromState?: ActiveStateDto, deal?: MarketDeal): Promise<CharacterMoneyDto | null> {
     setMutationError(null);
     try {
       const outcome = await removeEquipmentSelection({
@@ -3713,6 +3728,8 @@ export function CharacterSheet(props: {
         priceMode,
         ...(bonus === undefined ? {} : { bonus }),
         ...(fromState === undefined ? {} : { fromState }),
+        ...(deal === undefined ? {} : { quantity: deal.quantity }),
+        ...(deal?.negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(deal.negotiatedGp) }),
       });
       if (outcome.kind === 'Blocked') {
         setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
@@ -3730,28 +3747,89 @@ export function CharacterSheet(props: {
     }
   }
 
+  /** The Weapons tab's Drop: that copy to Not Carried in the active set, kept, no money (`decisions.md §27`). */
+  async function handleDropWeapon(drop: NonNullable<WeaponRow['drop']>) {
+    setMutationError(null);
+    try {
+      const outcome = await setEquipmentActiveState({ characterId: props.row.characterId, ...drop, savedAt: new Date().toISOString() });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
   /** A Market buy, and what to tell the player about it. */
-  async function handleMarketBuy(row: MarketRow, bonus: number): Promise<string | null> {
+  async function handleMarketBuy(row: MarketRow, bonus: number, deal?: MarketDeal): Promise<string | null> {
     const before = money.totalCopper;
-    const bought = await handleAddEquipment(row.key, bonus);
+    const bought = await handleAddEquipment(row.key, bonus, deal);
     if (!bought) {
       return null;
     }
-    const name = bonus > 0 ? (row.variants.find((variant) => variant.bonus === bonus)?.name ?? row.name) : row.name;
+    const one = bonus > 0 ? (row.variants.find((variant) => variant.bonus === bonus)?.name ?? row.name) : row.name;
+    const name = deal && deal.quantity > 1 ? `${deal.quantity} × ${one}` : one;
     const paid = marketMoneyMoved(before, bought.money.totalCopper);
     const where = marketPlacementWords(bought.activeState, bought.carriedReason);
     return paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (${where}).` : `Added ${name}; no money moved (${where}).`;
   }
 
   /** A Market sale, and what to tell the player about it. */
-  async function handleMarketSell(copy: HeldEquipmentCopyDto): Promise<string | null> {
+  async function handleMarketSell(copy: MarketHeldCopy, deal?: MarketDeal): Promise<string | null> {
     const before = money.totalCopper;
-    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState);
+    const after = await handleRemoveEquipment(copy.itemId, copy.bonus, copy.activeState, deal);
     if (!after) {
       return null;
     }
+    const name = deal && deal.quantity > 1 ? `${deal.quantity} × ${copy.name}` : copy.name;
     const returned = marketMoneyMoved(before, after.totalCopper);
-    return returned > 0 ? `Sold ${copy.name} for ${formatMarketPrice(returned, MARKET_CURRENCY)}.` : `Removed ${copy.name}; no money moved.`;
+    return returned > 0 ? `Sold ${name} for ${formatMarketPrice(returned, MARKET_CURRENCY)}.` : `Removed ${name}; no money moved.`;
+  }
+
+  /** The Market's Buy Custom (`decisions.md §24`): the rules price it, or the negotiated total; copies land Carried. */
+  async function handleMarketBuyCustom(build: CustomEquipmentBuild, quantity: number, negotiatedGp?: number): Promise<MarketOutcome> {
+    const before = money.totalCopper;
+    try {
+      const outcome = await purchaseCustomEquipment({
+        characterId: props.row.characterId,
+        ...build,
+        quantity,
+        ...(negotiatedGp === undefined ? {} : { negotiatedPriceCopper: gpToCopper(negotiatedGp) }),
+        savedAt: new Date().toISOString(),
+        priceMode,
+      });
+      if (outcome.kind === 'Blocked') {
+        return { error: blockedMessageFromDiagnostics(outcome.diagnostics) };
+      }
+      setMoney(outcome.money);
+      await republishFromDisk();
+      const name = `${quantity > 1 ? `${quantity} × ` : ''}${build.name ?? 'custom item'}`;
+      const paid = marketMoneyMoved(before, outcome.money.totalCopper);
+      return { line: paid > 0 ? `Bought ${name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (carried).` : `Added ${name}; no money moved (carried).` };
+    } catch (cause: unknown) {
+      return { error: cause instanceof Error ? cause.message : String(cause) };
+    }
+  }
+
+  /** The Market's Create (`decisions.md §25`): a custom record with no corpus base, Carried; a price above 0 is paid. */
+  async function handleMarketCreate(fields: CreateItemFields): Promise<MarketOutcome> {
+    const before = money.totalCopper;
+    try {
+      const outcome = await createCustomItem({ characterId: props.row.characterId, ...fields, savedAt: new Date().toISOString(), priceMode });
+      if (outcome.kind === 'Blocked') {
+        return { error: blockedMessageFromDiagnostics(outcome.diagnostics) };
+      }
+      setMoney(outcome.money);
+      setCustom(outcome.custom);
+      await republishFromDisk();
+      const paid = marketMoneyMoved(before, outcome.money.totalCopper);
+      return { line: paid > 0 ? `Created ${fields.name} for ${formatMarketPrice(paid, MARKET_CURRENCY)} (carried).` : `Created ${fields.name} (carried).` };
+    } catch (cause: unknown) {
+      return { error: cause instanceof Error ? cause.message : String(cause) };
+    }
   }
 
   /**
@@ -3953,7 +4031,8 @@ export function CharacterSheet(props: {
     setCustomError(null);
     try {
       setCustom(await saveCharacterCustom(props.row.characterId, withOverride(custom, key, on), new Date().toISOString()));
-      await refreshEngineRecords();
+      // The detail carries `ignoreContainerCapacity` and the loads it changes, not only the engine records.
+      await republishFromDisk();
     } catch (cause: unknown) {
       setCustomError(`The override was not saved: ${cause instanceof Error ? cause.message : String(cause)}`);
     }
@@ -4391,6 +4470,21 @@ export function CharacterSheet(props: {
               onOpenDialog={() => setSkillDialogOpen(true)}
               custom={custom}
             />
+            {activeCampaigns(campaignMemberships).length > 0 ? (
+              <div className="no-print" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.5rem' }}>
+                {activeCampaigns(campaignMemberships).map((membership) => (
+                  <button
+                    key={membership.campaignId}
+                    type="button"
+                    data-testid={`sheet-campaign-open-${membership.campaignId}`}
+                    onClick={() => props.onOpenCampaign(membership.campaignId)}
+                    style={{ background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, color: 'var(--color-text)', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, padding: '0.3rem 0.7rem' }}
+                  >
+                    Open {membership.campaignName}
+                  </button>
+                ))}
+              </div>
+            ) : null}
           </div>
         );
       case 'abilities':
@@ -4431,7 +4525,7 @@ export function CharacterSheet(props: {
                     onPrint={handlePrint}
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
-                    onRemoveWeapon={(itemId) => void handleRemoveEquipment(itemId)}
+                    onDropWeapon={(drop) => void handleDropWeapon(drop)}
                   />
                 ) : name === 'Defense' ? (
                   <DefenseTab
@@ -4463,14 +4557,17 @@ export function CharacterSheet(props: {
                     priceMode={priceMode}
                     onPriceModeChange={setPriceMode}
                     onAttachModifier={handleAttachModifier}
-                    onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
+                    characterId={props.row.characterId}
                     loadHeldEquipment={() => listHeldEquipment(props.row.characterId)}
                     detail={props.detail}
-                    onSetActiveState={handleSetEquipmentActiveState}
+                    armorClass={ac}
+                    onGearChange={handleGearChange}
+                    onGearSell={handleGearSell}
                     money={money}
                     moneyBusy={moneyBusy}
                     moneyError={moneyError}
                     onAdjustMoney={(gpAmount) => void handleAdjustMoney(gpAmount)}
+                    ignoreSlotLimits={customOverrides(custom).ignoreSlotLimits}
                   />
                 ) : name === 'Feats' ? (
                   <FeatsTab
@@ -4567,7 +4664,19 @@ export function CharacterSheet(props: {
 
         {/* MIDDLE: stat panels on top, weapons/defense/gear at the bottom */}
         <div className="sheet-mid" style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
-          <IdentityPanel name={props.row.displayLabel} campaign={props.row.campaign ?? '—'} />
+          <IdentityPanel name={props.row.displayLabel} campaign={campaignFieldText(campaignMemberships)} onEditCampaigns={() => setCampaignDialogOpen(true)} />
+          {mirrorWarnings.length > 0 ? (
+            <div role="alert" data-testid="sheet-mirror-warnings" className="no-print" style={{ ...panel, alignItems: 'flex-start', backgroundColor: 'var(--color-warn-bg)', border: '1px solid var(--color-warn-border)', color: 'var(--color-warn)', display: 'flex', fontSize: '0.8rem', gap: '0.75rem', justifyContent: 'space-between', padding: '0.5rem 0.75rem' }}>
+              <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                {mirrorWarnings.map((warning) => (
+                  <li key={warning}>Campaign copy failed: {warning}</li>
+                ))}
+              </ul>
+              <button type="button" aria-label="Dismiss" onClick={() => setMirrorWarnings([])} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 700 }}>
+                ×
+              </button>
+            </div>
+          ) : null}
           {/* Under the name, one row: the 2x2 beside the 1x4, which wraps under it when narrow. Placed by SHEET_LAYOUT. */}
           <div style={SHEET_REGION_STYLES.combatRow}>{renderSheetRegion('combatRow')}</div>
 
@@ -4610,6 +4719,18 @@ export function CharacterSheet(props: {
         </div>
       </div>
 
+      {campaignDialogOpen ? (
+        <CampaignMembershipDialog
+          characterId={props.row.characterId}
+          memberships={campaignMemberships}
+          onSaved={(memberships, warnings) => {
+            setCampaignMemberships(memberships);
+            setMirrorWarnings(warnings);
+            setCampaignDialogOpen(false);
+          }}
+          onClose={() => setCampaignDialogOpen(false)}
+        />
+      ) : null}
       {printOpen ? (
         <PrintDialog characterId={props.row.characterId} displayLabel={props.row.displayLabel} onClose={() => setPrintOpen(false)} />
       ) : null}
@@ -4645,7 +4766,7 @@ export function CharacterSheet(props: {
               if (response.typesError) {
                 throw new Error(`Categories unavailable: ${response.typesError}`);
               }
-              return mapMarketEntries(response.entries);
+              return mapMarketTableRows(response.entries);
             })
           }
           currency={MARKET_CURRENCY}
@@ -4653,6 +4774,9 @@ export function CharacterSheet(props: {
           loadInventory={() => listHeldEquipment(props.row.characterId).then(sellableCopies)}
           onBuy={handleMarketBuy}
           onSell={handleMarketSell}
+          takesDeals
+          onBuyCustom={handleMarketBuyCustom}
+          onCreate={handleMarketCreate}
           priceMode={priceMode}
           onPriceModeChange={setPriceMode}
           error={mutationError}

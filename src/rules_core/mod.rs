@@ -8,6 +8,8 @@ pub mod class_feature_pool_catalog;
 pub mod class_seeds;
 pub mod codex_neutral_name;
 pub mod composed_input;
+// SD-41 E1.3: container loads, contents summed recursively against capacity.
+pub mod containers;
 pub mod contract;
 pub mod converted_prose;
 pub mod corpus_loader;

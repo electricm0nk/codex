@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": 0.0,
+    "cost_gp": 5.0,
     "description": "A 20-footlong cord limits the Aklys's range, but allows it to be retrieved as a move equivalent action after it has been thrown.",
     "key": "Aklys",
     "name": "Aklys",

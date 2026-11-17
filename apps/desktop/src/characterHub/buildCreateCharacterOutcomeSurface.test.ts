@@ -66,6 +66,7 @@ function verifiesSavedOutcome() {
   const surface = buildCreateCharacterOutcomeSurface(
     {
       kind: 'Saved',
+      mirrorWarnings: [],
       summary: makeCharacterSummary({ displayLabel: 'Aldric' }),
       snapshot: {
         abilityModifiers: { strength: 3, dexterity: 2, constitution: 2, intelligence: 0, wisdom: 1, charisma: -1 },

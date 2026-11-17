@@ -209,6 +209,11 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
         criticalThreatRange: [19, 20],
         criticalMultiplier: 2,
         featEffects: [],
+        inHand: true,
+        unarmed: false,
+        nonlethal: false,
+        usesAmmunition: false,
+        ammunitionCarried: 0,
       },
     ],
   };

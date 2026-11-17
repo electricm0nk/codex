@@ -6,7 +6,7 @@
     "key": "Banded Mail of Luck",
     "category": "arms_armor",
     "name": "Banded Mail (Base)",
-    "cost_gp": null,
+    "cost_gp": 18900.0,
     "weight_lbs": null,
     "description": "Ten 100-gp gems adorn this +3 banded mail. Once per week, the armor allows its wearer to require that an attack roll made against him be rerolled. He must take whatever consequences come from the second roll. The wearer's player must decide whether to have the attack roll rerolled before damage is rolled."
   },

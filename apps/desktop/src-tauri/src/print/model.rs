@@ -140,24 +140,24 @@ pub enum Look {
     Attack,
     /// The three saves, each its total, three to a line (E2.20).
     Saves,
-    /// The land speed box.
+    /// The speed boxes, a 2×2 grid: Land and Fly over Swim and Climb (SD-41 `decisions.md §34` (6)).
     Speed,
-    /// The skills in two narrow columns: the class-skill box, the name with its armor-check mark,
-    /// the total, the key ability, the ranks and the misc write-in.
+    /// The skills as one table, a line per skill with its total, alternate lines shaded (SD-41
+    /// `decisions.md §34` (4)).
     Skills,
-    /// The weapons table: a line per weapon in hand (attack, damage dice, Str, enhancement, damage
-    /// bonus, threat, critical, wield), two blank lines and the ammunition write-in.
+    /// The weapons table: a line per engine weapon row (attack, damage, critical, range), ammunition
+    /// tick boxes under a weapon that fires it; no blank line (SD-41 `decisions.md §34` (5)).
     Weapons,
-    /// The portrait box (SD-40 E2.5): the saved portrait scaled into a frame, or the empty frame,
-    /// with its small "Portrait" caption.
+    /// The portrait box (SD-40 E2.5): the saved portrait, else the game system's logo, scaled into
+    /// a frame with no caption (SD-41 E4.4).
     Portrait,
     /// The Character Name and Campaign fields (the screen's IdentityPanel): each label over its
     /// value, a write-in line where there is none.
     NameCampaign,
     /// The languages (SD-40 E2.13): the known list as one comma list, then one blank write-in line.
     Languages,
-    /// The Conditional Bonuses box (SD-40 E2.20): an outlined box of fixed height, a ruled line per
-    /// conditional, then blank write-in lines to its foot.
+    /// The Conditional Bonuses box (SD-40 E2.20): an outlined box of fixed height, a line per
+    /// conditional, then empty room to its foot, no ruled line (SD-41 `decisions.md §34` (3)).
     ConditionalBonuses,
     /// The Resistances block (SD-40 E2.22): five energy boxes, Damage Reduction, Spell Resistance and
     /// Immunities, each empty when the character has none.
@@ -176,8 +176,9 @@ pub enum Look {
     /// The armor and shield table (SD-40 E3.2): a line per worn piece under its captions, one blank
     /// row, then the worn totals.
     Defense,
-    /// The Gear (SD-40 E3.2): Worn, Carried and Left behind, each its items and two blank rows, then
-    /// the carried weight, the load and the three limits.
+    /// The Gear (SD-40 E3.2; SD-41 E4.1): Worn, Carried and Not Carried, each its items (a
+    /// container's contents nested under it) and two blank rows, then the carried weight, the load
+    /// and the three limits.
     Gear,
     /// The Money (SD-40 E3.2): four coin boxes (PP, GP, SP, CP) and a four-line write-in ledger.
     Money,

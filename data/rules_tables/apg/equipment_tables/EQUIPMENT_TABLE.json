@@ -621,7 +621,7 @@
       "key": "Formula Book",
       "category": "General",
       "name": "Formula Book",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight": null,
       "description": null
     },
@@ -1197,7 +1197,7 @@
       "key": "Beaststrike Club",
       "category": "ArmsArmor",
       "name": "Beaststrike Club",
-      "cost_gp": 0.0,
+      "cost_gp": 2300.0,
       "weight": 3.0,
       "description": "A +1 club that a wild shape user can expend a daily use to transform into a natural weapon form (bite, claw, gore, slam, sting, or talon), counting as both a natural and a manufactured weapon."
     },
@@ -1365,7 +1365,7 @@
       "key": "Hammer of Thunderbolts",
       "category": "MagicItems",
       "name": "Hammer of Thunderbolts",
-      "cost_gp": 0.0,
+      "cost_gp": 32300.0,
       "weight": 15.0,
       "description": "A +3 Large returning warhammer; when wielded alongside a belt of giant strength by someone who knows its true nature, it becomes a +5 giant-bane thundering hammer with a thunderclap ability."
     },
@@ -1421,7 +1421,7 @@
       "key": "Fork of the Forgotten One",
       "category": "MagicItems",
       "name": "Fork of the Forgotten One",
-      "cost_gp": 0.0,
+      "cost_gp": 200300.0,
       "weight": 12.0,
       "description": "A magical ranseur that once belonged to an archdevil, granting bonuses to Diplomacy and Intimidate checks and a scorching ray ability; any nonevil creature that touches it must become lawful evil immediately or die."
     },

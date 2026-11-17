@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 25.0,
     "description": "Aura grants +2 or higher deflection bonus.",
     "key": "Scroll of Shield of Faith",
     "name": "Scroll",

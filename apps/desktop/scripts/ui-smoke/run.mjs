@@ -34,6 +34,7 @@ import {
   characterIds,
   cleanupCreatedCharacters,
   createIsolatedDataRoot,
+  expandRunPaths,
   fingerprintStore,
   isolatedXdg,
   launchEnv,
@@ -273,10 +274,10 @@ class TargetNotFoundError extends Error {
  * a late-acknowledged `click Load` had already opened the sheet, and every
  * re-send then failed on the vanished button).
  */
-function clickByNameChannel(name, index) {
+function clickByNameChannel(name, index, by) {
   // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
   // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
-  const result = sendUntilOk(cmdPath, probePath, { op: 'click', target: name, index }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
+  const result = sendUntilOk(cmdPath, probePath, { op: 'click', target: name, index, ...(by ? { by } : {}) }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new TargetNotFoundError(`${name}${result.error ? ` (${result.error})` : ''}`);
   }
@@ -324,8 +325,10 @@ function clickByNameXdotool(name) {
   }
 }
 
-function clickByName(name, index) {
-  return USE_XDOTOOL ? clickByNameXdotool(name) : clickByNameChannel(name, index);
+// `by: 'label'` matches the aria-label or the enclosing <label> (uiProbe.ts's labelOf), the
+// channel only: xdotool reads the probe's names.
+function clickByName(name, index, by) {
+  return USE_XDOTOOL && !by ? clickByNameXdotool(name) : clickByNameChannel(name, index, by);
 }
 
 /**
@@ -366,10 +369,10 @@ function typeText(text) {
  * `--xdotool` fallback: this op did not exist before, so there is no prior
  * xdotool-based behavior to preserve parity with.
  */
-function selectByName(target, text, index) {
+function selectByName(target, text, index, by) {
   // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
   // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
-  const result = sendUntilOk(cmdPath, probePath, { op: 'select', target, text, ...(index === undefined ? {} : { index }) }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
+  const result = sendUntilOk(cmdPath, probePath, { op: 'select', target, text, ...(index === undefined ? {} : { index }), ...(by ? { by } : {}) }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new TargetNotFoundError(`${target}${result.error ? ` (${result.error})` : ''}`);
   }
@@ -470,13 +473,13 @@ function runStep(step) {
       chooseInNativeFileDialog(step.text);
       break;
     case 'click':
-      clickByName(step.target, step.index);
+      clickByName(step.target, step.index, step.by);
       break;
     case 'type':
-      typeText(step.text);
+      typeText(expandRunPaths(step.text, isolatedAppDataDir && dirname(isolatedAppDataDir)));
       break;
     case 'select':
-      selectByName(step.target, step.text, step.index);
+      selectByName(step.target, step.text, step.index, step.by);
       break;
     case 'key':
       pressKey(step.key);

@@ -603,11 +603,13 @@ fn every_catalog_table_view_and_lookup_matches_its_golden_digest() {
     let expected = manifest();
     assert_eq!(expected.len(), 423 + 6, "golden_digests.txt rows");
     let actual = digests(transcripts!(cat));
-    let differing: Vec<&str> = expected
+    // Each moved transcript as its new `golden_digests.txt` line, so a deliberate data change
+    // (a converter re-run, SD-41 E1.9) re-pins exactly the ids it moved.
+    let differing: Vec<String> = expected
         .iter()
         .zip(&actual)
         .filter(|(e, a)| e != a)
-        .map(|(e, _)| e.0.as_str())
+        .map(|(_, a)| format!("{}  {}", a.1, a.0))
         .collect();
     assert_eq!(expected.len(), actual.len());
     assert!(differing.is_empty(), "transcripts whose digest moved: {differing:#?}");

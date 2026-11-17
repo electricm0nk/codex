@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "A ghostly hand shaped from your life force materializes and moves as you desire, allowing you to deliver low-level, touch range spells at a distance.",
     "key": "Wand of Spectral Hand",
     "name": "Wand",

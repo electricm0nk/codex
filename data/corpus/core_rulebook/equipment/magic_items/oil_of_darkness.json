@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 300.0,
     "description": "Object radiates darkness out to a 20-foot radius for 3 minutes.",
     "key": "Oil of Darkness",
     "name": "Potion",

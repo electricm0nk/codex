@@ -6,7 +6,7 @@
     "key": "Sunlord's Feather",
     "category": "ArmsArmor",
     "name": "Sunlord's Feather",
-    "cost_gp": null,
+    "cost_gp": 1100.05,
     "weight_lbs": null,
     "description": "When the arrow strikes an evil-aligned creature, it summons a swarm of celestial doves (treat as a celestial bat swarm; Bestiary 294, 30) that continues to attack the arrow's target for 10 rounds."
   },

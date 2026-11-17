@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "Turn up to 50 projectiles into fiery projectiles. Duration 30 minutes.",
     "key": "Oil of Flame Arrow",
     "name": "Potion",

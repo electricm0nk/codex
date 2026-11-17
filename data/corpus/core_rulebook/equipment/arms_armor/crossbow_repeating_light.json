@@ -6,7 +6,7 @@
     "key": "Crossbow (Repeating Light)",
     "category": "arms_armor",
     "name": "Repeating Light Crossbow (Base)",
-    "cost_gp": null,
+    "cost_gp": 250.0,
     "weight_lbs": null,
     "description": "The repeating crossbow (whether heavy or light) holds 5 crossbow bolts. As long as it holds bolts, you can reload it by pulling the reloading lever (a free action). Loading a new case of 5 bolts is a full-round action that provokes attacks of opportunity.\nYou can fire a repeating crossbow with one hand or fire a repeating crossbow in each hand in the same manner as you would a normal crossbow of the same size. However, you must fire the weapon with two hands in order to use the reloading lever, and you must use two hands to load a new case of bolts."
   },

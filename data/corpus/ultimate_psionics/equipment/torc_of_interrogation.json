@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 20000.0,
     "description": "take 2d6 nonlethal damage when lying (Will DC 14); cumulative -1 penalty per save attempted",
     "key": "Torc of Interrogation",
     "name": "Torc of Interrogation",

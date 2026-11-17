@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 25.0,
     "description": "Makes one person your friend.",
     "key": "Scroll of Charm Person",
     "name": "Scroll",

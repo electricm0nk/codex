@@ -1,0 +1,1352 @@
+[
+ {
+  "key": "Holy Avenger",
+  "name": "Longsword (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/holy-avenger/",
+  "outcome": "priced",
+  "price_gp": 120630.0
+ },
+ {
+  "key": "Longsword (Cold Iron/Masterwork)",
+  "name": "Longsword (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/longsword-cold-iron-masterwork/",
+  "outcome": "priced",
+  "price_gp": 330.0
+ },
+ {
+  "key": "Shifter's Sorrow",
+  "name": "Two-Bladed Sword (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/shifter-s-sorrow/",
+  "outcome": "priced",
+  "price_gp": 12780.0
+ },
+ {
+  "key": "Dagger (Silver/Masterwork)",
+  "name": "Dagger (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/silver-dagger-masterwork/",
+  "outcome": "priced",
+  "price_gp": 322.0
+ },
+ {
+  "key": "Longbow (Composite +0)",
+  "name": "Composite Longbow (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "priced",
+  "price_gp": 100.0
+ },
+ {
+  "key": "Shortbow (Composite +0)",
+  "name": "Composite Shortbow (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "priced",
+  "price_gp": 75.0
+ },
+ {
+  "key": "Oathbow",
+  "name": "Composite Longbow (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/oathbow/",
+  "outcome": "priced",
+  "price_gp": 25600.0
+ },
+ {
+  "key": "Bomb",
+  "name": "Bomb",
+  "category": "weapon",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price"
+ },
+ {
+  "key": "Fake Rapier",
+  "name": "Fake Rapier",
+  "category": "weapon",
+  "book": "ACG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price"
+ },
+ {
+  "key": "Weapon (Dwarven Boulder)",
+  "name": "Weapon (Dwarven Boulder)",
+  "category": "weapon",
+  "book": "ARG",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "priced",
+  "price_gp": 20.0
+ },
+ {
+  "key": "Amentum (Javelin)",
+  "name": "Amentum (Javelin)",
+  "category": "weapon",
+  "book": "UC",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/amentum/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Seedpod",
+  "name": "Seedpod",
+  "category": "weapon",
+  "book": "UW",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price"
+ },
+ {
+  "key": "Maiden's Panoply",
+  "name": "Maiden's Panoply",
+  "category": "armor",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-armor/specific-magic-armor/maidens-panoply/",
+  "outcome": "priced",
+  "price_gp": 30650.0
+ },
+ {
+  "key": "Darkwood Buckler",
+  "name": "Light Wooden Shield (Base)",
+  "category": "shield",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-armor/specific-magic-shields/darkwood-buckler/",
+  "outcome": "priced",
+  "price_gp": 203.0
+ },
+ {
+  "key": "Darkwood Shield",
+  "name": "Heavy Wooden Shield (Base)",
+  "category": "shield",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-armor/specific-magic-shields/darkwood-shield/",
+  "outcome": "priced",
+  "price_gp": 257.0
+ },
+ {
+  "key": "Padded Barding (Base)",
+  "name": "Padded Armor (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Leather Barding (Base)",
+  "name": "Leather Armor (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Studded Leather Barding (Base)",
+  "name": "Studded Leather (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Chain Shirt Barding (Base)",
+  "name": "Chain Shirt (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Hide Barding (Base)",
+  "name": "Hide Armor (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Scale Mail Barding (Base)",
+  "name": "Scale Mail (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Chainmail Barding (Base)",
+  "name": "Chainmail (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Breastplate Barding (Base)",
+  "name": "Breastplate (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Splint Mail Barding (Base)",
+  "name": "Splint Mail (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Banded Mail Barding (Base)",
+  "name": "Banded Mail (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Half-Plate Barding (Base)",
+  "name": "Half-Plate (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Full Plate Barding (Base)",
+  "name": "Full Plate (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Padded)",
+  "name": "Padded Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Leather)",
+  "name": "Leather Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Studded Leather)",
+  "name": "Studded Leather Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Chain Shirt)",
+  "name": "Chain Shirt Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Hide)",
+  "name": "Hide Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Scale Mail)",
+  "name": "Scale Mail Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Chainmail)",
+  "name": "Chainmail Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Breastplate)",
+  "name": "Breastplate Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Splint Mail)",
+  "name": "Splint Mail Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Banded Mail)",
+  "name": "Banded Mail Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Half-Plate)",
+  "name": "Half-Plate Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Barding (Full Plate)",
+  "name": "Full Plate Barding (Base)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices barding as the armor’s price ×2 (Medium mount) or ×4 (Large); the row names no mount size"
+ },
+ {
+  "key": "Sun Blade (Short)",
+  "name": "Sun Blade (Bastard)",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/sun-blade/",
+  "outcome": "priced",
+  "price_gp": 50335.0
+ },
+ {
+  "key": "Holly and Mistletoe",
+  "name": "Holly and Mistletoe",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/herbs-oils-other-substances/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Holy Symbol",
+  "name": "Holy Symbol",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/toys-games-puzzles/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices a holy symbol by material (wooden 1 gp … platinum 500 gp); the row names none"
+ },
+ {
+  "key": "Unholy Symbol",
+  "name": "Unholy Symbol",
+  "category": "gear",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd prices a holy symbol by material (wooden 1 gp … platinum 500 gp); the row names none"
+ },
+ {
+  "key": "Poison (Black Smear)",
+  "name": "Poison (Black Smear)",
+  "category": "gear",
+  "book": "B1",
+  "candidate_url": "https://www.d20pfsrd.com/magic/all-spells/p/poison/",
+  "outcome": "price-unknown",
+  "reason": "a monster or class-feature item (bestiary gear, a class ability, a test record), not sold; d20pfsrd states no price"
+ },
+ {
+  "key": "Raft",
+  "name": "Raft",
+  "category": "gear",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/furniture-trade-goods-vehicles/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Holy Symbol (Compartment)",
+  "name": "Holy Symbol, Compartment",
+  "category": "gear",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/toys-games-puzzles/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd states only a surcharge (+N gp) over the item it is added to"
+ },
+ {
+  "key": "Holy Symbol (Flask)",
+  "name": "Holy Symbol, Flask",
+  "category": "gear",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/toys-games-puzzles/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd states only a surcharge (+N gp) over the item it is added to"
+ },
+ {
+  "key": "Quarterstaff (Hurricane)",
+  "name": "Quarterstaff (Hurricane)",
+  "category": "gear",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/hurricane-quarterstaff/",
+  "outcome": "priced",
+  "price_gp": 7840.0
+ },
+ {
+  "key": "Quarterstaff of Vaulting",
+  "name": "Quarterstaff of Vaulting",
+  "category": "gear",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/quarterstaff-of-vaulting/",
+  "outcome": "priced",
+  "price_gp": 19100.0
+ },
+ {
+  "key": "Sling (Frostbite)",
+  "name": "Sling, Frostbite",
+  "category": "gear",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/frostbite-sling/",
+  "outcome": "priced",
+  "price_gp": 9380.0
+ },
+ {
+  "key": "Dust Knuckles.FORGET",
+  "name": "Dust Knuckles.FORGET",
+  "category": "gear",
+  "book": "ACG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a PCGen removal directive served as a row, not an item (E2.8 hides it)"
+ },
+ {
+  "key": "False Face.FORGET",
+  "name": "False Face.FORGET",
+  "category": "gear",
+  "book": "ACG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a PCGen removal directive served as a row, not an item (E2.8 hides it)"
+ },
+ {
+  "key": "Shadow Spike",
+  "name": "Shadow Spike",
+  "category": "gear",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/magic-weapons/",
+  "outcome": "priced",
+  "price_gp": 96600.0
+ },
+ {
+  "key": "Spellbreaker",
+  "name": "Spellbreaker",
+  "category": "gear",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/magic-weapons/",
+  "outcome": "priced",
+  "price_gp": 71600.0
+ },
+ {
+  "key": "Quarterstaff of Contemplation",
+  "name": "Quarterstaff of Contemplation",
+  "category": "gear",
+  "book": "ISC",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/magic-weapons/specific-magic-weapons/quarterstaff-of-contemplation/",
+  "outcome": "priced",
+  "price_gp": 34800.0
+ },
+ {
+  "key": "Horsemaster's Saddle (Mount)",
+  "name": "Horsemaster's Saddle (Mount)",
+  "category": "magicItem",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/wondrous-items/h-l/horsemaster-s-saddle/",
+  "outcome": "priced",
+  "price_gp": 12000.0
+ },
+ {
+  "key": "Reverse Capacitor",
+  "name": "Reverse Capacitor",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/equipment/psionic-items/cursed-psionic-items/",
+  "outcome": "price-unknown",
+  "reason": "its d20pfsrd entry states no price"
+ },
+ {
+  "key": "Crown of Chaos",
+  "name": "Crown of Chaos",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Disruptor",
+  "name": "Disruptor",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Dissonance",
+  "name": "Dissonance, Wind of the Mind",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/magic/3rd-party-spells/frog-god-games/dissonance/",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Groundscorn Boots",
+  "name": "Groundscorn Boots of the Twice-Loved",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Helm of the Hydra",
+  "name": "Helm of the Hydra",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Moldev",
+  "name": "Moldev, the Secret Strike",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Severis",
+  "name": "Severis, the Scourge Slayer",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Tempest's Blade",
+  "name": "Tempest's Blade",
+  "category": "magicItem",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Breezeblown Dandelion Flower",
+  "name": "Breezeblown Dandelion Flower",
+  "category": "magicItem",
+  "book": "UW",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Haunted Doll",
+  "name": "Haunted Doll",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Maniac Hand",
+  "name": "Maniac Hand",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Mirror of Soul Snaring",
+  "name": "Mirror of Soul Snaring",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Portal Network",
+  "name": "Portal Network",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Primordial Symbol",
+  "name": "Primordial Symbol",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Soul Portrait",
+  "name": "Soul Portrait",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Stannum Crown",
+  "name": "Stannum Crown",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Thought Record",
+  "name": "Thought Record",
+  "category": "magicItem",
+  "book": "OA",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Bullroarers of Outburst",
+  "name": "Bullroarers of Outburst",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Elemental Chain",
+  "name": "Elemental Chain",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Fleshhook of Mythic Sustenance",
+  "name": "Fleshhook of Mythic Sustenance",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Fortune's Arrow",
+  "name": "Fortune's Arrow",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Glabrezu Claw",
+  "name": "Glabrezu Claw",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Hermetic Flask",
+  "name": "Hermetic Flask",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Ring of Equilibrium",
+  "name": "Ring of Equilibrium",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Rod of Spell Sundering",
+  "name": "Rod of Spell Sundering",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Staff of Eldritch sovereignty",
+  "name": "Staff of Eldritch sovereignty",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Torc of the Heavens",
+  "name": "Torc of the Heavens",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Apocalypse Box",
+  "name": "Apocalypse Box",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Diadem of Nod",
+  "name": "Diadem of Nod",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Emperor's Mammoth",
+  "name": "Emperor's Mammoth",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Frozen Heart of Cocytus",
+  "name": "Frozen Heart of Cocytus",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Netherworld Cauldron",
+  "name": "Netherworld Cauldron",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Nimbus of Radiant Truth",
+  "name": "Nimbus of Radiant Truth",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Plaguebringer",
+  "name": "Plaguebringer",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Shadowwraith Heart",
+  "name": "Shadowwraith Heart",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Silver Maiden",
+  "name": "Silver Maiden",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Tarnhelm",
+  "name": "Tarnhelm",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Trueforge",
+  "name": "Trueforge",
+  "category": "magicItem",
+  "book": "MYTHIC",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/paizo-rules-systems/mythic/mythic-magic-items/artifacts/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Caparison of Resistance +1 (Mount)",
+  "name": "Caparison of Resistance +1 (Mount)",
+  "category": "magicItem",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+  "outcome": "priced",
+  "price_gp": 2700.0
+ },
+ {
+  "key": "Caparison of Resistance +2 (Mount)",
+  "name": "Caparison of Resistance +2 (Mount)",
+  "category": "magicItem",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+  "outcome": "priced",
+  "price_gp": 10800.0
+ },
+ {
+  "key": "Caparison of Resistance +3 (Mount)",
+  "name": "Caparison of Resistance +3 (Mount)",
+  "category": "magicItem",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+  "outcome": "priced",
+  "price_gp": 24300.0
+ },
+ {
+  "key": "Caparison of Resistance +4 (Mount)",
+  "name": "Caparison of Resistance +4 (Mount)",
+  "category": "magicItem",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+  "outcome": "priced",
+  "price_gp": 43200.0
+ },
+ {
+  "key": "Caparison of Resistance +5 (Mount)",
+  "name": "Caparison of Resistance +5 (Mount)",
+  "category": "magicItem",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/wondrous-items/c-d/caparison-of-resistance/",
+  "outcome": "priced",
+  "price_gp": 67500.0
+ },
+ {
+  "key": "Rod (Storm Kindler's)",
+  "name": "Rod (Storm Kindler's)",
+  "category": "magicItem",
+  "book": "AG",
+  "candidate_url": "https://www.d20pfsrd.com/magic-items/artifacts/minor-artifacts/storm-kindlers-rod-minor-artifact/",
+  "outcome": "price-unknown",
+  "reason": "an artifact: d20pfsrd and the book state no price"
+ },
+ {
+  "key": "Demon Armor Claw Attack",
+  "name": "Demon Armor Claw Attack",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a natural attack or part granted by another item; priced with that item, not on its own"
+ },
+ {
+  "key": "Armor Spikes",
+  "name": "Armor Spikes",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/armor/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd states only a surcharge (+N gp) over the item it is added to"
+ },
+ {
+  "key": "Club (Base)",
+  "name": "Club",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Quarterstaff (Base)",
+  "name": "Quarterstaff",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Spiked Armor (Base)",
+  "name": "Spiked Armor",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd's weapon table prices spiked armor as 'special' (the armor's price plus spikes)"
+ },
+ {
+  "key": "Gauntlet (Part of Armor Suit)",
+  "name": "Gauntlet (Base)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "price-unknown",
+  "reason": "a natural attack or part granted by another item; priced with that item, not on its own"
+ },
+ {
+  "key": "Flurry of Blows",
+  "name": "Flurry of Blows",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Shieldbash (Light)",
+  "name": "Shieldbash (Light Shield)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Shieldbash (Heavy)",
+  "name": "Shieldbash (Heavy Shield)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Touch Attack (Ray)",
+  "name": "Touch Attack (Ray Spell)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Unarmed Strike",
+  "name": "Unarmed Strike",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Sling (Base)",
+  "name": "Sling",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Improvised Weapon (1d2)",
+  "name": "Improvised Weapon (1d2)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (1d3)",
+  "name": "Improvised Weapon (1d3)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (1d4)",
+  "name": "Improvised Weapon (1d4)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (1d6)",
+  "name": "Improvised Weapon (1d6)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (1d8)",
+  "name": "Improvised Weapon (1d8)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (1d10)",
+  "name": "Improvised Weapon (1d10)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (1d12)",
+  "name": "Improvised Weapon (1d12)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (2d4)",
+  "name": "Improvised Weapon (2d4)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (2d6)",
+  "name": "Improvised Weapon (2d6)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (2d8)",
+  "name": "Improvised Weapon (2d8)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (2d10)",
+  "name": "Improvised Weapon (2d10)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (1d2)",
+  "name": "Improvised Weapon (Thrown) (1d2)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (1d3)",
+  "name": "Improvised Weapon (Thrown) (1d3)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (1d4)",
+  "name": "Improvised Weapon (Thrown) (1d4)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (1d6)",
+  "name": "Improvised Weapon (Thrown) (1d6)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (1d8)",
+  "name": "Improvised Weapon (Thrown) (1d8)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (1d10)",
+  "name": "Improvised Weapon (Thrown) (1d10)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (1d12)",
+  "name": "Improvised Weapon (Thrown) (1d12)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (2d4)",
+  "name": "Improvised Weapon (Thrown) (2d4)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (2d6)",
+  "name": "Improvised Weapon (Thrown) (2d6)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (2d8)",
+  "name": "Improvised Weapon (Thrown) (2d8)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Thrown) (2d10)",
+  "name": "Improvised Weapon (Thrown) (2d10)",
+  "category": "weapon",
+  "book": "CRB",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Stake (Wood)",
+  "name": "Wooden Stake",
+  "category": "weapon",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Improvised Weapon (One-Handed)",
+  "name": "Improvised Weapon, One-Handed",
+  "category": "weapon",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Improvised Weapon (Two-Handed)",
+  "name": "Improvised Weapon, Two-Handed",
+  "category": "weapon",
+  "book": "APG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Brawler's Flurry",
+  "name": "Brawler's Flurry",
+  "category": "weapon",
+  "book": "ACG",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Aklys",
+  "name": "Aklys",
+  "category": "weapon",
+  "book": "B1",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/",
+  "outcome": "priced",
+  "price_gp": 5.0
+ },
+ {
+  "key": "Mystic Bolts",
+  "name": "Mystic Bolts",
+  "category": "weapon",
+  "book": "UI",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "an attack form or class feature, not a purchasable item; d20pfsrd states no price"
+ },
+ {
+  "key": "Demon Prince Armor Claw Attack",
+  "name": "Demon Prince Armor Claw Attack",
+  "category": "weapon",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a natural attack or part granted by another item; priced with that item, not on its own"
+ },
+ {
+  "key": "Ring of Rat Fangs Bite Attack",
+  "name": "Ring of Rat Fangs Bite Attack",
+  "category": "weapon",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "a natural attack or part granted by another item; priced with that item, not on its own"
+ },
+ {
+  "key": "Amentum",
+  "name": "Amentum",
+  "category": "weapon",
+  "book": "UE",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/amentum/",
+  "outcome": "price-unknown",
+  "reason": "d20pfsrd lists it at '—' (no cost); a price of 0 is not a positive price"
+ },
+ {
+  "key": "Scroll Blade",
+  "name": "Scroll Blade",
+  "category": "weapon",
+  "book": "UM",
+  "candidate_url": "https://www.d20pfsrd.com/wp-sitemap.xml",
+  "outcome": "price-unknown",
+  "reason": "no d20pfsrd page names it (sitemap of every page searched by name, and its category pages read)"
+ },
+ {
+  "key": "Astral Suit Ram 1",
+  "name": "Ram",
+  "category": "weapon",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+  "outcome": "price-unknown",
+  "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item"
+ },
+ {
+  "key": "Astral Suit Ram 2",
+  "name": "Ram",
+  "category": "weapon",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+  "outcome": "price-unknown",
+  "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item"
+ },
+ {
+  "key": "Astral Suit Ram 3",
+  "name": "Ram",
+  "category": "weapon",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+  "outcome": "price-unknown",
+  "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item"
+ },
+ {
+  "key": "Astral Suit Ram 4",
+  "name": "Ram",
+  "category": "weapon",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/equipment/goods-and-services/animals-animal-gear/",
+  "outcome": "price-unknown",
+  "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item"
+ },
+ {
+  "key": "Mind Blade (Light Bludgeoning)",
+  "name": "Mind Blade, Light Bludgeoning",
+  "category": "weapon",
+  "book": "UPSI",
+  "candidate_url": "https://www.d20pfsrd.com/alternative-rule-systems/3rd-party-rules-systems/psionics-unleashed/feats/mind-blade-knight/",
+  "outcome": "price-unknown",
+  "reason": "a psionic class-feature construct (soulknife mind blade, aegis astral suit) or a power, not a purchasable item"
+ }
+]

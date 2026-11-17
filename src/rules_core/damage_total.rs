@@ -119,8 +119,8 @@
 //! records by `equipment_record`'s own
 //! `every_live_corpus_equipment_record_carries_the_same_weapon_values_the_token_reads_produced`.
 
-use crate::rules_core::character_input::{ActiveState, CharacterInput};
-use crate::rules_core::equipment_effects::{attached_weapon_enhancement, is_natural_attack_weapon, EquipmentEffects};
+use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
+use crate::rules_core::equipment_effects::{attached_weapon_enhancement, is_natural_attack_weapon, stand_in_record, EquipmentEffects};
 use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::equipment_resolver::{
     equipment_converted_resolve, equipment_id_resolve,
@@ -131,6 +131,7 @@ use crate::rules_core::rules_catalog::crb::feats::{feat_tables, EffectSelection,
 use crate::rules_core::rules_catalog::RuleSetId;
 use crate::rules_core::sheet_rule::{slug, ProseFamily, ProsePiece, SheetRulePackage};
 use crate::rules_core::source_content::SourcePackageContent;
+use crate::saved_character::equipment_sets::{copy_keys, CopyKey};
 
 /// A PF1 dice expression, e.g. `"1d8"` -> `{ count: 1, die_size: 8 }`,
 /// `"2d6"` -> `{ count: 2, die_size: 6 }`. `count` dice, each with
@@ -253,6 +254,42 @@ pub fn step_single_die(base: DiceExpression, steps: i32) -> Option<DiceExpressio
     SINGLE_DIE_STEP_TABLE
         .get(new_idx as usize)
         .map(|&die_size| DiceExpression { count: 1, die_size })
+}
+
+/// A Medium weapon's damage die as a copy made for a `size` wielder rolls it (SD-41 E2.12): one
+/// size up or down the PF1 Core Rulebook's weapon-size progression (Table 6-5, "Tiny and Large
+/// Weapon Damage", and the weapon tables' Small column). `Medium` is the die itself. `None` for
+/// a die the progression does not list, one that steps below a die (a Small `1d2` deals `1`),
+/// and any size but Small, Medium and Large -- never a guessed die.
+// shortcut: one step only (Small, Large); a Tiny or Huge copy needs the multi-step progression.
+pub fn weapon_damage_for_size(medium: DiceExpression, size: crate::rules_core::size::SizeCategory) -> Option<DiceExpression> {
+    use crate::rules_core::size::SizeCategory;
+    // (Medium, Small, Large), each as (count, die).
+    type Die = (u8, u8);
+    const PROGRESSION: [(Die, Option<Die>, Die); 12] = [
+        ((1, 2), None, (1, 3)),
+        ((1, 3), Some((1, 2)), (1, 4)),
+        ((1, 4), Some((1, 3)), (1, 6)),
+        ((1, 6), Some((1, 4)), (1, 8)),
+        ((1, 8), Some((1, 6)), (2, 6)),
+        ((1, 10), Some((1, 8)), (2, 8)),
+        ((1, 12), Some((1, 10)), (3, 6)),
+        ((2, 4), Some((1, 6)), (2, 6)),
+        ((2, 6), Some((1, 10)), (3, 6)),
+        ((2, 8), Some((2, 6)), (3, 8)),
+        ((2, 10), Some((2, 8)), (4, 8)),
+        ((3, 6), Some((2, 6)), (4, 6)),
+    ];
+    let dice = |(count, die_size): Die| DiceExpression { count, die_size };
+    if size == SizeCategory::Medium {
+        return Some(medium);
+    }
+    let (_, small, large) = PROGRESSION.iter().find(|(m, _, _)| *m == (medium.count, medium.die_size))?;
+    match size {
+        SizeCategory::Small => small.map(dice),
+        SizeCategory::Large => Some(dice(*large)),
+        _ => None,
+    }
 }
 
 /// Resolves a weapon's real base damage die (`resolve_base_damage_dice`)
@@ -776,7 +813,26 @@ pub struct WeaponDamageBreakdown {
     pub critical_threat_range: Option<DamageRollCriticalThreatRange>,
     pub critical_multiplier: Option<DamageRollCriticalMultiplier>,
     pub feat_effects: Vec<DamageRollFeatEffect>,
+    /// `false` for a carried (`SelectedInactive`) weapon, which only
+    /// [`resolve_weapon_damage_breakdown_with_carried`] returns.
+    pub in_hand: bool,
+    /// `true` for the one Unarmed row the carried view ends with ([`unarmed_strike_row`]).
+    pub unarmed: bool,
+    /// The strike deals nonlethal damage: the Unarmed row of a character without Improved
+    /// Unarmed Strike.
+    pub nonlethal: bool,
+    /// The weapon fires ammunition (its record, or the record standing in for it, is a `Projectile`).
+    pub uses_ammunition: bool,
+    /// Pieces of carried ammunition this weapon fires ([`ammunition_carried`]); 0 when it uses none.
+    pub ammunition_carried: u32,
+    /// The ammunition family the weapon's record names (`Arrow`), for the tab's "Arrow: 20 carried";
+    /// `None` for a weapon that names none or uses no ammunition.
+    pub ammunition_family: Option<String>,
 }
+
+/// The corpus record every character's Unarmed row is built from (Core Rulebook
+/// `Unarmed Strike`, `arms_armor/unarmed_strike.json`).
+pub const UNARMED_STRIKE_ITEM_ID: &str = "item:unarmed_strike";
 
 /// The wiring project's Cycle 5a aggregator: loops `character`'s equipped
 /// items, identifies which of them are weapons, and assembles a full
@@ -806,6 +862,135 @@ pub fn resolve_weapon_damage_breakdown(
     equipment_effects: &EquipmentEffects,
     str_modifier: i16,
 ) -> Vec<WeaponDamageBreakdown> {
+    weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive, &[], &[])
+}
+
+/// SD-41 E1.4: the in-hand rows of [`resolve_weapon_damage_breakdown`] (unchanged, first), then
+/// one row per carried (`SelectedInactive`) weapon with `in_hand: false`, resolved with the same
+/// arithmetic as a weapon in the main hand (a carried `+N` reaches it through its own selection's
+/// `attached` bonus, since `equipment_effects` holds in-hand items only). `Absent` weapons have no row.
+/// `quantities` are the pieces per copy the equipment-sets file states (E1.6, `decisions.md §30`);
+/// a copy it does not name counts one bundle. `sizes` are the copies made for another size than
+/// Medium (E2.12): each rolls [`weapon_damage_for_size`]'s die.
+pub fn resolve_weapon_damage_breakdown_with_carried(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+    str_modifier: i16,
+    quantities: &[(CopyKey, u32)],
+    sizes: &[(CopyKey, crate::rules_core::size::SizeCategory)],
+) -> Vec<WeaponDamageBreakdown> {
+    let mut rows = weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::EquippedActive, quantities, sizes);
+    rows.extend(weapon_rows(character, corpus, equipment_effects, str_modifier, ActiveState::SelectedInactive, quantities, sizes));
+    rows.extend(unarmed_strike_row(character, corpus, equipment_effects, str_modifier));
+    rows
+}
+
+/// SD-41 E1.5 (`decisions.md §22`): the Unarmed row every character has, the carried view's last.
+/// The record's own die, critical and `WIELD:` (`Light`, so full Strength); one size step down for a
+/// Small character (`1d3` -> `1d2`); the monk's die by level and size when the character has monk
+/// levels ([`monk_unarmed_strike_damage_die_for_size`], the table the Core Rulebook and Unchained
+/// Monk paths both read). Only natural-attack enhancements reach it (an Amulet of Mighty Fists), never
+/// a held weapon's `+N`. Nonlethal unless the character holds Improved Unarmed Strike.
+/// `None` only when the corpus lacks the record.
+fn unarmed_strike_row(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+    str_modifier: i16,
+) -> Option<WeaponDamageBreakdown> {
+    use crate::rules_core::pilot_compute::{holds_improved_unarmed_strike, monk_unarmed_strike_damage_die_for_size, unarmed_strike_monk_level};
+    use crate::rules_core::race_resolver::race_size_for_race_token;
+    use crate::rules_core::size::SizeCategory;
+    let mut base_dice = resolve_base_damage_dice(UNARMED_STRIKE_ITEM_ID, corpus)?;
+    let size = race_size_for_race_token(&character.chosen.race_id);
+    let monk_level = unarmed_strike_monk_level(character);
+    // shortcut: only the Small and Medium columns are modelled (every playable race); another size has no die.
+    let die = match (monk_level, size) {
+        (1.., Some(size)) => monk_unarmed_strike_damage_die_for_size(monk_level, size)
+            .map(|(face, count, _)| DiceExpression { count: count as u8, die_size: face as u8 }),
+        (0, Some(SizeCategory::Medium)) => Some(base_dice.base_dice),
+        (0, Some(SizeCategory::Small)) => step_single_die(base_dice.base_dice, -1),
+        _ => None,
+    };
+    let weapon_enhancement = resolve_weapon_enhancement_modifier(UNARMED_STRIKE_ITEM_ID, corpus, equipment_effects).map(|mut part| {
+        let natural = || equipment_effects.per_item.iter().filter_map(|item| item.weapon_enhancement_bonus.as_ref()).filter(|bonus| bonus.natural_attack_only);
+        part.attack_bonus = natural().filter_map(|bonus| bonus.tohit_bonus).sum();
+        part.damage_bonus = natural().filter_map(|bonus| bonus.damage_bonus).sum();
+        part
+    });
+    Some(WeaponDamageBreakdown {
+        weapon_item_id: UNARMED_STRIKE_ITEM_ID.to_owned(),
+        base_dice: die.map(|die| {
+            base_dice.base_dice = die;
+            base_dice
+        }),
+        str_modifier: resolve_str_damage_modifier(UNARMED_STRIKE_ITEM_ID, corpus, str_modifier, WeaponHandSlot::Primary),
+        weapon_enhancement,
+        critical_threat_range: resolve_critical_threat_range(UNARMED_STRIKE_ITEM_ID, corpus),
+        critical_multiplier: resolve_critical_multiplier(UNARMED_STRIKE_ITEM_ID, corpus),
+        feat_effects: character.chosen.selected_feats.iter().filter_map(|feat| resolve_feat_damage_effect(feat)).collect(),
+        in_hand: true,
+        unarmed: true,
+        nonlethal: !holds_improved_unarmed_strike(character),
+        uses_ammunition: false,
+        ammunition_carried: 0,
+        ammunition_family: None,
+    })
+}
+
+/// SD-41 E1.6 (`decisions.md §23, §30`): the pieces of ammunition `character` carries for a weapon
+/// of `family` (`None`: any ammunition fits): over the `EquippedActive` and `SelectedInactive`
+/// copies whose record (or its stand-in) is ammunition of that family, each copy's quantity from
+/// `quantities`, else its record's `base_quantity()` (one bundle).
+pub fn ammunition_carried(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    family: Option<&str>,
+    quantities: &[(CopyKey, u32)],
+) -> u32 {
+    let selections = &character.chosen.equipment_selections;
+    let keys = copy_keys(selections.iter().map(|selection| (selection.item_id.as_str(), copy_bonus(selection))));
+    selections
+        .iter()
+        .zip(keys)
+        .filter(|(selection, _)| selection.active_state != ActiveState::Absent)
+        .filter_map(|(selection, key)| {
+            let record = equipment_converted_resolve(&selection.item_id, corpus)?;
+            let ammunition = Some(record).filter(|r| r.is_ammunition()).or_else(|| stand_in_record(record, corpus))?;
+            ammunition.is_ammunition_for(family).then(|| {
+                quantities.iter().find(|(copy, _)| *copy == key).map_or_else(
+                    || record.base_quantity.or(ammunition.base_quantity).unwrap_or(1),
+                    |(_, pieces)| *pieces,
+                )
+            })
+        })
+        .sum()
+}
+
+/// A copy's `+N`, as the equipment-sets file keys it: the highest `Special Ability ~ +N ~ …` it holds.
+fn copy_bonus(selection: &EquipmentSelection) -> u8 {
+    use crate::rules_core::body_slots::Enhanceable;
+    (1..=10u8)
+        .filter(|n| {
+            [Enhanceable::Armor, Enhanceable::Shield, Enhanceable::Weapon]
+                .iter()
+                .any(|kind| selection.applied_modifiers.contains(&kind.modifier_key(*n)))
+        })
+        .max()
+        .unwrap_or(0)
+}
+
+/// One breakdown per weapon selection in `state`, in input order.
+fn weapon_rows(
+    character: &CharacterInput,
+    corpus: &SourcePackageContent,
+    equipment_effects: &EquipmentEffects,
+    str_modifier: i16,
+    state: ActiveState,
+    quantities: &[(CopyKey, u32)],
+    sizes: &[(CopyKey, crate::rules_core::size::SizeCategory)],
+) -> Vec<WeaponDamageBreakdown> {
     let feat_effects: Vec<DamageRollFeatEffect> = character
         .chosen
         .selected_feats
@@ -813,18 +998,30 @@ pub fn resolve_weapon_damage_breakdown(
         .filter_map(|feat_key| resolve_feat_damage_effect(feat_key))
         .collect();
 
-    character
-        .chosen
-        .equipment_selections
+    let selections = &character.chosen.equipment_selections;
+    let keys = copy_keys(selections.iter().map(|selection| (selection.item_id.as_str(), copy_bonus(selection))));
+    selections
         .iter()
-        .filter(|selection| selection.active_state == ActiveState::EquippedActive)
-        .filter_map(|selection| {
+        .zip(keys)
+        .filter(|(selection, _)| selection.active_state == state)
+        .filter_map(|(selection, key)| {
             let weapon_item_id = selection.item_id.as_str();
-            let base_dice = resolve_base_damage_dice(weapon_item_id, corpus)?;
+            let mut base_dice = resolve_base_damage_dice(weapon_item_id, corpus)?;
+            let size = sizes.iter().find(|(copy, _)| *copy == key).map(|(_, size)| *size);
+            let base_dice = match size {
+                None => Some(base_dice),
+                Some(size) => weapon_damage_for_size(base_dice.base_dice, size).map(|die| {
+                    base_dice.base_dice = die;
+                    base_dice
+                }),
+            };
+            let ammunition_user = equipment_converted_resolve(weapon_item_id, corpus).and_then(|record| {
+                Some(record).filter(|r| r.uses_ammunition()).or_else(|| stand_in_record(record, corpus).filter(|base| base.uses_ammunition()))
+            });
 
             Some(WeaponDamageBreakdown {
                 weapon_item_id: weapon_item_id.to_string(),
-                base_dice: Some(base_dice),
+                base_dice,
                 str_modifier: resolve_str_damage_modifier(
                     weapon_item_id,
                     corpus,
@@ -851,6 +1048,13 @@ pub fn resolve_weapon_damage_breakdown(
                 critical_threat_range: resolve_critical_threat_range(weapon_item_id, corpus),
                 critical_multiplier: resolve_critical_multiplier(weapon_item_id, corpus),
                 feat_effects: feat_effects.clone(),
+                in_hand: state == ActiveState::EquippedActive,
+                unarmed: false,
+                nonlethal: false,
+                uses_ammunition: ammunition_user.is_some(),
+                ammunition_carried: ammunition_user
+                    .map_or(0, |weapon| ammunition_carried(character, corpus, weapon.ammunition_family(), quantities)),
+                ammunition_family: ammunition_user.and_then(|weapon| weapon.ammunition_family()).map(str::to_owned),
             })
         })
         .collect()
@@ -1255,5 +1459,384 @@ mod weapon_damage_total_tests {
         assert_eq!(weapon_range_increment(package, &corpus, "Dagger (Base)"), Some(10));
         assert_eq!(weapon_range_increment(package, &corpus, "Dagger (Adamantine)"), Some(10));
         assert_eq!(weapon_range_increment(package, &corpus, "Longsword (Base)"), None);
+    }
+}
+
+/// SD-41 E1.4: a carried (`SelectedInactive`) weapon gets a row from the carried view, marked
+/// `in_hand: false`, with the same arithmetic as the weapon held in the main hand; the in-hand
+/// view is unchanged and `Absent` weapons appear in neither.
+#[cfg(test)]
+mod carried_weapon_tests {
+    use super::*;
+    use crate::rules_core::character_input::{load_character_input_fixture, EquipmentSelection};
+    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+    use crate::rules_core::equipment_effects::compute_equipment_effects;
+    use std::path::Path;
+
+    type Resolver = fn(&CharacterInput, &SourcePackageContent, &EquipmentEffects, i16) -> Vec<WeaponDamageBreakdown>;
+
+    fn select(item: &str, state: ActiveState, modifiers: &[&str]) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: state == ActiveState::EquippedActive,
+            active_state: state,
+            applied_modifiers: modifiers.iter().map(|m| (*m).to_owned()).collect(),
+        }
+    }
+
+    /// The callers' shape: equipment effects over the in-hand selections only.
+    fn rows(selections: Vec<EquipmentSelection>, resolve: Resolver) -> Vec<WeaponDamageBreakdown> {
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }]);
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:3\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.selected_feats = vec!["Weapon Specialization".to_owned()];
+        input.chosen.equipment_selections = selections;
+        let held: Vec<EquipmentSelection> = input
+            .chosen
+            .equipment_selections
+            .iter()
+            .filter(|s| s.active_state == ActiveState::EquippedActive)
+            .cloned()
+            .collect();
+        let effects = compute_equipment_effects(&held, &corpus);
+        resolve(&input, &corpus, &effects, 4)
+    }
+
+    const PLUS_ONE: &[&str] = &["Special Ability ~ +1 ~ Weapon"];
+
+    /// A carried `+1` longsword: one weapon row, `in_hand: false`, and every other field equal to the same
+    /// sword held in the main hand (its `+1` reaches it through its own selection).
+    #[test]
+    fn carried_weapon_with_carried_gets_a_row_not_in_hand() {
+        let carried = rows(vec![select("Longsword (Base)", ActiveState::SelectedInactive, PLUS_ONE)], |i, c, e, s| resolve_weapon_damage_breakdown_with_carried(i, c, e, s, &[], &[]));
+        assert_eq!(carried.len(), 2, "the sword, then the Unarmed row (E1.5): {carried:#?}");
+        assert!(!carried[0].in_hand);
+        let enhancement = carried[0].weapon_enhancement.as_ref().expect("a weapon has an enhancement part");
+        assert_eq!((enhancement.attack_bonus, enhancement.damage_bonus), (1, 1));
+
+        let held = rows(vec![select("Longsword (Base)", ActiveState::EquippedActive, PLUS_ONE)], resolve_weapon_damage_breakdown);
+        assert_eq!(held.len(), 1);
+        assert!(held[0].in_hand);
+        assert_eq!(WeaponDamageBreakdown { in_hand: true, ..carried[0].clone() }, held[0], "same arithmetic as in hand");
+    }
+
+    /// A copy made for a Large wielder rolls the Large die (1d8 -> 2d6), a Small one the Small die
+    /// (1d6); a copy with no size rolls the record's. The progression, one step either way.
+    #[test]
+    fn carried_weapon_sized_copy_rolls_its_size_die() {
+        use crate::rules_core::size::SizeCategory;
+        let die = |count, die_size| DiceExpression { count, die_size };
+        assert_eq!(weapon_damage_for_size(die(1, 8), SizeCategory::Large), Some(die(2, 6)));
+        assert_eq!(weapon_damage_for_size(die(1, 8), SizeCategory::Small), Some(die(1, 6)));
+        assert_eq!(weapon_damage_for_size(die(2, 6), SizeCategory::Small), Some(die(1, 10)));
+        assert_eq!(weapon_damage_for_size(die(1, 12), SizeCategory::Large), Some(die(3, 6)));
+        assert_eq!(weapon_damage_for_size(die(1, 8), SizeCategory::Medium), Some(die(1, 8)));
+        assert_eq!(weapon_damage_for_size(die(1, 2), SizeCategory::Small), None, "a Small 1d2 deals 1, not a die");
+        assert_eq!(weapon_damage_for_size(die(1, 8), SizeCategory::Huge), None);
+
+        let swords = || vec![select("Longsword (Base)", ActiveState::SelectedInactive, &[]), select("Longsword (Base)", ActiveState::SelectedInactive, &[])];
+        let dice = |rows: Vec<WeaponDamageBreakdown>| -> Vec<Option<DiceExpression>> {
+            rows.iter().filter(|row| !row.unarmed).map(|row| row.base_dice.as_ref().map(|dice| dice.base_dice)).collect()
+        };
+        let sized = rows(swords(), |i, c, e, s| {
+            let second = CopyKey { item_id: "Longsword (Base)".to_owned(), bonus: 0, ordinal: 1 };
+            resolve_weapon_damage_breakdown_with_carried(i, c, e, s, &[], &[(second, SizeCategory::Large)])
+        });
+        assert_eq!(dice(sized), vec![Some(die(1, 8)), Some(die(2, 6))], "the second copy is the Large one");
+    }
+
+    /// The old entry point keeps its contract: in-hand weapons only, each `in_hand: true`.
+    #[test]
+    fn carried_weapon_old_entry_point_unchanged_in_hand_only() {
+        let old = rows(
+            vec![
+                select("Longsword (Base)", ActiveState::EquippedActive, &[]),
+                select("Dagger (Base)", ActiveState::SelectedInactive, &[]),
+            ],
+            resolve_weapon_damage_breakdown,
+        );
+        assert_eq!(old.iter().map(|row| (row.weapon_item_id.as_str(), row.in_hand)).collect::<Vec<_>>(), [("Longsword (Base)", true)]);
+        assert!(rows(vec![select("Dagger (Base)", ActiveState::SelectedInactive, PLUS_ONE)], resolve_weapon_damage_breakdown).is_empty());
+    }
+
+    /// The carried view lists the in-hand rows first, byte-identical to the old entry point's, then
+    /// the carried rows (input order within each group).
+    #[test]
+    fn carried_weapon_in_hand_rows_identical_between_entry_points() {
+        let loadout = || {
+            vec![
+                select("Dagger (Base)", ActiveState::SelectedInactive, PLUS_ONE),
+                select("Longsword (Base)", ActiveState::EquippedActive, PLUS_ONE),
+                select("Breastplate (Base)", ActiveState::EquippedActive, &[]),
+                select("Heavy Mace (Base)", ActiveState::EquippedActive, &[]),
+            ]
+        };
+        let old = rows(loadout(), resolve_weapon_damage_breakdown);
+        let new = rows(loadout(), |i, c, e, s| resolve_weapon_damage_breakdown_with_carried(i, c, e, s, &[], &[]));
+        assert_eq!(old.len(), 2, "{old:#?}");
+        assert_eq!(new.len(), 4, "the Unarmed row last (E1.5): {new:#?}");
+        assert_eq!(new[..2], old[..]);
+        assert_eq!((new[2].weapon_item_id.as_str(), new[2].in_hand), ("Dagger (Base)", false));
+    }
+
+    /// An `Absent` weapon has no row in either view; a carried non-weapon has none either (the carried view holds only its Unarmed row).
+    #[test]
+    fn carried_weapon_absent_has_no_row_in_either() {
+        let loadout = || {
+            vec![
+                select("Longsword (Base)", ActiveState::Absent, PLUS_ONE),
+                select("Breastplate (Base)", ActiveState::SelectedInactive, &[]),
+            ]
+        };
+        assert!(rows(loadout(), resolve_weapon_damage_breakdown).is_empty());
+        let carried = rows(loadout(), |i, c, e, s| resolve_weapon_damage_breakdown_with_carried(i, c, e, s, &[], &[]));
+        assert!(carried.iter().all(|row| row.unarmed), "only the Unarmed row (E1.5): {carried:#?}");
+    }
+}
+
+/// SD-41 E1.5: the carried view always ends with one Unarmed row, built from the Core Rulebook
+/// `Unarmed Strike` record: `1d3` nonlethal for a Medium character, the record's die one step down
+/// for a Small one, the monk's die when the character has monk levels, lethal with Improved Unarmed
+/// Strike. Its attack and feat damage rows are the per-weapon melee path's over the same record.
+#[cfg(test)]
+mod unarmed_row_tests {
+    use super::*;
+    use crate::rules_core::character_input::{load_character_input_fixture, EquipmentSelection};
+    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+    use crate::rules_core::equipment_effects::compute_equipment_effects;
+    use crate::rules_core::pilot_compute::{compute_pilot_base_chassis, unarmed_strike_combat_rows};
+    use std::path::Path;
+
+    fn input(race: &str, class: &str, feats: &[&str], selections: Vec<EquipmentSelection>) -> CharacterInput {
+        let mut input = load_character_input_fixture(&format!(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:{race}\nclass_level=class:{class}\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n"
+        ))
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.selected_feats = feats.iter().map(|feat| (*feat).to_owned()).collect();
+        input.chosen.equipment_selections = selections;
+        input
+    }
+
+    fn select(item: &str, state: ActiveState, modifiers: &[&str]) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: state == ActiveState::EquippedActive,
+            active_state: state,
+            applied_modifiers: modifiers.iter().map(|m| (*m).to_owned()).collect(),
+        }
+    }
+
+    fn rows(input: &CharacterInput) -> Vec<WeaponDamageBreakdown> {
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }]);
+        let held: Vec<EquipmentSelection> = input
+            .chosen
+            .equipment_selections
+            .iter()
+            .filter(|s| s.active_state == ActiveState::EquippedActive)
+            .cloned()
+            .collect();
+        let effects = compute_equipment_effects(&held, &corpus);
+        resolve_weapon_damage_breakdown_with_carried(input, &corpus, &effects, 4, &[], &[])
+    }
+
+    fn unarmed(input: &CharacterInput) -> WeaponDamageBreakdown {
+        let rows = rows(input);
+        let last = rows.last().expect("the Unarmed row is always there").clone();
+        assert!(last.unarmed && last.in_hand, "{last:#?}");
+        assert_eq!(rows.iter().filter(|row| row.unarmed).count(), 1, "{rows:#?}");
+        last
+    }
+
+    fn dice(row: &WeaponDamageBreakdown) -> Option<(u8, u8)> {
+        row.base_dice.as_ref().map(|dice| (dice.base_dice.count, dice.base_dice.die_size))
+    }
+
+    /// Aldric (Human Fighter 3, Strength 19): a `+1` longsword in hand and a dagger carried, then the
+    /// Unarmed row last: `1d3`, nonlethal, no share of the sword's `+1`; its attack row is base
+    /// attack +3 and Strength +4; its damage total prints `1d3+4`. The old entry point has no
+    /// Unarmed row.
+    #[test]
+    fn unarmed_row_is_last_and_nonlethal_for_aldric() {
+        let aldric = input(
+            "human",
+            "fighter:3",
+            &[],
+            vec![
+                select("Longsword (Base)", ActiveState::EquippedActive, &["Special Ability ~ +1 ~ Weapon"]),
+                select("Dagger (Base)", ActiveState::SelectedInactive, &[]),
+            ],
+        );
+        let all = rows(&aldric);
+        assert_eq!(
+            all.iter().map(|row| (row.weapon_item_id.as_str(), row.in_hand, row.unarmed)).collect::<Vec<_>>(),
+            [("Longsword (Base)", true, false), ("Dagger (Base)", false, false), (UNARMED_STRIKE_ITEM_ID, true, true)]
+        );
+        let fist = unarmed(&aldric);
+        assert!(fist.nonlethal);
+        assert!(!all[0].nonlethal && !all[1].nonlethal);
+        assert_eq!(dice(&fist), Some((1, 3)));
+        assert_eq!(fist.weapon_enhancement.as_ref().map(|part| (part.attack_bonus, part.damage_bonus)), Some((0, 0)));
+
+        let combat = unarmed_strike_combat_rows(&compute_pilot_base_chassis(&aldric), &aldric);
+        let attack = combat.iter().find(|row| row.id == "combat.weapon_attack_bonus.unarmedstrike").expect("an attack row");
+        assert_eq!(attack.value, 7, "{}", attack.detail);
+        let key = fist.base_dice.as_ref().unwrap().weapon_record_key.clone();
+        let feat_row = combat.iter().find(|row| row.id == weapon_feat_damage_row_id(&key)).map(|row| row.value);
+        let total = weapon_damage_total_row(
+            &key,
+            fist.base_dice.as_ref().map(|dice| dice.base_dice),
+            fist.str_modifier.as_ref().map(|part| (part.str_damage_modifier, format!("{:?}", part.wield_category))),
+            fist.weapon_enhancement.as_ref().map(|part| part.damage_bonus),
+            feat_row,
+            &[],
+        )
+        .expect("the Unarmed row has dice");
+        assert_eq!(total.id, "combat.weapon_damage_total.unarmedstrike");
+        assert!(total.detail.starts_with("1d3+4:"), "{}", total.detail);
+
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }]);
+        let effects = compute_equipment_effects(&aldric.chosen.equipment_selections[..1], &corpus);
+        assert!(resolve_weapon_damage_breakdown(&aldric, &corpus, &effects, 4).iter().all(|row| !row.unarmed));
+    }
+
+    /// A Monk reads the monk's die by level (Medium: 1d8 at 4th, 2d6 at 12th) and is lethal
+    /// (the Monk's Improved Unarmed Strike grant).
+    #[test]
+    fn unarmed_row_monk_progression_and_lethal() {
+        let monk4 = unarmed(&input("human", "monk:4", &[], Vec::new()));
+        assert_eq!(dice(&monk4), Some((1, 8)));
+        assert!(!monk4.nonlethal);
+        assert_eq!(dice(&unarmed(&input("human", "monk:12", &[], Vec::new()))), Some((2, 6)));
+    }
+
+    /// A Small character reads the record's die one size step down, `1d2`; a Small monk the
+    /// monk's Small column (1d6 at 4th).
+    #[test]
+    fn unarmed_row_small_character_is_1d2() {
+        let small = unarmed(&input("halfling", "fighter:1", &[], Vec::new()));
+        assert_eq!(dice(&small), Some((1, 2)));
+        assert!(small.nonlethal);
+        assert_eq!(dice(&unarmed(&input("gnome", "monk:4", &[], Vec::new()))), Some((1, 6)));
+    }
+
+    /// Improved Unarmed Strike, chosen, makes the strike lethal and leaves the die; the Unchained
+    /// Monk's grant does too.
+    #[test]
+    fn unarmed_row_improved_unarmed_strike_is_lethal() {
+        let chosen = unarmed(&input("human", "fighter:3", &["Improved Unarmed Strike"], Vec::new()));
+        assert!(!chosen.nonlethal);
+        assert_eq!(dice(&chosen), Some((1, 3)));
+        let unchained = unarmed(&input("human", "unchained_monk:1", &[], Vec::new()));
+        assert!(!unchained.nonlethal);
+        assert_eq!(dice(&unchained), Some((1, 6)));
+    }
+}
+
+/// SD-41 E1.6 (`decisions.md §23, §30`): a weapon uses ammunition when its settled record (or the
+/// record standing in for it) is a `Projectile`; `ammunition_carried` counts the pieces of carried
+/// ammunition of the weapon's `CONTAINS` family, a copy without a quantity counting one bundle.
+#[cfg(test)]
+mod ammunition_tests {
+    use super::*;
+    use crate::rules_core::character_input::{load_character_input_fixture, EquipmentSelection};
+    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+    use crate::rules_core::equipment_effects::compute_equipment_effects;
+    use crate::saved_character::equipment_sets::CopyKey;
+    use std::path::Path;
+
+    const FLIGHT_ARROWS: &str = "Arrows (Flight/20)";
+
+    fn corpus() -> SourcePackageContent<'static> {
+        let books = ["core_rulebook", "advanced_players_guide", "ultimate_equipment"];
+        let dirs: Vec<String> = books.iter().map(|book| format!("data/corpus/{book}")).collect();
+        let roots: Vec<BookCorpusRoot> =
+            books.iter().zip(&dirs).map(|(book, dir)| BookCorpusRoot { book_id: book, dir: Path::new(dir) }).collect();
+        load_equipment_corpus(&roots)
+    }
+
+    fn select(item: &str, state: ActiveState) -> EquipmentSelection {
+        EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: state == ActiveState::EquippedActive,
+            active_state: state,
+            applied_modifiers: Vec::new(),
+        }
+    }
+
+    /// Aldric's chassis (Human Fighter 3, Strength 19) holding `selections`, through the carried view.
+    fn rows(selections: Vec<EquipmentSelection>, quantities: &[(CopyKey, u32)]) -> Vec<WeaponDamageBreakdown> {
+        let corpus = corpus();
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:3\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+        .character_input
+        .expect("the fixture loads");
+        input.chosen.equipment_selections = selections;
+        let held: Vec<EquipmentSelection> =
+            input.chosen.equipment_selections.iter().filter(|s| s.active_state == ActiveState::EquippedActive).cloned().collect();
+        let effects = compute_equipment_effects(&held, &corpus);
+        resolve_weapon_damage_breakdown_with_carried(&input, &corpus, &effects, 4, quantities, &[])
+    }
+
+    fn row<'a>(rows: &'a [WeaponDamageBreakdown], item: &str) -> &'a WeaponDamageBreakdown {
+        rows.iter().find(|row| row.weapon_item_id == item).unwrap_or_else(|| panic!("no row for {item}: {rows:#?}"))
+    }
+
+    /// Longbow, light crossbow, pistol and sling carry the `Projectile` type (the bow and crossbow
+    /// through the base record they copy); a longsword does not.
+    #[test]
+    fn uses_ammunition_by_projectile_tag() {
+        for (item, uses) in [("Longbow", true), ("Crossbow (Light)", true), ("Pistol", true), ("Sling", true), ("Longsword", false)] {
+            let rows = rows(vec![select(item, ActiveState::EquippedActive)], &[]);
+            assert_eq!(row(&rows, item).uses_ammunition, uses, "{item}");
+        }
+    }
+
+    /// A thrown dagger or javelin and the Unarmed row use none, and count none even with arrows carried.
+    #[test]
+    fn uses_ammunition_thrown_and_unarmed_do_not() {
+        let rows = rows(
+            vec![
+                select("Dagger", ActiveState::EquippedActive),
+                select("Javelin", ActiveState::SelectedInactive),
+                select(FLIGHT_ARROWS, ActiveState::SelectedInactive),
+            ],
+            &[],
+        );
+        for item in ["Dagger", "Javelin", UNARMED_STRIKE_ITEM_ID] {
+            let row = row(&rows, item);
+            assert_eq!((row.uses_ammunition, row.ammunition_carried), (false, 0), "{item}");
+        }
+    }
+
+    /// Aldric with a longbow and 3 × "Arrow, Flight (20)" carried: 60 arrows. A copy given a piece
+    /// quantity counts that; bolts (another family) and Not Carried arrows count nothing.
+    #[test]
+    fn uses_ammunition_carried_count_sums_bundles() {
+        let loadout = || {
+            vec![
+                select("Longbow", ActiveState::EquippedActive),
+                select(FLIGHT_ARROWS, ActiveState::SelectedInactive),
+                select(FLIGHT_ARROWS, ActiveState::SelectedInactive),
+                select(FLIGHT_ARROWS, ActiveState::EquippedActive),
+                select(FLIGHT_ARROWS, ActiveState::Absent),
+                select("Bolts (Crossbow/10)", ActiveState::SelectedInactive),
+            ]
+        };
+        assert_eq!(row(&rows(loadout(), &[]), "Longbow").ammunition_carried, 60);
+        let five = CopyKey { item_id: FLIGHT_ARROWS.to_owned(), bonus: 0, ordinal: 1 };
+        assert_eq!(row(&rows(loadout(), &[(five, 5)]), "Longbow").ammunition_carried, 45, "20 + 5 + 20");
+        let crossbow = rows(vec![select("Crossbow (Light)", ActiveState::EquippedActive), select(FLIGHT_ARROWS, ActiveState::SelectedInactive)], &[]);
+        assert_eq!(row(&crossbow, "Crossbow (Light)").ammunition_carried, 0, "arrows are not bolts");
     }
 }

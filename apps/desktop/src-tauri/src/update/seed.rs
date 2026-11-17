@@ -85,7 +85,9 @@ fn build_record(running: &RunningInstall, kind: InstallKind) -> InstalledState {
 /// Make `installed-state.json` describe the running build.
 ///
 /// - No record: write one.
-/// - Existing AppImage record: left alone; `verify_relaunch_artifact` owns it.
+/// - Existing AppImage record naming the running path: left alone; `verify_relaunch_artifact` owns it.
+/// - Existing AppImage record naming another path (the file was moved): rewritten, or every update
+///   would abort on the path mismatch.
 /// - Existing Deb/DevLocal record: rewritten when the binary or version changed, because a
 ///   package manager replaces the binary without going through the verifier.
 /// - Unreadable record: an error, never overwritten.
@@ -111,7 +113,8 @@ pub fn reconcile_installed_state_for(
     };
 
     if let Some(existing) = &existing {
-        let owned_by_verifier = existing.install_kind == InstallKind::AppImage;
+        let owned_by_verifier = existing.install_kind == InstallKind::AppImage
+            && existing.managed_executable_path == running.managed_executable_path;
         let up_to_date = existing.artifact_sha256 == running.artifact_sha256
             && existing.version == running.version;
         if owned_by_verifier || up_to_date {
@@ -134,8 +137,8 @@ fn write_record(path: &Path, record: &InstalledState) -> Result<(), String> {
 /// Make `installed-state.json` describe `running`, whatever record is already there.
 ///
 /// For the AppImage self-install (`self_install.rs`): the app has just copied itself to a new path,
-/// so an AppImage record naming the old path must be replaced, though `reconcile_installed_state`
-/// leaves AppImage records to the verifier.
+/// and the record must name the copy now, before the next startup's `reconcile_installed_state`
+/// (which leaves a same-path AppImage record to the verifier) runs from it.
 pub fn overwrite_installed_state(config_dir: &Path, running: &RunningInstall) -> Result<InstalledState, String> {
     let record = build_record(running, detect_install_kind(running));
     write_record(&config_update_dir(config_dir).join(INSTALLED_STATE_FILENAME), &record)?;
@@ -323,7 +326,7 @@ mod tests {
     }
 
     #[test]
-    fn existing_appimage_record_is_owned_by_the_verifier_and_never_rewritten() {
+    fn reconcile_leaves_a_same_path_appimage_record_to_the_verifier() {
         let config = temp_config("appimage");
         let mut r = deb_running("sha-a", "0.16.139");
         r.managed_executable_path = PathBuf::from("/home/u/Apps/Codex.AppImage");
@@ -334,6 +337,26 @@ mod tests {
         let outcome = reconcile_installed_state(&config, &r).unwrap();
         assert_eq!(outcome, SeedOutcome::Unchanged);
         assert_eq!(read_record(&config).artifact_sha256, "sha-a");
+    }
+
+    #[test]
+    fn reconcile_rewrites_an_appimage_record_that_names_another_path() {
+        let config = temp_config("appimage-moved");
+        let mut download = deb_running("sha-download", "0.19.148");
+        download.managed_executable_path = PathBuf::from("/home/u/Downloads/Codex_0.19.148_amd64.AppImage");
+        download.appimage_path = Some(download.managed_executable_path.clone());
+        reconcile_installed_state(&config, &download).unwrap();
+        let mut moved = download.clone();
+        moved.managed_executable_path = PathBuf::from("/home/u/Codex/Codex.AppImage");
+        moved.appimage_path = Some(moved.managed_executable_path.clone());
+        moved.artifact_sha256 = "sha-moved".into();
+        let outcome = reconcile_installed_state(&config, &moved).unwrap();
+        assert!(matches!(outcome, SeedOutcome::Written(_)), "{outcome:?}");
+        let record = read_record(&config);
+        assert_eq!(record.managed_executable_path, PathBuf::from("/home/u/Codex/Codex.AppImage"));
+        assert_eq!(record.artifact_sha256, "sha-moved");
+        assert_eq!(record.install_kind, InstallKind::AppImage);
+        assert!(record.update_eligible);
     }
 
     #[test]

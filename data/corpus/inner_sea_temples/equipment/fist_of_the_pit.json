@@ -6,7 +6,7 @@
     "key": "Fist of the Pit",
     "category": "ArmsArmor",
     "name": "Fist of the Pit",
-    "cost_gp": null,
+    "cost_gp": 9305.0,
     "weight_lbs": null,
     "description": "Once per day as a standard action, the wearer can strike the ground with the gauntlet, causing a 10-foot-square, 30-foot-deep extradimensional pit filled with spikes to open within 30 feet, as per spiked pit (APG). Any enhancement bonus or weapon special abilities that deal extra damage is added to the damage caused by the pit's spikes."
   },

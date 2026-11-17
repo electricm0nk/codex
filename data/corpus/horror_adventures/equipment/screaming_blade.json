@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 21315.0,
     "description": "This +2 longsword contains the hideous captured screams of a torture victim. The blade howls these blasphemies and profanities whenever it is drawn. This discordant noise grants the wielder a +5 competence bonus on Intimidate checks, but any creature can hear the howls with a Perception DC of –10, regardless of the wielder’s Stealth.&nl;The disturbing noise makes it difficult for nearby creatures to concentrate. Any creature other than the wielder within 60 feet attempting to cast a spell must succeed at a concentration check (DC = 15 + spell level) or the spell fails. Creatures within 60 feet take a –2 penalty on skill checks that require concentration and are unable to take 10 (unless they have an ability that enables them to take 10 while distracted or threatened). If the wielder is evil and has the bardic performance ability, she can use the screams as a masterwork instrument for either Perform (sing) or Perform (wind) and the DCs of her bardic performances that are fear effects increase by 1.&nl;Silence and similar effects suppress all the blade’s magical abilities except its enhancement bonus. Creatures other than wielder within 60 feet need a concentration check (DC = 15 + spell level) to cast as spell, they take -2 on skill chacks needing concentration, and cannot take 10 due to distraction.",
     "key": "Screaming Blade",
     "name": "Screaming Blade",

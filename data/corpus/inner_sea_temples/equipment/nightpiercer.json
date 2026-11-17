@@ -6,7 +6,7 @@
     "key": "Nightpiercer",
     "category": "ArmsArmor",
     "name": "Nightpiercer",
-    "cost_gp": null,
+    "cost_gp": 12700.0,
     "weight_lbs": null,
     "description": "Applies the ghost touch weapon special ability to all bolts fired from it. If a bolt deals damage to an incorporeal undead creature, the bolt remains embedded in the creature, reducing all of the target's speeds by half (to a minimum of 5 feet) for 1 round."
   },

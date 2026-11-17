@@ -200,7 +200,7 @@
       "key": "Poison-Resistant Scale Mail",
       "name": "Poison-Resistant Scale Mail",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 50.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -210,7 +210,7 @@
       "key": "Feathered Shield",
       "name": "Feathered Shield",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 9.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null

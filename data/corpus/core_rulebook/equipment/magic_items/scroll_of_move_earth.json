@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1650.0,
     "description": "Digs trenches and builds hills.",
     "key": "Scroll of Move Earth",
     "name": "Scroll",

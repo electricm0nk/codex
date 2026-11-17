@@ -6,7 +6,7 @@
     "key": "Crossbow (Heavy)",
     "category": "arms_armor",
     "name": "Heavy Crossbow (Base)",
-    "cost_gp": null,
+    "cost_gp": 50.0,
     "weight_lbs": null,
     "description": "You draw a heavy crossbow back by turning a small winch. Loading a heavy crossbow is a fullround action that provokes attacks of opportunity.\nNormally, operating a heavy crossbow requires two hands. However, you can shoot, but not load, a heavy crossbow with one hand at a -4 penalty on attack rolls. You can shoot a heavy crossbow with each hand, but you take a penalty on attack rolls as if attacking with two one-handed weapons. This penalty is cumulative with the penalty for one-handed firing."
   },

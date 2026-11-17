@@ -324,8 +324,8 @@ fn a_small_race_is_more_encumbered_than_a_medium_race_carrying_the_identical_loa
         selection("item:longsword", ActiveState::EquippedActive),
     ];
 
-    let human = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
-    let halfling = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Small);
+    let human = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium, &[], &[]);
+    let halfling = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Small, &[], &[]);
 
     assert_eq!(human.total_carried_weight_lbs, halfling.total_carried_weight_lbs, "same loadout");
 
@@ -383,7 +383,7 @@ fn compute_encumbrance_reports_the_load_penalties_for_a_real_medium_load() {
         selection("item:longsword", ActiveState::EquippedActive),
     ];
 
-    let computation = compute_encumbrance(&equipment_selections, &corpus, 6, SizeCategory::Medium);
+    let computation = compute_encumbrance(&equipment_selections, &corpus, 6, SizeCategory::Medium, &[], &[]);
 
     assert_eq!(computation.level, EncumbranceLevel::Medium);
     assert_eq!(computation.load_max_dex_cap, Some(3));
@@ -404,7 +404,7 @@ fn compute_encumbrance_totals_the_real_corpus_cost_of_the_carried_loadout() {
         selection("item:backpack", ActiveState::SelectedInactive),
     ];
 
-    let computation = compute_encumbrance(&equipment_selections, &corpus, 14, SizeCategory::Medium);
+    let computation = compute_encumbrance(&equipment_selections, &corpus, 14, SizeCategory::Medium, &[], &[]);
 
     assert_eq!(computation.total_carried_cost_gp, 100.0 + 15.0 + 2.0);
     let chain_shirt = computation
@@ -425,7 +425,7 @@ fn compute_encumbrance_sums_a_different_real_item_set_than_the_inline_fixture() 
         selection("item:backpack", ActiveState::SelectedInactive),
     ];
 
-    let computation = compute_encumbrance(&equipment_selections, &corpus, 14, SizeCategory::Medium);
+    let computation = compute_encumbrance(&equipment_selections, &corpus, 14, SizeCategory::Medium, &[], &[]);
 
     assert_eq!(computation.total_carried_weight_lbs, 25.0 + 4.0 + 2.0);
     assert!(computation.unresolved_item_ids.is_empty(), "{:?}", computation.unresolved_item_ids);
@@ -442,7 +442,7 @@ fn compute_encumbrance_returns_a_true_zero_for_an_entirely_absent_loadout() {
         selection("item:longsword", ActiveState::Absent),
     ];
 
-    let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
+    let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium, &[], &[]);
 
     assert_eq!(computation.total_carried_weight_lbs, 0.0);
     assert!(computation.per_item.is_empty());
@@ -462,7 +462,7 @@ fn compute_encumbrance_reaches_medium_between_light_and_heavy_thresholds() {
         selection("item:longsword", ActiveState::EquippedActive),
     ];
 
-    let computation = compute_encumbrance(&equipment_selections, &corpus, 6, SizeCategory::Medium);
+    let computation = compute_encumbrance(&equipment_selections, &corpus, 6, SizeCategory::Medium, &[], &[]);
 
     assert_eq!(computation.total_carried_weight_lbs, 29.0);
     assert_eq!(computation.level, EncumbranceLevel::Medium);

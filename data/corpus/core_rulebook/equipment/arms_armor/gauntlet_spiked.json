@@ -6,7 +6,7 @@
     "key": "Gauntlet (Spiked)",
     "category": "arms_armor",
     "name": "Spiked Gauntlet (Base)",
-    "cost_gp": null,
+    "cost_gp": 5.0,
     "weight_lbs": null,
     "description": "The cost and weight given are for a single gauntlet. An attack with a spiked gauntlet is considered an armed attack. Your opponent cannot use a disarm action to disarm you of spiked gauntlets."
   },

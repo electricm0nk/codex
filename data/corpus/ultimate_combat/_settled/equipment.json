@@ -53,6 +53,12 @@
     "alchemical_cartridge_dragon_s_breath.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -92,6 +98,12 @@
     "alchemical_cartridge_entangling_shot.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -131,6 +143,12 @@
     "alchemical_cartridge_flare.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -170,6 +188,12 @@
     "alchemical_cartridge_paper_bullet.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -209,6 +233,12 @@
     "alchemical_cartridge_paper_pellet.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -248,6 +278,12 @@
     "alchemical_cartridge_salt_shot.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -531,6 +567,11 @@
     "arrow_iron_tipped_distance_20.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Arrow"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -573,6 +614,11 @@
     "arrow_whistling.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Arrow"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -663,6 +709,11 @@
     "atlatl_dart.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "AtlatlDart"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -837,6 +888,11 @@
     "bamboo_shaft_10.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "BambooShaft"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -879,6 +935,7 @@
     "battered_blunderbuss.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -913,6 +970,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -927,6 +985,7 @@
     "battered_musket.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -960,6 +1019,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -974,6 +1034,7 @@
     "battered_pistol.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1007,6 +1068,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1099,6 +1161,7 @@
     "blunderbuss.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1133,6 +1196,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1525,6 +1589,7 @@
     "buckler_gun.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1558,6 +1623,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1572,6 +1638,12 @@
     "bullet_adamantine.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1611,6 +1683,12 @@
     "bullet_firearm.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1650,10 +1728,17 @@
     "bullet_firearm_30.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 30,
         "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -1689,6 +1774,12 @@
     "bullet_firearm_pitted.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1728,6 +1819,12 @@
     "bullet_firearm_silver.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1767,6 +1864,13 @@
     "burrowing_bullet.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet",
+          "Magic"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1806,6 +1910,13 @@
     "burrowing_bullet_greater.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet",
+          "Magic"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -2142,6 +2253,7 @@
     "culverin.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -2176,6 +2288,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -2328,6 +2441,7 @@
     "double_hackbut.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -2361,6 +2475,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -2476,6 +2591,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Blocking"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "BLOCKING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2501,6 +2624,17 @@
     "equipmods/bone.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -2515,6 +2649,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "BONE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2540,6 +2682,17 @@
     "equipmods/bronze.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -2554,6 +2707,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bronze"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "BRONZE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2593,6 +2754,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Deadly"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "DEADLY",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2632,6 +2801,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Distracting"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "DISTRACTING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2710,6 +2887,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "FIREARM_LUCKY",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2749,6 +2929,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "FIREARM_LUCKY_GRT",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2788,6 +2971,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "FIREARM_RELIABLE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2827,6 +3013,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "FIREARM_RELIABLE_GRT",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2866,6 +3055,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Scatter"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "FIREARM_SCATTER",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2905,6 +3102,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Fragile"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "FRAGILE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2983,6 +3188,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Grapple"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "GRAPPLE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3008,6 +3221,17 @@
     "equipmods/material_bone.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3022,6 +3246,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Bone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3047,6 +3279,17 @@
     "equipmods/material_bronze.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3061,6 +3304,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bronze"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3086,6 +3337,17 @@
     "equipmods/material_gold.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3100,6 +3362,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Gold"
+          ],
+          "terms": [
+            {
+              "per_base_gp": 9.0
+            }
+          ]
+        },
         "name": "Gold",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3125,6 +3397,17 @@
     "equipmods/material_obsidian.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3139,6 +3422,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Obsidian"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Obsidian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3164,6 +3455,17 @@
     "equipmods/material_stone.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3178,6 +3480,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Stone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3203,6 +3513,17 @@
     "equipmods/obsidian.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3217,6 +3538,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Obsidian"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "OBSIDIAN",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3256,6 +3585,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Performance"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "PERFORMANCE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3373,6 +3710,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Lucky",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3412,6 +3752,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Lucky (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3451,6 +3794,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Reliable",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3490,6 +3836,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Reliable (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3529,6 +3878,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Blocking"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Blocking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3568,6 +3925,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Deadly"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Deadly",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3607,6 +3972,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Distracting"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Distracting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3646,6 +4019,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Fragile"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Fragile",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3685,6 +4066,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Grapple"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Grapple",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3724,6 +4113,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Performance"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Performance",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3763,6 +4160,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Scatter"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Scatter",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3841,6 +4246,11 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Thrown"
+          ]
+        },
         "name": "Thrown",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3866,6 +4276,17 @@
     "equipmods/stone.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3880,6 +4301,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "STONE",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -3919,6 +4348,11 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Thrown"
+          ]
+        },
         "name": "THROWN",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -4109,6 +4543,7 @@
     "fire_lance.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Javelin",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -4142,6 +4577,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -5090,6 +5526,11 @@
     "kestros_dart_10.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "KestrosDart"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -6001,6 +6442,12 @@
     "metal_cartridge.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -6177,6 +6624,7 @@
     "musket.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6210,6 +6658,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6224,6 +6673,7 @@
     "musket_axe.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6257,6 +6707,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6271,6 +6722,7 @@
     "musket_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6304,6 +6756,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6318,6 +6771,7 @@
     "musket_warhammer.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6351,6 +6805,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6637,6 +7092,12 @@
     "pellets_handful.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmPellet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -6676,10 +7137,17 @@
     "pellets_handful_30.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmPellet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 30,
         "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -6715,6 +7183,7 @@
     "pepperbox.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6748,6 +7217,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6762,6 +7232,7 @@
     "pistol.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6795,6 +7266,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6809,6 +7281,7 @@
     "pistol_coat.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6842,6 +7315,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6856,6 +7330,7 @@
     "pistol_dagger.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6889,6 +7364,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6903,6 +7379,7 @@
     "pistol_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6936,6 +7413,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6950,6 +7428,7 @@
     "pistol_dragon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6984,6 +7463,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6998,6 +7478,7 @@
     "pistol_sword_cane.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -7031,6 +7512,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -7090,6 +7572,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 3.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -7129,6 +7613,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 0.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -7369,6 +7855,7 @@
     "revolver.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -7402,6 +7889,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -7465,6 +7953,7 @@
     "rifle.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -7498,6 +7987,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -7512,6 +8002,7 @@
     "rifle_pepperbox.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -7545,6 +8036,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -7887,6 +8379,7 @@
     "shotgun.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -7921,6 +8414,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -7935,6 +8429,7 @@
     "shotgun_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -7969,6 +8464,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -8078,6 +8574,11 @@
     "siege_engine_ammunition_alchemist_s_fire.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "SiegeAmmo"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -8117,6 +8618,11 @@
     "siege_engine_ammunition_blast_shot.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "SiegeAmmo"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -8156,6 +8662,11 @@
     "siege_engine_ammunition_bomb.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "SiegeAmmo"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -8195,6 +8706,11 @@
     "siege_engine_ammunition_chain_shot.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "SiegeAmmo"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -8234,6 +8750,11 @@
     "siege_engine_ammunition_liquid_ice.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "SiegeAmmo"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -8273,6 +8794,11 @@
     "siege_engine_ammunition_plague_bundle.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "SiegeAmmo"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -8312,6 +8838,11 @@
     "siege_engine_ammunition_smoke_shot.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "SiegeAmmo"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -9209,6 +9740,13 @@
     "tracer_bullet.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Magic",
+          "Ammunition",
+          "Resizable",
+          "FirearmGear",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1650.0,
     "description": "Gives +4 bonus on attack rolls, saves, skill checks; immunity to fear; temporary hp.",
     "key": "Scroll of Heroism (Greater)",
     "name": "Scroll",

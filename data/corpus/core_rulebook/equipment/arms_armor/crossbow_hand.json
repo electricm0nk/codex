@@ -6,7 +6,7 @@
     "key": "Crossbow (Hand)",
     "category": "arms_armor",
     "name": "Hand Crossbow (Base)",
-    "cost_gp": null,
+    "cost_gp": 100.0,
     "weight_lbs": null,
     "description": "You can draw a hand crossbow back by hand. Loading a hand crossbow is a move action that provokes attacks of opportunity. You can shoot, but not load, a hand crossbow with one hand at no penalty. You can shoot a hand crossbow with each hand, but you take a penalty on attack rolls as if attacking with two light weapons."
   },

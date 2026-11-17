@@ -15,6 +15,7 @@ use crate::rules_core::character_input::{
     load_character_input_fixture,
 };
 
+use super::campaign_mirror::{self, MirrorWarning};
 use super::{
     SavedCharacterEnvelope, SavedCharacterListing, SavedCharacterListingError,
     SavedCharacterRevisionKind, SavedCharacterStoreError, SavedCharacterSummary,
@@ -77,6 +78,15 @@ impl SavedCharacterStore {
         envelope: &SavedCharacterEnvelope,
         root: &Path,
     ) -> Result<(), SavedCharacterStoreError> {
+        Self::save_with_warnings(envelope, root).map(|_warnings| ())
+    }
+
+    /// `save`, then the campaign write-through (`campaign_mirror`, SD-41 `decisions.md §29`):
+    /// a campaign copy that fails is a warning beside the successful local save, never an error.
+    pub fn save_with_warnings(
+        envelope: &SavedCharacterEnvelope,
+        root: &Path,
+    ) -> Result<Vec<MirrorWarning>, SavedCharacterStoreError> {
         fs::create_dir_all(root).map_err(|err| io_error(root, err))?;
 
         let ensure_single_line = |field: &str,
@@ -127,7 +137,10 @@ impl SavedCharacterStore {
         fs::rename(&envelope_tmp, &envelope_path).map_err(|err| io_error(&envelope_path, err))?;
         fs::rename(&character_input_tmp, &character_input_path).map_err(|err| io_error(&character_input_path, err))?;
 
-        Ok(())
+        Ok(match campaign_mirror::load_memberships(root) {
+            Ok(memberships) => campaign_mirror::mirror(root, &envelope.display_label, &envelope.character_id, &memberships),
+            Err(err) => vec![MirrorWarning { campaign_dir: root.join(campaign_mirror::MEMBERSHIPS_FILE), reason: err.message }],
+        })
     }
 
     /// Load a saved-character envelope from a root directory.

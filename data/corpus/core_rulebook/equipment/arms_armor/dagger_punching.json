@@ -6,7 +6,7 @@
     "key": "Dagger (Punching)",
     "category": "arms_armor",
     "name": "Punching Dagger (Base)",
-    "cost_gp": null,
+    "cost_gp": 2.0,
     "weight_lbs": null,
     "description": "A punching dagger's blade is attached to a horizontal handle that projects out from the fist when held."
   },

@@ -6,7 +6,7 @@
     "key": "Elven Chain",
     "category": "arms_armor",
     "name": "Chainmail (Base)",
-    "cost_gp": null,
+    "cost_gp": 5150.0,
     "weight_lbs": null,
     "description": "This extremely light chainmail is made of very fine mithral links. This armor is treated, in all ways, like light armor, including when determining proficiency. The armor has an arcane spell failure chance of 20%%, a maximum Dexterity bonus of +4, and an armor check penalty of -2."
   },

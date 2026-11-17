@@ -1069,7 +1069,7 @@ pub(super) fn small_monk_unarmed_strike_damage_die(level: u8) -> (i16, i16, &'st
 /// arriving at another size reaches the absence notice, and
 /// `every_playable_race_reads_its_own_size_column` fails the moment the roster
 /// stops matching this claim.
-pub(super) fn monk_unarmed_strike_damage_die_for_size(
+pub(crate) fn monk_unarmed_strike_damage_die_for_size(
     level: u8,
     size: SizeCategory,
 ) -> Option<(i16, i16, &'static str)> {

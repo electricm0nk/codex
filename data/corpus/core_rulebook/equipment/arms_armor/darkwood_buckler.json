@@ -6,7 +6,7 @@
     "key": "Darkwood Buckler",
     "category": "arms_armor",
     "name": "Light Wooden Shield (Base)",
-    "cost_gp": null,
+    "cost_gp": 203.0,
     "weight_lbs": null,
     "description": "This nonmagical light wooden shield is made out of darkwood. It has no enhancement bonus, but its construction material makes it lighter than a normal wooden shield. It has no armor check penalty."
   },

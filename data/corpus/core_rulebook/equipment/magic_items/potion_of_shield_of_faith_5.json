@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 900.0,
     "description": "+5 deflection bonus to AC for 18 minutes",
     "key": "Potion of Shield of Faith +5",
     "name": "Potion",

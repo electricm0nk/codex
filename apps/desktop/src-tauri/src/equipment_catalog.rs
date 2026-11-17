@@ -53,7 +53,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::body_slots::{enhanceable_tags, is_magic_marked, Enhanceable};
+use codex::rules_core::body_slots::{enhanceable_tags, is_magic_marked, worn_slot, BodySlot, Enhanceable};
 use codex::rules_core::damage_total::resolve_base_damage_dice;
 use codex::rules_core::equipment_resolver::{equipment_catalog_rows, equipment_converted_resolve};
 use codex::rules_core::rules_catalog::{
@@ -143,7 +143,9 @@ pub struct EquipmentCatalogEntryDto {
     /// The record's own words, from [`row_description`]. `None` where the record
     /// genuinely states none — a real and documented gap for template and bookkeeping
     /// rows, never a fabricated stand-in.
-    pub description: Option<String>,
+    pub description: Option<String>,    /// The body slot a copy of this row takes (`body_slot_of_item` on the key, the held list's
+    /// read); `none` for the slotless. The Market's Slot column (SD-41 `decisions.md §26` (e)).
+    pub slot: BodySlot,
 }
 
 /// The description one catalog row serves.
@@ -254,6 +256,51 @@ pub struct EquipmentCatalogResponse {
     pub types_error: Option<String>,
 }
 
+/// The body slot `item_id` fills, read off its converted record. `None` when no record holds the
+/// id, which has no slot for the check to enforce. `Err` when the data itself cannot be read: that
+/// must not read as "this item has no slot" (`body_slots::slot_of`).
+pub(crate) fn body_slot_of_item(item_id: &str) -> Result<BodySlot, String> {
+    let package = codex::rules_core::corpus_loader::live_sheet_rules()
+        .ok_or_else(|| "the equipment records could not be read, so the body slots cannot be checked".to_owned())?;
+    let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
+    let Some(record) = package
+        .find("equipment", &codex::rules_core::sheet_rule::slug(needle))
+        .and_then(|id| package.rule(id))
+    else {
+        return Ok(BodySlot::None);
+    };
+    let types = codex::rules_core::equipment_types::equipment_types()
+        .as_ref()
+        .map_err(Clone::clone)?
+        .get(needle)
+        .map_or(&[][..], Vec::as_slice);
+    worn_slot(record, types, settled_wield_category(item_id))
+}
+
+/// A weapon's settled wield category, off its own record or the record it names as its stand-in
+/// (`Battleaxe` states none, and names `Battleaxe (Base)`). Off `full_corpus_bundle`, where a name
+/// answers by its own book's record and not by the fixture's.
+fn settled_wield_category(item_id: &str) -> Option<codex::rules_core::damage_total::WieldCategory> {
+    let corpus = crate::corpus_full::full_corpus_bundle();
+    let record = equipment_converted_resolve(item_id, corpus)?;
+    record.wield_category.or_else(|| {
+        let base = record.base_item.as_deref()?;
+        equipment_converted_resolve(base, corpus)?.wield_category
+    })
+}
+
+/// A catalog row's slot. When the data [`body_slot_of_item`] reads cannot be read, the catalog
+/// already says so (`types_error` for the type sidecar; no prose for the sheet rules), and the
+/// row shows no slot.
+///
+/// Read once per key: the read walks the whole corpus for a weapon's wield category, every
+/// catalog build asks for all 8,119 rows, and nothing it reads changes while the app runs.
+fn body_slot_or_none(key: &str) -> BodySlot {
+    static SLOTS: std::sync::OnceLock<std::sync::Mutex<std::collections::HashMap<String, BodySlot>>> = std::sync::OnceLock::new();
+    let mut slots = SLOTS.get_or_init(Default::default).lock().unwrap_or_else(std::sync::PoisonError::into_inner);
+    *slots.entry(key.to_owned()).or_insert_with(|| body_slot_of_item(key).unwrap_or(BodySlot::None))
+}
+
 fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
     EquipmentCatalogEntryDto {
         types: Vec::new(),
@@ -264,6 +311,7 @@ fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight_lbs,
         book: BOOK_CRB.to_string(),
         description: row_description(BOOK_CRB, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -277,6 +325,7 @@ fn map_apg_entry(entry: &apg::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight,
         book: BOOK_APG.to_string(),
         description: row_description(BOOK_APG, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -290,6 +339,7 @@ fn map_acg_entry(entry: &acg::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight_lbs,
         book: BOOK_ACG.to_string(),
         description: row_description(BOOK_ACG, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -305,6 +355,7 @@ fn map_beastiary1_entry(
         weight_lbs: entry.weight_lbs,
         book: BOOK_B1.to_string(),
         description: row_description(BOOK_B1, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -318,6 +369,7 @@ fn map_arg_entry(entry: &arg::equipment_tables::EquipmentTableEntry) -> Equipmen
         weight_lbs: entry.weight_lbs,
         book: BOOK_ARG.to_string(),
         description: row_description(BOOK_ARG, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -336,6 +388,7 @@ fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: None,
         book: BOOK_PU.to_string(),
         description: row_description(BOOK_PU, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -358,6 +411,7 @@ fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UI.to_string(),
         description: row_description(BOOK_UI, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -376,6 +430,7 @@ fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UE.to_string(),
         description: row_description(BOOK_UE, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -401,6 +456,7 @@ fn map_um_entry(entry: &um::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UM.to_string(),
         description: row_description(BOOK_UM, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -420,6 +476,7 @@ fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> Equipm
         weight_lbs: entry.weight_lbs,
         book: BOOK_UPSI.to_string(),
         description: row_description(BOOK_UPSI, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -439,6 +496,7 @@ fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentC
         weight_lbs: entry.weight_lbs,
         book: BOOK_UC.to_string(),
         description: row_description(BOOK_UC, entry.key, entry.description),
+        slot: body_slot_or_none(entry.key),
     }
 }
 
@@ -458,6 +516,7 @@ fn map_gap_entry(
         weight_lbs: row.weight_lbs,
         book: row.book.to_string(),
         description: row_description(row.book, row.key, row.description),
+        slot: body_slot_or_none(row.key),
     }
 }
 
@@ -675,6 +734,10 @@ fn market_category_of(entry: &EquipmentCatalogEntryDto) -> Option<MarketCategory
 /// buyer could recognize. The name alone does not make a template: `Holy Avenger` is also named
 /// `Longsword (Base)`, and it is an item of its own.
 fn hidden_from_market(entry: &EquipmentCatalogEntryDto) -> bool {
+    // A removal directive, not an item: no price any source can give.
+    if entry.key.ends_with(".FORGET") {
+        return true;
+    }
     let is_template = entry.cost_gp.is_none() && entry.name == format!("{} (Base)", entry.key);
     is_template || entry.name.starts_with("Codex-Named Unit")
 }
@@ -685,8 +748,8 @@ fn market_name(entry: &EquipmentCatalogEntryDto) -> String {
     if entry.name.ends_with(" (Base)") { entry.key.clone() } else { entry.name.clone() }
 }
 
-/// The `+1`…`+5` a row is offered at. Only arms and armor with a price take one. No price means no
-/// offer, never an invented base. A free item takes one only as a base record (`Club (Base)`,
+/// The `+1`…`+5` a row is offered at. Only arms and armor with a price take one, and never a named
+/// magic item, which already carries its bonus. No price means no offer, never an invented base. A free item takes one only as a base record (`Club (Base)`,
 /// `Quarterstaff (Base)`): the other free rows are attacks and summoned arms, not goods
 /// (`Touch Attack (Ray)`, `Mind Blade (…)`), and a negative price is a record's cost correction.
 fn market_variants(entry: &EquipmentCatalogEntryDto, name: &str) -> Vec<MarketVariantDto> {
@@ -697,7 +760,7 @@ fn market_variants(entry: &EquipmentCatalogEntryDto, name: &str) -> Vec<MarketVa
     }
     let tags: Vec<&str> = entry.types.iter().map(String::as_str).collect();
     let Some(kind) = enhanceable_tags(&tags) else { return Vec::new() };
-    if !bonus_reaches_the_sheet(&entry.key, kind) {
+    if !bonus_reaches_the_sheet(&entry.key, kind) || is_named_magic_item(&entry.book, &entry.key) {
         return Vec::new();
     }
     (1..=5)
@@ -721,6 +784,22 @@ fn bonus_reaches_the_sheet(key: &str, kind: Enhanceable) -> bool {
             .is_some_and(|record| record.stat_effect.armor_class_bonus.is_some()),
         Enhanceable::Weapon => resolve_base_damage_dice(key, corpus).is_some(),
     }
+}
+
+/// Whether the row is a named magic item (`Holy Avenger`, `Flame Tongue`): its converted record
+/// states a magic item's `Aura:` line. Its type tags are its base weapon's, so they cannot say so,
+/// and a masterwork or special-material copy (`Longsword (Cold Iron/Masterwork)`) states no aura.
+fn is_named_magic_item(book: &str, key: &str) -> bool {
+    use codex::rules_core::sheet_rule::ProsePiece;
+    let (Some(dir), Some(package)) = (corpus_book_dir_opt(book), crate::converted_prose::package()) else {
+        return false;
+    };
+    EQUIPMENT_KINDS
+        .iter()
+        .filter_map(|kind| crate::converted_prose::rule_id_for(dir, kind, key))
+        .filter_map(|id| package.rule(&id))
+        .flat_map(|rule| rule.prose.iter().flat_map(|segment| &segment.pieces))
+        .any(|piece| matches!(piece, ProsePiece::Text(text) if text.starts_with("Aura:")))
 }
 
 /// Narrows a built catalog to one Market list. The first row of a key decides that key, as it does
@@ -763,11 +842,256 @@ pub fn list_market(filter: MarketFilter) -> MarketResponse {
     market_from_catalog(built_catalog(), &filter)
 }
 
+/// The catalog row `key` names, the first of that key (as `market_from_catalog` reads it).
+pub(crate) fn catalog_row(key: &str) -> Option<&'static EquipmentCatalogEntryDto> {
+    built_catalog().entries.iter().find(|entry| entry.key == key)
+}
+
+/// Which part of a Buy Custom a modifier is, by its catalog key's family (`decisions.md §24`):
+/// the `+N` and the bonus-cost helpers are the enhancement field, not abilities, and of the
+/// special qualities only the `Wield Size` ones are offered, as abilities: they change how the
+/// weapon is wielded, not the size it is made in (E2.12; that is the build's `size`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum CustomPart {
+    Ability,
+    Material,
+}
+
+pub(crate) fn custom_part(key: &str) -> Option<CustomPart> {
+    if let Some(rest) = key.strip_prefix("Special Ability ~ ") {
+        let enhancement = rest.starts_with('+') || rest.starts_with("ABP") || rest.starts_with("Enhancement Cost");
+        (!enhancement).then_some(CustomPart::Ability)
+    } else if key.starts_with("Material ~ ") {
+        Some(CustomPart::Material)
+    } else {
+        (key.starts_with("Special Quality ~ ") && key.contains("Size")).then_some(CustomPart::Ability)
+    }
+}
+
+/// One modifier Buy Custom offers on a base item.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomOptionDto {
+    pub key: String,
+    pub name: String,
+    pub description: Option<String>,
+    /// The enhancement it counts as (`Flaming` is +1); 0 for a material or a quality.
+    pub plus: i16,
+    /// Its price cannot be read from the record: a purchase holding it is priced by Negotiate.
+    pub unpriced: bool,
+    /// What the item must also be, in the record's words, when the base's own types do not show
+    /// it (`Metal`; `WeaponEnhancement`, which a `+1` gives).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub prerequisite: Option<String>,
+}
+
+/// What Buy Custom offers on one base: every ability and material whose types name one of the
+/// base's (an eqmod's `TYPE` lists the items it goes on), and the wielder sizes it can be made
+/// for: Small and Large on the types the size rule prices (`size::RESIZED_ITEM_TYPES`), else none.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CustomOptionsDto {
+    pub abilities: Vec<CustomOptionDto>,
+    pub materials: Vec<CustomOptionDto>,
+    pub sizes: Vec<codex::rules_core::size::SizeCategory>,
+}
+
+/// [`CustomOptionsDto`] for the catalog row `base_key`; empty when no row holds the key.
+pub(crate) fn custom_equipment_options(base_key: &str) -> CustomOptionsDto {
+    let mut options = CustomOptionsDto::default();
+    let Some(base) = catalog_row(base_key) else { return options };
+    use codex::rules_core::size::{SizeCategory, RESIZED_ITEM_TYPES};
+    // shortcut: Small and Large only (one damage step); a Tiny or Huge copy needs the multi-step die progression.
+    if base.types.iter().any(|t| RESIZED_ITEM_TYPES.iter().any(|r| r.eq_ignore_ascii_case(t))) {
+        options.sizes = vec![SizeCategory::Small, SizeCategory::Large];
+    }
+    let corpus = crate::corpus_fixtures::corpus_fixture_bundle();
+    let rules = codex::rules_core::corpus_loader::live_sheet_rules();
+    let mut seen = std::collections::HashSet::new();
+    for entry in built_catalog().entries.iter().filter(|entry| entry.category == "Equipmods") {
+        let Some(part) = custom_part(&entry.key) else { continue };
+        let fits = entry.types.iter().any(|t| base.types.iter().any(|b| b.eq_ignore_ascii_case(t)));
+        if !fits || !seen.insert(entry.key.as_str()) {
+            continue;
+        }
+        let Some(record) = equipment_converted_resolve(&entry.key, corpus) else { continue };
+        let price = record.modifier_price.as_ref();
+        let applies = rules
+            .and_then(|package| package.rule(package.find("equipment_modifier", &codex::rules_core::sheet_rule::slug(&entry.key))?))
+            .map(|rule| &rule.applies);
+        let option = CustomOptionDto {
+            key: entry.key.clone(),
+            // The corpus keeps PCGen's leading `|` on some names (`|Spell Effect (Command Word)`); the key keeps it.
+            name: entry.name.trim_start_matches('|').to_owned(),
+            description: entry.description.clone(),
+            plus: price.map_or(0, |p| p.plus),
+            unpriced: price.is_some_and(|p| p.unpriced),
+            prerequisite: applies.and_then(|gate| unmet_item_gate(gate, &base.types)),
+        };
+        match part {
+            CustomPart::Ability => options.abilities.push(option),
+            CustomPart::Material => options.materials.push(option),
+        }
+    }
+    options
+}
+
+/// What a modifier's gate still needs of the base, in player words (`metal`, `an enhancement
+/// bonus`); `None` when the base's types meet it. A gate on anything but the item cannot be checked
+/// here, and reads as such.
+fn unmet_item_gate(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> Option<String> {
+    (item_gate_met(gate, types) != Some(true)).then(|| missing_words(gate, types))
+}
+
+/// A gate tag is held when the base has every `.`-joined part of it (`WeaponEnhancement.Weapon`).
+fn tag_held(tag: &str, types: &[String]) -> bool {
+    tag.split('.').all(|part| types.iter().any(|t| t.eq_ignore_ascii_case(part)))
+}
+
+fn item_gate_met(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> Option<bool> {
+    use codex::rules_core::sheet_rule::Applies;
+    Some(match gate {
+        Applies::Always => true,
+        Applies::Never => false,
+        Applies::ItemHas { tags, n } => tags.iter().filter(|tag| tag_held(tag, types)).count() >= usize::from(*n),
+        Applies::All(parts) => parts.iter().map(|part| item_gate_met(part, types)).collect::<Option<Vec<bool>>>()?.into_iter().all(|met| met),
+        Applies::AtLeast { n, of } => {
+            of.iter().map(|part| item_gate_met(part, types)).collect::<Option<Vec<bool>>>()?.into_iter().filter(|met| *met).count() >= usize::from(*n)
+        }
+        Applies::Not(inner) => !item_gate_met(inner, types)?,
+        _ => return None,
+    })
+}
+
+/// One gate tag as a player reads it: every `…Enhancement` is an enhancement bonus, an `EQMOD`
+/// tag names the ability, and a run-together tag splits into lower-case words (`ColdIron`).
+fn tag_words(tag: &str) -> String {
+    if let Some(eqmod) = tag.strip_prefix("EQMOD ") {
+        return format!("the {} ability", eqmod.split(" ~ ").nth(1).unwrap_or(eqmod).trim());
+    }
+    let words: Vec<String> = tag.split('.').map(|part| {
+        if part.ends_with("Enhancement") {
+            return "an enhancement bonus".to_owned();
+        }
+        let mut out = String::new();
+        for (i, c) in part.chars().enumerate() {
+            if i > 0 && c.is_uppercase() && part.chars().nth(i - 1).is_some_and(char::is_lowercase) {
+                out.push(' ');
+            }
+            out.extend(c.to_lowercase());
+        }
+        out
+    }).collect();
+    words.join(" and ")
+}
+
+/// The words for the tags in `tags` (deduplicated, in order), joined by `sep`.
+fn tags_words<'a>(tags: impl Iterator<Item = &'a String>, sep: &str) -> String {
+    let mut words: Vec<String> = Vec::new();
+    for word in tags.map(|tag| tag_words(tag)) {
+        if !words.contains(&word) {
+            words.push(word);
+        }
+    }
+    words.join(sep)
+}
+
+/// What `gate` still needs of a base with `types`: only its unmet parts, and of alternatives the
+/// one needing least (a weapon's Spell Effect needs `an enhancement bonus`, not a list of slots).
+fn missing_words(gate: &codex::rules_core::sheet_rule::Applies, types: &[String]) -> String {
+    use codex::rules_core::sheet_rule::Applies;
+    let unmet = |part: &&Applies| item_gate_met(part, types) != Some(true);
+    match gate {
+        Applies::Never => "nothing it can be made on".to_owned(),
+        Applies::ItemHas { tags, n } => {
+            // Of a `.`-joined tag only the parts the base lacks are missing.
+            let missing: Vec<String> = tags.iter().filter(|tag| !tag_held(tag, types))
+                .map(|tag| tag.split('.').filter(|part| !tag_held(part, types)).collect::<Vec<_>>().join(".")).collect();
+            let still = usize::from(*n).saturating_sub(tags.len() - missing.len());
+            if still <= 1 {
+                tags_words(missing.iter(), " or ")
+            } else if still >= missing.len() {
+                tags_words(missing.iter(), " and ")
+            } else {
+                format!("{still} of {}", tags_words(missing.iter(), ", "))
+            }
+        }
+        Applies::All(parts) => parts.iter().filter(unmet).map(|part| missing_words(part, types)).collect::<Vec<_>>().join(" and "),
+        Applies::AtLeast { n, of } if usize::from(*n) >= of.len() => of.iter().filter(unmet).map(|part| missing_words(part, types)).collect::<Vec<_>>().join(" and "),
+        Applies::AtLeast { of, .. } => of.iter().filter(unmet).map(|part| missing_words(part, types)).min_by_key(String::len).unwrap_or_default(),
+        Applies::Not(inner) => match inner.as_ref() {
+            Applies::ItemHas { tags, .. } => format!("not {}", tags_words(tags.iter().filter(|tag| tag_held(tag, types)), " or ")),
+            other => format!("not {}", missing_words(other, types)),
+        },
+        _ => "a condition this screen cannot check".to_owned(),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use codex::rules_core::equipment_resolver::equipment_catalog_row_by_key;
     use std::collections::{BTreeMap, BTreeSet};
+
+    /// SD-41 E3.12: Buy Custom's option names drop the corpus's leading `|` (the key keeps it), and a
+    /// prerequisite reads as player words: no run-together tag (`WeaponEnhancement`), no `of:` list.
+    #[test]
+    fn custom_options_names_read_as_words() {
+        let options = custom_equipment_options("Dagger");
+        let all: Vec<&CustomOptionDto> = options.abilities.iter().chain(&options.materials).collect();
+        let needs = |name: &str| all.iter().find(|o| o.name == name).unwrap_or_else(|| panic!("{name} is offered")).prerequisite.clone();
+        assert_eq!(needs("Spell Effect (Command Word)").as_deref(), Some("an enhancement bonus"), "the weapon route, not the slot list");
+        assert_eq!(needs("Mithral").as_deref(), Some("metal"));
+        assert_eq!(needs("Bleed").as_deref(), Some("an enhancement bonus"), "WeaponEnhancement.Weapon: the dagger is a weapon");
+        assert_eq!(needs("Catalytic").as_deref(), Some("the Corrosive ability or the Corrosive Burst ability"));
+        let longsword = custom_equipment_options("Longsword (Base)");
+        let breastplate = custom_equipment_options("Breastplate (Base)");
+        let wider: Vec<&CustomOptionDto> = [&longsword, &breastplate].into_iter().flat_map(|o| o.abilities.iter().chain(&o.materials)).collect();
+        assert!(!wider.is_empty());
+        for option in all.iter().chain(&wider) {
+            assert!(!option.name.starts_with('|'), "{}", option.name);
+            if let Some(words) = &option.prerequisite {
+                let tag = words.split(|c: char| !c.is_alphanumeric()).find(|w| w.chars().skip(1).any(char::is_uppercase));
+                assert!(tag.is_none() && !words.contains("of:"), "{}: {words}", option.name);
+            }
+        }
+    }
+
+    /// A PCGen removal directive (`Dust Knuckles.FORGET`) is not an item: the Market never lists one.
+    #[test]
+    fn market_hides_retirement_rows() {
+        let mut rows = 0;
+        for category in [MarketCategory::Weapon, MarketCategory::Armor, MarketCategory::Shield, MarketCategory::Gear, MarketCategory::MagicItem] {
+            for row in list_market(MarketFilter { category, name_contains: None, book: None }).entries {
+                rows += 1;
+                assert!(!row.entry.key.ends_with(".FORGET"), "{}", row.entry.key);
+            }
+        }
+        assert!(rows > 5000, "the whole shelf, not an empty filter: {rows}");
+    }
+
+    /// SD-41 E2.5 (`decisions.md §26` (e)): every catalog row carries the slot a copy of it takes,
+    /// the read the held list makes of a copy ([`body_slot_of_item`] on the row's key), and the
+    /// Market's Slot column serializes it.
+    #[test]
+    fn catalog_slot_is_set_on_every_entry() {
+        use codex::rules_core::body_slots::BodySlot;
+        let entries = &built_catalog().entries;
+        let mut by_slot: BTreeMap<BodySlot, usize> = BTreeMap::new();
+        for entry in entries {
+            assert_eq!(Ok(entry.slot), body_slot_of_item(&entry.key), "{}", entry.key);
+            *by_slot.entry(entry.slot).or_default() += 1;
+        }
+        println!("catalog rows={} by slot: {by_slot:?}", entries.len());
+        let slot_of = |key: &str| entries.iter().find(|entry| entry.key == key).map(|entry| entry.slot);
+        assert_eq!(slot_of("Ring of Protection +1"), Some(BodySlot::Ring));
+        assert_eq!(slot_of("Chain Shirt"), Some(BodySlot::Armor));
+        assert_eq!(slot_of("Longbow"), Some(BodySlot::WieldTwoHanded));
+        assert_eq!(slot_of("Rope (Hemp/50 ft)"), Some(BodySlot::None));
+        let market = list_market(MarketFilter { category: MarketCategory::Armor, name_contains: Some("Chain Shirt".to_owned()), book: None });
+        let row = serde_json::to_value(&market.entries[0]).unwrap();
+        assert_eq!(row["slot"], serde_json::json!("armor"), "{row}");
+    }
 
     /// **The corpus-wide floor under the equipment catalog's prose.**
     ///
@@ -2179,9 +2503,9 @@ mod tests {
         println!("distinct item keys {}; listed {}; hidden by a named rule {}", all_keys.len(), listed_keys.len(), lost.len());
         assert!(unexplained.is_empty(), "rows lost without a named rule: {unexplained:?}");
 
-        // A hidden template names its twin, and the twin is on sale. An item of its own that only
+        // A hidden template names its twin, and the twin is on sale (a retirement row has none). An item of its own that only
         // shares the base's name stays on the shelf.
-        for key in lost.iter().filter(|key| !key.starts_with("Codex-Named Unit")) {
+        for key in lost.iter().filter(|key| !key.starts_with("Codex-Named Unit") && !key.ends_with(".FORGET")) {
             let twin = format!("{key} (Base)");
             assert!(listed_keys.contains(twin.as_str()), "{key}'s twin {twin} is not listed");
         }
@@ -2304,7 +2628,12 @@ mod tests {
             (&weapons, "Mind Blade (Light Piercing)", "not an item"),
             (&weapons, "Demon Armor Claw Attack", "a negative price"),
             (&weapons, "Gauntlet (Part of Armor Suit)", "comes with the armor"),
-            (&weapons, "Holy Avenger", "no price: already magic"),
+            (&weapons, "Holy Avenger", "a named magic item, priced"),
+            (&weapons, "Flame Tongue", "a named magic item"),
+            (&weapons, "Oathbow", "a named magic item"),
+            (&weapons, "Javelin of Lightning", "a named magic item priced under a +1"),
+            (&weapons, "Trident of Warning", "a named magic item"),
+            (&weapons, "Mace of Terror", "a named magic item"),
             (&armor, "Mind Armor (Light)", "not an item"),
             (&shields, "Mind Shield", "not an item"),
             (&gear, "Backpack", "not arms or armor"),
@@ -2314,12 +2643,38 @@ mod tests {
                 assert!(row.variants.is_empty(), "{key} ({why}) has offers: {:?}", row.variants);
             }
         }
-        for key in ["Arrow (Base)", "Touch Attack (Ray)", "Holy Avenger"] {
+        for key in ["Arrow (Base)", "Touch Attack (Ray)", "Holy Avenger", "Flame Tongue", "Javelin of Lightning"] {
             assert!(entry(&weapons, key).is_some(), "{key} must be listed for this check to mean anything");
+        }
+        // Masterwork and special-material copies of a base weapon are not magic: they keep their `+N`.
+        for (list, key) in [
+            (&weapons, "Longsword (Cold Iron/Masterwork)"),
+            (&weapons, "Battleaxe (Adamantine)"),
+            (&weapons, "Dagger (Silver/Masterwork)"),
+            (&shields, "Mithral Heavy Shield"),
+        ] {
+            let row = entry(list, key).unwrap_or_else(|| panic!("{key} is on sale"));
+            assert_eq!(row.variants.len(), 5, "{key} keeps its +1…+5");
         }
         for list in [&gear, &market(MarketCategory::MagicItem)] {
             assert!(list.iter().all(|r| r.variants.is_empty()), "gear and magic items take no +N");
         }
+    }
+
+    /// The census the receipt quotes: every priced arms-and-armor Market row with `+N` offers, one
+    /// line each (`--nocapture`), so a change to who takes a bonus is a diff of this output.
+    #[test]
+    fn enhancement_price_table_census_of_rows_with_offers() {
+        let mut lines = Vec::new();
+        for category in [MarketCategory::Weapon, MarketCategory::Armor, MarketCategory::Shield] {
+            for row in market(category).iter().filter(|row| !row.variants.is_empty()) {
+                let base = built_catalog().entries.iter().find(|e| e.key == row.entry.key).map(|e| e.name.as_str());
+                let desc: String = row.entry.description.as_deref().unwrap_or("").chars().take(70).collect();
+                lines.push(format!("OFFERS\t{:?}\t{}\t{:?}\t{:?}\t{desc}", category, row.entry.key, row.entry.cost_gp, base));
+            }
+        }
+        println!("{}", lines.join("\n"));
+        assert!(!lines.is_empty());
     }
 
     #[test]

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 11250.0,
     "description": "Allies get +1 bonus on most rolls, enemies -1 penalty.",
     "key": "Wand of Prayer",
     "name": "Wand",

@@ -1,0 +1,10 @@
+character_id = 00000000-0000-0000-0000-000000000001
+revision_id = 00000000-0000-0000-0000-000000000001.rev.1
+revision_kind = authoritative
+saved_at = 2026-01-01T00:00:00.000Z
+schema_version = 2
+app_or_runtime_version = 0.0.0-test
+content_or_rules_provenance = pf1.core_rulebook
+game_system = pf1
+latest_authoritative_revision_ref = 00000000-0000-0000-0000-000000000001.rev.1
+display_label = Aldric Ironhand

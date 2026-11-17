@@ -114,6 +114,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "BLEED",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -192,6 +195,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Bleed",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -305,7 +311,7 @@
           "die_size": 6
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 164000.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           18,

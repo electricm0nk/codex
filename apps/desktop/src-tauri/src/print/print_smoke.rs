@@ -152,8 +152,8 @@ fn print_smoke_the_pdf_prints_the_values_the_sheet_holds() {
     // The blocks, in the PF layout file's order: the Combat block split along the screen's boxes
     // (SD-40 `decisions.md §8`), page 1 laid out on the grid (E2.3): each row's cells left to right.
     let at = |heading: &str| text.find(heading).unwrap_or_else(|| panic!("heading {heading} printed: {text}"));
-    // E2.18: the portrait's two-row cell reads after the name row in the PDF's text.
-    assert!(at("Character Name") < at("Portrait") && at("Portrait") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Character Name, Portrait, Hit Points, Abilities in order: {text}");
+    // SD-41 E4.4: the portrait box prints no word, so the order starts at the name row.
+    assert!(at("Character Name") < at("Hit Points") && at("Hit Points") < at("Abilities"), "Character Name, Hit Points, Abilities in order: {text}");
     assert!(at("Speed") < at("Details"), "the Bio section's details print after page 1's Speed (E3.4): {text}");
     // E2.18 (`decisions.md §24.3.1`): the AC row beside the portrait; the left column (Weapons,
     // Attack, Saving Throws), then the right column's Abilities.

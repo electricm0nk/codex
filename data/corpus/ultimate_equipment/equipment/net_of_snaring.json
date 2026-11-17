@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": 0.0,
+    "cost_gp": 16320.0,
     "description": "Can only be thrown underwater. If thrown on land, targets creature that threw it.",
     "key": "Net of Snaring",
     "name": "Net of Snaring",

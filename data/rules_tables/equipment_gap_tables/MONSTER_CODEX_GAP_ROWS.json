@@ -64,7 +64,7 @@
       "key": "Snakebiter Arrow",
       "name": "Snakebiter Arrow",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 0.05,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -74,7 +74,7 @@
       "key": "Frostblood Axe",
       "name": "Frostblood Axe",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 10.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -84,7 +84,7 @@
       "key": "Serpent-Necked Flail",
       "name": "Serpent-Necked Flail",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 15.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -94,7 +94,7 @@
       "key": "Cave Dweller's Greataxe",
       "name": "Cave Dweller's Greataxe",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -104,7 +104,7 @@
       "key": "Bloodfeast Shield",
       "name": "Bloodfeast Shield",
       "category": "ArmsArmor",
-      "cost_gp": null,
+      "cost_gp": 20.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null

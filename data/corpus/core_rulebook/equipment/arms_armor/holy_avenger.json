@@ -6,7 +6,7 @@
     "key": "Holy Avenger",
     "category": "arms_armor",
     "name": "Longsword (Base)",
-    "cost_gp": null,
+    "cost_gp": 120630.0,
     "weight_lbs": null,
     "description": "This +2 cold iron longsword becomes a +5 holy cold iron longsword in the hands of a paladin.\nThis sacred weapon provides spell resistance of 5 + the paladin's level to the wielder and anyone adjacent to her. It also enables the paladin to use greater dispel magic (once per round as a standard action) at the class level of the paladin. Only the area dispel is possible, not the targeted dispel or counterspell versions of greater dispel magic."
   },

@@ -404,6 +404,8 @@ export type CreateCharacterOutcome =
        * says the character starts with 0 gp and why.
        */
       startingWealthNote?: string | null;
+      /** Each campaign copy the save could not write ("<dir>: <reason>"); empty when all were written. */
+      mirrorWarnings: string[];
     }
   | { kind: 'Blocked'; diagnostics: DiagnosticDto[] };
 

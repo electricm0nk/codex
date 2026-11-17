@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 11250.0,
     "description": "Magic horse appears for 1 hour/level.",
     "key": "Wand of Phantom Steed",
     "name": "Wand",

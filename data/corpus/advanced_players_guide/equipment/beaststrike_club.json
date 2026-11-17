@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": 0.0,
+    "cost_gp": 2300.0,
     "description": "A +1 club that a wild shape user can expend a daily use to transform into a natural weapon form (bite, claw, gore, slam, sting, or talon), counting as both a natural and a manufactured weapon.",
     "key": "Beaststrike Club",
     "name": "Beaststrike Club",

@@ -6,7 +6,7 @@
     "key": "Mithral Shirt",
     "category": "arms_armor",
     "name": "Chain Shirt (Base)",
-    "cost_gp": null,
+    "cost_gp": 1100.0,
     "weight_lbs": 20.0,
     "description": "This extremely light chain shirt is made of very fine mithral links. The armor has an arcane spell failure chance of 10%%, a maximum Dexterity bonus of +6, and no armor check penalty. It is considered light armor."
   },

@@ -1,0 +1,66 @@
+SAVED	scripts/oracle_harness/eqm-fixtures/arrow_alone.pcg	ac=12	weight=4	level=Light	rows=armor=0,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/arrow_alone_apg.pcg	ac=12	weight=4	level=Light	rows=armor=0,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/bow_arrow.pcg	ac=12	weight=83	level=Medium	rows=armor=0,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/leather_baseline.pcg	ac=14	weight=15	level=Light	rows=armor=2,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/leather_draco.pcg	ac=14	weight=15	level=Light	rows=armor=2,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/leather_dragonhide.pcg	ac=14	weight=15	level=Light	rows=armor=2,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/leather_matdragonhide.pcg	ac=14	weight=15	level=Light	rows=armor=2,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/outfit_baseline.pcg	ac=12	weight=8	level=Light	rows=armor=0,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/outfit_darkleaf.pcg	ac=12	weight=8	level=Light	rows=armor=0,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/sd33r6_eqm_combo.pcg	ac=12	weight=0	level=Light	rows=armor=0,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/shield_baseline.pcg	ac=14	weight=10	level=Light	rows=armor=0,shield=2,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/shield_spikesb.pcg	ac=14	weight=10	level=Light	rows=armor=0,shield=2,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	scripts/oracle_harness/eqm-fixtures/shield_spikesqshieldbash.pcg	ac=14	weight=10	level=Light	rows=armor=0,shield=2,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:CodeMonkey.pcg	ac=14	weight=32	level=Light	rows=armor=3,shield=0,dexterity=1,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:Everything.pcg	ac=15	weight=9	level=Light	rows=armor=0,shield=0,dexterity=3,size=1,natural=0,deflection=0,misc=1	default=n/a
+SAVED	oracle:Sorcerer.pcg	ac=11	weight=10	level=Light	rows=armor=0,shield=0,dexterity=1,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:SpecialWizard.pcg	ac=10	weight=7	level=Light	rows=armor=0,shield=0,dexterity=-1,size=1,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:CodeMonkey.pcg	ac=14	weight=32	level=Light	rows=armor=3,shield=0,dexterity=1,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:Everything.pcg	ac=15	weight=9	level=Light	rows=armor=0,shield=0,dexterity=3,size=1,natural=0,deflection=0,misc=1	default=n/a
+SAVED	oracle:Sorcerer.pcg	ac=11	weight=10	level=Light	rows=armor=0,shield=0,dexterity=1,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:SpecialWizard.pcg	ac=10	weight=7	level=Light	rows=armor=0,shield=0,dexterity=-1,size=1,natural=0,deflection=0,misc=0	default=n/a
+BLOCKED	oracle:35e_Alice.pcg
+SAVED	oracle:35e_Bard.pcg	ac=11	weight=0	level=Light	rows=armor=0,shield=0,dexterity=1,size=0,natural=0,deflection=0,misc=0	default=n/a
+BLOCKED	oracle:35e_Bob.pcg
+BLOCKED	oracle:35e_Bob_Companion.pcg
+BLOCKED	oracle:35e_Charlie.pcg
+BLOCKED	oracle:35e_CloudGiantHalfDragon.pcg
+BLOCKED	oracle:35e_Dave.pcg
+BLOCKED	oracle:35e_Eve.pcg
+BLOCKED	oracle:35e_Fran.pcg
+BLOCKED	oracle:35e_Gordon.pcg
+BLOCKED	oracle:35e_Harold.pcg
+SAVED	oracle:35e_Ivan.pcg	ac=10	weight=1	level=Light	rows=armor=0,shield=0,dexterity=0,size=0,natural=0,deflection=0,misc=0	default=n/a
+BLOCKED	oracle:35e_Jango.pcg
+BLOCKED	oracle:35e_JimDop.pcg
+SAVED	oracle:35e_L10(fighter-human).pcg	ac=27	weight=101	level=Light	rows=armor=13,shield=0,dexterity=3,size=0,natural=0,deflection=0,misc=1	default=n/a
+SAVED	oracle:35e_L7-3(fighter-cleric-dwarf).pcg	ac=21	weight=69.5	level=Light	rows=armor=7,shield=0,dexterity=3,size=0,natural=0,deflection=0,misc=1	default=n/a
+BLOCKED	oracle:35e_Lauren.pcg
+SAVED	oracle:35e_Mallory.pcg	ac=11	weight=0	level=Light	rows=armor=0,shield=0,dexterity=0,size=0,natural=0,deflection=0,misc=1	default=n/a
+BLOCKED	oracle:35e_Q-PsiCrystal.pcg
+BLOCKED	oracle:35e_Quasvin.pcg
+BLOCKED	oracle:35e_UT~Gordon.pcg
+BLOCKED	oracle:35e_UT~Harold.pcg
+BLOCKED	oracle:35e_UT~Ivan.pcg
+SAVED	oracle:3e_BarJack.pcg	ac=20	weight=32	level=Light	rows=armor=6,shield=0,dexterity=3,size=1,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:3e_BrdJoe.pcg	ac=11	weight=0	level=Light	rows=armor=0,shield=0,dexterity=1,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:3e_CleElf.pcg	ac=19	weight=46	level=Medium	rows=armor=7,shield=1,dexterity=1,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:3e_FigFae.pcg	ac=14	weight=4	level=Light	rows=armor=0,shield=0,dexterity=3,size=0,natural=0,deflection=0,misc=1	default=n/a
+SAVED	oracle:3e_MonKee.pcg	ac=10	weight=0	level=Light	rows=armor=0,shield=0,dexterity=-1,size=0,natural=0,deflection=0,misc=1	default=n/a
+SAVED	oracle:3e_SWizSam.pcg	ac=12	weight=0	level=Light	rows=armor=0,shield=0,dexterity=1,size=1,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:3e_WizShar.pcg	ac=12	weight=0	level=Light	rows=armor=0,shield=0,dexterity=2,size=0,natural=0,deflection=0,misc=0	default=n/a
+BLOCKED	oracle:Zen_Nancy.pcg
+BLOCKED	oracle:msrd_Elwood.pcg
+BLOCKED	oracle:msrd_Ilyana.pcg
+REFUSED	oracle:none_PdfBuster.pcg	The PCGen import tool (pcg_import) refused the file: none_PdfBuster.pcg is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)
+REFUSED	oracle:none_derth.pcg	The PCGen import tool (pcg_import) refused the file: none_derth.pcg is not a PCGen 6 character: it has no PCGVERSION or CHARACTERNAME line (PCGen 5 and older wrote another format)
+SAVED	oracle:pf_Cleric.pcg	ac=16	weight=101.5	level=OverHeavyCapacity	rows=armor=5,shield=1,dexterity=0,size=0,natural=0,deflection=0,misc=0	default=n/a
+SAVED	oracle:pf_Paladin.pcg	ac=22	weight=166	level=Medium	rows=armor=10,shield=0,dexterity=1,size=0,natural=0,deflection=1,misc=0	default=n/a
+SAVED	oracle:pf_Rogue.pcg	ac=25	weight=144.64	level=OverHeavyCapacity	rows=armor=5,shield=0,dexterity=4,size=1,natural=2,deflection=2,misc=1	default=n/a
+BLOCKED	oracle:pf_goldielocks.pcg
+BLOCKED	oracle:sf_mechanic.pcg
+BLOCKED	oracle:sf_mechanic_drone.pcg
+BLOCKED	oracle:sf_soldier.pcg
+SAVED	oracle:DrakelingSorc.pcg	ac=13	weight=5	level=Light	rows=armor=0,shield=0,dexterity=3,size=0,natural=0,deflection=0,misc=0	default=n/a
+BLOCKED	oracle:Dex3.pcg
+SUMMARY	files=65	saved=37	blocked=26	refused=2

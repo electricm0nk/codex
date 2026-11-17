@@ -93,6 +93,7 @@ pub(crate) fn save_criticals_at_root(root: &Path, criticals: &[CprRecordedCritic
     choices.criticals = criticals.to_vec();
     compose_sheet(&CprSheetCatalogs::load(&corpus_root())?, &character.input, &choices)?;
     CprCharacterStore::save_choices(&choices, root)?;
+    crate::character_hub::after_write(root);
     CyberpunkAdapter.load_saved_character(root)
 }
 
@@ -160,6 +161,7 @@ fn market_save(
     }
     CprCharacterStore::save_kit(kit, root)?;
     CprCharacterStore::save_choices(choices, root)?;
+    crate::character_hub::after_write(root);
     Ok(MarketShellOutcome::Saved { moved: i64::from(moved) })
 }
 
@@ -508,6 +510,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
         character.revision_id = next.clone();
         character.saved_at = saved_at.to_owned();
         CprCharacterStore::save(&character, root)?;
+        crate::character_hub::after_write(root);
         Ok(ReSaveCharacterResponse { success: true, revision_id: Some(next), error: None })
     }
 
@@ -573,6 +576,7 @@ impl RuleSystemAdapter for CyberpunkAdapter {
         let sheet_rules_unavailable_reason = sheet_lines.is_empty().then(|| {
             "Cyberpunk RED has no sheet-rule package; its sheet renders the cpr. explanation rows".to_owned()
         });
+        let (campaigns, mirror_warnings) = crate::character_hub::campaign_state_at_root(root);
         Ok(LoadSavedCharacterResponse {
             admitted_under_override: Vec::new(),
             summary: summary_dto(&character),
@@ -650,6 +654,11 @@ impl RuleSystemAdapter for CyberpunkAdapter {
             languages: Default::default(),
             fly_maneuverability: None,
             resistances: Default::default(),
+            equipment_sets: None,
+            container_loads: Vec::new(),
+            campaigns,
+            mirror_warnings,
+            ignore_container_capacity: false,
         })
     }
 }
@@ -1419,5 +1428,55 @@ pub(crate) mod tests {
             std::fs::remove_dir_all(&root).ok();
         }
         assert!(cyberware > 0, "the starters hold cyberware, or this proves nothing");
+    }
+
+    /// SD-41 E2.13 (`decisions.md §29`): a Cyberpunk RED character in a campaign is copied to the
+    /// campaign folder when it joins, Lifepath included, and every later write reaches the copy:
+    /// a Critical Injury tick (`cpr_sheet_choices.txt`) and a re-save (`envelope.txt`).
+    #[test]
+    fn campaign_write_through_cpr_saves_reach_the_copy() {
+        use codex::rules_core::cpr::critical::{CprCriticalLocation, CprRecordedCritical};
+        use codex::rules_core::cpr::input::{CprLifepath, CprLifepathAnswer, CprSheetChoices};
+        use codex::rules_core::cpr::roles::CprRole;
+        use codex::saved_character::campaign_mirror::Membership;
+
+        let characters_root = tempdir("campaign-cpr");
+        let root = characters_root.join("cpr-edgerunner");
+        let campaign = characters_root.join("campaign");
+        std::fs::create_dir_all(&campaign).expect("campaign dir");
+        CprCharacterStore::save(&edgerunner(), &root).expect("saves");
+        CprCharacterStore::save_choices(&CprSheetChoices { role: Some((CprRole::Solo, 4)), ..CprSheetChoices::default() }, &root).expect("saves the choices");
+        let lifepath = CprLifepath {
+            answers: vec![CprLifepathAnswer {
+                table: "Cultural Origins".to_owned(),
+                entry: 0,
+                column: "Your (General) Cultural Region".to_owned(),
+                text: "East Asian".to_owned(),
+                detail: "Chinese, Cantonese, Japanese".to_owned(),
+            }],
+        };
+        CprCharacterStore::save_lifepath(&lifepath, &root).expect("saves the Lifepath");
+
+        let membership = Membership { campaign_id: "camp-1".to_owned(), campaign_name: "Night City".to_owned(), campaign_dir: campaign.clone(), active: true };
+        let warnings = crate::character_hub::set_character_campaigns_at_root(&root, &[membership]).expect("a CPR character joins a campaign");
+        assert!(warnings.is_empty(), "{warnings:?}");
+        let folders: Vec<std::path::PathBuf> = std::fs::read_dir(campaign.join("characters")).expect("the campaign holds the character").map(|e| e.unwrap().path()).collect();
+        assert_eq!(folders.len(), 1, "{folders:?}");
+        let copy = &folders[0];
+        assert!(copy.file_name().unwrap().to_string_lossy().ends_with("cpr-edgerunner"), "{copy:?}");
+        let same = |file: &str| std::fs::read(copy.join(file)).ok() == std::fs::read(root.join(file)).ok();
+        assert!(same("cpr_lifepath.txt") && copy.join("cpr_lifepath.txt").exists(), "the copy holds the Lifepath");
+
+        let before = std::fs::read(copy.join("cpr_sheet_choices.txt")).expect("the copy holds the choices");
+        let tick = CprRecordedCritical { location: CprCriticalLocation::Body, name: "Collapsed Lung".to_owned() };
+        let saved = save_criticals_at_root(&root, &[tick]).expect("saves the tick");
+        assert!(saved.mirror_warnings.is_empty(), "{:?}", saved.mirror_warnings);
+        assert_ne!(std::fs::read(copy.join("cpr_sheet_choices.txt")).unwrap(), before, "the tick reached the copy");
+        assert!(same("cpr_sheet_choices.txt"));
+
+        let resaved = CyberpunkAdapter.save_character(&root, "cpr-edgerunner.rev.1", "2026-11-15T00:00:00Z").expect("re-saves");
+        assert!(resaved.success, "{resaved:?}");
+        assert!(same("envelope.txt"), "the re-saved envelope reached the copy");
+        std::fs::remove_dir_all(&characters_root).ok();
     }
 }

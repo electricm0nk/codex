@@ -642,6 +642,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Obliviating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -681,6 +684,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Training",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,

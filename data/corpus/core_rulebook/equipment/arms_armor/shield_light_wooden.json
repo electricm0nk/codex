@@ -6,7 +6,7 @@
     "key": "Shield (Light/Wooden)",
     "category": "arms_armor",
     "name": "Light Wooden Shield (Base)",
-    "cost_gp": null,
+    "cost_gp": 3.0,
     "weight_lbs": null,
     "description": "You strap a shield to your forearm and grip it with your hand. A light shield's weight lets you carry other items in that hand, although you cannot use weapons with it.\nWooden or Steel: Wooden and steel shields offer the same basic protection, though they respond differently to some spells and effects.\nShield Bash Attacks: You can bash an opponent with a light shield. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right."
   },

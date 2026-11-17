@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "A coruscating ray springs from your hand, the subject takes a penalty to Strength equal to 1d6+1/two level, max +5.",
     "key": "Wand of Ray of Enfeeblement",
     "name": "Wand",

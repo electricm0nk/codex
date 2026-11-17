@@ -388,6 +388,11 @@ mod tests {
                         *damage = Some(damage.unwrap_or(0) + value);
                     }
                 };
+                // SD-41 E2.6: an ammunition-gated chain is not the weapon's roll (mithral's two
+                // `TOHIT` chains, one per item type, read +2 when summed).
+                if q.iter().any(|x| x.eq_ignore_ascii_case("PRETYPE:1,AMMUNITION")) {
+                    continue;
+                }
                 if (subject == Some("WEAPON") || this_natural) && is_roll_shape {
                     if equipment_bonus_reader::roll_bonus_carries_enhancement_type(bonus)
                         && let Some(value) =

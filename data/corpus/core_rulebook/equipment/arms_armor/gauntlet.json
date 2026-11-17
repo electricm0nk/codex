@@ -6,7 +6,7 @@
     "key": "Gauntlet",
     "category": "arms_armor",
     "name": "Gauntlet (Base)",
-    "cost_gp": null,
+    "cost_gp": 2.0,
     "weight_lbs": null,
     "description": "This metal glove lets you deal lethal damage rather than nonlethal damage with unarmed strikes. A strike with a gauntlet is otherwise considered an unarmed attack. The cost and weight given are for a single gauntlet. Medium and heavy armors (except breastplate) come with gauntlets. Your opponent cannot use a disarm action to disarm you of gauntlets."
   },

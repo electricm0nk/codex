@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "Creatures within the emanation area (or those who enter it) can't speak any deliberate and intentional lies.",
     "key": "Wand of Zone of Truth",
     "name": "Wand",

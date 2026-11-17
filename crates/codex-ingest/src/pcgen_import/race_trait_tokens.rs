@@ -370,7 +370,7 @@ pub fn declared_walk_speed_ft<T: IngestTokens>(data: &T) -> Option<i32> {
         .find_map(|t| walk_speed_from_move(&t.value))
 }
 
-/// This record's `MOVE:` swim and fly speeds in feet, and the fly
+/// This record's `MOVE:` swim, fly and climb speeds in feet, and the fly
 /// maneuverability its `DESC:` states in words (`"fly speed of 60 feet
 /// (average)"` → `"average"`): one of the five Core Rulebook words, or `None`.
 pub fn declared_move_modes<T: IngestTokens>(data: &T) -> DeclaredMoveModes {
@@ -383,7 +383,7 @@ pub fn declared_move_modes<T: IngestTokens>(data: &T) -> DeclaredMoveModes {
             ["clumsy", "poor", "average", "good", "perfect"].into_iter().find(|word| lower.contains(&format!("({word})"))).map(str::to_owned)
         })
     });
-    DeclaredMoveModes { swim_ft: speed("Swim"), fly_ft, fly_maneuverability }
+    DeclaredMoveModes { swim_ft: speed("Swim"), fly_ft, fly_maneuverability, climb_ft: speed("Climb") }
 }
 
 /// The creature size this record's `TEMPLATE:SIZE_<code>` assigns, if it
@@ -642,20 +642,20 @@ mod reader_tests {
 
     /// SD-40 E2.17: the swim and fly modes of a `MOVE:` token, and the fly maneuverability the
     /// record's own `DESC:` states in words (`strix_flight.json`: "a fly speed of 60 feet
-    /// (average)"). Climb is not read.
+    /// (average)"). SD-41 E1.14: climb is read the same way.
     #[test]
     fn move_modes_read_swim_fly_and_the_stated_maneuverability() {
         let undine = Row(vec![token("MOVE", "Walk,30,Swim,30")]);
-        assert_eq!(declared_move_modes(&undine), DeclaredMoveModes { swim_ft: Some(30), fly_ft: None, fly_maneuverability: None });
+        assert_eq!(declared_move_modes(&undine), DeclaredMoveModes { swim_ft: Some(30), ..DeclaredMoveModes::default() });
         let strix = Row(vec![token("DESC", "Strix have a fly speed of 60 feet (average)."), token("MOVE", "Fly,60")]);
         assert_eq!(
             declared_move_modes(&strix),
-            DeclaredMoveModes { swim_ft: None, fly_ft: Some(60), fly_maneuverability: Some("average".to_owned()) }
+            DeclaredMoveModes { fly_ft: Some(60), fly_maneuverability: Some("average".to_owned()), ..DeclaredMoveModes::default() }
         );
         let unstated = Row(vec![token("DESC", "It flies (badly)."), token("MOVE", "Fly,30")]);
         assert_eq!(declared_move_modes(&unstated).fly_maneuverability, None, "a word that is no maneuverability is not one");
         let climber = Row(vec![token("MOVE", "Walk,30,Climb,20")]);
-        assert_eq!(declared_move_modes(&climber), DeclaredMoveModes::default(), "climb and walk are not swim or fly");
+        assert_eq!(declared_move_modes(&climber), DeclaredMoveModes { climb_ft: Some(20), ..DeclaredMoveModes::default() }, "walk is not a declared mode");
     }
 
     #[test]

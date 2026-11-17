@@ -6,7 +6,7 @@
     "key": "Caster's Shield",
     "category": "arms_armor",
     "name": "Light Wooden Shield (Base)",
-    "cost_gp": null,
+    "cost_gp": 3153.0,
     "weight_lbs": null,
     "description": "This +1 light wooden shield has a leather strip on the back on which a spellcaster can scribe a single spell as on a scroll. A spell so scribed requires half the normal cost in raw materials. The strip cannot accommodate spells of higher than 3rd level. The strip is reusable.\nA random caster's shield has a 50%% chance of having a single medium scroll spell on it. The spell is divine (01-80 on d%%) or arcane (81-100). A caster's shield has a 5%% arcane spell failure chance."
   },

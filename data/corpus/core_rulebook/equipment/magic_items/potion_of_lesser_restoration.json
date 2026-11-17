@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 300.0,
     "description": "Dispels magical ability penalty or cures 1d4 points of ability damage to one ability score",
     "key": "Potion of Lesser Restoration",
     "name": "Potion",

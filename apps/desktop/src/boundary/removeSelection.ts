@@ -82,6 +82,10 @@ export interface RemoveEquipmentSelectionRequest {
   bonus?: number;
   /** The state the row shows this copy in. Omitted, a copy in hand goes before one left behind. */
   fromState?: ActiveStateDto;
+  /** Pieces to sell from the copy's stack; omitted sells the copy's own line. */
+  quantity?: number;
+  /** The agreed total in copper, returned in place of the price mode's refund. */
+  negotiatedPriceCopper?: number;
 }
 
 export async function removeEquipmentSelection(

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 20165.0,
     "description": "This +1 hide armor is stitched together from grizzly bear hides. When the wearer rages, she automatically turns into a Large brown bear, as if using change shape (beast shape II). The armor melds with her new form as normal, but the armor's enhancement bonus changes into a +1 enhancement bonus to her natural armor. When the rage ends, the wearer reverts to her own form. when wearer rages, he turns into a Large brown bear with +1 bonus to natural armor",
     "key": "Ursine Rageskin",
     "name": "Ursine Rageskin",

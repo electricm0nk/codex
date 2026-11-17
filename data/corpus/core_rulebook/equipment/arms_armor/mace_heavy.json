@@ -6,7 +6,7 @@
     "key": "Mace (Heavy)",
     "category": "arms_armor",
     "name": "Heavy Mace (Base)",
-    "cost_gp": null,
+    "cost_gp": 12.0,
     "weight_lbs": null,
     "description": "A heavy mace has a larger head and a longer handle than a normal mace."
   },

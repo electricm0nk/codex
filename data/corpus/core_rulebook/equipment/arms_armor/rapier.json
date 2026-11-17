@@ -6,7 +6,7 @@
     "key": "Rapier",
     "category": "arms_armor",
     "name": "Rapier (Base)",
-    "cost_gp": null,
+    "cost_gp": 20.0,
     "weight_lbs": null,
     "description": "You can use the Weapon Finesse feat to apply your Dexterity modifier instead of your Strength modifier to attack rolls with a rapier sized for you, even though it isn't a light weapon. You can't wield a rapier in two hands in order to apply 1-1/2 times your Strength bonus to damage."
   },

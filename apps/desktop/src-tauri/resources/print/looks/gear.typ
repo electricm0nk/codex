@@ -1,8 +1,9 @@
-// The `gear` look (SD-40 E3.2, decisions.md §23.1 item 5: section 3, Inventory): the owned copies
+// The `gear` look (SD-40 E3.2, decisions.md §23.1 item 5: section 3, Inventory): the owned stacks
 // under their captions (the row of kind `captions`: Item, Slot, Weight), in three sections (rows of
-// kind `section`: Worn, Carried, Left behind), each its item lines as given and then two blank ruled
-// rows for the pencil; then the carried weight, the load and the three limits (rows of kind `total`)
-// as a strip of labelled boxes. It formats strings it is given; it computes nothing (NR-2).
+// kind `section`: Worn, Carried, Not Carried), each its item lines as given and then two blank ruled
+// rows for the pencil; a line of kind `in-<n>` (SD-41 E4.1: inside `n` containers) is indented `n`
+// steps under its container; then the carried weight, the load and the three limits (rows of kind
+// `total`) as a strip of labelled boxes. It formats strings it is given; it computes nothing (NR-2).
 
 #let blank = 2
 
@@ -17,6 +18,12 @@
 
 #let kind(r) = r.at("kind", default: "")
 
+// How many containers a line sits in: `in-2` is 2, any other line 0.
+#let depth(r) = if kind(r).starts-with("in-") { int(kind(r).slice(3)) } else { 0 }
+
+// One indentation step.
+#let step = 0.9em
+
 // A line with words under it keeps both on one page (E3.MC): the table's zero-width first column
 // holds, beside such a line, one cell spanning its two rows that may not break across pages.
 #let keep(r) = if r.notes.len() == 0 { table.cell(inset: 0pt, []) } else { table.cell(rowspan: 2, breakable: false, inset: 0pt, []) }
@@ -28,9 +35,10 @@
   if kind(r) == "section" {
     (if first { () } else { blanks }) + (table.cell(colspan: 4, inset: (x: 4pt, top: 7pt, bottom: 3pt), text(size: 9.5pt, weight: "bold", r.label)),)
   } else {
-    let line = (keep(r), text(size: 9pt, r.label), text(size: 8.5pt, r.values.at(0, default: "")), text(size: 9pt, weight: "bold", r.values.at(1, default: "")))
+    let indent = depth(r) * step
+    let line = (keep(r), pad(left: indent, text(size: 9pt, r.label)), text(size: 8.5pt, r.values.at(0, default: "")), text(size: 9pt, weight: "bold", r.values.at(1, default: "")))
     if r.notes.len() == 0 { line } else {
-      line + (table.cell(colspan: 3, inset: (left: 10pt, right: 4pt, top: 0pt, bottom: 3pt), stack(spacing: 0.4em, ..r.notes.map(n => text(size: 8.5pt, fill: luma(40), n)))),)
+      line + (table.cell(colspan: 3, inset: (left: 10pt + indent, right: 4pt, top: 1.5pt, bottom: 3pt), stack(spacing: 0.4em, ..r.notes.map(n => text(size: 8.5pt, fill: luma(40), n)))),)
     }
   }
 }
@@ -59,6 +67,6 @@
       column-gutter: 4pt,
       ..totals.map(r => box(width: 100%, stroke: 0.6pt + luma(60), inset: 4pt, stack(spacing: 0.35em, text(size: 7.5pt, fill: luma(60), r.label), text(size: 10pt, weight: "bold", r.values.at(0, default: ""))))),
     )
-    #metadata((sections: sections, blank: blank)) <gear-look>
+    #metadata((sections: sections, blank: blank, deepest: calc.max(0, ..lines.map(depth)))) <gear-look>
   ]
 }

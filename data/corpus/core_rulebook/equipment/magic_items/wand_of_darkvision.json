@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "The subject gains the ability to see 60 feet even in total darkness.",
     "key": "Wand of Darkvision",
     "name": "Wand",

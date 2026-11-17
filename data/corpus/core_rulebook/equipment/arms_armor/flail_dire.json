@@ -6,7 +6,7 @@
     "key": "Flail (Dire)",
     "category": "arms_armor",
     "name": "Dire Flail (Base)",
-    "cost_gp": null,
+    "cost_gp": 90.0,
     "weight_lbs": null,
     "description": "A dire flail consists of two spheres of spiked iron dangling from chains at opposite ends of a long haft."
   },

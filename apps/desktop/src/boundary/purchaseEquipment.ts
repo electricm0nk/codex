@@ -33,6 +33,10 @@ export interface PurchaseEquipmentRequest {
   priceMode?: PriceMode;
   /** The `+N` to buy, one the Market row offers: charged at that offer's price, with its eqmod on the new copy. Absent buys the plain item. */
   bonus?: number;
+  /** Bundles as the book sells them (3 × "Arrow, Flight (20)" lands 60 arrows). Absent buys one. */
+  quantity?: number;
+  /** The agreed total in copper, charged in place of the listed price; the only way to buy a row with no price. */
+  negotiatedPriceCopper?: number;
 }
 
 export type PurchaseEquipmentOutcome =

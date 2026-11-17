@@ -6,7 +6,7 @@
     "key": "Rapier of Puncturing",
     "category": "arms_armor",
     "name": "Rapier (Base)",
-    "cost_gp": null,
+    "cost_gp": 50320.0,
     "weight_lbs": null,
     "description": "Three times per day, this +2 wounding rapier allows the wielder to make a touch attack with the weapon that deals 1d6 points of Constitution damage by draining blood. Creatures immune to critical hits are immune to the Constitution damage dealt by this weapon."
   },

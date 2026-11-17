@@ -6,7 +6,7 @@
     "key": "Axe (Orc Double)",
     "category": "arms_armor",
     "name": "Orc Double Axe (Base)",
-    "cost_gp": null,
+    "cost_gp": 60.0,
     "weight_lbs": null,
     "description": "A cruel weapon with blades placed at opposite ends of a long haft, an orc double axe is a double weapon."
   },

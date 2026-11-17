@@ -23,7 +23,7 @@ function describeSteps(row) {
     parts.push(`_(setup: ${setupId})_`);
   }
   for (const step of row.steps ?? []) {
-    if (step.op === 'click') parts.push(`click "${step.target}"`);
+    if (step.op === 'click') parts.push(`click ${step.by === 'label' ? 'label ' : ''}"${step.target}"${step.index === undefined ? '' : ` #${step.index}`}`);
     else if (step.op === 'type') parts.push(`type "${step.text}"`);
     else if (step.op === 'key') parts.push(`key ${step.key}`);
     else if (step.op === 'scroll') parts.push(`scroll (${step.ticks ?? 5} ticks)`);

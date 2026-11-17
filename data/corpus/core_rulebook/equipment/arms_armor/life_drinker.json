@@ -6,7 +6,7 @@
     "key": "Life-Drinker",
     "category": "arms_armor",
     "name": "Greataxe (Base)",
-    "cost_gp": null,
+    "cost_gp": 40320.0,
     "weight_lbs": null,
     "description": "This +1 greataxe is favored by undead and constructs, who do not suffer its drawback. A life-drinker bestows two negative levels on its target whenever it deals damage, just as if its target had been struck by an undead creature. One day after being struck, subjects must make a DC 16 Fortitude save for each negative level or the negative levels become permanent.\nEach time a life-drinker deals damage to a foe, it also bestows one negative level on the wielder. Any negative levels gained by the wielder in this fashion lasts for 1 hour."
   },

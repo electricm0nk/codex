@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 700.0,
     "description": "Grants acid resistance 20 for 70 minutes.",
     "key": "Potion of Resist Energy 20 (Acid)",
     "name": "Potion",

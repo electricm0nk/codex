@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 11250.0,
     "description": "Dispels invisibility within 5 ft./level.",
     "key": "Wand of Invisibility Purge",
     "name": "Wand",

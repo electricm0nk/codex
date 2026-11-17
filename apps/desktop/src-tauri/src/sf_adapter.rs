@@ -707,7 +707,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
         envelope.revision_id = next.clone();
         envelope.latest_authoritative_revision_ref = next;
         envelope.saved_at = saved_at.to_owned();
-        SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+        crate::character_hub::save_and_mirror(&envelope, root)?;
         Ok(AppendToCharacterResponse {
             success: true,
             character: Some(AppendedCharacterDto {
@@ -783,6 +783,7 @@ impl RuleSystemAdapter for StarfinderAdapter {
             Err(refusal) => refused_chassis(refusal.clone()),
         };
         let scores = &input.chosen.ability_scores;
+        let (campaigns, mirror_warnings) = crate::character_hub::campaign_state_at_root(root);
         Ok(LoadSavedCharacterResponse {
             admitted_under_override: Vec::new(),
             summary: summary_dto(&envelope),
@@ -872,6 +873,11 @@ impl RuleSystemAdapter for StarfinderAdapter {
             languages: Default::default(),
             fly_maneuverability: None,
             resistances: Default::default(),
+            equipment_sets: None,
+            container_loads: Vec::new(),
+            campaigns,
+            mirror_warnings,
+            ignore_container_capacity: false,
         })
     }
 }
@@ -901,7 +907,7 @@ fn market_save(mut envelope: SavedCharacterEnvelope, input: CharacterInput, save
     envelope.latest_authoritative_revision_ref = next;
     envelope.saved_at = saved_at.to_owned();
     envelope.character_input = input;
-    SavedCharacterStore::save(&envelope, root).map_err(|err| err.message)?;
+    crate::character_hub::save_and_mirror(&envelope, root)?;
     Ok(MarketShellOutcome::Saved { moved })
 }
 

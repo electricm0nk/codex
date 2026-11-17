@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "General",
-    "cost_gp": null,
+    "cost_gp": 15.0,
     "description": null,
     "key": "Sword of Inner Fire",
     "name": "Sword of Inner Fire",

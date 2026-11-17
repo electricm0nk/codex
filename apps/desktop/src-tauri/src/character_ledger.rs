@@ -522,7 +522,9 @@ pub(crate) fn write_character_ledger_at_root(root: &Path, ledger: &CharacterLedg
     // Whole or not at all: a half-written file would refuse every later change on this character.
     let temporary = root.join(format!("{LEDGER_FILE_NAME}.tmp"));
     std::fs::write(&temporary, json).map_err(|err| format!("{}: {err}", temporary.display()))?;
-    std::fs::rename(&temporary, &path).map_err(|err| format!("{}: {err}", path.display()))
+    std::fs::rename(&temporary, &path).map_err(|err| format!("{}: {err}", path.display()))?;
+    crate::character_hub::after_write(root);
+    Ok(())
 }
 
 /// A feat as the drawer prints it. `target` is a chooser feat's target.

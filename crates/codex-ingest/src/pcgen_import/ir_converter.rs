@@ -90,7 +90,7 @@ use codex::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use codex::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use codex::rules_core::equipment_effects::EquipmentStatEffect;
 use codex::rules_core::equipment_effects::skill_set_rows;
-use codex::rules_core::equipment_record::{CorpusEquipmentRecord, StatedBonus};
+use codex::rules_core::equipment_record::{ContainerCapacity, CorpusEquipmentRecord, ModifierPrice, PriceTerm, StatedBonus};
 use codex::rules_core::spell_record::CorpusSpellRecord;
 use crate::pcgen_import::ir_content_payload::{
     record_to_live, IrContentPayload, IrContentRecord, IrPackageContent,
@@ -523,6 +523,192 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         is_natural_attack: is_natural_attack_of(record),
         is_shield: is_shield_of(record),
         is_modifier: matches!(record.kind, EquipmentRecordKind::EquipMod),
+        container: container_of(record),
+        container_capacity: if container_of(record) { container_capacity_of(record) } else { ContainerCapacity::Unstated },
+        uses_ammunition: uses_ammunition_of(record),
+        ammunition_family: if uses_ammunition_of(record) { ammunition_family_of(record) } else { None },
+        ammunition_kinds: ammunition_kinds_of(record),
+        base_quantity: base_quantity_of(record),
+        modifier_price: modifier_price_of(record),
+    }
+}
+
+/// The record's price as an equipment modifier on another item (SD-41 E2.6, `decisions.md §24`):
+/// its `PLUS`, `ITYPE` words and masterwork quality, and each `COST` formula and `ITEMCOST` chain as
+/// a [`PriceTerm`] linear in the host's base price, weight and enhancement total squared -- the
+/// variables [`equipment_price_gp`] gives them. A formula with any other variable (`%CHOICE`,
+/// `%CHARGES`, `SIZE`) or a prerequisite other than one type word marks the record `unpriced`.
+/// `None` for a record stating none of the four (an item, or a modifier with a flat `COST` only).
+fn modifier_price_of(record: &EquipmentRecord) -> Option<ModifierPrice> {
+    let tokens: Vec<(String, String)> = record.tokens.iter().map(|t| (t.key.clone(), t.value.clone())).collect();
+    let chains: Vec<Vec<String>> = record.bonus_chains.iter().map(|b| b.qualifiers.clone()).collect();
+    let price = EqmodPrice::from_tokens(&tokens, &chains);
+    let grants: Vec<String> =
+        equipment_token_value(record, "ITYPE").map_or(Vec::new(), |v| v.split('.').filter(|w| !w.is_empty()).map(str::to_string).collect());
+    let formula_cost = price.cost.iter().any(|c| c.trim().parse::<f64>().is_err());
+    if price.plus == 0 && grants.is_empty() && price.item_costs.is_empty() && !formula_cost {
+        return None;
+    }
+    let mut settled = ModifierPrice {
+        plus: i16::try_from(price.plus).unwrap_or(0),
+        masterwork_quality: price.masterwork_quality,
+        grants,
+        ..ModifierPrice::default()
+    };
+    for formula in &price.cost {
+        match linear_price_term(formula) {
+            Some(term) => settled.terms.push(term),
+            None => settled.unpriced = true,
+        }
+    }
+    for chain in &price.item_costs {
+        let (Some(target), Some(formula)) = (chain.first(), chain.get(1)) else { continue };
+        let hosts: Vec<String> = target
+            .split(',')
+            .filter_map(|t| t.split_once('.'))
+            .filter(|(kind, _)| kind.eq_ignore_ascii_case("TYPE"))
+            .map(|(_, word)| word.to_string())
+            .collect();
+        // A target `equipment_price_gp` never applies (`TYPE=Instrument`) adds nothing here either.
+        if hosts.is_empty() {
+            continue;
+        }
+        let Some(mut term) = linear_price_term(formula) else {
+            settled.unpriced = true;
+            continue;
+        };
+        term.hosts = hosts;
+        for prereq in &chain[2..] {
+            let one_word = |prefix: &str| prereq.strip_prefix(prefix).filter(|w| !w.contains([',', '='])).map(str::to_string);
+            if prereq == NOT_ALREADY_MASTERWORK {
+                term.unless_masterwork_quality = true;
+            } else if let Some(word) = one_word("PRETYPE:1,") {
+                term.requires.push(word);
+            } else if let Some(word) = one_word("!PRETYPE:1,") {
+                term.excludes.push(word);
+            } else {
+                settled.unpriced = true;
+            }
+        }
+        settled.terms.push(term);
+    }
+    Some(settled)
+}
+
+/// `formula` as `flat + per_base × BASECOST + per_lb × WT + per_plus_squared × PLUSTOTAL²`, read off
+/// four evaluations and checked at a fifth; `None` when it is not that shape or uses another variable.
+fn linear_price_term(formula: &str) -> Option<PriceTerm> {
+    let at = |base: f64, lb: f64, plus: f64| {
+        let vars = std::collections::BTreeMap::from([
+            ("BASECOST".to_string(), base),
+            ("WT".to_string(), lb),
+            ("PLUSTOTAL".to_string(), plus),
+            ("HEADPLUSTOTAL".to_string(), plus),
+            ("SPELLXPCOST".to_string(), 0.0),
+        ]);
+        evaluate_price_formula(formula, &vars).ok()
+    };
+    let flat_gp = at(0.0, 0.0, 0.0)?;
+    let per_base_gp = at(1.0, 0.0, 0.0)? - flat_gp;
+    let per_lb_gp = at(0.0, 1.0, 0.0)? - flat_gp;
+    let per_plus_squared_gp = at(0.0, 0.0, 1.0)? - flat_gp;
+    let linear = flat_gp + 3.0 * per_base_gp + 5.0 * per_lb_gp + 4.0 * per_plus_squared_gp;
+    ((linear - at(3.0, 5.0, 2.0)?).abs() < 1e-6).then_some(PriceTerm { flat_gp, per_base_gp, per_lb_gp, per_plus_squared_gp, ..PriceTerm::default() })
+}
+
+/// The record's `TYPE` words.
+fn type_words(record: &EquipmentRecord) -> Vec<&str> {
+    equipment_token_value(record, "TYPE").map_or(Vec::new(), |value| value.split('.').collect())
+}
+
+/// Whether the item fires ammunition: `TYPE` holds `Projectile` (SD-41 `decisions.md §23`).
+fn uses_ammunition_of(record: &EquipmentRecord) -> bool {
+    type_words(record).contains(&"Projectile")
+}
+
+/// The ammunition family `CONTAINS` names after its capacity field, up to any `=count`, spaces
+/// removed: Longbow `UNLIM|Arrow` is `Arrow`, Pistol `1|Firearm Bullet=1` is `FirearmBullet`. Only
+/// the first family of a several-family weapon is kept (`FirearmBullet=1|FirearmPellet=1`).
+fn ammunition_family_of(record: &EquipmentRecord) -> Option<String> {
+    let family = equipment_token_value(record, "CONTAINS")?.split('|').nth(1)?.split('=').next()?.replace(' ', "");
+    (!family.is_empty() && family != "Any").then_some(family)
+}
+
+/// An `Ammunition`-typed item's `TYPE` words, spaces removed; empty for anything else.
+fn ammunition_kinds_of(record: &EquipmentRecord) -> Vec<String> {
+    let words = type_words(record);
+    if !words.contains(&"Ammunition") {
+        return Vec::new();
+    }
+    words.iter().map(|word| word.replace(' ', "")).collect()
+}
+
+/// Pieces per copy as the book sells it: `BASEQTY`, when it is a positive whole number.
+fn base_quantity_of(record: &EquipmentRecord) -> Option<u32> {
+    equipment_token_value(record, "BASEQTY").and_then(|value| value.parse::<u32>().ok()).filter(|n| *n > 0)
+}
+
+/// Whether the item is a container (SD-41 `decisions.md §31` R2, "Container tag, but not
+/// weapons"): `TYPE` holds `Container`, and the record is not a weapon by either signal the corpus
+/// gives -- no `DAMAGE` and no `Weapon` type word. A weapon's `CONTAINS` names its loaded
+/// ammunition (Pistol `1|FirearmBullet=1`, Wrist Launcher `UNLIM|Dart=1`), not a carried bag.
+fn container_of(record: &EquipmentRecord) -> bool {
+    let words: Vec<&str> = equipment_token_value(record, "TYPE").map_or(Vec::new(), |value| value.split('.').collect());
+    words.contains(&"Container") && !words.contains(&"Weapon") && !states_base_damage_of(record)
+}
+
+/// One row of the cited container-capacity override list (SD-41 `decisions.md §32`).
+#[derive(Debug, serde::Deserialize)]
+struct CapacityOverride {
+    key: String,
+    capacity_lbs: f64,
+    #[allow(dead_code)] // parsed so an uncited row fails; read by the tests and by people.
+    source: CapacitySource,
+}
+
+/// Where an override's figure comes from; a row without one does not parse.
+#[derive(Debug, serde::Deserialize)]
+#[allow(dead_code)] // read by the tests and by people, not by the converter.
+struct CapacitySource {
+    kind: String,
+    #[serde(rename = "ref")]
+    reference: String,
+    date: String,
+}
+
+/// `data/capacity_overrides/container-capacities.json`, compiled in so every conversion sees it.
+fn capacity_overrides() -> &'static [CapacityOverride] {
+    static ROWS: std::sync::OnceLock<Vec<CapacityOverride>> = std::sync::OnceLock::new();
+    ROWS.get_or_init(|| {
+        serde_json::from_str(include_str!("../../../../data/capacity_overrides/container-capacities.json"))
+            .expect("data/capacity_overrides/container-capacities.json parses")
+    })
+}
+
+/// The override keys that name no record among `identities`.
+#[cfg(test)]
+fn unmatched_capacity_override_keys<'a>(
+    rows: &'a [CapacityOverride],
+    identities: &std::collections::BTreeSet<String>,
+) -> Vec<&'a str> {
+    rows.iter().map(|row| row.key.as_str()).filter(|key| !identities.contains(*key)).collect()
+}
+
+/// A container's capacity: a cited override row for the record's identity wins (`decisions.md
+/// §32`); else `CONTAINS`'s first `|` field: `UNLIM…` is unlimited, a number is pounds, and a
+/// `*…` weight-reduction kind or an absent token states none (DEF-1).
+fn container_capacity_of(record: &EquipmentRecord) -> ContainerCapacity {
+    let identity = equipment_token_value(record, "KEY").unwrap_or(record.name.as_str());
+    if let Some(row) = capacity_overrides().iter().find(|row| row.key == identity) {
+        return ContainerCapacity::Pounds(row.capacity_lbs);
+    }
+    let Some(first) = equipment_token_value(record, "CONTAINS").and_then(|value| value.split('|').next()) else {
+        return ContainerCapacity::Unstated;
+    };
+    if first.starts_with("UNLIM") {
+        ContainerCapacity::Unlimited
+    } else {
+        first.parse::<f64>().map_or(ContainerCapacity::Unstated, ContainerCapacity::Pounds)
     }
 }
 
@@ -1043,6 +1229,11 @@ fn weapon_enhancement_of(record: &EquipmentRecord) -> Option<WeaponEnhancementBo
                 "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE"
             );
 
+        // A chain gated to ammunition is not the weapon's roll: mithral states one `TOHIT` for a
+        // weapon and one for ammunition, and summing them read +2 (SD-41 E2.6).
+        if qualifiers.iter().any(|q| q.eq_ignore_ascii_case("PRETYPE:1,AMMUNITION")) {
+            continue;
+        }
         if (subject == Some("WEAPON") || this_natural_attack_only) && is_roll_shape {
             if crate::pcgen_import::equipment_bonus_reader::roll_bonus_carries_enhancement_type(
                 bonus,
@@ -1725,6 +1916,204 @@ impl RecordSourcePath for AbilityDeclaration {
     }
 }
 
+// ---------------------------------------------------------------------------------------------
+// Equipment price (SD-41 E1.9, `decisions.md §26`): base + Σ eqmod cost, as PCGen's data states it
+// ---------------------------------------------------------------------------------------------
+
+/// What one equipment modifier adds to an item's price: its `COST` formulas, its `PLUS` (the
+/// enhancement the `+N` rate squares), whether it is a masterwork quality, and its
+/// `BONUS:ITEMCOST|<target>|<formula>[|<prereq>]` chains (the qualifiers after `ITEMCOST`).
+#[derive(Debug, Clone, Default, PartialEq)]
+pub struct EqmodPrice {
+    pub cost: Vec<String>,
+    pub plus: i64,
+    pub masterwork_quality: bool,
+    pub item_costs: Vec<Vec<String>>,
+}
+
+impl EqmodPrice {
+    /// From an eqmod record's `KEY:VALUE` tokens and its bonus chains' qualifiers.
+    pub fn from_tokens(tokens: &[(String, String)], chains: &[Vec<String>]) -> Self {
+        fn values<'a>(tokens: &'a [(String, String)], key: &'a str) -> impl Iterator<Item = &'a str> {
+            tokens.iter().filter(move |(k, _)| k == key).map(|(_, v)| v.as_str())
+        }
+        EqmodPrice {
+            cost: values(tokens, "COST").map(str::to_string).collect(),
+            plus: values(tokens, "PLUS").next().and_then(|v| v.trim().parse().ok()).unwrap_or(0),
+            masterwork_quality: values(tokens, "TYPE").any(|v| v.split('.').any(|w| w.eq_ignore_ascii_case("MasterworkQuality"))),
+            item_costs: chains
+                .iter()
+                .filter(|q| q.first().is_some_and(|tag| tag == "ITEMCOST"))
+                .map(|q| q[1..].to_vec())
+                .collect(),
+        }
+    }
+}
+
+/// Why an item has no price the converter can state.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Unpriced {
+    /// The item's own `COST` is a formula, not a number.
+    ItemCostFormula(String),
+    /// An `EQMOD` names a modifier no record holds.
+    EqmodMissing(String),
+    /// A cost formula uses a variable or operator the converter does not evaluate (`SIZE`, `^`).
+    Formula(String),
+    /// An `ITEMCOST` chain carries a prerequisite other than the masterwork-quality one.
+    Prerequisite(String),
+}
+
+/// The prerequisite every `+N` and masterwork chain carries: "unless another eqmod on the item is a
+/// masterwork quality" (adamantine, mithral and darkwood already include masterwork).
+const NOT_ALREADY_MASTERWORK: &str = "!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY";
+
+/// The item's price in gp as PCGen's data defines it: its `COST` (its own, else its `.COPY=`
+/// base's), plus, for each `EQMOD`, that modifier's `COST` formula and every `ITEMCOST` chain whose
+/// `TYPE.<word>` target the item's `TYPE` holds. A formula sees `BASECOST`, `WT`, `PLUSTOTAL` /
+/// `HEADPLUSTOTAL` (the item's summed `PLUS`), `%CHOICE` (the eqmod's `|N` argument),
+/// `%SPELLLEVEL` / `%CASTERLEVEL` / `%CHARGES` (its `NAME[N]` arguments), `%SPELLCOST` (the named
+/// spell's material cost from `spell_cost`) and `%SPELLXPCOST` = 0. `TYPE` words add up across the
+/// base and the row (`.CLEAR` resets); `EQMOD` is the row's own, else the base's.
+pub fn equipment_price_gp(
+    own: &[(String, String)],
+    base: Option<&[(String, String)]>,
+    eqmod: &dyn Fn(&str) -> Option<EqmodPrice>,
+    spell_cost: &dyn Fn(&str) -> f64,
+) -> Result<f64, Unpriced> {
+    let base = base.unwrap_or(&[]);
+    let first = |key: &str| {
+        own.iter().chain(base).find(|(k, _)| k == key).map(|(_, v)| v.trim())
+    };
+    let base_cost = match first("COST") {
+        None => 0.0,
+        Some(v) => v.parse::<f64>().map_err(|_| Unpriced::ItemCostFormula(v.to_string()))?,
+    };
+    let weight = first("WT").and_then(|v| v.parse::<f64>().ok()).unwrap_or(0.0);
+    let mut types: Vec<String> = Vec::new();
+    for (_, value) in base.iter().chain(own).filter(|(k, _)| k == "TYPE") {
+        for word in value.split('.') {
+            if word == "CLEAR" && value.starts_with(".CLEAR") {
+                types.clear();
+            } else if !word.is_empty() {
+                types.push(word.to_ascii_uppercase());
+            }
+        }
+    }
+    let eqmod_value = |tokens: &[(String, String)]| {
+        let joined: Vec<&str> = tokens.iter().filter(|(k, _)| k == "EQMOD").map(|(_, v)| v.as_str()).collect();
+        (!joined.is_empty()).then(|| joined.join("."))
+    };
+    let eqmods_text = eqmod_value(own).or_else(|| eqmod_value(base)).unwrap_or_default();
+    let mut mods = Vec::new();
+    for part in eqmods_text.split('.').filter(|p| !p.trim().is_empty()) {
+        let (key, args) = part.split_once('|').unwrap_or((part, ""));
+        let key = key.trim();
+        let price = eqmod(key).ok_or_else(|| Unpriced::EqmodMissing(key.to_string()))?;
+        mods.push((key.to_string(), args.to_string(), price));
+    }
+    let plus_total: i64 = mods.iter().map(|(_, _, m)| m.plus).sum();
+    let mut total = base_cost;
+    for (index, (_, args, price)) in mods.iter().enumerate() {
+        let mut vars = std::collections::BTreeMap::from([
+            ("BASECOST".to_string(), base_cost),
+            ("WT".to_string(), weight),
+            ("PLUSTOTAL".to_string(), plus_total as f64),
+            ("HEADPLUSTOTAL".to_string(), plus_total as f64),
+            ("SPELLXPCOST".to_string(), 0.0),
+        ]);
+        if let Ok(choice) = args.trim().parse::<f64>() {
+            vars.insert("CHOICE".to_string(), choice);
+        }
+        let mut rest = args.as_str();
+        while let Some((name, tail)) = rest.split_once('[') {
+            let Some((value, after)) = tail.split_once(']') else { break };
+            let name = name.trim();
+            match name {
+                "SPELLNAME" => {
+                    vars.insert("SPELLCOST".to_string(), spell_cost(value));
+                }
+                "SPELLLEVEL" | "CASTERLEVEL" | "CHARGES" => {
+                    if let Ok(n) = value.trim().parse::<f64>() {
+                        vars.insert(name.to_string(), n);
+                    }
+                }
+                _ => {}
+            }
+            rest = after;
+        }
+        vars.entry("SPELLCOST".to_string()).or_insert(0.0);
+        for formula in &price.cost {
+            total += evaluate_price_formula(formula, &vars)?;
+        }
+        let other_masterwork = mods.iter().enumerate().any(|(i, (_, _, m))| i != index && m.masterwork_quality);
+        for chain in &price.item_costs {
+            let (Some(target), Some(formula)) = (chain.first(), chain.get(1)) else { continue };
+            let applies = target.split(',').any(|t| {
+                t.split_once('.').is_some_and(|(kind, word)| {
+                    kind.eq_ignore_ascii_case("TYPE") && types.iter().any(|w| w.eq_ignore_ascii_case(word))
+                })
+            });
+            if !applies {
+                continue;
+            }
+            let mut holds = true;
+            for prereq in &chain[2..] {
+                if prereq == NOT_ALREADY_MASTERWORK {
+                    holds &= !other_masterwork;
+                } else {
+                    return Err(Unpriced::Prerequisite(prereq.clone()));
+                }
+            }
+            if holds {
+                total += evaluate_price_formula(formula, &vars)?;
+            }
+        }
+    }
+    Ok(total)
+}
+
+/// One cost formula over `vars` (`%NAME` and `NAME` both read `vars["NAME"]`), in `f64`.
+fn evaluate_price_formula(formula: &str, vars: &std::collections::BTreeMap<String, f64>) -> Result<f64, Unpriced> {
+    use crate::pcgen_import::formula_interpreter::{parse, CmpOp, Expr};
+    fn eval(expr: &Expr, vars: &std::collections::BTreeMap<String, f64>) -> Option<f64> {
+        Some(match expr {
+            Expr::Num(n) => *n,
+            Expr::Var(name) => *vars.get(name)?,
+            Expr::Neg(a) => -eval(a, vars)?,
+            Expr::Add(a, b) => eval(a, vars)? + eval(b, vars)?,
+            Expr::Sub(a, b) => eval(a, vars)? - eval(b, vars)?,
+            Expr::Mul(a, b) => eval(a, vars)? * eval(b, vars)?,
+            Expr::Div(a, b) => eval(a, vars)? / eval(b, vars)?,
+            Expr::Call(name, args) => {
+                let values = args.iter().map(|a| eval(a, vars)).collect::<Option<Vec<f64>>>()?;
+                match name.as_str() {
+                    "max" => values.into_iter().fold(f64::NEG_INFINITY, f64::max),
+                    "min" => values.into_iter().fold(f64::INFINITY, f64::min),
+                    "floor" => values.first()?.floor(),
+                    "ceil" => values.first()?.ceil(),
+                    _ => return None,
+                }
+            }
+            Expr::Cmp(a, op, b) => {
+                let (a, b) = (eval(a, vars)?, eval(b, vars)?);
+                let truth = match op {
+                    CmpOp::Ge => a >= b,
+                    CmpOp::Le => a <= b,
+                    CmpOp::Eq => a == b,
+                    CmpOp::Ne => a != b,
+                    CmpOp::Gt => a > b,
+                    CmpOp::Lt => a < b,
+                };
+                f64::from(u8::from(truth))
+            }
+            _ => return None,
+        })
+    }
+    let unpriced = || Unpriced::Formula(formula.to_string());
+    let expr = parse(&formula.replace('%', "")).map_err(|_| unpriced())?;
+    eval(&expr, vars).filter(|v| v.is_finite()).ok_or_else(unpriced)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1890,5 +2279,291 @@ mod tests {
         };
         let canonical = d.to_canonical();
         assert_eq!(canonical.source_ref.line, 0);
+    }
+
+    /// A record carrying exactly these `KEY:VALUE` tokens.
+    fn equipment_with(tokens: &[(&str, &str)]) -> EquipmentRecord {
+        let mut record = fake_equipment();
+        record.tokens = tokens
+            .iter()
+            .map(|(key, value)| EquipmentToken {
+                key: key.to_string(),
+                value: value.to_string(),
+                line_number: 4,
+                raw_pair: format!("{key}:{value}"),
+            })
+            .collect();
+        record
+    }
+
+    /// SD-41 E1.1 (`decisions.md §31` R2, "Container tag, but not weapons").
+    #[test]
+    fn container_of_is_container_typed_and_not_a_weapon() {
+        let backpack = equipment_with(&[("TYPE", "Goods.Container.General.Resizable"), ("CONTAINS", "UNLIM|Any")]);
+        let pistol = equipment_with(&[
+            ("TYPE", "Weapon.Exotic.Ranged.Container.Projectile.Firearm"),
+            ("CONTAINS", "1|FirearmBullet=1"),
+            ("DAMAGE", "1d8"),
+        ]);
+        let launcher = equipment_with(&[("TYPE", "Weapon.Exotic.Ranged.Container.Projectile"), ("CONTAINS", "UNLIM|Dart=1")]);
+        let rope = equipment_with(&[("TYPE", "Goods.General"), ("CONTAINS", "UNLIM|Any")]);
+        assert!(container_of(&backpack));
+        assert!(!container_of(&pistol), "states DAMAGE");
+        assert!(!container_of(&launcher), "Weapon-typed");
+        assert!(!container_of(&rope), "no Container type word");
+        let converted = equipment_record_to_corpus(&backpack);
+        assert!(converted.is_container());
+        let converted = equipment_record_to_corpus(&pistol);
+        assert!(!converted.is_container());
+        assert_eq!(converted.capacity(), ContainerCapacity::Unstated, "capacity settled only on a container");
+    }
+
+    /// SD-41 E1.6 (`decisions.md §23, §31`): ammunition users, their family, ammunition, bundle size.
+    #[test]
+    fn ammunition_of_settles_projectile_family_kinds_and_bundle() {
+        let longbow = equipment_with(&[("TYPE", "Weapon.Ranged.Container.Projectile.Bow"), ("CONTAINS", "UNLIM|Arrow"), ("DAMAGE", "1d8")]);
+        let pistol = equipment_with(&[("TYPE", "Weapon.Container.Projectile.Firearm"), ("CONTAINS", "1|Firearm Bullet=1|FirearmPellet=1"), ("DAMAGE", "1d8")]);
+        let sling = equipment_with(&[("TYPE", "Weapon.Ranged.Projectile.Sling"), ("DAMAGE", "1d4")]);
+        let dagger = equipment_with(&[("TYPE", "Weapon.Melee.Ranged.Thrown.Dagger"), ("DAMAGE", "1d4")]);
+        let arrows = equipment_with(&[("TYPE", "Ammunition.Resizable.Standard.Arrow"), ("BASEQTY", "20")]);
+        let backpack = equipment_with(&[("TYPE", "Goods.Container.General"), ("CONTAINS", "UNLIM|Any")]);
+        let settled = |record: &EquipmentRecord| {
+            let r = equipment_record_to_corpus(record);
+            (r.uses_ammunition(), r.ammunition_family().map(str::to_owned), r.is_ammunition(), r.base_quantity())
+        };
+        assert_eq!(settled(&longbow), (true, Some("Arrow".to_owned()), false, 1));
+        assert_eq!(settled(&pistol), (true, Some("FirearmBullet".to_owned()), false, 1));
+        assert_eq!(settled(&sling), (true, None, false, 1), "no CONTAINS: any ammunition");
+        assert_eq!(settled(&dagger), (false, None, false, 1), "Thrown is not Projectile");
+        assert_eq!(settled(&arrows), (false, None, true, 20));
+        assert_eq!(settled(&backpack), (false, None, false, 1), "a container's CONTAINS is no family");
+        assert!(equipment_record_to_corpus(&arrows).is_ammunition_for(Some("Arrow")));
+        assert!(!equipment_record_to_corpus(&arrows).is_ammunition_for(Some("Bolt")));
+    }
+
+    #[test]
+    fn container_of_capacity_reads_the_first_contains_field() {
+        let capacity = |contains: Option<&str>| {
+            let mut tokens = vec![("TYPE", "Goods.Container")];
+            tokens.extend(contains.map(|value| ("CONTAINS", value)));
+            container_capacity_of(&equipment_with(&tokens))
+        };
+        assert_eq!(capacity(Some("UNLIM|Any")), ContainerCapacity::Unlimited);
+        assert_eq!(capacity(Some("2000|Any")), ContainerCapacity::Pounds(2000.0));
+        assert_eq!(capacity(Some("1.5|Liquid=3")), ContainerCapacity::Pounds(1.5));
+        assert_eq!(capacity(Some("*20|Any")), ContainerCapacity::Unstated, "weight-reduction kind (DEF-1)");
+        assert_eq!(capacity(None), ContainerCapacity::Unstated);
+        assert_eq!(equipment_record_to_corpus(&equipment_with(&[("TYPE", "Goods.Container"), ("CONTAINS", "60|Any")])).capacity(), ContainerCapacity::Pounds(60.0));
+    }
+
+    /// SD-41 E1.12 (`decisions.md §32`): a cited override row wins over the `CONTAINS` token, by
+    /// the record's identity (`KEY`, else its name); other containers keep the token's capacity.
+    #[test]
+    fn capacity_override_row_wins_over_the_token() {
+        let backpack = equipment_with(&[("KEY", "Backpack"), ("TYPE", "Goods.Container.General"), ("CONTAINS", "UNLIM|Any")]);
+        let masterwork = equipment_with(&[("KEY", "Backpack (Masterwork)"), ("TYPE", "Goods.Container"), ("CONTAINS", "UNLIM|Any")]);
+        assert_eq!(equipment_record_to_corpus(&backpack).capacity(), ContainerCapacity::Pounds(60.0));
+        assert_eq!(equipment_record_to_corpus(&masterwork).capacity(), ContainerCapacity::Unlimited);
+        assert!(capacity_overrides().iter().all(|row| !row.source.kind.is_empty() && !row.source.reference.is_empty()), "every row is cited");
+    }
+
+    /// SD-41 E1.12: a row whose key names no converted equipment record is an error, and every row
+    /// of the shipped list names a record in the settled corpus.
+    #[test]
+    fn capacity_override_unknown_key_fails() {
+        let rows: Vec<CapacityOverride> = serde_json::from_str(
+            r#"[{ "key": "Backpack", "capacity_lbs": 60, "source": { "kind": "operator-ruling", "ref": "test", "date": "2026-11-12" } },
+                { "key": "No Such Bag", "capacity_lbs": 5, "source": { "kind": "book", "ref": "test", "date": "2026-11-12" } }]"#,
+        )
+        .unwrap();
+        let identities: std::collections::BTreeSet<String> = ["Backpack".to_string()].into();
+        assert_eq!(unmatched_capacity_override_keys(&rows, &identities), vec!["No Such Bag"]);
+
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        let mut corpus = std::collections::BTreeSet::new();
+        for book in codex::rules_core::settled_corpus::corpus_book_dirs(&root.join("data/corpus")) {
+            if let Ok(bundle) = codex::rules_core::settled_corpus::read_equipment_bundle(&book) {
+                corpus.extend(bundle.records.into_values().map(|entry| entry.record.identity));
+            }
+        }
+        assert!(corpus.len() > 1000, "settled equipment identities read: {}", corpus.len());
+        assert_eq!(unmatched_capacity_override_keys(capacity_overrides(), &corpus), Vec::<&str>::new());
+    }
+}
+
+#[cfg(test)]
+mod price_tests {
+    use super::*;
+    use crate::pcgen_import::lst_parser::equipment::EquipmentToken;
+
+    fn tokens(pairs: &[(&str, &str)]) -> Vec<(String, String)> {
+        pairs.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect()
+    }
+
+    fn chain(q: &[&str]) -> Vec<String> {
+        q.iter().map(|s| s.to_string()).collect()
+    }
+
+    /// The CRB eqmods the cases below name, as `cr_equipmods.lst` states them.
+    fn crb_eqmod(key: &str) -> Option<EqmodPrice> {
+        Some(match key {
+            "Material ~ Steel" => EqmodPrice::from_tokens(&tokens(&[("COST", "0"), ("TYPE", "BaseMaterial.Mundane")]), &[]),
+            "Material ~ Adamantine ~ Armor / Medium" => EqmodPrice::from_tokens(
+                &tokens(&[("TYPE", "BaseMaterial.MasterworkQuality.Armor"), ("COST", "10000")]),
+                &[],
+            ),
+            "Special Quality ~ Masterwork ~ Armor" => EqmodPrice::from_tokens(
+                &tokens(&[("TYPE", "MasterworkQuality.Armor.Shield"), ("COST", "0")]),
+                &[chain(&["ITEMCOST", "TYPE.ARMOR", "150"]), chain(&["ITEMCOST", "TYPE.SHIELD", "150"])],
+            ),
+            "Special Ability ~ +3 ~ Armor" => EqmodPrice::from_tokens(
+                &tokens(&[("TYPE", "Armor"), ("PLUS", "3")]),
+                &[
+                    chain(&["ITEMCOST", "TYPE.ARMOR", "1000*PLUSTOTAL*PLUSTOTAL"]),
+                    chain(&["ITEMCOST", "TYPE.ARMOR", "150", NOT_ALREADY_MASTERWORK]),
+                ],
+            ),
+            "Special Ability ~ Enhancement Cost" => EqmodPrice::from_tokens(&tokens(&[("COST", "%CHOICE")]), &[]),
+            "Special Ability ~ Spell Effect / Spell Trigger" => EqmodPrice::from_tokens(
+                &tokens(&[(
+                    "COST",
+                    "((15*(max(%SPELLLEVEL,(1/2)))*%CASTERLEVEL)+%SPELLCOST+(5*%SPELLXPCOST))*%CHARGES",
+                )]),
+                &[],
+            ),
+            "Size" => EqmodPrice::from_tokens(&tokens(&[("COST", "BASECOST*(2^(SIZE-4))")]), &[]),
+            "Odd Prerequisite" => EqmodPrice::from_tokens(&[], &[chain(&["ITEMCOST", "TYPE.ARMOR", "5", "!PRETYPE:1,Shield"])]),
+            _ => return None,
+        })
+    }
+
+    fn price(own: &[(&str, &str)], base: Option<&[(&str, &str)]>) -> Result<f64, Unpriced> {
+        let base = base.map(tokens);
+        equipment_price_gp(&tokens(own), base.as_deref(), &crb_eqmod, &|_| 0.0)
+    }
+
+    const BREASTPLATE_BASE: &[(&str, &str)] =
+        &[("KEY", "Breastplate (Base)"), ("TYPE", "Armor.Medium.ArmorProfMedium.Suit"), ("COST", "200"), ("WT", "30")];
+
+    /// An eqmod record with these tokens and `BONUS:` chains, as the converter sees one.
+    fn eqmod_record(pairs: &[(&str, &str)], chains: &[&[&str]]) -> EquipmentRecord {
+        EquipmentRecord {
+            kind: EquipmentRecordKind::EquipMod,
+            name: "EqMod".to_string(),
+            header_line_number: 1,
+            header_raw_line: String::new(),
+            tokens: pairs
+                .iter()
+                .map(|(key, value)| EquipmentToken { key: key.to_string(), value: value.to_string(), line_number: 1, raw_pair: format!("{key}:{value}") })
+                .collect(),
+            bonus_chains: chains
+                .iter()
+                .map(|q| crate::pcgen_import::lst_parser::equipment::BonusToken { line_number: 1, raw_bonus: String::new(), qualifiers: chain(q) })
+                .collect(),
+            is_record_start: true,
+            diagnostics: Vec::new(),
+        }
+    }
+
+    /// SD-41 E2.6: the settled terms price an item as [`equipment_price_gp`] does from the tokens
+    /// (two implementations of one sum), and a formula with any other variable is unpriced.
+    #[test]
+    fn modifier_price_settles_terms_that_agree_with_the_token_price() {
+        let adamantine = equipment_record_to_corpus(&eqmod_record(
+            &[("KEY", "Material ~ Adamantine ~ Armor / Medium"), ("TYPE", "BaseMaterial.MasterworkQuality.Armor"), ("COST", "10000"), ("ITYPE", "Metal.Adamantine.Masterwork")],
+            &[],
+        ));
+        let plus3 = equipment_record_to_corpus(&eqmod_record(
+            &[("KEY", "Special Ability ~ +3 ~ Armor"), ("TYPE", "Armor"), ("PLUS", "3")],
+            &[&["ITEMCOST", "TYPE.ARMOR", "1000*PLUSTOTAL*PLUSTOTAL"], &["ITEMCOST", "TYPE.ARMOR", "150", NOT_ALREADY_MASTERWORK]],
+        ));
+        let types: Vec<String> = ["Armor", "Medium", "ArmorProfMedium", "Suit"].iter().map(|t| t.to_string()).collect();
+        let settled = |modifiers: &[&CorpusEquipmentRecord]| codex::rules_core::equipment_record::modified_price_gp(200.0, 30.0, &types, modifiers);
+        assert_eq!(settled(&[&adamantine, &plus3]), Ok(200.0 + 10_000.0 + 9_000.0));
+        let own = [("EQMOD", "Material ~ Adamantine ~ Armor / Medium.Special Ability ~ +3 ~ Armor")];
+        assert_eq!(price(&own, Some(BREASTPLATE_BASE)), Ok(200.0 + 10_000.0 + 9_000.0), "the token price agrees");
+        assert_eq!(settled(&[&plus3]), Ok(200.0 + 150.0 + 9_000.0), "no masterwork quality: masterwork is charged");
+
+        let mithral = equipment_record_to_corpus(&eqmod_record(
+            &[("KEY", "Material ~ Mithril ~ Weapon / Item"), ("TYPE", "BaseMaterial.MasterworkQuality.Ammunition.Weapon"), ("COST", "WT*500"), ("ITYPE", "Metal.Mithral.Masterwork")],
+            &[&["WEAPON", "TOHIT", "1", "TYPE=Enhancement", "PRETYPE:1,WEAPON"], &["WEAPON", "TOHIT", "1", "TYPE=Enhancement", "PRETYPE:1,AMMUNITION"]],
+        ));
+        let price = mithral.modifier_price.as_ref().expect("a COST formula settles a price");
+        assert!(price.masterwork_quality && !price.unpriced);
+        assert_eq!(price.terms[0].per_lb_gp, 500.0);
+        assert_eq!(mithral.weapon_enhancement.as_ref().and_then(|w| w.tohit_bonus), Some(1), "the ammunition chain is not the weapon's");
+
+        let flaming = equipment_record_to_corpus(&eqmod_record(&[("KEY", "Special Ability ~ Flaming ~ Weapon"), ("TYPE", "Ammunition.Weapon"), ("PLUS", "1")], &[]));
+        assert_eq!(flaming.modifier_price.as_ref().map(|p| (p.plus, p.terms.len())), Some((1, 0)));
+        let choice = equipment_record_to_corpus(&eqmod_record(&[("KEY", "Special Ability ~ Enhancement Cost"), ("COST", "%CHOICE")], &[]));
+        assert!(choice.modifier_price.is_some_and(|p| p.unpriced));
+        let flat = equipment_record_to_corpus(&eqmod_record(&[("KEY", "Material ~ Whipwood"), ("COST", "500")], &[]));
+        assert_eq!(flat.modifier_price, None, "a flat COST stays `cost_gp`");
+    }
+
+    #[test]
+    fn equipment_price_adamantine_breastplate_is_base_plus_material() {
+        // CRB p.464: 10,200 gp. The `.COPY=` row states no COST of its own.
+        let own = [("KEY", "Adamantine Breastplate"), ("EQMOD", "Material ~ Adamantine ~ Armor / Medium")];
+        assert_eq!(price(&own, Some(BREASTPLATE_BASE)), Ok(10_200.0));
+    }
+
+    #[test]
+    fn equipment_price_specific_armor_sums_enhancement_masterwork_and_choice() {
+        // Banded Mail of Luck, CRB p.465: 250 + 150 masterwork + 1,000 × 3² + 9,500 = 18,900 gp.
+        let base = [("KEY", "Banded Mail (Base)"), ("TYPE", "Armor.Heavy.Suit"), ("COST", "250")];
+        let own = [(
+            "EQMOD",
+            "Material ~ Steel.Special Ability ~ +3 ~ Armor.Special Ability ~ Enhancement Cost|9500",
+        )];
+        assert_eq!(price(&own, Some(&base)), Ok(18_900.0));
+    }
+
+    #[test]
+    fn equipment_price_masterwork_is_not_charged_twice_on_a_masterwork_material() {
+        let own = [("EQMOD", "Material ~ Adamantine ~ Armor / Medium.Special Ability ~ +3 ~ Armor")];
+        assert_eq!(price(&own, Some(BREASTPLATE_BASE)), Ok(200.0 + 10_000.0 + 9_000.0));
+    }
+
+    #[test]
+    fn equipment_price_literal_cost_sums_with_its_eqmods_never_negative() {
+        // Astral Armor (Ultimate Psionics): COST:-150 beside the masterwork eqmod's +150.
+        let own = [("TYPE", "Armor.Medium.Suit"), ("COST", "-150"), ("EQMOD", "Special Quality ~ Masterwork ~ Armor")];
+        assert_eq!(price(&own, None), Ok(0.0));
+    }
+
+    #[test]
+    fn equipment_price_spell_trigger_reads_the_eqmod_arguments() {
+        // Wand of Magic Missile, CRB p.496: 15 × 1 × 1 × 50 charges = 750 gp.
+        let base = [("TYPE", "Wand.Combat Gear"), ("COST", "0")];
+        let own = [(
+            "EQMOD",
+            "Special Ability ~ Spell Effect / Spell Trigger|SPELLNAME[Magic Missile]SPELLLEVEL[1]CASTERLEVEL[1]CHARGES[50]",
+        )];
+        assert_eq!(price(&own, Some(&base)), Ok(750.0));
+    }
+
+    #[test]
+    fn equipment_price_type_adds_across_the_copy_and_clear_resets() {
+        // A `.COPY=` row's TYPE adds to its base's: the armor chains still apply.
+        let own = [("TYPE", "Magic"), ("EQMOD", "Special Quality ~ Masterwork ~ Armor")];
+        assert_eq!(price(&own, Some(BREASTPLATE_BASE)), Ok(350.0));
+        // `.CLEAR` drops the base's words: no ARMOR word, no armor chain.
+        let cleared = [("TYPE", ".CLEAR"), ("TYPE", "Goods"), ("EQMOD", "Special Quality ~ Masterwork ~ Armor")];
+        assert_eq!(price(&cleared, Some(BREASTPLATE_BASE)), Ok(200.0));
+    }
+
+    #[test]
+    fn equipment_price_refuses_what_it_cannot_evaluate() {
+        assert_eq!(price(&[("COST", "Unknown")], None), Err(Unpriced::ItemCostFormula("Unknown".to_string())));
+        assert_eq!(price(&[("EQMOD", "Nope")], None), Err(Unpriced::EqmodMissing("Nope".to_string())));
+        assert_eq!(
+            price(&[("COST", "10"), ("EQMOD", "Size")], None),
+            Err(Unpriced::Formula("BASECOST*(2^(SIZE-4))".to_string()))
+        );
+        assert_eq!(
+            price(&[("EQMOD", "Odd Prerequisite")], Some(BREASTPLATE_BASE)),
+            Err(Unpriced::Prerequisite("!PRETYPE:1,Shield".to_string()))
+        );
     }
 }

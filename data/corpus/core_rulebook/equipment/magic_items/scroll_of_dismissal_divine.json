@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 700.0,
     "description": "Forces a creature to return to native plane.",
     "key": "Scroll of Dismissal (Divine)",
     "name": "Scroll",

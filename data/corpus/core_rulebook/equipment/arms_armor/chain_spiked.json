@@ -6,7 +6,7 @@
     "key": "Chain (Spiked)",
     "category": "arms_armor",
     "name": "Spiked Chain (Base)",
-    "cost_gp": null,
+    "cost_gp": 25.0,
     "weight_lbs": null,
     "description": "A spiked chain is about 4 feet in length, covered in wicked barbs. You can use the Weapon Finesse feat to apply your Dexterity modifier instead of your Strength modifier to attack rolls with a spiked chain sized for you, even though it isn't a light weapon."
   },

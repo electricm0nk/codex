@@ -17,7 +17,7 @@ mod tests {
             selection("item:longsword", ActiveState::EquippedActive),
         ];
 
-        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium, &[], &[]);
 
         assert_eq!(computation.total_carried_weight_lbs, 15.0 + 5.0 + 4.0);
         assert!(computation.unresolved_item_ids.is_empty(), "{:?}", computation.unresolved_item_ids);
@@ -50,7 +50,7 @@ Dogslicer\tKEY:Dogslicer\tTYPE:Weapon.Resizable.Melee.Slashing.Goblin\tCOST:8\tW
         }
 
         let equipment_selections = vec![selection("Dogslicer", ActiveState::EquippedActive)];
-        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium, &[], &[]);
 
         assert!(computation.unresolved_item_ids.is_empty(), "{:?}", computation.unresolved_item_ids);
         assert_eq!(computation.total_carried_weight_lbs, 1.0, "Dogslicer's real WT:1 must be counted");
@@ -70,7 +70,7 @@ Dogslicer\tKEY:Dogslicer\tTYPE:Weapon.Resizable.Melee.Slashing.Goblin\tCOST:8\tW
             selection("item:not_a_real_item", ActiveState::EquippedActive),
         ];
 
-        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium);
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 10, SizeCategory::Medium, &[], &[]);
 
         assert_eq!(computation.total_carried_weight_lbs, 15.0, "Absent items must not contribute weight");
         assert_eq!(computation.unresolved_item_ids, vec!["item:not_a_real_item".to_owned()]);
@@ -83,7 +83,7 @@ Dogslicer\tKEY:Dogslicer\tTYPE:Weapon.Resizable.Melee.Slashing.Goblin\tCOST:8\tW
         // alone (15 lbs) exceeds even the heavy max.
         let equipment_selections = vec![selection("item:leather_armor", ActiveState::EquippedActive)];
 
-        let computation = compute_encumbrance(&equipment_selections, &corpus, 1, SizeCategory::Medium);
+        let computation = compute_encumbrance(&equipment_selections, &corpus, 1, SizeCategory::Medium, &[], &[]);
 
         assert_eq!(computation.level, EncumbranceLevel::OverHeavyCapacity);
     }

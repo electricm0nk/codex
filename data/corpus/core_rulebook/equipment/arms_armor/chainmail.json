@@ -6,7 +6,7 @@
     "key": "Chainmail",
     "category": "arms_armor",
     "name": "Chainmail (Base)",
-    "cost_gp": null,
+    "cost_gp": 150.0,
     "weight_lbs": null,
     "description": "Unlike a chain shirt, chainmail covers the legs and arms of the wearer. The suit includes gauntlets."
   },

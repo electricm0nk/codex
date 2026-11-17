@@ -128,7 +128,7 @@ fn worn_vs_carried_contract_receipt_agrees() {
 fn worn_vs_carried_encumbrance_weighs_both_states_and_not_absent() {
     let corpus = core_rulebook();
     let weigh = |state: ActiveState| {
-        compute_encumbrance(&[selection("Backpack", state)], &corpus, 16, SizeCategory::Medium).total_carried_weight_lbs
+        compute_encumbrance(&[selection("Backpack", state)], &corpus, 16, SizeCategory::Medium, &[], &[]).total_carried_weight_lbs
     };
     assert_eq!(weigh(ActiveState::EquippedActive), 2.0);
     assert_eq!(weigh(ActiveState::SelectedInactive), 2.0);
@@ -193,7 +193,7 @@ fn worn_item_applies_a_derived_record_reads_what_it_does_not_state() {
     assert_eq!(celestial.armor_class_not_against_touch(), 6);
 
     let carried = [selection("Mithral Shirt", ActiveState::SelectedInactive), selection("Flame Tongue", ActiveState::SelectedInactive)];
-    let load = compute_encumbrance(&carried, &corpus, 10, SizeCategory::Medium);
+    let load = compute_encumbrance(&carried, &corpus, 10, SizeCategory::Medium, &[], &[]);
     assert_eq!(load.total_carried_weight_lbs, 24.0, "Mithral Shirt's own 20, Flame Tongue reads Longsword's 4");
     assert!(load.unresolved_item_ids.is_empty(), "{:?}", load.unresolved_item_ids);
 }

@@ -6,7 +6,7 @@
     "key": "Nunchaku",
     "category": "arms_armor",
     "name": "Nunchaku (Base)",
-    "cost_gp": null,
+    "cost_gp": 2.0,
     "weight_lbs": null,
     "description": "A nunchaku is made up of two wooden or metal bars connected by a small length of rope or chain."
   },

@@ -6,7 +6,7 @@
     "key": "Dwarven Plate",
     "category": "arms_armor",
     "name": "Full Plate (Base)",
-    "cost_gp": null,
+    "cost_gp": 16500.0,
     "weight_lbs": null,
     "description": "This full plate is made of adamantine, giving its wearer damage reduction of 3/--."
   },

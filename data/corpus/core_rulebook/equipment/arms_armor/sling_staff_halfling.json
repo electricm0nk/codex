@@ -6,7 +6,7 @@
     "key": "Sling Staff (Halfling)",
     "category": "arms_armor",
     "name": "Halfling Sling Staff (Base)",
-    "cost_gp": null,
+    "cost_gp": 20.0,
     "weight_lbs": null,
     "description": "Made from a specially designed sling attached to a short club, a halfling sling staff can be used by a proficient wielder to devastating effect. Your Strength modifier applies to damage rolls when you use a halfling sling staff, just as it does for thrown weapons. You can fire, but not load, a halfling sling staff with one hand. Loading a halfling sling staff is a move action that requires two hands and provokes attacks of opportunity.\nYou can hurl ordinary stones with a halfling sling staff, but stones are not as dense or as round as bullets. Thus, such an attack deals damage as if the weapon were designed for a creature one size category smaller than you and you take a -1 penalty on attack rolls.\nA halfling sling staff can be used as a simple weapon that deals bludgeoning damage equal to that of a club of its size. Halflings treat halfling sling staves as martial weapons."
   },

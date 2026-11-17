@@ -741,6 +741,7 @@ pub(crate) fn apply_at_root(corpus: &Path, root: &Path, request: &CprImproveRequ
     let (_, planned) = priced_at_root(corpus, root, request, seed)?;
     let (next, _) = planned?;
     CprCharacterStore::save_choices(&next, root)?;
+    crate::character_hub::after_write(root);
     CyberpunkAdapter.load_saved_character(root)
 }
 

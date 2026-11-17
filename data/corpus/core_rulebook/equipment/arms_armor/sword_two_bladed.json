@@ -6,7 +6,7 @@
     "key": "Sword (Two-Bladed)",
     "category": "arms_armor",
     "name": "Two-Bladed Sword (Base)",
-    "cost_gp": null,
+    "cost_gp": 100.0,
     "weight_lbs": null,
     "description": "A two-bladed sword is a double weapon--twin blades extend from either side of a central, short haft, allowing the wielder to attack with graceful but deadly flourishes."
   },

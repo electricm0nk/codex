@@ -1,19 +1,28 @@
 import type { OverrideFlagDto } from '../boundary/loadSavedCharacterDetail';
-import { wornLabel } from './EquipmentPanel';
+import { wornLabel } from './gearScreenModel';
 import { OverrideTag } from './OverrideTag';
-import { CUSTOM_RECORD_KINDS, OVERRIDE_TOGGLES, bonusLine, customIsEmpty, customItemPlace, customOverrides, grantTargetLabel, type CharacterCustom, type CustomOverrides, type CustomRecord } from './customModel';
+import { CUSTOM_RECORD_KINDS, OVERRIDE_TOGGLES, bonusLine, customIsEmpty, customItemPlace, customOverrides, grantTargetLabel, type CharacterCustom, type CustomOverrides, type CustomRecord, type CustomRecordKind } from './customModel';
 
-/** `Worn, Head` or `Carried`; the Gear tab's Equipment control moves it. */
-function placeLine(record: CustomRecord): string | null {
-  const place = customItemPlace(record);
-  if (place === null) {
+/** `Worn, Head` or `Carried` for custom equipment, `null` for a feat, spell or device; the Gear tab's Equipment control moves it. */
+function placeLine(kind: CustomRecordKind, record: CustomRecord): string | null {
+  if (kind !== 'equipment') {
     return null;
   }
+  const place = customItemPlace(record);
   if (place === 'left_behind') {
     return 'Left behind';
   }
   const slot = record.slot && record.slot !== 'none' ? wornLabel(record.slot) : null;
   return place === 'worn' ? (slot ? `Worn, ${slot}` : 'Worn') : slot ? `Carried (takes ${slot})` : 'Carried';
+}
+
+/** `1 lb · 5 gp · Container, 10 lb`: what a created item states, each part only when set. */
+function itemFacts(record: CustomRecord): string {
+  const parts: string[] = [];
+  if (record.weightLbs !== null && record.weightLbs !== undefined) parts.push(`${record.weightLbs} lb`);
+  if (record.priceGp !== null && record.priceGp !== undefined && record.priceGp > 0) parts.push(`${record.priceGp} gp`);
+  if (record.containerCapacityLbs !== null && record.containerCapacityLbs !== undefined) parts.push(`Container, ${record.containerCapacityLbs} lb`);
+  return parts.join(' · ');
 }
 
 /**
@@ -96,7 +105,8 @@ export function CustomTab(props: {
             {props.custom[kind].map((record) => (
               <article key={record.id} style={{ borderTop: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
                 <strong>{record.name}</strong>
-                {placeLine(record) !== null ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.1rem 0' }}>{placeLine(record)}</p> : null}
+                {placeLine(kind, record) !== null ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.1rem 0' }}>{placeLine(kind, record)}</p> : null}
+                {kind === 'equipment' && itemFacts(record) !== '' ? <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0.1rem 0' }}>{itemFacts(record)}</p> : null}
                 {(record.bonuses ?? []).length > 0 ? (
                   <ul style={{ margin: '0.2rem 0', paddingLeft: '1.1rem' }}>
                     {(record.bonuses ?? []).map((bonus, index) => (

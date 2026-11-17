@@ -244,8 +244,8 @@ pub fn perform_self_install(
 ) -> Result<(PathBuf, InstalledState), String> {
     let target = install_target(home);
     copy_appimage(running, &target)?;
-    // The record must name the copy: `reconcile_installed_state` never rewrites an AppImage record,
-    // so one naming the download would make every in-app update refuse the copy as a foreign file.
+    // The record names the copy from here on: the copy's first startup would also rewrite a record
+    // naming the download (`reconcile_installed_state`), but writing it now leaves no stale window.
     let installed = gather_running_install(version, &target, Some(target.clone()), env!("CODEX_GIT_SHA"), BUILD_CHANNEL)?;
     let record = overwrite_installed_state(config_root, &installed)?;
     ensure_desktop_integration(data_home, &target)?;

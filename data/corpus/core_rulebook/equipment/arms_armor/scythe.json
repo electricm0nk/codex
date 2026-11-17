@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "arms_armor",
-    "cost_gp": null,
+    "cost_gp": 18.0,
     "description": null,
     "key": "Scythe",
     "name": "Scythe (Base)",

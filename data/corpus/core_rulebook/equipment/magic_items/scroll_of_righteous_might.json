@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 1125.0,
     "description": "Your size increases, and you gain bonuses in combat.",
     "key": "Scroll of Righteous Might",
     "name": "Scroll",

@@ -125,7 +125,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 20.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -165,10 +165,17 @@
     "bolts_bolas_10.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "BolaBolt"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 10,
         "cost_gp": 20.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -246,6 +253,12 @@
     "bullet_sling_alchemical.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Bullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -328,7 +341,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 20.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -547,6 +560,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Burning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -572,6 +588,10 @@
     "equipmods/special_ability_catalytic_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -586,6 +606,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Catalytic",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -625,6 +648,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Steaming",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -664,6 +690,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Virulent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -937,7 +966,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -1373,6 +1402,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 50.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -1412,6 +1442,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 75.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -1529,7 +1560,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 15.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -1646,6 +1677,7 @@
     "slaver_s_crossbow_heavy.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "BolaBolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1681,6 +1713,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1695,6 +1728,7 @@
     "slaver_s_crossbow_light.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "BolaBolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -1730,6 +1764,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -1748,7 +1783,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 0.05,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,

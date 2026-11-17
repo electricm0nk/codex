@@ -1,0 +1,41 @@
+codex verify — mode: --only, jobs: 8
+repo:  /home/ubuntu/workspace/repos/codex/.worktrees/sd41-main
+logs:  /tmp/codex-verify-pv6Qvn
+---------------------------------------------------------------
+==> corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh
+    PASS  corpus-sweep-selftest  (15 passed, 0 failed)
+---------------------------------------------------------------
+==> corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)
+    PASS  corpus-sweep  (48706 records examined of 51523 read, 413314 tokens compared (9 synthesized), 51463 digests checked, 0 findings)
+---------------------------------------------------------------
+==> ingest-full — cargo test --locked --no-fail-fast -p codex-ingest -j 8  (repo root)
+    PASS  ingest-full  (1880 passed across 179 suites, all 127 tests/*.rs suites executed)
+---------------------------------------------------------------
+==> desktop — cargo test --locked -j 8  (apps/desktop/src-tauri)
+    PASS  desktop  (1507 passed)
+---------------------------------------------------------------
+==> clippy — cargo clippy --locked --tests -j 8  (THREE crates)
+    PASS  clippy  (root:0 desktop:0 ingest:0 warnings, 0 errors)
+---------------------------------------------------------------
+==> tauri-resources-tracked — every bundle.resources path, the sidecar source and the compiled-in print assets are git-tracked
+    PASS  tauri-resources-tracked  (resources_checked=15 verdict=PASS)
+---------------------------------------------------------------
+SUMMARY
+  passed:  6  corpus-sweep-selftest corpus-sweep ingest-full desktop clippy tauri-resources-tracked
+
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_INGEST_FULL_TESTS baseline is stale: 1859 recorded, 1880 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd41-main/scripts/verify-baselines.env.
+  - BASELINE_INGEST_TEST_BINARIES baseline is stale: 177 recorded, 179 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd41-main/scripts/verify-baselines.env.
+  - BASELINE_DESKTOP_TESTS baseline is stale: 1317 recorded, 1507 measured. Update /home/ubuntu/workspace/repos/codex/.worktrees/sd41-main/scripts/verify-baselines.env.
+
+MEASURED (scripts/verify-baselines.env format):
+  BASELINE_CORPUS_LITERAL_RECORDS=48706
+  BASELINE_INGEST_FULL_TESTS=1880
+  BASELINE_INGEST_TEST_BINARIES=179
+  BASELINE_DESKTOP_TESTS=1507
+  BASELINE_CLIPPY_WARNINGS_ROOT=0
+  BASELINE_CLIPPY_WARNINGS_DESKTOP=0
+  BASELINE_CLIPPY_WARNINGS_INGEST=0
+
+RESULT: PASS
+logs in /tmp/codex-verify-pv6Qvn

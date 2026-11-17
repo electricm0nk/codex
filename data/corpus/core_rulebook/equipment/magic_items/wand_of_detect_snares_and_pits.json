@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 750.0,
     "description": "You can detect simple pits, deadfalls, and snares as well as mechanical traps constructed of natural materials.",
     "key": "Wand of Detect Snares and Pits",
     "name": "Wand",

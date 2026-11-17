@@ -6,11 +6,12 @@ import type { CreateCharacterOutcome } from './loadCreateCharacter';
  * Write desktop boundary for stowing, re-equipping, or marking absent a
  * carried equipment item.
  *
- * Invokes the `set_equipment_active_state` Tauri command, which loads the
- * saved character, sets the active state on the first copy of the item not
- * already in that state (of the copies `bonus` names, when given), recomputes via the real rules-core engine, and
- * re-saves. Wearing an item whose slot is held comes back `Blocked`, with a
- * diagnostic reading "head slot is taken by <item>"; nothing is saved.
+ * Invokes the `set_equipment_active_state` Tauri command, a move of one copy in the active
+ * equipment set (`moveEquipmentCopy`): the first copy of the item not already in that state (of the
+ * copies `bonus` names, when given) goes to its own slot when `EquippedActive` (or Equipped when it
+ * takes none), Carried when `SelectedInactive`, Not Carried when `Absent`; the set is projected,
+ * recomputed via the real rules-core engine, and re-saved. Wearing an item whose slot is held comes
+ * back `Blocked`, with a diagnostic reading "head slot is taken by <item>"; nothing is saved.
  */
 
 export type ActiveStateDto = 'EquippedActive' | 'Absent' | 'SelectedInactive';

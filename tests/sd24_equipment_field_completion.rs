@@ -125,9 +125,9 @@ fn amulet_of_natural_armor_has_real_weight_and_description() {
     assert!(description.contains("enhancement bonus to his natural armor"));
 }
 
-/// A `.COPY=`-derived arms/armor record has no independent COST/WT in the
-/// real corpus -- `None` here is a genuine corpus absence, not a dropped
-/// value. `Dart (Blowgun)`'s own base record (`Blowgun Dart (Base)`) itself
+/// A `.COPY=`-derived arms/armor record has no independent COST/WT on its
+/// own row; its price is its base's (settled since SD-41 E1.9), its weight
+/// stays `None`. `Dart (Blowgun)`'s own base record (`Blowgun Dart (Base)`) itself
 /// carries no `DESC:` token in the corpus either, so SD-25 criterion 7.N's
 /// `.COPY=`-inheritance fix (register A11) correctly finds nothing to
 /// inherit and leaves this `None` too -- demonstrating the inheritance
@@ -138,7 +138,9 @@ fn base_template_record_correctly_has_no_independent_cost_or_weight() {
         .iter()
         .find(|entry| entry.key == "Dart (Blowgun)")
         .expect("Dart (Blowgun) should be in the CRB arms/armor table");
-    assert_eq!(entry.cost_gp, None);
+    // SD-41 E1.9: the `.COPY=` row inherits `Blowgun Dart (Base)`'s `COST:0.05`; the converter
+    // now settles that price (base + its `Material ~ Steel` eqmod, 0). Weight stays unsettled.
+    assert_eq!(entry.cost_gp, Some(0.05));
     assert_eq!(entry.weight_lbs, None);
     assert_eq!(entry.description, None);
 }

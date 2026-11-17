@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 3825.0,
     "description": "As hold monster, but all within 30 ft.",
     "key": "Scroll of Hold Monster (Mass)",
     "name": "Scroll",

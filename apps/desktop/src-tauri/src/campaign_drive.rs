@@ -319,6 +319,23 @@ mod tests {
     }
 
     #[test]
+    fn write_campaign_drive_artifacts_accepts_a_member_without_invited() {
+        let temp = temp_dir("member");
+        let _ = fs::remove_dir_all(&temp);
+        let json = sample_campaign_config_json("Member Campaign")
+            .replace(r#""members":[]"#, r#""members":[{"email":"a@b.c"}]"#);
+        let request = WriteCampaignDriveArtifactsRequest {
+            drive_folder_path: temp.to_string_lossy().into_owned(),
+            campaign_name: "Member Campaign".to_owned(),
+            campaign_config_json: json,
+            assets: CampaignAssetsDto::default(),
+        };
+        let response = write_campaign_drive_artifacts_impl(&request).expect("member without invited writes");
+        assert!(PathBuf::from(&response.campaign_folder_path).join(".config").join("Member Campaign.json").exists());
+        let _ = fs::remove_dir_all(&temp);
+    }
+
+    #[test]
     fn rejects_an_empty_drive_folder_path() {
         let request = WriteCampaignDriveArtifactsRequest {
             drive_folder_path: String::new(),

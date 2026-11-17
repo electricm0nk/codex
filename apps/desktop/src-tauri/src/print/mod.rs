@@ -20,7 +20,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::character_custom::{custom_or_empty, CharacterCustomDto};
 use crate::character_hub::{
-    character_portrait_path_at_root, list_held_equipment_at_root, load_character_bio_at_root, load_character_portrait_bytes_at_root,
+    character_portrait_path_at_root, list_held_equipment_stacks_at_root, load_character_bio_at_root, load_character_portrait_bytes_at_root,
     resolve_character_root,
 };
 use crate::character_ledger::list_progression_ledger_at_root;
@@ -129,7 +129,7 @@ pub fn render_sheet_pdf_at_root(root: &Path, request: &PrintRequest) -> Result<R
 }
 
 /// The sheet the character saved at `root` prints as: its system's layout file over what the
-/// screen reads -- the load response, the owned copies (`list_held_equipment_at_root`), the
+/// screen reads -- the load response, the owned stacks (`list_held_equipment_stacks_at_root`), the
 /// Custom tab's records and the bio -- and the request's options.
 ///
 /// The load is the one the `load_saved_character` command makes (`load_saved_character_via_envelope`,
@@ -145,9 +145,10 @@ pub fn sheet_document_at_root(root: &Path, request: &PrintRequest) -> Result<mod
         other => return Err(format!("print.unsupported_system: no print layout for game system `{other}`")),
     };
     let (held, custom) =
-        if system == "pf1" { (list_held_equipment_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
+        if system == "pf1" { (list_held_equipment_stacks_at_root(root)?, custom_or_empty(root)) } else { (Vec::new(), CharacterCustomDto::default()) };
     let money = if system == "pf1" { Some(crate::character_hub::load_character_money_at_root(root)?) } else { None };
-    let portrait = if system == "pf1" { saved_portrait(root) } else { None };
+    // No saved portrait: the box prints the game system's logo, never the word (SD-41 `decisions.md §34` (7)).
+    let portrait = if system == "pf1" { saved_portrait(root).or_else(|| typst::logo(system)) } else { None };
     // Read as the Show Progression drawer reads it, and only when the section prints: it runs the engine once per level.
     let progression = if system == "pf1" && request.sections().progression { Some(list_progression_ledger_at_root(root)?) } else { None };
     let sources = blocks::SheetSources { loaded: &loaded, held, custom, bio: load_character_bio_at_root(root)?, money, portrait, progression, request };

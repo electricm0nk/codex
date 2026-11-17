@@ -427,7 +427,7 @@
       "key": "All-Seeing Armor",
       "name": "All-Seeing Armor",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5570.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -437,7 +437,7 @@
       "key": "Armor Of The Unqenchable Fire",
       "name": "Armor Of The Unqenchable Fire",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4840.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -447,7 +447,7 @@
       "key": "Blackfingers Apron",
       "name": "Blackfingers Apron",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5240.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -457,7 +457,7 @@
       "key": "Bronze Whisperer's Shield",
       "name": "Bronze Whisperer's Shield",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4279.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -467,7 +467,7 @@
       "key": "Calmitous Mail",
       "name": "Calmitous Mail",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3750.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -477,7 +477,7 @@
       "key": "Dawnflower Chain Vest",
       "name": "Dawnflower Chain Vest",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 6950.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -487,7 +487,7 @@
       "key": "Deadeye Leather",
       "name": "Deadeye Leather",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5425.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -497,7 +497,7 @@
       "key": "Driftwood Shield",
       "name": "Driftwood Shield",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2527.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -507,7 +507,7 @@
       "key": "Eternal Iron Breastplate",
       "name": "Eternal Iron Breastplate",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4890.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -517,7 +517,7 @@
       "key": "Fangtide Scale Mail",
       "name": "Fangtide Scale Mail",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4890.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -527,7 +527,7 @@
       "key": "Forgefather's Half-Plate",
       "name": "Forgefather's Half-Plate",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4180.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -537,7 +537,7 @@
       "key": "Golden Judge's Breastplate",
       "name": "Golden Judge's Breastplate",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5110.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -547,7 +547,7 @@
       "key": "Gravewatcher Chainmail",
       "name": "Gravewatcher Chainmail",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5380.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -557,7 +557,7 @@
       "key": "Gray Master's Leathers",
       "name": "Gray Master's Leathers",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5720.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -567,7 +567,7 @@
       "key": "Grim Gloom Mail",
       "name": "Grim Gloom Mail",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2380.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -577,7 +577,7 @@
       "key": "Half-Plate Of The Dark Prince",
       "name": "Half-Plate Of The Dark Prince",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3910.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -587,7 +587,7 @@
       "key": "Inheritor's Breastplate",
       "name": "Inheritor's Breastplate",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2430.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -597,7 +597,7 @@
       "key": "Kimle Coat",
       "name": "Kimle Coat",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2300.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -607,7 +607,7 @@
       "key": "Lucky Drunk's Mail",
       "name": "Lucky Drunk's Mail",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4840.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -617,7 +617,7 @@
       "key": "Milanite Armor",
       "name": "Milanite Armor",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 2780.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -627,7 +627,7 @@
       "key": "Painspike Armor",
       "name": "Painspike Armor",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4145.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -637,7 +637,7 @@
       "key": "Pallid Chain",
       "name": "Pallid Chain",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3300.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -647,7 +647,7 @@
       "key": "Pelt Of The Demon Mother",
       "name": "Pelt Of The Demon Mother",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3325.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -657,7 +657,7 @@
       "key": "Perfection Leather",
       "name": "Perfection Leather",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3860.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -667,7 +667,7 @@
       "key": "Red Stalker Armor",
       "name": "Red Stalker Armor",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3035.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -677,7 +677,7 @@
       "key": "Rosy Hauberk",
       "name": "Rosy Hauberk",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3035.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -687,7 +687,7 @@
       "key": "Sea Banshee Coat",
       "name": "Sea Banshee Coat",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3605.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -697,7 +697,7 @@
       "key": "Starsong Mail",
       "name": "Starsong Mail",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3460.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -707,7 +707,7 @@
       "key": "Toiler's Armor",
       "name": "Toiler's Armor",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3920.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -717,7 +717,7 @@
       "key": "Veiled Chain",
       "name": "Veiled Chain",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4490.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -727,7 +727,7 @@
       "key": "Black Alibi",
       "name": "Black Alibi",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4410.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -737,7 +737,7 @@
       "key": "Blade Of Three Fancies",
       "name": "Blade Of Three Fancies",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5248.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -747,7 +747,7 @@
       "key": "Bloodlight",
       "name": "Bloodlight",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3970.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -757,7 +757,7 @@
       "key": "Carouser's Retort",
       "name": "Carouser's Retort",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3060.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -767,7 +767,7 @@
       "key": "Dawnfire",
       "name": "Dawnfire",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5315.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -777,7 +777,7 @@
       "key": "Enduring Bloom",
       "name": "Enduring Bloom",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3848.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -787,7 +787,7 @@
       "key": "Fate Blade",
       "name": "Fate Blade",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3072.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -797,7 +797,7 @@
       "key": "Forgefather's Sledge",
       "name": "Forgefather's Sledge",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4312.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -807,7 +807,7 @@
       "key": "Fugitive Finder",
       "name": "Fugitive Finder",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 12655.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -817,7 +817,7 @@
       "key": "Fuming Blood Sabre",
       "name": "Fuming Blood Sabre",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 11035.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -827,7 +827,7 @@
       "key": "Hell's Eye",
       "name": "Hell's Eye",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 10305.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -837,7 +837,7 @@
       "key": "Inheritor's Light",
       "name": "Inheritor's Light",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 6555.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -847,7 +847,7 @@
       "key": "Kinbonded Bow",
       "name": "Kinbonded Bow",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 3875.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -857,7 +857,7 @@
       "key": "Nail Of The Princess",
       "name": "Nail Of The Princess",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5318.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -867,7 +867,7 @@
       "key": "Obliviating Flail",
       "name": "Obliviating Flail",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4815.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -877,7 +877,7 @@
       "key": "Perfectionist Shavtoosh",
       "name": "Perfectionist Shavtoosh",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 4461.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -887,7 +887,7 @@
       "key": "Quarterstaff Of Entwined Serpents",
       "name": "Quarterstaff Of Entwined Serpents",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 5050.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -897,7 +897,7 @@
       "key": "Redlust's Daughter",
       "name": "Redlust's Daughter",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 9875.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -907,7 +907,7 @@
       "key": "Rusting Teeth Of The Rough Beast",
       "name": "Rusting Teeth Of The Rough Beast",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 8320.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -917,7 +917,7 @@
       "key": "Shooting Starknife",
       "name": "Shooting Starknife",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 7724.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -927,7 +927,7 @@
       "key": "Stormstrike",
       "name": "Stormstrike",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 9315.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -937,7 +937,7 @@
       "key": "Umbral Chain",
       "name": "Umbral Chain",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 8825.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null
@@ -947,7 +947,7 @@
       "key": "Vengeful Kiss",
       "name": "Vengeful Kiss",
       "category": "General",
-      "cost_gp": null,
+      "cost_gp": 11501.0,
       "weight_lbs": null,
       "description": null,
       "name_pi_citation": null

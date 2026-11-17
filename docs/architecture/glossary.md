@@ -3,7 +3,7 @@
 > Scope: every project-specific term a newcomer meets in this codebase or its docs, each with a
 > short definition and a link to the doc that treats it in full.
 > Merge pass: **2026-10-07, `tranche/17` merged with `develop` @ `fd68740f60`** (SD-37 E7.9a): both term sets kept; the Data root entry now names the per-system roots.
-> Last verified: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the SD-40 terms (look, print layout, print section). Earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the SD-38 terms (the
+> Last verified: **2026-11-16 against `tranche-21` (`be27ecc83d`, SD-41 E5.3)** for the SD-41 terms (campaign write-through, container, copy key, equipment set, location, projection, stack) and the corpus-literal sweep's settled-price re-derivation. Earlier: **2026-11-14 against `tranche-20` (`2fd74a5c15`, SD-40 E5.4)** for the SD-40 terms (look, print layout, print section). Earlier: **2026-10-15 against `tranche-18` (`9d23977679`, SD-38 closure truth-up)** for the SD-38 terms (the
 > `cpr.` row, printed rule, the Game system entry). Earlier: **2026-10-07 against `tranche/17` (`b99c3d4b02`)** for the SD-37 terms (game system, held set,
 > data package, rules catalog, golden digests, Starfinder chassis).
 > Also verified: **2026-10-07 against branch `tranche-16-ui`** for the four terms it added (data root, installed state, release-notes pointer, version stamp). Earlier: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
@@ -42,6 +42,14 @@ render, exercised by `tests/sd20_contract_*.rs`. Distinct from the desktop **bou
 Components never call `invoke()` inline; they call a boundary wrapper, which is gated on
 `hasTauriRuntime()` and falls back to a preview value outside a real Tauri runtime. See
 [conventions.md](./conventions.md) §"Boundary wrapper rule" and [desktop-app.md](./desktop-app.md).
+
+## Campaign write-through
+
+The one-way copy of a whole character folder into each campaign folder it belongs to
+(`<campaignDir>/characters/<slug>-<characterId>/`), after every write under the character root
+(`campaign_mirror::mirror`, called by the desktop's `after_write`). Membership lives in the character's
+own `campaigns.json`; the copy is never read back, and a failed copy is a warning, not an error. See
+[persistence.md](./persistence.md).
 
 ## Carrier mix
 
@@ -95,6 +103,20 @@ holds, so "the class grants no weapon" is never confused with "the grant was los
 Written by `crates/codex-ingest/src/pcgen_import/sheet_rule/attest.rs`. Not the bundle sense of
 **Closure** above. See [corpus-ingest.md](./corpus-ingest.md).
 
+## Container (equipment)
+
+A corpus record whose type holds `Container` and that is not a weapon, settled by the converter as
+`container` with a `container_capacity` (pounds, unlimited, or unstated); a Create item with a capacity
+is one too. Its load is summed by `src/rules_core/containers.rs::container_loads` with the same bundle
+rule encumbrance uses. See [rules-engine.md](./rules-engine.md).
+
+## Copy key
+
+`CopyKey { item_id, bonus, ordinal }` (`src/saved_character/equipment_sets.rs`): one owned copy, the
+`ordinal`-th line of that item at that bonus in the saved input. The map key is
+`"<itemId>|<bonus>|<ordinal>"`. Sets, container contents and per-copy facts (custom name, piece
+quantity, size) are keyed by it.
+
 ## Corpus
 
 The real PCGen open-source rule data (`.pcc` entry files + `.lst` object-data files) — an
@@ -108,7 +130,9 @@ JSON cache derived from** the corpus. See [corpus-ingest.md](./corpus-ingest.md)
 
 `corpus_literal_sweep` (a `codex-ingest` binary, `scripts/verify.sh`'s `corpus-sweep` stage) —
 a byte-equality proof that every corpus-literal value this repo ships was transcribed verbatim
-from the pinned oracle, not paraphrased or hand-typed. See [testing.md](./testing.md).
+from the pinned oracle, not paraphrased or hand-typed. A settled `cost_gp` that the converter priced
+from a formula or eqmods (no flat `COST:` token) is proved by re-deriving it through
+`equipment_price_settle`, the same code `settle_equipment_prices` uses. See [testing.md](./testing.md).
 
 ## `cpr.` row
 
@@ -165,6 +189,13 @@ A named subdivision of an SD-N bundle (e.g. "Epic A — PCGen wall", "Epic C1 �
 refactor"), each with its own acceptance criteria in that bundle's `epic-breakdown.md`. See
 [README.md](./README.md) and any `docs/release/<bundle>/epic-breakdown.md`.
 
+## Equipment set
+
+A named arrangement of a character's owned copies (`EquipmentSet` in `equipment_sets.json`): each copy
+has a **location** in each set, and one set is active. Only the active set reaches the engine, through
+the **projection**. An old save gets one `Default` set on its first load. See
+[persistence.md](./persistence.md).
+
 ## Fail-honest
 
 The rule that nothing in this codebase fabricates a value it cannot prove: every computed field
@@ -213,6 +244,12 @@ set (`sf_defense::held`), so a total on the sheet is the number the package's ow
 `docs/release/<bundle>/kanban.md` — the per-bundle task board tracking each epic/criterion's
 dispatch status (READY, blocked, complete). Read alongside `workflow-instruction.md`, not a
 substitute for it.
+
+## Location (equipment)
+
+Where a copy is in one equipment set: a body `Slot`, `Equipped` (worn, no slot), `Carried`,
+`NotCarried`, or `Inside` a container copy (`equipment_sets::Location`). A copy a set does not name is
+Carried.
 
 ## Look (print)
 
@@ -281,6 +318,13 @@ remembered per character in `localStorage`. See
 ## Probe
 
 See DOM probe above — this codebase uses "probe" for more than one mechanism; check context.
+
+## Projection (equipment set)
+
+`equipment_sets::project`: the active set turned into each saved `equipment=` line's `active_state`
+(a slot or Equipped → `EquippedActive`; Carried, or inside a container that is worn or carried → `SelectedInactive`;
+Not Carried, or inside a container that is Not Carried → `Absent`). It is the only bridge from a set to the
+engine, which still reads only the saved input.
 
 ## Receipt
 
@@ -359,6 +403,13 @@ authoring time (`gen_settled_corpus`, now in `crates/codex-ingest`) so the live 
 (`src/rules_core/settled_corpus.rs`) never has to re-apply `.COPY=`/`.MOD` resolution at run time.
 Regenerate-and-diff (`gen_settled_corpus --check`) is its own idempotency proof. See
 [corpus-ingest.md](./corpus-ingest.md) and [rules-data-tables.md](./rules-data-tables.md).
+
+## Stack (equipment)
+
+A view, not a stored thing: held copies with the same item, bonus, custom name, location, size,
+special abilities and override flag are one row with a piece `quantity`
+(`list_held_equipment_stacks_at_root`). Bought bundles become pieces
+(3 × "Arrows (20)" = 60); the piece count lives in `equipment_sets.json`'s `copies` map.
 
 ## Status parity
 

@@ -6,7 +6,7 @@
     "key": "Javelin",
     "category": "arms_armor",
     "name": "Javelin (Base)",
-    "cost_gp": null,
+    "cost_gp": 1.0,
     "weight_lbs": null,
     "description": "A javelin is a thin throwing spear. Since it is not designed for melee, you are treated as nonproficient with it and take a -4 penalty on attack rolls if you use a javelin as a melee weapon."
   },

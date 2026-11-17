@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 2275.0,
     "description": "As invisibility, but affects all in range.",
     "key": "Scroll of Invisibility (Mass)",
     "name": "Scroll",

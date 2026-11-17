@@ -47,7 +47,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 162300.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -121,6 +121,17 @@
     "equipmods/material_ironwood.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -135,6 +146,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wood"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Ironwood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -167,7 +186,7 @@
           "die_size": 4
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 2300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           19,

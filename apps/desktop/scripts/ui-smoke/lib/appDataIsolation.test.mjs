@@ -24,6 +24,7 @@ import {
   characterIds,
   cleanupCreatedCharacters,
   createIsolatedDataRoot,
+  expandRunPaths,
   fingerprintStore,
   isolatedXdg,
   launchEnv,
@@ -187,5 +188,10 @@ try {
 } finally {
   rmSync(scratch, { recursive: true, force: true });
 }
+
+// --- a typed path under the run's own XDG_DATA_HOME (SD-41 E3.3: the Drive folder) ---
+assert.equal(expandRunPaths('{XDG_DATA_HOME}/drive', '/tmp/r/data'), '/tmp/r/data/drive', 'the token becomes the isolated XDG_DATA_HOME');
+assert.equal(expandRunPaths('Smoke Campaign', '/tmp/r/data'), 'Smoke Campaign', 'text without the token is unchanged');
+assert.throws(() => expandRunPaths('{XDG_DATA_HOME}/drive', null), /isolated XDG_DATA_HOME/, 'no isolated root: refused, never the real one');
 
 console.log('appDataIsolation.test.mjs: all assertions passed');

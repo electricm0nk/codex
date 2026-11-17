@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "You detect surface thoughts.",
     "key": "Wand of Detect Thoughts",
     "name": "Wand",

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 3825.0,
     "description": "Four exploding spheres each deal 6d6 fire damage.",
     "key": "Scroll of Meteor Swarm",
     "name": "Scroll",

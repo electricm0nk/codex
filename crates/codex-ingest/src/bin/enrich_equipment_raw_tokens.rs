@@ -31,7 +31,7 @@
 //! book-specific field this tool doesn't know about survives untouched,
 //! by construction, regardless of what else diverges between books' schemas.
 //!
-//! Records whose `source.kind` is not `"lst_token"` (a `web_second_source`
+//! Records whose `source.kind` is neither `"lst_token"` nor `"lst_inherited_copy"` (a `web_second_source`
 //! or `same_book_fallback` record -- no raw LST line to enrich from) are
 //! left untouched and counted separately, not treated as an error.
 
@@ -183,11 +183,15 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
     let was_already_enriched = existing_raw_tokens.is_some() || existing_raw_bonus_chains.is_some();
 
     let source = root["source"].clone();
-    if source.get("kind").and_then(Value::as_str) != Some("lst_token") {
-        return Outcome::NoLstCitation;
-    }
-    let lst_rel_path = source["path"].as_str().expect("lst_token source must carry a path").to_string();
-    let line = source["line"].as_u64().expect("lst_token source must carry a line") as usize;
+    // SD-41 E1.13: an `lst_inherited_copy` record cites its own `.COPY=` line too; it gets that
+    // line's own tokens only (`BASEQTY` among them). Its base's facts reach it through `base_item`.
+    let inherited_copy = match source.get("kind").and_then(Value::as_str) {
+        Some("lst_token") => false,
+        Some("lst_inherited_copy") => true,
+        _ => return Outcome::NoLstCitation,
+    };
+    let lst_rel_path = source["path"].as_str().expect("an LST source must carry a path").to_string();
+    let line = source["line"].as_u64().expect("an LST source must carry a line") as usize;
     let record_key = source.get("record_key").and_then(Value::as_str).unwrap_or("<unknown>").to_string();
 
     let lst_full_path = data_root.join(&lst_rel_path);
@@ -225,6 +229,12 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
     // now expected to always pass by construction) rather than removed.
     let cited_line_text = lst_text.lines().nth(line.saturating_sub(1)).unwrap_or("");
     let line_tokens = raw_record.tokens_on_line(line);
+    // shortcut: only the inherited copies that state a bundle size (the 4 CRB ammunition bundles);
+    // enriching all 117 also moves 98 settled `eqmod_references` and 2 `base_item`s -- widen under
+    // a card that rules on those.
+    if inherited_copy && !line_tokens.iter().any(|t| t.key == "BASEQTY") {
+        return Outcome::NoLstCitation;
+    }
     let line_bonus_chains = raw_record.bonus_chains_on_line(line);
     for token in &line_tokens {
         let rendered = format!("{}:{}", token.key, token.value);
@@ -248,7 +258,8 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
     // one hop: `find_copy_base` never matches another `.COPY=` row.
     let mut all_tokens: Vec<&EquipmentToken> = line_tokens;
     let mut all_bonus_chains: Vec<&BonusToken> = line_bonus_chains;
-    if let Some(base_identity) = copy_base_identity(cited_line_text)
+    if !inherited_copy
+        && let Some(base_identity) = copy_base_identity(cited_line_text)
         && let Some(base_record) = find_copy_base(&parsed.entries, base_identity)
     {
         let base_line = base_record.header_line_number;
@@ -380,6 +391,7 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         })
         .collect();
 
+    let all_bonus_chains_empty = raw_bonus_chains.is_empty();
     let new_raw_tokens = Value::Array(raw_tokens);
     let new_raw_bonus_chains = Value::Array(raw_bonus_chains);
 
@@ -399,7 +411,11 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
         .and_then(Value::as_object_mut)
         .expect("\"data\" must be a JSON object");
     data_obj.insert("raw_tokens".to_string(), new_raw_tokens);
-    data_obj.insert("raw_bonus_chains".to_string(), new_raw_bonus_chains);
+    // An inherited copy's re-ingest moves `raw_tokens` alone (SD-41 convert-lane field-diff rule);
+    // its bundle line states no `BONUS:` (`raw_bonus_chains` would be `[]`).
+    if !(inherited_copy && all_bonus_chains_empty) {
+        data_obj.insert("raw_bonus_chains".to_string(), new_raw_bonus_chains);
+    }
 
     let new_json = serde_json::to_string_pretty(&root).expect("serialize enriched record");
     fs::write(path, new_json + "\n").unwrap_or_else(|e| panic!("write {path:?}: {e}"));

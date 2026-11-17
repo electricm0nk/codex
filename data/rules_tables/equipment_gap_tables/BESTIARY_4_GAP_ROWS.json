@@ -14,7 +14,7 @@
       "key": "Pliers (Tooth Fairy)",
       "name": "Pliers (Tooth Fairy)",
       "category": "ArmsArmor",
-      "cost_gp": 0.0,
+      "cost_gp": 2300.0,
       "weight_lbs": 0.5,
       "description": "The pliers rust away into worthless splinters 1d4 rounds after the tooth fairy is killed.",
       "name_pi_citation": null
@@ -67,7 +67,7 @@
       "key": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_6)",
       "name": "Codex-Named Unit (equipment_bestiary_4_b4_equip_magic_items_lst_6)",
       "category": "MagicItems",
-      "cost_gp": 0.0,
+      "cost_gp": 162300.0,
       "weight_lbs": 2.0,
       "description": null,
       "name_pi_citation": [

@@ -418,6 +418,13 @@
     "alchemical_cartridge_dragon_s_breath.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -457,6 +464,13 @@
     "alchemical_cartridge_entangling_shot.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -496,6 +510,13 @@
     "alchemical_cartridge_flare.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -535,6 +556,13 @@
     "alchemical_cartridge_paper_bullet.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -574,6 +602,13 @@
     "alchemical_cartridge_paper_pellet.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -613,6 +648,13 @@
     "alchemical_cartridge_salt_shot.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -2021,7 +2063,7 @@
         "armor_class_chain_bonus": 9,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 10650.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -2065,7 +2107,7 @@
         "armor_class_chain_bonus": 9,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 1850.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -2151,7 +2193,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 0.05,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -2196,7 +2238,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 0.05,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -2276,6 +2318,7 @@
     "arrowbreak_bow.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Arrow",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -2309,6 +2352,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": {
           "damage_bonus": 2,
@@ -2371,7 +2415,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -2494,10 +2538,17 @@
     "atlatl_dart.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "AtlatlDart"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 1,
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -2583,6 +2634,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 1500.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -2700,7 +2752,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "container": true,
+        "cost_gp": 120000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -2930,10 +2983,17 @@
     "bamboo_shaft_arrows_10.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Arrow"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 10,
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -3015,6 +3075,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 0.5,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -3382,7 +3444,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 800.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -3471,7 +3533,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 1700.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -3551,7 +3613,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 100.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -3631,7 +3693,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 400.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -3711,7 +3773,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 90.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -3791,7 +3853,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 6.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -3871,7 +3933,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 60.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -3951,7 +4013,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 700.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4031,7 +4093,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4111,7 +4173,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 400.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4191,7 +4253,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 120.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4271,7 +4333,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 300.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4351,7 +4413,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 1000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4431,7 +4493,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 100.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4511,7 +4573,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 500.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4591,7 +4653,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 3400.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4671,7 +4733,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 50.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4751,7 +4813,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 200.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4831,7 +4893,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 60.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4911,7 +4973,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 3600.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -4991,7 +5053,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 2000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -5071,7 +5133,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 40.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -5149,7 +5211,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 35.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -6185,6 +6247,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 1000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -6227,7 +6290,7 @@
           "die_size": 6
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 36190.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           19,
@@ -6699,6 +6762,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 5000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -6812,6 +6877,7 @@
     "blunderbuss.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -6846,6 +6912,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -6860,10 +6927,17 @@
     "blunt_arrows_20.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Arrow"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 20,
         "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -7305,7 +7379,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 0.1,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -7352,7 +7426,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 0.1,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -7397,7 +7471,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 0.1,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -8651,7 +8725,7 @@
         "armor_class_chain_bonus": -5,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 12500.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -9266,6 +9340,7 @@
     "buckler_gun.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -9299,6 +9374,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -9395,7 +9471,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "container": true,
+        "cost_gp": 0.01,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -9435,6 +9512,13 @@
     "bullet_burrowing_greater.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -9478,6 +9562,13 @@
     "bullet_burrowing_lesser.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -9521,6 +9612,13 @@
     "bullet_firearm.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -9560,10 +9658,18 @@
     "bullet_firearm_30.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 30,
         "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -9599,6 +9705,13 @@
     "bullet_firearm_pitted.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -9638,6 +9751,13 @@
     "bullet_tracer.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmBullet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -10212,6 +10332,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 150.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -10407,7 +10528,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 0.01,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -10485,6 +10606,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 4.0
+        },
         "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -11771,6 +11896,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 200.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -11810,6 +11937,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 50.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -11849,6 +11978,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 100.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -14569,7 +14700,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 49000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -14604,6 +14735,7 @@
     "culverin.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -14638,6 +14770,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -14698,7 +14831,7 @@
           "die_size": 6
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 3901.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,
@@ -14800,7 +14933,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -14884,7 +15017,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -14929,7 +15062,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -15506,7 +15639,7 @@
         "armor_class_chain_bonus": 9,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 100150.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -15565,7 +15698,7 @@
           "die_size": 10
         },
         "base_item": null,
-        "cost_gp": -18300.0,
+        "cost_gp": 0.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,
@@ -15610,7 +15743,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 80.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -15776,6 +15909,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 300.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -15815,6 +15949,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 450.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -15854,7 +15989,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 20.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -16227,6 +16362,7 @@
     "double_hackbut.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -16260,6 +16396,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -16317,7 +16454,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -17482,7 +17619,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 15.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -17611,6 +17748,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 1000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -17896,6 +18034,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 1500.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -18152,6 +18291,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "CraftToolsTattoos"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Tattoos",
         "skill_check_bonus": {
           "bonus": 2,
@@ -18350,6 +18497,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Angelskin"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Angelskin",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18389,6 +18547,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Angelskin"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "Angelskin",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18414,6 +18583,10 @@
     "equipmods/material_blood_crystal_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -18428,6 +18601,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "BloodCrystal"
+          ],
+          "terms": [
+            {
+              "flat_gp": 30.0
+            }
+          ]
+        },
         "name": "Blood Crystal",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18467,6 +18650,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "BloodCrystal"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "Blood Crystal",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18492,6 +18685,17 @@
     "equipmods/material_bone.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -18506,6 +18710,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bone"
+          ],
+          "terms": [
+            {
+              "per_base_gp": -0.5
+            }
+          ]
+        },
         "name": "Bone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18531,6 +18745,17 @@
     "equipmods/material_bronze.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -18545,6 +18770,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Bronze"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18584,6 +18817,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 750.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18623,6 +18867,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18662,6 +18917,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18701,6 +18967,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Darkleaf"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "per_lb_gp": 375.0
+            }
+          ]
+        },
         "name": "Darkleaf Cloth",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18740,6 +19017,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "EelHide"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1200.0
+            }
+          ]
+        },
         "name": "Eel Hide",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18779,6 +19067,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "EelHide"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1800.0
+            }
+          ]
+        },
         "name": "Eel Hide",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18804,6 +19103,10 @@
     "equipmods/material_elysian_bronze_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -18818,6 +19121,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 20.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18857,6 +19170,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 3000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18896,6 +19219,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18935,6 +19268,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18974,6 +19317,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ElysianBronze"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Elysian Bronze",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -18999,6 +19352,11 @@
     "equipmods/material_fire_forged_steel_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "MasterworkQuality",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -19013,6 +19371,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 15.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19052,6 +19421,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 3000.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19096,6 +19476,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19140,6 +19531,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 2500.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19184,6 +19586,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FireForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 600.0
+            }
+          ]
+        },
         "name": "Fire-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19209,6 +19622,11 @@
     "equipmods/material_frost_forged_steel_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "MasterworkQuality",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -19223,6 +19641,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 15.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19262,6 +19691,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 3000.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19306,6 +19746,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19350,6 +19801,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 2500.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19394,6 +19856,17 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "FrostForgedSteel"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "flat_gp": 600.0
+            }
+          ]
+        },
         "name": "Frost-Forged Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19419,6 +19892,17 @@
     "equipmods/material_gold.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -19433,6 +19917,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Gold"
+          ],
+          "terms": [
+            {
+              "per_base_gp": 9.0
+            }
+          ]
+        },
         "name": "Gold",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19458,6 +19952,13 @@
     "equipmods/material_greenwood.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "MasterworkQuality",
+          "Ammunition",
+          "Weapon",
+          "Shield"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -19472,6 +19973,38 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Greenwood"
+          ],
+          "masterwork_quality": true,
+          "terms": [
+            {
+              "per_lb_gp": 50.0
+            },
+            {
+              "flat_gp": 6.0,
+              "hosts": [
+                "AMMUNITION"
+              ]
+            },
+            {
+              "excludes": [
+                "Shield"
+              ],
+              "flat_gp": 300.0,
+              "hosts": [
+                "WEAPON"
+              ]
+            },
+            {
+              "flat_gp": 150.0,
+              "hosts": [
+                "SHIELD"
+              ]
+            }
+          ]
+        },
         "name": "Greenwood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19511,6 +20044,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GriffonMane"
+          ],
+          "terms": [
+            {
+              "flat_gp": 200.0
+            }
+          ]
+        },
         "name": "Griffon Mane",
         "skill_check_bonus": {
           "bonus": 2,
@@ -19559,6 +20102,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GriffonMane"
+          ],
+          "terms": [
+            {
+              "per_lb_gp": 50.0
+            }
+          ]
+        },
         "name": "Griffon Mane",
         "skill_check_bonus": {
           "bonus": 2,
@@ -19593,6 +20146,10 @@
     "equipmods/material_living_steel_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -19607,6 +20164,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 10.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19646,6 +20213,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1500.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19685,6 +20262,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19724,6 +20311,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19763,6 +20360,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "per_lb_gp": 250.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19802,6 +20409,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 100.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19841,6 +20458,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LivingSteel"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Living Steel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19866,6 +20493,17 @@
     "equipmods/material_obsidian.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Mundane",
+          "Ammunition",
+          "Armor",
+          "Shield",
+          "Weapon",
+          "Instruments",
+          "Tools",
+          "Goods"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -19880,6 +20518,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Obsidian"
+          ],
+          "terms": [
+            {
+              "per_base_gp": -0.5
+            }
+          ]
+        },
         "name": "Obsidian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19919,6 +20567,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Stone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19958,6 +20614,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Stone"
+          ],
+          "terms": [
+            {
+              "per_base_gp": -0.75
+            }
+          ]
+        },
         "name": "Stone",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -19983,6 +20649,10 @@
     "equipmods/material_viridium_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -19997,6 +20667,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Viridium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 20.0
+            }
+          ]
+        },
         "name": "Viridium",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20022,6 +20702,10 @@
     "equipmods/material_viridium_strengthened_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "BaseMaterial",
+          "Ammunition"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -20036,6 +20720,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ViridiumStrengthened"
+          ],
+          "terms": [
+            {
+              "flat_gp": 20.0
+            }
+          ]
+        },
         "name": "Viridium (Strengthened)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20075,6 +20769,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "ViridiumStrengthened"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Viridium (Strengthened)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20114,6 +20818,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Viridium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 200.0
+            }
+          ]
+        },
         "name": "Viridium",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20153,6 +20867,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Whipwood"
+          ],
+          "terms": [
+            {
+              "flat_gp": 500.0
+            }
+          ]
+        },
         "name": "Whipwood",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20197,6 +20921,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Wyroot (1 Life Point)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20236,6 +20970,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 2000.0
+            }
+          ]
+        },
         "name": "Wyroot (2 Life Points)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20275,6 +21019,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Wyroot"
+          ],
+          "terms": [
+            {
+              "flat_gp": 4000.0
+            }
+          ]
+        },
         "name": "Wyroot (3 Life Points)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20314,6 +21068,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMinor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (1st)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20353,6 +21117,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMinor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 4000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (2nd)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20392,6 +21166,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMedium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 9000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (3rd)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20431,6 +21215,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMedium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 16000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (4th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20470,6 +21264,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMedium"
+          ],
+          "terms": [
+            {
+              "flat_gp": 25000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (5th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20509,6 +21313,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 36000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (6th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20548,6 +21362,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "LesserMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 49000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (7th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20587,6 +21411,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 64000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (8th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20626,6 +21460,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "GreaterMajor"
+          ],
+          "terms": [
+            {
+              "flat_gp": 81000.0
+            }
+          ]
+        },
         "name": "Page of Spell Knowledge (9th)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20665,6 +21509,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Adaptive"
+          ],
+          "terms": [
+            {
+              "flat_gp": 1000.0
+            }
+          ]
+        },
         "name": "Adaptive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20743,6 +21597,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Advancing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20782,6 +21639,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Anchoring",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20821,6 +21681,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Balanced",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20860,6 +21723,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Benevolent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20899,6 +21765,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Benevolent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20938,6 +21807,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Benevolent",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -20977,6 +21849,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bitter",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21016,6 +21891,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Bolstering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21055,6 +21933,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Brawling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21099,6 +21980,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Called",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21138,6 +22022,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Clangorous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21177,6 +22064,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Conductive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21216,6 +22106,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Conserving",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21255,6 +22148,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Corrosive",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21294,6 +22190,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Corrosive Burst",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21333,6 +22232,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Countering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21372,6 +22274,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Courageous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21450,6 +22355,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cruel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21475,6 +22383,12 @@
     "equipmods/special_ability_cruel_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Ammunition",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -21489,6 +22403,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cruel",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21528,6 +22445,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Cunning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21567,6 +22487,12 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Deadly"
+          ],
+          "plus": 1
+        },
         "name": "Deadly",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21606,6 +22532,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Deathless",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21645,6 +22574,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Defiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21684,6 +22616,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Defiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21748,6 +22683,11 @@
     "equipmods/special_ability_designating_greater_ranged.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -21762,6 +22702,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "Designating (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21787,6 +22730,11 @@
     "equipmods/special_ability_designating_lesser_ranged.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -21801,6 +22749,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Designating (Lesser)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21840,6 +22791,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Dispelling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21879,6 +22833,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Dispelling Burst",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21918,6 +22875,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Dispelling Burst",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21957,6 +22917,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Dispelling",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -21982,6 +22945,11 @@
     "equipmods/special_ability_dry_load_firearm_ammunition.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "FirearmBullet",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -22035,6 +23003,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Endless Ammunition",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22113,6 +23084,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Furious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22152,6 +23126,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Furyborn",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22191,6 +23168,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Furyborn",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22269,6 +23249,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Glorious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22308,6 +23291,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Glorious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22347,6 +23333,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grayflame",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22386,6 +23375,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grinding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22425,6 +23417,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grounding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22464,6 +23459,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Grounding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22503,6 +23501,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Guardian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22542,6 +23543,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Guardian",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22620,6 +23624,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Heartseeker",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22659,6 +23666,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Heartseeker",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22737,6 +23747,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Huntsman",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22776,6 +23789,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Igniting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22801,6 +23817,12 @@
     "equipmods/special_ability_igniting_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -22815,6 +23837,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Igniting",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22854,6 +23879,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Impact",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22893,6 +23921,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Impervious",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -22971,6 +24002,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Invigorating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23010,6 +24044,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Invigorating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23049,6 +24086,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Jurist",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23088,6 +24128,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Ki Intensifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23127,6 +24170,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Ki Intensifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23166,6 +24212,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Lifesurge",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23205,6 +24254,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Lifesurge",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23244,6 +24296,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Limning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23269,6 +24324,12 @@
     "equipmods/special_ability_limning_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -23283,6 +24344,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Limning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23322,6 +24386,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Lucky",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23361,6 +24428,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Lucky (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23439,6 +24509,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Menacing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23478,6 +24551,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Merging",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23517,6 +24593,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Mimetic",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23556,6 +24635,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Mimetic",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23595,6 +24677,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Mirrored",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23634,6 +24719,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Negating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23673,6 +24761,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Negating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23712,6 +24803,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Neutralizing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23751,6 +24845,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Neutralizing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23790,6 +24887,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "Nimble Shot",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23829,6 +24929,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Nullifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23868,6 +24971,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Nullifying",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23907,6 +25013,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Ominous",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23946,6 +25055,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Phase locking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -23971,6 +25083,12 @@
     "equipmods/special_ability_phase_locking_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -23985,6 +25103,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Phase Locking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24024,6 +25145,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Planar",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24049,6 +25173,12 @@
     "equipmods/special_ability_planar_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -24063,6 +25193,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Planar",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24180,6 +25313,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Quenching",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24219,6 +25355,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Quenching",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24258,6 +25397,16 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Light Source"
+          ],
+          "terms": [
+            {
+              "flat_gp": 7500.0
+            }
+          ]
+        },
         "name": "Radiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24336,6 +25485,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": true,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Ramming",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24375,6 +25527,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Reliable",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24414,6 +25569,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Reliable (Greater)",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24453,6 +25611,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Repositioning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24492,6 +25653,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Repositioning",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24531,6 +25695,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Seaborne",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24570,6 +25737,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Seaborne",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24609,6 +25779,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 4
+        },
         "name": "Second Chance",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24648,6 +25821,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Spell Storing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24687,6 +25863,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Spellstealing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24726,6 +25905,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Spellstealing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24765,6 +25947,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Stalking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24804,6 +25989,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Stalking",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24843,6 +26031,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Stanching",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24882,6 +26073,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Thawing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24921,6 +26115,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Thawing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -24960,6 +26157,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Titanic",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25038,6 +26238,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Valiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25077,6 +26280,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Valiant",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25155,6 +26361,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Warding",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25389,6 +26598,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Fragile"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Fragile",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25428,6 +26645,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Performance"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Performance",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25492,6 +26717,11 @@
     "equipmods/special_quality_scatter_firearm.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "FirearmBullet",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -25506,6 +26736,14 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "grants": [
+            "Scatter"
+          ],
+          "terms": [
+            {}
+          ]
+        },
         "name": "Scatter",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -25691,7 +26929,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -26528,7 +27766,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 15.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -26741,6 +27979,7 @@
     "fire_lance.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Javelin",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -26774,6 +28013,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -27037,7 +28277,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 25000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -27072,10 +28312,17 @@
     "flight_arrows_20.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Arrow"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 20,
         "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -28171,6 +29418,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 110000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -28249,6 +29497,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 300.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -28288,6 +29537,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 400.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -28444,7 +29694,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 12.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -28654,7 +29904,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -29535,7 +30785,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -29580,6 +30830,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 8000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -29853,7 +31104,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 9.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -30260,7 +31511,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 12.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -30312,7 +31563,7 @@
           "die_size": 6
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 162300.0,
         "critical_multiplier": 3,
         "critical_threat_range": [
           20,
@@ -30365,7 +31616,7 @@
           "die_size": 6
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 50300.0,
         "critical_multiplier": 3,
         "critical_threat_range": [
           20,
@@ -30462,7 +31713,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -32653,6 +33904,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 1.0
+        },
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -32692,6 +33947,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 5000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -33586,7 +34842,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 12000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -35698,6 +36954,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 15000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -36014,6 +37272,7 @@
           "die_size": 3
         },
         "base_item": null,
+        "base_quantity": 10,
         "cost_gp": 5.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
@@ -36099,10 +37358,17 @@
     "kestros_dart_10.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "KestrosDart"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 10,
         "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -36391,7 +37657,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 8.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -37893,7 +39159,7 @@
           "die_size": 8
         },
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 18300.0,
         "critical_multiplier": 2,
         "critical_threat_range": [
           20,
@@ -39111,6 +40377,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 2000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -39718,6 +40985,13 @@
     "metal_cartridge.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmCartridge"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -40951,7 +42225,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Bells (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -40992,7 +42266,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Chimes (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41033,7 +42307,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Drums (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41074,7 +42348,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Fiddle (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41115,7 +42389,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Flute (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41156,7 +42430,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Gong (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41197,7 +42471,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Harp (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41238,7 +42512,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Harpsichord (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41279,7 +42553,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Lute (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41320,7 +42594,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Mandolin (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41361,7 +42635,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Pan Pipes (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41402,7 +42676,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Piano (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41443,7 +42717,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Pipe Organ (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41484,7 +42758,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Recorder (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41525,7 +42799,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": "Trumpet (Base)",
-        "cost_gp": null,
+        "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -41618,6 +42892,7 @@
     "musket.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -41651,6 +42926,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -41665,6 +42941,7 @@
     "musket_axe.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -41698,6 +42975,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -41712,6 +42990,7 @@
     "musket_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -41745,6 +43024,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -41759,6 +43039,7 @@
     "musket_warhammer.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -41792,6 +43073,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -42126,6 +43408,7 @@
     "nearfiring_bow.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Arrow",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -42159,6 +43442,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -42260,7 +43544,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 95000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -42347,7 +43631,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 16320.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -43330,6 +44614,7 @@
     "ornery_pistol.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -43363,6 +44648,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": {
           "damage_bonus": 2,
@@ -44478,6 +45764,13 @@
     "pellets_handful.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmPellet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -44517,10 +45810,18 @@
     "pellets_handful_30.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "FirearmGear",
+          "Ammo",
+          "Ammunition",
+          "Resizable",
+          "FirearmPellet"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 30,
         "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -44556,6 +45857,7 @@
     "pepperbox.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -44589,6 +45891,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45048,6 +46351,7 @@
     "pistol.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45081,6 +46385,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45095,6 +46400,7 @@
     "pistol_coat.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45128,6 +46434,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45142,6 +46449,7 @@
     "pistol_dagger.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45175,6 +46483,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45189,6 +46498,7 @@
     "pistol_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45222,6 +46532,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45236,6 +46547,7 @@
     "pistol_dragon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45270,6 +46582,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45284,6 +46597,7 @@
     "pistol_firedrake.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45321,6 +46635,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45335,6 +46650,7 @@
     "pistol_of_the_infinite_sky.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45371,6 +46687,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45385,6 +46702,7 @@
     "pistol_sword_cane.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -45418,6 +46736,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -45629,6 +46948,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 8.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -46062,6 +47383,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 5000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -46296,7 +47618,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 1800.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -46335,6 +47657,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 3.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -46374,6 +47698,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 0.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -46895,6 +48221,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 2.0
+        },
         "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -46934,6 +48264,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 1.0
+        },
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -46973,6 +48307,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 1.0
+        },
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -47012,6 +48350,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 2.0
+        },
         "cost_gp": 20.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -47332,7 +48674,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 7840.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -47376,7 +48718,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 19100.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -47669,6 +49011,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": null,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -48094,6 +49438,7 @@
     "revolver.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -48127,6 +49472,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -48313,6 +49659,7 @@
     "rifle.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -48346,6 +49693,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -48360,6 +49708,7 @@
     "rifle_pepperbox.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -48393,6 +49742,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -48492,7 +49842,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 1100.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -50437,7 +51787,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 30000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -53381,6 +54731,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 10000.0
+        },
         "cost_gp": 0.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -53751,7 +55105,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 6000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -54033,7 +55387,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 15.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -54344,6 +55698,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 5.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -54383,7 +55739,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 18.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -54586,6 +55942,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 12500.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -55910,6 +57267,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 500.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -56153,6 +57512,7 @@
     "shotgun.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -56187,6 +57547,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -56201,6 +57562,7 @@
     "shotgun_double_barreled.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmCartridge",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -56235,6 +57597,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -56544,6 +57907,10 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": {
+          "Pounds": 1.0
+        },
         "cost_gp": 5000.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -56939,7 +58306,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 9380.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -57058,10 +58425,17 @@
     "smoke_arrow.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Arrow"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 1,
         "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -57703,7 +59077,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -58027,7 +59401,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -60274,7 +61648,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": 0.0,
+        "cost_gp": 5400.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -60752,7 +62126,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 8.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -60874,7 +62248,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 20.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -62224,7 +63598,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 30.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -62726,7 +64100,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 10.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -62923,7 +64297,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 15.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -63703,6 +65077,7 @@
     "unstable_musket.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "FirearmBullet",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -63736,6 +65111,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -63926,7 +65302,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 35.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -65006,6 +66382,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 100.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -65045,6 +66423,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 75.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -65217,7 +66597,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
-        "cost_gp": null,
+        "cost_gp": 75.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
         "damage_size_steps": 0,
@@ -65383,6 +66763,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 0.5,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -65652,10 +67034,17 @@
     "whistling_arrows_20.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Arrow"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 20,
         "cost_gp": 2.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -66168,6 +67557,8 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
+        "container_capacity": "Unlimited",
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -66391,6 +67782,7 @@
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "container": true,
         "cost_gp": 24.0,
         "critical_multiplier": null,
         "critical_threat_range": null,

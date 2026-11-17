@@ -8,12 +8,9 @@
 // The rows, as `print/blocks/core.rs` `resistances` sends them, by label: Acid, Cold, Electricity,
 // Fire, Sonic, Damage Reduction, Spell Resistance, Immunities; value 0 = what prints ("" = empty).
 
-#let heading-of(b) = {
-  text(size: 12pt, weight: "bold", b.heading)
-  v(-0.4em)
-  line(length: 100%, stroke: 0.6pt + luma(60))
-  v(-0.2em)
-}
+#import "/looks/section-title.typ": section-title
+
+#let heading-of(b) = section-title(b.heading)
 
 #let caption(t) = text(size: 7.5pt, weight: "bold", t)
 
@@ -37,8 +34,6 @@
   let others = b.rows.filter(r => r.label not in energies + defenses)
   block(breakable: false, width: 100%, above: 1em, below: 0.6em)[
     #heading-of(b)
-    // The rows sit close under the rule: page 1's left column has no height to spare on Letter.
-    #v(-0.45em)
     #stack(
       spacing: 0.06cm,
       line-of(energies, (1fr,) * energies.len()),

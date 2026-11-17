@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 21000.0,
     "description": "1 humanoid creature/level doubles in size.",
     "key": "Wand of Enlarge Person (Mass)",
     "name": "Wand",

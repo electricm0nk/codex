@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 50.0,
     "description": "Transmute as many as three pebbles, which can be no larger than sling bullets, so that they strike with great force when thrown or slung. Lasts 30 minutes or until discharged.",
     "key": "Oil of Magic Stone",
     "name": "Potion",

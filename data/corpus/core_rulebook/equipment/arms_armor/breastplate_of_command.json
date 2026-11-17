@@ -6,7 +6,7 @@
     "key": "Breastplate of Command",
     "category": "arms_armor",
     "name": "Breastplate (Base)",
-    "cost_gp": null,
+    "cost_gp": 25400.0,
     "weight_lbs": null,
     "description": "This +2 breastplate bestows a commanding aura upon its wearer. The wearer gains a +2 competence bonus on all Charisma checks, including Charisma-based skill checks. The wearer also gains a +2 competence bonus to his Leadership score. Friendly troops within 360 feet of the user become braver than normal, gaining a +2 resistance bonus on saving throws against fear. Since the effect arises in great part from the distinctiveness of the armor, it does not function if the wearer hides or conceals herself in any way."
   },

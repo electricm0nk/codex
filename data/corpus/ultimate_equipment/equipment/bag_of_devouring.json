@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 120000.0,
     "description": null,
     "key": "Bag of Devouring",
     "name": "Bag of Devouring",

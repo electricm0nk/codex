@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": 0.0,
+    "cost_gp": 162300.0,
     "description": "On hit when thrown, all creatures within 90 ft stunned 1 round (Fort DC 15 negates)",
     "key": "Hammer of Thunderbolts (Major Form)",
     "name": "Hammer of Thunderbolts (Major Form)",

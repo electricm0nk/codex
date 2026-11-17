@@ -6,7 +6,7 @@
     "key": "Waraxe (Dwarven)",
     "category": "arms_armor",
     "name": "Dwarven Waraxe (Base)",
-    "cost_gp": null,
+    "cost_gp": 30.0,
     "weight_lbs": null,
     "description": "A dwarven waraxe has a large, ornate head mounted to a thick handle, making it too large to use in one hand without special training; thus, it is an exotic weapon. A Medium character can use a dwarven waraxe two-handed as a martial weapon, or a Large creature can use it one-handed in the same way. A dwarf treats a dwarven waraxe as a martial weapon even when using it in one hand."
   },

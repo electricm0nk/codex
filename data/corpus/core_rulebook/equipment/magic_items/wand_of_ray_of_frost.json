@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 375.0,
     "description": "A ray of freezing air and ice projects from your pointing finger dealing 1d3 points of cold damage.",
     "key": "Wand of Ray of Frost",
     "name": "Wand",

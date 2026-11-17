@@ -143,8 +143,19 @@ pub fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentR
                 raw_pair: format!("WT:{weight}"),
             });
         }
+    // SD-41 E1.9 (`decisions.md §26`): a `COST` literal that is not a positive number (`COST:0`,
+    // `COST:-150`, a formula) is the row's price before its eqmods; `settle_equipment_prices`
+    // writes the summed price to `data.cost_gp`, which then stands for the row. A positive literal
+    // is a price on its own and still wins (the negative control below).
+    let settled_cost = data.get("cost_gp").and_then(serde_json::Value::as_f64);
+    if let (Some(cost), Some(token)) = (settled_cost, tokens.iter_mut().find(|t| t.key == "COST"))
+        && !token.value.trim().parse::<f64>().is_ok_and(|literal| literal > 0.0)
+    {
+        token.value = cost.to_string();
+        token.raw_pair = format!("COST:{cost}");
+    }
     if !tokens.iter().any(|t| t.key == "COST")
-        && let Some(cost) = data.get("cost_gp").and_then(serde_json::Value::as_f64) {
+        && let Some(cost) = settled_cost {
             tokens.push(EquipmentToken {
                 key: "COST".to_string(),
                 value: cost.to_string(),
@@ -278,6 +289,22 @@ mod tests {
         assert_eq!(wt.value, "99", "the real ingested WT: token value must win, not the top-level field");
         let cost = record.tokens.iter().find(|t| t.key == "COST").unwrap();
         assert_eq!(cost.value, "1");
+    }
+
+    /// SD-41 E1.9: a non-positive or formula `COST` literal is the price before the eqmods, so the
+    /// settled `cost_gp` the converter wrote stands for the row (Astral Armor: `COST:-150`, settled 0).
+    #[test]
+    fn equipment_record_from_json_settled_cost_replaces_a_non_positive_cost_literal() {
+        for literal in ["-150", "0", "%CHOICE"] {
+            let mut value: serde_json::Value = serde_json::json!({
+                "key": "Test Composite", "name": "Test Composite", "cost_gp": 0.0
+            });
+            value[crate::pcgen_import::ingest_payload::INGEST_TOKENS_FIELD] =
+                crate::pcgen_import::ingest_payload::ingest_tokens_value(&[("COST", literal)]);
+            let record = equipment_record_from_json(&value).expect("must build a record");
+            let costs: Vec<&str> = record.tokens.iter().filter(|t| t.key == "COST").map(|t| t.value.as_str()).collect();
+            assert_eq!(costs, ["0"], "literal {literal:?}");
+        }
     }
 
     /// Negative control: no `weight_lbs`/`cost_gp` field at all (neither

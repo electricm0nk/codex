@@ -6,7 +6,7 @@
     "key": "Winged Shield",
     "category": "arms_armor",
     "name": "Heavy Wooden Shield (Base)",
-    "cost_gp": null,
+    "cost_gp": 17257.0,
     "weight_lbs": null,
     "description": "This heavy wooden shield has a +3 enhancement bonus. Arching bird wings are carved into the face of the shield. Once per day, it can be commanded to fly (as the spell), carrying the wielder. The shield can carry up to 133 pounds and move at 60 feet per round, or up to 266 pounds and move at 40 feet per round."
   },

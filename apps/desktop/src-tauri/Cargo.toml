@@ -1,6 +1,6 @@
 [package]
 name = "codex-desktop"
-version = "0.20.0"
+version = "0.21.0"
 edition = "2021"
 
 # SD-36 Epic A: this crate's new dev-only path dependency below points at a
@@ -48,3 +48,9 @@ codex-ingest = { path = "../../../crates/codex-ingest" }
 # SD-39 E8.1: the print tests read the PDF back -- its text and its page boxes.
 pdf-extract = "0.12.1"
 lopdf = "0.42"
+
+# SD-41 E2.1: the old-save test compiles the crate's modules by path; without the libtest harness
+# `cfg(test)` is off, so their own suites (run by the bin target) are not compiled and run twice.
+[[test]]
+name = "old_save_loads_unchanged"
+harness = false

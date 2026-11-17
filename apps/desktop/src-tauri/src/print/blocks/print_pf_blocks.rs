@@ -26,12 +26,12 @@ const AT: &str = "2026-11-05T00:00:00Z";
 /// along the screen's boxes (SD-40 `decisions.md §8`), page 1 laid out on the round-2 grid (E2.18,
 /// `decisions.md §24.3.1`: the AC boxes with no heading, then Speed; the left column, then the
 /// Abilities over the Skills), the Hit Points and Initiative one square block (E2.9), the Languages
-/// under the portrait (E2.13), the Conditional Bonuses box under the Saving Throws (E2.20), the
-/// Resistances block under it (E2.22); then the sections, each under its title (E2.23,
+/// under the portrait (E2.13), the Resistances block under the Saving Throws (E2.22), the
+/// Conditional Bonuses box under it (E2.20; swapped by SD-41 `decisions.md §34` (2)); then the sections, each under its title (E2.23,
 /// `decisions.md §24.3.7`): Abilities and Feats, Inventory (Armor and Shields, Gear, Money, E3.2): the
 /// first-time sections, 1 + 2 + 3 (E4.1, `decisions.md §23.4`; Bio is its own box since E4.1).
 const BASE_HEADINGS: [&str; 24] = [
-    "Portrait",
+    "",
     "Languages",
     "Character Name",
     "",
@@ -40,8 +40,8 @@ const BASE_HEADINGS: [&str; 24] = [
     "Weapons",
     "Attack",
     "Saving Throws",
-    "Conditional Bonuses",
     "Resistances",
+    "Conditional Bonuses",
     "Abilities",
     "Skills",
     "Abilities and Feats",
@@ -428,7 +428,7 @@ fn print_pf_blocks_a_left_behind_item_is_owned_with_no_weight() {
     let inventory = gear_text(&text);
     // A section's title and its first line are two table rows, which the text extraction runs together.
     let bare: String = inventory.split_whitespace().collect();
-    assert!(bare.contains("LeftbehindChainShirtnoweight"), "listed as owned, left behind, with no weight: {inventory}");
+    assert!(bare.contains("NotCarriedChainShirt"), "listed as owned, Not Carried, name only: {inventory}");
     // The loadout's `item:shield` row and the Power Attack toggle are not things the character owns.
     assert!(!inventory.contains("power_attack") && !inventory.contains("shield"), "{inventory}");
 }
@@ -590,7 +590,12 @@ fn print_pf_blocks_every_look_has_its_template() {
         let typeset = crate::print::typst::typeset(&document).unwrap_or_else(|err| panic!("{name}: typesets: {err}"));
         assert!(typeset.warnings.is_empty(), "{name}: Typst reports no diagnostics: {:?}", typeset.warnings);
         let text = pdf_text(&typeset.pdf);
-        assert!(text.contains("Look Probe") && text.contains("Probe label") && text.contains("probe value"), "{name}: prints the block: {text}");
+        if look == Look::Portrait {
+            // SD-41 E4.4 (`decisions.md §34` (7)): the portrait box prints its image only, never a word.
+            assert!(!text.contains("Look Probe") && !text.contains("Probe label"), "{name}: prints no words: {text}");
+        } else {
+            assert!(text.contains("Look Probe") && text.contains("Probe label") && text.contains("probe value"), "{name}: prints the block: {text}");
+        }
     }
 }
 
@@ -608,7 +613,7 @@ fn print_pf_blocks_a_place_past_the_grid_is_refused() {
     assert_eq!(place("abilities"), Place::at(7, 5), "the Abilities sit beside it, on the right");
     assert_eq!(place("attack"), Place::under(0, 7), "the Attack is stacked in the left column, under the Weapons (E2.18)");
     let abilities = document.blocks.iter().position(|block| block.id == "abilities").expect("the Abilities");
-    assert_eq!(document.blocks[abilities - 1].id, "resistances", "one row: the left column's cell, then the Abilities beside it");
+    assert_eq!(document.blocks[abilities - 1].id, "conditionalBonuses", "one row: the left column's cell, then the Abilities beside it");
     crate::print::typst::typeset(&document).expect("the layout's own places typeset");
 
     document.blocks[abilities].place = Place::at(8, 5);
@@ -718,9 +723,11 @@ fn print_pf_blocks_the_split_combat_blocks_print_the_same_values() {
             ("attack", "Attack", "attack", "CMB", vec![signed(row("combat.combat_maneuver_bonus").value)], Some("combat.combat_maneuver_bonus")),
             ("attack", "Attack", "attack", "CMD", vec![row("defense.combat_maneuver_defense").value.to_string()], Some("defense.combat_maneuver_defense")),
             ("speed", "Speed", "speed", "Land", vec![format!("{} ft.", row("speed.land").value)], Some("speed.land")),
-            // E2.18: Swim and Fly boxes, empty for the pencil: no seed states either mode.
-            ("speed", "Speed", "speed", "Swim", vec![w()], None),
+            // E2.18: Fly and Swim boxes, empty for the pencil: no seed states either mode; SD-41
+            // E4.3: Climb, "—" with no `speed.climb` row (`decisions.md §34` (6)).
             ("speed", "Speed", "speed", "Fly", vec![w()], None),
+            ("speed", "Speed", "speed", "Swim", vec![w()], None),
+            ("speed", "Speed", "speed", "Climb", vec!["—".to_owned()], None),
         ];
         let mut numbers = 0;
         for (id, heading, look, label, cells, source) in &expected {
@@ -900,7 +907,7 @@ fn print_pf_blocks_weapons_print_as_one_table() {
         }
         let text = pdf_text(&render(&root, &request(false, false, false)));
         let block = &text[text.find("Weapons").expect("Weapons")..];
-        for caption in ["Weapon", "Attack", "Damage", "Critical", "Range", "Ammunition"] {
+        for caption in ["Weapon", "Attack", "Damage", "Critical", "Range"] {
             assert!(block.contains(caption), "{tag}: the Weapons look prints `{caption}`: {block}");
         }
     }
@@ -979,6 +986,8 @@ fn print_pf_blocks_page_one_stays_whole_with_a_bought_weapon_and_ring_with_no_ra
         let row = shelf.iter().find(|row| row.entry.name == name && row.entry.cost_gp.is_some()).unwrap_or_else(|| panic!("the Market sells {name}"));
         let response = purchase_equipment_priced_at_root(&bought, &row.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
         assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{name} is bought: {response:?}");
+        // A purchase lands Carried (SD-41 `decisions.md §10`); worn by a move.
+        crate::character_hub::set_equipment_active_state_at_root(&bought, &row.entry.key, ActiveState::EquippedActive, AT).expect("worn");
     }
     let after = load_saved_character_at_root(&bought).expect("the bought character loads");
     assert_eq!(after.weapon_damage.len(), before.weapon_damage.len() + 1, "the dagger is a second weapon in hand");
@@ -1171,14 +1180,13 @@ fn page_one_text(root: &Path, paper: Paper, campaigns: Vec<CampaignNote>) -> (cr
 fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
     let root = seeded("header-no-portrait", ALDRIC_ID);
     for paper in [Paper::Letter, Paper::A4] {
-        let (document, one, pdf) = page_one_text(&root, paper, Vec::new());
+        let (document, one, _) = page_one_text(&root, paper, Vec::new());
         let name = document.title.clone();
         // E2.18: the portrait's cell is two rows tall, so the PDF's text reads it after the name row.
         assert!(one.starts_with("Character Name"), "{paper:?}: page 1's text opens with the name row: {one}");
-        assert_in_order(&one, &["Character Name", &name, "Campaign", "Portrait", "Languages"]);
+        assert_in_order(&one, &["Character Name", &name, "Campaign", "Languages"]);
         assert_eq!(one.matches(name.as_str()).count(), 1, "{paper:?}: the name prints once on page 1: {one}");
         assert!(!one.contains("Identity"), "{paper:?}: page 1 holds no Identity block: {one}");
-        assert_eq!(image_objects(&pdf), 0, "{paper:?}: no portrait saved, no image printed");
         let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
         assert_eq!(&ids[..3], ["portrait", "languages", "nameCampaign"], "{paper:?}: the top band's blocks lead the sheet (the Languages line under the portrait, E2.13)");
         let next = document.blocks.iter().position(|block| block.new_page).expect("a block opens page 2");
@@ -1186,31 +1194,73 @@ fn print_pf_blocks_page_one_opens_with_the_portrait_and_name_campaign() {
     }
 }
 
-/// E2.5 (`decisions.md §23.1` item 1): a saved `portrait.png` prints inside page 1's portrait box
-/// (one image object in the PDF); an unreadable one never fails the print: the empty box prints
-/// and the render's warnings name the file.
+/// The width and height of every image the PDF holds (each stream whose `/Subtype` is `/Image`).
+fn image_sizes(pdf: &[u8]) -> Vec<(i64, i64)> {
+    let document = lopdf::Document::load_mem(pdf).expect("the PDF parses");
+    let int = |dict: &lopdf::Dictionary, key: &[u8]| dict.get(key).and_then(|value| value.as_i64()).expect("an image states its size");
+    document
+        .objects
+        .values()
+        .filter_map(|object| match object {
+            lopdf::Object::Stream(stream) if matches!(stream.dict.get(b"Subtype"), Ok(lopdf::Object::Name(name)) if name == b"Image") => {
+                Some((int(&stream.dict, b"Width"), int(&stream.dict, b"Height")))
+            }
+            _ => None,
+        })
+        .collect()
+}
+
+/// A PNG file's width and height, from its IHDR header.
+fn png_size(png: &[u8]) -> (i64, i64) {
+    assert_eq!(&png[..8], b"\x89PNG\r\n\x1a\n", "a PNG file");
+    let be = |at: usize| i64::from(u32::from_be_bytes([png[at], png[at + 1], png[at + 2], png[at + 3]]));
+    (be(16), be(20))
+}
+
+/// SD-41 E4.4 (`decisions.md §34` (7)): a saved `portrait.png` prints inside page 1's portrait box
+/// (the one image in the PDF is the portrait's 2 x 1 pixels, not the logo) and the word "portrait"
+/// prints nowhere on page 1; an unreadable one never fails the print: the box prints without it
+/// and the render's warnings name the file. Letter and A4.
 #[test]
-fn print_pf_blocks_a_saved_portrait_prints_on_page_one() {
-    let root = seeded("header-portrait", ALDRIC_ID);
+fn print_pf_blocks_page1_portrait_prints_the_stored_image() {
+    let root = seeded("page1-portrait", ALDRIC_ID);
     std::fs::write(root.join("portrait.png"), TEST_PORTRAIT_PNG).expect("the portrait saves");
     for paper in [Paper::Letter, Paper::A4] {
         let (_, one, pdf) = page_one_text(&root, paper, Vec::new());
-        assert_eq!(image_objects(&pdf), 1, "{paper:?}: the saved portrait prints as one image");
-        let caption = one.find("Campaign").map(|at| &one[at..]).unwrap_or_default();
-        assert!(caption.contains("Portrait"), "{paper:?}: the box keeps its caption (read after the name row, E2.18): {one}");
+        assert_eq!(image_sizes(&pdf), vec![png_size(&TEST_PORTRAIT_PNG)], "{paper:?}: the saved portrait is the one image printed");
+        assert!(!one.to_lowercase().contains("portrait"), "{paper:?}: the word never prints on page 1: {one}");
         if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
             std::fs::create_dir_all(&out).expect("the output dir is creatable");
-            std::fs::write(Path::new(&out).join(format!("aldric-portrait-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            std::fs::write(Path::new(&out).join(format!("aldric-portrait-page1-{paper:?}.pdf")), &pdf).expect("the PDF writes");
         }
     }
     std::fs::write(root.join("portrait.png"), b"not a png").expect("the broken portrait writes");
     let rendered = render_sheet_pdf_at_root(&root, &request(false, false, false)).expect("an unreadable portrait never fails the print");
-    assert_eq!(image_objects(&rendered.pdf), 0, "the unreadable portrait prints the empty box");
+    assert_eq!(image_objects(&rendered.pdf), 0, "the unreadable portrait is left out");
     assert!(
         rendered.warnings.iter().any(|warning| warning.contains("portrait.png")),
         "the warnings name the unreadable file: {:?}",
         rendered.warnings
     );
+}
+
+/// SD-41 E4.4 (`decisions.md §34` (7), §35 Q10): with no portrait saved, page 1's portrait box
+/// prints the Pathfinder logo (`resources/print/logos/pf1e.png`, the one image in the PDF) and
+/// never the word "portrait". Letter and A4.
+#[test]
+fn print_pf_blocks_page1_no_portrait_prints_the_system_logo_never_the_word() {
+    let root = seeded("page1-no-portrait", ALDRIC_ID);
+    let logo = std::fs::read(Path::new(env!("CARGO_MANIFEST_DIR")).join("resources/print/logos/pf1e.png")).unwrap_or_default();
+    assert!(!logo.is_empty(), "the Pathfinder logo is bundled at resources/print/logos/pf1e.png");
+    for paper in [Paper::Letter, Paper::A4] {
+        let (_, one, pdf) = page_one_text(&root, paper, Vec::new());
+        assert_eq!(image_sizes(&pdf), vec![png_size(&logo)], "{paper:?}: the system logo is the one image printed");
+        assert!(!one.to_lowercase().contains("portrait"), "{paper:?}: the word never prints on page 1: {one}");
+        if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+            std::fs::create_dir_all(&out).expect("the output dir is creatable");
+            std::fs::write(Path::new(&out).join(format!("aldric-no-portrait-page1-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+        }
+    }
 }
 
 /// E2.5 (`decisions.md §23.1` item 2): the Campaign field prints the names of the campaigns the
@@ -1403,6 +1453,8 @@ fn print_pf_blocks_page_one_prints_totals_only() {
                 let [low, high] = weapon.critical_threat_range.expect("a threat range");
                 let critical = format!("{}/x{}", if low == high { low.to_string() } else { format!("{low}-{high}") }, weapon.critical_multiplier.expect("a multiplier"));
                 let name = key.strip_suffix(" (Base)").unwrap_or(key);
+                // The line's marks (SD-41 E4.1, `decisions.md §9, §22`): carried, nonlethal.
+                let name = format!("{name}{}{}", if weapon.in_hand { "" } else { " (carried)" }, if weapon.nonlethal { " (nonlethal)" } else { "" });
                 let line = format!("{name} {} {damage} {critical}", signed(row(&format!("combat.weapon_attack_bonus.{slug}")).value));
                 assert!(one.contains(&line), "{tag} {paper:?}: the weapon line reads `{line}`: {one}");
             }
@@ -1554,6 +1606,8 @@ fn print_pf_blocks_armor_class_prints_every_part_from_the_engine() {
     let ring = shelf.iter().find(|row| row.entry.name == "Ring of Protection +1" && row.entry.cost_gp.is_some()).expect("the Market sells the ring");
     let bought = purchase_equipment_priced_at_root(&ringed, &ring.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
     assert!(matches!(bought, PurchaseEquipmentResponse::Purchased { .. }), "the ring is bought: {bought:?}");
+    // A purchase lands Carried (SD-41 `decisions.md §10`); worn by a move.
+    crate::character_hub::set_equipment_active_state_at_root(&ringed, &ring.entry.key, ActiveState::EquippedActive, AT).expect("worn");
 
     let mut printed_acs = Vec::new();
     for (tag, root) in [("aldric", &aldric), ("aldric + ring", &ringed)] {
@@ -1654,8 +1708,8 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
         ("weapons", place(0, 7, true, 1)),
         ("attack", place(0, 7, true, 1)),
         ("saves", place(0, 7, true, 1)),
-        ("conditionalBonuses", place(0, 7, true, 1)),
         ("resistances", place(0, 7, true, 1)),
+        ("conditionalBonuses", place(0, 7, true, 1)),
         ("abilities", place(7, 5, false, 1)),
         ("skills", place(7, 5, true, 1)),
     ];
@@ -1671,7 +1725,7 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
             assert_eq!(one.matches("Armor Class").count(), 1, "{tag} {paper:?}: `Armor Class` prints once, as the AC box's label: {one}");
             assert_in_order(
                 &one,
-                &["Character Name", "Campaign", "Portrait", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Swim", "Fly", "Hit Points", "Weapons", "Attack", "Saving Throws", "Conditional Bonuses", "Resistances", "Abilities", "Skills"],
+                &["Character Name", "Campaign", "Languages", "Armor Class", "Touch", "Flat-Footed", "Speed", "Land", "Fly", "Swim", "Climb", "Hit Points", "Weapons", "Attack", "Saving Throws", "Resistances", "Conditional Bonuses", "Abilities", "Skills"],
             );
         }
     }
@@ -1681,7 +1735,9 @@ fn print_pf_blocks_page_one_follows_the_round_two_grid() {
 /// `speed.land` / `speed.swim` / `speed.fly` as `<n> ft.`, the fly value followed by
 /// `(<maneuverability>)` from `flyManeuverability`; a mode the character lacks prints an empty box
 /// (no dash, no 0) with no engine row behind it. Aldric (Human: land only), Aldric saved as an
-/// Undine (swim 30) and as a Strix (fly 60, average); Letter and A4.
+/// Undine (swim 30) and as a Strix (fly 60, average); Letter and A4. SD-41 E4.3 re-pins the order
+/// to the 2×2 reading order (Land, Fly, Swim, then Climb, which
+/// `print_pf_blocks_page1_speed_is_a_2x2_with_climb_dash` covers).
 #[test]
 fn print_pf_blocks_speed_prints_land_swim_fly_boxes() {
     use codex::saved_character::local_store::SavedCharacterStore;
@@ -1694,23 +1750,23 @@ fn print_pf_blocks_speed_prints_land_swim_fly_boxes() {
     };
     let cases = [
         ("aldric", seeded("speed-aldric", ALDRIC_ID), ["30 ft.", "", ""]),
-        ("undine", as_race("speed-undine", "race:undine"), ["30 ft.", "30 ft.", ""]),
-        ("strix", as_race("speed-strix", "race:strix"), ["30 ft.", "", "60 ft. (average)"]),
+        ("undine", as_race("speed-undine", "race:undine"), ["30 ft.", "", "30 ft."]),
+        ("strix", as_race("speed-strix", "race:strix"), ["30 ft.", "60 ft. (average)", ""]),
     ];
     for (tag, root, expected) in &cases {
         let loaded = load_saved_character_at_root(root).expect("the character loads");
         for paper in [Paper::Letter, Paper::A4] {
             let (document, one, pdf) = page_one_text(root, paper, Vec::new());
             let speed = document.blocks.iter().find(|block| block.id == "speed").expect("the Speed block");
-            let lines: Vec<(&str, Vec<String>)> = speed.rows.iter().map(|row| (row.label.as_str(), row.values.clone())).collect();
-            let want: Vec<(&str, Vec<String>)> = ["Land", "Swim", "Fly"].into_iter().zip(expected.iter().map(|v| vec![(*v).to_owned()])).collect();
-            assert_eq!(lines, want, "{tag} {paper:?}: Land, Swim, Fly boxes");
-            for (row, id) in speed.rows.iter().zip(["speed.land", "speed.swim", "speed.fly"]) {
+            let lines: Vec<(&str, Vec<String>)> = speed.rows.iter().take(3).map(|row| (row.label.as_str(), row.values.clone())).collect();
+            let want: Vec<(&str, Vec<String>)> = ["Land", "Fly", "Swim"].into_iter().zip(expected.iter().map(|v| vec![(*v).to_owned()])).collect();
+            assert_eq!(lines, want, "{tag} {paper:?}: Land, Fly, Swim boxes");
+            for (row, id) in speed.rows.iter().zip(["speed.land", "speed.fly", "speed.swim"]) {
                 let held = loaded.explanations.iter().any(|row| row.id == id);
                 assert_eq!(row.derivation.is_some(), held, "{tag} {paper:?}: `{}` has the {id} row behind it only when the engine states one", row.label);
                 assert!(!row.values.iter().any(|value| value.contains('—') || value == "0"), "{tag} {paper:?}: no dash, no 0: {:?}", row.values);
             }
-            for (label, value) in ["Land", "Swim", "Fly"].into_iter().zip(expected) {
+            for (label, value) in ["Land", "Fly", "Swim"].into_iter().zip(expected) {
                 if !value.is_empty() {
                     assert!(one.contains(&format!("{label} {value}")), "{tag} {paper:?}: page 1 prints `{label} {value}`: {one}");
                 }
@@ -1739,7 +1795,7 @@ fn box_words(note: &codex::rules_core::pilot_compute::conditional_notes::Conditi
     format!("{}: {}", note.label, said.join(" "))
 }
 
-/// E2.20 (`decisions.md §24.3.4–5`, §24.6 Q1): the Conditional Bonuses box, under the Saving Throws
+/// E2.20 (`decisions.md §24.3.4–5`, §24.6 Q1): the Conditional Bonuses box, under the Resistances (SD-41 E4.2; under the Saving Throws before)
 /// in the left column, lists every conditional the engine states, in order HP, Initiative,
 /// Fortitude, Reflex, Will (a note on several saves once), AC, CMB, CMD, Skills, each line
 /// `<what>: <label>: <value> <condition>`, in an outlined box of 10 lines of which at least 4 are
@@ -1769,7 +1825,7 @@ fn print_pf_blocks_conditional_bonuses_box_lists_every_conditional() {
         let block = document.blocks.iter().find(|block| block.id == "conditionalBonuses").unwrap_or_else(|| panic!("the conditionalBonuses block: {:?}", document.blocks.iter().map(|b| b.id).collect::<Vec<_>>()));
         assert_eq!((block.heading.as_str(), block.look.name()), ("Conditional Bonuses", "conditional-bonuses"), "the box's heading and look");
         let at = document.blocks.iter().position(|b| b.id == "conditionalBonuses").expect("placed");
-        assert_eq!(document.blocks[at - 1].id, "saves", "the box sits under the Saving Throws");
+        assert_eq!(document.blocks[at - 1].id, "resistances", "the box sits under the Resistances (SD-41 `decisions.md §34` (2))");
         assert_eq!((block.place.x, block.place.span, block.place.under), (0, 7, true), "in the left column");
         block.rows.iter().map(|row| format!("{}: {}", row.label, row.values.join(" "))).collect()
     };
@@ -1922,7 +1978,7 @@ fn print_pf_blocks_conditional_bonuses_overflow_continues_on_page_two() {
     }
 }
 
-/// E2.22 (`decisions.md §24.3.6`): the Resistances block, under the Conditional Bonuses box in the
+/// E2.22 (`decisions.md §24.3.6`): the Resistances block, under the Saving Throws (SD-41 E4.2) in the
 /// left column, prints the five energy boxes (Acid, Cold, Electricity, Fire, Sonic), Damage
 /// Reduction, Spell Resistance and Immunities from the load response's `resistances` (E2.21), each
 /// box empty when the character has none; the Hit Points print no Damage Reduction; page 1 stays
@@ -1962,7 +2018,7 @@ fn print_pf_blocks_resistances_print_boxes_and_values() {
             let at = document.blocks.iter().position(|block| block.id == "resistances").unwrap_or_else(|| panic!("{tag}: the resistances block: {:?}", document.blocks.iter().map(|b| b.id).collect::<Vec<_>>()));
             let block = &document.blocks[at];
             assert_eq!((block.heading.as_str(), block.look.name()), ("Resistances", "resistances"), "{tag}: heading and look");
-            assert_eq!(document.blocks[at - 1].id, "conditionalBonuses", "{tag}: under the Conditional Bonuses box");
+            assert_eq!(document.blocks[at - 1].id, "saves", "{tag}: under the Saving Throws (SD-41 `decisions.md §34` (2))");
             assert_eq!((block.place.x, block.place.span, block.place.under), (0, 7, true), "{tag}: in the left column");
             let rows: Vec<(&str, &str)> = block.rows.iter().map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
             let want: Vec<(&str, &str)> = LABELS.iter().map(|label| (*label, filled.iter().find(|(l, _)| l == label).map_or("", |(_, v)| *v))).collect();
@@ -2258,88 +2314,157 @@ fn print_pf_blocks_inventory_starts_on_a_new_page() {
     }
 }
 
-/// E3.2: the Gear block prints every owned copy under one of three sections, Worn (by slot, its slot
-/// beside it), Carried, Left behind, each with its weight (a copy left behind weighs nothing), then
-/// the carried weight, the load and the three limits; two blank rows per section. Aldric with a
-/// Dagger and then a Ring of Protection +1 bought and worn (the ring's slot comes first), his chain
-/// shirt left behind and his longsword carried, Letter and A4.
+/// The Gear block's rows by section (SD-41 E4.1): each section's title, then its item lines (every
+/// kind but the captions, the titles and the totals: `item`, and `in-<n>` for a line nested `n` deep).
+fn gear_sections(gear: &crate::print::model::SheetBlock) -> Vec<(&str, Vec<&crate::print::model::SheetRow>)> {
+    let mut sections: Vec<(&str, Vec<&crate::print::model::SheetRow>)> = Vec::new();
+    for row in &gear.rows {
+        match row.kind {
+            "section" => sections.push((row.label.as_str(), Vec::new())),
+            "captions" | "total" => {}
+            _ => sections.last_mut().expect("an item under a section").1.push(row),
+        }
+    }
+    sections
+}
+
+fn gear_block(document: &crate::print::model::SheetDocument) -> &crate::print::model::SheetBlock {
+    document.blocks.iter().find(|block| block.id == "gear").expect("the Gear block")
+}
+
+/// Holds `item` (a fixture record's name) in `state` on Aldric's saved root.
+fn hold(root: &Path, item: &str, state: ActiveState) {
+    let response = crate::pf1_adapter::add_equipment_selection_at_root(root, item, state, AT).expect("the hold runs");
+    assert!(matches!(response, crate::character_hub::CreateCharacterResponse::Saved { .. }), "{item}: {response:?}");
+}
+
+/// Moves the copy `item`/`ordinal` (bonus 0) to `location` in the active set.
+fn move_to(root: &Path, item: &str, ordinal: u32, location: codex::saved_character::equipment_sets::Location) {
+    let copy = codex::saved_character::equipment_sets::CopyKey { item_id: item.to_owned(), bonus: 0, ordinal };
+    let response = crate::character_hub::move_equipment_copy_at_root(root, &copy, location, None, AT).expect("the move runs");
+    assert!(matches!(response, crate::character_hub::CreateCharacterResponse::Saved { .. }), "{item} #{ordinal}: {response:?}");
+}
+
+fn inside(item: &str) -> codex::saved_character::equipment_sets::Location {
+    codex::saved_character::equipment_sets::Location::Inside { container: codex::saved_character::equipment_sets::CopyKey { item_id: item.to_owned(), bonus: 0, ordinal: 0 } }
+}
+
+/// Creates an item (the Market's Create) on the root; returns its copy.
+fn create_item(root: &Path, name: &str, weight_lbs: f64, capacity_lbs: Option<f64>) -> codex::saved_character::equipment_sets::CopyKey {
+    create_item_for(root, ALDRIC_ID, name, weight_lbs, capacity_lbs)
+}
+
+/// [`create_item`] for any seed.
+fn create_item_for(root: &Path, character_id: &str, name: &str, weight_lbs: f64, capacity_lbs: Option<f64>) -> codex::saved_character::equipment_sets::CopyKey {
+    use crate::character_custom::{create_custom_item_at_root, CreateCustomItemRequest, CreateCustomItemResponse};
+    let request = CreateCustomItemRequest {
+        character_id: character_id.to_owned(),
+        name: name.to_owned(),
+        description: String::new(),
+        weight_lbs: Some(weight_lbs),
+        price_gp: None,
+        container_capacity_lbs: capacity_lbs,
+        slot: None,
+        saved_at: AT.to_owned(),
+        price_mode: crate::character_hub::PriceMode::Cashless,
+    };
+    match create_custom_item_at_root(root, &request).expect("the item is created") {
+        CreateCustomItemResponse::Created { copy, .. } => copy,
+        other => panic!("{name} is created: {other:?}"),
+    }
+}
+
+/// With `PRINT_PF_BLOCKS_OUT` set, keeps the PDF there as `<name>.pdf` to look at (E4.1 Looked at).
+fn keep_pdf(name: &str, pdf: &[u8]) {
+    if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+        std::fs::create_dir_all(&out).expect("the output dir is creatable");
+        std::fs::write(Path::new(&out).join(format!("{name}.pdf")), pdf).expect("the PDF writes");
+    }
+}
+
+/// A container's load as the print words it (`gearScreenModel.ts`'s `capacityLabel`), off the engine's row.
+fn load_words(load: &crate::character_hub::ContainerLoadDto) -> String {
+    use crate::character_hub::ContainerCapacityDto;
+    let lb = |value: f64| super::trim_number(value);
+    match load.capacity {
+        ContainerCapacityDto::Pounds { lbs } => format!("{} of {} lb", lb(load.contents_lbs), lb(lbs)),
+        ContainerCapacityDto::Unlimited => format!("{} lb, no limit", lb(load.contents_lbs)),
+        ContainerCapacityDto::Unstated => format!("{} lb", lb(load.contents_lbs)),
+    }
+}
+
+/// SD-41 E4.1 (`decisions.md §9` A7): the Gear block lists the active set by location: Worn (each
+/// slot in use, in body-slot order, the slot's words beside the copy, and its weight), then
+/// Carried (with its weight), then Not Carried as names only; then the carried weight, the load and
+/// the three limits as the engine states them. Aldric with a Dagger and a Ring of Protection +1
+/// bought and worn, his chain shirt Not Carried and his longsword carried, Letter and A4.
 #[test]
-fn print_pf_blocks_gear_prints_worn_carried_and_left_behind_sections() {
-    use crate::character_hub::{adjust_character_money_at_root, purchase_equipment_priced_at_root, PriceMode, PurchaseEquipmentResponse};
+fn print_pf_blocks_gear_prints_the_active_set_by_location() {
+    use crate::character_hub::{adjust_character_money_at_root, list_held_equipment_stacks_at_root, purchase_equipment_priced_at_root, PriceMode, PurchaseEquipmentResponse};
     use crate::equipment_catalog::{list_market, MarketCategory, MarketFilter};
-    let root = seeded("gear-sections", ALDRIC_ID);
+    use codex::saved_character::equipment_sets::Location;
+    let root = seeded("gear-locations", ALDRIC_ID);
     adjust_character_money_at_root(&root, 1_000_000).expect("funds for the Market");
     for (category, name) in [(MarketCategory::Weapon, "Dagger"), (MarketCategory::MagicItem, "Ring of Protection +1")] {
         let shelf = list_market(MarketFilter { category, name_contains: Some(name.to_owned()), book: None }).entries;
         let row = shelf.iter().find(|row| row.entry.name == name && row.entry.cost_gp.is_some()).unwrap_or_else(|| panic!("the Market sells {name}"));
         let response = purchase_equipment_priced_at_root(&root, &row.entry.key, ActiveState::EquippedActive, AT, PriceMode::Standard).expect("the purchase runs");
         assert!(matches!(response, PurchaseEquipmentResponse::Purchased { .. }), "{name} is bought: {response:?}");
+        set_equipment_active_state_at_root(&root, &row.entry.key, ActiveState::EquippedActive, AT).expect("worn");
     }
-    set_equipment_active_state_at_root(&root, "item:chain_shirt", ActiveState::Absent, AT).expect("left behind");
+    set_equipment_active_state_at_root(&root, "item:chain_shirt", ActiveState::Absent, AT).expect("not carried");
     set_equipment_active_state_at_root(&root, "item:longsword", ActiveState::SelectedInactive, AT).expect("carried");
-    let held = list_held_equipment_at_root(&root).expect("held");
+    let held = list_held_equipment_stacks_at_root(&root).expect("held");
     let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
     let encumbrance = &loaded.corpus_derived.encumbrance;
-    let section_of = |state: ActiveStateDto| match state {
-        ActiveStateDto::EquippedActive => "Worn",
-        ActiveStateDto::SelectedInactive => "Carried",
-        ActiveStateDto::Absent => "Left behind",
+    let section_of = |location: &Location| match location {
+        Location::Slot { .. } | Location::Equipped => "Worn",
+        Location::Carried => "Carried",
+        Location::NotCarried => "Not Carried",
+        Location::Inside { .. } => "nested",
     };
-    for state in [ActiveStateDto::EquippedActive, ActiveStateDto::SelectedInactive, ActiveStateDto::Absent] {
-        assert!(held.iter().any(|copy| copy.active_state == state), "Aldric holds a {} copy: {held:?}", section_of(state));
+    for title in ["Worn", "Carried", "Not Carried"] {
+        assert!(held.iter().any(|copy| section_of(&copy.location) == title), "Aldric holds a {title} copy: {held:?}");
     }
     for paper in [Paper::Letter, Paper::A4] {
         let tag = format!("aldric {paper:?}");
         let printed = PrintRequest { paper, ..request(false, false, false) };
         let document = sheet_document_at_root(&root, &printed).expect("the document builds");
-        let gear = document.blocks.iter().find(|block| block.id == "gear").expect("the Gear block");
+        let gear = gear_block(&document);
         assert_eq!(gear.look.name(), "gear", "{tag}: Gear prints in its own look");
-        // The rows section by section: each section's heading row, then its items.
-        let mut sections: Vec<(&str, Vec<&crate::print::model::SheetRow>)> = Vec::new();
-        for row in &gear.rows {
-            match row.kind {
-                "section" => sections.push((row.label.as_str(), Vec::new())),
-                "item" => sections.last_mut().expect("an item under a section").1.push(row),
-                _ => {}
-            }
-        }
+        let sections = gear_sections(gear);
         let titles: Vec<&str> = sections.iter().map(|(title, _)| *title).collect();
-        assert_eq!(titles, vec!["Worn", "Carried", "Left behind"], "{tag}: the three sections, in order");
+        assert_eq!(titles, vec!["Worn", "Carried", "Not Carried"], "{tag}: the three locations, in order");
         for (title, rows) in &sections {
-            let owned: Vec<&str> = held.iter().filter(|copy| section_of(copy.active_state) == *title).map(|copy| copy.name.as_str()).collect();
+            let mut expected: Vec<&str> = held.iter().filter(|copy| section_of(&copy.location) == *title).map(|copy| copy.name.as_str()).collect();
             let mut printed: Vec<&str> = rows.iter().map(|row| row.label.as_str()).collect();
-            let mut expected = owned.clone();
             printed.sort_unstable();
             expected.sort_unstable();
-            assert_eq!(printed, expected, "{tag}: `{title}` lists every copy in that state");
+            assert_eq!(printed, expected, "{tag}: `{title}` lists every copy there");
         }
-        // Worn by slot: in the body-slot order, each with its slot's words.
-        let worn: Vec<&crate::character_hub::HeldEquipmentCopyDto> = {
-            let mut worn: Vec<_> = held.iter().filter(|copy| copy.active_state == ActiveStateDto::EquippedActive).collect();
-            worn.sort_by_key(|copy| copy.slot);
-            worn
-        };
-        let printed_worn: Vec<&str> = sections[0].1.iter().map(|row| row.label.as_str()).collect();
-        assert_eq!(printed_worn, worn.iter().map(|copy| copy.name.as_str()).collect::<Vec<_>>(), "{tag}: Worn is in slot order");
+        // Worn by slot: in body-slot order, each with its slot's words.
+        let mut worn: Vec<_> = held.iter().filter(|copy| matches!(copy.location, Location::Slot { .. })).collect();
+        worn.sort_by_key(|copy| copy.slot);
         assert!(worn.len() >= 2 && worn[0].slot < worn[1].slot, "{tag}: two worn copies in two slots: {worn:?}");
+        let printed_worn: Vec<(&str, &str)> = sections[0].1.iter().map(|row| (row.label.as_str(), row.values[0].as_str())).collect();
+        let expected_worn: Vec<(&str, String)> =
+            worn.iter().map(|copy| (copy.name.as_str(), super::words_of(serde_json::to_value(copy.slot).unwrap().as_str().unwrap()))).collect();
+        assert_eq!(printed_worn, expected_worn.iter().map(|(name, slot)| (*name, slot.as_str())).collect::<Vec<_>>(), "{tag}: Worn is in slot order, slot beside");
+        // Not Carried: names only.
         for left in &sections[2].1 {
-            assert_eq!(left.values.last().map(String::as_str), Some("no weight"), "{tag}: a copy left behind weighs nothing: {left:?}");
+            assert!(left.values.iter().all(String::is_empty) && left.notes.is_empty(), "{tag}: a Not Carried copy prints its name only: {left:?}");
         }
-        // A worn or carried copy prints the weight the engine carries it at; none stated: the no-value mark.
+        // A worn or carried single copy prints the weight the engine carries it at.
         for carried in sections[0].1.iter().chain(&sections[1].1) {
             let copy = held.iter().find(|copy| copy.name == carried.label).expect("a held copy");
             let stated = encumbrance.per_item.iter().find(|item| item.item_id == copy.item_id);
             let expected = stated.map_or_else(|| crate::print::layout::NO_VALUE.to_owned(), |item| super::pounds(item.weight_lbs));
-            assert_eq!(carried.values.last(), Some(&expected), "{tag}: `{}` prints its weight", carried.label);
+            assert_eq!(carried.values[1], expected, "{tag}: `{}` prints its weight", carried.label);
         }
-        assert!(sections[0].1.iter().chain(&sections[1].1).any(|row| row.values.last().is_some_and(|weight| weight.ends_with(" lb"))), "{tag}: a weighed copy prints in pounds");
-        let fact = look_fact(&document, "gear-look");
-        assert_eq!((fact["sections"].as_u64(), fact["blank"].as_u64()), (Some(3), Some(2)), "{tag}: three sections, two blank rows each: {fact}");
-
         let text = pdf_text(&render(&root, &printed));
         let block = text_between(&text, "Gear Item", "Money PP");
         let bare: String = block.split_whitespace().collect();
-        assert_in_order(&bare, &["Worn", "Carried", "Longsword", "Leftbehind", "ChainShirtnoweight"]);
+        assert_in_order(&bare, &["Worn", "Ring", "Carried", "Longsword", "NotCarried", "ChainShirt", "Carriedweight"]);
         for (label, value) in [
             ("Carried weight", super::pounds(encumbrance.total_carried_weight_lbs)),
             ("Load", encumbrance.level.clone()),
@@ -2349,6 +2474,224 @@ fn print_pf_blocks_gear_prints_worn_carried_and_left_behind_sections() {
         ] {
             let pair: String = format!("{label}{value}").split_whitespace().collect();
             assert!(bare.contains(&pair), "{tag}: `{label} {value}` prints: {block}");
+        }
+    }
+}
+
+/// SD-41 E4.1: a container's contents print under it, one level deeper per nesting (`in-1`,
+/// `in-2`, which the `gear` look indents), the container's load beside it as the engine states it
+/// ("Holds 10 of 60 lb"). Aldric carries a Backpack holding a Sack holding a Rope (50 ft.).
+#[test]
+fn print_pf_blocks_gear_nests_container_contents() {
+    let root = seeded("gear-nested", ALDRIC_ID);
+    for item in ["Backpack", "Sack", "Rope (50 ft.)"] {
+        hold(&root, item, ActiveState::SelectedInactive);
+    }
+    move_to(&root, "Sack", 0, inside("Backpack"));
+    move_to(&root, "Rope (50 ft.)", 0, inside("Sack"));
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let load_of = |item: &str| loaded.container_loads.iter().find(|load| load.copy.item_id == item).unwrap_or_else(|| panic!("{item}'s load: {:?}", loaded.container_loads));
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let at = |label: &str| carried.iter().position(|row| row.label == label).unwrap_or_else(|| panic!("`{label}` under Carried: {carried:?}"));
+    let (pack, sack, rope) = (at("Backpack"), at("Sack"), at("Rope (50 ft.)"));
+    assert_eq!((sack, rope), (pack + 1, pack + 2), "each content line follows its container: {carried:?}");
+    assert_eq!([carried[pack].kind, carried[sack].kind, carried[rope].kind], ["item", "in-1", "in-2"], "one level deeper per nesting");
+    for (index, item) in [(pack, "Backpack"), (sack, "Sack")] {
+        let words = format!("Holds {}", load_words(load_of(item)));
+        assert!(carried[index].notes.contains(&words), "{item} states its load `{words}`: {:?}", carried[index]);
+    }
+    assert!(load_of("Sack").contents_lbs > 0.0, "the rope weighs in the sack");
+    let fact = look_fact(&document, "gear-look");
+    assert_eq!(fact["deepest"].as_u64(), Some(2), "the look indents two levels: {fact}");
+    let pdf = render(&root, &request(false, false, false));
+    keep_pdf("gear-nested-aldric-a4", &pdf);
+    let text = pdf_text(&pdf);
+    let bare: String = text_between(&text, "Gear Item", "Money PP").split_whitespace().collect();
+    assert_in_order(&bare, &["Carried", "Backpack", "Holds", "Sack", "Holds", "Rope(50ft.)", "NotCarried"]);
+}
+
+/// SD-41 E4.1 (`decisions.md §9, §22, §33`): the Weapons block prints the weapons in hand first,
+/// then the carried ones marked "(carried)", then the Unarmed strike last, marked "(nonlethal)"
+/// when it is; a Not Carried weapon is not on it. Aldric (longsword in hand) carrying a Dagger,
+/// with a Shortbow left Not Carried.
+#[test]
+fn print_pf_blocks_gear_weapons_in_hand_then_carried_then_unarmed() {
+    let root = seeded("gear-weapons-order", ALDRIC_ID);
+    hold(&root, "Dagger (Base)", ActiveState::SelectedInactive);
+    hold(&root, "Shortbow (Base)", ActiveState::SelectedInactive);
+    move_to(&root, "Shortbow (Base)", 0, codex::saved_character::equipment_sets::Location::NotCarried);
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    assert!(loaded.weapon_damage.iter().any(|weapon| !weapon.in_hand), "a carried weapon row: {:?}", loaded.weapon_damage);
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+    let lines: Vec<&str> = weapons.rows[1..].iter().filter(|row| row.values.len() >= 4 && !row.values[1].is_empty()).map(|row| row.label.as_str()).collect();
+    assert_eq!(lines.len(), loaded.weapon_damage.len(), "one line per weapon row: {lines:?}");
+    let carried_at = lines.iter().position(|label| label.ends_with(" (carried)")).unwrap_or_else(|| panic!("a carried line: {lines:?}"));
+    assert!(carried_at > 0 && lines[..carried_at].iter().all(|label| !label.contains("(carried)")), "in hand first: {lines:?}");
+    assert!(lines[carried_at].starts_with("Dagger"), "the dagger is carried: {lines:?}");
+    let last = lines.last().expect("a line");
+    assert!(loaded.weapon_damage.last().is_some_and(|weapon| weapon.unarmed && weapon.nonlethal), "the engine's last row is Unarmed, nonlethal");
+    assert!(last.starts_with("Unarmed") && last.ends_with(" (nonlethal)"), "Unarmed last, nonlethal: {lines:?}");
+    assert!(!lines.iter().any(|label| label.contains("Shortbow")), "a Not Carried weapon is not on the block: {lines:?}");
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    let bare: String = text_between(&text, "Weapons Weapon", "Saving Throws").split_whitespace().collect();
+    assert_in_order(&bare, &["Longsword", "Dagger", "(carried)", "Unarmed", "(nonlethal)"]);
+}
+
+/// SD-41 E4.1 (`decisions.md §23, §28`): a weapon that fires ammunition prints 20 tick boxes under
+/// its line, with "<kind>: <n> carried" when the engine counts any; the others print none; the
+/// global Ammunition row is gone from the look. Aldric carrying a Longbow and three Arrows (20).
+#[test]
+fn print_pf_blocks_gear_ammunition_boxes_only_under_projectile_weapons() {
+    let root = seeded("gear-ammunition", ALDRIC_ID);
+    hold(&root, "Longbow (Base)", ActiveState::SelectedInactive);
+    for _ in 0..3 {
+        hold(&root, "Arrows (20)", ActiveState::SelectedInactive);
+    }
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let bow = loaded.weapon_damage.iter().find(|weapon| weapon.weapon_record_key.as_deref() == Some("Longbow (Base)")).expect("the longbow's row");
+    assert!(bow.uses_ammunition && bow.ammunition_carried == 60, "three bundles of 20: {bow:?}");
+    // E4.5 (`decisions.md §9`): the carried bow's attack total, as if wielded in the main hand.
+    let bow_attack = loaded.explanations.iter().find(|row| row.id == "combat.weapon_attack_bonus.longbow").expect("the carried bow's attack row");
+    let words = format!("{}: 60 carried", bow.ammunition_family.as_deref().unwrap_or("Ammunition"));
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+    let lines: Vec<_> = weapons.rows[1..].iter().filter(|row| row.values.len() >= 4 && !row.values[1].is_empty()).collect();
+    for (line, weapon) in lines.iter().zip(&loaded.weapon_damage) {
+        if weapon.uses_ammunition {
+            assert_eq!((line.kind, line.values.get(4)), ("ammunition", Some(&words)), "the bow's boxes and count: {line:?}");
+            assert_eq!(line.values[0], format!("{:+}", bow_attack.value), "the bow's Attack cell is the engine's signed total: {line:?}");
+        } else {
+            // `SheetBlock::new` pads every row to the widest; a padded cell is empty.
+            assert_eq!((line.kind, line.values.get(4).map_or("", String::as_str)), ("", ""), "no boxes under `{}`", line.label);
+        }
+    }
+    assert_eq!(lines.iter().filter(|line| line.kind == "ammunition").count(), 1, "boxes under the bow only: {lines:?}");
+    let fact = look_fact(&document, "weapons-look");
+    assert_eq!((fact["ammunition"].as_u64(), fact["boxes"].as_u64()), (Some(1), Some(20)), "one row of 20 boxes: {fact}");
+    let look = include_str!("../../../resources/print/looks/weapons.typ");
+    assert_eq!(look.matches("\"Ammunition\"").count(), 0, "no global Ammunition row in the look");
+    let pdf = render(&root, &request(false, false, false));
+    keep_pdf("gear-ammunition-aldric-a4", &pdf);
+    let text = pdf_text(&pdf);
+    assert!(text.contains(&words), "`{words}` prints: {text}");
+}
+
+/// SD-41 E4.1 (`decisions.md §25, §28`): identical copies print as one stack, `<name> ×<pieces>`
+/// (a bundle's `(20)` dropped once bought), with the engine's weight per copy (`3 × 3 lb`); a
+/// created item prints with the weight it states. Aldric carrying three Arrows (20) and a created
+/// Lucky Charm of 0.5 lb.
+#[test]
+fn print_pf_blocks_gear_stacks_and_created_items() {
+    let root = seeded("gear-stacks", ALDRIC_ID);
+    for _ in 0..3 {
+        hold(&root, "Arrows (20)", ActiveState::SelectedInactive);
+    }
+    create_item(&root, "Lucky Charm", 0.5, None);
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    let arrows: Vec<f64> = loaded.corpus_derived.encumbrance.per_item.iter().filter(|item| item.item_id == "Arrows (20)").map(|item| item.weight_lbs).collect();
+    assert_eq!(arrows.len(), 3, "the engine weighs three bundles: {arrows:?}");
+    let document = sheet_document_at_root(&root, &request(false, false, false)).expect("the document builds");
+    let sections = gear_sections(gear_block(&document));
+    let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+    let stack = carried.iter().find(|row| row.label.starts_with("Arrows")).unwrap_or_else(|| panic!("the arrows: {carried:?}"));
+    assert_eq!(stack.label, "Arrows ×60", "one row, pieces counted");
+    assert_eq!(stack.values[1], format!("3 × {}", super::pounds(arrows[0])), "the engine's weight per bundle");
+    assert_eq!(carried.iter().filter(|row| row.label.starts_with("Arrows")).count(), 1, "one stack: {carried:?}");
+    let charm = carried.iter().find(|row| row.label == "Lucky Charm").unwrap_or_else(|| panic!("the created item: {carried:?}"));
+    assert_eq!(charm.values[1], "0.5 lb", "a created item prints its weight");
+    let text = pdf_text(&render(&root, &request(false, false, false)));
+    let bare: String = text_between(&text, "Gear Item", "Money PP").split_whitespace().collect();
+    assert!(bare.contains("Arrows×60") && bare.contains("LuckyCharm"), "{bare}");
+}
+
+/// SD-41 E4.1 (`decisions.md §32`): a container over what it holds is flagged on its line; with
+/// "Ignore container capacity limits" on, the flag goes and the override prints in the Custom
+/// block's override line as the others do. A created Tiny Box (holds 1 lb) holding a Rope (50 ft.).
+#[test]
+fn print_pf_blocks_gear_capacity_override_hides_the_flag() {
+    let root = seeded("gear-capacity", ALDRIC_ID);
+    hold(&root, "Rope (50 ft.)", ActiveState::SelectedInactive);
+    let tiny = create_item(&root, "Tiny Box", 1.0, Some(1.0));
+    move_to(&root, "Rope (50 ft.)", 0, codex::saved_character::equipment_sets::Location::Inside { container: tiny.clone() });
+    let over_line = |root: &Path| {
+        let document = sheet_document_at_root(root, &request(false, false, false)).expect("the document builds");
+        let sections = gear_sections(gear_block(&document));
+        let carried = &sections.iter().find(|(title, _)| *title == "Carried").expect("Carried").1;
+        let tiny = carried.iter().find(|row| row.label == "Tiny Box").unwrap_or_else(|| panic!("the box: {carried:?}"));
+        let custom = document.blocks.iter().find(|block| block.id == "custom").expect("the Custom block");
+        let overrides: Vec<String> = custom.rows.iter().filter(|row| row.label == "Overrides on").flat_map(|row| row.notes.clone()).collect();
+        (tiny.notes.clone(), overrides)
+    };
+    let loaded = load_saved_character_at_root(&root).expect("Aldric loads");
+    assert!(loaded.container_loads.iter().any(|load| load.copy == tiny && load.over), "the box is over: {:?}", loaded.container_loads);
+    let (notes, overrides) = over_line(&root);
+    assert!(notes.iter().any(|note| note.ends_with(", over capacity")), "flagged over: {notes:?}");
+    assert!(!overrides.iter().any(|tag| tag.contains("container capacity")), "{overrides:?}");
+    let mut custom = load_character_custom_at_root(&root).expect("custom loads");
+    custom.overrides.ignore_container_capacity = true;
+    save_character_custom_at_root(&root, &custom, AT).expect("the flag saves");
+    let (notes, overrides) = over_line(&root);
+    assert!(!notes.iter().any(|note| note.contains("over capacity")), "no flag under the override: {notes:?}");
+    assert!(notes.iter().any(|note| note.starts_with("Holds ")), "the load still prints: {notes:?}");
+    assert!(overrides.contains(&"Override: Ignore container capacity limits".to_owned()), "the override line names it: {overrides:?}");
+}
+
+/// SD-41 E4.MC (the E4.G gate's proof): Aldric and Elowen each carry a stocked set — a Backpack
+/// holding a Pouch (Belt) holding Trail Rations, a Heavy Wooden Shield Not Carried, three
+/// Arrow, Flight (20) and a Longbow, a created "Camping" container — with a "Formalwear" set made
+/// and left inactive. The first-time print (page 1 + Feats + Inventory) lists the active set only:
+/// the pack nests two deep, the shield under Not Carried, the arrows as one stack of 60 with 20 boxes
+/// under the bow, Camping with its load. A4 and Letter; with `PRINT_PF_BLOCKS_OUT` set the four PDFs
+/// are kept as `<seed>-stocked-<paper>.pdf` for the operator gate.
+#[test]
+fn print_pf_blocks_gate_stocked_set_prints_by_location() {
+    use crate::character_hub::{create_equipment_set_at_root, list_held_equipment_stacks_at_root};
+    use codex::saved_character::equipment_sets::Location;
+    for (seed, id) in [("aldric", ALDRIC_ID), ("elowen", ELOWEN_ID)] {
+        let root = seeded(&format!("gate-stocked-{seed}"), id);
+        for item in ["Backpack", "Pouch (Belt)", "Rations (Trail/Per Day)", "Heavy Wooden Shield (Base)", "Longbow (Base)"] {
+            hold(&root, item, ActiveState::SelectedInactive);
+        }
+        for _ in 0..3 {
+            hold(&root, "Arrows (Flight/20)", ActiveState::SelectedInactive);
+        }
+        move_to(&root, "Pouch (Belt)", 0, inside("Backpack"));
+        move_to(&root, "Rations (Trail/Per Day)", 0, inside("Pouch (Belt)"));
+        move_to(&root, "Heavy Wooden Shield (Base)", 0, Location::NotCarried);
+        create_item_for(&root, id, "Camping", 2.0, Some(30.0));
+        let sets = create_equipment_set_at_root(&root, "Formalwear", false).expect("the set is made");
+        assert_eq!((sets.active.as_str(), sets.names.len()), ("Default", 2), "{seed}: Formalwear made, Default still active: {sets:?}");
+        let held = list_held_equipment_stacks_at_root(&root).expect("held");
+        let name_of = |item: &str| held.iter().find(|copy| copy.item_id == item).unwrap_or_else(|| panic!("{seed} holds {item}: {held:?}")).name.clone();
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        let bow = loaded.weapon_damage.iter().find(|weapon| weapon.weapon_record_key.as_deref() == Some("Longbow (Base)")).expect("the longbow's row");
+        assert!(bow.uses_ammunition && bow.ammunition_carried == 60, "{seed}: three bundles of 20 flight arrows count for the bow: {bow:?}");
+        for (paper, paper_name) in [(Paper::A4, "a4"), (Paper::Letter, "letter")] {
+            let tag = format!("{seed} {paper_name}");
+            let printed = PrintRequest { paper, ..request(false, false, false) };
+            let document = sheet_document_at_root(&root, &printed).expect("the document builds");
+            let sections = gear_sections(gear_block(&document));
+            let section = |title: &str| &sections.iter().find(|(name, _)| *name == title).unwrap_or_else(|| panic!("{tag}: `{title}`: {sections:?}")).1;
+            let carried = section("Carried");
+            let at = |label: &str| carried.iter().position(|row| row.label == label).unwrap_or_else(|| panic!("{tag}: `{label}` under Carried: {carried:?}"));
+            let (pack, pouch, rations) = (at(&name_of("Backpack")), at(&name_of("Pouch (Belt)")), at(&name_of("Rations (Trail/Per Day)")));
+            assert_eq!((pouch, rations), (pack + 1, pack + 2), "{tag}: pack, pouch in it, rations in that: {carried:?}");
+            assert_eq!([carried[pack].kind, carried[pouch].kind, carried[rations].kind], ["item", "in-1", "in-2"], "{tag}: one level deeper per nesting");
+            let arrows: Vec<_> = carried.iter().filter(|row| row.label.contains("Flight")).collect();
+            assert_eq!(arrows.len(), 1, "{tag}: one stack: {arrows:?}");
+            assert!(arrows[0].label.ends_with("×60"), "{tag}: pieces counted: {:?}", arrows[0]);
+            let camping = &carried[at("Camping")];
+            assert!(camping.notes.iter().any(|note| note.starts_with("Holds ")), "{tag}: Camping states its load: {camping:?}");
+            let left: Vec<&str> = section("Not Carried").iter().map(|row| row.label.as_str()).collect();
+            assert!(left.contains(&name_of("Heavy Wooden Shield (Base)").as_str()), "{tag}: the shield is Not Carried: {left:?}");
+            let pdf = render(&root, &printed);
+            keep_pdf(&format!("{seed}-stocked-{paper_name}"), &pdf);
+            let bare: String = text_between(&pdf_text(&pdf), "Gear Item", "Money PP").split_whitespace().collect();
+            assert_in_order(&bare, &["Carried", "Backpack", "Holds", "Camping", "NotCarried", "Carriedweight"]);
+            assert!(!bare.contains("Formalwear"), "{tag}: an inactive set does not print: {bare}");
         }
     }
 }
@@ -2701,6 +3044,8 @@ fn page_one_breakdown_lines(loaded: &crate::character_hub::LoadSavedCharacterRes
             || NO_VALUE.to_owned(),
             |raw| raw.chars().enumerate().flat_map(|(i, c)| if i > 0 && c.is_uppercase() { vec![' ', c] } else { vec![c] }).collect(),
         );
+        // The line's marks (SD-41 E4.1, `decisions.md §9, §22`): carried, nonlethal.
+        let name = format!("{name}{}{}", if weapon.in_hand { "" } else { " (carried)" }, if weapon.nonlethal { " (nonlethal)" } else { "" });
         lines.push(line(
             &name,
             vec![
@@ -2915,7 +3260,7 @@ fn with_notes(root: &Path, notes: &str) {
 fn print_pf_blocks_each_section_is_a_list() {
     let root = seeded("section-lists", ALDRIC_ID);
     with_notes(&root, ALDRIC_NOTES);
-    let page_one = ["portrait", "languages", "nameCampaign", "armorClass", "speed", "squareBlock", "weapons", "attack", "saves", "conditionalBonuses", "resistances", "abilities", "skills"];
+    let page_one = ["portrait", "languages", "nameCampaign", "armorClass", "speed", "squareBlock", "weapons", "attack", "saves", "resistances", "conditionalBonuses", "abilities", "skills"];
     let expected: [(Section, Option<&str>, Vec<&str>); 8] = [
         (Section::Main, None, page_one.to_vec()),
         (Section::Feats, Some("Abilities and Feats"), vec!["feats", "classFeatures", "actions", "spells", "custom", "pets"]),
@@ -3024,4 +3369,152 @@ fn print_pf_blocks_notes_section_prints_only_when_ticked() {
     let on_pages = pages_text(&pdf_text(&pdf), &document.title, page_count(&pdf));
     assert_eq!(on_pages.len(), 1, "an empty Notes field prints one page to write on");
     assert!(on_pages[0].trim() == "Notes", "the page holds the title and its ruled lines only: {:?}", on_pages[0]);
+}
+
+/// The page-1 looks whose block titles print in the shared title box (SD-41 `decisions.md §34` (1)):
+/// the 11 sections the operator named, in 9 look files (`square-block` holds Hit Points,
+/// Initiative and Encumbrance, and its Conditions box, in the same style).
+const TITLE_BOX_LOOKS: [&str; 9] = ["speed", "square-block", "abilities", "skills", "weapons", "attack", "saves", "conditional-bonuses", "resistances"];
+
+/// SD-41 E4.2 (`decisions.md §34` (1)): every page-1 section title prints as one filled box with
+/// white bold letters, the same fill and height for all 11 (Speed, Hit Points, Initiative,
+/// Encumbrance, Abilities, Skills, Weapons, Attack, Saving Throws, Conditional Bonuses,
+/// Resistances); no page-1 look keeps the old underline. Aldric and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_page1_every_section_title_is_a_filled_box() {
+    const ELEVEN: [&str; 11] = ["Speed", "Hit Points", "Initiative", "Encumbrance", "Abilities", "Skills", "Weapons", "Attack", "Saving Throws", "Conditional Bonuses", "Resistances"];
+    for look in TITLE_BOX_LOOKS {
+        let (_, source) = crate::print::typst::LOOKS.iter().find(|(name, _)| *name == look).unwrap_or_else(|| panic!("the `{look}` look exists"));
+        assert!(!source.contains("line(length") && !source.contains("underline"), "`{look}`: no underline under a title");
+        assert!(source.contains("section-title("), "`{look}`: its titles call the shared `section-title`");
+    }
+    for (tag, id) in [("titles-aldric", ALDRIC_ID), ("titles-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, _, _) = page_one_text(&root, paper, Vec::new());
+            let boxes = crate::print::typst::look_metadata(&document, "section-title-box").expect("the sheet typesets");
+            let titles: Vec<&str> = boxes.iter().filter_map(|fact| fact["title"].as_str()).collect();
+            for title in ELEVEN {
+                assert!(titles.contains(&title), "{tag} {paper:?}: `{title}` prints in the title box: {titles:?}");
+            }
+            let first = boxes.first().expect("a title box");
+            for fact in &boxes {
+                assert_eq!(fact["fill"], first["fill"], "{tag} {paper:?}: one fill for every title: {fact}");
+                assert_eq!(fact["height"], first["height"], "{tag} {paper:?}: one height for every title: {fact}");
+                assert_eq!(fact["text"], "white bold", "{tag} {paper:?}: white bold letters: {fact}");
+            }
+        }
+    }
+}
+
+/// SD-41 E4.2 (`decisions.md §34` (2)): Resistances and Conditional Bonuses swap places on page 1:
+/// the Resistances block sits under the Saving Throws, the Conditional Bonuses box under it.
+#[test]
+fn print_pf_blocks_page1_resistances_precede_conditional_bonuses() {
+    let root = seeded("swap-aldric", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let (document, one, _) = page_one_text(&root, paper, Vec::new());
+        let ids: Vec<&str> = document.blocks.iter().map(|block| block.id).collect();
+        let at = |id: &str| ids.iter().position(|b| *b == id).unwrap_or_else(|| panic!("{paper:?}: `{id}` on page 1: {ids:?}"));
+        assert_eq!((at("saves") + 1, at("resistances") + 1), (at("resistances"), at("conditionalBonuses")), "{paper:?}: Saving Throws, Resistances, Conditional Bonuses: {ids:?}");
+        assert_in_order(&one, &["Saving Throws", "Resistances", "Conditional Bonuses", "Abilities"]);
+    }
+}
+
+/// SD-41 E4.2 (`decisions.md §34` (3)): the Conditional Bonuses box is an empty bordered box: the
+/// bonuses the engine states print in it, no ruled write-in line is drawn, and the box keeps its
+/// height (10 lines of 0.4 cm). Aldric (Bravery), Letter and A4.
+#[test]
+fn print_pf_blocks_page1_conditional_box_has_no_ruled_lines() {
+    let (_, source) = crate::print::typst::LOOKS.iter().find(|(name, _)| *name == "conditional-bonuses").expect("the look exists");
+    assert!(!source.contains("bottom:"), "no ruled line (a bottom stroke) inside the box");
+    let root = seeded("box-unruled", ALDRIC_ID);
+    for paper in [Paper::Letter, Paper::A4] {
+        let (document, one, _) = page_one_text(&root, paper, Vec::new());
+        let (lines, _, height) = conditional_box(&document);
+        assert_eq!(lines, 10, "{paper:?}: the box keeps its 10 lines' height");
+        let ten = 10.0 * 0.4 / 2.54 * 72.0;
+        assert!((height - ten).abs() < 0.5, "{paper:?}: the box is {ten} pt tall, {height} printed");
+        assert!(one.contains("Bravery"), "{paper:?}: the printed bonus stays: {one}");
+    }
+}
+
+/// SD-41 E4.3 (`decisions.md §34` (4)): the Skills print as a table whose alternate rows are filled
+/// a light grey (`luma` ≥ 230, so a monochrome printer still reads the words on it): every second
+/// skill line shaded, the others not. The look states its shade and its line counts
+/// (`skills-look`). Aldric and Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_page1_skills_alternate_rows_shaded() {
+    for (tag, id) in [("skills-shade-aldric", ALDRIC_ID), ("skills-shade-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, _, _) = page_one_text(&root, paper, Vec::new());
+            let skills = document.blocks.iter().find(|block| block.id == "skills").expect("the Skills block");
+            let lines = skills.rows.iter().filter(|row| row.values.first().is_some_and(|total| !total.is_empty())).count() as u64;
+            let facts = crate::print::typst::look_metadata(&document, "skills-look").expect("the sheet typesets");
+            let fact = facts.first().unwrap_or_else(|| panic!("{tag} {paper:?}: the skills look states its shading"));
+            let shade = fact["shade"].as_u64().expect("a luma level");
+            assert!((230..255).contains(&shade), "{tag} {paper:?}: a light grey that prints in black and white: {fact}");
+            assert_eq!(fact["lines"].as_u64(), Some(lines), "{tag} {paper:?}: every skill line prints: {fact}");
+            assert_eq!(fact["shaded"].as_u64(), Some(lines / 2), "{tag} {paper:?}: every second line is shaded: {fact}");
+        }
+    }
+}
+
+/// SD-41 E4.3 (`decisions.md §34` (5)): the Weapons print only real lines: no blank write-in line
+/// and no empty box. The block is one header plus one line per engine weapon row (in hand →
+/// carried → Unarmed), and the look prints exactly those lines (`weapons-look`). Aldric and
+/// Elowen, Letter and A4.
+#[test]
+fn print_pf_blocks_page1_weapons_has_no_blank_rows() {
+    let (_, source) = crate::print::typst::LOOKS.iter().find(|(name, _)| *name == "weapons").expect("the look exists");
+    assert!(!source.contains("write-line"), "no ruled write-in line in the Weapons look");
+    for (tag, id) in [("weapons-blank-aldric", ALDRIC_ID), ("weapons-blank-elowen", ELOWEN_ID)] {
+        let root = seeded(tag, id);
+        let loaded = load_saved_character_at_root(&root).expect("the seed loads");
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, _, _) = page_one_text(&root, paper, Vec::new());
+            let weapons = document.blocks.iter().find(|block| block.id == "weapons").expect("the Weapons block");
+            assert_eq!(weapons.rows.len(), loaded.weapon_damage.len() + 1, "{tag} {paper:?}: one header and a line per engine weapon: {:?}", weapons.rows);
+            let facts = crate::print::typst::look_metadata(&document, "weapons-look").expect("the sheet typesets");
+            let fact = facts.first().unwrap_or_else(|| panic!("{tag} {paper:?}: the weapons look states its lines"));
+            assert_eq!(fact["lines"].as_u64(), Some(loaded.weapon_damage.len() as u64), "{tag} {paper:?}: only the real lines print: {fact}");
+            assert_eq!(fact["empty"].as_u64(), Some(0), "{tag} {paper:?}: no empty box: {fact}");
+        }
+    }
+}
+
+/// SD-41 E4.3 (`decisions.md §34` (6), §35 Q11): the Speed prints as a 2×2 grid, Land and Fly over
+/// Swim and Climb; Climb prints the engine's `speed.climb` row when the response holds one (a
+/// Vanara: 20 ft.), else "—" with no row behind it (Aldric, Human), never a made-up value.
+/// Letter and A4.
+#[test]
+fn print_pf_blocks_page1_speed_is_a_2x2_with_climb_dash() {
+    use codex::saved_character::local_store::SavedCharacterStore;
+    let vanara = seeded("speed-climb-vanara", ALDRIC_ID);
+    let mut envelope = SavedCharacterStore::load(&vanara).expect("the seed's envelope loads");
+    envelope.character_input.chosen.race_id = "race:vanara".to_owned();
+    SavedCharacterStore::save(&envelope, &vanara).expect("the race saves");
+    for (tag, root, climb) in [("vanara", vanara, "20 ft."), ("aldric", seeded("speed-climb-aldric", ALDRIC_ID), "—")] {
+        let loaded = load_saved_character_at_root(&root).expect("the character loads");
+        let held = loaded.explanations.iter().find(|row| row.id == "speed.climb");
+        assert_eq!(held.map(|row| row.value), (climb != "—").then_some(20), "{tag}: the engine's speed.climb row");
+        for paper in [Paper::Letter, Paper::A4] {
+            let (document, one, pdf) = page_one_text(&root, paper, Vec::new());
+            if let Ok(out) = std::env::var("PRINT_PF_BLOCKS_OUT") {
+                std::fs::create_dir_all(&out).expect("the output dir is creatable");
+                std::fs::write(Path::new(&out).join(format!("climb-{tag}-{paper:?}.pdf")), &pdf).expect("the PDF writes");
+            }
+            let speed = document.blocks.iter().find(|block| block.id == "speed").expect("the Speed block");
+            let labels: Vec<&str> = speed.rows.iter().map(|row| row.label.as_str()).collect();
+            assert_eq!(labels, ["Land", "Fly", "Swim", "Climb"], "{tag} {paper:?}: Land and Fly over Swim and Climb");
+            let row = &speed.rows[3];
+            assert_eq!(row.values, vec![climb.to_owned()], "{tag} {paper:?}: Climb");
+            assert_eq!(row.derivation.is_some(), held.is_some(), "{tag} {paper:?}: the speed.climb row is behind Climb only when the engine states one");
+            assert!(one.contains(&format!("Climb {climb}")), "{tag} {paper:?}: page 1 prints `Climb {climb}`: {one}");
+            let facts = crate::print::typst::look_metadata(&document, "speed-look").expect("the sheet typesets");
+            let fact = facts.first().unwrap_or_else(|| panic!("{tag} {paper:?}: the speed look states its grid"));
+            assert_eq!((fact["columns"].as_u64(), fact["rows"].as_u64()), (Some(2), Some(2)), "{tag} {paper:?}: a 2×2 grid: {fact}");
+        }
+    }
 }

@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "MagicItems",
-    "cost_gp": 0.0,
+    "cost_gp": 30000.0,
     "description": "Must make concentration check (DC 20 + spell level) or lose the spell when casting.",
     "key": "Robe of Vermin",
     "name": "Robe of Vermin",

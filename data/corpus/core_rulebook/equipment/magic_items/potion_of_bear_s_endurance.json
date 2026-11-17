@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 300.0,
     "description": "+4 enhancement bonus to Constitution for 3 minutes",
     "key": "Potion of Bear's Endurance",
     "name": "Potion",

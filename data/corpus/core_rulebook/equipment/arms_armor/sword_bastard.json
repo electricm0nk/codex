@@ -6,7 +6,7 @@
     "key": "Sword (Bastard)",
     "category": "arms_armor",
     "name": "Bastard Sword (Base)",
-    "cost_gp": null,
+    "cost_gp": 35.0,
     "weight_lbs": null,
     "description": "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon."
   },

@@ -2,7 +2,7 @@
   "completeness": "chassis_only",
   "data": {
     "category": "ArmsArmor",
-    "cost_gp": null,
+    "cost_gp": 400.0,
     "description": null,
     "key": "Barding (Lamellar/Iron/Large)",
     "name": "Barding (Lamellar/Iron/Large)",

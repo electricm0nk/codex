@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 300.0,
     "description": "+1 morale bonus on attack rolls and saves vs. fear, plus 1d8+1 temporary hp for 1 minute",
     "key": "Potion of Aid",
     "name": "Potion",

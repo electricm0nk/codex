@@ -6,7 +6,7 @@
     "key": "Frost Brand",
     "category": "arms_armor",
     "name": "Greatsword (Base)",
-    "cost_gp": null,
+    "cost_gp": 54475.0,
     "weight_lbs": null,
     "description": "This +3 frost greatsword sheds light as a torch when the temperature drops below 0° F. At such times it cannot be concealed when drawn, nor can its light be shut off. Its wielder is protected from fire; the sword absorbs the first 10 points of fire damage each round that the wielder would otherwise take.\nA frost brand extinguishes all nonmagical fires in a 20-foot radius. As a standard action, it can also dispel lasting fire spells, but not instantaneous effects. You must succeed on a dispel check (1d20 +14) against each spell to dispel it. The DC to dispel such spells is 11 + the caster level of the fire spell."
   },

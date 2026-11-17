@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "You can see any objects or beings that are invisible within your range of vision, as well as any that are ethereal, as if they were normally visible.",
     "key": "Wand of See Invisibility",
     "name": "Wand",

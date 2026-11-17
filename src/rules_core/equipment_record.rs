@@ -212,9 +212,186 @@ pub struct CorpusEquipmentRecord {
     /// distinction is settled here instead -- the same two-valued answer, from
     /// the same source record, on the side that ships.
     pub is_modifier: bool,
+    /// Whether the item is a container a character can put other copies in: its type holds
+    /// `Container` and it is not a weapon (SD-41 `decisions.md §31` R2). A weapon's own `CONTAINS`
+    /// names its loaded ammunition, not a carried bag. Omitted from the settled bundle when `false`.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub container: bool,
+    /// What a container holds, settled only when [`Self::container`] is true; `Unstated` otherwise.
+    #[serde(default, skip_serializing_if = "ContainerCapacity::is_unstated")]
+    pub container_capacity: ContainerCapacity,
+    /// Whether the item fires ammunition: its type holds `Projectile` (SD-41 `decisions.md §23`).
+    /// `Thrown` does not count. Omitted from the settled bundle when `false`.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub uses_ammunition: bool,
+    /// The ammunition family an ammunition user's `CONTAINS` names (`Arrow`, `Bolt`,
+    /// `FirearmBullet`), spaces removed; `None` when it names none (any ammunition fits).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ammunition_family: Option<String>,
+    /// An `Ammunition`-typed item's type words, spaces removed, that a weapon's family is matched
+    /// against; empty for anything that is not ammunition.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub ammunition_kinds: Vec<String>,
+    /// How many pieces one copy is, as the book sells it (`BASEQTY`: `Arrow, Flight (20)` is 20);
+    /// `None` when the record states none.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub base_quantity: Option<u32>,
+    /// What the record adds to another item's price as an equipment modifier (SD-41
+    /// `decisions.md §24`, Buy Custom). `None` when it states no `PLUS`, `ITYPE`, `ITEMCOST` or
+    /// `COST` formula: such a modifier costs its flat [`Self::cost_gp`], or nothing.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub modifier_price: Option<ModifierPrice>,
+}
+
+/// An equipment modifier's price on a host item, settled from its `COST`, `PLUS`, `ITYPE` and
+/// `BONUS:ITEMCOST` chains: every term is linear in the host's base price, its weight and the
+/// square of the host's enhancement total, so no formula is read at run time.
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct ModifierPrice {
+    /// The enhancement the modifier counts as (`Flaming` is a `+1`-equivalent).
+    #[serde(default, skip_serializing_if = "is_zero_i16")]
+    pub plus: i16,
+    /// Whether it is a masterwork quality (mithral, darkwood): masterwork is in its price.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub masterwork_quality: bool,
+    /// Type words the modifier gives its host (`+1`: `WeaponEnhancement`, `Magic`).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub grants: Vec<String>,
+    /// The price terms, summed where each applies.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub terms: Vec<PriceTerm>,
+    /// A term's formula or prerequisite was one the converter cannot state as a term: the
+    /// modifier has no price, and a purchase that holds it is priced by Negotiate (`§30` Q6).
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub unpriced: bool,
+}
+
+/// One price term: `flat + per_base × base price + per_lb × weight + per_plus_squared × total²`.
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct PriceTerm {
+    /// Host type words, one of which the host must hold; empty for every host.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub hosts: Vec<String>,
+    /// Type words the host must hold (`PRETYPE`).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub requires: Vec<String>,
+    /// Type words the host must not hold (`!PRETYPE`).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub excludes: Vec<String>,
+    /// Not charged when another modifier on the host is a masterwork quality.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub unless_masterwork_quality: bool,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub flat_gp: f64,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub per_base_gp: f64,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub per_lb_gp: f64,
+    #[serde(default, skip_serializing_if = "is_zero_f64")]
+    pub per_plus_squared_gp: f64,
+}
+
+fn is_zero_i16(n: &i16) -> bool {
+    *n == 0
+}
+
+fn is_zero_f64(n: &f64) -> bool {
+    *n == 0.0
+}
+
+/// A host item's price with `modifiers` on it, as PCGen's data prices it: the base, plus each
+/// modifier's flat cost or its terms. `host_types` are the base's type words; the modifiers'
+/// `grants` join them, and the enhancement total is the modifiers' summed `plus`. `Err` names
+/// every modifier whose price is unknown (Negotiate, `decisions.md §30` Q6).
+pub fn modified_price_gp(base_gp: f64, base_lb: f64, host_types: &[String], modifiers: &[&CorpusEquipmentRecord]) -> Result<f64, Vec<String>> {
+    let prices: Vec<Option<&ModifierPrice>> = modifiers.iter().map(|m| m.modifier_price.as_ref()).collect();
+    let mut types: Vec<String> = host_types.iter().map(|t| t.to_ascii_uppercase()).collect();
+    types.extend(prices.iter().flatten().flat_map(|p| p.grants.iter().map(|t| t.to_ascii_uppercase())));
+    let holds = |word: &String| types.contains(&word.to_ascii_uppercase());
+    let plus_total = f64::from(prices.iter().flatten().map(|p| p.plus).sum::<i16>());
+    let mut total = base_gp;
+    let mut unpriced = Vec::new();
+    for (index, (modifier, price)) in modifiers.iter().zip(&prices).enumerate() {
+        let Some(price) = price else {
+            total += modifier.cost_gp.unwrap_or(0.0);
+            continue;
+        };
+        if price.unpriced {
+            unpriced.push(modifier.identity.clone());
+            continue;
+        }
+        let other_masterwork = prices.iter().enumerate().any(|(i, p)| i != index && p.is_some_and(|p| p.masterwork_quality));
+        for term in &price.terms {
+            let applies = (term.hosts.is_empty() || term.hosts.iter().any(holds))
+                && term.requires.iter().all(holds)
+                && !term.excludes.iter().any(holds)
+                && !(term.unless_masterwork_quality && other_masterwork);
+            if applies {
+                total += term.flat_gp + term.per_base_gp * base_gp + term.per_lb_gp * base_lb + term.per_plus_squared_gp * plus_total * plus_total;
+            }
+        }
+    }
+    if unpriced.is_empty() { Ok(total) } else { Err(unpriced) }
+}
+
+/// A container's stated capacity (SD-41 `decisions.md §7`). `Unstated` covers a container that
+/// states none and the weight-reduction kinds, whose contents weigh in full (DEF-1).
+#[derive(Debug, Clone, Copy, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub enum ContainerCapacity {
+    Pounds(f64),
+    Unlimited,
+    #[default]
+    Unstated,
+}
+
+impl ContainerCapacity {
+    pub fn is_unstated(&self) -> bool {
+        matches!(self, Self::Unstated)
+    }
 }
 
 impl CorpusEquipmentRecord {
+    /// Whether other copies can be put inside this one.
+    pub fn is_container(&self) -> bool {
+        self.container
+    }
+
+    /// The container's capacity; `Unstated` for a non-container.
+    pub fn capacity(&self) -> ContainerCapacity {
+        self.container_capacity
+    }
+
+    /// Whether the item fires ammunition (`Projectile`).
+    pub fn uses_ammunition(&self) -> bool {
+        self.uses_ammunition
+    }
+
+    /// The ammunition family the item fires, `None` when any ammunition fits.
+    pub fn ammunition_family(&self) -> Option<&str> {
+        self.ammunition_family.as_deref()
+    }
+
+    /// Whether the item is ammunition.
+    pub fn is_ammunition(&self) -> bool {
+        !self.ammunition_kinds.is_empty()
+    }
+
+    /// Whether the item is ammunition a weapon of `family` fires: any ammunition when the weapon
+    /// names no family, else one whose type words or name hold the family (§23), ignoring case
+    /// and spaces.
+    pub fn is_ammunition_for(&self, family: Option<&str>) -> bool {
+        let squash = |text: &str| text.replace(' ', "").to_lowercase();
+        self.is_ammunition()
+            && family.map(squash).is_none_or(|family| {
+                self.ammunition_kinds.iter().any(|kind| squash(kind) == family) || squash(&self.name).contains(&family)
+            })
+    }
+
+    /// Pieces in one copy: the stated `BASEQTY`, else 1.
+    pub fn base_quantity(&self) -> u32 {
+        self.base_quantity.unwrap_or(1)
+    }
+
     /// Weight in pounds and price in gold, the pair
     /// [`crate::rules_core::encumbrance`] reads for one carried item.
     pub fn weight_and_cost(&self) -> (Option<f64>, Option<f64>) {
@@ -222,3 +399,271 @@ impl CorpusEquipmentRecord {
     }
 }
 
+
+#[cfg(test)]
+mod container_tests {
+    //! SD-41 E1.1 (`decisions.md §7, §31`): which settled records are containers and what they hold.
+    //! The raw-corpus walks below are this test's second implementation of each figure; the live
+    //! side reads only the settled `container` / `container_capacity` fields.
+    use super::{ContainerCapacity, CorpusEquipmentRecord};
+    use crate::rules_core::settled_corpus::{corpus_book_dirs, read_equipment_bundle, SettledBundleError};
+    use std::path::{Path, PathBuf};
+
+    fn repo() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn json_files(dir: &Path, out: &mut Vec<PathBuf>) {
+        let Ok(entries) = std::fs::read_dir(dir) else { return };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                json_files(&path, out);
+            } else if path.extension().is_some_and(|ext| ext == "json") {
+                out.push(path);
+            }
+        }
+    }
+
+    /// Every settled equipment record across the 30 corpus books, keyed `<book>/<path>`.
+    fn settled() -> Vec<(String, CorpusEquipmentRecord)> {
+        let mut rows = Vec::new();
+        for book in corpus_book_dirs(&repo().join("data/corpus")) {
+            let name = book.file_name().unwrap().to_string_lossy().to_string();
+            let bundle = match read_equipment_bundle(&book) {
+                Ok(bundle) => bundle,
+                Err(SettledBundleError::Missing) if !book.join("equipment").is_dir() => continue,
+                Err(err) => panic!("{}: {err}", book.display()),
+            };
+            rows.extend(bundle.records.into_iter().map(|(key, entry)| (format!("{name}/{key}"), entry.record)));
+        }
+        rows
+    }
+
+    fn settled_record(key: &str) -> CorpusEquipmentRecord {
+        settled().into_iter().find(|(k, _)| k == key).unwrap_or_else(|| panic!("no settled record {key}")).1
+    }
+
+    /// The source corpus records' first value per token key, from `data/corpus/<book>/equipment/**`.
+    fn corpus_token_maps() -> Vec<std::collections::BTreeMap<String, String>> {
+        let mut files = Vec::new();
+        for book in corpus_book_dirs(&repo().join("data/corpus")) {
+            json_files(&book.join("equipment"), &mut files);
+        }
+        files
+            .iter()
+            .filter_map(|path| {
+                let value: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(path).ok()?).ok()?;
+                let tokens = value.get("data")?.get("raw_tokens")?.as_array()?;
+                let mut map = std::collections::BTreeMap::new();
+                for token in tokens {
+                    if let (Some(k), Some(v)) = (token["key"].as_str(), token["value"].as_str()) {
+                        map.entry(k.to_string()).or_insert_with(|| v.to_string());
+                    }
+                }
+                Some(map)
+            })
+            .collect()
+    }
+
+    fn kind_of(capacity: &ContainerCapacity) -> &'static str {
+        match capacity {
+            ContainerCapacity::Pounds(_) => "lb",
+            ContainerCapacity::Unlimited => "unlim",
+            ContainerCapacity::Unstated => "unstated",
+        }
+    }
+
+    #[test]
+    fn container_tag_population_is_232_files_265_rows() {
+        let mut files = Vec::new();
+        for book in std::fs::read_dir(repo().join("data/sheet_rules")).unwrap().flatten() {
+            json_files(&book.path().join("equipment"), &mut files);
+        }
+        let (mut tagged_files, mut tagged_rows, mut weapon_rows) = (0, 0, 0);
+        for path in &files {
+            let rows: Vec<serde_json::Value> = match serde_json::from_str(&std::fs::read_to_string(path).unwrap()) {
+                Ok(serde_json::Value::Array(rows)) => rows,
+                _ => continue,
+            };
+            let has = |row: &serde_json::Value, tag: &str| {
+                row["tags"].as_array().is_some_and(|tags| tags.iter().any(|t| t == tag))
+            };
+            let container_rows: Vec<_> = rows.iter().filter(|row| has(row, "Container")).collect();
+            tagged_files += usize::from(!container_rows.is_empty());
+            tagged_rows += container_rows.len();
+            weapon_rows += container_rows.iter().filter(|row| has(row, "Weapon")).count();
+        }
+        assert_eq!((tagged_files, tagged_rows, weapon_rows), (232, 265, 123), "sheet-rule Container tag population");
+    }
+
+    #[test]
+    fn container_capacity_population_is_210_88_73_49() {
+        // The source population: every corpus record with a CONTAINS token, by its first field.
+        let maps = corpus_token_maps();
+        let first_kind = |value: &str| {
+            let first = value.split('|').next().unwrap_or("");
+            if first.starts_with("UNLIM") {
+                "unlim"
+            } else if first.starts_with('*') {
+                "unstated"
+            } else if first.parse::<f64>().is_ok() {
+                "lb"
+            } else {
+                "other"
+            }
+        };
+        let contains: Vec<&str> = maps.iter().filter_map(|m| m.get("CONTAINS").map(|v| first_kind(v))).collect();
+        let count = |rows: &[&str], kind: &str| rows.iter().filter(|k| **k == kind).count();
+        assert_eq!(
+            (contains.len(), count(&contains, "lb"), count(&contains, "unlim"), count(&contains, "unstated"), count(&contains, "other")),
+            (210, 88, 73, 49, 0),
+            "CONTAINS records by first field"
+        );
+
+        // The settled containers: Container-typed, not a weapon (no DAMAGE, no Weapon type word).
+        // Implementation A: the settled bundles. Implementation B: the source records, with the
+        // cited capacity override list (`decisions.md §32`) applied by `KEY`.
+        let settled = settled();
+        let overrides: Vec<serde_json::Value> = serde_json::from_str(
+            &std::fs::read_to_string(repo().join("data/capacity_overrides/container-capacities.json")).unwrap(),
+        )
+        .unwrap();
+        let overridden = |m: &std::collections::BTreeMap<String, String>| {
+            m.get("KEY").is_some_and(|key| overrides.iter().any(|row| row["key"] == key.as_str()))
+        };
+        let a: Vec<&str> =
+            settled.iter().filter(|(_, r)| r.is_container()).map(|(_, r)| kind_of(&r.capacity())).collect();
+        let b: Vec<&str> = maps
+            .iter()
+            .filter(|m| {
+                let words: Vec<&str> = m.get("TYPE").map_or(vec![], |t| t.split('.').collect());
+                words.contains(&"Container") && !words.contains(&"Weapon") && !m.contains_key("DAMAGE")
+            })
+            .map(|m| if overridden(m) { "lb" } else { m.get("CONTAINS").map_or("unstated", |v| match first_kind(v) {
+                "other" => "unstated",
+                kind => kind,
+            }) })
+            .collect();
+        let tally = |rows: &[&str]| (rows.len(), count(rows, "lb"), count(rows, "unlim"), count(rows, "unstated"));
+        assert_eq!(tally(&a), tally(&b), "settled containers agree with the source predicate");
+        assert_eq!(tally(&a), (130, 33, 49, 48), "settled containers: total, lb, unlimited, unstated (the Backpack: 60 lb, §32)");
+        assert!(
+            settled.iter().all(|(_, r)| r.is_container() || r.capacity() == ContainerCapacity::Unstated),
+            "capacity is settled only on containers"
+        );
+    }
+
+    /// SD-41 E1.6 (`decisions.md §23, §31`): the settled ammunition fields agree with the source
+    /// tokens: `Projectile` users, users naming a `CONTAINS` family, `Ammunition` items, `BASEQTY`.
+    #[test]
+    fn ammunition_population_is_87_77_228_34() {
+        let settled = settled();
+        let a = (
+            settled.iter().filter(|(_, r)| r.uses_ammunition()).count(),
+            settled.iter().filter(|(_, r)| r.ammunition_family().is_some()).count(),
+            settled.iter().filter(|(_, r)| r.is_ammunition()).count(),
+            settled.iter().filter(|(_, r)| r.base_quantity.is_some()).count(),
+        );
+        let maps = corpus_token_maps();
+        let words = |m: &std::collections::BTreeMap<String, String>| m.get("TYPE").map_or(Vec::new(), |t| t.split('.').map(str::to_owned).collect::<Vec<_>>());
+        let projectile: Vec<_> = maps.iter().filter(|m| words(m).iter().any(|w| w == "Projectile")).collect();
+        let family = |m: &&&std::collections::BTreeMap<String, String>| {
+            m.get("CONTAINS").and_then(|c| c.split('|').nth(1)).map(|f| f.split('=').next().unwrap_or("").replace(' ', ""))
+                .is_some_and(|f| !f.is_empty() && f != "Any")
+        };
+        let b = (
+            projectile.len(),
+            projectile.iter().filter(family).count(),
+            maps.iter().filter(|m| words(m).iter().any(|w| w == "Ammunition")).count(),
+            maps.iter().filter(|m| m.get("BASEQTY").and_then(|q| q.parse::<u32>().ok()).is_some_and(|q| q > 0)).count(),
+        );
+        assert_eq!(a, b, "settled ammunition fields agree with the source tokens");
+        assert_eq!(a, (87, 77, 228, 34), "uses ammunition, names a family, is ammunition, states BASEQTY (30 + the 4 CRB inherited bundles, E1.13)");
+    }
+
+    #[test]
+    fn container_capacity_reads_backpack_unlimited() {
+        for key in [
+            "advanced_players_guide/backpack_masterwork.json",
+            "ultimate_equipment/powder_horn.json",
+        ] {
+            let record = settled_record(key);
+            assert!(record.is_container(), "{key} is a container");
+            assert_eq!(record.capacity(), ContainerCapacity::Unlimited, "{key}: UNLIM|…");
+        }
+        assert_eq!(settled_record("core_rulebook/general/sled.json").capacity(), ContainerCapacity::Pounds(2000.0));
+        assert_eq!(settled_record("core_rulebook/general/waterskin.json").capacity(), ContainerCapacity::Pounds(4.0));
+    }
+
+    /// SD-41 E1.12 (`decisions.md §32`): the operator's 60 lb Backpack reaches the settled record
+    /// through the cited override list; Backpack (Masterwork) is not overridden.
+    #[test]
+    fn container_capacity_backpack_is_60_lb() {
+        assert_eq!(settled_record("core_rulebook/general/backpack.json").capacity(), ContainerCapacity::Pounds(60.0));
+        assert_eq!(
+            settled_record("advanced_players_guide/backpack_masterwork.json").capacity(),
+            ContainerCapacity::Unlimited,
+            "Backpack (Masterwork) keeps UNLIM|Any"
+        );
+    }
+
+    /// SD-41 E1.7 (`decisions.md §28, §30`): the settled `BASEQTY` is the pieces in one copy.
+    #[test]
+    fn base_quantity_reads_the_settled_bundle_size() {
+        assert_eq!(settled_record("advanced_players_guide/arrows_flight_20.json").base_quantity(), 20, "Arrow, Flight (20)");
+        assert_eq!(settled_record("core_rulebook/general/backpack.json").base_quantity(), 1, "no BASEQTY: one piece");
+    }
+
+    /// SD-41 E1.13 (`decisions.md §20`): the CRB bundles ingested as inherited copies keep the
+    /// `BASEQTY` their own `.COPY=` line states, so 3 × `Arrows (20)` beside a longbow is 60 arrows.
+    #[test]
+    fn inherited_copy_bundles_settle_base_quantity() {
+        use crate::rules_core::character_input::{load_character_input_fixture, ActiveState, EquipmentSelection};
+        use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
+        use crate::rules_core::damage_total::ammunition_carried;
+        for (file, pieces) in [
+            ("arrows_20.json", 20),
+            ("bolts_crossbow_10.json", 10),
+            ("bolts_crossbow_repeating_5.json", 5),
+            ("bullets_sling_10.json", 10),
+            ("darts_blowgun_10.json", 10),
+        ] {
+            let record = settled_record(&format!("core_rulebook/arms_armor/{file}"));
+            assert_eq!(record.base_quantity, Some(pieces), "{file}");
+        }
+
+        let corpus = load_equipment_corpus(&[BookCorpusRoot { book_id: "core_rulebook", dir: &repo().join("data/corpus/core_rulebook") }]);
+        let mut input = load_character_input_fixture(
+            "case_id=case:test\nsource_package_id=core_rulebook\nrace_id=race:human\nclass_level=class:fighter:3\n\
+             ability=strength:19\nability=dexterity:13\nability=constitution:14\nability=intelligence:14\n\
+             ability=wisdom:12\nability=charisma:8\n",
+        )
+            .character_input
+            .expect("the fixture loads");
+        let select = |item: &str, state: ActiveState| EquipmentSelection {
+            item_id: item.to_owned(),
+            equipped_or_active: state == ActiveState::EquippedActive,
+            active_state: state,
+            applied_modifiers: Vec::new(),
+        };
+        input.chosen.equipment_selections = vec![
+            select("Longbow", ActiveState::EquippedActive),
+            select("Arrows (20)", ActiveState::SelectedInactive),
+            select("Arrows (20)", ActiveState::SelectedInactive),
+            select("Arrows (20)", ActiveState::EquippedActive),
+        ];
+        assert_eq!(ammunition_carried(&input, &corpus, Some("Arrow"), &[]), 60, "longbow + 3 × Arrows (20)");
+    }
+
+    #[test]
+    fn container_weapon_with_contains_is_not_a_container() {
+        // Pistol states DAMAGE 1d8; Wrist Launcher states no DAMAGE but is Weapon-typed. Both name
+        // their loaded ammunition in CONTAINS, which is not a carried bag (operator, §31 R2).
+        for key in ["ultimate_equipment/pistol.json", "ultimate_intrigue/wrist_launcher.json"] {
+            let record = settled_record(key);
+            assert!(!record.is_container(), "{key} is a weapon, not a container");
+            assert_eq!(record.capacity(), ContainerCapacity::Unstated, "{key}");
+        }
+    }
+}

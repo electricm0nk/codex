@@ -1359,6 +1359,7 @@ pub(crate) fn create_at_root(
             .collect(),
     };
     CprCharacterStore::save_kit(&saved_kit, root)?;
+    crate::character_hub::after_write(root);
     let loaded = crate::rule_system_adapter::load_saved_character_via_envelope(root)?;
     let mut explanations = engine_rows(&sheet);
     explanations.extend(allocated_skill_rows(&CprSkillCatalog::load(corpus)?, sheet, &preview.skills));

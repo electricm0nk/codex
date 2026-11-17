@@ -1,4 +1,4 @@
-import { ABSENT, buildWeaponsTabSurface } from './weaponsTabModel';
+import { ABSENT, AMMUNITION_BOXES, buildWeaponsTabSurface } from './weaponsTabModel';
 import { assert, assertEqual } from '../testSupport/asserts';
 import type { WeaponDamageDto } from '../boundary/loadSavedCharacterDetail';
 import type { CorpusDerivedDto } from '../boundary/loadCreateCharacter';
@@ -16,6 +16,11 @@ function longsword(overrides: Partial<WeaponDamageDto> = {}): WeaponDamageDto {
     criticalThreatRange: [19, 20],
     criticalMultiplier: 2,
     featEffects: [],
+    inHand: true,
+    unarmed: false,
+    nonlethal: false,
+    usesAmmunition: false,
+    ammunitionCarried: 0,
     ...overrides,
   };
 }
@@ -123,7 +128,45 @@ function verifiesAnHonestEmptyStateWhenNothingEquippedIsAWeapon() {
   assertEqual(surface.rows.length, 0, 'and produces no placeholder rows');
 }
 
+/** SD-41 E2.4 (`decisions.md §9, §22`): in hand, then carried, then Unarmed, whatever order the wire holds. */
+function verifiesInHandThenCarriedThenUnarmedLast() {
+  const unarmed = longsword({ weaponItemId: 'item:unarmed_strike', weaponRecordKey: 'Unarmed Strike', unarmed: true, nonlethal: true });
+  const dagger = longsword({ weaponItemId: 'item:dagger', weaponRecordKey: 'Dagger (Base)', inHand: false });
+  const rows = buildWeaponsTabSurface([unarmed, dagger, longsword()], null).rows;
+  assertEqual(rows.map((row) => row.group).join(','), 'inHand,carried,unarmed', 'in hand, carried, Unarmed last');
+  assertEqual(rows.map((row) => row.mark ?? '').join(','), ',(carried),(nonlethal)', 'carried and nonlethal are marked');
+  assertEqual(rows[2].name, 'Unarmed Strike', 'the Unarmed row keeps the engine name');
+}
+
+/** `decisions.md §23`: 20 boxes under a weapon that fires ammunition, the engine's count beside; none under a sword. */
+function verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons() {
+  const bow = (carried: number) =>
+    longsword({ weaponItemId: 'item:longbow', weaponRecordKey: 'Longbow (Base)', usesAmmunition: true, ammunitionCarried: carried, ammunitionFamily: 'Arrow' });
+  const [withArrows, sword] = buildWeaponsTabSurface([bow(20), longsword()], null).rows;
+  assertEqual(withArrows.ammunition?.boxes, AMMUNITION_BOXES, 'twenty tick boxes');
+  assertEqual(AMMUNITION_BOXES, 20, 'the operator\'s twenty');
+  assertEqual(withArrows.ammunition?.carried, 'Arrow: 20 carried', 'the engine count, the record family word');
+  assertEqual(sword.ammunition, null, 'a sword has no ammunition');
+  const empty = buildWeaponsTabSurface([bow(0)], null).rows[0];
+  assertEqual(empty.ammunition?.carried, null, 'no count line when the engine counts none');
+  assertEqual(empty.ammunition?.boxes, AMMUNITION_BOXES, 'the boxes stay');
+}
+
+/** `decisions.md §27`: Drop moves the row's own copy to Not Carried (never a sale); the Unarmed row has none. */
+function verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried() {
+  const carriedPlusOne = longsword({ weaponItemId: 'item:dagger', inHand: false, enhancementAttackBonus: 1, enhancementDamageBonus: 1 });
+  const masterwork = longsword({ enhancementAttackBonus: 1, enhancementDamageBonus: null });
+  const unarmed = longsword({ weaponItemId: 'item:unarmed_strike', unarmed: true, nonlethal: true });
+  const [inHand, carried, last] = buildWeaponsTabSurface([unarmed, carriedPlusOne, masterwork], null).rows;
+  assertEqual(JSON.stringify(inHand.drop), JSON.stringify({ itemId: 'item:longsword', bonus: 0, fromState: 'EquippedActive', activeState: 'Absent' }), 'in hand: a masterwork attack bonus is not a +N');
+  assertEqual(JSON.stringify(carried.drop), JSON.stringify({ itemId: 'item:dagger', bonus: 1, fromState: 'SelectedInactive', activeState: 'Absent' }), 'carried: the +1 copy that is carried');
+  assertEqual(last.drop, null, 'nothing to drop on the Unarmed row');
+}
+
 async function main() {
+  verifiesDropNamesTheRowsOwnCopyAndMovesItToNotCarried();
+  verifiesInHandThenCarriedThenUnarmedLast();
+  verifiesAmmunitionBoxesOnlyUnderAmmunitionWeapons();
   verifiesAnEquippedLongswordProducesAPopulatedRow();
   verifiesTheFacetsAreNeverSummedIntoADamageTotal();
   verifiesAnUngroundedFacetRendersAsAbsentNotZero();

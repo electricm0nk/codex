@@ -834,6 +834,15 @@
     "dart_of_recovery.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Magic",
+          "Resizable",
+          "Specific",
+          "Dart",
+          "Individual",
+          "LesserMinor"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -876,10 +885,17 @@
     "darts_featherweight_10.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Resizable",
+          "Standard",
+          "Dart"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
         "base_item": null,
+        "base_quantity": 10,
         "cost_gp": 1.0,
         "critical_multiplier": null,
         "critical_threat_range": null,
@@ -1136,6 +1152,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "LIBERATING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1161,6 +1180,12 @@
     "equipmods/peaceful.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1175,6 +1200,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "PEACEFUL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1200,6 +1228,12 @@
     "equipmods/silencing.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1214,6 +1248,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "SILENCING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1253,6 +1290,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "SLITHERING",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1292,6 +1332,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Liberating",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1317,6 +1360,12 @@
     "equipmods/special_ability_peaceful_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1331,6 +1380,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Peaceful",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1356,6 +1408,12 @@
     "equipmods/special_ability_silencing_weapon.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Ammunition",
+          "Weapon",
+          "Melee",
+          "Ranged"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -1370,6 +1428,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Silencing",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1409,6 +1470,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 1
+        },
         "name": "Slithering",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1448,6 +1512,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Truthful",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1487,6 +1554,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "Umbral",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1526,6 +1596,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "Unseen",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1565,6 +1638,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "TRUTHFUL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1604,6 +1680,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 3
+        },
         "name": "UMBRAL",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -1643,6 +1722,9 @@
         "is_modifier": false,
         "is_natural_attack": false,
         "is_shield": false,
+        "modifier_price": {
+          "plus": 2
+        },
         "name": "UNSEEN",
         "skill_check_bonus": null,
         "spell_resistance_bonus": null,
@@ -2292,6 +2374,7 @@
     "launcher_of_distraction.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -2329,6 +2412,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -2997,6 +3081,20 @@
     "prying_star.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_kinds": [
+          "Weapon",
+          "Magic",
+          "Resizable",
+          "Exotic",
+          "Ranged",
+          "Specific",
+          "Piercing",
+          "Thrown",
+          "Consumable",
+          "Shuriken",
+          "Ammunition",
+          "LesserMinor"
+        ],
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -3601,6 +3699,7 @@
     "silent_sentry_crossbow.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -3638,6 +3737,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -4138,6 +4238,7 @@
     "wrist_launcher.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Dart",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": null,
@@ -4166,6 +4267,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": false,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,
@@ -4180,6 +4282,7 @@
     "wrist_launcher_heavy.json": {
       "record": {
         "ability_score_bonus": null,
+        "ammunition_family": "Bolt",
         "armor_class_bonus_type": null,
         "armor_class_chain_bonus": null,
         "base_damage_dice": {
@@ -4214,6 +4317,7 @@
         },
         "stated_bonuses": [],
         "states_base_damage": true,
+        "uses_ammunition": true,
         "var_bonuses": [],
         "weapon_enhancement": null,
         "weight_divisor": null,

@@ -6,7 +6,7 @@
     "key": "Kama",
     "category": "arms_armor",
     "name": "Kama (Base)",
-    "cost_gp": null,
+    "cost_gp": 2.0,
     "weight_lbs": null,
     "description": "Similar to a sickle, a kama is a short, curved blade attached to a simple handle."
   },

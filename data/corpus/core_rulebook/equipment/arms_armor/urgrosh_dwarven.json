@@ -6,7 +6,7 @@
     "key": "Urgrosh (Dwarven)",
     "category": "arms_armor",
     "name": "Dwarven Urgrosh (Base)",
-    "cost_gp": null,
+    "cost_gp": 50.0,
     "weight_lbs": null,
     "description": "A dwarven urgrosh is a double weapon--an axe head and a spear point on opposite ends of a long haft. The urgrosh's axe head is a slashing weapon that deals 1d8 points of damage. Its spear head is a piercing weapon that deals 1d6 points of damage. You can use either head as the primary weapon. The other becomes the off-hand weapon. If you use an urgrosh against a charging character, the spear head is the part of the weapon that deals damage. Dwarves treat dwarven urgroshes as martial weapons."
   },

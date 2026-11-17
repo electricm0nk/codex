@@ -2,7 +2,7 @@
   "completeness": "full",
   "data": {
     "category": "magic_items",
-    "cost_gp": null,
+    "cost_gp": 4500.0,
     "description": "Fills area with negative energy, making undead stronger.",
     "key": "Wand of Desecrate",
     "name": "Wand",
