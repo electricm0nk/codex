@@ -1,14 +1,8 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
-import {
-  addCampaignAsset,
-  deleteCampaignAsset,
-  getCampaign,
-  getCampaignAssets,
-  updateCampaignAsset,
-  type Campaign,
-  type CampaignAssetKind,
-  type MarkdownAsset,
-} from './campaignModel';
+import { openCampaignFolder } from '../boundary/campaignFolder/knownCampaigns';
+import { listCampaignTree } from '../boundary/campaignFolder/campaignFiles';
+import type { CampaignFolderSnapshot, CampaignTreeEntry } from '../boundary/campaignFolder/types';
+import { CAMPAIGN_TABS, partyCharacterIds, tabFiles, type CampaignTab } from './campaignFolderModel';
 import { loadCharacterHubListSurfaceRuntime } from '../characterHub/characterHubRuntime';
 import type { CharacterHubListRowSurface } from '../characterHub/buildCharacterHubListSurface';
 import { loadSavedCharacterDetail, type LoadSavedCharacterResponse } from '../boundary/loadSavedCharacterDetail';
@@ -18,15 +12,11 @@ import { formatHeldClasses } from '../characterHub/characterProgression';
 import { AppMenu } from '../layout/AppMenu';
 
 /**
- * Post-load campaign screen, styled like the Character Sheet: a full-bleed
- * header, a left party-member list, and a tabbed bottom panel for the
- * campaign's shared assets (Party Resources / Adventure Log / Maps / Wiki).
- *
- * These tabs hold markdown assets. localStorage (campaignModel.ts) is the
- * source of truth — every change here also gets mirrored to real `.md`
- * files under the campaign's local folder (see `writeCampaignLocalFolderArtifacts`)
- * so the campaign stays inspectable/shareable as plain files, but there is
- * no network sync: by design, this app never talks to a cloud API.
+ * Post-load campaign screen, styled like the Character Sheet: a full-bleed header, a left party
+ * list, and a tabbed panel for the campaign folder's files (Party Resources / Adventure Log / Maps /
+ * Wiki). Everything is read from the folder (SD-42 `decisions.md §11`): `campaign.json`, and the
+ * tree for the tabs and the party (the characters copied into `Characters/` that this install
+ * holds). Each tab lists its files read-only; editing them in Codex is the tab's own card.
  */
 
 const panel: CSSProperties = {
@@ -34,13 +24,6 @@ const panel: CSSProperties = {
   border: '1px solid var(--color-border)',
   borderRadius: 10,
 };
-
-const ASSET_TABS: ReadonlyArray<{ kind: CampaignAssetKind; label: string }> = [
-  { kind: 'resources', label: 'Party Resources' },
-  { kind: 'adventureLog', label: 'Adventure Log' },
-  { kind: 'maps', label: 'Maps' },
-  { kind: 'wiki', label: 'Wiki' },
-];
 
 function fmt(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
@@ -119,137 +102,32 @@ function MemberDetailPanel(props: { row: CharacterHubListRowSurface; onOpenFullS
   );
 }
 
-function AssetList(props: {
-  assets: MarkdownAsset[];
-  onAdd: (title: string) => void;
-  onSave: (assetId: string, title: string, body: string) => void;
-  onDelete: (assetId: string) => void;
-  emptyLabel: string;
-  addLabel: string;
-}) {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [draftTitle, setDraftTitle] = useState('');
-  const [draftBody, setDraftBody] = useState('');
-  const [newTitle, setNewTitle] = useState('');
-
-  const selected = props.assets.find((asset) => asset.id === selectedId) ?? null;
-
-  function select(asset: MarkdownAsset) {
-    setSelectedId(asset.id);
-    setDraftTitle(asset.title);
-    setDraftBody(asset.body);
+function FileList(props: { files: string[] }) {
+  if (props.files.length === 0) {
+    return <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', margin: 0 }}>No files here yet.</p>;
   }
-
-  function handleAdd() {
-    if (!newTitle.trim()) {
-      return;
-    }
-    props.onAdd(newTitle.trim());
-    setNewTitle('');
-  }
-
   return (
-    <div style={{ display: 'flex', gap: '1rem', minHeight: 220 }}>
-      <div style={{ borderRight: '1px solid var(--color-border)', display: 'flex', flex: '0 0 220px', flexDirection: 'column', paddingRight: '1rem' }}>
-        <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '0.6rem' }}>
-          <input
-            type="text"
-            placeholder={props.addLabel}
-            value={newTitle}
-            onChange={(event) => setNewTitle(event.target.value)}
-            style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, boxSizing: 'border-box', color: 'var(--color-text)', flex: 1, fontSize: '0.82rem', padding: '0.35rem 0.5rem' }}
-          />
-          <button
-            type="button"
-            onClick={handleAdd}
-            disabled={!newTitle.trim()}
-            style={{ backgroundColor: 'var(--color-accent)', border: 'none', borderRadius: 6, color: 'var(--color-on-accent)', cursor: newTitle.trim() ? 'pointer' : 'not-allowed', flexShrink: 0, fontSize: '0.8rem', fontWeight: 700, opacity: newTitle.trim() ? 1 : 0.5, padding: '0.35rem 0.6rem' }}
-          >
-            +
-          </button>
-        </div>
-        {props.assets.length === 0 ? (
-          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.82rem' }}>{props.emptyLabel}</p>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            {props.assets.map((asset) => (
-              <button
-                key={asset.id}
-                type="button"
-                onClick={() => select(asset)}
-                style={{
-                  background: selectedId === asset.id ? 'var(--color-surface-2)' : 'none',
-                  border: 'none',
-                  borderRadius: 6,
-                  color: selectedId === asset.id ? 'var(--color-accent)' : 'var(--color-text)',
-                  cursor: 'pointer',
-                  fontSize: '0.85rem',
-                  fontWeight: selectedId === asset.id ? 700 : 500,
-                  padding: '0.4rem 0.5rem',
-                  textAlign: 'left',
-                }}
-              >
-                {asset.title}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {!selected ? (
-          <p style={{ color: 'var(--color-text-muted)' }}>Select an entry on the left, or add a new one.</p>
-        ) : (
-          <div>
-            <input
-              type="text"
-              value={draftTitle}
-              onChange={(event) => setDraftTitle(event.target.value)}
-              style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, boxSizing: 'border-box', color: 'var(--color-text)', fontSize: '0.95rem', fontWeight: 700, marginBottom: '0.6rem', padding: '0.4rem 0.6rem', width: '100%' }}
-            />
-            <textarea
-              value={draftBody}
-              onChange={(event) => setDraftBody(event.target.value)}
-              placeholder="Markdown content…"
-              rows={8}
-              style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 6, boxSizing: 'border-box', color: 'var(--color-text)', fontFamily: 'inherit', fontSize: '0.85rem', padding: '0.6rem', resize: 'vertical', width: '100%' }}
-            />
-            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.6rem' }}>
-              <button
-                type="button"
-                onClick={() => props.onSave(selected.id, draftTitle.trim() || selected.title, draftBody)}
-                style={{ backgroundColor: 'var(--color-accent)', border: 'none', borderRadius: 6, color: 'var(--color-on-accent)', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 700, padding: '0.4rem 0.9rem' }}
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  props.onDelete(selected.id);
-                  setSelectedId(null);
-                }}
-                style={{ backgroundColor: 'var(--color-surface-2)', border: '1px solid var(--color-error-border)', borderRadius: 6, color: 'var(--color-error)', cursor: 'pointer', fontSize: '0.82rem', fontWeight: 700, padding: '0.4rem 0.9rem' }}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    <ul data-testid="campaign-tab-files" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+      {props.files.map((path) => (
+        <li key={path} style={{ borderBottom: '1px solid var(--color-border)', fontSize: '0.85rem', overflowWrap: 'anywhere', padding: '0.35rem 0.2rem' }}>
+          {path}
+        </li>
+      ))}
+    </ul>
   );
 }
 
+type Loaded = { kind: 'loading' } | { kind: 'failed'; message: string } | { kind: 'open'; campaign: CampaignFolderSnapshot; tree: CampaignTreeEntry[] };
+
 export function CampaignSheet(props: {
-  campaignId: string;
+  campaignDir: string;
   onClose: () => void;
   onOpenCharacterSheet: (row: CharacterHubListRowSurface, detail: LoadSavedCharacterResponse | null) => void;
 }) {
-  const [campaign] = useState<Campaign | null>(() => getCampaign(props.campaignId));
+  const [loaded, setLoaded] = useState<Loaded>({ kind: 'loading' });
   const [savedCharacters, setSavedCharacters] = useState<CharacterHubListRowSurface[]>([]);
   const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
-  const [tab, setTab] = useState<CampaignAssetKind>('resources');
-  const [assets, setAssets] = useState(() => (campaign ? getCampaignAssets(campaign.id) : null));
+  const [tab, setTab] = useState<CampaignTab>('resources');
 
   useEffect(() => {
     loadCharacterHubListSurfaceRuntime()
@@ -257,10 +135,22 @@ export function CampaignSheet(props: {
       .catch(() => setSavedCharacters([]));
   }, []);
 
-  const partyRows = useMemo(
-    () => (campaign ? savedCharacters.filter((row) => campaign.partyCharacterIds.includes(row.characterId)) : []),
-    [savedCharacters, campaign]
-  );
+  useEffect(() => {
+    let live = true;
+    Promise.all([openCampaignFolder(props.campaignDir), listCampaignTree(props.campaignDir)])
+      .then(([opened, tree]) => live && setLoaded({ kind: 'open', campaign: opened.campaign, tree }))
+      .catch((cause: unknown) => live && setLoaded({ kind: 'failed', message: cause instanceof Error ? cause.message : String(cause) }));
+    return () => {
+      live = false;
+    };
+  }, [props.campaignDir]);
+
+  const tree = loaded.kind === 'open' ? loaded.tree : null;
+  const partyRows = useMemo(() => {
+    if (!tree) return [];
+    const ids = partyCharacterIds(tree, savedCharacters.map((row) => row.characterId));
+    return savedCharacters.filter((row) => ids.includes(row.characterId));
+  }, [savedCharacters, tree]);
 
   useEffect(() => {
     if (!selectedMemberId && partyRows.length > 0) {
@@ -268,10 +158,12 @@ export function CampaignSheet(props: {
     }
   }, [partyRows, selectedMemberId]);
 
-  if (!campaign) {
+  if (loaded.kind !== 'open') {
     return (
       <div style={{ marginTop: '2rem' }}>
-        <p style={{ color: 'var(--color-error)' }}>Campaign not found.</p>
+        <p role={loaded.kind === 'failed' ? 'alert' : undefined} style={{ color: loaded.kind === 'failed' ? 'var(--color-error)' : 'var(--color-text-muted)' }}>
+          {loaded.kind === 'failed' ? loaded.message : 'Opening the campaign folder…'}
+        </p>
         <button type="button" onClick={props.onClose} style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 8, cursor: 'pointer', padding: '0.5rem 1rem' }}>
           Back
         </button>
@@ -279,10 +171,7 @@ export function CampaignSheet(props: {
     );
   }
 
-  function refreshAssets() {
-    setAssets(getCampaignAssets(campaign!.id));
-  }
-
+  const { campaign } = loaded;
   const selectedMember = partyRows.find((row) => row.characterId === selectedMemberId) ?? null;
 
   return (
@@ -318,7 +207,9 @@ export function CampaignSheet(props: {
             Party ({partyRows.length})
           </p>
           {partyRows.length === 0 ? (
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>No party members yet — add some from Edit Campaign.</p>
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
+              No party members yet. A character joins from its sheet&apos;s Campaign dialog, which copies it into this folder&apos;s Characters/.
+            </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
               {partyRows.map((row) => {
@@ -366,13 +257,13 @@ export function CampaignSheet(props: {
 
           <div>
             <div style={{ borderBottom: '1px solid var(--color-border)', display: 'flex', flexWrap: 'wrap', gap: '1.25rem', marginBottom: '1rem' }}>
-              {ASSET_TABS.map((assetTab) => {
-                const active = assetTab.kind === tab;
+              {CAMPAIGN_TABS.map((assetTab) => {
+                const active = assetTab.tab === tab;
                 return (
                   <button
-                    key={assetTab.kind}
+                    key={assetTab.tab}
                     type="button"
-                    onClick={() => setTab(assetTab.kind)}
+                    onClick={() => setTab(assetTab.tab)}
                     style={{
                       background: 'none',
                       border: 'none',
@@ -391,29 +282,10 @@ export function CampaignSheet(props: {
             </div>
 
             <div style={{ ...panel, padding: '1.25rem' }}>
-              {assets ? (
-                <AssetList
-                  assets={assets[tab]}
-                  emptyLabel="Nothing here yet."
-                  addLabel={`New ${ASSET_TABS.find((assetTab) => assetTab.kind === tab)?.label.toLowerCase()} entry…`}
-                  onAdd={(title) => {
-                    addCampaignAsset(campaign.id, tab, title);
-                    refreshAssets();
-                  }}
-                  onSave={(assetId, title, body) => {
-                    updateCampaignAsset(campaign.id, tab, assetId, { title, body });
-                    refreshAssets();
-                  }}
-                  onDelete={(assetId) => {
-                    deleteCampaignAsset(campaign.id, tab, assetId);
-                    refreshAssets();
-                  }}
-                />
-              ) : null}
+              <FileList files={tabFiles(loaded.tree, tab)} />
             </div>
-            <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.6rem 0 0' }}>
-              Entries are saved locally for now; syncing them as markdown files to the campaign's Drive folder is not
-              yet wired.
+            <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.6rem 0 0', overflowWrap: 'anywhere' }}>
+              The files in {props.campaignDir}. Open the folder in Obsidian or any Markdown editor to edit them.
             </p>
           </div>
         </div>

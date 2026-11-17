@@ -10,7 +10,7 @@ import {
   type SaveSheetPdfRequest,
   type SavedSheetPdf,
 } from '../boundary/saveSheetPdf';
-import { getCampaigns, type Campaign } from '../campaign/campaignModel';
+import { getLegacyCampaigns as getCampaigns, type LegacyCampaign as Campaign } from '../campaign/campaignMigrationSource';
 import { PRINT_PAPERS, getPrintPaper, isPrintPaper, type PrintPaper } from '../settings/printPaper';
 import { getPrintSections, setPrintSections } from '../settings/printSections';
 

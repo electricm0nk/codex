@@ -8,12 +8,12 @@ import { PrintPanel } from './PrintPanel';
  * added by extending `SETTINGS_TABS` and the `panels` map the caller passes.
  */
 
-export type SettingsTab = 'appearance' | 'print' | 'google-drive' | 'update' | 'bug' | 'enhancement' | 'developer';
+export type SettingsTab = 'appearance' | 'print' | 'friends' | 'update' | 'bug' | 'enhancement' | 'developer';
 
 export const SETTINGS_TABS: ReadonlyArray<{ id: SettingsTab; label: string }> = [
   { id: 'appearance', label: 'Appearance' },
   { id: 'print', label: 'Print' },
-  { id: 'google-drive', label: 'Google Drive' },
+  { id: 'friends', label: 'Friends' },
   { id: 'update', label: 'Update' },
   { id: 'bug', label: 'Bug Report' },
   { id: 'enhancement', label: 'Enhancement Request' },

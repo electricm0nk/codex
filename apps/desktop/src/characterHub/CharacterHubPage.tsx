@@ -29,8 +29,6 @@ import type { StarfinderCatalogKind } from '../boundary/loadStarfinderCatalog';
 import { CyberpunkCatalogScreen } from '../cyberpunkCatalog/CyberpunkCatalogScreen';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { DmToolkitScreen } from '../dmToolkit/DmToolkitScreen';
-import { isGoogleDriveConfigured } from '../settings/googleDrive';
-import { computeCampaignManagerAccessGate } from '../campaign/campaignManagerAccessGate';
 import { CampaignManagerScreen } from '../campaign/CampaignManagerScreen';
 import { CreateCampaignScreen } from '../campaign/CreateCampaignScreen';
 import { EditCampaignScreen } from '../campaign/EditCampaignScreen';
@@ -84,7 +82,8 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
   // Where the ✕ on the character sheet should return to — Load Character
   // normally, but the campaign screen when opened from a party member there.
   const [sheetReturnMode, setSheetReturnMode] = useState<Mode>('load');
-  const [activeCampaignId, setActiveCampaignId] = useState<string | null>(null);
+  // The open campaign's folder (SD-42 `decisions.md §11`: a campaign is its folder).
+  const [activeCampaignDir, setActiveCampaignDir] = useState<string | null>(null);
   const [surface, setSurface] = useState<CharacterHubListSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -126,7 +125,6 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
         }}
         onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
-        campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
         onDmToolkit={() => setMode('dm-toolkit')}
       />
     );
@@ -187,12 +185,12 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
       <CampaignManagerScreen
         onCancel={() => setMode('landing')}
         onCreate={() => setMode('campaign-create')}
-        onEdit={(campaignId) => {
-          setActiveCampaignId(campaignId);
+        onEdit={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
           setMode('campaign-edit');
         }}
-        onLoad={(campaignId) => {
-          setActiveCampaignId(campaignId);
+        onLoad={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
           setMode('campaign-sheet');
         }}
       />
@@ -203,28 +201,28 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
     return (
       <CreateCampaignScreen
         onCancel={() => setMode('campaign-list')}
-        onCreated={(campaignId) => {
-          setActiveCampaignId(campaignId);
+        onCreated={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
           setMode('campaign-edit');
         }}
       />
     );
   }
 
-  if (mode === 'campaign-edit' && activeCampaignId) {
+  if (mode === 'campaign-edit' && activeCampaignDir) {
     return (
       <EditCampaignScreen
-        campaignId={activeCampaignId}
+        campaignId={activeCampaignDir}
         onCancel={() => setMode('campaign-list')}
         onSaved={() => setMode('campaign-list')}
       />
     );
   }
 
-  if (mode === 'campaign-sheet' && activeCampaignId) {
+  if (mode === 'campaign-sheet' && activeCampaignDir) {
     return (
       <CampaignSheet
-        campaignId={activeCampaignId}
+        campaignDir={activeCampaignDir}
         onClose={() => setMode('campaign-list')}
         onOpenCharacterSheet={(row, detail) => {
           setSheet({ row, detail });
@@ -298,8 +296,8 @@ function CharacterHubScreens({ onWideChange }: { onWideChange: (wide: boolean) =
           setMode('load');
         }}
         onCloned={reload}
-        onOpenCampaign={(campaignId) => {
-          setActiveCampaignId(campaignId);
+        onOpenCampaign={(campaignDir) => {
+          setActiveCampaignDir(campaignDir);
           setMode('campaign-sheet');
         }}
       />

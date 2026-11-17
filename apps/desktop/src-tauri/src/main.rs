@@ -1,7 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod browser_handoff;
-mod campaign_drive;
 mod campaign_folder;
 mod character_custom;
 mod character_hub;
@@ -67,10 +66,6 @@ use campaign_folder::{
     add_known_campaign_folder, create_campaign_folder, forget_known_campaign_folder, list_campaign_tree,
     list_known_campaigns, open_campaign_folder, read_campaign_file, save_attachment, save_campaign_json,
     stat_campaign_file, write_campaign_file,
-};
-use campaign_drive::{
-    drive_delete_campaign, drive_list_campaigns, drive_load_campaign, drive_save_campaign,
-    write_campaign_drive_artifacts,
 };
 use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection,
@@ -339,11 +334,6 @@ fn main() {
             export_character,
             import_character,
             import_pcg,
-            write_campaign_drive_artifacts,
-            drive_list_campaigns,
-            drive_load_campaign,
-            drive_save_campaign,
-            drive_delete_campaign,
             list_known_campaigns,
             add_known_campaign_folder,
             forget_known_campaign_folder,

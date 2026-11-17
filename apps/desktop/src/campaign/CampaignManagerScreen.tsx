@@ -1,12 +1,19 @@
 import { useEffect, useState, type CSSProperties } from 'react';
-import { listKnownCampaigns, openCampaignFolder } from '../boundary/campaignFolder/knownCampaigns';
+import { open } from '@tauri-apps/plugin-dialog';
+import {
+  addKnownCampaignFolder,
+  forgetKnownCampaignFolder,
+  listKnownCampaigns,
+  openCampaignFolder,
+} from '../boundary/campaignFolder/knownCampaigns';
 import type { KnownCampaign, OpenedCampaign } from '../boundary/campaignFolder/types';
+import { notACampaignFolder } from './campaignFolderModel';
 
 /**
- * Campaign Manager: the known campaign folders on the left, the selected folder's
- * `campaign.json` on the right (its typed members, the creator first), and a bottom action bar
- * (Load / Create / Edit / Cancel) — patterned after the Load Character screen. A campaign is
- * identified by its folder path.
+ * Campaign Manager: the known campaign folders (`<app data>/campaign-folders.json`) on the left,
+ * each with Forget, the selected folder's `campaign.json` on the right (its typed members, the
+ * creator first), and a bottom action bar (Load / New campaign… / Open folder… / Edit / Cancel) —
+ * patterned after the Load Character screen. A campaign is identified by its folder path.
  */
 
 const barButton = (variant: 'primary' | 'default', enabled: boolean): CSSProperties => ({
@@ -91,12 +98,61 @@ export function CampaignManagerScreen(props: {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [opened, setOpened] = useState<OpenedCampaign | null>(null);
   const [openError, setOpenError] = useState<string | null>(null);
+  /** "Open folder…" picked a folder with no campaign.json: offer New instead. */
+  const [pickedNotCampaign, setPickedNotCampaign] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
 
-  useEffect(() => {
+  function refreshList() {
     listKnownCampaigns()
-      .then(setCampaigns)
+      .then((known) => {
+        setCampaigns(known);
+        setListError(null);
+      })
       .catch((cause: unknown) => setListError(cause instanceof Error ? cause.message : String(cause)));
-  }, []);
+  }
+
+  useEffect(refreshList, []);
+
+  async function handleOpenFolder() {
+    setActionError(null);
+    setPickedNotCampaign(null);
+    let picked: string | string[] | null;
+    try {
+      picked = await open({ directory: true, multiple: false, title: 'Open a campaign folder' });
+    } catch (cause: unknown) {
+      setActionError(cause instanceof Error ? cause.message : String(cause));
+      return;
+    }
+    if (typeof picked !== 'string') {
+      return;
+    }
+    try {
+      const opened = await addKnownCampaignFolder(picked);
+      refreshList();
+      setSelectedId(opened.campaignDir);
+    } catch (cause: unknown) {
+      const message = cause instanceof Error ? cause.message : String(cause);
+      if (notACampaignFolder(message)) {
+        setPickedNotCampaign(picked);
+      } else {
+        setActionError(message);
+      }
+    }
+  }
+
+  async function handleForget(path: string) {
+    setActionError(null);
+    try {
+      await forgetKnownCampaignFolder(path);
+    } catch (cause: unknown) {
+      setActionError(cause instanceof Error ? cause.message : String(cause));
+      return;
+    }
+    if (selectedId === path) {
+      setSelectedId(null);
+    }
+    refreshList();
+  }
 
   useEffect(() => {
     setOpened(null);
@@ -118,6 +174,15 @@ export function CampaignManagerScreen(props: {
   return (
     <section style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 8rem)', marginTop: '1rem' }}>
       <h2 style={{ margin: '0 0 1rem' }}>Campaign Manager</h2>
+      {pickedNotCampaign ? (
+        <div role="alert" data-testid="campaign-not-a-folder" style={{ alignItems: 'center', display: 'flex', gap: '0.8rem', margin: '0 0 1rem' }}>
+          <span style={{ color: 'var(--color-error)', overflowWrap: 'anywhere' }}>{pickedNotCampaign} is not a campaign folder.</span>
+          <button type="button" onClick={props.onCreate} style={barButton('default', true)}>
+            New campaign…
+          </button>
+        </div>
+      ) : null}
+      {actionError ? <p role="alert" style={{ color: 'var(--color-error)', margin: '0 0 1rem' }}>{actionError}</p> : null}
 
       <div style={{ display: 'flex', flex: 1, gap: '1rem', minHeight: 0 }}>
         {/* Campaign list */}
@@ -135,32 +200,37 @@ export function CampaignManagerScreen(props: {
           {listError ? <p style={{ color: 'var(--color-error)', padding: '1rem' }}>{listError}</p> : null}
           {campaigns.length === 0 && !listError ? (
             <p style={{ color: 'var(--color-text-secondary)', padding: '1rem' }}>
-              No campaigns yet — press Create to start one.
+              No campaign folders yet. Press New campaign… to make one, or Open folder… to add one you already have.
             </p>
           ) : null}
           {campaigns.map((campaign) => {
             const isSelected = campaign.path === selectedId;
             return (
-              <button
+              <div
                 key={campaign.path}
-                type="button"
-                onClick={() => setSelectedId(campaign.path)}
-                style={{
-                  background: isSelected ? 'var(--color-surface-2)' : 'none',
-                  border: 'none',
-                  borderBottom: '1px solid var(--color-border)',
-                  cursor: 'pointer',
-                  padding: '0.75rem 1rem',
-                  textAlign: 'left',
-                }}
+                style={{ alignItems: 'flex-start', background: isSelected ? 'var(--color-surface-2)' : 'none', borderBottom: '1px solid var(--color-border)', display: 'flex' }}
               >
-                <p style={{ color: isSelected ? 'var(--color-accent)' : 'var(--color-text)', fontWeight: 700, margin: 0 }}>
-                  {campaign.name ?? campaign.path}
-                </p>
-                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', margin: '0.2rem 0 0', overflowWrap: 'anywhere' }}>
-                  {campaign.error ?? campaign.path}
-                </p>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedId(campaign.path)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', flex: 1, minWidth: 0, padding: '0.75rem 1rem', textAlign: 'left' }}
+                >
+                  <p style={{ color: isSelected ? 'var(--color-accent)' : 'var(--color-text)', fontWeight: 700, margin: 0 }}>
+                    {campaign.name ?? campaign.path}
+                  </p>
+                  <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.78rem', margin: '0.2rem 0 0', overflowWrap: 'anywhere' }}>
+                    {campaign.error ?? campaign.path}
+                  </p>
+                </button>
+                <button
+                  type="button"
+                  title="Remove from this list (the folder is not touched)"
+                  onClick={() => void handleForget(campaign.path)}
+                  style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '0.75rem', padding: '0.8rem 0.8rem 0 0' }}
+                >
+                  Forget
+                </button>
+              </div>
             );
           })}
         </div>
@@ -177,7 +247,10 @@ export function CampaignManagerScreen(props: {
           Load
         </button>
         <button type="button" onClick={props.onCreate} style={barButton('default', true)}>
-          Create
+          New campaign…
+        </button>
+        <button type="button" onClick={() => void handleOpenFolder()} style={barButton('default', true)}>
+          Open folder…
         </button>
         <button type="button" onClick={() => selected && props.onEdit(selected.campaignDir)} disabled={!selected} style={barButton('default', Boolean(selected))}>
           Edit

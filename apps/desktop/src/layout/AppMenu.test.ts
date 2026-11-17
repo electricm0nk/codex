@@ -67,7 +67,4 @@ for (const other of [
 }
 assert(!read('characterHub/CharacterSheet.tsx').includes('setMenuOpen'), "the sheet's dropdown is the lifted AppMenu, not a copy");
 
-// The Google Drive gate hint names the new path.
-assert(read('campaign/campaignManagerAccessGate.ts').includes('under ☰ → Options → Google Drive'), 'the gate hint reads ☰ → Options → Google Drive');
-
 console.log('AppMenu.test.ts: all assertions passed');

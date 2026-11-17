@@ -26,7 +26,7 @@ const modal = renderToStaticMarkup(
     activeTab: 'print',
     onTabChange: () => undefined,
     onClose: () => undefined,
-    panels: { appearance: null, 'google-drive': null, update: null, bug: null, enhancement: null, developer: null },
+    panels: { appearance: null, friends: null, update: null, bug: null, enhancement: null, developer: null },
   }),
 );
 assert(modal.includes('Print paper'), 'the modal draws the Print panel on the Print tab');

@@ -40,7 +40,7 @@ import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
 import { APP_SHELL_STYLE } from './layout/screenLayout';
 import { AppMenu, AppMenuHostContext, type AppMenuHost } from './layout/AppMenu';
 import { AppearancePanel } from './settings/AppearancePanel';
-import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
+import { FriendsSection } from './settings/FriendsSection';
 import { applyThemeMode, getStoredThemeMode, type ThemeMode } from './settings/themeMode';
 import { applyActiveTheme, applyObsidianModeClass, seedBuiltinThemes } from './settings/communityTheme';
 import { SOURCEBOOK_STATUS_ROWS } from './testerWorkbench/sourcebookSupportStatus';
@@ -870,7 +870,7 @@ export default function App() {
         onClose={() => setSettingsOpen(false)}
         panels={{
           appearance: <AppearancePanel mode={themeMode} onModeChange={setThemeMode} />,
-          'google-drive': <GoogleDrivePanel />,
+          friends: <FriendsSection />,
           update: <UpdateSection />,
           bug: surface ? (
             <BugReportComposer surface={surface} />

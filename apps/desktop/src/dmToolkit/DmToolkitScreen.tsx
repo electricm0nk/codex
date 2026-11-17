@@ -1,5 +1,5 @@
 import { useMemo, useState, type CSSProperties } from 'react';
-import { getCampaigns, type Campaign } from '../campaign/campaignModel';
+import { getLegacyCampaigns as getCampaigns, type LegacyCampaign as Campaign } from '../campaign/campaignMigrationSource';
 import { DM_KIND_FIELDS, DM_KIND_LABELS, DM_RECORD_KINDS, getDmRecords, type DmRecord, type DmRecordKind } from './dmRecordModel';
 import { buildDmConsoleView, nextSelectionForKind } from './dmConsoleModel';
 import { DM_LINK_LABELS, backlinksTo, createDmRecord, deleteDmRecord, linkDmRecords, unlinkDmRecords, updateDmRecord } from './dmRecordModel';

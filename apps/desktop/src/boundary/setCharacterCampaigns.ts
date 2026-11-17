@@ -14,7 +14,7 @@ import { formatError, hasTauriRuntime } from './runtime';
 export interface CampaignMembershipDto {
   campaignId: string;
   campaignName: string;
-  /** The campaign's folder: `<driveFolderPath>/<folderName>`. */
+  /** The campaign folder (SD-42 `decisions.md §11`). */
   campaignDir: string;
   /** Checked: every save of the character is copied there. */
   active: boolean;
