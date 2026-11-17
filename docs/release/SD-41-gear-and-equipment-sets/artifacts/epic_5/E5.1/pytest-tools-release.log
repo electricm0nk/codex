@@ -1,0 +1,3 @@
+/usr/bin/python3: No module named pytest
+......................................................                 [100%]
+54 passed, 2 subtests passed in 10.04s
