@@ -245,7 +245,7 @@ pub fn save_campaign_json_impl(request: &SaveCampaignJsonRequest) -> Result<Save
 #[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MigrateCampaignRequest {
-    /// One old `codex.campaigns` record, as the UI read it from localStorage…
+    /// One old localStorage campaign record, as the UI read it…
     pub record_json: Option<String>,
     /// …and its `codex.campaign.assets.<id>` value, if it had one.
     pub assets_json: Option<String>,
