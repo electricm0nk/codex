@@ -9,6 +9,7 @@ import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { decode, encode, type DecodedFile } from './roundTrip';
 import { livePreview, type ResolveImage } from './livePreview';
 import { renderReading } from './readingView';
+import { wikilinks, type OpenLink } from './wikilinks';
 
 export interface MarkdownEditorProps {
   campaignDir: string;
@@ -18,7 +19,10 @@ export interface MarkdownEditorProps {
   writeFile: (campaignDir: string, path: string, bytes: Uint8Array) => Promise<void>;
   statFile: (campaignDir: string, path: string) => Promise<{ mtimeMs: number }>;
   resolveImage: ResolveImage;
+  /** Every wiki page title and filename stem, for `[[` completion. */
   pages: () => Promise<string[]>;
+  /** A `[[link]]` was clicked (or Ctrl-Enter'd): its page name, alias and heading dropped. */
+  onOpenLink: OpenLink;
 }
 
 /** SD-s: a file this large opens read-only. */
@@ -80,6 +84,10 @@ export function MarkdownEditor(props: MarkdownEditorProps) {
               keymap.of([{ key: 'Mod-s', run: save, preventDefault: true }, ...defaultKeymap, ...historyKeymap, ...searchKeymap]),
               markdown({ base: markdownLanguage }),
               livePreview((image) => io.current.resolveImage(image)),
+              wikilinks(
+                () => io.current.pages(),
+                (target) => io.current.onOpenLink(target),
+              ),
               EditorView.lineWrapping,
               EditorState.readOnly.of(readOnlyReason !== undefined),
               EditorView.editable.of(readOnlyReason === undefined),
