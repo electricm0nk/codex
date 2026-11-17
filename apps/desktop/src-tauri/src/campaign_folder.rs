@@ -10,7 +10,7 @@ use std::time::UNIX_EPOCH;
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
-use codex::campaign::folder;
+use codex::campaign::{adventure_log, folder};
 use codex::campaign::local_store::{CampaignStore, CAMPAIGN_JSON};
 use codex::campaign::CampaignFolderSnapshot;
 
@@ -434,6 +434,30 @@ pub fn list_campaign_tree_impl(campaign_dir: &str) -> Result<Vec<CampaignTreeEnt
     tree_of(&dir, "")
 }
 
+// --- Adventure Log (decisions.md §15.2) ---
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NewAdventureLogEntryRequest {
+    pub campaign_dir: String,
+    pub author: String,
+    pub title: String,
+    /// The UI's local date, `YYYY-MM-DD`: the file's `posted` and `session`.
+    pub today: String,
+}
+
+pub fn list_adventure_log_impl(campaign_dir: &str) -> Result<Vec<adventure_log::Entry>, String> {
+    let dir = require_absolute(campaign_dir)?;
+    adventure_log::list(&dir).map_err(|err| err.message)
+}
+
+/// "+": the new entry's path inside the campaign. The campaign's name comes from its `campaign.json`.
+pub fn new_adventure_log_entry_impl(request: &NewAdventureLogEntryRequest) -> Result<String, String> {
+    let dir = require_absolute(&request.campaign_dir)?;
+    let name = folder::open(&dir).map_err(|err| err.message)?.snapshot.name;
+    adventure_log::new_entry(&dir, &name, &request.author, &request.title, &request.today).map_err(|err| err.message)
+}
+
 // --- commands ---
 
 fn app_data_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
@@ -508,6 +532,16 @@ pub fn save_attachment(request: SaveAttachmentRequest) -> Result<String, String>
 #[tauri::command]
 pub fn list_campaign_tree(campaign_dir: String) -> Result<Vec<CampaignTreeEntryDto>, String> {
     list_campaign_tree_impl(&campaign_dir)
+}
+
+#[tauri::command]
+pub fn list_adventure_log(campaign_dir: String) -> Result<Vec<adventure_log::Entry>, String> {
+    list_adventure_log_impl(&campaign_dir)
+}
+
+#[tauri::command]
+pub fn new_adventure_log_entry(request: NewAdventureLogEntryRequest) -> Result<String, String> {
+    new_adventure_log_entry_impl(&request)
 }
 
 #[cfg(test)]
@@ -760,6 +794,27 @@ mod tests {
         assert_eq!(save("../../escape.png", b"x").unwrap(), "Attachments/escape.png");
         assert_eq!(save("noext", b"x").unwrap(), "Attachments/noext");
         assert!(save("", b"x").is_err());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn adventure_log_commands_create_and_list() {
+        let root = temp_dir("adventure-log");
+        let opened = create_campaign_folder_at(&root.join("app-data"), &create_request(&root, "Log")).unwrap();
+        let request = |title: &str| NewAdventureLogEntryRequest {
+            campaign_dir: opened.campaign_dir.clone(),
+            author: "Dana".to_owned(),
+            title: title.to_owned(),
+            today: "2026-11-17".to_owned(),
+        };
+        let rel = new_adventure_log_entry_impl(&request("Session 1")).unwrap();
+        assert_eq!(rel, "Adventure Log/2026-11-17 Dana - Session 1.md");
+        let text = String::from_utf8(read_campaign_file_impl(&CampaignFileRequest { campaign_dir: opened.campaign_dir.clone(), path: rel.clone() }).unwrap().bytes).unwrap();
+        assert!(text.contains(&format!("campaign: \"{}\"", opened.campaign.name)), "{text}");
+        let listed = list_adventure_log_impl(&opened.campaign_dir).unwrap();
+        assert_eq!(listed.iter().map(|e| e.path.as_str()).collect::<Vec<_>>(), [rel.as_str()]);
+        assert!(new_adventure_log_entry_impl(&request("Session 1")).is_err(), "a taken name is refused");
+        assert!(list_adventure_log_impl("relative").is_err());
         let _ = fs::remove_dir_all(&root);
     }
 }

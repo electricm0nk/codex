@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../editor/MarkdownEditor';
-import { createPartyResourcesStarter, readCampaignFile, statCampaignFile, writeCampaignFile } from '../../boundary/campaignFolder/campaignFiles';
+import { campaignImageUrl, createPartyResourcesStarter, readCampaignFile, statCampaignFile, writeCampaignFile } from '../../boundary/campaignFolder/campaignFiles';
 import { saveAttachment } from '../../boundary/campaignFolder/attachments';
 import type { CampaignTreeEntry } from '../../boundary/campaignFolder/types';
 import { linkTarget, markdownStems, PARTY_RESOURCES_PATH } from './partyResourcesModel';
@@ -10,11 +10,6 @@ import { linkTarget, markdownStems, PARTY_RESOURCES_PATH } from './partyResource
  * parses it. A folder made by hand has no such file; the tab offers to write the starter. A clicked
  * `[[link]]` opens the linked page here, with a way back.
  */
-
-async function resolveImage(campaignDir: string, path: string): Promise<string> {
-  const { bytes } = await readCampaignFile(campaignDir, path);
-  return URL.createObjectURL(new Blob([Uint8Array.from(bytes)], { type: path.toLowerCase().endsWith('.svg') ? 'image/svg+xml' : '' }));
-}
 
 const button = { background: 'none', border: '1px solid var(--color-border)', borderRadius: 6, cursor: 'pointer', padding: '0.35rem 0.8rem' } as const;
 
@@ -68,7 +63,7 @@ export function PartyResourcesTab(props: { campaignDir: string; tree: readonly C
         writeFile={writeCampaignFile}
         statFile={statCampaignFile}
         saveAttachment={saveAttachment}
-        resolveImage={(image) => resolveImage(campaignDir, image)}
+        resolveImage={(image) => campaignImageUrl(campaignDir, image)}
         pages={async () => markdownStems(tree)}
         onOpenLink={(target) => {
           const found = linkTarget(tree, target);

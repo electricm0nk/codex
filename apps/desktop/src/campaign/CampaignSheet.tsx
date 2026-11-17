@@ -11,6 +11,7 @@ import { buildPreviewDetail } from '../characterHub/previewData';
 import { formatHeldClasses } from '../characterHub/characterProgression';
 import { AppMenu } from '../layout/AppMenu';
 import { CampaignHelpButton } from './CampaignHelpScreen';
+import { AdventureLogTab } from './tabs/AdventureLogTab';
 import { PartyResourcesTab } from './tabs/PartyResourcesTab';
 
 /**
@@ -18,8 +19,8 @@ import { PartyResourcesTab } from './tabs/PartyResourcesTab';
  * list, and a tabbed panel for the campaign folder's files (Party Resources / Adventure Log / Maps /
  * Wiki). Everything is read from the folder (SD-42 `decisions.md §11`): `campaign.json`, and the
  * tree for the tabs and the party (the characters copied into `Characters/` that this install
- * holds). Party Resources opens its file in the editor (E2.6); each other tab lists its files
- * read-only until its own card lands.
+ * holds). Party Resources opens its file in the editor (E2.6); the Adventure Log lists its sessions
+ * and opens one in the editor (E2.7); Maps and Wiki list their files read-only until their cards land.
  */
 
 const panel: CSSProperties = {
@@ -295,6 +296,8 @@ export function CampaignSheet(props: {
             <div style={{ ...panel, padding: '1.25rem' }}>
               {tab === 'resources' ? (
                 <PartyResourcesTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} />
+              ) : tab === 'adventureLog' ? (
+                <AdventureLogTab campaignDir={props.campaignDir} tree={loaded.tree} onTreeChanged={reloadTree} />
               ) : (
                 <FileList files={tabFiles(loaded.tree, tab)} />
               )}

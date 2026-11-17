@@ -7,7 +7,9 @@
 //! `CampaignAssets` types 1:1, plus a `schema_version` added from day one
 //! (per the `saved_character` precedent).
 
+pub mod adventure_log;
 pub mod folder;
+pub mod frontmatter;
 pub mod local_store;
 pub mod migrate;
 

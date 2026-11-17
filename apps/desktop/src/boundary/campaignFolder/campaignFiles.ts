@@ -33,3 +33,9 @@ export function listCampaignTree(campaignDir: string): Promise<CampaignTreeEntry
 export function createPartyResourcesStarter(campaignDir: string): Promise<CampaignFileStat> {
   return invokeCampaignFolder('create_party_resources_starter', { campaignDir }, 'creating Party Resources.md');
 }
+
+/** An image inside the campaign as a blob URL, for the editor's inline images. */
+export async function campaignImageUrl(campaignDir: string, path: string): Promise<string> {
+  const { bytes } = await readCampaignFile(campaignDir, path);
+  return URL.createObjectURL(new Blob([Uint8Array.from(bytes)], { type: path.toLowerCase().endsWith('.svg') ? 'image/svg+xml' : '' }));
+}
