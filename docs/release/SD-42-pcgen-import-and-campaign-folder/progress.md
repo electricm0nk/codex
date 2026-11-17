@@ -17,7 +17,7 @@ status: planning-ready
 | C | 2 | 2 (C0, C1) | C complete |
 | E1 import converter (lane `import`) | 10 | 5 (E1.1–E1.5) | E1.5 complete; E1.6 next; E1.9 discovered |
 | E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
-| E3 editor (lane `editor`) | 4 | 0 | waiting on C1 |
+| E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
 | E4 desktop wiring (Phase 2) | 12 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
 | E5 gate + closure | 5 | 0 | waiting on E4.MC |
 
@@ -60,11 +60,21 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E1.5 | complete | the commit adding the E1.5 receipt (code f4b23af04b) | `artifacts/epic_1/E1.5_cycle_receipt.md` | `BioWire.notes`: `## Imported from PCGen (<file>, <ISO date>)` + 9 kinds, once each, file order; 3/3 `pcg_import_notes`, codex-ingest `--lib` 721 passed; discovered E1.9 (diagnosis test rewrites E1.1 artifacts, 3rd time) |
 | 2026-11-17 | E2.2 | complete | 2c4fed1ad0 | `artifacts/epic_2/E2.2_cycle_receipt.md` | creator = member #1; typed member list; Manager over known folders; Edit saves via new `save_campaign_json`; `npm test` 204/204 |
 | 2026-11-17 | E3.3 | complete | the commit adding the E3.3 receipt (code 084394b746) | `artifacts/epic_3/E3.3_cycle_receipt.md` | toolbar 6 + autosave 4 + imageDrop 3 cases; `save_attachment` 1 passed; desktop full 0 failed; npm test 207/207; SD-k append-only conflict in campaign_folder.rs kept both (retro incident) |
+| 2026-11-17 | E3.MC | complete | the commit adding the E3.MC receipt (fix 05aa922dcd) | `artifacts/epic_3/E3.MC_cycle_receipt.md` | adversarial: reading view rendered `[t](<java\tscript:…>)` as a live `javascript:` link — fixed in `safeUrl`, 5th reading-view case; fixture `party-resources.md` ≠ E2.1 starter — replaced; licences MIT 11 of 11; npm test 207/207; no screenshot (no tab mounts the editor) |
 
 ## Epic reports
 
 (Each merge check appends its Epic report block here: cards, counts before → after, retro summary for the
 epic's window, what it looked at, what it fixed.)
+
+### Epic 3 — editor (E3.MC, 2026-11-17)
+
+- **Cards:** 4 of 4 complete (E3.1 `75e9feca1d`, E3.2 `931098912b`, E3.3 `084394b746`, E3.MC `05aa922dcd`); no discovered card. Re-derive: `awk -F'|' '$2 ~ /^ E3\./ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'` → 4.
+- **Counts before → after (this check):** reading-view cases 4 → 5; `npm test` 207 of 207 test files → 207 of 207 (`cd apps/desktop && npm test`, last line); editor test files 7 of 7 PASS; licences MIT 11 of 11 (`artifacts/epic_3/E3.MC/licences.txt`); round trip 9 of 9 fixtures exact on the unedited save, `party-resources.md` now byte-equal to E2.1's starter.
+- **Retro (window `2026-11-17T06:59:28-05:00` → now, actors sd42-e3.1/.2/.3/.mc, sd42-editor):** `python3 scripts/retro.py summary --since 2026-11-17T06:59:28-05:00 --actor sd42-e3.1 --actor sd42-e3.2 --actor sd42-e3.3 --actor sd42-e3.mc --actor sd42-editor` → 4 events: 2 correction (E3.MC: reading-view `safeUrl`; the fixture), 1 incident (E3.3 rebase conflict in `campaign_folder.rs`, SD-k), 1 verification (0 failing stages). No key fired more than once (R-W: no new control owed).
+- **Looked at:** nothing rendered — no tab mounts `MarkdownEditor` (`git grep -n "MarkdownEditor\|editor/" -- apps/desktop/src ':!apps/desktop/src/editor' | awk 'END{print NR}'` → 0). E2.6 and E2.MC take the first screenshots.
+- **Fixed:** a stored-XSS path in the Reading view (a `javascript:` scheme split by a tab or prefixed by a control char passed `safeUrl`; a shared campaign folder is untrusted input); the starter fixture.
+- **Not fixed (named):** the task-box widget toggles text on a read-only (> 2 MB) file (unsaved; no DOM harness to prove a fix); 0 of the editor's DOM event paths run under a test — E2.6/E2.MC/E5.G are their first exercise.
 
 ## Lead's dispatch log
 
