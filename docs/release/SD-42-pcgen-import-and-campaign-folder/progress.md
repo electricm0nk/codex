@@ -15,7 +15,7 @@ status: planning-ready
 | Epic | Cards | Complete | Status |
 |---|---|---|---|
 | C | 2 | 2 (C0, C1) | C complete |
-| E1 import converter (lane `import`) | 11 | 10 (E1.1–E1.10) | E1.10 complete; E1.MC next; E1.10 discovered E4.14 |
+| E1 import converter (lane `import`) | 11 | 11 (E1.1–E1.10, E1.MC) | E1 complete; import lane ended |
 | E2 campaign folder (lane `campaign`) | 14 | 0 | waiting on C1 |
 | E3 editor (lane `editor`) | 4 | 4 (E3.1–E3.3, E3.MC) | E3 complete; editor lane ended |
 | E4 desktop wiring (Phase 2) | 15 | 0 | waiting on E1.MC, E2.MC, E3.MC, SD-41 merged |
@@ -71,6 +71,7 @@ the post-gate run. A run with parallel lanes is never resumed, R9.)
 | 2026-11-17 | E2.6 | complete | the commit adding the E2.6 receipt (code fad0509fa6) | `artifacts/epic_2/E2.6_cycle_receipt.md` | Party Resources tab mounts `MarkdownEditor` on `Party Resources.md`; "Create starter file" via `create_party_resources_starter` (never overwrites); `[[links]]` open in the tab; root `party_resources_` 2 passed; desktop 1509 passed 0 failed; npm 209/209 |
 | 2026-11-17 | E1.10 | complete | the commit adding the E1.10 receipt | `artifacts/epic_1/E1.10_cycle_receipt.md` | code b56d3a43c8; `E1.10` ledger rows 22 → 0: SF selection lines become engine picks (Rapid Response, Opening Volley), pieces in no `EQUIPSET` entry Not Carried, the harness names a weapon by its copy and lists engine-held feats (4 rows deleted); 1 codex-rule, 5 oracle-departs (3 oracle runs), 12 → discovered E4.14 (engine/data); operator's local ledger 9 rows re-classified (counts only); codex-ingest 187 suites, 1907 passed |
 | 2026-11-17 | E2.7 | complete | the commit adding the E2.7 receipt (code e9914545d3) | `artifacts/epic_2/E2.7_cycle_receipt.md` | `src/campaign/frontmatter.rs` (tolerant YAML subset; `set_key`/`write_key` change one key's lines) + `adventure_log.rs` (`list` newest session first, ranges by start, SD-o listed by filename; `new_entry` refuses a taken name); `list_adventure_log`/`new_adventure_log_entry`; `AdventureLogTab` list + "+" + editor; root `adventure_log_` 5, `frontmatter_` 7; desktop 1510 passed 0 failed; npm 210/210 |
+| 2026-11-17 | E1.MC | complete | the commit adding the E1.MC receipt | `artifacts/epic_1/E1.MC_cycle_receipt.md` | adversarial: Notes lacked every line kept as a custom feat (81 over 6 samples) and a Create item's `CUSTOMIZATION` (Q2/Q5) — both fixed; partition command corrected (branch-wide 81 → lane-own 0); codex-ingest 187 suites / 1912 passed / 0 failed; root lib 3156 passed; residue PASS; import lane ended |
 
 ## Epic reports
 
@@ -85,6 +86,15 @@ epic's window, what it looked at, what it fixed.)
 - **Looked at:** nothing rendered — no tab mounts `MarkdownEditor` (`git grep -n "MarkdownEditor\|editor/" -- apps/desktop/src ':!apps/desktop/src/editor' | awk 'END{print NR}'` → 0). E2.6 and E2.MC take the first screenshots.
 - **Fixed:** a stored-XSS path in the Reading view (a `javascript:` scheme split by a tab or prefixed by a control char passed `safeUrl`; a shared campaign folder is untrusted input); the starter fixture.
 - **Not fixed (named):** the task-box widget toggles text on a read-only (> 2 MB) file (unsaved; no DOM harness to prove a fix); 0 of the editor's DOM event paths run under a test — E2.6/E2.MC/E5.G are their first exercise.
+
+### Epic 1 — import converter (E1.MC, 2026-11-17)
+
+- **Cards:** 11 of 11 complete (E1.1–E1.10, E1.MC); discovered during the epic: E1.8, E1.9, E1.10 (landed), E4.13, E4.14 (Phase 2). Re-derive: `awk -F'|' '$2 ~ /^ E1\./ && $5 ~ /complete/' kanban.md | awk 'END{print NR}'` → 11.
+- **Counts before → after (E1.1's diagnosis → the final converter; `artifacts/epic_1/E1.MC/`):** engine rows 48→22, 42→32, 57→44 (pf_Cleric/Paladin/Rogue, one row per line, not per copy); stacks per sample 21 / 31 / 43 / 4 / 22 / 4 over 20 / 29 / 41 / 4 / 22 / 4 lines (`final-converter-wire-counts.tsv`); sf_mechanic custom equipment records 22 → 3, sf_soldier 4 → 0 (SF records read); warnings pf_Cleric 5→0, pf_Paladin 11→3, pf_Rogue 11→2; parity 7 of 7 samples equal-or-explained (`pcg_import_parity` ok). Operator's file: 89 lines → 90 stacks, 333 pieces (counts only).
+- **Retro (actors sd42-e1.1 … sd42-e1.10, sd42-e1.mc, sd42-import; `python3 scripts/retro.py summary --since 2026-11-16 --actor sd42-e1.2 … --actor sd42-e1.mc --actor sd42-import`):** before this card 33 events — 18 verification (0 failing stages), 10 corrections (5 against the E1.2/E1.3 rows of `epic-breakdown.md`), 5 incidents; this card adds 3 corrections + 1 incident. Recurring key: `diagnosis-test-rewrites-frozen-artifacts` ×4 — its control is E1.9 (the test writes under `CARGO_TARGET_TMPDIR`), re-checked here: 2 runs, 0 E1.1 files dirtied (R-W met). New key `pgrep-wait-loop-matches-itself` ×1 (fired once; the memory note already names the control).
+- **Looked at:** nothing rendered (the import lane has no screen; E4.1/E4.2 take the first screenshots).
+- **Fixed by this check:** Q5 — every line kept as a custom feat is now a Notes line (81 lines over 6 samples, 21 in the operator's file were missing); Q2/Q5 — a Create item keeps its `CUSTOMIZATION` fields as stats and Notes lines (1 of the operator's 4, 1 of sf_mechanic's 3); the package's partition command (branch-wide → the lane's own commits).
+- **Not fixed (named):** Create-item eqmods are text, not priced; a `TEMPLATESAPPLIED:[NAME:Human]` line names its custom feat `[NAME:Human]`; the diagnosis instrument's `verdict` (PF gate) and `data_fields_not_read` (static) columns no longer measure the converter — E1.1's frozen evidence, not rewritten.
 
 ## Lead's dispatch log
 

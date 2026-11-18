@@ -5,8 +5,8 @@
 //! (no base, no record), an unknown satchel holding 4 rations (a catalog item) and 2 of an unknown
 //! charm, and 2 camels Not Carried with `LOADCOMPANIONS:N`.
 //!
-//! **Does not cover:** an unknown line's `CUSTOMIZATION` (`NAME`, `SPROP`, eqmods) on its Create item;
-//! a capacity the file states (PCGen's `.pcg` carries none: 0 of 89 `EQUIPNAME` lines in the operator's
+//! **Does not cover:** an unknown line's eqmods priced or weighed (they stay text on the Create item
+//! since E1.MC; `unmapped_create_item_keeps_its_customization`); a capacity the file states (PCGen's `.pcg` carries none: 0 of 89 `EQUIPNAME` lines in the operator's
 //! file and 0 of the 7 samples hold `CONTAINS`); bundle lines (E1.8); companion files (not followed);
 //! the app writing `custom.json` (E4.1); any `.pcg` outside this fixture.
 
@@ -104,4 +104,22 @@ fn companion_line_is_a_gear_line() {
     let camel = the_copy(&camel_id);
     assert_eq!((location(&camel), pieces(&camel)), (Location::NotCarried, Some(2)));
     assert!(!file.custom.feats.iter().any(|feat| feat.name.contains("Camel")), "a companion line is gear, not a feat");
+}
+
+/// Q2 + Q5 for a Create item (E1.MC): a line no record maps keeps its `CUSTOMIZATION` fields other than
+/// `KEY` and `NAME` as the item's stats, and each is a Notes line. Population: the operator's file has 1
+/// such line of its 4 Create items (counts only), `sf_mechanic` 1 of 3.
+#[test]
+fn unmapped_create_item_keeps_its_customization() {
+    let text = "PCGVERSION:2.0\nGAMEMODE:Pathfinder_RPG\nCHARACTERNAME:Custom Create Tester\nSTAT:STR|SCORE:14\nSTAT:DEX|SCORE:12\n\
+STAT:CON|SCORE:14\nSTAT:INT|SCORE:10\nSTAT:WIS|SCORE:10\nSTAT:CHA|SCORE:10\nRACE:Human\nCLASS:Paladin|LEVEL:1\n\
+EQUIPNAME:Glass Lantern of Dawn|OUTPUTORDER:1|COST:40|WT:2.0|QUANTITY:1.0|CUSTOMIZATION:[BASEITEM:Glowbulb Thing|DATA:NAME=Glass Lantern of Dawn$EQMOD=MWORKW.BANE$SPROP=Glows at dawn]\n";
+    let catalog = Catalog::load(&repo_root()).expect("the checkout holds converted rules");
+    let file = convert(text, "create_custom.pcg", &catalog).expect("converts");
+    let item = file.custom.equipment.iter().find(|record| record.name == "Glass Lantern of Dawn").expect("a Create item");
+    let stats: Vec<(&str, &str)> = item.stats.iter().map(|stat| (stat.label.as_str(), stat.value.as_str())).collect();
+    assert!(stats.contains(&("EQMOD", "MWORKW.BANE")) && stats.contains(&("SPROP", "Glows at dawn")), "{stats:?}");
+    assert!(!stats.iter().any(|(label, _)| *label == "NAME" || *label == "KEY"), "{stats:?}");
+    assert!(file.bio.notes.contains("- Glass Lantern of Dawn: EQMOD MWORKW.BANE kept as text"), "{}", file.bio.notes);
+    assert!(file.bio.notes.contains("- Glass Lantern of Dawn: SPROP Glows at dawn kept as text"), "{}", file.bio.notes);
 }

@@ -6,9 +6,9 @@
 //! a class and a race Codex lacks, a spell Codex has no record of, and a location word with no slot.
 //!
 //! **Does not cover:** a spell the engine's class list refuses (the same kind, written by
-//! `keep_the_spells_the_engine_takes`; no synthetic line triggers it here); a feat, skill or ability
-//! Codex lacks (kept as custom feats, not a kind the card names); the app writing `bio.json` (E4.1);
-//! the operator's file and the 7 samples other than `sf_soldier`.
+//! `keep_the_spells_the_engine_takes`; no synthetic line triggers it here); the app writing `bio.json`
+//! (E4.1); the operator's file. A line kept as a custom feat (a feat, skill, ability, template or
+//! unreadable money line Codex lacks) is its own kind since E1.MC, checked over 6 of the 7 samples.
 
 use std::path::{Path, PathBuf};
 
@@ -98,4 +98,54 @@ fn notes_block_maps_sf_soldiers_class() {
     let file = import(&String::from_utf8_lossy(&bytes), "sf_soldier.pcg");
     assert!(file.bio.notes.starts_with("## Imported from PCGen (sf_soldier.pcg, "), "{}", file.bio.notes);
     assert!(!file.bio.notes.contains("Classes with no Codex record") && !file.bio.notes.contains("Soldier 10"), "{}", file.bio.notes);
+}
+
+/// Q5 reads "anything the import cannot map directly": a feat, a skill, an ability, a template and a
+/// money line Codex cannot read are kept as custom feats, and each is a Notes line too (E1.MC).
+#[test]
+fn notes_block_lists_every_line_kept_as_a_custom_feat() {
+    let text = "PCGVERSION:2.0\nGAMEMODE:Pathfinder_RPG\nCHARACTERNAME:Custom Tester\nSTAT:STR|SCORE:14\nSTAT:DEX|SCORE:12\n\
+STAT:CON|SCORE:14\nSTAT:INT|SCORE:10\nSTAT:WIS|SCORE:10\nSTAT:CHA|SCORE:10\nRACE:Human\nCLASS:Paladin|LEVEL:1\n\
+FEAT:Moonlit Reverie\n\
+SKILL:Underwater Basketweaving|OUTPUTORDER:1|CLASSBOUGHT:[CLASS:Paladin|RANKS:1.0|COST:1|CLASSSKILL:Y]\n\
+ABILITY:Glimmerheart|TYPE:NORMAL|CATEGORY:Special Ability|NATURE:NORMAL|KEY:Glimmerheart\n\
+TEMPLATE:Half-Shade\n\
+MONEY:lots\n";
+    let file = import(text, "custom_feats.pcg");
+    let notes = body(&file.bio.notes, "custom_feats.pcg");
+    for name in ["Moonlit Reverie", "Underwater Basketweaving", "Glimmerheart", "Half-Shade", "lots"] {
+        assert!(file.custom.feats.iter().any(|feat| feat.name == name), "{name} is kept: {:?}", file.custom.feats.iter().map(|f| &f.name).collect::<Vec<_>>());
+        assert!(notes.contains(&format!("- {name} (")), "{name} is a Notes line:\n{notes}");
+    }
+}
+
+/// The same rule over PCGen's 7 samples: every custom feat but the Languages and Biography records
+/// the import itself assembles is named in Notes. Skips loudly when the oracle is absent.
+#[test]
+fn notes_block_names_every_custom_feat_of_the_samples() {
+    let dir = std::env::var("PCGEN_REPO_DIR")
+        .ok()
+        .filter(|dir| !dir.is_empty())
+        .map_or_else(|| PathBuf::from(std::env::var("HOME").expect("HOME")).join("workspace/repos/pcgen"), PathBuf::from);
+    let mut checked = 0;
+    for sample in ["pf_Cleric", "pf_Paladin", "pf_Rogue", "pf_goldielocks", "sf_mechanic", "sf_soldier"] {
+        let path = dir.join(format!("code/testsuite/PCGfiles/{sample}.pcg"));
+        let Ok(bytes) = std::fs::read(&path) else {
+            println!("SKIPPED: PCGen oracle absent at {} (decisions.md §22)", path.display());
+            return;
+        };
+        let file = import(&String::from_utf8_lossy(&bytes), &format!("{sample}.pcg"));
+        for feat in file.custom.feats.iter().filter(|feat| feat.name != "Languages" && feat.name != "Biography") {
+            // An unknown key's lines are listed once by the key (`notes_block_lists_every_unmapped_line_once`).
+            let key = feat.stats.iter().find(|stat| stat.label == "PCGen key").map(|stat| stat.value.as_str()).unwrap_or_default();
+            assert!(
+                file.bio.notes.contains(&format!("- {}", feat.name)) || file.bio.notes.contains(&format!("- {key}: kept as a custom feat")),
+                "{sample}: {} not in Notes:\n{}",
+                feat.name,
+                file.bio.notes
+            );
+            checked += 1;
+        }
+    }
+    println!("custom feats named in Notes: {checked}");
 }

@@ -1,0 +1,6 @@
+pf_Cleric	EQUIPNAME lines 20	stacks 21	pieces 65	custom feats/equipment/spells 13/0/0	warnings 0	notes lines 11
+pf_Paladin	EQUIPNAME lines 29	stacks 31	pieces 41	custom feats/equipment/spells 19/0/1	warnings 3	notes lines 20
+pf_Rogue	EQUIPNAME lines 41	stacks 43	pieces 74	custom feats/equipment/spells 20/0/0	warnings 2	notes lines 20
+pf_goldielocks	EQUIPNAME lines 4	stacks 4	pieces 4	custom feats/equipment/spells 19/4/33	warnings 4	notes lines 52
+sf_mechanic	EQUIPNAME lines 22	stacks 22	pieces 100072	custom feats/equipment/spells 17/3/0	warnings 5	notes lines 19
+sf_soldier	EQUIPNAME lines 4	stacks 4	pieces 4	custom feats/equipment/spells 9/0/0	warnings 0	notes lines 7

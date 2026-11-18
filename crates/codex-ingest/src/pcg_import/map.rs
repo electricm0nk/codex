@@ -309,6 +309,7 @@ enum NoteKind {
     Spell,
     Eqmod,
     Location,
+    CustomFeat,
 }
 
 impl NoteKind {
@@ -323,6 +324,7 @@ impl NoteKind {
             NoteKind::Spell => "Spells not kept",
             NoteKind::Eqmod => "Eqmods kept as text",
             NoteKind::Location => "Locations read as Equipped",
+            NoteKind::CustomFeat => "Lines kept as custom feats",
         }
     }
 }
@@ -817,7 +819,7 @@ impl<'a> Importer<'a> {
             .map(str::to_owned);
         let Some(item_key) = item_key else {
             let before = self.custom.equipment.len();
-            self.custom_item(line, &name, base_item.as_deref().unwrap_or(&name));
+            self.custom_item(line, &name, base_item.as_deref().unwrap_or(&name), &data);
             if self.custom.equipment.len() > before {
                 let id = self.custom.equipment[before].id.clone();
                 for place in self.placements.get_mut(index).into_iter().flatten() {
@@ -1048,6 +1050,10 @@ impl<'a> Importer<'a> {
     }
 
     fn custom_named_feat(&mut self, line: &Line, name: &str, description: &str) {
+        // Q5: every line kept as a custom feat is a Notes line, unless its caller already wrote one.
+        if self.notes.last().is_none_or(|(_, at, _)| *at != self.report.lines.len()) {
+            self.unmapped(NoteKind::CustomFeat, format!("{name} ({}): kept as a custom feat", line.key()));
+        }
         let stats = vec![CustomStat { label: "PCGen key".to_owned(), value: line.key().to_owned() }];
         let record = custom_record("feat", self.custom.feats.len(), name, description, stats);
         self.push_custom(line, record, |custom| &mut custom.feats);
@@ -1062,13 +1068,19 @@ impl<'a> Importer<'a> {
     /// A line no record maps is a Create item (`decisions.md §7`): weighed and priced per piece from
     /// the line, held at its places by `place_copies`, which also makes it a container when the set
     /// puts anything inside it.
-    fn custom_item(&mut self, line: &Line, name: &str, base: &str) {
-        let stats = line
+    fn custom_item(&mut self, line: &Line, name: &str, base: &str, data: &BTreeMap<String, String>) {
+        let mut stats: Vec<CustomStat> = line
             .get("NOTE")
             .filter(|value| !value.trim().is_empty())
             .map(|value| CustomStat { label: "Note".to_owned(), value: value.to_owned() })
             .into_iter()
             .collect();
+        // Q2, Q5: the line's customization stays on the Create item as text, and each field is a Notes line.
+        for (key, value) in data.iter().filter(|(key, _)| !matches!(key.as_str(), "KEY" | "NAME")).take(MAX_STATS - stats.len()) {
+            stats.push(CustomStat { label: key.clone(), value: value.clone() });
+            let kind = if key.ends_with("EQMOD") { NoteKind::Eqmod } else { NoteKind::Property };
+            self.unmapped(kind, format!("{name}: {key} {value} kept as text"));
+        }
         let reason = format!("no Codex record for {base}");
         let mut record = custom_record("equipment", self.custom.equipment.len(), name, &format!("Imported from PCGen: {reason}."), stats);
         record.weight_lbs = amount(line.get("WT"));
