@@ -14,24 +14,6 @@ export const CAMPAIGN_TABS: ReadonlyArray<{ tab: CampaignTab; label: string }> =
   { tab: 'wiki', label: 'Wiki' },
 ];
 
-/** The top-level entry each tab reads. */
-const TAB_ROOT: Record<CampaignTab, string> = {
-  resources: 'Party Resources.md',
-  adventureLog: 'Adventure Log',
-  maps: 'Maps',
-  wiki: 'Wiki',
-};
-
-function filesUnder(entry: CampaignTreeEntry): string[] {
-  return entry.isDir ? entry.children.flatMap(filesUnder) : [entry.path];
-}
-
-/** Every file of the tab's part of the folder, in tree order. */
-export function tabFiles(tree: readonly CampaignTreeEntry[], tab: CampaignTab): string[] {
-  const root = tree.find((entry) => entry.path === TAB_ROOT[tab]);
-  return root ? filesUnder(root) : [];
-}
-
 /**
  * The party: the saved characters of this install with a `<slug>-<characterId>` copy under
  * `Characters/` (or SD-41's `characters/`), in `savedIds` order.

@@ -1,4 +1,4 @@
-import { clickFraction, newPageText, pinTarget, wikiPages } from './mapsModel';
+import { clickFraction, pageName, pinTarget, wikiPages } from './mapsModel';
 import type { CampaignTreeEntry } from '../boundary/campaignFolder/types';
 import { assertEqual } from '../testSupport/asserts';
 
@@ -27,15 +27,15 @@ function testClickFraction() {
 }
 
 function testPinOpensItsPage() {
-  same(pinTarget(tree, 'Riverside Ferry'), { kind: 'open', path: 'Wiki/Places/Riverside Ferry.md' }, 'by filename stem, any folder');
-  same(pinTarget(tree, 'ameiko|the innkeeper'), { kind: 'open', path: 'Wiki/NPCs/Ameiko.md' }, 'alias and case ignored');
-  same(pinTarget(tree, 'Ameiko#History'), { kind: 'open', path: 'Wiki/NPCs/Ameiko.md' }, 'a heading link opens the page');
+  // Resolution itself (title first, then stem, any folder) is `resolve_wiki_link`'s: `wiki_resolve_by_title_then_stem_with_alias_and_heading`.
+  same(pinTarget('Riverside Ferry', 'Wiki/Places/Riverside Ferry.md'), { kind: 'open', path: 'Wiki/Places/Riverside Ferry.md' }, 'the resolved file opens');
+  assertEqual(pageName('ameiko|the innkeeper'), 'ameiko', 'alias dropped');
+  assertEqual(pageName(' Ameiko#History '), 'Ameiko', 'a heading link names the page');
 }
 
 function testMissingPageOffersCreate() {
-  same(pinTarget(tree, 'Old Light'), { kind: 'missing', name: 'Old Light', createPath: 'Wiki/Old Light.md' }, 'SD-p: created under Wiki/');
-  same(pinTarget(tree, '  '), { kind: 'none' }, 'a pin with no page');
-  assertEqual(newPageText('Old "Light"'), '---\ntitle: "Old \\"Light\\""\ntags: []\n---\n# Old "Light"\n', 'small frontmatter + heading');
+  same(pinTarget('Old Light#Top', null), { kind: 'missing', name: 'Old Light' }, 'SD-p: offered for creation by name');
+  same(pinTarget('  ', null), { kind: 'none' }, 'a pin with no page');
 }
 
 function testWikiPages() {

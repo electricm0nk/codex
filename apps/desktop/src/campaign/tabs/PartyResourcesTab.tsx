@@ -3,7 +3,8 @@ import { MarkdownEditor } from '../../editor/MarkdownEditor';
 import { campaignImageUrl, createPartyResourcesStarter, readCampaignFile, statCampaignFile, writeCampaignFile } from '../../boundary/campaignFolder/campaignFiles';
 import { saveAttachment } from '../../boundary/campaignFolder/attachments';
 import type { CampaignTreeEntry } from '../../boundary/campaignFolder/types';
-import { linkTarget, markdownStems, PARTY_RESOURCES_PATH } from './partyResourcesModel';
+import { markdownStems, PARTY_RESOURCES_PATH } from './partyResourcesModel';
+import { resolveWikiLink } from '../../boundary/campaignFolder/wiki';
 
 /**
  * Party Resources (SD-42 `decisions.md §15.1`): `Party Resources.md` in the campaign editor. Nothing
@@ -65,11 +66,14 @@ export function PartyResourcesTab(props: { campaignDir: string; tree: readonly C
         saveAttachment={saveAttachment}
         resolveImage={(image) => campaignImageUrl(campaignDir, image)}
         pages={async () => markdownStems(tree)}
-        onOpenLink={(target) => {
-          const found = linkTarget(tree, target);
-          setNotice(found ? null : `No page named "${target}" in this campaign yet.`);
-          if (found) setPath(found);
-        }}
+        onOpenLink={(target) =>
+          resolveWikiLink(campaignDir, target)
+            .then((found) => {
+              setNotice(found ? null : `No page named "${target}" in this campaign yet.`);
+              if (found) setPath(found);
+            })
+            .catch((cause: unknown) => setNotice(cause instanceof Error ? cause.message : String(cause)))
+        }
       />
     </div>
   );

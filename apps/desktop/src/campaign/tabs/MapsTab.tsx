@@ -2,10 +2,11 @@ import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent, type P
 import { open } from '@tauri-apps/plugin-dialog';
 import { MarkdownEditor } from '../../editor/MarkdownEditor';
 import { campaignImageUrl, readCampaignFile, statCampaignFile, writeCampaignFile } from '../../boundary/campaignFolder/campaignFiles';
+import { newWikiPage, resolveWikiLink } from '../../boundary/campaignFolder/wiki';
 import { saveAttachment } from '../../boundary/campaignFolder/attachments';
 import { addMap, listMaps, setMapPins, type MapEntry, type MapPin } from '../../boundary/campaignFolder/maps';
 import type { CampaignTreeEntry } from '../../boundary/campaignFolder/types';
-import { clickFraction, newPageText, pinTarget, wikiPages } from '../mapsModel';
+import { clickFraction, pageName, pinTarget, WIKI_DIR, wikiPages } from '../mapsModel';
 import { markdownStems } from './partyResourcesModel';
 
 /**
@@ -36,7 +37,7 @@ export function MapsTab(props: {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [pending, setPending] = useState<Pending | null>(null);
   const [drag, setDrag] = useState<Drag | null>(null);
-  const [missing, setMissing] = useState<{ name: string; createPath: string } | null>(null);
+  const [missing, setMissing] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   // Bumped after every pins write so the notes editor re-reads the file it shares with the pins.
   const [epoch, setEpoch] = useState(0);
@@ -91,28 +92,31 @@ export function MapsTab(props: {
       .catch((cause: unknown) => setNotice(message(cause)));
   };
 
-  const createPage = async (name: string, createPath: string) => {
-    const stat = await statCampaignFile(campaignDir, createPath);
-    if (!stat.exists) await writeCampaignFile(campaignDir, createPath, new TextEncoder().encode(newPageText(name)));
+  // SD-p: the Wiki's "+" writes the page (`new_wiki_page`), under `Wiki/`; resolves to its path.
+  const createPage = async (name: string) => {
+    const path = await newWikiPage(campaignDir, WIKI_DIR, name);
     props.onTreeChanged();
+    return path;
   };
 
-  const openPin = (pin: MapPin) => {
-    const target = pinTarget(tree, pin.page);
+  const openLink = (page: string) => {
     setMissing(null);
-    if (target.kind === 'open') props.onOpenPage(target.path);
-    else if (target.kind === 'missing') setMissing({ name: target.name, createPath: target.createPath });
-    else setNotice('This pin links to no wiki page.');
+    const resolved = pageName(page) ? resolveWikiLink(campaignDir, page) : Promise.resolve(null);
+    resolved
+      .then((found) => {
+        const target = pinTarget(page, found);
+        if (target.kind === 'open') props.onOpenPage(target.path);
+        else if (target.kind === 'missing') setMissing(target.name);
+        else setNotice('This pin links to no wiki page.');
+      })
+      .catch((cause: unknown) => setNotice(message(cause)));
   };
 
   const addPin = async () => {
     if (!pending || !map) return;
     try {
       const newName = pending.newPage.trim();
-      if (newName) {
-        const target = pinTarget(tree, newName);
-        if (target.kind === 'missing') await createPage(target.name, target.createPath);
-      }
+      if (newName && !(await resolveWikiLink(campaignDir, newName))) await createPage(pageName(newName));
       const page = newName || pending.page;
       await savePins([...map.pins, { x: pending.x, y: pending.y, label: pending.label.trim() || page, page }]);
       setPending(null);
@@ -230,7 +234,7 @@ export function MapsTab(props: {
                           dragged.current = false;
                           return;
                         }
-                        openPin(pin);
+                        openLink(pin.page);
                       }}
                       style={{
                         background: 'var(--color-accent)',
@@ -293,15 +297,15 @@ export function MapsTab(props: {
 
           {missing && (
             <p role="status" style={{ ...muted, color: 'var(--color-text)' }}>
-              {missing.name}: page not found —{' '}
+              {missing}: page not found —{' '}
               <button
                 type="button"
                 style={button}
                 onClick={() =>
-                  createPage(missing.name, missing.createPath)
-                    .then(() => {
+                  createPage(missing)
+                    .then((path) => {
                       setMissing(null);
-                      props.onOpenPage(missing.createPath);
+                      props.onOpenPage(path);
                     })
                     .catch((cause: unknown) => setNotice(message(cause)))
                 }
@@ -316,7 +320,7 @@ export function MapsTab(props: {
               {map.pins.map((pin, index) => (
                 <li key={index} style={{ marginBottom: '0.3rem' }}>
                   {pin.label} → {pin.page ? `[[${pin.page}]]` : 'no page'}{' '}
-                  <button type="button" style={{ ...button, padding: '0.1rem 0.5rem' }} onClick={() => openPin(pin)}>
+                  <button type="button" style={{ ...button, padding: '0.1rem 0.5rem' }} onClick={() => openLink(pin.page)}>
                     Open
                   </button>{' '}
                   <button
@@ -344,11 +348,7 @@ export function MapsTab(props: {
                 saveAttachment={saveAttachment}
                 resolveImage={(path) => campaignImageUrl(campaignDir, path)}
                 pages={async () => markdownStems(tree)}
-                onOpenLink={(target) => {
-                  const found = pinTarget(tree, target);
-                  if (found.kind === 'open') props.onOpenPage(found.path);
-                  else if (found.kind === 'missing') setMissing({ name: found.name, createPath: found.createPath });
-                }}
+                onOpenLink={openLink}
               />
             ) : (
               <button type="button" style={button} onClick={() => void savePins([])}>

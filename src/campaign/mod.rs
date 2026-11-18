@@ -13,6 +13,7 @@ pub mod frontmatter;
 pub mod local_store;
 pub mod maps;
 pub mod migrate;
+pub mod wiki;
 
 use serde::{Deserialize, Serialize};
 

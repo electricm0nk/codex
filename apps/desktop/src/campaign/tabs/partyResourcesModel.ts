@@ -13,10 +13,3 @@ const stem = (path: string) => path.split('/').pop()!.replace(/\.md$/i, '');
 export function markdownStems(tree: readonly CampaignTreeEntry[]): string[] {
   return markdownFiles(tree).map(stem);
 }
-
-// shortcut: filename stems only; E2.9 adds frontmatter titles and Obsidian's full resolution rule.
-/** The Markdown file a `[[link]]` names by its stem (case-insensitive), or null. */
-export function linkTarget(tree: readonly CampaignTreeEntry[], target: string): string | null {
-  const wanted = target.trim().toLowerCase();
-  return markdownFiles(tree).find((path) => stem(path).toLowerCase() === wanted) ?? null;
-}

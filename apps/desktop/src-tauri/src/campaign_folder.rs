@@ -10,7 +10,7 @@ use std::time::UNIX_EPOCH;
 use serde::{Deserialize, Serialize};
 use tauri::Manager;
 
-use codex::campaign::{adventure_log, folder, maps};
+use codex::campaign::{adventure_log, folder, maps, wiki};
 use codex::campaign::local_store::{CampaignStore, CAMPAIGN_JSON};
 use codex::campaign::CampaignFolderSnapshot;
 
@@ -601,6 +601,83 @@ pub fn add_map(request: AddMapRequest) -> Result<String, String> {
     add_map_impl(&request)
 }
 
+// --- Wiki (decisions.md §15.4) ---
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WikiPathRequest {
+    pub campaign_dir: String,
+    /// A folder or page inside the campaign, or (for `resolve_wiki_link`) the link text.
+    pub path: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WikiNameRequest {
+    pub campaign_dir: String,
+    /// The parent folder (`add_wiki_folder`), the folder (`new_wiki_page`, `rename_wiki_folder`).
+    pub path: String,
+    /// The new folder's or page's name.
+    pub name: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SearchCampaignRequest {
+    pub campaign_dir: String,
+    pub query: String,
+}
+
+fn wiki_result<T>(campaign_dir: &str, run: impl FnOnce(&Path) -> Result<T, codex::campaign::CampaignStoreError>) -> Result<T, String> {
+    run(&require_absolute(campaign_dir)?).map_err(|err| err.message)
+}
+
+#[tauri::command]
+pub fn list_wiki_folders(campaign_dir: String) -> Result<Vec<String>, String> {
+    wiki_result(&campaign_dir, wiki::folders)
+}
+
+#[tauri::command]
+pub fn list_wiki_pages(campaign_dir: String) -> Result<Vec<wiki::Page>, String> {
+    wiki_result(&campaign_dir, wiki::pages)
+}
+
+#[tauri::command]
+pub fn add_wiki_folder(request: WikiNameRequest) -> Result<String, String> {
+    wiki_result(&request.campaign_dir, |dir| wiki::add_folder(dir, &request.path, &request.name))
+}
+
+#[tauri::command]
+pub fn rename_wiki_folder(request: WikiNameRequest) -> Result<String, String> {
+    wiki_result(&request.campaign_dir, |dir| wiki::rename_folder(dir, &request.path, &request.name))
+}
+
+/// Empty when the folder was deleted; else its files, none deleted.
+#[tauri::command]
+pub fn delete_wiki_folder(request: WikiPathRequest) -> Result<Vec<String>, String> {
+    wiki_result(&request.campaign_dir, |dir| wiki::delete_folder(dir, &request.path))
+}
+
+#[tauri::command]
+pub fn new_wiki_page(request: WikiNameRequest) -> Result<String, String> {
+    wiki_result(&request.campaign_dir, |dir| wiki::new_page(dir, &request.path, &request.name))
+}
+
+#[tauri::command]
+pub fn resolve_wiki_link(request: WikiPathRequest) -> Result<Option<String>, String> {
+    wiki_result(&request.campaign_dir, |dir| wiki::resolve_link(dir, &request.path))
+}
+
+#[tauri::command]
+pub fn wiki_backlinks(request: WikiPathRequest) -> Result<Vec<String>, String> {
+    wiki_result(&request.campaign_dir, |dir| wiki::backlinks(dir, &request.path))
+}
+
+#[tauri::command]
+pub fn search_campaign(request: SearchCampaignRequest) -> Result<Vec<wiki::Hit>, String> {
+    wiki_result(&request.campaign_dir, |dir| wiki::search(dir, &request.query))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -900,6 +977,29 @@ mod tests {
         assert!(set("Party Resources.md", vec![]).is_err());
         assert!(set("Maps/../campaign.json", vec![]).is_err());
         assert!(set("Maps/Sandpoint.png", vec![]).is_err());
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn wiki_commands_reach_the_folder() {
+        let root = temp_dir("wiki");
+        let opened = create_campaign_folder_at(&root.join("app-data"), &create_request(&root.join("campaigns"), "Wiki")).unwrap();
+        let campaign_dir = opened.campaign_dir.clone();
+        let named = |path: &str, name: &str| WikiNameRequest { campaign_dir: campaign_dir.clone(), path: path.to_owned(), name: name.to_owned() };
+        let at = |path: &str| WikiPathRequest { campaign_dir: campaign_dir.clone(), path: path.to_owned() };
+        assert_eq!(list_wiki_folders(campaign_dir.clone()).unwrap(), ["Wiki/Factions", "Wiki/Items", "Wiki/NPCs", "Wiki/Places"]);
+        assert_eq!(new_wiki_page(named("Wiki/NPCs", "Ameiko")).unwrap(), "Wiki/NPCs/Ameiko.md");
+        assert_eq!(new_wiki_page(named("Wiki/Places", "Inn")).unwrap(), "Wiki/Places/Inn.md");
+        fs::write(Path::new(&campaign_dir).join("Wiki/Places/Inn.md"), "Run by [[Ameiko]].\n").unwrap();
+        assert_eq!(resolve_wiki_link(at("[[ameiko|her]]")).unwrap().as_deref(), Some("Wiki/NPCs/Ameiko.md"));
+        assert_eq!(wiki_backlinks(at("Wiki/NPCs/Ameiko.md")).unwrap(), ["Wiki/Places/Inn.md"]);
+        assert_eq!(search_campaign(SearchCampaignRequest { campaign_dir: campaign_dir.clone(), query: "run by".to_owned() }).unwrap()[0].path, "Wiki/Places/Inn.md");
+        assert_eq!(list_wiki_pages(campaign_dir.clone()).unwrap().len(), 2);
+        assert_eq!(add_wiki_folder(named("Wiki", "Gods")).unwrap(), "Wiki/Gods");
+        assert_eq!(rename_wiki_folder(named("Wiki/Gods", "Deities")).unwrap(), "Wiki/Deities");
+        assert!(delete_wiki_folder(at("Wiki/Deities")).unwrap().is_empty());
+        assert_eq!(delete_wiki_folder(at("Wiki/NPCs")).unwrap(), ["Wiki/NPCs/Ameiko.md"]);
+        assert!(list_wiki_folders("relative/path".to_owned()).is_err(), "an absolute campaign folder only");
         let _ = fs::remove_dir_all(&root);
     }
 }

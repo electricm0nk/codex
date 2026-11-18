@@ -1,5 +1,4 @@
 import type { CampaignTreeEntry } from '../boundary/campaignFolder/types';
-import { linkTarget } from './tabs/partyResourcesModel';
 
 /** The Maps tab's pure rules (SD-42 `decisions.md §15.3`); Rust reads and writes the pins. */
 
@@ -11,20 +10,21 @@ export function clickFraction(clientX: number, clientY: number, rect: { left: nu
   return { x: part(clientX - rect.left, rect.width), y: part(clientY - rect.top, rect.height) };
 }
 
-export type PinTarget = { kind: 'open'; path: string } | { kind: 'missing'; name: string; createPath: string } | { kind: 'none' };
+export type PinTarget = { kind: 'open'; path: string } | { kind: 'missing'; name: string } | { kind: 'none' };
 
-/** The file a pin's page names (`[[Page|alias]]`, `[[Page#heading]]` resolve to `Page`), or the create offer (SD-p). */
-export function pinTarget(tree: readonly CampaignTreeEntry[], page: string): PinTarget {
-  const name = page.split(/[|#]/)[0].trim();
-  if (!name) return { kind: 'none' };
-  const path = linkTarget(tree, name);
-  return path ? { kind: 'open', path } : { kind: 'missing', name, createPath: `${WIKI_DIR}/${name}.md` };
+/** The page name a pin or link names: `Page|alias`, `Page#heading` → `Page`. */
+export function pageName(page: string): string {
+  return page.split(/[|#]/)[0].trim();
 }
 
-// shortcut: the page "Create" writes has no `type` (no folder picked); E2.9's "+" owns the per-folder page.
-/** A new wiki page: `§15.4`'s small frontmatter and a heading. */
-export function newPageText(name: string): string {
-  return `---\ntitle: ${JSON.stringify(name)}\ntags: []\n---\n# ${name}\n`;
+/**
+ * What a pin's page opens: the file `resolve_wiki_link` found (`resolved`, title first, then
+ * filename stem), else the create offer (SD-p; "+" writes it under `Wiki/`), or nothing for no page.
+ */
+export function pinTarget(page: string, resolved: string | null): PinTarget {
+  const name = pageName(page);
+  if (!name) return { kind: 'none' };
+  return resolved ? { kind: 'open', path: resolved } : { kind: 'missing', name };
 }
 
 /** The Markdown pages under `Wiki/` by name, for the "Link to wiki page" list. */

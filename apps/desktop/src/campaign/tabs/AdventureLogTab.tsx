@@ -6,7 +6,8 @@ import { listAdventureLog, newAdventureLogEntry, type AdventureLogEntry } from '
 import type { CampaignTreeEntry } from '../../boundary/campaignFolder/types';
 import { localIsoDate, nextSessionTitle, sessionLabel, statusMark } from '../adventureLogModel';
 import { readYourName, rememberYourName } from '../campaignMembersModel';
-import { linkTarget, markdownStems } from './partyResourcesModel';
+import { markdownStems } from './partyResourcesModel';
+import { resolveWikiLink } from '../../boundary/campaignFolder/wiki';
 
 /**
  * Adventure Log (SD-42 `decisions.md §15.2`): one file per session per author under
@@ -128,11 +129,14 @@ export function AdventureLogTab(props: { campaignDir: string; tree: readonly Cam
           saveAttachment={saveAttachment}
           resolveImage={(image) => campaignImageUrl(campaignDir, image)}
           pages={async () => markdownStems(tree)}
-          onOpenLink={(target) => {
-            const found = linkTarget(tree, target);
-            setNotice(found ? null : `No page named "${target}" in this campaign yet.`);
-            if (found) setSelected(found);
-          }}
+          onOpenLink={(target) =>
+            resolveWikiLink(campaignDir, target)
+              .then((found) => {
+                setNotice(found ? null : `No page named "${target}" in this campaign yet.`);
+                if (found) setSelected(found);
+              })
+              .catch((cause: unknown) => setNotice(message(cause)))
+          }
         />
       )}
     </div>

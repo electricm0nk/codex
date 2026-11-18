@@ -1,11 +1,11 @@
-import { linkTarget, markdownStems, PARTY_RESOURCES_PATH } from './partyResourcesModel';
+import { markdownStems, PARTY_RESOURCES_PATH } from './partyResourcesModel';
 import type { CampaignTreeEntry } from '../../boundary/campaignFolder/types';
 import { assertEqual } from '../../testSupport/asserts';
 
 /**
  * SD-42 E2.6 (decisions.md §15.1): the Party Resources tab edits `Party Resources.md` in the
- * editor. `[[` completion offers every Markdown filename stem in the folder; a clicked link opens
- * the file whose stem it names (case-insensitive), or reports that none exists.
+ * editor. `[[` completion offers every Markdown filename stem in the folder. (A clicked link is
+ * resolved by `resolve_wiki_link` since E2.9: title first, then stem — `src/campaign/wiki.rs`.)
  */
 
 const file = (path: string): CampaignTreeEntry => ({ name: path.split('/').pop()!, path, isDir: false, children: [] });
@@ -23,12 +23,5 @@ function testStemsAreEveryMarkdownFile() {
   assertEqual(markdownStems(TREE).join('|'), 'Sandpoint|Party Resources|Ameiko Kaijitsu', 'md stems in tree order; images and json skipped');
 }
 
-function testLinkResolvesByStem() {
-  assertEqual(linkTarget(TREE, 'ameiko kaijitsu'), 'Wiki/NPCs/Ameiko Kaijitsu.md', 'case-insensitive stem');
-  assertEqual(linkTarget(TREE, 'Sandpoint'), 'Maps/Sandpoint.md', 'the notes file, never the image');
-  assertEqual(linkTarget(TREE, 'Nobody'), null, 'missing page');
-}
-
 testStemsAreEveryMarkdownFile();
-testLinkResolvesByStem();
-console.log('partyResourcesModel: 2 cases passed');
+console.log('partyResourcesModel: 1 case passed');

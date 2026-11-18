@@ -1,12 +1,12 @@
-import { notACampaignFolder, partyCharacterIds, tabFiles } from './campaignFolderModel';
+import { notACampaignFolder, partyCharacterIds } from './campaignFolderModel';
 import type { CampaignTreeEntry } from '../boundary/campaignFolder/types';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /**
  * SD-42 E2.3: the campaign sheet reads the folder. Its party is the characters copied into the
  * folder's `Characters/` (SD-41 wrote `characters/`), matched to this install's saved characters
- * by the `<slug>-<characterId>` folder name; each tab lists its own files read-only until its
- * feature card lands.
+ * by the `<slug>-<characterId>` folder name. (Each tab's own reader replaced E2.3's read-only file
+ * lists: E2.6–E2.9.)
  */
 
 const file = (path: string): CampaignTreeEntry => ({ name: path.split('/').pop()!, path, isDir: false, children: [] });
@@ -29,14 +29,6 @@ function testPartyIsTheFolderCharactersThisInstallHolds() {
   assertEqual(partyCharacterIds([], ['1f0c-aa']).length, 0, 'no Characters/ folder -> no party');
 }
 
-function testEachTabListsItsOwnFiles() {
-  assertEqual(tabFiles(TREE, 'resources').join('|'), 'Party Resources.md', 'Party Resources');
-  assertEqual(tabFiles(TREE, 'adventureLog').join('|'), 'Adventure Log/2026-11-01 Gwen - Arrival.md|Adventure Log/2026-11-08 Gwen - The Mill.md', 'Adventure Log');
-  assertEqual(tabFiles(TREE, 'maps').join('|'), 'Maps/Sandpoint.png|Maps/Sandpoint.md', 'Maps');
-  assertEqual(tabFiles(TREE, 'wiki').join('|'), 'Wiki/NPCs/Ameiko.md', 'Wiki files at any depth');
-  assertEqual(tabFiles([], 'wiki').length, 0, 'an empty folder lists nothing');
-}
-
 function testNotACampaignFolderIsRecognised() {
   assert(notACampaignFolder('Failed adding a campaign folder: /x has no campaign.json: it is not a campaign folder'), 'no campaign.json');
   assert(!notACampaignFolder('Failed adding a campaign folder: /x has no campaign.json: it is an older campaign (.config/); migrate it first'), 'an older campaign is not offered New');
@@ -44,6 +36,5 @@ function testNotACampaignFolderIsRecognised() {
 }
 
 testPartyIsTheFolderCharactersThisInstallHolds();
-testEachTabListsItsOwnFiles();
 testNotACampaignFolderIsRecognised();
-console.log('campaignFolderModel.test.ts: 3 cases passed');
+console.log('campaignFolderModel.test.ts: 2 cases passed');
